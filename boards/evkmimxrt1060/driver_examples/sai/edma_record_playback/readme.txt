@@ -3,6 +3,14 @@ Overview
 The sai_edma_record_playback example shows how to use sai driver with EDMA:
 
 In this example, one sai instance record the audio data from input and playbacks the audio data.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -43,11 +51,6 @@ SAI example finished!
 
 Note:
 Examples can't be downloaded again after dowmloading this case by MCUXpresso IDE. Please erase flash by serial download mode(SW7:0001b). This issue will be fixed in later release.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+Customization options
+=====================
 

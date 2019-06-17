@@ -41,6 +41,11 @@
  */
 #define LWIP_SO_RCVTIMEO 1
 
+/**
+ * LWIP_NETIF_API==1: Enable netif api to avoid raw api calls
+ */
+#define LWIP_NETIF_API 1
+
 #else
 /**
  * NO_SYS==1: Bare metal lwIP

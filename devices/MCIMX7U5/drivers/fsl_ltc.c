@@ -929,7 +929,7 @@ static status_t ltc_symmetric_process_data_multiple(LTC_Type *base,
 
     while (0U != lastSize)
     {
-        if (fsm == kLTC_ModeUpdate || kLTC_ModeInit)
+        if ((fsm == kLTC_ModeUpdate) || (fsm == kLTC_ModeInit))
         {
             while (0U != inSize)
             {
@@ -966,7 +966,7 @@ static status_t ltc_symmetric_process_data_multiple(LTC_Type *base,
             }
         }
 
-        else if (fsm == kLTC_ModeFinalize || kLTC_ModeInitFinal)
+        else if ((fsm == kLTC_ModeFinalize) || (fsm == kLTC_ModeInitFinal))
         {
             /* process last block in FINALIZE */
 

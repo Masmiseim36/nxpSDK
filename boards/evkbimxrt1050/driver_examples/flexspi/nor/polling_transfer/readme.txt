@@ -5,6 +5,14 @@ The flexspi_nor_polling_transfer example shows how to use flexspi driver with po
 In this example, flexspi will send data and operate the external Nor flash connected with FLEXSPI. Some simple flash command will
 be executed, such as Write Enable, Erase sector, Program page.
 Example will first erase the sector and program a page into the flash, at last check if the data in flash is correct.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -35,7 +43,7 @@ When the example runs successfully, you can see the similar information from the
 For flexspi_nor targets, the result is:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 FLEXSPI example started!
-Vendor ID: 0x16
+Vendor ID: 0x9d
 Erasing Serial NOR over FlexSPI...
 Erase data - successfully.
 Program data - successfully.
@@ -46,7 +54,7 @@ Program data - successfully.
 For ram/sdram targets, the result is:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 FLEXSPI example started!
-Vendor ID: 0x16
+Vendor ID: 0x9d
 Erasing whole chip over FlexSPI...
 Erase finished !
 Erasing Serial NOR over FlexSPI...
@@ -54,11 +62,6 @@ Erase data - successfully.
 Program data - successfully.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+Customization options
+=====================
 

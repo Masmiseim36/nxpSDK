@@ -254,7 +254,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     0x00U,                                        /* The X dimension of the picture aspect ratio */
     0x00U,                                        /* The Y dimension of the picture aspect ratio */
     0x00U,                                        /* Specifies interlace information */
-    0x00U,                                        /* Not uesd */
+    0x00U,                                        /* Not used */
 
     /* Motion-JPEG Video Frame Descriptor */
     USB_VIDEO_MJPEG_FRAME_DESCRIPTOR_LENGTH,     /* Size of this Descriptor */
@@ -553,7 +553,7 @@ usb_status_t USB_DeviceGetInterface(usb_device_handle handle, uint8_t interface,
  * current speed.
  * As the default, the device descriptors and configurations are configured by using FS parameters for both EHCI and
  * KHCI.
- * When the EHCI is enabled, the application needs to call this fucntion to update device by using current speed.
+ * When the EHCI is enabled, the application needs to call this function to update device by using current speed.
  * The updated information includes endpoint max packet size, endpoint interval, etc. */
 usb_status_t USB_DeviceSetSpeed(uint8_t speed)
 {

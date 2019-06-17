@@ -65,14 +65,15 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
                        USB_DESCRIPTOR_LENGTH_CDC_UNION_FUNC + USB_DESCRIPTOR_LENGTH_ENDPOINT +
                        USB_DESCRIPTOR_LENGTH_INTERFACE + USB_DESCRIPTOR_LENGTH_ENDPOINT +
                        USB_DESCRIPTOR_LENGTH_ENDPOINT) *
-                          2),
+                          USB_DEVICE_CONFIG_CDC_ACM),
     USB_SHORT_GET_HIGH(USB_DESCRIPTOR_LENGTH_CONFIGURE +
                        (USB_IAD_DESC_SIZE + USB_DESCRIPTOR_LENGTH_INTERFACE + USB_DESCRIPTOR_LENGTH_CDC_HEADER_FUNC +
                         USB_DESCRIPTOR_LENGTH_CDC_CALL_MANAG + USB_DESCRIPTOR_LENGTH_CDC_ABSTRACT +
                         USB_DESCRIPTOR_LENGTH_CDC_UNION_FUNC + USB_DESCRIPTOR_LENGTH_ENDPOINT +
                         USB_DESCRIPTOR_LENGTH_INTERFACE + USB_DESCRIPTOR_LENGTH_ENDPOINT +
                         USB_DESCRIPTOR_LENGTH_ENDPOINT) *
-                           2),
+                           USB_DEVICE_CONFIG_CDC_ACM),
+    /* the two cdc interface have almost same interface attribute except for some number index difference etc, so we could multiply by USB_DEVICE_CONFIG_CDC_ACM when calculate length*/
     /* Number of interfaces supported by this configuration */
     USB_INTERFACE_COUNT,
     /* Value to use as an argument to the SetConfiguration() request to select this configuration */
@@ -130,8 +131,8 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
 
     USB_DESCRIPTOR_LENGTH_CDC_UNION_FUNC, /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_CDC_CS_INTERFACE, /* CS_INTERFACE Descriptor Type */
-    USB_CDC_UNION_FUNC_DESC, 0x00,        /* The interface number of the Communications or Data Class interface  */
-    0x01,                                 /* Interface number of subordinate interface in the Union  */
+    USB_CDC_UNION_FUNC_DESC, USB_CDC_VCOM_CIC_INTERFACE_INDEX,        /* The interface number of the Communications or Data Class interface  */
+    USB_CDC_VCOM_DIC_INTERFACE_INDEX,                                 /* Interface number of subordinate interface in the Union  */
 
     /*Notification Endpoint descriptor */
     USB_DESCRIPTOR_LENGTH_ENDPOINT, USB_DESCRIPTOR_TYPE_ENDPOINT,
@@ -197,8 +198,8 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
 
     USB_DESCRIPTOR_LENGTH_CDC_UNION_FUNC, /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_CDC_CS_INTERFACE, /* CS_INTERFACE Descriptor Type */
-    USB_CDC_UNION_FUNC_DESC, 0x02,        /* The interface number of the Communications or Data Class interface  */
-    0x03,                                 /* Interface number of subordinate interface in the Union  */
+    USB_CDC_UNION_FUNC_DESC, USB_CDC_VCOM_CIC_INTERFACE_INDEX_2,        /* The interface number of the Communications or Data Class interface  */
+    USB_CDC_VCOM_DIC_INTERFACE_INDEX_2,                                 /* Interface number of subordinate interface in the Union  */
 
     /*Notification Endpoint descriptor */
     USB_DESCRIPTOR_LENGTH_ENDPOINT, USB_DESCRIPTOR_TYPE_ENDPOINT,
@@ -348,9 +349,9 @@ usb_language_list_t g_UsbDeviceLanguageList = {
 * Code
 ******************************************************************************/
 /*!
- * @brief Get the descritpor.
+ * @brief Get the descriptor.
  *
- * The function is used to get the descritpor, including the device descritpor, configuration descriptor, and string
+ * The function is used to get the descriptor, including the device descriptor, configuration descriptor, and string
  * descriptor, etc.
  *
  * @param handle              The device handle.

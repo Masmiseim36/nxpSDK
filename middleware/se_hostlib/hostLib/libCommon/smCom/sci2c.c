@@ -138,7 +138,7 @@ eSci2c_Error_t sci2c_Init(U8 *SCI2Catr, U16 *SCI2CatrLen)
             }
         }
         else {
-            // sm_printf(DBGOUT, "Status: 0x%02X\r\n", status);
+            // sm_printf(DBGOUT, "Status: 0x%lX\r\n", status);
             sm_sleep(T_WNCMD_ACTUAL);
         }
     }
@@ -300,37 +300,44 @@ static eSci2c_Error_t sci2c_SoftReset(U8 * pRx, U16 * pRxLen)
  */
 static eSci2c_Error_t sci2c_ReadAnswerToReset(U8 * pAtrResponse, U16 * pRxLen)
 {
-   i2c_status_t i2cErr = i2c_Okay;
-   sci2c_Data_t sci2cData;
-   sci2c_Data_t * pSci2cData = (sci2c_Data_t *) &sci2cData;
-   U16 nrRead = 0;
+    i2c_status_t i2cErr = i2c_Okay;
+    sci2c_Data_t sci2cData;
+    sci2c_Data_t * pSci2cData = (sci2c_Data_t *)&sci2cData;
+    U16 nrRead = 0;
 
-   assert(pAtrResponse != NULL);
-   assert(pRxLen != NULL);
+    assert(pAtrResponse != NULL);
+    assert(pRxLen != NULL);
 
-   pSci2cData->pcb = PCB_READ_ATR;
-   pSci2cData->dataLen = 0;
+    pSci2cData->pcb = PCB_READ_ATR;
+    pSci2cData->dataLen = 0;
 
-   i2cErr = sci2c_ReadBlock(pSci2cData, pAtrResponse, &nrRead);
+    i2cErr = sci2c_ReadBlock(pSci2cData, pAtrResponse, &nrRead);
 
-   if ((nrRead > MAX_ATR_RESPONSE_LENGTH) || (i2cErr == i2c_Failed) || (i2cErr == i2c_Sci2cException))
-   {
-      return eSci2c_Error;
-   }
-   else if (i2cErr == i2c_NoAddrAck)
-   {
-      sm_printf(DBGOUT, "no addr ack\r\n");
-      return eSci2c_Error;
-   }
+    if ((nrRead > MAX_ATR_RESPONSE_LENGTH) || (i2cErr == i2c_Failed) || (i2cErr == i2c_Sci2cException))
+    {
+        return eSci2c_Error;
+    }
+    else if (i2cErr == i2c_NoAddrAck)
+    {
+        sm_printf(DBGOUT, "no addr ack\r\n");
+        return eSci2c_Error;
+    }
 
-   /* strip the 1st (=length) and 2nd (=PCB) byte */
-   memmove(pAtrResponse, pAtrResponse + 2, nrRead - 2);
-   memset(&pAtrResponse[nrRead - 1], 0x00, 2); // clear the data in memory after copying
-   nrRead -= 2;
+    /* strip the 1st (=length) and 2nd (=PCB) byte */
+    if (nrRead < 2) {
+        *pRxLen = 0;
+        return eSci2c_Error;
+    }
+    else
+    {
+        memmove(pAtrResponse, pAtrResponse + 2, nrRead - 2);
+        memset(&pAtrResponse[nrRead - 1], 0x00, 2); // clear the data in memory after copying
+        nrRead -= 2;
 
-   *pRxLen = nrRead;
+        *pRxLen = nrRead;
+    }
 
-   return eSci2c_No_Error;
+    return eSci2c_No_Error;
 }
 
 /**
@@ -535,8 +542,10 @@ static U16 sci2c_SlaveToMasterDataTx(tSCI2C_Data_t * pSCI2C)
                   busy = 0;
 #endif
                   moreBitSet = (pRx[1] & (0x1 << 7)) >> 7;
-                  memcpy(&pSCI2C->pBuf[alreadyParsed], &pRx[2], nrRead - 2);
-                  alreadyParsed += (nrRead - 2);
+                  if (nrRead >= 2) {
+                      memcpy(&pSCI2C->pBuf[alreadyParsed], &pRx[2], nrRead - 2);
+                      alreadyParsed += (nrRead - 2);
+                  }
               }
 #ifdef PLATFORM_IMX
               else
@@ -822,7 +831,7 @@ static i2c_status_t sci2c_SendByte(sci2c_Data_t * pSci2cData)
     /* only write 1 byte (the PCB) */
 #ifdef PLATFORM_IMX
     status = axI2CWriteByte(I2C_BUS_0, SMCOM_I2C_ADDRESS, (U8 *) &txData);
-#else    
+#else
     status = axI2CWrite(I2C_BUS_0, SMCOM_I2C_ADDRESS, (U8 *) &txData, 1);
 #endif
     if (status == I2C_OK)
@@ -838,7 +847,7 @@ static i2c_status_t sci2c_SendByte(sci2c_Data_t * pSci2cData)
         // NOTE: An error code of 0x0D may be the (legitimate) return code
         // for an SCI2C wakeup command.
 #ifndef PLATFORM_IMX
-        sm_printf(DBGOUT, "I2C status: 0x%02X\r\n", status);
+        sm_printf(DBGOUT, "I2C status: 0x%lX\r\n", status);
 #endif
         return i2c_Failed;
     }

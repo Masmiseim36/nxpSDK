@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 /** @file iothub_client_version.h
-*	@brief Functions for managing the client SDK version.
+*    @brief Functions for managing the client SDK version.
 */
 
 #ifndef IOTHUB_CLIENT_PROVISIONING_H
@@ -12,7 +12,7 @@
 #include "azure_c_shared_utility/umock_c_prod.h"
 
 #ifdef USE_PROV_MODULE
-#include "azure_prov_client/iothub_auth_client.h"
+#include "azure_prov_client/internal/iothub_auth_client.h"
 #endif
 
 #include "iothub_client_ll.h"

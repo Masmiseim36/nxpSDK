@@ -270,9 +270,8 @@ typedef struct _usb_host_ip3516hs_ptl_struct
         uint32_t status;
         struct
         {
-            volatile uint32_t
-                uSA : 8U; /*!< This field is only used for periodic split transactions or if the port is enabled
-                               in HS mode. */
+            volatile uint32_t uSA : 8U; /*!< This field is only used for periodic split transactions or if the port is
+                                           enabled in HS mode. */
             volatile uint32_t Status0 : 3U; /*!< Isochronous IN or OUT status at uSOF0 */
             volatile uint32_t Status1 : 3U; /*!< Isochronous IN or OUT status at uSOF1 */
             volatile uint32_t Status2 : 3U; /*!< Isochronous IN or OUT status at uSOF2 */
@@ -386,9 +385,8 @@ typedef struct _usb_host_ip3516hs_sptl_struct
         uint32_t status;
         struct
         {
-            volatile uint32_t
-                uSA : 8U; /*!< This field is only used for periodic split transactions or if the port is enabled
-                               in HS mode. */
+            volatile uint32_t uSA : 8U; /*!< This field is only used for periodic split transactions or if the port is
+                                           enabled in HS mode. */
             volatile uint32_t Status0 : 3U; /*!< Isochronous IN or OUT status at uSOF0 */
             volatile uint32_t Status1 : 3U; /*!< Isochronous IN or OUT status at uSOF1 */
             volatile uint32_t Status2 : 3U; /*!< Isochronous IN or OUT status at uSOF2 */
@@ -447,6 +445,7 @@ typedef struct _usb_host_ip3516hs_sptl_struct
 #define USB_HOST_IP3516HS_MAX_FRAME (USB_HOST_IP3516HS_MAX_UFRAME)
 
 #define USB_HOST_IP3516HS_PERIODIC_TRANSFER_GAP (3U)
+#define USB_HOST_IP3516HS_ISO_MULTIPLE_TRANSFER (8U)
 
 /*! @brief Check the port connect state delay if the state is unstable */
 #define USB_HOST_IP3516HS_PORT_CONNECT_DEBOUNCE_DELAY (101U)
@@ -536,6 +535,10 @@ typedef struct _usb_host_ip3516hs_hcor_struct
     __IO uint32_t LAST_PTD_IN_USE;
     __IO uint32_t UTMI_ULPI_DEBUG;
     __IO uint32_t PORT_MODE;
+    uint8_t RESERVED_0[48];
+#if (defined(FSL_FEATURE_USBHSH_HAS_TURNAROUND_TIMEOUT) && (FSL_FEATURE_USBHSH_HAS_TURNAROUND_TIMEOUT > 0U))
+    __IO uint32_t PACKET_TURNAROUND_TIMEOUT;
+#endif
 } usb_host_ip3516hs_register_struct_t;
 
 /*! @brief Port state for device attachment/detachment. */
@@ -564,6 +567,7 @@ typedef struct _usb_host_ip3516hs_pipe_struct
     uint16_t busHsTime;
     uint16_t busNoneHsTime;
     uint16_t startUFrame;
+    uint16_t lastPrimedIndex;
     uint8_t ssSlot;
     uint8_t csSlot;
     uint8_t tdIndex;

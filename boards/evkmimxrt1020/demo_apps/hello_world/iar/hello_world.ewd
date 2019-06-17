@@ -8247,11 +8247,11 @@
         </option>
         <option>
           <name>MacOverride</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>MacFile</name>
-          <state>$PROJ_DIR$/evkmimxrt1020.mac</state>
+          <state/>
         </option>
         <option>
           <name>MemOverride</name>
@@ -18105,11 +18105,11 @@
         </option>
         <option>
           <name>MacOverride</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>MacFile</name>
-          <state>$PROJ_DIR$/evkmimxrt1020.mac</state>
+          <state/>
         </option>
         <option>
           <name>MemOverride</name>

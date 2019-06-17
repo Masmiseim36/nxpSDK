@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -43,6 +43,84 @@ extern "C" {
  *
  */
 void BOARD_InitBootPins(void);
+
+/* GPIO_AD_B0_07 (number 101), UART1_RXD/J17[4] */
+#define BOARD_INITPINS_UART1_RXD_PERIPHERAL                              LPUART1   /*!< Device name: LPUART1 */
+#define BOARD_INITPINS_UART1_RXD_SIGNAL                                       RX   /*!< LPUART1 signal: RX */
+
+/* GPIO_AD_B0_06 (number 105), UART1_TXD/J17[6] */
+#define BOARD_INITPINS_UART1_TXD_PERIPHERAL                              LPUART1   /*!< Device name: LPUART1 */
+#define BOARD_INITPINS_UART1_TXD_SIGNAL                                       TX   /*!< LPUART1 signal: TX */
+
+/* GPIO_AD_B1_00 (number 92), SAI1_MCLK */
+#define BOARD_INITPINS_SAI1_MCLK_PERIPHERAL                                 SAI1   /*!< Device name: SAI1 */
+#define BOARD_INITPINS_SAI1_MCLK_SIGNAL                                 sai_mclk   /*!< SAI1 signal: sai_mclk */
+
+/* GPIO_AD_B1_01 (number 91), SAI1_TX_BCLK */
+#define BOARD_INITPINS_SAI1_TX_BCLK_PERIPHERAL                              SAI1   /*!< Device name: SAI1 */
+#define BOARD_INITPINS_SAI1_TX_BCLK_SIGNAL                           sai_tx_bclk   /*!< SAI1 signal: sai_tx_bclk */
+
+/* GPIO_AD_B1_02 (number 90), SAI1_TX_SYNC/J19[10] */
+#define BOARD_INITPINS_SAI1_TX_SYNC_PERIPHERAL                              SAI1   /*!< Device name: SAI1 */
+#define BOARD_INITPINS_SAI1_TX_SYNC_SIGNAL                           sai_tx_sync   /*!< SAI1 signal: sai_tx_sync */
+
+/* GPIO_AD_B1_03 (number 89), SAI1_TXD/J19[9] */
+#define BOARD_INITPINS_SAI1_TXD_PERIPHERAL                                  SAI1   /*!< Device name: SAI1 */
+#define BOARD_INITPINS_SAI1_TXD_SIGNAL                              sai_tx_data0   /*!< SAI1 signal: sai_tx_data0 */
+
+/* GPIO_AD_B1_05 (number 87), SAI1_RXD */
+#define BOARD_INITPINS_SAI1_RXD_PERIPHERAL                                  SAI1   /*!< Device name: SAI1 */
+#define BOARD_INITPINS_SAI1_RXD_SIGNAL                              sai_rx_data0   /*!< SAI1 signal: sai_rx_data0 */
+
+/* GPIO_AD_B1_14 (number 75), I2C1_SCL/U10[17]/J18[6] */
+#define BOARD_INITPINS_I2C1_SCL_PERIPHERAL                                LPI2C1   /*!< Device name: LPI2C1 */
+#define BOARD_INITPINS_I2C1_SCL_SIGNAL                                       SCL   /*!< LPI2C1 signal: SCL */
+
+/* GPIO_AD_B1_15 (number 74), I2C1_SDA/U10[18]/J18[5] */
+#define BOARD_INITPINS_I2C1_SDA_PERIPHERAL                                LPI2C1   /*!< Device name: LPI2C1 */
+#define BOARD_INITPINS_I2C1_SDA_SIGNAL                                       SDA   /*!< LPI2C1 signal: SDA */
+
+/* GPIO_SD_B1_04 (number 27), INT1_COMBO */
+#define BOARD_INITPINS_INT1_COMBO_GPIO                                     GPIO3   /*!< GPIO device name: GPIO3 */
+#define BOARD_INITPINS_INT1_COMBO_PORT                                     GPIO3   /*!< PORT device name: GPIO3 */
+#define BOARD_INITPINS_INT1_COMBO_PIN                                        24U   /*!< GPIO3 pin index: 24 */
+
+/* GPIO_SD_B0_06 (number 41), SD_CD_SW/J15[9] */
+#define BOARD_INITPINS_SD_CD_SW_GPIO                                       GPIO3   /*!< GPIO device name: GPIO3 */
+#define BOARD_INITPINS_SD_CD_SW_PORT                                       GPIO3   /*!< PORT device name: GPIO3 */
+#define BOARD_INITPINS_SD_CD_SW_PIN                                          19U   /*!< GPIO3 pin index: 19 */
+
+/* GPIO_AD_B1_07 (number 83), SD0_VSELECT/J19[1] */
+#define BOARD_INITPINS_SD0_VSELECT_PERIPHERAL                             USDHC1   /*!< Device name: USDHC1 */
+#define BOARD_INITPINS_SD0_VSELECT_SIGNAL                          usdhc_vselect   /*!< USDHC1 signal: usdhc_vselect */
+
+/* GPIO_SD_B0_02 (number 46), SD1_CMD/J15[3] */
+#define BOARD_INITPINS_SD1_CMD_PERIPHERAL                                 USDHC1   /*!< Device name: USDHC1 */
+#define BOARD_INITPINS_SD1_CMD_SIGNAL                                  usdhc_cmd   /*!< USDHC1 signal: usdhc_cmd */
+
+/* GPIO_SD_B0_03 (number 45), SD1_CLK/J15[5] */
+#define BOARD_INITPINS_SD1_CLK_PERIPHERAL                                 USDHC1   /*!< Device name: USDHC1 */
+#define BOARD_INITPINS_SD1_CLK_SIGNAL                                  usdhc_clk   /*!< USDHC1 signal: usdhc_clk */
+
+/* GPIO_SD_B0_04 (number 43), SD1_D0/J15[7] */
+#define BOARD_INITPINS_SD1_D0_PERIPHERAL                                  USDHC1   /*!< Device name: USDHC1 */
+#define BOARD_INITPINS_SD1_D0_SIGNAL                                  usdhc_data   /*!< USDHC1 signal: usdhc_data */
+#define BOARD_INITPINS_SD1_D0_CHANNEL                                         0U   /*!< USDHC1 usdhc_data channel: 0 */
+
+/* GPIO_SD_B0_05 (number 42), SD1_D1/J15[8] */
+#define BOARD_INITPINS_SD1_D1_PERIPHERAL                                  USDHC1   /*!< Device name: USDHC1 */
+#define BOARD_INITPINS_SD1_D1_SIGNAL                                  usdhc_data   /*!< USDHC1 signal: usdhc_data */
+#define BOARD_INITPINS_SD1_D1_CHANNEL                                         1U   /*!< USDHC1 usdhc_data channel: 1 */
+
+/* GPIO_SD_B0_00 (number 48), SD1_D2/J15[1] */
+#define BOARD_INITPINS_SD1_D2_PERIPHERAL                                  USDHC1   /*!< Device name: USDHC1 */
+#define BOARD_INITPINS_SD1_D2_SIGNAL                                  usdhc_data   /*!< USDHC1 signal: usdhc_data */
+#define BOARD_INITPINS_SD1_D2_CHANNEL                                         2U   /*!< USDHC1 usdhc_data channel: 2 */
+
+/* GPIO_SD_B0_01 (number 47), SD1_D3/J15[2] */
+#define BOARD_INITPINS_SD1_D3_PERIPHERAL                                  USDHC1   /*!< Device name: USDHC1 */
+#define BOARD_INITPINS_SD1_D3_SIGNAL                                  usdhc_data   /*!< USDHC1 signal: usdhc_data */
+#define BOARD_INITPINS_SD1_D3_CHANNEL                                         3U   /*!< USDHC1 usdhc_data channel: 3 */
 
 
 /*!

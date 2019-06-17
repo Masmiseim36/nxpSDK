@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016，2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,17 +21,17 @@
 usb_device_endpoint_struct_t g_UsbDeviceCdcVcomCicEndpoints[USB_CDC_VCOM_ENDPOINT_CIC_COUNT] = {
     {
         USB_CDC_VCOM_INTERRUPT_IN_ENDPOINT | (USB_IN << 7U), USB_ENDPOINT_INTERRUPT,
-        FS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE,
+        FS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE, FS_CDC_VCOM_INTERRUPT_IN_INTERVAL,
     },
 };
 
 /* Define endpoint for data class */
 usb_device_endpoint_struct_t g_UsbDeviceCdcVcomDicEndpoints[USB_CDC_VCOM_ENDPOINT_DIC_COUNT] = {
     {
-        USB_CDC_VCOM_BULK_IN_ENDPOINT | (USB_IN << 7U), USB_ENDPOINT_BULK, FS_CDC_VCOM_BULK_IN_PACKET_SIZE,
+        USB_CDC_VCOM_BULK_IN_ENDPOINT | (USB_IN << 7U), USB_ENDPOINT_BULK, FS_CDC_VCOM_BULK_IN_PACKET_SIZE, 0U,
     },
     {
-        USB_CDC_VCOM_BULK_OUT_ENDPOINT | (USB_OUT << 7U), USB_ENDPOINT_BULK, FS_CDC_VCOM_BULK_OUT_PACKET_SIZE,
+        USB_CDC_VCOM_BULK_OUT_ENDPOINT | (USB_OUT << 7U), USB_ENDPOINT_BULK, FS_CDC_VCOM_BULK_OUT_PACKET_SIZE, 0U,
     }};
 
 /* Define interface for communication class */
@@ -349,7 +349,7 @@ usb_status_t USB_DeviceGetStringDescriptor(usb_device_handle handle,
  * current speed.
  * As the default, the device descriptors and configurations are configured by using FS parameters for both EHCI and
  * KHCI.
- * When the EHCI is enabled, the application needs to call this fucntion to update device by using current speed.
+ * When the EHCI is enabled, the application needs to call this function to update device by using current speed.
  * The updated information includes endpoint max packet size, endpoint interval, etc.
  *
  * @param handle The USB device handle.
@@ -424,10 +424,12 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
         if (USB_SPEED_HIGH == speed)
         {
             g_UsbDeviceCdcVcomCicEndpoints[i].maxPacketSize = HS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE;
+            g_UsbDeviceCdcVcomCicEndpoints[i].interval = HS_CDC_VCOM_INTERRUPT_IN_INTERVAL;
         }
         else
         {
             g_UsbDeviceCdcVcomCicEndpoints[i].maxPacketSize = FS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE;
+            g_UsbDeviceCdcVcomCicEndpoints[i].interval = FS_CDC_VCOM_INTERRUPT_IN_INTERVAL;
         }
     }
     for (int i = 0; i < USB_CDC_VCOM_ENDPOINT_DIC_COUNT; i++)

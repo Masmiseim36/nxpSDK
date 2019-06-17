@@ -20,7 +20,7 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-static void DEMO_CheckResult(bool condition, char* log);
+static void DEMO_CheckResult(bool condition, char *log);
 static void DEMO_ShowSSMState(snvs_hp_ssm_state_t ssmState);
 
 /*******************************************************************************
@@ -72,7 +72,8 @@ int main(void)
 
     /* Current state should be NON_SECURE, CHECK, TRUSTED or SECURE. */
     DEMO_CheckResult(((kSNVS_SSMCheck == ssmState) || (kSNVS_SSMNonSecure == ssmState) ||
-                      (kSNVS_SSMTrusted == ssmState) || (kSNVS_SSMSecure == ssmState)), "Invalid SSM mode");
+                      (kSNVS_SSMTrusted == ssmState) || (kSNVS_SSMSecure == ssmState)),
+                     "Invalid SSM mode");
 
     /* Step 3: Trigger software sucurity violation and enter soft fail mode. */
     PRINTF("Triger software sucurity violation to enter soft fail mode\r\n");
@@ -88,34 +89,36 @@ int main(void)
     hacValue = SNVS_HP_GetHighAssuranceCounter(SNVS);
 
     /* Delay for a while, to check whether the HAC is stopped. */
-    for (volatile uint32_t i=0; i<0x5; i++)
+    for (volatile uint32_t i = 0; i < 0x5; i++)
     {
     }
 
     DEMO_CheckResult((hacValue == SNVS_HP_GetHighAssuranceCounter(SNVS)), "Could not stop HAC");
 
-    PRINTF("The HAC stopped, current counter value is 0x%08x.\r\n",  hacValue);
+    PRINTF("The HAC stopped, current counter value is 0x%08x.\r\n", hacValue);
 
     /* Step 5: Clear the HAC, enter hard fail mode directly. */
     PRINTF("Clear the HAC to enter hard fail mode, and perform system reset.\r\n");
     PRINTF("Example success. The system will reset next.\r\n");
     /* Delay for a while, to make sure UART output finished. */
-    for (volatile uint32_t i=0; i<0x200000; i++)
+    for (volatile uint32_t i = 0; i < 0x200000; i++)
     {
     }
 
     SNVS_HP_ClearHighAssuranceCounter(SNVS);
 
     /* Should never get here. */
-    while(1);
+    while (1)
+        ;
 }
 
-static void DEMO_CheckResult(bool condition, char* log)
+static void DEMO_CheckResult(bool condition, char *log)
 {
     if (!condition)
     {
         PRINTF("FAIL: %s\r\n", log);
-        while (1);
+        while (1)
+            ;
     }
 }
 
@@ -123,7 +126,7 @@ static void DEMO_ShowSSMState(snvs_hp_ssm_state_t ssmState)
 {
     PRINTF("SSM state: ");
 
-    switch(ssmState)
+    switch (ssmState)
     {
         case kSNVS_SSMInit:
             PRINTF("Init");

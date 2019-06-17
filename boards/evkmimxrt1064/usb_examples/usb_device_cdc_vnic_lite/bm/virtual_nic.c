@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -110,7 +110,9 @@ uint32_t BOARD_GetPhySysClock(void)
 void BOARD_InitModuleClock(void)
 {
     const clock_enet_pll_config_t config = {
-        .enableClkOutput = true, .enableClkOutput25M = false, .loopDivider = 1,
+        .enableClkOutput    = true,
+        .enableClkOutput25M = false,
+        .loopDivider        = 1,
     };
     CLOCK_InitEnetPll(&config);
 }
@@ -138,7 +140,9 @@ void USB_OTG2_IRQHandler(void)
 void USB_DeviceClockInit(void)
 {
     usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL, BOARD_USB_PHY_TXCAL45DP, BOARD_USB_PHY_TXCAL45DM,
+        BOARD_USB_PHY_D_CAL,
+        BOARD_USB_PHY_TXCAL45DP,
+        BOARD_USB_PHY_TXCAL45DM,
     };
 
     if (CONTROLLER_ID == kUSB_ControllerEhci0)
@@ -158,7 +162,7 @@ void USB_DeviceIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbDeviceEhciIrq[] = USBHS_IRQS;
-    irqNumber = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
+    irqNumber                  = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
 
     /* Install isr, set priority, and enable IRQ. */
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
@@ -780,6 +784,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             uint32_t len;
             USB_DeviceControlPipeInit(g_cdcVnic.deviceHandle);
             g_cdcVnic.attach = 0;
+            g_cdcVnic.currentConfiguration = 0U;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -801,83 +806,94 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
-            if (param)
+            if (0U ==(*temp8))
             {
+                g_cdcVnic.attach = 0;
+                g_cdcVnic.currentConfiguration = 0U;
+            }
+            else if (USB_CDC_VNIC_CONFIGURE_INDEX == (*temp8))
+            {
+                usb_device_endpoint_init_struct_t epInitStruct;
+                usb_device_endpoint_callback_struct_t epCallback;
+
                 g_cdcVnic.attach = 1;
                 g_cdcVnic.currentConfiguration = *temp8;
-                if (USB_CDC_VNIC_CONFIGURE_INDEX == (*temp8))
+            
+                /* Initiailize endpoint for interrupt pipe */
+                epCallback.callbackFn = USB_DeviceCdcAcmInterruptIn;
+                epCallback.callbackParam = handle;
+
+                epInitStruct.zlt = 0;
+                epInitStruct.transferType = USB_ENDPOINT_INTERRUPT;
+                epInitStruct.endpointAddress = USB_CDC_VNIC_INTERRUPT_IN_ENDPOINT |
+                                               (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
+                if (USB_SPEED_HIGH == g_cdcVnic.speed)
                 {
-                    usb_device_endpoint_init_struct_t epInitStruct;
-                    usb_device_endpoint_callback_struct_t epCallback;
-
-                    /* Initiailize endpoint for interrupt pipe */
-                    epCallback.callbackFn = USB_DeviceCdcAcmInterruptIn;
-                    epCallback.callbackParam = handle;
-
-                    epInitStruct.zlt = 0;
-                    epInitStruct.transferType = USB_ENDPOINT_INTERRUPT;
-                    epInitStruct.endpointAddress = USB_CDC_VNIC_INTERRUPT_IN_ENDPOINT |
-                                                   (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
-                    if (USB_SPEED_HIGH == g_cdcVnic.speed)
-                    {
-                        epInitStruct.maxPacketSize = HS_CDC_VNIC_INTERRUPT_IN_PACKET_SIZE;
-                    }
-                    else
-                    {
-                        epInitStruct.maxPacketSize = FS_CDC_VNIC_INTERRUPT_IN_PACKET_SIZE;
-                    }
-
-                    USB_DeviceInitEndpoint(g_cdcVnic.deviceHandle, &epInitStruct, &epCallback);
-
-                    /* Initiailize endpoints for bulk pipe */
-                    epCallback.callbackFn = USB_DeviceCdcAcmBulkIn;
-                    epCallback.callbackParam = handle;
-
-                    epInitStruct.zlt = 0;
-                    epInitStruct.transferType = USB_ENDPOINT_BULK;
-                    epInitStruct.endpointAddress =
-                        USB_CDC_VNIC_BULK_IN_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
-                    if (USB_SPEED_HIGH == g_cdcVnic.speed)
-                    {
-                        epInitStruct.maxPacketSize = HS_CDC_VNIC_BULK_IN_PACKET_SIZE;
-                    }
-                    else
-                    {
-                        epInitStruct.maxPacketSize = FS_CDC_VNIC_BULK_IN_PACKET_SIZE;
-                    }
-
-                    USB_DeviceInitEndpoint(g_cdcVnic.deviceHandle, &epInitStruct, &epCallback);
-
-                    epCallback.callbackFn = USB_DeviceCdcAcmBulkOut;
-                    epCallback.callbackParam = handle;
-
-                    epInitStruct.zlt = 0;
-                    epInitStruct.transferType = USB_ENDPOINT_BULK;
-                    epInitStruct.endpointAddress =
-                        USB_CDC_VNIC_BULK_OUT_ENDPOINT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
-                    if (USB_SPEED_HIGH == g_cdcVnic.speed)
-                    {
-                        epInitStruct.maxPacketSize = HS_CDC_VNIC_BULK_OUT_PACKET_SIZE;
-                    }
-                    else
-                    {
-                        epInitStruct.maxPacketSize = FS_CDC_VNIC_BULK_OUT_PACKET_SIZE;
-                    }
-
-                    USB_DeviceInitEndpoint(g_cdcVnic.deviceHandle, &epInitStruct, &epCallback);
-
-                    if (USB_SPEED_HIGH == g_cdcVnic.speed)
-                    {
-                        s_usbBulkMaxPacketSize = HS_CDC_VNIC_BULK_OUT_PACKET_SIZE;
-                    }
-                    else
-                    {
-                        s_usbBulkMaxPacketSize = FS_CDC_VNIC_BULK_OUT_PACKET_SIZE;
-                    }
-                    /* Schedule buffer for receive */
-                    USB_DeviceRecvRequest(handle, USB_CDC_VNIC_BULK_OUT_ENDPOINT, s_currRecvBuf,
-                                          s_usbBulkMaxPacketSize);
+                    epInitStruct.maxPacketSize = HS_CDC_VNIC_INTERRUPT_IN_PACKET_SIZE;
+                    epInitStruct.interval = HS_CDC_VNIC_INTERRUPT_IN_INTERVAL;
                 }
+                else
+                {
+                    epInitStruct.maxPacketSize = FS_CDC_VNIC_INTERRUPT_IN_PACKET_SIZE;
+                    epInitStruct.interval = FS_CDC_VNIC_INTERRUPT_IN_INTERVAL;
+                }
+
+                USB_DeviceInitEndpoint(g_cdcVnic.deviceHandle, &epInitStruct, &epCallback);
+
+                /* Initiailize endpoints for bulk pipe */
+                epCallback.callbackFn = USB_DeviceCdcAcmBulkIn;
+                epCallback.callbackParam = handle;
+
+                epInitStruct.zlt = 0;
+                epInitStruct.interval = 0U;
+                epInitStruct.transferType = USB_ENDPOINT_BULK;
+                epInitStruct.endpointAddress =
+                    USB_CDC_VNIC_BULK_IN_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
+                if (USB_SPEED_HIGH == g_cdcVnic.speed)
+                {
+                    epInitStruct.maxPacketSize = HS_CDC_VNIC_BULK_IN_PACKET_SIZE;
+                }
+                else
+                {
+                    epInitStruct.maxPacketSize = FS_CDC_VNIC_BULK_IN_PACKET_SIZE;
+                }
+
+                USB_DeviceInitEndpoint(g_cdcVnic.deviceHandle, &epInitStruct, &epCallback);
+
+                epCallback.callbackFn = USB_DeviceCdcAcmBulkOut;
+                epCallback.callbackParam = handle;
+
+                epInitStruct.zlt = 0;
+                epInitStruct.interval = 0U;
+                epInitStruct.transferType = USB_ENDPOINT_BULK;
+                epInitStruct.endpointAddress =
+                    USB_CDC_VNIC_BULK_OUT_ENDPOINT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
+                if (USB_SPEED_HIGH == g_cdcVnic.speed)
+                {
+                    epInitStruct.maxPacketSize = HS_CDC_VNIC_BULK_OUT_PACKET_SIZE;
+                }
+                else
+                {
+                    epInitStruct.maxPacketSize = FS_CDC_VNIC_BULK_OUT_PACKET_SIZE;
+                }
+
+                USB_DeviceInitEndpoint(g_cdcVnic.deviceHandle, &epInitStruct, &epCallback);
+
+                if (USB_SPEED_HIGH == g_cdcVnic.speed)
+                {
+                    s_usbBulkMaxPacketSize = HS_CDC_VNIC_BULK_OUT_PACKET_SIZE;
+                }
+                else
+                {
+                    s_usbBulkMaxPacketSize = FS_CDC_VNIC_BULK_OUT_PACKET_SIZE;
+                }
+                /* Schedule buffer for receive */
+                USB_DeviceRecvRequest(handle, USB_CDC_VNIC_BULK_OUT_ENDPOINT, s_currRecvBuf,
+                                      s_usbBulkMaxPacketSize);
+            }
+            else
+            {
+                error = kStatus_USB_InvalidRequest;
             }
             break;
         default:
@@ -977,7 +993,7 @@ void APPTask(void)
     }
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)

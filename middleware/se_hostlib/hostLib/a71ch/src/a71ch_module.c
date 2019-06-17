@@ -21,13 +21,21 @@
 */
 #include <stdio.h>
 #include <string.h>
-#include <assert.h>
 
 #include "scp.h"
 #include "a71ch_api.h"
 #include "sm_apdu.h"
 #include "sm_errors.h"
 #include "ax_common_private.h"
+
+#if defined(SSS_USE_FTR_FILE)
+#include "fsl_sss_ftr.h"
+#else
+#include "fsl_sss_ftr_default.h"
+#endif
+
+#define NX_LOG_ENABLE_HOSTLIB_DEBUG 1
+#include <nxLog_hostLib.h>
 
 /// @cond
 static U16 A71_GetChallengeGeneric(U8 challengeType, U8 *challenge, U16 *challengeLen)
@@ -36,6 +44,12 @@ static U16 A71_GetChallengeGeneric(U8 challengeType, U8 *challenge, U16 *challen
     apdu_t apdu;
     apdu_t * pApdu = (apdu_t *) &apdu;
     U8 isOk;
+
+#ifndef A71_IGNORE_PARAM_CHECK
+    if ((challenge == NULL) || (challengeLen == NULL)) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     pApdu->cla   = A71CH_CLA;
     pApdu->ins   = A71CH_INS_GET_MODULE;
@@ -77,7 +91,11 @@ static U16 A71_GetRandomGeneric(U8 *random, U8 randomLen, U8 mode)
     apdu_t apdu;
     apdu_t * pApdu = (apdu_t *) &apdu;
 
-    assert(random != NULL);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if (random == NULL) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     pApdu->cla   = AX_CLA;
     pApdu->ins   = A71CH_INS_MODULE_GET_RANDOM;
@@ -107,6 +125,130 @@ static U16 A71_GetRandomGeneric(U8 *random, U8 randomLen, U8 mode)
     FreeAPDUBuffer(pApdu);
     return rv;
 }
+
+#if SSS_HAVE_SE050_EAR
+
+/**
+* Sets a pin code in the A71CH.
+* @param[in] pin
+* @param[in] pinLength
+* @param[in] pinIndex
+* @retval ::SW_OK Upon successful execution
+*/
+U16 SE05x_SetPin(U8 *pin, size_t pinLength, U8 pinIndex)
+{
+    U16 rv = 0;
+    apdu_t apdu;
+    apdu_t * pApdu = (apdu_t *)&apdu;
+
+    pApdu->cla = A71CH_CLA;
+    pApdu->ins = SE05X_INS_SEC_SET_PIN;
+    pApdu->p1 = pinIndex;
+    pApdu->p2 = 0x00;
+
+    AllocateAPDUBuffer(pApdu);
+    SetApduHeader(pApdu, 0);
+    smApduAppendCmdData(pApdu, pin,(U16) pinLength);
+    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    if (rv == SMCOM_OK)
+    {
+        // No response data expected
+        rv = CheckNoResponseData(pApdu);
+    }
+    FreeAPDUBuffer(pApdu);
+    return rv;
+}
+/**
+* Authenticates with the previously set PIN and gives session ID  if authentication is successful.
+* @param[in] pin
+* @param[in] pinLength
+* @param[in] pinIndex
+* @param[out] sessionId
+* @retval ::SW_OK Upon successful execution
+*/
+U16 SE05x_Authenticate(U8 *pin, size_t pinLength, U8 pinIndex, U32 *sessionId)
+{
+    U16 rv = 0;
+    apdu_t apdu;
+    U8 isOk;
+    U8 sessionIdBuf[SESSION_ID_LEN] = {0};
+    U16 sessionIdLen = SESSION_ID_LEN;
+    apdu_t * pApdu = (apdu_t *)&apdu;
+
+    pApdu->cla = A71CH_CLA;
+    pApdu->ins = SE05X_INS_SEC_AUTH;
+    pApdu->p1 = pinIndex;
+    pApdu->p2 = 0x00;
+    LOG_D("SE05x_Authenticate");
+    AllocateAPDUBuffer(pApdu);
+    SetApduHeader(pApdu, 0);
+    smApduAppendCmdData(pApdu, pin, (U16)pinLength);
+    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    if (rv == SMCOM_OK)
+    {
+        rv = smGetSw(pApdu, &isOk);
+        if (isOk)
+        {
+            rv = smApduGetResponseBody(pApdu, sessionIdBuf, &sessionIdLen);
+            if (rv == SW_OK)
+            {
+                if (sessionIdLen == SESSION_ID_LEN)
+                {
+                    *sessionId = (U32)sessionIdBuf[0] << 24;
+                    *sessionId |= (U32)sessionIdBuf[1] << 16;
+                    *sessionId |= (U32)sessionIdBuf[2] << 8;
+                    *sessionId |= (U32)sessionIdBuf[3] << 0;
+                }
+                else
+                    rv = ERR_WRONG_RESPONSE;
+            }
+        }
+    }
+    FreeAPDUBuffer(pApdu);
+    return rv;
+}
+
+/**
+* Closes Secure channel with session ID
+* @param[in] sessionId
+* @retval ::SW_OK Upon successful execution
+*/
+U16 SE05x_CloseSecureSession(U32 sessionId)
+{
+    U16 rv = 0;
+    apdu_t apdu;
+    U8 session_tlv_buf[4] = { 0 };
+    apdu_t * pApdu = (apdu_t *)&apdu;
+    LOG_D("SE05x_CloseSecureSession");
+    pApdu->cla = A71CH_CLA;
+    pApdu->ins = SE05X_INS_SEC_CLOSE_SESSION;
+    pApdu->p1 = 0x00;
+    pApdu->p2 = 0x00;
+
+    session_tlv_buf[0] = (U8)(sessionId >> 24);
+    session_tlv_buf[1] = (U8)(sessionId >> 16);
+    session_tlv_buf[2] = (U8)(sessionId >> 8);
+    session_tlv_buf[3] = (U8)(sessionId >> 0);
+    // release old session id as session is going to be closed..
+    set_SessionId_Tlv(0);
+
+    AllocateAPDUBuffer(pApdu);
+    SetApduHeader(pApdu, 0);
+    smApduAppendCmdData(pApdu, session_tlv_buf, sizeof(session_tlv_buf));
+    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    if (rv == SMCOM_OK)
+    {
+        // No response data expected
+        rv = CheckNoResponseData(pApdu);
+        // revert old session as close operation failed.
+        if(rv != SMCOM_OK)
+            set_SessionId_Tlv(sessionId);
+    }
+    FreeAPDUBuffer(pApdu);
+    return rv;
+}
+#endif
+
 /// @endcond
 
 /**
@@ -121,6 +263,12 @@ U16 A71_GetCredentialInfo(U8 *map, U16 *mapLen)
     apdu_t apdu;
     apdu_t * pApdu = (apdu_t *) &apdu;
     U8 isOk;
+
+#ifndef A71_IGNORE_PARAM_CHECK
+    if ((map == NULL) || (mapLen == NULL)) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     pApdu->cla   = A71CH_CLA;
     pApdu->ins   = A71CH_INS_GET_MODULE;
@@ -156,12 +304,12 @@ U16 A71_GetCredentialInfo(U8 *map, U16 *mapLen)
 * Get info on Module
 * @param[out] selectResponse     Encodes applet revision and whether Debug Mode is available
 * @param[out] debugOn            Equals 0x01 when the Debug Mode is available
-* @param[out] restrictedKpIdx    Either the index of the restricted keypair or ::A71CH_NO_RESTRICTED_KP
-* @param[out] transportLockState The value retieved is one of ::A71CH_TRANSPORT_LOCK_STATE_LOCKED,
-*   A71CH_TRANSPORT_LOCK_STATE_UNLOCKED or A71CH_TRANSPORT_LOCK_STATE_ALLOW_LOCK
-* @param[out] scpState           The value retrieved is on of ::A71CH_SCP_MANDATORY, ::A71CH_SCP_NOT_SET_UP
-*   or ::A71CH_SCP_KEYS_SET
-* @param[out] injectLockState The value retrieved is one of ::A71CH_INJECT_LOCK_STATE_LOCKED or ::A71CH_INJECT_LOCK_STATE_UNLOCKED
+* @param[out] restrictedKpIdx    Either the index of the restricted keypair or ::A71XX_NO_RESTRICTED_KP
+* @param[out] transportLockState The value retieved is one of ::A71XX_TRANSPORT_LOCK_STATE_LOCKED,
+*   A71XX_TRANSPORT_LOCK_STATE_UNLOCKED or A71XX_TRANSPORT_LOCK_STATE_ALLOW_LOCK
+* @param[out] scpState           The value retrieved is on of ::A71XX_SCP_MANDATORY, ::A71XX_SCP_NOT_SET_UP
+*   or ::A71XX_SCP_KEYS_SET
+* @param[out] injectLockState The value retrieved is one of ::A71XX_INJECT_LOCK_STATE_LOCKED or ::A71XX_INJECT_LOCK_STATE_UNLOCKED
 * @param[out] gpStorageSize   Total storage size (in byte) of the General Purpose data store
 * @retval ::SW_OK Upon successful execution
 */
@@ -173,6 +321,13 @@ U16 A71_GetModuleInfo(U16 *selectResponse, U8 *debugOn, U8 *restrictedKpIdx, U8 
     U8 isOk;
     U8 data[64];
     U16 dataLen = sizeof(data);
+
+#ifndef A71_IGNORE_PARAM_CHECK
+    if ((selectResponse == NULL) || (debugOn == NULL) || (restrictedKpIdx == NULL) || (transportLockState == NULL) ||
+        (scpState == NULL) || (injectLockState == NULL) || (gpStorageSize == NULL)) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     pApdu->cla   = A71CH_CLA;
     pApdu->ins   = A71CH_INS_GET_MODULE;
@@ -233,6 +388,12 @@ U16 A71_GetUniqueID(U8 *uid, U16 *uidLen)
     apdu_t * pApdu = (apdu_t *) &apdu;
     U8 isOk;
 
+#ifndef A71_IGNORE_PARAM_CHECK
+    if ((uid == NULL) || (uidLen == NULL)) {
+        return ERR_API_ERROR;
+    }
+#endif
+
     pApdu->cla   = A71CH_CLA;
     pApdu->ins   = A71CH_INS_GET_MODULE;
     pApdu->p1    = 0x00;
@@ -267,46 +428,46 @@ U16 A71_GetUniqueID(U8 *uid, U16 *uidLen)
 /**
  * Get cert uid from the Secure Module. The cert uid is a subset of the Secure Module Unique Identifier
  * @param[in,out] certUid IN: buffer to contain cert uid; OUT: cert uid retrieved from Secure Module
- * @param[in,out] certUidLen IN: Size of buffer provided (at least ::A71CH_MODULE_CERT_UID_LEN byte);
- * OUT: length of retrieved unique identifier (expected to be ::A71CH_MODULE_CERT_UID_LEN byte)
+ * @param[in,out] certUidLen IN: Size of buffer provided (at least ::A71XX_MODULE_CERT_UID_LEN byte);
+ * OUT: length of retrieved unique identifier (expected to be ::A71XX_MODULE_CERT_UID_LEN byte)
  *
  * @retval ::SW_OK Upon successful execution
  * @retval ::ERR_WRONG_RESPONSE In case the Secure Module Unique Identifier (i.e. the base uid) did not have the expected length
  */
 U16 A71_GetCertUid(U8 *certUid, U16 *certUidLen)
 {
-	U16 rv = 0;
-	U8 uid[A71CH_MODULE_UNIQUE_ID_LEN];
-	U16 uidLen = A71CH_MODULE_UNIQUE_ID_LEN;
-	int idx = 0;
+    U16 rv = 0;
+    U8 uid[A71CH_MODULE_UNIQUE_ID_LEN] = {0};
+    U16 uidLen = A71CH_MODULE_UNIQUE_ID_LEN;
+    int idx = 0;
 
-	if (*certUidLen < A71CH_MODULE_CERT_UID_LEN)
-	{
-		return ERR_BUF_TOO_SMALL;
-	}
+    if (*certUidLen < A71CH_MODULE_CERT_UID_LEN)
+    {
+        return ERR_BUF_TOO_SMALL;
+    }
 
-	rv = A71_GetUniqueID(uid, &uidLen);
-	if (rv == SMCOM_OK)
-	{
-		idx = 0;
-		certUid[idx++] = uid[A71CH_UID_IC_TYPE_OFFSET];
-		certUid[idx++] = uid[A71CH_UID_IC_TYPE_OFFSET + 1];
-		certUid[idx++] = uid[A71CH_UID_IC_FABRICATION_DATA_OFFSET];
-		certUid[idx++] = uid[A71CH_UID_IC_FABRICATION_DATA_OFFSET + 1];
-		certUid[idx++] = uid[A71CH_UID_IC_SERIAL_NR_OFFSET];
-		certUid[idx++] = uid[A71CH_UID_IC_SERIAL_NR_OFFSET + 1];
-		certUid[idx++] = uid[A71CH_UID_IC_SERIAL_NR_OFFSET + 2];
-		certUid[idx++] = uid[A71CH_UID_IC_BATCH_ID_OFFSET];
-		certUid[idx++] = uid[A71CH_UID_IC_BATCH_ID_OFFSET + 1];
-		certUid[idx++] = uid[A71CH_UID_IC_BATCH_ID_OFFSET + 2];
-		*certUidLen = A71CH_MODULE_CERT_UID_LEN;
-	}
-	else
-	{
-		*certUidLen = 0;
-	}
+    rv = A71_GetUniqueID(uid, &uidLen);
+    if (rv == SMCOM_OK)
+    {
+        idx = 0;
+        certUid[idx++] = uid[A71CH_UID_IC_TYPE_OFFSET];
+        certUid[idx++] = uid[A71CH_UID_IC_TYPE_OFFSET + 1];
+        certUid[idx++] = uid[A71CH_UID_IC_FABRICATION_DATA_OFFSET];
+        certUid[idx++] = uid[A71CH_UID_IC_FABRICATION_DATA_OFFSET + 1];
+        certUid[idx++] = uid[A71CH_UID_IC_SERIAL_NR_OFFSET];
+        certUid[idx++] = uid[A71CH_UID_IC_SERIAL_NR_OFFSET + 1];
+        certUid[idx++] = uid[A71CH_UID_IC_SERIAL_NR_OFFSET + 2];
+        certUid[idx++] = uid[A71CH_UID_IC_BATCH_ID_OFFSET];
+        certUid[idx++] = uid[A71CH_UID_IC_BATCH_ID_OFFSET + 1];
+        certUid[idx++] = uid[A71CH_UID_IC_BATCH_ID_OFFSET + 2];
+        *certUidLen = A71CH_MODULE_CERT_UID_LEN;
+    }
+    else
+    {
+        *certUidLen = 0;
+    }
 
-	return rv;
+    return rv;
 }
 
 /**
@@ -334,7 +495,6 @@ U16 A71_GetKeyPairChallenge(U8 *challenge, U16 *challengeLen)
 {
     return A71_GetChallengeGeneric(P1_KEYPAIR_CHALLENGE, challenge, challengeLen);
 }
-
 /**
 * Get Unlock challenge for a Public Key
 * @param[in,out] challenge IN: buffer to contain challenge; OUT: challenge retrieved from Secure Module
@@ -352,7 +512,7 @@ U16 A71_GetPublicKeyChallenge(U8 *challenge, U16 *challengeLen)
 * Retrieves a random byte array of size randomLen from the Secure Module.
 * The maximum amount of data that can be retrieved depends on
 * whether an authenticated channel (SCP03) has been set up.
-* In case SCP03 has been set up, this (worst-case) maximum is ::A71CH_SCP03_MAX_PAYLOAD_SIZE
+* In case SCP03 has been set up, this (worst-case) maximum is ::A71XX_SCP03_MAX_PAYLOAD_SIZE
 * @param[in,out] random  IN: buffer to contain random value (at least of size randomLen);
                          OUT: retrieved random data
 * @param[in] randomLen Amount of byte to retrieve
@@ -388,7 +548,7 @@ U16 A71_CreateClientHelloRandom(U8 *clientHello, U8 clientHelloLen)
  * Per block 2 bytes indicate the offset into GP storage and two bytes indicate the length of
  * the modifiable block.
  *
- * @param[out] idx Index of restricted key pair. ::A71CH_NO_RESTRICTED_KP in case there is no restricted key pair
+ * @param[out] idx Index of restricted key pair. ::A71XX_NO_RESTRICTED_KP in case there is no restricted key pair
  * @param[out] nBlocks Number of modifiable blocks
  * @param[in,out] blockInfo IN: Storage to contain blockInfo; OUT: Raw info on block offset and block lenght per block.
  * @param[in,out] blockInfoLen IN: Size of blockInfo (in byte); OUT: effective size of blockInfo
@@ -403,10 +563,11 @@ U16 A71_GetRestrictedKeyPairInfo(U8 *idx, U16 *nBlocks, U8 *blockInfo, U16 *bloc
     U8 localBuf[255];
     U16 localBufLen = sizeof(localBuf);
 
-    assert(idx != NULL);
-    assert(nBlocks != NULL);
-    assert(blockInfo != NULL);
-    assert(blockInfoLen != NULL);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if ((idx == NULL) || (nBlocks == NULL) || (blockInfo == NULL) || (blockInfoLen == NULL)) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     *idx = A71CH_NO_RESTRICTED_KP;
     *nBlocks = 0;
@@ -503,8 +664,11 @@ U16 A71_GetSha256(U8 *data, U16 dataLen, U8 *sha, U16 *shaLen)
     apdu_t apdu;
     apdu_t * pApdu = (apdu_t *) &apdu;
 
-    assert(data != NULL);
-    assert(sha != NULL);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if ((data == NULL) || (sha == NULL) || (shaLen == NULL)) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     pApdu->cla   = AX_CLA;
     pApdu->ins   = A71CH_INS_MODULE_GET_SHA256;
@@ -688,7 +852,7 @@ or unlocked again (it will remain unlocked).
 
 The unlock code is calculated as follows:
     - Request a challenge from A71CH using ::A71_GetUnlockChallenge.
-    - Decrypt the challenge in ECB mode using the appropriate configuration key value (the same as stored at index ::A71CH_CFG_KEY_IDX_MODULE_LOCK).
+    - Decrypt the challenge in ECB mode using the appropriate configuration key value (the same as stored at index ::A71XX_CFG_KEY_IDX_MODULE_LOCK).
     - The decrypted value is the unlock \p code
 * @param[in] code Value of unlock code
 * @param[in] codeLen Length of unlock code (must be 16)
@@ -699,6 +863,12 @@ U16 A71_UnlockModule(U8 *code, U16 codeLen)
     U16 rv;
     apdu_t apdu;
     apdu_t * pApdu = (apdu_t *) &apdu;
+
+#ifndef A71_IGNORE_PARAM_CHECK
+    if (code == NULL) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     pApdu->cla   = AX_CLA;
     pApdu->ins   = A71CH_INS_SET_MODULE;
@@ -732,7 +902,7 @@ U16 A71_UnlockModule(U8 *code, U16 codeLen)
  * used by the A71CH is \p 'master secret' (no quotes) as applicable for TLS 1.2.
  * The maximum size of the label that can be set is 24 byte.
  * @param[in] label Value to be stored and used as 'label' in TLS 1.2 protocol
- * @param[in] labelLen Length of label (less than or equal to ::A71CH_TLS_MAX_LABEL)
+ * @param[in] labelLen Length of label (less than or equal to ::A71XX_TLS_MAX_LABEL)
  * @retval ::SW_OK Upon successful execution
  */
 U16 A71_SetTlsLabel(const U8* label, U16 labelLen)
@@ -740,6 +910,12 @@ U16 A71_SetTlsLabel(const U8* label, U16 labelLen)
     U16 rv;
     apdu_t apdu;
     apdu_t * pApdu = (apdu_t *) &apdu;
+
+#ifndef A71_IGNORE_PARAM_CHECK
+    if (label == NULL) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     pApdu->cla   = AX_CLA;
     pApdu->ins   = A71CH_INS_SET_MODULE;
@@ -791,10 +967,11 @@ U16 A71_EccVerifyWithKey(const U8 *pKeyData, U16 keyDataLen, const U8 *pHash, U1
     U16 rv;
     U8 isOk = 0;
 
-    assert(pKeyData != NULL);
-    assert(pHash != NULL);
-    assert(pSignature != NULL);
-    assert(pResult != NULL);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if ((pKeyData == NULL) || (pHash == NULL) || (pSignature == NULL) || (pResult == NULL)) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     if (keyDataLen != A71CH_PUB_KEY_LEN) { return ERR_API_ERROR; }
     if (hashLen != AX_SHA256_LEN) { return ERR_API_ERROR; }

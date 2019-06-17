@@ -1,8 +1,8 @@
 /*
  * Copyright 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 , NXP
+ * Copyright 2016 - 2019 , NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -82,7 +82,6 @@
 #define SCG_SPLLCFG_MULT_VAL ((SCG->SPLLCFG & SCG_SPLLCFG_MULT_MASK) >> SCG_SPLLCFG_MULT_SHIFT)
 #define SCG_SPLLPFD_PFD_MAX_VAL (SCG_SPLLPFD_PFD0_MASK >> SCG_SPLLPFD_PFD0_SHIFT)
 
-
 #define SCG_APLLCFG_PREDIV_VAL ((SCG->APLLCFG & SCG_APLLCFG_PREDIV_MASK) >> SCG_APLLCFG_PREDIV_SHIFT)
 #define SCG_APLLCFG_MULT_VAL ((SCG->APLLCFG & SCG_APLLCFG_MULT_MASK) >> SCG_APLLCFG_MULT_SHIFT)
 #define SCG_APLLNUM_NUM_VAL ((SCG->APLLNUM & SCG_APLLNUM_NUM_MASK) >> SCG_APLLNUM_NUM_SHIFT)
@@ -101,9 +100,9 @@
 #define PFD_FREQ_CALCUL_CONSTANT 18
 
 /*! @brief Bitfield values for general PCC registers. */
-#define PCC_PCS_VAL(reg) (((reg) & PCC_CLKCFG_PCS_MASK) >> PCC_CLKCFG_PCS_SHIFT)
-#define PCC_FRAC_VAL(reg) (((reg) & PCC_CLKCFG_FRAC_MASK) >> PCC_CLKCFG_FRAC_SHIFT)
-#define PCC_PCD_VAL(reg) (((reg) & PCC_CLKCFG_PCD_MASK) >> PCC_CLKCFG_PCD_SHIFT)
+#define PCC_PCS_VAL(reg) (((reg)&PCC_CLKCFG_PCS_MASK) >> PCC_CLKCFG_PCS_SHIFT)
+#define PCC_FRAC_VAL(reg) (((reg)&PCC_CLKCFG_FRAC_MASK) >> PCC_CLKCFG_FRAC_SHIFT)
+#define PCC_PCD_VAL(reg) (((reg)&PCC_CLKCFG_PCD_MASK) >> PCC_CLKCFG_PCD_SHIFT)
 
 /*******************************************************************************
  * Variables
@@ -413,12 +412,12 @@ uint32_t CLOCK_GetIpFreq(clock_ip_name_t name)
         /* QSPI uses SCG DIV1 clock, while the others use SCG DIV2 clock. */
         if (kCLOCK_Qspi == name)
         {
-            sysClk = kSCG_SysClkPlat;
+            sysClk  = kSCG_SysClkPlat;
             asycClk = kSCG_AsyncDiv1Clk;
         }
         else
         {
-            sysClk = kSCG_SysClkBus;
+            sysClk  = kSCG_SysClkBus;
             asycClk = kSCG_AsyncDiv2Clk;
         }
 
@@ -555,10 +554,10 @@ uint32_t CLOCK_GetSysClkFreq(scg_sys_clk_t type)
     {
         freq /= (sysClkConfig.divBus + 1U);
     }
-/*    else if (kSCG_SysClkExt == type)
-    {
-        freq /= (sysClkConfig.divExt + 1U);
-    } */
+    /*    else if (kSCG_SysClkExt == type)
+        {
+            freq /= (sysClkConfig.divExt + 1U);
+        } */
     else
     {
     }
@@ -812,7 +811,7 @@ uint32_t CLOCK_GetSircFreq(void)
 uint32_t CLOCK_GetSircAsyncFreq(scg_async_clk_t type)
 {
     uint32_t sircFreq = CLOCK_GetSircFreq();
-    uint32_t divider = 0U;
+    uint32_t divider  = 0U;
 
     /* Get divider. */
     if (sircFreq)
@@ -950,7 +949,10 @@ status_t CLOCK_DeinitFirc(void)
 uint32_t CLOCK_GetFircFreq(void)
 {
     static const uint32_t fircFreq[] = {
-        SCG_FIRC_FREQ0, SCG_FIRC_FREQ1, SCG_FIRC_FREQ2, SCG_FIRC_FREQ3,
+        SCG_FIRC_FREQ0,
+        SCG_FIRC_FREQ1,
+        SCG_FIRC_FREQ2,
+        SCG_FIRC_FREQ3,
     };
 
     if (SCG->FIRCCSR & SCG_FIRCCSR_FIRCVLD_MASK) /* FIRC is valid. */
@@ -972,7 +974,7 @@ uint32_t CLOCK_GetFircFreq(void)
 uint32_t CLOCK_GetFircAsyncFreq(scg_async_clk_t type)
 {
     uint32_t fircFreq = CLOCK_GetFircFreq();
-    uint32_t divider = 0U;
+    uint32_t divider  = 0U;
 
     /* Get divider. */
     if (fircFreq)
@@ -1081,12 +1083,12 @@ status_t CLOCK_InitAuxPll(const scg_apll_config_t *config)
     /* Step 2. Set PLL configuration. */
     SCG->APLLCFG = SCG_APLLCFG_SOURCE(config->src) | SCG_APLLCFG_PREDIV(config->prediv) |
                    SCG_APLLCFG_MULT(config->mult) | SCG_APLLCFG_PLLS(config->isPfdSelected) |
-                   SCG_APLLCFG_PFDSEL(((uint32_t)config->pfdClkout)>>3U) |
+                   SCG_APLLCFG_PFDSEL(((uint32_t)config->pfdClkout) >> 3U) |
                    SCG_APLLCFG_PLLPOSTDIV1(config->pllPostdiv1) | SCG_APLLCFG_PLLPOSTDIV2(config->pllPostdiv2);
 
     /* Step 3. Set Numerator and Denominator. */
     SCG->APLLDENOM = config->denom;
-    SCG->APLLNUM = config->num;
+    SCG->APLLNUM   = config->num;
 
     /* Step 4. Enable clock. */
     SCG->APLLCSR = SCG_APLLCSR_APLLEN_MASK | config->enableMode;
@@ -1150,7 +1152,7 @@ static uint32_t CLOCK_GetAuxPllCommonFreq(void)
     {
         freq /= (SCG_APLLCFG_PREDIV_VAL + SCG_APLL_PREDIV_BASE_VALUE); /* Pre-divider. */
         freqTmp = (uint64_t)freq * ((uint64_t)SCG_APLLNUM_NUM_VAL) / ((uint64_t)SCG_APLLDENOM_DENOM_VAL);
-        freq = freq * (SCG_APLLCFG_MULT_VAL + SCG_APLL_MULT_BASE_VALUE) + (uint32_t)freqTmp;
+        freq    = freq * (SCG_APLLCFG_MULT_VAL + SCG_APLL_MULT_BASE_VALUE) + (uint32_t)freqTmp;
     }
 
     return freq;
@@ -1169,7 +1171,8 @@ uint32_t CLOCK_GetAuxPllFreq(void)
     if (SCG->APLLCFG & SCG_APLLCFG_PLLS_MASK)
     {
         /* pfdClkout is SCG_APLLCFG[PFDSEL] x 8. */
-        pfdClkout = (scg_apll_pfd_clkout_t)(((SCG->APLLCFG & SCG_APLLCFG_PFDSEL_MASK) >> SCG_APLLCFG_PFDSEL_SHIFT) << 3U);
+        pfdClkout =
+            (scg_apll_pfd_clkout_t)(((SCG->APLLCFG & SCG_APLLCFG_PFDSEL_MASK) >> SCG_APLLCFG_PFDSEL_SHIFT) << 3U);
         freq = CLOCK_GetAuxPllPfdFreq(pfdClkout);
     }
     else
@@ -1242,7 +1245,7 @@ uint32_t CLOCK_GetAuxPllAsyncFreq(scg_async_clk_t type)
  */
 uint32_t CLOCK_GetAuxPllPfdFreq(scg_apll_pfd_clkout_t pfdClkout)
 {
-    uint32_t freq = 0U;
+    uint32_t freq      = 0U;
     uint32_t fracValue = 0U;
 
     if (SCG->APLLPFD & SCG_PLLPFD_PFD_VALID_MASK(pfdClkout)) /* Auxiliary PLL PFD is valid. */
@@ -1258,7 +1261,7 @@ uint32_t CLOCK_GetAuxPllPfdFreq(scg_apll_pfd_clkout_t pfdClkout)
                 if (freq) /* If source is valid. */
                 {
                     freq = (uint32_t)((uint64_t)freq * PFD_FREQ_CALCUL_CONSTANT /
-                             fracValue); /* PFD Clock Frequency = PLL output frequency * 18 / frac value. */
+                                      fracValue); /* PFD Clock Frequency = PLL output frequency * 18 / frac value. */
                 }
             }
         }
@@ -1441,7 +1444,7 @@ static uint32_t CLOCK_GetSysPllCommonFreq(void)
     if (freq) /* If source is valid. */
     {
         freq /= (SCG_SPLLCFG_PREDIV_VAL + SCG_SPLL_PREDIV_BASE_VALUE); /* Pre-divider. */
-        freq *= s_spllMulti[SCG_SPLLCFG_MULT_VAL];     /* Multiplier. */
+        freq *= s_spllMulti[SCG_SPLLCFG_MULT_VAL];                     /* Multiplier. */
     }
 
     return freq;
@@ -1460,7 +1463,8 @@ uint32_t CLOCK_GetSysPllFreq(void)
     if (SCG->SPLLCFG & SCG_SPLLCFG_PLLS_MASK)
     {
         /* pfdClkout is SCG_SPLLCFG[PFDSEL] x 8. */
-        pfdClkout = (scg_spll_pfd_clkout_t)(((SCG->SPLLCFG & SCG_SPLLCFG_PFDSEL_MASK) >> SCG_SPLLCFG_PFDSEL_SHIFT) << 3U);
+        pfdClkout =
+            (scg_spll_pfd_clkout_t)(((SCG->SPLLCFG & SCG_SPLLCFG_PFDSEL_MASK) >> SCG_SPLLCFG_PFDSEL_SHIFT) << 3U);
         freq = CLOCK_GetSysPllPfdFreq(pfdClkout);
     }
     else
@@ -1527,7 +1531,7 @@ uint32_t CLOCK_GetSysPllAsyncFreq(scg_async_clk_t type)
  */
 uint32_t CLOCK_GetSysPllPfdFreq(scg_spll_pfd_clkout_t pfdClkout)
 {
-    uint32_t freq = 0U;
+    uint32_t freq      = 0U;
     uint32_t fracValue = 0U;
 
     if (SCG->SPLLPFD & SCG_PLLPFD_PFD_VALID_MASK(pfdClkout)) /* System PLL PFD is valid. */
@@ -1543,7 +1547,7 @@ uint32_t CLOCK_GetSysPllPfdFreq(scg_spll_pfd_clkout_t pfdClkout)
                 if (freq) /* If source is valid. */
                 {
                     freq = (uint32_t)((uint64_t)freq * PFD_FREQ_CALCUL_CONSTANT /
-                             fracValue); /* PFD Clock Frequency = PLL output frequency * 18 / frac value. */
+                                      fracValue); /* PFD Clock Frequency = PLL output frequency * 18 / frac value. */
                 }
             }
         }
@@ -1602,6 +1606,54 @@ void CLOCK_EnableSysPllPfdClkout(scg_spll_pfd_clkout_t pfdClkout, uint8_t fracVa
 
     /* Step 3. Wait for PFD clock to be stable. */
     while (!(SCG->SPLLPFD & SCG_PLLPFD_PFD_VALID_MASK(pfdClkout)))
+    {
+    }
+}
+
+/*!
+ * brief Use DWT to delay at least for some time.
+ * Please note that, this API will calculate the microsecond period with the maximum devices
+ * supported CPU frequency, so this API will only delay for at least the given microseconds, if precise
+ * delay count was needed, please implement a new timer count to achieve this function.
+ *
+ * param delay_us  Delay time in unit of microsecond.
+ */
+__attribute__((weak)) void SDK_DelayAtLeastUs(uint32_t delay_us)
+{
+    assert(0U != delay_us);
+    uint64_t count  = 0U;
+    uint32_t period = SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY / 1000000;
+
+    /* Make sure the DWT trace fucntion is enabled. */
+    if (CoreDebug_DEMCR_TRCENA_Msk != (CoreDebug_DEMCR_TRCENA_Msk & CoreDebug->DEMCR))
+    {
+        CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+    }
+
+    /* CYCCNT not supported on this device. */
+    assert(DWT_CTRL_NOCYCCNT_Msk != (DWT->CTRL & DWT_CTRL_NOCYCCNT_Msk));
+
+    /* If CYCCENT has already been enabled, read directly, otherwise, need enable it. */
+    if (DWT_CTRL_CYCCNTENA_Msk != (DWT_CTRL_CYCCNTENA_Msk & DWT->CTRL))
+    {
+        DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+    }
+
+    /* Calculate the count ticks. */
+    count = DWT->CYCCNT;
+    count += (uint64_t)period * delay_us;
+
+    if (count > 0xFFFFFFFFUL)
+    {
+        count -= 0xFFFFFFFFUL;
+        /* wait for cyccnt overflow. */
+        while (count < DWT->CYCCNT)
+        {
+        }
+    }
+
+    /* Wait for cyccnt reach count value. */
+    while (count > DWT->CYCCNT)
     {
     }
 }

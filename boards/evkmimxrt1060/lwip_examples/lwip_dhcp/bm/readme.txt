@@ -5,6 +5,24 @@ The lwip_dhcp demo application demonstrates a DHCP demo on the lwIP TCP/IP stack
 The application acts as a DHCP client and prints the status as it is progressing.
 Once the interface is being bound to an IP address obtained from DHCP server, address information is printed.
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
+Hardware requirements
+=====================
+- Mini/micro USB cable
+- EVK-MIMXRT1060 board
+- Personal Computer
+
+Board settings
+==============
+No special settings are required.
+
 Prepare the Demo
 ================
 1.  Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.
@@ -36,21 +54,6 @@ Initializing PHY...
  IPv4 Subnet mask : 255.255.255.0
  IPv4 Gateway     : 192.168.0.1
 
-Hardware requirements
+Customization options
 =====================
-- Mini/micro USB cable
-- EVK-MIMXRT1060 board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
 

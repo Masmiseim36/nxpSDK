@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -123,7 +123,7 @@ extern usb_status_t USB_DeviceGetVendorReceiveBuffer(usb_device_handle handle,
 
 /* standard request */
 /*!
- * @brief Get the descritpor.
+ * @brief Get the descriptor.
  *
  * The function is used to get the descriptor, including the device descriptor, configuration descriptor, and string
  * descriptor, etc.
@@ -885,7 +885,7 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
                 }
             }
         }
-        /* Send the reponse to the host. */
+        /* Send the response to the host. */
         error = USB_DeviceControlCallbackFeedback(handle, deviceSetup, error, kUSB_DeviceControlPipeSetupStage, &buffer,
                                                   &length);
     }
@@ -919,7 +919,7 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
         else
         {
         }
-        /* Send the reponse to the host. */
+        /* Send the response to the host. */
         error = USB_DeviceControlCallbackFeedback(handle, deviceSetup, error, kUSB_DeviceControlPipeDataStage, &buffer,
                                                   &length);
     }
@@ -949,6 +949,7 @@ usb_status_t USB_DeviceControlPipeInit(usb_device_handle handle)
     epCallback.callbackParam = handle;
 
     epInitStruct.zlt = 1U;
+    epInitStruct.interval = 0U;
     epInitStruct.transferType = USB_ENDPOINT_CONTROL;
     epInitStruct.endpointAddress = USB_CONTROL_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
     epInitStruct.maxPacketSize = USB_CONTROL_MAX_PACKET_SIZE;

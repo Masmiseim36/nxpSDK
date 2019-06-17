@@ -22,7 +22,7 @@ static void LPUART_RTOS_Callback(LPUART_Type *base, lpuart_handle_t *state, stat
     BaseType_t xHigherPriorityTaskWoken, xResult;
 
     xHigherPriorityTaskWoken = pdFALSE;
-    xResult = pdFAIL;
+    xResult                  = pdFAIL;
 
     if (status == kStatus_LPUART_RxIdle)
     {
@@ -94,7 +94,7 @@ int LPUART_RTOS_Init(lpuart_rtos_handle_t *handle, lpuart_handle_t *t_handle, co
         return kStatus_InvalidArgument;
     }
 
-    handle->base = cfg->base;
+    handle->base    = cfg->base;
     handle->t_state = t_handle;
 #if (configSUPPORT_STATIC_ALLOCATION == 1)
     handle->txSemaphore = xSemaphoreCreateMutexStatic(&handle->txSemaphoreBuffer);
@@ -118,7 +118,7 @@ int LPUART_RTOS_Init(lpuart_rtos_handle_t *handle, lpuart_handle_t *t_handle, co
 #if (configSUPPORT_STATIC_ALLOCATION == 1)
     handle->txEvent = xEventGroupCreateStatic(&handle->txEventBuffer);
 #else
-    handle->txEvent = xEventGroupCreate();
+    handle->txEvent     = xEventGroupCreate();
 #endif
     if (NULL == handle->txEvent)
     {
@@ -129,7 +129,7 @@ int LPUART_RTOS_Init(lpuart_rtos_handle_t *handle, lpuart_handle_t *t_handle, co
 #if (configSUPPORT_STATIC_ALLOCATION == 1)
     handle->rxEvent = xEventGroupCreateStatic(&handle->rxEventBuffer);
 #else
-    handle->rxEvent = xEventGroupCreate();
+    handle->rxEvent     = xEventGroupCreate();
 #endif
     if (NULL == handle->rxEvent)
     {
@@ -141,7 +141,7 @@ int LPUART_RTOS_Init(lpuart_rtos_handle_t *handle, lpuart_handle_t *t_handle, co
     LPUART_GetDefaultConfig(&defcfg);
 
     defcfg.baudRate_Bps = cfg->baudrate;
-    defcfg.parityMode = cfg->parity;
+    defcfg.parityMode   = cfg->parity;
     defcfg.stopBitCount = cfg->stopbits;
 
     LPUART_Init(handle->base, &defcfg, cfg->srcclk);
@@ -183,7 +183,7 @@ int LPUART_RTOS_Deinit(lpuart_rtos_handle_t *handle)
     vSemaphoreDelete(handle->rxSemaphore);
 
     /* Invalidate the handle */
-    handle->base = NULL;
+    handle->base    = NULL;
     handle->t_state = NULL;
 
     return 0;
@@ -230,7 +230,7 @@ int LPUART_RTOS_Send(lpuart_rtos_handle_t *handle, const uint8_t *buffer, uint32
         return kStatus_Fail;
     }
 
-    handle->txTransfer.data = (uint8_t *)buffer;
+    handle->txTransfer.data     = (uint8_t *)buffer;
     handle->txTransfer.dataSize = (uint32_t)length;
 
     /* Non-blocking call */
@@ -271,8 +271,8 @@ int LPUART_RTOS_Send(lpuart_rtos_handle_t *handle, const uint8_t *buffer, uint32
 int LPUART_RTOS_Receive(lpuart_rtos_handle_t *handle, uint8_t *buffer, uint32_t length, size_t *received)
 {
     EventBits_t ev;
-    size_t n = 0;
-    int retval = kStatus_Fail;
+    size_t n              = 0;
+    int retval            = kStatus_Fail;
     size_t local_received = 0;
 
     if (NULL == handle->base)
@@ -300,7 +300,7 @@ int LPUART_RTOS_Receive(lpuart_rtos_handle_t *handle, uint8_t *buffer, uint32_t 
         return kStatus_Fail;
     }
 
-    handle->rxTransfer.data = buffer;
+    handle->rxTransfer.data     = buffer;
     handle->rxTransfer.dataSize = (uint32_t)length;
 
     /* Non-blocking call */
@@ -316,7 +316,7 @@ int LPUART_RTOS_Receive(lpuart_rtos_handle_t *handle, uint8_t *buffer, uint32_t 
         /* Prevent false indication of successful transfer in next call of LPUART_RTOS_Receive.
            RTOS_LPUART_COMPLETE flag could be set meanwhile overrun is handled */
         xEventGroupClearBits(handle->rxEvent, RTOS_LPUART_COMPLETE);
-        retval = kStatus_LPUART_RxHardwareOverrun;
+        retval         = kStatus_LPUART_RxHardwareOverrun;
         local_received = 0;
     }
     else if (ev & RTOS_LPUART_RING_BUFFER_OVERRUN)
@@ -326,12 +326,12 @@ int LPUART_RTOS_Receive(lpuart_rtos_handle_t *handle, uint8_t *buffer, uint32_t 
         /* Prevent false indication of successful transfer in next call of LPUART_RTOS_Receive.
            RTOS_LPUART_COMPLETE flag could be set meanwhile overrun is handled */
         xEventGroupClearBits(handle->rxEvent, RTOS_LPUART_COMPLETE);
-        retval = kStatus_LPUART_RxRingBufferOverrun;
+        retval         = kStatus_LPUART_RxRingBufferOverrun;
         local_received = 0;
     }
     else if (ev & RTOS_LPUART_COMPLETE)
     {
-        retval = kStatus_Success;
+        retval         = kStatus_Success;
         local_received = length;
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018, NXP Semiconductors, Inc.
+ * Copyright  2017-2018 NXP
  * All rights reserved.
  *
  *
@@ -31,7 +31,7 @@ status_t VIDEO_I2C_WriteReg(uint8_t i2cAddr,
     {
         /* Byte swap. */
         regTmp = ((reg >> 8U) & 0xFF) | ((reg & 0xFFU) << 8U);
-        reg = regTmp;
+        reg    = regTmp;
     }
 
     i = regWidth;
@@ -71,7 +71,7 @@ status_t VIDEO_I2C_ReadReg(uint8_t i2cAddr,
     {
         /* Byte swap. */
         regTmp = ((reg >> 8U) & 0xFF) | ((reg & 0xFFU) << 8U);
-        reg = regTmp;
+        reg    = regTmp;
     }
 
     status = i2cReceiveFunc(i2cAddr, reg, addrType, data, regWidth);

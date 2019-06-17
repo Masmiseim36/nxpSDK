@@ -10,6 +10,8 @@
 #include "sntp_os.h"
 #include <time.h>
 
+extern time_t sntp_get_current_timestamp(void);
+
 /*Codes_SRS_SNTP_LWIP_30_002: [ The serverName parameter shall be an NTP server URL which shall not be validated. ]*/
 /*Codes_SRS_SNTP_LWIP_30_003: [ The SNTP_SetServerName shall set the NTP server to be used by ntp_lwip and return 0 to indicate success.]*/
 //

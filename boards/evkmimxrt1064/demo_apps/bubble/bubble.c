@@ -40,8 +40,8 @@ static void Board_UpdatePwm(uint16_t x);
  ******************************************************************************/
 volatile int16_t g_xAngle = 0;
 volatile int16_t g_yAngle = 0;
-volatile int16_t g_xDuty = 0;
-volatile int16_t g_yDuty = 0;
+volatile int16_t g_xDuty  = 0;
+volatile int16_t g_yDuty  = 0;
 /* FXOS device address */
 const uint8_t g_accel_address[] = {0x1CU, 0x1DU, 0x1EU, 0x1FU};
 
@@ -54,14 +54,14 @@ static void Timer_Init(void)
     qtmr_config_t qtmrConfig;
 
     /*
-   * qtmrConfig.debugMode = kQTMR_RunNormalInDebug;
-   * qtmrConfig.enableExternalForce = false;
-   * qtmrConfig.enableMasterMode = false;
-   * qtmrConfig.faultFilterCount = 0;
-   * qtmrConfig.faultFilterPeriod = 0;
-   * qtmrConfig.primarySource = kQTMR_ClockDivide_2;
-   * qtmrConfig.secondarySource = kQTMR_Counter0InputPin;
-   */
+     * qtmrConfig.debugMode = kQTMR_RunNormalInDebug;
+     * qtmrConfig.enableExternalForce = false;
+     * qtmrConfig.enableMasterMode = false;
+     * qtmrConfig.faultFilterCount = 0;
+     * qtmrConfig.faultFilterPeriod = 0;
+     * qtmrConfig.primarySource = kQTMR_ClockDivide_2;
+     * qtmrConfig.secondarySource = kQTMR_Counter0InputPin;
+     */
     QTMR_GetDefaultConfig(&qtmrConfig);
     qtmrConfig.primarySource = kQTMR_ClockDivide_128;
     QTMR_Init(BOARD_QTMR_BASEADDR, BOARD_QTMR_FIRST_CHANNEL, &qtmrConfig);
@@ -110,17 +110,17 @@ static void Board_UpdatePwm(uint16_t x)
 int main(void)
 {
     fxos_handle_t fxosHandle = {0};
-    fxos_data_t sensorData = {0};
-    fxos_config_t config = {0}; 
+    fxos_data_t sensorData   = {0};
+    fxos_config_t config     = {0};
     status_t result;
     gpio_pin_config_t led_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
-    uint8_t sensorRange = 0;
-    uint8_t dataScale = 0;
-    int16_t xData = 0;
-    int16_t yData = 0;
-    uint8_t i = 0;
-    uint8_t array_addr_size = 0;
-    uint32_t j = 0;
+    uint8_t sensorRange          = 0;
+    uint8_t dataScale            = 0;
+    int16_t xData                = 0;
+    int16_t yData                = 0;
+    uint8_t i                    = 0;
+    uint8_t array_addr_size      = 0;
+    uint32_t j                   = 0;
 
     /* Board pin, clock, debug console init */
     BOARD_ConfigMPU();
@@ -141,7 +141,7 @@ int main(void)
     /* I2C initialize */
     BOARD_Accel_I2C_Init();
     /* Configure the I2C function */
-    config.I2C_SendFunc = BOARD_Accel_I2C_Send;
+    config.I2C_SendFunc    = BOARD_Accel_I2C_Send;
     config.I2C_ReceiveFunc = BOARD_Accel_I2C_Receive;
 
     /* Initialize sensor devices */
@@ -161,9 +161,9 @@ int main(void)
     {
         PRINTF("\r\nSensor device initialize failed!\r\n");
         PRINTF("\r\nPlease check the sensor chip U32\r\n");
-        while(1)
+        while (1)
         {
-            for(j = 0; j < 30000000; j++)
+            for (j = 0; j < 30000000; j++)
             {
                 __NOP();
             }

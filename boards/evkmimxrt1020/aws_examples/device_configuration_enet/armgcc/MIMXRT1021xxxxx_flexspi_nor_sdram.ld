@@ -184,8 +184,8 @@ SECTIONS
     __data_start__ = .;      /* create a global symbol at data start */
     *(m_usb_dma_init_data)
     /* Explicit placement of flash and frequently executed functions in RAM */
-    */mflash_drv.c.obj
-    */fsl_flexspi.c.obj
+    */mflash_drv.c.obj(.text .text* .rodata .rodata*)
+    */fsl_flexspi.c.obj(.text .text* .rodata .rodata*)
     *(.data)                 /* .data sections */
     *(.data*)                /* .data* sections */
     KEEP(*(.jcr*))

@@ -30,20 +30,23 @@
 extern "C" {
 #endif
 
-/* ------------------------------ */
-#ifdef TGT_A70CM
-#define MAX_APDU_BUF_LENGTH            (2048 + 64)
-#elif defined (TGT_A71CH)
-#define MAX_APDU_BUF_LENGTH             (256 + 64)
-#else
-#define MAX_APDU_BUF_LENGTH            (1454)
+#ifdef A71_IGNORE_PARAM_CHECK
+#error "Do not remove API parameter check"
 #endif
+
+/* ------------------------------ */
+
+
+#define MAX_APDU_BUF_LENGTH             (256 + 1024)  // This value has not been optimized for TGT_A71CH (256+64)
+#define MAX_EXT_APDU_BUF_LENGTH         (32767)
+
 
 #define APDU_HEADER_LENGTH                (5)
 #define APDU_EXTENDED_HEADER_LENGTH       (7)
 #define EXT_CASE4_APDU_OVERHEAD           (9)
 #define SCP03_OVERHEAD                   (24)   // padding (=16) + mac (=8)
 #define RSP_APDU_STATUS_OVERHEAD          (2)
+#define APDU_STD_MAX_DATA               (255)
 
 // <Should be in a TLV specific header file>
 #ifdef TGT_A70CI
@@ -108,7 +111,7 @@ extern "C" {
 #define TAG_SIZE                       (0x1D)
 #define TAG_SST_WRAPPING_KEY_INDEX     (0x1E)
 #else //
-/// @cond not_relevant_for_A71ch
+/// @cond not_relevant_for_A71ch & A71cl
 #define TAG_DLMS_SECURITY_BYTE         (0x00)
 #define TAG_SST_IDENTIFIER             (0x01)
 #define TAG_SST_INDEX                  (0x02)
@@ -169,6 +172,7 @@ extern "C" {
 
 #define USE_STANDARD_APDU_LEN 0 //!< Create a standard length APDU.
 #define USE_EXTENDED_APDU_LEN 1 //!< Create an extended length APDU.
+#define SESSION_ID_LEN 4
 
 U8 SetApduHeader(apdu_t * pApdu, U8 extendedLength);
 U8 AllocateAPDUBuffer(apdu_t * pApdu);
@@ -178,14 +182,16 @@ void smApduAdaptLc(apdu_t *pApdu, U16 lc);
 void smApduAdaptLe(apdu_t *pApdu, U16 le);
 // U16 GetStatusWord(apdu_t *pApdu);
 U16 smGetSw(apdu_t *pApdu, U8 *pIsOk);
+void set_SessionId_Tlv(U32 sessionId);
 
-#ifndef TGT_A71CH
+
 U16 AddTlvItem(apdu_t * pApdu, U16 tag, U16 dataLength, const U8 *pValue);
 U16 ParseResponse(apdu_t * pApdu, U16 expectedTag, U16 * pLen, U8* pValue);
 U16 AddStdCmdData(apdu_t * pApdu, U16 dataLen, const U8 *data);
-#endif
+
 U16 smApduGetResponseBody(apdu_t *pApdu, U8 *buf, U16 *bufLen);
 U16 smApduAppendCmdData(apdu_t * pApdu, const U8 *data, U16 dataLen);
+U16 smApduAdaptChkSum(apdu_t *pApdu, U16 chkSum);
 
 #ifdef __cplusplus
 }

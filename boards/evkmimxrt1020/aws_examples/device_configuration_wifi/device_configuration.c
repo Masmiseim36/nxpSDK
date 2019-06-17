@@ -49,27 +49,27 @@ char clientcredentialMQTT_BROKER_ENDPOINT[MAX_LENGTH_AWS_ENDPOINT] = {0};
 char clientcredentialIOT_THING_NAME[MAX_LENGTH_AWS_THING_NAME] = {0};
 
 /* Flash structure */
-mflash_file_t g_file_table[] = {{.path = pkcs11configFILE_NAME_CLIENT_CERTIFICATE,
+mflash_file_t g_file_table[] = {{.path       = pkcs11configFILE_NAME_CLIENT_CERTIFICATE,
                                  .flash_addr = MFLASH_FILE_BASEADDR,
-                                 .max_size = MFLASH_FILE_SIZE},
-                                {.path = pkcs11configFILE_NAME_KEY,
+                                 .max_size   = MFLASH_FILE_SIZE},
+                                {.path       = pkcs11configFILE_NAME_KEY,
                                  .flash_addr = MFLASH_FILE_BASEADDR + MFLASH_FILE_SIZE,
-                                 .max_size = MFLASH_FILE_SIZE},
-                                {.path = FILENAME_AWS_THING_NAME,
+                                 .max_size   = MFLASH_FILE_SIZE},
+                                {.path       = FILENAME_AWS_THING_NAME,
                                  .flash_addr = MFLASH_FILE_BASEADDR + 2 * MFLASH_FILE_SIZE,
-                                 .max_size = MFLASH_FILE_SIZE},
-                                {.path = FILENAME_AWS_ENDPOINT,
+                                 .max_size   = MFLASH_FILE_SIZE},
+                                {.path       = FILENAME_AWS_ENDPOINT,
                                  .flash_addr = MFLASH_FILE_BASEADDR + 3 * MFLASH_FILE_SIZE,
-                                 .max_size = MFLASH_FILE_SIZE},
-                                {.path = FILENAME_MDNS_HOSTNAME,
+                                 .max_size   = MFLASH_FILE_SIZE},
+                                {.path       = FILENAME_MDNS_HOSTNAME,
                                  .flash_addr = MFLASH_FILE_BASEADDR + 4 * MFLASH_FILE_SIZE,
-                                 .max_size = MFLASH_FILE_SIZE},
-                                {.path = FILENAME_LOGIN_PASSWORD,
+                                 .max_size   = MFLASH_FILE_SIZE},
+                                {.path       = FILENAME_LOGIN_PASSWORD,
                                  .flash_addr = MFLASH_FILE_BASEADDR + 5 * MFLASH_FILE_SIZE,
-                                 .max_size = MFLASH_FILE_SIZE},
-                                {.path = FILENAME_WIFI_PARAMS,
+                                 .max_size   = MFLASH_FILE_SIZE},
+                                {.path       = FILENAME_WIFI_PARAMS,
                                  .flash_addr = MFLASH_FILE_BASEADDR + 6 * MFLASH_FILE_SIZE,
-                                 .max_size = MFLASH_FILE_SIZE},
+                                 .max_size   = MFLASH_FILE_SIZE},
                                 {0}};
 
 static SSLSRV_TLS_PARAM_STRUCT tls_params;
@@ -84,7 +84,7 @@ char g_device_info[MAX_LENGTH_DEVICE_INFO] = {0};
 static int init_device_info(char *thing_name, bool has_set_credentials, connection_type_t con_type)
 {
     int buff_len = MAX_LENGTH_DEVICE_INFO;
-    int n = snprintf(g_device_info, buff_len, "aws_thing_name=%s", thing_name);
+    int n        = snprintf(g_device_info, buff_len, "aws_thing_name=%s", thing_name);
     n += snprintf(g_device_info + n, buff_len, ",aws_credentials=%s", has_set_credentials ? "true" : "false");
     n += snprintf(g_device_info + n, buff_len, ",connection=%d", con_type);
 
@@ -133,9 +133,9 @@ static int ssl_server_init(void)
     /* Init SSLSRV parameters.*/
     memset(&params, 0, sizeof(params));
 
-    tls_params.certificate_buffer = (const unsigned char *)ssl_srv_cert;
+    tls_params.certificate_buffer      = (const unsigned char *)ssl_srv_cert;
     tls_params.certificate_buffer_size = ssl_srv_cert_len;
-    tls_params.private_key_buffer = (const unsigned char *)ssl_srv_pkey;
+    tls_params.private_key_buffer      = (const unsigned char *)ssl_srv_pkey;
     tls_params.private_key_buffer_size = ssl_srv_pkey_len;
 
     params.tls_param = &tls_params;
@@ -152,7 +152,7 @@ static int ssl_server_init(void)
 
 static int mdns_init(char *hostname, fnet_netif_desc_t netif_desc, connection_type_t con_type)
 {
-    char *thing_name = "";
+    char *thing_name  = "";
     uint8_t *fileData = NULL;
     uint32_t dataSize = 0;
     if (mflash_read_file(FILENAME_AWS_THING_NAME, &fileData, &dataSize) == pdTRUE)
@@ -175,7 +175,7 @@ static int mdns_init(char *hostname, fnet_netif_desc_t netif_desc, connection_ty
     struct fnet_mdns_params mdns_params;
     memset(&mdns_params, 0, sizeof(mdns_params));
     mdns_params.netif_desc = netif_desc;
-    mdns_params.name = hostname;
+    mdns_params.name       = hostname;
 
     /* Start mDNS server */
     g_mdns = fnet_mdns_init(&mdns_params);
@@ -186,7 +186,7 @@ static int mdns_init(char *hostname, fnet_netif_desc_t netif_desc, connection_ty
             return -1;
         }
 
-        if (xTaskCreate(mdns_task, "mdns_task", 300, g_mdns, tskIDLE_PRIORITY + 1, NULL) != pdPASS)
+        if (xTaskCreate(mdns_task, "mdns_task", 400, g_mdns, tskIDLE_PRIORITY + 1, NULL) != pdPASS)
         {
             return -1;
         }
@@ -310,8 +310,8 @@ int dev_cfg_check_aws_credentials()
 
 int dev_cfg_check_login_password(void *data, int data_len)
 {
-    uint8_t *fileData = NULL;
-    uint32_t dataSize = 0;
+    uint8_t *fileData    = NULL;
+    uint32_t dataSize    = 0;
     char *login_password = DEFAULT_LOGIN_PASSWORD;
     if (mflash_read_file(FILENAME_LOGIN_PASSWORD, &fileData, &dataSize) == pdTRUE)
     {
@@ -399,8 +399,8 @@ response_t dev_cfg_process_cmd(request_cmd_t cmd, void *data, int data_len)
             break;
         case kCMD_GetDeviceInfo:
             DEV_CFG_PRINTF("kCMD_GetDeviceInfo\n");
-            resp.status = kCMD_Ok;
-            resp.data = g_device_info;
+            resp.status      = kCMD_Ok;
+            resp.data        = g_device_info;
             resp.data_length = strlen(g_device_info);
             break;
 
@@ -415,7 +415,7 @@ response_t dev_cfg_process_cmd(request_cmd_t cmd, void *data, int data_len)
 int dev_cfg_get_wifi_params(WIFINetworkParams_t *network_params)
 {
     uint8_t *fileData = NULL;
-    uint32_t idx = 0;
+    uint32_t idx      = 0;
     uint32_t dataSize = 0;
 
     /* Try read parameters of wifi network */
@@ -438,7 +438,7 @@ int dev_cfg_get_wifi_params(WIFINetworkParams_t *network_params)
     idx++;
 
     /* Read SSID of wifi network */
-    uint32_t length = strlen((char *)&fileData[idx]);
+    uint32_t length        = strlen((char *)&fileData[idx]);
     network_params->pcSSID = pvPortMalloc(length + 1);
     if (network_params->pcSSID == NULL)
     {
@@ -450,7 +450,7 @@ int dev_cfg_get_wifi_params(WIFINetworkParams_t *network_params)
     {
         /* Read password of wifi network */
         idx += length + 1;
-        length = strlen((char *)&fileData[idx]);
+        length                     = strlen((char *)&fileData[idx]);
         network_params->pcPassword = pvPortMalloc(length + 1);
         if (network_params->pcPassword == NULL)
         {

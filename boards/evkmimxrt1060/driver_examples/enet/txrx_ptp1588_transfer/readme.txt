@@ -17,6 +17,14 @@ The time stamp of the received timestamp will be print when the PTP message fram
 Note, The RMII mode is used for default setting to initialize the ENET interface between MAC and the external PHY. you 
 can change it to MII mode as you wish. Please make sure the MII Mode setting in the MAC is synchronize to the setting
 in TWR-SERIAL board for the external PHY.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -68,11 +76,6 @@ A frame received. the length 1000 the timestamp is xx second, xx nanosecond
 Dest Address xx:xx:xx:xx:xx:xx Src Address xx:xx:xx:xx:xx:xx
 
 A frame received. the length 1000 Dest Address xx:xx:xx:xx:xx:xx Src Address xx:xx:xx:xx:xx:xx
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+Customization options
+=====================
 

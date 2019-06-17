@@ -25,8 +25,8 @@
 #define __ALIGN_END
 #endif
 #ifndef __ALIGN_BEGIN
-#if defined(__CC_ARM)
-#define __ALIGN_BEGIN __align(ENET_BUFF_ALIGNMENT)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION))
+#define __ALIGN_BEGIN __attribute__((aligned(ENET_BUFF_ALIGNMENT)))
 #elif defined(__ICCARM__)
 #define __ALIGN_BEGIN
 #endif

@@ -46,7 +46,7 @@
 
 static U8 exAuthenticate(U8 *keyEnc, U8 *keyMac, U8 *keyDek);
 static U8 exProvision(void);
-static U8 exUseCrypto(U16 appletVersion);
+static U8 exUseCrypto(void);
 
 static EC_KEY *eccKeyTls_0 = NULL; //!< OpenSSL specific datastructure to contain keypair to be stored at index 0
 static EC_KEY *eccKeyTls_1 = NULL; //!< OpenSSL specific datastructure to contain keypair to be stored at index 1
@@ -99,7 +99,7 @@ static void signalFunctionCallback(ScpEvent_t event, void *context)
 * - Provision the A71CH with some key material
 * - Demonstrate crypto operations using the provisioned key material
 */
-U8 exScp(U16 appletVersion)
+U8 exScp()
 {
     U8 result = 1;
     U8 initMode = INIT_MODE_RESET;
@@ -131,7 +131,8 @@ U8 exScp(U16 appletVersion)
 
     result &= exProvision();
 
-    result &= exUseCrypto(appletVersion);
+    result &= exUseCrypto();
+
     assert(result);
 
     HOSTCRYPTO_FreeEccKey(&eccKeyTls_0);
@@ -180,7 +181,7 @@ static U8 exAuthenticate(U8 *keyEnc, U8 *keyMac, U8 *keyDek)
 /**
 * Demonstrate crypto operations using the provisioned key material
 */
-static U8 exUseCrypto(U16 appletVersion)
+static U8 exUseCrypto()
 {
     U8 result = 1;
     U16 err;
@@ -188,7 +189,7 @@ static U8 exUseCrypto(U16 appletVersion)
     HLSE_RET_CODE retcode;
     int nRet;
     U8 isOk = 0;
-	HLSE_MECHANISM_INFO mechInfo;
+    HLSE_MECHANISM_INFO mechInfo;
 
     const U8 preCookedSha256[] = {
         0x00, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x80, 0x90, 0xa0, 0xb0, 0xc0, 0xd0, 0xe0, 0xf0,
@@ -224,16 +225,8 @@ static U8 exUseCrypto(U16 appletVersion)
     // Sign a precooked hash on the A71CH with the first key pair, do the subsequent verification on the Host
     index = A71CH_KEY_PAIR_0;
     signatureLen = sizeof(signature);
-    if (appletVersion >= 0x0130)
-    {
-        PRINTF("\r\nA71_EccSign(0x%02x) on A71CH.\r\n", index);
-        err = A71_EccSign(index, preCookedSha256, sizeof(preCookedSha256), signature, &signatureLen);
-    }
-    else
-    {
-        PRINTF("\r\nA71_EccSign(0x%02x) on A71CH.\r\n", index);
-        err = A71_EccSign(index, preCookedSha256, sizeof(preCookedSha256), signature, &signatureLen);
-    }
+    PRINTF("\r\nA71_EccSign(0x%02x) on A71CH.\r\n", index);
+    err = A71_EccSign(index, preCookedSha256, sizeof(preCookedSha256), signature, &signatureLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     axPrintByteArray("signature", signature, signatureLen, AX_COLON_32);
 
@@ -357,12 +350,28 @@ static U8 exProvision()
 
     err = HOSTCRYPTO_GenerateEccKey(eccCurve, &eccKeyTls_0);
     result &= AX_CHECK_SW(err, SW_OK, "err");
+    if ( NULL == eccKeyTls_0 ) {
+        result = 0;
+        goto exit;
+    }
     err = HOSTCRYPTO_GenerateEccKey(eccCurve, &eccKeyTls_1);
     result &= AX_CHECK_SW(err, SW_OK, "err");
+    if ( NULL == eccKeyTls_1 ) {
+        result = 0;
+        goto exit;
+    }
     err = HOSTCRYPTO_GenerateEccKey(eccCurve, &eccKeyRootCA_0);
     result &= AX_CHECK_SW(err, SW_OK, "err");
+    if ( NULL == eccKeyRootCA_0 ) {
+        result = 0;
+        goto exit;
+    }
     err = HOSTCRYPTO_GenerateEccKey(eccCurve, &eccKeyRootCA_1);
     result &= AX_CHECK_SW(err, SW_OK, "err");
+    if ( NULL == eccKeyRootCA_1 ) {
+        result = 0;
+        goto exit;
+    }
 
     // Break down the ECC keys generated in OpenSSL into eccKeyComponents
     err = HOSTCRYPTO_GetPublicKey(eccKeyTls_0, eccKcTls_0.pub, &(eccKcTls_0.pubLen), (64 << 1)+1);
@@ -452,6 +461,7 @@ static U8 exProvision()
 
     // NOTE: Reading out symmetric keys is not supported
 
+exit:
     PRINTF( "\r\n-----------\r\nEnd exProvision(), result = %s\r\n------------\r\n",
         ((result == 1)? "OK": "FAILED"));
 

@@ -2,6 +2,14 @@ Overview
 ========
 The KPP Example project is a demonstration program that uses the KSDK software to manipulate the Keypad MATRIX.
 The example is use the continuous column and rows as 4*4 or 8*8 matrix to show the example.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -57,11 +65,6 @@ The log would be seen on the OpenSDA terminal like:
  Key SW16 was pressed.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+Customization options
+=====================
 

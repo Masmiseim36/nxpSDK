@@ -56,10 +56,10 @@ int main(void)
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
-    
+
     /* Enable clock gate for GPIO1 */
     CLOCK_EnableClock(kCLOCK_Gpio1);
-    
+
     /* Set PERCLK_CLK source to OSC_CLK*/
     CLOCK_SetMux(kCLOCK_PerclkMux, 1U);
     /* Set PERCLK_CLK divider to 1 */

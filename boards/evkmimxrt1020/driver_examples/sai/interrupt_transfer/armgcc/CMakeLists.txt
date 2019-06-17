@@ -154,6 +154,8 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSDK_I2C_BASED_COMPONENT_US
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DBOARD_USE_CODEC=1")
 
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCODEC_WM8960_ENABLE")
+
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall")
@@ -195,6 +197,8 @@ SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DDEBUG_CONSOLE_
 SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DSDK_I2C_BASED_COMPONENT_USED=1")
 
 SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DBOARD_USE_CODEC=1")
+
+SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DCODEC_WM8960_ENABLE")
 
 SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -Os")
 
@@ -239,6 +243,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DDEBUG_
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DSDK_I2C_BASED_COMPONENT_USED=1")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DBOARD_USE_CODEC=1")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DCODEC_WM8960_ENABLE")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -g")
 
@@ -285,6 +291,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DDE
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DSDK_I2C_BASED_COMPONENT_USED=1")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DBOARD_USE_CODEC=1")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DCODEC_WM8960_ENABLE")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -Os")
 
@@ -654,7 +662,13 @@ include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers)
 
 include_directories(${ProjDirPath}/../../../../../../components/codec/wm8960)
 
+include_directories(${ProjDirPath}/../../../../../../components/codec/i2c)
+
 include_directories(${ProjDirPath}/../../../../../../components/codec)
+
+include_directories(${ProjDirPath}/../../../../../../components/codec/port)
+
+include_directories(${ProjDirPath}/../../../../../../components/i2c)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1021)
 
@@ -683,61 +697,68 @@ add_executable(sai_interrupt_transfer.elf
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_lpi2c.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_lpi2c.h"
-"${ProjDirPath}/../../../../../../components/codec/wm8960/fsl_wm8960.h"
 "${ProjDirPath}/../../../../../../components/codec/wm8960/fsl_wm8960.c"
-"${ProjDirPath}/../../../../../../components/codec/fsl_codec_common.h"
+"${ProjDirPath}/../../../../../../components/codec/wm8960/fsl_wm8960.h"
 "${ProjDirPath}/../../../../../../components/codec/fsl_codec_common.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_clock.h"
+"${ProjDirPath}/../../../../../../components/codec/fsl_codec_common.h"
+"${ProjDirPath}/../../../../../../components/codec/port/fsl_codec_adapter.h"
+"${ProjDirPath}/../../../../../../components/codec/port/wm8960/fsl_codec_adapter.c"
+"${ProjDirPath}/../../../../../../components/i2c/i2c.h"
+"${ProjDirPath}/../../../../../../components/i2c/lpi2c_adapter.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_clock.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_sai.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_sai.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_common.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_sai.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1021/fsl_device_registers.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/MIMXRT1021.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/MIMXRT1021_features.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1021/fsl_device_registers.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/system_MIMXRT1021.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/system_MIMXRT1021.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console_conf.h"
-"${ProjDirPath}/../../../../../../components/uart/uart.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../../components/uart/lpuart_adapter.c"
-"${ProjDirPath}/../../../../../../components/serial_manager/serial_manager.h"
+"${ProjDirPath}/../../../../../../components/uart/uart.h"
 "${ProjDirPath}/../../../../../../components/serial_manager/serial_manager.c"
-"${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.h"
+"${ProjDirPath}/../../../../../../components/serial_manager/serial_manager.h"
+"${ProjDirPath}/../../../../../../components/serial_manager/serial_port_internal.h"
 "${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.h"
+"${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.c"
-"${ProjDirPath}/../../../../../../components/lists/generic_list.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.h"
 "${ProjDirPath}/../../../../../../components/lists/generic_list.c"
+"${ProjDirPath}/../../../../../../components/lists/generic_list.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/gcc/startup_MIMXRT1021.S"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_iomuxc.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/utilities/fsl_assert.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_gpio.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_gpio.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_gpio.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.h"
 "${ProjDirPath}/../../../../xip/evkmimxrt1020_flexspi_nor_config.c"
 "${ProjDirPath}/../../../../xip/evkmimxrt1020_flexspi_nor_config.h"
 "${ProjDirPath}/../../../../xip/evkmimxrt1020_sdram_ini_dcd.c"
 "${ProjDirPath}/../../../../xip/evkmimxrt1020_sdram_ini_dcd.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/core_cm7.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_compiler.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_compiler.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
+"${ProjDirPath}/../../../../../../components/codec/i2c/fsl_codec_i2c.c"
+"${ProjDirPath}/../../../../../../components/codec/i2c/fsl_codec_i2c.h"
 )
 
 

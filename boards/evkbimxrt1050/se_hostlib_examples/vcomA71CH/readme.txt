@@ -52,9 +52,9 @@ Package (Windows Installer)" is installed from https://www.nxp.com/products/:A71
 Toolchain supported
 ===================
 - IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
 
 Hardware requirements
 =====================
@@ -83,3 +83,6 @@ functionalities of the secure module are invoked via the VCOM bridge.
 
 End of project
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Customization options
+=====================
+

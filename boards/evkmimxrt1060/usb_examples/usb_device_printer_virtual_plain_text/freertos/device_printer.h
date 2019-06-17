@@ -28,6 +28,8 @@
 
 #if defined(__GIC_PRIO_BITS)
 #define USB_DEVICE_INTERRUPT_PRIORITY (25U)
+#elif defined(__NVIC_PRIO_BITS) && (__NVIC_PRIO_BITS >= 3)
+#define USB_DEVICE_INTERRUPT_PRIORITY (6U)
 #else
 #define USB_DEVICE_INTERRUPT_PRIORITY (3U)
 #endif
@@ -39,6 +41,7 @@
 typedef enum _usb_device_printer_state
 {
     kPrinter_Idle = 0x00,
+    kPrinter_ReceiveNeedPrime,
     kPrinter_Receiving,
     kPrinter_Received,
 } usb_device_printer_buffer_t;
@@ -56,6 +59,8 @@ typedef struct _usb_device_printer_app
     uint32_t sendLength;
     uint8_t *printerBuffer;
     volatile uint8_t printerState;
+    volatile uint8_t stateChanged;
+    volatile uint8_t prnterTaskState;
     uint8_t currentConfiguration;
     uint8_t currentInterfaceAlternateSetting[USB_PRINTER_INTERFACE_COUNT];
     uint8_t attach;

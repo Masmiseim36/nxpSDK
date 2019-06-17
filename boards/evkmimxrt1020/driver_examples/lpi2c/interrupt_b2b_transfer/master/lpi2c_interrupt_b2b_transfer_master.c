@@ -1,7 +1,7 @@
 /*
  * Copyright 2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -67,7 +67,7 @@ static void lpi2c_master_callback(LPI2C_Type *base, lpi2c_master_handle_t *handl
 int main(void)
 {
     lpi2c_master_transfer_t masterXfer = {0};
-    status_t reVal = kStatus_Fail;
+    status_t reVal                     = kStatus_Fail;
 
     BOARD_ConfigMPU();
     BOARD_InitPins();
@@ -77,7 +77,6 @@ int main(void)
     /*Clock setting for LPI2C*/
     CLOCK_SetMux(kCLOCK_Lpi2cMux, LPI2C_CLOCK_SOURCE_SELECT);
     CLOCK_SetDiv(kCLOCK_Lpi2cDiv, LPI2C_CLOCK_SOURCE_DIVIDER);
-
 
     PRINTF("\r\nLPI2C board2board interrupt example -- Master transfer.\r\n");
 
@@ -125,14 +124,14 @@ int main(void)
 
     /* subAddress = 0x01, data = g_master_txBuff - write to slave.
       start + slaveaddress(w) + subAddress + length of data buffer + data buffer + stop*/
-    uint8_t deviceAddress = 0x01U;
-    masterXfer.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;
-    masterXfer.direction = kLPI2C_Write;
-    masterXfer.subaddress = (uint32_t)deviceAddress;
+    uint8_t deviceAddress     = 0x01U;
+    masterXfer.slaveAddress   = I2C_MASTER_SLAVE_ADDR_7BIT;
+    masterXfer.direction      = kLPI2C_Write;
+    masterXfer.subaddress     = (uint32_t)deviceAddress;
     masterXfer.subaddressSize = 1;
-    masterXfer.data = g_master_txBuff;
-    masterXfer.dataSize = I2C_DATA_LENGTH;
-    masterXfer.flags = kLPI2C_TransferDefaultFlag;
+    masterXfer.data           = g_master_txBuff;
+    masterXfer.dataSize       = I2C_DATA_LENGTH;
+    masterXfer.flags          = kLPI2C_TransferDefaultFlag;
 
     /* Send master non-blocking data to slave */
     reVal = LPI2C_MasterTransferNonBlocking(EXAMPLE_I2C_MASTER, &g_m_handle, &masterXfer);
@@ -152,13 +151,13 @@ int main(void)
 
     /* subAddress = 0x01, data = g_master_rxBuff - read from slave.
       start + slaveaddress(w) + subAddress + repeated start + slaveaddress(r) + rx data buffer + stop */
-    masterXfer.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;
-    masterXfer.direction = kLPI2C_Read;
-    masterXfer.subaddress = (uint32_t)deviceAddress;
+    masterXfer.slaveAddress   = I2C_MASTER_SLAVE_ADDR_7BIT;
+    masterXfer.direction      = kLPI2C_Read;
+    masterXfer.subaddress     = (uint32_t)deviceAddress;
     masterXfer.subaddressSize = 1;
-    masterXfer.data = g_master_rxBuff;
-    masterXfer.dataSize = I2C_DATA_LENGTH - 1;
-    masterXfer.flags = kLPI2C_TransferDefaultFlag;
+    masterXfer.data           = g_master_rxBuff;
+    masterXfer.dataSize       = I2C_DATA_LENGTH - 1;
+    masterXfer.flags          = kLPI2C_TransferDefaultFlag;
 
     reVal = LPI2C_MasterTransferNonBlocking(EXAMPLE_I2C_MASTER, &g_m_handle, &masterXfer);
     if (reVal != kStatus_Success)
@@ -189,7 +188,7 @@ int main(void)
     {
         if (g_master_rxBuff[i] != g_master_txBuff[i + 1])
         {
-            PRINTF("\r\nError occured in the transfer ! \r\n");
+            PRINTF("\r\nError occurred in the transfer ! \r\n");
             break;
         }
     }

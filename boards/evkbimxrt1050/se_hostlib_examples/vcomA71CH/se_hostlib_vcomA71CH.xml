@@ -7,7 +7,7 @@
     <definition extID="component.serial_manager.MIMXRT1052"/>
     <definition extID="component.serial_manager_uart.MIMXRT1052"/>
     <definition extID="component.serial_manager_usb_cdc.MIMXRT1052"/>
-    <definition extID="component.serial_manager_usb_cdc_device_config.MIMXRT1052"/>
+    <definition extID="component.serial_manager_usb_cdc_device_config.evkbimxrt1050.MIMXRT1052"/>
     <definition extID="device.MIMXRT1052_CMSIS.MIMXRT1052"/>
     <definition extID="device.MIMXRT1052_startup.MIMXRT1052"/>
     <definition extID="middleware.baremetal.MIMXRT1052"/>
@@ -34,8 +34,10 @@
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
+    <definition extID="com.crt.advproject.config.exe.debug"/>
+    <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_se_hostlib_vcomA71CH" name="se_hostlib_vcomA71CH" category="se_hostlib_examples" dependency="middleware.usb.device_controller_ehci.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 platform.drivers.trng.MIMXRT1052 platform.drivers.lpi2c.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.pit.MIMXRT1052 component.serial_manager_usb_cdc.MIMXRT1052 middleware.se_hostlib.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.clock.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 component.lists.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 middleware.usb.phy.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 middleware.baremetal.MIMXRT1052 component.serial_manager_usb_cdc_device_config.MIMXRT1052" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="evkbimxrt1050_se_hostlib_vcomA71CH" name="se_hostlib_vcomA71CH" category="se_hostlib_examples" dependency="middleware.usb.device_controller_ehci.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 platform.drivers.trng.MIMXRT1052 platform.drivers.lpi2c.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.pit.MIMXRT1052 component.serial_manager_usb_cdc.MIMXRT1052 component.serial_manager_usb_cdc_device_config.evkbimxrt1050.MIMXRT1052 middleware.se_hostlib.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.clock.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 component.lists.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 middleware.usb.phy.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 middleware.baremetal.MIMXRT1052">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -58,18 +60,15 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
-          <value>CPU_MIMXRT1052DVL6B</value>
           <value>SDK_DEBUGCONSOLE=1</value>
-          <value>PRINTF_FLOAT_ENABLE=0</value>
-          <value>SCANF_FLOAT_ENABLE=0</value>
-          <value>PRINTF_ADVANCED_ENABLE=0</value>
-          <value>SCANF_ADVANCED_ENABLE=0</value>
+          <value>CPU_MIMXRT1052DVL6B</value>
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>IMX_RT</value>
           <value>USB_STACK_BM</value>
           <value>NO_SECURE_CHANNEL_SUPPORT</value>
           <value>SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC</value>
+          <value>PRINTF_ADVANCED_ENABLE=1</value>
           <value>TGT_A71CH</value>
           <value>I2C</value>
         </option>
@@ -89,8 +88,34 @@
           <value>isd=*(NonCacheable.init);region=SRAM_DTC;type=.data</value>
           <value>isd=*(NonCacheable);region=SRAM_DTC;type=.bss</value>
         </option>
+        <option id="com.crt.advproject.gas.hdrlib" type="enum">
+          <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gas.specs" type="enum">
+          <value>com.crt.advproject.gas.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.specs" type="enum">
+          <value>com.crt.advproject.gcc.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.link.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.link.hdrlib.newlibnano.nohost</value>
+        </option>
       </toolchainSetting>
     </toolchainSettings>
+    <debug_configurations>
+      <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+        <drivers>
+          <driver id_refs="BOARD_FLASH_evkbimxrt1050">
+            <driverBinary path="devices/MIMXRT1052/mcuxpresso" type="binary" target_path="binary">
+              <files mask="MIMXRT1050-EVK_S26KS512S.cfx"/>
+            </driverBinary>
+          </driver>
+        </drivers>
+      </debug_configuration>
+    </debug_configurations>
     <source path="boards/evkbimxrt1050/se_hostlib_examples/vcomA71CH/armgcc" target_path="src" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1052xxxxx_ram.ld"/>
     </source>
@@ -126,9 +151,6 @@
     <source path="boards/evkbimxrt1050/se_hostlib_examples/vcomA71CH" target_path="source" type="src">
       <files mask="vcom2i2c.c"/>
       <files mask="virtual_com.c"/>
-    </source>
-    <source path="devices/MIMXRT1052/utilities" target_path="component/serial_manager/usb_cdc_adapter" type="c_include">
-      <files mask="usb_device_config.h"/>
     </source>
   </example>
 </ksdk:examples>

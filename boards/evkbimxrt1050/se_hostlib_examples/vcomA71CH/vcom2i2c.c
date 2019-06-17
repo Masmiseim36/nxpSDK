@@ -82,7 +82,7 @@ void state_vcom_read_write(
                 {
                 case WAIT_FOR_CARD:
                 {
-                    U8 Atr[64];
+                    U8 Atr[64] = {0};
                     U16 AtrLen = sizeof(Atr);
 
                     AtrLen = sizeof(Atr);
@@ -93,6 +93,8 @@ void state_vcom_read_write(
                         statusValue = vcomPackageApduResponse(0x00, 0x00, Atr, AtrLen, targetBuffer, &targetBufferLen);
                         if (statusValue == RJCT_OK)
                         {
+                            if (targetBufferLen > sizeof(selectResponseData))
+                                targetBufferLen = sizeof(selectResponseData);
                             memcpy(selectResponseData, targetBuffer, targetBufferLen);
                             selectResponseDataLen = targetBufferLen;
                             g_sendresp_vcom = 1;
@@ -145,15 +147,18 @@ void state_vcom_2_i2c()
     U16 sw;
     if (g_senddata_i2c)
     {
+        uint16_t u16_selectResponseDataLen = 0;
         g_senddata_i2c = 0;
         memset(selectResponseData, 0, sizeof(selectResponseData));
-        selectResponseDataLen = 0;
-        sw = SM_SendAPDUVcom(&s_RecvBuff[4], nExpectedPayload, selectResponseData, (uint16_t *) &selectResponseDataLen);
+        sw = SM_SendAPDUVcom(&s_RecvBuff[4], nExpectedPayload, selectResponseData, &u16_selectResponseDataLen);
+        selectResponseDataLen = u16_selectResponseDataLen;
         if (sw == SW_OK)
         {
             targetBufferLen = sizeof(targetBuffer);
             sw = vcomPackageApduResponse(APDU_DATA, 0x00, selectResponseData, selectResponseDataLen, targetBuffer,
                 &targetBufferLen);
+            if (targetBufferLen > sizeof(selectResponseData))
+                targetBufferLen = sizeof(selectResponseData); //COV 3268657s
             memcpy(selectResponseData, targetBuffer, targetBufferLen);
             selectResponseDataLen = targetBufferLen;
             g_sendresp_vcom = 1;

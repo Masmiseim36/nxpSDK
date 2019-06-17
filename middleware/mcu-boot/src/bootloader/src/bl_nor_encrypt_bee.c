@@ -1,15 +1,15 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#include "fsl_common.h"
-#include "dcp/fsl_dcp.h"
-#include "trng/fsl_trng.h"
-#include "bootloader/bootloader.h"
 #include "bootloader/bl_nor_encrypt.h"
+#include "bootloader/bootloader.h"
+#include "dcp/fsl_dcp.h"
+#include "fsl_common.h"
 #include "fusemap.h"
+#include "trng/fsl_trng.h"
 
 /*******************************************************************************
  * Definitions
@@ -188,112 +188,13 @@ status_t bl_nor_encrypt_region_info_load_default(void)
      */
     status_t status = kStatus_Fail;
 
-    s_img_gen_ctx.fuse_key_sel[0] = kBeeKeySel_OTPMK_SNVS_High;
-    s_img_gen_ctx.fuse_key_sel[1] = kBeeKeySel_OTPMK_SNVS_High;
-
-    do
+    for (uint32_t i = 0; i < 2; i++)
     {
-        /* Flashloader will not load the PRDB if one of below conditions is met */
-        if ((!ROM_OCOTP_ENCRYPT_XIP_VALAUE()) ||                      // Encrypted XIP feature is not enabled
-            (!(ROM_OCOTP_BEE_KEY0_SEL_VALUE() > 0)) ||                // BEE_KEY0_SEL is 0
-            (!(ROM_OCOTP_BEE_KEY1_SEL_VALUE() > 0)) ||                // BEE_KEY1_SEL is 0
-            (!(get_primary_boot_device() == kBootDevice_FlexSpiNOR))) // Boot device is not FlexSPI NOR
-        {
-            break;
-        }
+        s_img_gen_ctx.encrypt_enabled[i] = false;
+        memset(&s_img_gen_ctx.plain_block_info[i], 0, sizeof(prot_region_block_info_t));
+    }
 
-        uint32_t boot_mode = (SRC->SBMR2 & SRC_SBMR2_BMOD_MASK) >> SRC_SBMR2_BMOD_SHIFT;
-
-        // Boot from fuse mode or internal boot mode
-        if ((boot_mode == 0x0) || (boot_mode == 0x02))
-        {
-            // Try to reset BEE FAC region registers
-            bee_fac_region_t *fac_region = (bee_fac_region_t *)&IOMUXC_GPR->GPR18;
-            for (uint32_t i = 0; i < MAX_BEE_PROT_ENTRIES; i++)
-            {
-                fac_region[i].start = 0;
-                fac_region[i].end = 0;
-            }
-        }
-
-        s_img_gen_ctx.fuse_key_sel[0] = ROM_OCOTP_BEE_KEY0_SEL_VALUE();
-        s_img_gen_ctx.fuse_key_sel[1] = ROM_OCOTP_BEE_KEY1_SEL_VALUE();
-
-        dcp_alg_ctx_t dcp_ctx;
-        dcp_aes_init(&dcp_ctx);
-
-        for (uint32_t i = 0; i < 2; i++)
-        {
-            switch (s_img_gen_ctx.fuse_key_sel[i])
-            {
-                case kBeeKeySel_OTPMK_SNVS_Low:
-                    s_img_gen_ctx.bee_key_sel[i].option = OTPMK_SNVS_LOW_FLAG_BE;
-                    break;
-                case kBeeKeySel_OTPMK_SNVS_High:
-                    s_img_gen_ctx.bee_key_sel[i].option = OTPMK_SNVS_HIGH_FLAG_BE;
-                    break;
-                case kBeeKeySel_SW_GP2:
-                    s_img_gen_ctx.bee_key_sel[i].option = SW_GP2_FLAG_BE;
-                    break;
-                default:
-                    s_img_gen_ctx.bee_key_sel[i].key = NULL;
-                    break;
-            }
-
-            if (s_img_gen_ctx.bee_key_sel[i].key == NULL)
-            {
-                s_img_gen_ctx.encrypt_enabled[i] = false;
-                continue;
-            }
-            else
-            {
-                s_img_gen_ctx.encrypt_enabled[i] = true;
-            }
-
-            prot_region_block_info_t plain_block_info;
-            prot_region_block_info_t enc_block_info;
-            dcp_aes_set_key(&dcp_ctx, s_img_gen_ctx.bee_key_sel[i], 128);
-            uint32_t kib_addr = KIB_ADDR(i);
-            uint32_t prdb_addr = PRDB_ADDR(i);
-
-            // Read EKIB from Flash
-            memcpy(&enc_block_info.kib, (void *)kib_addr, sizeof(key_info_block_t));
-            // Read EPRDB from flash
-            memcpy(&enc_block_info.prdb, (void *)prdb_addr, sizeof(prot_region_desc_block_t));
-
-            // Decrypt EKIB
-            dcp_aes_ecb_crypt(&dcp_ctx, kAesMode_Decrypt, (uint8_t *)&enc_block_info.kib,
-                              (uint8_t *)&plain_block_info.kib, sizeof(key_info_block_t));
-
-            // Decrypt PRDB
-            aes_key_sel_t key_sel;
-            key_sel.key = plain_block_info.kib.aes_key;
-            dcp_aes_set_key(&dcp_ctx, key_sel, 128);
-            dcp_aes_cbc_crypt(&dcp_ctx,                          // DCP context
-                              kAesMode_Decrypt,                  // Decrypt
-                              plain_block_info.kib.iv,           // Intial vector
-                              (uint8_t *)&enc_block_info.prdb,   // Source, encrypted data
-                              (uint8_t *)&plain_block_info.prdb, // Destination, decrypted data
-                              sizeof(prot_region_desc_block_t)); // Size in bytes
-
-            if ((plain_block_info.prdb.tagh != BEE_PROT_REGION_BLK_TAGH) ||
-                (plain_block_info.prdb.tagl != BEE_PROT_REGION_BLK_TAGL))
-            {
-                s_img_gen_ctx.encrypt_enabled[i] = false;
-                memset(&s_img_gen_ctx.plain_block_info[i], 0, sizeof(prot_region_block_info_t));
-                continue;
-            }
-            else
-            {
-                s_img_gen_ctx.encrypt_enabled[i] = true;
-                memcpy(&s_img_gen_ctx.plain_block_info[i], &plain_block_info, sizeof(prot_region_block_info_t));
-                status = kStatus_Success;
-            }
-        }
-
-    } while (0);
-
-    return status;
+    return kStatus_Success;
 }
 
 bool bl_nor_encrypt_has_encrypted_region(void)

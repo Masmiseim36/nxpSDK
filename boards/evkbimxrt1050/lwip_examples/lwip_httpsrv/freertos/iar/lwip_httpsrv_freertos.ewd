@@ -3318,11 +3318,11 @@
         </option>
         <option>
           <name>MacOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>MacFile</name>
-          <state/>
+          <state>$PROJ_DIR$/evkbimxrt1050.mac</state>
         </option>
         <option>
           <name>MemOverride</name>

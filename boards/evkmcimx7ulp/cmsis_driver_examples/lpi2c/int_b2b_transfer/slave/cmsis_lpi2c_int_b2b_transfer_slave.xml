@@ -2,7 +2,6 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
-    <definition extID="RTE_Device.MCIMX7U5"/>
     <definition extID="component.lists.MCIMX7U5"/>
     <definition extID="component.lpuart_adapter.MCIMX7U5"/>
     <definition extID="component.serial_manager.MCIMX7U5"/>
@@ -31,7 +30,7 @@
     <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkmcimx7ulp_cmsis_lpi2c_int_b2b_transfer_slave" name="cmsis_lpi2c_int_b2b_transfer_slave" category="cmsis_driver_examples/lpi2c" dependency="platform.drivers.port.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.edma.MCIMX7U5 platform.drivers.dmamux.MCIMX7U5 platform.drivers.lpi2c.MCIMX7U5 platform.drivers.lpi2c_edma.MCIMX7U5 platform.drivers.lpi2c_cmsis.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 utility.debug_console.MCIMX7U5 component.lpuart_adapter.MCIMX7U5 component.serial_manager.MCIMX7U5 component.serial_manager_uart.MCIMX7U5 platform.drivers.lpuart.MCIMX7U5 component.lists.MCIMX7U5 platform.devices.MCIMX7U5_startup.MCIMX7U5 platform.drivers.gpio.MCIMX7U5 platform.drivers.msmc.MCIMX7U5 platform.utilities.assert.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.Include_common.MCIMX7U5 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MCIMX7U5 platform.CMSIS_Driver_Include.Common_CMSISInclude.MCIMX7U5 RTE_Device.MCIMX7U5">
+  <example id="evkmcimx7ulp_cmsis_lpi2c_int_b2b_transfer_slave" name="cmsis_lpi2c_int_b2b_transfer_slave" category="cmsis_driver_examples/lpi2c" dependency="platform.drivers.port.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.edma.MCIMX7U5 platform.drivers.dmamux.MCIMX7U5 platform.drivers.lpi2c.MCIMX7U5 platform.drivers.lpi2c_edma.MCIMX7U5 platform.drivers.lpi2c_cmsis.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 utility.debug_console.MCIMX7U5 component.lpuart_adapter.MCIMX7U5 component.serial_manager.MCIMX7U5 component.serial_manager_uart.MCIMX7U5 platform.drivers.lpuart.MCIMX7U5 component.lists.MCIMX7U5 platform.devices.MCIMX7U5_startup.MCIMX7U5 platform.drivers.gpio.MCIMX7U5 platform.drivers.msmc.MCIMX7U5 platform.utilities.assert.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.Include_common.MCIMX7U5 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MCIMX7U5 platform.CMSIS_Driver_Include.Common_CMSISInclude.MCIMX7U5">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -63,6 +62,10 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <source path="CMSIS/Driver/Include" target_path="CMSIS" type="c_include" exclude="true">
+      <files mask="Driver_Common.h"/>
+      <files mask="Driver_I2C.h"/>
+    </source>
     <source path="boards/evkmcimx7ulp/cmsis_driver_examples/lpi2c/int_b2b_transfer/slave/armgcc" target_path="src" type="linker" toolchain="armgcc">
       <files mask="MCIMX7U5xxxxx_cm4_ram.ld"/>
     </source>

@@ -196,7 +196,6 @@ void USB_ControllerSuspended(void)
 {
 }
 
-
 void USB_OTG1_IRQHandler(void)
 {
     USB_DeviceEhciIsrFunction(g_UsbDeviceHidMouse.deviceHandle);
@@ -205,22 +204,23 @@ void USB_OTG1_IRQHandler(void)
 void USB_DeviceClockInit(void)
 {
     usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL, BOARD_USB_PHY_TXCAL45DP, BOARD_USB_PHY_TXCAL45DM,
+        BOARD_USB_PHY_D_CAL,
+        BOARD_USB_PHY_TXCAL45DP,
+        BOARD_USB_PHY_TXCAL45DM,
     };
 
     CLOCK_EnableUsbhs0PhyPllClock(kCLOCK_Usbphy480M, 480000000U);
     CLOCK_EnableUsbhs0Clock(kCLOCK_Usb480M, 480000000U);
     USB_EhciLowPowerPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ, &phyConfig);
-
 }
 void USB_DeviceIsrEnable(void)
 {
     uint8_t irqNumber;
 
     uint8_t usbDeviceEhciIrq[] = USBHS_IRQS;
-    irqNumber = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
+    irqNumber                  = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
 
-/* Install isr, set priority, and enable IRQ. */
+    /* Install isr, set priority, and enable IRQ. */
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
     EnableIRQ((IRQn_Type)irqNumber);
 }
@@ -764,7 +764,9 @@ void main(void)
 
     /* Define the initialization structure for the input switch pin. */
     gpio_pin_config_t sw_config = {
-        kGPIO_DigitalInput, 0, kGPIO_IntRisingEdge,
+        kGPIO_DigitalInput,
+        0,
+        kGPIO_IntRisingEdge,
     };
     /* Initialize input switch GPIO. */
     GPIO_PinInit(BOARD_USER_BUTTON_GPIO, BOARD_USER_BUTTON_GPIO_PIN, &sw_config);

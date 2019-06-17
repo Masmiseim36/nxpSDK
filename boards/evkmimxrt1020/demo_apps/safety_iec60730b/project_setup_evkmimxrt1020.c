@@ -1,0 +1,347 @@
+/*******************************************************************************
+*
+* Copyright 2013 - 2016, Freescale Semiconductor, Inc.
+* Copyright 2016-2019 NXP
+*
+* This software is owned or controlled by NXP and may only be used
+* strictly in accordance with the applicable license terms.  By expressly
+* accepting such terms or by downloading, installing, activating and/or
+* otherwise using the software, you are agreeing that you have read, and
+* that you agree to comply with and are bound by, such license terms.  If
+* you do not agree to be bound by the applicable license terms, then you
+* may not retain, install, activate or otherwise use the software.
+* 
+*
+*******************************************************************************/
+
+#include "project_setup_evkmimxrt1020.h"
+
+/*******************************************************************************
+ * Definitions
+ ******************************************************************************/
+   
+/*******************************************************************************
+ * Prototypes
+ ******************************************************************************/
+
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
+
+/*******************************************************************************
+ * Code
+ ******************************************************************************/
+/*!
+* @brief   Watchdog configuration function
+*
+*          Enables the watchdog. Also in Wait and Stop mode. Updates are allowed
+*
+* @param   timeout
+* @param   window
+* @param   prescaler
+*
+* @return  None
+*/
+void WatchdogEnable(RTWDOG_Type *WDOGx, unsigned long timeout)   
+{   
+  uint32_t prescaler = 0;
+  uint16_t window = 0;
+
+  __asm("cpsid i");
+    
+    WDOGx->CNT = RTWDOG_UPDATE_KEY; /* Unlock sequence */ 
+    WDOGx->TOVAL = (uint16_t)timeout; /* Set timeout */
+    
+    /* Enable rtwdog, LPO clock, interrupt disabled, update enabled, 32b refresh, window mode, prescaler 255 enabled/disabled */
+    WDOGx->CS = RTWDOG_CS_EN_MASK | RTWDOG_CS_CLK(1) | RTWDOG_CS_INT(0) | 
+                 RTWDOG_CS_UPDATE(1) | RTWDOG_CS_CMD32EN_MASK |
+                 (window == 0 ? RTWDOG_CS_WIN(0) : RTWDOG_CS_WIN(1)) |
+                 (prescaler == 0 ? RTWDOG_CS_PRES(0) : RTWDOG_CS_PRES(1));
+                 
+    if (window > 0)
+    {
+        WDOGx->WIN = (uint16_t)window;
+    }
+
+    __asm("cpsie i");
+}  
+     
+/*!
+ * @brief   Watchdog disabling function
+ * 
+ * @param   void
+ *
+ * @return  None
+ */
+void WatchdogDisable(RTWDOG_Type *WDOGx)
+{  
+    __asm("cpsid i");
+    
+    WDOGx->CNT = RTWDOG_UPDATE_KEY; /* Unlock sequence */    
+    WDOGx->TOVAL = (uint16_t)0xFFFF; /* Write any nonzero value */
+    /* Clear the EN bit to disable watchdog */
+    WDOGx->CS = (uint32_t) ((WDOGx->CS) & ~RTWDOG_CS_EN_MASK);
+    
+    __asm("cpsie i");
+}   
+
+/*!
+ * @brief   Initialization of GPT1 timer
+ *
+ *          Firstly used for watchdog test, then for clock test
+ *
+ * @param   clkSource - 
+ * @param   compare   - 32bit value
+ * @param   prescaler - valid range 1-4096
+ *
+ * @return  None
+ */
+void GPT1_Init(uint32_t clkSource, uint32_t compare, uint32_t prescaler)
+{
+    /* Gpt serial clock, gpt bus clock enable */  
+    CCM->CCGR1 |= (CCM_CCGR1_CG10_MASK | CCM_CCGR1_CG11_MASK); 
+    
+    /* Reset registers */
+    GPT1->CR = GPT_CR_SWR(1U);
+    
+    /* Wait enable, stop enable, counter is reset when timer is disabled */
+    GPT1->CR |= GPT_CR_WAITEN_MASK | GPT_CR_STOPEN_MASK | GPT_CR_ENMOD_MASK;
+    
+    /* Clock source and prescaler */
+    if (clkSource == GPT_SRC_24M)
+    {
+        GPT1->CR |= GPT_CR_CLKSRC(clkSource) | GPT_CR_EN_24M_MASK; /* Set 24MHz clock source */
+    }
+    else
+    {
+        GPT1->CR |= GPT_CR_CLKSRC(clkSource); /* Set clock source */
+    }
+  
+    if (prescaler > 0 && prescaler <= GPT_PR_PRESCALER_MASK + 1)
+    {
+        GPT1->PR = GPT_PR_PRESCALER(prescaler - 1);
+    }
+    
+    GPT1->OCR[0] = GPT_OCR_COMP(compare); /* Compare value */
+    
+    /* Choose whether generates interrupt or not */
+    //GPT1->IR = GPT_IR_OF1IE_MASK; /* Output compare 1 interrupt enable */    
+    //NVIC_EnableIRQ(GPT1_IRQn);    /* Enable interrupt */
+    
+    GPT1->CR |= GPT_CR_EN_MASK; /* Enable GPT */ 
+}
+
+/*!
+ * @brief   Initialization of GPT2 timer
+ *
+ *          Used for clock test
+ *
+ * @param   clkSource - 
+ * @param   compare   - 32bit value
+ * @param   prescaler - valid range 1-4096
+ *
+ * @return  None
+ */
+void GPT2_Init(uint32_t clkSource, uint32_t compare, uint32_t prescaler)
+{
+    /* Gpt2 serial clock, gpt2 bus clock enable */  
+    CCM->CCGR0 |= (CCM_CCGR0_CG12_MASK | CCM_CCGR0_CG13_MASK); 
+    
+    /* Reset registers */
+    GPT2->CR = GPT_CR_SWR(1U);
+    
+    /* Wait enable, stop enable, counter is reset when timer is disabled */
+    GPT2->CR |= GPT_CR_WAITEN_MASK | GPT_CR_STOPEN_MASK | GPT_CR_ENMOD_MASK;
+    
+    /* Clock source and prescaler */
+    if (clkSource == GPT_SRC_24M)
+    {
+        GPT2->CR |= GPT_CR_CLKSRC(clkSource) | GPT_CR_EN_24M_MASK; /* Set 24MHz clock source */
+    }
+    else
+    {
+        GPT2->CR |= GPT_CR_CLKSRC(clkSource); /* Set clock source */
+    }
+  
+    if (prescaler > 0 && prescaler <= GPT_PR_PRESCALER_MASK + 1)
+    {
+        GPT2->PR = GPT_PR_PRESCALER(prescaler - 1);
+    }
+    
+    GPT2->OCR[0] = GPT_OCR_COMP(compare); /* Compare value */
+    
+    /* Choose whether generates interrupt or not */
+    //GPT2->IR = GPT_IR_OF1IE_MASK; /* Output compare 1 interrupt enable */
+    //NVIC_EnableIRQ(GPT2_IRQn);    /* Enable interrupt */
+    
+    GPT2->CR |= GPT_CR_EN_MASK; /* Enable GPT */
+}
+
+/*!
+ * @brief   Initialization of Systick timer
+ *
+ *          This function configures the Systick as a source of interrupt
+ *
+ * @param   compare - defines the period of counter refresh
+ *
+ * @return  None
+ */
+void SystickInitialisation(uint32_t compare)
+{
+    SysTick->VAL = 0;
+    SysTick->LOAD = compare;
+    SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk | SysTick_CTRL_TICKINT_Msk;
+}
+
+/*!
+ * @brief   Setup of LPUART
+ *       
+ * @param   Uart_X  - peripheral base address
+ * @param   baudRate  - desired baud rate
+ * @param   clockFreq - information about selected input clock frequency
+ *
+ * @return  None
+ */
+void SerialInit(LPUART_Type *Uart_X, uint32_t baudRate, uint32_t clockFreq)
+{
+    const lpuart_config_t LPUART_1_config =
+    {
+      .baudRate_Bps = baudRate,
+      .parityMode = kLPUART_ParityDisabled,
+      .dataBitsCount = kLPUART_EightDataBits,
+      .isMsb = false,
+      .stopBitCount = kLPUART_OneStopBit,
+      .txFifoWatermark = 0,
+      .rxFifoWatermark = 0,
+      .enableRxRTS = false,
+      .enableTxCTS = false,
+      .txCtsSource = kLPUART_CtsSourcePin,
+      .txCtsConfig = kLPUART_CtsSampleAtStart,
+      .rxIdleType = kLPUART_IdleTypeStartBit,
+      .rxIdleConfig = kLPUART_IdleCharacter1,
+      .enableTx = true,
+      .enableRx = true
+    };
+    
+    LPUART_Init(Uart_X, &LPUART_1_config, clockFreq);
+}
+
+/*!
+* @brief  Sets port direction and mux
+*/
+void PortSetup(uint32_t gpio, uint8_t pinNum, uint8_t pinDir)
+{  
+    /* Port configuration structure */
+    gpio_pin_config_t portConfig = { pinDir ? kGPIO_DigitalOutput : kGPIO_DigitalInput, 0U, kGPIO_NoIntmode };
+    
+    /* Initialization */
+    GPIO_PinInit((GPIO_Type *)gpio, pinNum, &portConfig);
+}
+
+/*!
+* @brief  DCP module initialization (used in Flash test)       
+*
+* @param  pBuffer - pointer to context switching buffer
+*
+* @return None
+*/
+void DCPInit(unsigned long *pui32Buffer)
+{    
+    /* Turn off the entire data cache */
+    SCB_DisableDCache();
+  
+    /* DCP clock enable */
+    CCM->CCGR0 = (CCM->CCGR0 & ~CCM_CCGR0_CG5_MASK) | CCM_CCGR0_CG5(0x3);
+
+    /* residual_writes=1, context_caching=0, interrupt disable */
+    DCP->CTRL = DCP_CTRL_SFTRST(0) | DCP_CTRL_CLKGATE(0) | 
+                DCP_CTRL_PRESENT_CRYPTO(1) | DCP_CTRL_PRESENT_SHA(1) | 
+                DCP_CTRL_GATHER_RESIDUAL_WRITES(0) | DCP_CTRL_ENABLE_CONTEXT_CACHING(0) | 
+                DCP_CTRL_ENABLE_CONTEXT_SWITCHING(0) | DCP_CTRL_CHANNEL_INTERRUPT_ENABLE(0);
+    
+    /* context_switching=1 */
+    DCP->CTRL |= DCP_CTRL_ENABLE_CONTEXT_SWITCHING(1);
+
+    /* Enable all channels */
+    DCP->CHANNELCTRL = DCP_CHANNELCTRL_ENABLE_CHANNEL(0xF);
+    
+    /* Store the CSB address into DCP->CONTEXT */
+    DCP->CONTEXT = (unsigned long)pui32Buffer;
+ }
+
+/*!
+* @brief   This function performs the MPU (Memory Protection Unit) configuration
+*          for the various memory regions inc1uding cache setup and the exact 
+*          behaviour of this function is contro11ed by a number of defined symbo1s.
+*
+* @param   none
+*
+* @return  None
+*/
+void MPUSetup(void)
+{
+    /* Disable I cache and D cache */
+    SCB_DisableICache();
+    SCB_DisableDCache();
+  
+/* Disable MPU */
+    ARM_MPU_Disable();
+
+    /* Region 0 setting */
+    MPU->RBAR = ARM_MPU_RBAR(0, 0xC0000000U);
+    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 2, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_512MB);
+
+    /* Region 1 setting */
+    MPU->RBAR = ARM_MPU_RBAR(1, 0x80000000U);
+    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 2, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_1GB);
+
+/* Region 2 setting */
+#if defined(XIP_EXTERNAL_FLASH) && (XIP_EXTERNAL_FLASH == 1)
+    MPU->RBAR = ARM_MPU_RBAR(2, 0x60000000U);
+    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_RO, 0, 0, 1, 1, 0, ARM_MPU_REGION_SIZE_8MB);
+#else
+    MPU->RBAR = ARM_MPU_RBAR(2, 0x60000000U);
+    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_RO, 2, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_8MB);
+#endif
+
+    /* Region 3 setting */
+    MPU->RBAR = ARM_MPU_RBAR(3, 0x00000000U);
+    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 2, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_1GB);
+
+    /* Region 4 setting */
+    MPU->RBAR = ARM_MPU_RBAR(4, 0x00000000U);
+    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 1, 0, ARM_MPU_REGION_SIZE_64KB);
+
+    /* Region 5 setting */
+    MPU->RBAR = ARM_MPU_RBAR(5, 0x20000000U);
+    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 1, 0, ARM_MPU_REGION_SIZE_64KB);
+
+    /* Region 6 setting */
+    MPU->RBAR = ARM_MPU_RBAR(6, 0x20200000U);
+    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 1, 0, ARM_MPU_REGION_SIZE_128KB);
+
+/* The define sets the cacheable memory to shareable,
+ * this suggestion is referred from chapter 2.2.1 Memory regions,
+ * types and attributes in Cortex-M7 Devices, Generic User Guide */
+#if defined(SDRAM_IS_SHAREABLE)
+    /* Region 7 setting, set whole SDRAM can be accessed by cache */
+    MPU->RBAR = ARM_MPU_RBAR(7, 0x80000000U);
+    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 1, 1, 1, 0, ARM_MPU_REGION_SIZE_32MB);
+#else
+    /* Region 7 setting, set whole SDRAM can be accessed by cache */
+    MPU->RBAR = ARM_MPU_RBAR(7, 0x80000000U);
+    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 1, 0, ARM_MPU_REGION_SIZE_32MB);
+#endif
+
+    /* Region 8 setting, set last 2MB of SDRAM can't be accessed by cache, glocal variables which are not expected to be
+     * accessed by cache can be put here */
+    MPU->RBAR = ARM_MPU_RBAR(8, 0x81E00000U);
+    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 1, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_2MB);
+
+    /* Enable MPU */
+    ARM_MPU_Enable(MPU_CTRL_PRIVDEFENA_Msk);
+
+    /* Enable I cache and D cache */
+    SCB_EnableDCache();
+    SCB_EnableICache();
+}

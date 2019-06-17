@@ -150,7 +150,7 @@ U8 hlse_a71chSetupScp03()
     U8 keyDek[SCP_KEY_SIZE];
     U8 sCounter[3];
     U16 sCounterLen = sizeof(sCounter);
-    HLSE_OBJECT_HANDLE moduleHandle;
+    HLSE_OBJECT_HANDLE moduleHandle = 0;
     U16 moduleHandleNum = 1;
     HLSE_ATTRIBUTE attr;
     HLSE_SECURE_CHANNEL_SCP03_ESTABLISH_PARAMS scp03Params;
@@ -476,7 +476,7 @@ U16 hlse_GetRandom(U8 *random, U8 randomLen)
 {
     U8 result = 1;
     // Get the Module's handle
-    HLSE_OBJECT_HANDLE moduleHandle;
+    HLSE_OBJECT_HANDLE moduleHandle = 0;
     U16 moduleHandleNum = 1;
     HLSE_ATTRIBUTE attr;
 
@@ -495,7 +495,7 @@ U16 hlse_GetCredentialInfo(U8 *map, U16 *mapLen)
 {
     U8 result = 1;
     // Get the Module's handle
-    HLSE_OBJECT_HANDLE moduleHandle;
+    HLSE_OBJECT_HANDLE moduleHandle = 0;
     U16 moduleHandleNum = 1;
     HLSE_ATTRIBUTE attr;
 
@@ -575,7 +575,7 @@ U16 hlse_GetUniqueID(U8 *uid, U16 *uidLen)
 {
     U8 result = 1;
     // Get the Module's handle
-    HLSE_OBJECT_HANDLE moduleHandle;
+    HLSE_OBJECT_HANDLE moduleHandle = 0;
     U16 moduleHandleNum = 1;
     HLSE_ATTRIBUTE attr;
 
@@ -594,7 +594,7 @@ U16 hlse_InjectLock()
 {
     U8 result = 1;
     // Get the Module's handle
-    HLSE_OBJECT_HANDLE moduleHandle;
+    HLSE_OBJECT_HANDLE moduleHandle = 0;
     U16 moduleHandleNum = 1;
     HLSE_ATTRIBUTE attr;
     HLSE_LIFE_CYCLE_STATE lifeCycleState = HLSE_INJECT_LOCKED;
@@ -635,7 +635,7 @@ U16 hlse_SetSymKey(SST_Index_t index, const U8 *key, U16 keyLen, HLSE_OBJECT_HAN
 
 U16 hlse_EccVerify(SST_Index_t index, const U8 *pHash, U16 hashLen, const U8 *pSignature, U16 signatureLen, U8 *pResult)
 {
-    HLSE_OBJECT_HANDLE handles[A71CH_PUBLIC_KEY_MAX];
+    HLSE_OBJECT_HANDLE handles[A71CH_PUBLIC_KEY_MAX] = {0};
 
     U8 result = 1;
     U16 handleNum = A71CH_PUBLIC_KEY_MAX;

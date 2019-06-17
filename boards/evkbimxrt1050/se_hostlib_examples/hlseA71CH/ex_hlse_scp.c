@@ -225,9 +225,9 @@ static U8 exUseCrypto()
     U16 signatureOnHostLen = sizeof(signatureOnHost);
     U32 nSigLen = 0;
 
-    U8 sharedSecretOnA71CH[32];
+    U8 sharedSecretOnA71CH[32] = { 0 };
     U16 sharedSecretOnA71CHLen = 0;
-    U8 sharedSecretOnHost[32];
+    U8 sharedSecretOnHost[32] = { 0 };
     U16 sharedSecretOnHostLen = 0;
     U16 expectedSharedSecretLen = sizeof(sharedSecretOnHost);
 
@@ -327,7 +327,7 @@ static U8 exUseCrypto()
     err = A71_EcdhGetSharedSecret(index, eccKcTls_0.pub, eccKcTls_0.pubLen, sharedSecretOnA71CH, &sharedSecretOnA71CHLen);
 #else
     {
-        HLSE_OBJECT_HANDLE handles[A71CH_KEY_PAIR_MAX];
+        HLSE_OBJECT_HANDLE handles[A71CH_KEY_PAIR_MAX] = {0};
         U16 handleNum = A71CH_KEY_PAIR_MAX;
         err = HLSE_EnumerateObjects(HLSE_KEY_PAIR, handles, &handleNum);
         result &= AX_CHECK_SW(err, HLSE_SW_OK, "err");
@@ -366,7 +366,7 @@ static U8 exProvision()
 
     ECCCurve_t eccCurve = ECCCurve_NIST_P256;
 
-    U8 pubTlsKey[256];
+    U8 pubTlsKey[256] = { 0 };
     U16 pubTlsKeyLen = 0;
 
     int indexAesKey = 0;
@@ -378,7 +378,7 @@ static U8 exProvision()
 
     HLSE_OBJECT_HANDLE keyPairHandles[2];
     HLSE_OBJECT_HANDLE pubkeyHandles[2];
-    HLSE_OBJECT_HANDLE aesKeyHandles[A71CH_SYM_KEY_MAX];
+    HLSE_OBJECT_HANDLE aesKeyHandles[A71CH_SYM_KEY_MAX] = {0};
 
     PRINTF( "\r\n-----------\r\nStart exProvision()\r\n------------\r\n");
 

@@ -27,7 +27,6 @@
 #endif
 
 #define USB_DEVICE_INTERRUPT_PRIORITY (3U)
-
 #define USB_PRINTER_BUFFER_SIZE                                                                            \
     (HS_PRINTER_BULK_OUT_PACKET_SIZE > FS_PRINTER_BULK_OUT_PACKET_SIZE ? HS_PRINTER_BULK_OUT_PACKET_SIZE : \
                                                                          FS_PRINTER_BULK_OUT_PACKET_SIZE)
@@ -35,6 +34,7 @@
 typedef enum _usb_device_printer_state
 {
     kPrinter_Idle = 0x00,
+    kPrinter_ReceiveNeedPrime,
     kPrinter_Receiving,
     kPrinter_Received,
 } usb_device_printer_buffer_t;
@@ -51,6 +51,8 @@ typedef struct _usb_device_printer_app
     uint32_t sendLength;
     uint8_t *printerBuffer;
     volatile uint8_t printerState;
+    volatile uint8_t stateChanged;
+    volatile uint8_t prnterTaskState;
     uint8_t attach;
     uint8_t speed;
     uint8_t printerPortStatus;

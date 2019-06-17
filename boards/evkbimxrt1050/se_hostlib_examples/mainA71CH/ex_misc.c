@@ -149,10 +149,10 @@ static U8 exGetUniqueID(U8 initMode)
 {
     U8 result = 1;
     U16 err;
-    U8 uid[A71CH_MODULE_UNIQUE_ID_LEN];
+    U8 uid[A71CH_MODULE_UNIQUE_ID_LEN] = {0};
     U16 uidLen = sizeof(uid);
-	U8 certUid[A71CH_MODULE_CERT_UID_LEN];
-	U16 certUidLen = sizeof(certUid);
+    U8 certUid[A71CH_MODULE_CERT_UID_LEN] = {0};
+    U16 certUidLen = sizeof(certUid);
 
     sm_printf(CONSOLE, "\r\n-----------\r\nStart exGetUniqueID(%s)\r\n------------\r\n", getInitModeAsString(initMode));
 
@@ -165,10 +165,10 @@ static U8 exGetUniqueID(U8 initMode)
     result &= AX_CHECK_SW(err, SW_OK, "err");
     axPrintByteArray("uid", uid, uidLen, AX_COLON_32);
 
-	sm_printf(CONSOLE, "A71_GetCertUid().\r\n");
-	err = A71_GetCertUid(certUid, &certUidLen);
-	result &= AX_CHECK_SW(err, SW_OK, "err");
-	axPrintByteArray("certUid", certUid, certUidLen, AX_COLON_32);
+    sm_printf(CONSOLE, "A71_GetCertUid().\r\n");
+    err = A71_GetCertUid(certUid, &certUidLen);
+    result &= AX_CHECK_SW(err, SW_OK, "err");
+    axPrintByteArray("certUid", certUid, certUidLen, AX_COLON_32);
 
     sm_printf(CONSOLE, "\r\n-----------\r\nEnd exGetUniqueID(%s), result = %s\r\n------------\r\n", getInitModeAsString(initMode),
         ((result == 1)? "OK": "FAILED"));

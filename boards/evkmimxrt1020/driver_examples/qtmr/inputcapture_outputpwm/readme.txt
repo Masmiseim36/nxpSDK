@@ -6,6 +6,14 @@ The example sets up a QTMR channel for input capture. Once the input signal is r
 this example will enter interrupt and print the capture value.
 The example also sets up one QTMR channel to output pwm. The user should probe a 50Khz PWM signal output with
 50% dutycycle with a oscilloscope. 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -17,6 +25,7 @@ Board settings
 ==============
 - Connect input signal to J16-13.
 - Use oscilloscope to measure output the signal pin at J17-5.
+- Remove the R116 on the board when use pin J16-13 as input or output.
 
 Prepare the Demo
 ================
@@ -39,7 +48,7 @@ When the demo runs successfully, the following message is displayed in the termi
 
 ****Provide a signal input to the QTMR pin****
 
-Captured Period time = 998 us (±5%)
+Captured Period time = 1000 us (±5%)
 
 ****Output PWM example.****
 
@@ -56,11 +65,6 @@ To debug in qspiflash, following steps are needed:
 3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
 4. Start debugging in IDE.
    - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

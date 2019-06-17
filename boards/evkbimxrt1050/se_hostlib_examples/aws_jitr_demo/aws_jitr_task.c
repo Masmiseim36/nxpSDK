@@ -1,6 +1,6 @@
 /*
  * Copyright 2010-2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- * Copyright 2017-2018 NXP Semiconductors. Not a Contribution
+ * Copyright 2017-2018 NXP. Not a Contribution
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -215,7 +215,7 @@ void awsPubSub_task(void *pvParameters)
     HLSE_CONNECTION_PARAMS params;
     HLSE_RET_CODE hlseret;
     HLSE_COMMUNICATION_STATE commState;
-    U8 AxUID[A71CH_MODULE_UNIQUE_ID_LEN];
+    U8 AxUID[A71CH_MODULE_UNIQUE_ID_LEN] = {0};
     U16 AxUIDLen = A71CH_MODULE_UNIQUE_ID_LEN;
 
     hlseret = HLSE_Connect(&params, &commState);

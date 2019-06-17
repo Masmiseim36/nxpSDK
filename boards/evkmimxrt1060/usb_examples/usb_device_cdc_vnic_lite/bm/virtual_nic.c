@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -136,7 +136,9 @@ void USB_OTG2_IRQHandler(void)
 void USB_DeviceClockInit(void)
 {
     usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL, BOARD_USB_PHY_TXCAL45DP, BOARD_USB_PHY_TXCAL45DM,
+        BOARD_USB_PHY_D_CAL,
+        BOARD_USB_PHY_TXCAL45DP,
+        BOARD_USB_PHY_TXCAL45DM,
     };
 
     if (CONTROLLER_ID == kUSB_ControllerEhci0)
@@ -156,7 +158,7 @@ void USB_DeviceIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbDeviceEhciIrq[] = USBHS_IRQS;
-    irqNumber = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
+    irqNumber                  = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
 
     /* Install isr, set priority, and enable IRQ. */
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
@@ -824,10 +826,12 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 if (USB_SPEED_HIGH == g_cdcVnic.speed)
                 {
                     epInitStruct.maxPacketSize = HS_CDC_VNIC_INTERRUPT_IN_PACKET_SIZE;
+                    epInitStruct.interval = HS_CDC_VNIC_INTERRUPT_IN_INTERVAL;
                 }
                 else
                 {
                     epInitStruct.maxPacketSize = FS_CDC_VNIC_INTERRUPT_IN_PACKET_SIZE;
+                    epInitStruct.interval = FS_CDC_VNIC_INTERRUPT_IN_INTERVAL;
                 }
 
                 USB_DeviceInitEndpoint(g_cdcVnic.deviceHandle, &epInitStruct, &epCallback);
@@ -837,6 +841,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 epCallback.callbackParam = handle;
 
                 epInitStruct.zlt = 0;
+                epInitStruct.interval = 0U;
                 epInitStruct.transferType = USB_ENDPOINT_BULK;
                 epInitStruct.endpointAddress =
                     USB_CDC_VNIC_BULK_IN_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
@@ -855,6 +860,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 epCallback.callbackParam = handle;
 
                 epInitStruct.zlt = 0;
+                epInitStruct.interval = 0U;
                 epInitStruct.transferType = USB_ENDPOINT_BULK;
                 epInitStruct.endpointAddress =
                     USB_CDC_VNIC_BULK_OUT_ENDPOINT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);

@@ -8,8 +8,8 @@
     <definition extID="component.serial_manager_uart.MIMXRT1062"/>
     <definition extID="device.MIMXRT1062_CMSIS.MIMXRT1062"/>
     <definition extID="device.MIMXRT1062_startup.MIMXRT1062"/>
-    <definition extID="middleware.freertos.MIMXRT1062"/>
-    <definition extID="middleware.freertos.heap.heap_4.MIMXRT1062"/>
+    <definition extID="middleware.amazon_freertos.freertos.MIMXRT1062"/>
+    <definition extID="middleware.amazon_freertos.freertos.heap_4.MIMXRT1062"/>
     <definition extID="middleware.usb.device_controller_ehci.MIMXRT1062"/>
     <definition extID="middleware.usb.phy.MIMXRT1062"/>
     <definition extID="platform.Include_common.MIMXRT1062"/>
@@ -28,8 +28,10 @@
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
+    <definition extID="com.crt.advproject.config.exe.debug"/>
+    <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1060_dev_audio_generator_freertos" name="dev_audio_generator_freertos" category="usb_examples" dependency="middleware.usb.device_controller_ehci.MIMXRT1062 middleware.usb.phy.MIMXRT1062 platform.drivers.cache_armv7_m7.MIMXRT1062 middleware.freertos.heap.heap_4.MIMXRT1062 middleware.freertos.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.xip_board.MIMXRT1062 utility.debug_console.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 component.lists.MIMXRT1062 platform.Include_core_cm7.MIMXRT1062 platform.Include_common.MIMXRT1062" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="evkmimxrt1060_dev_audio_generator_freertos" name="dev_audio_generator_freertos" category="usb_examples" dependency="middleware.usb.device_controller_ehci.MIMXRT1062 middleware.usb.phy.MIMXRT1062 platform.drivers.cache_armv7_m7.MIMXRT1062 middleware.amazon_freertos.freertos.heap_4.MIMXRT1062 middleware.amazon_freertos.freertos.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.xip_board.MIMXRT1062 utility.debug_console.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 component.lists.MIMXRT1062 platform.Include_core_cm7.MIMXRT1062 platform.Include_common.MIMXRT1062">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -55,10 +57,6 @@
           <value>_DEBUG=1</value>
           <value>CPU_MIMXRT1062DVL6A</value>
           <value>SDK_DEBUGCONSOLE=1</value>
-          <value>PRINTF_FLOAT_ENABLE=0</value>
-          <value>SCANF_FLOAT_ENABLE=0</value>
-          <value>PRINTF_ADVANCED_ENABLE=0</value>
-          <value>SCANF_ADVANCED_ENABLE=0</value>
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>USB_STACK_FREERTOS</value>
@@ -82,6 +80,17 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <debug_configurations>
+      <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+        <drivers>
+          <driver id_refs="BOARD_FLASH_evkmimxrt1060">
+            <driverBinary path="devices/MIMXRT1062/mcuxpresso" type="binary" target_path="binary">
+              <files mask="MIMXRT1060_SFDP_QSPI.cfx"/>
+            </driverBinary>
+          </driver>
+        </drivers>
+      </debug_configuration>
+    </debug_configurations>
     <source path="boards/evkmimxrt1060/usb_examples/usb_device_audio_generator/freertos/armgcc" target_path="src" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1062xxxxx_ram.ld"/>
     </source>
@@ -121,6 +130,9 @@
       <files mask="audio_data.c"/>
       <files mask="audio_generator.c"/>
       <files mask="usb_device_descriptor.c"/>
+    </source>
+    <source path="boards/evkmimxrt1060/usb_examples/usb_device_audio_generator/freertos" target_path="src" type="doc" exclude="true">
+      <files mask="readme.pdf"/>
     </source>
     <source path="boards/evkmimxrt1060/usb_examples/usb_device_audio_generator/freertos" target_path="usb/device/class/audio" type="c_include">
       <files mask="usb_device_audio.h"/>

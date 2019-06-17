@@ -8,10 +8,10 @@ page back to the PC.
 
 Toolchain supported
 ===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.1
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
 
 Hardware requirements
 =====================
@@ -42,6 +42,8 @@ Prepare the Demo
 Running the demo
 ================
 1.  When the demo runs successfully, the terminal will display the following:
+        Initializing PHY...
+
         ************************************************
          HTTP Server example
         ************************************************

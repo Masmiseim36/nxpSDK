@@ -12,13 +12,15 @@
 /*******************************************************************************
 * Definitions
 ******************************************************************************/
+/*! @brief Whether USB Audio use syn mode or not. */
+#define USB_DEVICE_AUDIO_USE_SYNC_MODE (0U)
 
 #define USB_DEVICE_SPECIFIC_BCD_VERSION (0x0200U)
 #define USB_DEVICE_DEMO_BCD_VERSION (0x0101U)
 
 #define USB_DEVICE_MAX_POWER (0x32U)
 
-/* usb descritpor length */
+/* usb descriptor length */
 #define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (sizeof(g_UsbDeviceConfigurationDescriptor))
 
 #define USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH (9)
@@ -43,12 +45,19 @@
 #define USB_AUDIO_CONTROL_INTERFACE_INDEX (0)
 #define USB_AUDIO_STREAM_INTERFACE_INDEX (1)
 
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+#define USB_AUDIO_STREAM_ENDPOINT_COUNT (1)
+#else
 #define USB_AUDIO_STREAM_ENDPOINT_COUNT (2)
+#endif
 #define USB_AUDIO_CONTROL_ENDPOINT_COUNT (1)
 
 #define USB_AUDIO_SPEAKER_STREAM_ENDPOINT (2)
 #define USB_AUDIO_CONTROL_ENDPOINT (1)
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+#else
 #define USB_AUDIO_SPEAKER_FEEDBACK_ENDPOINT (2)
+#endif
 
 #define USB_AUDIO_SPEAKER_INTERFACE_COUNT \
     (USB_AUDIO_SPEAKER_CONTROL_INTERFACE_COUNT + USB_AUDIO_SPEAKER_STREAM_INTERFACE_COUNT)
@@ -69,8 +78,11 @@
     (AUDIO_SAMPLING_RATE_KHZ * AUDIO_FORMAT_CHANNELS * \
      AUDIO_FORMAT_SIZE) /* This should be changed to 192 if sampling rate is 48k */
 #define FS_ISO_OUT_ENDP_PACKET_SIZE (AUDIO_SAMPLING_RATE_KHZ * AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE)
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+#else
 #define HS_ISO_FEEDBACK_ENDP_PACKET_SIZE (3)
 #define FS_ISO_FEEDBACK_ENDP_PACKET_SIZE (3)
+#endif
 #define HS_ISO_OUT_ENDP_INTERVAL (0x04)
 #define HS_ISO_IN_ENDP_INTERVAL (0x04)
 #define FS_ISO_OUT_ENDP_INTERVAL (0x01)
@@ -120,7 +132,7 @@
  * current speed.
  * As the default, the device descriptors and configurations are configured by using FS parameters for both EHCI and
  * KHCI.
- * When the EHCI is enabled, the application needs to call this fucntion to update device by using current speed.
+ * When the EHCI is enabled, the application needs to call this function to update device by using current speed.
  * The updated information includes endpoint max packet size, endpoint interval, etc.
  *
  * @param speed Speed type. USB_SPEED_HIGH/USB_SPEED_FULL/USB_SPEED_LOW.

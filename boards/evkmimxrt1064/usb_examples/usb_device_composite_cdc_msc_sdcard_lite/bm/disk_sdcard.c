@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2017, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -25,7 +25,7 @@
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #include "usb_phy.h"
 #endif
 
@@ -135,7 +135,7 @@ void USB_DeviceMscApp(void)
 static void USB_BmEnterCritical(uint8_t *sr)
 {
     *sr = DisableGlobalIRQ();
-    __ASM("CPSID I");
+    __ASM("CPSID i");
 }
 /*!
  * @brief msc exit critical.
@@ -845,6 +845,7 @@ usb_status_t USB_DeviceMscEndpointsInit(void)
     epCallback.callbackParam = (void *)mscHandle;
 
     epInitStruct.zlt = 0;
+    epInitStruct.interval = 0;
     epInitStruct.transferType = USB_ENDPOINT_BULK;
     epInitStruct.endpointAddress =
         USB_MSC_DISK_BULK_IN_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
@@ -864,6 +865,7 @@ usb_status_t USB_DeviceMscEndpointsInit(void)
     epCallback.callbackParam = (void *)mscHandle;
 
     epInitStruct.zlt = 0;
+    epInitStruct.interval = 0;
     epInitStruct.transferType = USB_ENDPOINT_BULK;
     epInitStruct.endpointAddress =
         USB_MSC_DISK_BULK_OUT_ENDPOINT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);

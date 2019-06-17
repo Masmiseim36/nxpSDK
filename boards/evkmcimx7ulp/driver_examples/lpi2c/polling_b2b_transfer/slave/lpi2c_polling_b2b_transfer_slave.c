@@ -46,6 +46,7 @@ int main(void)
 {
     lpi2c_slave_config_t slaveConfig;
     status_t reVal = kStatus_Fail;
+    uint8_t subaddress;
 
     BOARD_InitPins();
     BOARD_BootClockRUN();
@@ -80,6 +81,13 @@ int main(void)
 
     memset(g_slave_buff, 0, sizeof(g_slave_buff));
 
+    /* Wait until being visited by master before slave polling transfer */
+    while (!(LPI2C_SlaveGetStatusFlags(EXAMPLE_I2C_SLAVE) & kLPI2C_SlaveAddressValidFlag))
+    {
+    }
+    /* Clear being visited flag */
+    LPI2C_SlaveGetReceivedAddress(EXAMPLE_I2C_SLAVE);
+
     /* Start accepting I2C transfers on the LPI2C slave peripheral */
     reVal = LPI2C_SlaveReceive(EXAMPLE_I2C_SLAVE, g_slave_buff, I2C_DATA_LENGTH, 0);
 
@@ -87,6 +95,28 @@ int main(void)
     {
         return -1;
     }
+
+    /* Wait until being visited by master before slave polling transfer */
+    while (!(LPI2C_SlaveGetStatusFlags(EXAMPLE_I2C_SLAVE) & kLPI2C_SlaveAddressValidFlag))
+    {
+    }
+    /* Clear being visited flag */
+    LPI2C_SlaveGetReceivedAddress(EXAMPLE_I2C_SLAVE);
+
+    /* Start accepting I2C transfers on the LPI2C slave peripheral to simulate subaddress and will send ACK to master */
+    reVal = LPI2C_SlaveReceive(EXAMPLE_I2C_SLAVE, &subaddress, 1, 0);
+
+    if (reVal != kStatus_Success)
+    {
+        return -1;
+    }
+
+    /* Wait until being visited by master before slave polling transfer */
+    while (!(LPI2C_SlaveGetStatusFlags(EXAMPLE_I2C_SLAVE) & kLPI2C_SlaveAddressValidFlag))
+    {
+    }
+    /* Clear being visited flag */
+    LPI2C_SlaveGetReceivedAddress(EXAMPLE_I2C_SLAVE);
 
     reVal = LPI2C_SlaveSend(EXAMPLE_I2C_SLAVE, &g_slave_buff[2], g_slave_buff[1], 0);
 

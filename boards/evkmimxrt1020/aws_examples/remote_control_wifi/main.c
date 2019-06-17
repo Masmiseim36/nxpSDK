@@ -29,7 +29,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  Includes
 ///////////////////////////////////////////////////////////////////////////////
-
 /* SDK Included Files */
 #include "board.h"
 #include "fsl_debug_console.h"
@@ -40,9 +39,7 @@
 /* Amazon FreeRTOS Demo Includes */
 #include "FreeRTOS.h"
 #include "task.h"
-#include "aws_clientcredential.h"
 #include "aws_logging_task.h"
-#include "aws_wifi.h"
 #include "aws_system_init.h"
 #include "aws_dev_mode_key_provisioning.h"
 
@@ -53,11 +50,15 @@
 #include "fsl_mma.h"
 #endif
 
+#include "aws_clientcredential.h"
+#include "aws_wifi.h"
 #include "clock_config.h"
-#include "wifi_shield_gt202.h"
+#include "wifi_shield.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define INIT_SUCCESS 0
+#define INIT_FAIL 1
 
 /* LPI2C */
 #define BOARD_ACCEL_I2C_BASEADDR LPI2C4
@@ -87,13 +88,13 @@
 
 /* Accelerometer and magnetometer */
 #if defined(BOARD_ACCEL_FXOS)
-fxos_handle_t accelHandle = {0};
+fxos_handle_t accelHandle           = {0};
 static const uint8_t accelAddress[] = {0x1CU, 0x1EU, 0x1DU, 0x1FU};
-fxos_config_t config = {0};
+fxos_config_t config                = {0};
 #elif defined(BOARD_ACCEL_MMA)
-mma_handle_t accelHandle = {0};
+mma_handle_t accelHandle            = {0};
 static const uint8_t accelAddress[] = {0x1CU, 0x1DU, 0x1EU, 0x1FU};
-mma_config_t config = {0};
+mma_config_t config                 = {0};
 #endif
 
 /* Accelerometer data scale */
@@ -106,11 +107,18 @@ uint8_t g_accelResolution = 0;
  ******************************************************************************/
 void BOARD_InitLEDs(void);
 extern void vStartLedDemoTask(void);
-static int prvWifiConnect(void);
+extern int initNetwork(void);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+const WIFINetworkParams_t pxNetworkParams = {
+    .pcSSID           = clientcredentialWIFI_SSID,
+    .ucSSIDLength     = sizeof(clientcredentialWIFI_SSID) - 1,
+    .pcPassword       = clientcredentialWIFI_PASSWORD,
+    .ucPasswordLength = sizeof(clientcredentialWIFI_PASSWORD) - 1,
+    .xSecurity        = clientcredentialWIFI_SECURITY,
+};
 /* Count of LED which can be controlled */
 uint8_t ledCount = 1;
 /* Array of LED names */
@@ -121,6 +129,43 @@ char ledColors[] = "[\"green\"]";
 /*******************************************************************************
  * Code
  ******************************************************************************/
+int initNetwork(void)
+{
+    WIFIReturnCode_t result;
+
+    configPRINTF(("Starting WiFi...\r\n"));
+
+    result = WIFI_On();
+    if (result != eWiFiSuccess)
+    {
+        configPRINTF(("Could not enable WiFi, reason %d.\r\n", result));
+        return INIT_FAIL;
+    }
+
+    configPRINTF(("WiFi module initialized.\r\n"));
+
+    result = WIFI_ConnectAP(&pxNetworkParams);
+    if (result != eWiFiSuccess)
+    {
+        configPRINTF(("Could not connect to WiFi, reason %d.\r\n", result));
+        return INIT_FAIL;
+    }
+
+    configPRINTF(("WiFi connected to AP %s.\r\n", pxNetworkParams.pcSSID));
+
+    uint8_t tmp_ip[4] = {0};
+    result            = WIFI_GetIP(tmp_ip);
+
+    if (result != eWiFiSuccess)
+    {
+        configPRINTF(("Could not get IP address, reason %d.\r\n", result));
+        return INIT_FAIL;
+    }
+
+    configPRINTF(("IP Address acquired %d.%d.%d.%d\r\n", tmp_ip[0], tmp_ip[1], tmp_ip[2], tmp_ip[3]));
+
+    return INIT_SUCCESS;
+}
 void turnOnLed(uint8_t id)
 {
     if (id == 0)
@@ -145,11 +190,10 @@ void BOARD_InitLEDs()
     USER_LED_INIT(LOGIC_LED_OFF);
 }
 
-const WIFINetworkParams_t pxNetworkParams = {
-    .pcSSID = clientcredentialWIFI_SSID,
-    .pcPassword = clientcredentialWIFI_PASSWORD,
-    .xSecurity = clientcredentialWIFI_SECURITY,
-};
+void print_string(const char *string)
+{
+    PRINTF(string);
+}
 
 #if defined(BOARD_ACCEL_FXOS) || defined(BOARD_ACCEL_MMA)
 /*!
@@ -158,12 +202,12 @@ const WIFINetworkParams_t pxNetworkParams = {
 status_t init_mag_accel(uint8_t *accelDataScale, uint8_t *accelResolution)
 {
     uint8_t arrayAddrSize = 0;
-    uint8_t sensorRange = 0;
-    uint16_t i = 0;
-    status_t result = kStatus_Fail;
+    uint8_t sensorRange   = 0;
+    uint16_t i            = 0;
+    status_t result       = kStatus_Fail;
 
     /* Configure the I2C function */
-    config.I2C_SendFunc = BOARD_Accel_I2C_Send;
+    config.I2C_SendFunc    = BOARD_Accel_I2C_Send;
     config.I2C_ReceiveFunc = BOARD_Accel_I2C_Receive;
 
     /* Initialize sensor devices */
@@ -219,9 +263,9 @@ void vApplicationDaemonTaskStartupHook(void)
 
     if (SYSTEM_Init() == pdPASS)
     {
-        if (prvWifiConnect())
+        if (initNetwork() != 0)
         {
-            configPRINTF(("Failed to connect to wifi, stopping demo.\r\n"));
+            configPRINTF(("Network init failed, stopping demo.\r\n"));
             vTaskDelete(NULL);
         }
         else
@@ -270,44 +314,6 @@ int main(void)
     vTaskStartScheduler();
     for (;;)
         ;
-}
-
-static int prvWifiConnect(void)
-{
-    WIFIReturnCode_t result;
-
-    configPRINTF(("Starting WiFi...\r\n"));
-
-    result = WIFI_On();
-    if (result != eWiFiSuccess)
-    {
-        configPRINTF(("Could not enable WiFi, reason %d.\r\n", result));
-        return result;
-    }
-
-    configPRINTF(("WiFi module initialized.\r\n"));
-
-    result = WIFI_ConnectAP(&pxNetworkParams);
-    if (result != eWiFiSuccess)
-    {
-        configPRINTF(("Could not connect to WiFi, reason %d.\r\n", result));
-        return result;
-    }
-
-    configPRINTF(("WiFi connected to AP %s.\r\n", pxNetworkParams.pcSSID));
-
-    uint8_t tmp_ip[4] = {0};
-    result = WIFI_GetIP(tmp_ip);
-
-    if (result != eWiFiSuccess)
-    {
-        configPRINTF(("Could not get IP address, reason %d.\r\n", result));
-        return result;
-    }
-
-    configPRINTF(("IP Address acquired %d.%d.%d.%d\r\n", tmp_ip[0], tmp_ip[1], tmp_ip[2], tmp_ip[3]));
-
-    return result;
 }
 
 /* configUSE_STATIC_ALLOCATION is set to 1, so the application must provide an

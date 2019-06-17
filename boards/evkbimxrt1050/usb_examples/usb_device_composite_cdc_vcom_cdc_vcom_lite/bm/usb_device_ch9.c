@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -951,6 +951,7 @@ usb_status_t USB_DeviceControlPipeInit(usb_device_handle handle)
     epCallback.callbackParam = handle;
 
     epInitStruct.zlt = 1U;
+    epInitStruct.interval = 0U;
     epInitStruct.transferType = USB_ENDPOINT_CONTROL;
     epInitStruct.endpointAddress = USB_CONTROL_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
     epInitStruct.maxPacketSize = USB_CONTROL_MAX_PACKET_SIZE;

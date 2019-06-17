@@ -62,16 +62,15 @@ void USB_OTG1_IRQHandler(void)
 
 void USB_HostClockInit(void)
 {
-
     usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL, BOARD_USB_PHY_TXCAL45DP, BOARD_USB_PHY_TXCAL45DM,
+        BOARD_USB_PHY_D_CAL,
+        BOARD_USB_PHY_TXCAL45DP,
+        BOARD_USB_PHY_TXCAL45DM,
     };
-
 
     CLOCK_EnableUsbhs0PhyPllClock(kCLOCK_Usbphy480M, 480000000U);
     CLOCK_EnableUsbhs0Clock(kCLOCK_Usb480M, 480000000U);
     USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ, &phyConfig);
-
 }
 
 void USB_HostIsrEnable(void)
@@ -79,7 +78,7 @@ void USB_HostIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbHOSTEhciIrq[] = USBHS_IRQS;
-    irqNumber = usbHOSTEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
+    irqNumber                = usbHOSTEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
 /* USB_HOST_CONFIG_EHCI */
 
 /* Install isr, set priority, and enable IRQ. */

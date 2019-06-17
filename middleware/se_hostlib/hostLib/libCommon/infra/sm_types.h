@@ -30,6 +30,7 @@ extern "C" {
 
 #if defined(__GNUC__) || defined (__arm__) || defined(__ICCARM__)
 #   include <stdint.h>
+#   include <stdlib.h>
 #   include <stdbool.h>
 #endif /* __GNUC__ || __arm__ || iccarm */
 
@@ -39,31 +40,43 @@ extern "C" {
 
 #if defined(_MSC_VER) && _MSC_VER >= 1600
 #   include <stdint.h>
+#   if _MSC_VER >= 1800
+#       include <stdbool.h>
+#   endif
 #endif /* _MSC_VER */
 
-typedef unsigned char   U8;
-typedef unsigned short U16;
-typedef unsigned long  U32;
+typedef uint8_t U8;
+typedef uint16_t U16;
+typedef uint32_t U32;
 
-typedef signed char   S8;
-typedef signed short S16;
-typedef signed long  S32;
+typedef int8_t S8;
+typedef int16_t S16;
+typedef int32_t S32;
 
 #if !defined(__cplusplus) && !defined(__GNUC__) && !defined(__arm__) && !defined(__ICCARM__)
+#ifdef _MSC_VER
+#if _MSC_VER < 1600
     typedef unsigned char bool; // C++ and GCC has bool.
 #   define false    (0)
 #   define true     (1)
+#endif //_MSC_VER < 1600
+#else // _MSC_VER
+typedef unsigned char bool; // C++ and GCC has bool.
+#endif
 #endif /* bool */
 
+#ifndef FALSE
+#	define FALSE false
+#endif
 
-#if defined(CPU_MIMXRT1052DVL6B) && !defined(IMX_RT)
-#   define IMX_RT
+#ifndef TRUE
+#	define TRUE  true
 #endif
 
 /** @define AX_EMBEDDED Plaform is embedded like Kinetis / LPC / i.MX RT / Freedom Series */
 #if defined(FREEDOM) \
     || defined (IMX_RT) \
-    || defined (CPU_LPC54018JET180)
+    || defined (CPU_LPC54018)
 #   define AX_EMBEDDED  1
 #else
 #   define AX_EMBEDDED  0
@@ -119,7 +132,8 @@ typedef U16 SM_Error_t;
 #define ERR_CONNECT_LINK_FAILED             (0x7001)
 #define ERR_CONNECT_SELECT_FAILED           (0x7002)
 #define ERR_COMM_ERROR                      (0x7003) //!< Generic communication error
-#define ERR_NO_VALID_IP_PORT_PATTERN  (0x8000)
+#define ERR_NO_VALID_IP_PORT_PATTERN        (0x8000)
+#define ERR_COM_ALREADY_OPEN                (0x7016) //!< Communication link is already open with device
 
 /* Range 0x701x is reserved for Error codes defined in smCom.h */
 // #define SMCOM_SND_FAILED 0x7010
@@ -138,6 +152,8 @@ typedef U16 SM_Error_t;
 #define ERR_FILE_SYSTEM                     (0x7030)
 #define ERR_NO_PRIVATE_KEY                  (0x7031)
 #define ERR_IDENT_IDX_RANGE                 (0x7032) //!< Identifier or Index of Reference Key is out of bounds
+#define ERR_CRC_CHKSUM_VERIFY               (0x7033) //!< CRC checksum verify error
+#define ERR_INTERNAL_BUF_TOO_SMALL          (0x7034) //!< In A71CH PSP 1.6 this had value 0x7033. Code was already taken by A71CL
 
 #define SCP_OK                              (SW_OK)
 #define SCP_UNDEFINED_CHANNEL_ID            (0x7041) //!< Undefined SCP channel identifier
@@ -147,6 +163,7 @@ typedef U16 SM_Error_t;
 
 #define SCP_RSP_MAC_FAIL                    (0x7050) //!< MAC on APDU response is not correct
 #define SCP_DECODE_FAIL                     (0x7051) //!< Encrypted Response did not decode to correctly padded plaintext
+
 
 #ifdef __cplusplus
 }

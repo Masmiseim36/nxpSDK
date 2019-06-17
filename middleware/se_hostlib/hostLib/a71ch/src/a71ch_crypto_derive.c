@@ -20,7 +20,6 @@
 *
 *****************************************************************************/
 #include <stddef.h>
-#include <assert.h>
 #include <string.h>
 #include <stdio.h> // DEBUG
 
@@ -39,8 +38,11 @@ static U16 DERIVE_KdfGeneric(SST_Index_t index, U8 nBlock, const U8 *salt, U16 s
     U16 minBufLen = derivedDataLen;
     U8 data = 0x00;
 
-    assert(info != NULL);
-    assert(derivedData != NULL);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if ((info == NULL) || (derivedData == NULL)) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     if (infoLen > DERIVE_KEYDATA_FROM_SHARED_SECRET_MAX_INFO)
     {
@@ -62,6 +64,10 @@ static U16 DERIVE_KdfGeneric(SST_Index_t index, U8 nBlock, const U8 *salt, U16 s
 
     if (saltLen != 0)
     {
+        if (salt == NULL) {
+            FreeAPDUBuffer(pApdu);
+            return ERR_API_ERROR;
+        }
         data = (U8)saltLen;
         smApduAppendCmdData(pApdu, &data, 1);
         smApduAppendCmdData(pApdu, salt, saltLen);
@@ -191,8 +197,11 @@ U16 A71_PskDeriveMasterSecret(SST_Index_t index, U8 nBlock, const U8 *serverHell
     apdu_t * pApdu = (apdu_t *) &apdu;
     U16 minBufLen = AX_TLS_PSK_MASTER_SECRET_LEN;
 
-    assert(serverHelloRnd != NULL);
-    assert(masterSecret != NULL);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if ((serverHelloRnd == NULL) || (masterSecret == NULL)) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     if ( nBlock > A71CH_SYM_KEY_COMBINED_MAX)
     {
@@ -276,8 +285,11 @@ U16 A71_EcdhPskDeriveMasterSecret(SST_Index_t indexKp, const U8 *publicKey, U16 
     apdu_t * pApdu = (apdu_t *) &apdu;
     U16 minBufLen = AX_TLS_PSK_MASTER_SECRET_LEN;
 
-    assert(serverHelloRnd != NULL);
-    assert(masterSecret != NULL);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if ((publicKey == NULL) || (serverHelloRnd == NULL) || (masterSecret == NULL)) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     if ( nBlock > A71CH_SYM_KEY_COMBINED_MAX)
     {
@@ -353,8 +365,11 @@ U16 A71_GetHmacSha256(SST_Index_t index, U8 nBlock, const U8 *data, U16 dataLen,
     apdu_t apdu;
     apdu_t * pApdu = (apdu_t *) &apdu;
 
-    assert(data != NULL);
-    assert(hmac != NULL);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if ((data == NULL) || (hmac == NULL) || (hmacLen == NULL)) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     pApdu->cla   = AX_CLA;
     pApdu->ins   = A71CH_INS_HMAC_SHA256_SYM_KEY;

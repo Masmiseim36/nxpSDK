@@ -20,7 +20,6 @@
 *
 *****************************************************************************/
 #include <stddef.h>
-#include <assert.h>
 #include <string.h>
 #include <stdio.h> // DEBUG
 
@@ -68,7 +67,7 @@ static U16 SST_FreezeGenericWithCode(U8 ins, SST_Index_t index, U8 *code, U16 co
     pApdu->p1    = index;
     pApdu->p2    = (U8)codeLen;
 
-    if (codeLen != 16)
+    if ((codeLen != 16) || (code == NULL))
     {
         return ERR_API_ERROR;
     }
@@ -93,11 +92,11 @@ static U16 SST_FreezeGenericWithChallenge(U8 ins, SST_Index_t index, U8 *configK
 {
     U16 rv;
     S32 hcRet = 0;
-    U8 challenge[A71CH_MODULE_UNLOCK_CHALLENGE_LEN];
+    U8 challenge[A71CH_MODULE_UNLOCK_CHALLENGE_LEN] = {0};
     U16 challengeLen = sizeof(challenge);
-    U8 code[A71CH_MODULE_UNLOCK_CHALLENGE_LEN];
+    U8 code[A71CH_MODULE_UNLOCK_CHALLENGE_LEN] = {0};
 
-    if (configKeyLen != 16)
+    if ( (configKey == NULL) || (configKeyLen != 16) )
     {
         return ERR_API_ERROR;
     }
@@ -165,8 +164,7 @@ static U16 SST_EraseGenericWithCode(U8 ins, SST_Index_t index, U8 *code, U16 cod
     pApdu->p1    = index;
     pApdu->p2    = (U8)codeLen;
 
-    if (codeLen != 16)
-    {
+    if ((code == NULL) || (codeLen != 16)) {
         return ERR_API_ERROR;
     }
 
@@ -190,11 +188,11 @@ static U16 SST_EraseGenericWithChallenge(U8 ins, SST_Index_t index, U8 *configKe
 {
     U16 rv;
     S32 hcRet = 0;
-    U8 challenge[A71CH_MODULE_UNLOCK_CHALLENGE_LEN];
+    U8 challenge[A71CH_MODULE_UNLOCK_CHALLENGE_LEN] = {0};
     U16 challengeLen = sizeof(challenge);
-    U8 code[A71CH_MODULE_UNLOCK_CHALLENGE_LEN];
+    U8 code[A71CH_MODULE_UNLOCK_CHALLENGE_LEN] = {0};
 
-    if (configKeyLen != 16)
+    if ((configKey == NULL) || (configKeyLen != 16))
     {
         return ERR_API_ERROR;
     }
@@ -246,8 +244,11 @@ U16 A71_SetEccKeyPair(SST_Index_t index, const U8 *publicKey, U16 publicKeyLen, 
     apdu_t apdu;
     apdu_t * pApdu = (apdu_t *) &apdu;
 
-    assert(publicKey != NULL);
-    assert(privateKey != NULL);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if ((publicKey == NULL) || (privateKey == NULL)) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     pApdu->cla   = A71CH_CLA;
     pApdu->ins   = A71CH_INS_SET_ECC_KEYPAIR;
@@ -288,7 +289,7 @@ U16 A71_GetPublicKeyEccKeyPair(SST_Index_t index, U8 *publicKey, U16 *publicKeyL
     apdu_t * pApdu = (apdu_t *) &apdu;
     U8 isOk = 0x00;
 
-    if ( (publicKey == NULL) || (*publicKeyLen < 65) ) {return ERR_BUF_TOO_SMALL;}
+    if ( (publicKey == NULL) || (publicKeyLen == NULL) || (*publicKeyLen < 65) ) {return ERR_BUF_TOO_SMALL;}
 
     pApdu->cla   = A71CH_CLA;
     pApdu->ins   = A71CH_INS_GET_ECC_KEYPAIR;
@@ -335,9 +336,11 @@ U16 A71_GetEccKeyPairUsage(SST_Index_t index, U8 *restricted, U16 *usedCnt, U16 
     U8 localBuf[2];
     U16 localBufLen = sizeof(localBuf);
 
-    assert(restricted != NULL);
-    assert(usedCnt != NULL);
-    assert(maxUseCnt != NULL);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if ((restricted == NULL) || (usedCnt == NULL) || (maxUseCnt == NULL)) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     pApdu->cla   = A71CH_CLA;
     pApdu->ins   = A71CH_INS_GET_ECC_KEYPAIR;
@@ -508,7 +511,11 @@ U16 A71_SetEccPublicKey(SST_Index_t index, const U8 *publicKey, U16 publicKeyLen
     apdu_t apdu;
     apdu_t * pApdu = (apdu_t *) &apdu;
 
-    assert(publicKey != NULL);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if (publicKey == NULL) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     pApdu->cla   = A71CH_CLA;
     pApdu->ins   = A71CH_INS_SET_ECC_PUBLIC_KEY;
@@ -547,7 +554,7 @@ U16 A71_GetEccPublicKey(SST_Index_t index, U8 *publicKey, U16 *publicKeyLen)
     apdu_t * pApdu = (apdu_t *) &apdu;
     U8 isOk = 0x00;
 
-    if ( (publicKey == NULL) || (*publicKeyLen < 65) ) {return ERR_BUF_TOO_SMALL;}
+    if ( (publicKey == NULL) || (publicKeyLen == NULL) || (*publicKeyLen < 65) ) {return ERR_BUF_TOO_SMALL;}
 
     pApdu->cla   = A71CH_CLA;
     pApdu->ins   = A71CH_INS_GET_ECC_PUBLIC_KEY;
@@ -691,7 +698,11 @@ U16 A71_SetSymKey(SST_Index_t index, const U8 *key, U16 keyLen)
     apdu_t apdu;
     apdu_t * pApdu = (apdu_t *) &apdu;
 
-    assert(key != NULL);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if (key == NULL) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     pApdu->cla   = A71CH_CLA;
     pApdu->ins   = A71CH_INS_SET_SYM_KEY;
@@ -729,7 +740,11 @@ U16 A71_SetRfc3394WrappedAesKey(SST_Index_t index, const U8 *key, U16 keyLen)
     apdu_t * pApdu = (apdu_t *) &apdu;
     U16 rv = 0;
 
-    assert(key != NULL);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if (key == NULL) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     pApdu->cla   = A71CH_CLA;
     pApdu->ins   = A71CH_INS_SET_SYM_KEY;
@@ -867,7 +882,11 @@ U16 A71_GetCounter(SST_Index_t index, U32 *pValue)
     apdu_t apdu;
     apdu_t * pApdu = (apdu_t *) &apdu;
 
-    assert(pValue != NULL);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if (pValue == NULL) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     pApdu->cla   = AX_CLA;
     pApdu->ins   = A71CH_INS_GET_COUNTERS;
@@ -941,7 +960,11 @@ U16 A71_SetGpData(U16 dataOffset, const U8 *data, U16 dataLen)
     U16 rv = 0;
     int maxChunkSize = 0;
 
-    assert(data != NULL);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if (data == NULL) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     maxChunkSize = A71CH_GP_STORAGE_MAX_DATA_CHUNK;
 
@@ -1004,7 +1027,7 @@ U16 A71_SetGpDataWithLockCheck(U16 dataOffset, const U8 *data, U16 dataLen)
     U16 gpdataOffset = dataOffset;
     U16 rv = 0;
 
-    U8 map[A71CH_MAP_SIZE_MAX];
+    U8 map[A71CH_MAP_SIZE_MAX] = {0};
     U16 mapLen = sizeof(map);
 
     int gpStatusOffset;     // GP Storage offsets in CredentialinfoTable returned from GetCredentialInfo
@@ -1013,8 +1036,6 @@ U16 A71_SetGpDataWithLockCheck(U16 dataOffset, const U8 *data, U16 dataLen)
     U8 credtialstateLocked = 0x0F;   // nibble of lock state in map
 
     U8 fLocked = 0;         // flag to indicate that a locked segment was found
-
-    assert(data != NULL);
 
     if (dataLen <= A71CH_GP_STORAGE_MAX_DATA_CHUNK)
     {
@@ -1075,7 +1096,11 @@ U16 A71_GetGpData(U16 dataOffset, U8 *data, U16 dataLen)
     apdu_t * pApdu = (apdu_t *) &apdu;
     int maxChunkSize = 0;
 
-    assert(data != NULL);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if (data == NULL) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     maxChunkSize = A71CH_GP_STORAGE_MAX_DATA_CHUNK;
 
@@ -1197,7 +1222,11 @@ U16 A71_SetConfigKey(SST_Index_t index, const U8 *key, U16 keyLen)
     apdu_t apdu;
     apdu_t * pApdu = (apdu_t *) &apdu;
 
-    assert(key != NULL);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if (key == NULL) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     pApdu->cla   = A71CH_CLA;
     pApdu->ins   = A71CH_INS_SET_CONFIG_KEY;
@@ -1235,7 +1264,11 @@ U16 A71_SetRfc3394WrappedConfigKey(SST_Index_t index, const U8 *key, U16 keyLen)
     apdu_t * pApdu = (apdu_t *) &apdu;
     U16 rv = 0;
 
-    assert(key != NULL);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if (key == NULL) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     pApdu->cla   = A71CH_CLA;
     pApdu->ins   = A71CH_INS_SET_CONFIG_KEY;

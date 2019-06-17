@@ -131,7 +131,7 @@ typedef enum _semc_clock_freq
     kSemcClkFreq_166MHz = 0x06U,
 } semc_clk_freq_t;
 
-#if defined(MIMXRT1062_SERIES) || defined(MIMXRT1051_SERIES) || defined(MIMXRT1052_SERIES)
+#if defined(MIMXRT1064_SERIES) || defined(MIMXRT1062_SERIES) || defined(MIMXRT1051_SERIES) || defined(MIMXRT1052_SERIES)
 // i.MX RT1050 or i.MX RT1060
 #define SEMC_MAX_CLK_FREQ kSemcClkFreq_166MHz
 #define SEMC_2ND_MAX_CLK_FREQ kSemcClkFreq_133MHz

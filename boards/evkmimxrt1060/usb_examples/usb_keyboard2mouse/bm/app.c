@@ -98,17 +98,17 @@ USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_MouseBuffer[USB
  * Code
  ******************************************************************************/
 
-
 void USB_OTG1_IRQHandler(void)
 {
     USB_DeviceEhciIsrFunction(g_UsbDeviceHidMouse.deviceHandle);
 }
 
-
 void USB_DeviceClockInit(void)
 {
     usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL, BOARD_USB_PHY_TXCAL45DP, BOARD_USB_PHY_TXCAL45DM,
+        BOARD_USB_PHY_D_CAL,
+        BOARD_USB_PHY_TXCAL45DP,
+        BOARD_USB_PHY_TXCAL45DM,
     };
 
     if (DEVICE_CONTROLLER_ID == kUSB_ControllerEhci0)
@@ -122,16 +122,15 @@ void USB_DeviceClockInit(void)
         CLOCK_EnableUsbhs1Clock(kCLOCK_Usb480M, 480000000U);
     }
     USB_EhciPhyInit(DEVICE_CONTROLLER_ID, BOARD_XTAL0_CLK_HZ, &phyConfig);
-
 }
 void USB_DeviceIsrEnable(void)
 {
     uint8_t irqNumber;
 
     uint8_t usbDeviceEhciIrq[] = USBHS_IRQS;
-    irqNumber = usbDeviceEhciIrq[DEVICE_CONTROLLER_ID - kUSB_ControllerEhci0];
+    irqNumber                  = usbDeviceEhciIrq[DEVICE_CONTROLLER_ID - kUSB_ControllerEhci0];
 
-/* Install isr, set priority, and enable IRQ. */
+    /* Install isr, set priority, and enable IRQ. */
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
     EnableIRQ((IRQn_Type)irqNumber);
 }
@@ -142,7 +141,6 @@ void USB_DeviceTaskFn(void *deviceHandle)
 }
 #endif
 
-
 void USB_OTG2_IRQHandler(void)
 {
     USB_HostEhciIsrFunction(g_HostHandle);
@@ -150,11 +148,11 @@ void USB_OTG2_IRQHandler(void)
 
 void USB_HostClockInit(void)
 {
-
     usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL, BOARD_USB_PHY_TXCAL45DP, BOARD_USB_PHY_TXCAL45DM,
+        BOARD_USB_PHY_D_CAL,
+        BOARD_USB_PHY_TXCAL45DP,
+        BOARD_USB_PHY_TXCAL45DM,
     };
-
 
     if (HOST_CONTROLLER_ID == kUSB_ControllerEhci0)
     {
@@ -167,7 +165,6 @@ void USB_HostClockInit(void)
         CLOCK_EnableUsbhs1Clock(kCLOCK_Usb480M, 480000000U);
     }
     USB_EhciPhyInit(HOST_CONTROLLER_ID, BOARD_XTAL0_CLK_HZ, &phyConfig);
-
 }
 
 void USB_HostIsrEnable(void)
@@ -175,7 +172,7 @@ void USB_HostIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbHOSTEhciIrq[] = USBHS_IRQS;
-    irqNumber = usbHOSTEhciIrq[HOST_CONTROLLER_ID - kUSB_ControllerEhci0];
+    irqNumber                = usbHOSTEhciIrq[HOST_CONTROLLER_ID - kUSB_ControllerEhci0];
 /* USB_HOST_CONFIG_EHCI */
 
 /* Install isr, set priority, and enable IRQ. */

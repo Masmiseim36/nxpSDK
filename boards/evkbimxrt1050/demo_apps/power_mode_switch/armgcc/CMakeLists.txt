@@ -22,6 +22,8 @@ SET(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 SET(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
 
 
+SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -D__STARTUP_INITIALIZE_RAMFUNCTION")
+
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -D__STARTUP_CLEAR_BSS")
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -DDEBUG")
@@ -55,6 +57,8 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -mcp
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -mfloat-abi=hard")
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -mfpu=fpv5-d16")
+
+SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} -D__STARTUP_INITIALIZE_RAMFUNCTION")
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} -D__STARTUP_CLEAR_BSS")
 
@@ -154,6 +158,8 @@ SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfloat-abi=hard")
 
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfpu=fpv5-d16")
 
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1")
+
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DXIP_EXTERNAL_FLASH=1")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DXIP_BOOT_HEADER_ENABLE=1")
@@ -195,6 +201,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -mfpu=fp
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -MMD")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -MP")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DXIP_EXTERNAL_FLASH=1")
 
@@ -678,147 +686,145 @@ include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1052/xip)
 
 include_directories(${ProjDirPath}/../../../xip)
 
-add_executable(power_mode_switch.elf 
+add_executable(power_mode_switch_ca.elf 
+"${ProjDirPath}/../FreeRTOSConfig.h"
+"${ProjDirPath}/../lpm.c"
+"${ProjDirPath}/../lpm.h"
+"${ProjDirPath}/../specific.c"
+"${ProjDirPath}/../specific.h"
 "${ProjDirPath}/../power_mode_switch.c"
 "${ProjDirPath}/../power_mode_switch.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../FreeRTOSConfig.h"
-"${ProjDirPath}/../lpm.c"
-"${ProjDirPath}/../lpm.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpc.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpc.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpt.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpt.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpio.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/LICENSE"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/event_groups.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/port.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/portmacro.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/event_groups.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/message_buffer.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/list.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/mpu_prototypes.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/portable.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/threading_alt.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/queue.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/semphr.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/task.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/timers.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/list.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/mpu_prototypes.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/portable.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/threading_alt.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/fsl_tickless_generic.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/fsl_tickless_systick.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/port.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/portmacro.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpc.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpc.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpio.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_dcdc.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_dcdc.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_semc.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_semc.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_clock.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_common.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/fsl_device_registers.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/MIMXRT1052.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/MIMXRT1052_features.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/fsl_device_registers.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/system_MIMXRT1052.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/system_MIMXRT1052.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h"
-"${ProjDirPath}/../../../../../components/uart/uart.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../components/uart/lpuart_adapter.c"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"
+"${ProjDirPath}/../../../../../components/uart/uart.h"
 "${ProjDirPath}/../../../../../components/serial_manager/serial_manager.c"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_internal.h"
 "${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.c"
-"${ProjDirPath}/../../../../../components/lists/generic_list.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.h"
 "${ProjDirPath}/../../../../../components/lists/generic_list.c"
+"${ProjDirPath}/../../../../../components/lists/generic_list.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/gcc/startup_MIMXRT1052.S"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/fsl_assert.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.h"
 "${ProjDirPath}/../../../xip/evkbimxrt1050_flexspi_nor_config.c"
 "${ProjDirPath}/../../../xip/evkbimxrt1050_flexspi_nor_config.h"
 "${ProjDirPath}/../../../xip/evkbimxrt1050_sdram_ini_dcd.c"
 "${ProjDirPath}/../../../xip/evkbimxrt1050_sdram_ini_dcd.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/core_cm7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_compiler.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_compiler.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
 )
 
 
-set(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -T${ProjDirPath}/evkbimxrt1050_power_mode_switch_ca.ld -static")
+set(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -T${ProjDirPath}/MIMXRT1052xxxxx_flexspi_nor_ramfunc.ld -static")
 
-set(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -T${ProjDirPath}/evkbimxrt1050_power_mode_switch_ca.ld -static")
+set(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -T${ProjDirPath}/MIMXRT1052xxxxx_flexspi_nor_ramfunc.ld -static")
 
 set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -T${ProjDirPath}/MIMXRT1052xxxxx_ram.ld -static")
 
 set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -T${ProjDirPath}/MIMXRT1052xxxxx_ram.ld -static")
 
-TARGET_LINK_LIBRARIES(power_mode_switch.elf -Wl,--start-group)
-target_link_libraries(power_mode_switch.elf optimized m)
+TARGET_LINK_LIBRARIES(power_mode_switch_ca.elf -Wl,--start-group)
+target_link_libraries(power_mode_switch_ca.elf optimized m)
 
-target_link_libraries(power_mode_switch.elf optimized c)
+target_link_libraries(power_mode_switch_ca.elf optimized c)
 
-target_link_libraries(power_mode_switch.elf optimized gcc)
+target_link_libraries(power_mode_switch_ca.elf optimized gcc)
 
-target_link_libraries(power_mode_switch.elf optimized nosys)
+target_link_libraries(power_mode_switch_ca.elf optimized nosys)
 
-target_link_libraries(power_mode_switch.elf optimized m)
+target_link_libraries(power_mode_switch_ca.elf optimized m)
 
-target_link_libraries(power_mode_switch.elf optimized c)
+target_link_libraries(power_mode_switch_ca.elf optimized c)
 
-target_link_libraries(power_mode_switch.elf optimized gcc)
+target_link_libraries(power_mode_switch_ca.elf optimized gcc)
 
-target_link_libraries(power_mode_switch.elf optimized nosys)
+target_link_libraries(power_mode_switch_ca.elf optimized nosys)
 
-target_link_libraries(power_mode_switch.elf debug m)
+target_link_libraries(power_mode_switch_ca.elf debug m)
 
-target_link_libraries(power_mode_switch.elf debug c)
+target_link_libraries(power_mode_switch_ca.elf debug c)
 
-target_link_libraries(power_mode_switch.elf debug gcc)
+target_link_libraries(power_mode_switch_ca.elf debug gcc)
 
-target_link_libraries(power_mode_switch.elf debug nosys)
+target_link_libraries(power_mode_switch_ca.elf debug nosys)
 
-target_link_libraries(power_mode_switch.elf optimized m)
+target_link_libraries(power_mode_switch_ca.elf optimized m)
 
-target_link_libraries(power_mode_switch.elf optimized c)
+target_link_libraries(power_mode_switch_ca.elf optimized c)
 
-target_link_libraries(power_mode_switch.elf optimized gcc)
+target_link_libraries(power_mode_switch_ca.elf optimized gcc)
 
-target_link_libraries(power_mode_switch.elf optimized nosys)
+target_link_libraries(power_mode_switch_ca.elf optimized nosys)
 
-TARGET_LINK_LIBRARIES(power_mode_switch.elf -Wl,--end-group)
+TARGET_LINK_LIBRARIES(power_mode_switch_ca.elf -Wl,--end-group)
 

@@ -118,17 +118,17 @@ static U8 exSetConfigKey(U8 initMode)
     U8 result = 1;
     U16 err;
 
-    U8 uid[A71CH_MODULE_UNIQUE_ID_LEN];
+    U8 uid[A71CH_MODULE_UNIQUE_ID_LEN] = {0};
     U16 uidLen = sizeof(uid);
 
-    U8 challenge[A71CH_MODULE_UNLOCK_CHALLENGE_LEN];
+    U8 challenge[A71CH_MODULE_UNLOCK_CHALLENGE_LEN] = {0};
     U16 challengeLen = sizeof(challenge);
 
-    U8 unlockCode[A71CH_MODULE_UNLOCK_CHALLENGE_LEN];
+    U8 unlockCode[A71CH_MODULE_UNLOCK_CHALLENGE_LEN] = {0};
     S32 hcRet = 0;
 
     U8 indexCfgKey = A71CH_CFG_KEY_IDX_MODULE_LOCK;
-    HLSE_OBJECT_HANDLE moduleHandle;
+    HLSE_OBJECT_HANDLE moduleHandle = 0;
     U16 moduleHandleNum = 1;
 
     PRINTF("\r\n-----------\r\nStart exSetConfigKey(%s)\r\n------------\r\n", getInitModeAsString(initMode));
@@ -328,8 +328,8 @@ static U8 exSstPubEnc(U8 initMode)
 
     ECCCurve_t eccCurve = ECCCurve_NIST_P256;
 
-    EC_KEY *eccKeyCA[A71CH_PUBLIC_KEY_MAX];
-    eccKeyComponents_t eccKcCA[A71CH_PUBLIC_KEY_MAX];
+    EC_KEY *eccKeyCA[A71CH_PUBLIC_KEY_MAX] = {0};
+    eccKeyComponents_t eccKcCA[A71CH_PUBLIC_KEY_MAX] = {0};
 
     U8 fetchedPubKey[65];
     U16 fetchedPubKeyLen = sizeof(fetchedPubKey);
@@ -338,7 +338,7 @@ static U8 exSstPubEnc(U8 initMode)
     const U16 expectedPrivKeyLen = 32;
 
     // to hold handles for created keys
-    HLSE_OBJECT_HANDLE handles[A71CH_PUBLIC_KEY_MAX];
+    HLSE_OBJECT_HANDLE handles[A71CH_PUBLIC_KEY_MAX] = {0};
 
     PRINTF("\r\n-----------\r\nStart exSstPubEnc(%s)\r\n------------\r\n", getInitModeAsString(initMode));
 
@@ -443,8 +443,8 @@ static U8 exSstPubEraseAfterInjectLock()
 
     // ECCCurve_t eccCurve = ECCCurve_NIST_P256;
 
-    // EC_KEY *eccKeyCA[A71CH_PUBLIC_KEY_MAX];
-    // eccKeyComponents_t eccKcCA[A71CH_PUBLIC_KEY_MAX];
+    // EC_KEY *eccKeyCA[A71CH_PUBLIC_KEY_MAX] = {0};
+    // eccKeyComponents_t eccKcCA[A71CH_PUBLIC_KEY_MAX] = {0};
 
     U8 fetchedPubKey[65];
     U16 fetchedPubKeyLen = sizeof(fetchedPubKey);
@@ -452,7 +452,7 @@ static U8 exSstPubEraseAfterInjectLock()
     // const U16 expectedPubKeyLen = 65;
     // const U16 expectedPrivKeyLen = 32;
 
-    HLSE_OBJECT_HANDLE handles[A71CH_PUBLIC_KEY_MAX];
+    HLSE_OBJECT_HANDLE handles[A71CH_PUBLIC_KEY_MAX] = {0};
     U16 handleNum = A71CH_PUBLIC_KEY_MAX;
 
     err = HLSE_EnumerateObjects(HLSE_PUBLIC_KEY, handles, &handleNum);
@@ -545,8 +545,8 @@ static U8 exSstKeyPairEnc(U8 initMode)
 
     ECCCurve_t eccCurve = ECCCurve_NIST_P256;
 
-    EC_KEY *eccKeyTls[A71CH_KEY_PAIR_MAX];
-    eccKeyComponents_t eccKcTls[A71CH_KEY_PAIR_MAX];
+    EC_KEY *eccKeyTls[A71CH_KEY_PAIR_MAX] = { 0 };
+    eccKeyComponents_t eccKcTls[A71CH_KEY_PAIR_MAX] = { 0 };
 
     EC_KEY *eccKeyAlt = NULL;
     eccKeyComponents_t eccKcAlt;
@@ -569,8 +569,8 @@ static U8 exSstKeyPairEnc(U8 initMode)
     SST_Index_t kpIndex;
 
     // to hold handles for created keys
-    HLSE_OBJECT_HANDLE handles[A71CH_KEY_PAIR_MAX];
-    HLSE_OBJECT_HANDLE moduleHandle;
+    HLSE_OBJECT_HANDLE handles[A71CH_KEY_PAIR_MAX] = {0};
+    HLSE_OBJECT_HANDLE moduleHandle = 0;
     U16 moduleHandleNum = 1;
     HLSE_MECHANISM_INFO mechInfo;
 

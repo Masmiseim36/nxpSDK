@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -23,12 +23,13 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* RESET_CHECK_FLAG is a RAM variable used for wdog32 self test.
- * Make sure this variable's location is proper that it will not be affected by watchdog reset,
- * that is, the variable shall not be intialized in startup code.
+/* RESET_CHECK_CNT_VALUE and RESET_CHECK_FLAG is RAM variables used for wdog32 self test.
+ * Make sure these variables' locations are proper and will not be affected by watchdog reset,
+ * that is, these variables will not be intialized in startup code.
  */
-#define RESET_CHECK_FLAG (*((uint32_t *)0x20001000))
-#define RESET_CHECK_INIT_VALUE 0x0D0D
+#define RESET_CHECK_CNT_VALUE (*((uint32_t *)0x20001000))
+#define RESET_CHECK_FLAG (*((uint32_t *)0x20002000))
+#define RESET_CHECK_INIT_VALUE 0x0D0DU
 #define EXAMPLE_WDOG_BASE RTWDOG
 #define DELAY_TIME 100000U
 #define WDOG_IRQHandler RTWDOG_IRQHandler
@@ -43,7 +44,6 @@
  * Variables
  ******************************************************************************/
 
-static RTWDOG_Type *rtwdog_base = EXAMPLE_WDOG_BASE;
 #if defined(FSL_FEATURE_SOC_RCM_COUNT) && (FSL_FEATURE_SOC_RCM_COUNT)
 static RCM_Type *rcm_base = RCM;
 #endif
@@ -86,11 +86,11 @@ static inline rtwdog_test_mode_t GetTestMode(RTWDOG_Type *base)
  */
 void WDOG_IRQHandler(void)
 {
-    RTWDOG_ClearStatusFlags(rtwdog_base, kRTWDOG_InterruptFlag);
-    
+    RTWDOG_ClearStatusFlags(EXAMPLE_WDOG_BASE, kRTWDOG_InterruptFlag);
+
     RESET_CHECK_FLAG++;
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F, Cortex-M7, Cortex-M7F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F, Cortex-M7, Cortex-M7F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
 #if defined __CORTEX_M && (__CORTEX_M == 4U || __CORTEX_M == 7U)
     __DSB();
 #endif
@@ -110,7 +110,7 @@ void RTWdogFastTesting(void)
     /* When system is boot up, WDOG32 is disabled. We must wait for at least 2.5
      * periods of wdog32 clock to reconfigure wodg32. So Delay a while to wait for
      * the previous configuration taking effect. */
-    for(temp = 0; temp < DELAY_TIME; temp++)
+    for (temp = 0; temp < DELAY_TIME; temp++)
     {
         __NOP();
     }
@@ -128,86 +128,111 @@ void RTWdogFastTesting(void)
     RTWDOG_GetDefaultConfig(&config);
 
     config.enableInterrupt = true;
-    config.timeoutValue = 0xf0f0U;
+    /* Set the low bits 0xCDU, high bits 0xABU */
+    config.timeoutValue = 0xABCDU;
+    config.prescaler    = kRTWDOG_ClockPrescalerDivide256;
 
-    current_test_mode = GetTestMode(rtwdog_base);
+    current_test_mode = GetTestMode(EXAMPLE_WDOG_BASE);
     if (current_test_mode == kRTWDOG_TestModeDisabled)
     {
-        /* Set flags in RAM */
+        PRINTF("\r\n----- Fast test starts -----\r\n");
+/* Set flags in RAM */
 #if defined(APP_SKIP_LOW_BYTE_TEST) && (APP_SKIP_LOW_BYTE_TEST)
         RESET_CHECK_FLAG = RESET_CHECK_INIT_VALUE + 1;
 
         /* High byte test */
         config.testMode = kRTWDOG_HighByteTest;
+        PRINTF("High Byte test starts\r\n");
 #else
         RESET_CHECK_FLAG = RESET_CHECK_INIT_VALUE;
 
         /* Low byte test */
-        config.testMode = kRTWDOG_HighByteTest;
+        config.testMode = kRTWDOG_LowByteTest;
+        PRINTF("Low Byte test starts\r\n");
 #endif
-        
-        RTWDOG_Init(rtwdog_base, &config);
-        
-        /* Wait for timeout reset */
+
+        RTWDOG_Init(EXAMPLE_WDOG_BASE, &config);
+
+        /* Waiting for timeout reset */
+        PRINTF("Waiting for timeout reset\r\n");
         while (1)
         {
+            /* Use temp to store the low byte of counter value */
+            temp = (RTWDOG_GetCounterValue(EXAMPLE_WDOG_BASE) & 0x00FFU);
+            /* In the idle loop, save the RTWDOG counter value in the RAM for later comparison,
+               because the RAM is not affected by the RTWDOG reset*/
+            if (temp != 0U)
+            {
+                RESET_CHECK_CNT_VALUE = temp;
+            }
         }
     }
     else if (current_test_mode == kRTWDOG_LowByteTest)
     {
-        if ((RESET_CHECK_FLAG != (RESET_CHECK_INIT_VALUE + 1))
+        if ((RESET_CHECK_CNT_VALUE != (config.timeoutValue & 0x00FFU)) ||
+            (RESET_CHECK_FLAG != RESET_CHECK_INIT_VALUE + 1)
 #if defined(FSL_FEATURE_SOC_RCM_COUNT) && (FSL_FEATURE_SOC_RCM_COUNT)
             || ((RCM_GetPreviousResetSources(rcm_base) & kRCM_SourceWdog) == 0)
 #elif defined(FSL_FEATURE_SOC_SMC_COUNT) && (FSL_FEATURE_SOC_SMC_COUNT > 1) /* MSMC */
             || ((SMC_GetPreviousResetSources(EXAMPLE_MSMC_BASE) & kSMC_SourceWdog) == 0)
-#elif defined(FSL_FEATURE_SOC_ASMC_COUNT) && (FSL_FEATURE_SOC_ASMC_COUNT) /* ASMC */
-            || ((ASMC_GetSystemResetStatusFlags(EXAMPLE_ASMC_BASE) & kASMC_WatchdogResetFlag) == 0) 
+#elif defined(FSL_FEATURE_SOC_ASMC_COUNT) && (FSL_FEATURE_SOC_ASMC_COUNT)   /* ASMC */
+            || ((ASMC_GetSystemResetStatusFlags(EXAMPLE_ASMC_BASE) & kASMC_WatchdogResetFlag) == 0)
 #endif
         )
         {
-            PRINTF("Low Byte test fail\r\n");
+            PRINTF("Low Byte test failed\r\n");
         }
         else
         {
-            PRINTF("Low Byte test success\r\n");
-            /* High byte test */
-            config.testMode = kRTWDOG_HighByteTest;
+            PRINTF("Low Byte test succeeded\r\n");
+        }
+        /* High byte test */
+        config.testMode = kRTWDOG_HighByteTest;
 
-            RTWDOG_Init(rtwdog_base, &config);
-            /* Wait for timeout reset */
-            while (1)
+        PRINTF("----- High Byte test starts -----\r\n");
+        RTWDOG_Init(EXAMPLE_WDOG_BASE, &config);
+        /* Waiting for timeout reset */
+        PRINTF("Waiting for timeout reset\r\n");
+        while (1)
+        {
+            /* Use temp to store the high byte of counter value */
+            temp = ((RTWDOG_GetCounterValue(EXAMPLE_WDOG_BASE) >> 8U) & 0x00FFU);
+            if (temp != 0U)
             {
+                RESET_CHECK_CNT_VALUE = temp;
             }
         }
     }
     else if (current_test_mode == kRTWDOG_HighByteTest)
     {
-        if ((RESET_CHECK_FLAG != (RESET_CHECK_INIT_VALUE + 1))
+        if ((RESET_CHECK_CNT_VALUE != ((config.timeoutValue >> 8U) & 0x00FFU)) ||
+            (RESET_CHECK_FLAG != RESET_CHECK_INIT_VALUE + 2)
 #if defined(FSL_FEATURE_SOC_RCM_COUNT) && (FSL_FEATURE_SOC_RCM_COUNT)
             || ((RCM_GetPreviousResetSources(rcm_base) & kRCM_SourceWdog) == 0)
 #elif defined(FSL_FEATURE_SOC_SMC_COUNT) && (FSL_FEATURE_SOC_SMC_COUNT > 1) /* MSMC */
             || ((SMC_GetPreviousResetSources(EXAMPLE_MSMC_BASE) & kSMC_SourceWdog) == 0)
-#elif defined(FSL_FEATURE_SOC_ASMC_COUNT) && (FSL_FEATURE_SOC_ASMC_COUNT) /* ASMC */
-            || ((ASMC_GetSystemResetStatusFlags(EXAMPLE_ASMC_BASE) & kASMC_WatchdogResetFlag) == 0)               
+#elif defined(FSL_FEATURE_SOC_ASMC_COUNT) && (FSL_FEATURE_SOC_ASMC_COUNT)   /* ASMC */
+            || ((ASMC_GetSystemResetStatusFlags(EXAMPLE_ASMC_BASE) & kASMC_WatchdogResetFlag) == 0)
 #endif
         )
         {
-            PRINTF("High Byte test fail\r\n");
+            PRINTF("High Byte test failed\r\n");
         }
         else
         {
-            PRINTF("High Byte test success\r\n");
-
-            config.testMode = kRTWDOG_UserModeEnabled;
-            config.enableRtwdog = false;
-
-            RTWDOG_Init(rtwdog_base, &config);
-            WaitWctClose(rtwdog_base);
+            PRINTF("High Byte test succeeded\r\n");
         }
+        config.testMode     = kRTWDOG_UserModeEnabled;
+        config.enableRtwdog = false;
+
+        PRINTF("----- The end of RTWDOG fast test -----\r\n");
+        RTWDOG_Init(EXAMPLE_WDOG_BASE, &config);
+        WaitWctClose(EXAMPLE_WDOG_BASE);
+        RESET_CHECK_FLAG = RESET_CHECK_INIT_VALUE;
     }
     else
     {
-
+        /* User mode enable, skip the fast test */
     }
 }
 
@@ -218,97 +243,94 @@ void RTWdogFastTesting(void)
  */
 void RTWdogRefreshTest(void)
 {
-    /*
-     * config.enableWdog32 = true;
-     * config.clockSource = kWDOG32_ClockSource1;
-     * config.prescaler = kWDOG32_ClockPrescalerDivide1;
-     * config.testMode = kWDOG32_TestModeDisabled;
-     * config.enableUpdate = true;
-     * config.enableInterrupt = false;
-     * config.enableWindowMode = false;
-     * config.windowValue = 0U;
-     * config.timeoutValue = 0xFFFFU;
-     */
-    RTWDOG_GetDefaultConfig(&config);
-
-    config.testMode = kRTWDOG_UserModeEnabled;
-
-    config.clockSource = kRTWDOG_ClockSource0;
-    config.prescaler = kRTWDOG_ClockPrescalerDivide256;
-    config.windowValue = 6000U;
-    config.timeoutValue = 60000U;
-
-    PRINTF("\r\n----- Refresh test start -----\r\n");
-
-    /* Refresh test in none-window mode */
-    PRINTF("----- None-window mode -----\r\n");
-    config.enableWindowMode = false;
-    config.enableRtwdog = true;
-   
-    RTWDOG_Init(rtwdog_base, &config);
-
-    for (int i = 0; i < 10; i++)
+    if (RESET_CHECK_FLAG == RESET_CHECK_INIT_VALUE)
     {
-        for (;;)
+        /*
+         * config.enableWdog32 = true;
+         * config.clockSource = kWDOG32_ClockSource1;
+         * config.prescaler = kWDOG32_ClockPrescalerDivide1;
+         * config.testMode = kWDOG32_TestModeDisabled;
+         * config.enableUpdate = true;
+         * config.enableInterrupt = false;
+         * config.enableWindowMode = false;
+         * config.windowValue = 0U;
+         * config.timeoutValue = 0xFFFFU;
+         */
+        RTWDOG_GetDefaultConfig(&config);
+
+        config.testMode        = kRTWDOG_UserModeEnabled;
+        config.enableInterrupt = true;
+
+        config.prescaler    = kRTWDOG_ClockPrescalerDivide256;
+        config.timeoutValue = 600U;
+
+        PRINTF("\r\n----- Refresh test start -----\r\n");
+
+        /* Refresh test in none-window mode */
+        PRINTF("----- None-window mode -----\r\n");
+
+        RTWDOG_Init(EXAMPLE_WDOG_BASE, &config);
+
+        for (int i = 0; i < 6; i++)
         {
-            if (1000 * i < RTWDOG_GetCounterValue(rtwdog_base))
+            for (;;)
             {
-                PRINTF("Refresh rtwdog %d time\r\n", i);
-                RTWDOG_Refresh(rtwdog_base);
-                break;
+                if (100 * i < RTWDOG_GetCounterValue(EXAMPLE_WDOG_BASE))
+                {
+                    PRINTF("Refresh rtwdog %d time\r\n", i + 1);
+                    RTWDOG_Refresh(EXAMPLE_WDOG_BASE);
+                    break;
+                }
             }
         }
-    }
-    RTWDOG_Unlock(rtwdog_base);
-    RTWDOG_Disable(rtwdog_base);
-    WaitWctClose(rtwdog_base);
-    /* Refresh test in window mode */
-    PRINTF("----- Window mode -----\r\n");
-
-    config.enableWindowMode = true;
-    config.enableRtwdog = true;
-
-#if (!defined (BOARD_XTAL0_CLK_HZ))
-    /* Use internal clocks when oscilator clock is not available */
-    config.clockSource = kRTWDOG_ClockSource1;
-#else
-    config.clockSource = kRTWDOG_ClockSource2;
-#endif
-    
-    
-    config.prescaler = kRTWDOG_ClockPrescalerDivide1;
-
-    RTWDOG_Init(rtwdog_base, &config);
-    /* When switching clock sources during reconfiguration, the watchdog hardware holds the counter at
-       zero for 2.5 periods of the previous clock source and 2.5 periods of the new clock source
-       after the configuration time period (128 bus clocks) ends */
-    while (RTWDOG_GetCounterValue(rtwdog_base) != 0)
-    {
-    }
-    while (RTWDOG_GetCounterValue(rtwdog_base) == 0)
-    {
-    }
-    for (int i = 6; i < 9; i++)
-    {
-        for (;;)
+        PRINTF("Waiting for time out reset\r\n");
+        RESET_CHECK_FLAG = RESET_CHECK_INIT_VALUE;
+        while (1)
         {
-            /* Refresh wdog32 in the refresh window */
-            if (1000 * i < RTWDOG_GetCounterValue(rtwdog_base))
-            {
-                PRINTF("Refresh rtwdog %d time\r\n", i - 6);
-                RTWDOG_Refresh(rtwdog_base);
-                break;
-            }
         }
     }
+    if (RESET_CHECK_FLAG == RESET_CHECK_INIT_VALUE + 1)
+    {
+        PRINTF("None-window mode reset succeeded\r\n");
+        RTWDOG_GetDefaultConfig(&config);
+        config.prescaler       = kRTWDOG_ClockPrescalerDivide256;
+        config.testMode        = kRTWDOG_UserModeEnabled;
+        config.enableInterrupt = true;
+        config.timeoutValue    = 600U;
+        /* Refresh test in window mode */
+        PRINTF("----- Window mode -----\r\n");
+        config.enableWindowMode = true;
+        config.windowValue      = 300U;
+        RTWDOG_Init(EXAMPLE_WDOG_BASE, &config);
 
-    config.enableRtwdog = false;
-    config.testMode = kRTWDOG_TestModeDisabled;
+        for (int i = 3; i < 6; i++)
+        {
+            for (;;)
+            {
+                /* Refresh wdog32 in the refresh window */
+                if (100 * i < RTWDOG_GetCounterValue(EXAMPLE_WDOG_BASE))
+                {
+                    PRINTF("Refresh rtwdog %d time\r\n", i - 2);
+                    RTWDOG_Refresh(EXAMPLE_WDOG_BASE);
+                    break;
+                }
+            }
+        }
+        PRINTF("Waiting for time out reset\r\n");
+        while (1)
+        {
+        }
+    }
+    if (RESET_CHECK_FLAG == RESET_CHECK_INIT_VALUE + 2)
+    {
+        config.enableRtwdog = false;
+        config.testMode     = kRTWDOG_TestModeDisabled;
 
-    RTWDOG_Init(rtwdog_base, &config);
-    WaitWctClose(rtwdog_base);
+        RTWDOG_Init(EXAMPLE_WDOG_BASE, &config);
+        WaitWctClose(EXAMPLE_WDOG_BASE);
 
-    PRINTF("----- Refresh test success  -----\r\n\r\n");
+        PRINTF("Window mode reset succeeded\r\n");
+    }
 }
 
 int main(void)
@@ -322,17 +344,14 @@ int main(void)
     CLOCK_EnableClock(kCLOCK_Wdog3);
     NVIC_EnableIRQ(RTWDOG_IRQn);
 
-#if defined(FSL_FEATURE_SOC_ASMC_COUNT) && (FSL_FEATURE_SOC_ASMC_COUNT)    
+#if defined(FSL_FEATURE_SOC_ASMC_COUNT) && (FSL_FEATURE_SOC_ASMC_COUNT)
     if ((ASMC_GetSystemResetStatusFlags(EXAMPLE_ASMC_BASE) & kASMC_WatchdogResetFlag))
     {
         RESET_CHECK_FLAG++;
-    }  
+    }
 #endif
     RTWdogFastTesting();
     RTWdogRefreshTest();
-    PRINTF("----- End of RTWDOG example  -----\r\n\r\n");
 
-    while (1)
-    {
-    }
+    return 0;
 }

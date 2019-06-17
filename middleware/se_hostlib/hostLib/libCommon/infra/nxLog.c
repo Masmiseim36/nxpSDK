@@ -8,51 +8,190 @@
  * you do not agree to be bound by the applicable license terms, then you
  * may not retain, install, activate or otherwise use the software.
  */
-
 #include <nxLog.h>
-#include <stdio.h>
 #include <stdarg.h>
+#include <stdio.h>
+#include <inttypes.h>
 
-
-#if NX_LOG_SHORT_PREFIX
-static const char * szLevel[] = {
-    "D",
-    "I",
-    "W",
-    "E" };
-#else
-static const char * szLevel[] = {
-    "DEBUG",
-    "INFO ",
-    "WARN ",
-    "ERROR" };
+#include "sm_printf.h"
+#if defined(_MSC_VER)
+#include <windows.h>
 #endif
 
-void nLog(const char * comp, int level,
-    const char * format, ... ) {
-    va_list   vArgs;
-    printf("%s:%s:", comp, szLevel[level]);
+#define COLOR_RED    "\033[0;31m"
+#define COLOR_GREEN   "\033[0;32m"
+#define COLOR_YELLOW  "\033[0;33m"
+#define COLOR_BLUE    "\033[0;34m"
+#define COLOR_RESET   "\033[0m"
+
+#define szCRLF "\r\n"
+#define szLF "\n"
+
+static void setColor(int level);
+static void reSetColor(void);
+
+#if defined(_MSC_VER)
+static HANDLE sStdOutConsoleHandle = INVALID_HANDLE_VALUE;
+static void msvc_setColor(int level);
+static void msvc_reSetColor(void);
+#define szEOL szLF
+#endif
+
+#if defined(__GNUC__)
+static void ansi_setColor(int level);
+static void ansi_reSetColor(void);
+#if AX_EMBEDDED
+#define szEOL szCRLF
+#else
+#define szEOL szLF
+#endif
+#endif /* __GNUC__ */
+
+#ifndef szEOL
+#   define szEOL szCRLF
+#endif
+
+#if NX_LOG_SHORT_PREFIX
+static const char *szLevel[] = {"D", "I", "W", "E"};
+#else
+static const char *szLevel[] = {"DEBUG", "INFO ", "WARN ", "ERROR"};
+#endif
+
+void nLog(const char *comp, int level, const char *format, ...)
+{
+    va_list vArgs;
+    char buffer[256];
+    size_t size_buff = sizeof(buffer) / sizeof(buffer[0]) - 1;
+    setColor(level);
+    PRINTF("%10s:%s:", comp, szLevel[level]);
     va_start(vArgs, format);
-    vprintf(format,vArgs);
+    vsnprintf(buffer, size_buff, format, vArgs);
+    PRINTF("%s", buffer);
     va_end(vArgs);
-    printf("\r\n");
+    reSetColor();
+    PRINTF(szEOL);
 }
 
-void nLog_au8(const char * comp, int level,
-    const char * message,
-    unsigned char * array,
-    size_t array_len) {
-    size_t i;
-    printf("%s:%s:%s (Len=%d)", comp,
-        szLevel[level], message, array_len);
-    for (i = 0; i < array_len; i++) {
-        if ( 0 == (i % 16 )) {
-            printf("\r\n");
-        }
-        if ( 0 == (i % 4 )) {
-            printf("\t");
-        }
-        printf("%02X ", array[i]);
-    }
-    printf("\r\n");
+#if 0
+#if !(defined SDK_OS_FREE_RTOS)
+void vLoggingPrintf(const char *pcFormat, ...) {
+    char buffer[256];
+    va_list vArgs;
+    size_t size_buff = sizeof(buffer) / sizeof(buffer[0]) - 1;
+    va_start(vArgs, pcFormat);
+    setColor(NX_LEVEL_DEBUG);
+    PRINTF("%10s:%s:", "AWS", szLevel[NX_LEVEL_DEBUG]);
+    va_start(vArgs, pcFormat);
+    vsnprintf(buffer, size_buff, pcFormat, vArgs);
+    PRINTF("%s", buffer);
+    va_end(vArgs);
+    reSetColor();
+    PRINTF(szEOL);
+    va_end(vArgs);
 }
+#endif // SDK_OS_FREE_RTOS
+#endif // 0
+
+void nLog_au8(const char *comp, int level, const char *message, const unsigned char *array, size_t array_len)
+{
+    size_t i;
+    setColor(level);
+    PRINTF("%10s:%s:%s (Len=%" PRId32 ")", comp, szLevel[level], message, (int32_t)array_len);
+    for (i = 0; i < array_len; i++) {
+        if (0 == (i % 16)) {
+            PRINTF(szEOL);
+        }
+        if (0 == (i % 4)) {
+            PRINTF("\t\t");
+        }
+        PRINTF("%02X ", array[i]);
+    }
+    reSetColor();
+    PRINTF(szEOL);
+}
+
+static void setColor(int level)
+{
+#if defined(_MSC_VER)
+    msvc_setColor(level);
+#endif
+#if defined(__GNUC__)
+    ansi_setColor(level);
+#endif
+}
+
+static void reSetColor(void)
+{
+#if defined(_MSC_VER)
+    msvc_reSetColor();
+#endif
+#if defined(__GNUC__)
+    ansi_reSetColor();
+#endif
+}
+
+#if defined(_MSC_VER)
+static void msvc_setColor(int level)
+{
+    WORD wAttributes = 0;
+    if (sStdOutConsoleHandle == INVALID_HANDLE_VALUE) {
+        sStdOutConsoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+    }
+    switch (level) {
+    case NX_LEVEL_ERROR:
+        wAttributes = FOREGROUND_RED | FOREGROUND_INTENSITY;
+        break;
+    case NX_LEVEL_WARN:
+        wAttributes = FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+        break;
+    case NX_LEVEL_INFO:
+        wAttributes = FOREGROUND_GREEN;
+        break;
+    case NX_LEVEL_DEBUG:
+        /* As of now put color here. All normal printfs would be in WHITE
+             * Later, remove this color.
+             */
+        wAttributes = FOREGROUND_RED | FOREGROUND_GREEN;
+        break;
+    default:
+        wAttributes = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED;
+    }
+    SetConsoleTextAttribute(sStdOutConsoleHandle, wAttributes);
+}
+
+static void msvc_reSetColor()
+{
+    msvc_setColor(-1 /* default */);
+}
+#endif
+
+#if defined(__GNUC__)
+static void ansi_setColor(int level)
+{
+
+    switch (level) {
+    case NX_LEVEL_ERROR:
+        PRINTF(COLOR_RED);
+        break;
+    case NX_LEVEL_WARN:
+        PRINTF(COLOR_YELLOW);
+        break;
+    case NX_LEVEL_INFO:
+        PRINTF(COLOR_BLUE);
+        break;
+    case NX_LEVEL_DEBUG:
+        /* As of now put color here. All normal printfs would be in WHITE
+             * Later, remove this color.
+             */
+        PRINTF(COLOR_GREEN);
+        break;
+    default:
+        PRINTF(COLOR_RESET);
+    }
+}
+
+static void ansi_reSetColor()
+{
+    PRINTF(COLOR_RESET);
+}
+#endif

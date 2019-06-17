@@ -10,12 +10,14 @@
 #include "fsl_debug_console.h"
 #include "fsl_sai.h"
 #include "music.h"
+#include "fsl_codec_common.h"
 
 #include "fsl_wm8960.h"
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
+#include "fsl_codec_adapter.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -60,9 +62,19 @@ void BOARD_EnableSaiMclkOutput(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+wm8960_config_t wm8960Config = {
+    .i2cConfig        = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE, .codecI2CSourceClock = 57600000},
+    .route            = kWM8960_RoutePlaybackandRecord,
+    .rightInputSource = kWM8960_InputDifferentialMicInput2,
+    .playSource       = kWM8960_PlaySourceDAC,
+    .slaveAddress     = WM8960_I2C_ADDR,
+    .bus              = kWM8960_BusI2S,
+    .format = {.mclk_HZ = 6144000U, .sampleRate = kWM8960_AudioSampleRate16KHz, .bitWidth = kWM8960_AudioBitWidth16bit},
+    .master_slave = false,
+};
+codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8960, .codecDevConfig = &wm8960Config};
 static size_t g_index           = 0;
 static volatile bool isFinished = false;
-codec_handle_t codecHandle      = {0};
 extern codec_config_t boardCodecConfig;
 
 #if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
@@ -76,6 +88,8 @@ sai_master_clock_t mclkConfig = {
 #endif
 };
 #endif
+uint8_t codecHandleBuffer[CODEC_HANDLE_SIZE] = {0U};
+codec_handle_t *codecHandle                  = (codec_handle_t *)codecHandleBuffer;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -180,7 +194,6 @@ void SAI_TxIRQHandler(void)
  */
 int main(void)
 {
-    uint32_t delayCycle = 500000;
     sai_transceiver_t config;
 
     BOARD_InitPins();
@@ -193,7 +206,6 @@ int main(void)
 
     /* Use AUXPLL main clock source */
     CLOCK_SetIpSrcDiv(kCLOCK_Sai0, kCLOCK_IpSrcRtcAuxPllAsync, 0, 0);
-    BOARD_Codec_I2C_Init();
 
     PRINTF("SAI functional interrupt example started!\n\r");
 
@@ -218,17 +230,7 @@ int main(void)
 #endif
 
     /* Use default setting to init codec */
-    CODEC_Init(&codecHandle, &boardCodecConfig);
-    CODEC_SetFormat(&codecHandle, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH);
-
-#if defined(CODEC_CYCLE)
-    delayCycle = CODEC_CYCLE;
-#endif
-    while (delayCycle)
-    {
-        __ASM("nop");
-        delayCycle--;
-    }
+    CODEC_Init(codecHandle, &boardCodecConfig);
 
     /*  Enable interrupt */
     EnableIRQ(DEMO_SAI_IRQ);

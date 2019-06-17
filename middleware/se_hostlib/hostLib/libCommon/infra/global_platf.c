@@ -29,40 +29,6 @@
 #include "sm_apdu.h"
 #include "sm_errors.h"
 
-#ifndef TGT_A71CH
-/**
- * Send a select command to the card manager
- * @deprecated Use ::GP_Select instead. Please note the semantics of ::GP_SelectApplet and ::GP_Select are not identical
- *
- * @param[in] pAppletName Pointer to the applet name.
- * @param[in] appletNameLength Length of the applet name.
- * @param[out] pResponse Pointer to the response (data and status word).
- * @param[in,out] pResponseLength IN: size of pResponse buffer passed as argument; OUT: Length of response retrieved
- *
- * \retval Return value reflects communication status
- */
-U32 GP_SelectApplet(U8 * pAppletName, U8 appletNameLength, U8 * pResponse, U32 * pResponseLength)
-{
-    U32 st = 0;
-    U8 txBuf[128];
-    U8 len = appletNameLength;
-
-    txBuf[0] = CLA_ISO7816;
-    txBuf[1] = INS_GP_SELECT;
-    txBuf[2] = 0x04;
-    txBuf[3] = 0x00;
-    txBuf[4] = len;
-    memcpy(&txBuf[5], pAppletName, len);
-    txBuf[5+ len] = 0x00;
-
-    assert(pAppletName != NULL);
-
-    st = smCom_TransceiveRaw(txBuf, 6+len, pResponse, pResponseLength);
-
-    return st;
-}
-#endif // TGT_A71CH
-
 /**
  * Send a select command to the card manager
  *
@@ -76,12 +42,15 @@ U32 GP_SelectApplet(U8 * pAppletName, U8 appletNameLength, U8 * pResponse, U32 *
 U16 GP_Select(U8 *appletName, U16 appletNameLen, U8 *responseData, U16 *responseDataLen)
 {
     U16 rv = 0;
-    apdu_t apdu;
+    apdu_t apdu = {0};
     apdu_t * pApdu = (apdu_t *) &apdu;
     U8 isOk = 0x00;
 
-    assert(appletName != NULL);
-    assert(responseData != NULL);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if ((appletName == NULL) || (responseData == NULL) || (responseDataLen == NULL)) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     pApdu->cla   = CLA_ISO7816;
     pApdu->ins   = INS_GP_SELECT;
@@ -91,8 +60,10 @@ U16 GP_Select(U8 *appletName, U16 appletNameLen, U8 *responseData, U16 *response
     AllocateAPDUBuffer(pApdu);
     SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
 
-    smApduAppendCmdData(pApdu, appletName, appletNameLen);
-
+    if ( appletNameLen > 0)
+    {
+        smApduAppendCmdData(pApdu, appletName, appletNameLen);
+    }
     rv = (U16)scp_Transceive(pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
@@ -103,6 +74,54 @@ U16 GP_Select(U8 *appletName, U16 appletNameLen, U8 *responseData, U16 *response
         }
     }
 
+
+  FreeAPDUBuffer(pApdu);
+  return rv;
+}
+
+#ifdef TGT_A71CL
+/**
+* Gets the CL applet version'.
+* @param[in, out] appletVersion Pointer to a buffer containing the applet version.
+* @param[in, out] verionLength IN: size of applet version buffer passed as argument; OUT: Length of actual data retrieved
+* @retval::SW_OK Upon successful execution
+*/
+U16 GP_GetCLAppletVersion(U8 *appletVersion, U16 *verionLength)
+{
+  U16 rv;
+  /* U8 cntBuf[MONOTONIC_COUNTER_BYTE_COUNT]; */
+  /* U16 cntBufLen = sizeof(cntBuf); */
+  U8 isOk = 0;
+
+  apdu_t apdu;
+  apdu_t *pApdu = (apdu_t*)&apdu;
+
+  assert(appletVersion != NULL);
+  memset(&apdu, 0, sizeof(apdu));
+
+  pApdu->cla   = AX_CLA;
+  pApdu->ins   = 0xEF;
+  pApdu->p1    = 0x00;
+  pApdu->p2    = 0x00;
+#ifdef A71CL_DEMO_APPLET
+  pApdu->rxHasChkSum = 1;
+  pApdu->rxChkSumLength = A71CL_CMD_CHKSUM_LEN;
+#else
+  pApdu->rxHasChkSum = 0;
+#endif
+
+  AllocateAPDUBuffer(pApdu);
+  SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
+
+  rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+  if (rv == SMCOM_OK) {
+      rv = smGetSw(pApdu, &isOk);
+      if (isOk) {
+          rv = smApduGetResponseBody(pApdu, appletVersion, verionLength);
+      }
+  }
+
     FreeAPDUBuffer(pApdu);
     return rv;
 }
+#endif

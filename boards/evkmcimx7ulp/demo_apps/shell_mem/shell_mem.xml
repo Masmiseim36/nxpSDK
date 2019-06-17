@@ -85,5 +85,8 @@
     <source path="boards/evkmcimx7ulp/demo_apps/shell_mem" target_path="source" type="src">
       <files mask="shell_mem.c"/>
     </source>
+    <source path="boards/evkmcimx7ulp/demo_apps/shell_mem" target_path="src" type="binary" exclude="true">
+      <files mask="shell_mem.bin"/>
+    </source>
   </example>
 </ksdk:examples>

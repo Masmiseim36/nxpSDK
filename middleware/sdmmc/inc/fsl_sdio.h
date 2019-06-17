@@ -32,7 +32,7 @@ typedef void (*sdio_io_irq_handler_t)(sdio_card_t *card, uint32_t func);
 /*! @brief sdio io read/write direction */
 typedef enum _sdio_io_direction
 {
-    kSDIO_IORead = 0U,  /*!< io read */
+    kSDIO_IORead  = 0U, /*!< io read */
     kSDIO_IOWrite = 1U, /*!< io write */
 } sdio_io_direction_t;
 
@@ -79,7 +79,8 @@ struct _sdio_card
  * API
  ************************************************************************************************/
 #if defined(__cplusplus)
-extern "C" {
+extern "C"
+{
 #endif
 /*!
  * @name Initialization and deinitialization
@@ -269,7 +270,9 @@ status_t SDIO_ReadCIS(sdio_card_t *card, sdio_func_num_t func, const uint32_t *t
  * @param card detect configuration
  * @param waitCardStatus wait card detect status
  */
-status_t SDIO_WaitCardDetectStatus(SDMMCHOST_TYPE *hostBase, const sdmmchost_detect_card_t *cd, bool waitCardStatus);
+status_t SDIO_WaitCardDetectStatus(SDMMCHOST_TYPE *hostBase,
+                                   const sdmmchost_detect_card_t *cd,
+                                   bool waitCardStatus);
 
 /*!
  * @brief sdio card present check function.

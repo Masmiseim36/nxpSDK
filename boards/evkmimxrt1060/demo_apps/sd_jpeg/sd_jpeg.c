@@ -79,9 +79,9 @@ static status_t sdcardWaitCardInsert(void);
  ******************************************************************************/
 
 static volatile bool g_lcdFramePending = false;
-static void *volatile s_fbList = NULL; /* List to the frame buffers. */
-static void *volatile inactiveBuf = NULL;
-static void *volatile activeBuf = NULL;
+static void *volatile s_fbList         = NULL; /* List to the frame buffers. */
+static void *volatile inactiveBuf      = NULL;
+static void *volatile activeBuf        = NULL;
 
 /* This struct contains the JPEG decompression parameters */
 static struct jpeg_decompress_struct cinfo;
@@ -105,7 +105,10 @@ static const sdmmchost_detect_card_t s_sdCardDetect = {
 /*! @brief SDMMC card power control configuration */
 #if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
 static const sdmmchost_pwr_card_t s_sdCardPwrCtrl = {
-    .powerOn = BOARD_PowerOnSDCARD, .powerOnDelay_ms = 500U, .powerOff = BOARD_PowerOffSDCARD, .powerOffDelay_ms = 0U,
+    .powerOn          = BOARD_PowerOnSDCARD,
+    .powerOnDelay_ms  = 500U,
+    .powerOff         = BOARD_PowerOffSDCARD,
+    .powerOffDelay_ms = 0U,
 };
 #endif
 /*******************************************************************************
@@ -129,7 +132,8 @@ void BOARD_EnableLcdInterrupt(void)
 void BOARD_InitLcd(void)
 {
     gpio_pin_config_t config = {
-        kGPIO_DigitalOutput, 0,
+        kGPIO_DigitalOutput,
+        0,
     };
 
     /* Backlight. */
@@ -150,7 +154,10 @@ void BOARD_InitLcdifPixelClock(void)
      * Video PLL output clock is OSC24M * (loopDivider + (denominator / numerator)) / postDivider = 93MHz.
      */
     clock_video_pll_config_t config = {
-        .loopDivider = 31, .postDivider = 8, .numerator = 0, .denominator = 0,
+        .loopDivider = 31,
+        .postDivider = 8,
+        .numerator   = 0,
+        .denominator = 0,
     };
 
     CLOCK_InitVideoPll(&config);
@@ -173,8 +180,8 @@ void BOARD_InitLcdifPixelClock(void)
 static void BOARD_USDHCClockConfiguration(void)
 {
     CLOCK_InitSysPll(&sysPllConfig_BOARD_BootClockRUN);
-    /*configure system pll PFD2 fractional divider to 24*/
-    CLOCK_InitSysPfd(kCLOCK_Pfd2, 24U);
+    /*configure system pll PFD0 fractional divider to 24, output clock is 528MHZ * 18 / 24 = 396 MHZ*/
+    CLOCK_InitSysPfd(kCLOCK_Pfd0, 24U);
     /* Configure USDHC clock source and divider */
     CLOCK_SetDiv(kCLOCK_Usdhc1Div, 0U);
     CLOCK_SetMux(kCLOCK_Usdhc1Mux, 0U);
@@ -201,7 +208,7 @@ static void *APP_GetFrameBuffer(void)
 static void APP_PutFrameBuffer(void *fb)
 {
     *(void **)fb = s_fbList;
-    s_fbList = fb;
+    s_fbList     = fb;
 }
 
 /*!
@@ -220,7 +227,7 @@ void jpeg_decode(FIL *file, uint8_t *buffer)
 
     // Decode JPEG Image
     JSAMPROW row_pointer[1] = {0}; /* Output row buffer */
-    uint32_t row_stride = 0;       /* physical row width in image buffer */
+    uint32_t row_stride     = 0;   /* physical row width in image buffer */
 
     // Step 1: allocate and initialize JPEG decompression object
     cinfo.err = jpeg_std_error(&jerr);
@@ -230,11 +237,11 @@ void jpeg_decode(FIL *file, uint8_t *buffer)
 
     jpg_size = f_size(file);
 
-    jpg_buffer = (unsigned char *)malloc(jpg_size + 2 * APP_CACHE_LINE_SIZE);
+    jpg_buffer         = (unsigned char *)malloc(jpg_size + 2 * APP_CACHE_LINE_SIZE);
     jpg_buffer_aligned = (void *)(SDK_SIZEALIGN((uint32_t)jpg_buffer, APP_CACHE_LINE_SIZE));
 
     bytesRemain = jpg_size;
-    read_pos = jpg_buffer_aligned;
+    read_pos    = jpg_buffer_aligned;
 
     DCACHE_CleanInvalidateByRange((uint32_t)jpg_buffer_aligned, jpg_size);
 
@@ -334,7 +341,7 @@ void APP_LCDIF_IRQHandler(void)
              */
             APP_PutFrameBuffer(activeBuf);
 
-            activeBuf = inactiveBuf;
+            activeBuf         = inactiveBuf;
             g_lcdFramePending = false;
         }
     }
@@ -346,18 +353,18 @@ void APP_ELCDIF_Init(void)
     uint8_t i;
 
     const elcdif_rgb_mode_config_t config = {
-        .panelWidth = APP_IMG_WIDTH,
-        .panelHeight = APP_IMG_HEIGHT,
-        .hsw = APP_HSW,
-        .hfp = APP_HFP,
-        .hbp = APP_HBP,
-        .vsw = APP_VSW,
-        .vfp = APP_VFP,
-        .vbp = APP_VBP,
+        .panelWidth    = APP_IMG_WIDTH,
+        .panelHeight   = APP_IMG_HEIGHT,
+        .hsw           = APP_HSW,
+        .hfp           = APP_HFP,
+        .hbp           = APP_HBP,
+        .vsw           = APP_VSW,
+        .vfp           = APP_VFP,
+        .vbp           = APP_VBP,
         .polarityFlags = APP_POL_FLAGS,
-        .bufferAddr = (uint32_t)g_frameBuffer[0],
-        .pixelFormat = kELCDIF_PixelFormatRGB888,
-        .dataBus = APP_LCDIF_DATA_BUS,
+        .bufferAddr    = (uint32_t)g_frameBuffer[0],
+        .pixelFormat   = kELCDIF_PixelFormatRGB888,
+        .dataBus       = APP_LCDIF_DATA_BUS,
     };
 
     for (i = 1; i < APP_LCD_FB_NUM; i++)
@@ -439,7 +446,7 @@ int main(void)
         }
 
         ELCDIF_SetNextBufferAddr(APP_ELCDIF, (uint32_t)freeFb);
-        inactiveBuf = freeFb;
+        inactiveBuf       = freeFb;
         g_lcdFramePending = true;
     }
 }
@@ -447,7 +454,7 @@ int main(void)
 static status_t sdcardWaitCardInsert(void)
 {
     /* Save host information. */
-    g_sd.host.base = SD_HOST_BASEADDR;
+    g_sd.host.base           = SD_HOST_BASEADDR;
     g_sd.host.sourceClock_Hz = SD_HOST_CLK_FREQ;
     /* card detect type */
     g_sd.usrParam.cd = &s_sdCardDetect;

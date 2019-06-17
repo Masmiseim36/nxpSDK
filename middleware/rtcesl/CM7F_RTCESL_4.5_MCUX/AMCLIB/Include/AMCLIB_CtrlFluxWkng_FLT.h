@@ -21,9 +21,9 @@ extern "C" {
 /******************************************************************************
 * Includes
 ******************************************************************************/
-#include "mlib_fp.h"      
-#include "gflib_fp.h"     
-#include "gdflib_fp.h"    
+#include "mlib_FP.h"      
+#include "gflib_FP.h"     
+#include "gdflib_FP.h"    
 
 /******************************************************************************
 * Macros 
@@ -78,7 +78,7 @@ static inline void AMCLIB_CtrlFluxWkngInit_FLT_FCi(float_t fltInitVal,
 {
     GFLIB_CtrlPIpAWInit_FLT(fltInitVal, &psCtrl->sFWPiParam);
     GDFLIB_FilterIIR1Init_FLT (&psCtrl->sIqErrIIR1Param);           
-    psCtrl->bStopIntegFlag = FALSE;    
+   
 }
 
 

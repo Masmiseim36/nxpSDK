@@ -29,7 +29,7 @@ define symbol m_interrupts_end         = 0x700023FF;
 define symbol m_text_start             = 0x70002400;
 define symbol m_text_end               = 0x7017FFFF;
 
-/* NOTE: Flash in range 0x6058_0000 - 0x607F_FFFF is reserved for  data */
+/* NOTE: Flash in range 0x7018_0000 - 0x703F_FFFF is reserved for data */
 
 define symbol m_data_start             = 0x20000000;
 define symbol m_data_end               = 0x2001FFFF;

@@ -16,7 +16,12 @@
 #endif
 
 #ifdef __cplusplus
+/* Some compilers do not want to play by the standard, specifically ARM CC */
+#ifdef MBED_BUILD_TIMESTAMP
+#include <stdio.h>
+#else
 #include <cstdio>
+#endif
 extern "C" {
 #else
 #include <stdio.h>
@@ -74,7 +79,7 @@ typedef void(*LOGGER_LOG_GETLASTERROR)(const char* file, const char* func, int l
         printf(flash_str, ##__VA_ARGS__);   \
         printf("\n");\
     } while((void)0,0)
-    
+
 #define LogError LogInfo
 #define LOG(log_category, log_options, FORMAT, ...)  { \
         static const char flash_str[] ICACHE_RODATA_ATTR STORE_ATTR = (FORMAT); \
@@ -84,16 +89,38 @@ typedef void(*LOGGER_LOG_GETLASTERROR)(const char* file, const char* func, int l
 
 #else /* NOT ESP8266_RTOS */
 
+// In order to make sure that the compiler evaluates the arguments and issues an error if they do not conform to printf
+// specifications, we call printf with the format and __VA_ARGS__ but the call is behind an if (0) so that it does
+// not actually get executed at runtime
 #if defined _MSC_VER
-#define LOG(log_category, log_options, format, ...) { LOGGER_LOG l = xlogging_get_log_function(); if (l != NULL) l(log_category, __FILE__, FUNC_NAME, __LINE__, log_options, format, __VA_ARGS__); }
+// ignore warning C4127 
+#define LOG(log_category, log_options, format, ...) \
+{ \
+    __pragma(warning(suppress: 4127)) \
+    if (0) \
+    { \
+        (void)printf(format, __VA_ARGS__); \
+    } \
+    { \
+        LOGGER_LOG l = xlogging_get_log_function(); \
+        if (l != NULL) \
+        { \
+            l(log_category, __FILE__, FUNC_NAME, __LINE__, log_options, format, __VA_ARGS__); \
+        } \
+    } \
+}
 #else
-#define LOG(log_category, log_options, format, ...) { LOGGER_LOG l = xlogging_get_log_function(); if (l != NULL) l(log_category, __FILE__, FUNC_NAME, __LINE__, log_options, format, ##__VA_ARGS__); } 
+#define LOG(log_category, log_options, format, ...) { if (0) { (void)printf(format, ##__VA_ARGS__); } { LOGGER_LOG l = xlogging_get_log_function(); if (l != NULL) l(log_category, __FILE__, FUNC_NAME, __LINE__, log_options, format, ##__VA_ARGS__); } }
 #endif
 
 #if defined _MSC_VER
 #define LogInfo(FORMAT, ...) do{LOG(AZ_LOG_INFO, LOG_LINE, FORMAT, __VA_ARGS__); }while((void)0,0)
 #else
 #define LogInfo(FORMAT, ...) do{LOG(AZ_LOG_INFO, LOG_LINE, FORMAT, ##__VA_ARGS__); }while((void)0,0)
+#endif
+
+#ifdef WIN32
+extern void xlogging_LogErrorWinHTTPWithGetLastErrorAsStringFormatter(int errorMessageID);
 #endif
 
 #if defined _MSC_VER
@@ -106,38 +133,23 @@ extern LOGGER_LOG_GETLASTERROR xlogging_get_log_function_GetLastError(void);
 
 #define LogError(FORMAT, ...) do{ LOG(AZ_LOG_ERROR, LOG_LINE, FORMAT, __VA_ARGS__); }while((void)0,0)
 #define LogErrorWinHTTPWithGetLastErrorAsString(FORMAT, ...) do { \
-                DWORD errorMessageID = GetLastError(); \
-                char messageBuffer[MESSAGE_BUFFER_SIZE]; \
+                int errorMessageID = GetLastError(); \
                 LogError(FORMAT, __VA_ARGS__); \
-                if (errorMessageID == 0) \
-                {\
-                    LogError("GetLastError() returned 0. Make sure you are calling this right after the code that failed. "); \
-                } \
-                else\
-                {\
-                    int size = FormatMessage(FORMAT_MESSAGE_FROM_HMODULE | FORMAT_MESSAGE_IGNORE_INSERTS, \
-                        GetModuleHandle("WinHttp"), errorMessageID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), messageBuffer, MESSAGE_BUFFER_SIZE, NULL); \
-                    if (size == 0)\
-                    {\
-                        size = FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, NULL, errorMessageID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), messageBuffer, MESSAGE_BUFFER_SIZE, NULL); \
-                        if (size == 0)\
-                        {\
-                            LogError("GetLastError Code: %d. ", errorMessageID); \
-                        }\
-                        else\
-                        {\
-                            LogError("GetLastError: %s.", messageBuffer); \
-                        }\
-                    }\
-                    else\
-                    {\
-                        LogError("GetLastError: %s.", messageBuffer); \
-                    }\
-                }\
+                xlogging_LogErrorWinHTTPWithGetLastErrorAsStringFormatter(errorMessageID); \
             } while((void)0,0)
-#else
+#else // _MSC_VER
 #define LogError(FORMAT, ...) do{ LOG(AZ_LOG_ERROR, LOG_LINE, FORMAT, ##__VA_ARGS__); }while((void)0,0)
-#endif
+
+#ifdef WIN32
+// Included when compiling on Windows but not with MSVC, e.g. with MinGW.
+#define LogErrorWinHTTPWithGetLastErrorAsString(FORMAT, ...) do { \
+                int errorMessageID = GetLastError(); \
+                LogError(FORMAT, ##__VA_ARGS__); \
+                xlogging_LogErrorWinHTTPWithGetLastErrorAsStringFormatter(errorMessageID); \
+            } while((void)0,0)
+#endif // WIN32
+
+#endif // _MSC_VER
 
 extern void LogBinary(const char* comment, const void* data, size_t size);
 

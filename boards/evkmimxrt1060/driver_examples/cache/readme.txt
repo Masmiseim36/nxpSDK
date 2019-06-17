@@ -7,6 +7,14 @@ In this example, many memory (such as SDRAM, etc) and DMA will be used to show t
 Those memory is both accessible for cpu and DMA. For the memory data alignment, cache driver should be 
 used rightly. For cache enabled case, the cache invalidate operation should be done before cpu access the memory. The cache clean opeartion should be done after CPU verify the memory
 memory and before DMA access the memory.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -43,11 +51,6 @@ The log below shows the output of the example in the terminal window:
  Cache example end. 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+Customization options
+=====================
 

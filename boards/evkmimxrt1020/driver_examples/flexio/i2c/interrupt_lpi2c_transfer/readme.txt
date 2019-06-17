@@ -3,6 +3,14 @@ Overview
 The flexio_lpi2c_interrupt example shows how to use flexio i2c master  driver in interrupt way:
 
 In this example, a flexio simulated i2c master connect to a LPI2C slave
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -58,7 +66,7 @@ So the settings for baudrate of transmission do not more than 200k in this case.
 
 Known Issue: 
 
-Some toolchain flexspi_nor_release target could be print "Error occured in this transfer !". 
+Some toolchain flexspi_nor_release target could be print "Error occurred in this transfer !". 
 But slave received data is same with master sented, the transfer is ok for this case.
 
 Note:
@@ -67,11 +75,6 @@ To debug in qspiflash, following steps are needed:
 3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
 4. Start debugging in IDE.
    - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

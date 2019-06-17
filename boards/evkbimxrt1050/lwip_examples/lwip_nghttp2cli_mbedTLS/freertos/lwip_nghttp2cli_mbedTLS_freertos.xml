@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MIMXRT1052"/>
+    <definition extID="component.lpuart_adapter.MIMXRT1052"/>
+    <definition extID="component.serial_manager.MIMXRT1052"/>
+    <definition extID="component.serial_manager_uart.MIMXRT1052"/>
+    <definition extID="device.MIMXRT1052_CMSIS.MIMXRT1052"/>
+    <definition extID="device.MIMXRT1052_startup.MIMXRT1052"/>
+    <definition extID="driver.phyksz8081.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos.freertos.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos.freertos.heap_4.MIMXRT1052"/>
+    <definition extID="middleware.mbedtls.MIMXRT1052"/>
+    <definition extID="middleware.nghttp2.MIMXRT1052"/>
+    <definition extID="middleware.tcpip.lwip.MIMXRT1052"/>
+    <definition extID="middleware.tcpip.lwip.enet_ethernetif.MIMXRT1052"/>
+    <definition extID="middleware.tcpip.lwip.enet_ethernetif_kinetis.MIMXRT1052"/>
+    <definition extID="platform.Include_common.MIMXRT1052"/>
+    <definition extID="platform.Include_core_cm7.MIMXRT1052"/>
+    <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1052"/>
+    <definition extID="platform.drivers.clock.MIMXRT1052"/>
+    <definition extID="platform.drivers.common.MIMXRT1052"/>
+    <definition extID="platform.drivers.dcp.MIMXRT1052"/>
+    <definition extID="platform.drivers.enet.MIMXRT1052"/>
+    <definition extID="platform.drivers.igpio.MIMXRT1052"/>
+    <definition extID="platform.drivers.iomuxc.MIMXRT1052"/>
+    <definition extID="platform.drivers.lpuart.MIMXRT1052"/>
+    <definition extID="platform.drivers.trng.MIMXRT1052"/>
+    <definition extID="platform.drivers.xip_board.MIMXRT1052"/>
+    <definition extID="platform.drivers.xip_device.MIMXRT1052"/>
+    <definition extID="platform.utilities.assert.MIMXRT1052"/>
+    <definition extID="utility.debug_console.MIMXRT1052"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
+    <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
+    <definition extID="com.crt.advproject.config.exe.debug"/>
+    <definition extID="com.crt.advproject.config.exe.release"/>
+  </externalDefinitions>
+  <example id="evkbimxrt1050_lwip_nghttp2cli_mbedTLS_freertos" name="lwip_nghttp2cli_mbedTLS_freertos" category="demo_apps" dependency="driver.phyksz8081.MIMXRT1052 platform.drivers.trng.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 middleware.tcpip.lwip.enet_ethernetif_kinetis.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.enet.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.amazon_freertos.freertos.heap_4.MIMXRT1052 middleware.amazon_freertos.freertos.MIMXRT1052 middleware.nghttp2.MIMXRT1052 platform.drivers.common.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 component.lists.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 middleware.tcpip.lwip.enet_ethernetif.MIMXRT1052 middleware.tcpip.lwip.MIMXRT1052">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <memory>
+      <memoryBlock addr="60000000" size="04000000" access="RO" type="ExtFlash" id="BOARD_FLASH_evkbimxrt1050" name="BOARD_FLASH"/>
+      <memoryBlock addr="80000000" size="01E00000" access="RW" type="RAM" id="BOARD_SDRAM_evkbimxrt1050" name="BOARD_SDRAM"/>
+      <memoryBlock addr="81E00000" size="00200000" access="RW" type="RAM" id="BOARD_SDRAM_NONCACHEABLE_evkbimxrt1050" name="BOARD_SDRAM_NONCACHEABLE"/>
+      <memoryBlock addr="20000000" size="00020000" access="RW" type="RAM" id="SRAM_DTC_evkbimxrt1050" name="SRAM_DTC"/>
+      <memoryBlock addr="00000000" size="00020000" access="RW" type="RAM" id="SRAM_ITC_evkbimxrt1050" name="SRAM_ITC"/>
+      <memoryBlock addr="20200000" size="000C0000" access="RW" type="RAM" id="SRAM_OC_evkbimxrt1050" name="SRAM_OC"/>
+    </memory>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.minimal</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>_POSIX_SOURCE</value>
+          <value>XIP_BOOT_HEADER_DCD_ENABLE=1</value>
+          <value>SKIP_SYSCLK_INIT</value>
+          <value>CPU_MIMXRT1052DVL6B</value>
+          <value>SDK_DEBUGCONSOLE=1</value>
+          <value>XIP_EXTERNAL_FLASH=1</value>
+          <value>XIP_BOOT_HEADER_ENABLE=1</value>
+          <value>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</value>
+          <value>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</value>
+          <value>PRINTF_ADVANCED_ENABLE=1</value>
+          <value>USE_RTOS=1</value>
+          <value>LWIP_DNS=1</value>
+          <value>LWIP_DHCP=1</value>
+          <value>MBEDTLS_CONFIG_FILE='"nghttp2_mbedtls_config.h"'</value>
+          <value>HAVE_CONFIG_H</value>
+          <value>FSL_RTOS_FREE_RTOS</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-fomit-frame-pointer  -c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
+          <value>&amp;Heap:Default;Default;0x200&amp;Stack:Default;Default;0x200</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=BOARD_SDRAM_NONCACHEABLE;type=.data</value>
+          <value>isd=*(NonCacheable);region=BOARD_SDRAM_NONCACHEABLE;type=.bss</value>
+        </option>
+        <option id="com.crt.advproject.gas.hdrlib" type="enum">
+          <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gas.specs" type="enum">
+          <value>com.crt.advproject.gas.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.specs" type="enum">
+          <value>com.crt.advproject.gcc.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.link.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.link.hdrlib.newlibnano.nohost</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <debug_configurations>
+      <debug_configuration id_refs="com.nxp.mcuxpresso.core.debug.support.segger.debug">
+        <scripts>
+          <script type="segger_script">
+            <source path="boards/evkbimxrt1050/lwip_examples/lwip_nghttp2cli_mbedTLS/freertos" type="script" target_path="script">
+              <files mask="evkbimxrt1050_sdram_init.jlinkscript"/>
+            </source>
+          </script>
+        </scripts>
+      </debug_configuration>
+      <debug_configuration id_refs="com.nxp.mcuxpresso.core.debug.support.segger.release">
+        <scripts>
+          <script type="segger_script">
+            <source path="boards/evkbimxrt1050/lwip_examples/lwip_nghttp2cli_mbedTLS/freertos" type="script" target_path="script">
+              <files mask="evkbimxrt1050_sdram_init.jlinkscript"/>
+            </source>
+          </script>
+        </scripts>
+      </debug_configuration>
+      <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+        <drivers>
+          <driver id_refs="BOARD_FLASH_evkbimxrt1050">
+            <driverBinary path="devices/MIMXRT1052/mcuxpresso" type="binary" target_path="binary">
+              <files mask="MIMXRT1050-EVK_S26KS512S.cfx"/>
+            </driverBinary>
+          </driver>
+        </drivers>
+      </debug_configuration>
+    </debug_configurations>
+    <include_paths>
+      <include_path path="lwip/port"/>
+      <include_path path="lwip/src"/>
+      <include_path path="lwip/src/include"/>
+      <include_path path="mbedtls/include"/>
+      <include_path path="nghttp2/lib"/>
+      <include_path path="nghttp2/lib/includes"/>
+    </include_paths>
+    <source path="boards/evkbimxrt1050/lwip_examples/lwip_nghttp2cli_mbedTLS/freertos/iar" target_path="src" type="other" toolchain="iar">
+      <files mask="evkbimxrt1050.mac"/>
+    </source>
+    <source path="boards/evkbimxrt1050/lwip_examples/lwip_nghttp2cli_mbedTLS/freertos/mdk" target_path="src" type="configuration" toolchain="mdk">
+      <files mask="evkbimxrt1050_ram.ini"/>
+    </source>
+    <source path="boards/evkbimxrt1050/lwip_examples/lwip_nghttp2cli_mbedTLS/freertos" target_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/evkbimxrt1050/lwip_examples/lwip_nghttp2cli_mbedTLS/freertos" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/evkbimxrt1050/lwip_examples/lwip_nghttp2cli_mbedTLS/freertos" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/evkbimxrt1050/lwip_examples/lwip_nghttp2cli_mbedTLS/freertos" target_path="lwip_nghttp2cli_mbedTLS" type="c_include">
+      <files mask="config.h"/>
+      <files mask="nghttp2_mbedtls_config.h"/>
+      <files mask="nghttp2client.h"/>
+    </source>
+    <source path="boards/evkbimxrt1050/lwip_examples/lwip_nghttp2cli_mbedTLS/freertos" target_path="lwip_nghttp2cli_mbedTLS" type="src">
+      <files mask="nghttp2client.c"/>
+    </source>
+    <source path="boards/evkbimxrt1050/lwip_examples/lwip_nghttp2cli_mbedTLS/freertos" target_path="source" type="c_include">
+      <files mask="FreeRTOSConfig.h"/>
+      <files mask="lwipopts.h"/>
+    </source>
+    <source path="boards/evkbimxrt1050/lwip_examples/lwip_nghttp2cli_mbedTLS/freertos" target_path="source" type="src">
+      <files mask="lwip_nghttp2cli_mbedTLS_freertos.c"/>
+    </source>
+  </example>
+</ksdk:examples>

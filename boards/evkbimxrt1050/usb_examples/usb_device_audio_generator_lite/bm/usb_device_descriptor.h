@@ -12,6 +12,8 @@
 /*******************************************************************************
 * Definitions
 ******************************************************************************/
+/*! @brief Whether USB Audio use syn mode or not. */
+#define USB_DEVICE_AUDIO_USE_SYNC_MODE (0U)
 
 #define USB_DEVICE_SPECIFIC_BCD_VERSION (0x0200U)
 #define USB_DEVICE_DEMO_BCD_VERSION (0x0101U)

@@ -1,6 +1,6 @@
 /*
- * FreeRTOS Kernel V10.0.1
- * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS Kernel V10.2.0
+ * Copyright (C) 2019 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -19,10 +19,11 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * http://aws.amazon.com/freertos
  * http://www.FreeRTOS.org
+ * http://aws.amazon.com/freertos
+ *
+ * 1 tab == 4 spaces!
  */
-
 
 
 #ifndef FREERTOS_CONFIG_H
@@ -42,10 +43,8 @@
 
 /* Ensure stdint is only used by the compiler, and not the assembler. */
 #if defined( __ICCARM__ ) || defined( __ARMCC_VERSION ) || defined( __GNUC__)
-    #include <stdint.h>
-    #include "fsl_debug_console.h"
     extern uint32_t SystemCoreClock;
-    extern int DbgConsole_Printf( const char *fmt_s, ... );
+    extern void print_string( const char * string );
     extern void vLoggingPrintf( const char *pcFormat, ... );
 #endif
 
@@ -61,7 +60,7 @@
 #define configTICK_RATE_HZ                           ( ( TickType_t ) 1000 )
 #define configMAX_PRIORITIES                         ( 7 )
 #define configMINIMAL_STACK_SIZE                     ( ( uint16_t ) 90 )
-#define configTOTAL_HEAP_SIZE                        ( ( size_t ) ( 70 * 1024 ) )    /* 70 Kbytes. */
+#define configTOTAL_HEAP_SIZE                        ( ( size_t ) ( 75 * 1024 ) )    /* 75 Kbytes. */
 #define configMAX_TASK_NAME_LEN                      ( 16 )
 #define configUSE_TRACE_FACILITY                     1
 #define configUSE_16_BIT_TICKS                       0
@@ -85,7 +84,7 @@
 #define configUSE_TIMERS                             1
 #define configTIMER_TASK_PRIORITY                    ( configMAX_PRIORITIES - 3 )
 #define configTIMER_QUEUE_LENGTH                     10
-#define configTIMER_TASK_STACK_DEPTH                 ( configMINIMAL_STACK_SIZE * 4 )
+#define configTIMER_TASK_STACK_DEPTH                 ( configMINIMAL_STACK_SIZE * 8 )
 
 /* Set the following definitions to 1 to include the API function, or zero
  * to exclude the API function. */
@@ -99,6 +98,8 @@
 #define INCLUDE_xTaskGetSchedulerState               1
 #define INCLUDE_xTimerPendFunctionCall               1
 #define INCLUDE_xSemaphoreGetMutexHolder             1
+#define INCLUDE_uxTaskGetStackHighWaterMark          1
+
 
 /* Normal assert() semantics without relying on the provision of an assert.h
  * header file. */
@@ -110,7 +111,7 @@
 #define configPRINTF( x )          vLoggingPrintf x
 
 /* Map the logging task's printf to the board specific output function. */
-#define configPRINT_STRING    PRINTF
+#define configPRINT_STRING    print_string
 
 /* Sets the length of the buffers into which logging messages are written - so
  * also defines the maximum length of each log message. */
@@ -127,10 +128,10 @@
  * called pre and post the low power SLEEP mode being entered and exited.  These
  * macros can be used to turn turn off and on IO, clocks, the Flash etc. to obtain
  * the lowest power possible while the tick is off. */
-#if defined( __ICCARM__ ) || defined( __CC_ARM ) || defined( __GNUC__ )
+#if defined( __ICCARM__ ) || defined(__CC_ARM) || defined(__ARMCC_VERSION) || defined( __GNUC__ )
     void vMainPreStopProcessing( void );
     void vMainPostStopProcessing( void );
-#endif /* defined(__ICCARM__) || defined(__CC_ARM) || defined(__GNUC__) */
+#endif /* defined(__ICCARM__) || defined(__CC_ARM) || defined(__ARMCC_VERSION) || defined(__GNUC__) */
 
 #define configPRE_STOP_PROCESSING     vMainPreStopProcessing
 #define configPOST_STOP_PROCESSING    vMainPostStopProcessing
@@ -158,8 +159,6 @@
 #ifdef __ICCARM__
 	/* Logging task definitions. */
 	extern void vMainUARTPrintString( char * pcString );
-	void vLoggingPrintf( const char * pcFormat,
-						 ... );
 
 	extern int iMainRand32( void );
 

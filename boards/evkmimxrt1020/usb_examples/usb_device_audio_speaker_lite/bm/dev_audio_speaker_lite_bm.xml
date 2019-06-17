@@ -2,12 +2,16 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.codec_i2c.MIMXRT1021"/>
     <definition extID="component.lists.MIMXRT1021"/>
+    <definition extID="component.lpi2c_adapter.MIMXRT1021"/>
     <definition extID="component.lpuart_adapter.MIMXRT1021"/>
     <definition extID="component.serial_manager.MIMXRT1021"/>
     <definition extID="component.serial_manager_uart.MIMXRT1021"/>
+    <definition extID="component.wm8960_adapter.MIMXRT1021"/>
     <definition extID="device.MIMXRT1021_CMSIS.MIMXRT1021"/>
     <definition extID="device.MIMXRT1021_startup.MIMXRT1021"/>
+    <definition extID="driver.codec.MIMXRT1021"/>
     <definition extID="driver.wm8960.MIMXRT1021"/>
     <definition extID="middleware.baremetal.MIMXRT1021"/>
     <definition extID="middleware.usb.device_controller_ehci.MIMXRT1021"/>
@@ -33,8 +37,10 @@
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
+    <definition extID="com.crt.advproject.config.exe.debug"/>
+    <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1020_dev_audio_speaker_lite_bm" name="dev_audio_speaker_lite_bm" category="usb_examples" dependency="middleware.usb.device_controller_ehci.MIMXRT1021 middleware.usb.phy.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 driver.wm8960.MIMXRT1021 platform.drivers.lpi2c.MIMXRT1021 platform.drivers.sai.MIMXRT1021 platform.drivers.sai_edma.MIMXRT1021 platform.drivers.dmamux.MIMXRT1021 platform.drivers.edma.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.common.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 platform.utilities.assert.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.xip_board.MIMXRT1021 utility.debug_console.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.serial_manager.MIMXRT1021 component.serial_manager_uart.MIMXRT1021 component.lists.MIMXRT1021 platform.Include_core_cm7.MIMXRT1021 platform.Include_common.MIMXRT1021 middleware.baremetal.MIMXRT1021" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="evkmimxrt1020_dev_audio_speaker_lite_bm" name="dev_audio_speaker_lite_bm" category="usb_examples" dependency="middleware.usb.device_controller_ehci.MIMXRT1021 middleware.usb.phy.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 driver.wm8960.MIMXRT1021 driver.codec.MIMXRT1021 component.wm8960_adapter.MIMXRT1021 component.lpi2c_adapter.MIMXRT1021 platform.drivers.lpi2c.MIMXRT1021 platform.drivers.sai.MIMXRT1021 platform.drivers.sai_edma.MIMXRT1021 platform.drivers.dmamux.MIMXRT1021 platform.drivers.edma.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.common.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 platform.utilities.assert.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.xip_board.MIMXRT1021 utility.debug_console.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.serial_manager.MIMXRT1021 component.serial_manager_uart.MIMXRT1021 component.lists.MIMXRT1021 platform.Include_core_cm7.MIMXRT1021 platform.Include_common.MIMXRT1021 component.codec_i2c.MIMXRT1021 middleware.baremetal.MIMXRT1021">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -60,16 +66,13 @@
           <value>_DEBUG=1</value>
           <value>CPU_MIMXRT1021DAG5A</value>
           <value>SDK_DEBUGCONSOLE=1</value>
-          <value>PRINTF_FLOAT_ENABLE=0</value>
-          <value>SCANF_FLOAT_ENABLE=0</value>
-          <value>PRINTF_ADVANCED_ENABLE=0</value>
-          <value>SCANF_ADVANCED_ENABLE=0</value>
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>USB_STACK_BM</value>
           <value>USING_SAI</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>BOARD_USE_CODEC=1</value>
+          <value>CODEC_WM8960_ENABLE</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -88,6 +91,17 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <debug_configurations>
+      <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+        <drivers>
+          <driver id_refs="BOARD_FLASH_evkmimxrt1020">
+            <driverBinary path="devices/MIMXRT1021/mcuxpresso" type="binary" target_path="binary">
+              <files mask="MIMXRT1020-EVK_IS25LP064.cfx"/>
+            </driverBinary>
+          </driver>
+        </drivers>
+      </debug_configuration>
+    </debug_configurations>
     <source path="boards/evkmimxrt1020/usb_examples/usb_device_audio_speaker_lite/bm/armgcc" target_path="src" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1021xxxxx_ram.ld"/>
     </source>
@@ -125,6 +139,12 @@
       <files mask="usb_device_audio.c"/>
       <files mask="usb_device_ch9.c"/>
       <files mask="usb_device_descriptor.c"/>
+    </source>
+    <source path="boards/evkmimxrt1020/usb_examples/usb_device_audio_speaker_lite/bm" target_path="src" type="binary" exclude="true">
+      <files mask="dev_audio_speaker_lite_bm.bin"/>
+    </source>
+    <source path="boards/evkmimxrt1020/usb_examples/usb_device_audio_speaker_lite/bm" target_path="src" type="doc" exclude="true">
+      <files mask="readme.pdf"/>
     </source>
   </example>
 </ksdk:examples>

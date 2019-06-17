@@ -53,9 +53,14 @@
 
 #include "fw_serial.h"
 
+#if ((WIFISHIELD_IS) != (WIFISHIELD_IS_GT202))
+#error "FW-update demo supports only GT202 WiFi shield"
+#endif
+
+
 #include "pin_mux.h"
 #include "clock_config.h"
-#include "wifi_shield_gt202.h"
+#include "wifi_shield.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -76,7 +81,7 @@
  * Code
  ******************************************************************************/
 
-const int TASK_MAIN_PRIO = configMAX_PRIORITIES - 3;
+const int TASK_MAIN_PRIO       = configMAX_PRIORITIES - 3;
 const int TASK_MAIN_STACK_SIZE = 800;
 
 portSTACK_TYPE *task_main_stack = NULL;
@@ -182,7 +187,7 @@ static A_STATUS Driver_BMIConfig(void *pCxt)
     }
 
     /* Run at 40/44MHz by default */
-    param = CPU_CLOCK_STANDARD_SET(0);
+    param   = CPU_CLOCK_STANDARD_SET(0);
     address = RTC_BASE_ADDRESS + CPU_CLOCK_ADDRESS;
     if (A_OK != BMIWriteSOCRegister(pCxt, address, A_CPU2LE32(param)))
     {
@@ -190,7 +195,7 @@ static A_STATUS Driver_BMIConfig(void *pCxt)
     }
 
     address = RTC_BASE_ADDRESS + LPO_CAL_ADDRESS;
-    param = LPO_CAL_ENABLE_SET(1);
+    param   = LPO_CAL_ENABLE_SET(1);
     if (A_OK != BMIWriteSOCRegister(pCxt, address, A_CPU2LE32(param)))
     {
         return A_ERROR;
@@ -214,9 +219,9 @@ int32_t ath_driver_reset(void)
     inout_param.length = sizeof(value);
 
     /*Bring the driver down*/
-    value = 0;
+    value            = 0;
     inout_param.data = &value;
-    error = Custom_Api_Mediactl(&wifiCtx, QCA_MEDIACTL_VENDOR_SPECIFIC, &inout_param);
+    error            = Custom_Api_Mediactl(&wifiCtx, QCA_MEDIACTL_VENDOR_SPECIFIC, &inout_param);
 
     if (error != A_OK)
     {
@@ -224,9 +229,9 @@ int32_t ath_driver_reset(void)
     }
 
     /*Bring the driver up*/
-    value = 1;
+    value            = 1;
     inout_param.data = &value;
-    error = Custom_Api_Mediactl(&wifiCtx, QCA_MEDIACTL_VENDOR_SPECIFIC, &inout_param);
+    error            = Custom_Api_Mediactl(&wifiCtx, QCA_MEDIACTL_VENDOR_SPECIFIC, &inout_param);
 
     return error == A_OK ? A_OK : A_ERROR;
 }
@@ -238,10 +243,10 @@ int32_t ath_driver_reset(void)
 void atheros_driver_setup_init(void)
 {
     ath_custom_init.Driver_TargetConfig = NULL;
-    ath_custom_init.Driver_BootComm = NULL;
-    ath_custom_init.Driver_BMIConfig = Driver_BMIConfig;
-    ath_custom_init.skipWmi = true;
-    ath_custom_init.exitAtBmi = true;
+    ath_custom_init.Driver_BootComm     = NULL;
+    ath_custom_init.Driver_BMIConfig    = Driver_BMIConfig;
+    ath_custom_init.skipWmi             = true;
+    ath_custom_init.exitAtBmi           = true;
 
     ar4XXX_boot_param = AR4XXX_PARAM_MODE_BMI;
 }
@@ -253,15 +258,15 @@ void atheros_driver_setup_init(void)
 void reset_atheros_driver_setup_init(void)
 {
     ath_custom_init.Driver_TargetConfig = NULL;
-    ath_custom_init.Driver_BootComm = NULL;
-    ath_custom_init.Driver_BMIConfig = NULL;
-    ath_custom_init.skipWmi = false;
-    ath_custom_init.exitAtBmi = false;
+    ath_custom_init.Driver_BootComm     = NULL;
+    ath_custom_init.Driver_BMIConfig    = NULL;
+    ath_custom_init.skipWmi             = false;
+    ath_custom_init.exitAtBmi           = false;
 
     ar4XXX_boot_param = AR4XXX_PARAM_MODE_NORMAL;
 }
 
-fw_request_t g_request = {0};
+fw_request_t g_request   = {0};
 fw_response_t g_response = {0};
 
 /*!
@@ -271,18 +276,18 @@ int32_t fw_cmd_program(fw_request_t *request, fw_response_t *response)
 {
     ATH_PROGRAM_FLASH_STRUCT flash_msg = {0};
     ATH_IOCTL_PARAM_STRUCT inout_param = {0};
-    int32_t result = 0;
+    int32_t result                     = 0;
     (void)result;
 
-    response->cmdId = FW_CMD_PROGRAM_RESULT;
-    response->cmdId = A_BE2CPU16(response->cmdId);
+    response->cmdId     = FW_CMD_PROGRAM_RESULT;
+    response->cmdId     = A_BE2CPU16(response->cmdId);
     flash_msg.load_addr = A_LE2CPU32(request->addr);
-    flash_msg.length = A_LE2CPU16(request->length);
-    flash_msg.result = 0;
-    flash_msg.buffer = request->buffer;
+    flash_msg.length    = A_LE2CPU16(request->length);
+    flash_msg.result    = 0;
+    flash_msg.buffer    = request->buffer;
 
     inout_param.cmd_id = ATH_PROGRAM_FLASH;
-    inout_param.data = &flash_msg;
+    inout_param.data   = &flash_msg;
     inout_param.length = sizeof(flash_msg);
 
     result = Custom_Api_Mediactl(&wifiCtx, QCA_MEDIACTL_VENDOR_SPECIFIC, &inout_param);
@@ -300,18 +305,18 @@ int32_t fw_cmd_execute(fw_request_t *request, fw_response_t *response)
 {
     ATH_PROGRAM_FLASH_STRUCT flash_msg = {0};
     ATH_IOCTL_PARAM_STRUCT inout_param = {0};
-    int32_t result = 0;
+    int32_t result                     = 0;
     (void)result;
 
-    response->cmdId = FW_CMD_EXECUTE_RESULT;
-    response->cmdId = A_BE2CPU16(response->cmdId);
+    response->cmdId     = FW_CMD_EXECUTE_RESULT;
+    response->cmdId     = A_BE2CPU16(response->cmdId);
     flash_msg.load_addr = A_LE2CPU32(request->addr);
-    flash_msg.length = A_LE2CPU16(request->length);
-    flash_msg.result = A_LE2CPU32(request->option);
-    flash_msg.buffer = NULL;
+    flash_msg.length    = A_LE2CPU16(request->length);
+    flash_msg.result    = A_LE2CPU32(request->option);
+    flash_msg.buffer    = NULL;
 
     inout_param.cmd_id = ATH_EXECUTE_FLASH;
-    inout_param.data = &flash_msg;
+    inout_param.data   = &flash_msg;
     inout_param.length = sizeof(flash_msg);
 
     result = Custom_Api_Mediactl(&wifiCtx, QCA_MEDIACTL_VENDOR_SPECIFIC, &inout_param);
@@ -328,9 +333,9 @@ int32_t fw_cmd_execute(fw_request_t *request, fw_response_t *response)
 int32_t fw_cmd_sw_version(fw_request_t *request, fw_response_t *response)
 {
     /* host.exe checks compatibility, to pass the test the return value must be 4 */
-    response->cmdId = FW_CMD_VERSION_NUM;
+    response->cmdId  = FW_CMD_VERSION_NUM;
     response->result = 4;
-    response->cmdId = A_BE2CPU16(response->cmdId);
+    response->cmdId  = A_BE2CPU16(response->cmdId);
     response->result = A_BE2CPU32(response->result);
     return 0;
 }
@@ -373,16 +378,16 @@ int32_t fw_cmd_fw_version(fw_request_t *request, fw_response_t *response)
 #endif
 
     /* Set fake version numbers because we cannot switch to WMI mode */
-    response->cmdId = A_BE2CPU16(FW_CMD_FW_VERSION);
-    response->result = 0;
-    tmp = 0x33000000UL; // "3.3.0.0"
-    response->version.host_ver = A_BE2CPU32(tmp);
-    tmp = 0x31C80997UL; // "0x31c80997"
+    response->cmdId              = A_BE2CPU16(FW_CMD_FW_VERSION);
+    response->result             = 0;
+    tmp                          = 0x33000000UL; // "3.3.0.0"
+    response->version.host_ver   = A_BE2CPU32(tmp);
+    tmp                          = 0x31C80997UL; // "0x31c80997"
     response->version.target_ver = A_BE2CPU32(tmp);
-    tmp = 0x33050074UL; // "3.3.5.116"
-    response->version.wlan_ver = A_BE2CPU32(tmp);
-    tmp = 0x1UL; // "1"
-    response->version.abi_ver = A_BE2CPU32(tmp);
+    tmp                          = 0x33050074UL; // "3.3.5.116"
+    response->version.wlan_ver   = A_BE2CPU32(tmp);
+    tmp                          = 0x1UL; // "1"
+    response->version.abi_ver    = A_BE2CPU32(tmp);
 
     return 0;
 }
@@ -413,7 +418,7 @@ uint16_t crc16(uint8_t *ptr, int count)
 int32_t fw_receive_request(fw_request_t *request)
 {
     size_t received_n = 0;
-    size_t request_n = sizeof(*request);
+    size_t request_n  = sizeof(*request);
 
     int32_t error = fw_serial_receive((uint8_t *)request, sizeof(*request), &received_n);
     if ((kStatus_Success != error) || (received_n != request_n))
@@ -513,7 +518,7 @@ int main(void)
 
     /*Set clock source for LPSPI*/
     CLOCK_SetMux(kCLOCK_LpspiMux, WIFISHIELD_SPI_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_LpspiDiv, WIFISHIELD_SPI_CLOCK_SOURCE_DIVIDER);   
+    CLOCK_SetDiv(kCLOCK_LpspiDiv, WIFISHIELD_SPI_CLOCK_SOURCE_DIVIDER);
 
     result =
         xTaskCreate(task_main, "main", TASK_MAIN_STACK_SIZE, task_main_stack, TASK_MAIN_PRIO, &task_main_task_handler);

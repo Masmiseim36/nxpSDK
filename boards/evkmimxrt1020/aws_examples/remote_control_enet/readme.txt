@@ -3,8 +3,33 @@ Overview
 This example demonstrates how the board can be controlled by Android mobile application with usage the AWS IoT.
 User LEDs on the board can be controlled and also an action can be invoked to read data from accelerometer and report it to AWS IoT device shadow.
 Please take look into section "Board settings" if there are some board limitations to control LEDs or read data from accelerometer.
-===================================================================================================================================
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
+Hardware requirements
+=====================
+- Micro USB cable
+- EVK-MIMXRT1020 board
+- Personal Computer
+- Network cable RJ45 standard (Network with Internet access)
+
+Board settings
+==============
+Accelerometer is not used on this board.
+
+
+Note:
+To debug in qspiflash, following steps are needed:
+1. Select the flash target and compile.
+3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
+4. Start debugging in IDE.
+   - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
 Prepare the Demo
 ================
 Before running the demo it is need to configure AWS IoT Console and update some of project files:
@@ -19,21 +44,21 @@ Before running the demo it is need to configure AWS IoT Console and update some 
         static const char clientcredentialMQTT_BROKER_ENDPOINT[] = "abcdefgh123456.iot.us-west-2.amazonaws.com";
         #define clientcredentialIOT_THING_NAME "MyExample"
 
-    In the next step you will get the "device certificate" and the "primary key". Each of the certificates needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h".
-    Or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\amazon-freertos\demos\common\devmode_key_provisioning\CertificateConfigurationTool) to generate the "aws_clientcredential_keys.h".
+    In the next step you will get the "device certificate" and the "primary key". The device certificate and private key needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h".
+    Or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\amazon-freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
 
     Example:
-        static const char clientcredentialCLIENT_CERTIFICATE_PEM[] = "Paste client certificate here.";
+        #define keyCLIENT_CERTIFICATE_PEM "Paste client certificate here."
 
         Needs to be changed to:
 
-        static const char clientcredentialCLIENT_CERTIFICATE_PEM[] =
-            "-----BEGIN CERTIFICATE-----\n"
-            "MIIDWTCCAkGgAwIBAgIUPwbiJBIJhO6eF498l1GZ8siO/K0wDQYJKoZIhvcNAQEL\n"
-            .
-            .
-            "KByzyTutxTeI9UKcIPFxK40s4qF50a40/6UFxrGueW+TzZ4iubWzP7eG+47r\n"
-            "-----END CERTIFICATE-----\n";
+        #define keyCLIENT_CERTIFICATE_PEM "-----BEGIN CERTIFICATE-----\n"\
+        "MIIDWTCCAkGgAwIBAgIUfmv3zA+JULlMOxmz+upkAzhEkQ0wDQYJKoZIhvcNAQEL\n"\
+        .
+        .
+        .
+        "mepuT3lKmD0jZupsQ9vLQOA09rMjVMd0YPmI9ozvvWqLpjVvNTKVhsf/3slM\n"\
+        "-----END CERTIFICATE-----\n"
 
     In the same way update the private key array.
 
@@ -140,6 +165,7 @@ Android application displays Accelerometer data for all three axis and status of
 Every mentioned action takes approximately 1-3 seconds.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Initializing PHY...
 0 0 [Tmr Svc] Starting key provisioning...
 1 0 [Tmr Svc] Write root certificate...
 2 6 [Tmr Svc] Write device private key...
@@ -176,36 +202,6 @@ Every mentioned action takes approximately 1-3 seconds.
 .
 .
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Hardware requirements
+Customization options
 =====================
-- Micro USB cable
-- EVK-MIMXRT1020 board
-- Personal Computer
-- Network cable RJ45 standard (Network with Internet access)
-
-Board settings
-==============
-No special settings are required.
-
-Note:
-If sensor chip(U26) is not welded on the board.
-     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-       Sensor device initialize failed!
-       Please check the sensor chip.
-     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-Note:
-To debug in qspiflash, following steps are needed:
-1. Select the flash target and compile.
-3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
-4. Start debugging in IDE.
-   - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
 

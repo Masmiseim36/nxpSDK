@@ -1,11 +1,11 @@
 /*
-* Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
-* All rights reserved.
-*
-* 
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
+ * All rights reserved.
+ *
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 /*******************************************************************************
  * Includes
@@ -29,7 +29,6 @@
 #include "lwip/dns.h"
 #include "netif/etharp.h"
 
-
 #include "board.h"
 
 #include "fsl_device_registers.h"
@@ -42,9 +41,7 @@
  * Definitions
  ******************************************************************************/
 
-
 #define CONTROLLER_ID kUSB_ControllerEhci0
-
 
 #if defined(__GIC_PRIO_BITS)
 #define USB_HOST_INTERRUPT_PRIORITY (25U)
@@ -53,12 +50,12 @@
 #endif
 
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 extern usb_host_handle g_HostHandle;
 /*set when dhcp get ip address*/
 uint32_t dhcpReady;
@@ -69,7 +66,9 @@ uint8_t dnsReady;
 ip4_addr_t addrBuffer;
 ip4_addr_t currentaddr;
 
-uint8_t website[40] = {'w','w','w','.','n','x','p','.','c','o','m',};
+uint8_t website[40] = {
+    'w', 'w', 'w', '.', 'n', 'x', 'p', '.', 'c', 'o', 'm',
+};
 
 struct netif fsl_netif0;
 ethernetifConfig_t ethernetConfig;
@@ -86,16 +85,15 @@ void USB_OTG1_IRQHandler(void)
 
 void USB_HostClockInit(void)
 {
-
     usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL, BOARD_USB_PHY_TXCAL45DP, BOARD_USB_PHY_TXCAL45DM,
+        BOARD_USB_PHY_D_CAL,
+        BOARD_USB_PHY_TXCAL45DP,
+        BOARD_USB_PHY_TXCAL45DM,
     };
-
 
     CLOCK_EnableUsbhs0PhyPllClock(kCLOCK_Usbphy480M, 480000000U);
     CLOCK_EnableUsbhs0Clock(kCLOCK_Usb480M, 480000000U);
     USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ, &phyConfig);
-
 }
 
 void USB_HostIsrEnable(void)
@@ -103,7 +101,7 @@ void USB_HostIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbHOSTEhciIrq[] = USBHS_IRQS;
-    irqNumber = usbHOSTEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
+    irqNumber                = usbHOSTEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
 /* USB_HOST_CONFIG_EHCI */
 
 /* Install isr, set priority, and enable IRQ. */
@@ -129,7 +127,7 @@ void SysTick_Handler(void)
 }
 void lwip_dns_dns_found(const char *name, const ip_addr_t *ipaddr, void *arg)
 {
-    if(ipaddr != NULL)
+    if (ipaddr != NULL)
     {
         dnsReady = 1;
 
@@ -137,7 +135,7 @@ void lwip_dns_dns_found(const char *name, const ip_addr_t *ipaddr, void *arg)
     }
     else
     {
-         PRINTF("\r\n error in dns request\r\n");
+        PRINTF("\r\n error in dns request\r\n");
     }
 }
 /*!
@@ -148,36 +146,34 @@ void lwip_dns_dns_found(const char *name, const ip_addr_t *ipaddr, void *arg)
 static void print_dhcp_state(struct netif *netif)
 {
     static u8_t dhcp_last_state = DHCP_STATE_OFF;
-    struct dhcp *dhcp = netif_dhcp_data(netif);
+    struct dhcp *dhcp           = netif_dhcp_data(netif);
 
-    if((dhcpReady) && (!dnsReady))
+    if ((dhcpReady) && (!dnsReady))
     {
         err_t err;
         dhcpReady = 0;
-        PRINTF("\r\n  waiting for getting the IP Address....%s\r\n");
-        err = dns_gethostbyname((char*)&website[0], &addrBuffer, lwip_dns_dns_found, (void*)&fsl_netif0);
-        if(ERR_INPROGRESS == err)
+        PRINTF("\r\n  waiting for getting the IP Address....\r\n");
+        err = dns_gethostbyname((char *)&website[0], &addrBuffer, lwip_dns_dns_found, (void *)&fsl_netif0);
+        if (ERR_INPROGRESS == err)
         {
-             /* PRINTF("\r\n error in dns get\r\n");*/
+            /* PRINTF("\r\n error in dns get\r\n");*/
         }
-        else if(ERR_OK == err)
+        else if (ERR_OK == err)
         {
-            dnsReady = 1;
+            dnsReady         = 1;
             currentaddr.addr = addrBuffer.addr;
         }
-
     }
     if (dnsReady)
-    {   
-        if(!pingReady)
+    {
+        if (!pingReady)
         {
             pingReady = 1;
-            
+
             ping_init(&currentaddr);
         }
         dnsReady = 0;
         PRINTF("\r\n the IP Address of nxp.com is   : %s\r\n", ipaddr_ntoa(&currentaddr));
-
     }
     if (dhcp == NULL)
     {
@@ -235,22 +231,17 @@ static void print_dhcp_state(struct netif *netif)
             PRINTF("\r\n IPv4 Address     : %s\r\n", ipaddr_ntoa(&netif->ip_addr));
             PRINTF(" IPv4 Subnet mask : %s\r\n", ipaddr_ntoa(&netif->netmask));
             PRINTF(" IPv4 Gateway     : %s\r\n\r\n", ipaddr_ntoa(&netif->gw));
-            
+
             dhcpReady = 1;
         }
     }
-    
-
-
 }
 
 /*!
  * @brief Main function.
  */
- int main(void)
+int main(void)
 {
-
-
     BOARD_ConfigMPU();
     BOARD_InitPins();
     BOARD_BootClockRUN();
@@ -258,16 +249,15 @@ static void print_dhcp_state(struct netif *netif)
 
     time_init();
 
-
     IP4_ADDR(&fsl_netif0_ipaddr, 0U, 0U, 0U, 0U);
     IP4_ADDR(&fsl_netif0_netmask, 0U, 0U, 0U, 0U);
     IP4_ADDR(&fsl_netif0_gw, 0U, 0U, 0U, 0U);
     ethernetConfig.controllerId = CONTROLLER_ID;
-    ethernetConfig.privateData = NULL;
+    ethernetConfig.privateData  = NULL;
     lwip_init();
 
-    netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw,
-              &ethernetConfig, USB_EthernetIfInIt, ethernet_input);
+    netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &ethernetConfig, USB_EthernetIfInIt,
+              ethernet_input);
     netif_set_default(&fsl_netif0);
     netif_set_up(&fsl_netif0);
 

@@ -49,8 +49,8 @@ void EXAMPLE_GPT_IRQHandler(void)
 }
 
 /*!
-* @brief Main function
-*/
+ * @brief Main function
+ */
 int main(void)
 {
     uint32_t gptFreq;
@@ -97,7 +97,7 @@ int main(void)
         /* Check whether occur interupt and toggle LED */
         if (true == gptIsrFlag)
         {
-            PRINTF("\r\n GPT interrupt is occured !");
+            PRINTF("\r\n GPT interrupt is occurred !");
             gptIsrFlag = false;
         }
         else

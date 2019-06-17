@@ -12,13 +12,15 @@
 /*******************************************************************************
 * Definitions
 ******************************************************************************/
+/*! @brief Whether USB Audio use syn mode or not. */
+#define USB_DEVICE_AUDIO_USE_SYNC_MODE (0U)
 
 #define USB_DEVICE_SPECIFIC_BCD_VERSION (0x0200U)
 #define USB_DEVICE_DEMO_BCD_VERSION (0x0101U)
 
 #define USB_DEVICE_MAX_POWER (0x32U)
 
-/* usb descritpor length */
+/* usb descriptor length */
 #define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (sizeof(g_UsbDeviceConfigurationDescriptor))
 #define USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH (9)
 #define USB_AUDIO_CONTROL_INTERFACE_HEADER_LENGTH (9)

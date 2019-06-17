@@ -98,7 +98,7 @@
  * @defgroup MQTTTask MQTT task configuration parameters.
  */
 /** @{ */
-#define mqttconfigMQTT_TASK_STACK_DEPTH    ( 768 )
+#define mqttconfigMQTT_TASK_STACK_DEPTH    ( 896 )
 #define mqttconfigMQTT_TASK_PRIORITY       ( tskIDLE_PRIORITY + 2)
 /** @} */
 

@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2017, NXP Semiconductors, Inc.
+ * Copyright  2017 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -98,7 +98,8 @@ void BOARD_InitLcd(void)
     volatile uint32_t i = 0x100U;
 
     gpio_pin_config_t config = {
-        kGPIO_DigitalOutput, 0,
+        kGPIO_DigitalOutput,
+        0,
     };
 
     /* Reset the LCD. */
@@ -130,7 +131,10 @@ void BOARD_InitLcdifPixClock(void)
      * Video PLL output clock is OSC24M * (loopDivider + (denominator / numerator)) / postDivider = 93MHz.
      */
     clock_video_pll_config_t config = {
-        .loopDivider = 31, .postDivider = 8, .numerator = 0, .denominator = 0,
+        .loopDivider = 31,
+        .postDivider = 8,
+        .numerator   = 0,
+        .denominator = 0,
     };
 
     CLOCK_InitVideoPll(&config);
@@ -158,7 +162,9 @@ static csi_resource_t csiResource = {
 static csi_private_data_t csiPrivateData;
 
 camera_receiver_handle_t cameraReceiver = {
-    .resource = &csiResource, .ops = &csi_ops, .privateData = &csiPrivateData,
+    .resource    = &csiResource,
+    .ops         = &csi_ops,
+    .privateData = &csiPrivateData,
 };
 
 static void BOARD_PullCameraResetPin(bool pullUp)
@@ -181,15 +187,16 @@ static void BOARD_PullCameraPowerDownPin(bool pullUp)
 }
 
 static ov7725_resource_t ov7725Resource = {
-    .i2cSendFunc = BOARD_Camera_I2C_SendSCCB,
-    .i2cReceiveFunc = BOARD_Camera_I2C_ReceiveSCCB,
-    .pullResetPin = BOARD_PullCameraResetPin,
-    .pullPowerDownPin = BOARD_PullCameraPowerDownPin,
+    .i2cSendFunc       = BOARD_Camera_I2C_SendSCCB,
+    .i2cReceiveFunc    = BOARD_Camera_I2C_ReceiveSCCB,
+    .pullResetPin      = BOARD_PullCameraResetPin,
+    .pullPowerDownPin  = BOARD_PullCameraPowerDownPin,
     .inputClockFreq_Hz = 24000000,
 };
 
 camera_device_handle_t cameraDevice = {
-    .resource = &ov7725Resource, .ops = &ov7725_ops,
+    .resource = &ov7725Resource,
+    .ops      = &ov7725_ops,
 };
 #else
 /*
@@ -215,7 +222,7 @@ static void i2c_release_bus_delay(void)
 
 void BOARD_I2C_ReleaseBus(void)
 {
-    uint8_t i = 0;
+    uint8_t i                          = 0;
     const gpio_pin_config_t pin_config = {.direction = kGPIO_DigitalOutput, .outputLogic = 1};
 
     CLOCK_EnableClock(kCLOCK_Iomuxc);
@@ -259,14 +266,15 @@ void BOARD_I2C_ReleaseBus(void)
 }
 
 static mt9m114_resource_t mt9m114Resource = {
-    .i2cSendFunc = BOARD_Camera_I2C_Send,
-    .i2cReceiveFunc = BOARD_Camera_I2C_Receive,
-    .pullResetPin = BOARD_PullCameraResetPin,
+    .i2cSendFunc       = BOARD_Camera_I2C_Send,
+    .i2cReceiveFunc    = BOARD_Camera_I2C_Receive,
+    .pullResetPin      = BOARD_PullCameraResetPin,
     .inputClockFreq_Hz = 24000000,
 };
 
 camera_device_handle_t cameraDevice = {
-    .resource = &mt9m114Resource, .ops = &mt9m114_ops,
+    .resource = &mt9m114Resource,
+    .ops      = &mt9m114_ops,
 };
 #endif
 
@@ -305,7 +313,8 @@ void BOARD_InitCameraResource(void)
 
     /* Set the pins for CSI reset and power down. */
     gpio_pin_config_t pinConfig = {
-        kGPIO_DigitalOutput, 1,
+        kGPIO_DigitalOutput,
+        1,
     };
 
     GPIO_PinInit(GPIO1, 4, &pinConfig);
@@ -339,27 +348,27 @@ int main(void)
     PRINTF("CSI RGB565 example start...\r\n");
 
     elcdif_rgb_mode_config_t lcdConfig = {
-        .panelWidth = APP_LCD_WIDTH,
-        .panelHeight = APP_LCD_HEIGHT,
-        .hsw = APP_HSW,
-        .hfp = APP_HFP,
-        .hbp = APP_HBP,
-        .vsw = APP_VSW,
-        .vfp = APP_VFP,
-        .vbp = APP_VBP,
+        .panelWidth    = APP_LCD_WIDTH,
+        .panelHeight   = APP_LCD_HEIGHT,
+        .hsw           = APP_HSW,
+        .hfp           = APP_HFP,
+        .hbp           = APP_HBP,
+        .vsw           = APP_VSW,
+        .vfp           = APP_VFP,
+        .vbp           = APP_VBP,
         .polarityFlags = APP_LCD_POL_FLAGS,
-        .pixelFormat = kELCDIF_PixelFormatRGB565,
-        .dataBus = APP_LCDIF_DATA_BUS,
+        .pixelFormat   = kELCDIF_PixelFormatRGB565,
+        .dataBus       = APP_LCDIF_DATA_BUS,
     };
 
     const camera_config_t cameraConfig = {
-        .pixelFormat = kVIDEO_PixelFormatRGB565,
-        .bytesPerPixel = APP_BPP,
-        .resolution = FSL_VIDEO_RESOLUTION(APP_CAMERA_WIDTH, APP_CAMERA_HEIGHT),
+        .pixelFormat                = kVIDEO_PixelFormatRGB565,
+        .bytesPerPixel              = APP_BPP,
+        .resolution                 = FSL_VIDEO_RESOLUTION(APP_CAMERA_WIDTH, APP_CAMERA_HEIGHT),
         .frameBufferLinePitch_Bytes = APP_LCD_WIDTH * APP_BPP,
-        .interface = kCAMERA_InterfaceGatedClock,
-        .controlFlags = APP_CAMERA_CONTROL_FLAGS,
-        .framePerSec = 30,
+        .interface                  = kCAMERA_InterfaceGatedClock,
+        .controlFlags               = APP_CAMERA_CONTROL_FLAGS,
+        .framePerSec                = 30,
     };
 
     memset(s_frameBuffer, 0, sizeof(s_frameBuffer));

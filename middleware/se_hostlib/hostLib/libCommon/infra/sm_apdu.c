@@ -1,9 +1,9 @@
 /**
-* @file sm_apdu.c
-* @author NXP Semiconductors
-* @version 1.0
-* @par License
- * Copyright 2016 NXP
+ * @file sm_apdu.c
+ * @author NXP Semiconductors
+ * @version 1.0
+ * @par License
+ * Copyright 2019 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -12,64 +12,75 @@
  * that you agree to comply with and are bound by, such license terms.  If
  * you do not agree to be bound by the applicable license terms, then you
  * may not retain, install, activate or otherwise use the software.
-*
-* @par Description
-* This file implements the high-level APDU handling of the SM module.
-* @par History
-* 1.0   31-march-2014 : Initial version
-*
-*****************************************************************************/
+ *
+ * @par Description
+ * This file implements the high-level APDU handling of the SM module.
+ * @par History
+ * 1.0   31-march-2014 : Initial version
+ * 1.1   10-april-2019 : Removed compile time choice 'USE_MALLOC_FOR_APDU_BUFFER'
+ *
+ *****************************************************************************/
 #include <stddef.h>
 #include <string.h>
 #include <assert.h>
 #include <stdlib.h>
 
+
+#if defined(SSS_USE_FTR_FILE)
+#include "fsl_sss_ftr.h"
+#else
+#include "fsl_sss_ftr_default.h"
+#endif
+
 #include "sm_apdu.h"
 // #include "ax_api.h"
 #include "scp.h"
-
-// #define USE_MALLOC_FOR_APDU_BUFFER
 
 static void ReserveLc(apdu_t * pApdu);
 static void SetLc(apdu_t * pApdu, U16 lc);
 static void AddLe(apdu_t * pApdu, U16 le);
 
-#ifndef USE_MALLOC_FOR_APDU_BUFFER
-static U8 sharedApduBuffer[MAX_APDU_BUF_LENGTH];
+#if SSS_HAVE_SE050_EAR_CH
+/* Send session ID in trans-receive */
+static U8 session_Tlv[7];
+static U8 gEnableEnc = 0;
 #endif
 
+static U8 sharedApduBuffer[MAX_APDU_BUF_LENGTH];
+
+#ifdef TGT_A71CH
+#if ( (APDU_HEADER_LENGTH + APDU_STD_MAX_DATA + 1) >= MAX_APDU_BUF_LENGTH )
+#error "Ensure MAX_APDU_BUF_LENGTH is big enough"
+#endif
+#endif // TGT_A71CH
+
 /**
-* Associates a memory buffer with the APDU buffer.
-*
-* By default (determined at compile time) the buffer is not allocated with each call, but a reference
-* is made to a static data structure.
-*
-* \param[in,out] pApdu         APDU buffer
-* \returns always returns 0
-*/
+ * Associates a memory buffer with the APDU buffer.
+ *
+ * By default (determined at compile time) the buffer is not allocated with each call, but a reference
+ * is made to a static data structure.
+ *
+ * \param[in,out] pApdu         APDU buffer
+ * \returns always returns 0
+ */
 U8 AllocateAPDUBuffer(apdu_t * pApdu)
 {
     assert(pApdu);
     // In case of e.g. TGT_A7, pApdu is pointing to a structure defined on the stack
     // so pApdu->pBuf contains random data
-
-#ifdef USE_MALLOC_FOR_APDU_BUFFER
-    pApdu->pBuf = (U8*) malloc(MAX_APDU_BUF_LENGTH);
-#else
     pApdu->pBuf = sharedApduBuffer;
-#endif
 
     return 0;
 }
 
 /**
-* Clears the previously referenced APDU buffer.
-*
-* In case the buffer was effectively malloc'd by ::AllocateAPDUBuffer it will also be freed.
-*
-* \param[in,out] pApdu              APDU buffer
-* \return Always returns 0
-*/
+ * Clears the previously referenced APDU buffer.
+ *
+ * In case the buffer was effectively malloc'd by ::AllocateAPDUBuffer it will also be freed.
+ *
+ * \param[in,out] pApdu              APDU buffer
+ * \return Always returns 0
+ */
 U8 FreeAPDUBuffer(apdu_t * pApdu)
 {
     assert(pApdu);
@@ -77,20 +88,17 @@ U8 FreeAPDUBuffer(apdu_t * pApdu)
     {
         U16 nClear = (pApdu->rxlen > MAX_APDU_BUF_LENGTH) ? MAX_APDU_BUF_LENGTH : pApdu->rxlen;
         memset(pApdu->pBuf, 0, nClear);
-#ifdef USE_MALLOC_FOR_APDU_BUFFER
-        free(pApdu->pBuf);
-#endif
         pApdu->pBuf = 0;
     }
     return 0;
 }
 
 /**
-* Sets up the command APDU header.
-* \param[in,out] pApdu      APDU buffer
-* \param[in] extendedLength Indicates if command/response have extended length. Either ::USE_STANDARD_APDU_LEN or ::USE_EXTENDED_APDU_LEN
-* \return                   offset in APDU buffer after the header
-*/
+ * Sets up the command APDU header.
+ * \param[in,out] pApdu      APDU buffer
+ * \param[in] extendedLength Indicates if command/response have extended length. Either ::USE_STANDARD_APDU_LEN or ::USE_EXTENDED_APDU_LEN
+ * \return                   offset in APDU buffer after the header
+ */
 U8 SetApduHeader(apdu_t * pApdu, U8 extendedLength)
 {
 //    pApdu->edc = eEdc_NoErrorDetection;
@@ -118,6 +126,24 @@ U8 SetApduHeader(apdu_t * pApdu, U8 extendedLength)
 
     return (U8)(pApdu->offset);
 }
+
+#if SSS_HAVE_SE050_EAR_CH
+/**
+ * Creates session TLV from session ID. Session ID is retrieved as response to auth command.
+ * \param[in] sessionId
+ */
+void set_SessionId_Tlv(U32 sessionId)
+{
+    session_Tlv[0] = 0xBE;
+    session_Tlv[1] = 0xBE;
+    session_Tlv[2] = 0x04;
+    session_Tlv[3] = (U8)(sessionId >> 24);
+    session_Tlv[4] = (U8)(sessionId >> 16);
+    session_Tlv[5] = (U8)(sessionId >> 8);
+    session_Tlv[6] = (U8)(sessionId >> 0);
+    gEnableEnc = sessionId !=0 ? 1:0;
+}
+#endif
 
 /**
  * In the final stage before sending the APDU cmd one needs to update the values of lc (and le).
@@ -156,7 +182,7 @@ void smApduAdaptLcLe(apdu_t *pApdu, U16 lc, U16 le)
  * Must be called once in case the APDU cmd has a command data section.
  * \pre pApdu->hasData has been set.
  * \param[in,out] pApdu        APDU buffer
-*/
+ */
 static void ReserveLc(apdu_t * pApdu)
 {
     pApdu->lcLength = 0;
@@ -177,11 +203,11 @@ static void ReserveLc(apdu_t * pApdu)
 }
 
 /**
-* Sets the LC value in the command APDU.
-* @pre ReserveLc(...) has been called or there is no command data section
-* @param[in,out] pApdu APDU buffer
-* @param[in]     lc    LC value to be set
-*/
+ * Sets the LC value in the command APDU.
+ * @pre ReserveLc(...) has been called or there is no command data section
+ * @param[in,out] pApdu APDU buffer
+ * @param[in]     lc    LC value to be set
+ */
 static void SetLc(apdu_t * pApdu, U16 lc)
 {
     assert ( (pApdu->lcLength != 0) || (pApdu->hasData == 0) );
@@ -209,11 +235,11 @@ static void SetLc(apdu_t * pApdu, U16 lc)
 }
 
 /**
-* Adds the LE value to the command APDU.
-* @param pApdu              [IN/OUT] APDU buffer
-* @param le                 [IN] LE
-* @return
-*/
+ * Adds the LE value to the command APDU.
+ * @param pApdu              [IN/OUT] APDU buffer
+ * @param le                 [IN] LE
+ * @return
+ */
 static void AddLe(apdu_t * pApdu, U16 le)
 {
     pApdu->hasLe = true;
@@ -243,16 +269,16 @@ static void AddLe(apdu_t * pApdu, U16 le)
 }
 
 
-#ifndef TGT_A71CH
+#if 0
 /**
-* @function             AddTlvItem
-* @description          Adds a Tag-Length-Value structure to the command APDU.
-* @param pApdu          [IN/OUT] APDU buffer.
-* @param tag            [IN] tag; either a 1-byte tag or a 2-byte tag
-* @param dataLength     [IN] length of the Value
-* @param pValue         [IN] Value
-* @return               SW_OK or ERR_BUF_TOO_SMALL
-*/
+ * @function             AddTlvItem
+ * @description          Adds a Tag-Length-Value structure to the command APDU.
+ * @param pApdu          [IN/OUT] APDU buffer.
+ * @param tag            [IN] tag; either a 1-byte tag or a 2-byte tag
+ * @param dataLength     [IN] length of the Value
+ * @param pValue         [IN] Value
+ * @return               SW_OK or ERR_BUF_TOO_SMALL
+ */
 U16 AddTlvItem(apdu_t * pApdu, U16 tag, U16 dataLength, const U8 *pValue)
 {
     U8 msbTag = tag >> 8;
@@ -348,9 +374,9 @@ U16 AddTlvItem(apdu_t * pApdu, U16 tag, U16 dataLength, const U8 *pValue)
 }
 
 /**
-* AddStdCmdData
-* \deprecated Use ::smApduAppendCmdData instead
-*/
+ * AddStdCmdData
+ * \deprecated Use ::smApduAppendCmdData instead
+ */
 U16 AddStdCmdData(apdu_t * pApdu, U16 dataLen, const U8 *data)
 {
 
@@ -370,14 +396,14 @@ U16 AddStdCmdData(apdu_t * pApdu, U16 dataLen, const U8 *data)
 }
 
 /**
-* @function                 ParseResponse
-* @description              Parses a received Tag-Length-Value structure (response APDU).
-* @param pApdu              [IN] APDU buffer
-* @param expectedTag        [IN] expected tag; either a 1-byte tag or a 2-byte tag
-* @param pLen               [IN,OUT] IN: size of buffer provided; OUT: length of the received Value
-* @param pValue             [OUT] received Value
-* @return status
-*/
+ * @function                 ParseResponse
+ * @description              Parses a received Tag-Length-Value structure (response APDU).
+ * @param pApdu              [IN] APDU buffer
+ * @param expectedTag        [IN] expected tag; either a 1-byte tag or a 2-byte tag
+ * @param pLen               [IN,OUT] IN: size of buffer provided; OUT: length of the received Value
+ * @param pValue             [OUT] received Value
+ * @return status
+ */
 U16 ParseResponse(apdu_t *pApdu, U16 expectedTag, U16 *pLen, U8 *pValue)
 {
     U16 tag = 0;
@@ -486,10 +512,29 @@ U16 ParseResponse(apdu_t *pApdu, U16 expectedTag, U16 *pLen, U8 *pValue)
 #endif // TGT_A71CH
 
 /**
-* Add or append data to the body of a command APDU.
-*/
+ * Add or append data to the body of a command APDU.
+ * WARNING: Bufferoverflow fix only applied for A71CH
+ */
 U16 smApduAppendCmdData(apdu_t *pApdu, const U8 *data, U16 dataLen)
 {
+#ifdef TGT_A71CH
+    // The maximum amount of data payload depends on (whichever is smaller)
+    //   - STD-APDU (MAX=255 byte) / EXTENDED-APDU (MAX=65536 byte)
+    //   - size of pApdu->pBuf (MAX_APDU_BUF_LENGTH)
+    // Standard Length APDU's:
+    //   There is a pre-processor macro in place that ensures 'pApdu->pBuf' is of sufficient size
+    // Extended Length APDU's (not used by A71CH):
+    //   APDU payload restricted by buffersize of 'pApdu->pBuf'
+    U16 maxPayload_noLe;
+
+    if (pApdu->extendedLength) {
+        maxPayload_noLe = MAX_APDU_BUF_LENGTH - EXT_CASE4_APDU_OVERHEAD;
+    }
+    else {
+        maxPayload_noLe = APDU_HEADER_LENGTH + APDU_STD_MAX_DATA;
+    }
+#endif // TGT_A71CH
+
     // If this is the first commmand data section added to the buffer, we needs to ensure
     // the correct offset is used writing the data. This depends on
     // whether the APDU is a standard or an extended APDU.
@@ -499,11 +544,43 @@ U16 smApduAppendCmdData(apdu_t *pApdu, const U8 *data, U16 dataLen)
         ReserveLc(pApdu);
     }
 
-    pApdu->lc += dataLen;
+#if SSS_HAVE_SE050_EAR_CH
+    if (gEnableEnc)
+    {
+        pApdu->lc += (dataLen + sizeof(session_Tlv));
+        //add SessionId_Tlv
+        memcpy(&pApdu->pBuf[pApdu->offset], session_Tlv, sizeof(session_Tlv));
+        pApdu->offset += sizeof(session_Tlv);
+    }
+    else
+#endif // SSS_HAVE_SE050_EAR_CH
+    {
+        pApdu->lc += dataLen;
+    }
+
+#ifdef TGT_A71CL
+    /* add for cl */
+    if (pApdu->txHasChkSum == 1) {
+        pApdu->lc += pApdu->txChkSumLength;
+        pApdu->pBuf[pApdu->offset - 1] = (U8)pApdu->lc;
+    }
+#endif // TGT_A71CL
 
     // Value
+#ifdef TGT_A71CH
+    if (dataLen <= (maxPayload_noLe - pApdu->offset))
+    {
+        memcpy(&pApdu->pBuf[pApdu->offset], data, dataLen);
+        pApdu->offset += dataLen;
+    }
+    else
+    {
+        return ERR_INTERNAL_BUF_TOO_SMALL;
+    }
+#else // TGT_A71CH
     memcpy(&pApdu->pBuf[pApdu->offset], data, dataLen);
     pApdu->offset += dataLen;
+#endif // TGT_A71CH
 
     // adapt length
     pApdu->buflen = pApdu->offset;
@@ -512,11 +589,11 @@ U16 smApduAppendCmdData(apdu_t *pApdu, const U8 *data, U16 dataLen)
 }
 
 /**
-* Gets the Status Word from the APDU.
-* @param[in]      pApdu Pointer to the APDU.
-* @param[in,out]  pIsOk IN: Pointer to the error indicator, allowed to be NULL; OUT: Points to '1' in case SW is 0x9000
-* @return      Status Word or ::ERR_COMM_ERROR
-*/
+ * Gets the Status Word from the APDU.
+ * @param[in]      pApdu Pointer to the APDU.
+ * @param[in,out]  pIsOk IN: Pointer to the error indicator, allowed to be NULL; OUT: Points to '1' in case SW is 0x9000
+ * @return      Status Word or ::ERR_COMM_ERROR
+ */
 U16 smGetSw(apdu_t *pApdu, U8 *pIsOk)
 {
     U16 sw;
@@ -553,10 +630,32 @@ U16 smGetSw(apdu_t *pApdu, U8 *pIsOk)
 }
 
 /**
-* Retrieve the response data of the APDU response, in case the status word matches ::SW_OK
-*/
+ * verify crc checksum.
+ * \param[in] pApdu      APDU buffer
+ * \param[in] dataLen    data length to be use for crc caluate
+ * \return               offset in APDU buffer after the header
+ */
+#if defined(TGT_A71CL)
+static U8 smVerifyCrc(apdu_t *pApdu, U16 dataLen)
+{
+    U16 crc = 0;
+    U16 recvCrc = 0;
+    //FIXME: Where is the definition for below function?
+    //crc = CL_CalCRC(&pApdu->pBuf[pApdu->offset], (U32)dataLen, 0xFFFF);
+    recvCrc = *(U16*)&pApdu->pBuf[pApdu->offset + dataLen];
+    if (crc != recvCrc) {
+        return 0;
+    } else {
+        return 1;
+    }
+}
+#endif
+/**
+ * Retrieve the response data of the APDU response, in case the status word matches ::SW_OK
+ */
 U16 smApduGetResponseBody(apdu_t *pApdu, U8 *buf, U16 *bufLen)
 {
+    U16 tailInfoLen = 2;
     if (pApdu->rxlen < 2) /* minimum: 2 byte for response */
     {
         *bufLen = 0;
@@ -565,27 +664,67 @@ U16 smApduGetResponseBody(apdu_t *pApdu, U8 *buf, U16 *bufLen)
     else
     {
         /* check status returned is okay */
-        if ((pApdu->pBuf[pApdu->rxlen - 2] != 0x90) || (pApdu->pBuf[pApdu->rxlen - 1] != 0x00))
-        {
+        if (((pApdu->pBuf[pApdu->rxlen - 2] != 0x90) || (pApdu->pBuf[pApdu->rxlen - 1] != 0x00)) &&
+            (pApdu->pBuf[pApdu->rxlen -2] != 0x63) &&
+            (pApdu->pBuf[pApdu->rxlen - 2] != 0x95)) {
             *bufLen = 0;
             return ERR_GENERAL_ERROR;
         }
         else // response okay
         {
             pApdu->offset = 0;
-
-            if ( (pApdu->rxlen - 2) > *bufLen)
+#if defined(TGT_A71CL)
+            if (pApdu->rxHasChkSum == 1) {
+                tailInfoLen += pApdu->rxChkSumLength;
+            }
+#endif
+            if ((pApdu->rxlen - tailInfoLen) > *bufLen)
             {
                 *bufLen = 0;
                 return ERR_BUF_TOO_SMALL;
             }
             else
             {
-                *bufLen = pApdu->rxlen - 2;
-                memcpy(buf, &(pApdu->pBuf[pApdu->offset]), pApdu->rxlen - 2);
+                *bufLen = pApdu->rxlen - tailInfoLen;
+#if defined(TGT_A71CL)
+                if (pApdu->rxHasChkSum == 1) {
+                    if (smVerifyCrc(pApdu, *bufLen)) {
+                        memcpy(buf, &(pApdu->pBuf[pApdu->offset]), *bufLen);
+                    } else {
+                        return ERR_CRC_CHKSUM_VERIFY;
+                    }
+                }
+                else
+#endif
+                {
+                    if (*bufLen) {
+                        memcpy(buf, &(pApdu->pBuf[pApdu->offset]), *bufLen);
+                    }
+                }
             }
         }
     }
 
     return SW_OK;
 }
+
+#ifdef TGT_A71CL
+
+/**
+ * In the final stage before sending the APDU cmd one needs to update checksum value.
+ * \param[in,out] pApdu        APDU buffer
+ * \param[in] chksum
+ */
+U16 smApduAdaptChkSum(apdu_t *pApdu, U16 chkSum)
+{
+    // assert(pApdu->txHasChkSum == 1);
+    // U16 tmpchkSum = (chkSum >> 8)|(chkSum << 8);
+
+    if (pApdu->txHasChkSum) {
+        memcpy(&pApdu->pBuf[pApdu->offset], &chkSum, pApdu->txChkSumLength);
+    }
+    pApdu->buflen += pApdu->txChkSumLength;
+    pApdu->offset += pApdu->txChkSumLength;
+    return pApdu->offset;
+}
+#endif

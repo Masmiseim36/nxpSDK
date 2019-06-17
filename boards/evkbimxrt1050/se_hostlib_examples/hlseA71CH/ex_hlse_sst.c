@@ -36,7 +36,7 @@
 #include "HLSEAPI.h"
 #include "HostCryptoAPI.h"
 static U8 exSstSym(U8 initMode);
-static U8 exSstPub(U8 initMode, U16 appletVersion);
+static U8 exSstPub(U8 initMode);
 
 /**
  * Demonstrate storage of symmetric keys:
@@ -46,7 +46,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion);
  * - ::exSstPub
  *
  */
-U8 exHlseSst(U16 appletVersion)
+U8 exHlseSst()
 {
     U8 result = 1;
     PRINTF( "\r\n-----------\r\nStart exSst()\r\n------------\r\n");
@@ -59,7 +59,7 @@ U8 exHlseSst(U16 appletVersion)
     result &= exSstSym(INIT_MODE_RESET);
 
     // - Public keys
-    result &= exSstPub(INIT_MODE_RESET, appletVersion);
+    result &= exSstPub(INIT_MODE_RESET);
 
     // Using channel encryption
     // ------------------------
@@ -67,7 +67,7 @@ U8 exHlseSst(U16 appletVersion)
     result &= exSstSym(INIT_MODE_RESET_DO_SCP03);
 
     // - Public keys
-    result &= exSstPub(INIT_MODE_RESET_DO_SCP03, appletVersion);
+    result &= exSstPub(INIT_MODE_RESET_DO_SCP03);
 
     // overall result
     PRINTF( "\r\n-----------\r\nEnd exSst(), result = %s\r\n------------\r\n", ((result == 1)? "OK": "FAILED"));
@@ -186,7 +186,7 @@ static U8 exSstSym(U8 initMode)
     U8 indexAesKey = 0;
     U8 nBlock = 0x01;
 
-    HLSE_OBJECT_HANDLE aesKeyHandles[A71CH_SYM_KEY_MAX];
+    HLSE_OBJECT_HANDLE aesKeyHandles[A71CH_SYM_KEY_MAX] = {0};
 
     PRINTF("\r\n-----------\r\nStart exSstSym(%s)\r\n------------\r\n", getInitModeAsString(initMode));
 
@@ -498,7 +498,7 @@ static U8 exSstSym(U8 initMode)
  *   to be successfull.
  * @param[in] appletVersion In case an applet older than Revision 1.2 (0x012x) is attached, a negative test is skipped.
  */
-static U8 exSstPub(U8 initMode, U16 appletVersion)
+static U8 exSstPub(U8 initMode)
 {
     U8 result = 1;
     U16 err;
@@ -509,19 +509,19 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
 
     ECCCurve_t eccCurve = ECCCurve_NIST_P256;
 
-    EC_KEY *eccKeyCA[A71CH_PUBLIC_KEY_MAX];
-    eccKeyComponents_t eccKcCA[A71CH_PUBLIC_KEY_MAX];
+    EC_KEY *eccKeyCA[A71CH_PUBLIC_KEY_MAX] = { 0 };
+    eccKeyComponents_t eccKcCA[A71CH_PUBLIC_KEY_MAX] = { 0 };
 
     EC_KEY *eccKeyAlternative = NULL;
-    eccKeyComponents_t eccKcAlternative;
+    eccKeyComponents_t eccKcAlternative = {0};
 
-    U8 fetchedPubKey[65];
+    U8 fetchedPubKey[65] = { 0 };
     U16 fetchedPubKeyLen = sizeof(fetchedPubKey);
 
-    U8 hashSha256[32];
+    U8 hashSha256[32] = { 0 };
     U16 hashSha256Len = sizeof(hashSha256);
 
-    U8 signatureOnHost[128];
+    U8 signatureOnHost[128] = { 0 };
     unsigned int signatureOnHostLen = sizeof(signatureOnHost);
 
     // const U16 expectedPubKeyLen = 65;
@@ -537,7 +537,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
     U8 wrappedKey[64+8];
     U16 wrappedKeyLen = sizeof(wrappedKey);
 
-    HLSE_OBJECT_HANDLE pubkeyHandles[A71CH_PUBLIC_KEY_MAX];
+    HLSE_OBJECT_HANDLE pubkeyHandles[A71CH_PUBLIC_KEY_MAX] = {0};
     HLSE_OBJECT_HANDLE handleCfgKeyPublicKey;
 
     PRINTF("\r\n-----------\r\nStart exSstPub(%s)\r\n------------\r\n", getInitModeAsString(initMode));
@@ -826,7 +826,6 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
     result &= AX_CHECK_SW(err, SW_OK, "err");
     assert(result);
 
-    if (appletVersion >= 0x0120)
     {
         // Setting unwrapped public keys (in second half) MUST fail
         for (pubKeyIndex = A71CH_PUBLIC_KEY_MAX >> 1; pubKeyIndex < A71CH_PUBLIC_KEY_MAX; pubKeyIndex++)

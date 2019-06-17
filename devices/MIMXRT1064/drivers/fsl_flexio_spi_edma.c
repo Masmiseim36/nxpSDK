@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -69,12 +69,12 @@ static const uint16_t s_dummyData = FLEXIO_SPI_DUMMYDATA;
 static flexio_spi_master_edma_private_handle_t s_edmaPrivateHandle[FLEXIO_SPI_HANDLE_COUNT];
 
 /*******************************************************************************
-* Code
-******************************************************************************/
+ * Code
+ ******************************************************************************/
 
 static void FLEXIO_SPI_TxEDMACallback(edma_handle_t *handle, void *param, bool transferDone, uint32_t tcds)
 {
-    tcds = tcds;
+    tcds                                                      = tcds;
     flexio_spi_master_edma_private_handle_t *spiPrivateHandle = (flexio_spi_master_edma_private_handle_t *)param;
 
     /* Disable Tx DMA */
@@ -99,7 +99,7 @@ static void FLEXIO_SPI_TxEDMACallback(edma_handle_t *handle, void *param, bool t
 
 static void FLEXIO_SPI_RxEDMACallback(edma_handle_t *handle, void *param, bool transferDone, uint32_t tcds)
 {
-    tcds = tcds;
+    tcds                                                      = tcds;
     flexio_spi_master_edma_private_handle_t *spiPrivateHandle = (flexio_spi_master_edma_private_handle_t *)param;
 
     if (transferDone)
@@ -126,8 +126,8 @@ static void FLEXIO_SPI_EDMAConfig(FLEXIO_SPI_Type *base,
                                   flexio_spi_master_edma_handle_t *handle,
                                   flexio_spi_transfer_t *xfer)
 {
-    edma_transfer_config_t xferConfig;
-    flexio_spi_shift_direction_t direction;
+    edma_transfer_config_t xferConfig      = {0};
+    flexio_spi_shift_direction_t direction = kFLEXIO_SPI_MsbFirst;
     uint8_t bytesPerFrame;
 
     /* Configure the values in handle. */
@@ -135,23 +135,23 @@ static void FLEXIO_SPI_EDMAConfig(FLEXIO_SPI_Type *base,
     {
         case kFLEXIO_SPI_8bitMsb:
             bytesPerFrame = 1;
-            direction = kFLEXIO_SPI_MsbFirst;
+            direction     = kFLEXIO_SPI_MsbFirst;
             break;
         case kFLEXIO_SPI_8bitLsb:
             bytesPerFrame = 1;
-            direction = kFLEXIO_SPI_LsbFirst;
+            direction     = kFLEXIO_SPI_LsbFirst;
             break;
         case kFLEXIO_SPI_16bitMsb:
             bytesPerFrame = 2;
-            direction = kFLEXIO_SPI_MsbFirst;
+            direction     = kFLEXIO_SPI_MsbFirst;
             break;
         case kFLEXIO_SPI_16bitLsb:
             bytesPerFrame = 2;
-            direction = kFLEXIO_SPI_LsbFirst;
+            direction     = kFLEXIO_SPI_LsbFirst;
             break;
         default:
             bytesPerFrame = 1U;
-            direction = kFLEXIO_SPI_MsbFirst;
+            direction     = kFLEXIO_SPI_MsbFirst;
             assert(true);
             break;
     }
@@ -160,13 +160,13 @@ static void FLEXIO_SPI_EDMAConfig(FLEXIO_SPI_Type *base,
     handle->transferSize = xfer->dataSize;
 
     /* Configure tx transfer EDMA. */
-    xferConfig.destAddr = FLEXIO_SPI_GetTxDataRegisterAddress(base, direction);
+    xferConfig.destAddr   = FLEXIO_SPI_GetTxDataRegisterAddress(base, direction);
     xferConfig.destOffset = 0;
     if (bytesPerFrame == 1U)
     {
-        xferConfig.srcTransferSize = kEDMA_TransferSize1Bytes;
+        xferConfig.srcTransferSize  = kEDMA_TransferSize1Bytes;
         xferConfig.destTransferSize = kEDMA_TransferSize1Bytes;
-        xferConfig.minorLoopBytes = 1;
+        xferConfig.minorLoopBytes   = 1;
     }
     else
     {
@@ -174,22 +174,22 @@ static void FLEXIO_SPI_EDMAConfig(FLEXIO_SPI_Type *base,
         {
             xferConfig.destAddr -= 1U;
         }
-        xferConfig.srcTransferSize = kEDMA_TransferSize2Bytes;
+        xferConfig.srcTransferSize  = kEDMA_TransferSize2Bytes;
         xferConfig.destTransferSize = kEDMA_TransferSize2Bytes;
-        xferConfig.minorLoopBytes = 2;
+        xferConfig.minorLoopBytes   = 2;
     }
 
     /* Configure DMA channel. */
     if (xfer->txData)
     {
         xferConfig.srcOffset = bytesPerFrame;
-        xferConfig.srcAddr = (uint32_t)(xfer->txData);
+        xferConfig.srcAddr   = (uint32_t)(xfer->txData);
     }
     else
     {
         /* Disable the source increasement and source set to dummyData. */
         xferConfig.srcOffset = 0;
-        xferConfig.srcAddr = (uint32_t)(&s_dummyData);
+        xferConfig.srcAddr   = (uint32_t)(&s_dummyData);
     }
 
     xferConfig.majorLoopCounts = (xfer->dataSize / xferConfig.minorLoopBytes);
@@ -213,8 +213,8 @@ static void FLEXIO_SPI_EDMAConfig(FLEXIO_SPI_Type *base,
                 xferConfig.srcAddr -= 1U;
             }
         }
-        xferConfig.srcOffset = 0;
-        xferConfig.destAddr = (uint32_t)(xfer->rxData);
+        xferConfig.srcOffset  = 0;
+        xferConfig.destAddr   = (uint32_t)(xfer->rxData);
         xferConfig.destOffset = bytesPerFrame;
         EDMA_SubmitTransfer(handle->rxHandle, &xferConfig);
         handle->rxInProgress = true;
@@ -231,6 +231,23 @@ static void FLEXIO_SPI_EDMAConfig(FLEXIO_SPI_Type *base,
     }
 }
 
+/*!
+ * brief Initializes the FlexIO SPI master eDMA handle.
+ *
+ * This function initializes the FlexIO SPI master eDMA handle which can be used for other FlexIO SPI master
+ * transactional
+ * APIs.
+ * For a specified FlexIO SPI instance, call this API once to get the initialized handle.
+ *
+ * param base Pointer to FLEXIO_SPI_Type structure.
+ * param handle Pointer to flexio_spi_master_edma_handle_t structure to store the transfer state.
+ * param callback SPI callback, NULL means no callback.
+ * param userData callback function parameter.
+ * param txHandle User requested eDMA handle for FlexIO SPI RX eDMA transfer.
+ * param rxHandle User requested eDMA handle for FlexIO SPI TX eDMA transfer.
+ * retval kStatus_Success Successfully create the handle.
+ * retval kStatus_OutOfRange The FlexIO SPI eDMA type/handle table out of range.
+ */
 status_t FLEXIO_SPI_MasterTransferCreateHandleEDMA(FLEXIO_SPI_Type *base,
                                                    flexio_spi_master_edma_handle_t *handle,
                                                    flexio_spi_master_edma_transfer_callback_t callback,
@@ -247,7 +264,7 @@ status_t FLEXIO_SPI_MasterTransferCreateHandleEDMA(FLEXIO_SPI_Type *base,
     {
         if (s_edmaPrivateHandle[index].base == NULL)
         {
-            s_edmaPrivateHandle[index].base = base;
+            s_edmaPrivateHandle[index].base   = base;
             s_edmaPrivateHandle[index].handle = handle;
             break;
         }
@@ -283,6 +300,20 @@ status_t FLEXIO_SPI_MasterTransferCreateHandleEDMA(FLEXIO_SPI_Type *base,
     return kStatus_Success;
 }
 
+/*!
+ * brief Performs a non-blocking FlexIO SPI transfer using eDMA.
+ *
+ * note This interface returns immediately after transfer initiates. Call
+ * FLEXIO_SPI_MasterGetTransferCountEDMA to poll the transfer status and check
+ * whether the FlexIO SPI transfer is finished.
+ *
+ * param base Pointer to FLEXIO_SPI_Type structure.
+ * param handle Pointer to flexio_spi_master_edma_handle_t structure to store the transfer state.
+ * param xfer Pointer to FlexIO SPI transfer structure.
+ * retval kStatus_Success Successfully start a transfer.
+ * retval kStatus_InvalidArgument Input argument is invalid.
+ * retval kStatus_FLEXIO_SPI_Busy FlexIO SPI is not idle, is running another transfer.
+ */
 status_t FLEXIO_SPI_MasterTransferEDMA(FLEXIO_SPI_Type *base,
                                        flexio_spi_master_edma_handle_t *handle,
                                        flexio_spi_transfer_t *xfer)
@@ -330,6 +361,13 @@ status_t FLEXIO_SPI_MasterTransferEDMA(FLEXIO_SPI_Type *base,
     return kStatus_Success;
 }
 
+/*!
+ * brief Gets the remaining bytes for FlexIO SPI eDMA transfer.
+ *
+ * param base Pointer to FLEXIO_SPI_Type structure.
+ * param handle FlexIO SPI eDMA handle pointer.
+ * param count Number of bytes transferred so far by the non-blocking transaction.
+ */
 status_t FLEXIO_SPI_MasterTransferGetCountEDMA(FLEXIO_SPI_Type *base,
                                                flexio_spi_master_edma_handle_t *handle,
                                                size_t *count)
@@ -343,20 +381,26 @@ status_t FLEXIO_SPI_MasterTransferGetCountEDMA(FLEXIO_SPI_Type *base,
 
     if (handle->rxInProgress)
     {
-        *count = (handle->transferSize -
-                  (uint32_t)handle->nbytes *
-                      EDMA_GetRemainingMajorLoopCount(handle->rxHandle->base, handle->rxHandle->channel));
+        *count =
+            (handle->transferSize - (uint32_t)handle->nbytes * EDMA_GetRemainingMajorLoopCount(
+                                                                   handle->rxHandle->base, handle->rxHandle->channel));
     }
     else
     {
-        *count = (handle->transferSize -
-                  (uint32_t)handle->nbytes *
-                      EDMA_GetRemainingMajorLoopCount(handle->txHandle->base, handle->txHandle->channel));
+        *count =
+            (handle->transferSize - (uint32_t)handle->nbytes * EDMA_GetRemainingMajorLoopCount(
+                                                                   handle->txHandle->base, handle->txHandle->channel));
     }
 
     return kStatus_Success;
 }
 
+/*!
+ * brief Aborts a FlexIO SPI transfer using eDMA.
+ *
+ * param base Pointer to FLEXIO_SPI_Type structure.
+ * param handle FlexIO SPI eDMA handle pointer.
+ */
 void FLEXIO_SPI_MasterTransferAbortEDMA(FLEXIO_SPI_Type *base, flexio_spi_master_edma_handle_t *handle)
 {
     assert(handle);
@@ -373,6 +417,20 @@ void FLEXIO_SPI_MasterTransferAbortEDMA(FLEXIO_SPI_Type *base, flexio_spi_master
     handle->rxInProgress = false;
 }
 
+/*!
+ * brief Performs a non-blocking FlexIO SPI transfer using eDMA.
+ *
+ * note This interface returns immediately after transfer initiates. Call
+ * FLEXIO_SPI_SlaveGetTransferCountEDMA to poll the transfer status and
+ * check whether the FlexIO SPI transfer is finished.
+ *
+ * param base Pointer to FLEXIO_SPI_Type structure.
+ * param handle Pointer to flexio_spi_slave_edma_handle_t structure to store the transfer state.
+ * param xfer Pointer to FlexIO SPI transfer structure.
+ * retval kStatus_Success Successfully start a transfer.
+ * retval kStatus_InvalidArgument Input argument is invalid.
+ * retval kStatus_FLEXIO_SPI_Busy FlexIO SPI is not idle, is running another transfer.
+ */
 status_t FLEXIO_SPI_SlaveTransferEDMA(FLEXIO_SPI_Type *base,
                                       flexio_spi_slave_edma_handle_t *handle,
                                       flexio_spi_transfer_t *xfer)

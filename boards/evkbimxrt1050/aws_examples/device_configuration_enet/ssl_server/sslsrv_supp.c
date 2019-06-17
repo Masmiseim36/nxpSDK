@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  *
@@ -63,6 +63,7 @@ SSLSRV_STRUCT *sslsrv_create_server(SSLSRV_PARAM_STRUCT *params)
 
 EXIT:
     sslsrv_destroy_server(server);
+    sslsrv_mem_free((void *)server);
     return (NULL);
 }
 
@@ -72,7 +73,7 @@ EXIT:
 void sslsrv_destroy_server(SSLSRV_STRUCT *server)
 {
     uint32_t n = 0;
-    bool wait = false;
+    bool wait  = false;
 
     if (server)
     {
@@ -142,9 +143,9 @@ void sslsrv_destroy_server(SSLSRV_STRUCT *server)
 */
 static int32_t sslsrv_set_params(SSLSRV_STRUCT *server, SSLSRV_PARAM_STRUCT *params)
 {
-    server->params.max_ses = SSLSRV_CFG_DEFAULT_SES_CNT;
+    server->params.max_ses   = SSLSRV_CFG_DEFAULT_SES_CNT;
     server->params.task_prio = SSLSRV_CFG_DEFAULT_PRIORITY;
-    server->tls_ctx = NULL;
+    server->tls_ctx          = NULL;
 
     /* If there is parameters structure copy nonzero values to server */
     if (params != NULL)

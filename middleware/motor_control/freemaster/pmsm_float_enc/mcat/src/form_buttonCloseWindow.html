@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+ <title></title>
+ <script language="javascript">
+ 
+ function closeWindow()
+ {
+    object1 = parent.parent.document.getElementById("radioMotor1");
+    object2 = parent.parent.document.getElementById("radioMotor2");
+    object3 = parent.parent.document.getElementById("radioMotor3");
+    
+    if(object1)
+    {  
+      if(object1.checked)
+      {
+        prefixM = 'M1_';
+      }
+      else if(object2.checked)
+      {
+        prefixM = 'M2_';
+      }
+      else if(object3.checked)
+      {
+        prefixM = 'M3_';
+      }  
+    }
+    else
+    {
+      prefixM = '';
+    } 
+      
+    var object  = parent.document.getElementById('cntrStrucFrameImage');
+    var object2 = parent.document.getElementById('cntrStrucFrameButton');
+
+    var buttonUP   = parent.document.getElementById(prefixM+'ScalarUp');                                            
+    var buttonDOWN = parent.document.getElementById(prefixM+'ScalarDown');      
+
+    object.style.display= "none";
+    object2.style.display= "none";
+    
+    // buttons in control structure - scalar control
+    buttonUP.style.visibility = "visible";
+    buttonDOWN.style.visibility = "visible";     
+ }
+ 
+ </script>
+ </head>
+  <body>
+  <div style=" position:absolute; text-align: center; background-color: white;"> 
+
+    
+     <button id = "buttonClick" onclick="closeWindow()" style="cursor:pointer; width: 120px; height: 25px; text-align:center; ">Close window</button>       
+    
+ 
+     <span style="visibility: hidden; font-family: sans-serif;" id="txtErrMsg">.</span>   
+  </div>
+  </body>
+ </html>

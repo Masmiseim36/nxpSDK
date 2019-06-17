@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -33,7 +33,7 @@
 edma_handle_t g_EDMA_Handle;
 volatile bool g_Transfer_Done = false;
 
-AT_NONCACHEABLE_SECTION_INIT(uint32_t srcAddr[BUFFER_LENGTH]) = {0x01U, 0x02U, 0x03U, 0x04U,
+AT_NONCACHEABLE_SECTION_INIT(uint32_t srcAddr[BUFFER_LENGTH])  = {0x01U, 0x02U, 0x03U, 0x04U,
                                                                  0x05U, 0x06U, 0x07U, 0x08U};
 AT_NONCACHEABLE_SECTION_INIT(uint32_t destAddr[BUFFER_LENGTH]) = {0x00U, 0x00U, 0x00U, 0x00U,
                                                                   0x00U, 0x00U, 0x00U, 0x00U};
@@ -93,19 +93,15 @@ int main(void)
     EDMA_CreateHandle(&g_EDMA_Handle, EXAMPLE_DMA, 0);
     EDMA_SetCallback(&g_EDMA_Handle, EDMA_Callback, NULL);
     EDMA_ResetChannel(g_EDMA_Handle.base, g_EDMA_Handle.channel);
-
-    if (tcdMemoryPoolPtr != NULL)
-    {
-        EDMA_InstallTCDMemory(&g_EDMA_Handle, tcdMemoryPoolPtr, TCD_QUEUE_SIZE);
-        /* Configure and submit transfer structure 1 */
-        EDMA_PrepareTransfer(&transferConfig, srcAddr, sizeof(srcAddr[0]), destAddr, sizeof(destAddr[0]),
-                             sizeof(srcAddr[0]), sizeof(srcAddr[0]) * HALF_BUFFER_LENGTH, kEDMA_MemoryToMemory);
-        EDMA_SubmitTransfer(&g_EDMA_Handle, &transferConfig);
-        /* Configure and submit transfer structure 2 */
-        EDMA_PrepareTransfer(&transferConfig, &srcAddr[4], sizeof(srcAddr[0]), &destAddr[4], sizeof(destAddr[0]),
-                             sizeof(srcAddr[0]), sizeof(srcAddr[0]) * HALF_BUFFER_LENGTH, kEDMA_MemoryToMemory);
-        EDMA_SubmitTransfer(&g_EDMA_Handle, &transferConfig);
-    }
+    EDMA_InstallTCDMemory(&g_EDMA_Handle, tcdMemoryPoolPtr, TCD_QUEUE_SIZE);
+    /* Configure and submit transfer structure 1 */
+    EDMA_PrepareTransfer(&transferConfig, srcAddr, sizeof(srcAddr[0]), destAddr, sizeof(destAddr[0]),
+                         sizeof(srcAddr[0]), sizeof(srcAddr[0]) * HALF_BUFFER_LENGTH, kEDMA_MemoryToMemory);
+    EDMA_SubmitTransfer(&g_EDMA_Handle, &transferConfig);
+    /* Configure and submit transfer structure 2 */
+    EDMA_PrepareTransfer(&transferConfig, &srcAddr[4], sizeof(srcAddr[0]), &destAddr[4], sizeof(destAddr[0]),
+                         sizeof(srcAddr[0]), sizeof(srcAddr[0]) * HALF_BUFFER_LENGTH, kEDMA_MemoryToMemory);
+    EDMA_SubmitTransfer(&g_EDMA_Handle, &transferConfig);
     EDMA_StartTransfer(&g_EDMA_Handle);
     /* Wait for EDMA transfer finish */
     while (g_Transfer_Done != true)

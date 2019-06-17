@@ -32,7 +32,6 @@
 #define DATA_BUFF_SIZE HS_CDC_VCOM_BULK_OUT_PACKET_SIZE
 #endif
 #define USB_DEVICE_INTERRUPT_PRIORITY (3U)
-
 /* Currently configured line coding */
 #define LINE_CODING_SIZE (0x07)
 #define LINE_CODING_DTERATE (115200)
@@ -63,7 +62,7 @@ typedef struct _usb_cdc_vcom_struct
         [USB_CDC_VCOM_INTERFACE_COUNT]; /* Current alternate setting value for each interface. */
 } usb_cdc_vcom_struct_t;
 
-/* Define the infomation relates to abstract control model */
+/* Define the information relates to abstract control model */
 typedef struct _usb_cdc_acm_info
 {
     uint8_t serialStateBuf[NOTIF_PACKET_SIZE + UART_BITMAP_SIZE]; /* Serial state buffer of the CDC device to notify the

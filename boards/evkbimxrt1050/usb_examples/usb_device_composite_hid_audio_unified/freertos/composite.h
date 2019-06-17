@@ -31,7 +31,9 @@
 #endif
 
 #if defined(__GIC_PRIO_BITS)
-#define USB_DEVICE_INTERRUPT_PRIORITY (26U) // USB priority should be lower than SAI
+#define USB_DEVICE_INTERRUPT_PRIORITY (25U)
+#elif defined(__NVIC_PRIO_BITS) && (__NVIC_PRIO_BITS >= 3)
+#define USB_DEVICE_INTERRUPT_PRIORITY (6U)
 #else
 #define USB_DEVICE_INTERRUPT_PRIORITY (3U)
 #endif

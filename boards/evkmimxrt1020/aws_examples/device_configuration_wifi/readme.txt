@@ -3,6 +3,35 @@ Overview
 This example demonstrates how the aws iot device can be configured by mobile application.
 
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
+Hardware requirements
+=====================
+- Mini/micro USB cable
+- EVK-MIMXRT1020 board
+- GT202 Adaptor V1.04
+- Personal Computer
+
+Board settings
+==============
+Plug GT202 Adaptor board to Arduino stackable headers.
+Remove the resistor R137.
+
+Please use external power supply (J2), USB may not be sufficient.
+
+
+Note:
+To debug in qspiflash, following steps are needed:
+1. Select the flash target and compile.
+3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
+4. Start debugging in IDE.
+   - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
 Prepare the Demo
 ================
 Please update WiFi firmware to version 3.3.6 using "qca_fwupdate" demo.
@@ -80,7 +109,7 @@ The Android application requires Cognito service to authorize to AWS IoT in orde
     Then move file into your Android device.
 
 8.  To run Android application do either:
-    a) install and run pre-build apk on Android device (<SDK_Repository>\boards\<board_name>\aws_examples\remote_control\android\AwsRemoteControl.apk)
+    a) install and run pre-build apk on Android device (<SDK_Repository>\boards\<board_name>\aws_examples\device_configuration_android\AwsDeviceConfiguration.apk)
     b) open project in Android Studio, build it, attach Android device and Run application
 
     Application requires at least Android version 6.0 (Android SDK 23).
@@ -165,32 +194,6 @@ After successful configuration board will connect to AWS IoT and AWS Shadow exam
 .
 .
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Hardware requirements
+Customization options
 =====================
-- Mini/micro USB cable
-- EVK-MIMXRT1020 board
-- GT202 Adaptor V1.04
-- Personal Computer
-
-Board settings
-==============
-Plug GT202 Adaptor board to FRDM stackable headers (J1, J2, J3, J4).
-Remove the resistor R137.
-
-Please use external power supply (J2), USB may not be sufficient.
-
-
-Note:
-To debug in qspiflash, following steps are needed:
-1. Select the flash target and compile.
-3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
-4. Start debugging in IDE.
-   - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
 

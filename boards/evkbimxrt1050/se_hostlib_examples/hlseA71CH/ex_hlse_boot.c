@@ -138,7 +138,7 @@ U8 exHlseBoot(U8 bootMode)
     U16 packetSize;
 
     U16 connectStatus;
-    U8 Atr[64];
+    U8 Atr[64] = {0};
     U16 AtrLen = sizeof(Atr);
 
     SmCommState_t commState;
@@ -174,7 +174,7 @@ U8 exHlseBoot(U8 bootMode)
         }
         else
         {
-#ifndef RJCT_SOCKET
+#ifndef SMCOM_JRCP_V1
             int i=0;
             sm_printf(CONSOLE, "ATR=0x");
             for (i=0; i<AtrLen; i++) sm_printf(CONSOLE, "%02X.", Atr[i]);
@@ -305,12 +305,12 @@ U8 exHlseBoot(U8 bootMode)
     }
     else if (bootMode == BOOT_HOST_OS_RESUME)
     {
-        SmCommState_t retrCommState;
+        SmCommState_t retrCommState = { 0 };
         Scp03SessionState_t retrScp03State;
 
         readStateFromFile(szFilename, &retrCommState, &retrScp03State);
-        PRINTF("retrCommState.param1         : 0x%04X\r\n", retrCommState.param1);
-        PRINTF("retrCommState.hostLibVersion : 0x%04X\r\n", retrCommState.hostLibVersion);
+        PRINTF("retrCommState.param1         : 0x%02X\r\n", retrCommState.param1);
+        PRINTF("retrCommState.hostLibVersion : 0x%02X\r\n", retrCommState.hostLibVersion);
         PRINTF("retrCommState.appletVersion  : 0x%04X\r\n", retrCommState.appletVersion);
 
         DEV_ClearChannelState();
@@ -360,7 +360,7 @@ U8 axExHlseCreateAndSetInitialHostScpKeys(U8 *keyEnc, U8 *keyMac, U8 *keyDek)
 {
     U8 result = 1;
     U16 err = 0;
-    U8 random[3*SCP_KEY_SIZE];
+    U8 random[3*SCP_KEY_SIZE] = { 0 };
     U8 randomLen = (U8)sizeof(random);
     U8 *currentKeyDek = NULL;
     U8 keyVersion = 1;

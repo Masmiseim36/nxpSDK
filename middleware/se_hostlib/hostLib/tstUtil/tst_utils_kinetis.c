@@ -51,9 +51,10 @@
 #   include "lwip/opt.h"
 #   include "lwip/tcpip.h"
 #   include "lwip/dhcp.h"
+#   include "lwip/netifapi.h"
 #   include "lwip/prot/dhcp.h"
 #   include "netif/ethernet.h"
-#   include "ethernetif.h"
+#   include "enet_ethernetif.h"
 #endif
 
 #include "HLSEAPI.h"
@@ -146,13 +147,13 @@ void BOARD_InitNetwork(const unsigned char buffer[18])
     tcpip_init(NULL, NULL);
 
 
-    netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0, ethernetif0_init,
+    netifapi_netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0, ethernetif0_init,
               tcpip_input);
-    netif_set_default(&fsl_netif0);
-    netif_set_up(&fsl_netif0);
+    netifapi_netif_set_default(&fsl_netif0);
+    netifapi_netif_set_up(&fsl_netif0);
 
     PRINTF("Getting IP address from DHCP ...\n");
-    dhcp_start(&fsl_netif0);
+    netifapi_dhcp_start(&fsl_netif0);
 
     struct dhcp *dhcp;
     dhcp = (struct dhcp *)netif_get_client_data(&fsl_netif0, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP);

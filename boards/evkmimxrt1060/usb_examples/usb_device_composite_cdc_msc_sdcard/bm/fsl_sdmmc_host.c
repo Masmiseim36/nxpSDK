@@ -83,8 +83,8 @@ AT_NONCACHEABLE_SECTION_ALIGN(uint32_t g_usdhcAdma2Table[USDHC_ADMA_TABLE_WORDS]
 
 usdhc_handle_t g_usdhcHandle;
 volatile status_t g_usdhcTransferStatus = kStatus_Success;
-static volatile bool s_sdInsertedFlag = false;
-volatile status_t g_reTuningFlag = false;
+static volatile bool s_sdInsertedFlag   = false;
+volatile status_t g_reTuningFlag        = false;
 
 /*******************************************************************************
  * Code
@@ -186,9 +186,9 @@ static status_t SDMMCHOST_TransferFunction(SDMMCHOST_TYPE *base, SDMMCHOST_TRANS
     {
         memset(&dmaConfig, 0, sizeof(usdhc_adma_config_t));
         /* config adma */
-        dmaConfig.dmaMode = USDHC_DMA_MODE;
-        dmaConfig.burstLen = kUSDHC_EnBurstLenForINCR;
-        dmaConfig.admaTable = g_usdhcAdma2Table;
+        dmaConfig.dmaMode        = USDHC_DMA_MODE;
+        dmaConfig.burstLen       = kUSDHC_EnBurstLenForINCR;
+        dmaConfig.admaTable      = g_usdhcAdma2Table;
         dmaConfig.admaTableWords = USDHC_ADMA_TABLE_WORDS;
     }
 
@@ -209,7 +209,7 @@ static status_t SDMMCHOST_TransferFunction(SDMMCHOST_TYPE *base, SDMMCHOST_TRANS
             if (g_reTuningFlag)
             {
                 g_reTuningFlag = false;
-                error = kStatus_USDHC_TuningError;
+                error          = kStatus_USDHC_TuningError;
             }
         }
         else
@@ -245,7 +245,7 @@ void SDMMCHOST_ErrorRecovery(SDMMCHOST_TYPE *base)
 static status_t SDMMCHOST_CardDetectInit(SDMMCHOST_TYPE *base, const sdmmchost_detect_card_t *cd)
 {
     sdmmchost_detect_card_type_t cdType = kSDMMCHOST_DetectCardByGpioCD;
-    bool cardInserted = false;
+    bool cardInserted                   = false;
 
     if (cd != NULL)
     {
@@ -371,26 +371,26 @@ void SDMMCHOST_PowerOnCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr
 
 status_t SDMMCHOST_Init(SDMMCHOST_CONFIG *host, void *userData)
 {
-    usdhc_host_t *usdhcHost = (usdhc_host_t *)host;
+    usdhc_host_t *usdhcHost            = (usdhc_host_t *)host;
     usdhc_transfer_callback_t callback = {
         .TransferComplete = SDMMCHOST_TransferCompleteCallback,
-        .ReTuning = SDMMCHOST_ReTuningCallback,
-        .CardInserted = SDMMCHOST_DetectCardInsertByHost,
-        .CardRemoved = SDMMCHOST_DetectCardRemoveByHost,
-        .SdioInterrupt = SDMMCHOST_CardInterrupt,
-        .BlockGap = NULL,
+        .ReTuning         = SDMMCHOST_ReTuningCallback,
+        .CardInserted     = SDMMCHOST_DetectCardInsertByHost,
+        .CardRemoved      = SDMMCHOST_DetectCardRemoveByHost,
+        .SdioInterrupt    = SDMMCHOST_CardInterrupt,
+        .BlockGap         = NULL,
     };
     /* init card power control */
     SDMMCHOST_INIT_SD_POWER();
     SDMMCHOST_INIT_MMC_POWER();
 
     /* Initializes USDHC. */
-    usdhcHost->config.dataTimeout = USDHC_DATA_TIMEOUT;
-    usdhcHost->config.endianMode = USDHC_ENDIAN_MODE;
-    usdhcHost->config.readWatermarkLevel = USDHC_READ_WATERMARK_LEVEL;
+    usdhcHost->config.dataTimeout         = USDHC_DATA_TIMEOUT;
+    usdhcHost->config.endianMode          = USDHC_ENDIAN_MODE;
+    usdhcHost->config.readWatermarkLevel  = USDHC_READ_WATERMARK_LEVEL;
     usdhcHost->config.writeWatermarkLevel = USDHC_WRITE_WATERMARK_LEVEL;
-    usdhcHost->config.readBurstLen = USDHC_READ_BURST_LEN;
-    usdhcHost->config.writeBurstLen = USDHC_WRITE_BURST_LEN;
+    usdhcHost->config.readBurstLen        = USDHC_READ_BURST_LEN;
+    usdhcHost->config.writeBurstLen       = USDHC_WRITE_BURST_LEN;
 
     USDHC_Init(usdhcHost->base, &(usdhcHost->config));
 

@@ -5,6 +5,14 @@ In this example, fast testing is first implemented to test the rtwdog.
 After this, refreshing the watchdog in None-window mode and window mode is executed.
 Note rtwdog is disabled in SystemInit function which means rtwdog is disabled
 after chip emerges from reset.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -17,7 +25,7 @@ No special settings are required.
 
 Prepare the Demo
 ================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
+1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
 2.  Open a serial terminal with the following settings:
     - 115200 baud rate
     - 8 data bits
@@ -37,8 +45,8 @@ To download binary into hyper flash and boot from hyperflash directly, following
 4. Drop the binaray into disk "EVK-MIMXRT"
 5. Wait for the disk disappear and appear again which will take around ~10s, then power off the board
 6. Set the SW7: 1 off 2 on 3 on 4 off, then power on the board
-7. After power on the baord, program has already started to run, reset SW4 is recommended. 
- 
+7. After power on the baord, program has already started to run, reset SW4 is recommended.
+
 Note:
 To debug in hyper flash in MDK, following steps are needed:
 1. Select the target flexspi_nor_debug or flexspi_nor_release.
@@ -51,33 +59,31 @@ To debug in hyper flash in MDK, following steps are needed:
 When the example runs successfully, the following message is displayed in the terminal:
 
 ~~~~~~~~~~~~~~~~~~~~~
-High Byte test success
-
+----- Fast test starts -----
+----- Low Byte test starts -----
+Waiting for timeout reset
+Low Byte test succeeded
+----- High Byte test starts -----
+Waiting for timeout reset
+High Byte test succeeded
+----- The end of RTWDOG fast test -----
 ----- Refresh test start -----
 ----- None-window mode -----
-Refresh rtwdog 0 time
 Refresh rtwdog 1 time
 Refresh rtwdog 2 time
 Refresh rtwdog 3 time
 Refresh rtwdog 4 time
 Refresh rtwdog 5 time
 Refresh rtwdog 6 time
-Refresh rtwdog 7 time
-Refresh rtwdog 8 time
-Refresh rtwdog 9 time
+Waiting for time out reset
+None-window mode reset succeeded
 ----- Window mode -----
-Refresh rtwdog 0 time
 Refresh rtwdog 1 time
 Refresh rtwdog 2 time
------ Refresh test success  -----
-
------ End of RTWDOG example  -----
+Refresh rtwdog 3 time
+Waiting for time out reset
+Window mode reset succeeded
 ~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+Customization options
+=====================
 

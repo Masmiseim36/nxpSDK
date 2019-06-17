@@ -199,7 +199,7 @@ int app_boot_Connect(
         PRINTF("HostLib Version  : 0x%04X\r\n", pCommState->hostLibVersion);
 
         PRINTF("Applet Version   : 0x%04X\r\n", pCommState->appletVersion);
-        PRINTF("SecureBox Version: 0x%04X\r\n", pCommState->sbVersion);
+        PRINTF("SecureBox Version: 0x%02X\r\n", pCommState->sbVersion);
 
         PRINTF("\r\n");
         PRINTF("==========SELECT-DONE=========\r\n");
@@ -275,7 +275,7 @@ static U16 establishConnnection(
 {
     U16 connectStatus = 0;
 
-    U8 Atr[64];
+    U8 Atr[64] = {0};
     U16 AtrLen = sizeof(Atr);
 
 #if defined(TDA8029_UART) || defined(I2C) || defined(PCSC) || defined(SPI) || defined(IPC)

@@ -76,9 +76,8 @@
  *
  **/
 
-
-#include <stdint.h>
 #include <stddef.h>
+#include <stdint.h>
 
 #define NX_LEVEL_DEBUG 0
 #define NX_LEVEL_INFO 1
@@ -90,12 +89,8 @@
 #define NX_LOG_W
 #define NX_LOG_E
 
-void nLog(const char * comp, int level,
-    const char * format, ... );
+void nLog(const char *comp, int level, const char *format, ...);
 
-void nLog_au8(const char * comp, int level,
-    const char * message,
-    unsigned char * array,
-    size_t array_len);
+void nLog_au8(const char *comp, int level, const char *message, const unsigned char *array, size_t array_len);
 
 #endif

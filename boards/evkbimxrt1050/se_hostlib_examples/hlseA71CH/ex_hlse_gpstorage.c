@@ -99,7 +99,7 @@ static U8 exMonotonicCounter(U8 initMode)
 
     U32 tgtValue[] = {0x00000004, 0x00000014, 0x00000024, 0x00000034};
     U32 readValue = 0;
-    HLSE_OBJECT_HANDLE counterHandles[A71CH_COUNTER_MAX];
+    HLSE_OBJECT_HANDLE counterHandles[A71CH_COUNTER_MAX] = {0};
     U16 counterHandlesNum = A71CH_COUNTER_MAX;
 
     PRINTF("\r\n-----------\r\nStart exMonotonicCounter(%s)\r\n------------\r\n",

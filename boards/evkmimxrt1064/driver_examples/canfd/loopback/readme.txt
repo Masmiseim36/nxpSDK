@@ -9,10 +9,10 @@ throuth internal loopback interconnect and print out the Message payload to term
 
 Toolchain supported
 ===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.1
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
 
 Hardware requirements
 =====================
@@ -39,6 +39,8 @@ Prepare the Demo
 
 Running the demo
 ================
+Consider special errata 005829 feature, the 1st valid MB should be used as reserved one.
+The TX MB number will change from 8 to 9, while RX MB number will change from 9 to 10
 When the example runs successfully, following information can be seen on the OpenSDA terminal:
 
 ~~~~~~~~~~~~~~~~~~~~~
@@ -46,14 +48,14 @@ When the example runs successfully, following information can be seen on the Ope
 ==FlexCAN loopback functional example -- Start.==
 
 
-Send message from MB9 to MB8
+Send message from MB9 to MB10
 
 tx word0 = 0x0
 tx word1 = 0x1
 tx word2 = 0x2
 tx word3 = 0x3
 
-Received message from MB8
+Received message from MB10
 rx word0 = 0x0
 rx word1 = 0x1
 rx word2 = 0x2

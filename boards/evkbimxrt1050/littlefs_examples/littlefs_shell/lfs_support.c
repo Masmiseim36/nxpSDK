@@ -27,13 +27,13 @@ static status_t flexspi_nor_hyperbus_read(FLEXSPI_Type *base, uint32_t addr, uin
     status_t status;
 
     flashXfer.deviceAddress = addr * 2;
-    flashXfer.port = kFLEXSPI_PortA1;
-    flashXfer.cmdType = kFLEXSPI_Read;
-    flashXfer.SeqNumber = 1;
-    flashXfer.seqIndex = HYPERFLASH_CMD_LUT_SEQ_IDX_READDATA;
-    flashXfer.data = buffer;
-    flashXfer.dataSize = bytes;
-    status = FLEXSPI_TransferBlocking(base, &flashXfer);
+    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.cmdType       = kFLEXSPI_Read;
+    flashXfer.SeqNumber     = 1;
+    flashXfer.seqIndex      = HYPERFLASH_CMD_LUT_SEQ_IDX_READDATA;
+    flashXfer.data          = buffer;
+    flashXfer.dataSize      = bytes;
+    status                  = FLEXSPI_TransferBlocking(base, &flashXfer);
 
     if (status != kStatus_Success)
     {
@@ -49,13 +49,13 @@ static status_t flexspi_nor_hyperbus_write(FLEXSPI_Type *base, uint32_t addr, ui
     status_t status;
 
     flashXfer.deviceAddress = addr * 2;
-    flashXfer.port = kFLEXSPI_PortA1;
-    flashXfer.cmdType = kFLEXSPI_Write;
-    flashXfer.SeqNumber = 1;
-    flashXfer.seqIndex = HYPERFLASH_CMD_LUT_SEQ_IDX_WRITEDATA;
-    flashXfer.data = buffer;
-    flashXfer.dataSize = bytes;
-    status = FLEXSPI_TransferBlocking(base, &flashXfer);
+    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.cmdType       = kFLEXSPI_Write;
+    flashXfer.SeqNumber     = 1;
+    flashXfer.seqIndex      = HYPERFLASH_CMD_LUT_SEQ_IDX_WRITEDATA;
+    flashXfer.data          = buffer;
+    flashXfer.dataSize      = bytes;
+    status                  = FLEXSPI_TransferBlocking(base, &flashXfer);
 
     if (status != kStatus_Success)
     {
@@ -72,10 +72,10 @@ static status_t flexspi_nor_write_enable(FLEXSPI_Type *base, uint32_t baseAddr)
 
     /* Write neable */
     flashXfer.deviceAddress = baseAddr;
-    flashXfer.port = kFLEXSPI_PortA1;
-    flashXfer.cmdType = kFLEXSPI_Command;
-    flashXfer.SeqNumber = 2;
-    flashXfer.seqIndex = HYPERFLASH_CMD_LUT_SEQ_IDX_WRITEENABLE;
+    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.cmdType       = kFLEXSPI_Command;
+    flashXfer.SeqNumber     = 2;
+    flashXfer.seqIndex      = HYPERFLASH_CMD_LUT_SEQ_IDX_WRITEENABLE;
 
     status = FLEXSPI_TransferBlocking(base, &flashXfer);
 
@@ -91,12 +91,12 @@ static status_t flexspi_nor_wait_bus_busy(FLEXSPI_Type *base)
     flexspi_transfer_t flashXfer;
 
     flashXfer.deviceAddress = 0;
-    flashXfer.port = kFLEXSPI_PortA1;
-    flashXfer.cmdType = kFLEXSPI_Read;
-    flashXfer.SeqNumber = 2;
-    flashXfer.seqIndex = HYPERFLASH_CMD_LUT_SEQ_IDX_READSTATUS;
-    flashXfer.data = &readValue;
-    flashXfer.dataSize = 2;
+    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.cmdType       = kFLEXSPI_Read;
+    flashXfer.SeqNumber     = 2;
+    flashXfer.seqIndex      = HYPERFLASH_CMD_LUT_SEQ_IDX_READSTATUS;
+    flashXfer.data          = &readValue;
+    flashXfer.dataSize      = 2;
 
     do
     {
@@ -140,11 +140,11 @@ static status_t flexspi_nor_flash_erase_sector(FLEXSPI_Type *base, uint32_t addr
     }
 
     flashXfer.deviceAddress = address;
-    flashXfer.port = kFLEXSPI_PortA1;
-    flashXfer.cmdType = kFLEXSPI_Command;
-    flashXfer.SeqNumber = 4;
-    flashXfer.seqIndex = HYPERFLASH_CMD_LUT_SEQ_IDX_ERASESECTOR;
-    status = FLEXSPI_TransferBlocking(base, &flashXfer);
+    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.cmdType       = kFLEXSPI_Command;
+    flashXfer.SeqNumber     = 4;
+    flashXfer.seqIndex      = HYPERFLASH_CMD_LUT_SEQ_IDX_ERASESECTOR;
+    status                  = FLEXSPI_TransferBlocking(base, &flashXfer);
 
     if (status != kStatus_Success)
     {
@@ -171,13 +171,13 @@ static status_t flexspi_nor_flash_page_program(FLEXSPI_Type *base, uint32_t addr
 
     /* Prepare page program command */
     flashXfer.deviceAddress = address;
-    flashXfer.port = kFLEXSPI_PortA1;
-    flashXfer.cmdType = kFLEXSPI_Write;
-    flashXfer.SeqNumber = 2;
-    flashXfer.seqIndex = HYPERFLASH_CMD_LUT_SEQ_IDX_PAGEPROGRAM;
-    flashXfer.data = (uint32_t *)src;
-    flashXfer.dataSize = FLASH_PAGE_SIZE;
-    status = FLEXSPI_TransferBlocking(base, &flashXfer);
+    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.cmdType       = kFLEXSPI_Write;
+    flashXfer.SeqNumber     = 2;
+    flashXfer.seqIndex      = HYPERFLASH_CMD_LUT_SEQ_IDX_PAGEPROGRAM;
+    flashXfer.data          = (uint32_t *)src;
+    flashXfer.dataSize      = FLASH_PAGE_SIZE;
+    status                  = FLEXSPI_TransferBlocking(base, &flashXfer);
 
     if (status != kStatus_Success)
     {
@@ -198,7 +198,7 @@ static status_t flexspi_nor_hyperflash_cfi(FLEXSPI_Type *base)
     status_t status;
     uint32_t buffer[2];
     uint32_t data[1] = {0x9800};
-    status = flexspi_nor_hyperbus_write(base, 0x555, data, 2);
+    status           = flexspi_nor_hyperbus_write(base, 0x555, data, 2);
     if (status != kStatus_Success)
     {
         return status;
@@ -222,7 +222,7 @@ static status_t flexspi_nor_hyperflash_cfi(FLEXSPI_Type *base)
     }
     // ASO Exit
     data[0] = 0xF000;
-    status = flexspi_nor_hyperbus_write(base, 0x0, data, 2);
+    status  = flexspi_nor_hyperbus_write(base, 0x0, data, 2);
     if (status != kStatus_Success)
     {
         PRINTF("Can not exit the ASO\r\n");
@@ -306,17 +306,17 @@ static const struct lfs_config lfsc_default = {
     .context = NULL,
 
     // block device operations
-    .read = lfs_hyperflash_read,
-    .prog = lfs_hyperflash_prog,
+    .read  = lfs_hyperflash_read,
+    .prog  = lfs_hyperflash_prog,
     .erase = lfs_hyperflash_erase,
-    .sync = lfs_hyperflash_sync,
+    .sync  = lfs_hyperflash_sync,
 
     // block device configuration
-    .read_size = 16,
-    .prog_size = FLASH_PAGE_SIZE,
-    .block_size = FLASH_SECTOR_SIZE,
+    .read_size   = 16,
+    .prog_size   = FLASH_PAGE_SIZE,
+    .block_size  = FLASH_SECTOR_SIZE,
     .block_count = LFS_SECTORS,
-    .lookahead = 128,
+    .lookahead   = 128,
 };
 
 int lfs_get_default_config(struct lfs_config *lfsc)
@@ -340,7 +340,7 @@ int lfs_storage_init(const struct lfs_config *lfsc)
     config.ahbConfig.enableAHBPrefetch = true;
     /* enable diff clock and DQS */
     config.enableSckBDiffOpt = true;
-    config.rxSampleClock = kFLEXSPI_ReadSampleClkExternalInputFromDqsPad;
+    config.rxSampleClock     = kFLEXSPI_ReadSampleClkExternalInputFromDqsPad;
     config.enableCombination = true;
     FLEXSPI_Init(EXAMPLE_FLEXSPI, &config);
 

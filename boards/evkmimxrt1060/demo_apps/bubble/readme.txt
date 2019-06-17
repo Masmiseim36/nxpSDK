@@ -3,6 +3,14 @@ Overview
 The bubble level demo demonstrates basic usage of the on-board accelerometer to implement a bubble level. A bubble
 level utilizes two axes to visually show deviation from a level plane (0 degrees) on a given axis.
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -51,11 +59,6 @@ Note:
     Please check the sensor chip U32
 
   please check if the combo sensor (U32) is presented on the board.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+Customization options
+=====================
 

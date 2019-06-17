@@ -1675,11 +1675,11 @@
         </option>
         <option>
           <name>MacOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>MacFile</name>
-          <state/>
+          <state>$PROJ_DIR$/evkmimxrt1020_sdram_init.mac</state>
         </option>
         <option>
           <name>MemOverride</name>
@@ -6604,11 +6604,11 @@
         </option>
         <option>
           <name>MacOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>MacFile</name>
-          <state/>
+          <state>$PROJ_DIR$/evkmimxrt1020_sdram_init.mac</state>
         </option>
         <option>
           <name>MemOverride</name>

@@ -82,7 +82,7 @@ int main(void)
 static void uart_task(void *pvParameters)
 {
     int error;
-    size_t n;
+    size_t n = 0;
 
     lpuart_config.srcclk = DEMO_LPUART_CLK_FREQ;
     lpuart_config.base   = DEMO_LPUART;
@@ -122,7 +122,10 @@ static void uart_task(void *pvParameters)
         if (n > 0)
         {
             /* send back the received data */
-            LPUART_RTOS_Send(&handle, (uint8_t *)recv_buffer, n);
+            if (kStatus_Success != LPUART_RTOS_Send(&handle, (uint8_t *)recv_buffer, n))
+            {
+                vTaskSuspend(NULL);
+            }
         }
     } while (kStatus_Success == error);
 

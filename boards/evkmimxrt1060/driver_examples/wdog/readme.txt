@@ -2,10 +2,20 @@ Overview
 ========
 The WDOG Example project is to demonstrate usage of the KSDK wdog driver.
 In this example,implemented to test the wdog.
-And then after 10 times of refreshing the watchdog, a timeout reset is generated.
-We also try to refresh out of window to trigger reset after 10 times of refreshing.
-Please notice that because WDOG control registers are write-once only, so the 
-WDOG_Init function and the WDOG_Disable function can be called only once after reset.
+Please notice that because WDOG control registers are write-once only. And
+for the field WDT, once software performs a write "1" operation to this bit,
+it can not be reset/cleared until the next POR, this bit does not get reset/
+cleared due to any system reset. So the WDOG_Init function can be called 
+only once after power reset when WDT set, and the WDOG_Disable function can 
+be called only once after reset.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -53,11 +63,6 @@ WDOG has be refreshed!
 WDOG has be refreshed!
 
 ~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+Customization options
+=====================
 

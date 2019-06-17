@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -44,7 +44,7 @@ usb_status_t USB_HostRndisInitMsg(usb_host_class_handle classHandle,
     messageID = messageID%1024;
     message->requestID = messageID++;
     message->majorVersion = RNDIS_MAJOR_VERSION;
-    message->majorVersion = RNDIS_MINOR_VERSION;
+    message->minorVersion = RNDIS_MINOR_VERSION;
     message->maxTransferSize = RNDIS_MAX_TRANSFER_PACKET_SIZE;
 
     return USB_HostCdcSendEncapsulatedCommand(classHandle, messageBuffer, message->messageLength, callbackFn, callbackParam);
@@ -75,7 +75,9 @@ usb_status_t USB_HostRndisQueryMsg(usb_host_class_handle classHandle,
         {
           if(informationLength > (messageBufferLength - RNDIS_QUERY_MSG_SIZE))
           {
+#ifdef HOST_ECHO
             usb_echo("buffer is not enough\r\n");
+#endif
             message->messageLength = messageBufferLength;
             message->informationBufferLength = (messageBufferLength - RNDIS_QUERY_MSG_SIZE);
           }
@@ -126,7 +128,9 @@ usb_status_t USB_HostRndisSetMsg(usb_host_class_handle classHandle,
         {
           if(informationLength > (messageBufferLength - RNDIS_SET_MSG_SIZE))
           {
+#ifdef HOST_ECHO
             usb_echo("buffer is not enough\r\n");
+#endif
             message->informationBufferLength = messageBufferLength - RNDIS_SET_MSG_SIZE;
           }
           memcpy((uint8_t *)(&message->deviceVcHandle + 1), OIDInputBuffer, message->informationBufferLength);
@@ -178,7 +182,9 @@ usb_status_t USB_HostRndisSendDataMsg(usb_host_class_handle classHandle,
     message->reserved = 0U;
     if(dataLength > RNDIS_FRAME_MAX_FRAMELEN)
         {
+#ifdef HOST_ECHO
           usb_echo("buffer is not enough\r\n");
+#endif
           message->dataLength = RNDIS_FRAME_MAX_FRAMELEN;
         }
     memcpy(&message->dataBuffer[0], dataBuffer, message->dataLength);

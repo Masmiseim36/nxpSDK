@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  *
@@ -54,11 +54,17 @@ static inline void flexspi_clock_init(void)
 static inline void flexspi_clock_update(void)
 {
     /* Program finished, speed the clock to 166M. */
+    /* Wait for bus idle before change flash configuration. */
+    while (!FLEXSPI_GetBusIdleStatus(EXAMPLE_FLEXSPI))
+    {
+    }
     FLEXSPI_Enable(EXAMPLE_FLEXSPI, false);
     CLOCK_DisableClock(EXAMPLE_FLEXSPI_CLOCK);
     CLOCK_SetDiv(kCLOCK_FlexspiDiv, 0); /* flexspi clock 332M, DDR mode, internal clock 166M. */
     CLOCK_EnableClock(EXAMPLE_FLEXSPI_CLOCK);
     FLEXSPI_Enable(EXAMPLE_FLEXSPI, true);
+    /* Do software reset. */
+    FLEXSPI_SoftwareReset(EXAMPLE_FLEXSPI);
 }
 /*${prototype:end}*/
 

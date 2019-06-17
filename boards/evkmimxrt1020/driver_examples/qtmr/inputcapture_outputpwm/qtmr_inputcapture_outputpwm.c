@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -19,11 +19,11 @@
  ******************************************************************************/
 /* The QTMR instance/channel used for board */
 #define BOARD_QTMR_BASEADDR TMR2
-#define BOARD_QTMR_INPUT_CAPTURE_CHANNEL kQTMR_Channel_0        
+#define BOARD_QTMR_INPUT_CAPTURE_CHANNEL kQTMR_Channel_0
 #define BOARD_QTMR_PWM_CHANNEL kQTMR_Channel_1
 #define QTMR_CounterInputPin kQTMR_Counter0InputPin
 
-/* Interrupt number and interrupt handler for the QTMR instance used */   
+/* Interrupt number and interrupt handler for the QTMR instance used */
 #define QTMR_IRQ_ID TMR2_IRQn
 #define QTMR_IRQ_HANDLER TMR2_IRQHandler
 
@@ -60,8 +60,9 @@ void QTMR_IRQ_HANDLER(void)
 int main(void)
 {
     qtmr_config_t qtmrConfig;
-    uint32_t time1 = 0, time2 = 0, counterClock;
-    uint32_t timediff = 0;
+    uint32_t counterClock = 0;
+    uint32_t timeCapt     = 0;
+    uint32_t count        = 0;
 
     /* Board pin, clock, debug console init */
     BOARD_ConfigMPU();
@@ -73,14 +74,14 @@ int main(void)
     PRINTF("\r\n****Provide a signal input to the QTMR pin****\n");
 
     /*
-    * qtmrConfig.debugMode = kQTMR_RunNormalInDebug;
-    * qtmrConfig.enableExternalForce = false;
-    * qtmrConfig.enableMasterMode = false;
-    * qtmrConfig.faultFilterCount = 0;
-    * qtmrConfig.faultFilterPeriod = 0;
-    * qtmrConfig.primarySource = kQTMR_ClockDivide_2;
-    * qtmrConfig.secondarySource = kQTMR_Counter0InputPin;
-    */
+     * qtmrConfig.debugMode = kQTMR_RunNormalInDebug;
+     * qtmrConfig.enableExternalForce = false;
+     * qtmrConfig.enableMasterMode = false;
+     * qtmrConfig.faultFilterCount = 0;
+     * qtmrConfig.faultFilterPeriod = 0;
+     * qtmrConfig.primarySource = kQTMR_ClockDivide_2;
+     * qtmrConfig.secondarySource = kQTMR_Counter0InputPin;
+     */
     QTMR_GetDefaultConfig(&qtmrConfig);
 
     /* Init the first channel to use the IP Bus clock div by 8 */
@@ -102,25 +103,17 @@ int main(void)
 
     counterClock = QTMR_SOURCE_CLOCK / 8000;
 
-    /* Check whether occur interupt */
-    while (!(qtmrIsrFlag))
+    /* Check whether occur interupt and wait the capture frequency stable */
+    while (count < 5 || timeCapt == 0)
     {
-        time1 = BOARD_QTMR_BASEADDR->CHANNEL[BOARD_QTMR_INPUT_CAPTURE_CHANNEL].CAPT;
+        while (!(qtmrIsrFlag))
+        {
+        }
+        qtmrIsrFlag = false;
+        count++;
+        timeCapt = BOARD_QTMR_BASEADDR->CHANNEL[BOARD_QTMR_INPUT_CAPTURE_CHANNEL].CAPT;
     }
-    qtmrIsrFlag = false;
-    while (!(qtmrIsrFlag))
-    {
-        time2 = BOARD_QTMR_BASEADDR->CHANNEL[BOARD_QTMR_INPUT_CAPTURE_CHANNEL].CAPT;
-    }
-    if (time1 < time2)
-    {
-        timediff = time2 - time1;
-    }
-    else /* Consider counter overflow and wrap situation */
-    {
-        timediff = 65536 - time1 + time2;
-    }
-    PRINTF("\r\nCaptured Period time=%d us\n", (timediff * 1000) / counterClock);
+    PRINTF("\r\nCaptured Period time=%d us\n", (timeCapt * 1000) / counterClock);
 
     PRINTF("\r\n****Output PWM example.****\n");
     PRINTF("\r\n*********Make sure to connect an oscilloscope.*********\n");

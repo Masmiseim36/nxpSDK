@@ -1,10 +1,11 @@
-; 
-; NXP RNDIS Setup File
-; Copyright(C) 2016 NXP Semiconductors  
+;
+; Copyright 2016 - 2018 NXP
+; All rights reserved.
+;
+; SPDX-License-Identifier: BSD-3-Clause
+;
 ; Copyright(c) 2000 Microsoft Corporation
 ;
-
-; Windows Freescale 
 
 [Version]
 Signature = "$Windows NT$"

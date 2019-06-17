@@ -1,11 +1,11 @@
 /*
-* Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
-* All rights reserved.
-*
-* 
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
+ * All rights reserved.
+ *
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 /*******************************************************************************
  * Includes
@@ -14,10 +14,11 @@
 
 #if LWIP_IPV4 && LWIP_RAW && LWIP_SOCKET
 
-#include "ping/ping.h"
+#include "ping.h"
+#include "lwip/netifapi.h"
 #include "lwip/tcpip.h"
 #include "netif/ethernet.h"
-#include "ethernetif.h"
+#include "enet_ethernetif.h"
 
 #include "board.h"
 
@@ -66,24 +67,23 @@
 #define INIT_THREAD_PRIO DEFAULT_THREAD_PRIO
 
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
 void BOARD_InitModuleClock(void)
 {
-    const clock_enet_pll_config_t config =
-          {
-              .enableClkOutput = true, 
-              .enableClkOutput25M = false, 
-              .loopDivider = 1,
-          };
+    const clock_enet_pll_config_t config = {
+        .enableClkOutput    = true,
+        .enableClkOutput25M = false,
+        .loopDivider        = 1,
+    };
     CLOCK_InitEnetPll(&config);
 }
 
@@ -104,11 +104,17 @@ void delay(void)
 static void stack_init(void *arg)
 {
     static struct netif fsl_netif0;
+#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
+    static mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
+#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
     ethernetif_config_t fsl_enet_config0 = {
         .phyAddress = EXAMPLE_PHY_ADDRESS,
-        .clockName = EXAMPLE_CLOCK_NAME,
+        .clockName  = EXAMPLE_CLOCK_NAME,
         .macAddress = configMAC_ADDR,
+#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
+        .non_dma_memory = non_dma_memory,
+#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     };
 
     LWIP_UNUSED_ARG(arg);
@@ -119,10 +125,10 @@ static void stack_init(void *arg)
 
     tcpip_init(NULL, NULL);
 
-    netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw,
-              &fsl_enet_config0, ethernetif0_init, tcpip_input);
-    netif_set_default(&fsl_netif0);
-    netif_set_up(&fsl_netif0);
+    netifapi_netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0,
+                       ethernetif0_init, tcpip_input);
+    netifapi_netif_set_default(&fsl_netif0);
+    netifapi_netif_set_up(&fsl_netif0);
 
     PRINTF("\r\n************************************************\r\n");
     PRINTF(" PING example\r\n");
@@ -164,7 +170,7 @@ int main(void)
     GPIO_WritePinOutput(GPIO1, 9, 1);
 
     /* Initialize lwIP from thread */
-    if(sys_thread_new("main", stack_init, NULL, INIT_THREAD_STACKSIZE, INIT_THREAD_PRIO) == NULL)
+    if (sys_thread_new("main", stack_init, NULL, INIT_THREAD_STACKSIZE, INIT_THREAD_PRIO) == NULL)
         LWIP_ASSERT("main(): Task creation failed.", 0);
 
     vTaskStartScheduler();

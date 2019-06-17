@@ -181,12 +181,10 @@ void USB_ControllerSuspended(void)
 {
 }
 
-
 void USB_OTG1_IRQHandler(void)
 {
     USB_HostEhciIsrFunction(g_HostHandle);
 }
-
 
 void USB_OTG2_IRQHandler(void)
 {
@@ -195,11 +193,11 @@ void USB_OTG2_IRQHandler(void)
 
 void USB_HostClockInit(void)
 {
-
     usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL, BOARD_USB_PHY_TXCAL45DP, BOARD_USB_PHY_TXCAL45DM,
+        BOARD_USB_PHY_D_CAL,
+        BOARD_USB_PHY_TXCAL45DP,
+        BOARD_USB_PHY_TXCAL45DM,
     };
-
 
     if (CONTROLLER_ID == kUSB_ControllerEhci0)
     {
@@ -214,13 +212,12 @@ void USB_HostClockInit(void)
     USB_EhciLowPowerPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ, &phyConfig);
 }
 
-
 void USB_HostIsrEnable(void)
 {
     uint8_t irqNumber;
 
     uint8_t usbHOSTEhciIrq[] = USBHS_IRQS;
-    irqNumber = usbHOSTEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
+    irqNumber                = usbHOSTEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
 /* USB_HOST_CONFIG_EHCI */
 
 /* Install isr, set priority, and enable IRQ. */
@@ -633,7 +630,9 @@ int main(void)
 
     /* Define the initialization structure for the input switch pin. */
     gpio_pin_config_t sw_config = {
-        kGPIO_DigitalInput, 0, kGPIO_IntRisingEdge,
+        kGPIO_DigitalInput,
+        0,
+        kGPIO_IntRisingEdge,
     };
     /* Initialize input switch GPIO. */
     GPIO_PinInit(BOARD_USER_BUTTON_GPIO, BOARD_USER_BUTTON_GPIO_PIN, &sw_config);

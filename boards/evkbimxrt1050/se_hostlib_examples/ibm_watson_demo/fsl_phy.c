@@ -42,9 +42,9 @@ extern clock_ip_name_t s_enetClock[FSL_FEATURE_SOC_ENET_COUNT];
 status_t PHY_Init(ENET_Type *base, uint32_t phyAddr, uint32_t srcClock_Hz)
 {
     uint32_t bssReg;
-    uint32_t counter = PHY_TIMEOUT_COUNT;
-    uint32_t idReg = 0;
-    status_t result = kStatus_Success;
+    uint32_t counter  = PHY_TIMEOUT_COUNT;
+    uint32_t idReg    = 0;
+    status_t result   = kStatus_Success;
     uint32_t instance = ENET_GetInstance(base);
     uint32_t timeDelay;
     uint32_t ctlReg = 0;
@@ -69,12 +69,12 @@ status_t PHY_Init(ENET_Type *base, uint32_t phyAddr, uint32_t srcClock_Hz)
 
     /* Reset PHY. */
     counter = PHY_TIMEOUT_COUNT;
-    result = PHY_Write(base, phyAddr, PHY_BASICCONTROL_REG, PHY_BCTL_RESET_MASK);
+    result  = PHY_Write(base, phyAddr, PHY_BASICCONTROL_REG, PHY_BCTL_RESET_MASK);
     if (result == kStatus_Success)
     {
 #if defined(FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE)
         uint32_t data = 0;
-        result = PHY_Read(base, phyAddr, PHY_CONTROL2_REG, &data);
+        result        = PHY_Read(base, phyAddr, PHY_CONTROL2_REG, &data);
         if (result != kStatus_Success)
         {
             return result;

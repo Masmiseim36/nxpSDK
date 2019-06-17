@@ -111,8 +111,8 @@ static status_t OCRAM_Reallocate(void)
 {
     flexram_allocate_ram_t ramAllocate = {
         .ocramBankNum = APP_OCRAM_ALLOCATE_BANK_NUM,
-        .dtcmBankNum = APP_ITCM_ALLOCATE_BANK_NUM,
-        .itcmBankNum = APP_DTCM_ALLOCATE_BANK_NUM,
+        .dtcmBankNum  = APP_DTCM_ALLOCATE_BANK_NUM,
+        .itcmBankNum  = APP_ITCM_ALLOCATE_BANK_NUM,
     };
 
     PRINTF("\r\nAllocate on-chip ram:\r\n");

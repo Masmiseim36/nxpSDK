@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2017, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -1537,7 +1537,7 @@ usb_status_t USB_HostKhciCreate(uint8_t controllerId,
     if (NULL == (usbHostPointer->khciSwapBufPointer =
                      (uint8_t *)USB_OsaMemoryAllocate(USB_HOST_CONFIG_KHCI_DMA_ALIGN_BUFFER + 4)))
     {
-#ifdef HOST_DEBUG_
+#ifdef HOST_ECHO
         usb_echo("usbHostPointer->khciSwapBufPointer- memory allocation failed");
 #endif
         USB_HostKhciDestory(usbHostPointer);

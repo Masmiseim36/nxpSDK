@@ -28,8 +28,6 @@
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-
-
 #include "usb_phy.h"
 #include <stdbool.h>
 #include "fsl_pit.h"
@@ -198,7 +196,6 @@ void USB_ControllerSuspended(void)
 {
 }
 
-
 void USB_OTG1_IRQHandler(void)
 {
     USB_DeviceEhciIsrFunction(g_UsbDeviceHidMouse.deviceHandle);
@@ -212,7 +209,9 @@ void USB_OTG2_IRQHandler(void)
 void USB_DeviceClockInit(void)
 {
     usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL, BOARD_USB_PHY_TXCAL45DP, BOARD_USB_PHY_TXCAL45DM,
+        BOARD_USB_PHY_D_CAL,
+        BOARD_USB_PHY_TXCAL45DP,
+        BOARD_USB_PHY_TXCAL45DM,
     };
 
     if (CONTROLLER_ID == kUSB_ControllerEhci0)
@@ -233,9 +232,9 @@ void USB_DeviceIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbDeviceEhciIrq[] = USBHS_IRQS;
-    irqNumber = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
+    irqNumber                  = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
 
-/* Install isr, set priority, and enable IRQ. */
+    /* Install isr, set priority, and enable IRQ. */
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
     EnableIRQ((IRQn_Type)irqNumber);
 }
@@ -435,15 +434,24 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             }
             break;
         case kUSB_DeviceEventSetConfiguration:
-            if (param)
+            if (0U ==(*temp8))
+            {
+                g_UsbDeviceHidMouse.attach = 0;
+                g_UsbDeviceHidMouse.currentConfiguration = 0U;
+                g_UsbDeviceHidMouse.remoteWakeup = 0U;
+                g_UsbDeviceHidMouse.suspend = kStatus_MouseIdle;
+                g_UsbDeviceHidMouse.isResume = 0U;
+            }
+            else if (USB_HID_MOUSE_CONFIGURE_INDEX == (*temp8))
             {
                 /* Set device configuration request */
                 g_UsbDeviceHidMouse.attach = 1U;
                 g_UsbDeviceHidMouse.currentConfiguration = *temp8;
-                if (USB_HID_MOUSE_CONFIGURE_INDEX == (*temp8))
-                {
-                    error = USB_DeviceHidMouseAction();
-                }
+                error = USB_DeviceHidMouseAction();
+            }
+            else
+            {
+                error = kStatus_USB_InvalidRequest;
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -669,10 +677,10 @@ void USB_DeviceSuspendResumeTask(void)
                 g_UsbDeviceHidMouse.selfWakeup = 0U;
                 if (g_UsbDeviceHidMouse.remoteWakeup)
                 {
+                    usb_echo("Remote wakeup the host.\r\n");
                     if (kStatus_USB_Success ==
                         USB_DeviceSetStatus(g_UsbDeviceHidMouse.deviceHandle, kUSB_DeviceStatusBusResume, NULL))
                     {
-                        usb_echo("Remote wakeup the host.\r\n");
                         g_UsbDeviceHidMouse.suspend = kStatus_MouseResuming;
                     }
                     else
@@ -752,7 +760,7 @@ void APP_task(void *handle)
     }
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)
@@ -771,7 +779,9 @@ void main(void)
 
     /* Define the initialization structure for the input switch pin. */
     gpio_pin_config_t sw_config = {
-        kGPIO_DigitalInput, 0, kGPIO_IntRisingEdge,
+        kGPIO_DigitalInput,
+        0,
+        kGPIO_IntRisingEdge,
     };
     /* Initialize input switch GPIO. */
     GPIO_PinInit(BOARD_USER_BUTTON_GPIO, BOARD_USER_BUTTON_GPIO_PIN, &sw_config);
@@ -791,7 +801,7 @@ void main(void)
                     ) != pdPASS)
     {
         usb_echo("app task create failed!\r\n");
-#if (defined(__CC_ARM) || defined(__GNUC__))
+#if (defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__))
         return 1U;
 #else
         return;
@@ -800,7 +810,7 @@ void main(void)
 
     vTaskStartScheduler();
 
-#if (defined(__CC_ARM) || defined(__GNUC__))
+#if (defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__))
     return 1U;
 #endif
 }

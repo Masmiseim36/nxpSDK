@@ -1,0 +1,68 @@
+#! armcc -E
+/*
+** ###################################################################
+**     Processors:          MIMXRT1064CVJ5A
+**                          MIMXRT1064CVL5A
+**                          MIMXRT1064DVJ6A
+**                          MIMXRT1064DVL6A
+**
+**     Compiler:            Keil ARM C/C++ Compiler
+**
+**     Abstract:
+**         Linker file for the Keil ARM C/C++ Compiler
+**
+**     Copyright (c) 2015 Freescale Semiconductor, Inc.
+**     Copyright 2016-2018 NXP
+**     All rights reserved.
+**
+**     SPDX-License-Identifier: BSD-3-Clause
+**
+**     http:                 www.nxp.com
+**     mail:                 support@nxp.com
+**
+** ###################################################################
+*/
+
+#define m_interrupts_start             0x20002000
+#define m_interrupts_size              0x00000400
+
+#define m_text_start                   0x20002400
+#define m_text_size                    0x0001DBFF
+
+#define m_data_start                   0x20208000
+#define m_data_size                    0x00017FFF
+
+/* Sizes */
+#if (defined(__stack_size__))
+  #define Stack_Size                   __stack_size__
+#else
+  #define Stack_Size                   0x2000
+#endif
+
+#if (defined(__heap_size__))
+  #define Heap_Size                    __heap_size__
+#else
+  #define Heap_Size                    0x0
+#endif
+
+LR_m_text m_text_start m_text_size {   ; load region size_region
+  ER_m_text m_text_start m_text_size - Stack_Size-Heap_Size{ ; load address = execution address
+    * (InRoot$$Sections)
+    .ANY (+RO)
+  }
+  RW_m_data m_data_start m_data_size-Stack_Size-Heap_Size { ; RW data
+    .ANY (+RW +ZI)
+  }
+  ARM_LIB_HEAP +0 EMPTY Heap_Size {    ; Heap region growing up
+  }
+  ARM_LIB_STACK ImageLimit(ARM_LIB_HEAP)+Stack_Size EMPTY -Stack_Size { ; Stack region growing down
+  }
+}
+
+LR_m_interrupts m_interrupts_start m_interrupts_size {
+  VECTOR_ROM m_interrupts_start m_interrupts_size { ; load address = execution address
+    * (RESET,+FIRST)
+  }
+}
+
+

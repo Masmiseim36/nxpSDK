@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2018 NXP
+ * Copyright 2016 - 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,10 +22,10 @@
 /* Define endpoint for MSC class */
 usb_device_endpoint_struct_t g_mscDiskEndpoints[USB_MSC_DISK_ENDPOINT_COUNT] = {
     {
-        USB_MSC_DISK_BULK_IN_ENDPOINT | (USB_IN << 7U), USB_ENDPOINT_BULK, FS_MSC_DISK_BULK_IN_PACKET_SIZE,
+        USB_MSC_DISK_BULK_IN_ENDPOINT | (USB_IN << 7U), USB_ENDPOINT_BULK, FS_MSC_DISK_BULK_IN_PACKET_SIZE,0U,
     },
     {
-        USB_MSC_DISK_BULK_OUT_ENDPOINT | (USB_OUT << 7U), USB_ENDPOINT_BULK, FS_MSC_DISK_BULK_OUT_PACKET_SIZE,
+        USB_MSC_DISK_BULK_OUT_ENDPOINT | (USB_OUT << 7U), USB_ENDPOINT_BULK, FS_MSC_DISK_BULK_OUT_PACKET_SIZE,0U,
     }};
 
 /* Define interface for MSC class */
@@ -58,17 +58,17 @@ usb_device_class_struct_t g_mscDiskClass = {
 usb_device_endpoint_struct_t g_cdcVcomCicEndpoints[USB_CDC_VCOM_CIC_ENDPOINT_COUNT] = {
     {
         USB_CDC_VCOM_CIC_INTERRUPT_IN_ENDPOINT | (USB_IN << 7U), USB_ENDPOINT_INTERRUPT,
-        HS_CDC_VCOM_BULK_IN_PACKET_SIZE,
+        FS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE,FS_CDC_VCOM_INTERRUPT_IN_INTERVAL,
     },
 };
 
 /* Define endpoint for data class */
 usb_device_endpoint_struct_t g_cdcVcomDicEndpoints[USB_CDC_VCOM_DIC_ENDPOINT_COUNT] = {
     {
-        USB_CDC_VCOM_DIC_BULK_IN_ENDPOINT | (USB_IN << 7U), USB_ENDPOINT_BULK, FS_CDC_VCOM_BULK_IN_PACKET_SIZE,
+        USB_CDC_VCOM_DIC_BULK_IN_ENDPOINT | (USB_IN << 7U), USB_ENDPOINT_BULK, FS_CDC_VCOM_BULK_IN_PACKET_SIZE,0U,
     },
     {
-        USB_CDC_VCOM_DIC_BULK_OUT_ENDPOINT | (USB_OUT << 7U), USB_ENDPOINT_BULK, FS_CDC_VCOM_BULK_OUT_PACKET_SIZE,
+        USB_CDC_VCOM_DIC_BULK_OUT_ENDPOINT | (USB_OUT << 7U), USB_ENDPOINT_BULK, FS_CDC_VCOM_BULK_OUT_PACKET_SIZE,0U,
     },
 };
 
@@ -594,10 +594,12 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
         if (USB_SPEED_HIGH == speed)
         {
             g_cdcVcomCicEndpoints[i].maxPacketSize = HS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE;
+            g_cdcVcomCicEndpoints[i].interval = HS_CDC_VCOM_INTERRUPT_IN_INTERVAL;
         }
         else
         {
             g_cdcVcomCicEndpoints[i].maxPacketSize = FS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE;
+            g_cdcVcomCicEndpoints[i].interval = FS_CDC_VCOM_INTERRUPT_IN_INTERVAL;
         }
     }
 

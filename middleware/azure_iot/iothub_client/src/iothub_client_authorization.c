@@ -6,7 +6,7 @@
 #include "azure_c_shared_utility/macro_utils.h"
 #include "azure_c_shared_utility/umock_c_prod.h"
 #include "azure_c_shared_utility/crt_abstractions.h"
-#include "azure_c_shared_utility/agenttime.h" 
+#include "azure_c_shared_utility/agenttime.h"
 #include "azure_c_shared_utility/xlogging.h"
 #include "azure_c_shared_utility/strings.h"
 #include "azure_c_shared_utility/sastoken.h"
@@ -178,7 +178,8 @@ IOTHUB_AUTHORIZATION_HANDLE IoTHubClient_Auth_CreateFromDeviceAuth(const char* d
             }
             else
             {
-                if (iothub_device_auth_get_type(result->device_auth_handle) == AUTH_TYPE_SAS)
+                DEVICE_AUTH_TYPE auth_type = iothub_device_auth_get_type(result->device_auth_handle);
+                if (auth_type == AUTH_TYPE_SAS || auth_type == AUTH_TYPE_SYMM_KEY)
                 {
                     result->cred_type = IOTHUB_CREDENTIAL_TYPE_DEVICE_AUTH;
                 }
@@ -294,6 +295,55 @@ int IoTHubClient_Auth_Set_xio_Certificate(IOTHUB_AUTHORIZATION_HANDLE handle, XI
     return result;
 }
 
+int IoTHubClient_Auth_Get_x509_info(IOTHUB_AUTHORIZATION_HANDLE handle, char** x509_cert, char** x509_key)
+{
+    int result;
+    if (handle == NULL || x509_cert == NULL || x509_key == NULL)
+    {
+        LogError("Invalid Parameter handle: %p, x509_cert: %p, x509_key: %p", handle, x509_cert, x509_key);
+        result = __FAILURE__;
+    }
+    else if (handle->cred_type != IOTHUB_CREDENTIAL_TYPE_X509_ECC)
+    {
+        LogError("Invalid credential types for this operation");
+        result = __FAILURE__;
+    }
+    else
+    {
+#ifdef USE_PROV_MODULE
+        CREDENTIAL_RESULT* cred_result = iothub_device_auth_generate_credentials(handle->device_auth_handle, NULL);
+        if (cred_result == NULL)
+        {
+            LogError("Failure generating credentials");
+            result = __FAILURE__;
+        }
+        else
+        {
+            if (mallocAndStrcpy_s(x509_cert, cred_result->auth_cred_result.x509_result.x509_cert) != 0)
+            {
+                LogError("Failure copying certificate");
+                result = __FAILURE__;
+            }
+            else if (mallocAndStrcpy_s(x509_key, cred_result->auth_cred_result.x509_result.x509_alias_key) != 0)
+            {
+                LogError("Failure copying private key");
+                result = __FAILURE__;
+                free(*x509_cert);
+            }
+            else
+            {
+                result = 0;
+            }
+            free(cred_result);
+        }
+#else
+        LogError("Failed HSM module is not supported");
+        result = __FAILURE__;
+#endif
+    }
+    return result;
+}
+
 IOTHUB_CREDENTIAL_TYPE IoTHubClient_Auth_Get_Credential_Type(IOTHUB_AUTHORIZATION_HANDLE handle)
 {
     IOTHUB_CREDENTIAL_TYPE result;
@@ -314,6 +364,7 @@ IOTHUB_CREDENTIAL_TYPE IoTHubClient_Auth_Get_Credential_Type(IOTHUB_AUTHORIZATIO
 char* IoTHubClient_Auth_Get_SasToken(IOTHUB_AUTHORIZATION_HANDLE handle, const char* scope, size_t expiry_time_relative_seconds, const char* key_name)
 {
     char* result;
+    (void)expiry_time_relative_seconds;
     /* Codes_SRS_IoTHub_Authorization_07_009: [ if handle or scope are NULL, IoTHubClient_Auth_Get_SasToken shall return NULL. ] */
     if (handle == NULL)
     {
@@ -333,10 +384,10 @@ char* IoTHubClient_Auth_Get_SasToken(IOTHUB_AUTHORIZATION_HANDLE handle, const c
                 LogError("failure getting seconds from epoch");
                 result = NULL;
             }
-            else 
+            else
             {
                 memset(&dev_auth_cred, 0, sizeof(DEVICE_AUTH_CREDENTIAL_INFO));
-                size_t expiry_time = sec_since_epoch+expiry_time_relative_seconds;
+                size_t expiry_time = sec_since_epoch + handle->token_expiry_time_sec;
                 dev_auth_cred.sas_info.expiry_seconds = expiry_time;
                 dev_auth_cred.sas_info.token_scope = scope;
                 dev_auth_cred.sas_info.key_name = key_name;
@@ -393,17 +444,17 @@ char* IoTHubClient_Auth_Get_SasToken(IOTHUB_AUTHORIZATION_HANDLE handle, const c
                 STRING_HANDLE sas_token;
                 size_t sec_since_epoch;
 
-                /* Codes_SRS_IoTHub_Authorization_07_010: [ IoTHubClient_Auth_Get_SasToken` shall construct the expiration time using the expiry_time_relative_seconds added to epoch time. ] */
+                /* Codes_SRS_IoTHub_Authorization_07_010: [ IoTHubClient_Auth_Get_SasToken` shall construct the expiration time using the handle->token_expiry_time_sec added to epoch time. ] */
                 if (get_seconds_since_epoch(&sec_since_epoch) != 0)
                 {
                     /* Codes_SRS_IoTHub_Authorization_07_020: [ If any error is encountered IoTHubClient_Auth_Get_ConnString shall return NULL. ] */
                     LogError("failure getting seconds from epoch");
                     result = NULL;
                 }
-                else 
+                else
                 {
                     /* Codes_SRS_IoTHub_Authorization_07_011: [ IoTHubClient_Auth_Get_ConnString shall call SASToken_CreateString to construct the sas token. ] */
-                    size_t expiry_time = sec_since_epoch+expiry_time_relative_seconds;
+                    size_t expiry_time = sec_since_epoch + handle->token_expiry_time_sec;
                     if ( (sas_token = SASToken_CreateString(handle->device_key, scope, key_name, expiry_time)) == NULL)
                     {
                         /* Codes_SRS_IoTHub_Authorization_07_020: [ If any error is encountered IoTHubClient_Auth_Get_ConnString shall return NULL. ] */
@@ -535,11 +586,115 @@ SAS_TOKEN_STATUS IoTHubClient_Auth_Is_SasToken_Valid(IOTHUB_AUTHORIZATION_HANDLE
     return result;
 }
 
-
 #ifdef USE_EDGE_MODULES
-char* IoTHubClient_Auth_Get_TrustBundle(IOTHUB_AUTHORIZATION_HANDLE handle)
+
+// For debugging C modules, the environment can set the environment variable 'EdgeModuleCACertificateFile' to provide
+// trusted certificates.  We'd otherwise usually get these from trusted Edge service, but this complicates debugging experience.
+// EdgeModuleCACertificateFile and the related EdgeHubConnectionString can be set either manually or by tooling (e.g. VS Code).
+static char* read_ca_certificate_from_file(const char* certificate_file_name)
 {
-    return iothub_device_auth_get_trust_bundle(handle->device_auth_handle);
+    char* result;
+    FILE *file_stream = NULL;
+
+    if ((file_stream = fopen(certificate_file_name, "r")) == NULL)
+    {
+        LogError("Cannot read file %s, errno=%d", certificate_file_name, errno);
+        result = NULL;
+    }
+    else if (fseek(file_stream, 0, SEEK_END) != 0)
+    {
+        LogError("fseek on file %s fails, errno=%d", certificate_file_name, errno);
+        result = NULL;
+    }
+    else 
+    {
+        long int file_size = ftell(file_stream);
+        if (file_size < 0)
+        {
+            LogError("ftell fails reading %s, errno=%d",  certificate_file_name, errno);
+            result = NULL;
+        }
+        else if (file_size == 0)
+        {
+            LogError("file %s is 0 bytes, which is not valid certificate",  certificate_file_name);
+            result = NULL;
+        }
+        else
+        {
+            rewind(file_stream);
+
+            if ((result = calloc(1, file_size + 1)) == NULL)
+            {
+                LogError("Cannot allocate %lu bytes", (unsigned long)file_size);
+            }
+            else if ((fread(result, 1, file_size, file_stream) == 0) || (ferror(file_stream) != 0))
+            {
+                LogError("fread failed on file %s, errno=%d", certificate_file_name, errno);
+                free(result);
+                result = NULL;
+            }
+        }
+    }
+
+    if (file_stream != NULL)
+    {
+        fclose(file_stream);
+    }
+
+    return result;
+}
+
+// IoTHubClient_Auth_Get_TrustBundle retrieves a trust bundle - namely a PEM indicating the certificates the client should
+// trust as root authorities - to caller.  If certificate_file_name, we read this from a local file.  This should in general
+// be limited only to debugging modules on Edge.  If certificate_file_name is NULL, we invoke into the underlying 
+// HSM to retrieve this.
+char* IoTHubClient_Auth_Get_TrustBundle(IOTHUB_AUTHORIZATION_HANDLE handle, const char* certificate_file_name)
+{
+    char* result;
+    if (handle == NULL)
+    {
+        LogError("Security Handle is NULL");
+        result = NULL;
+    }
+    else if (certificate_file_name != NULL)
+    {
+        result = read_ca_certificate_from_file(certificate_file_name);
+    }
+    else
+    {
+        result = iothub_device_auth_get_trust_bundle(handle->device_auth_handle);
+    }
+    return result;
 }
 #endif
 
+int IoTHubClient_Auth_Set_SasToken_Expiry(IOTHUB_AUTHORIZATION_HANDLE handle, size_t expiry_time_seconds)
+{
+    int result;
+    if (handle == NULL)
+    {
+        LogError("Invalid handle value handle: NULL");
+        result = __FAILURE__;
+    }
+    else
+    {
+        handle->token_expiry_time_sec = expiry_time_seconds;
+        result = 0;
+    }
+    return result;
+}
+
+size_t IoTHubClient_Auth_Get_SasToken_Expiry(IOTHUB_AUTHORIZATION_HANDLE handle)
+{
+    size_t result;
+    if (handle == NULL)
+    {
+        LogError("Invalid handle value handle: NULL");
+        result = 0;
+    }
+    else
+    {
+        result = handle->token_expiry_time_sec;
+    }
+    return result;
+}

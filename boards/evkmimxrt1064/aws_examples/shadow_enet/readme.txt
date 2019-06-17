@@ -5,10 +5,10 @@ The simple Shadow lightbulb example to illustrate how client application and thi
 
 Toolchain supported
 ===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.1
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
 
 Hardware requirements
 =====================
@@ -35,127 +35,113 @@ Before running the demo it is need to configure AWS IoT Console and update some 
         static const char clientcredentialMQTT_BROKER_ENDPOINT[] = "abcdefgh123456.iot.us-west-2.amazonaws.com";
         #define clientcredentialIOT_THING_NAME "MyExample"
 
-    In the next step you will get the "device certificate" and the "primary key". Each of the certificates needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h".
-    Or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\amazon-freertos\demos\common\devmode_key_provisioning\CertificateConfigurationTool) to generate the "aws_clientcredential_keys.h".
+    In the next step you will get the "device certificate" and the "primary key". The device certificate and private key needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h".
+    Or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\amazon-freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
 
     Example:
-        static const char clientcredentialCLIENT_CERTIFICATE_PEM[] = "Paste client certificate here.";
+        #define keyCLIENT_CERTIFICATE_PEM "Paste client certificate here."
 
         Needs to be changed to:
 
-        static const char clientcredentialCLIENT_CERTIFICATE_PEM[] =
-            "-----BEGIN CERTIFICATE-----\n"
-            "MIIDWTCCAkGgAwIBAgIUPwbiJBIJhO6eF498l1GZ8siO/K0wDQYJKoZIhvcNAQEL\n"
-            .
-            .
-            "KByzyTutxTeI9UKcIPFxK40s4qF50a40/6UFxrGueW+TzZ4iubWzP7eG+47r\n"
-            "-----END CERTIFICATE-----\n";
+        #define keyCLIENT_CERTIFICATE_PEM "-----BEGIN CERTIFICATE-----\n"\
+        "MIIDWTCCAkGgAwIBAgIUfmv3zA+JULlMOxmz+upkAzhEkQ0wDQYJKoZIhvcNAQEL\n"\
+        .
+        .
+        .
+        "mepuT3lKmD0jZupsQ9vLQOA09rMjVMd0YPmI9ozvvWqLpjVvNTKVhsf/3slM\n"\
+        "-----END CERTIFICATE-----\n"
 
     In the same way update the private key array.
 
-3.  Open example's project and build it.
+3.  This demo doesn't need WiFi network, you can leave the following macros from "aws_clientcredential.h" unmodified.
+        #define clientcredentialWIFI_SSID       "Paste WiFi SSID here."
+        #define clientcredentialWIFI_PASSWORD   "Paste WiFi password here."
 
-4.  Connect a USB cable between the PC host and the OpenSDA port on the target board.
+4.  Make sure you have Internet access.
 
-5.  Open a serial terminal on PC for serial device with these settings:
+5.  Open example's project and build it.
+
+6.  Connect a USB cable between the PC host and the OpenSDA port on the target board.
+
+7.  Download the program to the target board with the CMSIS-DAP or J-Link debugger.
+
+8.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
+
+9.  Open a serial terminal on PC for serial device with these settings:
     - 115200 baud rate
     - 8 data bits
     - No parity
     - One stop bit
     - No flow control
 
-6.  Connect the boards's RJ45 to network with Internet access (IP address to the board is assigned by the DHCP server). Make sure the connection on port 8883 is not blocked.
-
-7.  Download the program to the target board.
-
-8.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
 Running the demo
 ================
-The log below shows the output of the demo in the terminal window.
+The log below shows the output of the demo in the terminal window. The log can be different based on your local network configuration.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Initializing PHY...
 0 0 [Tmr Svc] Starting key provisioning...
 1 0 [Tmr Svc] Write root certificate...
-2 0 [Tmr Svc] Write device private key...
-3 0 [Tmr Svc] Key provisioning done...
-4 6249 [Tmr Svc] Getting IP address from DHCP ...
-5 7249 [Tmr Svc] IPv4 Address: 10.42.0.198
-6 7249 [Tmr Svc] DHCP OK
-7 7255 [MainDemoTask] [Shadow 0] MQTT: Creation of dedicated MQTT client succeeded.
-8 7262 [MainDemoTask] Sending command to MQTT task.
-9 7267 [MQTT] Received message 10000 from queue.
-10 15949 [MQTT] MQTT Connect was accepted. Connection established.
-11 15949 [MQTT] Notifying task.
-12 15957 [MainDemoTask] Command sent to MQTT task passed.
-13 15963 [MainDemoTask] [Shadow 0] MQTT: Connect succeeded.
-14 15968 [MainDemoTask] Sending command to MQTT task.
-15 15973 [MQTT] Received message 20000 from queue.
-16 16378 [MQTT] MQTT Subscribe was accepted. Subscribed.
-17 16378 [MQTT] Notifying task.
-18 16385 [MainDemoTask] Command sent to MQTT task passed.
-19 16391 [MainDemoTask] [Shadow 0] MQTT: Subscribe to callback topic succeeded.
-20 16398 [MainDemoTask] Sending command to MQTT task.
-21 16402 [MQTT] Received message 30000 from queue.
-22 16707 [MQTT] MQTT Subscribe was accepted. Subscribed.
-23 16707 [MQTT] Notifying task.
-24 16715 [MainDemoTask] Command sent to MQTT task passed.
-25 16720 [MainDemoTask] [Shadow 0] MQTT: Subscribe to callback topic succeeded.
-26 16727 [MainDemoTask] Sending command to MQTT task.
-27 16731 [MQTT] Received message 40000 from queue.
-28 17036 [MQTT] MQTT Subscribe was accepted. Subscribed.
-29 17036 [MQTT] Notifying task.
-30 17044 [MainDemoTask] Command sent to MQTT task passed.
-31 17049 [MainDemoTask] [Shadow 0] MQTT: Subscribe to callback topic succeeded.
-32 17056 [MainDemoTask] Sending command to MQTT task.
-33 17060 [MQTT] Received message 50000 from queue.
-34 17365 [MQTT] MQTT Subscribe was accepted. Subscribed.
-35 17365 [MQTT] Notifying task.
-36 17373 [MainDemoTask] Command sent to MQTT task passed.
-37 17378 [MainDemoTask] [Shadow 0] MQTT: Subscribe to accepted topic succeeded.
-38 17385 [MainDemoTask] Sending command to MQTT task.
-39 17389 [MQTT] Received message 60000 from queue.
-40 17795 [MQTT] MQTT Subscribe was accepted. Subscribed.
-41 17795 [MQTT] Notifying task.
-42 17803 [MainDemoTask] Command sent to MQTT task passed.
-43 17808 [MainDemoTask] [Shadow 0] MQTT: Subscribe to rejected topic succeeded.
-44 17815 [MainDemoTask] Sending command to MQTT task.
-45 17819 [MQTT] Received message 70000 from queue.
-46 17820 [MQTT] Notifying task.
-47 17827 [MainDemoTask] Command sent to MQTT task passed.
-48 17832 [MainDemoTask] [Shadow 0] MQTT: Publish to operation topic succeeded.
-49 18225 [Shd-IOT-0] Sending command to MQTT task.
-50 18226 [MQTT] Received message 80000 from queue.
-51 19540 [MQTT] MQTT Subscribe was accepted. Subscribed.
-52 19540 [MQTT] Notifying task.
-53 19541 [Shd-IOT-0] Command sent to MQTT task passed.
-54 19541 [Shd-IOT-0] [Shadow 0] MQTT: Subscribe to accepted topic succeeded.
-55 19541 [Shd-IOT-0] Sending command to MQTT task.
-56 19541 [MQTT] Received message 90000 from queue.
-57 20451 [MQTT] MQTT Subscribe was accepted. Subscribed.
-58 20451 [MQTT] Notifying task.
-59 20452 [Shd-IOT-0] Command sent to MQTT task passed.
-60 20452 [Shd-IOT-0] [Shadow 0] MQTT: Subscribe to rejected topic succeeded.
-61 20452 [Shd-IOT-0] Sending command to MQTT task.
-62 20452 [MQTT] Received message a0000 from queue.
-63 20452 [MQTT] Notifying task.
-64 20453 [Shd-IOT-0] Command sent to MQTT task passed.
-65 20453 [Shd-IOT-0] [Shadow 0] MQTT: Publish to operation topic succeeded.
-66 21463 [Shd-IOT-0] Shadow Demo initialized.
-67 21463 [Shd-IOT-0] Client request to change color of light bulb.
-68 21463 [Shd-IOT-0] Sending command to MQTT task.
-69 21464 [MQTT] Received message b0000 from queue.
-70 21464 [MQTT] Notifying task.
-71 21464 [Shd-IOT-0] Command sent to MQTT task passed.
-72 21464 [Shd-IOT-0] [Shadow 0] MQTT: Publish to operation topic succeeded.
-73 23285 [ShDemoUpdt] Performing thing update.
-74 23387 [Shd-IOT-0] Client change done in thing shadow.
-75 23392 [ShDemoUpdt] Sending command to MQTT task.
-76 23396 [MQTT] Received message c0000 from queue.
-77 23397 [MQTT] Notifying task.
-78 23404 [ShDemoUpdt] Command sent to MQTT task passed.
-79 23409 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
-80 25117 [ShDemoUpdt] Performing thing update complete.
+2 15 [Tmr Svc] Write device private key...
+3 477 [Tmr Svc] Write device certificate...
+4 495 [Tmr Svc] Key provisioning done...
+5 5615 [Tmr Svc] Getting IP address from DHCP ...
+6 11617 [Tmr Svc] IPv4 Address: 10.42.0.198
+7 11618 [Tmr Svc] DHCP OK
+8 11628 [MainDemoTask] [Shadow 0] MQTT: Creation of dedicated MQTT client succeeded.
+9 24223 [MainDemoTask] [Shadow 0] MQTT: Connect succeeded.
+10 24543 [MainDemoTask] [Shadow 0] MQTT: Subscribe to accepted topic succeeded.
+11 24865 [MainDemoTask] [Shadow 0] MQTT: Subscribe to rejected topic succeeded.
+12 24880 [MainDemoTask] [Shadow 0] MQTT: Publish to operation topic succeeded.
+13 25605 [MainDemoTask] [Shadow 0] MQTT: Unsubscribe from rejected topic succeeded.
+14 25928 [MainDemoTask] [Shadow 0] MQTT: Subscribe to callback topic succeeded.
+15 25937 [MainDemoTask] Shadow client initialized.
+16 25948 [ShDemoUpdt] Performing Thing Shadow update.
+17 26265 [ShDemoUpdt] [Shadow 0] MQTT: Subscribe to accepted topic succeeded.
+18 26579 [ShDemoUpdt] [Shadow 0] MQTT: Subscribe to rejected topic succeeded.
+19 26586 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
+20 27000 [ShDemoUpdt] Successfully performed update.
+21 27002 [Shd-IOT-0] Shd-IOT-0 changing desired state.
+22 27005 [ShDemoUpdt] Performing Thing Shadow update.
+23 27013 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
+24 27527 [ShDemoUpdt] Successfully performed update.
+25 27529 [Shd-IOT-0] Shd-IOT-0 done changing desired state.
+26 32002 [Shd-IOT-0] Shd-IOT-0 changing desired state.
+27 32005 [ShDemoUpdt] Performing Thing Shadow update.
+28 32014 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
+29 32325 [MQTT] Successfully added new reported state to update queue.
+30 32334 [ShDemoUpdt] Successfully performed update.
+31 32336 [Shd-IOT-0] Shd-IOT-0 done changing desired state.
+32 32337 [ShDemoUpdt] Performing Thing Shadow update.
+33 32345 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
+34 32859 [ShDemoUpdt] Successfully performed update.
+35 37002 [Shd-IOT-0] Shd-IOT-0 changing desired state.
+36 37005 [ShDemoUpdt] Performing Thing Shadow update.
+37 37014 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
+38 37331 [MQTT] Successfully added new reported state to update queue.
+39 37333 [ShDemoUpdt] Successfully performed update.
+41 37337 [Shd-IOT-0] Shd-IOT-0 done changing desired state.
+40 37335 [ShDemoUpdt] Performing Thing Shadow update.
+42 37344 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
+43 37858 [ShDemoUpdt] Successfully performed update.
+44 42002 [Shd-IOT-0] Shd-IOT-0 changing desired state.
+45 42005 [ShDemoUpdt] Performing Thing Shadow update.
+46 42014 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
+47 42329 [MQTT] Successfully added new reported state to update queue.
+48 42331 [ShDemoUpdt] Successfully performed update.
+50 42335 [Shd-IOT-0] Shd-IOT-0 done changing desired state.
+49 42333 [ShDemoUpdt] Performing Thing Shadow update.
+51 42342 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
+52 42856 [ShDemoUpdt] Successfully performed update.
+53 47002 [Shd-IOT-0] Shd-IOT-0 changing desired state.
+54 47005 [ShDemoUpdt] Performing Thing Shadow update.
+55 47014 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
+56 47327 [MQTT] Successfully added new reported state to update queue.
+57 47336 [ShDemoUpdt] Successfully performed update.
+58 47338 [Shd-IOT-0] Shd-IOT-0 done changing desired state.
+59 47339 [ShDemoUpdt] Performing Thing Shadow update.
+60 47347 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
+61 47861 [ShDemoUpdt] Successfully performed update.
 .
 .
 .

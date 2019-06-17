@@ -96,8 +96,8 @@
 /*! @brief Definition of CDC class event. */
 typedef enum _usb_device_cdc_acm_event
 {
-    kUSB_DeviceCdcEventSendResponse = 0x01,     /*!< This event indicates the bulk send transfer is complete. */
-    kUSB_DeviceCdcEventRecvResponse,            /*!< This event indicates the bulk receive transfer is complete. */
+    kUSB_DeviceCdcEventSendResponse = 0x01,     /*!< This event indicates the bulk send transfer is complete or cancelled etc. */
+    kUSB_DeviceCdcEventRecvResponse,            /*!< This event indicates the bulk receive transfer is complete or cancelled etc.. */
     kUSB_DeviceCdcEventSerialStateNotif,        /*!< This event indicates the serial state has been sent to the host. */
     kUSB_DeviceCdcEventSendEncapsulatedCommand, /*!< This event indicates the device received the
                                                    SEND_ENCAPSULATED_COMMAND request. */
@@ -233,6 +233,8 @@ extern usb_status_t USB_DeviceCdcAcmEvent(void *handle, uint32_t event, void *pa
  * @retval kStatus_USB_Busy The endpoint is busy in transferring.
  * @retval kStatus_USB_InvalidHandle The CDC ACM device handle or the CDC ACM class handle is invalid.
  * @retval kStatus_USB_ControllerNotFound The controller interface is invalid.
+ *
+ * @note The function can only be called in the same context. 
  */
 extern usb_status_t USB_DeviceCdcAcmSend(class_handle_t handle, uint8_t ep, uint8_t *buffer, uint32_t length);
 /*!
@@ -251,6 +253,8 @@ extern usb_status_t USB_DeviceCdcAcmSend(class_handle_t handle, uint8_t ep, uint
  * @retval kStatus_USB_Busy The endpoint is busy in transferring.
  * @retval kStatus_USB_InvalidHandle The CDC ACM device handle or the CDC ACM class handle is invalid.
  * @retval kStatus_USB_ControllerNotFound The controller interface is invalid.
+ *
+ * @note The function can only be called in the same context. 
  */
 extern usb_status_t USB_DeviceCdcAcmRecv(class_handle_t handle, uint8_t ep, uint8_t *buffer, uint32_t length);
 

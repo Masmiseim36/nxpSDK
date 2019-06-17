@@ -105,18 +105,18 @@ void LCDIF_IRQHandler(void)
 void APP_ELCDIF_Init(void)
 {
     const elcdif_rgb_mode_config_t config = {
-        .panelWidth = APP_IMG_WIDTH,
-        .panelHeight = APP_IMG_HEIGHT,
-        .hsw = APP_HSW,
-        .hfp = APP_HFP,
-        .hbp = APP_HBP,
-        .vsw = APP_VSW,
-        .vfp = APP_VFP,
-        .vbp = APP_VBP,
+        .panelWidth    = APP_IMG_WIDTH,
+        .panelHeight   = APP_IMG_HEIGHT,
+        .hsw           = APP_HSW,
+        .hfp           = APP_HFP,
+        .hbp           = APP_HBP,
+        .vsw           = APP_VSW,
+        .vfp           = APP_VFP,
+        .vbp           = APP_VBP,
         .polarityFlags = APP_POL_FLAGS,
-        .bufferAddr = VRAM_ADDR,
-        .pixelFormat = ELCDIF_PIXEL_FORMAT,
-        .dataBus = APP_LCDIF_DATA_BUS,
+        .bufferAddr    = VRAM_ADDR,
+        .pixelFormat   = ELCDIF_PIXEL_FORMAT,
+        .dataBus       = APP_LCDIF_DATA_BUS,
     };
     ELCDIF_RgbModeInit(APP_ELCDIF, &config);
 
@@ -142,15 +142,15 @@ static void BOARD_Touch_Init(void)
 {
     lpi2c_master_config_t masterConfig = {0};
     /*
-    * masterConfig.debugEnable = false;
-    * masterConfig.ignoreAck = false;
-    * masterConfig.pinConfig = kLPI2C_2PinOpenDrain;
-    * masterConfig.baudRate_Hz = 100000U;
-    * masterConfig.busIdleTimeout_ns = 0;
-    * masterConfig.pinLowTimeout_ns = 0;
-    * masterConfig.sdaGlitchFilterWidth_ns = 0;
-    * masterConfig.sclGlitchFilterWidth_ns = 0;
-    */
+     * masterConfig.debugEnable = false;
+     * masterConfig.ignoreAck = false;
+     * masterConfig.pinConfig = kLPI2C_2PinOpenDrain;
+     * masterConfig.baudRate_Hz = 100000U;
+     * masterConfig.busIdleTimeout_ns = 0;
+     * masterConfig.pinLowTimeout_ns = 0;
+     * masterConfig.sdaGlitchFilterWidth_ns = 0;
+     * masterConfig.sclGlitchFilterWidth_ns = 0;
+     */
     LPI2C_MasterGetDefaultConfig(&masterConfig);
 
     /* Change the default baudrate configuration */
@@ -181,10 +181,10 @@ int BOARD_Touch_Poll(void)
     }
     else if (touch_event != kTouch_Reserved)
     {
-        pid_state.x = touch_y;
-        pid_state.y = touch_x;
+        pid_state.x       = touch_y;
+        pid_state.y       = touch_x;
         pid_state.Pressed = ((touch_event == kTouch_Down) || (touch_event == kTouch_Contact));
-        pid_state.Layer = 0;
+        pid_state.Layer   = 0;
         GUI_TOUCH_StoreStateEx(&pid_state);
         return 1;
     }
@@ -249,7 +249,7 @@ int LCD_X_DisplayDriver(unsigned LayerIndex, unsigned Cmd, void *p)
             //
             // Call hardware routine to write a LUT entry to the controller
             //
-            color = pData->Color;
+            color  = pData->Color;
             colorB = (color & 0xFF0000) >> 16;
             colorG = (color & 0x00FF00) >> 8;
             colorR = (color & 0x0000FF);

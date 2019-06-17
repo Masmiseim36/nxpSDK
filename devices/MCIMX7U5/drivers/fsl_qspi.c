@@ -351,7 +351,7 @@ void QSPI_SoftwareReset(QuadSPI_Type *base)
     /* Wait several time for the reset to finish, this method came from IC team */
     for (i = 0; i < 100; i++)
     {
-        __ASM("nop");
+        __NOP();
     }
 
     /* Disable QSPI module */
@@ -442,6 +442,25 @@ void QSPI_UpdateLUT(QuadSPI_Type *base, uint32_t index, uint32_t *cmd)
     base->LUTKEY = 0x5AF05AF0U;
     base->LCKCR  = 0x1U;
 }
+
+#if defined(FSL_FEATURE_QSPI_SOCCR_HAS_CLR_LPCAC) && (FSL_FEATURE_QSPI_SOCCR_HAS_CLR_LPCAC)
+
+/*! brief Clears the QSPI cache.
+ *
+ * param base Pointer to QuadSPI Type.
+ */
+void QSPI_ClearCache(QuadSPI_Type *base)
+{
+    uint32_t soccrVal;
+
+    soccrVal = base->SOCCR;
+    /* Write 1 to clear cache. */
+    base->SOCCR = (soccrVal | QuadSPI_SOCCR_CLR_LPCAC_MASK);
+
+    /* Write 0 to after cache is cleared. */
+    base->SOCCR = (soccrVal & (~QuadSPI_SOCCR_CLR_LPCAC_MASK));
+}
+#endif
 
 /*! brief Set the RX buffer readout area.
  *

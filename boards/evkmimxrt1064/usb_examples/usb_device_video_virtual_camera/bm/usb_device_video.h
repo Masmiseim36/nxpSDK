@@ -839,9 +839,9 @@ typedef struct _usb_device_video_still_probe_and_commit_controls_struct
 /*! @brief Available common event types in video class callback */
 typedef enum _usb_device_video_event
 {
-    kUSB_DeviceVideoEventStreamSendResponse = 0x01U, /*!< Send data completed in stream pipe */
-    kUSB_DeviceVideoEventStreamRecvResponse,         /*!< Data received in stream pipe */
-    kUSB_DeviceVideoEventControlSendResponse,        /*!< Send data completed in video control pipe */
+    kUSB_DeviceVideoEventStreamSendResponse = 0x01U, /*!< Send data completed or cancelled in stream pipe */
+    kUSB_DeviceVideoEventStreamRecvResponse,         /*!< Data received or cancelled in stream pipe */
+    kUSB_DeviceVideoEventControlSendResponse,        /*!< Send data completed or cancelled etc in video control pipe */
     kUSB_DeviceVideoEventClassRequestBuffer, /*!< Get buffer to save the data of the video class-specific request. */
 } usb_device_video_event_t;
 
@@ -959,6 +959,8 @@ extern usb_status_t USB_DeviceVideoEvent(void *handle, uint32_t event, void *par
  *
  * @return A USB error code or kStatus_USB_Success.
  *
+ * @note The function can only be called in the same context. 
+ *
  * @note The return value indicates whether the sending request is successful or not. The transfer done is notified by
  * USB_DeviceVideoStreamIn or USB_DeviceVideoControlIn.
  * Currently, only one transfer request can be supported for a specific endpoint.
@@ -982,6 +984,8 @@ extern usb_status_t USB_DeviceVideoSend(class_handle_t handle, uint8_t ep, uint8
  * @param[in] length The data length want to be received.
  *
  * @return A USB error code or kStatus_USB_Success.
+ *
+ * @note The function can only be called in the same context. 
  *
  * @note The return value indicates whether the receiving request is successful or not. The transfer done is notified by
  * USB_DeviceVideoStreamOut.

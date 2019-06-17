@@ -8,5 +8,7 @@ var group__config =
     [ "RL_USE_STATIC_API", "group__config.html#ga287167874db5209903c7e391013ab485", null ],
     [ "RL_CLEAR_USED_BUFFERS", "group__config.html#ga8a47e919e7dcb7ba81ad9f315cf14d8d", null ],
     [ "RL_USE_MCMGR_IPC_ISR_HANDLER", "group__config.html#ga1b30d0352059e95ffe6075ade6373c16", null ],
+    [ "RL_USE_ENVIRONMENT_CONTEXT", "group__config.html#ga20ac412396689025a366af64b0b8d354", null ],
+    [ "RL_DEBUG_CHECK_BUFFERS", "group__config.html#ga5c53a7ca40cc6bef546c7fa7c22fd1f6", null ],
     [ "RL_ASSERT", "group__config.html#ga1b73e9943f6d0786eee8e91020cdca29", null ]
 ];

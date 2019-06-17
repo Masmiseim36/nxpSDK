@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "board.h"
@@ -20,7 +20,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define MEM_DMATRANSFER_LEN 10U*FSL_FEATURE_L1DCACHE_LINESIZE_BYTE
+#define MEM_DMATRANSFER_LEN 10U * FSL_FEATURE_L1DCACHE_LINESIZE_BYTE
 #define DMA0_DMA16_DriverIRQHandler DMA_CH_0_16_DriverIRQHandler
 
 /* DMA Timtout. */
@@ -32,8 +32,7 @@
 void APP_CacheConfig(bool enable);
 uint32_t APP_MemoryInit(void);
 void APP_DMAInit(void *userData);
-void APP_DMAMem2memTransfer(uint8_t *srcAddr, uint32_t srcWidth, 
-       uint8_t *dstAddr, uint32_t dstWidth, uint32_t size);
+void APP_DMAMem2memTransfer(uint8_t *srcAddr, uint32_t srcWidth, uint8_t *dstAddr, uint32_t dstWidth, uint32_t size);
 
 /*******************************************************************************
  * Variables
@@ -53,26 +52,26 @@ void APP_CacheConfig(bool enable)
 {
     if (enable)
     {
-      /* Enable the l1 data cache. */
-      L1CACHE_EnableDCache();  
+        /* Enable the l1 data cache. */
+        L1CACHE_EnableDCache();
     }
     else
     {
-      L1CACHE_DisableDCache();
+        L1CACHE_DisableDCache();
     }
 }
 
 /* MPU configuration. */
 void APP_ConfigMPU(void)
-{ 
-    /* Disable I cache and D cache */ 
+{
+    /* Disable I cache and D cache */
     SCB_DisableICache();
     SCB_DisableDCache();
 
-    /* Disable MPU */ 
+    /* Disable MPU */
     ARM_MPU_Disable();
 
-    /* Region 0 setting */    
+    /* Region 0 setting */
     MPU->RBAR = ARM_MPU_RBAR(0, 0xC0000000U);
     MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 2, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_512MB);
 
@@ -96,9 +95,9 @@ void APP_ConfigMPU(void)
     MPU->RBAR = ARM_MPU_RBAR(4, 0x20200000U);
     MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 1, 0, ARM_MPU_REGION_SIZE_512KB);
 
-    /* Enable MPU */ 
+    /* Enable MPU */
     ARM_MPU_Enable(MPU_CTRL_PRIVDEFENA_Msk);
-    /* Enable I cache and D cache */ 
+    /* Enable I cache and D cache */
     SCB_EnableDCache();
     SCB_EnableICache();
 }
@@ -121,7 +120,6 @@ void APP_DMAInit(void *userData)
 {
     edma_config_t config;
 
-    
     /* Configure DMAMUX */
     DMAMUX_Init(DMAMUX);
     DMAMUX_EnableAlwaysOn(DMAMUX, 0, true);
@@ -133,15 +131,13 @@ void APP_DMAInit(void *userData)
     EDMA_SetCallback(&g_DMA_Handle, EDMA_Callback, userData);
 }
 
-void APP_DMAMem2memTransfer(uint8_t *srcAddr, uint32_t srcWidth, 
-       uint8_t *dstAddr, uint32_t dstWidth, uint32_t size)
+void APP_DMAMem2memTransfer(uint8_t *srcAddr, uint32_t srcWidth, uint8_t *dstAddr, uint32_t dstWidth, uint32_t size)
 {
     edma_transfer_config_t transferConfig;
 
-    EDMA_PrepareTransfer(&transferConfig, srcAddr, srcWidth, dstAddr, dstWidth,
-                        srcWidth, size, kEDMA_MemoryToMemory);
+    EDMA_PrepareTransfer(&transferConfig, srcAddr, srcWidth, dstAddr, dstWidth, srcWidth, size, kEDMA_MemoryToMemory);
     EDMA_SubmitTransfer(&g_DMA_Handle, &transferConfig);
-    EDMA_StartTransfer(&g_DMA_Handle); 
+    EDMA_StartTransfer(&g_DMA_Handle);
 }
 
 /*!
@@ -151,9 +147,9 @@ int main(void)
 {
     uint32_t count;
     uint32_t startAddr;
-    bool transferDone = false;
+    bool transferDone     = false;
     bool invalidateResult = false;
-    bool pushResult = false;
+    bool pushResult       = false;
     volatile uint32_t readDummy;
 
     APP_ConfigMPU();
@@ -168,7 +164,7 @@ int main(void)
     /* Data initialize. */
     for (count = 0; count < MEM_DMATRANSFER_LEN; count++)
     {
-        g_data[count] = 0xaa;
+        g_data[count]                   = 0xaa;
         *(uint8_t *)(startAddr + count) = 0;
     }
     /* Configure Cache. */
@@ -225,7 +221,7 @@ int main(void)
 
         /* Reset to zero. */
         g_Transfer_Done = false;
-        g_count = 0;
+        g_count         = 0;
         /* Get the real data in the memory . */
         APP_DMAMem2memTransfer((void *)startAddr, sizeof(g_data[0]), &g_data[0], sizeof(g_data[0]), sizeof(g_data));
 
@@ -255,7 +251,7 @@ int main(void)
 
                 /* Transfer from the sdram to data[]. */
                 g_Transfer_Done = false;
-                g_count = 0;
+                g_count         = 0;
                 APP_DMAMem2memTransfer((void *)startAddr, sizeof(g_data[0]), &g_data[0], sizeof(g_data[0]),
                                        sizeof(g_data));
 

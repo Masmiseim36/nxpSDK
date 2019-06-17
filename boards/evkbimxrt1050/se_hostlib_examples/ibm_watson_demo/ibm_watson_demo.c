@@ -364,12 +364,12 @@ void WatsonIoTDemo_task(void * ctx) {
     /* Connect to A71CH */
     uint16_t connectStatus;
     SmCommState_t commState;
-    U8 Atr[64];
+    U8 Atr[64] = {0};
     U16 AtrLen = sizeof(Atr);
     BaseType_t xResult;
     char cPayload[100];
     int i = 0;
-    U8 AxUID[A71CH_MODULE_UNIQUE_ID_LEN];
+    U8 AxUID[A71CH_MODULE_UNIQUE_ID_LEN] = {0};
     U16 AxUIDLen = A71CH_MODULE_UNIQUE_ID_LEN;
     unsigned char * p_cert_der_buf;
     U16 length_der;

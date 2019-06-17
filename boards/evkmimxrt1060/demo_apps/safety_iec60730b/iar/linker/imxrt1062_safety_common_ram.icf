@@ -1,0 +1,86 @@
+/*
+* Copyright (c) 2013 - 2016, Freescale Semiconductor, Inc.
+* Copyright 2016-2019 NXP
+*
+* SPDX-License-Identifier: NXP Proprietary
+*/
+
+/******************************************************************************/
+/******************     USER CONFIGURATION PART     ***************************/
+/******************************************************************************/
+define exported symbol stack_test_block_size = 0x10;
+define exported symbol ram_test_backup_size  = 0x20;
+define symbol __vector_table_size__          = 0x400;
+define symbol __size_cstack__                = 0x0400;
+
+define symbol RAM_interrupts_start = 0x00000000; /* IVT in RAM */
+define symbol RAM_interrupts_end   = RAM_interrupts_start + __vector_table_size__ - 1;
+
+define symbol SRAM_ITC_start       = 0x00000400; /* Part of 512KB on-chip RAM (Instruction-Tightly-Coupled) */
+define symbol SRAM_ITC_end         = 0x0001FFFF;
+
+define symbol SRAM_DTC_start       = 0x20000000; /* Part of 512KB on-chip RAM (Data-Tightly-Coupled) */
+define symbol SRAM_DTC_end         = 0x2001FFFF;
+
+define exported symbol __VECTOR_TABLE = RAM_interrupts_start;
+
+/***** NOT USED IN THIS EXAMPLE *****/
+define symbol SRAM_OC_start = 0x20200000; /* Part of 512KB on-chip RAM */
+define symbol SRAM_OC_end   = 0x202BFFFF;
+
+define symbol ROM_start     = 0x60000000; /* ~64MB of ROM memory (external ROM) */
+define symbol ROM_end       = 0x607FFFFF;
+
+define symbol SDRAM_start   = 0x80000000; /* ~32MB of SDRAM memory (external RAM) */
+define symbol SDRAM_end     = 0x81FFFFFF;
+/***** NOT USED IN THIS EXAMPLE *****/
+
+/******************************************************************************/
+/******************     SYMBOLS     *******************************************/
+/******************************************************************************/   
+define exported symbol m_ram_test_backup    = SRAM_DTC_end - ram_test_backup_size + 0x1;
+define exported symbol m_wd_test_backup     = m_ram_test_backup - 0x10;
+define exported symbol m_pc_test_flag       = m_wd_test_backup - 0x4;
+define exported symbol m_safety_error_code  = m_pc_test_flag - 0x4;
+define exported symbol m_stack_test_p_4     = m_safety_error_code - 0x4;
+define exported symbol m_stack_test_p_3     = m_stack_test_p_4 - stack_test_block_size +0x4;
+define exported symbol __BOOT_STACK_ADDRESS = m_stack_test_p_3 - 0x4;
+define exported symbol m_stack_test_p_2     = __BOOT_STACK_ADDRESS - __size_cstack__;
+define exported symbol m_stack_test_p_1     = m_stack_test_p_2 - stack_test_block_size + 0x4;
+define symbol SRAM_DTC_end_edited           = m_stack_test_p_1 - 0x1;
+
+/******************************************************************************/
+/******************     REGIONS     *******************************************/
+/******************************************************************************/
+define memory mem with size   = 4G;
+define region SRAM_ITC_region = mem:[from SRAM_ITC_start to SRAM_ITC_end];
+define region SRAM_DTC_region = mem:[from SRAM_DTC_start to SRAM_DTC_end_edited];
+
+/******************************************************************************/
+/******************     SECTIONS & BLOCKS    **********************************/
+/******************************************************************************/
+initialize manually           { readwrite };
+initialize manually           { section .data };
+initialize manually           { section .bss };
+initialize manually           { section .textrw };
+initialize manually           { section .safety_ram };
+initialize manually           { section .safety_ram_crc };
+do not initialize             { section .noinit };
+
+define block RW               { readwrite };
+define block ZI               { zi };
+define block NCACHE_VAR       { section NonCacheable, section NonCacheable.init };
+define block SAFETY_RAM_BLOCK { section .safety_ram };
+define block SAFETY_RAM_CRC_BLOCK { section .safety_ram_crc };
+
+/*****************************************************/
+/******************     PLACING     ******************/
+/*****************************************************/
+place at address mem:RAM_interrupts_start { readonly section .intvec };
+
+place in SRAM_ITC_region   { readonly };
+place in SRAM_DTC_region   { block RW };
+place in SRAM_DTC_region   { block ZI };
+place in SRAM_DTC_region   { block SAFETY_RAM_BLOCK };
+place in SRAM_DTC_region { block SAFETY_RAM_CRC_BLOCK };
+place in SRAM_DTC_region   { block NCACHE_VAR };

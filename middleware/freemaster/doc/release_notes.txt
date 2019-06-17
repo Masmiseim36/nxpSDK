@@ -1,0 +1,44 @@
+NXP FreeMASTER Communication Driver
+================================================================================
+
+FreeMASTER is a PC-based application serving as a real-time monitor, visualization 
+tool, and a graphical control panel of embedded applications based on NXP 
+microcontroller and microprocessor units. The FreeMASTER Serial Communication 
+Driver implements the serial interface between the target application and the host PC. 
+The driver targets Serial and CAN communication of the supported devices.
+
+This is version 3.0 of the serial driver which implements a new version (v4) of
+FreeMASTER protocol and is compatible with NXP MCUXpresso SDK suite. The driver 
+may be obtained as an MCUXpresso SDK middleware component from 
+https://mcuxpresso.nxp.com/en/welcome.
+
+Older implementations of FreeMASTER serial driver for platforms that are not 
+supported by MCUXpresso SDK (e.g. HCS08, HCS12, S12Z, ColdFire, 56F8xxx) can 
+be downloaded from FreeMASTER home at https://www.nxp.com/freemaster.
+
+
+CHANGELOG version 3.x versions
+==============================
+
+Version 3.0 (April 29th 2019)
+----------------------------
+- The first release as MCUXpresso SDK middleware component
+- Communication protocol completely redesigned (protocol version 4)
+- Use FreeMASTER 2.5 or later to connect to microcontroller
+- Example applications available for representative members of 
+  Kinetis, LPC and i.MX-RT families of NXP microcontrollers:
+      - FRDM-K64F
+      - TWR-K64F
+      - FRDM-KL28Z
+      - FRDM-KE15Z
+      - EVK-MIMXRT1060
+      - LPCXPRESSO54628
+      - LPCXPRESSO55S69
+      - LPC845max
+
+
+
+--------------------------------------------------------------------------------
+Copyright 2019 NXP
+ALL RIGHTS RESERVED
+www.nxp.com/freemaster

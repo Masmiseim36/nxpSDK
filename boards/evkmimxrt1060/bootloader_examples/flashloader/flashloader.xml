@@ -25,7 +25,7 @@
     <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkmimxrt1060_flashloader" name="flashloader" category="bootloader_examples" dependency="middleware.mcu-boot.MIMXRT1062_startup.MIMXRT1062 middleware.mcu-boot.src_bm_usb.MIMXRT1062 middleware.mcu-boot.bootsources.MIMXRT1062 middleware.mcu-boot.bootsources_imxrt.MIMXRT1062 middleware.mcu-boot.MIMXRT1062_drivers.MIMXRT1062 middleware.mcu-boot.MIMXRT1062_sources.MIMXRT1062 middleware.usb.device_controller_ehci.MIMXRT1062 middleware.mcu-boot.CMSIS_cm7_headers.MIMXRT1062 middleware.mcu-boot.src_startup.MIMXRT1062 middleware.mcu-boot.drv_microseconds_pit.MIMXRT1062 middleware.mcu-boot.drv_flexspi_nor.MIMXRT1062 middleware.mcu-boot.drv_flexspi_nand.MIMXRT1062 middleware.mcu-boot.drv_semc_nor.MIMXRT1062 middleware.mcu-boot.drv_semc_nand.MIMXRT1062 middleware.mcu-boot.drv_sdmmc.MIMXRT1062 middleware.mcu-boot.drv_serial_nor_eeprom.MIMXRT1062 middleware.mcu-boot.drv_ocotp.MIMXRT1062 middleware.usb.phy.MIMXRT1062 middleware.baremetal.MIMXRT1062" toolchain="iar mdk mcuxpresso">
+  <example id="evkmimxrt1060_flashloader" name="flashloader" category="bootloader_examples" dependency="middleware.mcu-boot.MIMXRT1062_startup.MIMXRT1062 middleware.mcu-boot.src_bm_usb.MIMXRT1062 middleware.mcu-boot.bootsources.MIMXRT1062 middleware.mcu-boot.bootsources_imxrt.MIMXRT1062 middleware.mcu-boot.MIMXRT1062_drivers.MIMXRT1062 middleware.mcu-boot.MIMXRT1062_sources.MIMXRT1062 middleware.usb.device_controller_ehci.MIMXRT1062 middleware.mcu-boot.CMSIS_cm7_headers.MIMXRT1062 middleware.mcu-boot.src_startup.MIMXRT1062 middleware.mcu-boot.drv_microseconds_pit.MIMXRT1062 middleware.mcu-boot.drv_flexspi_nor.MIMXRT1062 middleware.mcu-boot.drv_flexspi_nand.MIMXRT1062 middleware.mcu-boot.drv_semc_nor.MIMXRT1062 middleware.mcu-boot.drv_semc_nand.MIMXRT1062 middleware.mcu-boot.drv_sdmmc.MIMXRT1062 middleware.mcu-boot.drv_serial_nor_eeprom.MIMXRT1062 middleware.mcu-boot.drv_ocotp.MIMXRT1062 middleware.usb.phy.MIMXRT1062 middleware.baremetal.MIMXRT1062">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -68,7 +68,7 @@
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>
-          <value>true</value>
+          <value>false</value>
         </option>
         <option id="com.crt.advproject.link.fpu" type="enum">
           <value>com.crt.advproject.link.fpu.fpv5dp.hard</value>

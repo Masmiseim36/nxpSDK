@@ -9,9 +9,9 @@ See "A71CH examples -> Hostlib API based examples"  in A71CH Host Lib Doxygen Gu
 Toolchain supported
 ===================
 - IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
 
 Hardware requirements
 =====================
@@ -96,3 +96,6 @@ On successful run of the example, output similar to below can be seen.
 
 End of project
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Customization options
+=====================
+

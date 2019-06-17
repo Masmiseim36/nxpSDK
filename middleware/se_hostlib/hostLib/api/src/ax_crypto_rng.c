@@ -36,7 +36,8 @@
  * @param randomLength Requested length of the requested random bytestring.
  * @return
  */
-#if !defined(TGT_A70CM) && !defined(TGT_A71CH)
+
+#if defined(TGT_A71CL)
 U16 RND_GetRandom(U8 * pRandom, U16 randomLength)
 {
     U8 isOk = 0;
@@ -49,7 +50,7 @@ U16 RND_GetRandom(U8 * pRandom, U16 randomLength)
     assert(pRandom != NULL);
 
     pApdu->cla   = AX_CLA;
-    pApdu->ins   = INS_AX_RND_GET_RANDOM;
+    pApdu->ins   = A71CL_INS_MODULE_GET_RANDOM;
     pApdu->p1    = P1_GENERATE_RANDOM;
     pApdu->p2    = 0x00;
 
@@ -77,4 +78,4 @@ U16 RND_GetRandom(U8 * pRandom, U16 randomLength)
     FreeAPDUBuffer(pApdu);
     return rv;
 }
-#endif // TGT_A70CM
+#endif

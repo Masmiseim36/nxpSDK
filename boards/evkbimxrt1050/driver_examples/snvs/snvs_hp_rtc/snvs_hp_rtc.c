@@ -3,7 +3,7 @@
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -79,10 +79,10 @@ int main(void)
     PRINTF("SNVS HP example:\r\n");
 
     /* Set a start date time and start RT */
-    rtcDate.year = 2014U;
-    rtcDate.month = 12U;
-    rtcDate.day = 25U;
-    rtcDate.hour = 19U;
+    rtcDate.year   = 2014U;
+    rtcDate.month  = 12U;
+    rtcDate.day    = 25U;
+    rtcDate.hour   = 19U;
     rtcDate.minute = 0;
     rtcDate.second = 0;
 
@@ -101,8 +101,8 @@ int main(void)
     while (1)
     {
         busyWait = true;
-        index = 0;
-        sec = 0;
+        index    = 0;
+        sec      = 0;
 
         /* Get date time */
         SNVS_HP_RTC_GetDatetime(SNVS, &rtcDate);

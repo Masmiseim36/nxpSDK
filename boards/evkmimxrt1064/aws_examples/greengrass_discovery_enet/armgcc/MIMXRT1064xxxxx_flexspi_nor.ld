@@ -40,7 +40,7 @@ MEMORY
   m_data2               (RW)  : ORIGIN = 0x20200000, LENGTH = 0x000C0000
 }
 
-/* NOTE: Flash in range 0x6058_0000 - 0x607F_FFFF is reserved for  data */
+/* NOTE: Flash in range 0x7018_0000 - 0x703F_FFFF is reserved for  data */
 
 /* Define output sections */
 SECTIONS
@@ -180,8 +180,8 @@ SECTIONS
     __data_start__ = .;      /* create a global symbol at data start */
     *(m_usb_dma_init_data)
     /* Explicit placement of flash and frequently executed functions in RAM */
-    */mflash_drv.c.obj
-    */fsl_flexspi.c.obj
+    */mflash_drv.c.obj(.text .text* .rodata .rodata*)
+    */fsl_flexspi.c.obj(.text .text* .rodata .rodata*)
     *(.data)                 /* .data sections */
     *(.data*)                /* .data* sections */
     KEEP(*(.jcr*))

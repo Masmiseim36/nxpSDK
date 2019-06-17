@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018, NXP
+ * Copyright 2017-2018, NXP
  * All rights reserved.
  *
  *
@@ -10,7 +10,8 @@
 
 #include "srtm_i2c_codec_adapter.h"
 #include "srtm_heap.h"
-
+#include "fsl_codec_i2c.h"
+#include "srtm_audio_service.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -43,8 +44,9 @@ static srtm_status_t SRTM_I2CCodecAdapter_SetParam(srtm_codec_adapter_t adapter,
 {
     srtm_i2c_codec_adapter_t handle = (srtm_i2c_codec_adapter_t)adapter;
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s: %d. fmt %d, srate %d\r\n", __func__, index, format, srate);
+    uint32_t bitWidth = 0U;
 
-    if (format > kAUDIO_DSD32bits)
+    if (format > SRTM_Audio_DSD32bits)
     {
         SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_ERROR, "%s: unsupported format %d!\r\n", __func__, format);
         return SRTM_Status_InvalidParameter;
@@ -53,17 +55,31 @@ static srtm_status_t SRTM_I2CCodecAdapter_SetParam(srtm_codec_adapter_t adapter,
     if (handle->srate != srate || handle->format != format)
     {
         handle->format = format;
-        if (handle->driver->op.SetEncoding != NULL)
+
+        if (format >= SRTM_Audio_DSD8bits)
         {
-            CODEC_SetEncoding(handle->driver, format);
+            CODEC_ModuleControl(handle->driver, kCODEC_ModuleSwitchI2SInInterface, kCODEC_ModuleI2SInInterfaceDSD);
         }
-        if (format > kAUDIO_Stereo32Bits)
+        else
         {
-            format = format - 45U; /* Skip due to the format value from 3 to 47 not defined in SDK. */
+            CODEC_ModuleControl(handle->driver, kCODEC_ModuleSwitchI2SInInterface, kCODEC_ModuleI2SInInterfacePCM);
         }
+
+        if (format >= SRTM_Audio_DSD8bits && format <= SRTM_Audio_DSD32bits)
+        {
+            bitWidth = saiFormatMap[format - 45].bitwidth;
+        }
+        else if (format <= SRTM_Audio_Stereo32Bits)
+        {
+            bitWidth = saiFormatMap[format].bitwidth;
+        }
+        else
+        {
+            return SRTM_Status_Error;
+        }
+
         /* Only set codec when configuration changes. */
-        CODEC_SetFormat(handle->driver, handle->config.mclk, srate,
-                        CODEC_GetMappedFormatBits((audio_format_type_t)format));
+        CODEC_SetFormat(handle->driver, handle->config.mclk, srate, bitWidth);
         handle->srate = srate;
     }
 
@@ -83,8 +99,8 @@ static srtm_status_t SRTM_I2CCodecAdapter_SetReg(srtm_codec_adapter_t adapter, u
     }
     else
     {
-        status = CODEC_I2C_WriteReg(handle->driver->slaveAddress, handle->config.addrType, reg, handle->config.regWidth,
-                                    regVal, handle->driver->I2C_SendFunc);
+        status = CODEC_I2C_Send(handle->config.i2cHandle, handle->config.slaveAddr, reg, handle->config.addrType,
+                                (uint8_t *)(&regVal), handle->config.regWidth);
     }
     return status == kStatus_Success ? SRTM_Status_Success : SRTM_Status_Error;
 }
@@ -105,8 +121,8 @@ static srtm_status_t SRTM_I2CCodecAdapter_GetReg(srtm_codec_adapter_t adapter, u
     }
     else
     {
-        status = CODEC_I2C_ReadReg(handle->driver->slaveAddress, handle->config.addrType, reg, handle->config.regWidth,
-                                   (void *)pRegVal, handle->driver->I2C_ReceiveFunc);
+        status = CODEC_I2C_Receive(&(handle->config.i2cHandle), handle->config.slaveAddr, reg, handle->config.addrType,
+                                   (void *)pRegVal, handle->config.regWidth);
     }
     return status == kStatus_Success ? SRTM_Status_Success : SRTM_Status_Error;
 }

@@ -328,11 +328,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc 
---diag_suppress=66,1296,186 
---diag_suppress=1296,186 
- 
-</MiscControls>
+              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1021DAG5A, A_LITTLE_ENDIAN, FSL_RTOS_FREE_RTOS</Define>
               <Undefine/>
               <IncludePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F;../../..;..;../../../../../CMSIS/Include;../../../../../devices;../../../../../rtos/amazon-freertos/lib/include;../../../../../rtos/amazon-freertos/lib/include/private;../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos/gt202;../../../../../middleware/wifi_qca;../../../../../middleware/wifi_qca/include;../../../../../middleware/wifi_qca/include/AR6002;../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw;../../../../../middleware/wifi_qca/include/AR6002/hw4.0/hw;../../../../../middleware/wifi_qca/custom_src/stack_custom;../../../../../middleware/wifi_qca/custom_src/include;../../../../../middleware/wifi_qca/common_src/include;../../../../../middleware/wifi_qca/common_src/stack_common;../../../../../middleware/wifi_qca/common_src/hcd;../../../../../middleware/wifi_qca/common_src/wmi;../../../../../middleware/wifi_qca/port;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../devices/MIMXRT1021/drivers;../../../../../components/lists;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos;../../../../../middleware/wifi_qca/port/env/freertos;../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers</IncludePath>
@@ -369,12 +365,7 @@
             <ScatterFile>MIMXRT1021xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove 
---keep=*(.boot_hdr.ivt) 
---keep=*(.boot_hdr.boot_data) 
---keep=*(.boot_hdr.conf) 
---predefine="-DXIP_BOOT_HEADER_ENABLE=1" 
-</Misc>
+            <Misc>--remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -467,27 +458,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-FreeRTOS-portable</GroupName>
+          <GroupName>amazon-freertos-freertos-portable</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c</FilePath>
-            </File>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_tickless_systick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/fsl_tickless_systick.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_tickless_generic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/fsl_tickless_generic.h</FilePath>
             </File>
             <File>
               <FileName>port.c</FileName>
@@ -499,46 +475,296 @@
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/portmacro.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi_qca-common_src-wmi</GroupName>
-          <Files>
             <File>
-              <FileName>wmi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/wmi/wmi.c</FilePath>
-            </File>
-            <File>
-              <FileName>wmi_host.h</FileName>
+              <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/wmi/wmi_host.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi_qca-common_src-stack_common</GroupName>
+          <GroupName>wifi_qca-include</GroupName>
           <Files>
             <File>
-              <FileName>dset_api.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/storerecall/dset_api.c</FilePath>
+              <FileName>atheros_stack_offload.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/atheros_stack_offload.h</FilePath>
             </File>
             <File>
-              <FileName>common_stack_offload.h</FileName>
+              <FileName>atheros_wifi.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/stack_common/common_stack_offload.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/atheros_wifi.h</FilePath>
+            </File>
+            <File>
+              <FileName>atheros_wifi_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/atheros_wifi_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>atheros_wifi_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/atheros_wifi_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>athdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/athdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>bmi_msg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/bmi_msg.h</FilePath>
+            </File>
+            <File>
+              <FileName>dbglog.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/dbglog.h</FilePath>
+            </File>
+            <File>
+              <FileName>dbglog_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/dbglog_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>htc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/htc.h</FilePath>
+            </File>
+            <File>
+              <FileName>htc_services.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/htc_services.h</FilePath>
+            </File>
+            <File>
+              <FileName>p2p.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/p2p.h</FilePath>
+            </File>
+            <File>
+              <FileName>pkt_log.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/pkt_log.h</FilePath>
+            </File>
+            <File>
+              <FileName>pmu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/pmu.h</FilePath>
+            </File>
+            <File>
+              <FileName>targaddrs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/targaddrs.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/wlan_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>wmi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/wmi.h</FilePath>
+            </File>
+            <File>
+              <FileName>qcom_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/qcom_api.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-common_src-api_interface</GroupName>
+          <Files>
+            <File>
+              <FileName>api_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/api_interface/api_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>api_ioctl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/api_interface/api_ioctl.c</FilePath>
+            </File>
+            <File>
+              <FileName>api_txrx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/api_interface/api_txrx.c</FilePath>
+            </File>
+            <File>
+              <FileName>api_wmi_rx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/api_interface/api_wmi_rx.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-common_src-bmi</GroupName>
+          <Files>
+            <File>
+              <FileName>bmi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/bmi/bmi.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-common_src-driver</GroupName>
+          <Files>
+            <File>
+              <FileName>driver_diag.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/driver/driver_diag.c</FilePath>
+            </File>
+            <File>
+              <FileName>driver_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/driver/driver_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>driver_main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/driver/driver_main.c</FilePath>
+            </File>
+            <File>
+              <FileName>driver_netbuf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/driver/driver_netbuf.c</FilePath>
+            </File>
+            <File>
+              <FileName>driver_txrx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/driver/driver_txrx.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-common_src-hcd</GroupName>
+          <Files>
+            <File>
+              <FileName>hcd_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/hcd/hcd_api.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-common_src-htc</GroupName>
+          <Files>
+            <File>
+              <FileName>spi_hcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/hcd/spi_hcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>htc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/htc/htc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-common_src-hw_interface</GroupName>
+          <Files>
+            <File>
+              <FileName>hw_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/hw_interface/hw_api.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-common_src-include</GroupName>
+          <Files>
+            <File>
+              <FileName>a_debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/a_debug.h</FilePath>
+            </File>
+            <File>
+              <FileName>a_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/a_drv.h</FilePath>
+            </File>
+            <File>
+              <FileName>a_drv_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/a_drv_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>aggr_recv_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/aggr_recv_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>bmi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/bmi.h</FilePath>
+            </File>
+            <File>
+              <FileName>common_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/common_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>dbglog_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/dbglog_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>driver_cxt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/driver_cxt.h</FilePath>
+            </File>
+            <File>
+              <FileName>dset.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/dset.h</FilePath>
+            </File>
+            <File>
+              <FileName>dset_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/dset_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>hif_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/hif_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>htc_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/htc_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>ieee80211.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/ieee80211.h</FilePath>
+            </File>
+            <File>
+              <FileName>netbuf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/netbuf.h</FilePath>
+            </File>
+            <File>
+              <FileName>spi_hcd_if.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/spi_hcd_if.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/wlan_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>wmi_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/wmi_api.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>wifi_qca-common_src-qapi</GroupName>
           <Files>
-            <File>
-              <FileName>api_stack_offload.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/stack_common/api_stack_offload.c</FilePath>
-            </File>
             <File>
               <FileName>qcom_api.c</FileName>
               <FileType>1</FileType>
@@ -554,175 +780,35 @@
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wifi_qca/common_src/qapi/qcom_legacy.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi_qca-common_src-include</GroupName>
-          <Files>
             <File>
-              <FileName>dset_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/dset_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>driver_cxt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/driver_cxt.h</FilePath>
-            </File>
-            <File>
-              <FileName>a_drv_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/a_drv_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/wlan_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>wmi_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/wmi_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>hif_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/hif_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>dset.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/dset.h</FilePath>
-            </File>
-            <File>
-              <FileName>dbglog_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/dbglog_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>common_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/common_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>bmi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/bmi.h</FilePath>
-            </File>
-            <File>
-              <FileName>aggr_recv_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/aggr_recv_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>a_drv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/a_drv.h</FilePath>
-            </File>
-            <File>
-              <FileName>a_debug.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/a_debug.h</FilePath>
-            </File>
-            <File>
-              <FileName>spi_hcd_if.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/spi_hcd_if.h</FilePath>
-            </File>
-            <File>
-              <FileName>netbuf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/netbuf.h</FilePath>
-            </File>
-            <File>
-              <FileName>ieee80211.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/ieee80211.h</FilePath>
-            </File>
-            <File>
-              <FileName>htc_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/htc_api.h</FilePath>
+              <FileName>api_stack_offload.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/stack_common/api_stack_offload.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi_qca-common_src-htc</GroupName>
+          <GroupName>wifi_qca-common_src-reorder</GroupName>
           <Files>
             <File>
-              <FileName>htc.c</FileName>
+              <FileName>rcv_aggr.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/htc/htc.c</FilePath>
-            </File>
-            <File>
-              <FileName>spi_hcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/hcd/spi_hcd.c</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/reorder/rcv_aggr.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi_qca-common_src-driver</GroupName>
+          <GroupName>wifi_qca-common_src-stack_common</GroupName>
           <Files>
             <File>
-              <FileName>driver_main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/driver/driver_main.c</FilePath>
+              <FileName>common_stack_offload.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/stack_common/common_stack_offload.h</FilePath>
             </File>
             <File>
-              <FileName>driver_txrx.c</FileName>
+              <FileName>dset_api.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/driver/driver_txrx.c</FilePath>
-            </File>
-            <File>
-              <FileName>driver_netbuf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/driver/driver_netbuf.c</FilePath>
-            </File>
-            <File>
-              <FileName>driver_init.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/driver/driver_init.c</FilePath>
-            </File>
-            <File>
-              <FileName>driver_diag.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/driver/driver_diag.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi_qca-common_src-api_interface</GroupName>
-          <Files>
-            <File>
-              <FileName>api_wmi_rx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/api_interface/api_wmi_rx.c</FilePath>
-            </File>
-            <File>
-              <FileName>api_ioctl.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/api_interface/api_ioctl.c</FilePath>
-            </File>
-            <File>
-              <FileName>api_txrx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/api_interface/api_txrx.c</FilePath>
-            </File>
-            <File>
-              <FileName>api_init.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/api_interface/api_init.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi_qca-common_src-hw_interface</GroupName>
-          <Files>
-            <File>
-              <FileName>hw_api.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/hw_interface/hw_api.c</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/storerecall/dset_api.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -742,26 +828,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi_qca-common_src-hcd</GroupName>
-          <Files>
-            <File>
-              <FileName>hcd_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/hcd/hcd_api.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi_qca-common_src-bmi</GroupName>
-          <Files>
-            <File>
-              <FileName>bmi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/bmi/bmi.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>wifi_qca-common_src-util</GroupName>
           <Files>
             <File>
@@ -772,82 +838,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi_qca-common_src-reorder</GroupName>
+          <GroupName>wifi_qca-common_src-wmi</GroupName>
           <Files>
             <File>
-              <FileName>rcv_aggr.c</FileName>
+              <FileName>wmi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/reorder/rcv_aggr.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi_qca-custom_src-stack_custom</GroupName>
-          <Files>
-            <File>
-              <FileName>cust_api_stack_offload.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/stack_custom/cust_api_stack_offload.c</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/wmi/wmi.c</FilePath>
             </File>
             <File>
-              <FileName>qca_structs.h</FileName>
+              <FileName>wmi_host.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/stack_custom/qca_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>custom_stack_offload.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/stack_custom/custom_stack_offload.h</FilePath>
-            </File>
-            <File>
-              <FileName>cust_api_stack_txrx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/stack_custom/cust_api_stack_txrx.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi_qca-custom_src-qapi</GroupName>
-          <Files>
-            <File>
-              <FileName>custom_qcom_api.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/qapi/custom_qcom_api.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi_qca-custom_src-include</GroupName>
-          <Files>
-            <File>
-              <FileName>cust_netbuf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/cust_netbuf.h</FilePath>
-            </File>
-            <File>
-              <FileName>a_osapi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/a_osapi.h</FilePath>
-            </File>
-            <File>
-              <FileName>a_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/a_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/wlan_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>custom_wlan_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/custom_wlan_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>a_types.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/a_types.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/wmi/wmi_host.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -855,9 +856,9 @@
           <GroupName>wifi_qca-custom_src-api_interface</GroupName>
           <Files>
             <File>
-              <FileName>cust_api_wmi_rx.c</FileName>
+              <FileName>cust_api_init.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/api_interface/cust_api_wmi_rx.c</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/api_interface/cust_api_init.c</FilePath>
             </File>
             <File>
               <FileName>cust_api_ioctl.c</FileName>
@@ -870,9 +871,9 @@
               <FilePath>../../../../../middleware/wifi_qca/custom_src/api_interface/cust_api_txrx.c</FilePath>
             </File>
             <File>
-              <FileName>cust_api_init.c</FileName>
+              <FileName>cust_api_wmi_rx.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/api_interface/cust_api_init.c</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/api_interface/cust_api_wmi_rx.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -880,14 +881,14 @@
           <GroupName>wifi_qca-custom_src-driver</GroupName>
           <Files>
             <File>
-              <FileName>cust_driver_netbuf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/driver/cust_driver_netbuf.c</FilePath>
-            </File>
-            <File>
               <FileName>cust_driver_main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wifi_qca/custom_src/driver/cust_driver_main.c</FilePath>
+            </File>
+            <File>
+              <FileName>cust_driver_netbuf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/driver/cust_driver_netbuf.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -902,137 +903,72 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi_qca-include</GroupName>
+          <GroupName>wifi_qca-custom_src-include</GroupName>
           <Files>
             <File>
-              <FileName>wmi.h</FileName>
+              <FileName>a_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/wmi.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/a_config.h</FilePath>
             </File>
             <File>
-              <FileName>dbglog.h</FileName>
+              <FileName>a_osapi.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/dbglog.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/a_osapi.h</FilePath>
             </File>
             <File>
-              <FileName>athdefs.h</FileName>
+              <FileName>a_types.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/athdefs.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/a_types.h</FilePath>
             </File>
             <File>
-              <FileName>dbglog_id.h</FileName>
+              <FileName>cust_netbuf.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/dbglog_id.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/cust_netbuf.h</FilePath>
             </File>
             <File>
-              <FileName>bmi_msg.h</FileName>
+              <FileName>custom_wlan_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/bmi_msg.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/custom_wlan_api.h</FilePath>
             </File>
             <File>
-              <FileName>wlan_defs.h</FileName>
+              <FileName>wlan_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/wlan_defs.h</FilePath>
-            </File>
-            <File>
-              <FileName>targaddrs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/targaddrs.h</FilePath>
-            </File>
-            <File>
-              <FileName>pmu.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/pmu.h</FilePath>
-            </File>
-            <File>
-              <FileName>pkt_log.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/pkt_log.h</FilePath>
-            </File>
-            <File>
-              <FileName>p2p.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/p2p.h</FilePath>
-            </File>
-            <File>
-              <FileName>htc_services.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/htc_services.h</FilePath>
-            </File>
-            <File>
-              <FileName>htc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/htc.h</FilePath>
-            </File>
-            <File>
-              <FileName>qcom_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/qcom_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>atheros_stack_offload.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/atheros_stack_offload.h</FilePath>
-            </File>
-            <File>
-              <FileName>atheros_wifi_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/atheros_wifi_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>atheros_wifi_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/atheros_wifi_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>atheros_wifi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/atheros_wifi.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/wlan_config.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi_qca-include-AR6002-hw2.0-hw</GroupName>
+          <GroupName>wifi_qca-custom_src-qapi</GroupName>
           <Files>
             <File>
-              <FileName>hw20_gpio_reg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_gpio_reg.h</FilePath>
+              <FileName>custom_qcom_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/qapi/custom_qcom_api.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-custom_src-stack_custom</GroupName>
+          <Files>
+            <File>
+              <FileName>cust_api_stack_offload.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/stack_custom/cust_api_stack_offload.c</FilePath>
             </File>
             <File>
-              <FileName>hw20_apb_map.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_apb_map.h</FilePath>
+              <FileName>cust_api_stack_txrx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/stack_custom/cust_api_stack_txrx.c</FilePath>
             </File>
             <File>
-              <FileName>hw20_vmc_reg.h</FileName>
+              <FileName>custom_stack_offload.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_vmc_reg.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/stack_custom/custom_stack_offload.h</FilePath>
             </File>
             <File>
-              <FileName>hw20_uart_reg.h</FileName>
+              <FileName>qca_structs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_uart_reg.h</FilePath>
-            </File>
-            <File>
-              <FileName>hw20_si_reg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_si_reg.h</FilePath>
-            </File>
-            <File>
-              <FileName>hw20_rtc_reg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_rtc_reg.h</FilePath>
-            </File>
-            <File>
-              <FileName>hw20_mbox_reg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_mbox_reg.h</FilePath>
-            </File>
-            <File>
-              <FileName>hw20_mbox_host_reg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_mbox_host_reg.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/stack_custom/qca_structs.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1047,17 +983,62 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi_qca-include-AR6002-hw4.0-hw</GroupName>
+          <GroupName>wifi_qca-include-AR6002-hw2.0-hw</GroupName>
           <Files>
             <File>
-              <FileName>hw40_rtc_wlan_reg.h</FileName>
+              <FileName>hw20_apb_map.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw4.0/hw/hw40_rtc_wlan_reg.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_apb_map.h</FilePath>
             </File>
+            <File>
+              <FileName>hw20_gpio_reg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_gpio_reg.h</FilePath>
+            </File>
+            <File>
+              <FileName>hw20_mbox_host_reg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_mbox_host_reg.h</FilePath>
+            </File>
+            <File>
+              <FileName>hw20_mbox_reg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_mbox_reg.h</FilePath>
+            </File>
+            <File>
+              <FileName>hw20_rtc_reg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_rtc_reg.h</FilePath>
+            </File>
+            <File>
+              <FileName>hw20_si_reg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_si_reg.h</FilePath>
+            </File>
+            <File>
+              <FileName>hw20_uart_reg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_uart_reg.h</FilePath>
+            </File>
+            <File>
+              <FileName>hw20_vmc_reg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_vmc_reg.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-include-AR6002-hw4.0-hw</GroupName>
+          <Files>
             <File>
               <FileName>hw40_rtc_reg.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw4.0/hw/hw40_rtc_reg.h</FilePath>
+            </File>
+            <File>
+              <FileName>hw40_rtc_wlan_reg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw4.0/hw/hw40_rtc_wlan_reg.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1069,100 +1050,15 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_qca/port/wifi_common.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-license</GroupName>
-          <Files>
             <File>
-              <FileName>LICENSE</FileName>
+              <FileName>wifi_shield_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/LICENSE</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/port/wifi_shield_common.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-include</GroupName>
-          <Files>
-            <File>
-              <FileName>event_groups.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/event_groups.h</FilePath>
-            </File>
-            <File>
-              <FileName>FreeRTOS.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</FilePath>
-            </File>
-            <File>
-              <FileName>message_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/message_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/queue.h</FilePath>
-            </File>
-            <File>
-              <FileName>semphr.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/semphr.h</FilePath>
-            </File>
-            <File>
-              <FileName>stream_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/task.h</FilePath>
-            </File>
-            <File>
-              <FileName>timers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/timers.h</FilePath>
-            </File>
-            <File>
-              <FileName>freertos_tasks_c_additions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h</FilePath>
-            </File>
-            <File>
-              <FileName>deprecated_definitions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</FilePath>
-            </File>
-            <File>
-              <FileName>list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/list.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_wrappers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</FilePath>
-            </File>
-            <File>
-              <FileName>portable.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/portable.h</FilePath>
-            </File>
-            <File>
-              <FileName>projdefs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</FilePath>
-            </File>
-            <File>
-              <FileName>stack_macros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-FreeRTOS</GroupName>
+          <GroupName>amazon-freertos-freertos</GroupName>
           <Files>
             <File>
               <FileName>event_groups.c</FileName>
@@ -1197,22 +1093,107 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>drivers</GroupName>
+          <GroupName>amazon-freertos-include</GroupName>
           <Files>
             <File>
-              <FileName>fsl_clock.h</FileName>
+              <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_clock.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</FilePath>
             </File>
+            <File>
+              <FileName>event_groups.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/event_groups.h</FilePath>
+            </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
+            <File>
+              <FileName>message_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/message_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>deprecated_definitions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</FilePath>
+            </File>
+            <File>
+              <FileName>list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/list.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_prototypes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_prototypes.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>portable.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/portable.h</FilePath>
+            </File>
+            <File>
+              <FileName>projdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>stack_macros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>threading_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/threading_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>queue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/queue.h</FilePath>
+            </File>
+            <File>
+              <FileName>semphr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/semphr.h</FilePath>
+            </File>
+            <File>
+              <FileName>stream_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/task.h</FilePath>
+            </File>
+            <File>
+              <FileName>timers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/timers.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>drivers</GroupName>
+          <Files>
             <File>
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
+              <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_common.h</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
               <FileName>fsl_common.c</FileName>
@@ -1220,9 +1201,9 @@
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_common.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.h</FileName>
+              <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.h</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_common.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.c</FileName>
@@ -1230,19 +1211,24 @@
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_iomuxc.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpspi.c</FileName>
@@ -1255,19 +1241,14 @@
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_lpspi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpspi_edma.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_lpspi_edma.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_lpspi_edma.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_lpspi_edma.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_edma.h</FileName>
+              <FileName>fsl_lpspi_edma.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_edma.h</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_lpspi_edma.h</FilePath>
             </File>
             <File>
               <FileName>fsl_edma.c</FileName>
@@ -1275,25 +1256,25 @@
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_dmamux.h</FileName>
+              <FileName>fsl_edma.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_dmamux.h</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_edma.h</FilePath>
             </File>
             <File>
               <FileName>fsl_dmamux.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_dmamux.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_dmamux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_dmamux.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>device</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/fsl_device_registers.h</FilePath>
-            </File>
             <File>
               <FileName>MIMXRT1021.h</FileName>
               <FileType>5</FileType>
@@ -1303,6 +1284,11 @@
               <FileName>MIMXRT1021_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/MIMXRT1021_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MIMXRT1021.c</FileName>
@@ -1320,16 +1306,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -1345,6 +1321,16 @@
               <FilePath>../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/utilities/fsl_assert.c</FilePath>
@@ -1352,57 +1338,62 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/uart</GroupName>
+          <GroupName>component-uart</GroupName>
           <Files>
-            <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/uart/uart.h</FilePath>
-            </File>
             <File>
               <FileName>lpuart_adapter.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/uart/lpuart_adapter.c</FilePath>
             </File>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/uart/uart.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component/serial_manager</GroupName>
+          <GroupName>component-serial_manager</GroupName>
           <Files>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
             <File>
               <FileName>serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
             </File>
             <File>
-              <FileName>serial_port_uart.h</FileName>
+              <FileName>serial_manager.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
             </File>
             <File>
               <FileName>serial_port_uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
             </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component/lists</GroupName>
+          <GroupName>component-lists</GroupName>
           <Files>
-            <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
-            </File>
             <File>
               <FileName>generic_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/lists/generic_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1420,14 +1411,14 @@
           <GroupName>xip</GroupName>
           <Files>
             <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_flexspi_nor_boot.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.h</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1020_flexspi_nor_config.c</FileName>
@@ -1455,30 +1446,20 @@
           <GroupName>wifi_qca-port-shields</GroupName>
           <Files>
             <File>
-              <FileName>wifi_shield.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos/wifi_shield.h</FilePath>
-            </File>
-            <File>
               <FileName>wifi_shield.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos/wifi_shield.c</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_shield.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos/wifi_shield.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>wifi_qca-port-env-freertos</GroupName>
           <Files>
-            <File>
-              <FileName>wifi_port.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_port.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi_env_port.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_env_port.h</FilePath>
-            </File>
             <File>
               <FileName>wifi_env.c</FileName>
               <FileType>1</FileType>
@@ -1489,20 +1470,30 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_env.h</FilePath>
             </File>
+            <File>
+              <FileName>wifi_env_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_env_port.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_port.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>wifi_qca-port-drivers-lpspi_edma_freertos</GroupName>
           <Files>
             <File>
-              <FileName>wifi_spi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos/wifi_spi.h</FilePath>
-            </File>
-            <File>
               <FileName>wifi_spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos/wifi_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_spi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos/wifi_spi.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1513,46 +1504,6 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -1570,9 +1521,49 @@
               <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
             <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv8.h</FileName>
@@ -1908,11 +1899,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc 
---diag_suppress=66,1296,186 
---diag_suppress=1296,186 
- 
-</MiscControls>
+              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1021DAG5A, A_LITTLE_ENDIAN, FSL_RTOS_FREE_RTOS</Define>
               <Undefine/>
               <IncludePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F;../../..;..;../../../../../CMSIS/Include;../../../../../devices;../../../../../rtos/amazon-freertos/lib/include;../../../../../rtos/amazon-freertos/lib/include/private;../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos/gt202;../../../../../middleware/wifi_qca;../../../../../middleware/wifi_qca/include;../../../../../middleware/wifi_qca/include/AR6002;../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw;../../../../../middleware/wifi_qca/include/AR6002/hw4.0/hw;../../../../../middleware/wifi_qca/custom_src/stack_custom;../../../../../middleware/wifi_qca/custom_src/include;../../../../../middleware/wifi_qca/common_src/include;../../../../../middleware/wifi_qca/common_src/stack_common;../../../../../middleware/wifi_qca/common_src/hcd;../../../../../middleware/wifi_qca/common_src/wmi;../../../../../middleware/wifi_qca/port;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../devices/MIMXRT1021/drivers;../../../../../components/lists;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos;../../../../../middleware/wifi_qca/port/env/freertos;../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers</IncludePath>
@@ -1949,12 +1936,7 @@
             <ScatterFile>MIMXRT1021xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove 
---keep=*(.boot_hdr.ivt) 
---keep=*(.boot_hdr.boot_data) 
---keep=*(.boot_hdr.conf) 
---predefine="-DXIP_BOOT_HEADER_ENABLE=1" 
-</Misc>
+            <Misc>--remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2047,27 +2029,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-FreeRTOS-portable</GroupName>
+          <GroupName>amazon-freertos-freertos-portable</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c</FilePath>
-            </File>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_tickless_systick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/fsl_tickless_systick.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_tickless_generic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/fsl_tickless_generic.h</FilePath>
             </File>
             <File>
               <FileName>port.c</FileName>
@@ -2079,46 +2046,296 @@
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/portmacro.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi_qca-common_src-wmi</GroupName>
-          <Files>
             <File>
-              <FileName>wmi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/wmi/wmi.c</FilePath>
-            </File>
-            <File>
-              <FileName>wmi_host.h</FileName>
+              <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/wmi/wmi_host.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi_qca-common_src-stack_common</GroupName>
+          <GroupName>wifi_qca-include</GroupName>
           <Files>
             <File>
-              <FileName>dset_api.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/storerecall/dset_api.c</FilePath>
+              <FileName>atheros_stack_offload.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/atheros_stack_offload.h</FilePath>
             </File>
             <File>
-              <FileName>common_stack_offload.h</FileName>
+              <FileName>atheros_wifi.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/stack_common/common_stack_offload.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/atheros_wifi.h</FilePath>
+            </File>
+            <File>
+              <FileName>atheros_wifi_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/atheros_wifi_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>atheros_wifi_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/atheros_wifi_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>athdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/athdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>bmi_msg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/bmi_msg.h</FilePath>
+            </File>
+            <File>
+              <FileName>dbglog.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/dbglog.h</FilePath>
+            </File>
+            <File>
+              <FileName>dbglog_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/dbglog_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>htc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/htc.h</FilePath>
+            </File>
+            <File>
+              <FileName>htc_services.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/htc_services.h</FilePath>
+            </File>
+            <File>
+              <FileName>p2p.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/p2p.h</FilePath>
+            </File>
+            <File>
+              <FileName>pkt_log.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/pkt_log.h</FilePath>
+            </File>
+            <File>
+              <FileName>pmu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/pmu.h</FilePath>
+            </File>
+            <File>
+              <FileName>targaddrs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/targaddrs.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/wlan_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>wmi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/wmi.h</FilePath>
+            </File>
+            <File>
+              <FileName>qcom_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/qcom_api.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-common_src-api_interface</GroupName>
+          <Files>
+            <File>
+              <FileName>api_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/api_interface/api_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>api_ioctl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/api_interface/api_ioctl.c</FilePath>
+            </File>
+            <File>
+              <FileName>api_txrx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/api_interface/api_txrx.c</FilePath>
+            </File>
+            <File>
+              <FileName>api_wmi_rx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/api_interface/api_wmi_rx.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-common_src-bmi</GroupName>
+          <Files>
+            <File>
+              <FileName>bmi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/bmi/bmi.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-common_src-driver</GroupName>
+          <Files>
+            <File>
+              <FileName>driver_diag.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/driver/driver_diag.c</FilePath>
+            </File>
+            <File>
+              <FileName>driver_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/driver/driver_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>driver_main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/driver/driver_main.c</FilePath>
+            </File>
+            <File>
+              <FileName>driver_netbuf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/driver/driver_netbuf.c</FilePath>
+            </File>
+            <File>
+              <FileName>driver_txrx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/driver/driver_txrx.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-common_src-hcd</GroupName>
+          <Files>
+            <File>
+              <FileName>hcd_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/hcd/hcd_api.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-common_src-htc</GroupName>
+          <Files>
+            <File>
+              <FileName>spi_hcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/hcd/spi_hcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>htc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/htc/htc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-common_src-hw_interface</GroupName>
+          <Files>
+            <File>
+              <FileName>hw_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/hw_interface/hw_api.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-common_src-include</GroupName>
+          <Files>
+            <File>
+              <FileName>a_debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/a_debug.h</FilePath>
+            </File>
+            <File>
+              <FileName>a_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/a_drv.h</FilePath>
+            </File>
+            <File>
+              <FileName>a_drv_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/a_drv_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>aggr_recv_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/aggr_recv_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>bmi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/bmi.h</FilePath>
+            </File>
+            <File>
+              <FileName>common_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/common_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>dbglog_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/dbglog_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>driver_cxt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/driver_cxt.h</FilePath>
+            </File>
+            <File>
+              <FileName>dset.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/dset.h</FilePath>
+            </File>
+            <File>
+              <FileName>dset_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/dset_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>hif_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/hif_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>htc_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/htc_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>ieee80211.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/ieee80211.h</FilePath>
+            </File>
+            <File>
+              <FileName>netbuf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/netbuf.h</FilePath>
+            </File>
+            <File>
+              <FileName>spi_hcd_if.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/spi_hcd_if.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/wlan_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>wmi_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/include/wmi_api.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>wifi_qca-common_src-qapi</GroupName>
           <Files>
-            <File>
-              <FileName>api_stack_offload.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/stack_common/api_stack_offload.c</FilePath>
-            </File>
             <File>
               <FileName>qcom_api.c</FileName>
               <FileType>1</FileType>
@@ -2134,175 +2351,35 @@
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wifi_qca/common_src/qapi/qcom_legacy.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi_qca-common_src-include</GroupName>
-          <Files>
             <File>
-              <FileName>dset_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/dset_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>driver_cxt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/driver_cxt.h</FilePath>
-            </File>
-            <File>
-              <FileName>a_drv_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/a_drv_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/wlan_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>wmi_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/wmi_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>hif_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/hif_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>dset.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/dset.h</FilePath>
-            </File>
-            <File>
-              <FileName>dbglog_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/dbglog_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>common_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/common_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>bmi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/bmi.h</FilePath>
-            </File>
-            <File>
-              <FileName>aggr_recv_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/aggr_recv_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>a_drv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/a_drv.h</FilePath>
-            </File>
-            <File>
-              <FileName>a_debug.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/a_debug.h</FilePath>
-            </File>
-            <File>
-              <FileName>spi_hcd_if.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/spi_hcd_if.h</FilePath>
-            </File>
-            <File>
-              <FileName>netbuf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/netbuf.h</FilePath>
-            </File>
-            <File>
-              <FileName>ieee80211.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/ieee80211.h</FilePath>
-            </File>
-            <File>
-              <FileName>htc_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/include/htc_api.h</FilePath>
+              <FileName>api_stack_offload.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/stack_common/api_stack_offload.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi_qca-common_src-htc</GroupName>
+          <GroupName>wifi_qca-common_src-reorder</GroupName>
           <Files>
             <File>
-              <FileName>htc.c</FileName>
+              <FileName>rcv_aggr.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/htc/htc.c</FilePath>
-            </File>
-            <File>
-              <FileName>spi_hcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/hcd/spi_hcd.c</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/reorder/rcv_aggr.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi_qca-common_src-driver</GroupName>
+          <GroupName>wifi_qca-common_src-stack_common</GroupName>
           <Files>
             <File>
-              <FileName>driver_main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/driver/driver_main.c</FilePath>
+              <FileName>common_stack_offload.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/stack_common/common_stack_offload.h</FilePath>
             </File>
             <File>
-              <FileName>driver_txrx.c</FileName>
+              <FileName>dset_api.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/driver/driver_txrx.c</FilePath>
-            </File>
-            <File>
-              <FileName>driver_netbuf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/driver/driver_netbuf.c</FilePath>
-            </File>
-            <File>
-              <FileName>driver_init.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/driver/driver_init.c</FilePath>
-            </File>
-            <File>
-              <FileName>driver_diag.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/driver/driver_diag.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi_qca-common_src-api_interface</GroupName>
-          <Files>
-            <File>
-              <FileName>api_wmi_rx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/api_interface/api_wmi_rx.c</FilePath>
-            </File>
-            <File>
-              <FileName>api_ioctl.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/api_interface/api_ioctl.c</FilePath>
-            </File>
-            <File>
-              <FileName>api_txrx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/api_interface/api_txrx.c</FilePath>
-            </File>
-            <File>
-              <FileName>api_init.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/api_interface/api_init.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi_qca-common_src-hw_interface</GroupName>
-          <Files>
-            <File>
-              <FileName>hw_api.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/hw_interface/hw_api.c</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/storerecall/dset_api.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2322,26 +2399,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi_qca-common_src-hcd</GroupName>
-          <Files>
-            <File>
-              <FileName>hcd_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/hcd/hcd_api.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi_qca-common_src-bmi</GroupName>
-          <Files>
-            <File>
-              <FileName>bmi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/bmi/bmi.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>wifi_qca-common_src-util</GroupName>
           <Files>
             <File>
@@ -2352,82 +2409,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi_qca-common_src-reorder</GroupName>
+          <GroupName>wifi_qca-common_src-wmi</GroupName>
           <Files>
             <File>
-              <FileName>rcv_aggr.c</FileName>
+              <FileName>wmi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/common_src/reorder/rcv_aggr.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi_qca-custom_src-stack_custom</GroupName>
-          <Files>
-            <File>
-              <FileName>cust_api_stack_offload.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/stack_custom/cust_api_stack_offload.c</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/wmi/wmi.c</FilePath>
             </File>
             <File>
-              <FileName>qca_structs.h</FileName>
+              <FileName>wmi_host.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/stack_custom/qca_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>custom_stack_offload.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/stack_custom/custom_stack_offload.h</FilePath>
-            </File>
-            <File>
-              <FileName>cust_api_stack_txrx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/stack_custom/cust_api_stack_txrx.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi_qca-custom_src-qapi</GroupName>
-          <Files>
-            <File>
-              <FileName>custom_qcom_api.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/qapi/custom_qcom_api.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi_qca-custom_src-include</GroupName>
-          <Files>
-            <File>
-              <FileName>cust_netbuf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/cust_netbuf.h</FilePath>
-            </File>
-            <File>
-              <FileName>a_osapi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/a_osapi.h</FilePath>
-            </File>
-            <File>
-              <FileName>a_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/a_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/wlan_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>custom_wlan_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/custom_wlan_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>a_types.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/a_types.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/common_src/wmi/wmi_host.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2435,9 +2427,9 @@
           <GroupName>wifi_qca-custom_src-api_interface</GroupName>
           <Files>
             <File>
-              <FileName>cust_api_wmi_rx.c</FileName>
+              <FileName>cust_api_init.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/api_interface/cust_api_wmi_rx.c</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/api_interface/cust_api_init.c</FilePath>
             </File>
             <File>
               <FileName>cust_api_ioctl.c</FileName>
@@ -2450,9 +2442,9 @@
               <FilePath>../../../../../middleware/wifi_qca/custom_src/api_interface/cust_api_txrx.c</FilePath>
             </File>
             <File>
-              <FileName>cust_api_init.c</FileName>
+              <FileName>cust_api_wmi_rx.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/api_interface/cust_api_init.c</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/api_interface/cust_api_wmi_rx.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2460,14 +2452,14 @@
           <GroupName>wifi_qca-custom_src-driver</GroupName>
           <Files>
             <File>
-              <FileName>cust_driver_netbuf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/custom_src/driver/cust_driver_netbuf.c</FilePath>
-            </File>
-            <File>
               <FileName>cust_driver_main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wifi_qca/custom_src/driver/cust_driver_main.c</FilePath>
+            </File>
+            <File>
+              <FileName>cust_driver_netbuf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/driver/cust_driver_netbuf.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2482,137 +2474,72 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi_qca-include</GroupName>
+          <GroupName>wifi_qca-custom_src-include</GroupName>
           <Files>
             <File>
-              <FileName>wmi.h</FileName>
+              <FileName>a_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/wmi.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/a_config.h</FilePath>
             </File>
             <File>
-              <FileName>dbglog.h</FileName>
+              <FileName>a_osapi.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/dbglog.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/a_osapi.h</FilePath>
             </File>
             <File>
-              <FileName>athdefs.h</FileName>
+              <FileName>a_types.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/athdefs.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/a_types.h</FilePath>
             </File>
             <File>
-              <FileName>dbglog_id.h</FileName>
+              <FileName>cust_netbuf.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/dbglog_id.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/cust_netbuf.h</FilePath>
             </File>
             <File>
-              <FileName>bmi_msg.h</FileName>
+              <FileName>custom_wlan_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/bmi_msg.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/custom_wlan_api.h</FilePath>
             </File>
             <File>
-              <FileName>wlan_defs.h</FileName>
+              <FileName>wlan_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/wlan_defs.h</FilePath>
-            </File>
-            <File>
-              <FileName>targaddrs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/targaddrs.h</FilePath>
-            </File>
-            <File>
-              <FileName>pmu.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/pmu.h</FilePath>
-            </File>
-            <File>
-              <FileName>pkt_log.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/pkt_log.h</FilePath>
-            </File>
-            <File>
-              <FileName>p2p.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/p2p.h</FilePath>
-            </File>
-            <File>
-              <FileName>htc_services.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/htc_services.h</FilePath>
-            </File>
-            <File>
-              <FileName>htc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/htc.h</FilePath>
-            </File>
-            <File>
-              <FileName>qcom_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/qcom_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>atheros_stack_offload.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/atheros_stack_offload.h</FilePath>
-            </File>
-            <File>
-              <FileName>atheros_wifi_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/atheros_wifi_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>atheros_wifi_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/atheros_wifi_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>atheros_wifi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/atheros_wifi.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/include/wlan_config.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi_qca-include-AR6002-hw2.0-hw</GroupName>
+          <GroupName>wifi_qca-custom_src-qapi</GroupName>
           <Files>
             <File>
-              <FileName>hw20_gpio_reg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_gpio_reg.h</FilePath>
+              <FileName>custom_qcom_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/qapi/custom_qcom_api.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-custom_src-stack_custom</GroupName>
+          <Files>
+            <File>
+              <FileName>cust_api_stack_offload.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/stack_custom/cust_api_stack_offload.c</FilePath>
             </File>
             <File>
-              <FileName>hw20_apb_map.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_apb_map.h</FilePath>
+              <FileName>cust_api_stack_txrx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/stack_custom/cust_api_stack_txrx.c</FilePath>
             </File>
             <File>
-              <FileName>hw20_vmc_reg.h</FileName>
+              <FileName>custom_stack_offload.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_vmc_reg.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/stack_custom/custom_stack_offload.h</FilePath>
             </File>
             <File>
-              <FileName>hw20_uart_reg.h</FileName>
+              <FileName>qca_structs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_uart_reg.h</FilePath>
-            </File>
-            <File>
-              <FileName>hw20_si_reg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_si_reg.h</FilePath>
-            </File>
-            <File>
-              <FileName>hw20_rtc_reg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_rtc_reg.h</FilePath>
-            </File>
-            <File>
-              <FileName>hw20_mbox_reg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_mbox_reg.h</FilePath>
-            </File>
-            <File>
-              <FileName>hw20_mbox_host_reg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_mbox_host_reg.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/custom_src/stack_custom/qca_structs.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2627,17 +2554,62 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi_qca-include-AR6002-hw4.0-hw</GroupName>
+          <GroupName>wifi_qca-include-AR6002-hw2.0-hw</GroupName>
           <Files>
             <File>
-              <FileName>hw40_rtc_wlan_reg.h</FileName>
+              <FileName>hw20_apb_map.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw4.0/hw/hw40_rtc_wlan_reg.h</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_apb_map.h</FilePath>
             </File>
+            <File>
+              <FileName>hw20_gpio_reg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_gpio_reg.h</FilePath>
+            </File>
+            <File>
+              <FileName>hw20_mbox_host_reg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_mbox_host_reg.h</FilePath>
+            </File>
+            <File>
+              <FileName>hw20_mbox_reg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_mbox_reg.h</FilePath>
+            </File>
+            <File>
+              <FileName>hw20_rtc_reg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_rtc_reg.h</FilePath>
+            </File>
+            <File>
+              <FileName>hw20_si_reg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_si_reg.h</FilePath>
+            </File>
+            <File>
+              <FileName>hw20_uart_reg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_uart_reg.h</FilePath>
+            </File>
+            <File>
+              <FileName>hw20_vmc_reg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_vmc_reg.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-include-AR6002-hw4.0-hw</GroupName>
+          <Files>
             <File>
               <FileName>hw40_rtc_reg.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw4.0/hw/hw40_rtc_reg.h</FilePath>
+            </File>
+            <File>
+              <FileName>hw40_rtc_wlan_reg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/include/AR6002/hw4.0/hw/hw40_rtc_wlan_reg.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2649,100 +2621,15 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_qca/port/wifi_common.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-license</GroupName>
-          <Files>
             <File>
-              <FileName>LICENSE</FileName>
+              <FileName>wifi_shield_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/LICENSE</FilePath>
+              <FilePath>../../../../../middleware/wifi_qca/port/wifi_shield_common.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-include</GroupName>
-          <Files>
-            <File>
-              <FileName>event_groups.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/event_groups.h</FilePath>
-            </File>
-            <File>
-              <FileName>FreeRTOS.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</FilePath>
-            </File>
-            <File>
-              <FileName>message_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/message_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/queue.h</FilePath>
-            </File>
-            <File>
-              <FileName>semphr.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/semphr.h</FilePath>
-            </File>
-            <File>
-              <FileName>stream_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/task.h</FilePath>
-            </File>
-            <File>
-              <FileName>timers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/timers.h</FilePath>
-            </File>
-            <File>
-              <FileName>freertos_tasks_c_additions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h</FilePath>
-            </File>
-            <File>
-              <FileName>deprecated_definitions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</FilePath>
-            </File>
-            <File>
-              <FileName>list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/list.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_wrappers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</FilePath>
-            </File>
-            <File>
-              <FileName>portable.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/portable.h</FilePath>
-            </File>
-            <File>
-              <FileName>projdefs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</FilePath>
-            </File>
-            <File>
-              <FileName>stack_macros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-FreeRTOS</GroupName>
+          <GroupName>amazon-freertos-freertos</GroupName>
           <Files>
             <File>
               <FileName>event_groups.c</FileName>
@@ -2777,22 +2664,107 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>drivers</GroupName>
+          <GroupName>amazon-freertos-include</GroupName>
           <Files>
             <File>
-              <FileName>fsl_clock.h</FileName>
+              <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_clock.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</FilePath>
             </File>
+            <File>
+              <FileName>event_groups.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/event_groups.h</FilePath>
+            </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
+            <File>
+              <FileName>message_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/message_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>deprecated_definitions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</FilePath>
+            </File>
+            <File>
+              <FileName>list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/list.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_prototypes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_prototypes.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>portable.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/portable.h</FilePath>
+            </File>
+            <File>
+              <FileName>projdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>stack_macros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>threading_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/threading_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>queue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/queue.h</FilePath>
+            </File>
+            <File>
+              <FileName>semphr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/semphr.h</FilePath>
+            </File>
+            <File>
+              <FileName>stream_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/task.h</FilePath>
+            </File>
+            <File>
+              <FileName>timers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/timers.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>drivers</GroupName>
+          <Files>
             <File>
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
+              <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_common.h</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
               <FileName>fsl_common.c</FileName>
@@ -2800,9 +2772,9 @@
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_common.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.h</FileName>
+              <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.h</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_common.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.c</FileName>
@@ -2810,19 +2782,24 @@
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_iomuxc.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpspi.c</FileName>
@@ -2835,19 +2812,14 @@
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_lpspi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpspi_edma.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_lpspi_edma.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_lpspi_edma.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_lpspi_edma.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_edma.h</FileName>
+              <FileName>fsl_lpspi_edma.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_edma.h</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_lpspi_edma.h</FilePath>
             </File>
             <File>
               <FileName>fsl_edma.c</FileName>
@@ -2855,25 +2827,25 @@
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_dmamux.h</FileName>
+              <FileName>fsl_edma.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_dmamux.h</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_edma.h</FilePath>
             </File>
             <File>
               <FileName>fsl_dmamux.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_dmamux.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_dmamux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_dmamux.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>device</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/fsl_device_registers.h</FilePath>
-            </File>
             <File>
               <FileName>MIMXRT1021.h</FileName>
               <FileType>5</FileType>
@@ -2883,6 +2855,11 @@
               <FileName>MIMXRT1021_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/MIMXRT1021_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MIMXRT1021.c</FileName>
@@ -2900,16 +2877,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -2925,6 +2892,16 @@
               <FilePath>../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/utilities/fsl_assert.c</FilePath>
@@ -2932,57 +2909,62 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/uart</GroupName>
+          <GroupName>component-uart</GroupName>
           <Files>
-            <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/uart/uart.h</FilePath>
-            </File>
             <File>
               <FileName>lpuart_adapter.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/uart/lpuart_adapter.c</FilePath>
             </File>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/uart/uart.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component/serial_manager</GroupName>
+          <GroupName>component-serial_manager</GroupName>
           <Files>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
             <File>
               <FileName>serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
             </File>
             <File>
-              <FileName>serial_port_uart.h</FileName>
+              <FileName>serial_manager.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
             </File>
             <File>
               <FileName>serial_port_uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
             </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component/lists</GroupName>
+          <GroupName>component-lists</GroupName>
           <Files>
-            <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
-            </File>
             <File>
               <FileName>generic_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/lists/generic_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3000,14 +2982,14 @@
           <GroupName>xip</GroupName>
           <Files>
             <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_flexspi_nor_boot.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.h</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1020_flexspi_nor_config.c</FileName>
@@ -3035,30 +3017,20 @@
           <GroupName>wifi_qca-port-shields</GroupName>
           <Files>
             <File>
-              <FileName>wifi_shield.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos/wifi_shield.h</FilePath>
-            </File>
-            <File>
               <FileName>wifi_shield.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos/wifi_shield.c</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_shield.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos/wifi_shield.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>wifi_qca-port-env-freertos</GroupName>
           <Files>
-            <File>
-              <FileName>wifi_port.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_port.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi_env_port.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_env_port.h</FilePath>
-            </File>
             <File>
               <FileName>wifi_env.c</FileName>
               <FileType>1</FileType>
@@ -3069,20 +3041,30 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_env.h</FilePath>
             </File>
+            <File>
+              <FileName>wifi_env_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_env_port.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_port.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>wifi_qca-port-drivers-lpspi_edma_freertos</GroupName>
           <Files>
             <File>
-              <FileName>wifi_spi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos/wifi_spi.h</FilePath>
-            </File>
-            <File>
               <FileName>wifi_spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos/wifi_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_spi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos/wifi_spi.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3093,46 +3075,6 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -3150,9 +3092,49 @@
               <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
             <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv8.h</FileName>

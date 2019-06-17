@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">RPMsg-Lite User&#39;s Guide
-   &#160;<span id="projectnumber">Rev. 2.0.2</span>
+   &#160;<span id="projectnumber">Rev. 2.2.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -457,6 +457,7 @@ vq_ops</td>
     <tr><td class="paramname">shmem_length</td><td>Length of memory area given by previous parameter </td></tr>
     <tr><td class="paramname">link_id</td><td>Link ID used to define the rpmsg-lite instance, see rpmsg_platform.h </td></tr>
     <tr><td class="paramname">init_flags</td><td>Initialization flags </td></tr>
+    <tr><td class="paramname">env_cfg</td><td>Initialization data for the environement RPMsg-Lite layer, used when the environment layer uses its own context (RL_USE_ENVIRONMENT_CONTEXT) </td></tr>
     <tr><td class="paramname">static_context</td><td>RPMsg-Lite preallocated context pointer, used in case of static api (RL_USE_STATIC_API)</td></tr>
   </table>
   </dd>
@@ -500,7 +501,9 @@ vq_ops</td>
   <table class="params">
     <tr><td class="paramname">shmem_addr</td><td>Shared memory base used for this instance of RPMsg-Lite </td></tr>
     <tr><td class="paramname">link_id</td><td>Link ID used to define the rpmsg-lite instance, see rpmsg_platform.h </td></tr>
-    <tr><td class="paramname">init_flags</td><td>Initialization flags</td></tr>
+    <tr><td class="paramname">init_flags</td><td>Initialization flags </td></tr>
+    <tr><td class="paramname">env_cfg</td><td>Initialization data for the environement RPMsg-Lite layer, used when the environment layer uses its own context (RL_USE_ENVIRONMENT_CONTEXT) </td></tr>
+    <tr><td class="paramname">static_context</td><td>RPMsg-Lite preallocated context pointer, used in case of static api (RL_USE_STATIC_API)</td></tr>
   </table>
   </dd>
 </dl>

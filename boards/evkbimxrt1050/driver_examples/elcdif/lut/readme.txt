@@ -4,6 +4,14 @@ The ELCDIF LUT project shows how to use the ELCDIF LUT to convert 8-bit input pi
 to 24-bit output pixel. There are two LUT memories, this project uses one input
 frame buffer, and swithes between the two memories, so from the LCD panel, two
 different pictures are shown one by one.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -30,11 +38,6 @@ Prepare the Demo
 Running the demo
 ================
 If this example runs correctly, the screen switches between red and blue.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+Customization options
+=====================
 

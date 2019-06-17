@@ -10,14 +10,21 @@
     <definition extID="device.MIMXRT1021_startup.MIMXRT1021"/>
     <definition extID="driver.fxos8700cq.MIMXRT1021"/>
     <definition extID="middleware.amazon_freertos.aws_iot.MIMXRT1021"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.drivers_rt1020.MIMXRT1021"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.jsmn.MIMXRT1021"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.secure_sockets_wifi_qca.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.bufferpool.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.crypto.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.demos.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.mflash.rt1020.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.mqtt.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.pkcs11.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.secure_sockets.wifi_qca.MIMXRT1021"/>
     <definition extID="middleware.amazon_freertos.aws_iot.shadow.MIMXRT1021"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.wifi.MIMXRT1021"/>
-    <definition extID="middleware.amazon_freertos.aws_iot_demos.MIMXRT1021"/>
-    <definition extID="middleware.freertos.MIMXRT1021"/>
-    <definition extID="middleware.freertos.heap.heap_4.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.tls.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.utils.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.wifi_qca_400x.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos.freertos.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos.freertos.heap_4.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos.third_party.jsmn.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos.third_party.pkcs11.MIMXRT1021"/>
     <definition extID="middleware.mbedtls.MIMXRT1021"/>
     <definition extID="middleware.wifi_qca.MIMXRT1021"/>
     <definition extID="middleware.wifi_qca.evkmimxrt1020.freertos.shields.MIMXRT1021"/>
@@ -50,8 +57,10 @@
     <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
+    <definition extID="com.crt.advproject.config.exe.debug"/>
+    <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1020_aws_remote_control_wifi" name="aws_remote_control_wifi" category="aws_examples" dependency="platform.drivers.trng.MIMXRT1021 platform.drivers.dcp.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 platform.drivers.flexspi.MIMXRT1021 middleware.wifi_qca.evkmimxrt1020.freertos.shields.gt202.MIMXRT1021 middleware.amazon_freertos.aws_iot.drivers_rt1020.MIMXRT1021 platform.drivers.lpi2c.MIMXRT1021 driver.fxos8700cq.MIMXRT1021 middleware.freertos.heap.heap_4.MIMXRT1021 middleware.wifi_qca.MIMXRT1021 middleware.freertos.MIMXRT1021 middleware.mbedtls.MIMXRT1021 middleware.amazon_freertos.aws_iot.MIMXRT1021 middleware.amazon_freertos.aws_iot.jsmn.MIMXRT1021 middleware.amazon_freertos.aws_iot.shadow.MIMXRT1021 middleware.amazon_freertos.aws_iot.secure_sockets_wifi_qca.MIMXRT1021 middleware.amazon_freertos.aws_iot.wifi.MIMXRT1021 middleware.amazon_freertos.aws_iot_demos.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.common.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 utility.debug_console.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.serial_manager.MIMXRT1021 component.serial_manager_uart.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 component.lists.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 platform.utilities.assert.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.xip_board.MIMXRT1021 platform.Include_core_cm7.MIMXRT1021 platform.Include_common.MIMXRT1021 middleware.wifi_qca.evkmimxrt1020.freertos.shields.MIMXRT1021 middleware.wifi_qca.freertos.MIMXRT1021 middleware.wifi_qca.freertos.drivers.lpspi_edma.MIMXRT1021 platform.drivers.lpspi.MIMXRT1021 platform.drivers.lpspi_edma.MIMXRT1021 platform.drivers.edma.MIMXRT1021 platform.drivers.dmamux.MIMXRT1021" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="evkmimxrt1020_aws_remote_control_wifi" name="aws_remote_control_wifi" category="aws_examples" dependency="platform.drivers.trng.MIMXRT1021 platform.drivers.dcp.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 platform.drivers.flexspi.MIMXRT1021 middleware.wifi_qca.evkmimxrt1020.freertos.shields.gt202.MIMXRT1021 middleware.amazon_freertos.aws_iot.mflash.rt1020.MIMXRT1021 platform.drivers.lpi2c.MIMXRT1021 driver.fxos8700cq.MIMXRT1021 middleware.wifi_qca.MIMXRT1021 middleware.amazon_freertos.aws_iot.secure_sockets.wifi_qca.MIMXRT1021 middleware.amazon_freertos.aws_iot.wifi_qca_400x.MIMXRT1021 middleware.amazon_freertos.aws_iot.demos.MIMXRT1021 middleware.amazon_freertos.freertos.MIMXRT1021 middleware.amazon_freertos.freertos.heap_4.MIMXRT1021 middleware.amazon_freertos.aws_iot.MIMXRT1021 middleware.amazon_freertos.aws_iot.bufferpool.MIMXRT1021 middleware.amazon_freertos.aws_iot.crypto.MIMXRT1021 middleware.amazon_freertos.aws_iot.mqtt.MIMXRT1021 middleware.amazon_freertos.aws_iot.pkcs11.MIMXRT1021 middleware.amazon_freertos.aws_iot.shadow.MIMXRT1021 middleware.amazon_freertos.aws_iot.tls.MIMXRT1021 middleware.amazon_freertos.aws_iot.utils.MIMXRT1021 middleware.amazon_freertos.third_party.jsmn.MIMXRT1021 middleware.amazon_freertos.third_party.pkcs11.MIMXRT1021 middleware.mbedtls.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.common.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 utility.debug_console.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.serial_manager.MIMXRT1021 component.serial_manager_uart.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 component.lists.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 platform.utilities.assert.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.xip_board.MIMXRT1021 platform.Include_core_cm7.MIMXRT1021 platform.Include_common.MIMXRT1021 middleware.wifi_qca.evkmimxrt1020.freertos.shields.MIMXRT1021 middleware.wifi_qca.freertos.MIMXRT1021 middleware.wifi_qca.freertos.drivers.lpspi_edma.MIMXRT1021 platform.drivers.lpspi.MIMXRT1021 platform.drivers.lpspi_edma.MIMXRT1021 platform.drivers.edma.MIMXRT1021 platform.drivers.dmamux.MIMXRT1021">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -79,16 +88,12 @@
           <value>SKIP_SYSCLK_INIT</value>
           <value>CPU_MIMXRT1021DAG5A</value>
           <value>SDK_DEBUGCONSOLE=1</value>
-          <value>PRINTF_FLOAT_ENABLE=0</value>
-          <value>SCANF_FLOAT_ENABLE=0</value>
-          <value>PRINTF_ADVANCED_ENABLE=0</value>
-          <value>SCANF_ADVANCED_ENABLE=0</value>
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
-          <value>BOARD_ACCEL_FXOS</value>
           <value>SDK_I2C_BASED_COMPONENT_USED</value>
           <value>USE_RTOS=1</value>
           <value>MBEDTLS_CONFIG_FILE='"aws_mbedtls_config.h"'</value>
+          <value>FSL_FEATURE_GPIO_HAS_NO_RESET=1</value>
           <value>A_LITTLE_ENDIAN</value>
           <value>FSL_RTOS_FREE_RTOS</value>
         </option>
@@ -96,7 +101,7 @@
           <value>-fno-common</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin  -fomit-frame-pointer</value>
+          <value>-fomit-frame-pointer  -c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
         </option>
         <option id="com.crt.advproject.link.fpu" type="enum">
           <value>com.crt.advproject.link.fpu.fpv5dp.hard</value>
@@ -117,7 +122,7 @@
       <debug_configuration id_refs="com.nxp.mcuxpresso.core.debug.support.segger.debug">
         <scripts>
           <script type="segger_script">
-            <source path="boards/evkmimxrt1020/aws_examples/remote_control_wifi" type="script">
+            <source path="boards/evkmimxrt1020/aws_examples/remote_control_wifi" type="script" target_path="script">
               <files mask="evkmimxrt1020_sdram_init.jlinkscript"/>
             </source>
           </script>
@@ -126,17 +131,134 @@
       <debug_configuration id_refs="com.nxp.mcuxpresso.core.debug.support.segger.release">
         <scripts>
           <script type="segger_script">
-            <source path="boards/evkmimxrt1020/aws_examples/remote_control_wifi" type="script">
+            <source path="boards/evkmimxrt1020/aws_examples/remote_control_wifi" type="script" target_path="script">
               <files mask="evkmimxrt1020_sdram_init.jlinkscript"/>
             </source>
           </script>
         </scripts>
       </debug_configuration>
+      <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+        <drivers>
+          <driver id_refs="BOARD_FLASH_evkmimxrt1020">
+            <driverBinary path="devices/MIMXRT1021/mcuxpresso" type="binary" target_path="binary">
+              <files mask="MIMXRT1020-EVK_IS25LP064.cfx"/>
+            </driverBinary>
+          </driver>
+        </drivers>
+      </debug_configuration>
     </debug_configurations>
     <include_paths>
-      <include_path path="amazon-freertos/third_party"/>
       <include_path path="mbedtls/include"/>
     </include_paths>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android/.idea/copyright" target_path="source" type="xml" exclude="true">
+      <files mask="NXP.xml"/>
+      <files mask="profiles_settings.xml"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android/.idea" target_path="source" type="xml" exclude="true">
+      <files mask="compiler.xml"/>
+      <files mask="gradle.xml"/>
+      <files mask="misc.xml"/>
+      <files mask="modules.xml"/>
+      <files mask="runConfigurations.xml"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android/app/src/main/java/com/nxp/awsremotecontrol/iot" target_path="source" type="other" exclude="true">
+      <files mask="AwsConstants.java"/>
+      <files mask="AwsShadow.java"/>
+      <files mask="IPreferencesListener.java"/>
+      <files mask="RgbLed.java"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android/app/src/main/java/com/nxp/awsremotecontrol/mqtt" target_path="source" type="other" exclude="true">
+      <files mask="Connection.java"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android/app/src/main/java/com/nxp/awsremotecontrol" target_path="source" type="other" exclude="true">
+      <files mask="AboutActivity.java"/>
+      <files mask="MainActivity.java"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android/app/src/main/res/drawable-hdpi" target_path="source" type="image" exclude="true">
+      <files mask="ic_action_refresh.png"/>
+      <files mask="ic_led.png"/>
+      <files mask="ic_led_filled.png"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android/app/src/main/res/drawable-mdpi" target_path="source" type="image" exclude="true">
+      <files mask="ic_action_refresh.png"/>
+      <files mask="ic_led.png"/>
+      <files mask="ic_led_filled.png"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android/app/src/main/res/drawable-xhdpi" target_path="source" type="image" exclude="true">
+      <files mask="ic_action_refresh.png"/>
+      <files mask="ic_led.png"/>
+      <files mask="ic_led_filled.png"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android/app/src/main/res/drawable-xxhdpi" target_path="source" type="image" exclude="true">
+      <files mask="ic_action_refresh.png"/>
+      <files mask="ic_led.png"/>
+      <files mask="ic_led_filled.png"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android/app/src/main/res/drawable" target_path="source" type="image" exclude="true">
+      <files mask="nxp.png"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android/app/src/main/res/layout" target_path="source" type="xml" exclude="true">
+      <files mask="activity_about.xml"/>
+      <files mask="activity_main.xml"/>
+      <files mask="content_about.xml"/>
+      <files mask="content_main.xml"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android/app/src/main/res/menu" target_path="source" type="xml" exclude="true">
+      <files mask="main.xml"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android/app/src/main/res/mipmap-hdpi" target_path="source" type="image" exclude="true">
+      <files mask="ic_launcher.png"/>
+      <files mask="ic_launcher_round.png"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android/app/src/main/res/mipmap-mdpi" target_path="source" type="image" exclude="true">
+      <files mask="ic_launcher.png"/>
+      <files mask="ic_launcher_round.png"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android/app/src/main/res/mipmap-xhdpi" target_path="source" type="image" exclude="true">
+      <files mask="ic_launcher.png"/>
+      <files mask="ic_launcher_round.png"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android/app/src/main/res/mipmap-xxhdpi" target_path="source" type="image" exclude="true">
+      <files mask="ic_launcher.png"/>
+      <files mask="ic_launcher_round.png"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android/app/src/main/res/mipmap-xxxhdpi" target_path="source" type="image" exclude="true">
+      <files mask="ic_launcher.png"/>
+      <files mask="ic_launcher_round.png"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android/app/src/main/res/values" target_path="source" type="xml" exclude="true">
+      <files mask="colors.xml"/>
+      <files mask="dimens.xml"/>
+      <files mask="drawables.xml"/>
+      <files mask="strings.xml"/>
+      <files mask="styles.xml"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android/app/src/main" target_path="source" type="image" exclude="true">
+      <files mask="ic_launcher-web.png"/>
+      <files mask="ic_launcher_round-web.png"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android/app/src/main" target_path="source" type="xml" exclude="true">
+      <files mask="AndroidManifest.xml"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android/app" target_path="source" type="other" exclude="true">
+      <files mask="build.gradle"/>
+      <files mask="proguard-rules.pro"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android/gradle/wrapper" target_path="source" type="other" exclude="true">
+      <files mask="gradle-wrapper.jar"/>
+      <files mask="gradle-wrapper.properties"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android" target_path="source" type="other" exclude="true">
+      <files mask="AwsRemoteControl.apk"/>
+      <files mask="AwsRemoteControlPreferences.properties"/>
+      <files mask="build.gradle"/>
+      <files mask="gradle.properties"/>
+      <files mask="gradlew"/>
+      <files mask="settings.gradle"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/remote_control_android" target_path="source" type="script" exclude="true">
+      <files mask="gradlew.bat"/>
+    </source>
     <source path="boards/evkmimxrt1020/aws_examples/remote_control_wifi/config_files" target_path="amazon-freertos/config_files" type="c_include">
       <files mask="FreeRTOSIPConfig.h"/>
       <files mask="aws_bufferpool_config.h"/>

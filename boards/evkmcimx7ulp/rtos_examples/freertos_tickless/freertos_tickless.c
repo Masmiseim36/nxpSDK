@@ -21,7 +21,7 @@
 #include "fsl_device_registers.h"
 #include "fsl_common.h"
 #include "clock_config.h"
-#if configUSE_TICKLESS_IDLE
+#if configUSE_TICKLESS_IDLE == 2
 #include "fsl_lptmr.h"
 #endif
 /*******************************************************************************
@@ -64,6 +64,7 @@ SemaphoreHandle_t xSWSemaphore = NULL;
  * Code
  ******************************************************************************/
 
+#if configUSE_TICKLESS_IDLE == 2
 /*!
  * @brief Interrupt service fuction of LPT timer.
  *
@@ -95,6 +96,7 @@ IRQn_Type vPortGetLptmrIrqn(void)
 {
     return LPTMR0_IRQn;
 }
+#endif
 /*!
  * @brief Main function
  */
@@ -110,7 +112,7 @@ int main(void)
 #endif
     };
 #endif
-#if configUSE_TICKLESS_IDLE
+#if configUSE_TICKLESS_IDLE == 2
     lptmr_config_t lptmrConfig;
 
     CLOCK_EnableClock(kCLOCK_Lptmr0);

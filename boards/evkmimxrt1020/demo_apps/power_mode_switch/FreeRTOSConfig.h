@@ -43,7 +43,7 @@
 #define configCPU_CLOCK_HZ                      (SystemCoreClock)
 #define configTICK_RATE_HZ                      ((TickType_t)1000)
 #define configMAX_PRIORITIES                    5
-#define configMINIMAL_STACK_SIZE                ((unsigned short)90)
+#define configMINIMAL_STACK_SIZE                ((unsigned short)100)
 #define configMAX_TASK_NAME_LEN                 20
 #define configUSE_16_BIT_TICKS                  0
 #define configIDLE_SHOULD_YIELD                 1
@@ -147,9 +147,15 @@ to all Cortex-M ports, and do not rely on any particular library functions. */
 /* !!!! configMAX_SYSCALL_INTERRUPT_PRIORITY must not be set to zero !!!!
 See http://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html. */
 #define configMAX_SYSCALL_INTERRUPT_PRIORITY (configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY << (8 - configPRIO_BITS))
-                         
-#define configPRE_SLEEP_PROCESSING      vPortPRE_SLEEP_PROCESSING
-#define configPOST_SLEEP_PROCESSING     vPortPOST_SLEEP_PROCESSING
+
+#ifndef __IASMARM__
+
+  void vPortPRE_SLEEP_PROCESSING( unsigned long xExpectedIdleTime );
+  void vPortPOST_SLEEP_PROCESSING( unsigned long xExpectedIdleTime );
+  #define configPRE_SLEEP_PROCESSING( xExpectedIdleTime )      vPortPRE_SLEEP_PROCESSING( xExpectedIdleTime );
+  #define configPOST_SLEEP_PROCESSING( xExpectedIdleTime )     vPortPOST_SLEEP_PROCESSING( xExpectedIdleTime );
+
+#endif /* __IASMARM__ */
 
 /* Definitions that map the FreeRTOS port interrupt handlers to their CMSIS
 standard names. */

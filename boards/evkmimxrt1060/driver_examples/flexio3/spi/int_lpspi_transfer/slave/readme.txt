@@ -5,35 +5,14 @@ The flexio_spi_slave_interrupt_lpspi_master example shows how to use flexio spi 
 In this example, a flexio simulated slave connect to a lpspi master.
 
 
-Running the demo
-================
-You can see the similar message shows following in the terminal if the example runs successfully.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-LPSPI Master interrupt - FLEXIO SPI Slave interrupt example start.
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
 
-This example use one lpspi instance as master and one flexio spi slave on one board.
-
-Master and slave are both use interrupt way.
-
-Please make sure you make the correct line connection. Basically, the connection is:
-
-LPSPI_master -- FLEXIO_SPI_slave
-
-   CLK      --    CLK
-
-   PCS      --    PCS
-
-   SOUT     --    SIN
-
-   SIN      --    SOUT
-
-This is FLEXIO SPI slave call back.
-
-LPSPI master <-> FLEXIO SPI slave transfer all data matched!
-
-End of Example.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -67,11 +46,35 @@ Prepare the Demo
 4. Either press the reset button on your board or launch the debugger in your IDE to begin running
    the demo.
 
+Running the demo
+================
+You can see the similar message shows following in the terminal if the example runs successfully.
 
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+LPSPI Master interrupt - FLEXIO SPI Slave interrupt example start.
+
+This example use one lpspi instance as master and one flexio spi slave on one board.
+
+Master and slave are both use interrupt way.
+
+Please make sure you make the correct line connection. Basically, the connection is:
+
+LPSPI_master -- FLEXIO_SPI_slave
+
+   CLK      --    CLK
+
+   PCS      --    PCS
+
+   SOUT     --    SIN
+
+   SIN      --    SOUT
+
+This is FLEXIO SPI slave call back.
+
+LPSPI master <-> FLEXIO SPI slave transfer all data matched!
+
+End of Example.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Customization options
+=====================
 

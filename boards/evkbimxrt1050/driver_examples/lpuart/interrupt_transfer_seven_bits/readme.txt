@@ -4,6 +4,14 @@ The lpuart_interrupt_transfer_seven_bits Example project is to demonstrate usage
 In the example, you can send characters to the console back and they will be printed out onto console
  in a group of 8 characters.
 NOTE: Please set com port format to "7 data bits without parity bit" in PC's com port tool
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -39,11 +47,6 @@ Lpuart interrupt example with seven data bits
 Board receives 8 characters then sends them out
 Now please input:
 ~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+Customization options
+=====================
 

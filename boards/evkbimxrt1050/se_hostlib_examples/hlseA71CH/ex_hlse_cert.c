@@ -27,6 +27,7 @@
 #include "sm_types.h"
 #include "sm_apdu.h"
 #include "tst_sm_util.h"
+#include "a71ch_util.h"
 
 #include "HLSEAPI.h"
 #include "tst_a71ch_util.h"
@@ -46,7 +47,7 @@ static U8 exCertSetAttr(void);
 
 // internal utilities
 static HLSE_RET_CODE patchCertificateInitialTL(U8 *clientCertDer, U16 clientCertDerLen);
-static HLSE_RET_CODE getObject(HLSE_OBJECT_HANDLE handle, U8 *data, U16 *len); 
+static HLSE_RET_CODE getObject(HLSE_OBJECT_HANDLE handle, U8 *data, U16 *len);
 static HLSE_RET_CODE setObject(HLSE_OBJECT_HANDLE handle, U8 *data, U16 len);
 
 /**
@@ -56,6 +57,8 @@ U8 exHlseCert()
 {
     U8 result = 1;
     PRINTF("\r\n-----------\r\nStart exHlseCert()\r\n------------\r\n");
+
+    DEV_ClearChannelState();
 
     // Example of Data object usage
     result &= exDataObjUsage(INIT_MODE_RESET);
@@ -162,8 +165,8 @@ static U8 exCertUsageBasic(U8 initMode)
     result &= AX_CHECK_U16(certHandlesNum, 1, "err");
 
     // Get the attributes of the single certificate we have created
-	// - Object Index
-	// - Certificate data
+    // - Object Index
+    // - Certificate data
     PRINTF("\r\nHLSE_GetObjectAttribute()...\r\n");
     {
         U32 certIndex = 0xFFFFFFFF;
@@ -175,7 +178,7 @@ static U8 exCertUsageBasic(U8 initMode)
         hlseRc = HLSE_GetObjectAttribute(certHandles[certHandlesNum - 1], &attrL);
         result &= AX_CHECK_SW(hlseRc, HLSE_SW_OK, "err");
 
-        PRINTF("\tcert index = 0x%lx\r\n", certIndex);
+        PRINTF("\tcert index = 0x%X\r\n", certIndex);
         result &= AX_CHECK_U16((U16)certIndex, 0x00, "err");
     }
 
@@ -342,7 +345,7 @@ static U8 exDataObjUsage(U8 initMode)
         hlseRc = HLSE_GetObjectAttribute(handles[handlesNum - 1], &attrL);
         result &= AX_CHECK_SW(hlseRc, HLSE_SW_OK, "err");
 
-        PRINTF("\tdata object offset = 0x%lx\r\n", offset);
+        PRINTF("\tdata object offset = 0x%u\r\n", offset);
     }
 
     // make sure our data object is the one we previously created
@@ -358,7 +361,7 @@ static U8 exDataObjUsage(U8 initMode)
         hlseRc = HLSE_GetObjectAttribute(handles[handlesNum - 1], &attrL);
         result &= AX_CHECK_SW(hlseRc, HLSE_SW_OK, "err");
 
-        PRINTF("\tdata object index = 0x%lx\r\n", dataIndex);
+        PRINTF("\tdata object index = 0x%X\r\n", dataIndex);
         result &= AX_CHECK_U16((U16)dataIndex, 0x00, "err");
     }
 
@@ -528,7 +531,7 @@ static U8 exDataObjUsage(U8 initMode)
 /**
 * An Example to show usage of mixed certificates and data objects
 *
-* Scenario: 
+* Scenario:
 *   - Create certificates and data objects
 *   - Read back the certificate and data objects
 *       - verify objects exists
@@ -539,7 +542,7 @@ static U8 exDataObjUsage(U8 initMode)
 *       - verify objects exists
 *       - verify object's length matches
 *       - verify objects's data matches
-*   - Update an objects with new data 
+*   - Update an objects with new data
 *   - Read back the remaining certificate and data objects
 *       - verify objects exists
 *       - verify object's length matches
@@ -645,7 +648,7 @@ static U8 exMixedCertsAndDataObj(U8 initMode, U16 nBaseSize, U16 nObj)
         attr[2].valueLen = effectiveSize[i];
 
         // Create certificate object @ index
-        PRINTF("\r\nHLSE_CreateObject(index=%d, size=%d) - Create %s object...\r\n------------\r\n",
+        PRINTF("\r\nHLSE_CreateObject(index=%lu, size=%d) - Create %s object...\r\n------------\r\n",
             index, attr[2].valueLen, (objType == HLSE_CERTIFICATE ? "Certificate" : "Data"));
         hlseRc = HLSE_CreateObject(attr, templateSize, &mixedHandles[i]);
 
@@ -685,7 +688,10 @@ static U8 exMixedCertsAndDataObj(U8 initMode, U16 nBaseSize, U16 nObj)
 
     // Delete a random number of objects
     do {
-        nObjToDelete = (U8)(rand() % (nObjCreated / 2));
+        U8 nObjCreated_by2 = nObjCreated / 2;
+        if ( nObjCreated_by2 != 0 ) {
+            nObjToDelete = (U8)(rand() % (nObjCreated_by2));
+        }
     } while (nObjToDelete == 0);
 
     PRINTF("\r\nAbout to delete %d objects...", nObjToDelete);
@@ -694,7 +700,7 @@ static U8 exMixedCertsAndDataObj(U8 initMode, U16 nBaseSize, U16 nObj)
         handleAlreadySelected = 0;
         // find an index to delete
         do {
-            // index in mixedHandles array of handle to delete 
+            // index in mixedHandles array of handle to delete
             index = (U8)(rand() % nObjCreated);
             // verify this index was not already deleted
             if (handleIndDeleted[index] == 1) {
@@ -710,7 +716,7 @@ static U8 exMixedCertsAndDataObj(U8 initMode, U16 nBaseSize, U16 nObj)
         handleIndDeleted[index] = 1;
 
         // Delete the object
-        PRINTF("\r\nHLSE_EraseObject(),  handle=0x%lX...\r\n", mixedHandles[index]);
+        PRINTF("\r\nHLSE_EraseObject(),  handle=0x%X...\r\n", mixedHandles[index]);
         hlseRc = HLSE_EraseObject(mixedHandles[index]);
         result &= AX_CHECK_SW(hlseRc, HLSE_SW_OK, "err");
     }
@@ -720,10 +726,10 @@ static U8 exMixedCertsAndDataObj(U8 initMode, U16 nBaseSize, U16 nObj)
     PRINTF("\r\nNow read back remaining certificates and data objects...\r\n");
     for (i = 0; i < nObjCreated; i++)
     {
-		U16 dataLen = MAX_ADV_CERT_SIZE;
-		U8 localScore = 1;
+        U16 dataLen = MAX_ADV_CERT_SIZE;
+        U8 localScore = 1;
 
-		// ignore this handle if was deleted
+        // ignore this handle if was deleted
         if (handleIndDeleted[i] != 0)
         {
             // skip this deleted object;
@@ -748,9 +754,9 @@ static U8 exMixedCertsAndDataObj(U8 initMode, U16 nBaseSize, U16 nObj)
     PRINTF("\r\nNow update remaining certificates and data objects...\r\n");
     for (i = 0; i < nObjCreated; i++)
     {
-		U16 dataLen;
-		U8 localScore = 1;
-		// ignore this handle if was deleted
+        U16 dataLen;
+        U8 localScore = 1;
+        // ignore this handle if was deleted
         if (handleIndDeleted[i] != 0)
         {
             // skip this deleted object;
@@ -781,7 +787,7 @@ static U8 exMixedCertsAndDataObj(U8 initMode, U16 nBaseSize, U16 nObj)
 
         result &= localScore;
     }
-    
+
 
     /*
     * Delete all objects
@@ -800,7 +806,7 @@ static U8 exMixedCertsAndDataObj(U8 initMode, U16 nBaseSize, U16 nObj)
         handleIndDeleted[i] = 1;
 
         // Delete the object
-        PRINTF("\r\nHLSE_EraseObject(), handle=0x%lX...\r\n", mixedHandles[i]);
+        PRINTF("\r\nHLSE_EraseObject(), handle=0x%X...\r\n", mixedHandles[i]);
         hlseRc = HLSE_EraseObject(mixedHandles[i]);
         result &= AX_CHECK_SW(hlseRc, HLSE_SW_OK, "err");
     }
@@ -824,7 +830,7 @@ static U8 exMixedCertsAndDataObj(U8 initMode, U16 nBaseSize, U16 nObj)
  *
  * Simulate the following scenario and aim to verify it works correctly:
  *
- * - Create certificates 
+ * - Create certificates
  * - Verify cannot create additional certificate
  * - Verify allows to enlarge a certificate with size within allocated boundary
  * - Verify cannot enlarge beyond the allocated boundary
@@ -842,9 +848,9 @@ static U8 exCertUsageEnlarge(U8 initMode)
     // num of certificates to try to create ( actually created depends on GP memory availability )
     U8 nCertsToCreate = 50;
 
-    // Note at max of 254 objects could be stored in the Gp table 
+    // Note at max of 254 objects could be stored in the Gp table
     // we allocate here space for one more in case we want to check that more that that is not possible
-    HLSE_OBJECT_HANDLE certHandles[255 + 1];  
+    HLSE_OBJECT_HANDLE certHandles[255 + 1];
 
     U8 nCertsCreated = 0;
 
@@ -900,7 +906,7 @@ static U8 exCertUsageEnlarge(U8 initMode)
         index = indexCert;
         memset(certData, (0xAA+index), sizeof(certData));
 
-        PRINTF("\r\nHLSE_CreateObject() - Create certificate object(0x%02lx)", index);
+        PRINTF("\r\nHLSE_CreateObject() - Create certificate object(0x%02x)", index);
         hlseRc = HLSE_CreateObject(attr, templateSize, &certHandles[indexCert]);
 
         if ((hlseRc != HLSE_SW_OK) && (indexCert > 4)) {
@@ -1025,7 +1031,7 @@ static U8 exCertUsageEnlarge(U8 initMode)
         attr[2].value = dataIn2Chunks;
         attr[2].valueLen = sizeof(dataIn2Chunks);
 
-        PRINTF("\r\nHLSE_CreateObject() - Create certificate object(0x%02lx)\r\n", index);
+        PRINTF("\r\nHLSE_CreateObject() - Create certificate object(0x%02x)\r\n", index);
         hlseRc = HLSE_CreateObject(attr, templateSize, &certHandle2);
         result &= AX_CHECK_SW(hlseRc, HLSE_SW_OK, "err");
         nCertsCreated++;
@@ -1109,7 +1115,7 @@ static U8 exCertUsageEnlarge(U8 initMode)
     {
         index = indexCert;
 
-        PRINTF("\r\nHLSE_EraseObject() - index 0x%02lx", index);
+        PRINTF("\r\nHLSE_EraseObject() - index 0x%02x", index);
         hlseRc = HLSE_EraseObject(certHandles[index]);
         result &= AX_CHECK_SW(hlseRc, HLSE_SW_OK, "err");
     }
@@ -1317,7 +1323,7 @@ static U8 exCertUsageGpTableLengthUnknown(U8 initMode)
         hlseRc = HLSE_GetObjectAttribute(certHandles[certHandlesNum - 1], &attrL);
         result &= AX_CHECK_SW(hlseRc, HLSE_SW_OK, "err");
 
-        PRINTF("\tcert index = 0x%lx\r\n", certIndex);
+        PRINTF("\tcert index = 0x%X\r\n", certIndex);
         result &= AX_CHECK_U16((U16)certIndex, 0x00, "err");
     }
 
@@ -1531,7 +1537,7 @@ static U8 exCertUsageReadOnly(U8 initMode)
  */
 static U8 exCertEnumerate()
 {
-    HLSE_OBJECT_HANDLE handles[10];
+    HLSE_OBJECT_HANDLE handles[10] = { 0 };
     U16 handleNum = 10;
     HLSE_RET_CODE hlseRc;
     U16 i;
@@ -1552,7 +1558,7 @@ static U8 exCertEnumerate()
         hlseRc = HLSE_GetObjectAttribute(handles[i], &attr);
         result &= AX_CHECK_SW(hlseRc, HLSE_SW_OK, "err");
 
-        PRINTF("exCertEnumerate - tag = 0x%lx\r\n", tag);
+        PRINTF("exCertEnumerate - tag = 0x%X\r\n", tag);
     }
 
     PRINTF("\r\n-----------\r\nEnd exCertEnumerate(), result = %s\r\n------------\r\n", ((result == 1) ? "OK" : "FAILED"));
@@ -1573,7 +1579,7 @@ static U8 exCertGetAttr()
     U8 result = 1;
     HLSE_RET_CODE hlseRc;
 
-    HLSE_OBJECT_HANDLE handles[10];
+    HLSE_OBJECT_HANDLE handles[10] = { 0 };
     U16 handleNum = 10;
     U16 i;
 
@@ -1659,9 +1665,9 @@ static U8 exCertSetAttr()
 
 
 /**
-* Internal utility to patch the TLV header of a data buffer so it contains the 
+* Internal utility to patch the TLV header of a data buffer so it contains the
 * certificate header TLV correct
-* 
+*
 * A certificate header consists of the 0x30 tag followes by a length which could be encoded as
 * 1) one byte: the length byte in case of length <= 127
 * 2) 2 bytes : 0x81 followed byte the length byte in case 127 < length <= 255
@@ -1701,10 +1707,10 @@ static HLSE_RET_CODE patchCertificateInitialTL(U8 *clientCertDer, U16 clientCert
 *  Get an object's value and length based on based on object handle provided
 *
 * @param[in]     handle     object handle
-* @param[out]    data       buffer to store object's value retrieved 
+* @param[out]    data       buffer to store object's value retrieved
 * @param[in,out] len        in - length of data buffer, out - actual object's length
 */
-static HLSE_RET_CODE getObject(HLSE_OBJECT_HANDLE handle, U8 *data, U16 *len) 
+static HLSE_RET_CODE getObject(HLSE_OBJECT_HANDLE handle, U8 *data, U16 *len)
 {
     HLSE_RET_CODE hlseRc;
     HLSE_ATTRIBUTE attr;
@@ -1714,10 +1720,10 @@ static HLSE_RET_CODE getObject(HLSE_OBJECT_HANDLE handle, U8 *data, U16 *len)
     // We are looking for the object on index i in handles array
     type = HLSE_GET_OBJECT_TYPE(handle);
     if (type == HLSE_CERTIFICATE) {
-        PRINTF("get Certificate Object, handle=0x%lX\n", handle);
+        PRINTF("get Certificate Object, handle=0x%X\n", handle);
     }
     else {
-        PRINTF("get Data Object, handle=0x%lX\n", handle);
+        PRINTF("get Data Object, handle=0x%X\n", handle);
     }
 
     // Read
@@ -1766,10 +1772,10 @@ static HLSE_RET_CODE setObject(HLSE_OBJECT_HANDLE handle, U8 *data, U16 len)
     // We are looking for the object on index i in handles array
     type = HLSE_GET_OBJECT_TYPE(handle);
     if (type == HLSE_CERTIFICATE) {
-        PRINTF("Set Certificate Object, handle=0x%lX\n", handle);
+        PRINTF("Set Certificate Object, handle=0x%X\n", handle);
     }
     else {
-        PRINTF("Set Data Object, handle=0x%lX\n", handle);
+        PRINTF("Set Data Object, handle=0x%X\n", handle);
     }
 
     // Update

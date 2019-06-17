@@ -3,6 +3,14 @@ Overview
 The Hello World demo application provides a sanity check for the new SDK build environments and board bring up. The Hello
 World demo prints the "Hello World" string to the terminal using the SDK UART drivers. The purpose of this demo is to
 show how to use the UART, and to provide a simple project for debugging and further development.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -39,11 +47,6 @@ To download binary into qspiflash and boot from qspiflash directly, following st
 4. Drop the binaray into disk "RT1060-EVK" on PC.
 5. Wait for the disk disappear and appear again which will take couple of seconds.
 7. Reset the board by pressing SW3 or power off and on the board. 
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+Customization options
+=====================
 

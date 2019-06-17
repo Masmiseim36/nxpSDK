@@ -70,7 +70,7 @@ void tlsio_options_release_resources(TLSIO_OPTIONS* options)
 
 static bool is_supported_string_option(const char* name)
 {
-    return 
+    return
         (strcmp(name, OPTION_TRUSTED_CERT) == 0) ||
         (strcmp(name, OPTION_OPENSSL_CIPHER_SUITE) == 0) ||
         (strcmp(name, SU_OPTION_X509_CERT) == 0) ||
@@ -253,7 +253,7 @@ OPTIONHANDLER_HANDLE tlsio_options_retrieve_options_ex(TLSIO_OPTIONS* options,
     if (options == NULL || cloneOption == NULL || destroyOption == NULL || setOption == NULL)
     {
         LogError("Null parameter in options: %p, cloneOption: %p, destroyOption: %p, setOption: %p",
-            options, cloneOption, destroyOption, setOption);
+            options, (void*)cloneOption, (void*)destroyOption, (void*)setOption);
         result = NULL;
     }
     else

@@ -1,7 +1,7 @@
 /*
  * Copyright 2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -56,28 +56,28 @@ static void lpi2c_slave_callback(LPI2C_Type *base, lpi2c_slave_transfer_t *xfer,
     {
         /*  Address match event */
         case kLPI2C_SlaveAddressMatchEvent:
-            xfer->data = NULL;
+            xfer->data     = NULL;
             xfer->dataSize = 0;
             break;
         /*  Transmit request */
         case kLPI2C_SlaveTransmitEvent:
             /*  Update information for transmit process */
-            xfer->data = &g_slave_buff[2];
+            xfer->data     = &g_slave_buff[2];
             xfer->dataSize = g_slave_buff[1];
             break;
 
         /*  Receive request */
         case kLPI2C_SlaveReceiveEvent:
             /*  Update information for received process */
-            xfer->data = g_slave_buff;
+            xfer->data     = g_slave_buff;
             xfer->dataSize = I2C_DATA_LENGTH;
             break;
 
         /*  Transfer done */
         case kLPI2C_SlaveCompletionEvent:
             g_SlaveCompletionFlag = true;
-            xfer->data = NULL;
-            xfer->dataSize = 0;
+            xfer->data            = NULL;
+            xfer->dataSize        = 0;
             break;
 
         default:

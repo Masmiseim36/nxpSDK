@@ -1,77 +1,57 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2017 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _LPM_H_
 #define _LPM_H_
 
-#include "fsl_common.h"
 #include "fsl_clock.h"
-#include "fsl_device_registers.h"
 #include <stdint.h>
-#include <stdbool.h>
-#include <assert.h>
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 extern void vPortGPTIsr(void);
+extern uint32_t g_savedPrimask;
 
-#define  vPortGptIsr  GPT1_IRQHandler
+#define vPortGptIsr GPT1_IRQHandler
 
-#define  CLOCK_SET_MUX(mux, value) \
-do { \
-    CCM_TUPLE_REG(CCM, mux) = (CCM_TUPLE_REG(CCM, mux) & (~CCM_TUPLE_MASK(mux))) | \
-        (((uint32_t)((value) << CCM_TUPLE_SHIFT(mux))) & CCM_TUPLE_MASK(mux)); \
-    while (CCM->CDHIPR != 0) \
-    { \
-    } \
-} while(0)
+#define CLOCK_CCM_HANDSHAKE_WAIT() \
+                                   \
+    do                             \
+    {                              \
+        while (CCM->CDHIPR != 0)   \
+        {                          \
+        }                          \
+                                   \
+    } while (0)
 
-#define  CLOCK_SET_DIV(divider, value) \
-do { \
-    CCM_TUPLE_REG(CCM, divider) = (CCM_TUPLE_REG(CCM, divider) & (~CCM_TUPLE_MASK(divider))) | \
-        (((uint32_t)((value) << CCM_TUPLE_SHIFT(divider))) & CCM_TUPLE_MASK(divider)); \
-    while (CCM->CDHIPR != 0) \
-    { \
-    } \
-} while(0)  
+#if defined(XIP_EXTERNAL_FLASH) && (XIP_EXTERNAL_FLASH == 1)
+#define LPM_EnterCritical()                        \
+                                                   \
+    do                                             \
+    {                                              \
+        g_savedPrimask = DisableGlobalIRQ();       \
+        SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk; \
+                                                   \
+    } while (0)
 
-#define  CLOCK_CCM_HANDSHAKE_WAIT() \
-do { \
-    while (CCM->CDHIPR != 0) \
-    { \
-    } \
-} while(0)     
-
-#define  LPM_DELAY(value) \
-do { \
-    for (uint32_t i = 0; i < 5 * value; i++) \
-    { \
-        __NOP(); \
-    } \
-} while(0)  
-
-#if defined(XIP_EXTERNAL_FLASH)
-#define LPM_EnterCritical() \
-do { \
-    __disable_irq(); \
-    SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk; \
-} while(0)
-
-#define LPM_ExitCritical() \
-do { \
-    __enable_irq(); \
-    SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk; \
-} while(0) 
+#define LPM_ExitCritical()                        \
+                                                  \
+    do                                            \
+    {                                             \
+        EnableGlobalIRQ(g_savedPrimask);          \
+        SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk; \
+                                                  \
+    } while (0)
 
 #else
-#define LPM_EnterCritical() 
-#define LPM_ExitCritical() 
+#define LPM_EnterCritical()
+#define LPM_ExitCritical()
 #endif
 
 /* Power mode definition of low power management.
@@ -79,9 +59,9 @@ do { \
  */
 typedef enum _lpm_power_mode
 {
-    LPM_PowerModeOverRun = 0,      /* Over RUN mode, CPU won't stop running */
+    LPM_PowerModeOverRun = 0, /* Over RUN mode, CPU won't stop running */
 
-    LPM_PowerModeFullRun,          /* Full RUN mode, CPU won't stop running */
+    LPM_PowerModeFullRun, /* Full RUN mode, CPU won't stop running */
 
     LPM_PowerModeLowSpeedRun,
 
@@ -92,7 +72,7 @@ typedef enum _lpm_power_mode
      * All peripheral can remain active, clock gating decided by CCGR setting.
      * DRAM enters auto-refresh mode when there is no access.
      */
-    LPM_PowerModeSysIdle,         /* System WAIT mode, also system low speed idle */
+    LPM_PowerModeSysIdle, /* System WAIT mode, also system low speed idle */
 
     /* In low power idle mode, all PLL/PFD is off, cpu power is off.
      * Analog modules running in low power mode.
@@ -100,7 +80,7 @@ typedef enum _lpm_power_mode
      * Low speed peripherals can remain running at low frequency
      * DRAM in self-refresh.
      */
-    LPM_PowerModeLPIdle,         /* Low Power Idle mode */
+    LPM_PowerModeLPIdle, /* Low Power Idle mode */
 
     /* In deep sleep mode, all PLL/PFD is off, XTAL is off, cpu power is off.
      * All clocks are shut off except 32K RTC clock
@@ -109,45 +89,14 @@ typedef enum _lpm_power_mode
      * DRAM in self-refresh.
      * If RTOS is used, systick will be disabled in DSM
      */
-    LPM_PowerModeSuspend,          /* Deep Sleep mode, suspend. */
+    LPM_PowerModeSuspend, /* Deep Sleep mode, suspend. */
 
-    LPM_PowerModeSNVS,          /* Power off mode, or shutdown mode */
+    LPM_PowerModeSNVS, /* Power off mode, or shutdown mode */
 
     LPM_PowerModeEnd = LPM_PowerModeSNVS
 } lpm_power_mode_t;
 
-typedef bool (*lpm_power_mode_callback_t)(lpm_power_mode_t curMode,
-                                          lpm_power_mode_t newMode,
-                                          void *data);
-
-/*! @name Time sensitive region */
-/* @{ */
-#if defined(XIP_EXTERNAL_FLASH) 
-#if (defined(__ICCARM__))
-#define QUICKACCESS_SECTION_CODE(func) __ramfunc func
-#elif(defined(__ARMCC_VERSION))
-#define QUICKACCESS_SECTION_CODE(func) __attribute__((section("RamFunction"))) func
-#elif defined(__MCUXPRESSO)
-#define QUICKACCESS_SECTION_CODE(func) __attribute__((section(".ramfunc.$SRAM_ITC"))) func
-#elif(defined(__GNUC__))
-#define QUICKACCESS_SECTION_CODE(func) __attribute__((section("RamFunction"))) func
-#else
-#error Toolchain not supported.
-#endif /* defined(__ICCARM__) */
-#else
-#if (defined(__ICCARM__))
-#define QUICKACCESS_SECTION_CODE(func) func
-#elif(defined(__ARMCC_VERSION))
-#define QUICKACCESS_SECTION_CODE(func) func
-#elif(defined(__MCUXPRESSO))
-#define QUICKACCESS_SECTION_CODE(func) func
-#elif(defined(__GNUC__))
-#define QUICKACCESS_SECTION_CODE(func) func
-#else
-#error Toolchain not supported.
-#endif    
-#endif /* __FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE */
-
+typedef bool (*lpm_power_mode_callback_t)(lpm_power_mode_t curMode, lpm_power_mode_t newMode, void *data);
 
 /*******************************************************************************
  * API
@@ -157,12 +106,8 @@ typedef bool (*lpm_power_mode_callback_t)(lpm_power_mode_t curMode,
 extern "C" {
 #endif /* __cplusplus*/
 
-QUICKACCESS_SECTION_CODE(void LPM_SwitchBandgap(void));
-QUICKACCESS_SECTION_CODE(void LPM_RestoreBandgap(void));
-QUICKACCESS_SECTION_CODE(void LPM_SwitchToXtalOSC(void));
-QUICKACCESS_SECTION_CODE(void LPM_SwitchToRcOSC(void));
-QUICKACCESS_SECTION_CODE(void LPM_SwitchFlexspiClock(lpm_power_mode_t power_mode));
-QUICKACCESS_SECTION_CODE(void LPM_RestoreFlexspiClock(void));
+AT_QUICKACCESS_SECTION_CODE(void CLOCK_SET_MUX(clock_mux_t mux, uint32_t value));
+AT_QUICKACCESS_SECTION_CODE(void CLOCK_SET_DIV(clock_div_t divider, uint32_t value));
 
 /* Initialize the Low Power Management */
 bool LPM_Init(lpm_power_mode_t run_mode);
@@ -205,19 +150,26 @@ void LPM_RegisterPowerListener(lpm_power_mode_callback_t callback, void *data);
 /* Unregister power mode switch listener */
 void LPM_UnregisterPowerListener(lpm_power_mode_callback_t callback, void *data);
 
-void LPM_SystemRestoreDsm(void);
-void LPM_SystemRestoreIdle(void);
-void LPM_SystemResumeDsm(void);
-
-void LPM_RestorePLLs(lpm_power_mode_t power_mode);
-void LPM_DisablePLLs(lpm_power_mode_t power_mode);
-
-void LPM_SystemFullRun(void);
-void LPM_SystemOverRun(void);
-void LPM_SystemLowSpeedRun(void);
-void LPM_SystemLowPowerRun(void);
-
 #endif
+
+void ClockSelectXtalOsc(void);
+void ClockSelectRcOsc(void);
+void LPM_EnableWakeupSource(uint32_t irq);
+void LPM_DisableWakeupSource(uint32_t irq);
+void LPM_PreEnterWaitMode(void);
+void LPM_PostExitWaitMode(void);
+void LPM_PreEnterStopMode(void);
+void LPM_PostExitStopMode(void);
+void LPM_OverDriveRun(void);
+void LPM_FullSpeedRun(void);
+void LPM_LowSpeedRun(void);
+void LPM_LowPowerRun(void);
+void LPM_EnterSystemIdle(void);
+void LPM_ExitSystemIdle(void);
+void LPM_EnterLowPowerIdle(void);
+void LPM_ExitLowPowerIdle(void);
+void LPM_EnterSuspend(void);
+void LPM_EnterSNVS(void);
 
 #if defined(__cplusplus)
 }

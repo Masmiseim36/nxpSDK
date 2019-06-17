@@ -553,7 +553,7 @@ usb_status_t USB_DevicePrinterEvent(void *handle, uint32_t event, void *param)
                             /* ClassCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
                             it is from the second parameter of classInit */
                             status = printerHandle->classConfig->classCallback(
-                                (class_handle_t)printerHandle, kUSB_DevicePrinterEventGetPortStatus, &classRequest);
+                                (class_handle_t)printerHandle, kUSB_DevicePrinterEventSoftReset, &classRequest);
                         }
                         break;
 

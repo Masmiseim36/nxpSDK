@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright (c) 2017, NXP
+ * Copyright 2017, NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -24,9 +24,6 @@
 #define YEAR_RANGE_START (1970U)
 #define YEAR_RANGE_END (2099U)
 
-#if !(defined(SNVS_HPCOMR_SW_SV_MASK))
-#define SNVS_HPCOMR_SW_SV_MASK (0x100U)
-#endif
 #if !(defined(SNVS_HPSR_PI_MASK))
 #define SNVS_HPSR_PI_MASK (0x2U)
 #endif
@@ -184,13 +181,13 @@ static void SNVS_HP_ConvertSecondsToDatetime(uint32_t seconds, snvs_hp_rtc_datet
     secondsRemaining = secondsRemaining % SECONDS_IN_A_DAY;
 
     /* Calculate the datetime hour, minute and second fields */
-    datetime->hour = secondsRemaining / SECONDS_IN_A_HOUR;
+    datetime->hour   = secondsRemaining / SECONDS_IN_A_HOUR;
     secondsRemaining = secondsRemaining % SECONDS_IN_A_HOUR;
     datetime->minute = secondsRemaining / 60U;
     datetime->second = secondsRemaining % SECONDS_IN_A_MINUTE;
 
     /* Calculate year */
-    daysInYear = DAYS_IN_A_YEAR;
+    daysInYear     = DAYS_IN_A_YEAR;
     datetime->year = YEAR_RANGE_START;
     while (days > daysInYear)
     {
@@ -287,13 +284,13 @@ void SNVS_HP_RTC_Init(SNVS_Type *base, const snvs_hp_rtc_config_t *config)
     CLOCK_EnableClock(s_snvsHpClock[instance]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 
-    base->HPCOMR |= SNVS_HPCOMR_NPSWA_EN_MASK | SNVS_HPCOMR_SW_SV_MASK;
+    base->HPCOMR |= SNVS_HPCOMR_NPSWA_EN_MASK;
 
     base->HPCR = SNVS_HPCR_PI_FREQ(config->periodicInterruptFreq);
 
     if (config->rtcCalEnable)
     {
-        base->HPCR = SNVS_HPCR_HPCALB_VAL_MASK & (config->rtcCalValue << SNVS_HPCR_HPCALB_VAL_SHIFT);
+        base->HPCR |= SNVS_HPCR_HPCALB_VAL_MASK & (config->rtcCalValue << SNVS_HPCR_HPCALB_VAL_SHIFT);
         base->HPCR |= SNVS_HPCR_HPCALB_EN_MASK;
     }
 }
@@ -332,21 +329,21 @@ void SNVS_HP_RTC_GetDefaultConfig(snvs_hp_rtc_config_t *config)
     /* Initializes the configure structure to zero. */
     memset(config, 0, sizeof(*config));
 
-    config->rtcCalEnable = false;
-    config->rtcCalValue = 0U;
+    config->rtcCalEnable          = false;
+    config->rtcCalValue           = 0U;
     config->periodicInterruptFreq = 0U;
 }
 
 static uint32_t SNVS_HP_RTC_GetSeconds(SNVS_Type *base)
 {
     uint32_t seconds = 0;
-    uint32_t tmp = 0;
+    uint32_t tmp     = 0;
 
     /* Do consecutive reads until value is correct */
     do
     {
         seconds = tmp;
-        tmp = (base->HPRTCMR << 17U) | (base->HPRTCLR >> 15U);
+        tmp     = (base->HPRTCMR << 17U) | (base->HPRTCLR >> 15U);
     } while (tmp != seconds);
 
     return seconds;
@@ -366,7 +363,7 @@ status_t SNVS_HP_RTC_SetDatetime(SNVS_Type *base, const snvs_hp_rtc_datetime_t *
     assert(datetime);
 
     uint32_t seconds = 0U;
-    uint32_t tmp = base->HPCR;
+    uint32_t tmp     = base->HPCR;
 
     /* disable RTC */
     SNVS_HP_RTC_StopTimer(base);
@@ -424,8 +421,8 @@ status_t SNVS_HP_RTC_SetAlarm(SNVS_Type *base, const snvs_hp_rtc_datetime_t *ala
     assert(alarmTime);
 
     uint32_t alarmSeconds = 0U;
-    uint32_t currSeconds = 0U;
-    uint32_t tmp = base->HPCR;
+    uint32_t currSeconds  = 0U;
+    uint32_t tmp          = base->HPCR;
 
     /* Return error if the alarm time provided is not valid */
     if (!(SNVS_HP_CheckDatetimeFormat(alarmTime)))
@@ -434,7 +431,7 @@ status_t SNVS_HP_RTC_SetAlarm(SNVS_Type *base, const snvs_hp_rtc_datetime_t *ala
     }
 
     alarmSeconds = SNVS_HP_ConvertDatetimeToSeconds(alarmTime);
-    currSeconds = SNVS_HP_RTC_GetSeconds(base);
+    currSeconds  = SNVS_HP_RTC_GetSeconds(base);
 
     /* Return error if the alarm time has passed */
     if (alarmSeconds < currSeconds)

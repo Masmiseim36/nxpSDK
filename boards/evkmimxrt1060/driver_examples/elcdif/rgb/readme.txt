@@ -6,6 +6,14 @@ changes every time it reaches the edges of the screen.
 
 The rectangle moving speed might be different with Debug target and Release target,
 because these two targets spend different time to fill the frame buffer.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -33,11 +41,6 @@ Running the demo
 ================
 If this example runs correctly, a rectangle is moving in the screen, and the color
 changes every time it reaches the edges of the screen.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+Customization options
+=====================
 

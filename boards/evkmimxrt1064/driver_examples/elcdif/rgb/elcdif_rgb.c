@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2017, NXP Semiconductors, Inc.
+ * Copyright  2017 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -78,7 +78,8 @@ void BOARD_InitLcd(void)
     volatile uint32_t i = 0x100U;
 
     gpio_pin_config_t config = {
-        kGPIO_DigitalOutput, 0,
+        kGPIO_DigitalOutput,
+        0,
     };
 
     /* Reset the LCD. */
@@ -110,7 +111,10 @@ void BOARD_InitLcdifPixelClock(void)
      * Video PLL output clock is OSC24M * (loopDivider + (denominator / numerator)) / postDivider = 93MHz.
      */
     clock_video_pll_config_t config = {
-        .loopDivider = 31, .postDivider = 8, .numerator = 0, .denominator = 0,
+        .loopDivider = 31,
+        .postDivider = 8,
+        .numerator   = 0,
+        .denominator = 0,
     };
 
     CLOCK_InitVideoPll(&config);
@@ -153,18 +157,18 @@ void APP_LCDIF_IRQHandler(void)
 void APP_ELCDIF_Init(void)
 {
     const elcdif_rgb_mode_config_t config = {
-        .panelWidth = APP_IMG_WIDTH,
-        .panelHeight = APP_IMG_HEIGHT,
-        .hsw = APP_HSW,
-        .hfp = APP_HFP,
-        .hbp = APP_HBP,
-        .vsw = APP_VSW,
-        .vfp = APP_VFP,
-        .vbp = APP_VBP,
+        .panelWidth    = APP_IMG_WIDTH,
+        .panelHeight   = APP_IMG_HEIGHT,
+        .hsw           = APP_HSW,
+        .hfp           = APP_HFP,
+        .hbp           = APP_HBP,
+        .vsw           = APP_VSW,
+        .vfp           = APP_VFP,
+        .vbp           = APP_VBP,
         .polarityFlags = APP_POL_FLAGS,
-        .bufferAddr = (uint32_t)s_frameBuffer[0],
-        .pixelFormat = kELCDIF_PixelFormatXRGB8888,
-        .dataBus = APP_LCDIF_DATA_BUS,
+        .bufferAddr    = (uint32_t)s_frameBuffer[0],
+        .pixelFormat   = kELCDIF_PixelFormatXRGB8888,
+        .dataBus       = APP_LCDIF_DATA_BUS,
     };
 
     ELCDIF_RgbModeInit(APP_ELCDIF, &config);
@@ -175,14 +179,14 @@ void APP_FillFrameBuffer(uint32_t frameBuffer[APP_IMG_HEIGHT][APP_IMG_WIDTH])
     /* Background color. */
     static const uint32_t bgColor = 0U;
     /* Foreground color. */
-    static uint8_t fgColorIndex = 0U;
+    static uint8_t fgColorIndex          = 0U;
     static const uint32_t fgColorTable[] = {0x000000FFU, 0x0000FF00U, 0x0000FFFFU, 0x00FF0000U,
                                             0x00FF00FFU, 0x00FFFF00U, 0x00FFFFFFU};
-    uint32_t fgColor = fgColorTable[fgColorIndex];
+    uint32_t fgColor                     = fgColorTable[fgColorIndex];
 
     /* Position of the foreground rectangle. */
-    static uint16_t upperLeftX = 0U;
-    static uint16_t upperLeftY = 0U;
+    static uint16_t upperLeftX  = 0U;
+    static uint16_t upperLeftY  = 0U;
     static uint16_t lowerRightX = (APP_IMG_WIDTH - 1U) / 2U;
     static uint16_t lowerRightY = (APP_IMG_HEIGHT - 1U) / 2U;
 
@@ -222,23 +226,23 @@ void APP_FillFrameBuffer(uint32_t frameBuffer[APP_IMG_HEIGHT][APP_IMG_WIDTH])
 
     if (0U == upperLeftX)
     {
-        incX = 1;
+        incX        = 1;
         changeColor = true;
     }
     else if (APP_IMG_WIDTH - 1 == lowerRightX)
     {
-        incX = -1;
+        incX        = -1;
         changeColor = true;
     }
 
     if (0U == upperLeftY)
     {
-        incY = 1;
+        incY        = 1;
         changeColor = true;
     }
     else if (APP_IMG_HEIGHT - 1 == lowerRightY)
     {
-        incY = -1;
+        incY        = -1;
         changeColor = true;
     }
 

@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -61,10 +61,10 @@ AT_NONCACHEABLE_SECTION_INIT(uint8_t g_tipString[]) =
 
 AT_NONCACHEABLE_SECTION_INIT(uint8_t g_txBuffer[ECHO_BUFFER_LENGTH]) = {0};
 AT_NONCACHEABLE_SECTION_INIT(uint8_t g_rxBuffer[ECHO_BUFFER_LENGTH]) = {0};
-volatile bool rxBufferEmpty = true;
-volatile bool txBufferFull = false;
-volatile bool txOnGoing = false;
-volatile bool rxOnGoing = false;
+volatile bool rxBufferEmpty                                          = true;
+volatile bool txBufferFull                                           = false;
+volatile bool txOnGoing                                              = false;
+volatile bool rxOnGoing                                              = false;
 
 /*******************************************************************************
  * Code
@@ -80,13 +80,13 @@ void FLEXIO_UART_UserCallback(FLEXIO_UART_Type *base,
     if (kStatus_FLEXIO_UART_TxIdle == status)
     {
         txBufferFull = false;
-        txOnGoing = false;
+        txOnGoing    = false;
     }
 
     if (kStatus_FLEXIO_UART_RxIdle == status)
     {
         rxBufferEmpty = false;
-        rxOnGoing = false;
+        rxOnGoing     = false;
     }
 }
 
@@ -121,15 +121,15 @@ int main(void)
      */
     FLEXIO_UART_GetDefaultConfig(&userconfig);
     userconfig.baudRate_Bps = BOARD_DEBUG_UART_BAUDRATE;
-    userconfig.enableUart = true;
+    userconfig.enableUart   = true;
 
-    uartDev.flexioBase = BOARD_FLEXIO_BASE;
-    uartDev.TxPinIndex = FLEXIO_UART_TX_PIN;
-    uartDev.RxPinIndex = FLEXIO_UART_RX_PIN;
+    uartDev.flexioBase      = BOARD_FLEXIO_BASE;
+    uartDev.TxPinIndex      = FLEXIO_UART_TX_PIN;
+    uartDev.RxPinIndex      = FLEXIO_UART_RX_PIN;
     uartDev.shifterIndex[0] = FLEXIO_TX_SHIFTER_INDEX;
     uartDev.shifterIndex[1] = FLEXIO_RX_SHIFTER_INDEX;
-    uartDev.timerIndex[0] = 0U;
-    uartDev.timerIndex[1] = 1U;
+    uartDev.timerIndex[0]   = 0U;
+    uartDev.timerIndex[1]   = 1U;
 
     result = FLEXIO_UART_Init(&uartDev, &userconfig, FLEXIO_CLOCK_FREQUENCY);
     if (result != kStatus_Success)
@@ -154,9 +154,9 @@ int main(void)
                                          &g_uartRxEdmaHandle);
 
     /* Send g_tipString out. */
-    xfer.data = g_tipString;
+    xfer.data     = g_tipString;
     xfer.dataSize = sizeof(g_tipString) - 1;
-    txOnGoing = true;
+    txOnGoing     = true;
     FLEXIO_UART_TransferSendEDMA(&uartDev, &g_uartHandle, &xfer);
 
     /* Wait send finished */
@@ -165,9 +165,9 @@ int main(void)
     }
 
     /* Start to echo. */
-    sendXfer.data = g_txBuffer;
-    sendXfer.dataSize = ECHO_BUFFER_LENGTH;
-    receiveXfer.data = g_rxBuffer;
+    sendXfer.data        = g_txBuffer;
+    sendXfer.dataSize    = ECHO_BUFFER_LENGTH;
+    receiveXfer.data     = g_rxBuffer;
     receiveXfer.dataSize = ECHO_BUFFER_LENGTH;
 
     while (1)
@@ -191,7 +191,7 @@ int main(void)
         {
             memcpy(g_txBuffer, g_rxBuffer, ECHO_BUFFER_LENGTH);
             rxBufferEmpty = true;
-            txBufferFull = true;
+            txBufferFull  = true;
         }
     }
 }

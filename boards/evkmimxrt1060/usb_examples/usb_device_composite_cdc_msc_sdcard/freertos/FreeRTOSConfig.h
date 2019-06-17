@@ -37,6 +37,9 @@
  *
  * See http://www.freertos.org/a00110.html.
  *----------------------------------------------------------*/
+#define configENABLE_MPU 0
+#define configENABLE_FPU 0
+#define configENABLE_TRUSTZONE 0
 
 #define configUSE_PREEMPTION 1
 #define configUSE_TICKLESS_IDLE 0

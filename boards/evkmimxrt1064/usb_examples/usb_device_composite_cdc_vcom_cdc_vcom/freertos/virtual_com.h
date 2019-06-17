@@ -29,7 +29,6 @@
 #endif
 
 #define USB_DEVICE_INTERRUPT_PRIORITY (3U)
-
 /* Currently configured line coding */
 #define LINE_CODING_SIZE (0x07)
 #define LINE_CODING_DTERATE (115200)
@@ -46,7 +45,7 @@
 #define NOTIF_PACKET_SIZE (0x08)
 #define UART_BITMAP_SIZE (0x02)
 #define NOTIF_REQUEST_TYPE (0xA1)
-/* Define the infomation relates to abstract control model */
+/* Define the information relates to abstract control model */
 typedef struct _usb_cdc_acm_info
 {
     uint8_t serialStateBuf[NOTIF_PACKET_SIZE + UART_BITMAP_SIZE]; /* Serial state buffer of the CDC device to notify the
@@ -62,7 +61,7 @@ typedef struct _usb_cdc_vcom_struct
 {
     usb_device_handle deviceHandle; /* USB device handle. */
     class_handle_t cdcAcmHandle; /* USB CDC ACM class handle.                                                         */
-    uint8_t *lineCoding;         /* Line codinig of cdc device */
+    uint8_t *lineCoding;         /* Line coding of cdc device */
     uint8_t *abstractState;      /* Abstract state of cdc device */
     uint8_t *countryCode;        /* Country code of cdc device */
     usb_cdc_acm_info_t *usbCdcAcmInfo;       /* CDC ACM information */

@@ -1,7 +1,7 @@
 /*
 ** ###################################################################
 **     Version:             rev. 7.0, 2018-11-05
-**     Build:               b190213
+**     Build:               b190319
 **
 **     Abstract:
 **         Chip specific module features.
@@ -282,6 +282,10 @@
 #define FSL_FEATURE_SAI_HAS_MDR (0)
 /* @brief Has support the BCLK bypass mode when BCLK = MCLK. */
 #define FSL_FEATURE_SAI_HAS_BCLK_BYPASS (0)
+/* @brief Has DIV bit fields of MCR register (register bit fields MCR[DIV]. */
+#define FSL_FEATURE_SAI_HAS_MCR_MCLK_POST_DIV (0)
+/* @brief Support Channel Mode (register bit fields TCR4[CHMOD]). */
+#define FSL_FEATURE_SAI_HAS_CHANNEL_MODE (1)
 
 /* LLWU module features */
 

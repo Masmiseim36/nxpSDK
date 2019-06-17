@@ -76,7 +76,11 @@
     <source path="boards/evkmcimx7ulp/driver_examples/qspi/polling_transfer" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>
     </source>
+    <source path="boards/evkmcimx7ulp/driver_examples/qspi/polling_transfer" target_path="source" type="c_include">
+      <files mask="app.h"/>
+    </source>
     <source path="boards/evkmcimx7ulp/driver_examples/qspi/polling_transfer" target_path="source" type="src">
+      <files mask="qspi_nor_flash_ops.c"/>
       <files mask="qspi_polling_transfer.c"/>
     </source>
   </example>

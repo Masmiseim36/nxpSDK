@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  *
@@ -20,7 +20,7 @@
 #include "lwip/timeouts.h"
 #include "lwip/init.h"
 #include "netif/ethernet.h"
-#include "ethernetif.h"
+#include "enet_ethernetif.h"
 
 #include "board.h"
 
@@ -99,16 +99,12 @@ void SysTick_Handler(void)
 
 /* Report state => string */
 const char *report_type_str[] = {
-    "TCP_DONE_SERVER",             /* LWIPERF_TCP_DONE_SERVER,*/
-    "TCP_DONE_CLIENT",             /* LWIPERF_TCP_DONE_CLIENT,*/
+    "TCP_DONE_SERVER (RX)",        /* LWIPERF_TCP_DONE_SERVER,*/
+    "TCP_DONE_CLIENT (TX)",        /* LWIPERF_TCP_DONE_CLIENT,*/
     "TCP_ABORTED_LOCAL",           /* LWIPERF_TCP_ABORTED_LOCAL, */
     "TCP_ABORTED_LOCAL_DATAERROR", /* LWIPERF_TCP_ABORTED_LOCAL_DATAERROR, */
     "TCP_ABORTED_LOCAL_TXERROR",   /* LWIPERF_TCP_ABORTED_LOCAL_TXERROR, */
     "TCP_ABORTED_REMOTE",          /* LWIPERF_TCP_ABORTED_REMOTE, */
-    "UDP_STARTED",                 /* LWIPERF_UDP_STARTED, */
-    "UDP_DONE",                    /* LWIPERF_UDP_DONE, */
-    "UDP_ABORTED_LOCAL",           /* LWIPERF_UDP_ABORTED_LOCAL, */
-    "UDP_ABORTED_REMOTE"           /* LWIPERF_UDP_ABORTED_REMOTE */
 };
 
 /** Prototype of a report function that is called when a session is finished.
@@ -143,15 +139,65 @@ static void lwiperf_report(void *arg,
     }
 }
 
+void select_mode(bool *server_mode, enum lwiperf_client_type *client_type)
+{
+    char option;
+
+    while (true)
+    {
+        PRINTF("Please select one of the following modes to run IPERF with:\r\n\r\n");
+        PRINTF("    1: server mode (RX only test)\r\n");
+        PRINTF("    2: client mode (TX only test)\r\n");
+        PRINTF("    3: client dual mode (TX and RX in parallel)\r\n");
+        PRINTF("    4: client tradeoff mode (TX and RX sequentially)\r\n\r\n");
+        PRINTF("Enter mode number: ");
+
+        option = GETCHAR();
+        PUTCHAR(option);
+        PRINTF("\r\n");
+
+        switch (option)
+        {
+            case '1':
+                *server_mode = true;
+                *client_type = LWIPERF_CLIENT;
+                return;
+            case '2':
+                *server_mode = false;
+                *client_type = LWIPERF_CLIENT;
+                return;
+            case '3':
+                *server_mode = false;
+                *client_type = LWIPERF_DUAL;
+                return;
+            case '4':
+                *server_mode = false;
+                *client_type = LWIPERF_TRADEOFF;
+                return;
+        }
+    }
+}
+
 /*!
  * @brief Main function.
  */
 int main(void)
 {
+    bool server_mode;
+    enum lwiperf_client_type client_type;
+    void *iperf_session;
     struct netif fsl_netif0;
+#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
+    mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
+#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
     ethernetif_config_t fsl_enet_config0 = {
-        .phyAddress = EXAMPLE_PHY_ADDRESS, .clockName = EXAMPLE_CLOCK_NAME, .macAddress = configMAC_ADDR,
+        .phyAddress = EXAMPLE_PHY_ADDRESS,
+        .clockName  = EXAMPLE_CLOCK_NAME,
+        .macAddress = configMAC_ADDR,
+#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
+        .non_dma_memory = non_dma_memory,
+#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     };
 
     gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
@@ -185,20 +231,30 @@ int main(void)
     netif_set_default(&fsl_netif0);
     netif_set_up(&fsl_netif0);
 
-    if (lwiperf_start_tcp_server_default(lwiperf_report, 0))
+    PRINTF("\r\n************************************************\r\n");
+    PRINTF(" IPERF example\r\n");
+    PRINTF("************************************************\r\n");
+    PRINTF(" IPv4 Address     : %u.%u.%u.%u\r\n", ((u8_t *)&fsl_netif0_ipaddr)[0], ((u8_t *)&fsl_netif0_ipaddr)[1],
+           ((u8_t *)&fsl_netif0_ipaddr)[2], ((u8_t *)&fsl_netif0_ipaddr)[3]);
+    PRINTF(" IPv4 Subnet mask : %u.%u.%u.%u\r\n", ((u8_t *)&fsl_netif0_netmask)[0], ((u8_t *)&fsl_netif0_netmask)[1],
+           ((u8_t *)&fsl_netif0_netmask)[2], ((u8_t *)&fsl_netif0_netmask)[3]);
+    PRINTF(" IPv4 Gateway     : %u.%u.%u.%u\r\n", ((u8_t *)&fsl_netif0_gw)[0], ((u8_t *)&fsl_netif0_gw)[1],
+           ((u8_t *)&fsl_netif0_gw)[2], ((u8_t *)&fsl_netif0_gw)[3]);
+    PRINTF("************************************************\r\n");
+
+    select_mode(&server_mode, &client_type);
+
+    if (server_mode)
     {
-        PRINTF("\r\n************************************************\r\n");
-        PRINTF(" IPERF Server example\r\n");
-        PRINTF("************************************************\r\n");
-        PRINTF(" IPv4 Address     : %u.%u.%u.%u\r\n", ((u8_t *)&fsl_netif0_ipaddr)[0], ((u8_t *)&fsl_netif0_ipaddr)[1],
-               ((u8_t *)&fsl_netif0_ipaddr)[2], ((u8_t *)&fsl_netif0_ipaddr)[3]);
-        PRINTF(" IPv4 Subnet mask : %u.%u.%u.%u\r\n", ((u8_t *)&fsl_netif0_netmask)[0],
-               ((u8_t *)&fsl_netif0_netmask)[1], ((u8_t *)&fsl_netif0_netmask)[2], ((u8_t *)&fsl_netif0_netmask)[3]);
-        PRINTF(" IPv4 Gateway     : %u.%u.%u.%u\r\n", ((u8_t *)&fsl_netif0_gw)[0], ((u8_t *)&fsl_netif0_gw)[1],
-               ((u8_t *)&fsl_netif0_gw)[2], ((u8_t *)&fsl_netif0_gw)[3]);
-        PRINTF("************************************************\r\n");
+        iperf_session = lwiperf_start_tcp_server(IP_ADDR_ANY, LWIPERF_TCP_PORT_DEFAULT, lwiperf_report, 0);
     }
     else
+    {
+        iperf_session =
+            lwiperf_start_tcp_client(&fsl_netif0_gw, LWIPERF_TCP_PORT_DEFAULT, client_type, lwiperf_report, 0);
+    }
+
+    if (iperf_session == NULL)
     {
         PRINTF("IPERF initialization failed!\r\n");
     }

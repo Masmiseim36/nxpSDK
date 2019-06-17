@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2018 NXP
+ * Copyright 2016 - 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -15,14 +15,16 @@
 #include "audio_unified.h"
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 /* hid mouse endpoint information */
 usb_device_endpoint_struct_t g_UsbDeviceHidEndpoints[USB_HID_KEYBOARD_ENDPOINT_COUNT] = {
     {
         /* HID mouse interrupt IN pipe */
-        USB_HID_KEYBOARD_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT), USB_ENDPOINT_INTERRUPT,
+        USB_HID_KEYBOARD_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
+        USB_ENDPOINT_INTERRUPT,
         FS_HID_KEYBOARD_INTERRUPT_IN_PACKET_SIZE,
+        FS_HID_KEYBOARD_INTERRUPT_IN_INTERVAL,
     },
 };
 
@@ -63,68 +65,105 @@ usb_device_endpoint_struct_t g_UsbDeviceAudioRecorderEndpoints[USB_AUDIO_RECORDE
     /* Audio generator ISO IN pipe */
     {
         USB_AUDIO_RECORDER_STREAM_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
-        USB_ENDPOINT_ISOCHRONOUS, FS_ISO_IN_ENDP_PACKET_SIZE + AUDIO_FORMAT_CHANNELS *AUDIO_FORMAT_SIZE,
+        USB_ENDPOINT_ISOCHRONOUS,
+        FS_ISO_IN_ENDP_PACKET_SIZE + AUDIO_FORMAT_CHANNELS *AUDIO_FORMAT_SIZE,
+        FS_ISO_IN_ENDP_INTERVAL,
     },
 };
 
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
 usb_device_endpoint_struct_t g_UsbDeviceAudioSpeakerEndpoints[USB_AUDIO_SPEAKER_STREAM_ENDPOINT_COUNT] = {
     /* Audio generator ISO OUT pipe */
     {
         USB_AUDIO_SPEAKER_STREAM_ENDPOINT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
-        USB_ENDPOINT_ISOCHRONOUS, FS_ISO_OUT_ENDP_PACKET_SIZE + AUDIO_FORMAT_CHANNELS *AUDIO_FORMAT_SIZE, /* The max
-                                                    packet size should be increased otherwise if host send data larger
-                                                    than max packet size will cause DMA error. */
+        USB_ENDPOINT_ISOCHRONOUS,
+        FS_ISO_OUT_ENDP_PACKET_SIZE, /* The max
+                          packet size should be increased otherwise if host send data larger
+                          than max packet size will cause DMA error. */
+        FS_ISO_OUT_ENDP_INTERVAL,
+    },
+};
+#else
+usb_device_endpoint_struct_t g_UsbDeviceAudioSpeakerEndpoints[USB_AUDIO_SPEAKER_STREAM_ENDPOINT_COUNT] = {
+    /* Audio generator ISO OUT pipe */
+    {
+        USB_AUDIO_SPEAKER_STREAM_ENDPOINT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
+        USB_ENDPOINT_ISOCHRONOUS,
+        FS_ISO_OUT_ENDP_PACKET_SIZE + AUDIO_FORMAT_CHANNELS *AUDIO_FORMAT_SIZE, /* The max
+                          packet size should be increased otherwise if host send data larger
+                          than max packet size will cause DMA error. */
+        FS_ISO_OUT_ENDP_INTERVAL,
     },
     {
         USB_AUDIO_SPEAKER_FEEDBACK_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
-        USB_ENDPOINT_ISOCHRONOUS, FS_ISO_FEEDBACK_ENDP_PACKET_SIZE,
+        USB_ENDPOINT_ISOCHRONOUS,
+        FS_ISO_FEEDBACK_ENDP_PACKET_SIZE,
+        1U,
     }};
+#endif
 
 /* Audio speaker control endpoint information */
 usb_device_endpoint_struct_t g_UsbDeviceAudioControlEndpoints[USB_AUDIO_CONTROL_ENDPOINT_COUNT] = {{
-    USB_AUDIO_CONTROL_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT), USB_ENDPOINT_INTERRUPT,
+    USB_AUDIO_CONTROL_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
+    USB_ENDPOINT_INTERRUPT,
     FS_AUDIO_INTERRUPT_IN_PACKET_SIZE,
+    FS_AUDIO_INTERRUPT_IN_INTERVAL,
 }};
 
 /* Audio generator entity struct */
 usb_device_audio_entity_struct_t g_UsbDeviceAudioRecorderEntity[] = {
     {
-        USB_AUDIO_RECORDER_CONTROL_INPUT_TERMINAL_ID, USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_INPUT_TERMINAL, 0U,
+        USB_AUDIO_RECORDER_CONTROL_INPUT_TERMINAL_ID,
+        USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_INPUT_TERMINAL,
+        0U,
     },
     {
-        USB_AUDIO_RECORDER_CONTROL_FEATURE_UNIT_ID, USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_FEATURE_UNIT, 0U,
+        USB_AUDIO_RECORDER_CONTROL_FEATURE_UNIT_ID,
+        USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_FEATURE_UNIT,
+        0U,
     },
     {
-        USB_AUDIO_RECORDER_CONTROL_OUTPUT_TERMINAL_ID, USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_OUTPUT_TERMINAL, 0U,
+        USB_AUDIO_RECORDER_CONTROL_OUTPUT_TERMINAL_ID,
+        USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_OUTPUT_TERMINAL,
+        0U,
     },
 };
 
 usb_device_audio_entity_struct_t g_UsbDeviceAudioSpeakerEntity[] = {
     {
-        USB_AUDIO_SPEAKER_CONTROL_INPUT_TERMINAL_ID, USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_INPUT_TERMINAL, 0U,
+        USB_AUDIO_SPEAKER_CONTROL_INPUT_TERMINAL_ID,
+        USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_INPUT_TERMINAL,
+        0U,
     },
     {
-        USB_AUDIO_SPEAKER_CONTROL_FEATURE_UNIT_ID, USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_FEATURE_UNIT, 0U,
+        USB_AUDIO_SPEAKER_CONTROL_FEATURE_UNIT_ID,
+        USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_FEATURE_UNIT,
+        0U,
     },
     {
-        USB_AUDIO_SPEAKER_CONTROL_OUTPUT_TERMINAL_ID, USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_OUTPUT_TERMINAL, 0U,
+        USB_AUDIO_SPEAKER_CONTROL_OUTPUT_TERMINAL_ID,
+        USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_OUTPUT_TERMINAL,
+        0U,
     },
 
 };
 /* Audio speaker entity information */
 usb_device_audio_entities_struct_t g_UsbDeviceAudioRecorderEntities = {
-    g_UsbDeviceAudioRecorderEntity, sizeof(g_UsbDeviceAudioRecorderEntity) / sizeof(usb_device_audio_entity_struct_t),
+    g_UsbDeviceAudioRecorderEntity,
+    sizeof(g_UsbDeviceAudioRecorderEntity) / sizeof(usb_device_audio_entity_struct_t),
 };
 
 usb_device_audio_entities_struct_t g_UsbDeviceAudioSpeakerEntities = {
-    g_UsbDeviceAudioSpeakerEntity, sizeof(g_UsbDeviceAudioSpeakerEntity) / sizeof(usb_device_audio_entity_struct_t),
+    g_UsbDeviceAudioSpeakerEntity,
+    sizeof(g_UsbDeviceAudioSpeakerEntity) / sizeof(usb_device_audio_entity_struct_t),
 };
 
 /* Audio speaker control interface information */
 usb_device_interface_struct_t g_UsbDeviceAudioRecorderControInterface[] = {{
     0U,
     {
-        USB_AUDIO_CONTROL_ENDPOINT_COUNT, g_UsbDeviceAudioControlEndpoints,
+        USB_AUDIO_CONTROL_ENDPOINT_COUNT,
+        g_UsbDeviceAudioControlEndpoints,
     },
     &g_UsbDeviceAudioRecorderEntities,
 }};
@@ -132,7 +171,8 @@ usb_device_interface_struct_t g_UsbDeviceAudioRecorderControInterface[] = {{
 usb_device_interface_struct_t g_UsbDeviceAudioSpeakerControInterface[] = {{
     0U,
     {
-        USB_AUDIO_CONTROL_ENDPOINT_COUNT, g_UsbDeviceAudioControlEndpoints,
+        USB_AUDIO_CONTROL_ENDPOINT_COUNT,
+        g_UsbDeviceAudioControlEndpoints,
     },
     &g_UsbDeviceAudioSpeakerEntities,
 }};
@@ -142,14 +182,16 @@ usb_device_interface_struct_t g_UsbDeviceAudioRecStreamInterface[] = {
     {
         0U,
         {
-            0U, NULL,
+            0U,
+            NULL,
         },
         NULL,
     },
     {
         1U,
         {
-            USB_AUDIO_RECORDER_STREAM_ENDPOINT_COUNT, g_UsbDeviceAudioRecorderEndpoints,
+            USB_AUDIO_RECORDER_STREAM_ENDPOINT_COUNT,
+            g_UsbDeviceAudioRecorderEndpoints,
         },
         NULL,
     },
@@ -159,14 +201,16 @@ usb_device_interface_struct_t g_UsbDeviceAudioSpeakerStreamInterface[] = {
     {
         0U,
         {
-            0U, NULL,
+            0U,
+            NULL,
         },
         NULL,
     },
     {
         1U,
         {
-            USB_AUDIO_SPEAKER_STREAM_ENDPOINT_COUNT, g_UsbDeviceAudioSpeakerEndpoints,
+            USB_AUDIO_SPEAKER_STREAM_ENDPOINT_COUNT,
+            g_UsbDeviceAudioSpeakerEndpoints,
         },
         NULL,
     },
@@ -214,24 +258,30 @@ usb_device_interfaces_struct_t g_UsbDeviceAudioSpeakerInterfaces[2] = {
 
 usb_device_interface_list_t g_UsbDeviceAudioInterfaceListRecorder[USB_DEVICE_CONFIGURATION_COUNT] = {
     {
-        2, g_UsbDeviceAudioRecorderInterfaces,
+        2,
+        g_UsbDeviceAudioRecorderInterfaces,
     },
 };
 
 /* Define configurations for audio speaker */
 usb_device_interface_list_t g_UsbDeviceAudioInterfaceListSpeaker[USB_DEVICE_CONFIGURATION_COUNT] = {
     {
-        2, g_UsbDeviceAudioSpeakerInterfaces,
+        2,
+        g_UsbDeviceAudioSpeakerInterfaces,
     },
 };
 
 usb_device_class_struct_t g_UsbDeviceAudioClassRecorder = {
-    g_UsbDeviceAudioInterfaceListRecorder, kUSB_DeviceClassTypeAudio, USB_DEVICE_CONFIGURATION_COUNT,
+    g_UsbDeviceAudioInterfaceListRecorder,
+    kUSB_DeviceClassTypeAudio,
+    USB_DEVICE_CONFIGURATION_COUNT,
 };
 
 /* Define class information for audio speaker */
 usb_device_class_struct_t g_UsbDeviceAudioClassSpeaker = {
-    g_UsbDeviceAudioInterfaceListSpeaker, kUSB_DeviceClassTypeAudio, USB_DEVICE_CONFIGURATION_COUNT,
+    g_UsbDeviceAudioInterfaceListSpeaker,
+    kUSB_DeviceClassTypeAudio,
+    USB_DEVICE_CONFIGURATION_COUNT,
 };
 
 /* Define device descriptor */
@@ -247,8 +297,10 @@ uint8_t g_UsbDeviceDescriptor[] = {
     USB_DEVICE_PROTOCOL,                                 /* Protocol code (assigned by the USB-IF). */
     USB_CONTROL_MAX_PACKET_SIZE,                         /* Maximum packet size for endpoint zero
                                                             (only 8, 16, 32, or 64 are valid) */
-    0xC9U, 0x1FU,                                        /* Vendor ID (assigned by the USB-IF) */
-    0xA4U, 0x00U,                                        /* Product ID (assigned by the manufacturer) */
+    0xC9U,
+    0x1FU, /* Vendor ID (assigned by the USB-IF) */
+    0xA4U,
+    0x00U, /* Product ID (assigned by the manufacturer) */
     USB_SHORT_GET_LOW(USB_DEVICE_DEMO_BCD_VERSION),
     USB_SHORT_GET_HIGH(USB_DEVICE_DEMO_BCD_VERSION), /* Device release number in binary-coded decimal */
     0x01U,                                           /* Index of string descriptor describing manufacturer */
@@ -278,9 +330,12 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
         USB_DESCRIPTOR_LENGTH_INTERFACE + USB_AUDIO_STREAMING_IFACE_DESC_SIZE + USB_AUDIO_STREAMING_TYPE_I_DESC_SIZE +
         USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH + USB_AUDIO_STREAMING_ENDP_DESC_SIZE + USB_DESCRIPTOR_LENGTH_INTERFACE +
         USB_DESCRIPTOR_LENGTH_INTERFACE + USB_AUDIO_STREAMING_IFACE_DESC_SIZE + USB_AUDIO_STREAMING_TYPE_I_DESC_SIZE +
-        USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH + USB_AUDIO_STREAMING_ENDP_DESC_SIZE +
-        USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH + USB_DESCRIPTOR_LENGTH_INTERFACE + USB_DESCRIPTOR_LENGTH_HID +
-        USB_DESCRIPTOR_LENGTH_ENDPOINT),
+        USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH + USB_AUDIO_STREAMING_ENDP_DESC_SIZE
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+#else
+        + USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH
+#endif
+        + USB_DESCRIPTOR_LENGTH_INTERFACE + USB_DESCRIPTOR_LENGTH_HID + USB_DESCRIPTOR_LENGTH_ENDPOINT),
     USB_SHORT_GET_HIGH(
         USB_DESCRIPTOR_LENGTH_CONFIGURE + USB_DESCRIPTOR_LENGTH_INTERFACE + USB_AUDIO_CONTROL_INTERFACE_HEADER_LENGTH +
         USB_AUDIO_INPUT_TERMINAL_ONLY_DESC_SIZE + USB_AUDIO_FEATURE_UNIT_ONLY_DESC_SIZE(2, 1) +
@@ -290,8 +345,12 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
         USB_DESCRIPTOR_LENGTH_INTERFACE + USB_AUDIO_STREAMING_IFACE_DESC_SIZE + USB_AUDIO_STREAMING_TYPE_I_DESC_SIZE +
         USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH + USB_AUDIO_STREAMING_ENDP_DESC_SIZE + USB_DESCRIPTOR_LENGTH_INTERFACE +
         USB_DESCRIPTOR_LENGTH_INTERFACE + USB_AUDIO_STREAMING_IFACE_DESC_SIZE + USB_AUDIO_STREAMING_TYPE_I_DESC_SIZE +
-        USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH + USB_AUDIO_STREAMING_ENDP_DESC_SIZE +
-        USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH + USB_DESCRIPTOR_LENGTH_INTERFACE + USB_DESCRIPTOR_LENGTH_HID +
+        USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH + USB_AUDIO_STREAMING_ENDP_DESC_SIZE
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+#else
+        + USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH
+#endif
+        + USB_DESCRIPTOR_LENGTH_INTERFACE + USB_DESCRIPTOR_LENGTH_HID +
         USB_DESCRIPTOR_LENGTH_ENDPOINT), /* Total length of data returned for this configuration. */
     USB_DEVICE_INTERFACE_COUNT,          /* Number of interfaces supported by this configuration */
     USB_COMPOSITE_CONFIGURE_INDEX,       /* Value to use as an argument to the
@@ -360,11 +419,11 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
                   This value is used in all requests to
                   address this Unit.  */
     USB_AUDIO_RECORDER_CONTROL_INPUT_TERMINAL_ID, /* ID of the Unit or Terminal to which this Feature Unit is connected.
-                                                     */
+                                                   */
     0x01U,                                        /* Size in bytes of an element of the bmaControls() array:  */
     0x03,                                         /* Master channel controls */
     0x00,                                         /* Logic channel 1 controls */
-    0x00,                                         /* Logic channel 2 controls */ 
+    0x00,                                         /* Logic channel 2 controls */
     0x00U,                                        /* Index of a string descriptor, describing this Feature Unit.   */
 
     /* Audio Class Specific type of  Output Terminal */
@@ -402,7 +461,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
              value is used in all requests to
              address this Unit.  */
     USB_AUDIO_SPEAKER_CONTROL_INPUT_TERMINAL_ID, /* ID of the Unit or Terminal to which this Feature Unit is connected.
-                                                    */
+                                                  */
     0x01U,                                       /* Size in bytes of an element of the bmaControls() array:  */
     0x03U,                                       /* Master channel0 controls */
     0x00U,                                       /* Master channel1 controls */
@@ -474,13 +533,26 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     0x01U,                   /* Indicates how the sampling frequency can be programmed:   */
     TSAMFREQ2BYTES(AUDIO_SAMPLING_RATE_KHZ * 1000),
 
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+    /* ENDPOINT Descriptor */
+    USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH,               /* Descriptor size is 9 bytes  */
+    USB_DESCRIPTOR_TYPE_ENDPOINT,                       /* ENDPOINT Descriptor Type   */
+    USB_AUDIO_RECORDER_STREAM_ENDPOINT | (USB_IN << 7), /* This is an IN endpoint with endpoint number 2   */
+    USB_ENDPOINT_ISOCHRONOUS | 0x0C,                    /*   Types - Transfer: ISOCHRONOUS
+                                                             Sync: Sync  */
+    USB_SHORT_GET_LOW(FS_ISO_IN_ENDP_PACKET_SIZE),
+    USB_SHORT_GET_HIGH(FS_ISO_IN_ENDP_PACKET_SIZE), /* Maximum packet size for this endpoint is 8 Bytes.  */
+    FS_ISO_IN_ENDP_INTERVAL, /* The polling interval value is every 1 Frames. If Hi-Speed, every 1 uFrames   */
+    0x00U,                   /* Refresh Rate 2**n ms where n = 0   */
+    0x00U,                   /* Synchronization Endpoint (if used) is endpoint 0   */
+#else
     /* ENDPOINT Descriptor */
     USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH,               /* Descriptor size is 9 bytes  */
     USB_DESCRIPTOR_TYPE_ENDPOINT,                       /* ENDPOINT Descriptor Type   */
     USB_AUDIO_RECORDER_STREAM_ENDPOINT | (USB_IN << 7), /* This is an IN endpoint with endpoint number 2   */
     USB_ENDPOINT_ISOCHRONOUS | 0x04 | (0x2 << 4U),      /*   Types - Transfer: ISOCHRONOUS
-                                                                 Sync: Async
-                                                                 Usage: Implicit Feedback EP   */
+                                                                     Sync: Async
+                                                                     Usage: Implicit Feedback EP   */
     USB_SHORT_GET_LOW(FS_ISO_IN_ENDP_PACKET_SIZE + AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE),
     USB_SHORT_GET_HIGH(FS_ISO_IN_ENDP_PACKET_SIZE +
                        AUDIO_FORMAT_CHANNELS *
@@ -488,6 +560,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     FS_ISO_IN_ENDP_INTERVAL, /* The polling interval value is every 1 Frames. If Hi-Speed, every 1 uFrames   */
     0x00U,                   /* Refresh Rate 2**n ms where n = 0   */
     0x00U,                   /* Synchronization Endpoint (if used) is endpoint 0   */
+#endif
 
     /* Audio Class Specific ENDPOINT Descriptor  */
     USB_AUDIO_STREAMING_ENDP_DESC_SIZE,      /*  Size of the descriptor, in bytes  */
@@ -497,9 +570,8 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
                                                 Bit 1: Pitch 0
                                                 Bit 7: MaxPacketsOnly 0   */
     0x00U,                                   /* Indicates the units used for the wLockDelay field: 0: Undefined  */
-    0x00U,
-    0x00U, /* Indicates the time it takes this endpoint to reliably lock its internal clock recovery
-              circuitry */
+    0x00U, 0x00U, /* Indicates the time it takes this endpoint to reliably lock its internal clock recovery
+                     circuitry */
 
     /* Audio Class Specific INTERFACE Descriptor, alternative interface 0  */
     USB_DESCRIPTOR_LENGTH_INTERFACE,          /* Descriptor size is 9 bytes  */
@@ -516,8 +588,12 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE,          /* Descriptor size is 9 bytes  */
     USB_DESCRIPTOR_TYPE_INTERFACE,            /* INTERFACE Descriptor Type  */
     USB_AUDIO_SPEAKER_STREAM_INTERFACE_INDEX, /*The number of this interface is 1.  */
-    0x01U,                    /* The value used to select the alternate setting for this interface is 1  */
-    0x02U,                    /* The number of endpoints used by this interface is 2 (excluding endpoint zero)    */
+    0x01U, /* The value used to select the alternate setting for this interface is 1  */
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+    0x01U, /* The number of endpoints used by this interface is 1 (excluding endpoint zero)    */
+#else
+    0x02U,                   /* The number of endpoints used by this interface is 2 (excluding endpoint zero)    */
+#endif
     USB_AUDIO_CLASS,          /* The interface implements the Audio Interface class   */
     USB_SUBCLASS_AUDIOSTREAM, /* The interface implements the AUDIOSTREAMING Subclass   */
     0x00U,                    /* The interface doesn't use any class-specific protocols  */
@@ -544,9 +620,21 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
                                                         /*   0x40, 0x1F,0x00U,                  8 kHz */
     // 0x80U, 0x3EU, 0x00U,                                /* 16 kHz */
     TSAMFREQ2BYTES(AUDIO_SAMPLING_RATE_KHZ * 1000),
-    /*   0x80,0xBB,0x00U,                  48 kHz */
-    /*   0x00U, 0xFA,0x00U,                72 kHz */
+/*   0x80,0xBB,0x00U,                  48 kHz */
+/*   0x00U, 0xFA,0x00U,                72 kHz */
 
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+    /* ENDPOINT Descriptor */
+    USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH, /* Descriptor size is 9 bytes  */
+    USB_DESCRIPTOR_TYPE_ENDPOINT,         /* Descriptor type (endpoint descriptor) */
+    USB_AUDIO_SPEAKER_STREAM_ENDPOINT |
+        (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT), /* OUT endpoint address 1 */
+    USB_ENDPOINT_ISOCHRONOUS | 0x0CU,                                 /* Isochronous endpoint and Synchronous*/
+    USB_SHORT_GET_LOW(FS_ISO_OUT_ENDP_PACKET_SIZE), USB_SHORT_GET_HIGH(FS_ISO_OUT_ENDP_PACKET_SIZE), /* 16 bytes  */
+    FS_ISO_OUT_ENDP_INTERVAL, /* bInterval(0x01U): x ms */
+    0x00U,                    /* Unused */
+    0x00U,                    /* Synchronization Endpoint (if used) is endpoint 0x83  */
+#else
     /* ENDPOINT Descriptor */
     USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH, /* Descriptor size is 9 bytes  */
     USB_DESCRIPTOR_TYPE_ENDPOINT,         /* Descriptor type (endpoint descriptor) */
@@ -560,7 +648,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_AUDIO_SPEAKER_FEEDBACK_ENDPOINT |
         (USB_IN
          << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT), /* Synchronization Endpoint (if used) is endpoint 0x83  */
-
+#endif
     /* Audio Class Specific ENDPOINT Descriptor  */
     USB_AUDIO_STREAMING_ENDP_DESC_SIZE,      /*  Size of the descriptor, in bytes  */
     USB_AUDIO_STREAM_ENDPOINT_DESCRIPTOR,    /* CS_ENDPOINT Descriptor Type  */
@@ -569,9 +657,10 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
                                                 Bit 1: Pitch 0
                                                 Bit 7: MaxPacketsOnly 0   */
     0x00U,                                   /* Indicates the units used for the wLockDelay field: 0: Undefined  */
-    0x00U,
-    0x00U, /* Indicates the time it takes this endpoint to reliably lock its internal clock recovery circuitry */
+    0x00U, 0x00U, /* Indicates the time it takes this endpoint to reliably lock its internal clock recovery circuitry */
 
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+#else
     /* Endpoint 3 Feedback ENDPOINT */
     USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH, /* bLength */
     USB_DESCRIPTOR_TYPE_ENDPOINT,         /* bDescriptorType */
@@ -581,11 +670,11 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
                                                                          Transfer: ISOCHRONOUS
                                                                          Sync: Async
                                                                          Usage: Feedback EP   */
-    FS_ISO_FEEDBACK_ENDP_PACKET_SIZE,
-    0x00, /* wMaxPacketSize */
-    0x01, /* interval polling(2^x ms) */
-    0x05, /* bRefresh(32ms)  */
-    0x00, /* unused */
+    FS_ISO_FEEDBACK_ENDP_PACKET_SIZE, 0x00,                          /* wMaxPacketSize */
+    0x01,                                                            /* interval polling(2^x ms) */
+    0x05,                                                            /* bRefresh(32ms)  */
+    0x00,                                                            /* unused */
+#endif
 
     /* Interface Descriptor */
     USB_DESCRIPTOR_LENGTH_INTERFACE,  /* Size of this descriptor in bytes */
@@ -642,7 +731,10 @@ uint8_t g_UsbDeviceQualifierDescriptor[] = {
 /* Define string descriptor */
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 uint8_t g_UsbDeviceString0[] = {
-    2U + 2U, USB_DESCRIPTOR_TYPE_STRING, 0x09U, 0x04U,
+    2U + 2U,
+    USB_DESCRIPTOR_TYPE_STRING,
+    0x09U,
+    0x04U,
 };
 
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
@@ -692,24 +784,33 @@ uint8_t g_UsbDeviceString2[] = {
 };
 
 uint32_t g_UsbDeviceStringDescriptorLength[USB_DEVICE_STRING_COUNT] = {
-    sizeof(g_UsbDeviceString0), sizeof(g_UsbDeviceString1), sizeof(g_UsbDeviceString2),
+    sizeof(g_UsbDeviceString0),
+    sizeof(g_UsbDeviceString1),
+    sizeof(g_UsbDeviceString2),
 };
 
 uint8_t *g_UsbDeviceStringDescriptorArray[USB_DEVICE_STRING_COUNT] = {
-    g_UsbDeviceString0, g_UsbDeviceString1, g_UsbDeviceString2,
+    g_UsbDeviceString0,
+    g_UsbDeviceString1,
+    g_UsbDeviceString2,
 };
 
 usb_language_t g_UsbDeviceLanguage[USB_DEVICE_LANGUAGE_COUNT] = {{
-    g_UsbDeviceStringDescriptorArray, g_UsbDeviceStringDescriptorLength, (uint16_t)0x0409U,
+    g_UsbDeviceStringDescriptorArray,
+    g_UsbDeviceStringDescriptorLength,
+    (uint16_t)0x0409U,
 }};
 
 usb_language_list_t g_UsbDeviceLanguageList = {
-    g_UsbDeviceString0, sizeof(g_UsbDeviceString0), g_UsbDeviceLanguage, USB_DEVICE_LANGUAGE_COUNT,
+    g_UsbDeviceString0,
+    sizeof(g_UsbDeviceString0),
+    g_UsbDeviceLanguage,
+    USB_DEVICE_LANGUAGE_COUNT,
 };
 
 /*******************************************************************************
-* Code
-******************************************************************************/
+ * Code
+ ******************************************************************************/
 /*!
  * @brief USB device get device descriptor function.
  *
@@ -779,7 +880,7 @@ usb_status_t USB_DeviceGetStringDescriptor(usb_device_handle handle,
     }
     else
     {
-        uint8_t languageId = 0U;
+        uint8_t languageId    = 0U;
         uint8_t languageIndex = USB_DEVICE_STRING_COUNT;
 
         for (; languageId < USB_DEVICE_LANGUAGE_COUNT; languageId++)
@@ -841,6 +942,26 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
         {
             if (USB_SPEED_HIGH == speed)
             {
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+                if ((USB_AUDIO_SPEAKER_STREAM_ENDPOINT ==
+                     (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                    ((descriptorHead->endpoint.bEndpointAddress >> USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT) ==
+                     USB_OUT))
+                {
+                    descriptorHead->endpoint.bInterval = HS_ISO_OUT_ENDP_INTERVAL;
+                    USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS((HS_ISO_OUT_ENDP_PACKET_SIZE),
+                                                       descriptorHead->endpoint.wMaxPacketSize);
+                }
+                else if ((USB_AUDIO_RECORDER_STREAM_ENDPOINT ==
+                          (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                         ((descriptorHead->endpoint.bEndpointAddress >>
+                           USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT) == USB_IN))
+                {
+                    descriptorHead->endpoint.bInterval = HS_ISO_IN_ENDP_INTERVAL;
+                    USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS((HS_ISO_IN_ENDP_PACKET_SIZE),
+                                                       descriptorHead->endpoint.wMaxPacketSize);
+                }
+#else
                 if ((USB_AUDIO_SPEAKER_STREAM_ENDPOINT ==
                      (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
                     ((descriptorHead->endpoint.bEndpointAddress >> USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT) ==
@@ -861,18 +982,18 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
                                                        descriptorHead->endpoint.wMaxPacketSize);
                 }
                 else if ((USB_AUDIO_RECORDER_STREAM_ENDPOINT ==
-                         (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                          (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
                          ((descriptorHead->endpoint.bEndpointAddress >>
-                           USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT) == USB_IN)
-                         )
+                           USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT) == USB_IN))
                 {
                     descriptorHead->endpoint.bInterval = HS_ISO_IN_ENDP_INTERVAL;
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(
                         (HS_ISO_IN_ENDP_PACKET_SIZE + AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE),
                         descriptorHead->endpoint.wMaxPacketSize);
                 }
+#endif
                 else if ((USB_HID_KEYBOARD_ENDPOINT ==
-                         (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                          (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
                          ((descriptorHead->endpoint.bEndpointAddress >>
                            USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT) == USB_IN))
                 {
@@ -886,6 +1007,26 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
             }
             else
             {
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+                if ((USB_AUDIO_SPEAKER_STREAM_ENDPOINT ==
+                     (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                    ((descriptorHead->endpoint.bEndpointAddress >> USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT) ==
+                     USB_OUT))
+                {
+                    descriptorHead->endpoint.bInterval = FS_ISO_OUT_ENDP_INTERVAL;
+                    USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS((FS_ISO_OUT_ENDP_PACKET_SIZE),
+                                                       descriptorHead->endpoint.wMaxPacketSize);
+                }
+                else if ((USB_AUDIO_RECORDER_STREAM_ENDPOINT ==
+                          (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                         ((descriptorHead->endpoint.bEndpointAddress >>
+                           USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT) == USB_IN))
+                {
+                    descriptorHead->endpoint.bInterval = FS_ISO_IN_ENDP_INTERVAL;
+                    USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS((FS_ISO_IN_ENDP_PACKET_SIZE),
+                                                       descriptorHead->endpoint.wMaxPacketSize);
+                }
+#else
                 if ((USB_AUDIO_SPEAKER_STREAM_ENDPOINT ==
                      (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
                     ((descriptorHead->endpoint.bEndpointAddress >> USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT) ==
@@ -906,7 +1047,7 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
                                                        descriptorHead->endpoint.wMaxPacketSize);
                 }
                 else if ((USB_AUDIO_RECORDER_STREAM_ENDPOINT ==
-                         (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                          (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
                          ((descriptorHead->endpoint.bEndpointAddress >>
                            USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT) == USB_IN))
                 {
@@ -915,8 +1056,9 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
                         (FS_ISO_IN_ENDP_PACKET_SIZE + AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE),
                         descriptorHead->endpoint.wMaxPacketSize);
                 }
+#endif
                 else if ((USB_HID_KEYBOARD_ENDPOINT ==
-                         (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                          (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
                          ((descriptorHead->endpoint.bEndpointAddress >>
                            USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT) == USB_IN))
                 {
@@ -936,15 +1078,27 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
     {
         if (USB_SPEED_HIGH == speed)
         {
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+            g_UsbDeviceAudioSpeakerEndpoints[0].maxPacketSize = (HS_ISO_OUT_ENDP_PACKET_SIZE);
+            g_UsbDeviceAudioSpeakerEndpoints[0].interval      = (HS_ISO_OUT_ENDP_INTERVAL);
+#else
             g_UsbDeviceAudioSpeakerEndpoints[0].maxPacketSize =
                 (HS_ISO_OUT_ENDP_PACKET_SIZE + AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE);
+            g_UsbDeviceAudioSpeakerEndpoints[0].interval      = (HS_ISO_OUT_ENDP_INTERVAL);
             g_UsbDeviceAudioSpeakerEndpoints[1].maxPacketSize = HS_ISO_FEEDBACK_ENDP_PACKET_SIZE;
+#endif
         }
         else
         {
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+            g_UsbDeviceAudioSpeakerEndpoints[0].maxPacketSize = (FS_ISO_OUT_ENDP_PACKET_SIZE);
+            g_UsbDeviceAudioSpeakerEndpoints[0].interval      = (FS_ISO_OUT_ENDP_INTERVAL);
+#else
             g_UsbDeviceAudioSpeakerEndpoints[0].maxPacketSize =
                 (FS_ISO_OUT_ENDP_PACKET_SIZE + AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE);
+            g_UsbDeviceAudioSpeakerEndpoints[0].interval      = (FS_ISO_OUT_ENDP_INTERVAL);
             g_UsbDeviceAudioSpeakerEndpoints[1].maxPacketSize = FS_ISO_FEEDBACK_ENDP_PACKET_SIZE;
+#endif
         }
     }
 
@@ -953,10 +1107,12 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
         if (USB_SPEED_HIGH == speed)
         {
             g_UsbDeviceHidEndpoints[i].maxPacketSize = HS_HID_KEYBOARD_INTERRUPT_IN_PACKET_SIZE;
+            g_UsbDeviceHidEndpoints[i].interval      = HS_HID_KEYBOARD_INTERRUPT_IN_INTERVAL;
         }
         else
         {
             g_UsbDeviceHidEndpoints[i].maxPacketSize = FS_HID_KEYBOARD_INTERRUPT_IN_PACKET_SIZE;
+            g_UsbDeviceHidEndpoints[i].interval      = FS_HID_KEYBOARD_INTERRUPT_IN_INTERVAL;
         }
     }
 

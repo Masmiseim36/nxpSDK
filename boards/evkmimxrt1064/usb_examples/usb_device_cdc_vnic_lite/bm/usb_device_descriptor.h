@@ -87,7 +87,7 @@
 #define USB_CDC_TELEPHONE_CONTROL_FUNC_DESC (0x18)
 #define USB_CDC_OBEX_SERVICE_ID_FUNC_DESC (0x19)
 
-/* usb descritpor length */
+/* usb descriptor length */
 #define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (sizeof(g_UsbDeviceConfigurationDescriptor))
 #define USB_DESCRIPTOR_LENGTH_CDC_HEADER_FUNC (5)
 #define USB_DESCRIPTOR_LENGTH_CDC_CALL_MANAG (5)
@@ -167,7 +167,7 @@ extern usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
  * current speed.
  * As the default, the device descriptors and configurations are configured by using FS parameters for both EHCI and
  * KHCI.
- * When the EHCI is enabled, the application needs to call this fucntion to update device by using current speed.
+ * When the EHCI is enabled, the application needs to call this function to update device by using current speed.
  * The updated information includes endpoint max packet size, endpoint interval, etc.
  *
  * @param handle The USB device handle.

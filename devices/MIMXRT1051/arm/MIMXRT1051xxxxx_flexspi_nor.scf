@@ -3,18 +3,19 @@
 ** ###################################################################
 **     Processors:          MIMXRT1051CVJ5B
 **                          MIMXRT1051CVL5B
+**                          MIMXRT1051DVJ6B
 **                          MIMXRT1051DVL6B
 **
 **     Compiler:            Keil ARM C/C++ Compiler
-**     Reference manual:    IMXRT1050RM Rev.1, 03/2018
+**     Reference manual:    IMXRT1050RM Rev.2.1, 12/2018
 **     Version:             rev. 1.0, 2018-09-21
-**     Build:               b180921
+**     Build:               b190312
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2018 NXP
+**     Copyright 2016-2019 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause

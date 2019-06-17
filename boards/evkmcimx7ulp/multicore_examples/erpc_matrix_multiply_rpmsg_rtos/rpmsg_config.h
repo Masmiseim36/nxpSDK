@@ -2,7 +2,7 @@
  * Copyright (c) 2014, Mentor Graphics Corporation
  * Copyright (c) 2015 Xilinx, Inc.
  * Copyright (c) 2016 Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -32,6 +32,7 @@
 //! [2^n - 16].
 //! The default value is 496.
 #define RL_BUFFER_PAYLOAD_SIZE (496)
+
 //! @def RL_BUFFER_COUNT
 //!
 //! Number of the buffers, it must be power of two (2, 4, ...).
@@ -65,6 +66,18 @@
 //! The default value is 0 (no MCMGR IPC ISR handler used).
 #define RL_USE_MCMGR_IPC_ISR_HANDLER (0)
 
+//! @def RL_USE_ENVIRONMENT_CONTEXT
+//!
+//! When enabled the environment layer uses its own context.
+//! Added for QNX port mainly, but can be used if required.
+//! The default value is 0 (no context, saves some RAM).
+#define RL_USE_ENVIRONMENT_CONTEXT (0)
+
+
+//! @def RL_DEBUG_CHECK_BUFFERS
+//!
+//! Do not use in RPMsg-Lite to Linux configuration
+#define RL_DEBUG_CHECK_BUFFERS (0)
 //@}
 
 #endif /* _RPMSG_CONFIG_H */

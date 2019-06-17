@@ -34,10 +34,7 @@
 #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 #if !BL_DEVICE_IS_LPC_SERIES
 const flash_driver_interface_t g_flashDriverInterface = {
-    .version = {.name = kFLASH_DriverVersionName,
-                .major = kFLASH_DriverVersionMajor,
-                .minor = kFLASH_DriverVersionMinor,
-                .bugfix = kFLASH_DriverVersionBugfix },
+    {.version = FSL_FLASH_DRIVER_VERSION},
     .flash_init = FLASH_Init,
     .flash_erase_all = FLASH_EraseAll,
 #if BL_FEATURE_ERASEALL_UNSECURE
@@ -66,7 +63,9 @@ const flash_driver_interface_t g_flashDriverInterface = {
     .flash_read_once = NULL,
     .flash_read_resource = NULL,
 #endif
+#if defined(FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL) && FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL
     .flash_is_execute_only = FLASH_IsExecuteOnly,
+#endif
 #if BL_FEATURE_FAC_ERASE
     .flash_erase_all_execute_only_segments = FLASH_EraseAllExecuteOnlySegments,
     .flash_verify_erase_all_execute_only_segments = FLASH_VerifyEraseAllExecuteOnlySegments,

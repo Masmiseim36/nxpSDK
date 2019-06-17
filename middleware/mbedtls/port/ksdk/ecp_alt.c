@@ -376,7 +376,7 @@ void mbedtls_ecp_keypair_free( mbedtls_ecp_keypair *key )
     {
         key->grp.hlse_handle = 0;
     }
-    mbedtls_ecp_keypair_free(key);
+    mbedtls_ecp_keypair_free_o(key);
 }
 #else
 void mbedtls_ecp_keypair_free( mbedtls_ecp_keypair *key )

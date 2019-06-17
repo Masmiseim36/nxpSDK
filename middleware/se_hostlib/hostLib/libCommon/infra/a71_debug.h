@@ -23,7 +23,6 @@
 #define _A71_DEBUG_
 
 #include "ax_api.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -43,12 +42,15 @@ extern "C" {
 
 /** \name Debug functions (only available in case the Applet is in Debug Mode)
    @{ */
+
+#if (SSS_HAVE_A71CH || SSS_HAVE_A71CL || SSS_HAVE_SE050_EAR_CH || SSS_HAVE_SE050_EAR_CL)
 U16 A71_DbgDisableDebug(void);
 U16 A71_DbgEraseCounter(SST_Index_t index);
 U16 A71_DbgGetFreePersistentMemory(S16 *freeMem);
 U16 A71_DbgGetFreeTransientMemory(S16 *freeMem);
 U16 A71_DbgReflect(U8 *sndBuf, U16 sndBufLen, U8 *rcvBuf, U16 *rcvBufLen);
 U16 A71_DbgReset(void);
+#endif
 /** @}*/
 
 #ifdef __cplusplus

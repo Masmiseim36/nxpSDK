@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, NXP Semiconductor, Inc.
+ * Copyright 2017 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,20 +8,23 @@
 #ifndef __WIFI_SHIELD_H__
 #define __WIFI_SHIELD_H__
 
-/* Select specific shield support */
-#define WIFISHIELD_IS_GT202
-// #define WIFISHIELD_IS_SILEX2041
+#include "wifi_shield_common.h"
 
-/* Include shields support */
-#if defined(WIFISHIELD_IS_GT202)
-#include "wifi_shield_gt202.h"
-/* future silex2401 support */
-//#elif defined(WIFISHIELD_IS_SILEX2041)
-//#include "wifi_shield_silex2401.h"
-#else
-#error "No shield is selected !"
+/* Select specific shield support */
+#ifndef WIFISHIELD_IS
+#define WIFISHIELD_IS WIFISHIELD_IS_GT202
 #endif
 
+/* Include shields support */
+#if defined(WIFISHIELD_IS)
+#   if (WIFISHIELD_IS) == (WIFISHIELD_IS_GT202)
+#       include "wifi_shield_gt202.h"
+#   else
+#       error "Unsupported shield selected !"
+#   endif
+#else
+#   error "No shield is selected !"
+#endif
 /* define IRQ priority level */
 #ifndef WIFISHIELD_SPI_IRQ_PRIORITY
 #   define WIFISHIELD_SPI_IRQ_PRIORITY (configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 1)

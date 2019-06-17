@@ -293,9 +293,9 @@ usb_language_list_t g_UsbDeviceLanguageList = {
 * Code
 ******************************************************************************/
 /*!
- * @brief Get the descritpor.
+ * @brief Get the descriptor.
  *
- * The function is used to get the descritpor, including the device descritpor, configuration descriptor, and string
+ * The function is used to get the descriptor, including the device descriptor, configuration descriptor, and string
  * descriptor, etc.
  *
  * @param handle              The device handle.

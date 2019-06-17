@@ -16,37 +16,14 @@ With board to board connection, one LPSPI instance on one board is used as LPSPI
     For board used as LPSPI slave:
         #define SPI_MASTER_SLAVE isSLAVE
 
-Running the demo
-================
-The following message shows in the terminal if the example runs successfully.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-FreeRTOS LPSPI example start.
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
 
-This example use one lpspi instance as master and another as slave on a single board.
-
-Master and slave are both use interrupt way.
-
-Please make sure you make the correct line connection. Basically, the connection is:
-
-LPSPI_master -- LPSPI_slave
-
-    CLK      --    CLK
-
-    PCS0     --    PCS0
-
-    SOUT     --    SIN
-
-    SIN      --    SOUT
-
-LPSPI master transfer completed successfully.
-
-Slave-to-master data verified ok.
-
-LPSPI slave transfer completed successfully.
-
-Master-to-slave data verified ok.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -80,11 +57,37 @@ Prepare the Demo
 4. Either press the reset button on your board or launch the debugger in your IDE to begin running
    the demo.
 
+Running the demo
+================
+The following message shows in the terminal if the example runs successfully.
 
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+FreeRTOS LPSPI example start.
+
+This example use one lpspi instance as master and another as slave on a single board.
+
+Master and slave are both use interrupt way.
+
+Please make sure you make the correct line connection. Basically, the connection is:
+
+LPSPI_master -- LPSPI_slave
+
+    CLK      --    CLK
+
+    PCS0     --    PCS0
+
+    SOUT     --    SIN
+
+    SIN      --    SOUT
+
+LPSPI master transfer completed successfully.
+
+Slave-to-master data verified ok.
+
+LPSPI slave transfer completed successfully.
+
+Master-to-slave data verified ok.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Customization options
+=====================
 

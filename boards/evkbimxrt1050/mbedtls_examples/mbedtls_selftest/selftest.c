@@ -118,7 +118,7 @@
 static int test_snprintf(size_t n, const char ref_buf[10], int ref_ret)
 {
     int ret;
-    char buf[10] = "xxxxxxxxx";
+    char buf[10]       = "xxxxxxxxx";
     const char ref[10] = "xxxxxxxxx";
 
     ret = mbedtls_snprintf(buf, n, "%s", "123");
@@ -387,7 +387,7 @@ int main(int argc, char *argv[])
     char **argp;
     int exclude_mode = 0;
 #endif
-    int v = 1; /* v=1 for verbose mode */
+    int v             = 1; /* v=1 for verbose mode */
     int suites_tested = 0, suites_failed = 0;
 #if defined(MBEDTLS_MEMORY_BUFFER_ALLOC_C) && defined(MBEDTLS_SELF_TEST)
     unsigned char buf[1000000];
@@ -419,9 +419,9 @@ int main(int argc, char *argv[])
         mbedtls_exit(MBEDTLS_EXIT_FAILURE);
     }
 
-/*
- * Make sure we have a snprintf that correctly zero-terminates
- */
+    /*
+     * Make sure we have a snprintf that correctly zero-terminates
+     */
 #if RUN_TEST_SNPRINTF /* Test is failed for UV */
     if (run_test_snprintf() != 0)
     {

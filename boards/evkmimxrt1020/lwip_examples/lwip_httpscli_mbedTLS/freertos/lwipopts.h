@@ -1,14 +1,14 @@
 /**
-  ******************************************************************************
-  * @file    lwipopts.h
-  * This file is based on \src\include\lwip\opt.h
-  ******************************************************************************
-   * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
-   * Copyright 2016-2018 NXP
-   * All rights reserved.
-   *
-   * SPDX-License-Identifier: BSD-3-Clause
-   */
+ ******************************************************************************
+ * @file    lwipopts.h
+ * This file is based on \src\include\lwip\opt.h
+ ******************************************************************************
+ * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 #ifndef __LWIPOPTS_H__
 #define __LWIPOPTS_H__
@@ -116,6 +116,11 @@
 /* Default value is defined in lwip\src\include\lwip\opt.h as
  * LWIP_MEM_ALIGN_SIZE(TCP_MSS+40+PBUF_LINK_ENCAPSULATION_HLEN+PBUF_LINK_HLEN)*/
 
+#ifdef WIFI_WICED
+#include "wwd_network_constants.h"
+#define PBUF_LINK_HLEN (MAX_BUS_HEADER_LENGTH + MAX_SDPCM_HEADER_LENGTH + WICED_ETHERNET_SIZE)
+#endif
+
 /* ---------- TCP options ---------- */
 #ifndef LWIP_TCP
 #define LWIP_TCP 1
@@ -149,7 +154,7 @@
 
 /* TCP receive window. */
 #ifndef TCP_WND
-#define TCP_WND (2 * TCP_MSS)
+#define TCP_WND (9 * TCP_MSS)
 #endif
 
 /* Enable backlog*/

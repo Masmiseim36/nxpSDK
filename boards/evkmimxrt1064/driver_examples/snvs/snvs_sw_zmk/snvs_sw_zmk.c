@@ -60,7 +60,7 @@ int main(void)
     SNVS_LP_WriteZeroizableMasterKey(SNVS, ZMKey);
 
     /* Now the ZMK is not zero. */
-    DEMO_CheckResult((0 == (SNVS_HP_GetStatusFlags(SNVS) & kSNVS_ZMK_ZeroFlag)), "ZMK not set");
+    DEMO_CheckResult((0 == (SNVS_HP_GetStatusFlags(SNVS) & (uint32_t)kSNVS_ZMK_ZeroFlag)), "ZMK not set");
 
     /* Step 2: Enable the ZMK. */
     PRINTF("Enable the ZMK\r\n");
@@ -85,7 +85,7 @@ int main(void)
     SNVS_LP_WriteZeroizableMasterKey(SNVS, ZMKey);
 
     /* Now the ZMK is zero. */
-    DEMO_CheckResult((0 != (SNVS_HP_GetStatusFlags(SNVS) & kSNVS_ZMK_ZeroFlag)), "ZMK not zeroized");
+    DEMO_CheckResult((0 != (SNVS_HP_GetStatusFlags(SNVS) & (uint32_t)kSNVS_ZMK_ZeroFlag)), "ZMK not zeroized");
 
     PRINTF("ZMK violation detected, ZMK key is zeroized\r\n");
 

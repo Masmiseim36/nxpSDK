@@ -30,8 +30,8 @@
 void BOARD_PowerOffSDCARD(void);
 void BOARD_PowerOnSDCARD(void);
 /*!
-* @brief wait card insert function.
-*/
+ * @brief wait card insert function.
+ */
 static status_t sdcardWaitCardInsert(void);
 
 /*******************************************************************************
@@ -41,13 +41,13 @@ static FATFS g_fileSystem; /* File system object */
 static FIL g_fileObject;   /* File object */
 
 /* @brief decription about the read/write buffer
-* The size of the read/write buffer should be a multiple of 512, since SDHC/SDXC card uses 512-byte fixed
-* block length and this driver example is enabled with a SDHC/SDXC card.If you are using a SDSC card, you
-* can define the block length by yourself if the card supports partial access.
-* The address of the read/write buffer should align to the specific DMA data buffer address align value if
-* DMA transfer is used, otherwise the buffer address is not important.
-* At the same time buffer address/size should be aligned to the cache line size if cache is supported.
-*/
+ * The size of the read/write buffer should be a multiple of 512, since SDHC/SDXC card uses 512-byte fixed
+ * block length and this driver example is enabled with a SDHC/SDXC card.If you are using a SDSC card, you
+ * can define the block length by yourself if the card supports partial access.
+ * The address of the read/write buffer should align to the specific DMA data buffer address align value if
+ * DMA transfer is used, otherwise the buffer address is not important.
+ * At the same time buffer address/size should be aligned to the cache line size if cache is supported.
+ */
 SDK_ALIGN(uint8_t g_bufferWrite[SDK_SIZEALIGN(BUFFER_SIZE, SDMMC_DATA_BUFFER_ALIGN_CACHE)],
           MAX(SDMMC_DATA_BUFFER_ALIGN_CACHE, SDMMCHOST_DMA_BUFFER_ADDR_ALIGN));
 SDK_ALIGN(uint8_t g_bufferRead[SDK_SIZEALIGN(BUFFER_SIZE, SDMMC_DATA_BUFFER_ALIGN_CACHE)],
@@ -65,7 +65,10 @@ static const sdmmchost_detect_card_t s_sdCardDetect = {
 /*! @brief SDMMC card power control configuration */
 #if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
 static const sdmmchost_pwr_card_t s_sdCardPwrCtrl = {
-    .powerOn = BOARD_PowerOnSDCARD, .powerOnDelay_ms = 500U, .powerOff = BOARD_PowerOffSDCARD, .powerOffDelay_ms = 0U,
+    .powerOn          = BOARD_PowerOnSDCARD,
+    .powerOnDelay_ms  = 500U,
+    .powerOff         = BOARD_PowerOffSDCARD,
+    .powerOffDelay_ms = 0U,
 };
 #endif
 /*******************************************************************************
@@ -95,11 +98,11 @@ void BOARD_PowerOnSDCARD(void)
 static void BOARD_USDHCClockConfiguration(void)
 {
     CLOCK_InitSysPll(&sysPllConfig_BOARD_BootClockRUN);
-    /*configure system pll PFD2 fractional divider to 24*/
-    CLOCK_InitSysPfd(kCLOCK_Pfd2, 24U);
+    /*configure system pll PFD0 fractional divider to 24, output clock is 528MHZ * 18 / 24 = 396 MHZ*/
+    CLOCK_InitSysPfd(kCLOCK_Pfd0, 24U);
     /* Configure USDHC clock source and divider */
     CLOCK_SetDiv(kCLOCK_Usdhc1Div, 0U);
-    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 0U);
+    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 1U);
 }
 
 
@@ -114,8 +117,8 @@ int main(void)
     UINT bytesWritten;
     UINT bytesRead;
     const TCHAR driverNumberBuffer[3U] = {SDDISK + '0', ':', '/'};
-    volatile bool failedFlag = false;
-    char ch = '0';
+    volatile bool failedFlag           = false;
+    char ch                            = '0';
     BYTE work[FF_MAX_SS];
 
     BOARD_ConfigMPU();
@@ -300,7 +303,7 @@ int main(void)
 static status_t sdcardWaitCardInsert(void)
 {
     /* Save host information. */
-    g_sd.host.base = SD_HOST_BASEADDR;
+    g_sd.host.base           = SD_HOST_BASEADDR;
     g_sd.host.sourceClock_Hz = SD_HOST_CLK_FREQ;
     /* card detect type */
     g_sd.usrParam.cd = &s_sdCardDetect;

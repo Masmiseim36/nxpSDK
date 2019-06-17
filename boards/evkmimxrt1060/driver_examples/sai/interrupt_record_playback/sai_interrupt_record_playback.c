@@ -7,12 +7,14 @@
  */
 
 #include "board.h"
-#include "fsl_sai.h"
 #include "fsl_debug_console.h"
+#include "fsl_sai.h"
+#include "fsl_codec_common.h"
 
 #include "fsl_wm8960.h"
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "fsl_codec_adapter.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -48,7 +50,19 @@
 #define OVER_SAMPLE_RATE (384U)
 #define BUFFER_SIZE (1024U)
 #define BUFFER_NUMBER (4U)
-
+/* demo audio sample rate */
+#define DEMO_AUDIO_SAMPLE_RATE (kSAI_SampleRate16KHz)
+/* demo audio master clock */
+#if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) || \
+    (defined FSL_FEATURE_PCC_HAS_SAI_DIVIDER && FSL_FEATURE_PCC_HAS_SAI_DIVIDER)
+#define DEMO_AUDIO_MASTER_CLOCK OVER_SAMPLE_RATE *DEMO_AUDIO_SAMPLE_RATE
+#else
+#define DEMO_AUDIO_MASTER_CLOCK DEMO_SAI_CLK_FREQ
+#endif
+/* demo audio data channel */
+#define DEMO_AUDIO_DATA_CHANNEL (2U)
+/* demo audio bit width */
+#define DEMO_AUDIO_BIT_WIDTH kSAI_WordWidth16bits
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -56,15 +70,17 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t Buffer[BUFFER_NUMBER * BUFFER_SIZE], 4);
-sai_handle_t txHandle = {0}, rxHandle = {0};
-static uint32_t tx_index = 0U, rx_index = 0U;
-volatile uint32_t emptyBlock = BUFFER_NUMBER;
-codec_handle_t codecHandle = {0};
-extern codec_config_t boardCodecConfig;
-/*******************************************************************************
- * Code
- ******************************************************************************/
+wm8960_config_t wm8960Config = {
+    .i2cConfig = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE, .codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ},
+    .route     = kWM8960_RoutePlaybackandRecord,
+    .rightInputSource = kWM8960_InputDifferentialMicInput2,
+    .playSource       = kWM8960_PlaySourceDAC,
+    .slaveAddress     = WM8960_I2C_ADDR,
+    .bus              = kWM8960_BusI2S,
+    .format = {.mclk_HZ = 6144000U, .sampleRate = kWM8960_AudioSampleRate16KHz, .bitWidth = kWM8960_AudioBitWidth16bit},
+    .master_slave = false,
+};
+codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8960, .codecDevConfig = &wm8960Config};
 
 /*
  * AUDIO PLL setting: Frequency = Fref * (DIV_SELECT + NUM / DENOM)
@@ -74,9 +90,30 @@ extern codec_config_t boardCodecConfig;
 const clock_audio_pll_config_t audioPllConfig = {
     .loopDivider = 32,  /* PLL loop divider. Valid range for DIV_SELECT divider value: 27~54. */
     .postDivider = 1,   /* Divider after the PLL, should only be 1, 2, 4, 8, 16. */
-    .numerator = 77,    /* 30 bit numerator of fractional loop divider. */
+    .numerator   = 77,  /* 30 bit numerator of fractional loop divider. */
     .denominator = 100, /* 30 bit denominator of fractional loop divider */
 };
+AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t Buffer[BUFFER_NUMBER * BUFFER_SIZE], 4);
+sai_handle_t txHandle = {0}, rxHandle = {0};
+static uint32_t tx_index = 0U, rx_index = 0U;
+volatile uint32_t emptyBlock = BUFFER_NUMBER;
+extern codec_config_t boardCodecConfig;
+#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
+    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
+sai_master_clock_t mclkConfig = {
+#if defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)
+    .mclkOutputEnable = true,
+#if !(defined(FSL_FEATURE_SAI_HAS_NO_MCR_MICS) && (FSL_FEATURE_SAI_HAS_NO_MCR_MICS))
+    .mclkSource = kSAI_MclkSourceSysclk,
+#endif
+#endif
+};
+#endif
+uint8_t codecHandleBuffer[CODEC_HANDLE_SIZE] = {0U};
+codec_handle_t *codecHandle                  = (codec_handle_t *)codecHandleBuffer;
+/*******************************************************************************
+ * Code
+ ******************************************************************************/
 
 void BOARD_EnableSaiMclkOutput(bool enable)
 {
@@ -119,11 +156,8 @@ static void tx_callback(I2S_Type *base, sai_handle_t *handle, status_t status, v
  */
 int main(void)
 {
-    sai_config_t config;
-    uint32_t mclkSourceClockHz = 0U;
-    sai_transfer_format_t format;
     sai_transfer_t xfer;
-    uint32_t delayCycle = 500000;
+    sai_transceiver_t config;
 
     BOARD_ConfigMPU();
     BOARD_InitPins();
@@ -142,85 +176,44 @@ int main(void)
 
     /*Enable MCLK clock*/
     BOARD_EnableSaiMclkOutput(true);
-    BOARD_Codec_I2C_Init();
-
-    memset(&format, 0U, sizeof(sai_transfer_format_t));
 
     PRINTF("SAI example started!\n\r");
 
-    /*
-     * config.masterSlave = kSAI_Master;
-     * config.mclkSource = kSAI_MclkSourceSysclk;
-     * config.protocol = kSAI_BusLeftJustified;
-     * config.syncMode = kSAI_ModeAsync;
-     * config.mclkOutputEnable = true;
-     */
-    SAI_TxGetDefaultConfig(&config);
-#if defined DEMO_CODEC_WM8524
-    config.protocol = kSAI_BusI2S;
-#endif
-    SAI_TxInit(DEMO_SAI, &config);
+    /* SAI init */
+    SAI_Init(DEMO_SAI);
+    SAI_TransferTxCreateHandle(DEMO_SAI, &txHandle, tx_callback, NULL);
+    SAI_TransferRxCreateHandle(DEMO_SAI, &rxHandle, rx_callback, NULL);
 
-    SAI_RxGetDefaultConfig(&config);
-#if defined DEMO_CODEC_WM8524
-    config.protocol = kSAI_BusI2S;
-#endif
-    SAI_RxInit(DEMO_SAI, &config);
+    /* I2S mode configurations */
+    SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, kSAI_Channel0Mask);
+    SAI_TransferTxSetConfig(DEMO_SAI, &txHandle, &config);
+    config.syncMode = kSAI_ModeSync;
+    SAI_TransferRxSetConfig(DEMO_SAI, &rxHandle, &config);
 
-    /* Configure the audio format */
-    format.bitWidth = kSAI_WordWidth16bits;
-    format.channel = 0U;
-    format.sampleRate_Hz = kSAI_SampleRate16KHz;
-#if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) || \
-    (defined FSL_FEATURE_PCC_HAS_SAI_DIVIDER && FSL_FEATURE_PCC_HAS_SAI_DIVIDER)
-    format.masterClockHz = OVER_SAMPLE_RATE * format.sampleRate_Hz;
-#else
-    format.masterClockHz = DEMO_SAI_CLK_FREQ;
+    /* set bit clock divider */
+    SAI_TxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
+                          DEMO_AUDIO_DATA_CHANNEL);
+    SAI_RxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
+                          DEMO_AUDIO_DATA_CHANNEL);
+
+    /* master clock configurations */
+#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
+    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
+#if defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER)
+    mclkConfig.mclkHz          = DEMO_AUDIO_MASTER_CLOCK;
+    mclkConfig.mclkSourceClkHz = DEMO_SAI_CLK_FREQ;
 #endif
-    format.protocol = config.protocol;
-    format.stereo = kSAI_Stereo;
-    format.isFrameSyncCompact = true;
-#if defined(FSL_FEATURE_SAI_FIFO_COUNT) && (FSL_FEATURE_SAI_FIFO_COUNT > 1)
-    format.watermark = FSL_FEATURE_SAI_FIFO_COUNT / 2U;
+    SAI_SetMasterClockConfig(DEMO_SAI, &mclkConfig);
 #endif
 
     /* Use default setting to init codec */
-    CODEC_Init(&codecHandle, &boardCodecConfig);
-    CODEC_SetFormat(&codecHandle, format.masterClockHz, format.sampleRate_Hz, format.bitWidth);
-#if defined CODEC_USER_CONFIG
-    BOARD_Codec_Config(&codecHandle);
-#endif
-
-#if defined(DEMO_CODEC_WM8524)
-    wm8524_config_t codecConfig = {0};
-    codecConfig.busPinNum = CODEC_BUS_PIN_NUM;
-    codecConfig.busPin = CODEC_BUS_PIN;
-    codecConfig.mutePin = CODEC_MUTE_PIN;
-    codecConfig.mutePinNum = CODEC_MUTE_PIN_NUM;
-    codecConfig.protocol = kWM8524_ProtocolI2S;
-    WM8524_Init(&codecHandle, &codecConfig);
-#endif
-
-#if defined(CODEC_CYCLE)
-    delayCycle = CODEC_CYCLE;
-#endif
-    while (delayCycle)
-    {
-        __ASM("nop");
-        delayCycle--;
-    }
-
-    SAI_TransferTxCreateHandle(DEMO_SAI, &txHandle, tx_callback, NULL);
-    SAI_TransferRxCreateHandle(DEMO_SAI, &rxHandle, rx_callback, NULL);
-    mclkSourceClockHz = DEMO_SAI_CLK_FREQ;
-    SAI_TransferTxSetFormat(DEMO_SAI, &txHandle, &format, mclkSourceClockHz, format.masterClockHz);
-    SAI_TransferRxSetFormat(DEMO_SAI, &rxHandle, &format, mclkSourceClockHz, format.masterClockHz);
+    CODEC_Init(codecHandle, &boardCodecConfig);
 
     while (1)
     {
         if (emptyBlock > 0)
         {
-            xfer.data = Buffer + rx_index * BUFFER_SIZE;
+            xfer.data     = Buffer + rx_index * BUFFER_SIZE;
             xfer.dataSize = BUFFER_SIZE;
             if (kStatus_Success == SAI_TransferReceiveNonBlocking(DEMO_SAI, &rxHandle, &xfer))
             {
@@ -233,7 +226,7 @@ int main(void)
         }
         if (emptyBlock < BUFFER_NUMBER)
         {
-            xfer.data = Buffer + tx_index * BUFFER_SIZE;
+            xfer.data     = Buffer + tx_index * BUFFER_SIZE;
             xfer.dataSize = BUFFER_SIZE;
             if (kStatus_Success == SAI_TransferSendNonBlocking(DEMO_SAI, &txHandle, &xfer))
             {

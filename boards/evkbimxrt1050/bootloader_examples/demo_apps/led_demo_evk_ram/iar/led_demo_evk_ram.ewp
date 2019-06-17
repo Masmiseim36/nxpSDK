@@ -767,6 +767,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
+          <state> --redirect __aeabi_idiv=__iar_small___aeabi_idiv </state>
+          <state> --redirect __aeabi_idivmod=__iar_small___aeabi_idivmod </state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -970,19 +972,19 @@
   <group>
     <name>device</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/system_MIMXRT1052.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/MIMXRT1052.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/targets/MIMXRT1052/src/startup/system_MIMXRT1052.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/MIMXRT1052_features.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/fsl_device_registers.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/MIMXRT1052.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/system_MIMXRT1052.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/MIMXRT1052_features.h</name>
+      <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/targets/MIMXRT1052/src/startup/system_MIMXRT1052.c</name>
     </file>
   </group>
   <group>
@@ -1003,10 +1005,10 @@
       </file>
     </group>
     <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/apps/led_demo/src/milliseconds_delay.h</name>
+      <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/apps/led_demo/src/milliseconds_delay.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/apps/led_demo/src/milliseconds_delay.c</name>
+      <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/apps/led_demo/src/milliseconds_delay.h</name>
     </file>
   </group>
 </project>

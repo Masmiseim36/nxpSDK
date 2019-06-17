@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -73,12 +73,11 @@ uint8_t g_macAddr[6] = {0xd4, 0xbe, 0xd9, 0x45, 0x22, 0x60};
  ******************************************************************************/
 void BOARD_InitModuleClock(void)
 {
-    const clock_enet_pll_config_t config =
-          {
-              .enableClkOutput = true, 
-              .enableClkOutput25M = true, 
-              .loopDivider = 1,
-          };
+    const clock_enet_pll_config_t config = {
+        .enableClkOutput    = true,
+        .enableClkOutput25M = true,
+        .loopDivider        = 1,
+    };
     CLOCK_InitEnetPll(&config);
 }
 
@@ -101,8 +100,8 @@ static void ENET_BuildPtpEventFrame(void)
     /* The six-byte source MAC address. */
     memcpy(&g_frame[6], &g_macAddr[0], 6);
     /* The type/length: if data length is used make sure it's smaller than 1500 */
-    g_frame[12] = 0x08U;
-    g_frame[13] = 0x00U;
+    g_frame[12]    = 0x08U;
+    g_frame[13]    = 0x00U;
     g_frame[0x0EU] = 0x40;
     /* Set the UDP PTP event port number. */
     g_frame[0x24U] = (kENET_PtpEventPort >> 8) & 0xFFU;
@@ -112,8 +111,8 @@ static void ENET_BuildPtpEventFrame(void)
     /* Add ptp event message type: sync message. */
     g_frame[0x2AU] = ENET_PTP_SYNC_MSG;
     /* Add sequence id. */
-    g_frame[0x48U] = 0;
-    g_frame[0x48U+1] = 0;
+    g_frame[0x48U]     = 0;
+    g_frame[0x48U + 1] = 0;
 }
 
 /*!
@@ -126,7 +125,7 @@ int main(void)
     uint32_t sysClock;
     uint32_t ptpClock;
     uint32_t count = 0;
-    bool link = false;
+    bool link      = false;
     phy_speed_t speed;
     phy_duplex_t duplex;
     status_t result;
@@ -158,18 +157,16 @@ int main(void)
     PRINTF("\r\n ENET PTP 1588 example start.\r\n");
 
     /* prepare the buffer configuration. */
-    enet_buffer_config_t buffConfig[] = {
-        {
-            ENET_RXBD_NUM,
-            ENET_TXBD_NUM,
-            SDK_SIZEALIGN(ENET_RXBUFF_SIZE, APP_ENET_BUFF_ALIGNMENT),
-            SDK_SIZEALIGN(ENET_TXBUFF_SIZE, APP_ENET_BUFF_ALIGNMENT),
-            &g_rxBuffDescrip[0],
-            &g_txBuffDescrip[0],
-            &g_rxDataBuff[0][0],
-            &g_txDataBuff[0][0],
-        }
-    };
+    enet_buffer_config_t buffConfig[] = {{
+        ENET_RXBD_NUM,
+        ENET_TXBD_NUM,
+        SDK_SIZEALIGN(ENET_RXBUFF_SIZE, APP_ENET_BUFF_ALIGNMENT),
+        SDK_SIZEALIGN(ENET_TXBUFF_SIZE, APP_ENET_BUFF_ALIGNMENT),
+        &g_rxBuffDescrip[0],
+        &g_txBuffDescrip[0],
+        &g_rxDataBuff[0][0],
+        &g_txDataBuff[0][0],
+    }};
 
     sysClock = CORE_CLK_FREQ;
     ptpClock = PTP_CLK_FREQ;
@@ -198,7 +195,7 @@ int main(void)
         /* Get the actual PHY link speed. */
         PHY_GetLinkSpeedDuplex(EXAMPLE_ENET, EXAMPLE_PHY, &speed, &duplex);
         /* Change the MII speed and duplex for actual link status. */
-        config.miiSpeed = (enet_mii_speed_t)speed;
+        config.miiSpeed  = (enet_mii_speed_t)speed;
         config.miiDuplex = (enet_mii_duplex_t)duplex;
     }
 
@@ -233,7 +230,7 @@ int main(void)
         {
             /* Received valid frame. Deliver the rx buffer with the size equal to length. */
             uint8_t *data = (uint8_t *)malloc(length);
-            result = ENET_ReadFrame(EXAMPLE_ENET, &g_handle, data, length);
+            result        = ENET_ReadFrame(EXAMPLE_ENET, &g_handle, data, length);
             if (result == kStatus_Success)
             {
                 PRINTF(" A frame received. the length %d ", length);

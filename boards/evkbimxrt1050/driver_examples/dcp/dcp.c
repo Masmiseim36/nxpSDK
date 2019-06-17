@@ -2,7 +2,7 @@
  * Copyright 2017 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -36,9 +36,9 @@
 #if DCP_TEST_USE_OTP_KEY
 typedef enum _dcp_otp_key_select
 {
-    kDCP_OTPMKKeyLow = 1U,  /* Use [127:0] from snvs key as dcp key */
+    kDCP_OTPMKKeyLow  = 1U, /* Use [127:0] from snvs key as dcp key */
     kDCP_OTPMKKeyHigh = 2U, /* Use [255:128] from snvs key as dcp key */
-    kDCP_OCOTPKeyLow = 3U,  /* Use [127:0] from ocotp key as dcp key */
+    kDCP_OCOTPKeyLow  = 3U, /* Use [127:0] from ocotp key as dcp key */
     kDCP_OCOTPKeyHigh = 4U  /* Use [255:128] from ocotp key as dcp key */
 } dcp_otp_key_select;
 #endif
@@ -53,28 +53,28 @@ typedef enum _dcp_otp_key_select
 #if DCP_TEST_USE_OTP_KEY
 status_t DCP_OTPKeySelect(dcp_otp_key_select keySelect)
 {
-    if(keySelect == kDCP_OTPMKKeyLow)
+    if (keySelect == kDCP_OTPMKKeyLow)
     {
-       IOMUXC_GPR->GPR3 &= ~(1 << IOMUXC_GPR_GPR3_DCP_KEY_SEL_SHIFT);
-       IOMUXC_GPR->GPR10 &= ~(1 << IOMUXC_GPR_GPR10_DCPKEY_OCOTP_OR_KEYMUX_SHIFT);
+        IOMUXC_GPR->GPR3 &= ~(1 << IOMUXC_GPR_GPR3_DCP_KEY_SEL_SHIFT);
+        IOMUXC_GPR->GPR10 &= ~(1 << IOMUXC_GPR_GPR10_DCPKEY_OCOTP_OR_KEYMUX_SHIFT);
     }
 
-    else if(keySelect == kDCP_OTPMKKeyHigh)
+    else if (keySelect == kDCP_OTPMKKeyHigh)
     {
-       IOMUXC_GPR->GPR3 |= (1 << IOMUXC_GPR_GPR3_DCP_KEY_SEL_SHIFT);
-       IOMUXC_GPR->GPR10 &= ~(1 << IOMUXC_GPR_GPR10_DCPKEY_OCOTP_OR_KEYMUX_SHIFT);
+        IOMUXC_GPR->GPR3 |= (1 << IOMUXC_GPR_GPR3_DCP_KEY_SEL_SHIFT);
+        IOMUXC_GPR->GPR10 &= ~(1 << IOMUXC_GPR_GPR10_DCPKEY_OCOTP_OR_KEYMUX_SHIFT);
     }
 
-    else if(keySelect == kDCP_OCOTPKeyLow)
+    else if (keySelect == kDCP_OCOTPKeyLow)
     {
-       IOMUXC_GPR->GPR3 &= ~(1 << IOMUXC_GPR_GPR3_DCP_KEY_SEL_SHIFT);
-       IOMUXC_GPR->GPR10 |= (1 << IOMUXC_GPR_GPR10_DCPKEY_OCOTP_OR_KEYMUX_SHIFT);
+        IOMUXC_GPR->GPR3 &= ~(1 << IOMUXC_GPR_GPR3_DCP_KEY_SEL_SHIFT);
+        IOMUXC_GPR->GPR10 |= (1 << IOMUXC_GPR_GPR10_DCPKEY_OCOTP_OR_KEYMUX_SHIFT);
     }
 
-    else if(keySelect == kDCP_OCOTPKeyHigh)
+    else if (keySelect == kDCP_OCOTPKeyHigh)
     {
-       IOMUXC_GPR->GPR3 |= (1 << IOMUXC_GPR_GPR3_DCP_KEY_SEL_SHIFT);
-       IOMUXC_GPR->GPR10 |= (1 << IOMUXC_GPR_GPR10_DCPKEY_OCOTP_OR_KEYMUX_SHIFT);
+        IOMUXC_GPR->GPR3 |= (1 << IOMUXC_GPR_GPR3_DCP_KEY_SEL_SHIFT);
+        IOMUXC_GPR->GPR10 |= (1 << IOMUXC_GPR_GPR10_DCPKEY_OCOTP_OR_KEYMUX_SHIFT);
     }
 
     else
@@ -90,9 +90,9 @@ void TestAesEcb(void)
 {
     static const uint8_t keyAes128[] __attribute__((aligned)) = {0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6,
                                                                  0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c};
-    static const uint8_t plainAes128[] = {0x6b, 0xc1, 0xbe, 0xe2, 0x2e, 0x40, 0x9f, 0x96,
+    static const uint8_t plainAes128[]                        = {0x6b, 0xc1, 0xbe, 0xe2, 0x2e, 0x40, 0x9f, 0x96,
                                           0xe9, 0x3d, 0x7e, 0x11, 0x73, 0x93, 0x17, 0x2a};
-    static const uint8_t cipherAes128[] = {0x3a, 0xd7, 0x7b, 0xb4, 0x0d, 0x7a, 0x36, 0x60,
+    static const uint8_t cipherAes128[]                       = {0x3a, 0xd7, 0x7b, 0xb4, 0x0d, 0x7a, 0x36, 0x60,
                                            0xa8, 0x9e, 0xca, 0xf3, 0x24, 0x66, 0xef, 0x97};
 #if DCP_TEST_USE_OTP_KEY
 #warning Please update cipherAes128 variables to match expected AES ciphertext for your OTP key.
@@ -104,7 +104,7 @@ void TestAesEcb(void)
 
     dcp_handle_t m_handle;
 
-    m_handle.channel = kDCP_Channel0;
+    m_handle.channel    = kDCP_Channel0;
     m_handle.swapConfig = kDCP_NoSwap;
 
 #if DCP_TEST_USE_OTP_KEY
@@ -129,9 +129,9 @@ void TestAesCbc(void)
 {
     static const uint8_t keyAes128[] __attribute__((aligned)) = {0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6,
                                                                  0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c};
-    static const uint8_t plainAes128[] = {0x6b, 0xc1, 0xbe, 0xe2, 0x2e, 0x40, 0x9f, 0x96,
+    static const uint8_t plainAes128[]                        = {0x6b, 0xc1, 0xbe, 0xe2, 0x2e, 0x40, 0x9f, 0x96,
                                           0xe9, 0x3d, 0x7e, 0x11, 0x73, 0x93, 0x17, 0x2a};
-    static const uint8_t ive[] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+    static const uint8_t ive[]                                = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
                                   0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f};
 
     static const uint8_t cipherAes128[] = {0x76, 0x49, 0xab, 0xac, 0x81, 0x19, 0xb2, 0x46,
@@ -146,7 +146,7 @@ void TestAesCbc(void)
 
     dcp_handle_t m_handle;
 
-    m_handle.channel = kDCP_Channel0;
+    m_handle.channel    = kDCP_Channel0;
     m_handle.swapConfig = kDCP_NoSwap;
 
 #if DCP_TEST_USE_OTP_KEY
@@ -182,11 +182,11 @@ void TestSha1(void)
 
     dcp_handle_t m_handle;
 
-    m_handle.channel = kDCP_Channel0;
-    m_handle.keySlot = kDCP_KeySlot0;
+    m_handle.channel    = kDCP_Channel0;
+    m_handle.keySlot    = kDCP_KeySlot0;
     m_handle.swapConfig = kDCP_NoSwap;
 
-    length = sizeof(message) - 1;
+    length    = sizeof(message) - 1;
     outLength = sizeof(output);
     memset(&output, 0, outLength);
 
@@ -221,11 +221,11 @@ void TestSha256(void)
 
     dcp_handle_t m_handle;
 
-    m_handle.channel = kDCP_Channel0;
-    m_handle.keySlot = kDCP_KeySlot0;
+    m_handle.channel    = kDCP_Channel0;
+    m_handle.keySlot    = kDCP_KeySlot0;
     m_handle.swapConfig = kDCP_NoSwap;
 
-    length = sizeof(message) - 1;
+    length    = sizeof(message) - 1;
     outLength = sizeof(output);
     memset(&output, 0, outLength);
 
@@ -256,11 +256,11 @@ void TestCrc32(void)
 
     dcp_handle_t m_handle;
 
-    m_handle.channel = kDCP_Channel0;
-    m_handle.keySlot = kDCP_KeySlot0;
+    m_handle.channel    = kDCP_Channel0;
+    m_handle.keySlot    = kDCP_KeySlot0;
     m_handle.swapConfig = kDCP_NoSwap;
 
-    length = sizeof(message) - 1;
+    length    = sizeof(message) - 1;
     outLength = sizeof(output);
     memset(&output, 0, outLength);
 

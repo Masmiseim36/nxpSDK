@@ -16,12 +16,12 @@
 
 /* Listener task stack size */
 #ifndef SSLSRV_CFG_SERVER_STACK_SIZE
-#define SSLSRV_CFG_SERVER_STACK_SIZE (2500 / sizeof(uint32_t))
+#define SSLSRV_CFG_SERVER_STACK_SIZE (3000 / sizeof(uint32_t))
 #endif
 
 /* Session task stack size.*/
 #ifndef SSLSRV_CFG_SESSION_STACK_SIZE
-#define SSLSRV_CFG_SESSION_STACK_SIZE (2000 / sizeof(uint32_t))
+#define SSLSRV_CFG_SESSION_STACK_SIZE (2500 / sizeof(uint32_t))
 #endif
 
 /* Task priority - must be lower than priority of network stack task */

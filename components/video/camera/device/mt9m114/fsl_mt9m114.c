@@ -48,11 +48,11 @@ status_t MT9M114_InitExt(camera_device_handle_t *handle, const camera_config_t *
  * Variables
  ******************************************************************************/
 const camera_device_operations_t mt9m114_ops = {
-    .init = MT9M114_Init,
-    .deinit = MT9M114_Deinit,
-    .start = MT9M114_Start,
-    .stop = MT9M114_Stop,
-    .control = MT9M114_Control,
+    .init     = MT9M114_Init,
+    .deinit   = MT9M114_Deinit,
+    .start    = MT9M114_Start,
+    .stop     = MT9M114_Stop,
+    .control  = MT9M114_Control,
     .init_ext = MT9M114_InitExt,
 };
 

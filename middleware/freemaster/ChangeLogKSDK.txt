@@ -1,0 +1,16 @@
+/*!
+@page middleware_log Middleware Change Log
+
+@section fmstr FreeMASTER Communication Driver
+  Current version is 3.0.0
+  
+  - 3.0.0
+    - Initial version of FreeMASTER driver reworked from a standalone package to MCUXpresso SDK middleware.
+    - This driver version supports new version V4 of FreeMASTER serial communication protocol.
+    - Supports UART, LPUART, USART, MINIUSART, FlexCAN, USB-CDC and JTAG/BDM communication.
+    - Initial version was tested with the following boards: evkmimxrt1060, frdmk64f, frdmke15z, 
+      frdmkl28z, lpcxpresso54628 lpcxpresso55s69, lpcxpresso845max and twrk64f120m.
+    - Use with FreeMASTER PC Host tool version 2.5 or later.
+    - Visit www.nxp.com/freemaster for more information.
+
+*/

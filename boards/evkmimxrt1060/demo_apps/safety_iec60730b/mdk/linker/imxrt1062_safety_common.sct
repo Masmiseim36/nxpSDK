@@ -1,0 +1,61 @@
+#! armcc -E -I .\startup
+
+; *************************************************************
+; *** Scatter-Loading Description File                      ***
+; *************************************************************
+#include "linker_config.h"
+
+/************ IVT ************/
+LR_IROM1_IVT ROM_interrupts_start __vector_table_size__ {   ; load region size_region
+	ROM_VECTOR_TABLE ROM_interrupts_start NOCOMPRESS __vector_table_size__ { ; load address = execution address
+	    vectors_mdk.o (.data)
+	}
+}
+
+/************ RO, RW, ZI, safety ram, stack ************/
+LR_IROM1 ROM_start ROM_end - ROM_start + 1 {
+	ER_IROM1 ROM_start NOCOMPRESS ROM_end - ROM_start + 1 { ; load address = execution address
+		* (InRoot$$Sections)
+		.ANY (+RO)
+	}
+
+	SafetyRam_region m_safety_ram_start NOCOMPRESS SAFETY_RAM_SIZE{
+		main.o (.safety_ram)
+		safety_test_items.o (.data)
+	}
+	
+	SafetyRamCRC_region m_safety_ram_crc_start NOCOMPRESS SAFETY_RAM_CRC_SIZE{
+		main.o (.safety_ram_crc)
+	}
+
+	RW_IRAM1 SRAM_DTC_start SRAM_DTC_end - SRAM_DTC_start + 1  {  ; RW data
+		.ANY (+RW +ZI)
+	}
+
+	ARM_LIB_STACK __BOOT_STACK_ADDRESS EMPTY -__size_cstack__{ ; Stack region growing down
+	}
+	
+	ARM_LIB_HEAP SRAM_ITC_start EMPTY 0x100 { ; Heap region growing up
+    }
+}
+
+/************ PC test object ************/
+LR_PC_OBJECT __PC_test_start__ __PC_test_end__ - __PC_test_start__ + 1 {
+	ER_PCTEST __PC_test_start__ __PC_test_end__ - __PC_test_start__ + 1 {
+		iec60730b_cm4_cm7_pc_object.o 
+	}
+}
+
+/************ XIP boot header ************/
+LR_m_rom_config m_flash_config_start m_flash_config_size {   ; load region size_region
+	RW_m_config_text m_flash_config_start m_flash_config_size { ; load address = execution address
+	* (.boot_hdr.conf, +FIRST)
+	}
+}
+LR_m_rom_ivt m_ivt_start m_ivt_size {   ; load region size_region
+	RW_m_ivt_text m_ivt_start m_ivt_size { ; load address = execution address
+	* (.boot_hdr.ivt, +FIRST)
+	* (.boot_hdr.boot_data)
+	* (.boot_hdr.dcd_data)
+	}
+}

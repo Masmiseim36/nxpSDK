@@ -7,11 +7,16 @@ The file 'cmsis_lpspi_int_b2b_transfer_master.c' includes the LPSPI master code.
 This example uses the transactional API in LPSPI driver.
 
 1. LPSPI master send/received data to/from LPSPI slave in interrupt . 
-﻿Hardware requirements
-======================
-- Mini/micro USB cable
-- EVK-MIMXRT1020 board
-- Personal Computer
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
+Hardware requirements
+=====================
 
 Board settings
 ==============
@@ -75,11 +80,6 @@ To debug in qspiflash, following steps are needed:
 3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
 4. Start debugging in IDE.
    - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html style="text-align: center;">     
+  <head>       
+    <meta http-equiv="content-type" content="text/html; charset=windows-1250">       
+    <meta name="generator" content="PSPad editor, www.pspad.com">       
+    <title>    
+    </title>       
+    <link href="style.css" rel="stylesheet" type="text/css" />      
+    <script type="text/javascript" src="JS_functions\mainInclude.js"></script>
+    <script LANGUAGE="JavaScript" type ="text/javascript">
+     includeJSfiles();
+    </script>
+   </head>     
+  <body id="PoSpe" onload="initLoadFormPoSpe(); " background="images/pozadi.png" style="display: inline-block; margin: 10px auto; text-align: center;">                                          
+    <OBJECT id="MCB_PC_Master_Services1" style="display:none;"  classid="clsid:48A185F1-FFDB-11D3-80E3-00C04F176153" name="pcm">	     
+    </OBJECT>	  
+    <script language="VBScript">
+    Sub pcm_OnVariableChanged(a1,a2)
+        Event_OnVariableChangedHall a1,a2
+    End Sub
+    </script>  
+    <OBJECT style="display:none;"  CLASSID = "clsid:5220cb21-c88d-11cf-b347-00aa00a28331">         
+      <PARAM NAME="LPKPath" VALUE="gmsctls.lpk">         
+    </OBJECT> 
+    <!-- Headline -->
+    <div class="HeadBorder fontTitle" style="width: 740px;">Position & Speed Sensors Module</div>             
+           
+    <div>              
+              
+      <table style="width: 740px;" class="MainTab">           
+          <tr>                 
+            <td width="45%" align="left" valign="top" style="padding-right: 10px;">                        		                            
+            <fieldset  id="Position_sensor" style="width: 100%;" class="ContBox">
+            <legend class="fontControlLabel">Quadrature Encoder</legend>        
+                <!-- Resolver-->   
+            
+                <div id="Resolver" style="display: none;">
+                <table  width="100%"  class="ContBoxTab">   
+                     
+                    <script>
+                    // resolver pole pairs
+                    document.write( build_parameter_line("Resolver","RES_PP", "pole pairs", "Number of Resolver Pole Pairs", 0, ""));
+                    </script>
+                    
+                </table>	
+                </div>
+                <!-- Encoder-->
+                <div id="Encoder" style="display: none;">
+                <table   width="100%" class="ContBoxTab">              
+                   
+                    <script>
+                    // encoder pulse number
+                    document.write( build_parameter_line("Pulse number","ENC_P", "pulses", "Number of Quadrature Encoder Pulses. Updated only via Output File", 0, ""));
+                    document.write( build_parameter_line("Direction","ENC_DIR", "-", "Encoder direction / phase A&B order.", 0, ""));
+                    </script>		                            
+                  
+                </table>
+                </div> 
+            </fieldset>  
+            
+            <fieldset  id="Position Observer" style="width: 100%;" class="ContBox">
+             <legend class="fontControlLabel">Position Observer Parameters</legend>    
+                <table width="100%"  border="0"   class="ContBoxTab">              
+                 
+                <script>
+                  // speed control loop sampling period
+                  document.write( build_parameter_line("Sample&nbsp;time", "POSPE_Ts", "sec", "Current Control Loop Sampling Period, typically equals to current loop Ts", 0, ""));
+                  // speed control loop bandwidth
+                  document.write( build_parameter_line("F0", "ATO_F0", "Hz", "Position Observer Bandwidth", 0, ""));
+                  // speed control loop attenuation
+                  document.write( build_parameter_line("&xi;", "ATO_Att", "-", "Position Observer Attenuation", 0, "")); 
+                </script>	
+             
+                  </table>		                            
+                <table width="100%" id="informativeTable" border="0" >            
+                            
+                    <script>
+                    <!--document.write( build_informative_line("TOcontroller","PI controller type:", "Parallel")); -->
+                    </script>
+            	
+                </table>    	
+            </fieldset>
+<!--			 
+			<fieldset style="border: none; padding:0px;">
+                <table id="hallCalibTable" width="100%"  border="0" align="center" class="ContBoxTab">
+                <tr><td align="center">
+                    <button class="xlink, fButtonsDisabled" id = "CalibrateHallButton" onclick="clickCalibrateHall()" disabled="disabled" style="width: 150px; height: 50px; border-width: 2px; margin:5px;">Calibrate Hall Sensors                        
+                    </button>
+                </td></tr>
+                </table>
+            </fieldset>
+-->			 
+            </td>
+                                            
+            <td width="55%" align="right" valign="top" style="padding-left: 10px;">                                                 
+              <!-- speed controller constants -->     
+              <fieldset  id="PoSpe_PIparal" style="width: 100%;" class="ContBox">
+                <legend class="fontControlLabel">Position Observer Constants</legend>        
+                <table border="0" align="left" width="100%"  class="ContBoxTab">            
+                            
+                  <script>
+    	            // speed controller proportional gain and gain scales 
+                  document.write( build_constant_line("Kp&nbsp;gain", "ATO_Kp_g", "Speed Controller Proportional Gain in time domain"));
+                  // speed controller integral gain and gain scales 
+                  document.write( build_constant_line( "Ki&nbsp;gain","ATO_Ki_g", "Speed Controller Integral Gain in time domain"));
+                  </script>	
+                  	                            
+                </table>
+              </fieldset>
+              <fieldset  id="PoSpe_PIrecur" style="width: 100%;" class="ContBox">
+                <legend class="fontControlLabel">Position Observer Constants</legend>        
+                <table border="0" align="left" width="100%"  class="ContBoxTab">            
+                           
+                  <script>
+                  // speed controller reccurent gain scales
+                  document.write( build_constant_line("CC1", "ATO_CC1", "Speed Controller CC1 constant in time domain"));
+                  document.write( build_constant_line("CC2","ATO_CC2", "Speed Controller CC2 constant in time domain"));
+                  </script>	
+                                           
+                </table>
+              </fieldset>
+              <fieldset  id="PoSpe_Integ" style="width: 100%;" class="ContBox">
+                <legend class="fontControlLabel">Integrator Constants</legend>        
+                <table align="left" width="100%"  border="0"   class="ContBoxTab">            
+                        
+                  <script>
+    	            // integrator gain and gain scales 
+                  document.write( build_constant_line("Integrator&nbsp;gain", "Integ_g", "Tracking Observer Integration Constant"));
+                  </script>	
+                                           
+                </table>
+              </fieldset></td>
+            <td width="1" align="center" valign="top" style="display:none;"> 
+              <!-- position timer constants-->
+              <fieldset id="PoSpe_Theta" style="width: 365px; " class="ContBox">     
+                <legend class="fontControlLabel">Position Timer Constant</legend>        
+                <table  align="left" width="100%"  border="0"   class="ContBoxTab">            
+                          
+                  <script>
+    	            // position gain and gain scales 
+                  document.write( build_constant_line("Theta&nbsp;gain", "PoSpe_Theta_g", "Position Constant Gain in time domain"));
+                  </script>	
+                                          
+               </table>
+              </fieldset>
+              <!-- Hall Sensor constants-->
+              <fieldset id="PoSpe_HS" style="width: 100%;" class="ContBox">     
+                <legend class="fontControlLabel">Hall sensor Constant</legend>        
+                <table align="left" width="100%"  border="0"   class="ContBoxTab">            
+                          
+                  <script>
+    	            // Transformation constant for HS position sensing 
+                  document.write( build_constant_line("HS&nbsp;const", "PoSpe_HS_const", "Hall Transformation Constant"));
+                  </script>	
+           	                            
+               </table>
+              </fieldset>
+              <!-- Encoder scale constants-->
+              <fieldset id="PoSpe_Encoder" style="width: 100%;" class="ContBox">     
+                <legend class="fontControlLabel">Encoder Constant</legend>        
+                <table align="left" width="100%"  border="0"   class="ContBoxTab">            
+                         
+                  <script>
+    	            // Transformation constant for Encoder position sensing 
+                  document.write( build_constant_line("ENC&nbsp;elpos_gain", "PoSpe_ENC_el_pos_g", "Encoder Electrical Position Gain"));
+                  document.write( build_constant_line("ENC&nbsp;elpos_sc", "PoSpe_ENC_el_pos_sc", "Encoder Electrical Position Gain Scale"));
+                  document.write( build_constant_line("ENC&nbsp;mechpos_g", "PoSpe_ENC_mech_pos_g", "Encoder Mechanical Position Gain"));
+                  document.write( build_constant_line("ENC&nbsp;mechpos_sc", "PoSpe_ENC_mech_pos_sc", "Encoder Mechanical Position Gain Scale"));
+                  </script>	
+                                          
+               </table>
+              </fieldset>
+                            
+           </td>                     
+        </tr>         
+      </table>                      
+      <!-- calculation buttons-->
+      <table class = "fButtonGroup" >                     
+            <tr>    
+                <td><input type="button" class="fButtonsEnabled" value="Update Target" id="PoSpeUpdateFrm" onmouseout="unmarkUpdatePospeField()" onmouseover="markUpdatePospeField()" onclick="clickUpdatePoSpeFM()" /></td> 
+                <td><input type="button" class="fButtonsDisabled" value="Reload Data" id="ReloadData" onclick="clickReloadData(); initLoadFormPoSpe();" disabled="disabled" /></td> 
+                <td><input type="button" class="fButtonsDisabled" value="Store Data" id="StoreData" onclick="clickStoreData()" disabled="disabled" /></td> 
+            </tr>            
+      </table>                 
+      <span style="visibility: hidden" face="sans-serif" id="txtErrMsg">.       
+      </span>          
+    </div>     
+  </body>
+</html>

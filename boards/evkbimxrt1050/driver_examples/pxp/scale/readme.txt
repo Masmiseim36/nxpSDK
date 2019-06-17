@@ -3,6 +3,14 @@ Overview
 The PXP scale project shows how to use the PXP scale function. If this example
 runs correctly, you will see a square with three color(red, green and blue).
 The square size is changing.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -31,11 +39,6 @@ Running the demo
 When the demo runs successfully, the log would be seen on the OpenSDA terminal like:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 PXP Scale example start...
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+Customization options
+=====================
 

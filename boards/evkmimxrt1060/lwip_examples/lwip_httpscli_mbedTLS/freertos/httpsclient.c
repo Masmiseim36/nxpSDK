@@ -164,7 +164,7 @@ static void my_debug(void *ctx, int level, const char *file, int line, const cha
 
 int https_client_tls_init()
 {
-    int ret = 0;
+    int ret          = 0;
     const char *pers = "aws_iot_tls_wrapper";
     char vrfy_buf[512];
     bool ServerVerificationFlag = false;
@@ -229,9 +229,9 @@ int https_client_tls_init()
     struct addrinfo hints;
     struct addrinfo *res;
     memset(&hints, 0, sizeof(struct addrinfo));
-    hints.ai_family = AF_INET;
+    hints.ai_family   = AF_INET;
     hints.ai_socktype = SOCK_STREAM;
-    hints.ai_flags = AI_PASSIVE;
+    hints.ai_flags    = AI_PASSIVE;
 
     ret = getaddrinfo(HTTPS_SERVER_NAME, HTTPS_SERVER_PORT, &hints, &res);
     if ((ret != 0) || (res == NULL))

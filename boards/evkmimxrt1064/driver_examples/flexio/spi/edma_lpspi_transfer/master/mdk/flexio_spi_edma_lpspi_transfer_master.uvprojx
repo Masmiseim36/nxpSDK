@@ -329,14 +329,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc 
---library_type=standardlib 
---diag_suppress=66,1296,186 
- 
-</MiscControls>
+              <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1064DVL6A</Define>
               <Undefine/>
-              <IncludePath>../../../../../../../../CMSIS/Include;../../../../../../../../devices;../..;..;../../../../../..;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064;../../../../../../../../devices/MIMXRT1064/utilities/io;../../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../../devices/MIMXRT1064/utilities/log;../../../../../../../../devices/MIMXRT1064/utilities;../../../../../../../../devices/MIMXRT1064/xip</IncludePath>
+              <IncludePath>../..;..;../../../../../..;../../../../../../../../CMSIS/Include;../../../../../../../../devices;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064;../../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../../../components/uart;../../../../../../../../components/serial_manager;../../../../../../../../components/serial_manager;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/xip;../../../../../../xip</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -370,8 +366,7 @@
             <ScatterFile>MIMXRT1064xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove 
-</Misc>
+            <Misc>--remove</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -401,11 +396,6 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>board-src</GroupName>
-          <Files>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -442,49 +432,9 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_dmamux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iomuxc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_iomuxc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_dmamux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dmamux.h</FileName>
@@ -492,9 +442,9 @@
               <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_dmamux.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_dmamux.c</FileName>
+              <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_dmamux.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_edma.h</FileName>
@@ -502,9 +452,14 @@
               <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_edma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_edma.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_edma.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flexio.c</FileName>
@@ -546,11 +501,61 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpspi.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iomuxc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
+          <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>MIMXRT1064.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/MIMXRT1064.h</FilePath>
+            </File>
+            <File>
+              <FileName>MIMXRT1064_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/MIMXRT1064_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>system_MIMXRT1064.c</FileName>
               <FileType>1</FileType>
@@ -561,35 +566,25 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/system_MIMXRT1064.h</FilePath>
             </File>
-            <File>
-              <FileName>startup_MIMXRT1064.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.s</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_io.c</FileName>
+              <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/io/fsl_io.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_io.h</FileName>
+              <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/io/fsl_io.h</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/log/fsl_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_log.h</FileName>
+              <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/log/fsl_log.h</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -602,21 +597,6 @@
               <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_assert.c</FilePath>
@@ -624,37 +604,182 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>xip</GroupName>
+          <GroupName>component-uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
+              <FileName>lpuart_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/uart/lpuart_adapter.c</FilePath>
             </File>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/uart/uart.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component-serial_manager</GroupName>
+          <Files>
+            <File>
+              <FileName>serial_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component-lists</GroupName>
+          <Files>
+            <File>
+              <FileName>generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/lists/generic_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/lists/generic_list.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1064.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.s</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>xip</GroupName>
+          <Files>
             <File>
               <FileName>fsl_flexspi_nor_boot.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
               <FileName>evkmimxrt1064_flexspi_nor_config.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1064_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1064_sdram_ini_dcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_sdram_ini_dcd.c</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_sdram_ini_dcd.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1064_sdram_ini_dcd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_sdram_ini_dcd.h</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_sdram_ini_dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -986,14 +1111,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc 
---library_type=standardlib 
---diag_suppress=66,1296,186 
- 
-</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, CPU_MIMXRT1064DVL6A</Define>
+              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1064DVL6A</Define>
               <Undefine/>
-              <IncludePath>../../../../../../../../CMSIS/Include;../../../../../../../../devices;../..;..;../../../../../..;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064;../../../../../../../../devices/MIMXRT1064/utilities/io;../../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../../devices/MIMXRT1064/utilities/log;../../../../../../../../devices/MIMXRT1064/utilities;../../../../../../../../devices/MIMXRT1064/xip</IncludePath>
+              <IncludePath>../..;..;../../../../../..;../../../../../../../../CMSIS/Include;../../../../../../../../devices;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064;../../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../../../components/uart;../../../../../../../../components/serial_manager;../../../../../../../../components/serial_manager;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/xip;../../../../../../xip</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1009,7 +1130,7 @@
             <uClangAs>0</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>__STARTUP_INITIALIZE_NONCACHEDATA</Define>
+              <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -1027,12 +1148,7 @@
             <ScatterFile>MIMXRT1064xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove 
---keep=*(.boot_hdr.ivt) 
---keep=*(.boot_hdr.boot_data) 
---keep=*(.boot_hdr.conf) 
---predefine="-DXIP_BOOT_HEADER_ENABLE=1" 
-</Misc>
+            <Misc>--remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1062,11 +1178,6 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>board-src</GroupName>
-          <Files>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -1103,49 +1214,9 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_dmamux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iomuxc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_iomuxc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_dmamux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dmamux.h</FileName>
@@ -1153,9 +1224,9 @@
               <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_dmamux.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_dmamux.c</FileName>
+              <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_dmamux.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_edma.h</FileName>
@@ -1163,9 +1234,14 @@
               <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_edma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_edma.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_edma.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flexio.c</FileName>
@@ -1207,11 +1283,61 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpspi.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iomuxc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
+          <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>MIMXRT1064.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/MIMXRT1064.h</FilePath>
+            </File>
+            <File>
+              <FileName>MIMXRT1064_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/MIMXRT1064_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>system_MIMXRT1064.c</FileName>
               <FileType>1</FileType>
@@ -1222,35 +1348,25 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/system_MIMXRT1064.h</FilePath>
             </File>
-            <File>
-              <FileName>startup_MIMXRT1064.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.s</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_io.c</FileName>
+              <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/io/fsl_io.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_io.h</FileName>
+              <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/io/fsl_io.h</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/log/fsl_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_log.h</FileName>
+              <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/log/fsl_log.h</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -1263,21 +1379,6 @@
               <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_assert.c</FilePath>
@@ -1285,37 +1386,182 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>xip</GroupName>
+          <GroupName>component-uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
+              <FileName>lpuart_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/uart/lpuart_adapter.c</FilePath>
             </File>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/uart/uart.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component-serial_manager</GroupName>
+          <Files>
+            <File>
+              <FileName>serial_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component-lists</GroupName>
+          <Files>
+            <File>
+              <FileName>generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/lists/generic_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/lists/generic_list.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1064.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.s</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>xip</GroupName>
+          <Files>
             <File>
               <FileName>fsl_flexspi_nor_boot.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
               <FileName>evkmimxrt1064_flexspi_nor_config.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1064_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1064_sdram_ini_dcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_sdram_ini_dcd.c</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_sdram_ini_dcd.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1064_sdram_ini_dcd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_sdram_ini_dcd.h</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_sdram_ini_dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1647,14 +1893,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc 
---library_type=standardlib 
---diag_suppress=66,1296,186 
- 
-</MiscControls>
+              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
               <Define>SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1064DVL6A</Define>
               <Undefine/>
-              <IncludePath>../../../../../../../../CMSIS/Include;../../../../../../../../devices;../..;..;../../../../../..;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064;../../../../../../../../devices/MIMXRT1064/utilities/io;../../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../../devices/MIMXRT1064/utilities/log;../../../../../../../../devices/MIMXRT1064/utilities;../../../../../../../../devices/MIMXRT1064/xip</IncludePath>
+              <IncludePath>../..;..;../../../../../..;../../../../../../../../CMSIS/Include;../../../../../../../../devices;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064;../../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../../../components/uart;../../../../../../../../components/serial_manager;../../../../../../../../components/serial_manager;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/xip;../../../../../../xip</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1688,8 +1930,7 @@
             <ScatterFile>MIMXRT1064xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove 
-</Misc>
+            <Misc>--remove</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1719,11 +1960,6 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>board-src</GroupName>
-          <Files>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -1760,49 +1996,9 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_dmamux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iomuxc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_iomuxc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_dmamux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dmamux.h</FileName>
@@ -1810,9 +2006,9 @@
               <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_dmamux.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_dmamux.c</FileName>
+              <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_dmamux.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_edma.h</FileName>
@@ -1820,9 +2016,14 @@
               <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_edma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_edma.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_edma.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flexio.c</FileName>
@@ -1864,11 +2065,61 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpspi.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iomuxc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
+          <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>MIMXRT1064.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/MIMXRT1064.h</FilePath>
+            </File>
+            <File>
+              <FileName>MIMXRT1064_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/MIMXRT1064_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>system_MIMXRT1064.c</FileName>
               <FileType>1</FileType>
@@ -1879,35 +2130,25 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/system_MIMXRT1064.h</FilePath>
             </File>
-            <File>
-              <FileName>startup_MIMXRT1064.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.s</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_io.c</FileName>
+              <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/io/fsl_io.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_io.h</FileName>
+              <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/io/fsl_io.h</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/log/fsl_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_log.h</FileName>
+              <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/log/fsl_log.h</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -1920,21 +2161,6 @@
               <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_assert.c</FilePath>
@@ -1942,37 +2168,182 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>xip</GroupName>
+          <GroupName>component-uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
+              <FileName>lpuart_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/uart/lpuart_adapter.c</FilePath>
             </File>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/uart/uart.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component-serial_manager</GroupName>
+          <Files>
+            <File>
+              <FileName>serial_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component-lists</GroupName>
+          <Files>
+            <File>
+              <FileName>generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/lists/generic_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/lists/generic_list.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1064.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.s</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>xip</GroupName>
+          <Files>
             <File>
               <FileName>fsl_flexspi_nor_boot.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
               <FileName>evkmimxrt1064_flexspi_nor_config.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1064_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1064_sdram_ini_dcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_sdram_ini_dcd.c</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_sdram_ini_dcd.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1064_sdram_ini_dcd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_sdram_ini_dcd.h</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_sdram_ini_dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2304,14 +2675,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc 
---library_type=standardlib 
---diag_suppress=66,1296,186 
- 
-</MiscControls>
+              <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1064DVL6A</Define>
               <Undefine/>
-              <IncludePath>../../../../../../../../CMSIS/Include;../../../../../../../../devices;../..;..;../../../../../..;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064;../../../../../../../../devices/MIMXRT1064/utilities/io;../../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../../devices/MIMXRT1064/utilities/log;../../../../../../../../devices/MIMXRT1064/utilities;../../../../../../../../devices/MIMXRT1064/xip</IncludePath>
+              <IncludePath>../..;..;../../../../../..;../../../../../../../../CMSIS/Include;../../../../../../../../devices;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064;../../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../../../components/uart;../../../../../../../../components/serial_manager;../../../../../../../../components/serial_manager;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/xip;../../../../../../xip</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2345,8 +2712,7 @@
             <ScatterFile>MIMXRT1064xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove 
-</Misc>
+            <Misc>--remove</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2376,11 +2742,6 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>board-src</GroupName>
-          <Files>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -2417,49 +2778,9 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_dmamux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iomuxc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_iomuxc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_dmamux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dmamux.h</FileName>
@@ -2467,9 +2788,9 @@
               <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_dmamux.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_dmamux.c</FileName>
+              <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_dmamux.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_edma.h</FileName>
@@ -2477,9 +2798,14 @@
               <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_edma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_edma.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_edma.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flexio.c</FileName>
@@ -2521,11 +2847,61 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpspi.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iomuxc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
+          <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>MIMXRT1064.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/MIMXRT1064.h</FilePath>
+            </File>
+            <File>
+              <FileName>MIMXRT1064_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/MIMXRT1064_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>system_MIMXRT1064.c</FileName>
               <FileType>1</FileType>
@@ -2536,35 +2912,25 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/system_MIMXRT1064.h</FilePath>
             </File>
-            <File>
-              <FileName>startup_MIMXRT1064.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.s</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_io.c</FileName>
+              <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/io/fsl_io.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_io.h</FileName>
+              <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/io/fsl_io.h</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/log/fsl_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_log.h</FileName>
+              <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/log/fsl_log.h</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -2577,21 +2943,6 @@
               <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_assert.c</FilePath>
@@ -2599,37 +2950,182 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>xip</GroupName>
+          <GroupName>component-uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
+              <FileName>lpuart_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/uart/lpuart_adapter.c</FilePath>
             </File>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/uart/uart.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component-serial_manager</GroupName>
+          <Files>
+            <File>
+              <FileName>serial_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component-lists</GroupName>
+          <Files>
+            <File>
+              <FileName>generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/lists/generic_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/lists/generic_list.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1064.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.s</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>xip</GroupName>
+          <Files>
             <File>
               <FileName>fsl_flexspi_nor_boot.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
               <FileName>evkmimxrt1064_flexspi_nor_config.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1064_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1064_sdram_ini_dcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_sdram_ini_dcd.c</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_sdram_ini_dcd.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1064_sdram_ini_dcd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_sdram_ini_dcd.h</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_sdram_ini_dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2961,14 +3457,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc 
---library_type=standardlib 
---diag_suppress=66,1296,186 
- 
-</MiscControls>
+              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1064DVL6A</Define>
               <Undefine/>
-              <IncludePath>../../../../../../../../CMSIS/Include;../../../../../../../../devices;../..;..;../../../../../..;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064;../../../../../../../../devices/MIMXRT1064/utilities/io;../../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../../devices/MIMXRT1064/utilities/log;../../../../../../../../devices/MIMXRT1064/utilities;../../../../../../../../devices/MIMXRT1064/xip</IncludePath>
+              <IncludePath>../..;..;../../../../../..;../../../../../../../../CMSIS/Include;../../../../../../../../devices;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064;../../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../../../components/uart;../../../../../../../../components/serial_manager;../../../../../../../../components/serial_manager;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/xip;../../../../../../xip</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3002,12 +3494,7 @@
             <ScatterFile>MIMXRT1064xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove 
---keep=*(.boot_hdr.ivt) 
---keep=*(.boot_hdr.boot_data) 
---keep=*(.boot_hdr.conf) 
---predefine="-DXIP_BOOT_HEADER_ENABLE=1" 
-</Misc>
+            <Misc>--remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3037,11 +3524,6 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>board-src</GroupName>
-          <Files>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -3078,49 +3560,9 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_dmamux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iomuxc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_iomuxc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_dmamux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dmamux.h</FileName>
@@ -3128,9 +3570,9 @@
               <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_dmamux.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_dmamux.c</FileName>
+              <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_dmamux.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_edma.h</FileName>
@@ -3138,9 +3580,14 @@
               <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_edma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_edma.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_edma.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flexio.c</FileName>
@@ -3182,11 +3629,61 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpspi.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iomuxc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
+          <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>MIMXRT1064.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/MIMXRT1064.h</FilePath>
+            </File>
+            <File>
+              <FileName>MIMXRT1064_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/MIMXRT1064_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>system_MIMXRT1064.c</FileName>
               <FileType>1</FileType>
@@ -3197,35 +3694,25 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/system_MIMXRT1064.h</FilePath>
             </File>
-            <File>
-              <FileName>startup_MIMXRT1064.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.s</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_io.c</FileName>
+              <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/io/fsl_io.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_io.h</FileName>
+              <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/io/fsl_io.h</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/log/fsl_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_log.h</FileName>
+              <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/log/fsl_log.h</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -3238,21 +3725,6 @@
               <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_assert.c</FilePath>
@@ -3260,37 +3732,182 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>xip</GroupName>
+          <GroupName>component-uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
+              <FileName>lpuart_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/uart/lpuart_adapter.c</FilePath>
             </File>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/uart/uart.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component-serial_manager</GroupName>
+          <Files>
+            <File>
+              <FileName>serial_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component-lists</GroupName>
+          <Files>
+            <File>
+              <FileName>generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/lists/generic_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/lists/generic_list.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1064.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.s</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>xip</GroupName>
+          <Files>
             <File>
               <FileName>fsl_flexspi_nor_boot.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
               <FileName>evkmimxrt1064_flexspi_nor_config.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1064_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1064_sdram_ini_dcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_sdram_ini_dcd.c</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_sdram_ini_dcd.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1064_sdram_ini_dcd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_sdram_ini_dcd.h</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_sdram_ini_dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3622,14 +4239,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc 
---library_type=standardlib 
---diag_suppress=66,1296,186 
- 
-</MiscControls>
+              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
               <Define>SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1064DVL6A</Define>
               <Undefine/>
-              <IncludePath>../../../../../../../../CMSIS/Include;../../../../../../../../devices;../..;..;../../../../../..;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064;../../../../../../../../devices/MIMXRT1064/utilities/io;../../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../../devices/MIMXRT1064/utilities/log;../../../../../../../../devices/MIMXRT1064/utilities;../../../../../../../../devices/MIMXRT1064/xip</IncludePath>
+              <IncludePath>../..;..;../../../../../..;../../../../../../../../CMSIS/Include;../../../../../../../../devices;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064;../../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../../../components/uart;../../../../../../../../components/serial_manager;../../../../../../../../components/serial_manager;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../../devices/MIMXRT1064/xip;../../../../../../xip</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3663,8 +4276,7 @@
             <ScatterFile>MIMXRT1064xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove 
-</Misc>
+            <Misc>--remove</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3694,11 +4306,6 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>board-src</GroupName>
-          <Files>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -3735,49 +4342,9 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_dmamux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iomuxc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_iomuxc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_dmamux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dmamux.h</FileName>
@@ -3785,9 +4352,9 @@
               <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_dmamux.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_dmamux.c</FileName>
+              <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_dmamux.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_edma.h</FileName>
@@ -3795,9 +4362,14 @@
               <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_edma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_edma.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_edma.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flexio.c</FileName>
@@ -3839,11 +4411,61 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpspi.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iomuxc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
+          <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>MIMXRT1064.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/MIMXRT1064.h</FilePath>
+            </File>
+            <File>
+              <FileName>MIMXRT1064_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/MIMXRT1064_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>system_MIMXRT1064.c</FileName>
               <FileType>1</FileType>
@@ -3854,35 +4476,25 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/system_MIMXRT1064.h</FilePath>
             </File>
-            <File>
-              <FileName>startup_MIMXRT1064.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.s</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_io.c</FileName>
+              <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/io/fsl_io.c</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_io.h</FileName>
+              <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/io/fsl_io.h</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/log/fsl_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_log.h</FileName>
+              <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/log/fsl_log.h</FilePath>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -3895,21 +4507,6 @@
               <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/utilities/fsl_assert.c</FilePath>
@@ -3917,37 +4514,182 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>xip</GroupName>
+          <GroupName>component-uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
+              <FileName>lpuart_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/uart/lpuart_adapter.c</FilePath>
             </File>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/uart/uart.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component-serial_manager</GroupName>
+          <Files>
+            <File>
+              <FileName>serial_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component-lists</GroupName>
+          <Files>
+            <File>
+              <FileName>generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/lists/generic_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/lists/generic_list.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1064.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.s</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>xip</GroupName>
+          <Files>
             <File>
               <FileName>fsl_flexspi_nor_boot.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
               <FileName>evkmimxrt1064_flexspi_nor_config.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1064_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1064_sdram_ini_dcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_sdram_ini_dcd.c</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_sdram_ini_dcd.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1064_sdram_ini_dcd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_sdram_ini_dcd.h</FilePath>
+              <FilePath>../../../../../../xip/evkmimxrt1064_sdram_ini_dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
           </Files>
         </Group>

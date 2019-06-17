@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -23,7 +23,7 @@
  ******************************************************************************/
 #define EXAMPLE_ENET ENET
 #define EXAMPLE_PHY 0x02U
-#define CORE_CLK_FREQ CLOCK_GetFreq(kCLOCK_AhbClk)
+#define CORE_CLK_FREQ CLOCK_GetFreq(kCLOCK_IpgClk)
 #define ENET_RXBD_NUM (4)
 #define ENET_TXBD_NUM (4)
 #define ENET_RXBUFF_SIZE (ENET_FRAME_MAX_FRAMELEN)
@@ -84,7 +84,7 @@ void delay(void)
 /*! @brief Build Frame for transmit. */
 static void ENET_BuildBroadCastFrame(void)
 {
-    uint32_t count = 0;
+    uint32_t count  = 0;
     uint32_t length = ENET_DATA_LENGTH - 14;
 
     for (count = 0; count < 6U; count++)
@@ -138,18 +138,16 @@ int main(void)
     PRINTF("\r\n ENET example start.\r\n");
 
     /* prepare the buffer configuration. */
-    enet_buffer_config_t buffConfig[] = {
-        {
-            ENET_RXBD_NUM,
-            ENET_TXBD_NUM,
-            SDK_SIZEALIGN(ENET_RXBUFF_SIZE, APP_ENET_BUFF_ALIGNMENT),
-            SDK_SIZEALIGN(ENET_TXBUFF_SIZE, APP_ENET_BUFF_ALIGNMENT),
-            &g_rxBuffDescrip[0],
-            &g_txBuffDescrip[0],
-            &g_rxDataBuff[0][0],
-            &g_txDataBuff[0][0],
-        }
-    };
+    enet_buffer_config_t buffConfig[] = {{
+        ENET_RXBD_NUM,
+        ENET_TXBD_NUM,
+        SDK_SIZEALIGN(ENET_RXBUFF_SIZE, APP_ENET_BUFF_ALIGNMENT),
+        SDK_SIZEALIGN(ENET_TXBUFF_SIZE, APP_ENET_BUFF_ALIGNMENT),
+        &g_rxBuffDescrip[0],
+        &g_txBuffDescrip[0],
+        &g_rxDataBuff[0][0],
+        &g_txDataBuff[0][0],
+    }};
 
     /* Get default configuration. */
     /*
@@ -162,7 +160,7 @@ int main(void)
 
     /* Set SMI to get PHY link status. */
     sysClock = CORE_CLK_FREQ;
-    status = PHY_Init(EXAMPLE_ENET, EXAMPLE_PHY, sysClock);
+    status   = PHY_Init(EXAMPLE_ENET, EXAMPLE_PHY, sysClock);
     while (status != kStatus_Success)
     {
         PRINTF("\r\nPHY Auto-negotiation failed. Please check the cable connection and link partner setting.\r\n");
@@ -175,7 +173,7 @@ int main(void)
         /* Get the actual PHY link speed. */
         PHY_GetLinkSpeedDuplex(EXAMPLE_ENET, EXAMPLE_PHY, &speed, &duplex);
         /* Change the MII speed and duplex for actual link status. */
-        config.miiSpeed = (enet_mii_speed_t)speed;
+        config.miiSpeed  = (enet_mii_speed_t)speed;
         config.miiDuplex = (enet_mii_duplex_t)duplex;
     }
 
@@ -194,7 +192,7 @@ int main(void)
         {
             /* Received valid frame. Deliver the rx buffer with the size equal to length. */
             uint8_t *data = (uint8_t *)malloc(length);
-            status = ENET_ReadFrame(EXAMPLE_ENET, &g_handle, data, length);
+            status        = ENET_ReadFrame(EXAMPLE_ENET, &g_handle, data, length);
             if (status == kStatus_Success)
             {
                 PRINTF(" A frame received. the length %d ", length);

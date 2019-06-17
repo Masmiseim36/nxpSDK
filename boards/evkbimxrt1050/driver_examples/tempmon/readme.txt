@@ -6,11 +6,16 @@ interrupt signals if the temperature is above two high-temperature thresholds an
 a low temperature threshold, the system can then use this module to monitor the on-die
 temperature and take appropriate actions such as throttling back the core frequency when
 a the high temperature interrupt is set.
-﻿Hardware requirements
-======================
-- Mini/micro USB cable
-- EVKB-IMXRT1050 board
-- Personal Computer
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
+Hardware requirements
+=====================
 
 Board settings
 ==============
@@ -42,11 +47,6 @@ The chip core frequency is 500000000 Hz.
 ......
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+Customization options
+=====================
 

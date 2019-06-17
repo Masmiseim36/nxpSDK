@@ -151,7 +151,7 @@ static void aws_connect_cb(QCOM_ONCONNECT_EVENT event, uint8_t devid, QCOM_BSSID
         else if (QCOM_ONCONNECT_EVENT_DISCONNECT == event)
         {
             g_connected = 0;
-            
+
             /* Avoid situation when receive disconnect followed by connect */
             if (expected_event_disconnect == g_expected_event)
             {
@@ -368,6 +368,7 @@ WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkPara
     WIFIReturnCode_t status = eWiFiFailure;
     const TickType_t connect_timeout = pdMS_TO_TICKS( 30000UL );
     const TickType_t dhcp_timeout = pdMS_TO_TICKS( 20000UL );
+    (void)dhcp_timeout;
     uint32_t tmp_ip4_addr = 0, tmp_ip4_mask = 0, tmp_ip4_gw = 0;
     uint8_t ucDhcpSuccessful = 0;
 
@@ -422,7 +423,7 @@ WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkPara
             }
 
             /* Set SSID, must be done before auth, cipher and passphrase */
-            strncpy(g_ssid.ssid, pxNetworkParams->pcSSID, sizeof(g_ssid.ssid));
+            strncpy(g_ssid.ssid, pxNetworkParams->pcSSID, sizeof(g_ssid.ssid) - 1);
             if (A_OK != (A_STATUS)qcom_set_ssid(g_devid, &g_ssid))
             {
                 break;
@@ -494,25 +495,50 @@ WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkPara
                 /* Perform DHCP request */
                 if (A_OK != qcom_ipconfig(g_devid, QCOM_IPCONFIG_DHCP, &tmp_ip4_addr, &tmp_ip4_mask, &tmp_ip4_gw))
                 {
+                    /* Error case, terminate loops */
                     break;
                 }
 
-                /* If DHCP response is not available immediately, wait for DHCP callback */
-                if (!IPs_are_valid(tmp_ip4_addr, tmp_ip4_mask, tmp_ip4_gw))
-                {
-                    /* Wait for DHCP response */
-                    if (pdTRUE != xSemaphoreTake(g_dhcp_semaph, dhcp_timeout))
-                    {
-                        break;
-                    }
-                }
-                else
+                /* DHCP response is available immediately */
+                if (IPs_are_valid(tmp_ip4_addr, tmp_ip4_mask, tmp_ip4_gw))
                 {
                     /* Valid IP of DHCP response */
                     g_ip4_addr = tmp_ip4_addr;
                     g_ip4_mask = tmp_ip4_mask;
                     g_ip4_gw = tmp_ip4_gw;
+                    /* Expected case, terminate loops */
+                    break;
                 }
+
+#if defined(WIFISHIELD_IS_GT202) && (WIFISHIELD_IS == WIFISHIELD_IS_GT202)
+                /* If DHCP response is not available immediately, wait for DHCP callback */
+                if (pdTRUE == xSemaphoreTake(g_dhcp_semaph, dhcp_timeout))
+                {
+                    /* If semaphore is posted before deadline, expects valid IPs assigned in callback */
+                    /* Expected case, terminate loops */
+                    break;
+                }
+#endif
+
+#if defined(WIFISHIELD_IS_SILEX2401) && (WIFISHIELD_IS == WIFISHIELD_IS_SILEX2401)
+                /* If there is no callback response or callback does not catch the deadline, try IPCONFIG_QUERY */
+                if (A_OK != qcom_ipconfig(g_devid, QCOM_IPCONFIG_QUERY, &tmp_ip4_addr, &tmp_ip4_mask, &tmp_ip4_gw))
+                {
+                    /* Error case, terminate loops */
+                    break;
+                }
+
+                /* Check received IPCONFIG response */
+                if (IPs_are_valid(tmp_ip4_addr, tmp_ip4_mask, tmp_ip4_gw))
+                {
+                    /* Valid IP of DHCP response */
+                    g_ip4_addr = tmp_ip4_addr;
+                    g_ip4_mask = tmp_ip4_mask;
+                    g_ip4_gw = tmp_ip4_gw;
+                    /* Expected case, terminate loops */
+                    break;
+                }
+#endif
             }
 
             /* Still not a valid IP, report error */
@@ -1058,7 +1084,7 @@ WIFIReturnCode_t WIFI_ConfigureAP(const WIFINetworkParams_t * const pxNetworkPar
                 break;
 
             /* Set SSID, must be done before auth, cipher and passphrase */
-            strncpy(g_ssid.ssid, pxNetworkParams->pcSSID, sizeof(g_ssid.ssid));
+            strncpy(g_ssid.ssid, pxNetworkParams->pcSSID, sizeof(g_ssid.ssid) - 1);
             if (A_OK != (A_STATUS)qcom_set_ssid(g_devid, &g_ssid))
                 break;
 

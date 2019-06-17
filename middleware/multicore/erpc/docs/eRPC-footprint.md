@@ -11,7 +11,7 @@ program erpc_matrix_multiply; // specify name of output files
 /*! This const defines the matrix size. The value has to be the same as the
     Matrix array dimension. Do not forget to re-generate the erpc code once the
     matrix size is changed in the erpc file */
-int const matrix_size = 5;
+const int32 matrix_size = 5;
 
 /*! This is the matrix array type. The dimension has to be the same as the
     matrix size const. Do not forget to re-generate the erpc code once the

@@ -54,7 +54,7 @@
 
 #define EX_APP_VERSION "1.30:1.31"  // App-version:Preferred-applet-version
 
-#if defined(LINUX) || defined(_WIN32)
+#if defined(__gnu_linux__) || defined(_WIN32)
 #   define SET_TIME(now)         now = time(NULL)
 #   define TIME_TO_STRING(pNow)  ctime((pNow))
 #else
@@ -68,8 +68,8 @@ int main(int argc, char ** argv)
 {
     U8 result = 1;
     int connectStatus = 0;
-    SmCommState_t commState;
-#if defined(LINUX) || defined(_WIN32)
+    SmCommState_t commState = { 0 };
+#if defined(__gnu_linux__) || defined(_WIN32)
     time_t now;
 #endif
     U8 dbgTstMode = 0x00;
@@ -132,7 +132,7 @@ int main(int argc, char ** argv)
     result &= exHlseMisc();
     result &= exHlsePsk();
     result &= exHlseScp();
-    result &= exHlseSst(commState.appletVersion);
+    result &= exHlseSst();
     result &= exHlseSstKp();
 #endif
 
@@ -147,10 +147,7 @@ LBL_REPORT_STATUS:
     sm_printf(CONSOLE, "# Key Pairs = %d.\r\n", A71CH_KEY_PAIR_MAX);
     sm_printf(CONSOLE, "# Pub Key   = %d.\r\n", A71CH_PUBLIC_KEY_MAX);
     sm_printf(CONSOLE, "# Sym Key   = %d.\r\n", A71CH_SYM_KEY_MAX);
-    if (commState.appletVersion < 0x0130)
-    {
-        sm_printf(CONSOLE, "Warning: Please switch to latest A71CH version, attached version is obsolete (attached version=0x%04X)\r\n", commState.appletVersion);
-    }
+
     sm_printf(CONSOLE, "\r\n-----------\r\nExample Set HLSE-A71CH finished (Rev %s) on 0x%04X, overall result = %s\r\n%sExec time: %ld ms\r\n------------\r\n",
             EX_APP_VERSION,
             commState.appletVersion,
@@ -158,7 +155,7 @@ LBL_REPORT_STATUS:
             TIME_TO_STRING(&now),
             getMeasurement(&execTime));
 
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(__MINGW32__)
     if (IsDebuggerPresent()) {
         PRINTF("Enter/Return to close window.");
         getchar();

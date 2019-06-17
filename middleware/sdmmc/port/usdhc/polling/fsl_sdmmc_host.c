@@ -78,9 +78,9 @@ static status_t SDMMCHOST_TransferFunction(SDMMCHOST_TYPE *base, SDMMCHOST_TRANS
     {
         memset(&dmaConfig, 0, sizeof(usdhc_adma_config_t));
         /* config adma */
-        dmaConfig.dmaMode = USDHC_DMA_MODE;
-        dmaConfig.burstLen = kUSDHC_EnBurstLenForINCR;
-        dmaConfig.admaTable = g_usdhcAdma2Table;
+        dmaConfig.dmaMode        = USDHC_DMA_MODE;
+        dmaConfig.burstLen       = kUSDHC_EnBurstLenForINCR;
+        dmaConfig.admaTable      = g_usdhcAdma2Table;
         dmaConfig.admaTableWords = USDHC_ADMA_TABLE_WORDS;
     }
 
@@ -117,7 +117,7 @@ void SDMMCHOST_ErrorRecovery(SDMMCHOST_TYPE *base)
 static status_t SDMMCHOST_CardDetectInit(SDMMCHOST_TYPE *base, const sdmmchost_detect_card_t *cd)
 {
     sdmmchost_detect_card_type_t cdType = kSDMMCHOST_DetectCardByGpioCD;
-    bool cardInserted = false;
+    bool cardInserted                   = false;
 
     if (cd != NULL)
     {
@@ -248,12 +248,12 @@ status_t SDMMCHOST_Init(SDMMCHOST_CONFIG *host, void *userData)
     SDMMCHOST_INIT_MMC_POWER();
 
     /* Initializes SDHC. */
-    usdhcHost->config.dataTimeout = USDHC_DATA_TIMEOUT;
-    usdhcHost->config.endianMode = USDHC_ENDIAN_MODE;
-    usdhcHost->config.readWatermarkLevel = USDHC_READ_WATERMARK_LEVEL;
+    usdhcHost->config.dataTimeout         = USDHC_DATA_TIMEOUT;
+    usdhcHost->config.endianMode          = USDHC_ENDIAN_MODE;
+    usdhcHost->config.readWatermarkLevel  = USDHC_READ_WATERMARK_LEVEL;
     usdhcHost->config.writeWatermarkLevel = USDHC_WRITE_WATERMARK_LEVEL;
-    usdhcHost->config.readBurstLen = USDHC_READ_BURST_LEN;
-    usdhcHost->config.writeBurstLen = USDHC_WRITE_BURST_LEN;
+    usdhcHost->config.readBurstLen        = USDHC_READ_BURST_LEN;
+    usdhcHost->config.writeBurstLen       = USDHC_WRITE_BURST_LEN;
 
     USDHC_Init(usdhcHost->base, &(usdhcHost->config));
 

@@ -29,12 +29,13 @@
 #   error "LOG_ macro already defined"
 #endif /* LOG_E */
 
+/* Enable/Set log levels for 'App' - start */
 /* If source file, or nxLog_Config.h has not set it, set these defines
  *
  * Do not #undef these values, rather set to 0/1. This way we can
- * jump to definition and avoid plain-old-text-search to jump to undef.
- *
- */
+ * jump to definition and avoid plain-old-text-search to jump to
+ * undef. */
+
 #ifndef NX_LOG_ENABLE_APP_DEBUG
 #   define NX_LOG_ENABLE_APP_DEBUG (NX_LOG_ENABLE_DEFAULT_DEBUG)
 #endif
@@ -47,6 +48,8 @@
 #ifndef NX_LOG_ENABLE_APP_ERROR
 #   define NX_LOG_ENABLE_APP_ERROR (NX_LOG_ENABLE_APP_WARN + NX_LOG_ENABLE_DEFAULT_ERROR)
 #endif
+
+/* Enable/Set log levels for 'App' - end */
 
 #if NX_LOG_ENABLE_APP_DEBUG
 #   define LOG_D(format, ...) \

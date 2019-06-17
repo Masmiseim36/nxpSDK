@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018, NXP
+ * Copyright 2017-2018, NXP
  * All rights reserved.
  *
  *
@@ -48,6 +48,27 @@ typedef enum
     SRTM_AudioStatePaused,
 } srtm_audio_state_t;
 
+/*!@brief Define the format info which aligned with Linux side in the SRTM Audio service. */
+typedef enum
+{
+    SRTM_Audio_Stereo16Bits = 0,
+    SRTM_Audio_Stereo24Bits = 1,
+    SRTM_Audio_Stereo32Bits = 2,
+    SRTM_Audio_DSD8bits     = 48,
+    SRTM_Audio_DSD16bits    = 49,
+    SRTM_Audio_DSD32bits    = 50,
+} srtm_audio_format_type_t;
+
+typedef struct _audio_format
+{
+    srtm_audio_format_type_t format;
+    uint8_t bitwidth;
+} srtm_audio_format_map_t;
+
+/*!@brief Define the format numbers used in the SRTM Audio service. */
+#define FORMAT_NUM_USED (6)
+
+extern srtm_audio_format_map_t saiFormatMap[FORMAT_NUM_USED];
 /**
  * @brief SRTM SAI adapter structure pointer.
  */

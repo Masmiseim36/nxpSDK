@@ -7,6 +7,7 @@ Current Maintainer: [Max Bruckner](https://github.com/FSMaxB)
 * [Ajay Bhargav](https://github.com/ajaybhargav)
 * [Alper Akcan](https://github.com/alperakcan)
 * [Anton Sergeev](https://github.com/anton-sergeev)
+* [Bob Kocisko](https://github.com/bobkocisko)
 * [Christian Schulze](https://github.com/ChristianSch)
 * [Casperinous](https://github.com/Casperinous)
 * [Debora Grosse](https://github.com/DeboraG)
@@ -40,5 +41,8 @@ Current Maintainer: [Max Bruckner](https://github.com/FSMaxB)
 * [Stephan Gatzka](https://github.com/gatzka)
 * [Weston Schmidt](https://github.com/schmidtw)
 * [yangfl](https://github.com/yangfl)
+* [Zhao Zhixu](https://github.com/zhaozhixu)
 
 And probably more people on [SourceForge](https://sourceforge.net/p/cjson/bugs/search/?q=status%3Aclosed-rejected+or+status%3Aclosed-out-of-date+or+status%3Awont-fix+or+status%3Aclosed-fixed+or+status%3Aclosed&page=0)
+
+Also thanks to all the people who reported bugs and suggested new features.

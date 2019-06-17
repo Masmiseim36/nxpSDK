@@ -63,17 +63,19 @@ typedef struct FlashDriverInterface
                                      uint32_t *failedAddress,
                                      uint32_t *failedData);
     status_t (*flash_get_property)(flash_config_t *config, flash_property_tag_t whichProperty, uint32_t *value);
-    status_t (*flash_program_once)(ftfx_config_t *config, uint32_t index, uint8_t *src, uint32_t lengthInBytes);
+    status_t (*flash_program_once)(ftfx_config_t *config, uint32_t index, const uint8_t *src, uint32_t lengthInBytes);
     status_t (*flash_read_once)(ftfx_config_t *config, uint32_t index, uint8_t *dst, uint32_t lengthInBytes);
     status_t (*flash_read_resource)(flash_config_t *config,
                                     uint32_t start,
                                     uint8_t *dst,
                                     uint32_t lengthInBytes,
                                     ftfx_read_resource_opt_t option);
+#if defined(FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL) && FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL
     status_t (*flash_is_execute_only)(flash_config_t *config,
                                       uint32_t start,
                                       uint32_t lengthInBytes,
                                       flash_xacc_state_t *access_state);
+#endif
     status_t (*flash_erase_all_execute_only_segments)(flash_config_t *config, uint32_t key);
     status_t (*flash_verify_erase_all_execute_only_segments)(flash_config_t *config, ftfx_margin_value_t margin);
     status_t (*flash_set_flexram_function)(flash_config_t *config, ftfx_flexram_func_opt_t option);

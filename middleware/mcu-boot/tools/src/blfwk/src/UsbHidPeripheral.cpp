@@ -1,8 +1,9 @@
 /*
  * Copyright (c) 2013-2014 Freescale Semiconductor, Inc.
+ * Copyright 2019 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -184,7 +185,20 @@ status_t UsbHidPeripheral::write(const uint8_t *buffer, uint32_t byteCount, uint
     }
 
 #ifdef LINUX
-    int count = hid_write(m_device, buffer, byteCount);
+    /*
+     * Note: Linux system doesn't support timeout for the USB HID write, so here add
+     *      a peripheral level timeout
+     */
+    int retryCnt = (timeoutMS + 5000 - 1) / 5000;
+    int count = -1;
+    while (retryCnt-- > 0)
+    {
+        count = hid_write(m_device, buffer, byteCount);
+        if (count >= 0)
+        {
+            break;
+        }
+    }
 #else
     int count = hid_write_timeout(m_device, buffer, byteCount, timeoutMS);
 #endif

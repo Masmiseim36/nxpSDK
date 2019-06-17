@@ -161,7 +161,7 @@ typedef struct _callback_message_t
 void LPSPI_SlaveUserCallback(LPSPI_Type *base, lpspi_slave_handle_t *handle, status_t status, void *userData)
 {
     callback_message_t *cb_msg = (callback_message_t *)userData;
-    BaseType_t reschedule;
+    BaseType_t reschedule      = 0;
 
     cb_msg->async_status = status;
     xSemaphoreGiveFromISR(cb_msg->sem, &reschedule);

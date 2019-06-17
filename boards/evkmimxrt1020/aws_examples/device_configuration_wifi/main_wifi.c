@@ -46,7 +46,7 @@
 #include "device_configuration.h"
 
 #include "clock_config.h"
-#include "wifi_shield_gt202.h"
+#include "wifi_shield.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -67,10 +67,16 @@ static int prvWifiConnect(const WIFINetworkParams_t *pxNetworkParams);
 const WIFINetworkParams_t pxDefaultNetworkParams = {
     .pcSSID = "aws_iot_ap", .pcPassword = "admin1234", .xSecurity = eWiFiSecurityOpen, /*eWiFiSecurityWPA2,*/
 };
+const char *clientcredentialJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM = NULL;
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
+void print_string(const char *string)
+{
+    PRINTF(string);
+}
+
 void wifiCreateAP()
 {
     WIFIReturnCode_t result = eWiFiSuccess;
@@ -178,7 +184,7 @@ static int prvWifiConnect(const WIFINetworkParams_t *pxNetworkParams)
     configPRINTF(("Connected\r\n"));
 
     uint8_t tmp_ip[4] = {0};
-    result = WIFI_GetIP(tmp_ip);
+    result            = WIFI_GetIP(tmp_ip);
     if (result != eWiFiSuccess)
     {
         configPRINTF(("Could not get IP address, reason %d.\r\n", result));

@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -12,7 +12,7 @@
  ******************************************************************************/
 
 /*! @brief Defines the timeout macro. */
-#define PHY_TIMEOUT_COUNT 0x3FFFFFFU
+#define PHY_TIMEOUT_COUNT 100000
 
 /*******************************************************************************
  * Prototypes
@@ -42,9 +42,9 @@ extern clock_ip_name_t s_enetClock[FSL_FEATURE_SOC_ENET_COUNT];
 status_t PHY_Init(ENET_Type *base, uint32_t phyAddr, uint32_t srcClock_Hz)
 {
     uint32_t bssReg;
-    uint32_t counter = PHY_TIMEOUT_COUNT;
-    uint32_t idReg = 0;
-    status_t result = kStatus_Success;
+    uint32_t counter  = PHY_TIMEOUT_COUNT;
+    uint32_t idReg    = 0;
+    status_t result   = kStatus_Success;
     uint32_t instance = ENET_GetInstance(base);
     uint32_t timeDelay;
     uint32_t ctlReg = 0;
@@ -59,7 +59,7 @@ status_t PHY_Init(ENET_Type *base, uint32_t phyAddr, uint32_t srcClock_Hz)
     while ((idReg != PHY_CONTROL_ID1) && (counter != 0))
     {
         PHY_Read(base, phyAddr, PHY_ID1_REG, &idReg);
-        counter --;       
+        counter--;
     }
 
     if (!counter)
@@ -69,14 +69,13 @@ status_t PHY_Init(ENET_Type *base, uint32_t phyAddr, uint32_t srcClock_Hz)
 
     /* Reset PHY. */
     counter = PHY_TIMEOUT_COUNT;
-    result = PHY_Write(base, phyAddr, PHY_BASICCONTROL_REG, PHY_BCTL_RESET_MASK);
+    result  = PHY_Write(base, phyAddr, PHY_BASICCONTROL_REG, PHY_BCTL_RESET_MASK);
     if (result == kStatus_Success)
     {
-
 #if defined(FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE)
         uint32_t data = 0;
-        result = PHY_Read(base, phyAddr, PHY_CONTROL2_REG, &data);
-        if ( result != kStatus_Success)
+        result        = PHY_Read(base, phyAddr, PHY_CONTROL2_REG, &data);
+        if (result != kStatus_Success)
         {
             return result;
         }
@@ -85,29 +84,29 @@ status_t PHY_Init(ENET_Type *base, uint32_t phyAddr, uint32_t srcClock_Hz)
         {
             return result;
         }
-#endif  /* FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE */    
-        
+#endif /* FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE */
+
         /* Set the negotiation. */
         result = PHY_Write(base, phyAddr, PHY_AUTONEG_ADVERTISE_REG,
                            (PHY_100BASETX_FULLDUPLEX_MASK | PHY_100BASETX_HALFDUPLEX_MASK |
                             PHY_10BASETX_FULLDUPLEX_MASK | PHY_10BASETX_HALFDUPLEX_MASK | 0x1U));
         if (result == kStatus_Success)
         {
-            result = PHY_Write(base, phyAddr, PHY_BASICCONTROL_REG,
-                               (PHY_BCTL_AUTONEG_MASK | PHY_BCTL_RESTART_AUTONEG_MASK));
+            result =
+                PHY_Write(base, phyAddr, PHY_BASICCONTROL_REG, (PHY_BCTL_AUTONEG_MASK | PHY_BCTL_RESTART_AUTONEG_MASK));
             if (result == kStatus_Success)
             {
                 /* Check auto negotiation complete. */
-                while (counter --)
+                while (counter--)
                 {
                     result = PHY_Read(base, phyAddr, PHY_BASICSTATUS_REG, &bssReg);
-                    if ( result == kStatus_Success)
+                    if (result == kStatus_Success)
                     {
                         PHY_Read(base, phyAddr, PHY_CONTROL1_REG, &ctlReg);
                         if (((bssReg & PHY_BSTATUS_AUTONEGCOMP_MASK) != 0) && (ctlReg & PHY_LINK_READY_MASK))
                         {
                             /* Wait a moment for Phy status stable. */
-                            for (timeDelay = 0; timeDelay < PHY_TIMEOUT_COUNT; timeDelay ++)
+                            for (timeDelay = 0; timeDelay < PHY_TIMEOUT_COUNT; timeDelay++)
                             {
                                 __ASM("nop");
                             }
@@ -210,9 +209,9 @@ status_t PHY_EnableLoopback(ENET_Type *base, uint32_t phyAddr, phy_loop_t mode, 
             }
             else
             {
-                data = PHY_BCTL_DUPLEX_MASK | PHY_BCTL_LOOP_MASK;                
+                data = PHY_BCTL_DUPLEX_MASK | PHY_BCTL_LOOP_MASK;
             }
-           return PHY_Write(base, phyAddr, PHY_BASICCONTROL_REG, data);
+            return PHY_Write(base, phyAddr, PHY_BASICCONTROL_REG, data);
         }
         else
         {

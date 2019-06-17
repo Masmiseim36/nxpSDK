@@ -68,8 +68,9 @@ int main(void)
     PRINTF("TEMPMON driver example. \r\n");
 
     TEMPMON_GetDefaultConfig(&config);
-    config.frequency = 0x03U;
+    config.frequency     = 0x03U;
     config.highAlarmTemp = DEMO_HIGHALARMTEMP;
+    config.lowAlarmTemp  = DEMO_LOWALARMTEMP;
 
     TEMPMON_Init(DEMO_TEMPMON, &config);
     TEMPMON_StartMeasure(DEMO_TEMPMON);

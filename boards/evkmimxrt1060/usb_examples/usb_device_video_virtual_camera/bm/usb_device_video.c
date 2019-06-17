@@ -85,7 +85,7 @@ USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static usb_device_vide
  */
 static usb_status_t USB_DeviceVideoAllocateHandle(usb_device_video_struct_t **handle)
 {
-    int32_t count;
+    uint32_t count;
     USB_OSA_SR_ALLOC();
 
     USB_OSA_ENTER_CRITICAL();
@@ -116,11 +116,11 @@ static usb_status_t USB_DeviceVideoFreeHandle(usb_device_video_struct_t *handle)
     USB_OSA_SR_ALLOC();
 
     USB_OSA_ENTER_CRITICAL();
-    handle->handle = NULL;
-    handle->configStruct = (usb_device_class_config_struct_t *)NULL;
-    handle->configuration = 0U;
+    handle->handle           = NULL;
+    handle->configStruct     = (usb_device_class_config_struct_t *)NULL;
+    handle->configuration    = 0U;
     handle->controlAlternate = 0U;
-    handle->streamAlternate = 0U;
+    handle->streamAlternate  = 0U;
     USB_OSA_EXIT_CRITICAL();
     return kStatus_USB_Success;
 }
@@ -259,7 +259,7 @@ static usb_status_t USB_DeviceVideoStreamEndpointsInit(usb_device_video_struct_t
 {
     usb_device_interface_list_t *interfaceList;
     usb_device_interface_struct_t *interface = (usb_device_interface_struct_t *)NULL;
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error                       = kStatus_USB_Error;
 
     /* Check the configuration is valid or not. */
     if (!videoHandle->configuration)
@@ -311,11 +311,11 @@ static usb_status_t USB_DeviceVideoStreamEndpointsInit(usb_device_video_struct_t
     {
         usb_device_endpoint_init_struct_t epInitStruct;
         usb_device_endpoint_callback_struct_t epCallback;
-        epInitStruct.zlt = 0U;
-        epInitStruct.interval = interface->endpointList.endpoint[count].interval;
+        epInitStruct.zlt             = 0U;
+        epInitStruct.interval        = interface->endpointList.endpoint[count].interval;
         epInitStruct.endpointAddress = interface->endpointList.endpoint[count].endpointAddress;
-        epInitStruct.maxPacketSize = interface->endpointList.endpoint[count].maxPacketSize;
-        epInitStruct.transferType = interface->endpointList.endpoint[count].transferType;
+        epInitStruct.maxPacketSize   = interface->endpointList.endpoint[count].maxPacketSize;
+        epInitStruct.transferType    = interface->endpointList.endpoint[count].transferType;
 
         if ((USB_ENDPOINT_ISOCHRONOUS == (epInitStruct.transferType & USB_DESCRIPTOR_ENDPOINT_ATTRIBUTE_TYPE_MASK)) &&
             (USB_IN == ((epInitStruct.endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) >>
@@ -383,7 +383,7 @@ static usb_status_t USB_DeviceVideoControlEndpointsInit(usb_device_video_struct_
 {
     usb_device_interface_list_t *interfaceList;
     usb_device_interface_struct_t *interface = (usb_device_interface_struct_t *)NULL;
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error                       = kStatus_USB_Error;
 
     /* Check the configuration is valid or not. */
     if (!videoHandle->configuration)
@@ -434,10 +434,10 @@ static usb_status_t USB_DeviceVideoControlEndpointsInit(usb_device_video_struct_
     {
         usb_device_endpoint_init_struct_t epInitStruct;
         usb_device_endpoint_callback_struct_t epCallback;
-        epInitStruct.zlt = 0U;
+        epInitStruct.zlt             = 0U;
         epInitStruct.endpointAddress = interface->endpointList.endpoint[count].endpointAddress;
-        epInitStruct.maxPacketSize = interface->endpointList.endpoint[count].maxPacketSize;
-        epInitStruct.transferType = interface->endpointList.endpoint[count].transferType;
+        epInitStruct.maxPacketSize   = interface->endpointList.endpoint[count].maxPacketSize;
+        epInitStruct.transferType    = interface->endpointList.endpoint[count].transferType;
 
         if ((USB_ENDPOINT_INTERRUPT == (epInitStruct.transferType & USB_DESCRIPTOR_ENDPOINT_ATTRIBUTE_TYPE_MASK)) &&
             (USB_IN == ((epInitStruct.endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) >>
@@ -499,7 +499,7 @@ static usb_status_t USB_DeviceVideoVcPowerModeControl(usb_device_video_struct_t 
                                                       usb_device_control_request_struct_t *controlRequest)
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
-    uint32_t command = 0U;
+    uint32_t command   = 0U;
 
     switch (controlRequest->setup->bRequest)
     {
@@ -539,7 +539,7 @@ static usb_status_t USB_DeviceVideoVcInterfaceRequest(usb_device_video_struct_t 
                                                       usb_device_control_request_struct_t *controlRequest)
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
-    uint8_t cs = (controlRequest->setup->wValue >> 0x08U) & 0xFFU;
+    uint8_t cs         = (controlRequest->setup->wValue >> 0x08U) & 0xFFU;
 
     if (USB_DEVICE_VIDEO_VC_VIDEO_POWER_MODE_CONTROL == cs)
     {
@@ -570,7 +570,7 @@ static usb_status_t USB_DeviceVideoVcCameraTerminalRequest(usb_device_video_stru
                                                            usb_device_control_request_struct_t *controlRequest)
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
-    uint8_t cs = (controlRequest->setup->wValue >> 0x08U) & 0xFFU;
+    uint8_t cs         = (controlRequest->setup->wValue >> 0x08U) & 0xFFU;
 
     switch (cs)
     {
@@ -635,7 +635,7 @@ static usb_status_t USB_DeviceVideoVcProcessingUnitRequest(usb_device_video_stru
                                                            usb_device_control_request_struct_t *controlRequest)
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
-    uint8_t cs = (controlRequest->setup->wValue >> 0x08U) & 0xFFU;
+    uint8_t cs         = (controlRequest->setup->wValue >> 0x08U) & 0xFFU;
 
     switch (cs)
     {
@@ -701,7 +701,7 @@ static usb_status_t USB_DeviceVideoVcRequest(usb_device_video_struct_t *videoHan
 {
     usb_device_video_entities_struct_t *entity_list;
     usb_status_t error = kStatus_USB_InvalidRequest;
-    uint8_t entityId = (uint8_t)(controlRequest->setup->wIndex >> 0x08U);
+    uint8_t entityId   = (uint8_t)(controlRequest->setup->wIndex >> 0x08U);
 
     if (!videoHandle->controlInterfaceHandle)
     {
@@ -767,7 +767,7 @@ static usb_status_t USB_DeviceVideoVsProbeRequest(usb_device_video_struct_t *vid
                                                   usb_device_control_request_struct_t *controlRequest)
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
-    uint32_t command = 0U;
+    uint32_t command   = 0U;
 
     switch (controlRequest->setup->bRequest)
     {
@@ -822,7 +822,7 @@ static usb_status_t USB_DeviceVideoVsCommitRequest(usb_device_video_struct_t *vi
                                                    usb_device_control_request_struct_t *controlRequest)
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
-    uint32_t command = 0U;
+    uint32_t command   = 0U;
 
     switch (controlRequest->setup->bRequest)
     {
@@ -865,7 +865,7 @@ static usb_status_t USB_DeviceVideoVsStillProbeRequest(usb_device_video_struct_t
                                                        usb_device_control_request_struct_t *controlRequest)
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
-    uint32_t command = 0U;
+    uint32_t command   = 0U;
 
     switch (controlRequest->setup->bRequest)
     {
@@ -920,7 +920,7 @@ static usb_status_t USB_DeviceVideoVsStillCommitRequest(usb_device_video_struct_
                                                         usb_device_control_request_struct_t *controlRequest)
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
-    uint32_t command = 0U;
+    uint32_t command   = 0U;
 
     switch (controlRequest->setup->bRequest)
     {
@@ -963,7 +963,7 @@ static usb_status_t USB_DeviceVideoVsStillImageTriggerRequest(usb_device_video_s
                                                               usb_device_control_request_struct_t *controlRequest)
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
-    uint32_t command = 0U;
+    uint32_t command   = 0U;
 
     switch (controlRequest->setup->bRequest)
     {
@@ -1003,7 +1003,7 @@ static usb_status_t USB_DeviceVideoVsRequest(usb_device_video_struct_t *videoHan
                                              usb_device_control_request_struct_t *controlRequest)
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
-    uint8_t cs = (controlRequest->setup->wValue >> 0x08U) & 0xFFU;
+    uint8_t cs         = (controlRequest->setup->wValue >> 0x08U) & 0xFFU;
 
     switch (cs)
     {
@@ -1076,9 +1076,9 @@ usb_status_t USB_DeviceVideoEvent(void *handle, uint32_t event, void *param)
     {
         case kUSB_DeviceClassEventDeviceReset:
             /* Bus reset, clear the configuration. */
-            videoHandle->configuration = 0U;
+            videoHandle->configuration     = 0U;
             videoHandle->streamOutPipeBusy = 0U;
-            videoHandle->streamInPipeBusy = 0U;
+            videoHandle->streamInPipeBusy  = 0U;
             break;
         case kUSB_DeviceClassEventSetConfiguration:
             /* Get the new configuration. */
@@ -1102,9 +1102,9 @@ usb_status_t USB_DeviceVideoEvent(void *handle, uint32_t event, void *param)
             /* Clear the alternate setting value. */
             videoHandle->controlAlternate = 0U;
             /* Clear the alternate setting value. */
-            videoHandle->streamAlternate = 0U;
+            videoHandle->streamAlternate        = 0U;
             videoHandle->controlInterfaceHandle = NULL;
-            videoHandle->streamInterfaceHandle = NULL;
+            videoHandle->streamInterfaceHandle  = NULL;
             /* Initialize the control endpoints of the new current configuration by using the alternate setting 0. */
             error = USB_DeviceVideoControlEndpointsInit(videoHandle);
             /* Initialize the stream endpoints of the new current configuration by using the alternate setting 0. */
@@ -1130,7 +1130,7 @@ usb_status_t USB_DeviceVideoEvent(void *handle, uint32_t event, void *param)
                     break;
                 }
                 /* De-initialize old endpoints */
-                error = USB_DeviceVideoControlEndpointsDeinit(videoHandle);
+                error                         = USB_DeviceVideoControlEndpointsDeinit(videoHandle);
                 videoHandle->controlAlternate = alternate;
                 /* Initialize new endpoints */
                 error = USB_DeviceVideoControlEndpointsInit(videoHandle);
@@ -1144,7 +1144,7 @@ usb_status_t USB_DeviceVideoEvent(void *handle, uint32_t event, void *param)
                     break;
                 }
                 /* De-initialize old endpoints */
-                error = USB_DeviceVideoStreamEndpointsDeinit(videoHandle);
+                error                        = USB_DeviceVideoStreamEndpointsDeinit(videoHandle);
                 videoHandle->streamAlternate = alternate;
                 /* Initialize new endpoints */
                 error = USB_DeviceVideoStreamEndpointsInit(videoHandle);
@@ -1218,7 +1218,7 @@ usb_status_t USB_DeviceVideoEvent(void *handle, uint32_t event, void *param)
             {
                 /* Handle the video class specific request. */
                 usb_device_control_request_struct_t *controlRequest = (usb_device_control_request_struct_t *)param;
-                uint8_t interface_index = (uint8_t)controlRequest->setup->wIndex;
+                uint8_t interface_index                             = (uint8_t)controlRequest->setup->wIndex;
 
                 if ((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) !=
                     USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
@@ -1305,8 +1305,8 @@ usb_status_t USB_DeviceVideoInit(uint8_t controllerId, usb_device_class_config_s
     /* Save the configuration of the class. */
     videoHandle->configStruct = config;
     /* Clear the configuration value. */
-    videoHandle->configuration = 0U;
-    videoHandle->streamAlternate = 0xffU;
+    videoHandle->configuration    = 0U;
+    videoHandle->streamAlternate  = 0xffU;
     videoHandle->controlAlternate = 0xffU;
 
     *handle = (class_handle_t)videoHandle;

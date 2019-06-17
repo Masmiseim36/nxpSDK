@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2019 NXP
  * All rights reserved.
  *
  *
@@ -13,6 +13,21 @@
 ********************************************************************************** */
 #include "fsl_common.h"
 #include "generic_list.h"
+
+static list_status_t LIST_Scan(list_handle_t list, list_element_handle_t newElement)
+{
+    list_element_handle_t element = list->head;
+
+    while (element != NULL)
+    {
+        if (element == newElement)
+        {
+            return kLIST_DuplicateError;
+        }
+        element = element->next;
+    }
+    return kLIST_Ok;
+}
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -38,7 +53,7 @@ void LIST_Init(list_handle_t list, uint32_t max)
 {
     list->head = NULL;
     list->tail = NULL;
-    list->max  = max;
+    list->max  = (uint16_t)max;
     list->size = 0;
 }
 
@@ -82,13 +97,19 @@ list_status_t LIST_AddTail(list_handle_t list, list_element_handle_t element)
 {
     uint32_t regPrimask = DisableGlobalIRQ();
 
-    if ((list->max != 0) && (list->max == list->size))
+    if ((list->max != 0U) && (list->max == list->size))
     {
         EnableGlobalIRQ(regPrimask);
         return kLIST_Full;
     }
 
-    if (list->size == 0)
+    if (kLIST_DuplicateError == LIST_Scan(list, element))
+    {
+        EnableGlobalIRQ(regPrimask);
+        return kLIST_DuplicateError;
+    }
+
+    if (list->size == 0U)
     {
         list->head = element;
     }
@@ -126,13 +147,19 @@ list_status_t LIST_AddHead(list_handle_t list, list_element_handle_t element)
 {
     uint32_t regPrimask = DisableGlobalIRQ();
 
-    if ((list->max != 0) && (list->max == list->size))
+    if ((list->max != 0U) && (list->max == list->size))
     {
         EnableGlobalIRQ(regPrimask);
         return kLIST_Full;
     }
 
-    if (list->size == 0)
+    if (kLIST_DuplicateError == LIST_Scan(list, element))
+    {
+        EnableGlobalIRQ(regPrimask);
+        return kLIST_DuplicateError;
+    }
+
+    if (list->size == 0U)
     {
         list->tail = element;
     }
@@ -171,7 +198,7 @@ list_element_handle_t LIST_RemoveHead(list_handle_t list)
 
     uint32_t regPrimask = DisableGlobalIRQ();
 
-    if ((NULL == list) || (list->size == 0))
+    if ((NULL == list) || (list->size == 0U))
     {
         EnableGlobalIRQ(regPrimask);
         return NULL; /*LIST_ is empty*/
@@ -179,7 +206,7 @@ list_element_handle_t LIST_RemoveHead(list_handle_t list)
 
     element = list->head;
     list->size--;
-    if (list->size == 0)
+    if (list->size == 0U)
     {
         list->tail = NULL;
     }
@@ -327,10 +354,16 @@ list_status_t LIST_AddPrevElement(list_element_handle_t element, list_element_ha
     }
     uint32_t regPrimask = DisableGlobalIRQ();
 
-    if ((element->list->max != 0) && (element->list->max == element->list->size))
+    if ((element->list->max != 0U) && (element->list->max == element->list->size))
     {
         EnableGlobalIRQ(regPrimask);
         return kLIST_Full;
+    }
+
+    if (kLIST_DuplicateError == LIST_Scan(element->list, newElement))
+    {
+        EnableGlobalIRQ(regPrimask);
+        return kLIST_DuplicateError;
     }
 
     if (element->prev == NULL) /*Element is list head*/
@@ -386,5 +419,5 @@ uint32_t LIST_GetSize(list_handle_t list)
  ********************************************************************************** */
 uint32_t LIST_GetAvailableSize(list_handle_t list)
 {
-    return (list->max - list->size);
+    return ((uint32_t)list->max - (uint32_t)list->size);
 }

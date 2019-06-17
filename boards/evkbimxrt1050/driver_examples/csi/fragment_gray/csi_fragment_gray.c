@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, NXP Semiconductors, Inc.
+ * Copyright  2018 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -103,7 +103,8 @@ void CSI_IRQHandler(void)
 void BOARD_InitLcd(void)
 {
     gpio_pin_config_t config = {
-        kGPIO_DigitalOutput, 0,
+        kGPIO_DigitalOutput,
+        0,
     };
 
     /* Backlight. */
@@ -124,7 +125,10 @@ void BOARD_InitLcdifPixClock(void)
      * Video PLL output clock is OSC24M * (loopDivider + (denominator / numerator)) / postDivider = 93MHz.
      */
     clock_video_pll_config_t config = {
-        .loopDivider = 31, .postDivider = 8, .numerator = 0, .denominator = 0,
+        .loopDivider = 31,
+        .postDivider = 8,
+        .numerator   = 0,
+        .denominator = 0,
     };
 
     CLOCK_InitVideoPll(&config);
@@ -164,15 +168,16 @@ static void BOARD_PullCameraPowerDownPin(bool pullUp)
 }
 
 static ov7725_resource_t ov7725Resource = {
-    .i2cSendFunc = BOARD_Camera_I2C_SendSCCB,
-    .i2cReceiveFunc = BOARD_Camera_I2C_ReceiveSCCB,
-    .pullResetPin = BOARD_PullCameraResetPin,
-    .pullPowerDownPin = BOARD_PullCameraPowerDownPin,
+    .i2cSendFunc       = BOARD_Camera_I2C_SendSCCB,
+    .i2cReceiveFunc    = BOARD_Camera_I2C_ReceiveSCCB,
+    .pullResetPin      = BOARD_PullCameraResetPin,
+    .pullPowerDownPin  = BOARD_PullCameraPowerDownPin,
     .inputClockFreq_Hz = 24000000,
 };
 
 camera_device_handle_t cameraDevice = {
-    .resource = &ov7725Resource, .ops = &ov7725_ops,
+    .resource = &ov7725Resource,
+    .ops      = &ov7725_ops,
 };
 #else
 /*
@@ -198,7 +203,7 @@ static void i2c_release_bus_delay(void)
 
 void BOARD_I2C_ReleaseBus(void)
 {
-    uint8_t i = 0;
+    uint8_t i                          = 0;
     const gpio_pin_config_t pin_config = {.direction = kGPIO_DigitalOutput, .outputLogic = 1};
 
     CLOCK_EnableClock(kCLOCK_Iomuxc);
@@ -242,14 +247,15 @@ void BOARD_I2C_ReleaseBus(void)
 }
 
 static mt9m114_resource_t mt9m114Resource = {
-    .i2cSendFunc = BOARD_Camera_I2C_Send,
-    .i2cReceiveFunc = BOARD_Camera_I2C_Receive,
-    .pullResetPin = BOARD_PullCameraResetPin,
+    .i2cSendFunc       = BOARD_Camera_I2C_Send,
+    .i2cReceiveFunc    = BOARD_Camera_I2C_Receive,
+    .pullResetPin      = BOARD_PullCameraResetPin,
     .inputClockFreq_Hz = 24000000,
 };
 
 camera_device_handle_t cameraDevice = {
-    .resource = &mt9m114Resource, .ops = &mt9m114_ops,
+    .resource = &mt9m114Resource,
+    .ops      = &mt9m114_ops,
 };
 #endif
 
@@ -288,7 +294,8 @@ void BOARD_InitCameraResource(void)
 
     /* Set the pins for CSI reset and power down. */
     gpio_pin_config_t pinConfig = {
-        kGPIO_DigitalOutput, 1,
+        kGPIO_DigitalOutput,
+        1,
     };
 
     GPIO_PinInit(GPIO1, 4, &pinConfig);
@@ -301,7 +308,7 @@ uint32_t DEMO_MakeLutData(uint8_t r, uint8_t g, uint8_t b)
 #if (DEMO_LCDIF_DATA_BUS_WIDTH == 16)
     /* 16 bit data bus. */
     return (((r >> 3)) << 11) | (((g >> 2)) << 5) | (((b >> 3)) << 0);
-#elif(DEMO_LCDIF_DATA_BUS_WIDTH == 24)
+#elif (DEMO_LCDIF_DATA_BUS_WIDTH == 24)
     /* 24-bit data bus. */
     return (r << 16) | (g << 8) | (b << 0);
 #else
@@ -330,18 +337,18 @@ void CSI_TransferCallBack(CSI_Type *base, csi_frag_handle_t *handle, status_t st
 void DEMO_InitLCD(void)
 {
     elcdif_rgb_mode_config_t lcdConfig = {
-        .panelWidth = DEMO_LCD_WIDTH,
-        .panelHeight = DEMO_LCD_HEIGHT,
-        .hsw = DEMO_HSW,
-        .hfp = DEMO_HFP,
-        .hbp = DEMO_HBP,
-        .vsw = DEMO_VSW,
-        .vfp = DEMO_VFP,
-        .vbp = DEMO_VBP,
+        .panelWidth    = DEMO_LCD_WIDTH,
+        .panelHeight   = DEMO_LCD_HEIGHT,
+        .hsw           = DEMO_HSW,
+        .hfp           = DEMO_HFP,
+        .hbp           = DEMO_HBP,
+        .vsw           = DEMO_VSW,
+        .vfp           = DEMO_VFP,
+        .vbp           = DEMO_VBP,
         .polarityFlags = DEMO_LCD_POL_FLAGS,
-        .pixelFormat = kELCDIF_PixelFormatRAW8,
-        .dataBus = kELCDIF_DataBus8Bit,
-        .bufferAddr = (uint32_t)s_frameBuffer,
+        .pixelFormat   = kELCDIF_PixelFormatRAW8,
+        .dataBus       = kELCDIF_DataBus8Bit,
+        .bufferAddr    = (uint32_t)s_frameBuffer,
     };
 
     memset(s_frameBuffer, 0, sizeof(s_frameBuffer));
@@ -361,26 +368,26 @@ void DEMO_InitLCD(void)
 void DEMO_InitCamera(void)
 {
     const camera_config_t cameraConfig = {
-        .pixelFormat = kVIDEO_PixelFormatYUYV,
-        .bytesPerPixel = 2,
-        .resolution = FSL_VIDEO_RESOLUTION(DEMO_CAMERA_WIDTH, DEMO_CAMERA_HEIGHT),
+        .pixelFormat                = kVIDEO_PixelFormatYUYV,
+        .bytesPerPixel              = 2,
+        .resolution                 = FSL_VIDEO_RESOLUTION(DEMO_CAMERA_WIDTH, DEMO_CAMERA_HEIGHT),
         .frameBufferLinePitch_Bytes = DEMO_CAMERA_WIDTH * 2,
-        .interface = kCAMERA_InterfaceGatedClock,
-        .controlFlags = kCAMERA_HrefActiveHigh | kCAMERA_DataLatchOnRisingEdge | kCAMERA_VsyncActiveLow,
-        .framePerSec = 30,
+        .interface                  = kCAMERA_InterfaceGatedClock,
+        .controlFlags               = kCAMERA_HrefActiveHigh | kCAMERA_DataLatchOnRisingEdge | kCAMERA_VsyncActiveLow,
+        .framePerSec                = 30,
     };
 
     csi_frag_config_t csiFragConfig = {
-        .width = DEMO_CAMERA_WIDTH,
-        .height = DEMO_CAMERA_HEIGHT,
-        .polarityFlags = kCSI_HsyncActiveHigh | kCSI_DataLatchOnRisingEdge | kCSI_VsyncActiveLow,
-        .inputFormat = kCSI_FragInputYUYV,
-        .workMode = kCSI_GatedClockMode,
-        .dataBus = kCSI_DataBus8Bit,
-        .useExtVsync = true,
-        .dmaBufferAddr0 = (uint32_t)s_dmaBuffer[0],
-        .dmaBufferAddr1 = (uint32_t)s_dmaBuffer[1],
-        .dmaBufferLine = DEMO_CSI_DMA_BUFFER_LINE,
+        .width               = DEMO_CAMERA_WIDTH,
+        .height              = DEMO_CAMERA_HEIGHT,
+        .polarityFlags       = kCSI_HsyncActiveHigh | kCSI_DataLatchOnRisingEdge | kCSI_VsyncActiveLow,
+        .inputFormat         = kCSI_FragInputYUYV,
+        .workMode            = kCSI_GatedClockMode,
+        .dataBus             = kCSI_DataBus8Bit,
+        .useExtVsync         = true,
+        .dmaBufferAddr0      = (uint32_t)s_dmaBuffer[0],
+        .dmaBufferAddr1      = (uint32_t)s_dmaBuffer[1],
+        .dmaBufferLine       = DEMO_CSI_DMA_BUFFER_LINE,
         .isDmaBufferCachable = true,
     };
 
@@ -391,7 +398,8 @@ void DEMO_InitCamera(void)
     if (kStatus_Success != CAMERA_DEVICE_Init(&cameraDevice, &cameraConfig))
     {
         PRINTF("Camera init failed\r\n");
-        while (1);
+        while (1)
+            ;
     }
 
     CAMERA_DEVICE_Start(&cameraDevice);
@@ -410,7 +418,9 @@ int main(void)
     };
 
     csi_frag_capture_config_t csiFragCaptureConfig = {
-        .outputGrayScale = true, .buffer = (uint32_t)s_windowBuffer, .window = &window,
+        .outputGrayScale = true,
+        .buffer          = (uint32_t)s_windowBuffer,
+        .window          = &window,
     };
 
     BOARD_ConfigMPU();

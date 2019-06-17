@@ -8,14 +8,14 @@ periodically executed and text “Tick.” is printed to terminal.
 
 
 
-Running the demo
-================
-After the board is flashed the Tera Term will show output message.
 
-Example output:
-Tick.
-Tick.
-Tick.
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -37,11 +37,14 @@ Prepare the Demo
     - No flow control
 3.  Download the program to the target board.
 4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
+Running the demo
+================
+After the board is flashed the Tera Term will show output message.
 
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+Example output:
+Tick.
+Tick.
+Tick.
+Customization options
+=====================
 

@@ -265,7 +265,7 @@ static usb_status_t USB_DeviceEhciEndpointInit(usb_device_ehci_state_struct_t *e
     }
     
     /* Enable the endpoint. */
-    if (USB_ENDPOINT_CONTROL == transferType)
+    if ((USB_CONTROL_ENDPOINT == endpoint))
     {
         ehciState->qh[index].capabilttiesCharacteristicsUnion.capabilttiesCharacteristicsBitmap.ios = 1U;
         ehciState->registerBase->EPCR0 |=
@@ -1328,7 +1328,12 @@ usb_status_t USB_DeviceEhciCancel(usb_device_controller_handle ehciHandle, uint8
     /* Get the first dtd */
     currentDtd =
         (usb_device_ehci_dtd_struct_t *)((uint32_t)ehciState->dtdHard[index] & USB_DEVICE_ECHI_DTD_POINTER_MASK);
-
+   
+    /* In the next loop, USB_DeviceNotificationTrigger function may trigger a new transfer and the context always 
+     * keep in the critical section, so the Dtd sequence would still keep non-empty and the loop would be endless.
+     * We set the Dtd's dtdInvalid in this while and add an if statement in the next loop so that this issue could
+     * be fixed.  
+     */
     while (currentDtd)
     {
         currentDtd->reservedUnion.originalBufferInfo.dtdInvalid = 1U;
@@ -1340,6 +1345,7 @@ usb_status_t USB_DeviceEhciCancel(usb_device_controller_handle ehciHandle, uint8
         (usb_device_ehci_dtd_struct_t *)((uint32_t)ehciState->dtdHard[index] & USB_DEVICE_ECHI_DTD_POINTER_MASK);
     while (currentDtd)
     {
+        /* this if statement is used with  the previous while loop to avoid the endless loop */
         if (!currentDtd->reservedUnion.originalBufferInfo.dtdInvalid)
         {
             break;

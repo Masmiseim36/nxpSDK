@@ -48,7 +48,7 @@ U8 exHlseDebugMode(U8 testMode)
 {
     U8 result = 1;
     int i;
-    long msArray[MEASURE_POINTS_MAX];
+    long msArray[MEASURE_POINTS_MAX] = {0};
     axTimeMeasurement_t mPair;
     int nPoint = 0;
 
@@ -240,7 +240,7 @@ static U8 exDbgInternalMemory(U8 initMode)
     S16 freeMem = 0;
     U8 result = 1;
     U16 err;
-    HLSE_OBJECT_HANDLE moduleHandle;
+    HLSE_OBJECT_HANDLE moduleHandle = 0;
     U16 moduleHandleNum = 1;
 
     sm_printf(CONSOLE, "\r\n-----------\r\nStart exDbgInternalMemory(%s)\r\n------------\r\n", getInitModeAsString(initMode));

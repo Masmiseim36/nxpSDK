@@ -19,7 +19,7 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-static void DEMO_CheckResult(bool condition, char* log);
+static void DEMO_CheckResult(bool condition, char *log);
 static void DEMO_PrintUINT64(uint64_t value);
 
 /*******************************************************************************
@@ -52,7 +52,7 @@ int main(void)
 
     cnt = SNVS_LP_GetMonotonicCounter(SNVS);
 
-    for (uint32_t i=0; i<DEMO_LOOP; i++)
+    for (uint32_t i = 0; i < DEMO_LOOP; i++)
     {
         cnt_old = cnt;
 
@@ -67,15 +67,17 @@ int main(void)
     }
 
     PRINTF("SNVS LP MC example finished successfully\r\n");
-    while (1);
+    while (1)
+        ;
 }
 
-static void DEMO_CheckResult(bool condition, char* log)
+static void DEMO_CheckResult(bool condition, char *log)
 {
     if (!condition)
     {
         PRINTF("FAIL: %s\r\n", log);
-        while (1);
+        while (1)
+            ;
     }
 }
 

@@ -6,9 +6,8 @@
     <definition extID="component.lpuart_adapter.MCIMX7U5"/>
     <definition extID="component.serial_manager.MCIMX7U5"/>
     <definition extID="component.serial_manager_uart.MCIMX7U5"/>
-    <definition extID="middleware.freertos.MCIMX7U5"/>
-    <definition extID="middleware.freertos.freertos_tickless_lptmr.MCIMX7U5"/>
-    <definition extID="middleware.freertos.heap.heap_4.MCIMX7U5"/>
+    <definition extID="middleware.amazon_freertos.freertos.MCIMX7U5"/>
+    <definition extID="middleware.amazon_freertos.freertos.heap_4.MCIMX7U5"/>
     <definition extID="platform.Include_common.MCIMX7U5"/>
     <definition extID="platform.Include_core_cm4.MCIMX7U5"/>
     <definition extID="platform.devices.MCIMX7U5_CMSIS.MCIMX7U5"/>
@@ -27,7 +26,7 @@
     <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkmcimx7ulp_freertos_tickless" name="freertos_tickless" category="rtos_examples" dependency="middleware.freertos.freertos_tickless_lptmr.MCIMX7U5 platform.drivers.port.MCIMX7U5 platform.drivers.gpio.MCIMX7U5 platform.drivers.clock.MCIMX7U5 middleware.freertos.MCIMX7U5 middleware.freertos.heap.heap_4.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 utility.debug_console.MCIMX7U5 component.lpuart_adapter.MCIMX7U5 component.serial_manager.MCIMX7U5 component.serial_manager_uart.MCIMX7U5 platform.drivers.lpuart.MCIMX7U5 component.lists.MCIMX7U5 platform.devices.MCIMX7U5_startup.MCIMX7U5 platform.drivers.msmc.MCIMX7U5 platform.utilities.assert.MCIMX7U5 platform.drivers.lptmr.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.Include_common.MCIMX7U5">
+  <example id="evkmcimx7ulp_freertos_tickless" name="freertos_tickless" category="rtos_examples" dependency="platform.drivers.lptmr.MCIMX7U5 platform.drivers.port.MCIMX7U5 platform.drivers.gpio.MCIMX7U5 platform.drivers.clock.MCIMX7U5 middleware.amazon_freertos.freertos.MCIMX7U5 middleware.amazon_freertos.freertos.heap_4.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 utility.debug_console.MCIMX7U5 component.lpuart_adapter.MCIMX7U5 component.serial_manager.MCIMX7U5 component.serial_manager_uart.MCIMX7U5 platform.drivers.lpuart.MCIMX7U5 component.lists.MCIMX7U5 platform.devices.MCIMX7U5_startup.MCIMX7U5 platform.drivers.msmc.MCIMX7U5 platform.utilities.assert.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.Include_common.MCIMX7U5">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -65,6 +64,12 @@
     </source>
     <source path="boards/evkmcimx7ulp/rtos_examples/freertos_tickless/iar" target_path="src" type="linker" toolchain="iar">
       <files mask="MCIMX7U5xxxxx_cm4_ram.icf"/>
+    </source>
+    <source path="boards/evkmcimx7ulp/rtos_examples/freertos_tickless/low_power_tickless" target_path="source/low_power_tickless" type="c_include">
+      <files mask="fsl_tickless_lptmr.h"/>
+    </source>
+    <source path="boards/evkmcimx7ulp/rtos_examples/freertos_tickless/low_power_tickless" target_path="source/low_power_tickless" type="src">
+      <files mask="fsl_tickless_lptmr.c"/>
     </source>
     <source path="boards/evkmcimx7ulp/rtos_examples/freertos_tickless" target_path="board" type="c_include">
       <files mask="board.h"/>

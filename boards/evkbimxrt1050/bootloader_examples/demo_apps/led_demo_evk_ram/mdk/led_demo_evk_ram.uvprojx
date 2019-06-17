@@ -363,10 +363,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc 
---diag_suppress=66,1296,186,1295,177,61,111 
---library_type=standardlib  --gnu 
-</MiscControls>
+              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186,1295,177,61,111 --library_type=standardlib  --gnu</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1052DVL6B, CPU_IS_ARM_CORTEX_M7=1, MIMXRT1052</Define>
               <Undefine/>
               <IncludePath>../../../../../../CMSIS/Include;../../../../../../devices/MIMXRT1052;../../../../../../middleware/mcu-boot/targets/MIMXRT1052/src;../../../../../../middleware/mcu-boot/src/startup;../../../../../../middleware/mcu-boot/src/include;../../../../../../middleware/mcu-boot/apps/led_demo/src;..</IncludePath>
@@ -384,8 +381,7 @@
             <useXO>0</useXO>
             <uClangAs>0</uClangAs>
             <VariousControls>
-              <MiscControls>--cpreproc 
-</MiscControls>
+              <MiscControls>--cpreproc</MiscControls>
               <Define>BL_HAS_BOOTLOADER_CONFIG=1</Define>
               <Undefine/>
               <IncludePath/>
@@ -404,12 +400,7 @@
             <ScatterFile>MIMXRT1052_application_0xa000.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove 
---datacompressor 
-off 
---feedback_type=unused,noiw 
---predefine="-D__ram_vector_table__=1" 
-</Misc>
+            <Misc>--remove --datacompressor off --feedback_type=unused,noiw --predefine="-D__ram_vector_table__=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -430,21 +421,6 @@ off
           <GroupName>device</GroupName>
           <Files>
             <File>
-              <FileName>system_MIMXRT1052.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/system_MIMXRT1052.h</FilePath>
-            </File>
-            <File>
-              <FileName>system_MIMXRT1052.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mcu-boot/targets/MIMXRT1052/src/startup/system_MIMXRT1052.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/fsl_device_registers.h</FilePath>
-            </File>
-            <File>
               <FileName>MIMXRT1052.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1052/MIMXRT1052.h</FilePath>
@@ -453,6 +429,21 @@ off
               <FileName>MIMXRT1052_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1052/MIMXRT1052_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/fsl_device_registers.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_MIMXRT1052.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/system_MIMXRT1052.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_MIMXRT1052.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mcu-boot/targets/MIMXRT1052/src/startup/system_MIMXRT1052.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -485,14 +476,14 @@ off
           <GroupName>source</GroupName>
           <Files>
             <File>
-              <FileName>milliseconds_delay.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mcu-boot/apps/led_demo/src/milliseconds_delay.h</FilePath>
-            </File>
-            <File>
               <FileName>milliseconds_delay.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mcu-boot/apps/led_demo/src/milliseconds_delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>milliseconds_delay.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mcu-boot/apps/led_demo/src/milliseconds_delay.h</FilePath>
             </File>
           </Files>
         </Group>

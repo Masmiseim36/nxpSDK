@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -44,7 +44,7 @@
  * Variables
  ******************************************************************************/
 edma_handle_t g_EDMA_Handle;
-volatile bool g_Transfer_Done = false;
+volatile bool g_Transfer_Done                                 = false;
 AT_NONCACHEABLE_SECTION_INIT(volatile uint16_t g_Cmpld1Value) = 0U;
 AT_NONCACHEABLE_SECTION_INIT(volatile uint16_t g_Cmpld2Value) = 0U;
 
@@ -69,8 +69,8 @@ status_t QTMR_SetCmpldValue(uint32_t pwmFreqHz, uint8_t dutyCyclePercent, int32_
         /* Invalid dutycycle */
         return kStatus_Fail;
     }
-    highCount = (periodCount * dutyCyclePercent) / 100;
-    lowCount = periodCount - highCount;
+    highCount     = (periodCount * dutyCyclePercent) / 100;
+    lowCount      = periodCount - highCount;
     g_Cmpld1Value = lowCount;
     g_Cmpld2Value = highCount;
     return kStatus_Success;
@@ -87,9 +87,10 @@ int main(void)
     edma_config_t userConfig;
     edma_transfer_config_t transferConfig;
     uint8_t updatedDutycycle = 50U;
-    uint8_t getCharValue = 0U;
-    uint32_t time1 = 0, time2 = 0, counterClock;
-    uint32_t timediff = 0;
+    uint8_t getCharValue     = 0U;
+    uint32_t timeCapt        = 0;
+    uint32_t count           = 0;
+    uint32_t counterClock    = 0;
 
     /* Board pin, clock, debug console init */
     BOARD_ConfigMPU();
@@ -146,22 +147,14 @@ int main(void)
     QTMR_StartTimer(BOARD_QTMR_BASEADDR, BOARD_QTMR_INPUT_CAPTURE_CHANNEL, kQTMR_PriSrcRiseEdge);
 
     /* Wait input Edge*/
-    while (!(QTMR_GetStatus(BOARD_QTMR_BASEADDR, BOARD_QTMR_INPUT_CAPTURE_CHANNEL) & kQTMR_EdgeFlag))
+    while (count < 5 || timeCapt == 0)
     {
-        time1 = BOARD_QTMR_BASEADDR->CHANNEL[BOARD_QTMR_INPUT_CAPTURE_CHANNEL].CAPT;
-    }
-    QTMR_ClearStatusFlags(BOARD_QTMR_BASEADDR, BOARD_QTMR_INPUT_CAPTURE_CHANNEL, kQTMR_EdgeFlag);
-    while (!(QTMR_GetStatus(BOARD_QTMR_BASEADDR, BOARD_QTMR_INPUT_CAPTURE_CHANNEL) & kQTMR_EdgeFlag))
-    {
-        time2 = BOARD_QTMR_BASEADDR->CHANNEL[BOARD_QTMR_INPUT_CAPTURE_CHANNEL].CAPT;
-    }
-    if (time1 < time2)
-    {
-        timediff = time2 - time1;
-    }
-    else /* Consider counter overflow and wrap situation */
-    {
-        timediff = 65536 - time1 + time2;
+        while (!(QTMR_GetStatus(BOARD_QTMR_BASEADDR, BOARD_QTMR_INPUT_CAPTURE_CHANNEL) & kQTMR_EdgeFlag))
+        {
+        }
+        QTMR_ClearStatusFlags(BOARD_QTMR_BASEADDR, BOARD_QTMR_INPUT_CAPTURE_CHANNEL, kQTMR_EdgeFlag);
+        count++;
+        timeCapt = BOARD_QTMR_BASEADDR->CHANNEL[BOARD_QTMR_INPUT_CAPTURE_CHANNEL].CAPT;
     }
 
     counterClock = QTMR_SOURCE_CLOCK / 8000;
@@ -172,7 +165,7 @@ int main(void)
     while (g_Transfer_Done != true)
     {
     }
-    PRINTF("\r\nCaptured Period time=%d us\n", timediff * 1000 / counterClock);
+    PRINTF("\r\nCaptured Period time=%d us\n", timeCapt * 1000 / counterClock);
     QTMR_DisableDma(BOARD_QTMR_BASEADDR, BOARD_QTMR_INPUT_CAPTURE_CHANNEL, kQTMR_InputEdgeFlagDmaEnable);
 
     DMAMUX_DisableChannel(EXAMPLE_QTMR_DMA_MUX, 0);

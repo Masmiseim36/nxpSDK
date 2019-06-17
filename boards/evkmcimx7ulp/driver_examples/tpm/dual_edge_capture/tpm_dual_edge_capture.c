@@ -98,7 +98,8 @@ int main(void)
 {
     tpm_config_t tpmInfo;
     tpm_dual_edge_capture_param_t edgeParam;
-    uint32_t pulseWidth = 0;
+    uint32_t tpm_source_clock_ms = 0;
+    uint32_t pulseWidth          = 0;
 
     /* Board pin, clock, debug console init */
     BOARD_InitPins();
@@ -162,9 +163,11 @@ int main(void)
     /* TPM clock source is not prescaled and is
      * divided by 1000000 as the output is printed in microseconds
      */
+    tpm_source_clock_ms = TPM_SOURCE_CLOCK / 1000000;
+    assert(0 != tpm_source_clock_ms);
     pulseWidth =
         (((g_secondChannelOverflowCount - g_firstChannelOverflowCount) * 65536 + capture2Val - capture1Val) + 1) /
-        (TPM_SOURCE_CLOCK / 1000000);
+        tpm_source_clock_ms;
 
     PRINTF("\r\nInput signals pulse width=%d us\r\n", pulseWidth);
     while (1)

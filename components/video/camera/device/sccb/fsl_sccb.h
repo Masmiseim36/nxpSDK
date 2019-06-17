@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2017-2018, NXP Semiconductors, Inc.
+ * Copyright  2017-2018 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -22,7 +22,7 @@ typedef status_t (*sccb_i2c_receive_func_t)(
 /*! @brief SCCB register address type. */
 typedef enum _sccb_reg_addr
 {
-    kSCCB_RegAddr8Bit = 1,  /*!< 8-bit register address. */
+    kSCCB_RegAddr8Bit  = 1, /*!< 8-bit register address. */
     kSCCB_RegAddr16Bit = 2, /*!< 16-bit register address. */
 } sccb_reg_addr_t;
 

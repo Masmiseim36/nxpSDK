@@ -567,7 +567,7 @@ static CK_RV prvImportPublicKey( CK_SESSION_HANDLE xSession,
         { CKA_CLASS,    &xPublicKeyClass,                         sizeof( xPublicKeyClass )                         },
         { CKA_KEY_TYPE, &xKeyType,                                sizeof( xKeyType )                                },
         { CKA_LABEL,    &pkcs11configLABEL_CODE_VERIFICATION_KEY, sizeof( pkcs11configLABEL_CODE_VERIFICATION_KEY ) },
-        { CKA_VALUE,    ( CK_VOID_PTR ) pucPublicKeyDer,          ( CK_ULONG ) xPublicKeyBufferLength              }
+        { CKA_VALUE,    ( CK_VOID_PTR ) pucPublicKeyDer,          ( CK_ULONG ) xPublicKeyBufferLength               }
     };
 
     /* Create an object using the public key. */
@@ -1050,7 +1050,7 @@ TEST_SETUP( Full_PKCS11_GeneralPurpose )
 TEST_SETUP( Full_PKCS11_CryptoOperation )
 {
     CK_RV xResult;
-    CK_SLOT_ID xSlotId = pkcs11testINVALID_SLOT_ID;
+    CK_SLOT_ID xSlotId = (CK_ULONG) pkcs11testINVALID_SLOT_ID;
     CK_ULONG ulCount = 1;
 
 
@@ -1073,7 +1073,7 @@ TEST_SETUP( Full_PKCS11_CryptoOperation )
 
     /* Get the slot ID with PKCS#11  token. */
     xResult = pxGlobalFunctionList->C_GetSlotList( CK_TRUE, &xSlotId, &ulCount );
-    TEST_ASSERT_NOT_EQUAL_MESSAGE( pkcs11testINVALID_SLOT_ID, xSlotId, "Invalid slot number." );
+    TEST_ASSERT_NOT_EQUAL_MESSAGE( (CK_ULONG) pkcs11testINVALID_SLOT_ID, xSlotId, "Invalid slot number." );
 
     /* Open a PKCS#11 Session. */
     xResult = pxGlobalFunctionList->C_OpenSession( xSlotId, CKF_SERIAL_SESSION, NULL, NULL, &xGlobalSession );

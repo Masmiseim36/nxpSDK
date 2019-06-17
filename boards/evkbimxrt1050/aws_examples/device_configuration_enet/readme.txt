@@ -3,6 +3,25 @@ Overview
 This example demonstrates how the aws iot device can be configured by mobile application.
 
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
+Hardware requirements
+=====================
+- Mini/micro USB cable
+- EVKB-IMXRT1050 board
+- Personal Computer
+- Network cable RJ45 standard (Network with Internet access)
+
+Board settings
+==============
+No special settings are required.
+
 Prepare the Demo
 ================
 Before running the demo it is need to configure AWS IoT Console and update some of project files:
@@ -81,7 +100,7 @@ The Android application requires Cognito service to authorize to AWS IoT in orde
     Then move file into your Android device.
 
 8.  To run Android application do either:
-    a) install and run pre-build apk on Android device (<SDK_Repository>\boards\<board_name>\aws_examples\remote_control\android\AwsRemoteControl.apk)
+    a) install and run pre-build apk on Android device (<SDK_Repository>\boards\<board_name>\aws_examples\device_configuration_android\AwsDeviceConfiguration.apk)
     b) open project in Android Studio, build it, attach Android device and Run application
 
     Application requires at least Android version 6.0 (Android SDK 23).
@@ -166,22 +185,6 @@ Initializing PHY...
 .
 .
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Hardware requirements
+Customization options
 =====================
-- Mini/micro USB cable
-- EVKB-IMXRT1050 board
-- Personal Computer
-- Network cable RJ45 standard (Network with Internet access)
-
-Board settings
-==============
-No special settings are required.
-
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
 

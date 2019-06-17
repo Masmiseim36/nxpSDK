@@ -22,8 +22,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief QSPI driver version 2.0.4. */
-#define FSL_QSPI_DRIVER_VERSION (MAKE_VERSION(2, 0, 4))
+/*! @brief QSPI driver version 2.2.0. */
+#define FSL_QSPI_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
 /*@}*/
 
 /*! @brief Macro functions for LUT table */
@@ -638,6 +638,15 @@ static inline void QSPI_EnableDDRMode(QuadSPI_Type *base, bool enable)
         base->MCR &= ~QuadSPI_MCR_DDR_EN_MASK;
     }
 }
+
+#if defined(FSL_FEATURE_QSPI_SOCCR_HAS_CLR_LPCAC) && (FSL_FEATURE_QSPI_SOCCR_HAS_CLR_LPCAC)
+
+/*! @brief Clears the QSPI cache.
+ *
+ * @param base Pointer to QuadSPI Type.
+ */
+void QSPI_ClearCache(QuadSPI_Type *base);
+#endif
 
 /*!@ brief Set the RX buffer readout area.
  *

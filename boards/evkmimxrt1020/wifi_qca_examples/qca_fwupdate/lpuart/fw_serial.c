@@ -13,21 +13,21 @@
 #include "fsl_lpuart_freertos.h"
 
 static lpuart_rtos_handle_t g_rtos_handle = {0};
-static lpuart_handle_t g_uart_handle = {0};
+static lpuart_handle_t g_uart_handle      = {0};
 static uint8_t g_background_buffer[8];
 
 int32_t fw_serial_init(void *uart_base, uint32_t baudrate, uint32_t clk_freq)
 {
     lpuart_rtos_config_t uart_config = {
-        .baudrate = baudrate,
-        .parity = kLPUART_ParityDisabled,
-        .stopbits = kLPUART_OneStopBit,
-        .buffer = g_background_buffer,
+        .baudrate    = baudrate,
+        .parity      = kLPUART_ParityDisabled,
+        .stopbits    = kLPUART_OneStopBit,
+        .buffer      = g_background_buffer,
         .buffer_size = sizeof(g_background_buffer),
     };
     uart_config.srcclk = clk_freq;
-    uart_config.base = uart_base;
-    int32_t result = LPUART_RTOS_Init(&g_rtos_handle, &g_uart_handle, &uart_config);
+    uart_config.base   = uart_base;
+    int32_t result     = LPUART_RTOS_Init(&g_rtos_handle, &g_uart_handle, &uart_config);
     return result;
 }
 

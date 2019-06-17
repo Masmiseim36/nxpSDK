@@ -1,15 +1,15 @@
 /**
-  ******************************************************************************
-  * @file    lwipopts.h
-  * This file is based on \src\include\lwip\opt.h
-  ******************************************************************************
-   * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
-   * Copyright 2016-2017 NXP
-   * All rights reserved.
-   *
-   * 
-   * SPDX-License-Identifier: BSD-3-Clause
-   */
+ ******************************************************************************
+ * @file    lwipopts.h
+ * This file is based on \src\include\lwip\opt.h
+ ******************************************************************************
+ * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
+ * All rights reserved.
+ *
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 #ifndef __LWIPOPTS_H__
 #define __LWIPOPTS_H__
@@ -39,7 +39,7 @@
  * LWIP_SOCKET==1: Enable Socket API (require to use sockets.c)
  */
 #define LWIP_SOCKET 1
- #define  LWIP_DNS 1
+#define LWIP_DNS 1
 /**
  * LWIP_SO_RCVTIMEO==1: Enable receive timeout for sockets/netconns and
  * SO_RCVTIMEO processing.

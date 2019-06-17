@@ -3,7 +3,27 @@ Overview
 This example demonstrates how the board can be controlled by Android mobile application with usage the AWS IoT.
 User LEDs on the board can be controlled and also an action can be invoked to read data from accelerometer and report it to AWS IoT device shadow.
 Please take look into section "Board settings" if there are some board limitations to control LEDs or read data from accelerometer.
-===================================================================================================================================
+
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
+Hardware requirements
+=====================
+- Micro USB cable
+- EVKB-IMXRT1050 board
+- Personal Computer
+- Network cable RJ45 standard (Network with Internet access)
+
+Board settings
+==============
+No special settings are required.
+
+The LED on this board, can't be controlled in this example, because the control pin is used by ENET peripheral.
 
 Prepare the Demo
 ================
@@ -177,24 +197,6 @@ Initializing PHY...
 .
 .
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Hardware requirements
+Customization options
 =====================
-- Micro USB cable
-- EVKB-IMXRT1050 board
-- Personal Computer
-- Network cable RJ45 standard (Network with Internet access)
-
-Board settings
-==============
-No special settings are required.
-
-The LED on this board, can't be controlled in this example, because the control pin is used by ENET peripheral.
-
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
 

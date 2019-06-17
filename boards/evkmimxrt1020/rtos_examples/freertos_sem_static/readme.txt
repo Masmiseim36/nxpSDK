@@ -9,6 +9,24 @@ creating of two semaphores (xSemaphore_producer and xSemaphore_consumer). These 
 access to virtual item. The synchronization is based on bilateral rendezvous pattern. Both of
 consumer and producer must be prepared to enable transaction.
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
+Hardware requirements
+=====================
+- Mini/micro USB cable
+- EVK-MIMXRT1020 board
+- Personal Computer
+
+Board settings
+==============
+No special settings are required.
+
 Prepare the Demo
 ================
 1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
@@ -46,21 +64,6 @@ Producer released item.
 Consumer 1 accepted item.
 Producer released item.
 Consumer 2 accepted item.
-Hardware requirements
+Customization options
 =====================
-- Mini/micro USB cable
-- EVK-MIMXRT1020 board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
 

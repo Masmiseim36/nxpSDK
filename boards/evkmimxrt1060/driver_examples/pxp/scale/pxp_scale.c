@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2017, NXP Semiconductors, Inc.
+ * Copyright  2017 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 #include "board.h"
 #include "fsl_debug_console.h"
@@ -86,7 +86,8 @@ static pxp_output_buffer_config_t outputBufferConfig;
 void BOARD_InitLcd(void)
 {
     gpio_pin_config_t config = {
-        kGPIO_DigitalOutput, 0,
+        kGPIO_DigitalOutput,
+        0,
     };
 
     /* Backlight. */
@@ -107,7 +108,10 @@ void BOARD_InitLcdifPixelClock(void)
      * Video PLL output clock is OSC24M * (loopDivider + (denominator / numerator)) / postDivider = 93MHz.
      */
     clock_video_pll_config_t config = {
-        .loopDivider = 31, .postDivider = 8, .numerator = 0, .denominator = 0,
+        .loopDivider = 31,
+        .postDivider = 8,
+        .numerator   = 0,
+        .denominator = 0,
     };
 
     CLOCK_InitVideoPll(&config);
@@ -153,18 +157,18 @@ int main(void)
 static void APP_InitLcdif(void)
 {
     const elcdif_rgb_mode_config_t config = {
-        .panelWidth = APP_IMG_WIDTH,
-        .panelHeight = APP_IMG_HEIGHT,
-        .hsw = APP_HSW,
-        .hfp = APP_HFP,
-        .hbp = APP_HBP,
-        .vsw = APP_VSW,
-        .vfp = APP_VFP,
-        .vbp = APP_VBP,
+        .panelWidth    = APP_IMG_WIDTH,
+        .panelHeight   = APP_IMG_HEIGHT,
+        .hsw           = APP_HSW,
+        .hfp           = APP_HFP,
+        .hbp           = APP_HBP,
+        .vsw           = APP_VSW,
+        .vfp           = APP_VFP,
+        .vbp           = APP_VBP,
         .polarityFlags = APP_POL_FLAGS,
-        .bufferAddr = (uint32_t)s_psBufferLcd[0],
-        .pixelFormat = kELCDIF_PixelFormatXRGB8888,
-        .dataBus = APP_LCDIF_DATA_BUS,
+        .bufferAddr    = (uint32_t)s_psBufferLcd[0],
+        .pixelFormat   = kELCDIF_PixelFormatXRGB8888,
+        .dataBus       = APP_LCDIF_DATA_BUS,
     };
 
     ELCDIF_RgbModeInit(APP_ELCDIF, &config);
@@ -179,11 +183,11 @@ static void APP_InitPxp(void)
     /* PS configure. */
     const pxp_ps_buffer_config_t psBufferConfig = {
         .pixelFormat = kPXP_PsPixelFormatRGB888,
-        .swapByte = false,
-        .bufferAddr = (uint32_t)s_psBufferPxp,
+        .swapByte    = false,
+        .bufferAddr  = (uint32_t)s_psBufferPxp,
         .bufferAddrU = 0U,
         .bufferAddrV = 0U,
-        .pitchBytes = APP_PS_SIZE * APP_BPP,
+        .pitchBytes  = APP_PS_SIZE * APP_BPP,
     };
 
     PXP_SetProcessSurfaceBackGroundColor(APP_PXP, 0U);
@@ -194,13 +198,13 @@ static void APP_InitPxp(void)
     PXP_SetAlphaSurfacePosition(APP_PXP, 0xFFFFU, 0xFFFFU, 0U, 0U);
 
     /* Output config. */
-    outputBufferConfig.pixelFormat = kPXP_OutputPixelFormatRGB888;
+    outputBufferConfig.pixelFormat    = kPXP_OutputPixelFormatRGB888;
     outputBufferConfig.interlacedMode = kPXP_OutputProgressive;
-    outputBufferConfig.buffer0Addr = (uint32_t)s_psBufferLcd[0];
-    outputBufferConfig.buffer1Addr = 0U;
-    outputBufferConfig.pitchBytes = APP_IMG_WIDTH * APP_BPP;
-    outputBufferConfig.width = APP_IMG_WIDTH;
-    outputBufferConfig.height = APP_IMG_HEIGHT;
+    outputBufferConfig.buffer0Addr    = (uint32_t)s_psBufferLcd[0];
+    outputBufferConfig.buffer1Addr    = 0U;
+    outputBufferConfig.pitchBytes     = APP_IMG_WIDTH * APP_BPP;
+    outputBufferConfig.width          = APP_IMG_WIDTH;
+    outputBufferConfig.height         = APP_IMG_HEIGHT;
 
     PXP_SetOutputBufferConfig(APP_PXP, &outputBufferConfig);
 
@@ -213,8 +217,8 @@ static void APP_Scale(void)
     uint8_t curLcdBufferIdx = 1U;
 
     float downScaleStart = 0.5f;
-    float downScaleEnd = 4.0f;
-    float downScaleStep = 1.01f;
+    float downScaleEnd   = 4.0f;
+    float downScaleStep  = 1.01f;
     float downScaleFact;
     uint16_t outputWidth, outputHeight;
 
@@ -222,7 +226,7 @@ static void APP_Scale(void)
     {
         for (downScaleFact = downScaleStart; downScaleFact <= downScaleEnd; downScaleFact *= downScaleStep)
         {
-            outputWidth = (uint16_t)((float)APP_PS_SIZE / downScaleFact);
+            outputWidth  = (uint16_t)((float)APP_PS_SIZE / downScaleFact);
             outputHeight = (uint16_t)((float)APP_PS_SIZE / downScaleFact);
 
             /* Prepare next buffer for LCD. */

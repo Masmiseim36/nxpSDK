@@ -168,7 +168,7 @@ static U8 exAesRfc3394Precooked(U8 initMode)
     U8 nBlock = 0x01;
 
     // to hold handles for created sym keys
-    HLSE_OBJECT_HANDLE handles[A71CH_SYM_KEY_MAX];
+    HLSE_OBJECT_HANDLE handles[A71CH_SYM_KEY_MAX] = {0};
 
     PRINTF("\r\n-----------\r\nStart exAesRfc3394Precooked(%s)\r\n------------\r\n", getInitModeAsString(initMode));
 
@@ -372,7 +372,7 @@ static U8 exAesRfc3394(U8 initMode)
     U8 nBlock = 0x01;
 
     // to hold handles for created sym keys
-    HLSE_OBJECT_HANDLE handles[A71CH_SYM_KEY_MAX];
+    HLSE_OBJECT_HANDLE handles[A71CH_SYM_KEY_MAX] = {0};
 
     PRINTF("\r\n-----------\r\nStart exAesRfc3394(%s)\r\n------------\r\n", getInitModeAsString(initMode));
 
@@ -383,7 +383,7 @@ static U8 exAesRfc3394(U8 initMode)
     for (indexAesKey=0; indexAesKey<A71CH_SYM_KEY_MAX; indexAesKey++)
     {
         U8 randomLen = 16;
-        HLSE_OBJECT_HANDLE moduleHandle;
+        HLSE_OBJECT_HANDLE moduleHandle = 0;
         U16 moduleHandleNum = 1;
         HLSE_ATTRIBUTE attr;
         sm_printf(CONSOLE, "A71_GetRandom(%d)\r\n", randomLen);
@@ -576,17 +576,17 @@ static U8 exSymHkdf(U8 initMode)
     U8 indexAesKey = 0;
     U8 nBlock = 1;
 
-    U8 hostPsk[A71CH_SYM_KEY_MAX*16];
+    U8 hostPsk[A71CH_SYM_KEY_MAX*16] = { 0 };
     U16 hostPskLen;
     U8 indexOffset = 0x00;
 
-    U8 derivedData[DERIVE_KEYDATA_FROM_SHARED_SECRET_MAX_DERIVED_DATA];
+    U8 derivedData[DERIVE_KEYDATA_FROM_SHARED_SECRET_MAX_DERIVED_DATA] = { 0 };
     U16 derivedDataLen = sizeof(derivedData);
 
-    U8 derivedDataOnHost[DERIVE_KEYDATA_FROM_SHARED_SECRET_MAX_DERIVED_DATA];
+    U8 derivedDataOnHost[DERIVE_KEYDATA_FROM_SHARED_SECRET_MAX_DERIVED_DATA] = { 0 };
     U16 derivedDataOnHostLen = sizeof(derivedDataOnHost);
 
-    U8 info[DERIVE_KEYDATA_FROM_SHARED_SECRET_MAX_INFO];
+    U8 info[DERIVE_KEYDATA_FROM_SHARED_SECRET_MAX_INFO] = { 0 };
     U8 infoLen = sizeof(info);
 
     U16 nReqData = 0;
@@ -594,7 +594,7 @@ static U8 exSymHkdf(U8 initMode)
     int i;
 
     // to hold handles for created sym keys
-    HLSE_OBJECT_HANDLE handles[A71CH_SYM_KEY_MAX];
+    HLSE_OBJECT_HANDLE handles[A71CH_SYM_KEY_MAX] = { 0 };
 
     PRINTF( "\r\n-----------\r\nStart exSymHkdf(%s)\r\n------------\r\n", getInitModeAsString(initMode));
 
@@ -906,7 +906,7 @@ static U8 exSymHmacSha256(U8 initMode)
     U16 hmacOnHostLen = sizeof(hmacOnHost);
 
     // to hold handles for created sym keys
-    HLSE_OBJECT_HANDLE handles[A71CH_SYM_KEY_MAX];
+    HLSE_OBJECT_HANDLE handles[A71CH_SYM_KEY_MAX] = {0};
 
     int i;
 

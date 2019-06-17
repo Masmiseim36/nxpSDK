@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  *
@@ -108,7 +108,9 @@ void USB_OTG2_IRQHandler(void)
 void USB_HostClockInit(void)
 {
     usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL, BOARD_USB_PHY_TXCAL45DP, BOARD_USB_PHY_TXCAL45DM,
+        BOARD_USB_PHY_D_CAL,
+        BOARD_USB_PHY_TXCAL45DP,
+        BOARD_USB_PHY_TXCAL45DM,
     };
 
     if (CONTROLLER_ID == kUSB_ControllerEhci0)
@@ -129,7 +131,7 @@ void USB_HostIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbHOSTEhciIrq[] = USBHS_IRQS;
-    irqNumber = usbHOSTEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
+    irqNumber                = usbHOSTEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
 /* USB_HOST_CONFIG_EHCI */
 
 /* Install isr, set priority, and enable IRQ. */
@@ -174,13 +176,13 @@ void lwip_dns_dns_found(const char *name, const ip_addr_t *ipaddr, void *arg)
 static void print_dhcp_state(struct netif *netif)
 {
     static u8_t dhcp_last_state = DHCP_STATE_OFF;
-    struct dhcp *dhcp = netif_dhcp_data(netif);
+    struct dhcp *dhcp           = netif_dhcp_data(netif);
 
     if ((dhcpReady) && (!dnsReady))
     {
         err_t err;
         dhcpReady = 0;
-        PRINTF("\r\n  waiting for getting the IP Address....%s\r\n");
+        PRINTF("\r\n  waiting for getting the IP Address....\r\n");
         err = dns_gethostbyname((char *)&website[0], &addrBuffer, lwip_dns_dns_found, (void *)&fsl_netif0);
         if (ERR_INPROGRESS == err)
         {
@@ -188,7 +190,7 @@ static void print_dhcp_state(struct netif *netif)
         }
         else if (ERR_OK == err)
         {
-            dnsReady = 1;
+            dnsReady         = 1;
             currentaddr.addr = addrBuffer.addr;
         }
     }
@@ -294,7 +296,7 @@ int main(void)
     IP4_ADDR(&fsl_netif0_netmask, 0U, 0U, 0U, 0U);
     IP4_ADDR(&fsl_netif0_gw, 0U, 0U, 0U, 0U);
     ethernetConfig.controllerId = CONTROLLER_ID;
-    ethernetConfig.privateData = NULL;
+    ethernetConfig.privateData  = NULL;
     lwip_init();
 
     netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &ethernetConfig, USB_EthernetIfInIt,

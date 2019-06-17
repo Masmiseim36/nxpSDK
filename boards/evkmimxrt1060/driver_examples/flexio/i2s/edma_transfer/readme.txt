@@ -3,6 +3,14 @@ Overview
 The flexio_i2s_EDMA example shows how to use flexio_i2s driver with EDMA:
 
 In this example, flexio acts as I2S module to record data from line-in line and playbacks the recorded data at the same time using EDMA.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -54,11 +62,6 @@ FLEXIO I2S EDMA example finished!
 
 Note:
 This example's right/left channel data is swapped due to the buffer maintain issue. This issue will be fixed in later release.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+Customization options
+=====================
 

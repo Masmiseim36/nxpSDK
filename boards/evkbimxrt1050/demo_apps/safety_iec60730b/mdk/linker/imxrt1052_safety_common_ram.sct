@@ -1,0 +1,92 @@
+#! armcc -E -I .\startup
+
+/**********************************************************************************/
+/****************************        MEMORY MAP        ****************************/
+/**********************************************************************************/
+
+/********************        FLASH        ********************/
+//     __________________
+//    |                  | --> 0x60000000 - ROM_start
+//    |//// NOT USED ////|
+//    |__________________| --> 0x63FFFFFF - ROM_end
+//
+//
+/********************        SRAM        ********************/
+//     __________________
+//    |                  | --> 0x00000000 - RAM_interrupts_start
+//    |       IVT        |
+//    |__________________| --> 0x000003FF - RAM_interrupts_end 
+//    |                  | --> 0x00000400 - SRAM_ITC_start
+//    |     readonly     |
+//    |__________________| --> 0x0001FFFF - SRAM_ITC_end 
+//    |                  |
+//    |//// RESERVED ////|
+//    |__________________|
+//    |                  | --> 0x20000000 - SRAM_DTC_start
+//    |     RW (.data)   | --> copying in startup_iar.c
+//    |     ZI (.bss)    | --> copying in startup_iar.c
+//    | SAFETY_RAM_BLOCK | 
+//    |__________________| --> SRAM_DTC_end_edited
+//    |                  | --> m_stack_test_p_1
+//    |                  |
+//    |__________________| --> m_stack_test_p_2
+//    |                  |
+//    |                  |
+//    |      STACK       |
+//    |                  |
+//    |__________________| --> __BOOT_STACK_ADDRESS
+//    |                  | --> m_stack_test_p_3
+//    |                  |
+//    |__________________| --> m_stack_test_p_4
+//    |__________________| --> m_safety_error_code
+//    |__________________| --> m_pc_test_flag
+//    |                  | --> m_wd_test_backup
+//    |__________________|
+//    |                  |
+//    |                  | --> m_ram_test_backup
+//    |__________________|
+//    |__________________| --> 0x2001FFFF - SRAM_DTC_end
+//    |                  |
+//    |//// RESERVED ////|
+//    |__________________|
+//    |                  | --> 0x20200000 - SRAM_OC_start
+//    |//// NOT USED ////|
+//    |__________________| --> 0x2023FFFF - SRAM_OC_end
+//
+//
+/********************        SDRAM        ********************/
+//     __________________
+//    |                  | --> 0x80000000 - SDRAM_start
+//    |//// NOT USED ////|
+//    |__________________| --> 0x81FFFFFF - SDRAM_end
+//
+//
+
+; *************************************************************
+; *** Scatter-Loading Description File                      ***
+; *************************************************************
+#include "linker_config.h"
+
+LR_SRAM_ITC SRAM_ITC_start SRAM_ITC_end + 1 {   ; load region size_region
+	RAM_VECTOR_TABLE SRAM_ITC_start NOCOMPRESS __vector_table_size__ {
+	    vectors_mdk.o (.data)
+	}
+	
+	ER_IRAM2 RAM_interrupts_end SRAM_ITC_end - RAM_interrupts_end + 1 {
+		.ANY (+RO)
+	}
+}
+
+LR_SRAM_DTC SRAM_DTC_start SRAM_DTC_end - SRAM_DTC_start + 1 {   ; load region size_region
+	RW_IRAM1 SRAM_DTC_start m_data_size {
+		.ANY (+RW +ZI)
+	}
+	
+	SafetyRam_region m_safety_ram_start NOCOMPRESS SAFETY_RAM_SIZE {
+		main.o (.safety_ram)
+		safety_test_items.o (.data)
+	}
+	
+	ARM_LIB_STACK __BOOT_STACK_ADDRESS EMPTY -__size_cstack__{ ; Stack region growing down
+	}
+}

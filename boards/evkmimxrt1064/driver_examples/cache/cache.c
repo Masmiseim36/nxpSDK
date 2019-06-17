@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "board.h"
@@ -146,9 +146,9 @@ int main(void)
 {
     uint32_t count;
     uint32_t startAddr;
-    bool transferDone = false;
+    bool transferDone     = false;
     bool invalidateResult = false;
-    bool pushResult = false;
+    bool pushResult       = false;
     volatile uint32_t readDummy;
 
     APP_ConfigMPU();
@@ -163,7 +163,7 @@ int main(void)
     /* Data initialize. */
     for (count = 0; count < MEM_DMATRANSFER_LEN; count++)
     {
-        g_data[count] = 0xaa;
+        g_data[count]                   = 0xaa;
         *(uint8_t *)(startAddr + count) = 0;
     }
     /* Configure Cache. */
@@ -220,7 +220,7 @@ int main(void)
 
         /* Reset to zero. */
         g_Transfer_Done = false;
-        g_count = 0;
+        g_count         = 0;
         /* Get the real data in the memory . */
         APP_DMAMem2memTransfer((void *)startAddr, sizeof(g_data[0]), &g_data[0], sizeof(g_data[0]), sizeof(g_data));
 
@@ -250,7 +250,7 @@ int main(void)
 
                 /* Transfer from the sdram to data[]. */
                 g_Transfer_Done = false;
-                g_count = 0;
+                g_count         = 0;
                 APP_DMAMem2memTransfer((void *)startAddr, sizeof(g_data[0]), &g_data[0], sizeof(g_data[0]),
                                        sizeof(g_data));
 

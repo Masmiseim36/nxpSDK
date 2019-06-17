@@ -1,12 +1,12 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017-2019 NXP
  * All rights reserved.
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-/* freertos_tasks_c_additions.h Rev. 1.2 */
+/* freertos_tasks_c_additions.h Rev. 1.3 */
 #ifndef FREERTOS_TASKS_C_ADDITIONS_H
 #define FREERTOS_TASKS_C_ADDITIONS_H
 
@@ -17,7 +17,7 @@
 #endif
 
 #define FREERTOS_DEBUG_CONFIG_MAJOR_VERSION 1
-#define FREERTOS_DEBUG_CONFIG_MINOR_VERSION 1
+#define FREERTOS_DEBUG_CONFIG_MINOR_VERSION 3
 
 /* NOTE!!
  * Default to a FreeRTOS version which didn't include these macros. FreeRTOS
@@ -65,6 +65,20 @@ extern const uint8_t FreeRTOSDebugConfig[];
  * linked, and the #pragma placed immediately before the symbol definition.
  * The IAR supplied examples violate both "rules", so this is a best guess.
  */
+
+#if (tskKERNEL_VERSION_MAJOR >= 10) && (tskKERNEL_VERSION_MINOR >= 2)
+#if defined(__GNUC__)
+char *const portArch_Name __attribute__((section(".rodata"))) = portARCH_NAME;
+#elif defined(__CC_ARM) || defined(__ARMCC_VERSION)
+char *const portArch_Name __attribute__((used)) = portARCH_NAME;
+#elif defined(__IAR_SYSTEMS_ICC__)
+char *const portArch_Name = portARCH_NAME;
+#pragma required=portArch_Name
+#endif
+#else
+char *const portArch_Name = NULL;
+#endif	// tskKERNEL_VERSION_MAJOR
+
 #if defined(__GNUC__)
 const uint8_t FreeRTOSDebugConfig[] __attribute__((section(".rodata"))) =
 #elif defined(__CC_ARM) || defined(__ARMCC_VERSION)
@@ -93,7 +107,12 @@ const uint8_t FreeRTOSDebugConfig[] =
     offsetof(struct tskTaskControlBlock, uxTaskNumber),
     configMAX_TASK_NAME_LEN,
     configMAX_PRIORITIES,
-    0 /* pad to 32-bit boundary */
+    configENABLE_MPU,
+    configENABLE_FPU,
+    configENABLE_TRUSTZONE,
+	configRUN_FREERTOS_SECURE_ONLY,
+	0, 			// 32-bit align
+	0, 0, 0, 0	// padding
 };
 
 #ifdef __cplusplus

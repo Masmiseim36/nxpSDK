@@ -3,10 +3,15 @@
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
+
 #include "ffconf.h"
+/* This fatfs subcomponent is disabled by default
+ * To enable it, define following macro in ffconf.h */
+#ifdef USB_DISK_ENABLE
+
 #include "fsl_usb_disk.h" /* FatFs lower layer API */
 
 /*******************************************************************************
@@ -234,6 +239,7 @@ DRESULT USB_HostMsdWriteDisk(BYTE pdrv, const BYTE *buff, DWORD sector, UINT cou
         sectorCount = count;
         sectorIndex = sector;
 #endif
+        retry = USB_HOST_FATFS_RW_RETRY_TIMES;
         while (retry--)
         {
             if (g_UsbFatfsClassHandle == NULL)
@@ -355,3 +361,4 @@ DRESULT USB_HostMsdIoctlDisk(BYTE pdrv, BYTE cmd, void *buff)
     }
     return fatfs_code;
 }
+#endif /* USB_DISK_ENABLE */

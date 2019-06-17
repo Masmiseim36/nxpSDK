@@ -5,6 +5,10 @@
       <name>all</name>
       <member>
         <project>lwip_iperf_bm</project>
+        <configuration>debug</configuration>
+      </member>
+      <member>
+        <project>lwip_iperf_bm</project>
         <configuration>sdram_debug</configuration>
       </member>
       <member>
@@ -17,15 +21,18 @@
       </member>
       <member>
         <project>lwip_iperf_bm</project>
-        <configuration>debug</configuration>
-      </member>
-      <member>
-        <project>lwip_iperf_bm</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
         <project>lwip_iperf_bm</project>
         <configuration>flexspi_nor_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>debug</name>
+      <member>
+        <project>lwip_iperf_bm</project>
+        <configuration>debug</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
@@ -47,13 +54,6 @@
       <member>
         <project>lwip_iperf_bm</project>
         <configuration>release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>debug</name>
-      <member>
-        <project>lwip_iperf_bm</project>
-        <configuration>debug</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

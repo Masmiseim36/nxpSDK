@@ -6,20 +6,22 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "fsl_sdmmc_host.h"
 #include "fsl_sdmmc_event.h"
+#include "fsl_sdmmc_host.h"
 
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 /*!
- * @brief SDMMCHOST detect card by GPIO.
+ * @brief SDMMCHOST notify card insertion status.
+ * @param inserted true is inserted, false is not
+ * @param cd card detect descriptor
  */
-static void SDMMCHOST_DetectCardByGpio(const sdmmchost_detect_card_t *cd);
+static void SDMMCHOST_NofiyCardInsertStatus(bool inserted, const sdmmchost_detect_card_t *cd);
 
 /*!
  * @brief SDMMCHOST detect card insert status by host controller.
@@ -56,9 +58,9 @@ static void SDMMCHOST_TransferCompleteCallback(SDMMCHOST_TYPE *base,
 
 /*!
  * @brief SDMMCHOST re-tuning callback
-* @param base host base address.
-* @param userData user can register a application card insert callback through userData.
-*/
+ * @param base host base address.
+ * @param userData user can register a application card insert callback through userData.
+ */
 static void SDMMCHOST_ReTuningCallback(SDMMCHOST_TYPE *base, void *userData);
 
 /*!
@@ -81,15 +83,15 @@ AT_NONCACHEABLE_SECTION_ALIGN(uint32_t g_usdhcAdma2Table[USDHC_ADMA_TABLE_WORDS]
 
 usdhc_handle_t g_usdhcHandle;
 volatile status_t g_usdhcTransferStatus = kStatus_Success;
-static volatile bool s_sdInsertedFlag = false;
-volatile status_t g_reTuningFlag = false;
+static volatile bool s_sdInsertedFlag   = false;
+volatile status_t g_reTuningFlag        = false;
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static void SDMMCHOST_DetectCardByGpio(const sdmmchost_detect_card_t *cd)
+static void SDMMCHOST_NofiyCardInsertStatus(bool inserted, const sdmmchost_detect_card_t *cd)
 {
-    if (SDMMCHOST_CARD_DETECT_GPIO_STATUS() != SDMMCHOST_CARD_INSERT_CD_LEVEL)
+    if (inserted == false)
     {
         s_sdInsertedFlag = false;
         if (cd && (cd->cardRemoved))
@@ -112,9 +114,11 @@ static void SDMMCHOST_DetectCardInsertByHost(SDMMCHOST_TYPE *base, void *userDat
     s_sdInsertedFlag = true;
     SDMMCEVENT_Notify(kSDMMCEVENT_CardDetect);
     /* application callback */
-    if (userData && ((sdmmchost_detect_card_t *)userData)->cardInserted)
+    if (userData && (((sdmmhostcard_usr_param_t *)userData)->cd) &&
+        ((sdmmhostcard_usr_param_t *)userData)->cd->cardInserted)
     {
-        ((sdmmchost_detect_card_t *)userData)->cardInserted(true, ((sdmmchost_detect_card_t *)userData)->userData);
+        ((sdmmhostcard_usr_param_t *)userData)
+            ->cd->cardInserted(true, ((sdmmhostcard_usr_param_t *)userData)->cd->userData);
     }
 }
 
@@ -122,9 +126,21 @@ static void SDMMCHOST_DetectCardRemoveByHost(SDMMCHOST_TYPE *base, void *userDat
 {
     s_sdInsertedFlag = false;
     /* application callback */
-    if (userData && ((sdmmchost_detect_card_t *)userData)->cardRemoved)
+    if (userData && (((sdmmhostcard_usr_param_t *)userData)->cd) &&
+        ((sdmmhostcard_usr_param_t *)userData)->cd->cardRemoved)
     {
-        ((sdmmchost_detect_card_t *)userData)->cardRemoved(false, ((sdmmchost_detect_card_t *)userData)->userData);
+        ((sdmmhostcard_usr_param_t *)userData)
+            ->cd->cardRemoved(false, ((sdmmhostcard_usr_param_t *)userData)->cd->userData);
+    }
+}
+
+static void SDMMCHOST_CardInterrupt(SDMMCHOST_TYPE *base, void *userData)
+{
+    /* application callback */
+    if (userData && ((sdmmhostcard_usr_param_t *)userData)->cardInt)
+    {
+        ((sdmmhostcard_usr_param_t *)userData)
+            ->cardInt->cardInterrupt(((sdmmhostcard_usr_param_t *)userData)->cardInt->userData);
     }
 }
 
@@ -132,7 +148,8 @@ void SDMMCHOST_CARD_DETECT_GPIO_INTERRUPT_HANDLER(void)
 {
     if (SDMMCHOST_CARD_DETECT_GPIO_INTERRUPT_STATUS() & (1U << BOARD_USDHC_CD_GPIO_PIN))
     {
-        SDMMCHOST_DetectCardByGpio((sdmmchost_detect_card_t *)g_usdhcHandle.userData);
+        SDMMCHOST_NofiyCardInsertStatus((SDMMCHOST_CARD_DETECT_GPIO_STATUS() == SDMMCHOST_CARD_INSERT_CD_LEVEL),
+                                        ((sdmmhostcard_usr_param_t *)g_usdhcHandle.userData)->cd);
     }
     /* Clear interrupt flag.*/
     SDMMCHOST_CARD_DETECT_GPIO_INTERRUPT_STATUS_CLEAR(~0U);
@@ -145,7 +162,7 @@ static void SDMMCHOST_TransferCompleteCallback(SDMMCHOST_TYPE *base,
                                                void *userData)
 {
     /* if reading data from sdcard, ignore the command error, usdhc will continue transfer data */
-    if (!((handle->data) && (status == kStatus_USDHC_SendCommandFailed)))
+    if (!((handle->data) && (handle->data->rxData) && (status == kStatus_USDHC_SendCommandFailed)))
     {
         SDMMCEVENT_Notify(kSDMMCEVENT_TransferComplete);
     }
@@ -169,9 +186,9 @@ static status_t SDMMCHOST_TransferFunction(SDMMCHOST_TYPE *base, SDMMCHOST_TRANS
     {
         memset(&dmaConfig, 0, sizeof(usdhc_adma_config_t));
         /* config adma */
-        dmaConfig.dmaMode = USDHC_DMA_MODE;
-        dmaConfig.burstLen = kUSDHC_EnBurstLenForINCR;
-        dmaConfig.admaTable = g_usdhcAdma2Table;
+        dmaConfig.dmaMode        = USDHC_DMA_MODE;
+        dmaConfig.burstLen       = kUSDHC_EnBurstLenForINCR;
+        dmaConfig.admaTable      = g_usdhcAdma2Table;
         dmaConfig.admaTableWords = USDHC_ADMA_TABLE_WORDS;
     }
 
@@ -192,7 +209,7 @@ static status_t SDMMCHOST_TransferFunction(SDMMCHOST_TYPE *base, SDMMCHOST_TRANS
             if (g_reTuningFlag)
             {
                 g_reTuningFlag = false;
-                error = kStatus_USDHC_TuningError;
+                error          = kStatus_USDHC_TuningError;
             }
         }
         else
@@ -228,6 +245,7 @@ void SDMMCHOST_ErrorRecovery(SDMMCHOST_TYPE *base)
 static status_t SDMMCHOST_CardDetectInit(SDMMCHOST_TYPE *base, const sdmmchost_detect_card_t *cd)
 {
     sdmmchost_detect_card_type_t cdType = kSDMMCHOST_DetectCardByGpioCD;
+    bool cardInserted                   = false;
 
     if (cd != NULL)
     {
@@ -242,10 +260,14 @@ static status_t SDMMCHOST_CardDetectInit(SDMMCHOST_TYPE *base, const sdmmchost_d
     if (cdType == kSDMMCHOST_DetectCardByGpioCD)
     {
         SDMMCHOST_CARD_DETECT_GPIO_INIT();
+
         /* Open card detection pin NVIC. */
         SDMMCHOST_ENABLE_IRQ(SDMMCHOST_CARD_DETECT_GPIO_IRQ);
-        /* check card insert or not */
-        SDMMCHOST_DetectCardByGpio(cd);
+        /* detect card insert status */
+        if (SDMMCHOST_CARD_DETECT_GPIO_STATUS() == SDMMCHOST_CARD_INSERT_CD_LEVEL)
+        {
+            cardInserted = true;
+        }
     }
     else
     {
@@ -256,14 +278,20 @@ static status_t SDMMCHOST_CardDetectInit(SDMMCHOST_TYPE *base, const sdmmchost_d
         }
         /* enable card detect interrupt */
         SDMMCHOST_CARD_DETECT_INSERT_ENABLE(base);
-        SDMMCHOST_CARD_DETECT_INSERT_INTERRUPT_ENABLE(base);
-
         /* check if card is inserted */
         if (SDMMCHOST_CARD_DETECT_INSERT_STATUS(base))
         {
-            s_sdInsertedFlag = true;
+            cardInserted = true;
+        }
+        else
+        {
+            SDMMCHOST_CARD_DETECT_INSERT_INTERRUPT_ENABLE(base);
+            SDMMCHOST_CARD_DETECT_REMOVE_INTERRUPT_ENABLE(base);
         }
     }
+
+    /* notify application about the card insertion status */
+    SDMMCHOST_NofiyCardInsertStatus(cardInserted, cd);
 
     return kStatus_Success;
 }
@@ -343,26 +371,26 @@ void SDMMCHOST_PowerOnCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr
 
 status_t SDMMCHOST_Init(SDMMCHOST_CONFIG *host, void *userData)
 {
-    usdhc_host_t *usdhcHost = (usdhc_host_t *)host;
+    usdhc_host_t *usdhcHost            = (usdhc_host_t *)host;
     usdhc_transfer_callback_t callback = {
         .TransferComplete = SDMMCHOST_TransferCompleteCallback,
-        .ReTuning = SDMMCHOST_ReTuningCallback,
-        .CardInserted = SDMMCHOST_DetectCardInsertByHost,
-        .CardRemoved = SDMMCHOST_DetectCardRemoveByHost,
-        .SdioInterrupt = NULL,
-        .BlockGap = NULL,
+        .ReTuning         = SDMMCHOST_ReTuningCallback,
+        .CardInserted     = SDMMCHOST_DetectCardInsertByHost,
+        .CardRemoved      = SDMMCHOST_DetectCardRemoveByHost,
+        .SdioInterrupt    = SDMMCHOST_CardInterrupt,
+        .BlockGap         = NULL,
     };
     /* init card power control */
     SDMMCHOST_INIT_SD_POWER();
     SDMMCHOST_INIT_MMC_POWER();
 
     /* Initializes USDHC. */
-    usdhcHost->config.dataTimeout = USDHC_DATA_TIMEOUT;
-    usdhcHost->config.endianMode = USDHC_ENDIAN_MODE;
-    usdhcHost->config.readWatermarkLevel = USDHC_READ_WATERMARK_LEVEL;
+    usdhcHost->config.dataTimeout         = USDHC_DATA_TIMEOUT;
+    usdhcHost->config.endianMode          = USDHC_ENDIAN_MODE;
+    usdhcHost->config.readWatermarkLevel  = USDHC_READ_WATERMARK_LEVEL;
     usdhcHost->config.writeWatermarkLevel = USDHC_WRITE_WATERMARK_LEVEL;
-    usdhcHost->config.readBurstLen = USDHC_READ_BURST_LEN;
-    usdhcHost->config.writeBurstLen = USDHC_WRITE_BURST_LEN;
+    usdhcHost->config.readBurstLen        = USDHC_READ_BURST_LEN;
+    usdhcHost->config.writeBurstLen       = USDHC_WRITE_BURST_LEN;
 
     USDHC_Init(usdhcHost->base, &(usdhcHost->config));
 
@@ -381,7 +409,7 @@ status_t SDMMCHOST_Init(SDMMCHOST_CONFIG *host, void *userData)
     /* Define transfer function. */
     usdhcHost->transfer = SDMMCHOST_TransferFunction;
     /* card detect init */
-    SDMMCHOST_CardDetectInit(usdhcHost->base, (sdmmchost_detect_card_t *)userData);
+    SDMMCHOST_CardDetectInit(usdhcHost->base, (userData == NULL) ? NULL : (((sdmmhostcard_usr_param_t *)userData)->cd));
 
     return kStatus_Success;
 }

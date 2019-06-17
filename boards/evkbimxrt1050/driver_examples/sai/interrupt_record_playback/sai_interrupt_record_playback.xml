@@ -2,12 +2,16 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.codec_i2c.MIMXRT1052"/>
     <definition extID="component.lists.MIMXRT1052"/>
+    <definition extID="component.lpi2c_adapter.MIMXRT1052"/>
     <definition extID="component.lpuart_adapter.MIMXRT1052"/>
     <definition extID="component.serial_manager.MIMXRT1052"/>
     <definition extID="component.serial_manager_uart.MIMXRT1052"/>
+    <definition extID="component.wm8960_adapter.MIMXRT1052"/>
     <definition extID="device.MIMXRT1052_CMSIS.MIMXRT1052"/>
     <definition extID="device.MIMXRT1052_startup.MIMXRT1052"/>
+    <definition extID="driver.codec.MIMXRT1052"/>
     <definition extID="driver.wm8960.MIMXRT1052"/>
     <definition extID="platform.Include_common.MIMXRT1052"/>
     <definition extID="platform.Include_core_cm7.MIMXRT1052"/>
@@ -26,8 +30,10 @@
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
+    <definition extID="com.crt.advproject.config.exe.debug"/>
+    <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_sai_interrupt_record_playback" name="sai_interrupt_record_playback" category="driver_examples/sai" dependency="platform.drivers.lpi2c.MIMXRT1052 driver.wm8960.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.sai.MIMXRT1052 platform.drivers.common.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 component.lists.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="evkbimxrt1050_sai_interrupt_record_playback" name="sai_interrupt_record_playback" category="driver_examples/sai" dependency="platform.drivers.lpi2c.MIMXRT1052 driver.wm8960.MIMXRT1052 driver.codec.MIMXRT1052 component.wm8960_adapter.MIMXRT1052 component.lpi2c_adapter.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.sai.MIMXRT1052 platform.drivers.common.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 component.lists.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 component.codec_i2c.MIMXRT1052">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -52,14 +58,11 @@
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MIMXRT1052DVL6B</value>
           <value>SDK_DEBUGCONSOLE=1</value>
-          <value>PRINTF_FLOAT_ENABLE=0</value>
-          <value>SCANF_FLOAT_ENABLE=0</value>
-          <value>PRINTF_ADVANCED_ENABLE=0</value>
-          <value>SCANF_ADVANCED_ENABLE=0</value>
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>BOARD_USE_CODEC=1</value>
+          <value>CODEC_WM8960_ENABLE</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -79,6 +82,17 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <debug_configurations>
+      <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+        <drivers>
+          <driver id_refs="BOARD_FLASH_evkbimxrt1050">
+            <driverBinary path="devices/MIMXRT1052/mcuxpresso" type="binary" target_path="binary">
+              <files mask="MIMXRT1050-EVK_S26KS512S.cfx"/>
+            </driverBinary>
+          </driver>
+        </drivers>
+      </debug_configuration>
+    </debug_configurations>
     <source path="boards/evkbimxrt1050/driver_examples/sai/interrupt_record_playback/armgcc" target_path="src" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1052xxxxx_ram.ld"/>
     </source>

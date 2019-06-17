@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016 Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  *
@@ -37,12 +37,12 @@
 #define RL_PLATFORM_HIGHEST_LINK_ID               (1)
 
 /* platform interrupt related functions */
-int platform_init_interrupt(int vector_id, void *isr_data);
-int platform_deinit_interrupt(int vector_id);
+int platform_init_interrupt(unsigned int vector_id, void *isr_data);
+int platform_deinit_interrupt(unsigned int vector_id);
 int platform_interrupt_enable(unsigned int vector_id);
 int platform_interrupt_disable(unsigned int vector_id);
 int platform_in_isr(void);
-void platform_notify(int vector_id);
+void platform_notify(unsigned int vector_id);
 
 /* platform low-level time-delay (busy loop) */
 void platform_time_delay(int num_msec);

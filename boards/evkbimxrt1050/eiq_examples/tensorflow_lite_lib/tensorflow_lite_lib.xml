@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="middleware.eiq.tensorflow_lite.MIMXRT1052"/>
+    <definition extID="middleware.eiq.tensorflow_lite.third_party.eigen.MIMXRT1052"/>
+    <definition extID="middleware.eiq.tensorflow_lite.third_party.farmhash.MIMXRT1052"/>
+    <definition extID="middleware.eiq.tensorflow_lite.third_party.fft2d.MIMXRT1052"/>
+    <definition extID="middleware.eiq.tensorflow_lite.third_party.flatbuffers.MIMXRT1052"/>
+    <definition extID="middleware.eiq.tensorflow_lite.third_party.gemmlowp.MIMXRT1052"/>
+  </externalDefinitions>
+  <example id="evkbimxrt1050_tensorflow_lite_lib" name="tensorflow_lite_lib" category="eiq_examples" dependency="middleware.eiq.tensorflow_lite.MIMXRT1052 middleware.eiq.tensorflow_lite.third_party.eigen.MIMXRT1052 middleware.eiq.tensorflow_lite.third_party.farmhash.MIMXRT1052 middleware.eiq.tensorflow_lite.third_party.fft2d.MIMXRT1052 middleware.eiq.tensorflow_lite.third_party.flatbuffers.MIMXRT1052 middleware.eiq.tensorflow_lite.third_party.gemmlowp.MIMXRT1052">
+    <projects>
+      <project type="com.crt.advproject.projecttype.lib" nature="org.eclipse.cdt.core.ccnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="gnu.both.asm.option.flags.crt" type="string">
+          <value>-Wall  -fno-common  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin  -std=gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.nowarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.extrawarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.wconversion" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.toerrors" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MIMXRT1052DVL6B</value>
+          <value>EIGEN_MPL2_ONLY</value>
+          <value>EIGEN_STACK_ALLOCATION_LIMIT=16384</value>
+          <value>FARMHASH_MCU</value>
+          <value>FARMHASH_LITTLE_ENDIAN</value>
+          <value>FARMHASH_NO_BUILTIN_EXPECT</value>
+          <value>FLATBUFFERS_LITTLEENDIAN</value>
+          <value>GEMMLOWP_MCU</value>
+          <value>TFLITE_MCU</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -fno-common  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="com.crt.advproject.cpp.fpu" type="enum">
+          <value>com.crt.advproject.cpp.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="com.crt.advproject.cpp.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnupp11</value>
+        </option>
+        <option id="gnu.cpp.compiler.option.preprocessor.def" type="stringList">
+          <value>EIGEN_MPL2_ONLY</value>
+          <value>EIGEN_STACK_ALLOCATION_LIMIT=16384</value>
+          <value>FARMHASH_MCU</value>
+          <value>FARMHASH_LITTLE_ENDIAN</value>
+          <value>FARMHASH_NO_BUILTIN_EXPECT</value>
+          <value>FLATBUFFERS_LITTLEENDIAN</value>
+          <value>GEMMLOWP_MCU</value>
+          <value>TFLITE_MCU</value>
+        </option>
+        <option id="gnu.cpp.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.cpp.compiler.option.other.other" type="string">
+          <value>-fpermissive  -Wno-comment  -Wno-format  -Wno-parentheses  -Wno-sign-compare  -Wno-switch  -Wno-unused-local-typedefs  -Wno-unused-variable  -c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin  -fno-rtti  -fno-exceptions</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <include_paths>
+      <include_path path="tensorflow-lite"/>
+      <include_path path="tensorflow-lite/third_party/farmhash"/>
+      <include_path path="tensorflow-lite/third_party/flatbuffers"/>
+      <include_path path="tensorflow-lite/third_party/flatbuffers/include"/>
+      <include_path path="tensorflow-lite/third_party/gemmlowp"/>
+    </include_paths>
+  </example>
+</ksdk:examples>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 - 2018 NXP
+ * Copyright 2017 - 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -25,17 +25,17 @@
 usb_device_endpoint_struct_t g_cdcVcomCicEndpoints[USB_CDC_VCOM_CIC_ENDPOINT_COUNT] = {
     {
         USB_CDC_VCOM_CIC_INTERRUPT_IN_ENDPOINT | (USB_IN << 7U), USB_ENDPOINT_INTERRUPT,
-        FS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE,
+        FS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE,FS_CDC_VCOM_INTERRUPT_IN_INTERVAL,
     },
 };
 
 /* Define endpoint for data class */
 usb_device_endpoint_struct_t g_cdcVcomDicEndpoints[USB_CDC_VCOM_DIC_ENDPOINT_COUNT] = {
     {
-        USB_CDC_VCOM_DIC_BULK_IN_ENDPOINT | (USB_IN << 7U), USB_ENDPOINT_BULK, FS_CDC_VCOM_BULK_IN_PACKET_SIZE,
+        USB_CDC_VCOM_DIC_BULK_IN_ENDPOINT | (USB_IN << 7U), USB_ENDPOINT_BULK, FS_CDC_VCOM_BULK_IN_PACKET_SIZE,0U,
     },
     {
-        USB_CDC_VCOM_DIC_BULK_OUT_ENDPOINT | (USB_OUT << 7U), USB_ENDPOINT_BULK, FS_CDC_VCOM_BULK_OUT_PACKET_SIZE,
+        USB_CDC_VCOM_DIC_BULK_OUT_ENDPOINT | (USB_OUT << 7U), USB_ENDPOINT_BULK, FS_CDC_VCOM_BULK_OUT_PACKET_SIZE,0U,
     },
 };
 
@@ -73,17 +73,17 @@ usb_device_interface_list_t g_UsbDeviceCdcVcomInterfaceList[USB_DEVICE_CONFIGURA
 usb_device_endpoint_struct_t g_cdcVcomCicEndpoints_2[USB_CDC_VCOM_CIC_ENDPOINT_COUNT_2] = {
     {
         USB_CDC_VCOM_CIC_INTERRUPT_IN_ENDPOINT_2 | (USB_IN << 7U), USB_ENDPOINT_INTERRUPT,
-        FS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE,
+        FS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE_2,FS_CDC_VCOM_INTERRUPT_IN_INTERVAL_2,
     },
 };
 
 /* Define endpoint for data class */
 usb_device_endpoint_struct_t g_cdcVcomDicEndpoints_2[USB_CDC_VCOM_DIC_ENDPOINT_COUNT_2] = {
     {
-        USB_CDC_VCOM_DIC_BULK_IN_ENDPOINT_2 | (USB_IN << 7U), USB_ENDPOINT_BULK, FS_CDC_VCOM_BULK_IN_PACKET_SIZE,
+        USB_CDC_VCOM_DIC_BULK_IN_ENDPOINT_2 | (USB_IN << 7U), USB_ENDPOINT_BULK, FS_CDC_VCOM_BULK_IN_PACKET_SIZE,0U,
     },
     {
-        USB_CDC_VCOM_DIC_BULK_OUT_ENDPOINT_2 | (USB_OUT << 7U), USB_ENDPOINT_BULK, FS_CDC_VCOM_BULK_OUT_PACKET_SIZE,
+        USB_CDC_VCOM_DIC_BULK_OUT_ENDPOINT_2 | (USB_OUT << 7U), USB_ENDPOINT_BULK, FS_CDC_VCOM_BULK_OUT_PACKET_SIZE,0U,
     },
 };
 
@@ -171,14 +171,15 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
                        USB_DESCRIPTOR_LENGTH_CDC_UNION_FUNC + USB_DESCRIPTOR_LENGTH_ENDPOINT +
                        USB_DESCRIPTOR_LENGTH_INTERFACE + USB_DESCRIPTOR_LENGTH_ENDPOINT +
                        USB_DESCRIPTOR_LENGTH_ENDPOINT) *
-                          2),
+                          USB_DEVICE_CONFIG_CDC_ACM),
     USB_SHORT_GET_HIGH(USB_DESCRIPTOR_LENGTH_CONFIGURE +
                        (USB_IAD_DESC_SIZE + USB_DESCRIPTOR_LENGTH_INTERFACE + USB_DESCRIPTOR_LENGTH_CDC_HEADER_FUNC +
                         USB_DESCRIPTOR_LENGTH_CDC_CALL_MANAG + USB_DESCRIPTOR_LENGTH_CDC_ABSTRACT +
                         USB_DESCRIPTOR_LENGTH_CDC_UNION_FUNC + USB_DESCRIPTOR_LENGTH_ENDPOINT +
                         USB_DESCRIPTOR_LENGTH_INTERFACE + USB_DESCRIPTOR_LENGTH_ENDPOINT +
                         USB_DESCRIPTOR_LENGTH_ENDPOINT) *
-                           2),
+                           USB_DEVICE_CONFIG_CDC_ACM),
+    /* the two cdc interface have almost same interface attribute except for some number index difference etc, so we could multiply by USB_DEVICE_CONFIG_CDC_ACM when calculate length*/
     /* Number of interfaces supported by this configuration */
     USB_INTERFACE_COUNT,
     /* Value to use as an argument to the SetConfiguration() request to select this configuration */
@@ -236,8 +237,8 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
 
     USB_DESCRIPTOR_LENGTH_CDC_UNION_FUNC, /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_CDC_CS_INTERFACE, /* CS_INTERFACE Descriptor Type */
-    USB_CDC_UNION_FUNC_DESC, 0x00,        /* The interface number of the Communications or Data Class interface  */
-    0x01,                                 /* Interface number of subordinate interface in the Union  */
+    USB_CDC_UNION_FUNC_DESC, USB_CDC_VCOM_CIC_INTERFACE_INDEX,        /* The interface number of the Communications or Data Class interface  */
+    USB_CDC_VCOM_DIC_INTERFACE_INDEX,                                 /* Interface number of subordinate interface in the Union  */
 
     /*Notification Endpoint descriptor */
     USB_DESCRIPTOR_LENGTH_ENDPOINT, USB_DESCRIPTOR_TYPE_ENDPOINT,
@@ -303,8 +304,8 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
 
     USB_DESCRIPTOR_LENGTH_CDC_UNION_FUNC, /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_CDC_CS_INTERFACE, /* CS_INTERFACE Descriptor Type */
-    USB_CDC_UNION_FUNC_DESC, 0x02,        /* The interface number of the Communications or Data Class interface  */
-    0x03,                                 /* Interface number of subordinate interface in the Union  */
+    USB_CDC_UNION_FUNC_DESC, USB_CDC_VCOM_CIC_INTERFACE_INDEX_2,        /* The interface number of the Communications or Data Class interface  */
+    USB_CDC_VCOM_DIC_INTERFACE_INDEX_2,                                 /* Interface number of subordinate interface in the Union  */
 
     /*Notification Endpoint descriptor */
     USB_DESCRIPTOR_LENGTH_ENDPOINT, USB_DESCRIPTOR_TYPE_ENDPOINT,
@@ -693,10 +694,12 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
         if (USB_SPEED_HIGH == speed)
         {
             g_cdcVcomCicEndpoints[i].maxPacketSize = HS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE;
+            g_cdcVcomCicEndpoints[i].interval = HS_CDC_VCOM_INTERRUPT_IN_INTERVAL;
         }
         else
         {
             g_cdcVcomCicEndpoints[i].maxPacketSize = FS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE;
+            g_cdcVcomCicEndpoints[i].interval = FS_CDC_VCOM_INTERRUPT_IN_INTERVAL;
         }
     }
 
@@ -731,10 +734,12 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
         if (USB_SPEED_HIGH == speed)
         {
             g_cdcVcomCicEndpoints_2[i].maxPacketSize = HS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE_2;
+            g_cdcVcomCicEndpoints_2[i].interval = HS_CDC_VCOM_INTERRUPT_IN_INTERVAL_2;
         }
         else
         {
             g_cdcVcomCicEndpoints_2[i].maxPacketSize = FS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE_2;
+            g_cdcVcomCicEndpoints_2[i].interval = FS_CDC_VCOM_INTERRUPT_IN_INTERVAL_2;
         }
     }
 

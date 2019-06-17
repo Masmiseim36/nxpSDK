@@ -771,12 +771,11 @@ CK_DEFINE_FUNCTION( CK_RV, C_CloseSession_sm )( CK_SESSION_HANDLE xSession )
         /*
          * Tear down the session.
          */
-        if ( NULL != pxSession->pxCurrentKey->certificate_buf )        {
-           vPortFree(pxSession->pxCurrentKey->certificate_buf);
-        }
+        if ( NULL != pxSession->pxCurrentKey ) {
+            if ( NULL != pxSession->pxCurrentKey->certificate_buf ) {
+               vPortFree(pxSession->pxCurrentKey->certificate_buf);
+            }
 
-
-        if( NULL != pxSession->pxCurrentKey )        {
             prvFreeKey( pxSession->pxCurrentKey );
         }
 

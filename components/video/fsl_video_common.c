@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2017, NXP Semiconductors, Inc.
+ * Copyright  2017 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -55,14 +55,59 @@ void VIDEO_DelayMs(uint32_t ms)
 #endif
 }
 
+uint8_t VIDEO_GetPixelSizeBits(video_pixel_format_t pixelFormat)
+{
+    uint8_t ret;
+
+    switch (pixelFormat)
+    {
+        case kVIDEO_PixelFormatXRGB8888:
+        case kVIDEO_PixelFormatRGBX8888:
+        case kVIDEO_PixelFormatXBGR8888:
+        case kVIDEO_PixelFormatBGRX8888:
+        case kVIDEO_PixelFormatXYUV:
+        case kVIDEO_PixelFormatXYVU:
+            ret = 32;
+            break;
+
+        case kVIDEO_PixelFormatRGB888:
+        case kVIDEO_PixelFormatBGR888:
+            ret = 24;
+            break;
+
+        case kVIDEO_PixelFormatRGB565:
+        case kVIDEO_PixelFormatBGR565:
+        case kVIDEO_PixelFormatXRGB1555:
+        case kVIDEO_PixelFormatRGBX5551:
+        case kVIDEO_PixelFormatXBGR1555:
+        case kVIDEO_PixelFormatBGRX5551:
+        case kVIDEO_PixelFormatXRGB4444:
+        case kVIDEO_PixelFormatRGBX4444:
+        case kVIDEO_PixelFormatXBGR4444:
+        case kVIDEO_PixelFormatBGRX4444:
+        case kVIDEO_PixelFormatYUYV:
+        case kVIDEO_PixelFormatYVYU:
+        case kVIDEO_PixelFormatUYVY:
+        case kVIDEO_PixelFormatVYUY:
+            ret = 16;
+            break;
+
+        default:
+            ret = 0;
+            break;
+    }
+
+    return ret;
+}
+
 status_t VIDEO_RINGBUF_Init(video_ringbuf_t *ringbuf, void **buf, uint32_t size)
 {
     assert(ringbuf);
 
-    ringbuf->rear = 0;
+    ringbuf->rear  = 0;
     ringbuf->front = 0;
-    ringbuf->size = size;
-    ringbuf->buf = buf;
+    ringbuf->size  = size;
+    ringbuf->buf   = buf;
 
     return kStatus_Success;
 }
@@ -105,7 +150,7 @@ status_t VIDEO_RINGBUF_Put(video_ringbuf_t *ringbuf, void *item)
     if (rear_next != ringbuf->front)
     {
         ringbuf->buf[ringbuf->rear] = item;
-        ringbuf->rear = rear_next;
+        ringbuf->rear               = rear_next;
 
         return kStatus_Success;
     }
@@ -144,7 +189,7 @@ bool VIDEO_RINGBUF_IsEmpty(video_ringbuf_t *ringbuf)
 
 bool VIDEO_RINGBUF_IsFull(video_ringbuf_t *ringbuf)
 {
-    uint32_t rear = ringbuf->rear;
+    uint32_t rear  = ringbuf->rear;
     uint32_t front = ringbuf->front;
 
     rear++;
@@ -175,6 +220,12 @@ status_t VIDEO_MEMPOOL_Init(video_mempool_t *mempool, void *initMem, uint32_t si
     }
 
     return kStatus_Success;
+}
+
+void VIDEO_MEMPOOL_InitEmpty(video_mempool_t *mempool)
+{
+    mempool->pool = NULL;
+    mempool->cnt  = 0;
 }
 
 void VIDEO_MEMPOOL_Put(video_mempool_t *mempool, void *mem)

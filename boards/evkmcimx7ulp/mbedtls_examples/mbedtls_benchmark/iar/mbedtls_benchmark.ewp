@@ -2018,10 +2018,10 @@
   <group>
     <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers/fsl_ltc.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers/fsl_ltc.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers/fsl_ltc.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers/fsl_ltc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers/fsl_trng.c</name>
@@ -2033,34 +2033,34 @@
       <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers/fsl_port.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers/fsl_clock.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers/fsl_clock.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers/fsl_common.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers/fsl_clock.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers/fsl_common.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers/fsl_lpuart.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers/fsl_common.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers/fsl_lpuart.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers/fsl_gpio.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers/fsl_lpuart.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers/fsl_gpio.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers/fsl_msmc.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers/fsl_gpio.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers/fsl_msmc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers/fsl_msmc.h</name>
     </file>
   </group>
   <group>
@@ -2200,9 +2200,6 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/md.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/md_internal.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/md2.h</name>
       </file>
       <file>
@@ -2210,6 +2207,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/md5.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/md_internal.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/memory_buffer_alloc.h</name>
@@ -2239,13 +2239,13 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/pk_internal.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/pkcs5.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/pkcs11.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/pkcs12.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/pkcs5.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/platform.h</name>
@@ -2359,16 +2359,16 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/certs.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/cipher.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/cipher_wrap.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/chacha20.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/chachapoly.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/cipher.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/cipher_wrap.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/cmac.c</name>
@@ -2425,9 +2425,6 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/md.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/md_wrap.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/md2.c</name>
       </file>
       <file>
@@ -2435,6 +2432,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/md5.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/md_wrap.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/memory_buffer_alloc.c</name>
@@ -2461,10 +2461,13 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/pk_wrap.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/pkcs5.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/pkcs11.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/pkcs12.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/pkcs5.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/pkparse.c</name>
@@ -2556,12 +2559,33 @@
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/xtea.c</name>
       </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/pkcs11.c</name>
-      </file>
     </group>
     <group>
       <name>mbedtls_port</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/des_alt.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/des_alt.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</name>
+      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</name>
       </file>
@@ -2577,42 +2601,18 @@
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</name>
       </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/des_alt.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/des_alt.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</name>
-      </file>
     </group>
   </group>
   <group>
     <name>device</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/fsl_device_registers.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/MCIMX7U5_cm4.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/MCIMX7U5_cm4_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/system_MCIMX7U5_cm4.c</name>
@@ -2624,12 +2624,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -2637,6 +2631,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/debug_console/fsl_debug_console_conf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/str/fsl_str.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/fsl_assert.c</name>
@@ -2647,34 +2647,37 @@
     <group>
       <name>uart</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/lpuart_adapter.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/lpuart_adapter.c</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
       </file>
     </group>
     <group>
       <name>serial_manager</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_internal.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
       </file>
     </group>
   </group>
@@ -2690,30 +2693,6 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm4.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
     </file>
     <file>
@@ -2723,7 +2702,31 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>

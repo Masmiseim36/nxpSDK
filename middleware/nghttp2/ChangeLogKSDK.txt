@@ -1,0 +1,11 @@
+/*!
+@page middleware_log Middleware Change Log
+
+@section nghttp2 nghttp2 library for MCUXpresso SDK
+  Original package is available at <a href="https://github.com/nghttp2/nghttp2">https://github.com/nghttp2/nghttp2</a>.
+  The current version of nghttp2 library is 1.32.90.
+
+  - 1.32.90
+    - Initial version of library for MCUXpresso SDK
+
+*/

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 , 2018 NXP
+ * Copyright 2016 , 2018 - 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -31,15 +31,15 @@
 usb_device_endpoint_struct_t g_UsbDevicePhdcWeightScaleEndpoints[USB_PHDC_WEIGHT_SCALE_ENDPOINT_COUNT] = {
     {
         USB_PHDC_INTERRUPT_ENDPOINT_IN | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
-        USB_ENDPOINT_INTERRUPT, FS_USB_PHDC_INTERRUPT_ENDPOINT_IN_PACKET_SIZE,
+        USB_ENDPOINT_INTERRUPT, FS_USB_PHDC_INTERRUPT_ENDPOINT_IN_PACKET_SIZE,FS_USB_PHDC_INTERRUPT_ENDPOINT_IN_INTERVAL,
     },
     {
         USB_PHDC_BULK_ENDPOINT_OUT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT), USB_ENDPOINT_BULK,
-        FS_USB_PHDC_BULK_ENDPOINT_OUT_PACKET_SIZE,
+        FS_USB_PHDC_BULK_ENDPOINT_OUT_PACKET_SIZE,0U,
     },
     {
         USB_PHDC_BULK_ENDPOINT_IN | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT), USB_ENDPOINT_BULK,
-        FS_USB_PHDC_BULK_ENDPOINT_IN_PACKET_SIZE,
+        FS_USB_PHDC_BULK_ENDPOINT_IN_PACKET_SIZE,0U,
     },
 };
 
@@ -488,6 +488,7 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
             if (USB_ENDPOINT_INTERRUPT == g_UsbDevicePhdcWeightScaleEndpoints[i].transferType)
             {
                 g_UsbDevicePhdcWeightScaleEndpoints[i].maxPacketSize = HS_USB_PHDC_INTERRUPT_ENDPOINT_IN_PACKET_SIZE;
+                g_UsbDevicePhdcWeightScaleEndpoints[i].interval = HS_USB_PHDC_INTERRUPT_ENDPOINT_IN_INTERVAL;
             }
             else if (g_UsbDevicePhdcWeightScaleEndpoints[i].endpointAddress &
                      USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK)
@@ -504,6 +505,7 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
             if (USB_ENDPOINT_INTERRUPT == g_UsbDevicePhdcWeightScaleEndpoints[i].transferType)
             {
                 g_UsbDevicePhdcWeightScaleEndpoints[i].maxPacketSize = FS_USB_PHDC_INTERRUPT_ENDPOINT_IN_PACKET_SIZE;
+                g_UsbDevicePhdcWeightScaleEndpoints[i].interval = FS_USB_PHDC_INTERRUPT_ENDPOINT_IN_INTERVAL;
             }
             else if (g_UsbDevicePhdcWeightScaleEndpoints[i].endpointAddress &
                      USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK)

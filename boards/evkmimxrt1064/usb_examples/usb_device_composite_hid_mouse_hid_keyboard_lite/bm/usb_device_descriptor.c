@@ -106,10 +106,10 @@ uint8_t g_UsbDeviceHidKeyboardReportDescriptor[] = {
     0x95U, 0x06U, /* Report Count (6U) */
     0x75U, 0x08U, /* Report Size (8U) */
     0x15U, 0x00U, /* Logical Minimum (0U) */
-    0x25U, 0xFFU, /* Logical Maximum (255U) */
+    0x25U, 0x65U, /* Logical Maximum (101U) */
     0x05U, 0x07U, /* Usage Page (Key Codes) */
     0x19U, 0x00U, /* Usage Minimum (0U) */
-    0x29U, 0xFFU, /* Usage Maximum (255U) */
+    0x29U, 0x65U, /* Usage Maximum (101U) */
 
     0x81U, 0x00U, /* Input(Data, Array), Key arrays(6U bytes)*/
     0xC0U,        /* End collection */
@@ -514,7 +514,7 @@ usb_status_t USB_DeviceGetInterface(usb_device_handle handle, uint8_t interface,
  * current speed.
  * As the default, the device descriptors and configurations are configured by using FS parameters for both EHCI and
  * KHCI.
- * When the EHCI is enabled, the application needs to call this fucntion to update device by using current speed.
+ * When the EHCI is enabled, the application needs to call this function to update device by using current speed.
  * The updated information includes endpoint max packet size, endpoint interval, etc. */
 usb_status_t USB_DeviceSetSpeed(uint8_t speed)
 {

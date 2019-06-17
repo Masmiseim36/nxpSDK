@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -45,13 +45,13 @@
  * Variables
  ******************************************************************************/
 
-uint8_t g_slave_buff[LPI2C_DATA_LENGTH] = {0};
+uint8_t g_slave_buff[LPI2C_DATA_LENGTH]  = {0};
 uint8_t g_master_buff[LPI2C_DATA_LENGTH] = {0};
-volatile uint8_t g_masterTxIndex = 0U;
-volatile uint8_t g_masterRxIndex = 0U;
-volatile uint8_t g_slaveTxIndex = 0U;
-volatile uint8_t g_slaveRxIndex = 0U;
-volatile bool g_masterReadBegin = false;
+volatile uint8_t g_masterTxIndex         = 0U;
+volatile uint8_t g_masterRxIndex         = 0U;
+volatile uint8_t g_slaveTxIndex          = 0U;
+volatile uint8_t g_slaveRxIndex          = 0U;
+volatile bool g_masterReadBegin          = false;
 
 /*******************************************************************************
  * Code
@@ -108,8 +108,8 @@ void LPI2C_MASTER_IRQHandler(void)
             }
         }
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
 #if defined __CORTEX_M && (__CORTEX_M == 4U)
     __DSB();
 #endif
@@ -152,7 +152,7 @@ void LPI2C_SLAVE_IRQHandler(void)
 
     if (flags & kLPI2C_SlaveTxReadyFlag)
     {
-         /* If rx Index < LPI2C_DATA_LENGTH, slave send->master receive transfer is ongoing. */
+        /* If rx Index < LPI2C_DATA_LENGTH, slave send->master receive transfer is ongoing. */
         if (g_slaveTxIndex < LPI2C_DATA_LENGTH)
         {
             EXAMPLE_LPI2C_SLAVE_BASEADDR->STDR = g_slave_buff[g_slaveTxIndex++];
@@ -164,8 +164,8 @@ void LPI2C_SLAVE_IRQHandler(void)
             }
         }
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
 #if defined __CORTEX_M && (__CORTEX_M == 4U)
     __DSB();
 #endif
@@ -176,9 +176,9 @@ void LPI2C_SLAVE_IRQHandler(void)
  */
 int main(void)
 {
-    lpi2c_slave_config_t slaveConfig = {0};
+    lpi2c_slave_config_t slaveConfig   = {0};
     lpi2c_master_config_t masterConfig = {0};
-    status_t reVal = kStatus_Fail;
+    status_t reVal                     = kStatus_Fail;
 
     BOARD_ConfigMPU();
     BOARD_InitPins();
@@ -277,7 +277,7 @@ int main(void)
     {
         if (g_slave_buff[i] != g_master_buff[i])
         {
-            PRINTF("\r\nError occured in this transfer ! \r\n");
+            PRINTF("\r\nError occurred in this transfer ! \r\n");
             break;
         }
     }
@@ -337,7 +337,7 @@ int main(void)
     {
         if (g_slave_buff[i] != g_master_buff[i])
         {
-            PRINTF("\r\nError occured in the transfer ! \r\n");
+            PRINTF("\r\nError occurred in the transfer ! \r\n");
             break;
         }
     }

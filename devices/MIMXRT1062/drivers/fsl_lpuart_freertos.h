@@ -42,11 +42,11 @@ typedef struct _lpuart_rtos_config
 } lpuart_rtos_config_t;
 
 /*!
-* @cond RTOS_PRIVATE
-* @name LPUART event flags
-*
-* This are only valid states for txEvent and rxEvent (lpuart_rtos_handle_t).
-*/
+ * @cond RTOS_PRIVATE
+ * @name LPUART event flags
+ *
+ * This are only valid states for txEvent and rxEvent (lpuart_rtos_handle_t).
+ */
 /*@{*/
 /*! @brief Event flag - transfer complete. */
 #define RTOS_LPUART_COMPLETE 0x1

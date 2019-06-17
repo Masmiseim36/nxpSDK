@@ -1,7 +1,7 @@
 /*
  * Copyright 2018 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -16,7 +16,7 @@
 #ifndef __ISSDK_HAL_H__
 #define __ISSDK_HAL_H__
 
-#include "evkmimxrt1060.h"           //Include appropriate MCU board header file
+#include "evkmimxrt1060.h"          //Include appropriate MCU board header file
 #include "frdm_stbc_agm01_shield.h" //Include appropriate sensor shield board header file
 
 #include "fsl_lpi2c_cmsis.h"

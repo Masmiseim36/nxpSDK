@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, NXP Semiconductors, Inc.
+ * Copyright  2017 NXP
  * All rights reserved.
  *
  *
@@ -63,15 +63,15 @@ typedef enum _video_pixel_format
 /*! @brief Resolution definition. */
 typedef enum _video_resolution
 {
-    kVIDEO_ResolutionVGA = FSL_VIDEO_RESOLUTION(640, 480),     /*!< VGA, 640 * 480 */
-    kVIDEO_ResolutionQVGA = FSL_VIDEO_RESOLUTION(320, 240),    /*!< QVGA, 320 * 240 */
+    kVIDEO_ResolutionVGA   = FSL_VIDEO_RESOLUTION(640, 480),   /*!< VGA, 640 * 480 */
+    kVIDEO_ResolutionQVGA  = FSL_VIDEO_RESOLUTION(320, 240),   /*!< QVGA, 320 * 240 */
     kVIDEO_ResolutionQQVGA = FSL_VIDEO_RESOLUTION(160, 120),   /*!< QQVGA, 160 * 120 */
-    kVIDEO_ResolutionCIF = FSL_VIDEO_RESOLUTION(352, 288),     /*!< CIF, 352 * 288 */
-    kVIDEO_ResolutionQCIF = FSL_VIDEO_RESOLUTION(176, 144),    /*!< QCIF, 176 * 144 */
+    kVIDEO_ResolutionCIF   = FSL_VIDEO_RESOLUTION(352, 288),   /*!< CIF, 352 * 288 */
+    kVIDEO_ResolutionQCIF  = FSL_VIDEO_RESOLUTION(176, 144),   /*!< QCIF, 176 * 144 */
     kVIDEO_ResolutionQQCIF = FSL_VIDEO_RESOLUTION(88, 72),     /*!< QQCIF, 88 * 72 */
-    kVIDEO_Resolution720P = FSL_VIDEO_RESOLUTION(1280, 720),   /*!< 720P, 1280 * 720 */
+    kVIDEO_Resolution720P  = FSL_VIDEO_RESOLUTION(1280, 720),  /*!< 720P, 1280 * 720 */
     kVIDEO_Resolution1080P = FSL_VIDEO_RESOLUTION(1920, 1080), /*!< 1080P, 1920 * 1280*/
-    kVIDEO_ResolutionWXGA = FSL_VIDEO_RESOLUTION(1280, 800),   /*!< WXGA, 1280 * 800 */
+    kVIDEO_ResolutionWXGA  = FSL_VIDEO_RESOLUTION(1280, 800),  /*!< WXGA, 1280 * 800 */
 } video_resolution_t;
 
 /*!
@@ -124,6 +124,14 @@ bool VIDEO_IsYUV(video_pixel_format_t format);
  * @param ms How many milli-second to delay.
  */
 void VIDEO_DelayMs(uint32_t ms);
+
+/*!
+ * @brief Get the pixel size in bits.
+ *
+ * @param pixelFormat The pixel format.
+ * @return Bits per pixel.
+ */
+uint8_t VIDEO_GetPixelSizeBits(video_pixel_format_t pixelFormat);
 
 /* @} */
 
@@ -214,6 +222,13 @@ bool VIDEO_RINGBUF_IsFull(video_ringbuf_t *ringbuf);
  * error code.
  */
 status_t VIDEO_MEMPOOL_Init(video_mempool_t *mempool, void *initMem, uint32_t size, uint32_t count);
+
+/*!
+ * @brief Create an empty memory pool.
+ *
+ * @param mempool Pointer to the memory pool handle.
+ */
+void VIDEO_MEMPOOL_InitEmpty(video_mempool_t *mempool);
 
 /*!
  * @brief Put memory block in the pool.

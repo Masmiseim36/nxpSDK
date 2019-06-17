@@ -4,12 +4,16 @@ The PWM project is a simple demonstration program of the SDK PWM driver.
 The pulse width modulator (PWM) module contains PWM submodules, each of which is set up to control a single half-bridge power stage.
 Fault channel support is provided. This PWM module can generate various switching patterns, including highly sophisticated waveforms.
 It can be used to control all known Switched Mode Power Supplies (SMPS) topologies.
-﻿Hardware requirements
-======================
-- Mini/micro USB cable
-- EVK-MIMXRT1020 board
-- Personal Computer
-- Oscilloscope
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
+Hardware requirements
+=====================
 
 Board settings
 ==============
@@ -45,11 +49,6 @@ To debug in qspiflash, following steps are needed:
 3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
 4. Start debugging in IDE.
    - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

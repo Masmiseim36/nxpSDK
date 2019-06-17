@@ -160,22 +160,23 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     0x30U, /* Constant uniquely identifying the Unit within the audio function. This value is used in all requests to
               address this Unit.  */
     0x20U, /* ID of the Unit or Terminal to which this Feature Unit is connected.  */
-    0x0FU, 0x00U, 0x00U, 0x00U, /* logic channel 0 bmaControls(0)(0x0000000F):  D1..0: Mute Control is present and host programmable
-                                   D3..2: Volume Control is present and host programmable
-                                   D5..4: Bass Control is not present
-                                   D7..6: Mid Control is not present
-                                   D9..8: Treble Control is not present
-                                   D11..10: Graphic Equalizer Control is not present
-                                   D13..12: Automatic Gain Control is not present
-                                   D15..14: Delay Control is not present
-                                   D17..16: Bass Control is not present
-                                   D19..18: Loudness Control is not present
-                                   D21..20: Input Gain Control is not present
-                                   D23..22: Input Gain Pad Control is not present
-                                   D25..24: Phase Inverter Control is not present
-                                   D27..26: Underflow Control is not present
-                                   D29..28: Overflow Control is not present
-                                   D31..30: Reserved, should set to 0 */
+    0x0FU, 0x00U, 0x00U,
+    0x00U, /* logic channel 0 bmaControls(0)(0x0000000F):  D1..0: Mute Control is present and host programmable
+              D3..2: Volume Control is present and host programmable
+              D5..4: Bass Control is not present
+              D7..6: Mid Control is not present
+              D9..8: Treble Control is not present
+              D11..10: Graphic Equalizer Control is not present
+              D13..12: Automatic Gain Control is not present
+              D15..14: Delay Control is not present
+              D17..16: Bass Control is not present
+              D19..18: Loudness Control is not present
+              D21..20: Input Gain Control is not present
+              D23..22: Input Gain Pad Control is not present
+              D25..24: Phase Inverter Control is not present
+              D27..26: Underflow Control is not present
+              D29..28: Overflow Control is not present
+              D31..30: Reserved, should set to 0 */
     0x00U, 0x00U, 0x00U, 0x00U, /* logic channel 0 bmaControls(0)(0x0000000F): */
     0x00U,                      /* Index of a string descriptor, describing this Feature Unit.   */
 
@@ -275,25 +276,32 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     /* Configuration Descriptor Size - always 9 bytes*/
     USB_DESCRIPTOR_LENGTH_CONFIGURE, /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_CONFIGURE,   /* CONFIGURATION Descriptor Type */
-    USB_SHORT_GET_LOW(USB_DESCRIPTOR_LENGTH_CONFIGURE + USB_DESCRIPTOR_LENGTH_INTERFACE +
-                      USB_AUDIO_CONTROL_INTERFACE_HEADER_LENGTH + USB_AUDIO_INPUT_TERMINAL_ONLY_DESC_SIZE +
-                      USB_AUDIO_FEATURE_UNIT_ONLY_DESC_SIZE(2, 1) + USB_AUDIO_OUTPUT_TERMINAL_ONLY_DESC_SIZE +
-                      USB_DESCRIPTOR_LENGTH_AC_INTERRUPT_ENDPOINT + USB_DESCRIPTOR_LENGTH_INTERFACE +
-                      USB_DESCRIPTOR_LENGTH_INTERFACE + USB_AUDIO_STREAMING_IFACE_DESC_SIZE +
-                      USB_AUDIO_STREAMING_TYPE_I_DESC_SIZE + USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH +
-                      USB_AUDIO_STREAMING_ENDP_DESC_SIZE + USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH),
+    USB_SHORT_GET_LOW(
+        USB_DESCRIPTOR_LENGTH_CONFIGURE + USB_DESCRIPTOR_LENGTH_INTERFACE + USB_AUDIO_CONTROL_INTERFACE_HEADER_LENGTH +
+        USB_AUDIO_INPUT_TERMINAL_ONLY_DESC_SIZE + USB_AUDIO_FEATURE_UNIT_ONLY_DESC_SIZE(2, 1) +
+        USB_AUDIO_OUTPUT_TERMINAL_ONLY_DESC_SIZE + USB_DESCRIPTOR_LENGTH_AC_INTERRUPT_ENDPOINT +
+        USB_DESCRIPTOR_LENGTH_INTERFACE + USB_DESCRIPTOR_LENGTH_INTERFACE + USB_AUDIO_STREAMING_IFACE_DESC_SIZE +
+        USB_AUDIO_STREAMING_TYPE_I_DESC_SIZE + USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH + USB_AUDIO_STREAMING_ENDP_DESC_SIZE
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+        ),
+#else
+        + USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH), /* Total length of data returned for this configuration. */
+#endif
     USB_SHORT_GET_HIGH(
         USB_DESCRIPTOR_LENGTH_CONFIGURE + USB_DESCRIPTOR_LENGTH_INTERFACE + USB_AUDIO_CONTROL_INTERFACE_HEADER_LENGTH +
         USB_AUDIO_INPUT_TERMINAL_ONLY_DESC_SIZE + USB_AUDIO_FEATURE_UNIT_ONLY_DESC_SIZE(2, 1) +
         USB_AUDIO_OUTPUT_TERMINAL_ONLY_DESC_SIZE + USB_DESCRIPTOR_LENGTH_AC_INTERRUPT_ENDPOINT +
         USB_DESCRIPTOR_LENGTH_INTERFACE + USB_DESCRIPTOR_LENGTH_INTERFACE + USB_AUDIO_STREAMING_IFACE_DESC_SIZE +
-        USB_AUDIO_STREAMING_TYPE_I_DESC_SIZE + USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH +
-        USB_AUDIO_STREAMING_ENDP_DESC_SIZE +
-        USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH), /* Total length of data returned for this configuration. */
-    USB_AUDIO_SPEAKER_INTERFACE_COUNT,         /* Number of interfaces supported by this configuration */
-    USB_AUDIO_SPEAKER_CONFIGURE_INDEX,         /* Value to use as an argument to the
-                                                    SetConfiguration() request to select this configuration */
-    0x00U,                                     /* Index of string descriptor describing this configuration */
+        USB_AUDIO_STREAMING_TYPE_I_DESC_SIZE + USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH + USB_AUDIO_STREAMING_ENDP_DESC_SIZE
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+        ),
+#else
+        + USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH), /* Total length of data returned for this configuration. */
+#endif
+    USB_AUDIO_SPEAKER_INTERFACE_COUNT, /* Number of interfaces supported by this configuration */
+    USB_AUDIO_SPEAKER_CONFIGURE_INDEX, /* Value to use as an argument to the
+                                            SetConfiguration() request to select this configuration */
+    0x00U,                             /* Index of string descriptor describing this configuration */
     (USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_D7_MASK) |
         (USB_DEVICE_CONFIG_SELF_POWER << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_SELF_POWERED_SHIFT) |
         (USB_DEVICE_CONFIG_REMOTE_WAKEUP << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_REMOTE_WAKEUP_SHIFT),
@@ -341,8 +349,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_AUDIO_SPEAKER_CONTROL_INPUT_TERMINAL_ID, /* Constant uniquely identifying the Terminal within the audio
               function. This value is used in all requests
               to address this Terminal.  */
-    0x01U,
-    0x01,         /* A generic microphone that does not fit under any of the other classifications.  */
+    0x01U, 0x01,  /* A generic microphone that does not fit under any of the other classifications.  */
     0x00U,        /* This Input Terminal has no association  */
     0x02U,        /* This Terminal's output audio channel cluster has 1 logical output channels  */
     0x03U, 0x00U, /* Spatial locations present in the cluster */
@@ -364,7 +371,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     0x03U,                                       /* Master channel0 controls */
     0x00U,                                       /* Master channel1 controls */
     0x00U,                                       /* Master channel2 controls */
-    0x00U, /* Index of a string descriptor, describing this Feature Unit.   */
+    0x00U,                                       /* Index of a string descriptor, describing this Feature Unit.   */
 
     /* Audio Class Specific type of  Output Terminal */
     USB_AUDIO_OUTPUT_TERMINAL_ONLY_DESC_SIZE, /* Size of the descriptor, in bytes  */
@@ -373,9 +380,8 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     /* OUTPUT_TERMINAL descriptor subtype  */
     USB_AUDIO_SPEAKER_CONTROL_OUTPUT_TERMINAL_ID, /* Constant uniquely identifying the Terminal within the audio
                                                      function*/
-    0x01U,
-    0x03U, /* A Terminal dealing with a signal carried over an endpoint in an AudioStreaming interface */
-    0x00U, /*  This Output Terminal has no association   */
+    0x01U, 0x03U, /* A Terminal dealing with a signal carried over an endpoint in an AudioStreaming interface */
+    0x00U,        /*  This Output Terminal has no association   */
     USB_AUDIO_SPEAKER_CONTROL_FEATURE_UNIT_ID, /* ID of the Unit or Terminal to which this Terminal is connected.   */
     0x00U,                                     /* Index of a string descriptor, describing the Output Terminal.  */
 
@@ -405,11 +411,15 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_TYPE_INTERFACE,    /* INTERFACE Descriptor Type  */
     USB_AUDIO_STREAM_INTERFACE_INDEX, /*The number of this interface is 1.  */
     0x01U,                            /* The value used to select the alternate setting for this interface is 1  */
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+    0x01U,                            /* The number of endpoints used by this interface is 1 (excluding endpoint zero)    */
+#else
     0x02U,                    /* The number of endpoints used by this interface is 2 (excluding endpoint zero)    */
-    USB_AUDIO_CLASS,          /* The interface implements the Audio Interface class   */
-    USB_SUBCLASS_AUDIOSTREAM, /* The interface implements the AUDIOSTREAMING Subclass   */
-    0x00U,                    /* The interface doesn't use any class-specific protocols  */
-    0x00U,                    /* The device doesn't have a string descriptor describing this iInterface  */
+#endif
+    USB_AUDIO_CLASS,                  /* The interface implements the Audio Interface class   */
+    USB_SUBCLASS_AUDIOSTREAM,         /* The interface implements the AUDIOSTREAMING Subclass   */
+    0x00U,                            /* The interface doesn't use any class-specific protocols  */
+    0x00U,                            /* The device doesn't have a string descriptor describing this iInterface  */
 
     /* Audio Class Specific CS INTERFACE Descriptor*/
     USB_AUDIO_STREAMING_IFACE_DESC_SIZE,            /* Size of the descriptor, in bytes  */
@@ -417,9 +427,8 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_SUBTYPE_AUDIO_STREAMING_GENERAL, /* AS_GENERAL descriptor subtype  */
     USB_AUDIO_SPEAKER_CONTROL_INPUT_TERMINAL_ID,    /* The Terminal ID of the Terminal to which the endpoint of this
                                                        interface is connected. */
-    0x01U, /* Delay introduced by the data path. Expressed in number of frames.  */
-    0x01U,
-    0x00U, /* PCM  */
+    0x01U,        /* Delay introduced by the data path. Expressed in number of frames.  */
+    0x01U, 0x00U, /* PCM  */
 
     /* Audio Class Specific type I format INTERFACE Descriptor */
     USB_AUDIO_STREAMING_TYPE_I_DESC_SIZE,               /* bLength (11) */
@@ -434,7 +443,19 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     TSAMFREQ2BYTES(AUDIO_SAMPLING_RATE_KHZ * 1000),     /* 16 kHz */
                                                         /*   0x80,0xBB,0x00U,                  48 kHz */
                                                         /*   0x00U, 0xFA,0x00U,                72 kHz */
-
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+    /* ENDPOINT Descriptor */
+    USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH, /* Descriptor size is 9 bytes  */
+    USB_DESCRIPTOR_TYPE_ENDPOINT,         /* Descriptor type (endpoint descriptor) */
+    USB_AUDIO_SPEAKER_STREAM_ENDPOINT |
+        (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT), /* OUT endpoint address 1 */
+    USB_ENDPOINT_ISOCHRONOUS | 0x0CU,                                 /* Isochronous endpoint and Synchronous*/
+    USB_SHORT_GET_LOW(FS_ISO_OUT_ENDP_PACKET_SIZE),
+    USB_SHORT_GET_HIGH(FS_ISO_OUT_ENDP_PACKET_SIZE), /* 16 bytes  */
+    FS_ISO_OUT_ENDP_INTERVAL,                        /* bInterval(0x01U): x ms */
+    0x00U,                                           /* Unused */
+    0x00U,                                           /* Synchronization Endpoint (if used) is endpoint 0x83  */
+#else
     /* ENDPOINT Descriptor */
     USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH, /* Descriptor size is 9 bytes  */
     USB_DESCRIPTOR_TYPE_ENDPOINT,         /* Descriptor type (endpoint descriptor) */
@@ -448,7 +469,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_AUDIO_SPEAKER_FEEDBACK_ENDPOINT |
         (USB_IN
          << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT), /* Synchronization Endpoint (if used) is endpoint 0x83  */
-
+#endif
     /* Audio Class Specific ENDPOINT Descriptor  */
     USB_AUDIO_STREAMING_ENDP_DESC_SIZE,      /*  Size of the descriptor, in bytes  */
     USB_AUDIO_STREAM_ENDPOINT_DESCRIPTOR,    /* CS_ENDPOINT Descriptor Type  */
@@ -457,9 +478,10 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
                                                 Bit 1: Pitch 0
                                                 Bit 7: MaxPacketsOnly 0   */
     0x00U,                                   /* Indicates the units used for the wLockDelay field: 0: Undefined  */
-    0x00U,
-    0x00U, /* Indicates the time it takes this endpoint to reliably lock its internal clock recovery circuitry */
+    0x00U, 0x00U,                            /* Indicates the time it takes this endpoint to reliably lock its internal clock recovery circuitry */
 
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+#else
     /* Endpoint 3 Feedback ENDPOINT */
     USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH, /* bLength */
     USB_DESCRIPTOR_TYPE_ENDPOINT,         /* bDescriptorType */
@@ -474,6 +496,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     0x01, /* interval polling(2^x ms) */
     0x05, /* bRefresh(32ms)  */
     0x00, /* unused */
+#endif
 #endif /* AUDIO_CLASS_2_0 */
 };
 
@@ -697,7 +720,7 @@ usb_status_t USB_DeviceGetInterface(usb_device_handle handle, uint8_t interface,
  * current speed.
  * As the default, the device descriptors and configurations are configured by using FS parameters for both EHCI and
  * KHCI.
- * When the EHCI is enabled, the application needs to call this fucntion to update device by using current speed.
+ * When the EHCI is enabled, the application needs to call this function to update device by using current speed.
  * The updated information includes endpoint max packet size, endpoint interval, etc. */
 usb_status_t USB_DeviceSetSpeed(uint8_t speed)
 {
@@ -714,6 +737,17 @@ usb_status_t USB_DeviceSetSpeed(uint8_t speed)
         {
             if (USB_SPEED_HIGH == speed)
             {
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+                if ((USB_AUDIO_SPEAKER_STREAM_ENDPOINT ==
+                     (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                    ((descriptorHead->endpoint.bEndpointAddress >> USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT) ==
+                     USB_OUT))
+                {
+                    descriptorHead->endpoint.bInterval = HS_ISO_OUT_ENDP_INTERVAL;
+                    USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS((HS_ISO_OUT_ENDP_PACKET_SIZE),
+                                                       descriptorHead->endpoint.wMaxPacketSize);
+                }
+#else
                 if ((USB_AUDIO_SPEAKER_STREAM_ENDPOINT ==
                      (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
                     ((descriptorHead->endpoint.bEndpointAddress >> USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT) ==
@@ -733,12 +767,24 @@ usb_status_t USB_DeviceSetSpeed(uint8_t speed)
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(HS_ISO_FEEDBACK_ENDP_PACKET_SIZE,
                                                        descriptorHead->endpoint.wMaxPacketSize);
                 }
+#endif
                 else
                 {
                 }
             }
             else
             {
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+                if ((USB_AUDIO_SPEAKER_STREAM_ENDPOINT ==
+                     (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                    ((descriptorHead->endpoint.bEndpointAddress >> USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT) ==
+                     USB_OUT))
+                {
+                    descriptorHead->endpoint.bInterval = FS_ISO_OUT_ENDP_INTERVAL;
+                    USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS((FS_ISO_OUT_ENDP_PACKET_SIZE),
+                                                       descriptorHead->endpoint.wMaxPacketSize);
+                }
+#else
                 if ((USB_AUDIO_SPEAKER_STREAM_ENDPOINT ==
                      (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
                     ((descriptorHead->endpoint.bEndpointAddress >> USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT) ==
@@ -758,6 +804,7 @@ usb_status_t USB_DeviceSetSpeed(uint8_t speed)
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(FS_ISO_FEEDBACK_ENDP_PACKET_SIZE,
                                                        descriptorHead->endpoint.wMaxPacketSize);
                 }
+#endif
                 else
                 {
                 }

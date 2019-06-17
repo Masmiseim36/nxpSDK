@@ -8,7 +8,7 @@
 /**
  * @file evkmimxrt1020.h
  * @brief The evkmimxrt1020.h file defines GPIO pin mappings for evkmimxrt1020 board
-*/
+ */
 
 #ifndef EVKMIMX1020_H_
 #define EVKMIMX1020_H_
@@ -99,7 +99,7 @@ extern gpioHandleiMXSDK_t INT2;
 
 /* @brief  Ask use input to resume after specified samples have been processed. */
 #define ASK_USER_TO_RESUME(x)                                                          \
-    static volatile bool askResume = true;                                             \
+    static volatile bool askResume   = true;                                           \
     static uint16_t samplesToProcess = x - 1;                                          \
     if (askResume && !samplesToProcess--)                                              \
     {                                                                                  \

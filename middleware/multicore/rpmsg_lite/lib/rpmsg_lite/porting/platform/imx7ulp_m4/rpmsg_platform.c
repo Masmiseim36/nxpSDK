@@ -1,12 +1,11 @@
 /*
  * Copyright (c) 2016 Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#include <assert.h>
 #include <stdio.h>
 #include <string.h>
 #include "rpmsg_platform.h"
@@ -15,58 +14,78 @@
 #include "fsl_device_registers.h"
 #include "fsl_mu.h"
 
+#if defined(RL_USE_ENVIRONMENT_CONTEXT) && (RL_USE_ENVIRONMENT_CONTEXT == 1)
+#error "This RPMsg-Lite port requires RL_USE_ENVIRONMENT_CONTEXT set to 0"
+#endif
+
 #define APP_MU_IRQ_PRIORITY (3U)
 #define APP_MU_A7_SIDE_READY (0x1U)
 #define APP_MU_A7_WAIT_INTERVAL_MS (10U)
 
 static int isr_counter = 0;
 static int disable_counter = 0;
-static void *lock;
+static void *platform_lock;
 
-int platform_init_interrupt(int vq_id, void *isr_data)
+
+void platform_global_isr_disable(void)
+{
+    __asm volatile("cpsid i");
+}
+
+
+void platform_global_isr_enable(void)
+{
+    __asm volatile("cpsie i");
+}
+
+int platform_init_interrupt(unsigned int vector_id, void *isr_data)
 {
     /* Register ISR to environment layer */
-    env_register_isr(vq_id, isr_data);
+    env_register_isr(vector_id, isr_data);
 
     /* Prepare the MU Hardware, enable channel 1 interrupt */
-    env_lock_mutex(lock);
+    env_lock_mutex(platform_lock);
 
-    assert(0 <= isr_counter);
+    RL_ASSERT(0 <= isr_counter);
     if (!isr_counter)
+    {
         MU_EnableInterrupts(MUA, (1U << 27U) >> RPMSG_MU_CHANNEL);
+    }
     isr_counter++;
 
-    env_unlock_mutex(lock);
+    env_unlock_mutex(platform_lock);
 
     return 0;
 }
 
-int platform_deinit_interrupt(int vq_id)
+int platform_deinit_interrupt(unsigned int vector_id)
 {
     /* Prepare the MU Hardware */
-    env_lock_mutex(lock);
+    env_lock_mutex(platform_lock);
 
-    assert(0 < isr_counter);
+    RL_ASSERT(0 < isr_counter);
     isr_counter--;
     if (!isr_counter)
+    {
         MU_DisableInterrupts(MUA, (1U << 27U) >> RPMSG_MU_CHANNEL);
+    }
 
     /* Unregister ISR from environment layer */
-    env_unregister_isr(vq_id);
+    env_unregister_isr(vector_id);
 
-    env_unlock_mutex(lock);
+    env_unlock_mutex(platform_lock);
 
     return 0;
 }
 
-void platform_notify(int vq_id)
+void platform_notify(unsigned int vector_id)
 {
     /* As Linux suggests, use MU->Data Channel 1 as communication channel */
-    uint32_t msg = (uint32_t)(vq_id << 16);
+    uint32_t msg = (uint32_t)(vector_id << 16);
 
-    env_lock_mutex(lock);
+    env_lock_mutex(platform_lock);
     MU_SendMsg(MUA, RPMSG_MU_CHANNEL, msg);
-    env_unlock_mutex(lock);
+    env_unlock_mutex(platform_lock);
 }
 
 /*
@@ -131,26 +150,26 @@ int platform_in_isr(void)
 /**
  * platform_interrupt_enable
  *
- * Enable peripheral-related interrupt with passed priority and type.
+ * Enable peripheral-related interrupt
  *
- * @param vq_id Vector ID that need to be converted to IRQ number
- * @param trigger_type IRQ active level
- * @param trigger_type IRQ priority
+ * @param vector_id Virtual vector ID that needs to be converted to IRQ number
  *
- * @return vq_id. Return value is never checked..
+ * @return vector_id Return value is never checked.
  *
  */
-int platform_interrupt_enable(unsigned int vq_id)
+int platform_interrupt_enable(unsigned int vector_id)
 {
-    assert(0 < disable_counter);
+    RL_ASSERT(0 < disable_counter);
 
-    __asm volatile("cpsid i");
+    platform_global_isr_disable();
     disable_counter--;
 
     if (!disable_counter)
+    {
         NVIC_EnableIRQ(MU_A_IRQn);
-    __asm volatile("cpsie i");
-    return (vq_id);
+    }
+    platform_global_isr_enable();
+    return (vector_id);
 }
 
 /**
@@ -158,24 +177,25 @@ int platform_interrupt_enable(unsigned int vq_id)
  *
  * Disable peripheral-related interrupt.
  *
- * @param vq_id Vector ID that need to be converted to IRQ number
+ * @param vector_id Virtual vector ID that needs to be converted to IRQ number
  *
- * @return vq_id. Return value is never checked.
+ * @return vector_id Return value is never checked.
  *
  */
-int platform_interrupt_disable(unsigned int vq_id)
+int platform_interrupt_disable(unsigned int vector_id)
 {
-    assert(0 <= disable_counter);
+    RL_ASSERT(0 <= disable_counter);
 
-    __asm volatile("cpsid i");
-    // virtqueues use the same NVIC vector
-    // if counter is set - the interrupts are disabled
+    platform_global_isr_disable();
+    /* virtqueues use the same NVIC vector
+       if counter is set - the interrupts are disabled */
     if (!disable_counter)
+    {
         NVIC_DisableIRQ(MU_A_IRQn);
-
+    }
     disable_counter++;
-    __asm volatile("cpsie i");
-    return (vq_id);
+    platform_global_isr_enable();
+    return (vector_id);
 }
 
 /**
@@ -194,7 +214,7 @@ void platform_map_mem_region(unsigned int vrt_addr, unsigned int phy_addr, unsig
  * Dummy implementation
  *
  */
-void platform_cache_all_flush_invalidate()
+void platform_cache_all_flush_invalidate(void)
 {
 }
 
@@ -204,7 +224,7 @@ void platform_cache_all_flush_invalidate()
  * Dummy implementation
  *
  */
-void platform_cache_disable()
+void platform_cache_disable(void)
 {
 }
 
@@ -246,7 +266,10 @@ int platform_init(void)
     NVIC_EnableIRQ(MU_A_IRQn);
 
     /* Create lock used in multi-instanced RPMsg */
-    env_create_mutex(&lock, 1);
+    if(0 != env_create_mutex(&platform_lock, 1))
+    {
+        return -1;
+    }
 
     return 0;
 }
@@ -259,7 +282,7 @@ int platform_init(void)
 int platform_deinit(void)
 {
     /* Delete lock used in multi-instanced RPMsg */
-    env_delete_mutex(lock);
-    lock = NULL;
+    env_delete_mutex(platform_lock);
+    platform_lock = NULL;
     return 0;
 }

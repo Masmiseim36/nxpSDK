@@ -35,11 +35,8 @@ extern "C" {
 #define INS_GP_SELECT                 (0xA4)  //!< Global platform defined instruction
 #define INS_GP_PUT_KEY                (0xD8)  //!< Global platform defined instruction
 
-#ifndef TGT_A71CH
-U32 GP_SelectApplet(U8 * pAppletName, U8 appletNameLength, U8 * pResponse, U32 * pResponseLength);
-#endif // TGT_A71CH
 U16 GP_Select(U8 *appletName, U16 appletNameLen, U8 *response, U16 *responseLen);
-
+U16 GP_GetCLAppletVersion(U8 *appletVersion, U16 *verionLength);
 #ifdef __cplusplus
 }
 #endif

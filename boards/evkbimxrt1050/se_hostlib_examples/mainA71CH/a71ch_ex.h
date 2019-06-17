@@ -64,22 +64,22 @@ U8 exAesRfc3394Precooked(U8 initMode);
 U8 exSymHkdf(U8 initMode);
 U8 exSymHmacSha256(U8 initMode);
 
-U8 exConfig(U16 appletVersion);
+U8 exConfig(void);
 U8 exEccNohc(void);
 U8 exGPStorage(U8 tstMode);
 U8 exMisc(void);
-U8 exPsk(U16 appletVersion);
-U8 exScp(U16 appletVersion);
-U8 exSst(U16 appletVersion);
-U8 exSstKp(U16 appletVersion);
-U8 exSstKeyPair(U8 initMode, U16 appletVersion);
+U8 exPsk(void);
+U8 exScp(void);
+U8 exSst(void);
+U8 exSstKp(void);
+U8 exSstKeyPair(U8 initMode);
 
-U8 exPskTls1_2(U8 initMode, U8 pskMode, U16 appletVersion);
+U8 exPskTls1_2(U8 initMode, U8 pskMode);
 /** @}*/
 
 /** \name Walkthrough example (illustrating typical product use)
   @{ */
-U8 exWalkthrough(U16 appletVersion);
+U8 exWalkthrough(void);
 /** @}*/
 
 /** \name Example functions illustrating specific Debug Mode functions (only available in case the Applet is in Debug Mode)

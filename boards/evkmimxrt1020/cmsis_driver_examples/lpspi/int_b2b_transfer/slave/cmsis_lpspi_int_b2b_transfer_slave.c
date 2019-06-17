@@ -1,7 +1,7 @@
 /*
  * Copyright 2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -27,8 +27,7 @@
 /* Clock divider for master lpspi clock source */
 #define EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER (7U)
 
-#define EXAMPLE_LPSPI_CLOCK_FREQ \
-    (CLOCK_GetFreq(kCLOCK_Usb1PllPfd0Clk) / (EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER + 1U))
+#define EXAMPLE_LPSPI_CLOCK_FREQ (CLOCK_GetFreq(kCLOCK_Usb1PllPfd0Clk) / (EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER + 1U))
 #define TRANSFER_SIZE 64U /*! Transfer dataSize */
 
 /*******************************************************************************
@@ -43,8 +42,8 @@ void LPSPI_SlaveSignalEvent_t(uint32_t event);
 uint8_t slaveRxData[TRANSFER_SIZE] = {0U};
 
 volatile bool isTransferCompleted = false;
-volatile bool isSlaveOnTransmit = false;
-volatile bool isSlaveOnReceive = false;
+volatile bool isSlaveOnTransmit   = false;
+volatile bool isSlaveOnReceive    = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -85,7 +84,6 @@ int main(void)
     CLOCK_SetMux(kCLOCK_LpspiMux, EXAMPLE_LPSPI_CLOCK_SOURCE_SELECT);
     CLOCK_SetDiv(kCLOCK_LpspiDiv, EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER);
 
-
     PRINTF("LPSPI CMSIS driver board to board interrupt example.\r\n");
 
     uint32_t i;
@@ -105,7 +103,7 @@ int main(void)
             slaveRxData[i] = 0U;
         }
         isTransferCompleted = false;
-        isSlaveOnReceive = true;
+        isSlaveOnReceive    = true;
         /* Set slave transfer to receive data */
         DRIVER_SLAVE_SPI.Receive(slaveRxData, TRANSFER_SIZE);
 
@@ -114,7 +112,7 @@ int main(void)
         }
 
         isTransferCompleted = false;
-        isSlaveOnTransmit = true;
+        isSlaveOnTransmit   = true;
         /* Set slave transfer to send back data */
         DRIVER_SLAVE_SPI.Send(slaveRxData, TRANSFER_SIZE);
 

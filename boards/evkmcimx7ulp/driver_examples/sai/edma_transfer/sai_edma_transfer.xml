@@ -2,10 +2,14 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.codec_i2c.MCIMX7U5"/>
     <definition extID="component.lists.MCIMX7U5"/>
+    <definition extID="component.lpi2c_adapter.MCIMX7U5"/>
     <definition extID="component.lpuart_adapter.MCIMX7U5"/>
     <definition extID="component.serial_manager.MCIMX7U5"/>
     <definition extID="component.serial_manager_uart.MCIMX7U5"/>
+    <definition extID="component.wm8960_adapter.MCIMX7U5"/>
+    <definition extID="driver.codec.MCIMX7U5"/>
     <definition extID="driver.wm8960.MCIMX7U5"/>
     <definition extID="platform.Include_common.MCIMX7U5"/>
     <definition extID="platform.Include_core_cm4.MCIMX7U5"/>
@@ -29,7 +33,7 @@
     <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkmcimx7ulp_sai_edma_transfer" name="sai_edma_transfer" category="driver_examples/sai" dependency="platform.drivers.lpi2c.MCIMX7U5 driver.wm8960.MCIMX7U5 platform.drivers.port.MCIMX7U5 platform.drivers.gpio.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.sai.MCIMX7U5 platform.drivers.sai_edma.MCIMX7U5 platform.drivers.dmamux.MCIMX7U5 platform.drivers.edma.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 utility.debug_console.MCIMX7U5 component.lpuart_adapter.MCIMX7U5 component.serial_manager.MCIMX7U5 component.serial_manager_uart.MCIMX7U5 platform.drivers.lpuart.MCIMX7U5 component.lists.MCIMX7U5 platform.devices.MCIMX7U5_startup.MCIMX7U5 platform.drivers.msmc.MCIMX7U5 platform.utilities.assert.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.Include_common.MCIMX7U5">
+  <example id="evkmcimx7ulp_sai_edma_transfer" name="sai_edma_transfer" category="driver_examples/sai" dependency="platform.drivers.lpi2c.MCIMX7U5 driver.wm8960.MCIMX7U5 driver.codec.MCIMX7U5 component.wm8960_adapter.MCIMX7U5 component.lpi2c_adapter.MCIMX7U5 platform.drivers.port.MCIMX7U5 platform.drivers.gpio.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.sai.MCIMX7U5 platform.drivers.sai_edma.MCIMX7U5 platform.drivers.dmamux.MCIMX7U5 platform.drivers.edma.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 utility.debug_console.MCIMX7U5 component.lpuart_adapter.MCIMX7U5 component.serial_manager.MCIMX7U5 component.serial_manager_uart.MCIMX7U5 platform.drivers.lpuart.MCIMX7U5 component.lists.MCIMX7U5 platform.devices.MCIMX7U5_startup.MCIMX7U5 platform.drivers.msmc.MCIMX7U5 platform.utilities.assert.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.Include_common.MCIMX7U5 component.codec_i2c.MCIMX7U5">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -48,6 +52,7 @@
           <value>CPU_MCIMX7U5DVP08</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>BOARD_USE_CODEC=1</value>
+          <value>CODEC_WM8960_ENABLE</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>

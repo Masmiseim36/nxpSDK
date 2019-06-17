@@ -86,7 +86,7 @@ static void CMP_Configuration(void)
     cmp_dac_config_t cmpdacConfig;
 
     cmpdacConfig.referenceVoltageSource = kCMP_VrefSourceVin2;
-    cmpdacConfig.DACValue = 32U; /* Set DAC output value */
+    cmpdacConfig.DACValue               = 32U; /* Set DAC output value */
 
     CMP_GetDefaultConfig(&cmpConfig);
     CMP_Init(DEMO_CMP_BASEADDR, &cmpConfig);
@@ -122,7 +122,7 @@ static void XBAR_Configuration(void)
     XBARA_SetSignalsConnection(DEMO_XBARA_BASEADDR, DEMO_XBARA_INPUT_AOI_SIGNAL, DEMO_XBARA_OUTPUT_SIGNAL);
 
     /* Configure the XBARA interrupt */
-    xbaraConfig.activeEdge = kXBARA_EdgeRising;
+    xbaraConfig.activeEdge  = kXBARA_EdgeRising;
     xbaraConfig.requestType = kXBARA_RequestInterruptEnalbe;
     XBARA_SetOutputSignalConfig(DEMO_XBARA_BASEADDR, DEMO_XBARA_OUTPUT_SIGNAL, &xbaraConfig);
 

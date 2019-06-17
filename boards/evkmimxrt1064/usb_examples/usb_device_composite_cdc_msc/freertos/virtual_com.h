@@ -31,6 +31,8 @@
 
 #if defined(__GIC_PRIO_BITS)
 #define USB_DEVICE_INTERRUPT_PRIORITY (25U)
+#elif defined(__NVIC_PRIO_BITS) && (__NVIC_PRIO_BITS >= 3)
+#define USB_DEVICE_INTERRUPT_PRIORITY (6U)
 #else
 #define USB_DEVICE_INTERRUPT_PRIORITY (3U)
 #endif
@@ -65,7 +67,7 @@ typedef struct _usb_cdc_vcom_struct
         [USB_CDC_VCOM_INTERFACE_COUNT]; /* Current alternate setting value for each interface. */
 } usb_cdc_vcom_struct_t;
 
-/* Define the infomation relates to abstract control model */
+/* Define the information relates to abstract control model */
 typedef struct _usb_cdc_acm_info
 {
     uint8_t serialStateBuf[NOTIF_PACKET_SIZE + UART_BITMAP_SIZE]; /* Serial state buffer of the CDC device to notify the

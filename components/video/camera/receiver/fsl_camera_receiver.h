@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2017, NXP Semiconductors, Inc.
+ * Copyright  2017 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -50,10 +50,10 @@ struct _camera_receiver_operations
                                                                                            frame buffer from
                                                                                            the receiver buffer queue. */
     status_t (*init_ext)(camera_receiver_handle_t *handle,
-                     const camera_config_t *config,
-                     const void *specialConfig,
-                     camera_receiver_callback_t callback,
-                     void *userData);                                                 /*!< Init the receiver with specific configuration. */
+                         const camera_config_t *config,
+                         const void *specialConfig,
+                         camera_receiver_callback_t callback,
+                         void *userData); /*!< Init the receiver with specific configuration. */
 };
 
 /*******************************************************************************
@@ -98,10 +98,10 @@ static inline status_t CAMERA_RECEIVER_Init(camera_receiver_handle_t *handle,
  * error code.
  */
 static inline status_t CAMERA_RECEIVER_InitExt(camera_receiver_handle_t *handle,
-                                            const camera_config_t *config,
-                                            const void *specialConfig,
-                                            camera_receiver_callback_t callback,
-                                            void *userData)
+                                               const camera_config_t *config,
+                                               const void *specialConfig,
+                                               camera_receiver_callback_t callback,
+                                               void *userData)
 {
     return handle->ops->init_ext(handle, config, specialConfig, callback, userData);
 }

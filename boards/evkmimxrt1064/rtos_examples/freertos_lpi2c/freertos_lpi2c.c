@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -40,7 +40,7 @@
 #define LPI2C_CLOCK_FREQUENCY ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
 
 /* clang-format off */
-/* 
+/*
 The example support single board communication(one instance works as master, another
 instance works as slave) or board to board communication. Defult is single board mode.
 */
@@ -154,12 +154,12 @@ typedef struct _callback_message_t
 static void lpi2c_slave_callback(LPI2C_Type *base, lpi2c_slave_transfer_t *xfer, void *userData)
 {
     callback_message_t *cb_msg = (callback_message_t *)userData;
-    BaseType_t reschedule;
+    BaseType_t reschedule      = 0;
 
     switch (xfer->event)
     {
         case kLPI2C_SlaveReceiveEvent:
-            xfer->data = g_slave_buff;
+            xfer->data     = g_slave_buff;
             xfer->dataSize = I2C_DATA_LENGTH;
             break;
         case kLPI2C_SlaveCompletionEvent:
@@ -182,7 +182,7 @@ static void slave_task(void *pvParameters)
     callback_message_t cb_msg;
 
     cb_msg.sem = xSemaphoreCreateBinary();
-    lpi2c_sem = cb_msg.sem;
+    lpi2c_sem  = cb_msg.sem;
     if (cb_msg.sem == NULL)
     {
         PRINTF("I2C slave: Error creating semaphore\r\n");
@@ -227,8 +227,12 @@ static void slave_task(void *pvParameters)
         PRINTF("Failed to create master task");
     }
 #endif
+
     /* Wait for transfer to finish */
-    xSemaphoreTake(cb_msg.sem, portMAX_DELAY);
+    if (xSemaphoreTake(cb_msg.sem, portMAX_DELAY) != pdTRUE)
+    {
+        PRINTF("Failed to take semaphore.\r\n");
+    }
 
 #if ((I2C_MASTER_SLAVE == isSLAVE) || (EXAMPLE_CONNECT_I2C == SINGLE_BOARD))
     if (cb_msg.async_status == kStatus_Success)
@@ -246,7 +250,7 @@ static void slave_task(void *pvParameters)
     {
         if (g_slave_buff[i] != g_master_buff[i])
         {
-            PRINTF("\r\nError occured in this transfer ! \r\n");
+            PRINTF("\r\nError occurred in this transfer ! \r\n");
             break;
         }
     }
@@ -312,13 +316,13 @@ static void master_task(void *pvParameters)
     }
 
     memset(&masterXfer, 0, sizeof(masterXfer));
-    masterXfer.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;
-    masterXfer.direction = kLPI2C_Write;
-    masterXfer.subaddress = 0;
+    masterXfer.slaveAddress   = I2C_MASTER_SLAVE_ADDR_7BIT;
+    masterXfer.direction      = kLPI2C_Write;
+    masterXfer.subaddress     = 0;
     masterXfer.subaddressSize = 0;
-    masterXfer.data = g_master_buff;
-    masterXfer.dataSize = I2C_DATA_LENGTH;
-    masterXfer.flags = kLPI2C_TransferDefaultFlag;
+    masterXfer.data           = g_master_buff;
+    masterXfer.dataSize       = I2C_DATA_LENGTH;
+    masterXfer.flags          = kLPI2C_TransferDefaultFlag;
 
     status = LPI2C_RTOS_Transfer(&master_rtos_handle, &masterXfer);
     if (status == kStatus_Success)

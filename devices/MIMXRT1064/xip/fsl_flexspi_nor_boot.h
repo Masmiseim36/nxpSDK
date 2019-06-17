@@ -11,6 +11,12 @@
 #include <stdint.h>
 #include "board.h"
 
+/*! @name Driver version */
+/*@{*/
+/*! @brief XIP_DEVICE driver version 2.0.0. */
+#define FSL_XIP_DEVICE_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+/*@}*/
+
 /************************************* 
  *  IVT Data 
  *************************************/
@@ -57,7 +63,7 @@ typedef struct _ivt_ {
 #define IVT_HEADER           (IVT_TAG_HEADER | (IVT_SIZE << 8) | (IVT_PAR << 24))
 
 /* Set resume entry */
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION) 
     extern uint32_t __Vectors[];
     extern uint32_t Image$$RW_m_config_text$$Base[];
 #define IMAGE_ENTRY_ADDRESS ((uint32_t)__Vectors) 
@@ -94,7 +100,11 @@ typedef struct _boot_data_ {
   uint32_t placeholder;		/* placehoder to make even 0x10 size */
 }BOOT_DATA_T;
 
+#if defined(BOARD_FLASH_SIZE)
 #define FLASH_SIZE            BOARD_FLASH_SIZE
+#else
+#error "Please define macro BOARD_FLASH_SIZE"
+#endif
 #define PLUGIN_FLAG           (uint32_t)0
 
 /* External Variables */

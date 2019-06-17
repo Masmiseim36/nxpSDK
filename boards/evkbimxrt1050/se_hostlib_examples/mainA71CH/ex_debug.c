@@ -20,7 +20,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include "sm_printf.h"
 #include "a71ch_ex.h"
 #include "ax_util.h"
 #include "a71_debug.h"
@@ -29,6 +28,7 @@
 #include "tst_sm_util.h"
 #include "tst_sm_time.h"
 #include "tst_a71ch_util.h"
+#include "nxLog_hostLib.h"
 
 #define MEASURE_POINTS_MAX 16
 
@@ -44,11 +44,11 @@ U8 exDebugMode(U8 testMode)
 {
     U8 result = 1;
     int i;
-    long msArray[MEASURE_POINTS_MAX];
+    long msArray[MEASURE_POINTS_MAX] = {0};
     axTimeMeasurement_t mPair;
     int nPoint = 0;
 
-    PRINTF( "\r\n-----------\r\nStart exDebugMode(extended_test=%s, measure_exec_time=%s)\r\n------------\r\n",
+    LOG_I( "-----------Start exDebugMode(extended_test=%s, measure_exec_time=%s)------------",
         ((testMode & EXTENDED_TEST) == EXTENDED_TEST)? "ON":"OFF",
         ((testMode & MEASURE_EXEC_TIME) == MEASURE_EXEC_TIME)? "ON":"OFF");
 
@@ -82,7 +82,7 @@ U8 exDebugMode(U8 testMode)
         // * Measure transfer time for mixed packet sizes
         concludeMeasurement(&mPair);
         msArray[nPoint] = getMeasurement(&mPair);
-        PRINTF("exDbgReflect: Exec time for mixed packet sizes = %ld ms\r\n", msArray[nPoint]);
+        LOG_I("exDbgReflect: Exec time for mixed packet sizes = %ld ms", msArray[nPoint]);
         nPoint++;
     }
 
@@ -91,11 +91,11 @@ U8 exDebugMode(U8 testMode)
     {
         for (i=0; i<20; i++)
         {
-            PRINTF("exDbgReflect_duration (iter==%d).\r\n", i);
+            LOG_I("exDbgReflect_duration (iter==%d).", i);
             result &= exDbgReflect(1, 255);
             if (result == 0)
             {
-                PRINTF("exDbgReflect_duration failed (iter==%d).\r\n", i);
+                LOG_E("exDbgReflect_duration failed (iter==%d).", i);
                 break;
             }
         }
@@ -105,37 +105,37 @@ U8 exDebugMode(U8 testMode)
     if ((testMode & MEASURE_EXEC_TIME) == MEASURE_EXEC_TIME)
     {
         // * Measure transfer time for small packets
-        PRINTF("exDbgReflect: Measure exec time for packets between 16 & 32 byte.\r\n");
+        LOG_I("exDbgReflect: Measure exec time for packets between 16 & 32 byte.");
         initMeasurement(&mPair);
         for (i=0; i<3; i++)
         {
             result &= exDbgReflect(16, 32);
             if (result == 0)
             {
-                PRINTF("exDbgReflect failed (iter==%d) at line %d.\r\n", i, __LINE__);
+                LOG_I("exDbgReflect failed (iter==%d) at line %d.", i, __LINE__);
                 break;
             }
         }
         concludeMeasurement(&mPair);
         msArray[nPoint] = getMeasurement(&mPair);
-        PRINTF("exDbgReflect: Exec time for packets between 16 & 32 byte = %ld ms\r\n", msArray[nPoint]);
+        LOG_I("exDbgReflect: Exec time for packets between 16 & 32 byte = %ld ms", msArray[nPoint]);
         nPoint++;
 
         // * Measure transfer time for big packets
-        PRINTF("exDbgReflect: Measure exec time for packets between 230 & 246 byte.\r\n");
+        LOG_I("exDbgReflect: Measure exec time for packets between 230 & 246 byte.");
         initMeasurement(&mPair);
         for (i=0; i<3; i++)
         {
             result &= exDbgReflect(230, 246);
             if (result == 0)
             {
-                PRINTF("exDbgReflect failed (iter==%d) at line %d.\r\n", i, __LINE__);
+                LOG_E("exDbgReflect failed (iter==%d) at line %d.", i, __LINE__);
                 break;
             }
         }
         concludeMeasurement(&mPair);
         msArray[nPoint] = getMeasurement(&mPair);
-        PRINTF("exDbgReflect: Exec time for packets between 230 & 246 byte = %ld ms\r\n", msArray[nPoint]);
+        LOG_I("exDbgReflect: Exec time for packets between 230 & 246 byte = %ld ms", msArray[nPoint]);
         nPoint++;
     }
 
@@ -144,14 +144,14 @@ U8 exDebugMode(U8 testMode)
     {
         if (result == 1)
         {
-            PRINTF("exDbgReflect: Exec time for mixed packet sizes = %ld ms\r\n", msArray[0]);
-            PRINTF("exDbgReflect: Exec time for packets between 16 & 32 byte = %ld ms\r\n", msArray[1]);
-            PRINTF("exDbgReflect: Exec time for packets between 230 & 246 byte = %ld ms\r\n",  msArray[2]);
+            LOG_I("exDbgReflect: Exec time for mixed packet sizes = %ld ms", msArray[0]);
+            LOG_I("exDbgReflect: Exec time for packets between 16 & 32 byte = %ld ms", msArray[1]);
+            LOG_I("exDbgReflect: Exec time for packets between 230 & 246 byte = %ld ms",  msArray[2]);
         }
     }
 
     // overall result
-    PRINTF( "\r\n-----------\r\nEnd exDebugMode(extended_test=%s, measure_exec_time=%s), result = %s\r\n------------\r\n",
+    LOG_I( "-----------End exDebugMode(extended_test=%s, measure_exec_time=%s), result = %s------------",
         ((testMode & EXTENDED_TEST) == EXTENDED_TEST)? "ON":"OFF",
         ((testMode & MEASURE_EXEC_TIME) == MEASURE_EXEC_TIME)? "ON":"OFF",
         ((result == 1)? "OK": "FAILED"));
@@ -178,7 +178,7 @@ U8 exDbgReflect(int nLower, int nUpper)
 
     if (nLower > nUpper)
     {
-        PRINTF("exDbgReflect: Invalid arguments.\r\n");
+        LOG_E("exDbgReflect: Invalid arguments.");
         return 0;
     }
 
@@ -192,7 +192,7 @@ U8 exDbgReflect(int nLower, int nUpper)
         sw = A71_DbgReflect(sndBuf, sndBufLen, rcvBuf, &rcvBufLen);
         if (sw != SW_OK)
         {
-            PRINTF("Call to A71_DbgReflect() failed: sw = 0x%04X.\r\n", sw);
+            LOG_E("Call to A71_DbgReflect() failed: sw = 0x%04X.", sw);
             result &= 0;
         }
         else
@@ -201,7 +201,7 @@ U8 exDbgReflect(int nLower, int nUpper)
             // Is length as expected?
             if (rcvBufLen != sndBufLen)
             {
-                PRINTF("Not enough data returned: rcv=%d != snd=%d.\r\n", rcvBufLen, sndBufLen);
+                LOG_E("Not enough data returned: rcv=%d != snd=%d.", rcvBufLen, sndBufLen);
                 result &= 0;
             }
             else
@@ -212,7 +212,7 @@ U8 exDbgReflect(int nLower, int nUpper)
         if (result == 0)
         {
             // Drop out of loop if an error has occured.
-            PRINTF("exDbgReflect: Failed on packetsize %d\r\n", i);
+            LOG_E("exDbgReflect: Failed on packetsize %d", i);
             break;
         }
     }
@@ -233,24 +233,24 @@ U8 exDbgInternalMemory(U8 initMode)
     U8 result = 1;
     U16 err;
 
-    sm_printf(CONSOLE, "\r\n-----------\r\nStart exDbgInternalMemory(%s)\r\n------------\r\n", getInitModeAsString(initMode));
+    LOG_I("-----------Start exDbgInternalMemory(%s)------------", getInitModeAsString(initMode));
 
     // Initialize the A71CH
     result &= a71chInitModule(initMode);
     assert(result);
 
     // Get Free Memory
-    sm_printf(CONSOLE, "A71_DbgGetFreePersistentMemory\r\n");
+    LOG_I("A71_DbgGetFreePersistentMemory");
     err = A71_DbgGetFreePersistentMemory(&freeMem);
     result &= AX_CHECK_SW(err, SW_OK, "err");
-    sm_printf(CONSOLE, "FreePersistentMemory: %d\r\n", freeMem);
+    LOG_I("FreePersistentMemory: %d", freeMem);
 
-    sm_printf(CONSOLE, "A71_DbgGetFreeTransientMemory\r\n");
+    LOG_I( "A71_DbgGetFreeTransientMemory");
     err = A71_DbgGetFreeTransientMemory(&freeMem);
     result &= AX_CHECK_SW(err, SW_OK, "err");
-    sm_printf(CONSOLE, "FreeTransientMemory: %d\r\n", freeMem);
+    LOG_I( "FreeTransientMemory: %d", freeMem);
 
-    sm_printf(CONSOLE, "\r\n-----------\r\nEnd exDbgInternalMemory(), result = %s\r\n------------\r\n", ((result == 1)? "OK": "FAILED"));
+    LOG_I( "-----------End exDbgInternalMemory(), result = %s------------", ((result == 1)? "OK": "FAILED"));
 
     assert(result);
     return result;
@@ -269,23 +269,23 @@ U8 exPermanentlyDisableDebugMode()
     U16 err;
 #endif
 
-    sm_printf(CONSOLE, "\r\n-----------\r\nStart exPermanentlyDisableDebugMode()\r\n------------\r\n");
+    LOG_I( "-----------Start exPermanentlyDisableDebugMode()------------");
 
 #ifdef A71CH_ALLOW_DISABLE_DEBUG_MODE
-    sm_printf(CONSOLE, "A71_DbgDisableDebug()\r\n");
+    LOG_I( "A71_DbgDisableDebug()");
     err = A71_DbgDisableDebug();
     result &= AX_CHECK_SW(err, SW_OK, "Invocation of A71_DbgDisableDebug() failed.");
 #else
-    sm_printf(CONSOLE, "********************************************************************************\r\n");
-    sm_printf(CONSOLE, "A71_DbgDisableDebug() not invoked.\r\n");
-    sm_printf(CONSOLE, "Please define A71CH_ALLOW_DISABLE_DEBUG_MODE in header file a71ch_ex.h to enable\r\n");
-    sm_printf(CONSOLE, "the invocation of A71_DbgDisableDebug() through this example function.\r\n");
-    sm_printf(CONSOLE, "The effect of A71_DbgDisableDebug() is irreversible!\r\n");
-    sm_printf(CONSOLE, "********************************************************************************\r\n");
+    LOG_I("********************************************************************************");
+    LOG_I("A71_DbgDisableDebug() not invoked.");
+    LOG_I("Please define A71CH_ALLOW_DISABLE_DEBUG_MODE in header file a71ch_ex.h to enable");
+    LOG_I("the invocation of A71_DbgDisableDebug() through this example function.");
+    LOG_I("The effect of A71_DbgDisableDebug() is irreversible!");
+    LOG_I("********************************************************************************");
     result = 0;
 #endif
 
-    sm_printf(CONSOLE, "\r\n-----------\r\nEnd exPermanentlyDisableDebugMode(), result = %s\r\n------------\r\n", ((result == 1)? "OK": "FAILED"));
+    LOG_I("-----------End exPermanentlyDisableDebugMode(), result = %s------------", ((result == 1)? "OK": "FAILED"));
 
     assert(result);
     return result;

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016 - 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -69,7 +69,10 @@ static void USB_HostIp3516HsDelay(usb_host_ip3516hs_state_struct_t *usbHostState
 USB_GLOBAL_DEDICATED_RAM USB_RAM_ADDRESS_ALIGNMENT(1024)
     usb_host_ip3516hs_ptd_struct_t s_UsbHostIp3516HsPtd[USB_HOST_CONFIG_IP3516HS];
 static usb_host_ip3516hs_state_struct_t s_UsbHostIp3516HsState[USB_HOST_CONFIG_IP3516HS];
+#if (defined(USB_HOST_CONFIG_IP3516HS_MAX_ISO) && (USB_HOST_CONFIG_IP3516HS_MAX_ISO > 0U)) || \
+    (defined(USB_HOST_CONFIG_IP3516HS_MAX_INT) && (USB_HOST_CONFIG_IP3516HS_MAX_INT > 0U))
 static uint8_t s_SlotMaxBandwidth[8] = {125, 125, 125, 125, 125, 125, 50, 0};
+#endif
 USB_GLOBAL_DEDICATED_RAM uint8_t s_UsbHostIp3516HsBufferArray[80][64];
 /*******************************************************************************
  * Code
@@ -111,9 +114,9 @@ static void USB_HostIp3516HsTestCallback(void *param, usb_host_transfer_t *trans
     if (1U == usbHostState->complianceTestStart)
     {
         uint8_t timeCount;
-        usbHostState->complianceTest = 0U;
+        usbHostState->complianceTest      = 0U;
         usbHostState->complianceTestStart = 0U;
-        timeCount = 15 * 8; /* 15s */
+        timeCount                         = 15 * 8; /* 15s */
         while (timeCount--)
         {
             USB_HostIp3516HsDelay(usbHostState, 1000U);
@@ -148,19 +151,19 @@ static void USB_HostIp3516HsTestSingleStepGetDeviceDesc(usb_host_ip3516hs_state_
         return;
     }
 
-    getDescriptorParam.descriptorLength = sizeof(usb_descriptor_device_t);
-    getDescriptorParam.descriptorLength = 18;
-    getDescriptorParam.descriptorBuffer = (uint8_t *)&deviceInstance->deviceDescriptor;
-    getDescriptorParam.descriptorType = USB_DESCRIPTOR_TYPE_DEVICE;
-    getDescriptorParam.descriptorIndex = 0;
-    getDescriptorParam.languageId = 0;
-    transfer->callbackFn = USB_HostIp3516HsTestCallback;
-    transfer->callbackParam = usbHostState->hostHandle;
+    getDescriptorParam.descriptorLength  = sizeof(usb_descriptor_device_t);
+    getDescriptorParam.descriptorLength  = 18;
+    getDescriptorParam.descriptorBuffer  = (uint8_t *)&deviceInstance->deviceDescriptor;
+    getDescriptorParam.descriptorType    = USB_DESCRIPTOR_TYPE_DEVICE;
+    getDescriptorParam.descriptorIndex   = 0;
+    getDescriptorParam.languageId        = 0;
+    transfer->callbackFn                 = USB_HostIp3516HsTestCallback;
+    transfer->callbackParam              = usbHostState->hostHandle;
     transfer->setupPacket->bmRequestType = USB_REQUEST_TYPE_DIR_IN;
-    transfer->setupPacket->bRequest = USB_REQUEST_STANDARD_GET_DESCRIPTOR;
-    transfer->setupPacket->wIndex = 0;
-    transfer->setupPacket->wLength = 0;
-    transfer->setupPacket->wValue = 0;
+    transfer->setupPacket->bRequest      = USB_REQUEST_STANDARD_GET_DESCRIPTOR;
+    transfer->setupPacket->wIndex        = 0;
+    transfer->setupPacket->wLength       = 0;
+    transfer->setupPacket->wValue        = 0;
     USB_HostStandardSetGetDescriptor(deviceInstance, transfer, &getDescriptorParam);
 }
 
@@ -184,20 +187,20 @@ static void USB_HostIp3516HsTestSingleStepGetDeviceDescData(usb_host_ip3516hs_st
 #endif
         return;
     }
-    usbHostState->complianceTestStart = 1;
-    getDescriptorParam.descriptorLength = sizeof(usb_descriptor_device_t);
-    getDescriptorParam.descriptorLength = 18;
-    getDescriptorParam.descriptorBuffer = (uint8_t *)buffer;
-    getDescriptorParam.descriptorType = USB_DESCRIPTOR_TYPE_DEVICE;
-    getDescriptorParam.descriptorIndex = 0;
-    getDescriptorParam.languageId = 0;
-    transfer->callbackFn = USB_HostIp3516HsTestCallback;
-    transfer->callbackParam = (void *)usbHostState;
+    usbHostState->complianceTestStart    = 1;
+    getDescriptorParam.descriptorLength  = sizeof(usb_descriptor_device_t);
+    getDescriptorParam.descriptorLength  = 18;
+    getDescriptorParam.descriptorBuffer  = (uint8_t *)buffer;
+    getDescriptorParam.descriptorType    = USB_DESCRIPTOR_TYPE_DEVICE;
+    getDescriptorParam.descriptorIndex   = 0;
+    getDescriptorParam.languageId        = 0;
+    transfer->callbackFn                 = USB_HostIp3516HsTestCallback;
+    transfer->callbackParam              = (void *)usbHostState;
     transfer->setupPacket->bmRequestType = USB_REQUEST_TYPE_DIR_IN;
-    transfer->setupPacket->bRequest = USB_REQUEST_STANDARD_GET_DESCRIPTOR;
-    transfer->setupPacket->wIndex = 0;
-    transfer->setupPacket->wLength = 0;
-    transfer->setupPacket->wValue = 0;
+    transfer->setupPacket->bRequest      = USB_REQUEST_STANDARD_GET_DESCRIPTOR;
+    transfer->setupPacket->wIndex        = 0;
+    transfer->setupPacket->wLength       = 0;
+    transfer->setupPacket->wValue        = 0;
     USB_HostStandardSetGetDescriptor(deviceInstance, transfer, &getDescriptorParam);
 
     return;
@@ -331,7 +334,7 @@ static void USB_HostIp3516HsDelay(usb_host_ip3516hs_state_struct_t *usbHostState
 
     do
     {
-        SofEnd = (int32_t)((usbHostState->usbRegBase->FLADJ_FRINDEX & USB_HOST_IP3516HS_FLADJ_FRINDEX_MASK) >>
+        SofEnd   = (int32_t)((usbHostState->usbRegBase->FLADJ_FRINDEX & USB_HOST_IP3516HS_FLADJ_FRINDEX_MASK) >>
                            USB_HOST_IP3516HS_FLADJ_FRINDEX_SHIFT);
         distance = (uint32_t)(
             (SofEnd - sofStart + (USB_HOST_IP3516HS_FLADJ_FRINDEX_MASK >> USB_HOST_IP3516HS_FLADJ_FRINDEX_SHIFT) + 1) &
@@ -376,7 +379,7 @@ static usb_status_t USB_HostIp3516HsControlBus(usb_host_ip3516hs_state_struct_t 
                 portStatus |= USB_HOST_IP3516HS_PORTSC1_SUSP_MASK;
                 usbHostState->usbRegBase->PORTSC1 = portStatus;
 
-                usbHostState->matchTick = hostPointer->hwTick;
+                usbHostState->matchTick        = hostPointer->hwTick;
                 usbHostState->busSuspendStatus = kBus_Ip3516HsStartSuspend;
 
                 while ((hostPointer->hwTick - usbHostState->matchTick) <= 5)
@@ -407,7 +410,7 @@ static usb_status_t USB_HostIp3516HsControlBus(usb_host_ip3516hs_state_struct_t 
                 portStatus &= ~(USB_HOST_IP3516HS_PORTSC1_WIC);
                 portStatus |= USB_HOST_IP3516HS_PORTSC1_FPR_MASK;
                 usbHostState->usbRegBase->PORTSC1 = portStatus;
-                usbHostState->matchTick = hostPointer->hwTick;
+                usbHostState->matchTick           = hostPointer->hwTick;
                 while ((hostPointer->hwTick - usbHostState->matchTick) <= 20)
                 {
                 }
@@ -418,7 +421,7 @@ static usb_status_t USB_HostIp3516HsControlBus(usb_host_ip3516hs_state_struct_t 
                 /* call host callback function, function is initialized in USB_HostInit */
                 hostPointer->deviceCallback(hostPointer->suspendedDevice, NULL,
                                             kUSB_HostEventResumed); /* call host callback function */
-                hostPointer->suspendedDevice = NULL;
+                hostPointer->suspendedDevice   = NULL;
                 usbHostState->busSuspendStatus = kBus_Ip3516HsIdle;
             }
             else
@@ -429,8 +432,8 @@ static usb_status_t USB_HostIp3516HsControlBus(usb_host_ip3516hs_state_struct_t 
                 portStatus &= ~(USB_HOST_IP3516HS_PORTSC1_WIC | USB_HOST_IP3516HS_PORTSC1_FPR_MASK);
                 portStatus |= USB_HOST_IP3516HS_PORTSC1_PP_MASK | USB_HOST_IP3516HS_PORTSC1_PED_MASK;
                 usbHostState->usbRegBase->PORTSC1 = portStatus;
-                hostPointer->suspendedDevice = NULL;
-                usbHostState->busSuspendStatus = kBus_Ip3516HsIdle;
+                hostPointer->suspendedDevice      = NULL;
+                usbHostState->busSuspendStatus    = kBus_Ip3516HsIdle;
 
                 status = kStatus_USB_Error;
             }
@@ -446,7 +449,7 @@ static usb_status_t USB_HostIp3516HsControlBus(usb_host_ip3516hs_state_struct_t 
                 portStatus |= (usbHostState->hirdValue << USB_HOST_IP3516HS_USBCMD_HIRD_SHIFT) |
                               (usbHostState->L1remoteWakeupEnable << USB_HOST_IP3516HS_USBCMD_LPM_RWU_SHIFT);
                 usbHostState->usbRegBase->USBCMD = portStatus;
-                portStatus = usbHostState->usbRegBase->PORTSC1;
+                portStatus                       = usbHostState->usbRegBase->PORTSC1;
                 portStatus &= ~(USB_HOST_IP3516HS_PORTSC1_WIC | USB_HOST_IP3516HS_PORTSC1_SUS_L1_MASK |
                                 USB_HOST_IP3516HS_PORTSC1_DEV_ADD_MASK);
                 usb_host_device_instance_t *deviceInstance;
@@ -469,7 +472,8 @@ static usb_status_t USB_HostIp3516HsControlBus(usb_host_ip3516hs_state_struct_t 
                 portStatus = usbHostState->usbRegBase->PORTSC1;
 
                 if ((usbHostState->usbRegBase->PORTSC1 & USB_HOST_IP3516HS_PORTSC1_SUSP_MASK) &&
-                    (0x00 == (portStatus & USB_HOST_IP3516HS_PORTSC1_SUS_STAT_MASK)))
+                    (0x00 == ((portStatus & USB_HOST_IP3516HS_PORTSC1_SUS_STAT_MASK) >>
+                              USB_HOST_IP3516HS_PORTSC1_SUS_STAT_SHIFT)))
                 {
                     usbHostState->matchTick = hostPointer->hwTick;
                     while ((hostPointer->hwTick - usbHostState->matchTick) <= 4)
@@ -484,21 +488,24 @@ static usb_status_t USB_HostIp3516HsControlBus(usb_host_ip3516hs_state_struct_t 
                     hostPointer->deviceCallback(hostPointer->suspendedDevice, NULL,
                                                 kUSB_HostEventL1Sleeped); /* call host callback function */
                 }
-                else if (0x02 == (portStatus & USB_HOST_IP3516HS_PORTSC1_SUS_STAT_MASK))
+                else if (0x02 == ((portStatus & USB_HOST_IP3516HS_PORTSC1_SUS_STAT_MASK) >>
+                                  USB_HOST_IP3516HS_PORTSC1_SUS_STAT_SHIFT))
                 {
                     usbHostState->busSuspendStatus = kBus_Ip3516HsIdle;
                     /* call host callback function, function is initialized in USB_HostInit */
                     hostPointer->deviceCallback(hostPointer->suspendedDevice, NULL,
                                                 kUSB_HostEventL1SleepNotSupport); /* call host callback function */
                 }
-                else if (0x01 == (portStatus & USB_HOST_IP3516HS_PORTSC1_SUS_STAT_MASK))
+                else if (0x01 == ((portStatus & USB_HOST_IP3516HS_PORTSC1_SUS_STAT_MASK) >>
+                                  USB_HOST_IP3516HS_PORTSC1_SUS_STAT_SHIFT))
                 {
                     usbHostState->busSuspendStatus = kBus_Ip3516HsIdle;
                     /* call host callback function, function is initialized in USB_HostInit */
                     hostPointer->deviceCallback(hostPointer->suspendedDevice, NULL,
                                                 kUSB_HostEventL1SleepNYET); /* call host callback function */
                 }
-                else if (0x03 == (portStatus & USB_HOST_IP3516HS_PORTSC1_SUS_STAT_MASK))
+                else if (0x03 == ((portStatus & USB_HOST_IP3516HS_PORTSC1_SUS_STAT_MASK) >>
+                                  USB_HOST_IP3516HS_PORTSC1_SUS_STAT_SHIFT))
                 {
                     usbHostState->busSuspendStatus = kBus_Ip3516HsIdle;
                     /* call host callback function, function is initialized in USB_HostInit */
@@ -540,7 +547,7 @@ static usb_status_t USB_HostIp3516HsControlBus(usb_host_ip3516hs_state_struct_t 
                 /* call host callback function, function is initialized in USB_HostInit */
                 hostPointer->deviceCallback(hostPointer->suspendedDevice, NULL,
                                             kUSB_HostEventL1Resumed); /* call host callback function */
-                hostPointer->suspendedDevice = NULL;
+                hostPointer->suspendedDevice   = NULL;
                 usbHostState->busSuspendStatus = kBus_Ip3516HsIdle;
             }
             else
@@ -551,8 +558,8 @@ static usb_status_t USB_HostIp3516HsControlBus(usb_host_ip3516hs_state_struct_t 
                 portStatus &= ~(USB_HOST_IP3516HS_PORTSC1_WIC | USB_HOST_IP3516HS_PORTSC1_FPR_MASK);
                 portStatus |= USB_HOST_IP3516HS_PORTSC1_PP_MASK | USB_HOST_IP3516HS_PORTSC1_PED_MASK;
                 usbHostState->usbRegBase->PORTSC1 = portStatus;
-                hostPointer->suspendedDevice = NULL;
-                usbHostState->busSuspendStatus = kBus_Ip3516HsIdle;
+                hostPointer->suspendedDevice      = NULL;
+                usbHostState->busSuspendStatus    = kBus_Ip3516HsIdle;
 
                 status = kStatus_USB_Error;
             }
@@ -584,6 +591,8 @@ static usb_status_t USB_HostIp3516HsControlBus(usb_host_ip3516hs_state_struct_t 
     return status;
 }
 
+#if (defined(USB_HOST_CONFIG_IP3516HS_MAX_ISO) && (USB_HOST_CONFIG_IP3516HS_MAX_ISO > 0U)) || \
+    (defined(USB_HOST_CONFIG_IP3516HS_MAX_INT) && (USB_HOST_CONFIG_IP3516HS_MAX_INT > 0U))
 static uint32_t USB_HostIp3516HsBusTime(uint8_t speed, uint8_t pipeType, uint8_t direction, uint32_t dataLength)
 {
     uint32_t result = (3167 + ((1000 * dataLength) * 7U * 8U / 6U)) / 1000;
@@ -645,6 +654,7 @@ static uint32_t USB_HostIp3516HsBusTime(uint8_t speed, uint8_t pipeType, uint8_t
 
     return result;
 }
+#endif
 
 static usb_status_t USB_HostIp3516HsGetNewPipe(usb_host_ip3516hs_pipe_struct_t **pipeQueue,
                                                usb_host_ip3516hs_pipe_struct_t **pipe)
@@ -657,9 +667,9 @@ static usb_status_t USB_HostIp3516HsGetNewPipe(usb_host_ip3516hs_pipe_struct_t *
     USB_OSA_ENTER_CRITICAL();
     if (NULL != (*pipeQueue))
     {
-        *pipe = *pipeQueue;
+        *pipe      = *pipeQueue;
         *pipeQueue = (usb_host_ip3516hs_pipe_struct_t *)((*pipe)->pipeCommon.next);
-        error = kStatus_USB_Success;
+        error      = kStatus_USB_Success;
     }
     /* Exit critical */
     USB_OSA_EXIT_CRITICAL();
@@ -683,7 +693,7 @@ static usb_status_t USB_HostIp3516HsRemovePipe(usb_host_ip3516hs_pipe_struct_t *
         if (p != pipe)
         {
             pre = p;
-            p = (usb_host_ip3516hs_pipe_struct_t *)p->pipeCommon.next;
+            p   = (usb_host_ip3516hs_pipe_struct_t *)p->pipeCommon.next;
         }
         else
         {
@@ -727,7 +737,7 @@ static usb_status_t USB_HostIp3516HsInsertPipe(usb_host_ip3516hs_pipe_struct_t *
     if (NULL == p)
     {
         pipe->pipeCommon.next = (usb_host_pipe_t *)(*pipeQueue);
-        *pipeQueue = pipe;
+        *pipeQueue            = pipe;
     }
     USB_OSA_EXIT_CRITICAL();
     return kStatus_USB_Success;
@@ -752,8 +762,8 @@ static usb_status_t USB_HostIp3516HsPortChange(usb_host_ip3516hs_state_struct_t 
                 portStatus &= ~(USB_HOST_IP3516HS_PORTSC1_WIC | USB_HOST_IP3516HS_PORTSC1_FPR_MASK);
                 portStatus |= USB_HOST_IP3516HS_PORTSC1_PP_MASK | USB_HOST_IP3516HS_PORTSC1_PED_MASK;
                 usbHostState->usbRegBase->PORTSC1 = portStatus;
-                hostPointer->suspendedDevice = NULL;
-                usbHostState->busSuspendStatus = kBus_Ip3516HsIdle;
+                hostPointer->suspendedDevice      = NULL;
+                usbHostState->busSuspendStatus    = kBus_Ip3516HsIdle;
             }
 #endif
             uint32_t sofStart =
@@ -799,7 +809,7 @@ static usb_status_t USB_HostIp3516HsPortChange(usb_host_ip3516hs_state_struct_t 
                     portStatus &= ~(USB_HOST_IP3516HS_PORTSC1_WIC);
                     portStatus |= USB_HOST_IP3516HS_PORTSC1_FPR_MASK;
                     usbHostState->usbRegBase->PORTSC1 = portStatus;
-                    usbHostState->matchTick = hostPointer->hwTick;
+                    usbHostState->matchTick           = hostPointer->hwTick;
                     while ((hostPointer->hwTick - usbHostState->matchTick) <= 20)
                     {
                     }
@@ -810,7 +820,7 @@ static usb_status_t USB_HostIp3516HsPortChange(usb_host_ip3516hs_state_struct_t 
                     /* call host callback function, function is initialized in USB_HostInit */
                     hostPointer->deviceCallback(hostPointer->suspendedDevice, NULL,
                                                 kUSB_HostEventResumed); /* call host callback function */
-                    hostPointer->suspendedDevice = NULL;
+                    hostPointer->suspendedDevice   = NULL;
                     usbHostState->busSuspendStatus = kBus_Ip3516HsIdle;
                 }
 #if ((defined(USB_HOST_CONFIG_LPM_L1)) && (USB_HOST_CONFIG_LPM_L1 > 0U))
@@ -842,17 +852,18 @@ static usb_status_t USB_HostIp3516HsPortChange(usb_host_ip3516hs_state_struct_t 
                     /* call host callback function, function is initialized in USB_HostInit */
                     hostPointer->deviceCallback(hostPointer->suspendedDevice, NULL,
                                                 kUSB_HostEventL1Resumed); /* call host callback function */
-                    hostPointer->suspendedDevice = NULL;
+                    hostPointer->suspendedDevice   = NULL;
                     usbHostState->busSuspendStatus = kBus_Ip3516HsIdle;
                 }
 #if (defined(FSL_FEATURE_USBHSH_VERSION) && (FSL_FEATURE_USBHSH_VERSION >= 300U))
                 else if ((kBus_Ip3516HsL1StartSleep == usbHostState->busSuspendStatus))
                 {
                     usb_host_instance_t *hostPointer = (usb_host_instance_t *)usbHostState->hostHandle;
-                    portStatus = usbHostState->usbRegBase->PORTSC1;
+                    portStatus                       = usbHostState->usbRegBase->PORTSC1;
 
                     if ((usbHostState->usbRegBase->PORTSC1 & USB_HOST_IP3516HS_PORTSC1_SUSP_MASK) &&
-                        (0x00 == (portStatus & USB_HOST_IP3516HS_PORTSC1_SUS_STAT_MASK)))
+                        (0x00 == ((portStatus & USB_HOST_IP3516HS_PORTSC1_SUS_STAT_MASK) >>
+                                  USB_HOST_IP3516HS_PORTSC1_SUS_STAT_SHIFT)))
                     {
                         portStatus = usbHostState->usbRegBase->USBCMD;
                         portStatus &= ~USB_HOST_IP3516HS_USBCMD_RS_MASK;
@@ -863,21 +874,24 @@ static usb_status_t USB_HostIp3516HsPortChange(usb_host_ip3516hs_state_struct_t 
                         hostPointer->deviceCallback(hostPointer->suspendedDevice, NULL,
                                                     kUSB_HostEventL1Sleeped); /* call host callback function */
                     }
-                    else if (0x02 == (portStatus & USB_HOST_IP3516HS_PORTSC1_SUS_STAT_MASK))
+                    else if (0x02 == ((portStatus & USB_HOST_IP3516HS_PORTSC1_SUS_STAT_MASK) >>
+                                      USB_HOST_IP3516HS_PORTSC1_SUS_STAT_SHIFT))
                     {
                         usbHostState->busSuspendStatus = kBus_Ip3516HsIdle;
                         /* call host callback function, function is initialized in USB_HostInit */
                         hostPointer->deviceCallback(hostPointer->suspendedDevice, NULL,
                                                     kUSB_HostEventL1SleepNotSupport); /* call host callback function */
                     }
-                    else if (0x01 == (portStatus & USB_HOST_IP3516HS_PORTSC1_SUS_STAT_MASK))
+                    else if (0x01 == ((portStatus & USB_HOST_IP3516HS_PORTSC1_SUS_STAT_MASK) >>
+                                      USB_HOST_IP3516HS_PORTSC1_SUS_STAT_SHIFT))
                     {
                         usbHostState->busSuspendStatus = kBus_Ip3516HsIdle;
                         /* call host callback function, function is initialized in USB_HostInit */
                         hostPointer->deviceCallback(hostPointer->suspendedDevice, NULL,
                                                     kUSB_HostEventL1SleepNYET); /* call host callback function */
                     }
-                    else if (0x03 == (portStatus & USB_HOST_IP3516HS_PORTSC1_SUS_STAT_MASK))
+                    else if (0x03 == ((portStatus & USB_HOST_IP3516HS_PORTSC1_SUS_STAT_MASK) >>
+                                      USB_HOST_IP3516HS_PORTSC1_SUS_STAT_SHIFT))
                     {
                         usbHostState->busSuspendStatus = kBus_Ip3516HsIdle;
                         /* call host callback function, function is initialized in USB_HostInit */
@@ -964,6 +978,8 @@ static usb_status_t USB_HostIp3516HsPortChange(usb_host_ip3516hs_state_struct_t 
     return kStatus_USB_Success;
 }
 
+#if (defined(USB_HOST_CONFIG_IP3516HS_MAX_ISO) && (USB_HOST_CONFIG_IP3516HS_MAX_ISO > 0U)) || \
+    (defined(USB_HOST_CONFIG_IP3516HS_MAX_INT) && (USB_HOST_CONFIG_IP3516HS_MAX_INT > 0U))
 static usb_status_t USB_HostIp3516HsFillSlotBusTime(usb_host_ip3516hs_state_struct_t *usbHostState,
                                                     usb_host_ip3516hs_pipe_struct_t *pipe,
                                                     uint32_t startUFrame,
@@ -971,7 +987,7 @@ static usb_status_t USB_HostIp3516HsFillSlotBusTime(usb_host_ip3516hs_state_stru
                                                     uint8_t *ssSlot,
                                                     uint8_t *csSlot)
 {
-    uint8_t slots = (pipe->pipeCommon.maxPacketSize + 187) / 188;
+    uint8_t slots     = (pipe->pipeCommon.maxPacketSize + 187) / 188;
     uint8_t startSlot = startUFrame % 8;
 
     for (int i = 0; i < 8U; i++)
@@ -1096,8 +1112,7 @@ static usb_status_t USB_HostIp3516HsFindStartFrame(usb_host_ip3516hs_state_struc
                             {
                                 if (p->csSlot & (1U << cs))
                                 {
-                                    if (0U ==
-                                        ((frame - ((p->startUFrame & 0xFFFFFFF8U) + cs)) % p->pipeCommon.interval))
+                                    if (0U == ((frame - ((p->startUFrame & 0xFFF8U) + cs)) % p->pipeCommon.interval))
                                     {
                                         total += p->busHsTime;
                                     }
@@ -1154,8 +1169,7 @@ static usb_status_t USB_HostIp3516HsFindStartFrame(usb_host_ip3516hs_state_struc
                             USB_HostHelperGetPeripheralInformation(p->pipeCommon.deviceHandle,
                                                                    kUSB_HostGetDeviceHSHubNumber, &deviceHsHubNumber);
                             if ((deviceHsHubNumber == hsHubNumber) &&
-                                (0U ==
-                                 (((frame & 0xFFFFFFF8U) - (p->startUFrame & 0xFFFFFFF8U)) % p->pipeCommon.interval)))
+                                (0U == (((frame & 0xFFFFFFF8U) - (p->startUFrame & 0xFFF8U)) % p->pipeCommon.interval)))
                             {
                                 uint8_t ss;
                                 uint8_t cs;
@@ -1214,6 +1228,7 @@ static usb_status_t USB_HostIp3516BaudWidthCheck(usb_host_ip3516hs_state_struct_
     USB_OSA_EXIT_CRITICAL();
     return error;
 }
+#endif
 
 static usb_status_t USB_HostIp3516HsOpenControlBulkPipe(usb_host_ip3516hs_state_struct_t *usbHostState,
                                                         usb_host_ip3516hs_pipe_struct_t *pipe)
@@ -1242,9 +1257,9 @@ static usb_status_t USB_HostIp3516HsOpenControlBulkPipe(usb_host_ip3516hs_state_
     {
         return kStatus_USB_Busy;
     }
-    atl = &s_UsbHostIp3516HsPtd[usbHostState->controllerId].atl[pipe->tdIndex];
+    atl                                   = &s_UsbHostIp3516HsPtd[usbHostState->controllerId].atl[pipe->tdIndex];
     atl->control1Union.stateBitField.Mult = pipe->pipeCommon.numberPerUframe;
-    atl->control2Union.stateBitField.EP = pipe->pipeCommon.endpointAddress;
+    atl->control2Union.stateBitField.EP   = pipe->pipeCommon.endpointAddress;
     atl->control2Union.stateBitField.DeviceAddress =
         ((usb_host_device_instance_t *)pipe->pipeCommon.deviceHandle)->setAddress;
     if (USB_SPEED_HIGH == usbHostState->portState[0].portSpeed)
@@ -1256,7 +1271,7 @@ static usb_status_t USB_HostIp3516HsOpenControlBulkPipe(usb_host_ip3516hs_state_
     {
         atl->control2Union.stateBitField.S = 0U;
     }
-    atl->control2Union.stateBitField.RL = 0xFU;
+    atl->control2Union.stateBitField.RL  = 0xFU;
     atl->stateUnion.stateBitField.NakCnt = 0xFU;
     atl->control2Union.stateBitField.SE =
         (USB_SPEED_LOW == ((usb_host_device_instance_t *)pipe->pipeCommon.deviceHandle)->speed) ? 2U : 0U;
@@ -1272,10 +1287,10 @@ static usb_status_t USB_HostIp3516HsOpenControlBulkPipe(usb_host_ip3516hs_state_
 #else
         0U;
 #endif
-    atl->dataUnion.dataBitField.I = 1U;
+    atl->dataUnion.dataBitField.I        = 1U;
     atl->stateUnion.stateBitField.EpType = pipe->pipeCommon.pipeType;
-    atl->stateUnion.stateBitField.DT = 0U;
-    atl->stateUnion.stateBitField.P = 0U;
+    atl->stateUnion.stateBitField.DT     = 0U;
+    atl->stateUnion.stateBitField.P      = 0U;
 
     return kStatus_USB_Success;
 }
@@ -1286,6 +1301,7 @@ static usb_status_t USB_HostIp3516HsOpenIsoPipe(usb_host_ip3516hs_state_struct_t
 {
     usb_host_ip3516hs_ptl_struct_t *ptl;
     usb_host_ip3516hs_sptl_struct_t *sptl;
+    uint32_t count = 0;
     usb_status_t error;
     USB_OSA_SR_ALLOC();
 
@@ -1298,14 +1314,29 @@ static usb_status_t USB_HostIp3516HsOpenIsoPipe(usb_host_ip3516hs_state_struct_t
 
     /* Enter critical */
     USB_OSA_ENTER_CRITICAL();
-    for (int i = 0; i < USB_HOST_CONFIG_IP3516HS_MAX_ISO; i++)
+    for (uint32_t i = 0; i < USB_HOST_CONFIG_IP3516HS_MAX_ISO; i++)
     {
-        if (0 == s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[i].control1Union.stateBitField.MaxPacketLength)
+        for (uint32_t j = i; j < (USB_HOST_IP3516HS_ISO_MULTIPLE_TRANSFER + i); j++)
+        {
+            if (0 ==
+                s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[j].control1Union.stateBitField.MaxPacketLength)
+            {
+                count++;
+            }
+        }
+        if (count >= USB_HOST_IP3516HS_ISO_MULTIPLE_TRANSFER)
         {
             pipe->tdIndex = i;
-            s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[i].control1Union.stateBitField.MaxPacketLength =
-                pipe->pipeCommon.maxPacketSize;
+            for (uint32_t j = i; j < (USB_HOST_IP3516HS_ISO_MULTIPLE_TRANSFER + i); j++)
+            {
+                s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[j].control1Union.stateBitField.MaxPacketLength =
+                    pipe->pipeCommon.maxPacketSize;
+            }
             break;
+        }
+        else
+        {
+            count = 0;
         }
     }
     /* Exit critical */
@@ -1316,50 +1347,53 @@ static usb_status_t USB_HostIp3516HsOpenIsoPipe(usb_host_ip3516hs_state_struct_t
         return kStatus_USB_Busy;
     }
 
-    ptl = &s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[pipe->tdIndex];
-    sptl = (usb_host_ip3516hs_sptl_struct_t *)ptl;
-    ptl->control1Union.stateBitField.Mult = pipe->pipeCommon.numberPerUframe;
-    ptl->control2Union.stateBitField.EP = pipe->pipeCommon.endpointAddress;
-    ptl->control2Union.stateBitField.DeviceAddress =
-        ((usb_host_device_instance_t *)pipe->pipeCommon.deviceHandle)->setAddress;
-    if (USB_SPEED_HIGH == usbHostState->portState[0].portSpeed)
+    for (uint32_t j = pipe->tdIndex; j < (USB_HOST_IP3516HS_ISO_MULTIPLE_TRANSFER + pipe->tdIndex); j++)
     {
-        ptl->control2Union.stateBitField.S =
-            (USB_SPEED_HIGH == ((usb_host_device_instance_t *)pipe->pipeCommon.deviceHandle)->speed) ? 0U : 1U;
-    }
-    else
-    {
-        ptl->control2Union.stateBitField.S = 0U;
-    }
-    ptl->control2Union.stateBitField.RL = 0U;
-    ptl->stateUnion.stateBitField.NakCnt = 0U;
-    ptl->control2Union.stateBitField.SE =
-        (USB_SPEED_LOW == ((usb_host_device_instance_t *)pipe->pipeCommon.deviceHandle)->speed) ? 2U : 0U;
-    if (ptl->control2Union.stateBitField.S)
-    {
-        sptl->control2Union.stateBitField.PortNumber =
+        ptl                                   = &s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[j];
+        sptl                                  = (usb_host_ip3516hs_sptl_struct_t *)ptl;
+        ptl->control1Union.stateBitField.Mult = pipe->pipeCommon.numberPerUframe;
+        ptl->control2Union.stateBitField.EP   = pipe->pipeCommon.endpointAddress;
+        ptl->control2Union.stateBitField.DeviceAddress =
+            ((usb_host_device_instance_t *)pipe->pipeCommon.deviceHandle)->setAddress;
+        if (USB_SPEED_HIGH == usbHostState->portState[0].portSpeed)
+        {
+            ptl->control2Union.stateBitField.S =
+                (USB_SPEED_HIGH == ((usb_host_device_instance_t *)pipe->pipeCommon.deviceHandle)->speed) ? 0U : 1U;
+        }
+        else
+        {
+            ptl->control2Union.stateBitField.S = 0U;
+        }
+        ptl->control2Union.stateBitField.RL  = 0U;
+        ptl->stateUnion.stateBitField.NakCnt = 0U;
+        ptl->control2Union.stateBitField.SE =
+            (USB_SPEED_LOW == ((usb_host_device_instance_t *)pipe->pipeCommon.deviceHandle)->speed) ? 2U : 0U;
+        if (ptl->control2Union.stateBitField.S)
+        {
+            sptl->control2Union.stateBitField.PortNumber =
 #if (defined(USB_HOST_CONFIG_HUB) && (USB_HOST_CONFIG_HUB > 0U))
-            ((usb_host_device_instance_t *)pipe->pipeCommon.deviceHandle)->hsHubPort;
+                ((usb_host_device_instance_t *)pipe->pipeCommon.deviceHandle)->hsHubPort;
 #else
-            0U;
+                0U;
 #endif
-        sptl->control2Union.stateBitField.HubAddress =
+            sptl->control2Union.stateBitField.HubAddress =
 #if (defined(USB_HOST_CONFIG_HUB) && (USB_HOST_CONFIG_HUB > 0U))
-            ((usb_host_device_instance_t *)pipe->pipeCommon.deviceHandle)->hsHubNumber;
+                ((usb_host_device_instance_t *)pipe->pipeCommon.deviceHandle)->hsHubNumber;
 #else
-            0U;
+                0U;
 #endif
+        }
+        else
+        {
+            sptl->control2Union.stateBitField.PortNumber = 0U;
+            sptl->control2Union.stateBitField.HubAddress = 0U;
+        }
+        ptl->dataUnion.dataBitField.NrBytesToTransfer = 0U;
+        ptl->dataUnion.dataBitField.I                 = 1U;
+        ptl->stateUnion.stateBitField.EpType          = pipe->pipeCommon.pipeType;
+        ptl->stateUnion.stateBitField.DT              = 0U;
+        ptl->stateUnion.stateBitField.P               = 0U;
     }
-    else
-    {
-        sptl->control2Union.stateBitField.PortNumber = 0U;
-        sptl->control2Union.stateBitField.HubAddress = 0U;
-    }
-    ptl->dataUnion.dataBitField.I = 1U;
-    ptl->stateUnion.stateBitField.EpType = pipe->pipeCommon.pipeType;
-    ptl->stateUnion.stateBitField.DT = 0U;
-    ptl->stateUnion.stateBitField.P = 0U;
-
     return kStatus_USB_Success;
 }
 #endif
@@ -1403,10 +1437,10 @@ static usb_status_t USB_HostIp3516HsOpenInterruptPipe(usb_host_ip3516hs_state_st
         USB_HostIp3516HsInsertPipe(&usbHostState->pipeList, pipe);
         return kStatus_USB_Busy;
     }
-    ptl = &s_UsbHostIp3516HsPtd[usbHostState->controllerId].interrupt[pipe->tdIndex];
-    sptl = (usb_host_ip3516hs_sptl_struct_t *)ptl;
+    ptl                                   = &s_UsbHostIp3516HsPtd[usbHostState->controllerId].interrupt[pipe->tdIndex];
+    sptl                                  = (usb_host_ip3516hs_sptl_struct_t *)ptl;
     ptl->control1Union.stateBitField.Mult = pipe->pipeCommon.numberPerUframe;
-    ptl->control2Union.stateBitField.EP = pipe->pipeCommon.endpointAddress;
+    ptl->control2Union.stateBitField.EP   = pipe->pipeCommon.endpointAddress;
     ptl->control2Union.stateBitField.DeviceAddress =
         ((usb_host_device_instance_t *)pipe->pipeCommon.deviceHandle)->setAddress;
     if (USB_SPEED_HIGH == usbHostState->portState[0].portSpeed)
@@ -1418,7 +1452,7 @@ static usb_status_t USB_HostIp3516HsOpenInterruptPipe(usb_host_ip3516hs_state_st
     {
         ptl->control2Union.stateBitField.S = 0U;
     }
-    ptl->control2Union.stateBitField.RL = 0xFU;
+    ptl->control2Union.stateBitField.RL  = 0xFU;
     ptl->stateUnion.stateBitField.NakCnt = 0xFU;
     ptl->control2Union.stateBitField.SE =
         (USB_SPEED_LOW == ((usb_host_device_instance_t *)pipe->pipeCommon.deviceHandle)->speed) ? 2U : 0U;
@@ -1442,10 +1476,10 @@ static usb_status_t USB_HostIp3516HsOpenInterruptPipe(usb_host_ip3516hs_state_st
         sptl->control2Union.stateBitField.PortNumber = 0U;
         sptl->control2Union.stateBitField.HubAddress = 0U;
     }
-    ptl->dataUnion.dataBitField.I = 1U;
+    ptl->dataUnion.dataBitField.I        = 1U;
     ptl->stateUnion.stateBitField.EpType = pipe->pipeCommon.pipeType;
-    ptl->stateUnion.stateBitField.DT = 0U;
-    ptl->stateUnion.stateBitField.P = 0U;
+    ptl->stateUnion.stateBitField.DT     = 0U;
+    ptl->stateUnion.stateBitField.P      = 0U;
 
     return kStatus_USB_Success;
 }
@@ -1460,6 +1494,18 @@ static usb_status_t USB_HostIp3516HsCancelPipe(usb_host_ip3516hs_state_struct_t 
     usb_host_transfer_t *trPre;
     uint32_t startUFrame;
     uint32_t currentUFrame;
+#if ((defined(USB_HOST_CONFIG_IP3516HS_MAX_ISO)) && (USB_HOST_CONFIG_IP3516HS_MAX_ISO > 0U))
+    union index_length
+    {
+        uint32_t indexLength;
+        struct
+        {
+            uint32_t tdIndex : 8U;
+            uint32_t bufferIndex : 8U;
+            uint32_t bufferLength : 16U;
+        } state;
+    } indexLength;
+#endif
     usb_status_t trStatus = kStatus_USB_Success;
 
     switch (pipe->pipeCommon.pipeType)
@@ -1475,13 +1521,14 @@ static usb_status_t USB_HostIp3516HsCancelPipe(usb_host_ip3516hs_state_struct_t 
 #endif
 #if ((defined(USB_HOST_CONFIG_IP3516HS_MAX_ISO)) && (USB_HOST_CONFIG_IP3516HS_MAX_ISO > 0U))
         case USB_ENDPOINT_ISOCHRONOUS:
-            usbHostState->usbRegBase->ISO_PTD_SKIP_MAP |= 1U << pipe->tdIndex;
+            usbHostState->usbRegBase->ISO_PTD_SKIP_MAP |= ((1U << USB_HOST_IP3516HS_ISO_MULTIPLE_TRANSFER) - 1U)
+                                                          << pipe->tdIndex;
             break;
 #endif
         default:
             break;
     }
-    startUFrame = (uint32_t)((usbHostState->usbRegBase->FLADJ_FRINDEX & USB_HOST_IP3516HS_FLADJ_FRINDEX_MASK) >>
+    startUFrame   = (uint32_t)((usbHostState->usbRegBase->FLADJ_FRINDEX & USB_HOST_IP3516HS_FLADJ_FRINDEX_MASK) >>
                              USB_HOST_IP3516HS_FLADJ_FRINDEX_SHIFT);
     currentUFrame = startUFrame;
 
@@ -1493,7 +1540,7 @@ static usb_status_t USB_HostIp3516HsCancelPipe(usb_host_ip3516hs_state_struct_t 
 
     USB_HostIp3516HsLock();
     trCurrent = pipe->trList;
-    trPre = NULL;
+    trPre     = NULL;
     while (trCurrent)
     {
         trPos = trCurrent->next;
@@ -1530,7 +1577,7 @@ static usb_status_t USB_HostIp3516HsCancelPipe(usb_host_ip3516hs_state_struct_t 
                             }
                             else
                             {
-                                trStatus = kStatus_USB_TransferFailed;
+                                trStatus                         = kStatus_USB_TransferFailed;
                                 trCurrent->union1.transferResult = kStatus_USB_Success;
                             }
                         }
@@ -1576,32 +1623,51 @@ static usb_status_t USB_HostIp3516HsCancelPipe(usb_host_ip3516hs_state_struct_t 
 #endif
 #if ((defined(USB_HOST_CONFIG_IP3516HS_MAX_ISO)) && (USB_HOST_CONFIG_IP3516HS_MAX_ISO > 0U))
                 case USB_ENDPOINT_ISOCHRONOUS:
-                    trCurrent->transferSofar += s_UsbHostIp3516HsPtd[usbHostState->controllerId]
-                                                    .iso[pipe->tdIndex]
-                                                    .stateUnion.stateBitField.NrBytesToTransfer;
-                    if (s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[pipe->tdIndex].stateUnion.stateBitField.H)
+                    indexLength.indexLength = trCurrent->union2.frame;
+                    trCurrent->union2.frame = 0;
+                    if (indexLength.indexLength)
                     {
-                        trStatus = kStatus_USB_TransferStall;
-                    }
-                    else if ((s_UsbHostIp3516HsPtd[usbHostState->controllerId]
-                                  .iso[pipe->tdIndex]
-                                  .stateUnion.stateBitField.B) &&
-                             (s_UsbHostIp3516HsPtd[usbHostState->controllerId]
-                                  .iso[pipe->tdIndex]
-                                  .stateUnion.stateBitField.X))
-                    {
-                        trStatus = kStatus_USB_TransferFailed;
+                        trCurrent->transferSofar += s_UsbHostIp3516HsPtd[usbHostState->controllerId]
+                                                        .iso[indexLength.state.tdIndex]
+                                                        .stateUnion.stateBitField.NrBytesToTransfer;
+                        if (s_UsbHostIp3516HsPtd[usbHostState->controllerId]
+                                .iso[indexLength.state.tdIndex]
+                                .stateUnion.stateBitField.H)
+                        {
+                            trStatus = kStatus_USB_TransferStall;
+                        }
+                        else if ((s_UsbHostIp3516HsPtd[usbHostState->controllerId]
+                                      .iso[indexLength.state.tdIndex]
+                                      .stateUnion.stateBitField.B) &&
+                                 (s_UsbHostIp3516HsPtd[usbHostState->controllerId]
+                                      .iso[indexLength.state.tdIndex]
+                                      .stateUnion.stateBitField.X))
+                        {
+                            trStatus = kStatus_USB_TransferFailed;
+                        }
+                        else
+                        {
+                            if ((!trCurrent->transferSofar) && (kStatus_USB_Success == trStatus))
+                            {
+                                trStatus = kStatus_USB_TransferCancel;
+                            }
+                        }
+                        s_UsbHostIp3516HsPtd[usbHostState->controllerId]
+                            .iso[indexLength.state.tdIndex]
+                            .stateUnion.stateBitField.A = 0U;
+                        s_UsbHostIp3516HsPtd[usbHostState->controllerId]
+                            .iso[indexLength.state.tdIndex]
+                            .control1Union.stateBitField.V = 0U;
+                        s_UsbHostIp3516HsPtd[usbHostState->controllerId]
+                            .iso[indexLength.state.tdIndex]
+                            .dataUnion.dataBitField.NrBytesToTransfer = 0;
                     }
                     else
                     {
-                        if ((!trCurrent->transferSofar) && (kStatus_USB_Success == trStatus))
-                        {
-                            trStatus = kStatus_USB_TransferCancel;
-                        }
+                        trStatus = kStatus_USB_TransferCancel;
                     }
-                    s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[pipe->tdIndex].stateUnion.stateBitField.A = 0U;
-                    s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[pipe->tdIndex].control1Union.stateBitField.V =
-                        0U;
+                    pipe->bufferIndex  = indexLength.state.bufferIndex;
+                    pipe->bufferLength = indexLength.state.bufferLength;
                     break;
 #endif
                 default:
@@ -1622,7 +1688,7 @@ static usb_status_t USB_HostIp3516HsCancelPipe(usb_host_ip3516hs_state_struct_t 
                 pipe->trList = trPos;
             }
             pipe->cutOffTime = USB_HOST_IP3516HS_TRANSFER_TIMEOUT_GAP;
-            pipe->isBusy = 0U;
+            pipe->isBusy     = 0U;
             /* callback function is different from the current condition */
             trCurrent->callbackFn(trCurrent->callbackParam, trCurrent, trStatus); /* transfer callback */
         }
@@ -1646,7 +1712,8 @@ static usb_status_t USB_HostIp3516HsCancelPipe(usb_host_ip3516hs_state_struct_t 
 #endif
 #if ((defined(USB_HOST_CONFIG_IP3516HS_MAX_ISO)) && (USB_HOST_CONFIG_IP3516HS_MAX_ISO > 0U))
         case USB_ENDPOINT_ISOCHRONOUS:
-            usbHostState->usbRegBase->ISO_PTD_SKIP_MAP &= ~(1U << pipe->tdIndex);
+            usbHostState->usbRegBase->ISO_PTD_SKIP_MAP &=
+                ~(((1U << USB_HOST_IP3516HS_ISO_MULTIPLE_TRANSFER) - 1U) << pipe->tdIndex);
             break;
 #endif
         default:
@@ -1683,9 +1750,17 @@ static usb_status_t USB_HostIp3516HsCloseIsoPipe(usb_host_ip3516hs_state_struct_
 
     /* Enter critical */
     USB_OSA_ENTER_CRITICAL();
-    s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[pipe->tdIndex].control1Union.stateBitField.V = 0U;
-    s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[pipe->tdIndex].control1Union.stateBitField.MaxPacketLength =
-        0U;
+
+    for (uint32_t i = 0; i < USB_HOST_IP3516HS_ISO_MULTIPLE_TRANSFER; i++)
+    {
+        s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[pipe->tdIndex + i].control1Union.stateBitField.V = 0U;
+        s_UsbHostIp3516HsPtd[usbHostState->controllerId]
+            .iso[pipe->tdIndex + i]
+            .control1Union.stateBitField.MaxPacketLength = 0U;
+        s_UsbHostIp3516HsPtd[usbHostState->controllerId]
+            .iso[pipe->tdIndex + i]
+            .dataUnion.dataBitField.NrBytesToTransfer = 0U;
+    }
     /* Exit critical */
     USB_OSA_EXIT_CRITICAL();
 
@@ -1721,7 +1796,7 @@ static usb_status_t USB_HostIp3516HsGetBuffer(usb_host_ip3516hs_state_struct_t *
                                               uint32_t *bufferLength)
 {
     uint32_t i;
-    uint32_t startIndex = 0xFFFFFFFFU;
+    uint32_t startIndex     = 0xFFFFFFFFU;
     uint32_t freeBufferSize = 0U;
     USB_OSA_SR_ALLOC();
 
@@ -1731,7 +1806,7 @@ static usb_status_t USB_HostIp3516HsGetBuffer(usb_host_ip3516hs_state_struct_t *
         if (usbHostState->bufferArrayBitMap[i >> 5] & (1U << (i % 32)))
         {
             freeBufferSize = 0U;
-            startIndex = 0xFFFFFFFFU;
+            startIndex     = 0xFFFFFFFFU;
         }
         else
         {
@@ -1748,7 +1823,7 @@ static usb_status_t USB_HostIp3516HsGetBuffer(usb_host_ip3516hs_state_struct_t *
     }
     if (0xFFFFFFFFU != startIndex)
     {
-        *index = startIndex;
+        *index        = startIndex;
         *bufferLength = freeBufferSize;
         for (; startIndex <= i; startIndex++)
         {
@@ -1769,7 +1844,7 @@ static usb_status_t USB_HostIp3516HsGetBuffer(usb_host_ip3516hs_state_struct_t *
         if (usbHostState->bufferArrayBitMap[i >> 5] & (1U << (i % 32)))
         {
             freeBufferSize = 0U;
-            startIndex = 0xFFFFFFFFU;
+            startIndex     = 0xFFFFFFFFU;
         }
         else
         {
@@ -1786,7 +1861,7 @@ static usb_status_t USB_HostIp3516HsGetBuffer(usb_host_ip3516hs_state_struct_t *
     }
     if (0xFFFFFFFFU != startIndex)
     {
-        *index = startIndex;
+        *index        = startIndex;
         *bufferLength = freeBufferSize;
         for (; startIndex <= i; startIndex++)
         {
@@ -1823,6 +1898,7 @@ static usb_status_t USB_HostIp3516HsWriteControlPipe(usb_host_ip3516hs_state_str
     usb_host_ip3516hs_atl_struct_t *atl = &s_UsbHostIp3516HsPtd[usbHostState->controllerId].atl[pipe->tdIndex];
     uint8_t *bufferAddress;
     uint32_t transferLength;
+    usb_status_t status = kStatus_USB_Success;
 
 #if ((defined USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
     uint8_t timeCount;
@@ -1875,20 +1951,20 @@ static usb_status_t USB_HostIp3516HsWriteControlPipe(usb_host_ip3516hs_state_str
             {
                 bufferAddress[i] = ((uint8_t *)tr->setupPacket)[i];
             }
-            atl->control2Union.stateBitField.RL = 0U;
-            atl->stateUnion.stateBitField.P = 0U;
-            atl->stateUnion.stateBitField.NakCnt = 0U;
-            atl->stateUnion.stateBitField.Cerr = 0x3U;
-            atl->dataUnion.dataBitField.NrBytesToTransfer = 8U;
+            atl->control2Union.stateBitField.RL             = 0U;
+            atl->stateUnion.stateBitField.P                 = 0U;
+            atl->stateUnion.stateBitField.NakCnt            = 0U;
+            atl->stateUnion.stateBitField.Cerr              = 0x3U;
+            atl->dataUnion.dataBitField.NrBytesToTransfer   = 8U;
             atl->stateUnion.stateBitField.NrBytesToTransfer = 0U;
-            atl->dataUnion.dataBitField.DataStartAddress = ((uint32_t)(bufferAddress)) & 0x0000FFFFU;
-            atl->dataUnion.dataBitField.I = 1U;
-            atl->stateUnion.stateBitField.Token = USB_HOST_IP3516HS_PTD_TOKEN_SETUP;
-            atl->stateUnion.stateBitField.DT = 0x00U;
-            atl->stateUnion.stateBitField.SC = 0x00U;
-            tr->setupStatus = kStatus_UsbHostIp3516Hs_Setup;
-            atl->control1Union.stateBitField.V = 0x01U;
-            atl->stateUnion.stateBitField.A = 0x01U;
+            atl->dataUnion.dataBitField.DataStartAddress    = ((uint32_t)(bufferAddress)) & 0x0000FFFFU;
+            atl->dataUnion.dataBitField.I                   = 1U;
+            atl->stateUnion.stateBitField.Token             = USB_HOST_IP3516HS_PTD_TOKEN_SETUP;
+            atl->stateUnion.stateBitField.DT                = 0x00U;
+            atl->stateUnion.stateBitField.SC                = 0x00U;
+            tr->setupStatus                                 = kStatus_UsbHostIp3516Hs_Setup;
+            atl->control1Union.stateBitField.V              = 0x01U;
+            atl->stateUnion.stateBitField.A                 = 0x01U;
             break;
         case kStatus_UsbHostIp3516Hs_Data2:
         case kStatus_UsbHostIp3516Hs_Setup:
@@ -1905,20 +1981,20 @@ static usb_status_t USB_HostIp3516HsWriteControlPipe(usb_host_ip3516hs_state_str
                     bufferAddress[i] = tr->transferBuffer[tr->transferSofar + i];
                 }
             }
-            atl->control2Union.stateBitField.RL = 0U;
-            atl->stateUnion.stateBitField.NakCnt = 0U;
-            atl->stateUnion.stateBitField.Cerr = 0x3U;
-            atl->dataUnion.dataBitField.NrBytesToTransfer = transferLength;
+            atl->control2Union.stateBitField.RL             = 0U;
+            atl->stateUnion.stateBitField.NakCnt            = 0U;
+            atl->stateUnion.stateBitField.Cerr              = 0x3U;
+            atl->dataUnion.dataBitField.NrBytesToTransfer   = transferLength;
             atl->stateUnion.stateBitField.NrBytesToTransfer = 0U;
-            atl->dataUnion.dataBitField.DataStartAddress = ((uint32_t)(bufferAddress)) & 0x0000FFFFU;
-            atl->dataUnion.dataBitField.I = 1U;
-            atl->stateUnion.stateBitField.SC = 0x00U;
+            atl->dataUnion.dataBitField.DataStartAddress    = ((uint32_t)(bufferAddress)) & 0x0000FFFFU;
+            atl->dataUnion.dataBitField.I                   = 1U;
+            atl->stateUnion.stateBitField.SC                = 0x00U;
             if (transferLength)
             {
                 if (USB_IN == tr->direction)
                 {
                     atl->stateUnion.stateBitField.Token = USB_HOST_IP3516HS_PTD_TOKEN_IN;
-                    atl->stateUnion.stateBitField.P = 0x00U;
+                    atl->stateUnion.stateBitField.P     = 0x00U;
                 }
                 else
                 {
@@ -1936,23 +2012,24 @@ static usb_status_t USB_HostIp3516HsWriteControlPipe(usb_host_ip3516hs_state_str
             else
             {
                 atl->stateUnion.stateBitField.Token = USB_HOST_IP3516HS_PTD_TOKEN_IN;
-                tr->setupStatus = kStatus_UsbHostIp3516Hs_State;
+                tr->setupStatus                     = kStatus_UsbHostIp3516Hs_State;
             }
             atl->control1Union.stateBitField.V = 0x01U;
-            atl->stateUnion.stateBitField.A = 0x01U;
+            atl->stateUnion.stateBitField.A    = 0x01U;
             break;
         case kStatus_UsbHostIp3516Hs_Data:
-            bufferAddress = (uint8_t *)&s_UsbHostIp3516HsBufferArray[pipe->bufferIndex][0];
-            atl->control2Union.stateBitField.RL = 0U;
+            tr->setupStatus                      = kStatus_UsbHostIp3516Hs_State;
+            bufferAddress                        = (uint8_t *)&s_UsbHostIp3516HsBufferArray[pipe->bufferIndex][0];
+            atl->control2Union.stateBitField.RL  = 0U;
             atl->stateUnion.stateBitField.NakCnt = 0U;
-            atl->stateUnion.stateBitField.Cerr = 0x3U;
-            atl->dataUnion.dataBitField.NrBytesToTransfer = 0;
+            atl->stateUnion.stateBitField.Cerr   = 0x3U;
+            atl->dataUnion.dataBitField.NrBytesToTransfer   = 0;
             atl->stateUnion.stateBitField.NrBytesToTransfer = 0U;
-            atl->dataUnion.dataBitField.DataStartAddress = ((uint32_t)(bufferAddress)) & 0x0000FFFFU;
-            atl->dataUnion.dataBitField.I = 1U;
-            atl->stateUnion.stateBitField.DT = 1U;
-            atl->stateUnion.stateBitField.P = 0x00U;
-            atl->stateUnion.stateBitField.SC = 0x00U;
+            atl->dataUnion.dataBitField.DataStartAddress    = ((uint32_t)(bufferAddress)) & 0x0000FFFFU;
+            atl->dataUnion.dataBitField.I                   = 1U;
+            atl->stateUnion.stateBitField.DT                = 1U;
+            atl->stateUnion.stateBitField.P                 = 0x00U;
+            atl->stateUnion.stateBitField.SC                = 0x00U;
             if (USB_OUT == tr->direction)
             {
                 atl->stateUnion.stateBitField.Token = USB_HOST_IP3516HS_PTD_TOKEN_IN;
@@ -1962,21 +2039,19 @@ static usb_status_t USB_HostIp3516HsWriteControlPipe(usb_host_ip3516hs_state_str
                 atl->stateUnion.stateBitField.Token = USB_HOST_IP3516HS_PTD_TOKEN_OUT;
             }
             atl->control1Union.stateBitField.V = 0x01U;
-            atl->stateUnion.stateBitField.A = 0x01U;
-            tr->setupStatus = kStatus_UsbHostIp3516Hs_State;
+            atl->stateUnion.stateBitField.A    = 0x01U;
+
             break;
         default:
+            status          = kStatus_USB_Error;
+            tr->setupStatus = kStatus_UsbHostIp3516Hs_Idle;
             USB_OSA_ENTER_CRITICAL();
             pipe->isBusy = 0U;
             USB_OSA_EXIT_CRITICAL();
-            tr->setupStatus = kStatus_UsbHostIp3516Hs_Idle;
             break;
     }
-    if (!pipe->isBusy)
-    {
-        return kStatus_USB_Error;
-    }
-    return kStatus_USB_Success;
+
+    return status;
 }
 
 static usb_status_t USB_HostIp3516HsWriteBulkPipe(usb_host_ip3516hs_state_struct_t *usbHostState,
@@ -2032,17 +2107,17 @@ static usb_status_t USB_HostIp3516HsWriteBulkPipe(usb_host_ip3516hs_state_struct
         memcpy(bufferAddress, &tr->transferBuffer[tr->transferSofar], transferLength);
     }
 
-    atl->control2Union.stateBitField.RL = 0U;
-    atl->stateUnion.stateBitField.NakCnt = 0U;
-    atl->stateUnion.stateBitField.Cerr = 0x3U;
-    atl->dataUnion.dataBitField.NrBytesToTransfer = transferLength;
+    atl->control2Union.stateBitField.RL             = 0U;
+    atl->stateUnion.stateBitField.NakCnt            = 0U;
+    atl->stateUnion.stateBitField.Cerr              = 0x3U;
+    atl->dataUnion.dataBitField.NrBytesToTransfer   = transferLength;
     atl->stateUnion.stateBitField.NrBytesToTransfer = 0U;
-    atl->dataUnion.dataBitField.DataStartAddress = ((uint32_t)(bufferAddress)) & 0x0000FFFFU;
-    atl->dataUnion.dataBitField.I = 1U;
-    atl->stateUnion.stateBitField.SC = 0x00U;
+    atl->dataUnion.dataBitField.DataStartAddress    = ((uint32_t)(bufferAddress)) & 0x0000FFFFU;
+    atl->dataUnion.dataBitField.I                   = 1U;
+    atl->stateUnion.stateBitField.SC                = 0x00U;
     if (USB_IN == tr->direction)
     {
-        atl->stateUnion.stateBitField.P = 0x00U;
+        atl->stateUnion.stateBitField.P     = 0x00U;
         atl->stateUnion.stateBitField.Token = USB_HOST_IP3516HS_PTD_TOKEN_IN;
     }
     else
@@ -2050,7 +2125,7 @@ static usb_status_t USB_HostIp3516HsWriteBulkPipe(usb_host_ip3516hs_state_struct
         atl->stateUnion.stateBitField.Token = USB_HOST_IP3516HS_PTD_TOKEN_OUT;
     }
     atl->control1Union.stateBitField.V = 0x01U;
-    atl->stateUnion.stateBitField.A = 0x01U;
+    atl->stateUnion.stateBitField.A    = 0x01U;
     return kStatus_USB_Success;
 }
 
@@ -2059,151 +2134,209 @@ static usb_status_t USB_HostIp3516HsWriteIsoPipe(usb_host_ip3516hs_state_struct_
                                                  usb_host_ip3516hs_pipe_struct_t *pipe,
                                                  usb_host_transfer_t *tr)
 {
-    usb_host_ip3516hs_ptl_struct_t *ptl = &s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[pipe->tdIndex];
-    usb_host_ip3516hs_sptl_struct_t *sptl = (usb_host_ip3516hs_sptl_struct_t *)ptl;
+    usb_host_ip3516hs_ptl_struct_t *ptl;
+    usb_host_ip3516hs_sptl_struct_t *sptl;
+    usb_host_transfer_t *currentTr;
     uint32_t transferLength;
     uint32_t currentUFrame;
     uint32_t insertUFrame;
+    uint32_t primedUFrame;
+    uint32_t tdIndex;
+    union index_length
+    {
+        uint32_t indexLength;
+        struct
+        {
+            uint32_t tdIndex : 8U;
+            uint32_t bufferIndex : 8U;
+            uint32_t bufferLength : 16U;
+        } state;
+    } indexLength;
     uint8_t *bufferAddress;
     uint8_t speed = ((usb_host_device_instance_t *)pipe->pipeCommon.deviceHandle)->speed;
     USB_OSA_SR_ALLOC();
 
-    if (1U == pipe->isBusy)
-    {
-        return kStatus_USB_Success;
-    }
-
     USB_OSA_ENTER_CRITICAL();
-    pipe->isBusy = 1U;
-    USB_OSA_EXIT_CRITICAL();
 
-    transferLength = (tr->transferLength - tr->transferSofar);
-    if (pipe->bufferLength)
+    currentTr = tr;
+    while (currentTr)
     {
-        bufferAddress = (uint8_t *)&s_UsbHostIp3516HsBufferArray[pipe->bufferIndex][0];
-    }
-    else
-    {
-        if (kStatus_USB_Success == USB_HostIp3516HsGetBuffer(usbHostState, transferLength,
-                                                             pipe->pipeCommon.maxPacketSize, &pipe->bufferIndex,
-                                                             &pipe->bufferLength))
+        transferLength          = (currentTr->transferLength - currentTr->transferSofar);
+        indexLength.indexLength = currentTr->union2.frame;
+        if (0 == indexLength.indexLength)
         {
-            bufferAddress = (uint8_t *)&s_UsbHostIp3516HsBufferArray[pipe->bufferIndex][0];
+            uint32_t bufferIndex;
+            uint32_t bufferLength;
+
+            tdIndex = 0xFF;
+            for (uint32_t i = 0; i < (USB_HOST_IP3516HS_ISO_MULTIPLE_TRANSFER); i++)
+            {
+                ptl = &s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[pipe->tdIndex + i];
+                if (0 == ptl->dataUnion.dataBitField.NrBytesToTransfer)
+                {
+                    tdIndex = pipe->tdIndex + i;
+                    sptl    = (usb_host_ip3516hs_sptl_struct_t *)ptl;
+                    break;
+                }
+            }
+            if (0xFF == tdIndex)
+            {
+                break;
+            }
+
+            if (kStatus_USB_Success == USB_HostIp3516HsGetBuffer(usbHostState, transferLength,
+                                                                 pipe->pipeCommon.maxPacketSize, &bufferIndex,
+                                                                 &bufferLength))
+            {
+                indexLength.state.bufferIndex  = bufferIndex;
+                indexLength.state.bufferLength = bufferLength;
+                bufferAddress = (uint8_t *)&s_UsbHostIp3516HsBufferArray[indexLength.state.bufferIndex][0];
+            }
+            else
+            {
+                break;
+            }
+            indexLength.state.tdIndex = tdIndex;
+            currentTr->union2.frame   = indexLength.indexLength;
         }
         else
         {
-            USB_OSA_ENTER_CRITICAL();
-            pipe->isBusy = 2U;
-            USB_OSA_EXIT_CRITICAL();
-            return kStatus_USB_Success;
+            currentTr = currentTr->next;
+            continue;
         }
-    }
-    if (transferLength > pipe->bufferLength)
-    {
-        transferLength = pipe->bufferLength;
-    }
 
-    if (USB_OUT == tr->direction)
-    {
-        for (int i = 0; i < transferLength; i++)
+        if (transferLength > indexLength.state.bufferLength)
         {
-            bufferAddress[i] = tr->transferBuffer[tr->transferSofar + i];
+            transferLength = indexLength.state.bufferLength;
         }
-    }
 
-    if (USB_SPEED_HIGH != speed)
-    {
-        if (transferLength > pipe->pipeCommon.maxPacketSize)
+        if (USB_OUT == currentTr->direction)
         {
-            transferLength = pipe->pipeCommon.maxPacketSize;
-        }
-    }
-    ptl->control2Union.stateBitField.RL = 0U;
-    ptl->stateUnion.stateBitField.NakCnt = 0U;
-    ptl->stateUnion.stateBitField.Cerr = 0U;
-    ptl->dataUnion.dataBitField.NrBytesToTransfer = transferLength;
-    ptl->stateUnion.stateBitField.NrBytesToTransfer = 0U;
-    ptl->dataUnion.dataBitField.DataStartAddress = ((uint32_t)(bufferAddress)) & 0x0000FFFFU;
-    ptl->dataUnion.dataBitField.I = 1U;
-    ptl->stateUnion.stateBitField.SC = 0x00U;
-
-    ptl->stateUnion.stateBitField.H = 0U;
-    ptl->stateUnion.stateBitField.X = 0U;
-    ptl->stateUnion.stateBitField.B = 0U;
-    if (USB_IN == tr->direction)
-    {
-        ptl->stateUnion.stateBitField.Token = USB_HOST_IP3516HS_PTD_TOKEN_IN;
-    }
-    else
-    {
-        ptl->stateUnion.stateBitField.Token = USB_HOST_IP3516HS_PTD_TOKEN_OUT;
-    }
-
-    ptl->statusUnion.status = 0U;
-    ptl->isoInUnion1.isoIn = 0U;
-    ptl->isoInUnion2.isoIn = 0U;
-    ptl->isoInUnion3.isoIn = 0U;
-
-    currentUFrame = (uint32_t)((usbHostState->usbRegBase->FLADJ_FRINDEX & USB_HOST_IP3516HS_FLADJ_FRINDEX_MASK) >>
-                               USB_HOST_IP3516HS_FLADJ_FRINDEX_SHIFT);
-    currentUFrame = currentUFrame & 0xFFU;
-
-    insertUFrame = pipe->startUFrame + ((currentUFrame - pipe->startUFrame + USB_HOST_IP3516HS_PERIODIC_TRANSFER_GAP +
-                                         pipe->pipeCommon.interval - 1U) &
-                                        (~(pipe->pipeCommon.interval - 1U)));
-
-    if (USB_SPEED_HIGH == speed)
-    {
-        ptl->control1Union.stateBitField.uFrame = insertUFrame & 0xF8U;
-        for (int i = (insertUFrame & 0x07U); i < 8; i += pipe->pipeCommon.interval)
-        {
-            ptl->statusUnion.statusBitField.uSA |= 1U << i;
-        }
-    }
-    else
-    {
-        if (ptl->control2Union.stateBitField.S)
-        {
-#if (defined(FSL_FEATURE_USBHSH_VERSION) && (FSL_FEATURE_USBHSH_VERSION >= 300U))
-            if (USB_IN == tr->direction)
+            for (int i = 0; i < transferLength; i++)
             {
-                if (transferLength <= 192U)
+                bufferAddress[i] = currentTr->transferBuffer[currentTr->transferSofar + i];
+            }
+        }
+
+        if (USB_SPEED_HIGH != speed)
+        {
+            if (transferLength > pipe->pipeCommon.maxPacketSize)
+            {
+                transferLength = pipe->pipeCommon.maxPacketSize;
+            }
+        }
+        ptl->control2Union.stateBitField.RL             = 0U;
+        ptl->stateUnion.stateBitField.NakCnt            = 0U;
+        ptl->stateUnion.stateBitField.Cerr              = 0U;
+        ptl->dataUnion.dataBitField.NrBytesToTransfer   = transferLength;
+        ptl->stateUnion.stateBitField.NrBytesToTransfer = 0U;
+        ptl->dataUnion.dataBitField.DataStartAddress    = ((uint32_t)(bufferAddress)) & 0x0000FFFFU;
+        ptl->dataUnion.dataBitField.I                   = 1U;
+        ptl->stateUnion.stateBitField.SC                = 0x00U;
+
+        ptl->stateUnion.stateBitField.H = 0U;
+        ptl->stateUnion.stateBitField.X = 0U;
+        ptl->stateUnion.stateBitField.B = 0U;
+        if (USB_IN == currentTr->direction)
+        {
+            ptl->stateUnion.stateBitField.Token = USB_HOST_IP3516HS_PTD_TOKEN_IN;
+        }
+        else
+        {
+            ptl->stateUnion.stateBitField.Token = USB_HOST_IP3516HS_PTD_TOKEN_OUT;
+        }
+
+        ptl->statusUnion.status = 0U;
+        ptl->isoInUnion1.isoIn  = 0U;
+        ptl->isoInUnion2.isoIn  = 0U;
+        ptl->isoInUnion3.isoIn  = 0U;
+
+        currentUFrame = (uint32_t)((usbHostState->usbRegBase->FLADJ_FRINDEX & USB_HOST_IP3516HS_FLADJ_FRINDEX_MASK) >>
+                                   USB_HOST_IP3516HS_FLADJ_FRINDEX_SHIFT);
+        currentUFrame = currentUFrame & 0xFFU;
+
+        primedUFrame = (pipe->lastPrimedIndex + pipe->pipeCommon.interval) & 0xFFU;
+
+        if (primedUFrame < currentUFrame)
+        {
+            primedUFrame = primedUFrame + 0x100U;
+        }
+        if (primedUFrame >= (currentUFrame + USB_HOST_IP3516HS_PERIODIC_TRANSFER_GAP))
+        {
+            primedUFrame = primedUFrame & 0xFFU;
+            insertUFrame = primedUFrame;
+        }
+        else
+        {
+            insertUFrame =
+                pipe->startUFrame + ((currentUFrame - pipe->startUFrame + USB_HOST_IP3516HS_PERIODIC_TRANSFER_GAP +
+                                      pipe->pipeCommon.interval - 1U) &
+                                     (~(pipe->pipeCommon.interval - 1U)));
+        }
+
+        pipe->lastPrimedIndex = insertUFrame;
+
+        if (USB_SPEED_HIGH == speed)
+        {
+            uint32_t primedLength                   = currentTr->transferSofar;
+            ptl->control1Union.stateBitField.uFrame = insertUFrame & 0xF8U;
+            ptl->statusUnion.statusBitField.uSA     = 0U;
+
+            for (uint8_t i = (insertUFrame & 0x07U); (i < 8U) && (primedLength < currentTr->transferLength);
+                 i += pipe->pipeCommon.interval)
+            {
+                primedLength += pipe->pipeCommon.maxPacketSize * pipe->pipeCommon.numberPerUframe;
+                ptl->statusUnion.statusBitField.uSA |= 1U << i;
+            }
+        }
+        else
+        {
+            if (ptl->control2Union.stateBitField.S)
+            {
+#if (defined(FSL_FEATURE_USBHSH_VERSION) && (FSL_FEATURE_USBHSH_VERSION >= 300U))
+                if (USB_IN == currentTr->direction)
                 {
-                    sptl->control1Union.stateBitField.MaxPacketLength = transferLength;
+                    if (transferLength <= 192U)
+                    {
+                        sptl->control1Union.stateBitField.MaxPacketLength = transferLength;
+                    }
+                    else
+                    {
+                        sptl->control1Union.stateBitField.MaxPacketLength = 192U;
+                    }
                 }
                 else
+#endif
                 {
-                    sptl->control1Union.stateBitField.MaxPacketLength = 192U;
+                    if (transferLength <= 188U)
+                    {
+#if (defined(FSL_FEATURE_USBHSH_VERSION) && (FSL_FEATURE_USBHSH_VERSION >= 300U))
+                        sptl->control1Union.stateBitField.MaxPacketLength = transferLength;
+#else
+                        sptl->control1Union.stateBitField.MaxPacketLength = transferLength + 1U;
+#endif
+                    }
+                    else
+                    {
+                        sptl->control1Union.stateBitField.MaxPacketLength = 188U;
+                    }
                 }
             }
             else
-#endif
             {
-                if (transferLength <= 188U)
-                {
-#if (defined(FSL_FEATURE_USBHSH_VERSION) && (FSL_FEATURE_USBHSH_VERSION >= 300U))
-                    sptl->control1Union.stateBitField.MaxPacketLength = transferLength;
-#else
-                    sptl->control1Union.stateBitField.MaxPacketLength = transferLength + 1U;
-#endif
-                }
-                else
-                {
-                    sptl->control1Union.stateBitField.MaxPacketLength = 188U;
-                }
+                sptl->control1Union.stateBitField.MaxPacketLength = pipe->pipeCommon.maxPacketSize;
             }
+            sptl->control1Union.stateBitField.uFrame = insertUFrame & 0xF8U;
+            sptl->statusUnion.statusBitField.uSA     = pipe->ssSlot;
+            sptl->isoInUnion1.bitField.uSCS          = pipe->csSlot;
         }
-        else
-        {
-            sptl->control1Union.stateBitField.MaxPacketLength = pipe->pipeCommon.maxPacketSize;
-        }
-        sptl->control1Union.stateBitField.uFrame = insertUFrame & 0xF8U;
-        sptl->statusUnion.statusBitField.uSA = pipe->ssSlot;
-        sptl->isoInUnion1.bitField.uSCS = pipe->csSlot;
-    }
 
-    ptl->control1Union.stateBitField.V = 0x01U;
-    ptl->stateUnion.stateBitField.A = 0x01U;
+        ptl->control1Union.stateBitField.V = 0x01U;
+        ptl->stateUnion.stateBitField.A    = 0x01U;
+
+        currentTr = currentTr->next;
+    }
+    USB_OSA_EXIT_CRITICAL();
     return kStatus_USB_Success;
 }
 #endif
@@ -2213,7 +2346,7 @@ static usb_status_t USB_HostIp3516HsWriteInterruptPipe(usb_host_ip3516hs_state_s
                                                        usb_host_ip3516hs_pipe_struct_t *pipe,
                                                        usb_host_transfer_t *tr)
 {
-    usb_host_ip3516hs_ptl_struct_t *ptl = &s_UsbHostIp3516HsPtd[usbHostState->controllerId].interrupt[pipe->tdIndex];
+    usb_host_ip3516hs_ptl_struct_t *ptl   = &s_UsbHostIp3516HsPtd[usbHostState->controllerId].interrupt[pipe->tdIndex];
     usb_host_ip3516hs_sptl_struct_t *sptl = (usb_host_ip3516hs_sptl_struct_t *)ptl;
     uint32_t transferLength;
     uint32_t currentUFrame;
@@ -2257,15 +2390,15 @@ static usb_status_t USB_HostIp3516HsWriteInterruptPipe(usb_host_ip3516hs_state_s
         }
     }
 
-    ptl->control2Union.stateBitField.RL = 0U;
-    ptl->stateUnion.stateBitField.NakCnt = 0x0FU;
-    ptl->stateUnion.stateBitField.Cerr = 0x3U;
-    ptl->dataUnion.dataBitField.NrBytesToTransfer = transferLength;
+    ptl->control2Union.stateBitField.RL             = 0U;
+    ptl->stateUnion.stateBitField.NakCnt            = 0x0FU;
+    ptl->stateUnion.stateBitField.Cerr              = 0x3U;
+    ptl->dataUnion.dataBitField.NrBytesToTransfer   = transferLength;
     ptl->stateUnion.stateBitField.NrBytesToTransfer = 0U;
-    ptl->dataUnion.dataBitField.DataStartAddress = ((uint32_t)(bufferAddress)) & 0x0000FFFFU;
-    ptl->dataUnion.dataBitField.I = 1U;
-    ptl->stateUnion.stateBitField.P = 0x00U;
-    ptl->stateUnion.stateBitField.SC = 0x00U;
+    ptl->dataUnion.dataBitField.DataStartAddress    = ((uint32_t)(bufferAddress)) & 0x0000FFFFU;
+    ptl->dataUnion.dataBitField.I                   = 1U;
+    ptl->stateUnion.stateBitField.P                 = 0x00U;
+    ptl->stateUnion.stateBitField.SC                = 0x00U;
     if (USB_IN == tr->direction)
     {
         ptl->stateUnion.stateBitField.Token = USB_HOST_IP3516HS_PTD_TOKEN_IN;
@@ -2276,9 +2409,9 @@ static usb_status_t USB_HostIp3516HsWriteInterruptPipe(usb_host_ip3516hs_state_s
     }
 
     ptl->statusUnion.status = 0U;
-    ptl->isoInUnion1.isoIn = 0U;
-    ptl->isoInUnion2.isoIn = 0U;
-    ptl->isoInUnion3.isoIn = 0U;
+    ptl->isoInUnion1.isoIn  = 0U;
+    ptl->isoInUnion2.isoIn  = 0U;
+    ptl->isoInUnion3.isoIn  = 0U;
 
     currentUFrame = (uint32_t)((usbHostState->usbRegBase->FLADJ_FRINDEX & USB_HOST_IP3516HS_FLADJ_FRINDEX_MASK) >>
                                USB_HOST_IP3516HS_FLADJ_FRINDEX_SHIFT);
@@ -2325,11 +2458,11 @@ static usb_status_t USB_HostIp3516HsWriteInterruptPipe(usb_host_ip3516hs_state_s
     else
     {
         sptl->statusUnion.statusBitField.uSA = pipe->ssSlot;
-        sptl->isoInUnion1.bitField.uSCS = pipe->csSlot;
+        sptl->isoInUnion1.bitField.uSCS      = pipe->csSlot;
     }
 
     ptl->control1Union.stateBitField.V = 0x01U;
-    ptl->stateUnion.stateBitField.A = 0x01U;
+    ptl->stateUnion.stateBitField.A    = 0x01U;
     return kStatus_USB_Success;
 }
 #endif
@@ -2345,6 +2478,12 @@ usb_host_ip3516hs_pipe_struct_t *USB_HostIp3516HsGetPipe(usb_host_ip3516hs_state
     while (p != NULL)
     {
         if ((p->pipeCommon.pipeType == pipeType) && (p->tdIndex == tdIndex))
+        {
+            USB_OSA_EXIT_CRITICAL();
+            return p;
+        }
+        if ((p->pipeCommon.pipeType == pipeType) && (USB_ENDPOINT_ISOCHRONOUS == pipeType) && (p->tdIndex >= tdIndex) &&
+            (tdIndex < (p->tdIndex + USB_HOST_IP3516HS_ISO_MULTIPLE_TRANSFER)))
         {
             USB_OSA_EXIT_CRITICAL();
             return p;
@@ -2369,7 +2508,8 @@ static usb_status_t USB_HostIp3516HsCheckIsoTransferSofar(usb_host_ip3516hs_stat
     {
         if (tokenDoneBits & (1U << i))
         {
-            if (s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[i].stateUnion.stateBitField.A)
+            if ((s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[i].stateUnion.stateBitField.A) &&
+                (s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[i].control1Union.stateBitField.V))
             {
                 continue;
             }
@@ -2441,7 +2581,8 @@ static usb_status_t USB_HostIp3516HsCheckIntTransferSofar(usb_host_ip3516hs_stat
     {
         if (tokenDoneBits & (1U << i))
         {
-            if (s_UsbHostIp3516HsPtd[usbHostState->controllerId].interrupt[i].stateUnion.stateBitField.A)
+            if ((s_UsbHostIp3516HsPtd[usbHostState->controllerId].interrupt[i].stateUnion.stateBitField.A) &&
+                (s_UsbHostIp3516HsPtd[usbHostState->controllerId].interrupt[i].control1Union.stateBitField.V))
             {
                 continue;
             }
@@ -2535,6 +2676,18 @@ static usb_status_t USB_HostIp3516HsTokenDone(usb_host_ip3516hs_state_struct_t *
     usb_host_ip3516hs_pipe_struct_t *p;
     uint32_t startUFrame;
     uint32_t currentUFrame;
+#if ((defined(USB_HOST_CONFIG_IP3516HS_MAX_ISO)) && (USB_HOST_CONFIG_IP3516HS_MAX_ISO > 0U))
+    union index_length
+    {
+        uint32_t indexLength;
+        struct
+        {
+            uint32_t tdIndex : 8U;
+            uint32_t bufferIndex : 8U;
+            uint32_t bufferLength : 16U;
+        } state;
+    } indexLength;
+#endif
     usb_status_t trStatus;
     uint8_t trDone;
 
@@ -2544,7 +2697,7 @@ static usb_status_t USB_HostIp3516HsTokenDone(usb_host_ip3516hs_state_struct_t *
     pipe = usbHostState->pipeListInUsing;
     while (NULL != pipe)
     {
-        trStatus = kStatus_USB_Success;
+        trStatus  = kStatus_USB_Success;
         trCurrent = pipe->trList;
         if (NULL == trCurrent)
         {
@@ -2618,7 +2771,12 @@ static usb_status_t USB_HostIp3516HsTokenDone(usb_host_ip3516hs_state_struct_t *
                             break;
                     }
 
-                    if (!s_UsbHostIp3516HsPtd[usbHostState->controllerId].atl[pipe->tdIndex].stateUnion.stateBitField.A)
+                    if (!((s_UsbHostIp3516HsPtd[usbHostState->controllerId]
+                               .atl[pipe->tdIndex]
+                               .stateUnion.stateBitField.A) &&
+                          (s_UsbHostIp3516HsPtd[usbHostState->controllerId]
+                               .atl[pipe->tdIndex]
+                               .control1Union.stateBitField.V)))
                     {
                         trDone = 1;
                     }
@@ -2679,7 +2837,12 @@ static usb_status_t USB_HostIp3516HsTokenDone(usb_host_ip3516hs_state_struct_t *
                                                     .atl[pipe->tdIndex]
                                                     .stateUnion.stateBitField.NrBytesToTransfer;
 
-                    if (!s_UsbHostIp3516HsPtd[usbHostState->controllerId].atl[pipe->tdIndex].stateUnion.stateBitField.A)
+                    if (!((s_UsbHostIp3516HsPtd[usbHostState->controllerId]
+                               .atl[pipe->tdIndex]
+                               .stateUnion.stateBitField.A) &&
+                          (s_UsbHostIp3516HsPtd[usbHostState->controllerId]
+                               .atl[pipe->tdIndex]
+                               .control1Union.stateBitField.V)))
                     {
                         trDone = 1;
                     }
@@ -2728,9 +2891,12 @@ static usb_status_t USB_HostIp3516HsTokenDone(usb_host_ip3516hs_state_struct_t *
                         continue;
                     }
 
-                    if (!s_UsbHostIp3516HsPtd[usbHostState->controllerId]
-                             .interrupt[pipe->tdIndex]
-                             .stateUnion.stateBitField.A)
+                    if (!((s_UsbHostIp3516HsPtd[usbHostState->controllerId]
+                               .interrupt[pipe->tdIndex]
+                               .stateUnion.stateBitField.A) &&
+                          (s_UsbHostIp3516HsPtd[usbHostState->controllerId]
+                               .interrupt[pipe->tdIndex]
+                               .control1Union.stateBitField.V)))
                     {
                         trDone = 1;
                     }
@@ -2786,15 +2952,25 @@ static usb_status_t USB_HostIp3516HsTokenDone(usb_host_ip3516hs_state_struct_t *
 #if ((defined(USB_HOST_CONFIG_IP3516HS_MAX_ISO)) && (USB_HOST_CONFIG_IP3516HS_MAX_ISO > 0U))
                 case USB_ENDPOINT_ISOCHRONOUS:
 #if 1
-                    if (pipe->isBusy)
+                    indexLength.indexLength = trCurrent->union2.frame;
+                    trCurrent->union2.frame = 0;
+                    if ((s_UsbHostIp3516HsPtd[usbHostState->controllerId]
+                             .iso[indexLength.state.tdIndex]
+                             .stateUnion.stateBitField.A) &&
+                        (s_UsbHostIp3516HsPtd[usbHostState->controllerId]
+                             .iso[indexLength.state.tdIndex]
+                             .control1Union.stateBitField.V))
                     {
                         pipe = (usb_host_ip3516hs_pipe_struct_t *)pipe->pipeCommon.next;
                         continue;
                     }
+
+                    pipe->bufferIndex  = indexLength.state.bufferIndex;
+                    pipe->bufferLength = indexLength.state.bufferLength;
                     if (USB_IN == trCurrent->direction)
                     {
                         for (int i = 0; i < s_UsbHostIp3516HsPtd[usbHostState->controllerId]
-                                                .iso[pipe->tdIndex]
+                                                .iso[indexLength.state.tdIndex]
                                                 .stateUnion.stateBitField.NrBytesToTransfer;
                              i++)
                         {
@@ -2803,14 +2979,14 @@ static usb_status_t USB_HostIp3516HsTokenDone(usb_host_ip3516hs_state_struct_t *
                         }
                     }
                     trCurrent->transferSofar += s_UsbHostIp3516HsPtd[usbHostState->controllerId]
-                                                    .iso[pipe->tdIndex]
+                                                    .iso[indexLength.state.tdIndex]
                                                     .stateUnion.stateBitField.NrBytesToTransfer;
 
                     if ((s_UsbHostIp3516HsPtd[usbHostState->controllerId]
-                             .iso[pipe->tdIndex]
+                             .iso[indexLength.state.tdIndex]
                              .stateUnion.stateBitField.B) ||
                         (s_UsbHostIp3516HsPtd[usbHostState->controllerId]
-                             .iso[pipe->tdIndex]
+                             .iso[indexLength.state.tdIndex]
                              .stateUnion.stateBitField.X))
                     {
                         trCurrent->union1.transferResult = kStatus_USB_TransferFailed;
@@ -2849,6 +3025,10 @@ static usb_status_t USB_HostIp3516HsTokenDone(usb_host_ip3516hs_state_struct_t *
                     {
                         trStatus = kStatus_USB_TransferFailed;
                     }
+                    s_UsbHostIp3516HsPtd[usbHostState->controllerId]
+                        .iso[indexLength.state.tdIndex]
+                        .dataUnion.dataBitField.NrBytesToTransfer = 0;
+
                     break;
 #endif
                 default:
@@ -2857,9 +3037,13 @@ static usb_status_t USB_HostIp3516HsTokenDone(usb_host_ip3516hs_state_struct_t *
             if (trDone)
             {
                 pipe->trList = trCurrent->next;
-
+#if 0
 #if ((defined(USB_HOST_CONFIG_IP3516HS_MAX_ISO)) && (USB_HOST_CONFIG_IP3516HS_MAX_ISO > 0U))
                 if ((USB_ENDPOINT_ISOCHRONOUS != pipe->pipeCommon.pipeType) && (pipe->bufferLength))
+#else
+                if ((pipe->bufferLength)
+#endif
+
 #else
                 if ((pipe->bufferLength))
 #endif
@@ -3050,8 +3234,8 @@ static usb_status_t USB_HostIp3516HsControllerInit(usb_host_ip3516hs_state_struc
     {
         s_UsbHostIp3516HsPtd[usbHostState->controllerId].atl[i].control1Union.controlState = 0U;
         s_UsbHostIp3516HsPtd[usbHostState->controllerId].atl[i].control2Union.controlState = 0U;
-        s_UsbHostIp3516HsPtd[usbHostState->controllerId].atl[i].dataUnion.data = 0U;
-        s_UsbHostIp3516HsPtd[usbHostState->controllerId].atl[i].stateUnion.state = 0U;
+        s_UsbHostIp3516HsPtd[usbHostState->controllerId].atl[i].dataUnion.data             = 0U;
+        s_UsbHostIp3516HsPtd[usbHostState->controllerId].atl[i].stateUnion.state           = 0U;
     }
     usbHostState->usbRegBase->ATL_PTD_BASE_ADDRESS =
         (((uint32_t)(&s_UsbHostIp3516HsPtd[usbHostState->controllerId].atl[0])) &
@@ -3065,8 +3249,8 @@ static usb_status_t USB_HostIp3516HsControllerInit(usb_host_ip3516hs_state_struc
     {
         s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[i].control1Union.controlState = 0U;
         s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[i].control2Union.controlState = 0U;
-        s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[i].dataUnion.data = 0U;
-        s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[i].stateUnion.state = 0U;
+        s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[i].dataUnion.data             = 0U;
+        s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[i].stateUnion.state           = 0U;
     }
     usbHostState->usbRegBase->ISO_PTD_BASE_ADDRESS =
         (((uint32_t)(&s_UsbHostIp3516HsPtd[usbHostState->controllerId].iso[0])) &
@@ -3083,8 +3267,8 @@ static usb_status_t USB_HostIp3516HsControllerInit(usb_host_ip3516hs_state_struc
     {
         s_UsbHostIp3516HsPtd[usbHostState->controllerId].interrupt[i].control1Union.controlState = 0U;
         s_UsbHostIp3516HsPtd[usbHostState->controllerId].interrupt[i].control2Union.controlState = 0U;
-        s_UsbHostIp3516HsPtd[usbHostState->controllerId].interrupt[i].dataUnion.data = 0U;
-        s_UsbHostIp3516HsPtd[usbHostState->controllerId].interrupt[i].stateUnion.state = 0U;
+        s_UsbHostIp3516HsPtd[usbHostState->controllerId].interrupt[i].dataUnion.data             = 0U;
+        s_UsbHostIp3516HsPtd[usbHostState->controllerId].interrupt[i].stateUnion.state           = 0U;
     }
     usbHostState->usbRegBase->INT_PTD_BASE_ADDRESS =
         (((uint32_t)(&s_UsbHostIp3516HsPtd[usbHostState->controllerId].interrupt[0])) &
@@ -3097,12 +3281,12 @@ static usb_status_t USB_HostIp3516HsControllerInit(usb_host_ip3516hs_state_struc
 #endif
 
     usbHostState->pipeListInUsing = NULL;
-    usbHostState->pipeList = &usbHostState->pipePool[0];
-    pipe = usbHostState->pipeList;
+    usbHostState->pipeList        = &usbHostState->pipePool[0];
+    pipe                          = usbHostState->pipeList;
     for (i = 1U; i < USB_HOST_CONFIG_IP3516HS_MAX_PIPE; i++)
     {
         pipe->pipeCommon.next = (usb_host_pipe_t *)&usbHostState->pipePool[i];
-        pipe = (usb_host_ip3516hs_pipe_struct_t *)pipe->pipeCommon.next;
+        pipe                  = (usb_host_ip3516hs_pipe_struct_t *)pipe->pipeCommon.next;
     }
     pipe->pipeCommon.next = NULL;
 
@@ -3123,6 +3307,13 @@ static usb_status_t USB_HostIp3516HsControllerInit(usb_host_ip3516hs_state_struc
 
     usbHostState->usbRegBase->USBINTR =
         interruptState | USB_HOST_IP3516HS_USBINTR_PCDE_MASK | USB_HOST_IP3516HS_USBINTR_SOF_E_MASK;
+
+/* On RT600, there is no attach information when LS device is connected, the designer said it is due to the default
+ * turnaround time is too small, the 0x654 is their suggested value. */
+#if (defined(FSL_FEATURE_USBHSH_HAS_TURNAROUND_TIMEOUT) && (FSL_FEATURE_USBHSH_HAS_TURNAROUND_TIMEOUT > 0U))
+    usbHostState->usbRegBase->PACKET_TURNAROUND_TIMEOUT &= ~USBHSH_PACKET_TURNAROUND_TIME_HOST_TIMEOUT_LS_MASK;
+    usbHostState->usbRegBase->PACKET_TURNAROUND_TIMEOUT |= 0x00000654;
+#endif
 
     usbHostState->usbRegBase->USBCMD |= USB_HOST_IP3516HS_USBCMD_RS_MASK;
 
@@ -3149,8 +3340,8 @@ usb_status_t USB_HostIp3516HsCreate(uint8_t controllerId,
 {
     usb_host_ip3516hs_state_struct_t *usbHostState;
     uint32_t usb_base_addrs[] = USBHSH_BASE_ADDRS;
-    uint8_t usb_irq[] = USBHSH_IRQS;
-    usb_status_t status = kStatus_USB_Success;
+    uint8_t usb_irq[]         = USBHSH_IRQS;
+    usb_status_t status       = kStatus_USB_Success;
 
     if (((controllerId - kUSB_ControllerIp3516Hs0) >= (uint8_t)USB_HOST_CONFIG_IP3516HS) ||
         ((controllerId - kUSB_ControllerIp3516Hs0) >= (sizeof(usb_base_addrs) / sizeof(uint32_t))))
@@ -3159,11 +3350,11 @@ usb_status_t USB_HostIp3516HsCreate(uint8_t controllerId,
     }
     usbHostState = &s_UsbHostIp3516HsState[controllerId - kUSB_ControllerIp3516Hs0];
     /* Allocate the USB Host Pipe Descriptors */
-    usbHostState->hostHandle = hostHandle;
+    usbHostState->hostHandle   = hostHandle;
     usbHostState->controllerId = controllerId - kUSB_ControllerIp3516Hs0;
 
     usbHostState->usbRegBase = (usb_host_ip3516hs_register_struct_t *)usb_base_addrs[usbHostState->controllerId];
-    usbHostState->isrNumber = (IRQn_Type)usb_irq[usbHostState->controllerId];
+    usbHostState->isrNumber  = (IRQn_Type)usb_irq[usbHostState->controllerId];
 
     USB_OsaEventCreate(&usbHostState->ip3516HsEvent, 1U);
     if (NULL == usbHostState->ip3516HsEvent)
@@ -3226,7 +3417,7 @@ usb_status_t USB_HostIp3516HsDestory(usb_host_controller_handle controllerHandle
     usb_host_ip3516hs_state_struct_t *usbHostState = (usb_host_ip3516hs_state_struct_t *)controllerHandle;
 
     usbHostState->usbRegBase->USBINTR = 0U;
-    usbHostState->usbRegBase->USBSTS = 0xFFFFFFFFU;
+    usbHostState->usbRegBase->USBSTS  = 0xFFFFFFFFU;
 
     usbHostState->usbRegBase->USBCMD &= ~USB_HOST_IP3516HS_USBCMD_RS_MASK;
 
@@ -3255,7 +3446,7 @@ usb_status_t USB_HostIp3516HsOpenPipe(usb_host_controller_handle controllerHandl
                                       usb_host_pipe_handle *pipeHandle,
                                       usb_host_pipe_init_t *pipeInit)
 {
-    usb_host_ip3516hs_pipe_struct_t *pipe = NULL;
+    usb_host_ip3516hs_pipe_struct_t *pipe          = NULL;
     usb_host_ip3516hs_state_struct_t *usbHostState = (usb_host_ip3516hs_state_struct_t *)controllerHandle;
     usb_status_t status;
 
@@ -3269,24 +3460,25 @@ usb_status_t USB_HostIp3516HsOpenPipe(usb_host_controller_handle controllerHandl
     }
 
     /* initialize pipe informations */
-    pipe->pipeCommon.deviceHandle = pipeInit->devInstance;
+    pipe->pipeCommon.deviceHandle    = pipeInit->devInstance;
     pipe->pipeCommon.endpointAddress = pipeInit->endpointAddress;
-    pipe->pipeCommon.direction = pipeInit->direction;
-    pipe->pipeCommon.interval = pipeInit->interval;
-    pipe->pipeCommon.maxPacketSize = pipeInit->maxPacketSize;
-    pipe->pipeCommon.pipeType = pipeInit->pipeType;
+    pipe->pipeCommon.direction       = pipeInit->direction;
+    pipe->pipeCommon.interval        = pipeInit->interval;
+    pipe->pipeCommon.maxPacketSize   = pipeInit->maxPacketSize;
+    pipe->pipeCommon.pipeType        = pipeInit->pipeType;
     pipe->pipeCommon.numberPerUframe = (pipeInit->numberPerUframe + 1U) & 0x03U;
-    pipe->pipeCommon.nakCount = pipeInit->nakCount;
-    pipe->pipeCommon.nextdata01 = 0U;
-    pipe->pipeCommon.currentCount = 0U;
-    pipe->pipeCommon.open = 1U;
-    pipe->tdIndex = 0xFFU;
-    pipe->cutOffTime = USB_HOST_IP3516HS_TRANSFER_TIMEOUT_GAP;
-    pipe->startUFrame = 0U;
-    pipe->csSlot = 0U;
-    pipe->isBusy = 0U;
-    pipe->bufferLength = 0U;
-    pipe->currentTr = NULL;
+    pipe->pipeCommon.nakCount        = pipeInit->nakCount;
+    pipe->pipeCommon.nextdata01      = 0U;
+    pipe->pipeCommon.currentCount    = 0U;
+    pipe->pipeCommon.open            = 1U;
+    pipe->tdIndex                    = 0xFFU;
+    pipe->cutOffTime                 = USB_HOST_IP3516HS_TRANSFER_TIMEOUT_GAP;
+    pipe->startUFrame                = 0U;
+    pipe->csSlot                     = 0U;
+    pipe->isBusy                     = 0U;
+    pipe->bufferLength               = 0U;
+    pipe->currentTr                  = NULL;
+    pipe->lastPrimedIndex            = 0U;
 
     if (USB_ENDPOINT_ISOCHRONOUS == pipe->pipeCommon.pipeType)
     {
@@ -3376,7 +3568,7 @@ usb_status_t USB_HostIp3516HsOpenPipe(usb_host_controller_handle controllerHandl
 usb_status_t USB_HostIp3516HsClosePipe(usb_host_controller_handle controllerHandle, usb_host_pipe_handle pipeHandle)
 {
     usb_host_ip3516hs_state_struct_t *usbHostState = (usb_host_ip3516hs_state_struct_t *)controllerHandle;
-    usb_host_ip3516hs_pipe_struct_t *pipe = (usb_host_ip3516hs_pipe_struct_t *)pipeHandle;
+    usb_host_ip3516hs_pipe_struct_t *pipe          = (usb_host_ip3516hs_pipe_struct_t *)pipeHandle;
 
     switch (pipe->pipeCommon.pipeType)
     {
@@ -3412,23 +3604,23 @@ usb_status_t USB_HostIp3516HsWritePipe(usb_host_controller_handle controllerHand
                                        usb_host_transfer_t *transfer)
 {
     usb_host_ip3516hs_state_struct_t *usbHostState = (usb_host_ip3516hs_state_struct_t *)controllerHandle;
-    usb_host_ip3516hs_pipe_struct_t *pipe = (usb_host_ip3516hs_pipe_struct_t *)pipeHandle;
+    usb_host_ip3516hs_pipe_struct_t *pipe          = (usb_host_ip3516hs_pipe_struct_t *)pipeHandle;
     usb_host_transfer_t *trPre;
     usb_status_t status = kStatus_USB_Success;
     uint8_t trListEmpty = 0U;
     USB_OSA_SR_ALLOC();
 
-    transfer->setupStatus = kStatus_UsbHostIp3516Hs_Idle;
-    transfer->next = NULL;
-    transfer->transferSofar = 0U;
+    transfer->setupStatus           = kStatus_UsbHostIp3516Hs_Idle;
+    transfer->next                  = NULL;
+    transfer->transferSofar         = 0U;
     transfer->union1.transferResult = kStatus_USB_Success;
 
     USB_OSA_ENTER_CRITICAL();
     if (NULL == pipe->trList)
     {
-        pipe->trList = transfer;
+        pipe->trList    = transfer;
         pipe->currentTr = transfer;
-        trListEmpty = 1U;
+        trListEmpty     = 1U;
     }
     else
     {
@@ -3441,7 +3633,11 @@ usb_status_t USB_HostIp3516HsWritePipe(usb_host_controller_handle controllerHand
     }
     USB_OSA_EXIT_CRITICAL();
 
-    if (trListEmpty)
+#if ((defined(USB_HOST_CONFIG_IP3516HS_MAX_ISO)) && (USB_HOST_CONFIG_IP3516HS_MAX_ISO > 0U))
+    if ((trListEmpty) || (USB_ENDPOINT_ISOCHRONOUS == pipe->pipeCommon.pipeType))
+#else
+    if ((trListEmpty))
+#endif
     {
         switch (pipe->pipeCommon.pipeType)
         {
@@ -3455,7 +3651,7 @@ usb_status_t USB_HostIp3516HsWritePipe(usb_host_controller_handle controllerHand
 
 #if ((defined(USB_HOST_CONFIG_IP3516HS_MAX_ISO)) && (USB_HOST_CONFIG_IP3516HS_MAX_ISO > 0U))
             case USB_ENDPOINT_ISOCHRONOUS:
-                status = USB_HostIp3516HsWriteIsoPipe(usbHostState, pipe, transfer);
+                status = USB_HostIp3516HsWriteIsoPipe(usbHostState, pipe, pipe->trList);
                 break;
 #endif
 
@@ -3501,15 +3697,15 @@ usb_status_t USB_HostIp3516HsIoctl(usb_host_controller_handle controllerHandle, 
     {
         case kUSB_HostCancelTransfer:
             /* cancel pipe or one transfer */
-            param = (usb_host_cancel_param_t *)ioctlParam;
+            param  = (usb_host_cancel_param_t *)ioctlParam;
             status = USB_HostIp3516HsCancelPipe(usbHostState, (usb_host_ip3516hs_pipe_struct_t *)param->pipeHandle,
                                                 param->transfer);
             break;
 #if ((defined(USB_HOST_CONFIG_LOW_POWER_MODE)) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U))
 #if ((defined(USB_HOST_CONFIG_LPM_L1)) && (USB_HOST_CONFIG_LPM_L1 > 0U))
         case kUSB_HostL1Config:
-            lpmParam = (uint8_t *)ioctlParam;
-            usbHostState->hirdValue = (*lpmParam) & 0xFU;
+            lpmParam                           = (uint8_t *)ioctlParam;
+            usbHostState->hirdValue            = (*lpmParam) & 0xFU;
             usbHostState->L1remoteWakeupEnable = (((*lpmParam) & 0x80U) >> 7);
             break;
 #endif
@@ -3691,7 +3887,7 @@ void USB_HostIp3516HsIsrFunction(void *hostHandle)
 {
     usb_host_ip3516hs_state_struct_t *usbHostState;
     static uint32_t interruptStatus = 0U;
-    static uint32_t sofCount = 0U;
+    static uint32_t sofCount        = 0U;
 
     if (hostHandle == NULL)
     {

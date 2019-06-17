@@ -20,9 +20,9 @@
  */
 /*! @name Driver version */
 /*@{*/
-/*! @brief LTC driver version. Version 2.0.7.
+/*! @brief LTC driver version. Version 2.0.8.
  *
- * Current version: 2.0.7
+ * Current version: 2.0.8
  *
  * Change log:
  * - Version 2.0.1
@@ -45,8 +45,11 @@
  *
  * - Version 2.0.7
  *   - Fix MISRA-2012 issues
+ *
+ * - Version 2.0.8
+ *   - Fix Coverity issues
  */
-#define FSL_LTC_DRIVER_VERSION (MAKE_VERSION(2, 0, 7))
+#define FSL_LTC_DRIVER_VERSION (MAKE_VERSION(2, 0, 8))
 /*@}*/
 /*! @} */
 

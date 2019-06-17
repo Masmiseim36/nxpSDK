@@ -1,7 +1,16 @@
 Overview
 ========
-This document explains the freertos_tickless example. It shows the CPU enter at sleep mode and then
-it is waked up by expired time delay that using GPT module.
+This document explains the freertos_tickless example. It shows how the CPU enters the sleep mode and then
+it is woken up either by expired time delay using low power timer module or by external interrupt caused by a
+user defined button.
+
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
 
 Hardware requirements
 =====================
@@ -27,12 +36,11 @@ Prepare the Demo
 
 Running the demo
 ================
-After the board is flashed the Tera Term will start periodically printing number tick count when the CPU
-is running.
-
-When the CPU is running and get tick count number, press button on board that suggest message display on
-console screen ("eg:Press SW3 <or SW1,SW2> to wake up the CPU") to wake up CPU then Tera Term
-will printing “CPU waked up by EXT interrupt” message.
+After flashing the example to the board the console will start printing the number of tick count periodically
+when the CPU is running.
+To wake up the CPU by external interrupt, press the button, that is specified at the beginning of the
+example (SWx where x is the number of the user defined button). When the button is pressed, the console prints
+out the "CPU woken up by external interrupt" message.
 
 Example output:
 
@@ -41,27 +49,22 @@ Tickless Demo example
 Press or turn on SWx to wake up the CPU
 
 Tick count :
-1
-5001
-10001
-CPU waked up by EXT interrupt
-15001
-20001
-25001
+0
+5000
+10000
+CPU woken up by external interrupt
+15000
+20000
+25000
 
 Explanation of the example
-The example application will get tick count number after every period time delay vTaskDelay(time)
-When this function called the CPU enter to sleep mode a period of time that called by vTaskDelay
-function.
+The example application prints the actual tick count number every time after the specified
+delay. When the vTaskDelay() is called, the CPU enters the sleep mode for that defined period
+of time.
 
-While the CPU is sleeping, if several time on board then CPU waked up
-by external interrupt and continuous enter sleep mode after complete interrupt service.
-The period of time delay is not change after occur external interrupt.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+While the CPU is in sleep mode and the user defined button is pressed, the CPU is woken up
+by the external interrupt and continues to sleep after the interrupt is handled.
+The period of time delay is not changed after the external interrupt occurs.
+Customization options
+=====================
 

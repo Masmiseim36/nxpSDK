@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -125,60 +125,6 @@
 #define BOARD_INITPINS_WL_HOST_WAKE_LABEL                         "WL_HOST_WAKE"   /*!< Label */
 #define BOARD_INITPINS_WL_HOST_WAKE_NAME                          "WL_HOST_WAKE"   /*!< Identifier name */
 
-/* PTB1 (number AF2), I2S1_TX_BCLK */
-#define BOARD_INITPINS_I2S1_TX_BCLK_PERIPHERAL                               PTB   /*!< Device name: PTB */
-#define BOARD_INITPINS_I2S1_TX_BCLK_SIGNAL                                  port   /*!< PTB signal: port */
-#define BOARD_INITPINS_I2S1_TX_BCLK_CHANNEL                                    1   /*!< PTB port channel: 1 */
-#define BOARD_INITPINS_I2S1_TX_BCLK_PIN_NAME                                PTB1   /*!< Pin name */
-#define BOARD_INITPINS_I2S1_TX_BCLK_PIN_FUNCTION_ID             IOMUXC_PTB1_PTB1   /*!< Pin function id */
-#define BOARD_INITPINS_I2S1_TX_BCLK_LABEL                         "I2S1_TX_BCLK"   /*!< Label */
-#define BOARD_INITPINS_I2S1_TX_BCLK_NAME                          "I2S1_TX_BCLK"   /*!< Identifier name */
-
-/* PTB2 (number AE3), I2S1_TX_FS */
-#define BOARD_INITPINS_I2S1_TX_FS_PERIPHERAL                                 PTB   /*!< Device name: PTB */
-#define BOARD_INITPINS_I2S1_TX_FS_SIGNAL                                    port   /*!< PTB signal: port */
-#define BOARD_INITPINS_I2S1_TX_FS_CHANNEL                                      2   /*!< PTB port channel: 2 */
-#define BOARD_INITPINS_I2S1_TX_FS_PIN_NAME                                  PTB2   /*!< Pin name */
-#define BOARD_INITPINS_I2S1_TX_FS_PIN_FUNCTION_ID               IOMUXC_PTB2_PTB2   /*!< Pin function id */
-#define BOARD_INITPINS_I2S1_TX_FS_LABEL                             "I2S1_TX_FS"   /*!< Label */
-#define BOARD_INITPINS_I2S1_TX_FS_NAME                              "I2S1_TX_FS"   /*!< Identifier name */
-
-/* PTB3 (number AE4), I2S1_TXD0 */
-#define BOARD_INITPINS_I2S1_TXD0_PERIPHERAL                                  PTB   /*!< Device name: PTB */
-#define BOARD_INITPINS_I2S1_TXD0_SIGNAL                                     port   /*!< PTB signal: port */
-#define BOARD_INITPINS_I2S1_TXD0_CHANNEL                                       3   /*!< PTB port channel: 3 */
-#define BOARD_INITPINS_I2S1_TXD0_PIN_NAME                                   PTB3   /*!< Pin name */
-#define BOARD_INITPINS_I2S1_TXD0_PIN_FUNCTION_ID                IOMUXC_PTB3_PTB3   /*!< Pin function id */
-#define BOARD_INITPINS_I2S1_TXD0_LABEL                               "I2S1_TXD0"   /*!< Label */
-#define BOARD_INITPINS_I2S1_TXD0_NAME                                "I2S1_TXD0"   /*!< Identifier name */
-
-/* PTB10 (number AC7), I2S1_RXD0 */
-#define BOARD_INITPINS_I2S1_RXD0_PERIPHERAL                                  PTB   /*!< Device name: PTB */
-#define BOARD_INITPINS_I2S1_RXD0_SIGNAL                                     port   /*!< PTB signal: port */
-#define BOARD_INITPINS_I2S1_RXD0_CHANNEL                                      10   /*!< PTB port channel: 10 */
-#define BOARD_INITPINS_I2S1_RXD0_PIN_NAME                                  PTB10   /*!< Pin name */
-#define BOARD_INITPINS_I2S1_RXD0_PIN_FUNCTION_ID              IOMUXC_PTB10_PTB10   /*!< Pin function id */
-#define BOARD_INITPINS_I2S1_RXD0_LABEL                               "I2S1_RXD0"   /*!< Label */
-#define BOARD_INITPINS_I2S1_RXD0_NAME                                "I2S1_RXD0"   /*!< Identifier name */
-
-/* PTB4 (number AG4), PTB4 */
-#define BOARD_INITPINS_PTB4_PERIPHERAL                                       PTB   /*!< Device name: PTB */
-#define BOARD_INITPINS_PTB4_SIGNAL                                          port   /*!< PTB signal: port */
-#define BOARD_INITPINS_PTB4_CHANNEL                                            4   /*!< PTB port channel: 4 */
-#define BOARD_INITPINS_PTB4_PIN_NAME                                        PTB4   /*!< Pin name */
-#define BOARD_INITPINS_PTB4_PIN_FUNCTION_ID                     IOMUXC_PTB4_PTB4   /*!< Pin function id */
-#define BOARD_INITPINS_PTB4_LABEL                                         "PTB4"   /*!< Label */
-#define BOARD_INITPINS_PTB4_NAME                                          "PTB4"   /*!< Identifier name */
-
-/* PTB5 (number AF4), PTB5 */
-#define BOARD_INITPINS_PTB5_PERIPHERAL                                       PTB   /*!< Device name: PTB */
-#define BOARD_INITPINS_PTB5_SIGNAL                                          port   /*!< PTB signal: port */
-#define BOARD_INITPINS_PTB5_CHANNEL                                            5   /*!< PTB port channel: 5 */
-#define BOARD_INITPINS_PTB5_PIN_NAME                                        PTB5   /*!< Pin name */
-#define BOARD_INITPINS_PTB5_PIN_FUNCTION_ID                     IOMUXC_PTB5_PTB5   /*!< Pin function id */
-#define BOARD_INITPINS_PTB5_LABEL                                         "PTB5"   /*!< Label */
-#define BOARD_INITPINS_PTB5_NAME                                          "PTB5"   /*!< Identifier name */
-
 /* PTB6 (number AF5), DDR_SW_EN# */
 #define BOARD_INITPINS_DDR_SW_EN_PERIPHERAL                                  PTB   /*!< Device name: PTB */
 #define BOARD_INITPINS_DDR_SW_EN_SIGNAL                                     port   /*!< PTB signal: port */
@@ -196,32 +142,6 @@
 #define BOARD_INITPINS_BT_HOST_WAKE_PIN_FUNCTION_ID             IOMUXC_PTB7_PTB7   /*!< Pin function id */
 #define BOARD_INITPINS_BT_HOST_WAKE_LABEL                         "BT_HOST_WAKE"   /*!< Label */
 #define BOARD_INITPINS_BT_HOST_WAKE_NAME                          "BT_HOST_WAKE"   /*!< Identifier name */
-
-/* PTB9 (number AD7), SEN_INT# */
-#define BOARD_INITPINS_SEN_INT_PERIPHERAL                                    PTB   /*!< Device name: PTB */
-#define BOARD_INITPINS_SEN_INT_SIGNAL                                       port   /*!< PTB signal: port */
-#define BOARD_INITPINS_SEN_INT_CHANNEL                                         9   /*!< PTB port channel: 9 */
-#define BOARD_INITPINS_SEN_INT_PIN_NAME                                     PTB9   /*!< Pin name */
-#define BOARD_INITPINS_SEN_INT_PIN_FUNCTION_ID                  IOMUXC_PTB9_PTB9   /*!< Pin function id */
-#define BOARD_INITPINS_SEN_INT_LABEL                                  "SEN_INT#"   /*!< Label */
-#define BOARD_INITPINS_SEN_INT_NAME                                    "SEN_INT"   /*!< Identifier name */
-
-/* PTB11 (number AB7), PMIC_INT# */
-#define BOARD_INITPINS_PMIC_INT_PERIPHERAL                                   PTB   /*!< Device name: PTB */
-#define BOARD_INITPINS_PMIC_INT_SIGNAL                                      port   /*!< PTB signal: port */
-#define BOARD_INITPINS_PMIC_INT_CHANNEL                                       11   /*!< PTB port channel: 11 */
-#define BOARD_INITPINS_PMIC_INT_PIN_NAME                                   PTB11   /*!< Pin name */
-#define BOARD_INITPINS_PMIC_INT_PIN_FUNCTION_ID               IOMUXC_PTB11_PTB11   /*!< Pin function id */
-#define BOARD_INITPINS_PMIC_INT_LABEL                                "PMIC_INT#"   /*!< Label */
-#define BOARD_INITPINS_PMIC_INT_NAME                                  "PMIC_INT"   /*!< Identifier name */
-
-/* PTB14 (number AG8), RTC_CLK */
-#define BOARD_INITPINS_RTC_CLK_PERIPHERAL                                    RTC   /*!< Device name: RTC */
-#define BOARD_INITPINS_RTC_CLK_SIGNAL                                 rtc_clkout   /*!< RTC signal: rtc_clkout */
-#define BOARD_INITPINS_RTC_CLK_PIN_NAME                                    PTB14   /*!< Pin name */
-#define BOARD_INITPINS_RTC_CLK_PIN_FUNCTION_ID           IOMUXC_PTB14_RTC_CLKOUT   /*!< Pin function id */
-#define BOARD_INITPINS_RTC_CLK_LABEL                                   "RTC_CLK"   /*!< Label */
-#define BOARD_INITPINS_RTC_CLK_NAME                                    "RTC_CLK"   /*!< Identifier name */
 
 /* PTA16 (number AG18), I2C0_SCL */
 #define BOARD_I2C_CONFIGUREPINS_I2C0_SCL_PERIPHERAL                       LPI2C0   /*!< Device name: LPI2C0 */

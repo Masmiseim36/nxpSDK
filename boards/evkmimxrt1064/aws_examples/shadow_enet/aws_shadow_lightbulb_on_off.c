@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS Shadow Demo V1.2.3
+ * Amazon FreeRTOS Shadow Demo V1.4.7
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -44,9 +44,6 @@
 /* MQTT include. */
 #include "aws_mqtt_agent.h"
 
-/* Logging includes. */
-#include "aws_logging_task.h"
-
 /* Demo configurations. */
 #include "aws_demo_config.h"
 
@@ -57,7 +54,6 @@
 #include "aws_shadow.h"
 
 /* Required for shadow demo. */
-#include "aws_shadow_lightbulb_on_off.h"
 #include "jsmn.h"
 
 /* Task names. */
@@ -118,8 +114,8 @@
 #define shadowDemoRECV_QUEUE_WAIT_TICKS      500
 #define shadowDemoUPDATE_QUEUE_LENGTH        democonfigSHADOW_DEMO_NUM_TASKS * 2
 
-/* The maximum amount of time tasks will wait for their updates to process.
- * Tasks should not continue executing until their updates have processed.*/
+/* The maximum amount of time tasks will wait for their updates to process. Tasks
+ * should not continue executing until their updates have processed.*/
 #define shadowDemoNOTIFY_WAIT_MS             pdMS_TO_TICKS( ( 100000UL ) )
 
 /* An element of the Shadow update queue. */
@@ -346,7 +342,7 @@ static ShadowReturnCode_t prvShadowClientCreateConnect( void )
         xConnectParams.pcURL = clientcredentialMQTT_BROKER_ENDPOINT;
         xConnectParams.usPort = clientcredentialMQTT_BROKER_PORT;
 
-        xConnectParams.xFlags = mqttagentREQUIRE_TLS;
+        xConnectParams.xFlags = democonfigMQTT_AGENT_CONNECT_FLAGS;
         xConnectParams.pcCertificate = NULL;
         xConnectParams.ulCertificateSize = 0;
         xConnectParams.pxCallback = NULL;
@@ -486,7 +482,7 @@ static void prvShadowInitTask( void * pvParameters )
                               shadowDemoUPDATE_TASK_NAME,
                               shadowDemoUPDATE_TASK_STACK_SIZE,
                               NULL,
-                              democonfigSHADOW_LIGHTBULB_TASK_PRIORITY,
+                              democonfigSHADOW_DEMO_TASK_PRIORITY,
                               NULL );
 
         /* Create the Shadow demo tasks which update the "desired" states. */
@@ -498,9 +494,9 @@ static void prvShadowInitTask( void * pvParameters )
                                ucTask );
             ( void ) xTaskCreate( prvChangeDesiredTask,
                                   ( const char * ) ( &( xShadowTaskParamBuffer[ ucTask ] ) )->cTaskName,
-                                  democonfigSHADOW_LIGHTBULB_TASK_STACK_SIZE,
+                                  democonfigSHADOW_DEMO_TASK_STACK_SIZE,
                                   &( xShadowTaskParamBuffer[ ucTask ] ),
-                                  democonfigSHADOW_LIGHTBULB_TASK_PRIORITY,
+                                  democonfigSHADOW_DEMO_TASK_PRIORITY,
                                   &( ( xShadowTaskParamBuffer[ ucTask ] ).xTaskHandle ) );
         }
     }

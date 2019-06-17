@@ -102,7 +102,7 @@ static usb_device_class_config_struct_t s_cdcAcmConfig[1] = {{
     USB_DeviceCdcVnicCallback, 0, &g_cdcVnicClass,
 }};
 
-/* USB device class configuraion information */
+/* USB device class configuration information */
 static usb_device_class_config_list_struct_t s_cdcAcmConfigList = {
     s_cdcAcmConfig, USB_DeviceCallback, 1,
 };
@@ -123,7 +123,9 @@ uint32_t BOARD_GetPhySysClock(void)
 void BOARD_InitModuleClock(void)
 {
     const clock_enet_pll_config_t config = {
-        .enableClkOutput = true, .enableClkOutput25M = false, .loopDivider = 1,
+        .enableClkOutput    = true,
+        .enableClkOutput25M = false,
+        .loopDivider        = 1,
     };
     CLOCK_InitEnetPll(&config);
 }
@@ -151,7 +153,9 @@ void USB_OTG2_IRQHandler(void)
 void USB_DeviceClockInit(void)
 {
     usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL, BOARD_USB_PHY_TXCAL45DP, BOARD_USB_PHY_TXCAL45DM,
+        BOARD_USB_PHY_D_CAL,
+        BOARD_USB_PHY_TXCAL45DP,
+        BOARD_USB_PHY_TXCAL45DM,
     };
 
     if (CONTROLLER_ID == kUSB_ControllerEhci0)
@@ -171,7 +175,7 @@ void USB_DeviceIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbDeviceEhciIrq[] = USBHS_IRQS;
-    irqNumber = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
+    irqNumber                  = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
 
     /* Install isr, set priority, and enable IRQ. */
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
@@ -682,6 +686,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             uint8_t *message;
             uint32_t len;
             g_cdcVnic.attach = 0;
+            g_cdcVnic.currentConfiguration = 0U;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -702,20 +707,26 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
-            if (param)
+            if (0U ==(*temp8))
+            {
+                g_cdcVnic.attach = 0;
+                g_cdcVnic.currentConfiguration = 0U;
+            }
+            else if (USB_CDC_VNIC_CONFIGURE_INDEX == (*temp8))
             {
                 g_cdcVnic.attach = 1;
                 g_cdcVnic.currentConfiguration = *temp8;
-                if (USB_CDC_VNIC_CONFIGURE_INDEX == (*temp8))
+                /* Schedule buffer for receive */
+                error = USB_DeviceCdcAcmRecv(g_cdcVnic.cdcAcmHandle, USB_CDC_VNIC_BULK_OUT_ENDPOINT, s_currRecvBuf,
+                                             g_cdcVnicDicEp[0].maxPacketSize);
+                if (kStatus_USB_Error == error)
                 {
-                    /* Schedule buffer for receive */
-                    error = USB_DeviceCdcAcmRecv(g_cdcVnic.cdcAcmHandle, USB_CDC_VNIC_BULK_OUT_ENDPOINT, s_currRecvBuf,
-                                                 g_cdcVnicDicEp[0].maxPacketSize);
-                    if (kStatus_USB_Error == error)
-                    {
-                        usb_echo("kUSB_DeviceEventSetConfiguration, USB_DeviceCdcAcmRecv failed.\r\n");
-                    }
+                    usb_echo("kUSB_DeviceEventSetConfiguration, USB_DeviceCdcAcmRecv failed.\r\n");
                 }
+            }
+            else
+            {
+                error = kStatus_USB_InvalidRequest;
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -828,7 +839,7 @@ void APPTask(void)
     }
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)

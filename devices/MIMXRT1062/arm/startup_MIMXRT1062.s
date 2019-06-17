@@ -2,13 +2,14 @@
 ; *  @file:    startup_MIMXRT1062.s
 ; *  @purpose: CMSIS Cortex-M7 Core Device Startup File
 ; *            MIMXRT1062
-; *  @version: 0.1
-; *  @date:    2017-1-10
-; *  @build:   b180819
+; *  @version: 1.1
+; *  @date:    2018-11-27
+; *  @build:   b190124
 ; * -------------------------------------------------------------------------
 ; *
 ; * Copyright 1997-2016 Freescale Semiconductor, Inc.
-; * Copyright 2016-2018 NXP
+; * Copyright 2016-2019 NXP
+; * All rights reserved.
 ; *
 ; * SPDX-License-Identifier: BSD-3-Clause
 ; *

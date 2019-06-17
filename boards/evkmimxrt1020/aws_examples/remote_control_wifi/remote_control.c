@@ -110,12 +110,12 @@ static ShadowClientHandle_t xClientHandle;
 QueueHandle_t jsonDeltaQueue = NULL;
 
 /* Actual state of LED */
-uint16_t ledState = 0;
+uint16_t ledState       = 0;
 uint16_t parsedLedState = 0;
 
 #if defined(BOARD_ACCEL_FXOS) || defined(BOARD_ACCEL_MMA)
 /* Actual state of accelerometer */
-uint16_t accState = 0;
+uint16_t accState       = 0;
 uint16_t parsedAccState = 0;
 #endif
 
@@ -202,7 +202,7 @@ int buildJsonAccel()
     sprintf(tmpBufAccel, "{\"accel\":{\"x\":%d,\"y\":%d,\"z\":%d}}", vec.A_x, vec.A_y, vec.A_z);
 
     int ret = 0;
-    ret = snprintf(pcUpdateBuffer, shadowBUFFER_LENGTH,
+    ret     = snprintf(pcUpdateBuffer, shadowBUFFER_LENGTH,
                    "{\"state\":{"
                    "\"desired\":{"
                    "\"accelUpdate\":null"
@@ -235,9 +235,9 @@ static BaseType_t prvDeltaCallback(void *pvUserData,
 
     /* add the to queue for processing */
     jsonDelta_t jsonDelta;
-    jsonDelta.pcDeltaDocument = (char *)pcDeltaDocument;
+    jsonDelta.pcDeltaDocument  = (char *)pcDeltaDocument;
     jsonDelta.ulDocumentLength = ulDocumentLength;
-    jsonDelta.xBuffer = xBuffer;
+    jsonDelta.xBuffer          = xBuffer;
 
     if (jsonDeltaQueue == NULL)
     {
@@ -324,7 +324,7 @@ int compareString(char *json, jsmntok_t *token, char *string)
 {
     if (token->type == JSMN_STRING)
     {
-        int len = strlen(string);
+        int len    = strlen(string);
         int tokLen = token->end - token->start;
         if (len > tokLen)
         {
@@ -357,7 +357,7 @@ void processShadowDeltaJSON(char *json, uint32_t jsonLength)
     jsmntok_t tokens[MAX_CNT_TOKENS];
 
     int tokenCnt = 0;
-    tokenCnt = jsmn_parse(&parser, json, jsonLength, tokens, MAX_CNT_TOKENS);
+    tokenCnt     = jsmn_parse(&parser, json, jsonLength, tokens, MAX_CNT_TOKENS);
     /* the token with state of device is at 6th positin in this delta JSON:
      * {"version":229,"timestamp":1510062270,"state":{"LEDstate":1},"metadata":{"LEDstate":{"timestamp":1510062270}}} */
     if (tokenCnt < 6)
@@ -379,7 +379,7 @@ void processShadowDeltaJSON(char *json, uint32_t jsonLength)
     int stateTokenEnd = tokens[i].end;
 
     char key[20] = {0};
-    int err = 0;
+    int err      = 0;
 
     while (i < tokenCnt)
     {
@@ -415,23 +415,23 @@ static ShadowReturnCode_t prvShadowClientCreateConnect(void)
     ShadowReturnCode_t xReturn;
 
     xCreateParams.xMQTTClientType = eDedicatedMQTTClient;
-    xReturn = SHADOW_ClientCreate(&xClientHandle, &xCreateParams);
+    xReturn                       = SHADOW_ClientCreate(&xClientHandle, &xCreateParams);
 
     if (xReturn == eShadowSuccess)
     {
         memset(&xConnectParams, 0x00, sizeof(xConnectParams));
-        xConnectParams.pcURL = clientcredentialMQTT_BROKER_ENDPOINT;
+        xConnectParams.pcURL  = clientcredentialMQTT_BROKER_ENDPOINT;
         xConnectParams.usPort = clientcredentialMQTT_BROKER_PORT;
 
-        xConnectParams.xFlags = mqttagentREQUIRE_TLS;
-        xConnectParams.pcCertificate = NULL;
+        xConnectParams.xFlags            = mqttagentREQUIRE_TLS;
+        xConnectParams.pcCertificate     = NULL;
         xConnectParams.ulCertificateSize = 0;
-        xConnectParams.pxCallback = NULL;
-        xConnectParams.pvUserData = &xClientHandle;
+        xConnectParams.pxCallback        = NULL;
+        xConnectParams.pvUserData        = &xClientHandle;
 
-        xConnectParams.pucClientId = (const uint8_t *)(clientcredentialIOT_THING_NAME);
+        xConnectParams.pucClientId      = (const uint8_t *)(clientcredentialIOT_THING_NAME);
         xConnectParams.usClientIdLength = (uint16_t)strlen(clientcredentialIOT_THING_NAME);
-        xReturn = SHADOW_ClientConnect(xClientHandle, &xConnectParams, shadowDemoTIMEOUT);
+        xReturn                         = SHADOW_ClientConnect(xClientHandle, &xConnectParams, shadowDemoTIMEOUT);
 
         if (xReturn != eShadowSuccess)
         {
@@ -465,8 +465,8 @@ void prvShadowMainTask(void *pvParameters)
 
     ShadowOperationParams_t xOperationParams;
     xOperationParams.pcThingName = shadowDemoTHING_NAME;
-    xOperationParams.xQoS = eMQTTQoS0;
-    xOperationParams.pcData = NULL;
+    xOperationParams.xQoS        = eMQTTQoS0;
+    xOperationParams.pcData      = NULL;
     /* Don't keep subscriptions, since SHADOW_Delete is only called here once. */
     xOperationParams.ucKeepSubscriptions = pdFALSE;
 
@@ -489,10 +489,10 @@ void prvShadowMainTask(void *pvParameters)
      * the Shadow so that any previous Shadow doesn't unintentionally trigger the
      * delta callback.*/
     ShadowCallbackParams_t xCallbackParams;
-    xCallbackParams.pcThingName = shadowDemoTHING_NAME;
+    xCallbackParams.pcThingName            = shadowDemoTHING_NAME;
     xCallbackParams.xShadowUpdatedCallback = NULL;
     xCallbackParams.xShadowDeletedCallback = NULL;
-    xCallbackParams.xShadowDeltaCallback = prvDeltaCallback;
+    xCallbackParams.xShadowDeltaCallback   = prvDeltaCallback;
 
     xReturn = SHADOW_RegisterCallbacks(xClientHandle, &xCallbackParams, shadowDemoTIMEOUT);
     if (xReturn != eShadowSuccess)
@@ -501,7 +501,7 @@ void prvShadowMainTask(void *pvParameters)
         vTaskDelete(NULL);
     }
 
-    xOperationParams.pcData = pcUpdateBuffer;
+    xOperationParams.pcData       = pcUpdateBuffer;
     xOperationParams.ulDataLength = prvGenerateShadowJSON();
     /* Keep subscriptions across multiple calls to SHADOW_Update. */
     xOperationParams.ucKeepSubscriptions = pdTRUE;
@@ -533,7 +533,7 @@ void prvShadowMainTask(void *pvParameters)
                     if (((ledState & (1 << i)) == 0) && ((parsedLedState & (1 << i)) != 0))
                     {
                         /* turn on led */
-                        configPRINTF(("Turn on %s\n", ledName[i]));
+                        configPRINTF(("Turn on %s\r\n", ledName[i]));
                         turnOnLed(i);
                     }
 
@@ -541,7 +541,7 @@ void prvShadowMainTask(void *pvParameters)
                     if (((ledState & (1 << i)) != 0) && ((parsedLedState & (1 << i)) == 0))
                     {
                         /* turn off led */
-                        configPRINTF(("Turn off %s\n", ledName[i]));
+                        configPRINTF(("Turn off %s\r\n", ledName[i]));
                         turnOffLed(i);
                     }
                 }
@@ -549,7 +549,7 @@ void prvShadowMainTask(void *pvParameters)
 
                 /* update device shadow */
                 xOperationParams.ulDataLength = prvReportShadowJSON();
-                xReturn = SHADOW_Update(xClientHandle, &xOperationParams, shadowDemoTIMEOUT);
+                xReturn                       = SHADOW_Update(xClientHandle, &xOperationParams, shadowDemoTIMEOUT);
                 if (xReturn == eShadowSuccess)
                 {
                     configPRINTF(("Successfully performed update.\r\n"));
@@ -564,7 +564,7 @@ void prvShadowMainTask(void *pvParameters)
             {
                 configPRINTF(("Update accelerometer.\r\n"));
                 xOperationParams.ulDataLength = buildJsonAccel();
-                xReturn = SHADOW_Update(xClientHandle, &xOperationParams, shadowDemoTIMEOUT);
+                xReturn                       = SHADOW_Update(xClientHandle, &xOperationParams, shadowDemoTIMEOUT);
                 if (xReturn == eShadowSuccess)
                 {
                     configPRINTF(("Successfully performed update.\r\n"));

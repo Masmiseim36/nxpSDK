@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -43,16 +43,16 @@ static void PWM_DRV_Init3PhPwm(void)
     /* Set deadtime count, we set this to about 650ns */
     deadTimeVal = ((uint64_t)pwmSourceClockInHz * 650) / 1000000000;
 
-    pwmSignal[0].pwmChannel = kPWM_PwmA;
-    pwmSignal[0].level = kPWM_HighTrue;
+    pwmSignal[0].pwmChannel       = kPWM_PwmA;
+    pwmSignal[0].level            = kPWM_HighTrue;
     pwmSignal[0].dutyCyclePercent = 50; /* 1 percent dutycycle */
-    pwmSignal[0].deadtimeValue = deadTimeVal;
+    pwmSignal[0].deadtimeValue    = deadTimeVal;
 
     pwmSignal[1].pwmChannel = kPWM_PwmB;
-    pwmSignal[1].level = kPWM_HighTrue;
+    pwmSignal[1].level      = kPWM_HighTrue;
     /* Dutycycle field of PWM B does not matter as we are running in PWM A complementary mode */
     pwmSignal[1].dutyCyclePercent = 50;
-    pwmSignal[1].deadtimeValue = deadTimeVal;
+    pwmSignal[1].deadtimeValue    = deadTimeVal;
 
     /*********** PWMA_SM0 - phase A, configuration, setup 2 channel as an example ************/
     PWM_SetupPwm(BOARD_PWM_BASEADDR, kPWM_Module_0, pwmSignal, 2, kPWM_SignedCenterAligned, pwmFrequencyInHz,
@@ -115,7 +115,7 @@ int main(void)
     /* Use full cycle reload */
     pwmConfig.reloadLogic = kPWM_ReloadPwmFullCycle;
     /* PWM A & PWM B form a complementary PWM pair */
-    pwmConfig.pairOperation = kPWM_ComplementaryPwmA;
+    pwmConfig.pairOperation   = kPWM_ComplementaryPwmA;
     pwmConfig.enableDebugMode = true;
 
     /* Initialize submodule 0 */
@@ -126,7 +126,7 @@ int main(void)
     }
 
     /* Initialize submodule 1 */
-    pwmConfig.clockSource = kPWM_Submodule0Clock;
+    pwmConfig.clockSource           = kPWM_Submodule0Clock;
     pwmConfig.initializationControl = kPWM_Initialize_MasterSync;
     if (PWM_Init(BOARD_PWM_BASEADDR, kPWM_Module_1, &pwmConfig) == kStatus_Fail)
     {

@@ -767,7 +767,7 @@ static usb_status_t USB_HostParseDeviceConfigurationDescriptor(usb_device_handle
                 {
                     if (deviceInstance->configuration.interfaceCount >= USB_HOST_CONFIG_CONFIGURATION_MAX_INTERFACE)
                     {
-#ifdef HOST_ECHO
+#if (((defined USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST)) || defined(HOST_ECHO))
                         usb_echo(
                             "Unsupported Device attached\r\n too many interfaces in one configuration, please increase "
                             "the USB_HOST_CONFIG_CONFIGURATION_MAX_INTERFACE value\n");

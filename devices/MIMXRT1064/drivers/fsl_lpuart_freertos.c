@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -16,14 +16,13 @@
 #define FSL_COMPONENT_ID "platform.drivers.lpuart_freertos"
 #endif
 
-
 static void LPUART_RTOS_Callback(LPUART_Type *base, lpuart_handle_t *state, status_t status, void *param)
 {
     lpuart_rtos_handle_t *handle = (lpuart_rtos_handle_t *)param;
     BaseType_t xHigherPriorityTaskWoken, xResult;
 
     xHigherPriorityTaskWoken = pdFALSE;
-    xResult = pdFAIL;
+    xResult                  = pdFAIL;
 
     if (status == kStatus_LPUART_RxIdle)
     {
@@ -58,6 +57,14 @@ static void LPUART_RTOS_Callback(LPUART_Type *base, lpuart_handle_t *state, stat
  * Description   : Initializes the LPUART instance for application
  *
  *END**************************************************************************/
+/*!
+ * brief Initializes an LPUART instance for operation in RTOS.
+ *
+ * param handle The RTOS LPUART handle, the pointer to an allocated space for RTOS context.
+ * param t_handle The pointer to an allocated space to store the transactional layer internal state.
+ * param cfg The pointer to the parameters required to configure the LPUART after initialization.
+ * return 0 succeed, others failed
+ */
 int LPUART_RTOS_Init(lpuart_rtos_handle_t *handle, lpuart_handle_t *t_handle, const lpuart_rtos_config_t *cfg)
 {
     lpuart_config_t defcfg;
@@ -87,7 +94,7 @@ int LPUART_RTOS_Init(lpuart_rtos_handle_t *handle, lpuart_handle_t *t_handle, co
         return kStatus_InvalidArgument;
     }
 
-    handle->base = cfg->base;
+    handle->base    = cfg->base;
     handle->t_state = t_handle;
 #if (configSUPPORT_STATIC_ALLOCATION == 1)
     handle->txSemaphore = xSemaphoreCreateMutexStatic(&handle->txSemaphoreBuffer);
@@ -111,7 +118,7 @@ int LPUART_RTOS_Init(lpuart_rtos_handle_t *handle, lpuart_handle_t *t_handle, co
 #if (configSUPPORT_STATIC_ALLOCATION == 1)
     handle->txEvent = xEventGroupCreateStatic(&handle->txEventBuffer);
 #else
-    handle->txEvent = xEventGroupCreate();
+    handle->txEvent     = xEventGroupCreate();
 #endif
     if (NULL == handle->txEvent)
     {
@@ -122,7 +129,7 @@ int LPUART_RTOS_Init(lpuart_rtos_handle_t *handle, lpuart_handle_t *t_handle, co
 #if (configSUPPORT_STATIC_ALLOCATION == 1)
     handle->rxEvent = xEventGroupCreateStatic(&handle->rxEventBuffer);
 #else
-    handle->rxEvent = xEventGroupCreate();
+    handle->rxEvent     = xEventGroupCreate();
 #endif
     if (NULL == handle->rxEvent)
     {
@@ -134,7 +141,7 @@ int LPUART_RTOS_Init(lpuart_rtos_handle_t *handle, lpuart_handle_t *t_handle, co
     LPUART_GetDefaultConfig(&defcfg);
 
     defcfg.baudRate_Bps = cfg->baudrate;
-    defcfg.parityMode = cfg->parity;
+    defcfg.parityMode   = cfg->parity;
     defcfg.stopBitCount = cfg->stopbits;
 
     LPUART_Init(handle->base, &defcfg, cfg->srcclk);
@@ -153,6 +160,14 @@ int LPUART_RTOS_Init(lpuart_rtos_handle_t *handle, lpuart_handle_t *t_handle, co
  * Description   : Deinitializes the LPUART instance and frees resources
  *
  *END**************************************************************************/
+/*!
+ * brief Deinitializes an LPUART instance for operation.
+ *
+ * This function deinitializes the LPUART module, sets all register value to the reset value,
+ * and releases the resources.
+ *
+ * param handle The RTOS LPUART handle.
+ */
 int LPUART_RTOS_Deinit(lpuart_rtos_handle_t *handle)
 {
     LPUART_Deinit(handle->base);
@@ -168,7 +183,7 @@ int LPUART_RTOS_Deinit(lpuart_rtos_handle_t *handle)
     vSemaphoreDelete(handle->rxSemaphore);
 
     /* Invalidate the handle */
-    handle->base = NULL;
+    handle->base    = NULL;
     handle->t_state = NULL;
 
     return 0;
@@ -180,6 +195,16 @@ int LPUART_RTOS_Deinit(lpuart_rtos_handle_t *handle)
  * Description   : Initializes the UART instance for application
  *
  *END**************************************************************************/
+/*!
+ * brief Sends data in the background.
+ *
+ * This function sends data. It is an synchronous API.
+ * If the hardware buffer is full, the task is in the blocked state.
+ *
+ * param handle The RTOS LPUART handle.
+ * param buffer The pointer to buffer to send.
+ * param length The number of bytes to send.
+ */
 int LPUART_RTOS_Send(lpuart_rtos_handle_t *handle, const uint8_t *buffer, uint32_t length)
 {
     EventBits_t ev;
@@ -205,7 +230,7 @@ int LPUART_RTOS_Send(lpuart_rtos_handle_t *handle, const uint8_t *buffer, uint32
         return kStatus_Fail;
     }
 
-    handle->txTransfer.data = (uint8_t *)buffer;
+    handle->txTransfer.data     = (uint8_t *)buffer;
     handle->txTransfer.dataSize = (uint32_t)length;
 
     /* Non-blocking call */
@@ -232,11 +257,22 @@ int LPUART_RTOS_Send(lpuart_rtos_handle_t *handle, const uint8_t *buffer, uint32
  * Description   : Receives chars for the application
  *
  *END**************************************************************************/
+/*!
+ * brief Receives data.
+ *
+ * This function receives data from LPUART. It is an synchronous API. If any data is immediately available
+ * it is returned immediately and the number of bytes received.
+ *
+ * param handle The RTOS LPUART handle.
+ * param buffer The pointer to buffer where to write received data.
+ * param length The number of bytes to receive.
+ * param received The pointer to a variable of size_t where the number of received data is filled.
+ */
 int LPUART_RTOS_Receive(lpuart_rtos_handle_t *handle, uint8_t *buffer, uint32_t length, size_t *received)
 {
     EventBits_t ev;
-    size_t n = 0;
-    int retval = kStatus_Fail;
+    size_t n              = 0;
+    int retval            = kStatus_Fail;
     size_t local_received = 0;
 
     if (NULL == handle->base)
@@ -264,7 +300,7 @@ int LPUART_RTOS_Receive(lpuart_rtos_handle_t *handle, uint8_t *buffer, uint32_t 
         return kStatus_Fail;
     }
 
-    handle->rxTransfer.data = buffer;
+    handle->rxTransfer.data     = buffer;
     handle->rxTransfer.dataSize = (uint32_t)length;
 
     /* Non-blocking call */
@@ -280,7 +316,7 @@ int LPUART_RTOS_Receive(lpuart_rtos_handle_t *handle, uint8_t *buffer, uint32_t 
         /* Prevent false indication of successful transfer in next call of LPUART_RTOS_Receive.
            RTOS_LPUART_COMPLETE flag could be set meanwhile overrun is handled */
         xEventGroupClearBits(handle->rxEvent, RTOS_LPUART_COMPLETE);
-        retval = kStatus_LPUART_RxHardwareOverrun;
+        retval         = kStatus_LPUART_RxHardwareOverrun;
         local_received = 0;
     }
     else if (ev & RTOS_LPUART_RING_BUFFER_OVERRUN)
@@ -290,12 +326,12 @@ int LPUART_RTOS_Receive(lpuart_rtos_handle_t *handle, uint8_t *buffer, uint32_t 
         /* Prevent false indication of successful transfer in next call of LPUART_RTOS_Receive.
            RTOS_LPUART_COMPLETE flag could be set meanwhile overrun is handled */
         xEventGroupClearBits(handle->rxEvent, RTOS_LPUART_COMPLETE);
-        retval = kStatus_LPUART_RxRingBufferOverrun;
+        retval         = kStatus_LPUART_RxRingBufferOverrun;
         local_received = 0;
     }
     else if (ev & RTOS_LPUART_COMPLETE)
     {
-        retval = kStatus_Success;
+        retval         = kStatus_Success;
         local_received = length;
     }
 

@@ -9,31 +9,44 @@
 #ifndef __SERIAL_MANAGER_H__
 #define __SERIAL_MANAGER_H__
 
+/*!
+ * @addtogroup serialmanager
+ * @{
+ */
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #ifdef DEBUG_CONSOLE_TRANSFER_NON_BLOCKING
-#define SERIAL_MANAGER_NON_BLOCKING_MODE \
-    (1U) /* Enable or disable serial manager non-blocking mode (1 - enable, 0 - disable) */
+/*! @brief Enable or disable serial manager non-blocking mode (1 - enable, 0 - disable) */
+#define SERIAL_MANAGER_NON_BLOCKING_MODE (1U)
 #else
 #ifndef SERIAL_MANAGER_NON_BLOCKING_MODE
-#define SERIAL_MANAGER_NON_BLOCKING_MODE \
-    (0U) /* Enable or disable serial manager non-blocking mode (1 - enable, 0 - disable) */
+#define SERIAL_MANAGER_NON_BLOCKING_MODE (0U)
 #endif
 #endif
 
+/*! @brief Enable or disable uart port (1 - enable, 0 - disable) */
 #ifndef SERIAL_PORT_TYPE_UART
-#define SERIAL_PORT_TYPE_UART (1U) /* Enable or disable uart port (1 - enable, 0 - disable) */
+#define SERIAL_PORT_TYPE_UART (1U)
 #endif
 
+/*! @brief Enable or disable USB CDC port (1 - enable, 0 - disable) */
 #ifndef SERIAL_PORT_TYPE_USBCDC
-#define SERIAL_PORT_TYPE_USBCDC (0U) /* Enable or disable USB CDC port (1 - enable, 0 - disable) */
+#define SERIAL_PORT_TYPE_USBCDC (0U)
 #endif
 
+/*! @brief Enable or disable SWO port (1 - enable, 0 - disable) */
 #ifndef SERIAL_PORT_TYPE_SWO
-#define SERIAL_PORT_TYPE_SWO (0U) /* Enable or disable SWO port (1 - enable, 0 - disable) */
+#define SERIAL_PORT_TYPE_SWO (0U)
 #endif
 
+/*! @brief Enable or disable USB CDC virtual port (1 - enable, 0 - disable) */
+#ifndef SERIAL_PORT_TYPE_USBCDC_VIRTUAL
+#define SERIAL_PORT_TYPE_USBCDC_VIRTUAL (0U)
+#endif
+
+/*! @brief Set serial manager write handle size */
 #if (defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0U))
 #define SERIAL_MANAGER_WRITE_HANDLE_SIZE (44U)
 #define SERIAL_MANAGER_READ_HANDLE_SIZE (44U)
@@ -57,6 +70,15 @@
 
 #if (defined(SERIAL_PORT_TYPE_SWO) && (SERIAL_PORT_TYPE_SWO > 0U))
 #include "serial_port_swo.h"
+#endif
+
+#if (defined(SERIAL_PORT_TYPE_USBCDC_VIRTUAL) && (SERIAL_PORT_TYPE_USBCDC_VIRTUAL > 0U))
+
+#if !(defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0U))
+#error The serial manager blocking mode cannot be supported for USB CDC.
+#endif
+
+#include "serial_port_usb_virtual.h"
 #endif
 
 #define SERIAL_MANAGER_HANDLE_SIZE_TEMP 0U
@@ -87,10 +109,19 @@
 
 #endif
 
-/* SERIAL_PORT_UART_HANDLE_SIZE/SERIAL_PORT_USB_CDC_HANDLE_SIZE + serial manager dedicated size */
+#if (defined(SERIAL_PORT_TYPE_USBCDC_VIRTUAL) && (SERIAL_PORT_TYPE_USBCDC_VIRTUAL > 0U))
+
+#if (SERIAL_PORT_USB_VIRTUAL_HANDLE_SIZE > SERIAL_MANAGER_HANDLE_SIZE_TEMP)
+#undef SERIAL_MANAGER_HANDLE_SIZE_TEMP
+#define SERIAL_MANAGER_HANDLE_SIZE_TEMP SERIAL_PORT_USB_VIRTUAL_HANDLE_SIZE
+#endif
+
+#endif
+
+/*! @brief SERIAL_PORT_UART_HANDLE_SIZE/SERIAL_PORT_USB_CDC_HANDLE_SIZE + serial manager dedicated size */
 #if ((defined(SERIAL_MANAGER_HANDLE_SIZE_TEMP) && (SERIAL_MANAGER_HANDLE_SIZE_TEMP > 0U)))
 #else
-#error SERIAL_PORT_TYPE_UART, SERIAL_PORT_TYPE_USBCDC and SERIAL_PORT_TYPE_SWO should not be cleared at same time.
+#error SERIAL_PORT_TYPE_UART, SERIAL_PORT_TYPE_USBCDC, SERIAL_PORT_TYPE_SWO and SERIAL_PORT_TYPE_USBCDC_VIRTUAL should not be cleared at same time.
 #endif
 
 #if (defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0U))
@@ -107,13 +138,16 @@ typedef void *serial_handle_t;
 typedef void *serial_write_handle_t;
 typedef void *serial_read_handle_t;
 
+/*! @brief serial port type*/
 typedef enum _serial_port_type
 {
-    kSerialPort_Uart = 1U, /*!< Serial port UART */
-    kSerialPort_UsbCdc,    /*!< Serial port USB CDC */
-    kSerialPort_Swo,       /*!< Serial port SWO */
+    kSerialPort_Uart = 1U,     /*!< Serial port UART */
+    kSerialPort_UsbCdc,        /*!< Serial port USB CDC */
+    kSerialPort_Swo,           /*!< Serial port SWO */
+    kSerialPort_UsbCdcVirtual, /*!< Serial port USB CDC Virtual */
 } serial_port_type_t;
 
+/*! @brief serial manager config structure*/
 typedef struct _serial_manager_config
 {
     uint8_t *ringBuffer;     /*!< Ring buffer address, it is used to buffer data received by the hardware.
@@ -124,6 +158,7 @@ typedef struct _serial_manager_config
     void *portConfig;        /*!< Serial port configuration */
 } serial_manager_config_t;
 
+/*! @brief serial manager error code*/
 typedef enum _serial_manager_status
 {
     kStatus_SerialManager_Success = kStatus_Success,                            /*!< Success */
@@ -160,16 +195,16 @@ extern "C" {
 /*!
  * @brief Initializes a serial manager module with the serial manager handle and the user configuration structure.
  *
- * This function configures the serial manager module with user-defined settings. The user can configure the
+ * This function configures the Serial Manager module with user-defined settings. The user can configure the
  * configuration
  * structure. The parameter serialHandle is a pointer to point to a memory space of size #SERIAL_MANAGER_HANDLE_SIZE
  * allocated by the caller.
- * The serial manager module supports two types serial port, uart (includes UART, USART, LPSCI, LPUART, etc) and USB
+ * The Serial Manager module supports two types of serial port, UART (includes UART, USART, LPSCI, LPUART, etc) and USB
  * CDC.
  * Please refer to #serial_port_type_t for serial port setting. These two types can be set by using
  * #serial_manager_config_t.
  *
- * Example below shows how to use this API to configure the serial manager.
+ * Example below shows how to use this API to configure the Serial Manager.
  * For UART,
  *  @code
  *   #define SERIAL_MANAGER_RING_BUFFER_SIZE          (256U)
@@ -212,7 +247,7 @@ extern "C" {
  * @param serialHandle Pointer to point to a memory space of size #SERIAL_MANAGER_HANDLE_SIZE allocated by the caller.
  * @param config Pointer to user-defined configuration structure.
  * @retval kStatus_SerialManager_Error An error occurred.
- * @retval kStatus_SerialManager_Success The serial manager module initialization succeed.
+ * @retval kStatus_SerialManager_Success The Serial Manager module initialization succeed.
  */
 serial_manager_status_t SerialManager_Init(serial_handle_t serialHandle, serial_manager_config_t *config);
 
@@ -280,7 +315,7 @@ serial_manager_status_t SerialManager_CloseWriteHandle(serial_write_handle_t wri
  *
  * This function Opens a reading handle for the serial manager module. The reading handle can not be
  * opened multiple at the same time. The error code kStatus_SerialManager_Busy would be returned when
- * the previous reading handle is not closed. And There can only one buffer for receiving for the
+ * the previous reading handle is not closed. And There can only be one buffer for receiving for the
  * reading handle at the same time.
  *
  * @param serialHandle The serial manager module handle pointer.
@@ -509,5 +544,5 @@ serial_manager_status_t SerialManager_ExitLowpower(serial_handle_t serialHandle)
 #if defined(__cplusplus)
 }
 #endif
-
+/*! @} */
 #endif /* __SERIAL_MANAGER_H__ */

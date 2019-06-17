@@ -63,7 +63,7 @@
     else if(result == kStatus_I2C_Nak) I2C_LOG_PRINTF(Operation " Nak\r\n");                             \
     else if(result == kStatus_I2C_Timeout) I2C_LOG_PRINTF(Operation " T/O\r\n");                         \
     else if(result == kStatus_I2C_ArbitrationLost) I2C_LOG_PRINTF(Operation " ArbtnLost\r\n");           \
-    else I2C_LOG_PRINTF (Operation " ERROR  : 0x%02lX\r\n", status);
+    else I2C_LOG_PRINTF (Operation " ERROR  : 0x%lX\r\n", status);
 #else
 #   define DEBUG_PRINT_KINETIS_I2C(Operation, status)
 #endif

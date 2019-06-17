@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018, NXP
+ * Copyright 2017-2019, NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -58,6 +58,7 @@ typedef struct _lpm_nvic_context
 static lpm_power_mode_t s_curMode;
 static lpm_nvic_context_t s_nvicContext;
 static volatile uint32_t s_psp;
+static uint32_t s_usbWakeup;
 static uint32_t s_rccr;
 static uint32_t s_qspipcc;
 static uint32_t s_sosccsr;
@@ -212,7 +213,10 @@ static uint32_t LPM_EnterTicklessIdle(uint32_t timeoutMilliSec, uint64_t *pCount
     uint32_t flag;
     uint32_t timeoutTicks;
     uint32_t countPerTick = SYSTICK_COUNT_PER_TICK;
+    uint32_t sourceClock  = SYSTICK_SOURCE_CLOCK;
     lptmr_config_t lptmrConfig;
+
+    assert(sourceClock != 0U);
 
     if ((uint64_t)timeoutMilliSec * configTICK_RATE_HZ < 2 * 1000)
     {
@@ -268,7 +272,7 @@ static uint32_t LPM_EnterTicklessIdle(uint32_t timeoutMilliSec, uint64_t *pCount
     /* Initialize the LPTMR */
     LPTMR_Init(SYSTICK_BASE, &lptmrConfig);
     /* Convert count in systick freq to tickless clock count */
-    LPTMR_SetTimerPeriod(SYSTICK_BASE, counter * SYSTICK_TICKLESS_CLOCK / SYSTICK_SOURCE_CLOCK);
+    LPTMR_SetTimerPeriod(SYSTICK_BASE, counter * SYSTICK_TICKLESS_CLOCK / sourceClock);
     /* Enable timer interrupt */
     LPTMR_EnableInterrupts(SYSTICK_BASE, kLPTMR_TimerInterruptEnable);
     /* Restart timer */
@@ -287,6 +291,8 @@ static void LPM_ExitTicklessIdle(uint32_t timeoutTicks, uint64_t timeoutCounter)
     uint32_t completeTicks;
     uint32_t countPerTick = SYSTICK_COUNT_PER_TICK;
     lptmr_config_t lptmrConfig;
+
+    assert(countPerTick != 0U);
 
     /* Convert tickless count to systick count. */
     expired = (uint64_t)(LPTMR_GetCurrentTimerCount(SYSTICK_BASE)) * SYSTICK_SOURCE_CLOCK / SYSTICK_TICKLESS_CLOCK;
@@ -765,6 +771,9 @@ void LPM_SystemSuspend(uint32_t psp)
 {
     uint32_t mask0;
 
+    /* Save USB wakeup setting. */
+    s_usbWakeup = SIM->GPR1 & SIM_GPR1_USB_PHY_WAKEUP_ISO_DISABLE_MASK;
+
     mask0 = SIM_SIM_DGO_CTRL0_WR_ACK_DGO_GP6_MASK | SIM_SIM_DGO_CTRL0_WR_ACK_DGO_GP5_MASK |
             SIM_SIM_DGO_CTRL0_WR_ACK_DGO_GP4_MASK | SIM_SIM_DGO_CTRL0_WR_ACK_DGO_GP3_MASK |
             SIM_SIM_DGO_CTRL0_WR_ACK_DGO_GP2_MASK | SIM_SIM_DGO_CTRL0_WR_ACK_DGO_GP1_MASK;
@@ -814,6 +823,8 @@ uint32_t LPM_SystemResume(bool resume)
     /* Restore data. */
     memcpy(ROM_RESERVED_MEM, s_suspendMem, sizeof(s_suspendMem));
     memcpy(ROM_RESERVED_MEM + sizeof(s_suspendMem), ROM_HEADER_MEM, ROM_HEADER_SIZE);
+
+    SIM->GPR1 = (SIM->GPR1 & ~SIM_GPR1_USB_PHY_WAKEUP_ISO_DISABLE_MASK) | s_usbWakeup;
 
     return s_psp;
 }

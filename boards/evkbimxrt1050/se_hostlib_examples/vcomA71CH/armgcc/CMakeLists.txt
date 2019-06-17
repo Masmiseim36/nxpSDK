@@ -158,6 +158,8 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DNO_SECURE_CHANNEL_SUPPORT")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC")
 
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DPRINTF_ADVANCED_ENABLE=1")
+
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DTGT_A71CH")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DI2C")
@@ -205,6 +207,8 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DUSB_STACK_BM")
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNO_SECURE_CHANNEL_SUPPORT")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DPRINTF_ADVANCED_ENABLE=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DTGT_A71CH")
 
@@ -255,6 +259,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DUSB_ST
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DNO_SECURE_CHANNEL_SUPPORT")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DSCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DPRINTF_ADVANCED_ENABLE=1")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DTGT_A71CH")
 
@@ -307,6 +313,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DUS
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DNO_SECURE_CHANNEL_SUPPORT")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DSCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DPRINTF_ADVANCED_ENABLE=1")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DTGT_A71CH")
 
@@ -708,9 +716,13 @@ include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers)
 
 include_directories(${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter)
 
+include_directories(${ProjDirPath}/../../../component_examples/config)
+
 include_directories(${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra)
 
 include_directories(${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/scp)
+
+include_directories(${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc)
 
 include_directories(${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom)
 
@@ -736,8 +748,6 @@ include_directories(${ProjDirPath}/../../../xip)
 
 include_directories(${ProjDirPath}/../../../../../middleware/usb/phy)
 
-include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities)
-
 add_executable(se_hostlib_vcomA71CH.elf 
 "${ProjDirPath}/../virtual_com.c"
 "${ProjDirPath}/../virtual_com.h"
@@ -755,8 +765,8 @@ add_executable(se_hostlib_vcomA71CH.elf
 "${ProjDirPath}/../../../../../middleware/usb/include/usb_misc.h"
 "${ProjDirPath}/../../../../../middleware/usb/include/usb_spec.h"
 "${ProjDirPath}/../../../../../middleware/usb/osa/usb_osa.h"
-"${ProjDirPath}/../../../../../middleware/usb/osa/usb_osa_bm.h"
 "${ProjDirPath}/../../../../../middleware/usb/osa/usb_osa_bm.c"
+"${ProjDirPath}/../../../../../middleware/usb/osa/usb_osa_bm.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_cache.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_cache.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_trng.c"
@@ -767,35 +777,71 @@ add_executable(se_hostlib_vcomA71CH.elf
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_dcp.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_pit.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_pit.h"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_port_usb.h"
 "${ProjDirPath}/../../../../../components/serial_manager/serial_port_usb.c"
-"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_descriptor.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_usb.h"
 "${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_descriptor.c"
+"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_descriptor.h"
 "${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_cdc_acm.c"
 "${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_cdc_acm.h"
 "${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_class.c"
 "${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_class.h"
 "${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_ch9.c"
 "${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_ch9.h"
+"${ProjDirPath}/../../../component_examples/config/usb_device_config.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc/HLSEAPI.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc/HLSEComm.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc/HLSECrypto.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc/HLSEMisc.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc/HLSEObjects.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc/HLSETypes.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc/PlugAndTrust_HostLib_Ver.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc/PlugAndTrust_Pkg_Ver.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc/a71ch_api.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc/a71ch_const.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc/a71ch_util.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc/ax_api.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc/ax_common.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc/ax_common_a71ch.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc/ax_common_a71cl.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc/ax_common_private.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc/ax_scp.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc/ax_scp_private.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc/ax_sss_scp.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc/ax_util.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc/fsl_sss_ftr_default.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc/nxEnsure.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/inc/scp.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/global_platf.c"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/global_platf.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_apdu.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_apdu.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_errors.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_errors.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_types.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog.c"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_App.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_DefaultConfig.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_UseCases.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_VCOM.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_hostLib.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_mbedtls.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_scp.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_smCom.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_sscp.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_sss.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_apdu.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_apdu.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_api.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_errors.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_errors.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_printf.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_types.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/scp/scp.c"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/scp/scp.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/apduComm.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/sci2c.c"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/sci2c.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/sci2c_cfg.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smCom.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smCom.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smComSCI2C.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/generic/sm_printf.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smComSCI2C.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/inc/i2c_a7.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/inc/sm_printf.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/inc/sm_timer.h"
@@ -805,43 +851,41 @@ add_executable(se_hostlib_vcomA71CH.elf
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/kinetis/timer_kinetis.c"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/kinetis/timer_kinetis_bm.c"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/kinetis/timer_kinetis_freertos.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smCom.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smComSCI2C.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/sci2c_cfg.h"
 "${ProjDirPath}/../../../../../middleware/usb/device/usb_device.h"
 "${ProjDirPath}/../../../../../middleware/usb/device/usb_device_dci.c"
 "${ProjDirPath}/../../../../../middleware/usb/device/usb_device_dci.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_clock.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_clock.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/fsl_device_registers.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/MIMXRT1052.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/MIMXRT1052_features.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/fsl_device_registers.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/system_MIMXRT1052.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/system_MIMXRT1052.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h"
-"${ProjDirPath}/../../../../../components/uart/uart.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../components/uart/lpuart_adapter.c"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"
+"${ProjDirPath}/../../../../../components/uart/uart.h"
 "${ProjDirPath}/../../../../../components/serial_manager/serial_manager.c"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_internal.h"
 "${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.c"
-"${ProjDirPath}/../../../../../components/lists/generic_list.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.h"
 "${ProjDirPath}/../../../../../components/lists/generic_list.c"
+"${ProjDirPath}/../../../../../components/lists/generic_list.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/gcc/startup_MIMXRT1052.S"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/fsl_assert.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpio.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpio.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.h"
 "${ProjDirPath}/../../../xip/evkbimxrt1050_flexspi_nor_config.c"
 "${ProjDirPath}/../../../xip/evkbimxrt1050_flexspi_nor_config.h"
 "${ProjDirPath}/../../../xip/evkbimxrt1050_sdram_ini_dcd.c"
@@ -849,20 +893,19 @@ add_executable(se_hostlib_vcomA71CH.elf
 "${ProjDirPath}/../../../../../middleware/usb/phy/usb_phy.c"
 "${ProjDirPath}/../../../../../middleware/usb/phy/usb_phy.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/core_cm7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_compiler.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_compiler.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/usb_device_config.h"
 )
 
 

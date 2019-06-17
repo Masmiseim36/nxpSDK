@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2107 NXP
+ * Copyright 2016 - 2017, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -451,10 +451,12 @@ usb_status_t USB_DeviceCdcVcomSetConfigure(usb_device_handle handle, uint8_t con
         if (USB_SPEED_HIGH == g_deviceComposite->speed)
         {
             epInitStruct.maxPacketSize = HS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE;
+            epInitStruct.interval = HS_CDC_VCOM_INTERRUPT_IN_INTERVAL;
         }
         else
         {
             epInitStruct.maxPacketSize = FS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE;
+            epInitStruct.interval = FS_CDC_VCOM_INTERRUPT_IN_INTERVAL;
         }
 
         USB_DeviceInitEndpoint(handle, &epInitStruct, &epCallback);
@@ -464,6 +466,7 @@ usb_status_t USB_DeviceCdcVcomSetConfigure(usb_device_handle handle, uint8_t con
         epCallback.callbackParam = handle;
 
         epInitStruct.zlt = 0;
+        epInitStruct.interval = 0;
         epInitStruct.transferType = USB_ENDPOINT_BULK;
         epInitStruct.endpointAddress =
             USB_CDC_VCOM_DIC_BULK_IN_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
@@ -481,7 +484,8 @@ usb_status_t USB_DeviceCdcVcomSetConfigure(usb_device_handle handle, uint8_t con
         epCallback.callbackFn = USB_DeviceCdcAcmBulkOut;
         epCallback.callbackParam = handle;
 
-        epInitStruct.zlt = 0;
+        epInitStruct.zlt = 0; 
+        epInitStruct.interval = 0U;
         epInitStruct.transferType = USB_ENDPOINT_BULK;
         epInitStruct.endpointAddress =
             USB_CDC_VCOM_DIC_BULK_OUT_ENDPOINT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);

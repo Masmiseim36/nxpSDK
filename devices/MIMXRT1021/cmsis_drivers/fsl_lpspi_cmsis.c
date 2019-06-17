@@ -136,8 +136,8 @@ static int32_t LPSPI_CommonControl(uint32_t control,
      defined(RTE_SPI0_BETWEEN_TRANSFER_DELAY))
     if (0U == resource->instance)
     {
-        masterConfig.pcsToSckDelayInNanoSec = RTE_SPI0_PCS_TO_SCK_DELAY;
-        masterConfig.lastSckToPcsDelayInNanoSec = RTE_SPI0_SCK_TO_PSC_DELAY;
+        masterConfig.pcsToSckDelayInNanoSec        = RTE_SPI0_PCS_TO_SCK_DELAY;
+        masterConfig.lastSckToPcsDelayInNanoSec    = RTE_SPI0_SCK_TO_PSC_DELAY;
         masterConfig.betweenTransferDelayInNanoSec = RTE_SPI0_BETWEEN_TRANSFER_DELAY;
     }
 #endif /*RTE LPSPI0 trnafer delay time configure */
@@ -146,8 +146,8 @@ static int32_t LPSPI_CommonControl(uint32_t control,
      defined(RTE_SPI1_BETWEEN_TRANSFER_DELAY))
     if (1U == resource->instance)
     {
-        masterConfig.pcsToSckDelayInNanoSec = RTE_SPI1_PCS_TO_SCK_DELAY;
-        masterConfig.lastSckToPcsDelayInNanoSec = RTE_SPI1_SCK_TO_PSC_DELAY;
+        masterConfig.pcsToSckDelayInNanoSec        = RTE_SPI1_PCS_TO_SCK_DELAY;
+        masterConfig.lastSckToPcsDelayInNanoSec    = RTE_SPI1_SCK_TO_PSC_DELAY;
         masterConfig.betweenTransferDelayInNanoSec = RTE_SPI1_BETWEEN_TRANSFER_DELAY;
     }
 #endif /*RTE LPSPI1 trnafer delay time configure */
@@ -156,8 +156,8 @@ static int32_t LPSPI_CommonControl(uint32_t control,
      defined(RTE_SPI2_BETWEEN_TRANSFER_DELAY))
     if (2U == resource->instance)
     {
-        masterConfig.pcsToSckDelayInNanoSec = RTE_SPI2_PCS_TO_SCK_DELAY;
-        masterConfig.lastSckToPcsDelayInNanoSec = RTE_SPI2_SCK_TO_PSC_DELAY;
+        masterConfig.pcsToSckDelayInNanoSec        = RTE_SPI2_PCS_TO_SCK_DELAY;
+        masterConfig.lastSckToPcsDelayInNanoSec    = RTE_SPI2_SCK_TO_PSC_DELAY;
         masterConfig.betweenTransferDelayInNanoSec = RTE_SPI2_BETWEEN_TRANSFER_DELAY;
     }
 #endif /*RTE LPSPI2 trnafer delay time configure */
@@ -165,8 +165,8 @@ static int32_t LPSPI_CommonControl(uint32_t control,
      defined(RTE_SPI3_BETWEEN_TRANSFER_DELAY))
     if (3U == resource->instance)
     {
-        masterConfig.pcsToSckDelayInNanoSec = RTE_SPI3_PCS_TO_SCK_DELAY;
-        masterConfig.lastSckToPcsDelayInNanoSec = RTE_SPI3_SCK_TO_PSC_DELAY;
+        masterConfig.pcsToSckDelayInNanoSec        = RTE_SPI3_PCS_TO_SCK_DELAY;
+        masterConfig.lastSckToPcsDelayInNanoSec    = RTE_SPI3_SCK_TO_PSC_DELAY;
         masterConfig.betweenTransferDelayInNanoSec = RTE_SPI3_BETWEEN_TRANSFER_DELAY;
     }
 #endif /*RTE LPSPI3 trnafer delay time configure */
@@ -175,8 +175,8 @@ static int32_t LPSPI_CommonControl(uint32_t control,
      defined(RTE_SPI4_BETWEEN_TRANSFER_DELAY))
     if (4U == resource->instance)
     {
-        masterConfig.pcsToSckDelayInNanoSec = RTE_SPI4_PCS_TO_SCK_DELAY;
-        masterConfig.lastSckToPcsDelayInNanoSec = RTE_SPI4_SCK_TO_PSC_DELAY;
+        masterConfig.pcsToSckDelayInNanoSec        = RTE_SPI4_PCS_TO_SCK_DELAY;
+        masterConfig.lastSckToPcsDelayInNanoSec    = RTE_SPI4_SCK_TO_PSC_DELAY;
         masterConfig.betweenTransferDelayInNanoSec = RTE_SPI4_BETWEEN_TRANSFER_DELAY;
     }
 #endif /*RTE LPSPI4 trnafer delay time configure */
@@ -185,8 +185,8 @@ static int32_t LPSPI_CommonControl(uint32_t control,
      defined(RTE_SPI5_BETWEEN_TRANSFER_DELAY))
     if (5U == resource->instance)
     {
-        masterConfig.pcsToSckDelayInNanoSec = RTE_SPI5_PCS_TO_SCK_DELAY;
-        masterConfig.lastSckToPcsDelayInNanoSec = RTE_SPI5_SCK_TO_PSC_DELAY;
+        masterConfig.pcsToSckDelayInNanoSec        = RTE_SPI5_PCS_TO_SCK_DELAY;
+        masterConfig.lastSckToPcsDelayInNanoSec    = RTE_SPI5_SCK_TO_PSC_DELAY;
         masterConfig.betweenTransferDelayInNanoSec = RTE_SPI5_BETWEEN_TRANSFER_DELAY;
     }
 #endif /*RTE LPSPI5 trnafer delay time configure */
@@ -499,7 +499,7 @@ static int32_t LPSPI_EdmaInitialize(ARM_SPI_SignalEvent_t cb_event, cmsis_lpspi_
     if (!(lpspi->flags & SPI_FLAG_INIT))
     {
         lpspi->cb_event = cb_event;
-        lpspi->flags = SPI_FLAG_INIT;
+        lpspi->flags    = SPI_FLAG_INIT;
     }
     return ARM_DRIVER_OK;
 }
@@ -573,8 +573,8 @@ static int32_t LPSPI_EdmaSend(const void *data, uint32_t num, cmsis_lpspi_edma_d
     status_t status;
     lpspi_transfer_t xfer = {0};
 
-    xfer.rxData = NULL;
-    xfer.txData = (uint8_t *)data;
+    xfer.rxData   = NULL;
+    xfer.txData   = (uint8_t *)data;
     xfer.dataSize = num;
 
     LPSPI_SetTransferConfigFlags(LPSPI_IsMaster(lpspi->resource->base), lpspi->resource->instance, &xfer);
@@ -613,8 +613,8 @@ static int32_t LPSPI_EdmaReceive(void *data, uint32_t num, cmsis_lpspi_edma_driv
     status_t status;
     lpspi_transfer_t xfer = {0};
 
-    xfer.txData = NULL;
-    xfer.rxData = (uint8_t *)data;
+    xfer.txData   = NULL;
+    xfer.rxData   = (uint8_t *)data;
     xfer.dataSize = num;
 
     LPSPI_SetTransferConfigFlags(LPSPI_IsMaster(lpspi->resource->base), lpspi->resource->instance, &xfer);
@@ -656,8 +656,8 @@ static int32_t LPSPI_EdmaTransfer(const void *data_out,
     status_t status;
     lpspi_transfer_t xfer = {0};
 
-    xfer.txData = (uint8_t *)data_out;
-    xfer.rxData = (uint8_t *)data_in;
+    xfer.txData   = (uint8_t *)data_out;
+    xfer.rxData   = (uint8_t *)data_in;
     xfer.dataSize = num;
 
     LPSPI_SetTransferConfigFlags(LPSPI_IsMaster(lpspi->resource->base), lpspi->resource->instance, &xfer);
@@ -816,16 +816,16 @@ ARM_SPI_STATUS LPSPI_EdmaGetStatus(cmsis_lpspi_edma_driver_state_t *lpspi)
 
     if (LPSPI_IsMaster(lpspi->resource->base))
     {
-        stat.busy = (kLPSPI_Busy == lpspi->handle->masterHandle.state) ? (1U) : (0U);
+        stat.busy      = (kLPSPI_Busy == lpspi->handle->masterHandle.state) ? (1U) : (0U);
         stat.data_lost = (kLPSPI_Error == lpspi->handle->masterHandle.state) ? (1U) : (0U);
     }
     else
     {
-        stat.busy = (kLPSPI_Busy == lpspi->handle->slaveHandle.state) ? (1U) : (0U);
+        stat.busy      = (kLPSPI_Busy == lpspi->handle->slaveHandle.state) ? (1U) : (0U);
         stat.data_lost = (kLPSPI_Error == lpspi->handle->slaveHandle.state) ? (1U) : (0U);
     }
     stat.mode_fault = 0U;
-    stat.reserved = 0U;
+    stat.reserved   = 0U;
 
     return stat;
 }
@@ -890,7 +890,7 @@ static int32_t LPSPI_InterruptInitialize(ARM_SPI_SignalEvent_t cb_event, cmsis_l
     if (!(lpspi->flags & SPI_FLAG_INIT))
     {
         lpspi->cb_event = cb_event;
-        lpspi->flags = SPI_FLAG_INIT;
+        lpspi->flags    = SPI_FLAG_INIT;
     }
 
     return ARM_DRIVER_OK;
@@ -944,8 +944,8 @@ static int32_t LPSPI_InterruptSend(const void *data, uint32_t num, cmsis_lpspi_i
     status_t status;
     lpspi_transfer_t xfer = {0};
 
-    xfer.rxData = NULL;
-    xfer.txData = (uint8_t *)data;
+    xfer.rxData   = NULL;
+    xfer.txData   = (uint8_t *)data;
     xfer.dataSize = num;
 
     LPSPI_SetTransferConfigFlags(LPSPI_IsMaster(lpspi->resource->base), lpspi->resource->instance, &xfer);
@@ -984,8 +984,8 @@ static int32_t LPSPI_InterruptReceive(void *data, uint32_t num, cmsis_lpspi_inte
     status_t status;
     lpspi_transfer_t xfer = {0};
 
-    xfer.txData = NULL;
-    xfer.rxData = (uint8_t *)data;
+    xfer.txData   = NULL;
+    xfer.rxData   = (uint8_t *)data;
     xfer.dataSize = num;
 
     LPSPI_SetTransferConfigFlags(LPSPI_IsMaster(lpspi->resource->base), lpspi->resource->instance, &xfer);
@@ -1027,8 +1027,8 @@ static int32_t LPSPI_InterruptTransfer(const void *data_out,
     status_t status;
     lpspi_transfer_t xfer = {0};
 
-    xfer.txData = (uint8_t *)data_out;
-    xfer.rxData = (uint8_t *)data_in;
+    xfer.txData   = (uint8_t *)data_out;
+    xfer.rxData   = (uint8_t *)data_in;
     xfer.dataSize = num;
 
     LPSPI_SetTransferConfigFlags(LPSPI_IsMaster(lpspi->resource->base), lpspi->resource->instance, &xfer);
@@ -1194,7 +1194,7 @@ ARM_SPI_STATUS LPSPI_InterruptGetStatus(cmsis_lpspi_interrupt_driver_state_t *lp
         stat.data_lost = (kLPSPI_Error == lpspi->handle->slaveHandle.state) ? (1U) : (0U);
     }
     stat.mode_fault = 0U;
-    stat.reserved = 0U;
+    stat.reserved   = 0U;
 
     return stat;
 }
@@ -1299,7 +1299,8 @@ cmsis_lpspi_interrupt_driver_state_t LPSPI0_InterruptDriverState = {
 #else
 cmsis_lpspi_interrupt_driver_state_t LPSPI0_InterruptDriverState = {
 #endif
-    &LPSPI0_Resource, &LPSPI0_Handle,
+    &LPSPI0_Resource,
+    &LPSPI0_Handle,
 };
 
 static int32_t LPSPI0_InterruptInitialize(ARM_SPI_SignalEvent_t cb_event)
@@ -1462,7 +1463,8 @@ cmsis_lpspi_interrupt_driver_state_t LPSPI1_InterruptDriverState = {
 #else
 cmsis_lpspi_interrupt_driver_state_t LPSPI1_InterruptDriverState = {
 #endif
-    &LPSPI1_Resource, &LPSPI1_Handle,
+    &LPSPI1_Resource,
+    &LPSPI1_Handle,
 };
 
 static int32_t LPSPI1_InterruptInitialize(ARM_SPI_SignalEvent_t cb_event)
@@ -1625,7 +1627,8 @@ cmsis_lpspi_interrupt_driver_state_t LPSPI2_InterruptDriverState = {
 #else
 cmsis_lpspi_interrupt_driver_state_t LPSPI2_InterruptDriverState = {
 #endif
-    &LPSPI2_Resource, &LPSPI2_Handle,
+    &LPSPI2_Resource,
+    &LPSPI2_Handle,
 };
 
 static int32_t LPSPI2_InterruptInitialize(ARM_SPI_SignalEvent_t cb_event)
@@ -1788,7 +1791,8 @@ cmsis_lpspi_interrupt_driver_state_t LPSPI3_InterruptDriverState = {
 #else
 cmsis_lpspi_interrupt_driver_state_t LPSPI3_InterruptDriverState = {
 #endif
-    &LPSPI3_Resource, &LPSPI3_Handle,
+    &LPSPI3_Resource,
+    &LPSPI3_Handle,
 };
 
 static int32_t LPSPI3_InterruptInitialize(ARM_SPI_SignalEvent_t cb_event)
@@ -1951,7 +1955,8 @@ cmsis_lpspi_interrupt_driver_state_t LPSPI4_InterruptDriverState = {
 #else
 cmsis_lpspi_interrupt_driver_state_t LPSPI4_InterruptDriverState = {
 #endif
-    &LPSPI4_Resource, &LPSPI4_Handle,
+    &LPSPI4_Resource,
+    &LPSPI4_Handle,
 };
 
 static int32_t LPSPI4_InterruptInitialize(ARM_SPI_SignalEvent_t cb_event)
@@ -2114,7 +2119,8 @@ cmsis_lpspi_interrupt_driver_state_t LPSPI5_InterruptDriverState = {
 #else
 cmsis_lpspi_interrupt_driver_state_t LPSPI5_InterruptDriverState = {
 #endif
-    &LPSPI5_Resource, &LPSPI5_Handle,
+    &LPSPI5_Resource,
+    &LPSPI5_Handle,
 };
 
 static int32_t LPSPI5_InterruptInitialize(ARM_SPI_SignalEvent_t cb_event)

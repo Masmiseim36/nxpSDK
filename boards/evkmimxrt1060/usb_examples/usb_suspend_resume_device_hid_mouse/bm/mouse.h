@@ -27,7 +27,6 @@
 #endif
 
 #define USB_DEVICE_INTERRUPT_PRIORITY (3U)
-
 #define USB_HID_MOUSE_REPORT_LENGTH (0x04U)
 
 typedef enum _usb_hid_mouse_status

@@ -162,6 +162,12 @@
 #define TCP_LISTEN_BACKLOG 1
 #endif
 
+/* ---------- Network Interfaces options ---------- */
+/* Support netif api (in netifapi.c). */
+#ifndef LWIP_NETIF_API
+#define LWIP_NETIF_API 1
+#endif
+
 /* ---------- ICMP options ---------- */
 #ifndef LWIP_ICMP
 #define LWIP_ICMP 1

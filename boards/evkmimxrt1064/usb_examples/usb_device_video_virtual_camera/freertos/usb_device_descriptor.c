@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 , 2018 NXP
+ * Copyright 2016 , 2018 - 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -32,7 +32,7 @@
 usb_device_endpoint_struct_t g_UsbDeviceVideoControlEndpoints[USB_VIDEO_VIRTUAL_CAMERA_CONTROL_ENDPOINT_COUNT] = {
     {
         USB_VIDEO_VIRTUAL_CAMERA_CONTROL_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
-        USB_ENDPOINT_INTERRUPT, FS_INTERRUPT_IN_PACKET_SIZE,
+        USB_ENDPOINT_INTERRUPT, FS_INTERRUPT_IN_PACKET_SIZE,FS_INTERRUPT_IN_INTERVAL,
     },
 };
 
@@ -74,7 +74,7 @@ usb_device_interface_struct_t g_UsbDeviceVideoControlInterface[] = {{
 usb_device_endpoint_struct_t g_UsbDeviceVideoStreamEndpoints[USB_VIDEO_VIRTUAL_CAMERA_STREAM_ENDPOINT_COUNT] = {
     {
         USB_VIDEO_VIRTUAL_CAMERA_STREAM_ENDPOINT_IN | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
-        USB_ENDPOINT_ISOCHRONOUS, FS_STREAM_IN_PACKET_SIZE,
+        USB_ENDPOINT_ISOCHRONOUS, FS_STREAM_IN_PACKET_SIZE,FS_STREAM_IN_INTERVAL,
     },
 };
 
@@ -353,7 +353,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     0x00U,                                        /* The X dimension of the picture aspect ratio */
     0x00U,                                        /* The Y dimension of the picture aspect ratio */
     0x00U,                                        /* Specifies interlace information */
-    0x00U,                                        /* Not uesd */
+    0x00U,                                        /* Not used */
 
     /* Motion-JPEG Video Frame Descriptor */
     USB_VIDEO_MJPEG_FRAME_DESCRIPTOR_LENGTH,     /* Size of this Descriptor */
@@ -608,7 +608,7 @@ usb_status_t USB_DeviceGetStringDescriptor(usb_device_handle handle,
  * current speed.
  * As the default, the device descriptors and configurations are configured by using FS parameters for both EHCI and
  * KHCI.
- * When the EHCI is enabled, the application needs to call this fucntion to update device by using current speed.
+ * When the EHCI is enabled, the application needs to call this function to update device by using current speed.
  * The updated information includes endpoint max packet size, endpoint interval, etc. */
 usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
 {
@@ -667,11 +667,17 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
     {
         g_UsbDeviceVideoControlEndpoints[0].maxPacketSize = HS_INTERRUPT_IN_PACKET_SIZE;
         g_UsbDeviceVideoStreamEndpoints[0].maxPacketSize = HS_STREAM_IN_PACKET_SIZE;
+        
+        g_UsbDeviceVideoControlEndpoints[0].interval = HS_INTERRUPT_IN_INTERVAL;
+        g_UsbDeviceVideoStreamEndpoints[0].interval = HS_STREAM_IN_INTERVAL;
     }
     else
     {
         g_UsbDeviceVideoControlEndpoints[0].maxPacketSize = FS_INTERRUPT_IN_PACKET_SIZE;
         g_UsbDeviceVideoStreamEndpoints[0].maxPacketSize = FS_STREAM_IN_PACKET_SIZE;
+        
+        g_UsbDeviceVideoControlEndpoints[0].interval = FS_INTERRUPT_IN_INTERVAL;
+        g_UsbDeviceVideoStreamEndpoints[0].interval = FS_STREAM_IN_INTERVAL;
     }
 
     return kStatus_USB_Success;

@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -40,6 +40,7 @@ void PIT_LED_HANDLER(void)
     /* Clear interrupt flag.*/
     PIT_ClearStatusFlags(PIT, kPIT_Chnl_0, kPIT_TimerFlag);
     pitIsrFlag = true;
+    __DSB();
 }
 
 /*!
@@ -93,7 +94,7 @@ int main(void)
         /* Check whether occur interupt and toggle LED */
         if (true == pitIsrFlag)
         {
-            PRINTF("\r\n Channel No.0 interrupt is occured !");
+            PRINTF("\r\n Channel No.0 interrupt is occurred !");
             LED_TOGGLE();
             pitIsrFlag = false;
         }

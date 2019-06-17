@@ -1,15 +1,10 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2017, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
-#include "fsl_device_registers.h"
-#include "clock_config.h"
-#include "board.h"
-#include "fsl_debug_console.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,8 +34,8 @@
 #define VENDOR_INFO_SIZE (16)
 
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 usb_status_t USB_DeviceCdcRndisInitializeCommand(usb_device_cdc_rndis_struct_t *handle,
                                                  uint8_t **message,
                                                  uint32_t *len);
@@ -54,20 +49,22 @@ usb_status_t USB_DeviceCdcRndisIndicateStatusCommand(usb_device_cdc_rndis_struct
                                                      uint32_t *len);
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 /* The USB CDC RNDIS device instance. */
 static usb_device_cdc_rndis_struct_t s_cdcRndisHandle[USB_DEVICE_CONFIG_CDC_RNDIS_MAX_INSTANCE];
 
 /* The response data for RNDIS notification. */
-USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_responseAvailableData[NOTIF_PACKET_SIZE] = {
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+static uint8_t s_responseAvailableData[NOTIF_PACKET_SIZE] = {
     USB_DEVICE_CDC_NOTIF_RESPONSE_AVAIL, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
 /* The buffer to store RNDIS request. */
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_rndisCommand[RNDIS_MAX_EXPECTED_COMMAND_SIZE];
 /* The 4-byte-aligned buffer to store RNDIS response. */
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint32_t s_responseData[(RNDIS_MAX_EXPECTED_RESPONSE_SIZE + 3) / sizeof(uint32_t)];
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+static uint32_t s_responseData[(RNDIS_MAX_EXPECTED_RESPONSE_SIZE + 3) / sizeof(uint32_t)];
 
 /* The buffer to store RNDIS device vendor information. */
 static uint8_t s_vendorInfo[VENDOR_INFO_SIZE] = " FSL RNDIS PORT ";
@@ -100,8 +97,8 @@ static uint32_t s_listSuppOid[RNDIS_NUM_OIDS_SUPPORTED] = {NDIS_OID_GEN_SUPPORTE
                                                            NDIS_OID_802_3_XMIT_MORE_COLLISIONS};
 
 /*******************************************************************************
-* Code
-******************************************************************************/
+ * Code
+ ******************************************************************************/
 
 /*!
  * @brief Allocates a handle for USB CDC RNDIS device.
@@ -113,7 +110,7 @@ static uint32_t s_listSuppOid[RNDIS_NUM_OIDS_SUPPORTED] = {NDIS_OID_GEN_SUPPORTE
  */
 static usb_status_t USB_DeviceCdcRndisAllocateHandle(usb_device_cdc_rndis_struct_t **handle)
 {
-    int32_t count;
+    uint32_t count;
     for (count = 0; count < USB_DEVICE_CONFIG_CDC_RNDIS_MAX_INSTANCE; count++)
     {
         if (NULL == (void *)s_cdcRndisHandle[count].cdcAcmHandle)
@@ -165,17 +162,19 @@ usb_status_t USB_DeviceCdcRndisInit(class_handle_t classHandle,
     }
 
     /* Initially RNDIS is in Uninitialized state */
-    cdcRndisHandle->cdcAcmHandle = classHandle;
-    cdcRndisHandle->rndisDeviceState = RNDIS_UNINITIALIZED;
-    cdcRndisHandle->rndisHwState = NDIS_HARDWARE_STATUS_NOT_READY;
+    cdcRndisHandle->cdcAcmHandle            = classHandle;
+    cdcRndisHandle->rndisDeviceState        = RNDIS_UNINITIALIZED;
+    cdcRndisHandle->rndisHwState            = NDIS_HARDWARE_STATUS_NOT_READY;
     cdcRndisHandle->rndisMediaConnectStatus = NDIS_MEDIA_STATE_UNKNOWN;
-    cdcRndisHandle->rndisDevMaxTxSize = config->devMaxTxSize;
-    cdcRndisHandle->rndisCallback = config->rndisCallback;
-    cdcRndisHandle->rndisCommand = &s_rndisCommand[0];
-    cdcRndisHandle->responseData = (uint8_t *)&s_responseData[0];
+    cdcRndisHandle->rndisDevMaxTxSize       = config->devMaxTxSize;
+    cdcRndisHandle->rndisCallback           = config->rndisCallback;
+    cdcRndisHandle->rndisCommand            = &s_rndisCommand[0];
+    cdcRndisHandle->responseData            = (uint8_t *)&s_responseData[0];
     if (kStatus_USB_OSA_Success != USB_OsaMutexCreate(&(cdcRndisHandle->statusMutex)))
     {
+#ifdef DEBUG
         usb_echo("mutex create error!");
+#endif
     }
     *handle = cdcRndisHandle;
     return error;
@@ -202,7 +201,9 @@ usb_status_t USB_DeviceCdcRndisDeinit(usb_device_cdc_rndis_struct_t *handle)
     }
     if (kStatus_USB_OSA_Success != USB_OsaMutexDestroy(cdcRndisHandle->statusMutex))
     {
+#ifdef DEBUG
         usb_echo("mutex destroy error!");
+#endif
     }
     error = USB_DeviceCdcRndisFreeHandle(cdcRndisHandle);
     return error;
@@ -254,7 +255,6 @@ usb_status_t USB_DeviceCdcRndisMessageSet(usb_device_cdc_rndis_struct_t *handle,
 
     if (*len > RNDIS_MAX_EXPECTED_COMMAND_SIZE)
     {
-        usb_echo("message length: (%d) exceeds the max: (%d)\n", len, RNDIS_MAX_EXPECTED_COMMAND_SIZE);
         return kStatus_USB_Error;
     }
 
@@ -299,7 +299,7 @@ usb_status_t USB_DeviceCdcRndisMessageGet(usb_device_cdc_rndis_struct_t *handle,
         return kStatus_USB_InvalidHandle;
     }
     controlRequestLen = *len;
-    *len = 0;
+    *len              = 0;
 
     /* we can avoid one swap operation by using messageType in
        PSTN_Rndis_Message_Set instead of messageType, but this gives
@@ -351,18 +351,14 @@ usb_status_t USB_DeviceCdcRndisMessageGet(usb_device_cdc_rndis_struct_t *handle,
             USB_DeviceCdcRndisKeepaliveCommand(handle, message, len);
             break;
         default:
+#ifdef DEBUG
             usb_echo("UNSUPPORTED RNDIS Command : 0x%x\n", messageType);
+#endif
             return kStatus_USB_InvalidRequest;
-    }
-
-    if (*len > RNDIS_MAX_EXPECTED_RESPONSE_SIZE)
-    {
-        usb_echo("MAX_EXPECTED_RESPONSE_SIZE insufficient\n");
     }
 
     if (controlRequestLen < *len)
     {
-        usb_echo("Error : Device has more data to send than Host needs.\n");
         return kStatus_USB_InvalidRequest;
     }
     return kStatus_USB_Success;
@@ -389,7 +385,7 @@ usb_status_t USB_DeviceCdcRndisInitializeCommand(usb_device_cdc_rndis_struct_t *
     {
         return kStatus_USB_InvalidHandle;
     }
-    rndisInitMsg = (rndis_init_msg_struct_t *)handle->rndisCommand;
+    rndisInitMsg   = (rndis_init_msg_struct_t *)handle->rndisCommand;
     rndisInitCmplt = (rndis_init_cmplt_struct_t *)handle->responseData;
 
     /* preparing for Byte 0-3 : MessageType*/
@@ -433,7 +429,7 @@ usb_status_t USB_DeviceCdcRndisInitializeCommand(usb_device_cdc_rndis_struct_t *
     /* We are currently returning the same max transfer size to host
        as it send to device in its corresponding filed in
        initialization command */
-    handle->rndisHostMaxTxSize = USB_LONG_TO_LITTLE_ENDIAN(rndisInitMsg->maxTransferSize);
+    handle->rndisHostMaxTxSize      = USB_LONG_TO_LITTLE_ENDIAN(rndisInitMsg->maxTransferSize);
     rndisInitCmplt->maxTransferSize = USB_LONG_TO_LITTLE_ENDIAN(handle->rndisDevMaxTxSize);
 
     /* preparing for Byte 40-43 : PacketAlignmentFactor*/
@@ -446,20 +442,20 @@ usb_status_t USB_DeviceCdcRndisInitializeCommand(usb_device_cdc_rndis_struct_t *
     rndisInitCmplt->afListSize = RNDIS_AF_LIST_SIZE;
 
     *message = handle->responseData;
-    *len = RNDIS_RESPONSE_INITIALIZE_MSG_SIZE;
+    *len     = RNDIS_RESPONSE_INITIALIZE_MSG_SIZE;
 
     /* initializing RNDIS variables */
-    handle->rndisDeviceState = RNDIS_INITIALIZED;
-    handle->rndisHwState = NDIS_HARDWARE_STATUS_READY;
-    handle->rndisMediaConnectStatus = NDIS_MEDIA_STATE_DISCONNECTED;
-    handle->numFramesTxOk = 0;
-    handle->numFramesRxOk = 0;
-    handle->numFramesTxError = 0;
-    handle->numFramesRxError = 0;
-    handle->numRecvFramesMissed = 0;
+    handle->rndisDeviceState            = RNDIS_INITIALIZED;
+    handle->rndisHwState                = NDIS_HARDWARE_STATUS_READY;
+    handle->rndisMediaConnectStatus     = NDIS_MEDIA_STATE_DISCONNECTED;
+    handle->numFramesTxOk               = 0;
+    handle->numFramesRxOk               = 0;
+    handle->numFramesTxError            = 0;
+    handle->numFramesRxError            = 0;
+    handle->numRecvFramesMissed         = 0;
     handle->numRecvFramesAlignmentError = 0;
-    handle->numFramesTxOneCollision = 0;
-    handle->numFramesTxManyCollision = 0;
+    handle->numFramesTxOneCollision     = 0;
+    handle->numFramesTxManyCollision    = 0;
     return kStatus_USB_Success;
 }
 
@@ -483,7 +479,7 @@ usb_status_t USB_DeviceCdcRndisKeepaliveCommand(usb_device_cdc_rndis_struct_t *h
     {
         return kStatus_USB_InvalidHandle;
     }
-    rndisKeepaliveMsg = (rndis_keepalive_msg_struct_t *)handle->rndisCommand;
+    rndisKeepaliveMsg   = (rndis_keepalive_msg_struct_t *)handle->rndisCommand;
     rndisKeepaliveCmplt = (rndis_keepalive_cmplt_struct_t *)handle->responseData;
 
     /* preparing for Byte 0-3 : MessageType*/
@@ -508,7 +504,7 @@ usb_status_t USB_DeviceCdcRndisKeepaliveCommand(usb_device_cdc_rndis_struct_t *h
     USB_CDC_RNDIS_MUTEX_UNLOCK(handle->statusMutex);
 
     *message = (uint8_t *)rndisKeepaliveCmplt;
-    *len = RNDIS_RESPONSE_KEEPALIVE_MSG_SIZE;
+    *len     = RNDIS_RESPONSE_KEEPALIVE_MSG_SIZE;
     return kStatus_USB_Success;
 }
 
@@ -530,14 +526,14 @@ usb_status_t USB_DeviceCdcRndisQueryCommand(usb_device_cdc_rndis_struct_t *handl
     rndis_query_msg_struct_t *rndisQueryMsg;
     rndis_query_cmplt_struct_t *rndisQueryCmplt;
     uint32_t infoBufLen = 0;
-    uint8_t *infoBuf = NULL;
+    uint8_t *infoBuf    = NULL;
     usb_device_cdc_rndis_request_param_struct_t reqParam;
 
     if (!handle)
     {
         return kStatus_USB_InvalidHandle;
     }
-    rndisQueryMsg = (rndis_query_msg_struct_t *)handle->rndisCommand;
+    rndisQueryMsg   = (rndis_query_msg_struct_t *)handle->rndisCommand;
     rndisQueryCmplt = (rndis_query_cmplt_struct_t *)handle->responseData;
 
     /* preparing for Byte 0-3 : MessageType*/
@@ -571,22 +567,22 @@ usb_status_t USB_DeviceCdcRndisQueryCommand(usb_device_cdc_rndis_struct_t *handl
         break;
         case NDIS_OID_GEN_HARDWARE_STATUS:
             /* Hardware status  - Query Mandatory - General Operational Characteristic*/
-            infoBufLen = sizeof(uint32_t);
+            infoBufLen             = sizeof(uint32_t);
             *((uint32_t *)infoBuf) = USB_LONG_TO_LITTLE_ENDIAN(handle->rndisHwState);
             break;
         case NDIS_OID_GEN_MEDIA_SUPPORTED:
             /* Media types supported (encoded) - Query Mandatory - General Operational Characteristic*/
-            infoBufLen = sizeof(uint32_t);
+            infoBufLen             = sizeof(uint32_t);
             *((uint32_t *)infoBuf) = USB_LONG_TO_LITTLE_ENDIAN(NDIS_MEDIUM802_3);
             break;
         case NDIS_OID_GEN_MEDIA_IN_USE:
             /* Media types in use (encoded) - Query Mandatory - General Operational Characteristic*/
-            infoBufLen = sizeof(uint32_t);
+            infoBufLen             = sizeof(uint32_t);
             *((uint32_t *)infoBuf) = USB_LONG_TO_LITTLE_ENDIAN(NDIS_MEDIUM802_3);
             break;
         case NDIS_OID_GEN_MAXIMUM_FRAME_SIZE:
             /* Maximum in bytes, frame size - Query Mandatory - General Operational Characteristic*/
-            infoBufLen = sizeof(uint32_t);
+            infoBufLen      = sizeof(uint32_t);
             reqParam.buffer = infoBuf;
             reqParam.length = infoBufLen;
             if (handle->rndisCallback)
@@ -600,7 +596,7 @@ usb_status_t USB_DeviceCdcRndisQueryCommand(usb_device_cdc_rndis_struct_t *handl
             break;
         case NDIS_OID_GEN_LINK_SPEED:
             /* Link speed in units of 100 bps - Query Mandatory - General Operational Characteristic*/
-            infoBufLen = sizeof(uint32_t);
+            infoBufLen      = sizeof(uint32_t);
             reqParam.buffer = infoBuf;
             reqParam.length = infoBufLen;
             if (handle->rndisCallback)
@@ -616,7 +612,7 @@ usb_status_t USB_DeviceCdcRndisQueryCommand(usb_device_cdc_rndis_struct_t *handl
             /* Minimum amount of storage, in bytes, that a single packet
                occupies in the transmit buffer space of the NIC -
                Query Mandatory - General Operational Characteristic*/
-            infoBufLen = sizeof(uint32_t);
+            infoBufLen      = sizeof(uint32_t);
             reqParam.buffer = infoBuf;
             reqParam.length = infoBufLen;
             if (handle->rndisCallback)
@@ -631,7 +627,7 @@ usb_status_t USB_DeviceCdcRndisQueryCommand(usb_device_cdc_rndis_struct_t *handl
         case NDIS_OID_GEN_RECEIVE_BLOCK_SIZE:
             /* Amount of storage, in bytes, that a single packet occupies in
                the receive buffer space of the NIC - Query Mandatory - General Operational Characteristic*/
-            infoBufLen = sizeof(uint32_t);
+            infoBufLen      = sizeof(uint32_t);
             reqParam.buffer = infoBuf;
             reqParam.length = infoBufLen;
             if (handle->rndisCallback)
@@ -662,12 +658,12 @@ usb_status_t USB_DeviceCdcRndisQueryCommand(usb_device_cdc_rndis_struct_t *handl
             break;
         case NDIS_OID_GEN_CURRENT_PACKET_FILTER:
             /* Current packet filter (encoded) - Query and Set Mandatory - General Operational Characteristic*/
-            infoBufLen = sizeof(uint32_t);
+            infoBufLen             = sizeof(uint32_t);
             *((uint32_t *)infoBuf) = USB_LONG_TO_LITTLE_ENDIAN(handle->rndisPacketFilter);
             break;
         case NDIS_OID_GEN_MAXIMUM_TOTAL_SIZE:
             /* Maximum total packet length in bytes - Query Mandatory - General Operational Characteristic*/
-            infoBufLen = sizeof(uint32_t);
+            infoBufLen             = sizeof(uint32_t);
             *((uint32_t *)infoBuf) = USB_LONG_TO_LITTLE_ENDIAN(handle->rndisDevMaxTxSize);
             break;
         case NDIS_OID_GEN_MEDIA_CONNECT_STATUS:
@@ -675,7 +671,7 @@ usb_status_t USB_DeviceCdcRndisQueryCommand(usb_device_cdc_rndis_struct_t *handl
             {
                 uint32_t mediaConnected;
                 /* Whether the NIC is connected to the network - Query Mandatory - General Operational Characteristic*/
-                infoBufLen = sizeof(uint32_t);
+                infoBufLen      = sizeof(uint32_t);
                 reqParam.buffer = (uint8_t *)&mediaConnected;
                 reqParam.length = infoBufLen;
                 if (handle->rndisCallback)
@@ -698,32 +694,32 @@ usb_status_t USB_DeviceCdcRndisQueryCommand(usb_device_cdc_rndis_struct_t *handl
             break;
         case NDIS_OID_GEN_XMIT_OK:
             /* Frames transmitted without errors - Query Mandatory - General Statistics*/
-            infoBufLen = sizeof(uint32_t);
+            infoBufLen             = sizeof(uint32_t);
             *((uint32_t *)infoBuf) = USB_LONG_TO_LITTLE_ENDIAN(handle->numFramesTxOk);
             break;
         case NDIS_OID_GEN_RCV_OK:
             /* Frames received without errors - Query Mandatory - General Statistics*/
-            infoBufLen = sizeof(uint32_t);
+            infoBufLen             = sizeof(uint32_t);
             *((uint32_t *)infoBuf) = USB_LONG_TO_LITTLE_ENDIAN(handle->numFramesRxOk);
             break;
         case NDIS_OID_GEN_XMIT_ERROR:
             /* Frames not transmitted or transmitted with errors - Query Mandatory - General Statistics*/
-            infoBufLen = sizeof(uint32_t);
+            infoBufLen             = sizeof(uint32_t);
             *((uint32_t *)infoBuf) = USB_LONG_TO_LITTLE_ENDIAN(handle->numFramesTxError);
             break;
         case NDIS_OID_GEN_RCV_ERROR:
             /* Frames received with errors - Query Mandatory - General Statistics*/
-            infoBufLen = sizeof(uint32_t);
+            infoBufLen             = sizeof(uint32_t);
             *((uint32_t *)infoBuf) = USB_LONG_TO_LITTLE_ENDIAN(handle->numFramesRxError);
             break;
         case NDIS_OID_GEN_RCV_NO_BUFFER:
             /* Frame missed, no buffers - Query Mandatory - General Statistics*/
-            infoBufLen = sizeof(uint32_t);
+            infoBufLen             = sizeof(uint32_t);
             *((uint32_t *)infoBuf) = USB_LONG_TO_LITTLE_ENDIAN(handle->numRecvFramesMissed);
             break;
         case NDIS_OID_802_3_PERMANENT_ADDRESS:
             /* Permanent station address - Query Mandatory - Ethernet Operational Characteristic*/
-            infoBufLen = RNDIS_ETHER_ADDR_SIZE;
+            infoBufLen      = RNDIS_ETHER_ADDR_SIZE;
             reqParam.buffer = infoBuf;
             reqParam.length = infoBufLen;
             if (handle->rndisCallback)
@@ -737,7 +733,7 @@ usb_status_t USB_DeviceCdcRndisQueryCommand(usb_device_cdc_rndis_struct_t *handl
         case NDIS_OID_802_3_CURRENT_ADDRESS:
         {
             /* Current station address - Query Mandatory - Ethernet Operational Characteristic*/
-            infoBufLen = RNDIS_ETHER_ADDR_SIZE;
+            infoBufLen      = RNDIS_ETHER_ADDR_SIZE;
             reqParam.buffer = infoBuf;
             reqParam.length = infoBufLen;
             if (handle->rndisCallback)
@@ -752,7 +748,7 @@ usb_status_t USB_DeviceCdcRndisQueryCommand(usb_device_cdc_rndis_struct_t *handl
             /* Current multicast address list - Query and Set Mandatory - Ethernet Operational Characteristic*/
             infoBufLen = RNDIS_ETHER_ADDR_SIZE;
             /* Currently Our RNDIS driver does not support multicast addressing */
-            *((uint32_t *)infoBuf) = USB_LONG_TO_LITTLE_ENDIAN(0x00000000);
+            *((uint32_t *)infoBuf)     = USB_LONG_TO_LITTLE_ENDIAN(0x00000000);
             *((uint32_t *)infoBuf + 1) = USB_LONG_TO_LITTLE_ENDIAN(0x00000000);
             break;
         case NDIS_OID_802_3_MAXIMUM_LIST_SIZE:
@@ -763,26 +759,28 @@ usb_status_t USB_DeviceCdcRndisQueryCommand(usb_device_cdc_rndis_struct_t *handl
             break;
         case NDIS_OID_802_3_RCV_ERROR_ALIGNMENT:
             /* Frames received with alignment error - Query Mandatory - Ethernet Statistics*/
-            infoBufLen = sizeof(uint32_t);
+            infoBufLen             = sizeof(uint32_t);
             *((uint32_t *)infoBuf) = USB_LONG_TO_LITTLE_ENDIAN(handle->numRecvFramesAlignmentError);
             break;
         case NDIS_OID_802_3_XMIT_ONE_COLLISION:
             /* Frames transmitted with one collision - Query Mandatory - Ethernet Statistics*/
-            infoBufLen = sizeof(uint32_t);
+            infoBufLen             = sizeof(uint32_t);
             *((uint32_t *)infoBuf) = USB_LONG_TO_LITTLE_ENDIAN(handle->numFramesTxOneCollision);
             break;
         case NDIS_OID_802_3_XMIT_MORE_COLLISIONS:
             /* Frames transmitted with more than one collision - Query Mandatory - Ethernet Statistics*/
-            infoBufLen = sizeof(uint32_t);
+            infoBufLen             = sizeof(uint32_t);
             *((uint32_t *)infoBuf) = USB_LONG_TO_LITTLE_ENDIAN(handle->numFramesTxManyCollision);
             break;
         case NDIS_OID_GEN_PHYSICAL_MEDIUM:
             /* Physical media supported by the miniport (encoded)*/
-            infoBufLen = sizeof(uint32_t);
+            infoBufLen             = sizeof(uint32_t);
             *((uint32_t *)infoBuf) = USB_LONG_TO_LITTLE_ENDIAN(NDIS_PHYSICAL_MEDIUM_POWER_LINE);
             break;
         default:
+#ifdef DEBUG
             usb_echo("OID 0x%x NOT SUPPORTED(QUERY)\n", rndisQueryMsg->oid);
+#endif
             rndisQueryCmplt->status = USB_LONG_TO_LITTLE_ENDIAN(RNDIS_STATUS_NOT_SUPPORTED);
             break;
     }
@@ -792,7 +790,7 @@ usb_status_t USB_DeviceCdcRndisQueryCommand(usb_device_cdc_rndis_struct_t *handl
     rndisQueryCmplt->messageLength = USB_LONG_TO_LITTLE_ENDIAN(*len);
     /* preparing for Byte 16-19 : InformationBufferLength*/
     rndisQueryCmplt->informationBufferLength = USB_LONG_TO_LITTLE_ENDIAN(infoBufLen);
-    *message = (uint8_t *)&(rndisQueryCmplt->messageType);
+    *message                                 = (uint8_t *)&(rndisQueryCmplt->messageType);
     return kStatus_USB_Success;
 }
 
@@ -817,7 +815,7 @@ usb_status_t USB_DeviceCdcRndisSetCommand(usb_device_cdc_rndis_struct_t *handle,
     {
         return kStatus_USB_InvalidHandle;
     }
-    rndisSetMsg = (rndis_set_msg_struct_t *)handle->rndisCommand;
+    rndisSetMsg   = (rndis_set_msg_struct_t *)handle->rndisCommand;
     rndisSetCmplt = (rndis_set_cmplt_struct_t *)handle->responseData;
 
     /* preparing for Byte 0-3 : MessageType*/
@@ -856,12 +854,12 @@ usb_status_t USB_DeviceCdcRndisSetCommand(usb_device_cdc_rndis_struct_t *handle,
                 USB_CDC_RNDIS_MUTEX_LOCK(handle->statusMutex);
                 if ((handle->rndisPacketFilter) && (mediaConnected == 1))
                 {
-                    handle->rndisDeviceState = RNDIS_DATA_INITIALIZED;
+                    handle->rndisDeviceState        = RNDIS_DATA_INITIALIZED;
                     handle->rndisMediaConnectStatus = NDIS_MEDIA_STATE_CONNECTED;
                 }
                 else
                 {
-                    handle->rndisDeviceState = RNDIS_INITIALIZED;
+                    handle->rndisDeviceState        = RNDIS_INITIALIZED;
                     handle->rndisMediaConnectStatus = NDIS_MEDIA_STATE_DISCONNECTED;
                 }
                 USB_CDC_RNDIS_MUTEX_UNLOCK(handle->statusMutex);
@@ -887,13 +885,15 @@ usb_status_t USB_DeviceCdcRndisSetCommand(usb_device_cdc_rndis_struct_t *handle,
 
             break;
         default:
+#ifdef DEBUG
             usb_echo("OID 0x%x NOT SUPPORTED(SET)\n", rndisSetMsg->oid);
+#endif
             rndisSetCmplt->status = RNDIS_STATUS_NOT_SUPPORTED;
             break;
     }
     /* preparing for Byte 12-15 : Status*/
     rndisSetCmplt->status = USB_LONG_TO_LITTLE_ENDIAN(rndisSetCmplt->status);
-    *message = (uint8_t *)&(rndisSetCmplt->messageType);
+    *message              = (uint8_t *)&(rndisSetCmplt->messageType);
     return kStatus_USB_Success;
 }
 
@@ -933,8 +933,8 @@ usb_status_t USB_DeviceCdcRndisResetCommand(usb_device_cdc_rndis_struct_t *handl
 
     *message = (uint8_t *)&(rndisResetCmplt->messageType);
     USB_CDC_RNDIS_MUTEX_LOCK(handle->statusMutex);
-    handle->rndisHwState = NDIS_HARDWARE_STATUS_RESET;
-    handle->rndisDeviceState = RNDIS_UNINITIALIZED;
+    handle->rndisHwState            = NDIS_HARDWARE_STATUS_RESET;
+    handle->rndisDeviceState        = RNDIS_UNINITIALIZED;
     handle->rndisMediaConnectStatus = NDIS_MEDIA_STATE_UNKNOWN;
     USB_CDC_RNDIS_MUTEX_UNLOCK(handle->statusMutex);
     return kStatus_USB_Success;
@@ -973,11 +973,11 @@ usb_status_t USB_DeviceCdcRndisHaltCommand(usb_device_cdc_rndis_struct_t *handle
     {
         return kStatus_USB_InvalidHandle;
     }
-    usb_echo("RNDIS_Halt_Command\n");
+
     USB_CDC_RNDIS_MUTEX_LOCK(handle->statusMutex);
-    handle->rndisDeviceState = RNDIS_UNINITIALIZED;
+    handle->rndisDeviceState        = RNDIS_UNINITIALIZED;
     handle->rndisMediaConnectStatus = NDIS_MEDIA_STATE_DISCONNECTED;
-    handle->rndisHwState = NDIS_HARDWARE_STATUS_NOT_READY;
+    handle->rndisHwState            = NDIS_HARDWARE_STATUS_NOT_READY;
     USB_CDC_RNDIS_MUTEX_UNLOCK(handle->statusMutex);
     return kStatus_USB_Success;
 }

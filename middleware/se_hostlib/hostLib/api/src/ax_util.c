@@ -282,3 +282,18 @@ ChannelId_t DEV_GetSelectedChannel(scp_CommandType_t *commandType)
 
     return selectedChannelId;
 }
+
+
+void DEV_setDataDerivationArray(U8 ddA[], U16 *pDdALen,
+    U8 ddConstant, U16 ddL, U8 iCounter, U8 *context, U16 contextLen)
+{
+    // SCPO3 spec p9&10
+    memset(ddA, 0, DD_LABEL_LEN - 1);
+    ddA[DD_LABEL_LEN - 1] = ddConstant;
+    ddA[DD_LABEL_LEN] = 0x00; // Separation Indicator
+    ddA[DD_LABEL_LEN + 1] = (U8)(ddL >> 8);
+    ddA[DD_LABEL_LEN + 2] = (U8)ddL;
+    ddA[DD_LABEL_LEN + 3] = iCounter;
+    memcpy(&ddA[DD_LABEL_LEN + 4], context, contextLen);
+    *pDdALen = DD_LABEL_LEN + 4 + contextLen;
+}

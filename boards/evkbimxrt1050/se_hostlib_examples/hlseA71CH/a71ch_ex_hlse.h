@@ -64,7 +64,7 @@ U8 exHlseGPStorage(U8 tstMode);
 U8 exHlseMisc(void);
 U8 exHlsePsk(void);
 U8 exHlseScp(void);
-U8 exHlseSst(U16 appletVersion);
+U8 exHlseSst(void);
 U8 exHlseSstKp(void);
 /** @}*/
 

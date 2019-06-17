@@ -37,8 +37,8 @@ volatile uint32_t g_AdcConversionValue;
 const uint32_t g_Adc_12bitFullRange = 4096U;
 
 /*******************************************************************************
-* Code
-******************************************************************************/
+ * Code
+ ******************************************************************************/
 void EXAMPLE_ADC_ETC_DONE0_Handler(void)
 {
     ADC_ETC_ClearInterruptStatusFlags(DEMO_ADC_ETC_BASE, kADC_ETC_Trg0TriggerSource, kADC_ETC_Done0StatusFlagMask);
@@ -71,16 +71,16 @@ int main(void)
     ADC_ETC_Init(DEMO_ADC_ETC_BASE, &adcEtcConfig);
 
     /* Set the external XBAR trigger0 configuration. */
-    adcEtcTriggerConfig.enableSyncMode = false;
+    adcEtcTriggerConfig.enableSyncMode      = false;
     adcEtcTriggerConfig.enableSWTriggerMode = true;
-    adcEtcTriggerConfig.triggerChainLength = DEMO_ADC_ETC_CHAIN_LENGTH; /* Chain length is 1. */
-    adcEtcTriggerConfig.triggerPriority = 0U;
+    adcEtcTriggerConfig.triggerChainLength  = DEMO_ADC_ETC_CHAIN_LENGTH; /* Chain length is 1. */
+    adcEtcTriggerConfig.triggerPriority     = 0U;
     adcEtcTriggerConfig.sampleIntervalDelay = 0U;
-    adcEtcTriggerConfig.initialDelay = 0U;
+    adcEtcTriggerConfig.initialDelay        = 0U;
     ADC_ETC_SetTriggerConfig(DEMO_ADC_ETC_BASE, 0U, &adcEtcTriggerConfig);
 
     /* Set the external XBAR trigger0 chain0 configuration. */
-    adcEtcTriggerChainConfig.enableB2BMode = false;
+    adcEtcTriggerChainConfig.enableB2BMode       = false;
     adcEtcTriggerChainConfig.ADCHCRegisterSelect = 1U
                                                    << DEMO_ADC_CHANNEL_GROUP; /* Select ADC_HC0 register to trigger. */
     adcEtcTriggerChainConfig.ADCChannelSelect =
@@ -107,8 +107,8 @@ int main(void)
 }
 
 /*!
-* @brief Configure ADC to working with ADC_ETC.
-*/
+ * @brief Configure ADC to working with ADC_ETC.
+ */
 void ADC_Configuration(void)
 {
     adc_config_t adcConfig;

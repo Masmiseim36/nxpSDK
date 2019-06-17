@@ -114,7 +114,7 @@ int ax_mbedtls_associate_keypair(
     SST_Index_t key_index, mbedtls_pk_context * pkey)
 {
     mbedtls_ecp_keypair * pax_ctx;
-    HLSE_OBJECT_HANDLE keyPairHandles[A71CH_KEY_PAIR_MAX];
+    HLSE_OBJECT_HANDLE keyPairHandles[A71CH_KEY_PAIR_MAX] = {0};
     U16 kpHandleNum = A71CH_KEY_PAIR_MAX;
     U16 kpHandleNumMax;
     U8 i = 0;
@@ -164,7 +164,7 @@ int ax_mbedtls_associate_pubkey(
 {
     mbedtls_ecp_keypair * pax_ctx;
     HLSE_RET_CODE err;
-    HLSE_OBJECT_HANDLE handles[A71CH_PUBLIC_KEY_MAX];
+    HLSE_OBJECT_HANDLE handles[A71CH_PUBLIC_KEY_MAX] = {0};
     U16 handleNum = A71CH_PUBLIC_KEY_MAX;
     U16 handleNumMax;
     U8 i = 0;

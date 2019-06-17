@@ -7,6 +7,14 @@ SDK SNVS HP driver. In this example,
    3. In soft fail mode, software stops the HAC counter, and clear the HAC to make SSM
       switch to hard fail mode. 
    4. The system resets when enters hard fail mode.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -33,11 +41,6 @@ Running the demo
 ================
 Follow the instruction from the terminal window to run the demo. This demo resets
 the system at last.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+Customization options
+=====================
 

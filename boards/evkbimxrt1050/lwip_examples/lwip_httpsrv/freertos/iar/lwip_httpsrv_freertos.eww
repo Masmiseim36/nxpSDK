@@ -5,11 +5,22 @@
       <name>all</name>
       <member>
         <project>lwip_httpsrv_freertos</project>
+        <configuration>release</configuration>
+      </member>
+      <member>
+        <project>lwip_httpsrv_freertos</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
         <project>lwip_httpsrv_freertos</project>
         <configuration>flexspi_nor_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>release</name>
+      <member>
+        <project>lwip_httpsrv_freertos</project>
+        <configuration>release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

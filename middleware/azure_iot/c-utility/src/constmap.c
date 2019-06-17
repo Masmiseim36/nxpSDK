@@ -36,12 +36,11 @@ CONSTMAP_HANDLE ConstMap_Create(MAP_HANDLE sourceMap)
         result->map = Map_Clone(sourceMap);
         if (result->map == NULL)
         {
-            free(result);
+            LOG_CONSTMAP_ERROR(CONSTMAP_ERROR);
+            REFCOUNT_TYPE_DESTROY(CONSTMAP_HANDLE_DATA, result);
             /*Codes_SRS_CONSTMAP_17_002: [If during creation there are any errors, then ConstMap_Create shall return NULL.]*/
             result = NULL;
-            LOG_CONSTMAP_ERROR(CONSTMAP_ERROR);
         }
-
     }
     /*Codes_SRS_CONSTMAP_17_003: [Otherwise, it shall return a non-NULL handle that can be used in subsequent calls.]*/
     return (CONSTMAP_HANDLE)result;
@@ -61,7 +60,7 @@ void ConstMap_Destroy(CONSTMAP_HANDLE handle)
         {
             /*Codes_SRS_CONSTMAP_17_004: [If the reference count is zero, ConstMap_Destroy shall release all resources associated with the immutable map.]*/
             Map_Destroy(((CONSTMAP_HANDLE_DATA *)handle)->map);
-            free(handle);
+            REFCOUNT_TYPE_DESTROY(CONSTMAP_HANDLE_DATA, handle);
         }
 
     }
@@ -182,7 +181,7 @@ bool ConstMap_ContainsValue(CONSTMAP_HANDLE handle, const char* value)
 const char* ConstMap_GetValue(CONSTMAP_HANDLE handle, const char* key)
 {
     const char* value = NULL;
-    
+
     if (handle == NULL)
     {
         /*Codes_SRS_CONSTMAP_17_040: [If parameter handle or key is NULL then ConstMap_GetValue returns NULL.]*/
@@ -216,8 +215,8 @@ CONSTMAP_RESULT ConstMap_GetInternals(CONSTMAP_HANDLE handle, const char*const**
     }
     else
     {
-        /*Codes_SRS_CONSTMAP_17_043: [ConstMap_GetInternals shall produce in *keys a pointer to an array of const char* having all the keys stored so far by the map.] 
-         *Codes_SRS_CONSTMAP_17_044: [ConstMap_GetInternals shall produce in *values a pointer to an array of const char* having all the values stored so far by the map.] 
+        /*Codes_SRS_CONSTMAP_17_043: [ConstMap_GetInternals shall produce in *keys a pointer to an array of const char* having all the keys stored so far by the map.]
+         *Codes_SRS_CONSTMAP_17_044: [ConstMap_GetInternals shall produce in *values a pointer to an array of const char* having all the values stored so far by the map.]
          *Codes_SRS_CONSTMAP_17_045: [ ConstMap_GetInternals shall produce in *count the number of stored keys and values.]
          */
         MAP_RESULT mapResult = Map_GetInternals(((CONSTMAP_HANDLE_DATA *)handle)->map, keys, values, count);

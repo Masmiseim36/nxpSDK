@@ -1,11 +1,11 @@
 /*
-* Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
-* All rights reserved.
-*
-* 
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
+ * All rights reserved.
+ *
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 /*******************************************************************************
  * Includes
@@ -17,10 +17,11 @@
 
 #include "lwip/dhcp.h"
 #include "lwip/ip_addr.h"
+#include "lwip/netifapi.h"
 #include "lwip/prot/dhcp.h"
 #include "lwip/tcpip.h"
 #include "lwip/sys.h"
-#include "ethernetif.h"
+#include "enet_ethernetif.h"
 
 #include "board.h"
 
@@ -62,12 +63,6 @@
 #define EXAMPLE_CLOCK_NAME kCLOCK_CoreSysClk
 
 
-/*! @brief Stack size of the temporary lwIP initialization thread. */
-#define INIT_THREAD_STACKSIZE 1024
-
-/*! @brief Priority of the temporary lwIP initialization thread. */
-#define INIT_THREAD_PRIO DEFAULT_THREAD_PRIO
-
 /*! @brief Stack size of the thread which prints DHCP info. */
 #define PRINT_THREAD_STACKSIZE 512
 
@@ -75,24 +70,23 @@
 #define PRINT_THREAD_PRIO DEFAULT_THREAD_PRIO
 
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
 void BOARD_InitModuleClock(void)
 {
-    const clock_enet_pll_config_t config =
-          {
-              .enableClkOutput = true, 
-              .enableClkOutput25M = false, 
-              .loopDivider = 1,
-          };
+    const clock_enet_pll_config_t config = {
+        .enableClkOutput    = true,
+        .enableClkOutput25M = false,
+        .loopDivider        = 1,
+    };
     CLOCK_InitEnetPll(&config);
 }
 
@@ -188,46 +182,24 @@ static void print_dhcp_state(void *arg)
 }
 
 /*!
- * @brief Initializes lwIP stack.
- */
-static void stack_init(void *arg)
-{
-    static struct netif fsl_netif0;
-    ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
-    ethernetif_config_t fsl_enet_config0 = {
-        .phyAddress = EXAMPLE_PHY_ADDRESS, .clockName = EXAMPLE_CLOCK_NAME, .macAddress = configMAC_ADDR,
-    };
-
-    IP4_ADDR(&fsl_netif0_ipaddr, 0U, 0U, 0U, 0U);
-    IP4_ADDR(&fsl_netif0_netmask, 0U, 0U, 0U, 0U);
-    IP4_ADDR(&fsl_netif0_gw, 0U, 0U, 0U, 0U);
-
-    tcpip_init(NULL, NULL);
-
-    netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0, ethernetif0_init,
-              tcpip_input);
-    netif_set_default(&fsl_netif0);
-    netif_set_up(&fsl_netif0);
-
-    dhcp_start(&fsl_netif0);
-
-    PRINTF("\r\n************************************************\r\n");
-    PRINTF(" DHCP example\r\n");
-    PRINTF("************************************************\r\n");
-
-    if (sys_thread_new("print_dhcp", print_dhcp_state, &fsl_netif0, PRINT_THREAD_STACKSIZE, PRINT_THREAD_PRIO) == NULL)
-    {
-        LWIP_ASSERT("stack_init(): Task creation failed.", 0);
-    }
-
-    vTaskDelete(NULL);
-}
-
-/*!
  * @brief Main function.
  */
 int main(void)
 {
+    static struct netif fsl_netif0;
+#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
+    static mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
+#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
+    ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
+    ethernetif_config_t fsl_enet_config0 = {
+        .phyAddress = EXAMPLE_PHY_ADDRESS,
+        .clockName  = EXAMPLE_CLOCK_NAME,
+        .macAddress = configMAC_ADDR,
+#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
+        .non_dma_memory = non_dma_memory,
+#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
+    };
+
     gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
 
     BOARD_ConfigMPU();
@@ -246,10 +218,26 @@ int main(void)
     delay();
     GPIO_WritePinOutput(GPIO1, 9, 1);
 
-    /* Initialize lwIP from thread */
-    if (sys_thread_new("main", stack_init, NULL, INIT_THREAD_STACKSIZE, INIT_THREAD_PRIO) == NULL)
+    IP4_ADDR(&fsl_netif0_ipaddr, 0U, 0U, 0U, 0U);
+    IP4_ADDR(&fsl_netif0_netmask, 0U, 0U, 0U, 0U);
+    IP4_ADDR(&fsl_netif0_gw, 0U, 0U, 0U, 0U);
+
+    tcpip_init(NULL, NULL);
+
+    netifapi_netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0,
+                       ethernetif0_init, tcpip_input);
+    netifapi_netif_set_default(&fsl_netif0);
+    netifapi_netif_set_up(&fsl_netif0);
+
+    netifapi_dhcp_start(&fsl_netif0);
+
+    PRINTF("\r\n************************************************\r\n");
+    PRINTF(" DHCP example\r\n");
+    PRINTF("************************************************\r\n");
+
+    if (sys_thread_new("print_dhcp", print_dhcp_state, &fsl_netif0, PRINT_THREAD_STACKSIZE, PRINT_THREAD_PRIO) == NULL)
     {
-        LWIP_ASSERT("main(): Task creation failed.", 0);
+        LWIP_ASSERT("stack_init(): Task creation failed.", 0);
     }
 
     vTaskStartScheduler();

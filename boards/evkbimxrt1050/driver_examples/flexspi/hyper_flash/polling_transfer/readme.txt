@@ -7,6 +7,14 @@ be executed, such as Read ID, Erase Sector and Program Buffer.
 Example will first configures hyper flash to enter ASO mode, read ID-CFI parameters, then exit ASO mode.
 Second, the example erase a sector in flash, check if the erase is successful and program the same sector, then read back
 the sector data. At last check if the data read back is correct.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -54,11 +62,6 @@ Erase data - successfully.
 Program data - successfully.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+Customization options
+=====================
 

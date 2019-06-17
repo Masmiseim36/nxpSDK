@@ -1,3 +1,36 @@
+Overview
+========
+The qca_demo example provides basic commands to show the functionality of qca_wifi stack.
+The default IP configuration is "addr: 192.168.1.10 mask: 255.255.255.0 gw: 192.168.1.1".
+To obtain a valid IP configuration from DHCP server, press 'd' after WiFi connection is established.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
+Hardware requirements
+=====================
+
+Board settings
+==============
+Plug GT202 Adaptor board to Arduino stackable headers.
+Remove the resistor R137.
+
+Known issues:
+- HTTP request to gateway (by pressing 'w') may retrun corrupted data.
+
+Please use external power supply (J2), USB may not be sufficient.
+
+
+Note:
+To debug in qspiflash, following steps are needed:
+1. Select the flash target and compile.
+3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
+4. Start debugging in IDE.
+   - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
 Prepare the Demo
 ================
 
@@ -55,40 +88,6 @@ When the demo runs successfully, the log would be seen on the CMSIS DAP terminal
 - Press 'd' to get an IP address by DHCP.
 - Press 'g' to download several bytes of NXP website.
 
-Overview
-========
-The qca_demo example provides basic commands to show the functionality of qca_wifi stack.
-The default IP configuration is "addr: 192.168.1.10 mask: 255.255.255.0 gw: 192.168.1.1".
-To obtain a valid IP configuration from DHCP server, press 'd' after WiFi connection is established.
-﻿Hardware requirements
-======================
-- Mini/micro USB cable
-- EVK-MIMXRT1020 board
-- GT202 Adaptor V1.04
-- Personal Computer
-
-Board settings
-==============
-Plug GT202 Adaptor board to FRDM stackable headers (J1, J2, J3, J4).
-Remove the resistor R137.
-
-Known issues:
-- HTTP request to gateway (by pressing 'w') may retrun corrupted data.
-
-Please use external power supply (J2), USB may not be sufficient.
-
-
-Note:
-To debug in qspiflash, following steps are needed:
-1. Select the flash target and compile.
-3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
-4. Start debugging in IDE.
-   - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

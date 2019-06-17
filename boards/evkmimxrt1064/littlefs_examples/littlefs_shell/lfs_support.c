@@ -27,10 +27,10 @@ static status_t flexspi_nor_write_enable(FLEXSPI_Type *base, uint32_t baseAddr)
 
     /* Write neable */
     flashXfer.deviceAddress = baseAddr;
-    flashXfer.port = kFLEXSPI_PortA1;
-    flashXfer.cmdType = kFLEXSPI_Command;
-    flashXfer.SeqNumber = 1;
-    flashXfer.seqIndex = NOR_CMD_LUT_SEQ_IDX_WRITEENABLE;
+    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.cmdType       = kFLEXSPI_Command;
+    flashXfer.SeqNumber     = 1;
+    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_WRITEENABLE;
 
     status = FLEXSPI_TransferBlocking(base, &flashXfer);
 
@@ -46,12 +46,12 @@ static status_t flexspi_nor_wait_bus_busy(FLEXSPI_Type *base)
     flexspi_transfer_t flashXfer;
 
     flashXfer.deviceAddress = 0;
-    flashXfer.port = kFLEXSPI_PortA1;
-    flashXfer.cmdType = kFLEXSPI_Read;
-    flashXfer.SeqNumber = 1;
-    flashXfer.seqIndex = NOR_CMD_LUT_SEQ_IDX_READSTATUSREG;
-    flashXfer.data = &readValue;
-    flashXfer.dataSize = 1;
+    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.cmdType       = kFLEXSPI_Read;
+    flashXfer.SeqNumber     = 1;
+    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_READSTATUSREG;
+    flashXfer.data          = &readValue;
+    flashXfer.dataSize      = 1;
 
     do
     {
@@ -105,12 +105,12 @@ status_t flexspi_nor_enable_quad_mode(FLEXSPI_Type *base)
 
     /* Enable quad mode. */
     flashXfer.deviceAddress = 0;
-    flashXfer.port = kFLEXSPI_PortA1;
-    flashXfer.cmdType = kFLEXSPI_Write;
-    flashXfer.SeqNumber = 1;
-    flashXfer.seqIndex = NOR_CMD_LUT_SEQ_IDX_WRITESTATUSREG;
-    flashXfer.data = &writeValue;
-    flashXfer.dataSize = 1;
+    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.cmdType       = kFLEXSPI_Write;
+    flashXfer.SeqNumber     = 1;
+    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_WRITESTATUSREG;
+    flashXfer.data          = &writeValue;
+    flashXfer.dataSize      = 1;
 
     status = FLEXSPI_TransferBlocking(base, &flashXfer);
     if (status != kStatus_Success)
@@ -137,11 +137,11 @@ static status_t flexspi_nor_flash_erase_sector(FLEXSPI_Type *base, uint32_t addr
     }
 
     flashXfer.deviceAddress = address;
-    flashXfer.port = kFLEXSPI_PortA1;
-    flashXfer.cmdType = kFLEXSPI_Command;
-    flashXfer.SeqNumber = 1;
-    flashXfer.seqIndex = NOR_CMD_LUT_SEQ_IDX_ERASESECTOR;
-    status = FLEXSPI_TransferBlocking(base, &flashXfer);
+    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.cmdType       = kFLEXSPI_Command;
+    flashXfer.SeqNumber     = 1;
+    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_ERASESECTOR;
+    status                  = FLEXSPI_TransferBlocking(base, &flashXfer);
 
     if (status != kStatus_Success)
     {
@@ -168,13 +168,13 @@ static status_t flexspi_nor_flash_page_program(FLEXSPI_Type *base, uint32_t addr
 
     /* Prepare page program command */
     flashXfer.deviceAddress = address;
-    flashXfer.port = kFLEXSPI_PortA1;
-    flashXfer.cmdType = kFLEXSPI_Write;
-    flashXfer.SeqNumber = 1;
-    flashXfer.seqIndex = NOR_CMD_LUT_SEQ_IDX_PAGEPROGRAM_QUAD;
-    flashXfer.data = (uint32_t *)src;
-    flashXfer.dataSize = FLASH_PAGE_SIZE;
-    status = FLEXSPI_TransferBlocking(base, &flashXfer);
+    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.cmdType       = kFLEXSPI_Write;
+    flashXfer.SeqNumber     = 1;
+    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_PAGEPROGRAM_QUAD;
+    flashXfer.data          = (uint32_t *)src;
+    flashXfer.dataSize      = FLASH_PAGE_SIZE;
+    status                  = FLEXSPI_TransferBlocking(base, &flashXfer);
 
     if (status != kStatus_Success)
     {
@@ -258,17 +258,17 @@ static const struct lfs_config lfsc_default = {
     .context = NULL,
 
     // block device operations
-    .read = lfs_qspiflash_read,
-    .prog = lfs_qspiflash_prog,
+    .read  = lfs_qspiflash_read,
+    .prog  = lfs_qspiflash_prog,
     .erase = lfs_qspiflash_erase,
-    .sync = lfs_qspiflash_sync,
+    .sync  = lfs_qspiflash_sync,
 
     // block device configuration
-    .read_size = 16,
-    .prog_size = FLASH_PAGE_SIZE,
-    .block_size = FLASH_SECTOR_SIZE,
+    .read_size   = 16,
+    .prog_size   = FLASH_PAGE_SIZE,
+    .block_size  = FLASH_SECTOR_SIZE,
     .block_count = LFS_SECTORS,
-    .lookahead = 128,
+    .lookahead   = 128,
 };
 
 int lfs_get_default_config(struct lfs_config *lfsc)
@@ -290,7 +290,7 @@ int lfs_storage_init(const struct lfs_config *lfsc)
 
     /* Set AHB buffer size for reading data through AHB bus. */
     config.ahbConfig.enableAHBPrefetch = true;
-    config.rxSampleClock = kFLEXSPI_ReadSampleClkLoopbackFromDqsPad;
+    config.rxSampleClock               = kFLEXSPI_ReadSampleClkLoopbackFromDqsPad;
     FLEXSPI_Init(EXAMPLE_FLEXSPI, &config);
 
     /* Configure flash settings according to serial flash feature. */

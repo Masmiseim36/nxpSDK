@@ -194,10 +194,32 @@ static void BOARD_InitClockAndPins(void)
 static void APP_Suspend(void)
 {
     /* Uninit PMIC I2C */
-    IOMUXC_SetPinMux(IOMUXC_PTB12_PTB12, 0U);
-    IOMUXC_SetPinMux(IOMUXC_PTB13_PTB13, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_PTB12_PTB12, IOMUXC0_SW_MUX_CTL_PAD_PE_MASK | IOMUXC0_SW_MUX_CTL_PAD_PS_MASK);
-    IOMUXC_SetPinConfig(IOMUXC_PTB13_PTB13, IOMUXC0_SW_MUX_CTL_PAD_PE_MASK | IOMUXC0_SW_MUX_CTL_PAD_PS_MASK);
+    IOMUXC_SetPinMux(IOMUXC_PTB12_ADC1_CH13A_CMP1_IN0, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_PTB12_ADC1_CH13A_CMP1_IN0, 0U);
+    IOMUXC_SetPinMux(IOMUXC_PTB13_ADC1_CH13B_CMP1_IN1, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_PTB13_ADC1_CH13B_CMP1_IN1, 0U);
+
+    /* Uninit I2S */
+    IOMUXC_SetPinMux(IOMUXC_PTA2_CMP1_IN2_3V, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_PTA2_CMP1_IN2_3V, 0U);
+    IOMUXC_SetPinMux(IOMUXC_PTA4_ADC1_CH3A, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_PTA4_ADC1_CH3A, 0U);
+    IOMUXC_SetPinMux(IOMUXC_PTA5_ADC1_CH3B, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_PTA5_ADC1_CH3B, 0U);
+    IOMUXC_SetPinMux(IOMUXC_PTA6_ADC1_CH4A, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_PTA6_ADC1_CH4A, 0U);
+    IOMUXC_SetPinMux(IOMUXC_PTA7_ADC1_CH4B, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_PTA7_ADC1_CH4B, 0U);
+
+    /* Uninit VOL- GPIO */
+    IOMUXC_SetPinMux(IOMUXC_PTA13_ADC1_CH7B, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_PTA13_ADC1_CH7B, 0U);
+
+    /* Uninit Audio Codec I2C */
+    IOMUXC_SetPinMux(IOMUXC_PTA16_CMP1_IN5_3V, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_PTA16_CMP1_IN5_3V, 0U);
+    IOMUXC_SetPinMux(IOMUXC_PTA17_CMP1_IN6_3V, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_PTA17_CMP1_IN6_3V, 0U);
 
     /* Save SRTM context */
     APP_SRTM_Suspend();
@@ -210,6 +232,28 @@ static void APP_Resume(bool resume)
     IOMUXC_SetPinConfig(IOMUXC_PTB12_LPI2C3_SCL, IOMUXC0_SW_MUX_CTL_PAD_ODE_MASK);
     IOMUXC_SetPinMux(IOMUXC_PTB13_LPI2C3_SDA, 0U);
     IOMUXC_SetPinConfig(IOMUXC_PTB13_LPI2C3_SDA, IOMUXC0_SW_MUX_CTL_PAD_ODE_MASK);
+
+    /* Recover I2S pinmux. */
+    IOMUXC_SetPinMux(IOMUXC_PTA2_I2S0_RXD0, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_PTA2_I2S0_RXD0, 0U);
+    IOMUXC_SetPinMux(IOMUXC_PTA4_I2S0_MCLK, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_PTA4_I2S0_MCLK, IOMUXC0_SW_MUX_CTL_PAD_OBE_MASK | IOMUXC0_SW_MUX_CTL_PAD_DSE_MASK);
+    IOMUXC_SetPinMux(IOMUXC_PTA5_I2S0_TX_BCLK, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_PTA5_I2S0_TX_BCLK, IOMUXC0_SW_MUX_CTL_PAD_DSE_MASK);
+    IOMUXC_SetPinMux(IOMUXC_PTA6_I2S0_TX_FS, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_PTA6_I2S0_TX_FS, IOMUXC0_SW_MUX_CTL_PAD_DSE_MASK);
+    IOMUXC_SetPinMux(IOMUXC_PTA7_I2S0_TXD0, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_PTA7_I2S0_TXD0, IOMUXC0_SW_MUX_CTL_PAD_DSE_MASK);
+
+    /* Recover VOL- GPIO pinmux. */
+    IOMUXC_SetPinMux(IOMUXC_PTA13_PTA13, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_PTA13_PTA13, IOMUXC0_SW_MUX_CTL_PAD_IBE_MASK);
+
+    /* Recover Audio Codec pinmux. */
+    IOMUXC_SetPinMux(IOMUXC_PTA16_LPI2C0_SCL, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_PTA16_LPI2C0_SCL, IOMUXC0_SW_MUX_CTL_PAD_ODE_MASK);
+    IOMUXC_SetPinMux(IOMUXC_PTA17_LPI2C0_SDA, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_PTA17_LPI2C0_SDA, IOMUXC0_SW_MUX_CTL_PAD_ODE_MASK);
 
     if (resume)
     {
@@ -234,9 +278,12 @@ void APP_PowerPreSwitchHook(smc_power_state_t originPowerState, lpm_power_mode_t
         /*
          * Set pin for current leakage.
          * Debug console RX pin: Set to pinmux to analog.
-         * Debug console TX pin: Don't need to change.
+         * Debug console TX pin: Set to pinmux to analog.
          */
         IOMUXC_SetPinMux(IOMUXC_PTA19_CMP1_IN3_3V, 0);
+        IOMUXC_SetPinConfig(IOMUXC_PTA19_CMP1_IN3_3V, 0);
+        IOMUXC_SetPinMux(IOMUXC_PTA18_CMP1_IN1_3V, 0);
+        IOMUXC_SetPinConfig(IOMUXC_PTA18_CMP1_IN1_3V, 0);
 
         if (LPM_PowerModeVlls == targetMode)
         {
@@ -254,10 +301,13 @@ void APP_PowerPostSwitchHook(smc_power_state_t originPowerState, lpm_power_mode_
             APP_Resume(result);
         }
         /*
-         * Debug console RX pin is set to disable for current leakage, need to re-configure pinmux.
-         * Debug console TX pin: Don't need to change.
+         * Debug console RX pin was set to disable for current leakage, need to re-configure pinmux.
+         * Debug console TX pin was set to disable for current leakage, need to re-configure pinmux.
          */
-        IOMUXC_SetPinMux(IOMUXC_PTA19_LPUART0_RX, 0);
+        IOMUXC_SetPinMux(IOMUXC_PTA18_LPUART0_TX, 0U);
+        IOMUXC_SetPinConfig(IOMUXC_PTA18_LPUART0_TX, IOMUXC0_SW_MUX_CTL_PAD_PE_MASK | IOMUXC0_SW_MUX_CTL_PAD_PS_MASK);
+        IOMUXC_SetPinMux(IOMUXC_PTA19_LPUART0_RX, 0U);
+        IOMUXC_SetPinConfig(IOMUXC_PTA19_LPUART0_RX, IOMUXC0_SW_MUX_CTL_PAD_PE_MASK | IOMUXC0_SW_MUX_CTL_PAD_PS_MASK);
         APP_InitDebugConsole();
     }
     PRINTF("== Power switch %s ==\r\n", result ? "OK" : "FAIL");

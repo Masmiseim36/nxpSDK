@@ -23,8 +23,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief LPADC driver version 2.0.4. */
-#define FSL_LPADC_DRIVER_VERSION (MAKE_VERSION(2, 0, 4))
+/*! @brief LPADC driver version 2.1.1. */
+#define FSL_LPADC_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
 /*@}*/
 
 /*!
@@ -252,9 +252,11 @@ typedef enum _lpadc_trigger_priority_policy
                                                     the current conversion is completed (including averaging iterations
                                                     and compare function if enabled) and stored to the result FIFO
                                                     before the higher priority trigger/command is initiated. */
+#if defined(FSL_FEATURE_LPADC_HAS_CFG_SUBSEQUENT_PRIORITY) && FSL_FEATURE_LPADC_HAS_CFG_SUBSEQUENT_PRIORITY
     kLPADC_TriggerPriorityPreemptSubsequently = 2U, /*!< If a higher priority trigger is received during command
                                                     processing, the current command will be completed (averaging,
                                                     looping, compare) before servicing the higher priority trigger. */
+#endif                                              /* FSL_FEATURE_LPADC_HAS_CFG_SUBSEQUENT_PRIORITY */
 } lpadc_trigger_priority_policy_t;
 
 /*!

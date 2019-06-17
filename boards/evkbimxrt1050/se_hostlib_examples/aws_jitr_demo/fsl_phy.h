@@ -69,8 +69,8 @@
 /*! @brief Defines the PHY status. */
 enum _phy_status
 {
-    kStatus_PHY_SMIVisitTimeout = MAKE_STATUS(kStatusGroup_PHY, 1),  /*!< ENET PHY SMI visit timeout. */
-    kStatus_PHY_AutoNegotiateFail = MAKE_STATUS(kStatusGroup_PHY, 2) /*!< ENET PHY AutoNegotiate Fail. */
+    kStatus_PHY_SMIVisitTimeout   = MAKE_STATUS(kStatusGroup_PHY, 1), /*!< ENET PHY SMI visit timeout. */
+    kStatus_PHY_AutoNegotiateFail = MAKE_STATUS(kStatusGroup_PHY, 2)  /*!< ENET PHY AutoNegotiate Fail. */
 };
 
 /*! @brief Defines the PHY link speed. This is align with the speed for ENET MAC. */
@@ -103,9 +103,9 @@ extern "C" {
 #endif
 
 /*!
-  * @name PHY Driver
-  * @{
-  */
+ * @name PHY Driver
+ * @{
+ */
 
 /*!
  * @brief Initializes PHY.

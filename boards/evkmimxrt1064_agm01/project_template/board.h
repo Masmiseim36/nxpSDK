@@ -1,7 +1,7 @@
 /*
  * Copyright 2018 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -64,7 +64,7 @@
 #define BOARD_USER_BUTTON_NAME "SW8"
 
 /*! @brief The board flash size */
-#define BOARD_FLASH_SIZE    (0x400000U)
+#define BOARD_FLASH_SIZE (0x400000U)
 
 /*! @brief The Enet instance used for board. */
 #define BOARD_ENET_BASEADDR ENET
@@ -92,7 +92,9 @@
 #define BOARD_USDHC_CD_GPIO_INIT()                                                          \
     {                                                                                       \
         gpio_pin_config_t sw_config = {                                                     \
-            kGPIO_DigitalInput, 0, kGPIO_IntFallingEdge,                                    \
+            kGPIO_DigitalInput,                                                             \
+            0,                                                                              \
+            kGPIO_IntFallingEdge,                                                           \
         };                                                                                  \
         GPIO_PinInit(BOARD_USDHC_CD_GPIO_BASE, BOARD_USDHC_CD_GPIO_PIN, &sw_config);        \
         GPIO_PortEnableInterrupts(BOARD_USDHC_CD_GPIO_BASE, 1U << BOARD_USDHC_CD_GPIO_PIN); \
@@ -109,7 +111,9 @@
 #define BOARD_USDHC_MMCCARD_POWER_CONTROL_INIT()                                            \
     {                                                                                       \
         gpio_pin_config_t sw_config = {                                                     \
-            kGPIO_DigitalOutput, 0, kGPIO_NoIntmode,                                        \
+            kGPIO_DigitalOutput,                                                            \
+            0,                                                                              \
+            kGPIO_NoIntmode,                                                                \
         };                                                                                  \
         GPIO_PinInit(BOARD_SD_POWER_RESET_GPIO, BOARD_SD_POWER_RESET_GPIO_PIN, &sw_config); \
         GPIO_PinWrite(BOARD_SD_POWER_RESET_GPIO, BOARD_SD_POWER_RESET_GPIO_PIN, true);      \
@@ -118,7 +122,9 @@
 #define BOARD_USDHC_SDCARD_POWER_CONTROL_INIT()                                             \
     {                                                                                       \
         gpio_pin_config_t sw_config = {                                                     \
-            kGPIO_DigitalOutput, 0, kGPIO_NoIntmode,                                        \
+            kGPIO_DigitalOutput,                                                            \
+            0,                                                                              \
+            kGPIO_NoIntmode,                                                                \
         };                                                                                  \
         GPIO_PinInit(BOARD_SD_POWER_RESET_GPIO, BOARD_SD_POWER_RESET_GPIO_PIN, &sw_config); \
     }
@@ -139,9 +145,9 @@
 #define BOARD_MMC_VCCQ_SUPPLY kMMC_VoltageWindow170to195
 #define BOARD_MMC_VCC_SUPPLY kMMC_VoltageWindows270to360
 /* we are using the BB SD socket to DEMO the MMC example,but the
-* SD socket provide 4bit bus only, so we define this macro to avoid
-* 8bit data bus test
-*/
+ * SD socket provide 4bit bus only, so we define this macro to avoid
+ * 8bit data bus test
+ */
 #define BOARD_MMC_SUPPORT_8BIT_BUS (1U)
 
 #define BOARD_SD_HOST_SUPPORT_SDR104_FREQ (200000000U)

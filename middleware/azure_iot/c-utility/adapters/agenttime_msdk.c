@@ -96,6 +96,7 @@ time_t __time32 (time_t * p)
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 #pragma import(__use_no_semihosting_swi)
 
+#if !defined(SDK_DEBUGCONSOLE_UART)
 void _sys_exit(int ret)
 {
     while(1);
@@ -105,6 +106,7 @@ void _ttywrch(int c)
 {
     putchar(c);
 }
+#endif /* SDK_DEBUGCONSOLE_UART */
 
 time_t time(time_t *timer)
 {

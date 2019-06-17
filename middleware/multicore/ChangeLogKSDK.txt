@@ -2,7 +2,26 @@
 @page middleware_log Middleware Change Log
 
 @section multicore Multicore SDK
-  The current version of Multicore SDK is 2.5.0.
+  The current version of Multicore SDK is 2.6.0.
+  - 2.6.0
+    - Multicore SDK component versions:
+      - embedded Remote Procedure Call (eRPC) v1.7.2
+      - eRPC generator (erpcgen) v.1.7.2
+      - Multicore Manager (MCMgr) v4.0.3
+      - RPMsg-Lite v2.2.0
+    - New features:
+      - eRPC: Improved support of const types.
+      - eRPC: Fixed Mac build.
+      - eRPC: Fixed serializing python list.
+      - eRPC: Documentation update.
+      - eRPC: Add missing doxygen comments for transports.
+      - RPMsg-Lite: Added configuration macro RL_DEBUG_CHECK_BUFFERS.
+      - RPMsg-Lite: Several MISRA violations fixed.
+      - RPMsg-Lite: Added environment layers for QNX and Zephyr.
+      - RPMsg-Lite: Allow environment context required for some environments (controlled by the RL_USE_ENVIRONMENT_CONTEXT configuration macro). 
+      - RPMsg-Lite: Data types consolidation. 
+      - MCMgr: Documentation updated to describe handshaking in a graphic form.
+      - MCMgr: Minor code adjustments based on static analysis tool findings
   - 2.5.0
     - Multicore SDK component versions:
       - embedded Remote Procedure Call (eRPC) v1.7.1
@@ -11,7 +30,7 @@
       - RPMsg-Lite v2.0.2
     - New features:
       - RPMsg-Lite, MCMgr: Align porting layers to the updated MCUXpressoSDK feature files.
-      - eRPC: Fixed semaphore in static message buffer factory. 
+      - eRPC: Fixed semaphore in static message buffer factory.
       - erpcgen: Fixed MU received error flag.
       - erpcgen: Fixed tcp transport.
   - 2.4.0

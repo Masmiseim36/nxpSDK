@@ -55,7 +55,7 @@
 #include "lwip/dhcp.h"
 #include "lwip/prot/dhcp.h"
 #include "netif/ethernet.h"
-#include "ethernetif.h"
+#include "enet_ethernetif.h"
 #include "lwip/netifapi.h"
 #include "clock_config.h"
 #include "fsl_gpio.h"
@@ -105,13 +105,13 @@
 
 /* Accelerometer and magnetometer */
 #if defined(BOARD_ACCEL_FXOS)
-fxos_handle_t accelHandle = {0};
+fxos_handle_t accelHandle           = {0};
 static const uint8_t accelAddress[] = {0x1CU, 0x1EU, 0x1DU, 0x1FU};
-fxos_config_t config = {0};
+fxos_config_t config                = {0};
 #elif defined(BOARD_ACCEL_MMA)
-mma_handle_t accelHandle = {0};
+mma_handle_t accelHandle            = {0};
 static const uint8_t accelAddress[] = {0x1CU, 0x1DU, 0x1EU, 0x1FU};
-mma_config_t config = {0};
+mma_config_t config                 = {0};
 #endif
 
 /* Accelerometer data scale */
@@ -130,6 +130,9 @@ extern int initNetwork(void);
  * Variables
  ******************************************************************************/
 struct netif fsl_netif0;
+#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
+mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
+#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
 /* Count of LED */
 uint8_t ledCount = 0;
 /* Array of LED names */
@@ -144,7 +147,12 @@ int initNetwork(void)
 {
     ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
     ethernetif_config_t fsl_enet_config0 = {
-        .phyAddress = EXAMPLE_PHY_ADDRESS, .clockName = EXAMPLE_CLOCK_NAME, .macAddress = configMAC_ADDR,
+        .phyAddress = EXAMPLE_PHY_ADDRESS,
+        .clockName  = EXAMPLE_CLOCK_NAME,
+        .macAddress = configMAC_ADDR,
+#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
+        .non_dma_memory = non_dma_memory,
+#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     };
 
     IP4_ADDR(&fsl_netif0_ipaddr, 0, 0, 0, 0);
@@ -221,12 +229,12 @@ void print_string(const char *string)
 status_t init_mag_accel(uint8_t *accelDataScale, uint8_t *accelResolution)
 {
     uint8_t arrayAddrSize = 0;
-    uint8_t sensorRange = 0;
-    uint16_t i = 0;
-    status_t result = kStatus_Fail;
+    uint8_t sensorRange   = 0;
+    uint16_t i            = 0;
+    status_t result       = kStatus_Fail;
 
     /* Configure the I2C function */
-    config.I2C_SendFunc = BOARD_Accel_I2C_Send;
+    config.I2C_SendFunc    = BOARD_Accel_I2C_Send;
     config.I2C_ReceiveFunc = BOARD_Accel_I2C_Receive;
 
     /* Initialize sensor devices */

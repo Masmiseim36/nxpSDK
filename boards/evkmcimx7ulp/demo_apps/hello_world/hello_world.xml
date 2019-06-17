@@ -81,5 +81,8 @@
     <source path="boards/evkmcimx7ulp/demo_apps/hello_world" target_path="source" type="src">
       <files mask="hello_world.c"/>
     </source>
+    <source path="boards/evkmcimx7ulp/demo_apps/hello_world" target_path="src" type="binary" exclude="true">
+      <files mask="hello_world.bin"/>
+    </source>
   </example>
 </ksdk:examples>

@@ -6,8 +6,8 @@
     <definition extID="component.lpuart_adapter.MCIMX7U5"/>
     <definition extID="component.serial_manager.MCIMX7U5"/>
     <definition extID="component.serial_manager_uart.MCIMX7U5"/>
-    <definition extID="middleware.freertos.MCIMX7U5"/>
-    <definition extID="middleware.freertos.heap.heap_4.MCIMX7U5"/>
+    <definition extID="middleware.amazon_freertos.freertos.MCIMX7U5"/>
+    <definition extID="middleware.amazon_freertos.freertos.heap_4.MCIMX7U5"/>
     <definition extID="platform.Include_common.MCIMX7U5"/>
     <definition extID="platform.Include_core_cm4.MCIMX7U5"/>
     <definition extID="platform.devices.MCIMX7U5_CMSIS.MCIMX7U5"/>
@@ -25,7 +25,7 @@
     <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkmcimx7ulp_freertos_swtimer" name="freertos_swtimer" category="rtos_examples" dependency="platform.drivers.port.MCIMX7U5 platform.drivers.gpio.MCIMX7U5 platform.drivers.clock.MCIMX7U5 middleware.freertos.MCIMX7U5 middleware.freertos.heap.heap_4.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 utility.debug_console.MCIMX7U5 component.lpuart_adapter.MCIMX7U5 component.serial_manager.MCIMX7U5 component.serial_manager_uart.MCIMX7U5 platform.drivers.lpuart.MCIMX7U5 component.lists.MCIMX7U5 platform.devices.MCIMX7U5_startup.MCIMX7U5 platform.drivers.msmc.MCIMX7U5 platform.utilities.assert.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.Include_common.MCIMX7U5">
+  <example id="evkmcimx7ulp_freertos_swtimer" name="freertos_swtimer" category="rtos_examples" dependency="platform.drivers.port.MCIMX7U5 platform.drivers.gpio.MCIMX7U5 platform.drivers.clock.MCIMX7U5 middleware.amazon_freertos.freertos.MCIMX7U5 middleware.amazon_freertos.freertos.heap_4.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 utility.debug_console.MCIMX7U5 component.lpuart_adapter.MCIMX7U5 component.serial_manager.MCIMX7U5 component.serial_manager_uart.MCIMX7U5 platform.drivers.lpuart.MCIMX7U5 component.lists.MCIMX7U5 platform.devices.MCIMX7U5_startup.MCIMX7U5 platform.drivers.msmc.MCIMX7U5 platform.utilities.assert.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.Include_common.MCIMX7U5">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>

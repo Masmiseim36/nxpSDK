@@ -1,14 +1,14 @@
 /**
-  ******************************************************************************
-  * @file    lwipopts.h
-  * This file is based on \src\include\lwip\opt.h
-  ******************************************************************************
-   * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
-   * Copyright 2016-2017 NXP
-   * All rights reserved.
-   *
-   * SPDX-License-Identifier: BSD-3-Clause
-   */
+ ******************************************************************************
+ * @file    lwipopts.h
+ * This file is based on \src\include\lwip\opt.h
+ ******************************************************************************
+ * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 #ifndef __LWIPOPTS_H__
 #define __LWIPOPTS_H__
@@ -71,7 +71,7 @@
  * a lot of data that needs to be copied, this should be set high.
  */
 #ifndef MEM_SIZE
-#define MEM_SIZE (22 * 1024)
+#define MEM_SIZE (16 * 1024)
 #endif
 
 /* MEMP_NUM_PBUF: the number of memp struct pbufs. If the application
@@ -155,6 +155,12 @@
 /* Enable backlog*/
 #ifndef TCP_LISTEN_BACKLOG
 #define TCP_LISTEN_BACKLOG 1
+#endif
+
+/* ---------- Network Interfaces options ---------- */
+/* Support netif api (in netifapi.c). */
+#ifndef LWIP_NETIF_API
+#define LWIP_NETIF_API 1
 #endif
 
 /* ---------- ICMP options ---------- */

@@ -218,7 +218,7 @@ static U8 exHlseWtUseCrypto()
     ECCCurve_t eccCurve = ECCCurve_NIST_P256;
 
     EC_KEY *eccKeyTls_Host = NULL;
-    eccKeyComponents_t eccKcTls_Host;
+    eccKeyComponents_t eccKcTls_Host = { 0 };
     EC_KEY *eccKeyTls_0 = NULL;
 
     // const U16 expectedPubKeyLen = 65;
@@ -233,10 +233,10 @@ static U8 exHlseWtUseCrypto()
     U16 derivedDataLen = sizeof(derivedData);
     U8 derivedDataOnHost[128];
 
-    U8 uid[A71CH_MODULE_UNIQUE_ID_LEN];
+    U8 uid[A71CH_MODULE_UNIQUE_ID_LEN] = { 0 };
     U16 uidLen = sizeof(uid);
 
-    HLSE_OBJECT_HANDLE keyPairHandles[A71CH_KEY_PAIR_MAX];
+    HLSE_OBJECT_HANDLE keyPairHandles[A71CH_KEY_PAIR_MAX] = { 0 };
     U16 kpHandleNum = A71CH_KEY_PAIR_MAX;
 
     PRINTF( "\r\n-----------\r\nStart exWtUseCrypto()\r\n------------\r\n");
@@ -343,6 +343,10 @@ static U8 exHlseWtUseCrypto()
     // First create a new keypair on the host.
     err = HOSTCRYPTO_GenerateEccKey(eccCurve, &eccKeyTls_Host);
     result &= AX_CHECK_SW(err, SW_OK, "err");
+    if ( NULL == eccKeyTls_Host ) {
+        result = 0;
+        goto exit;
+    }
     // Break down the ECC key generated in OpenSSL into eccKeyComponents
     err = HOSTCRYPTO_GetPublicKey(eccKeyTls_Host, eccKcTls_Host.pub, &(eccKcTls_Host.pubLen), (64 << 1)+1);
     result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -400,7 +404,7 @@ static U8 exHlseWtUseCrypto()
         derivedData, derivedDataLen);
 #else
     {
-        HLSE_OBJECT_HANDLE handles[A71CH_SYM_KEY_MAX];
+        HLSE_OBJECT_HANDLE handles[A71CH_SYM_KEY_MAX] = {0};
         U16 handleNum = A71CH_SYM_KEY_MAX;
         HLSE_HKDF_PARAMS hlseHkdfParams;
         HLSE_MECHANISM_INFO mechInfo;
@@ -439,7 +443,7 @@ static U8 exHlseWtUseCrypto()
     HOSTCRYPTO_FreeEccKey(&eccKeyTls_Host);
     HOSTCRYPTO_FreeEccKey(&eccKeyTls_0);
 
-
+exit:
     PRINTF( "\r\n-----------\r\nEnd exWtUseCrypto(), result = %s\r\n------------\r\n",
         ((result == 1)? "OK": "FAILED"));
 
@@ -464,12 +468,12 @@ static U8 exHlseWtProvision()
 
     SST_Index_t index;
 
-    U8 uid[A71CH_MODULE_UNIQUE_ID_LEN];
+    U8 uid[A71CH_MODULE_UNIQUE_ID_LEN] = {0};
     U16 uidLen = sizeof(uid);
 
     HLSE_OBJECT_HANDLE keyPairHandles[2];
     HLSE_OBJECT_HANDLE pubkeyHandles[2];
-    HLSE_OBJECT_HANDLE aesKeyHandles[A71CH_SYM_KEY_MAX];
+    HLSE_OBJECT_HANDLE aesKeyHandles[A71CH_SYM_KEY_MAX] = {0};
 
     PRINTF( "\r\n-----------\r\nStart exWtProvision()\r\n------------\r\n");
 
@@ -481,8 +485,17 @@ static U8 exHlseWtProvision()
     // leaves the A71CH.
     err = HOSTCRYPTO_GenerateEccKey(eccCurve, &eccKeyRootCA_0);
     result &= AX_CHECK_SW(err, SW_OK, "err");
+    if ( NULL == eccKeyRootCA_0 ) {
+        result = 0;
+        goto exit;
+    }
+
     err = HOSTCRYPTO_GenerateEccKey(eccCurve, &eccKeyRootCA_1);
     result &= AX_CHECK_SW(err, SW_OK, "err");
+    if ( NULL == eccKeyRootCA_1 ) {
+        result = 0;
+        goto exit;
+    }
 
     err = HOSTCRYPTO_GetPublicKey(eccKeyRootCA_0, eccKcRootCA_0.pub, &(eccKcRootCA_0.pubLen), (64 << 1)+1);
     result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -622,6 +635,7 @@ static U8 exHlseWtProvision()
     // - Store a certificate (or the hash of a certificate) in GP storage
     // - Store public keys in GP storage
 
+exit:
     PRINTF( "\r\n-----------\r\nEnd exWtProvision(), result = %s\r\n------------\r\n",
         ((result == 1)? "OK": "FAILED"));
 

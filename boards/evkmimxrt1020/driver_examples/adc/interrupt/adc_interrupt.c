@@ -35,8 +35,8 @@ volatile uint32_t g_AdcInterruptCounter;
 const uint32_t g_Adc_12bitFullRange = 4096U;
 
 /*******************************************************************************
-* Code
-******************************************************************************/
+ * Code
+ ******************************************************************************/
 
 void EXAMPLE_ADC_IRQHandler(void)
 {
@@ -68,18 +68,18 @@ int main(void)
     PRINTF("\r\nADC interrupt Example.\r\n");
 
     /*
- *  config->enableAsynchronousClockOutput = true;
-  *  config->enableOverWrite =               false;
-    *  config->enableContinuousConversion =    false;
-    *  config->enableHighSpeed =               false;
-    *  config->enableLowPower =                false;
-    *  config->enableLongSample =              false;
-    *  config->referenceVoltageSource =        kADC_ReferenceVoltageSourceVref;
-    *  config->samplePeriodMode =              kADC_SamplePeriod2or12Clocks;
-    *  config->clockSource =                   kADC_ClockSourceAD;
-    *  config->clockDriver =                   kADC_ClockDriver1;
-    *  config->resolution =                    kADC_Resolution12Bit;
-    */
+     *  config->enableAsynchronousClockOutput = true;
+     *  config->enableOverWrite =               false;
+     *  config->enableContinuousConversion =    false;
+     *  config->enableHighSpeed =               false;
+     *  config->enableLowPower =                false;
+     *  config->enableLongSample =              false;
+     *  config->referenceVoltageSource =        kADC_ReferenceVoltageSourceVref;
+     *  config->samplePeriodMode =              kADC_SamplePeriod2or12Clocks;
+     *  config->clockSource =                   kADC_ClockSourceAD;
+     *  config->clockDriver =                   kADC_ClockDriver1;
+     *  config->resolution =                    kADC_Resolution12Bit;
+     */
     ADC_GetDefaultConfig(&adcConfigStrcut);
     ADC_Init(DEMO_ADC_BASE, &adcConfigStrcut);
 #if !(defined(FSL_FEATURE_ADC_SUPPORT_HARDWARE_TRIGGER_REMOVE) && FSL_FEATURE_ADC_SUPPORT_HARDWARE_TRIGGER_REMOVE)
@@ -97,9 +97,9 @@ int main(void)
     }
 
     /* Configure the user channel and interrupt. */
-    adcChannelConfigStruct.channelNumber = DEMO_ADC_USER_CHANNEL;
+    adcChannelConfigStruct.channelNumber                        = DEMO_ADC_USER_CHANNEL;
     adcChannelConfigStruct.enableInterruptOnConversionCompleted = true;
-    g_AdcInterruptCounter = 0U; /* Clear the interrupt counter. */
+    g_AdcInterruptCounter                                       = 0U; /* Clear the interrupt counter. */
 
     PRINTF("ADC Full Range: %d\r\n", g_Adc_12bitFullRange);
     while (1)

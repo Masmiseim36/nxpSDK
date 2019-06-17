@@ -79,11 +79,11 @@ static U8 exSstKeyPair(U8 initMode)
 
     ECCCurve_t eccCurve = ECCCurve_NIST_P256;
 
-    EC_KEY *eccKeyTls[A71CH_KEY_PAIR_MAX];
-    eccKeyComponents_t eccKcTls[A71CH_KEY_PAIR_MAX];
+    EC_KEY *eccKeyTls[A71CH_KEY_PAIR_MAX] = { 0 };
+    eccKeyComponents_t eccKcTls[A71CH_KEY_PAIR_MAX] = { 0 };
 
     EC_KEY *eccKeyAlt = NULL;
-    eccKeyComponents_t eccKcAlt;
+    eccKeyComponents_t eccKcAlt = { 0 };
 
     U8 fetchedPubKey[65];
     U16 fetchedPubKeyLen = sizeof(fetchedPubKey);
@@ -99,7 +99,7 @@ static U8 exSstKeyPair(U8 initMode)
 
     SST_Index_t kpIndex;
 
-    HLSE_OBJECT_HANDLE keyPairHandles[A71CH_KEY_PAIR_MAX];
+    HLSE_OBJECT_HANDLE keyPairHandles[A71CH_KEY_PAIR_MAX] = {0};
 
     PRINTF("\r\n-----------\r\nStart exSstKeyPair(%s)\r\n------------\r\n", getInitModeAsString(initMode));
 

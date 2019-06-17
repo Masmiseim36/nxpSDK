@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  *
@@ -11,12 +11,12 @@
 #include "app.h"
 
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 
 /*******************************************************************************
  * Variables
@@ -33,10 +33,10 @@ status_t flexspi_nor_write_enable(FLEXSPI_Type *base, uint32_t baseAddr)
 
     /* Write enable */
     flashXfer.deviceAddress = baseAddr;
-    flashXfer.port = kFLEXSPI_PortA1;
-    flashXfer.cmdType = kFLEXSPI_Command;
-    flashXfer.SeqNumber = 1;
-    flashXfer.seqIndex = NOR_CMD_LUT_SEQ_IDX_WRITEENABLE;
+    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.cmdType       = kFLEXSPI_Command;
+    flashXfer.SeqNumber     = 1;
+    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_WRITEENABLE;
 
     status = FLEXSPI_TransferBlocking(base, &flashXfer);
 
@@ -52,12 +52,12 @@ status_t flexspi_nor_wait_bus_busy(FLEXSPI_Type *base)
     flexspi_transfer_t flashXfer;
 
     flashXfer.deviceAddress = 0;
-    flashXfer.port = kFLEXSPI_PortA1;
-    flashXfer.cmdType = kFLEXSPI_Read;
-    flashXfer.SeqNumber = 1;
-    flashXfer.seqIndex = NOR_CMD_LUT_SEQ_IDX_READSTATUSREG;
-    flashXfer.data = &readValue;
-    flashXfer.dataSize = 1;
+    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.cmdType       = kFLEXSPI_Read;
+    flashXfer.SeqNumber     = 1;
+    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_READSTATUSREG;
+    flashXfer.data          = &readValue;
+    flashXfer.dataSize      = 1;
 
     do
     {
@@ -99,7 +99,7 @@ status_t flexspi_nor_enable_quad_mode(FLEXSPI_Type *base)
 {
     flexspi_transfer_t flashXfer;
     status_t status;
-    uint32_t writeValue = 0x40;
+    uint32_t writeValue = FLASH_QUAD_ENABLE;
 
     /* Write enable */
     status = flexspi_nor_write_enable(base, 0);
@@ -111,12 +111,12 @@ status_t flexspi_nor_enable_quad_mode(FLEXSPI_Type *base)
 
     /* Enable quad mode. */
     flashXfer.deviceAddress = 0;
-    flashXfer.port = kFLEXSPI_PortA1;
-    flashXfer.cmdType = kFLEXSPI_Write;
-    flashXfer.SeqNumber = 1;
-    flashXfer.seqIndex = NOR_CMD_LUT_SEQ_IDX_WRITESTATUSREG;
-    flashXfer.data = &writeValue;
-    flashXfer.dataSize = 1;
+    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.cmdType       = kFLEXSPI_Write;
+    flashXfer.SeqNumber     = 1;
+    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_WRITESTATUSREG;
+    flashXfer.data          = &writeValue;
+    flashXfer.dataSize      = 1;
 
     status = FLEXSPI_TransferBlocking(base, &flashXfer);
     if (status != kStatus_Success)
@@ -125,6 +125,9 @@ status_t flexspi_nor_enable_quad_mode(FLEXSPI_Type *base)
     }
 
     status = flexspi_nor_wait_bus_busy(base);
+
+    /* Do software reset. */
+    FLEXSPI_SoftwareReset(base);
 
     return status;
 }
@@ -136,10 +139,10 @@ status_t flexspi_nor_flash_erase_sector(FLEXSPI_Type *base, uint32_t address)
 
     /* Write enable */
     flashXfer.deviceAddress = address;
-    flashXfer.port = kFLEXSPI_PortA1;
-    flashXfer.cmdType = kFLEXSPI_Command;
-    flashXfer.SeqNumber = 1;
-    flashXfer.seqIndex = NOR_CMD_LUT_SEQ_IDX_WRITEENABLE;
+    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.cmdType       = kFLEXSPI_Command;
+    flashXfer.SeqNumber     = 1;
+    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_WRITEENABLE;
 
     status = FLEXSPI_TransferBlocking(base, &flashXfer);
 
@@ -149,11 +152,11 @@ status_t flexspi_nor_flash_erase_sector(FLEXSPI_Type *base, uint32_t address)
     }
 
     flashXfer.deviceAddress = address;
-    flashXfer.port = kFLEXSPI_PortA1;
-    flashXfer.cmdType = kFLEXSPI_Command;
-    flashXfer.SeqNumber = 1;
-    flashXfer.seqIndex = NOR_CMD_LUT_SEQ_IDX_ERASESECTOR;
-    status = FLEXSPI_TransferBlocking(base, &flashXfer);
+    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.cmdType       = kFLEXSPI_Command;
+    flashXfer.SeqNumber     = 1;
+    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_ERASESECTOR;
+    status                  = FLEXSPI_TransferBlocking(base, &flashXfer);
 
     if (status != kStatus_Success)
     {
@@ -161,6 +164,9 @@ status_t flexspi_nor_flash_erase_sector(FLEXSPI_Type *base, uint32_t address)
     }
 
     status = flexspi_nor_wait_bus_busy(base);
+
+    /* Do software reset. */
+    FLEXSPI_SoftwareReset(base);
 
     return status;
 }
@@ -180,13 +186,13 @@ status_t flexspi_nor_flash_page_program(FLEXSPI_Type *base, uint32_t dstAddr, co
 
     /* Prepare page program command */
     flashXfer.deviceAddress = dstAddr;
-    flashXfer.port = kFLEXSPI_PortA1;
-    flashXfer.cmdType = kFLEXSPI_Write;
-    flashXfer.SeqNumber = 1;
-    flashXfer.seqIndex = NOR_CMD_LUT_SEQ_IDX_PAGEPROGRAM_QUAD;
-    flashXfer.data = (uint32_t *)src;
-    flashXfer.dataSize = FLASH_PAGE_SIZE;
-    status = FLEXSPI_TransferBlocking(base, &flashXfer);
+    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.cmdType       = kFLEXSPI_Write;
+    flashXfer.SeqNumber     = 1;
+    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_PAGEPROGRAM_QUAD;
+    flashXfer.data          = (uint32_t *)src;
+    flashXfer.dataSize      = FLASH_PAGE_SIZE;
+    status                  = FLEXSPI_TransferBlocking(base, &flashXfer);
 
     if (status != kStatus_Success)
     {
@@ -194,6 +200,9 @@ status_t flexspi_nor_flash_page_program(FLEXSPI_Type *base, uint32_t dstAddr, co
     }
 
     status = flexspi_nor_wait_bus_busy(base);
+
+    /* Do software reset. */
+    FLEXSPI_SoftwareReset(base);
 
     return status;
 }
@@ -203,16 +212,19 @@ status_t flexspi_nor_get_vendor_id(FLEXSPI_Type *base, uint8_t *vendorId)
     uint32_t temp;
     flexspi_transfer_t flashXfer;
     flashXfer.deviceAddress = 0;
-    flashXfer.port = kFLEXSPI_PortA1;
-    flashXfer.cmdType = kFLEXSPI_Read;
-    flashXfer.SeqNumber = 1;
-    flashXfer.seqIndex = NOR_CMD_LUT_SEQ_IDX_READID;
-    flashXfer.data = &temp;
-    flashXfer.dataSize = 1;
+    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.cmdType       = kFLEXSPI_Read;
+    flashXfer.SeqNumber     = 1;
+    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_READID;
+    flashXfer.data          = &temp;
+    flashXfer.dataSize      = 1;
 
     status_t status = FLEXSPI_TransferBlocking(base, &flashXfer);
 
     *vendorId = temp;
+
+    /* Do software reset. */
+    FLEXSPI_SoftwareReset(base);
 
     return status;
 }
@@ -231,10 +243,10 @@ status_t flexspi_nor_erase_chip(FLEXSPI_Type *base)
     }
 
     flashXfer.deviceAddress = 0;
-    flashXfer.port = kFLEXSPI_PortA1;
-    flashXfer.cmdType = kFLEXSPI_Command;
-    flashXfer.SeqNumber = 1;
-    flashXfer.seqIndex = NOR_CMD_LUT_SEQ_IDX_ERASECHIP;
+    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.cmdType       = kFLEXSPI_Command;
+    flashXfer.SeqNumber     = 1;
+    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_ERASECHIP;
 
     status = FLEXSPI_TransferBlocking(base, &flashXfer);
 
@@ -258,11 +270,11 @@ void flexspi_nor_flash_init(FLEXSPI_Type *base)
     FLEXSPI_GetDefaultConfig(&config);
 
     /*Set AHB buffer size for reading data through AHB bus. */
-    config.ahbConfig.enableAHBPrefetch = true;
-    config.ahbConfig.enableAHBBufferable = true;
+    config.ahbConfig.enableAHBPrefetch    = true;
+    config.ahbConfig.enableAHBBufferable  = true;
     config.ahbConfig.enableReadAddressOpt = true;
-    config.ahbConfig.enableAHBCachable = true;
-    config.rxSampleClock = kFLEXSPI_ReadSampleClkLoopbackFromDqsPad;
+    config.ahbConfig.enableAHBCachable    = true;
+    config.rxSampleClock                  = kFLEXSPI_ReadSampleClkLoopbackFromDqsPad;
     FLEXSPI_Init(base, &config);
 
     /* Configure flash settings according to serial flash feature. */

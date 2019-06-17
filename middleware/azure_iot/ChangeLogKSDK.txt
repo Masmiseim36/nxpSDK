@@ -1,0 +1,58 @@
+/**
+@page middleware_log Middleware Change Log
+@section Azure IOT C SDK for KSDK
+Current version is azure-iot-sdk-c 1.2.13_rev0.
+  - 1.2.13_rev0
+      - update version
+      - add AMQP support
+  - 1.2.8_rev0
+      - add Azure IOT snapshot from github.com/Azure/azure-iot-sdk-c
+      - Create minimalistic snapshot without submodules
+      - Changed files:
+            c-utility\adapters\tlsio_mbedtls.c
+                - remove deprecated USE_MBED_TLS conditional macro
+                - include string.h, stdio.h, fsl_debug_console.h
+                - comment out MBED_TLS_DEBUG_ENABLE definition
+                - comment out mbedtls_ssl_conf_dbg and mbedtls_debug_set_threshold
+            c-utility\inc\azure_c_shared_utility\agenttime.h
+                - Add sntp_get_current_timestamp declaration
+            c-utility\inc\azure_c_shared_utility\crt_abstractions.h
+                - Add ENOMEM and EINVAL definitions (IAR specific)
+            c-utility\inc\azure_c_shared_utility\gbnetwork.h
+                - Include lwip/sockets.h
+            c-utility\inc\azure_c_shared_utility\tlsio_mbedtls.h
+                - remove deprecated USE_MBED_TLS conditional macro
+                - remove deprecated tls_config.h include
+            c-utility\pal\freertos\lock.c
+                - adapt freertos path to MSDK folder structure
+            c-utility\pal\freertos\threadapi.c
+                - adapt frertos path, use portTICK_PERIOD_MS
+            c-utility\pal\freertos\tickcounter.c
+                - adapt freertos path, use portTICK_PERIOD_MS
+            c-utility\pal\lwip\sntp_lwip.c
+                - include time.h
+                - adapt SNTP_Init
+            c-utility\pal\lwip\sntp_os.h
+                - include lwip/apps/sntp.h. instead of apps/sntp/sntp.h
+            deps\parson\parson.c
+                - ignore functions requiring FILE_DESCRIPTOR
+            iothub_client\src\iothub_client_diagnostic.c
+                - remove int64_t check, because of undefined type, observed for armgcc
+            iothub_client\src\iothubtransport_mqtt_common.c
+                - Comment out ResetConnectionIfNecessary, cause failure.
+      - Renamed files (Fix conflicts with system libraries or other middlewares):
+            c-utility\src\base64_azure.c
+            c-utility\src\hmac_azure.c
+            c-utility\src\sha1_azure.c
+            iothub_client\src\version_azure.c
+      - Removed:
+            azure_c_shared_utility/tls_config.h
+                - deprecated
+      - New files:
+            c-utility\adapters\agenttime_msdk.c
+                - Add MSDK adaptation layer
+            c-utility\adapters\platform_msdk.c
+                - Add MSDK adaptation layer
+            c-utility\adapters\socketio_berkeley_msdk.c
+                - Add lwip adaptation layer
+*/

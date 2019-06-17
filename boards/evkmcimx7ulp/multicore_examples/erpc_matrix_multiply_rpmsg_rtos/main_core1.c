@@ -29,7 +29,7 @@
 #define RPMSG_LITE_NS_ANNOUNCE_STRING "rpmsg-virtual-tty-channel"
 #define RPMSG_LITE_MASTER_IS_LINUX
 
-#define APP_TASK_STACK_SIZE 256
+#define APP_TASK_STACK_SIZE 304
 #define APP_ERPC_READY_EVENT_DATA (1)
 
 /*******************************************************************************

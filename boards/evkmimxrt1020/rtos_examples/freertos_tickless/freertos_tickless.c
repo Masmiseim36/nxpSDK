@@ -19,7 +19,7 @@
 #endif
 #include "pin_mux.h"
 #include "clock_config.h"
-#if configUSE_TICKLESS_IDLE
+#if configUSE_TICKLESS_IDLE == 2
 #include "fsl_gpt.h"
 #endif
 /*******************************************************************************
@@ -58,7 +58,7 @@ SemaphoreHandle_t xSWSemaphore = NULL;
  * Code
  ******************************************************************************/
 
-
+#if configUSE_TICKLESS_IDLE == 2
 /*!
  * @brief Interrupt service fuction of GPT timer.
  *
@@ -90,6 +90,7 @@ IRQn_Type vPortGetGptIrqn(void)
 {
     return GPT1_IRQn;
 }
+#endif
 /*!
  * @brief Main function
  */
@@ -97,8 +98,7 @@ int main(void)
 {
 /* Define the init structure for the input switch pin */
 #ifdef BOARD_SW_NAME
-    gpio_pin_config_t sw_config =
-    {
+    gpio_pin_config_t sw_config = {
         kGPIO_DigitalInput,
         0,
 #if defined(FSL_FEATURE_SOC_IGPIO_COUNT) && (FSL_FEATURE_SOC_IGPIO_COUNT > 0)
@@ -106,15 +106,15 @@ int main(void)
 #endif
     };
 #endif
-#if configUSE_TICKLESS_IDLE
+#if configUSE_TICKLESS_IDLE == 2
     gpt_config_t gptConfig;
-#endif  
+#endif
     BOARD_ConfigMPU();
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
-    
-#if configUSE_TICKLESS_IDLE
+
+#if configUSE_TICKLESS_IDLE == 2
     GPT_GetDefaultConfig(&gptConfig);
 
     /* Initialize GPT module */
@@ -123,13 +123,12 @@ int main(void)
     /* Divide GPT clock source frequency by 1 inside GPT module */
     GPT_SetClockDivider(GPT1, 1);
 
-
     /* Enable GPT Output Compare1 interrupt */
     GPT_EnableInterrupts(GPT1, kGPT_OutputCompare1InterruptEnable);
 
     /* Enable at the Interrupt */
     EnableIRQ(GPT1_IRQn);
-#endif    
+#endif
 
     PRINTF("Press any key to start the example\r\n");
     GETCHAR();
@@ -159,19 +158,20 @@ int main(void)
 #endif
 
     /*Create tickless task*/
-    if (xTaskCreate(Tickless_task, "Tickless_task", configMINIMAL_STACK_SIZE + 38, NULL, tickless_task_PRIORITY,
+    if (xTaskCreate(Tickless_task, "Tickless_task", configMINIMAL_STACK_SIZE + 100, NULL, tickless_task_PRIORITY,
                     NULL) != pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
         while (1)
             ;
     }
-    if (xTaskCreate(SW_task, "Switch_task", configMINIMAL_STACK_SIZE + 38, NULL, SW_task_PRIORITY, NULL) != pdPASS)
+    if (xTaskCreate(SW_task, "Switch_task", configMINIMAL_STACK_SIZE + 100, NULL, SW_task_PRIORITY, NULL) != pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
         while (1)
             ;
     }
+    PRINTF("\r\nTick count :\r\n");
     /*Task Scheduler*/
     vTaskStartScheduler();
     for (;;)
@@ -181,7 +181,6 @@ int main(void)
 /* Tickless Task */
 static void Tickless_task(void *pvParameters)
 {
-    PRINTF("\r\nTick count :\r\n");
     for (;;)
     {
         PRINTF("%d\r\n", xTaskGetTickCount());
@@ -197,7 +196,7 @@ static void SW_task(void *pvParameters)
     {
         if (xSemaphoreTake(xSWSemaphore, portMAX_DELAY) == pdTRUE)
         {
-            PRINTF("CPU waked up by EXT interrupt\r\n");
+            PRINTF("CPU woken up by external interrupt\r\n");
         }
     }
 }

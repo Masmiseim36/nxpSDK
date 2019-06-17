@@ -1,11 +1,11 @@
 /*
-* Copyright (c) 2016, Freescale Semiconductor, Inc.
-* Copyright 2017 NXP. Not a Contribution
-* All rights reserved.
-*
-* 
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2017 NXP. Not a Contribution
+ * All rights reserved.
+ *
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 /*******************************************************************************
  * Includes
@@ -25,18 +25,21 @@
  ******************************************************************************/
 /* This is the value used for ssl read timeout */
 #define IOT_SSL_READ_TIMEOUT 10
-#define GET_REQUEST "GET /media/uploads/mbed_official/hello.txt HTTP/1.0\r\n\r\n"
+#define GET_REQUEST                                           \
+    "GET /media/uploads/mbed_official/hello.txt HTTP/1.0\r\n" \
+    "HOST: os.mbed.com\r\n\r\n"
+
 #define DEBUG_LEVEL 0
 
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 TLSDataParams tlsDataParams;
-const char *HTTPS_SERVER_NAME = "developer.mbed.org";
+const char *HTTPS_SERVER_NAME = "os.mbed.com";
 const char *HTTPS_SERVER_PORT = "443";
 unsigned char https_buf[1024];
 /*******************************************************************************
@@ -61,21 +64,21 @@ int write_request()
      * Write the GET request
      */
     int ret = 0;
-    PRINTF( "  > Write to server:" );
-    
-    int len = sprintf( (char *) https_buf, GET_REQUEST );
+    PRINTF("  > Write to server:");
 
-    while( ( ret = mbedtls_ssl_write( &(tlsDataParams.ssl), https_buf, len ) ) <= 0 )
+    int len = sprintf((char *)https_buf, GET_REQUEST);
+
+    while ((ret = mbedtls_ssl_write(&(tlsDataParams.ssl), https_buf, len)) <= 0)
     {
-        if( ret != MBEDTLS_ERR_SSL_WANT_READ && ret != MBEDTLS_ERR_SSL_WANT_WRITE )
+        if (ret != MBEDTLS_ERR_SSL_WANT_READ && ret != MBEDTLS_ERR_SSL_WANT_WRITE)
         {
-            PRINTF( " failed\n  ! mbedtls_ssl_write returned %d\n\n", ret );
+            PRINTF(" failed\n  ! mbedtls_ssl_write returned %d\n\n", ret);
             goto exit;
         }
     }
 
     len = ret;
-    PRINTF( " %d bytes written\n\n%s", len, (char *) https_buf );
+    PRINTF(" %d bytes written\n\n%s", len, (char *)https_buf);
 
     return ret;
 
@@ -91,36 +94,35 @@ int read_request()
      */
     int ret = 0;
     int len = 0;
-    PRINTF( "  < Read from server:" );
+    PRINTF("  < Read from server:");
 
     do
     {
-        len = sizeof( https_buf ) - 1;
-        memset( https_buf, 0, sizeof( https_buf ) );
-        ret = mbedtls_ssl_read( &(tlsDataParams.ssl), https_buf, len );
+        len = sizeof(https_buf) - 1;
+        memset(https_buf, 0, sizeof(https_buf));
+        ret = mbedtls_ssl_read(&(tlsDataParams.ssl), https_buf, len);
 
-        if( ret == MBEDTLS_ERR_SSL_WANT_READ || ret == MBEDTLS_ERR_SSL_WANT_WRITE )
+        if (ret == MBEDTLS_ERR_SSL_WANT_READ || ret == MBEDTLS_ERR_SSL_WANT_WRITE)
             continue;
 
-        if( ret == MBEDTLS_ERR_SSL_PEER_CLOSE_NOTIFY )
+        if (ret == MBEDTLS_ERR_SSL_PEER_CLOSE_NOTIFY)
             break;
 
-        if( ret < 0 )
+        if (ret < 0)
         {
-            PRINTF( "failed\n  ! mbedtls_ssl_read returned %d\n\n", ret );
+            PRINTF("failed\n  ! mbedtls_ssl_read returned %d\n\n", ret);
             goto exit;
         }
 
-        if( ret == 0 )
+        if (ret == 0)
         {
-            PRINTF( "\n\nEOF\n\n" );
+            PRINTF("\n\nEOF\n\n");
             break;
         }
 
         len = ret;
-        PRINTF( " %d bytes read\n\n%s", len, (char *) https_buf );
-    }
-    while( 1 );
+        PRINTF(" %d bytes read\n\n%s", len, (char *)https_buf);
+    } while (1);
 
     return ret;
 
@@ -128,7 +130,6 @@ exit:
     https_client_tls_release();
     return -1;
 }
-
 
 static int _iot_tls_verify_cert(void *data, mbedtls_x509_crt *crt, int depth, uint32_t *flags)
 {
@@ -163,7 +164,7 @@ static void my_debug(void *ctx, int level, const char *file, int line, const cha
 
 int https_client_tls_init()
 {
-    int ret = 0;
+    int ret          = 0;
     const char *pers = "aws_iot_tls_wrapper";
     char vrfy_buf[512];
     bool ServerVerificationFlag = false;
@@ -188,16 +189,17 @@ int https_client_tls_init()
 
     PRINTF("\n  . Seeding the random number generator...");
     mbedtls_entropy_init(&(tlsDataParams.entropy));
-    md_info = mbedtls_md_info_from_type( MBEDTLS_MD_SHA256 );
-    if ((ret = mbedtls_hmac_drbg_seed(&(tlsDataParams.hmac_drbg), md_info, mbedtls_entropy_func, &(tlsDataParams.entropy),
-                                     (const unsigned char *)pers, strlen(pers))) != 0)
+    md_info = mbedtls_md_info_from_type(MBEDTLS_MD_SHA256);
+    if ((ret = mbedtls_hmac_drbg_seed(&(tlsDataParams.hmac_drbg), md_info, mbedtls_entropy_func,
+                                      &(tlsDataParams.entropy), (const unsigned char *)pers, strlen(pers))) != 0)
     {
         PRINTF(" failed\n  ! mbedtls_hmac_drbg_seed returned -0x%x\n", -ret);
         return NETWORK_MBEDTLS_ERR_CTR_DRBG_ENTROPY_SOURCE_FAILED;
     }
 
     PRINTF("  . Loading the CA root certificate ...");
-    ret = mbedtls_x509_crt_parse(&(tlsDataParams.cacert), (const unsigned char *) mbedtls_test_ca_crt, mbedtls_test_ca_crt_len);
+    ret = mbedtls_x509_crt_parse(&(tlsDataParams.cacert), (const unsigned char *)mbedtls_test_ca_crt,
+                                 mbedtls_test_ca_crt_len);
     if (ret < 0)
     {
         PRINTF(" failed\n  !  mbedtls_x509_crt_parse returned -0x%x while parsing root cert\n\n", -ret);
@@ -206,14 +208,16 @@ int https_client_tls_init()
     PRINTF(" ok (%d skipped)\n", ret);
 
     PRINTF("  . Loading the client cert. and key...");
-    ret = mbedtls_x509_crt_parse(&(tlsDataParams.clicert), (const unsigned char *) mbedtls_test_cli_crt, mbedtls_test_cli_crt_len);
+    ret = mbedtls_x509_crt_parse(&(tlsDataParams.clicert), (const unsigned char *)mbedtls_test_cli_crt,
+                                 mbedtls_test_cli_crt_len);
     if (ret != 0)
     {
         PRINTF(" failed\n  !  mbedtls_x509_crt_parse returned -0x%x while parsing device cert\n\n", -ret);
         return NETWORK_X509_DEVICE_CRT_PARSE_ERROR;
     }
 
-    ret = mbedtls_pk_parse_key(&(tlsDataParams.pkey), (const unsigned char *) mbedtls_test_cli_key, mbedtls_test_cli_key_len, NULL, 0);
+    ret = mbedtls_pk_parse_key(&(tlsDataParams.pkey), (const unsigned char *)mbedtls_test_cli_key,
+                               mbedtls_test_cli_key_len, NULL, 0);
     if (ret != 0)
     {
         PRINTF(" failed\n  !  mbedtls_pk_parse_key returned -0x%x while parsing private key\n\n", -ret);
@@ -225,9 +229,9 @@ int https_client_tls_init()
     struct addrinfo hints;
     struct addrinfo *res;
     memset(&hints, 0, sizeof(struct addrinfo));
-    hints.ai_family = AF_INET;
+    hints.ai_family   = AF_INET;
     hints.ai_socktype = SOCK_STREAM;
-    hints.ai_flags = AI_PASSIVE;
+    hints.ai_flags    = AI_PASSIVE;
 
     ret = getaddrinfo(HTTPS_SERVER_NAME, HTTPS_SERVER_PORT, &hints, &res);
     if ((ret != 0) || (res == NULL))
@@ -271,8 +275,7 @@ int https_client_tls_init()
     mbedtls_ssl_conf_rng(&(tlsDataParams.conf), mbedtls_hmac_drbg_random, &(tlsDataParams.hmac_drbg));
 
     mbedtls_ssl_conf_ca_chain(&(tlsDataParams.conf), &(tlsDataParams.cacert), NULL);
-    if ((ret = mbedtls_ssl_conf_own_cert(&(tlsDataParams.conf), &(tlsDataParams.clicert), &(tlsDataParams.pkey))) !=
-        0)
+    if ((ret = mbedtls_ssl_conf_own_cert(&(tlsDataParams.conf), &(tlsDataParams.clicert), &(tlsDataParams.pkey))) != 0)
     {
         PRINTF(" failed\n  ! mbedtls_ssl_conf_own_cert returned %d\n\n", ret);
         return SSL_CONNECTION_ERROR;
@@ -290,8 +293,8 @@ int https_client_tls_init()
     }
     PRINTF("\n\nSSL state connect : %d ", tlsDataParams.ssl.state);
 
-    mbedtls_ssl_set_bio(&(tlsDataParams.ssl), &(tlsDataParams.fd), lwipSend,  (mbedtls_ssl_recv_t*) lwipRecv, NULL);
- 
+    mbedtls_ssl_set_bio(&(tlsDataParams.ssl), &(tlsDataParams.fd), lwipSend, (mbedtls_ssl_recv_t *)lwipRecv, NULL);
+
     PRINTF(" ok\n");
     PRINTF("\n\nSSL state connect : %d ", tlsDataParams.ssl.state);
     PRINTF("  . Performing the SSL/TLS handshake...");
@@ -311,8 +314,8 @@ int https_client_tls_init()
         }
     }
 
-    PRINTF(" ok\n    [ Protocol is %s ]\n    [ Ciphersuite is %s ]\n",
-              mbedtls_ssl_get_version(&(tlsDataParams.ssl)), mbedtls_ssl_get_ciphersuite(&(tlsDataParams.ssl)));
+    PRINTF(" ok\n    [ Protocol is %s ]\n    [ Ciphersuite is %s ]\n", mbedtls_ssl_get_version(&(tlsDataParams.ssl)),
+           mbedtls_ssl_get_ciphersuite(&(tlsDataParams.ssl)));
     if ((ret = mbedtls_ssl_get_record_expansion(&(tlsDataParams.ssl))) >= 0)
     {
         PRINTF("    [ Record expansion is %d ]\n", ret);

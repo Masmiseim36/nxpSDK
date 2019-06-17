@@ -2,6 +2,14 @@ Overview
 ========
 The DCP Example project is a demonstration program that uses the KSDK software implement
 several cryptography algorithms using the DCP software driver.
+
+Toolchain supported
+===================
+- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -38,11 +46,6 @@ CRC Test pass
 
 Note:
 There will be no log printed when downloading by IAR or keil. This issue will be fixed in later release.
-
-Toolchain supported
-===================
-- GCC ARM Embedded  7.3.1
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- MCUXpresso 10.3.1
+Customization options
+=====================
 

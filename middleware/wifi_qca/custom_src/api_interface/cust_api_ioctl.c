@@ -507,7 +507,7 @@ int32_t ath_ioctl_handler(QCA_CONTEXT_STRUCT_PTR qca_ptr, ATH_IOCTL_PARAM_STRUCT
             }
             else
             {
-                A_MEMCPY(&pDCxt->scan_param, &SCAN_PARAM, sizeof(WMI_SCAN_PARAMS_CMD));//update scan parameters                        
+                A_MEMCPY(&pDCxt->scan_param, &SCAN_PARAM, sizeof(WMI_SCAN_PARAMS_CMD));//update scan parameters
             }
             break;
         case ATH_SET_CONNECT_STATE_CALLBACK:
@@ -1250,6 +1250,7 @@ int32_t ath_ioctl_handler(QCA_CONTEXT_STRUCT_PTR qca_ptr, ATH_IOCTL_PARAM_STRUCT
             WPS_START.role = WPS_ENROLLEE_ROLE;
 
 #if ENABLE_SCC_MODE
+#if WLAN_NUM_OF_DEVICES > 1
             int num_dev = WLAN_NUM_OF_DEVICES;
 
             if ((num_dev > 1) && (pDCxt->conn[1].isConnected == true) && (pP2PConnect->go_oper_freq == 0))
@@ -1265,6 +1266,7 @@ int32_t ath_ioctl_handler(QCA_CONTEXT_STRUCT_PTR qca_ptr, ATH_IOCTL_PARAM_STRUCT
                     break;
                 }
             }
+#endif
 #endif /* ENABLE_SCC_MODE */
             if (pP2PConnect->wps_method == WPS_PBC)
             {
@@ -1300,7 +1302,7 @@ int32_t ath_ioctl_handler(QCA_CONTEXT_STRUCT_PTR qca_ptr, ATH_IOCTL_PARAM_STRUCT
     case ATH_P2P_INV_CONNECT:
     {
       pInvitation_connect_param =  (WMI_PERSISTENT_MAC_LIST *)param_ptr->data;
-      
+
       p2p_invite_conn_cmd.ssidLength          = strlen(pInvitation_connect_param->ssid);
       p2p_invite_conn_cmd.networkType         = INFRA_NETWORK;
       p2p_invite_conn_cmd.dot11AuthMode       = OPEN_AUTH;
@@ -1311,17 +1313,17 @@ int32_t ath_ioctl_handler(QCA_CONTEXT_STRUCT_PTR qca_ptr, ATH_IOCTL_PARAM_STRUCT
       p2p_invite_conn_cmd.groupCryptoLen      = 0;
       p2p_invite_conn_cmd.channel             = 0;
       p2p_invite_conn_cmd.ctrl_flags          = A_CPU2LE32(DEFAULT_CONNECT_CTRL_FLAGS |CONNECT_DO_WPA_OFFLOAD | CONNECT_IGNORE_WPAx_GROUP_CIPHER);
-      
+
       if (pInvitation_connect_param->ssid != NULL) {
         A_MEMCPY(p2p_invite_conn_cmd.ssid, pInvitation_connect_param->ssid, strlen(pInvitation_connect_param->ssid));
       }
-      
-      status = wmi_cmd_start(pDCxt->pWmiCxt, (void*)&p2p_invite_conn_cmd, 
+
+      status = wmi_cmd_start(pDCxt->pWmiCxt, (void*)&p2p_invite_conn_cmd,
                              WMI_CONNECT_CMDID, sizeof(WMI_CONNECT_CMD));
-      
+
       if(status != A_OK){
         break;
-      }      
+      }
 
     }
     break;
@@ -1636,7 +1638,7 @@ int32_t ath_ioctl_handler(QCA_CONTEXT_STRUCT_PTR qca_ptr, ATH_IOCTL_PARAM_STRUCT
             pDCxt->hb_sequence = HB_MAGIC ;
             if(A_OK == wmi_cmd_start(pWmi, param_ptr->data, WMI_EXTENSION_CMDID, param_ptr->length))
             {
-                /* block until data return */	
+                /* block until data return */
                 DRIVER_WAIT_FOR_CONDITION(pCxt, &(pDCxt->hb_challenge_done), true, 5000);
             }
             if (pDCxt->hb_challenge_done != true)

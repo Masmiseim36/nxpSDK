@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -77,13 +77,13 @@ mcdef_bldc_t g_sM1Drive;
 bool_t g_bM1SwitchAppOnOff;
 
 /*! @brief M1 structure */
-static m1_run_substate_t s_eM1StateRun;
+m1_run_substate_t s_eM1StateRun;
 
 /*! @brief FreeMASTER scales */
 /*! DO NOT USE THEM in the code to avoid float library include */
-static volatile float s_fltM1DCBvoltageScale;
-static volatile float s_fltM1currentScale;
-static volatile float s_fltM1speedScale;
+volatile float s_fltM1DCBvoltageScale;
+volatile float s_fltM1currentScale;
+volatile float s_fltM1speedScale;
 
 /*! @brief Application state machine table - fast */
 const sm_app_state_fcn_t s_STATE_FAST = {M1_StateFaultFast, M1_StateInitFast, M1_StateStopFast, M1_StateRunFast};
@@ -521,6 +521,10 @@ static void M1_TransStopRun(void)
 static void M1_TransRunFault(void)
 {
     /* type the code to do when going from the RUN to the FAULT state */
+    
+    /* disable PWM outputs */
+    M1_MCDRV_PWM3PH_SET_PWM_OUTPUT(&g_sM1Pwm3ph, 7);  
+  
     /* turn off application */
     g_bM1SwitchAppOnOff = 0;
 
@@ -1029,6 +1033,9 @@ static void M1_TransRunSpinFreewheel(void)
 {
     /* set long free-wheel period - expected motor spinning */
     g_sM1Drive.ui16CounterState = g_sM1Drive.ui16PeriodFreewheelLong;
+    
+    /* PWM output disable request */
+    M1_MCDRV_PWM3PH_SET_PWM_OUTPUT(&g_sM1Pwm3ph, 7);
 
     /* enter FREEWHEEL sub-state */
     s_eM1StateRun = kRunState_Freewheel;

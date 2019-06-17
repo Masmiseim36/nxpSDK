@@ -1,11 +1,10 @@
 /*
  * Copyright 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 , NXP
+ * Copyright 2016-2019, NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
 
 #ifndef _FSL_CLOCK_H_
 #define _FSL_CLOCK_H_
@@ -37,9 +36,14 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief CLOCK driver version 2.1.1. */
-#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
+/*! @brief CLOCK driver version 2.2.0. */
+#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
 /*@}*/
+
+/* Definition for delay API in clock driver, users can redefine it to the real application. */
+#ifndef SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY
+#define SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY (192000000UL)
+#endif
 
 /*!
  * @brief Re-map the SCG peripheral base address for i.MX 7ULP.
@@ -117,15 +121,15 @@ extern volatile uint32_t g_lvdsFreq;
 #define PCC_CLKCFG_PR_MASK (0x80000000U)
 
 /*! @brief Clock ip name array for DMAMUX. */
-#define DMAMUX_CLOCKS  \
-    {                  \
-        kCLOCK_Dmamux0 \
+#define DMAMUX_CLOCKS                  \
+    {                                  \
+        kCLOCK_Dmamux0, kCLOCK_Dmamux1 \
     }
 
 /*! @brief Clock ip name array for RGPIO2P. */
-#define RGPIO2P_CLOCKS  \
-    {                   \
-        kCLOCK_Rgpio2p0 \
+#define RGPIO2P_CLOCKS                                                                                       \
+    {                                                                                                        \
+        kCLOCK_Rgpio2p0, kCLOCK_Rgpio2p0, kCLOCK_Rgpio2p1, kCLOCK_Rgpio2p1, kCLOCK_Rgpio2p1, kCLOCK_Rgpio2p1 \
     }
 
 /*! @brief Clock ip name array for SAI. */
@@ -135,33 +139,35 @@ extern volatile uint32_t g_lvdsFreq;
     }
 
 /*! @brief Clock ip name array for PCTL. */
-#define PCTL_CLOCKS                \
-    {                              \
-        kCLOCK_PctlA, kCLOCK_PctlB \
+#define PCTL_CLOCKS                                                                        \
+    {                                                                                      \
+        kCLOCK_PctlA, kCLOCK_PctlB, kCLOCK_PctlC, kCLOCK_PctlD, kCLOCK_PctlE, kCLOCK_PctlF \
     }
 
 /*! @brief Clock ip name array for LPI2C. */
-#define LPI2C_CLOCKS                                               \
-    {                                                              \
-        kCLOCK_Lpi2c0, kCLOCK_Lpi2c1, kCLOCK_Lpi2c2, kCLOCK_Lpi2c3 \
+#define LPI2C_CLOCKS                                                                                             \
+    {                                                                                                            \
+        kCLOCK_Lpi2c0, kCLOCK_Lpi2c1, kCLOCK_Lpi2c2, kCLOCK_Lpi2c3, kCLOCK_Lpi2c4, kCLOCK_Lpi2c5, kCLOCK_Lpi2c6, \
+            kCLOCK_Lpi2c7                                                                                        \
     }
 
 /*! @brief Clock ip name array for FLEXIO. */
-#define FLEXIO_CLOCKS  \
-    {                  \
-        kCLOCK_Flexio0 \
+#define FLEXIO_CLOCKS                  \
+    {                                  \
+        kCLOCK_Flexio0, kCLOCK_Flexio1 \
     }
 
 /*! @brief Clock ip name array for EDMA. */
-#define EDMA_CLOCKS \
-    {               \
-        kCLOCK_Dma0 \
+#define EDMA_CLOCKS              \
+    {                            \
+        kCLOCK_Dma0, kCLOCK_Dma1 \
     }
 
 /*! @brief Clock ip name array for LPUART. */
-#define LPUART_CLOCKS                                                  \
-    {                                                                  \
-        kCLOCK_Lpuart0, kCLOCK_Lpuart1, kCLOCK_Lpuart2, kCLOCK_Lpuart3 \
+#define LPUART_CLOCKS                                                                                   \
+    {                                                                                                   \
+        kCLOCK_Lpuart0, kCLOCK_Lpuart1, kCLOCK_Lpuart2, kCLOCK_Lpuart3, kCLOCK_Lpuart4, kCLOCK_Lpuart5, \
+            kCLOCK_Lpuart6, kCLOCK_Lpuart7                                                              \
     }
 
 /*! @brief Clock ip name array for DAC. */
@@ -171,14 +177,14 @@ extern volatile uint32_t g_lvdsFreq;
     }
 
 /*! @brief Clock ip name array for DAC. */
-#define SNVS_HP_CLOCKS           \
-    {                            \
-        kCLOCK_Snvs              \
+#define SNVS_HP_CLOCKS \
+    {                  \
+        kCLOCK_Snvs    \
     }
 
-#define SNVS_LP_CLOCKS           \
-    {                            \
-        kCLOCK_Snvs              \
+#define SNVS_LP_CLOCKS \
+    {                  \
+        kCLOCK_Snvs    \
     }
 
 /*! @brief Clock ip name array for LPTMR. */
@@ -200,21 +206,21 @@ extern volatile uint32_t g_lvdsFreq;
     }
 
 /*! @brief Clock ip name array for LPSPI. */
-#define LPSPI_CLOCKS                 \
-    {                                \
-        kCLOCK_Lpspi0, kCLOCK_Lpspi1 \
+#define LPSPI_CLOCKS                                               \
+    {                                                              \
+        kCLOCK_Lpspi0, kCLOCK_Lpspi1, kCLOCK_Lpspi2, kCLOCK_Lpspi3 \
     }
 
 /*! @brief Clock ip name array for TPM. */
-#define TPM_CLOCKS                                         \
-    {                                                      \
-        kCLOCK_Tpm0, kCLOCK_Tpm1, kCLOCK_Tpm2, kCLOCK_Tpm3 \
+#define TPM_CLOCKS                                                                                             \
+    {                                                                                                          \
+        kCLOCK_Tpm0, kCLOCK_Tpm1, kCLOCK_Tpm2, kCLOCK_Tpm3, kCLOCK_Tpm4, kCLOCK_Tpm5, kCLOCK_Tpm6, kCLOCK_Tpm7 \
     }
 
 /*! @brief Clock ip name array for LPIT. */
-#define LPIT_CLOCKS  \
-    {                \
-        kCLOCK_Lpit0 \
+#define LPIT_CLOCKS                \
+    {                              \
+        kCLOCK_Lpit0, kCLOCK_Lpit1 \
     }
 
 /*! @brief Clock ip name array for CRC. */
@@ -242,9 +248,9 @@ extern volatile uint32_t g_lvdsFreq;
     }
 
 /*! @brief Clock ip name array for WDOG. */
-#define WDOG_CLOCKS  \
-    {                \
-        kCLOCK_Wdog0 \
+#define WDOG_CLOCKS                              \
+    {                                            \
+        kCLOCK_Wdog0, kCLOCK_Wdog1, kCLOCK_Wdog2 \
     }
 
 /*! @brief Clock ip name array for LTC. */
@@ -260,9 +266,9 @@ extern volatile uint32_t g_lvdsFreq;
     }
 
 /*! @brief Clock ip name array for SEMA42. */
-#define SEMA42_CLOCKS    \
-    {                    \
-        kCLOCK_Sema420   \
+#define SEMA42_CLOCKS                  \
+    {                                  \
+        kCLOCK_Sema420, kCLOCK_Sema421 \
     }
 
 /*! @brief Clock ip name array for TPIU. */
@@ -382,49 +388,93 @@ typedef enum _clock_ip_name
 {
     kCLOCK_IpInvalid = 0U,
     /* PCC 0 */
-    kCLOCK_Dma0 = 0x41026020U,
+    kCLOCK_Dma0     = 0x41026020U,
     kCLOCK_Rgpio2p0 = 0x4102603CU,
-    kCLOCK_Xrdc0 = 0x41026050U,
-    kCLOCK_Sema420 = 0x4102606CU,
-    kCLOCK_Dmamux0 = 0x41026080U,
-    kCLOCK_MuA = 0x41026088U,
-    kCLOCK_Wdog0 = 0x41026094U,
-    kCLOCK_Crc0 = 0x410260A4U,
-    kCLOCK_Ltc0 = 0x410260A8U,
-    kCLOCK_Trng0 = 0x410260B0U,
-    kCLOCK_Lpit0 = 0x410260B4U,
-    kCLOCK_Lptmr0 = 0x410260B8U,
-    kCLOCK_Lptmr1 = 0x410260BCU,
-    kCLOCK_Tpm0 = 0x410260C0U,
-    kCLOCK_Tpm1 = 0x410260C4U,
-    kCLOCK_Flexio0 = 0x410260C8U,
-    kCLOCK_Lpi2c0 = 0x410260CCU,
-    kCLOCK_Lpi2c1 = 0x410260D0U,
-    kCLOCK_Lpi2c2 = 0x410260D4U,
-    kCLOCK_Lpi2c3 = 0x410260D8U,
-    kCLOCK_Sai0 = 0x410260DCU,
-    kCLOCK_Lpspi0 = 0x410260E0U,
-    kCLOCK_Lpspi1 = 0x410260E4U,
-    kCLOCK_Lpuart0 = 0x410260E8U,
-    kCLOCK_Lpuart1 = 0x410260ECU,
-    kCLOCK_PctlA = 0x410260FCU,
-    kCLOCK_PctlB = 0x41026100U,
-    kCLOCK_Adc0 = 0x41026104U,
-    kCLOCK_Cmp0 = 0x41026108U,
-    kCLOCK_Cmp1 = 0x4102610CU,
-    kCLOCK_Dac0 = 0x41026110U,
-    kCLOCK_Dac1 = 0x41026114U,
-    kCLOCK_Snvs = 0x410261C0U,
+    kCLOCK_Xrdc0    = 0x41026050U,
+    kCLOCK_Sema420  = 0x4102606CU,
+    kCLOCK_Dmamux0  = 0x41026080U,
+    kCLOCK_MuA      = 0x41026088U,
+    kCLOCK_Wdog0    = 0x41026094U,
+    kCLOCK_Crc0     = 0x410260A4U,
+    kCLOCK_Ltc0     = 0x410260A8U,
+    kCLOCK_Trng0    = 0x410260B0U,
+    kCLOCK_Lpit0    = 0x410260B4U,
+    kCLOCK_Lptmr0   = 0x410260B8U,
+    kCLOCK_Lptmr1   = 0x410260BCU,
+    kCLOCK_Tpm0     = 0x410260C0U,
+    kCLOCK_Tpm1     = 0x410260C4U,
+    kCLOCK_Flexio0  = 0x410260C8U,
+    kCLOCK_Lpi2c0   = 0x410260CCU,
+    kCLOCK_Lpi2c1   = 0x410260D0U,
+    kCLOCK_Lpi2c2   = 0x410260D4U,
+    kCLOCK_Lpi2c3   = 0x410260D8U,
+    kCLOCK_Sai0     = 0x410260DCU,
+    kCLOCK_Lpspi0   = 0x410260E0U,
+    kCLOCK_Lpspi1   = 0x410260E4U,
+    kCLOCK_Lpuart0  = 0x410260E8U,
+    kCLOCK_Lpuart1  = 0x410260ECU,
+    kCLOCK_PctlA    = 0x410260FCU,
+    kCLOCK_PctlB    = 0x41026100U,
+    kCLOCK_Adc0     = 0x41026104U,
+    kCLOCK_Cmp0     = 0x41026108U,
+    kCLOCK_Cmp1     = 0x4102610CU,
+    kCLOCK_Dac0     = 0x41026110U,
+    kCLOCK_Dac1     = 0x41026114U,
+    kCLOCK_Snvs     = 0x410261C0U,
 
     /* PCC 1 */
-    kCLOCK_Tpiu = 0x410B2050U,
-    kCLOCK_Qspi = 0x410B2094U,
-    kCLOCK_Tpm2 = 0x410B20A0U,
-    kCLOCK_Tpm3 = 0x410B20A4U,
-    kCLOCK_Sai1 = 0x410B20A8U,
+    kCLOCK_Tpiu    = 0x410B2050U,
+    kCLOCK_Qspi    = 0x410B2094U,
+    kCLOCK_Tpm2    = 0x410B20A0U,
+    kCLOCK_Tpm3    = 0x410B20A4U,
+    kCLOCK_Sai1    = 0x410B20A8U,
     kCLOCK_Lpuart2 = 0x410B20ACU,
     kCLOCK_Lpuart3 = 0x410B20B0U,
-    kCLOCK_Adc1 = 0x410B20B4U,
+    kCLOCK_Adc1    = 0x410B20B4U,
+
+    /* PCC 2 */
+    kCLOCK_Dma1     = 0x403F0020U,
+    kCLOCK_Rgpio2p1 = 0x403F003CU,
+    kCLOCK_Flexbus  = 0x403F0040U,
+    kCLOCK_Sema421  = 0x403F006CU,
+    kCLOCK_Dmamux1  = 0x403F0084U,
+    kCLOCK_Caam     = 0x403F0090U,
+    kCLOCK_Tpm4     = 0x403F0094U,
+    kCLOCK_Tpm5     = 0x403F0098U,
+    kCLOCK_Lpit1    = 0x403F009CU,
+    kCLOCK_Lpspi2   = 0x403F00A4U,
+    kCLOCK_Lpspi3   = 0x403F00A8U,
+    kCLOCK_Lpi2c4   = 0x403F00ACU,
+    kCLOCK_Lpi2c5   = 0x403F00B0U,
+    kCLOCK_Lpuart4  = 0x403F00B4U,
+    kCLOCK_Lpuart5  = 0x403F00B8U,
+    kCLOCK_Flexio1  = 0x403F00C4U,
+    kCLOCK_Usb0     = 0x403F00CCU,
+    kCLOCK_Usb1     = 0x403F00D0U,
+    kCLOCK_UsbPhy   = 0x403F00D4U,
+    kCLOCK_UsbPl301 = 0x403F00D8U,
+    kCLOCK_Usdhc0   = 0x403F00DCU,
+    kCLOCK_Usdhc1   = 0x403F00E0U,
+    kCLOCK_Wdog1    = 0x403F00F4U,
+    kCLOCK_Wdog2    = 0x403F010CU,
+
+    /* PCC 3 */
+    kCLOCK_Tpm6    = 0x40B30084U,
+    kCLOCK_Tpm7    = 0x40B30088U,
+    kCLOCK_Lpi2c6  = 0x40B30090U,
+    kCLOCK_Lpi2c7  = 0x40B30094U,
+    kCLOCK_Lpuart6 = 0x40B30098U,
+    kCLOCK_Lpuart7 = 0x40B3009CU,
+    kCLOCK_Viu     = 0x40B300A0U,
+    kCLOCK_Dsi     = 0x40B300A4U,
+    kCLOCK_Lcdif   = 0x40B300A8U,
+    kCLOCK_Mmdc    = 0x40B300ACU,
+    kCLOCK_PctlC   = 0x40B300B8U,
+    kCLOCK_PctlD   = 0x40B300BCU,
+    kCLOCK_PctlE   = 0x40B300C0U,
+    kCLOCK_PctlF   = 0x40B300C4U,
+    kCLOCK_Gpu3D   = 0x40B30140U,
+    kCLOCK_Gpu2D   = 0x40B30144U,
 } clock_ip_name_t;
 
 /*!
@@ -432,8 +482,8 @@ typedef enum _clock_ip_name
  */
 enum _scg_status
 {
-    kStatus_SCG_Busy = MAKE_STATUS(kStatusGroup_SCG, 1),      /*!< Clock is busy.  */
-    kStatus_SCG_InvalidSrc = MAKE_STATUS(kStatusGroup_SCG, 2) /*!< Invalid source. */
+    kStatus_SCG_Busy       = MAKE_STATUS(kStatusGroup_SCG, 1), /*!< Clock is busy.  */
+    kStatus_SCG_InvalidSrc = MAKE_STATUS(kStatusGroup_SCG, 2)  /*!< Invalid source. */
 };
 
 /*!
@@ -454,9 +504,9 @@ typedef enum _scg_sys_clk
 typedef enum _scg_sys_clk_src
 {
     kSCG_SysClkSrcSysOsc = 1U, /*!< System OSC. */
-    kSCG_SysClkSrcSirc = 2U,   /*!< Slow IRC.   */
-    kSCG_SysClkSrcFirc = 3U,   /*!< Fast IRC.   */
-    kSCG_SysClkSrcRosc = 4U,   /*!< RTC OSC. */
+    kSCG_SysClkSrcSirc   = 2U, /*!< Slow IRC.   */
+    kSCG_SysClkSrcFirc   = 3U, /*!< Fast IRC.   */
+    kSCG_SysClkSrcRosc   = 4U, /*!< RTC OSC. */
     kSCG_SysClkSrcAuxPll = 5U, /*!< Auxiliary PLL. */
     kSCG_SysClkSrcSysPll = 6U  /*!< System PLL. */
 } scg_sys_clk_src_t;
@@ -466,15 +516,15 @@ typedef enum _scg_sys_clk_src
  */
 typedef enum _scg_sys_clk_div
 {
-    kSCG_SysClkDivBy1 = 0U,   /*!< Divided by 1.  */
-    kSCG_SysClkDivBy2 = 1U,   /*!< Divided by 2.  */
-    kSCG_SysClkDivBy3 = 2U,   /*!< Divided by 3.  */
-    kSCG_SysClkDivBy4 = 3U,   /*!< Divided by 4.  */
-    kSCG_SysClkDivBy5 = 4U,   /*!< Divided by 5.  */
-    kSCG_SysClkDivBy6 = 5U,   /*!< Divided by 6.  */
-    kSCG_SysClkDivBy7 = 6U,   /*!< Divided by 7.  */
-    kSCG_SysClkDivBy8 = 7U,   /*!< Divided by 8.  */
-    kSCG_SysClkDivBy9 = 8U,   /*!< Divided by 9.  */
+    kSCG_SysClkDivBy1  = 0U,  /*!< Divided by 1.  */
+    kSCG_SysClkDivBy2  = 1U,  /*!< Divided by 2.  */
+    kSCG_SysClkDivBy3  = 2U,  /*!< Divided by 3.  */
+    kSCG_SysClkDivBy4  = 3U,  /*!< Divided by 4.  */
+    kSCG_SysClkDivBy5  = 4U,  /*!< Divided by 5.  */
+    kSCG_SysClkDivBy6  = 5U,  /*!< Divided by 6.  */
+    kSCG_SysClkDivBy7  = 6U,  /*!< Divided by 7.  */
+    kSCG_SysClkDivBy8  = 7U,  /*!< Divided by 8.  */
+    kSCG_SysClkDivBy9  = 8U,  /*!< Divided by 9.  */
     kSCG_SysClkDivBy10 = 9U,  /*!< Divided by 10. */
     kSCG_SysClkDivBy11 = 10U, /*!< Divided by 11. */
     kSCG_SysClkDivBy12 = 11U, /*!< Divided by 12. */
@@ -504,13 +554,13 @@ typedef struct _scg_sys_clk_config
  */
 typedef enum _clock_clkout_src
 {
-    kClockClkoutSelScgExt = 0U,    /*!< SCG external clock. */
-    kClockClkoutSelSysOsc = 1U,    /*!< System OSC.     */
-    kClockClkoutSelSirc = 2U,      /*!< Slow IRC.       */
-    kClockClkoutSelFirc = 3U,      /*!< Fast IRC.       */
+    kClockClkoutSelScgExt    = 0U, /*!< SCG external clock. */
+    kClockClkoutSelSysOsc    = 1U, /*!< System OSC.     */
+    kClockClkoutSelSirc      = 2U, /*!< Slow IRC.       */
+    kClockClkoutSelFirc      = 3U, /*!< Fast IRC.       */
     kClockClkoutSelScgRtcOsc = 4U, /*!< SCG RTC OSC clock. */
     kClockClkoutSelScgAuxPll = 5U, /*!< SCG Auxiliary PLL clock. */
-    kClockClkoutSelSysPll = 6U     /*!< System PLL.     */
+    kClockClkoutSelSysPll    = 6U  /*!< System PLL.     */
 } clock_clkout_src_t;
 
 /*!
@@ -529,10 +579,10 @@ typedef enum _scg_async_clk
 typedef enum scg_async_clk_div
 {
     kSCG_AsyncClkDisable = 0U, /*!< Clock output is disabled.  */
-    kSCG_AsyncClkDivBy1 = 1U,  /*!< Divided by 1.              */
-    kSCG_AsyncClkDivBy2 = 2U,  /*!< Divided by 2.              */
-    kSCG_AsyncClkDivBy4 = 3U,  /*!< Divided by 4.              */
-    kSCG_AsyncClkDivBy8 = 4U,  /*!< Divided by 8.              */
+    kSCG_AsyncClkDivBy1  = 1U, /*!< Divided by 1.              */
+    kSCG_AsyncClkDivBy2  = 2U, /*!< Divided by 2.              */
+    kSCG_AsyncClkDivBy4  = 3U, /*!< Divided by 4.              */
+    kSCG_AsyncClkDivBy8  = 4U, /*!< Divided by 8.              */
     kSCG_AsyncClkDivBy16 = 5U, /*!< Divided by 16.             */
     kSCG_AsyncClkDivBy32 = 6U, /*!< Divided by 32.             */
     kSCG_AsyncClkDivBy64 = 7U  /*!< Divided by 64.             */
@@ -543,8 +593,8 @@ typedef enum scg_async_clk_div
  */
 typedef enum _scg_sosc_monitor_mode
 {
-    kSCG_SysOscMonitorDisable = 0U,                  /*!< Monitor disabled.                          */
-    kSCG_SysOscMonitorInt = SCG_SOSCCSR_SOSCCM_MASK, /*!< Interrupt when the system OSC error is detected. */
+    kSCG_SysOscMonitorDisable = 0U,                      /*!< Monitor disabled.                          */
+    kSCG_SysOscMonitorInt     = SCG_SOSCCSR_SOSCCM_MASK, /*!< Interrupt when the system OSC error is detected. */
     kSCG_SysOscMonitorReset =
         SCG_SOSCCSR_SOSCCM_MASK | SCG_SOSCCSR_SOSCCMRE_MASK /*!< Reset when the system OSC error is detected.     */
 } scg_sosc_monitor_mode_t;
@@ -552,7 +602,7 @@ typedef enum _scg_sosc_monitor_mode
 /*! @brief OSC work mode. */
 typedef enum _scg_sosc_mode
 {
-    kSCG_SysOscModeExt = 0U,                                                   /*!< Use external clock.   */
+    kSCG_SysOscModeExt         = 0U,                                           /*!< Use external clock.   */
     kSCG_SysOscModeOscLowPower = SCG_SOSCCFG_EREFS_MASK,                       /*!< Oscillator low power. */
     kSCG_SysOscModeOscHighGain = SCG_SOSCCFG_EREFS_MASK | SCG_SOSCCFG_HGO_MASK /*!< Oscillator high gain. */
 } scg_sosc_mode_t;
@@ -560,8 +610,8 @@ typedef enum _scg_sosc_mode
 /*! @brief OSC enable mode. */
 enum _scg_sosc_enable_mode
 {
-    kSCG_SysOscEnable = SCG_SOSCCSR_SOSCEN_MASK,             /*!< Enable OSC clock. */
-    kSCG_SysOscEnableInStop = SCG_SOSCCSR_SOSCSTEN_MASK,     /*!< Enable OSC in stop mode. */
+    kSCG_SysOscEnable           = SCG_SOSCCSR_SOSCEN_MASK,   /*!< Enable OSC clock. */
+    kSCG_SysOscEnableInStop     = SCG_SOSCCSR_SOSCSTEN_MASK, /*!< Enable OSC in stop mode. */
     kSCG_SysOscEnableInLowPower = SCG_SOSCCSR_SOSCLPEN_MASK, /*!< Enable OSC in low power mode. */
 };
 
@@ -593,9 +643,9 @@ typedef enum _scg_sirc_range
 /*! @brief SIRC enable mode. */
 enum _scg_sirc_enable_mode
 {
-    kSCG_SircEnable = SCG_SIRCCSR_SIRCEN_MASK,            /*!< Enable SIRC clock.             */
-    kSCG_SircEnableInStop = SCG_SIRCCSR_SIRCSTEN_MASK,    /*!< Enable SIRC in stop mode.      */
-    kSCG_SircEnableInLowPower = SCG_SIRCCSR_SIRCLPEN_MASK /*!< Enable SIRC in low power mode. */
+    kSCG_SircEnable           = SCG_SIRCCSR_SIRCEN_MASK,   /*!< Enable SIRC clock.             */
+    kSCG_SircEnableInStop     = SCG_SIRCCSR_SIRCSTEN_MASK, /*!< Enable SIRC in stop mode.      */
+    kSCG_SircEnableInLowPower = SCG_SIRCCSR_SIRCLPEN_MASK  /*!< Enable SIRC in low power mode. */
 };
 
 /*!
@@ -645,8 +695,8 @@ typedef enum _scg_firc_trim_div
  */
 typedef enum _scg_firc_trim_src
 {
-    kSCG_FircTrimSrcUsb0 = 0U,   /*!< USB0 start of frame (1kHz). */
-    kSCG_FircTrimSrcUsb1 = 1U,   /*!< USB1 start of frame (1kHz). */
+    kSCG_FircTrimSrcUsb0   = 0U, /*!< USB0 start of frame (1kHz). */
+    kSCG_FircTrimSrcUsb1   = 1U, /*!< USB1 start of frame (1kHz). */
     kSCG_FircTrimSrcSysOsc = 2U, /*!< System OSC.                 */
     kSCG_FircTrimSrcRtcOsc = 3U, /*!< RTC OSC (32.768 kHz).       */
 } scg_firc_trim_src_t;
@@ -678,7 +728,7 @@ typedef enum _scg_firc_range
 /*! @brief FIRC enable mode. */
 enum _scg_firc_enable_mode
 {
-    kSCG_FircEnable = SCG_FIRCCSR_FIRCEN_MASK,         /*!< Enable FIRC clock.             */
+    kSCG_FircEnable       = SCG_FIRCCSR_FIRCEN_MASK,   /*!< Enable FIRC clock.             */
     kSCG_FircEnableInStop = SCG_FIRCCSR_FIRCSTEN_MASK, /*!< Enable FIRC in stop mode.      */
 };
 
@@ -710,7 +760,7 @@ typedef enum _scg_spll_src
 /*! @brief SPLL enable mode. */
 enum _scg_spll_enable_mode
 {
-    kSCG_SysPllEnable = SCG_SPLLCSR_SPLLEN_MASK,        /*!< Enable SPLL clock.             */
+    kSCG_SysPllEnable       = SCG_SPLLCSR_SPLLEN_MASK,  /*!< Enable SPLL clock.             */
     kSCG_SysPllEnableInStop = SCG_SPLLCSR_SPLLSTEN_MASK /*!< Enable SPLL in stop mode.      */
 };
 
@@ -748,8 +798,8 @@ typedef struct _scg_spll_config
  */
 typedef enum _scg_rosc_monitor_mode
 {
-    kSCG_rtcOscMonitorDisable = 0U,                  /*!< Monitor disable.                          */
-    kSCG_rtcOscMonitorInt = SCG_ROSCCSR_ROSCCM_MASK, /*!< Interrupt when the RTC OSC error is detected. */
+    kSCG_rtcOscMonitorDisable = 0U,                      /*!< Monitor disable.                          */
+    kSCG_rtcOscMonitorInt     = SCG_ROSCCSR_ROSCCM_MASK, /*!< Interrupt when the RTC OSC error is detected. */
     kSCG_rtcOscMonitorReset =
         SCG_ROSCCSR_ROSCCM_MASK | SCG_ROSCCSR_ROSCCMRE_MASK /*!< Reset when the RTC OSC error is detected.     */
 } scg_rosc_monitor_mode_t;
@@ -774,7 +824,7 @@ typedef enum _scg_apll_src
 /*! @brief APLL enable mode. */
 enum _scg_apll_enable_mode
 {
-    kSCG_AuxPllEnable = SCG_APLLCSR_APLLEN_MASK,        /*!< Enable APLL clock.             */
+    kSCG_AuxPllEnable       = SCG_APLLCSR_APLLEN_MASK,  /*!< Enable APLL clock.             */
     kSCG_AuxPllEnableInStop = SCG_APLLCSR_APLLSTEN_MASK /*!< Enable APLL in stop mode.      */
 };
 
@@ -908,8 +958,8 @@ static inline void CLOCK_SetIpSrcDiv(clock_ip_name_t name, clock_ip_src_t src, u
 
     if ((kCLOCK_Sai0 == name) || (kCLOCK_Sai1 == name))
     {
-        reg = (reg & ~(PCC_CLKCFG_PCS_MASK | PCC1_PCC_SAI1_PCD_MASK)) | PCC_CLKCFG_PCS(src) |
-              PCC1_PCC_SAI1_PCD(divValue);
+        reg =
+            (reg & ~(PCC_CLKCFG_PCS_MASK | PCC1_PCC_SAI1_PCD_MASK)) | PCC_CLKCFG_PCS(src) | PCC1_PCC_SAI1_PCD(divValue);
     }
     else
     {
@@ -1873,6 +1923,17 @@ static inline void CLOCK_SetLvdsFreq(uint32_t freq)
 {
     g_lvdsFreq = freq;
 }
+
+/*!
+ * @brief Use DWT to delay at least for some time.
+ *  Please note that, this API will calculate the microsecond period with the maximum
+ *  supported CPU frequency, so this API will only delay for at least the given microseconds, if precise
+ *  delay count was needed, please implement a new timer count to achieve this function.
+ *
+ * @param delay_us  Delay time in unit of microsecond.
+ */
+void SDK_DelayAtLeastUs(uint32_t delay_us);
+
 /* @} */
 
 #if defined(__cplusplus)

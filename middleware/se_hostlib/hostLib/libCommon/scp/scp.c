@@ -489,7 +489,7 @@ static U32 scp_TransformResponse(apdu_t *pApdu)
 
     U8 response[SCP_BUFFER_SIZE];
     U8 plaintextResponse[SCP_BUFFER_SIZE];
-    U8 sw[SCP_GP_SW_LEN];
+    U8 sw[SCP_GP_SW_LEN] = {0};
     U8 pMac[16];
     //axHcCmacCtx_t *cmacCtx;
     HLSE_CONTEXT_HANDLE hContext;

@@ -1,13 +1,12 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_common.h"
-#include "fsl_debug_console.h"
 #include "fsl_lpi2c.h"
 #include "fsl_ft5406_rt.h"
 
@@ -53,25 +52,25 @@ status_t FT5406_RT_Init(ft5406_rt_handle_t *handle, LPI2C_Type *base)
     memset(handle->touch_buf, 0, FT5406_RT_TOUCH_DATA_LEN);
 
     /* set device mode to normal operation */
-    mode = 0;
-    xfer->slaveAddress = FT5406_RT_I2C_ADDRESS;
-    xfer->direction = kLPI2C_Write;
-    xfer->subaddress = 0;
+    mode                 = 0;
+    xfer->slaveAddress   = FT5406_RT_I2C_ADDRESS;
+    xfer->direction      = kLPI2C_Write;
+    xfer->subaddress     = 0;
     xfer->subaddressSize = 1;
-    xfer->data = &mode;
-    xfer->dataSize = 1;
-    xfer->flags = kLPI2C_TransferDefaultFlag;
+    xfer->data           = &mode;
+    xfer->dataSize       = 1;
+    xfer->flags          = kLPI2C_TransferDefaultFlag;
 
     status = LPI2C_MasterTransferBlocking(handle->base, &handle->xfer);
 
     /* prepare transfer structure for reading touch data */
-    xfer->slaveAddress = FT5406_RT_I2C_ADDRESS;
-    xfer->direction = kLPI2C_Read;
-    xfer->subaddress = 1;
+    xfer->slaveAddress   = FT5406_RT_I2C_ADDRESS;
+    xfer->direction      = kLPI2C_Read;
+    xfer->subaddress     = 1;
     xfer->subaddressSize = 1;
-    xfer->data = handle->touch_buf;
-    xfer->dataSize = FT5406_RT_TOUCH_DATA_LEN;
-    xfer->flags = kLPI2C_TransferDefaultFlag;
+    xfer->data           = handle->touch_buf;
+    xfer->dataSize       = FT5406_RT_TOUCH_DATA_LEN;
+    xfer->flags          = kLPI2C_TransferDefaultFlag;
 
     return status;
 }
@@ -157,19 +156,19 @@ status_t FT5406_RT_GetMultiTouch(ft5406_rt_handle_t *handle,
         /* Decode valid touch points */
         for (i = 0; i < touch_data->TD_STATUS; i++)
         {
-            touch_array[i].TOUCH_ID = TOUCH_POINT_GET_ID(touch_data->TOUCH[i]);
+            touch_array[i].TOUCH_ID    = TOUCH_POINT_GET_ID(touch_data->TOUCH[i]);
             touch_array[i].TOUCH_EVENT = TOUCH_POINT_GET_EVENT(touch_data->TOUCH[i]);
-            touch_array[i].TOUCH_X = TOUCH_POINT_GET_X(touch_data->TOUCH[i]);
-            touch_array[i].TOUCH_Y = TOUCH_POINT_GET_Y(touch_data->TOUCH[i]);
+            touch_array[i].TOUCH_X     = TOUCH_POINT_GET_X(touch_data->TOUCH[i]);
+            touch_array[i].TOUCH_Y     = TOUCH_POINT_GET_Y(touch_data->TOUCH[i]);
         }
 
         /* Clear vacant elements of touch_array */
         for (; i < FT5406_RT_MAX_TOUCHES; i++)
         {
-            touch_array[i].TOUCH_ID = 0;
+            touch_array[i].TOUCH_ID    = 0;
             touch_array[i].TOUCH_EVENT = kTouch_Reserved;
-            touch_array[i].TOUCH_X = 0;
-            touch_array[i].TOUCH_Y = 0;
+            touch_array[i].TOUCH_X     = 0;
+            touch_array[i].TOUCH_Y     = 0;
         }
     }
 

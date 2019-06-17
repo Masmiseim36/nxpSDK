@@ -1,0 +1,32 @@
+Release Name: FreeMASTER Communication Driver
+=============================================
+
+FreeMASTER Communication Driver             Version: 3.x
+for NXP Microcontrollers                    Author: NXP
+                                            License: LA_OPT_NXP_Software_License
+                                            Content register: this file
+                                            Format: source code
+                                            Location: src/common/*, src/platforms/*, src/drivers/*
+
+
+FreeMASTER Example Code                     Version: n/a
+                                            Author: NXP
+                                            License: Open Source - BSD-3-Clause               
+                                            Content register: this file
+                                            Format: source code
+                                            Location: boards/*, src/support/mcuxsdk_usb/*
+
+
+SHA-1/SHA-256 crypto-algorithms library     Version: n/a
+written by Brad Conte, brad@bradconte.com   License: public domain
+                                            License text: https://github.com/B-Con/crypto-algorithms/blob/master/README.md
+                                            Original location: https://github.com/B-Con/crypto-algorithms
+                                            Format: unmodified source code
+                                            Location: src/support/sec_ca/src/*
+
+
+bernii gauge.js component                   Used as minified version in demo project UI
+                                            Author: Bernard Kobos, https://github.com/bernii
+                                            License: MIT 
+                                            Original location: http://bernii.github.io/gauge.js
+

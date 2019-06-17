@@ -11,20 +11,11 @@
 #if defined(SDK_I2C_BASED_COMPONENT_USED) && SDK_I2C_BASED_COMPONENT_USED
 #include "fsl_lpi2c.h"
 #endif /* SDK_I2C_BASED_COMPONENT_USED */
-#if defined BOARD_USE_CODEC
-#include "fsl_wm8960.h"
-#endif
 #include "fsl_iomuxc.h"
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-#if defined BOARD_USE_CODEC
-codec_config_t boardCodecConfig = {.I2C_SendFunc = BOARD_Codec_I2C_Send,
-                                   .I2C_ReceiveFunc = BOARD_Codec_I2C_Receive,
-                                   .op.Init = WM8960_Init,
-                                   .op.Deinit = WM8960_Deinit,
-                                   .op.SetFormat = WM8960_ConfigDataFormat};
-#endif
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -323,7 +314,6 @@ void BOARD_SD_Pin_Config(uint32_t speed, uint32_t strength)
                             IOMUXC_SW_PAD_CTL_PAD_PKE_MASK | IOMUXC_SW_PAD_CTL_PAD_PUE_MASK |
                             IOMUXC_SW_PAD_CTL_PAD_HYS_MASK | IOMUXC_SW_PAD_CTL_PAD_PUS(1) |
                             IOMUXC_SW_PAD_CTL_PAD_DSE(strength));
-\
 }
 
 void BOARD_MMC_Pin_Config(uint32_t speed, uint32_t strength)
@@ -377,7 +367,6 @@ void BOARD_MMC_Pin_Config(uint32_t speed, uint32_t strength)
                             IOMUXC_SW_PAD_CTL_PAD_PKE_MASK | IOMUXC_SW_PAD_CTL_PAD_PUE_MASK |
                             IOMUXC_SW_PAD_CTL_PAD_HYS_MASK | IOMUXC_SW_PAD_CTL_PAD_PUS(1) |
                             IOMUXC_SW_PAD_CTL_PAD_DSE(strength));
-\
 }
 
 /* MPU configuration. */
@@ -399,12 +388,12 @@ void BOARD_ConfigMPU(void)
     /* MPU configure:
      * Use ARM_MPU_RASR(DisableExec, AccessPermission, TypeExtField, IsShareable, IsCacheable, IsBufferable,
      * SubRegionDisable, Size)
-     * API in core_cm7.h.
+     * API in mpu_armv7.h.
      * param DisableExec       Instruction access (XN) disable bit,0=instruction fetches enabled, 1=instruction fetches
      * disabled.
      * param AccessPermission  Data access permissions, allows you to configure read/write access for User and
      * Privileged mode.
-     *      Use MACROS defined in core_cm7.h:
+     *      Use MACROS defined in mpu_armv7.h:
      * ARM_MPU_AP_NONE/ARM_MPU_AP_PRIV/ARM_MPU_AP_URO/ARM_MPU_AP_FULL/ARM_MPU_AP_PRO/ARM_MPU_AP_RO
      * Combine TypeExtField/IsShareable/IsCacheable/IsBufferable to configure MPU memory access attributes.
      *  TypeExtField  IsShareable  IsCacheable  IsBufferable   Memory Attribtue    Shareability        Cache
@@ -432,7 +421,7 @@ void BOARD_ConfigMPU(void)
      *  please refer to Table 4-55 /4-56 in arm cortex-M7 generic user guide <dui0646b_cortex_m7_dgug.pdf>
      * param SubRegionDisable  Sub-region disable field. 0=sub-region is enabled, 1=sub-region is disabled.
      * param Size              Region size of the region to be configured. use ARM_MPU_REGION_SIZE_xxx MACRO in
-     * core_cm7.h.
+     * mpu_armv7.h.
      */
 
     /* Region 0 setting: Memory with Device type, not shareable, non-cacheable. */
@@ -474,7 +463,7 @@ void BOARD_ConfigMPU(void)
  * this suggestion is referred from chapter 2.2.1 Memory regions,
  * types and attributes in Cortex-M7 Devices, Generic User Guide */
 #if defined(SDRAM_IS_SHAREABLE)
-    /* Region 7 setting: Memory with Normal type, not shareable, outer/inner write back */
+    /* Region 7 setting: Memory with Normal type, shareable, outer/inner write back */
     MPU->RBAR = ARM_MPU_RBAR(7, 0x80000000U);
     MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 1, 1, 1, 0, ARM_MPU_REGION_SIZE_32MB);
 #else

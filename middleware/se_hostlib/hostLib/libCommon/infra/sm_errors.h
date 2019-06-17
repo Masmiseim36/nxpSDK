@@ -23,7 +23,7 @@
 #ifndef _SM_ERRORS_
 #define _SM_ERRORS_
 
-// #include "ax_api.h"
+#include "apduComm.h"
 
 #ifdef __cplusplus
 extern "C" {

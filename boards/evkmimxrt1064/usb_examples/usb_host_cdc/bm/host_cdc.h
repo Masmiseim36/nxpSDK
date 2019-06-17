@@ -144,7 +144,7 @@ void USB_HostCdcInitBuffer(void);
 *
 * @param param   the host cdc instance pointer.
 */
-extern void USB_HosCdcTask(void *param);
+extern void USB_HostCdcTask(void *param);
 
 /*!
  * @brief host cdc callback function.

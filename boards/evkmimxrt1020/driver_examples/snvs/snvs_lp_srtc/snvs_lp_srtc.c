@@ -58,6 +58,7 @@ int main(void)
 {
     uint32_t sec;
     uint32_t min;
+    uint32_t hour;
     uint8_t index;
     snvs_hp_rtc_datetime_t rtcDate;
     snvs_lp_srtc_datetime_t srtcDate;
@@ -89,10 +90,10 @@ int main(void)
     PRINTF("SNVS LP SRTC example:\r\n");
 
     /* Set a start date time and start RT */
-    srtcDate.year = 2014U;
-    srtcDate.month = 12U;
-    srtcDate.day = 25U;
-    srtcDate.hour = 19U;
+    srtcDate.year   = 2014U;
+    srtcDate.month  = 12U;
+    srtcDate.day    = 25U;
+    srtcDate.hour   = 19U;
     srtcDate.minute = 0;
     srtcDate.second = 0;
 
@@ -117,9 +118,10 @@ int main(void)
     while (1)
     {
         busyWait = true;
-        index = 0;
-        sec = 0;
-        min = 0;
+        index    = 0;
+        sec      = 0;
+        min      = 0;
+        hour     = 0;
 
         /* Get date time */
         SNVS_HP_RTC_GetDatetime(SNVS, &rtcDate);
@@ -143,12 +145,13 @@ int main(void)
         }
         PRINTF("\r\n");
 
-        /* alam can be set only for one day*/
+        /* Alarm can be set only for one day*/
         if (sec > (24 * 60 * 60))
         {
+            PRINTF("Please input the number below 86000 and press enter \r\n");
             continue;
         }
-        // SNVS_HP_RTC_GetDatetime(SNVS, &rtcDate);
+        SNVS_HP_RTC_GetDatetime(SNVS, &rtcDate);
         if ((rtcDate.second + sec) < 60)
         {
             rtcDate.second += sec;
@@ -167,6 +170,16 @@ int main(void)
         {
             rtcDate.hour += (rtcDate.minute + min) / 60U;
             rtcDate.minute = (rtcDate.minute + min) % 60U;
+        }
+
+        if ((rtcDate.hour + hour) < 24)
+        {
+            rtcDate.hour += hour;
+        }
+        else
+        {
+            rtcDate.day += (rtcDate.hour + hour) / 24U;
+            rtcDate.hour = (rtcDate.hour + hour) % 24U;
         }
 
         SNVS_HP_RTC_SetAlarm(SNVS, &rtcDate);

@@ -2076,8 +2076,8 @@ A_STATUS qcom_p2p_func_set_pass_ssid(uint8_t device_id, QCOM_PASSPHRASE *ppass, 
 
     strcpy((char *)setPassPhrase.passphrase, ppass->passphrase);
     setPassPhrase.passphrase_len = strlen(ppass->passphrase);
-    strcpy((char *)setPassPhrase.ssid, pssid->ssid);
     setPassPhrase.ssid_len = strlen(pssid->ssid);
+    memcpy((char *)setPassPhrase.ssid, pssid->ssid, setPassPhrase.ssid_len);
 
     param.cmd_id = ATH_P2P_APMODE_PP;
     param.data = &setPassPhrase;

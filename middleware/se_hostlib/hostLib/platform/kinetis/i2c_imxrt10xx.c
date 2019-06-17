@@ -89,7 +89,7 @@ uint32_t LPI2C1_GetFreq(void)
     else if(result == kStatus_LPI2C_Idle) LPI2C_LOG_PRINTF(Operation " Idle\r\n");                           \
     else if(result == kStatus_LPI2C_Timeout) LPI2C_LOG_PRINTF(Operation " T/O\r\n");                         \
     else if(result == kStatus_LPI2C_ArbitrationLost) LPI2C_LOG_PRINTF(Operation " ArbtnLost\r\n");           \
-    else LPI2C_LOG_PRINTF (Operation " ERROR  : 0x%02lX\r\n", status);
+    else LPI2C_LOG_PRINTF (Operation " ERROR  : 0x%lX\r\n", status);
 #else
 #   define DEBUG_PRINT_KINETIS_I2C(Operation, status)
 #endif

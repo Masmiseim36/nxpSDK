@@ -496,11 +496,11 @@ usb_status_t usb_device_msc_callback(class_handle_t handle, uint32_t event, void
             break;
         case kUSB_DeviceMscEventGetLbaInformation:
             lba_info_structure_ptr = (usb_device_lba_information_struct_t *)param;
-            lba_info_structure_ptr->totalLbaNumberSupports = kDiskTotalLogicalBlocks;
-            lba_info_structure_ptr->lengthOfEachLba = kDiskSectorSize;
+            //lba_info_structure_ptr->totalLbaNumberSupports = kDiskTotalLogicalBlocks;
+            //lba_info_structure_ptr->lengthOfEachLba = kDiskSectorSize;
             lba_info_structure_ptr->logicalUnitNumberSupported = kDiskLogicalUnits;
-            lba_info_structure_ptr->bulkInBufferSize = USB_DEVICE_MSC_WRITE_BUFF_SIZE;
-            lba_info_structure_ptr->bulkOutBufferSize = USB_DEVICE_MSC_READ_BUFF_SIZE;
+            //lba_info_structure_ptr->bulkInBufferSize = USB_DEVICE_MSC_WRITE_BUFF_SIZE;
+            //lba_info_structure_ptr->bulkOutBufferSize = USB_DEVICE_MSC_READ_BUFF_SIZE;
             error = kStatus_USB_Success;
             break;
         case kUSB_DeviceMscEventTestUnitReady:

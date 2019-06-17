@@ -227,7 +227,9 @@ public class AwsIoTConnection extends AwsConnection {
                 KeyPair keyPair = certificateResult.getKeyPair();
 
                 // create default policy
-                ListPoliciesResult listPoliciesResult = iotClient.listPolicies(new ListPoliciesRequest());
+                ListPoliciesRequest req = new ListPoliciesRequest();
+                req.setPageSize(250);
+                ListPoliciesResult listPoliciesResult = iotClient.listPolicies(req);
                 boolean defaultPolicyExist = false;
                 for (Policy policy : listPoliciesResult.getPolicies()) {
                     if (policy.getPolicyName().equals(AwsConfig.DEFAULT_POLICY_NAME)) {

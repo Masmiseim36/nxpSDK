@@ -114,7 +114,10 @@ status_t LPSPI_RTOS_Transfer(lpspi_rtos_handle_t *handle, lpspi_transfer_t *tran
     }
 
     /* Wait for transfer to finish */
-    xSemaphoreTake(handle->event, portMAX_DELAY);
+    if (xSemaphoreTake(handle->event, portMAX_DELAY) != pdTRUE)
+    {
+        return kStatus_LPSPI_Error;
+    }
 
     /* Unlock resource mutex */
     xSemaphoreGive(handle->mutex);

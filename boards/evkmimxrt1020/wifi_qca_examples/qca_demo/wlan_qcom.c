@@ -2,7 +2,7 @@
  * Copyright (c) 2013 - 2014, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -31,7 +31,8 @@ static int _traceQcomApi = 0;
 // ============================================================================
 
 // Convert IP address in uint32_t to comma separated bytes
-#define UINT32_IPADDR_TO_CSV_BYTES(a) ((uint8_t)((a) >> 24) & 0xFF), (uint8_t)(((a) >> 16) & 0xFF), (uint8_t)(((a) >> 8) & 0xFF), (uint8_t)((a)&0xFF)
+#define UINT32_IPADDR_TO_CSV_BYTES(a) \
+    ((uint8_t)((a) >> 24) & 0xFF), (uint8_t)(((a) >> 16) & 0xFF), (uint8_t)(((a) >> 8) & 0xFF), (uint8_t)((a)&0xFF)
 // Convert comma separated bytes to a uint32_t IP address
 #define CSV_BYTES_TO_UINT32_IPADDR(a0, a1, a2, a3) \
     (((uint32_t)(a0)&0xFF) << 24) | (((uint32_t)(a1)&0xFF) << 16) | (((uint32_t)(a2)&0xFF) << 8) | ((uint32_t)(a3)&0xFF)
@@ -107,8 +108,8 @@ int traceQcomApi(int enable)
 enum ipconfigActions
 {
     IP_CONFIG_QUERY = 0,
-    IP_CONFIG_SET = 1,
-    IP_CONFIG_DHCP = 2,
+    IP_CONFIG_SET   = 1,
+    IP_CONFIG_DHCP  = 2,
 };
 
 void getDhcp(void)
@@ -218,12 +219,12 @@ static void apConnectParamsPrint(void)
 
     // Get current operational mode
     QCOM_WLAN_DEV_MODE opMode = QCOM_WLAN_DEV_MODE_INVALID;
-    status = qcom_op_get_mode(devId, &opMode);
+    status                    = qcom_op_get_mode(devId, &opMode);
     isQcomError(status, "qcom_op_get_mode");
     PRINTF("  opMode=%d (%s)\r\n", opMode, (opMode == 0 ? "Station" : "AP"));
 
     char *phyMode = NULL;
-    status = qcom_get_phy_mode(devId, &phyMode);
+    status        = qcom_get_phy_mode(devId, &phyMode);
     isQcomError(status, "qcom_get_phy_mode");
     if (NULL != phyMode)
     {
@@ -236,7 +237,7 @@ static void apConnectParamsPrint(void)
     // checkForError(status, "qcom_sec_get_auth_mode");
 
     QCOM_SSID ssidRead = {0};
-    status = qcom_get_ssid(devId, &ssidRead);
+    status             = qcom_get_ssid(devId, &ssidRead);
     isQcomError(status, "qcom_get_ssid");
     PRINTF("  ssid=%s\r\n", ssidRead.ssid);
 }
@@ -245,7 +246,7 @@ static char *getSecurityStr(uint8_t auth, uint8_t cipher)
 {
     static char s[100];
     char *p = s;
-    s[0] = 0;
+    s[0]    = 0;
 
     if (auth & SECURITY_AUTH_1X)
         p += sprintf(p, "802.1X ");
@@ -277,7 +278,7 @@ void apScan(void)
     // NOTE: A maximum of 12 results are returned
     QCOM_BSS_SCAN_INFO *scanResult;
     int16_t scanNumResults = 0;
-    status = qcom_get_scan(devId, &scanResult, &scanNumResults);
+    status                 = qcom_get_scan(devId, &scanResult, &scanNumResults);
     isQcomError(status, "qcom_get_scan");
     // PRINTF("qcom_get_scan numResults=%d\r\n", scanNumResults);
 
@@ -285,8 +286,8 @@ void apScan(void)
     for (int i = 0; i < scanNumResults; i++)
     {
         QCOM_BSS_SCAN_INFO *scr = &scanResult[i];
-        int ssidLen = scr->ssid_len;
-        scr->ssid[ssidLen] = 0;
+        int ssidLen             = scr->ssid_len;
+        scr->ssid[ssidLen]      = 0;
 
         PRINTF("%2d %2d %4d  %02x:%02x:%02x:%02x:%02x:%02x  %s\r\n", i, scr->channel, scr->rssi, scr->bssid[0],
                scr->bssid[1], scr->bssid[2], scr->bssid[3], scr->bssid[4], scr->bssid[5], scr->ssid);
@@ -399,8 +400,8 @@ uint32_t pingHost(const char *hostname)
 
     // NOTE: qcom_ping() is a blocking function and has no timeout so it will
     PRINTF("Pinging %d.%d.%d.%d... ", UINT32_IPADDR_TO_CSV_BYTES(addr));
-    uint32_t t = A_TIME_GET_MSEC();
-    A_STATUS status = qcom_ping(addr, 10);
+    uint32_t t       = A_TIME_GET_MSEC();
+    A_STATUS status  = qcom_ping(addr, 10);
     uint32_t elapsed = status;
     if (status == 0)
     {
@@ -414,7 +415,10 @@ uint32_t pingHost(const char *hostname)
 void resolveManyHosts(void)
 {
     const char *hostnames[] = {
-        "google.com", "cr.yp.to", "kernel.org", "nxp.com",
+        "google.com",
+        "cr.yp.to",
+        "kernel.org",
+        "nxp.com",
     };
     int numHosts = sizeof(hostnames) / sizeof(hostnames[0]);
     for (int i = 0; i < numHosts; i++)
@@ -427,8 +431,8 @@ void resolveManyHosts(void)
 // UDP example
 // ============================================================================
 
-static int32_t udpSock = 0;
-static char *udpRecvBuf = NULL;
+static int32_t udpSock   = 0;
+static char *udpRecvBuf  = NULL;
 static int udpRecvBufLen = 0;
 
 // IPv4 address of remote peer
@@ -459,8 +463,8 @@ void udpBind(uint16_t port)
         return;
 
     memset(&localAddr, 0, sizeof(localAddr));
-    localAddr.sin_port = port;
-    localAddr.sin_family = ATH_AF_INET;
+    localAddr.sin_port        = port;
+    localAddr.sin_family      = ATH_AF_INET;
     localAddr.sin_addr.s_addr = CSV_BYTES_TO_UINT32_IPADDR(0, 0, 0, 0);
 
     status = 0 == qcom_bind(udpSock, (struct sockaddr *)(&localAddr), sizeof(localAddr)) ? A_OK : A_ERROR;
@@ -485,7 +489,7 @@ int udpPollAndRecv(int timeout)
     // NOTE: There is no qcom_select() function, only t_select() that polls only one socket
     // NOTE: t_select() does NOT take a devId like all the other functions
     QCA_CONTEXT_STRUCT *enetCtx = wlan_get_context();
-    int32_t status = t_select(enetCtx, udpSock, timeout);
+    int32_t status              = t_select(enetCtx, udpSock, timeout);
     if (status == -1)
         return A_ERROR;
 
@@ -494,7 +498,7 @@ int udpPollAndRecv(int timeout)
     {
         // PRINTF("Freeing old buffer\r\n");
         zero_copy_free(udpRecvBuf);
-        udpRecvBuf = NULL;
+        udpRecvBuf    = NULL;
         udpRecvBufLen = 0;
     }
 
@@ -544,14 +548,14 @@ const static char header_start[] =
     "Accept-Language: en-us\r\n"
     "Host: ";
 const static char header_end[] = "\r\n\r\n";
-static char gs_hostname[16] = {0};
+static char gs_hostname[16]    = {0};
 
 void httpGet(const char *hostname, int timeout)
 {
     int32_t sock = 0;
     SOCKADDR_T addr;
     A_STATUS status;
-    char *request_data = NULL;
+    char *request_data  = NULL;
     char *response_data = NULL;
 
     PRINTF("****************************************\r\n");
@@ -588,16 +592,17 @@ void httpGet(const char *hostname, int timeout)
         /* No explicit hostname, use gateway addr */
         if (hostname == NULL)
         {
-            int32_t result = snprintf(gs_hostname, CONSTSTR_LEN(gs_hostname), "%u.%u.%u.%u", UINT32_IPADDR_TO_CSV_BYTES(ipv4.gateway));
+            int32_t result = snprintf(gs_hostname, CONSTSTR_LEN(gs_hostname), "%u.%u.%u.%u",
+                                      UINT32_IPADDR_TO_CSV_BYTES(ipv4.gateway));
             (void)result;
             assert(result > 0);
             hostname = gs_hostname;
         }
 
         /* Allocate request_data of size that includes extra '\0' for string functions */
-        uint32_t hostname_len = strlen(hostname);
+        uint32_t hostname_len      = strlen(hostname);
         uint32_t request_data_size = CONSTSTR_LEN(header_start) + hostname_len + CONSTSTR_LEN(header_end) + 1;
-        request_data = custom_alloc(request_data_size);
+        request_data               = custom_alloc(request_data_size);
         assert(!(NULL == request_data));
         if (NULL == request_data)
             break;
@@ -635,7 +640,7 @@ void httpGet(const char *hostname, int timeout)
         if (timeout == 0)
             timeout = 5000;
         QCA_CONTEXT_STRUCT *enetCtx = wlan_get_context();
-        status = (A_STATUS)t_select(enetCtx, sock, timeout);
+        status                      = (A_STATUS)t_select(enetCtx, sock, timeout);
         if (status == A_ERROR)
             break;
 

@@ -4,6 +4,14 @@ Overview
 The sdramc example shows how to use SEMC controller driver to initialize the external SDRAM chip.
 
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -64,11 +72,6 @@ SEMC SDRAM Example Start!
 
 Note:
 Examples can't be downloaded again after dowmloading IAR flexspi_nor_debug/flexspi_nor_release target. Please erase flash by serial download mode(SW7:0001b). This issue will be fixed in later release.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+Customization options
+=====================
 

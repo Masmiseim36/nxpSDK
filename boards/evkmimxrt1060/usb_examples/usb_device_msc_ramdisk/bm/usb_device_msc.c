@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2017£¬2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -300,6 +300,7 @@ static usb_status_t USB_DeviceMscBulkIn(usb_device_handle handle,
             lbaData.size = 0;
             lbaData.buffer = message->buffer;
             lbaData.offset = 0;
+            lbaData.lun = mscHandle->mscCbw->logicalUnitNumber;
             /*classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
             it is from the second parameter of classInit */
             mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventReadResponse,
@@ -345,6 +346,7 @@ static usb_status_t USB_DeviceMscBulkIn(usb_device_handle handle,
             lbaData.size = message->length;
             lbaData.buffer = message->buffer;
             lbaData.offset = mscHandle->currentOffset;
+            lbaData.lun = mscHandle->mscCbw->logicalUnitNumber;
 
             if ((USB_DEVICE_MSC_READ_10_COMMAND == mscHandle->mscCbw->cbwcb[0]) ||
                 (USB_DEVICE_MSC_READ_12_COMMAND == mscHandle->mscCbw->cbwcb[0]))
@@ -357,7 +359,7 @@ static usb_status_t USB_DeviceMscBulkIn(usb_device_handle handle,
 
             if (mscHandle->transferRemaining)
             {
-                mscHandle->currentOffset += (message->length / mscHandle->lengthOfEachLba);
+                mscHandle->currentOffset += (message->length / mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].lengthOfEachLba);
                 error = USB_DeviceMscSend(mscHandle);
             }
             if (!mscHandle->transferRemaining)
@@ -416,6 +418,7 @@ usb_status_t USB_DeviceMscBulkOut(usb_device_handle handle,
             lbaData.size = 0;
             lbaData.buffer = message->buffer;
             lbaData.offset = 0;
+            lbaData.lun = mscHandle->mscCbw->logicalUnitNumber;
             /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
             it is from the second parameter of classInit */
             mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventWriteResponse,
@@ -465,6 +468,7 @@ usb_status_t USB_DeviceMscBulkOut(usb_device_handle handle,
         lbaData.size = message->length;
         lbaData.buffer = message->buffer;
         lbaData.offset = mscHandle->currentOffset;
+        lbaData.lun = mscHandle->mscCbw->logicalUnitNumber;
 
         if ((mscHandle->configurationStruct->classCallback != NULL))
         {
@@ -479,7 +483,7 @@ usb_status_t USB_DeviceMscBulkOut(usb_device_handle handle,
 
             if (mscHandle->transferRemaining)
             {
-                mscHandle->currentOffset += (message->length / mscHandle->lengthOfEachLba);
+                mscHandle->currentOffset += (message->length / mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].lengthOfEachLba);
                 error = USB_DeviceMscRecv(mscHandle);
             }
         }
@@ -751,20 +755,19 @@ usb_status_t USB_DeviceMscInit(uint8_t controllerId, usb_device_class_config_str
     error = mscHandle->configurationStruct->classCallback(
         (class_handle_t)mscHandle, kUSB_DeviceMscEventGetLbaInformation, (void *)&diskInformation);
 
-    if (((diskInformation.lengthOfEachLba) && (diskInformation.totalLbaNumberSupports)) == 0)
-    {
-        error = kStatus_USB_Error;
-        USB_DeviceMscFreeHandle(mscHandle);
-        return error;
-    }
-    mscHandle->logicalUnitNumber = diskInformation.logicalUnitNumberSupported;
+    mscHandle->logicalUnitNumber = diskInformation.logicalUnitNumberSupported - 1;
     /*initialize the basic device information*/
     ufi = &mscHandle->mscUfi;
-    mscHandle->totalLogicalBlockNumber = diskInformation.totalLbaNumberSupports;
-    mscHandle->lengthOfEachLba = diskInformation.lengthOfEachLba;
-    mscHandle->logicalUnitNumber = diskInformation.logicalUnitNumberSupported - 1;
-    mscHandle->bulkInBufferSize = diskInformation.bulkInBufferSize;
-    mscHandle->bulkOutBufferSize = diskInformation.bulkOutBufferSize;
+    for (uint8_t index = 0; (index <= mscHandle->logicalUnitNumber) && (index < USB_DEVICE_MSC_MAX_LUN); ++index)
+    {
+        if (((diskInformation.logicalUnitInformations[index].lengthOfEachLba) && (diskInformation.logicalUnitInformations[index].totalLbaNumberSupports)) == 0)
+        {
+            error = kStatus_USB_Error;
+            USB_DeviceMscFreeHandle(mscHandle);
+            return error;
+        }
+        mscHandle->luInformations[index] = diskInformation.logicalUnitInformations[index];
+    }
     mscHandle->implementingDiskDrive = implementingDiskDrive;
 
     ufi->requestSense->validErrorCode = USB_DEVICE_MSC_UFI_REQ_SENSE_VALID_ERROR_CODE;
@@ -772,11 +775,6 @@ usb_status_t USB_DeviceMscInit(uint8_t controllerId, usb_device_class_config_str
     ufi->requestSense->senseKey = USB_DEVICE_MSC_UFI_NO_SENSE;
     ufi->requestSense->additionalSenseCode = USB_DEVICE_MSC_UFI_NO_SENSE;
     ufi->requestSense->additionalSenseQualifer = USB_DEVICE_MSC_UFI_NO_SENSE;
-
-    ufi->readCapacity->lastLogicalBlockAddress = USB_LONG_TO_BIG_ENDIAN(mscHandle->totalLogicalBlockNumber - 1);
-    ufi->readCapacity->blockSize = USB_LONG_TO_BIG_ENDIAN((uint32_t)mscHandle->lengthOfEachLba);
-    ufi->readCapacity16->lastLogicalBlockAddress1 = USB_LONG_TO_BIG_ENDIAN(mscHandle->totalLogicalBlockNumber - 1);
-    ufi->readCapacity16->blockSize = USB_LONG_TO_BIG_ENDIAN((uint32_t)mscHandle->lengthOfEachLba);
 
     mscHandle->cbwPrimeFlag = 0;
     mscHandle->cswPrimeFlag = 0;
@@ -1089,18 +1087,19 @@ usb_status_t USB_DeviceMscSend(usb_device_msc_struct_t *mscHandle)
        length by the hardware,
         lba.size is the data pending  for transfer ,select the minimum size to transfer ,the remaining will be transfer
        next time*/
-    lba.size = (mscHandle->bulkInBufferSize > USB_DEVICE_MSC_MAX_SEND_TRANSFER_LENGTH) ?
+    lba.size = (mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].bulkInBufferSize > USB_DEVICE_MSC_MAX_SEND_TRANSFER_LENGTH) ?
                    USB_DEVICE_MSC_MAX_SEND_TRANSFER_LENGTH :
-                   mscHandle->bulkInBufferSize;
+                   mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].bulkInBufferSize;
     lba.size =
         (mscHandle->transferRemaining > lba.size) ? lba.size : mscHandle->transferRemaining; /* which one is smaller */
 
     lba.buffer = NULL;
+    lba.lun = mscHandle->mscCbw->logicalUnitNumber;
     /*classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
     it is from the second parameter of classInit*/
     mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventReadRequest, &lba);
 
-    if (mscHandle->currentOffset < mscHandle->totalLogicalBlockNumber)
+    if (mscHandle->currentOffset < mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].totalLbaNumberSupports)
     {
         error = USB_DeviceSendRequest(mscHandle->handle, mscHandle->bulkInEndpoint, lba.buffer, lba.size);
     }
@@ -1143,18 +1142,19 @@ usb_status_t USB_DeviceMscRecv(usb_device_msc_struct_t *mscHandle)
        length by the hardware,
        lba.size is the data pending  for transfer ,select the minimum size to transfer ,the remaining will be transfer
        next time*/
-    lba.size = (mscHandle->bulkOutBufferSize > USB_DEVICE_MSC_MAX_RECV_TRANSFER_LENGTH) ?
+    lba.size = (mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].bulkOutBufferSize > USB_DEVICE_MSC_MAX_RECV_TRANSFER_LENGTH) ?
                    USB_DEVICE_MSC_MAX_RECV_TRANSFER_LENGTH :
-                   mscHandle->bulkOutBufferSize;
+                   mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].bulkOutBufferSize;
     lba.size =
         (mscHandle->transferRemaining > lba.size) ? lba.size : mscHandle->transferRemaining; /* whichever is smaller */
 
     lba.buffer = NULL;
+    lba.lun = mscHandle->mscCbw->logicalUnitNumber;
     /*classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
     it is from the second parameter of classInit*/
     mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventWriteRequest, &lba);
 
-    if (mscHandle->currentOffset < mscHandle->totalLogicalBlockNumber)
+    if (mscHandle->currentOffset < mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].totalLbaNumberSupports)
     {
         error = USB_DeviceRecvRequest(mscHandle->handle, mscHandle->bulkOutEndpoint, lba.buffer, lba.size);
     }
@@ -1188,7 +1188,7 @@ usb_status_t USB_DeviceMscLbaTransfer(usb_device_msc_struct_t *mscHandle,
 {
     usb_status_t error = kStatus_USB_Success;
 
-    mscHandle->transferRemaining = lba_info_ptr->transferNumber * mscHandle->lengthOfEachLba;
+    mscHandle->transferRemaining = lba_info_ptr->transferNumber * mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].lengthOfEachLba;
     mscHandle->currentOffset = lba_info_ptr->startingLogicalBlockAddress;
 
     if (direction == USB_IN)

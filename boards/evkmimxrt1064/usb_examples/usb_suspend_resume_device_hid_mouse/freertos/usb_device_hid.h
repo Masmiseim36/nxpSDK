@@ -76,8 +76,8 @@ typedef enum _usb_device_dcd_dev_status
 /*! @brief Available common EVENT types in HID class callback */
 typedef enum _usb_device_hid_event
 {
-    kUSB_DeviceHidEventSendResponse = 0x01U, /*!< Send data completed */
-    kUSB_DeviceHidEventRecvResponse,         /*!< Data received */
+    kUSB_DeviceHidEventSendResponse = 0x01U, /*!< Send data completed or cancelled etc*/
+    kUSB_DeviceHidEventRecvResponse,         /*!< Data received or cancelled etc*/
     kUSB_DeviceHidEventGetReport,            /*!< Get report request */
     kUSB_DeviceHidEventGetIdle,              /*!< Get idle request */
     kUSB_DeviceHidEventGetProtocol,          /*!< Get protocol request */
@@ -210,6 +210,8 @@ extern usb_status_t USB_DeviceHidEvent(void *handle, uint32_t event, void *param
  *
  * @return A USB error code or kStatus_USB_Success.
  *
+ * @note The function can only be called in the same context.
+ * 
  * @note The return value indicates whether the sending request is successful or not. The transfer done is notified by
  * usb_device_hid_interrupt_in.
  * Currently, only one transfer request can be supported for one specific endpoint.
@@ -233,6 +235,8 @@ extern usb_status_t USB_DeviceHidSend(class_handle_t handle, uint8_t ep, uint8_t
  * @param[in] length The data length to be received.
  *
  * @return A USB error code or kStatus_USB_Success.
+ *
+ * @note The function can only be called in the same context. 
  *
  * @note The return value indicates whether the receiving request is successful or not. The transfer done is notified by
  * usb_device_hid_interrupt_out.

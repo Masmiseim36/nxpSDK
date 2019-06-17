@@ -2,7 +2,7 @@
  * Copyright 2017 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -38,12 +38,12 @@
 
 /* AES user key must be stored in little_endian. */
 /* aesKey = 01020304_05060708_090A0B0C_0D0E0F10h */
-static const uint8_t aesKey[] = {0x10, 0x0f, 0x0e, 0x0d, 0x0c, 0x0b, 0x0a, 0x09,
-                                 0x08, 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01};
+static const uint8_t aesKey[] __attribute__((aligned)) = {0x10, 0x0f, 0x0e, 0x0d, 0x0c, 0x0b, 0x0a, 0x09,
+                                                          0x08, 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01};
 #endif
 
-static const uint8_t aesNonce[] = {0xff, 0xee, 0xdd, 0xcc, 0xbb, 0xaa, 0x99, 0x88,
-                                   0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11, 0x00};
+static const uint8_t aesNonce[] __attribute__((aligned)) = {0xff, 0xee, 0xdd, 0xcc, 0xbb, 0xaa, 0x99, 0x88,
+                                                            0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11, 0x00};
 
 /*******************************************************************************
  * Code
@@ -70,13 +70,14 @@ int main(void)
 
     /* Set BEE region 0 to work in AES CTR mode */
     beeConfig.region0Mode = kBEE_AesCtrMode;
-    /* Configure BEE region 0 to use whole address space of FAC by setting bottom and top address of BEE region 1 to zero */
+    /* Configure BEE region 0 to use whole address space of FAC by setting bottom and top address of BEE region 1 to
+     * zero */
     beeConfig.region1Bot = 0U;
     beeConfig.region1Top = 0U;
 
     /* Configure Start address and end address of access protected region-0 */
     iomuxc->REG0_START_ADDR_GPR = FLEXSPI_START_ADDR;
-    iomuxc->REG0_END_ADDR_GPR = FLEXSPI_START_ADDR + BEE_REGION_SIZE;
+    iomuxc->REG0_END_ADDR_GPR   = FLEXSPI_START_ADDR + BEE_REGION_SIZE;
     /* Enable BEE data decryption of memory region-0 */
     iomuxc->REG0_DECRYPT_EN_GPR = REG0_DECRYPT_EN;
 

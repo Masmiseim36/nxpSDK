@@ -174,9 +174,9 @@ USB_CONTROLLER_DATA USB_RAM_ADDRESS_ALIGNMENT(256) static uint32_t
 
 #elif((USB_DEVICE_CONFIG_LPCIP3511FS + USB_DEVICE_CONFIG_LPCIP3511HS) == 2U)
 USB_CONTROLLER_DATA USB_RAM_ADDRESS_ALIGNMENT(256) static uint32_t
-    s_EpCommandStatusList1[((USB_DEVICE_IP3511_ENDPOINTS_NUM ) * 4];
+    s_EpCommandStatusList1[(USB_DEVICE_IP3511_ENDPOINTS_NUM) * 4];
 USB_CONTROLLER_DATA USB_RAM_ADDRESS_ALIGNMENT(256) static uint32_t
-    s_EpCommandStatusList2[((USB_DEVICE_IP3511_ENDPOINTS_NUM ) * 4];
+    s_EpCommandStatusList2[(USB_DEVICE_IP3511_ENDPOINTS_NUM) * 4];
 #define LPC_CONTROLLER_ENDPOINT_LIST_ARRAY                     \
     {                                                          \
         &s_EpCommandStatusList1[0], &s_EpCommandStatusList2[0] \
@@ -425,7 +425,7 @@ static void USB_DeviceLpc3511IpSetDefaultState(usb_device_lpc3511ip_state_struct
 #if ((defined(USB_DEVICE_CONFIG_LPCIP3511HS)) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
     if (lpc3511IpState->controllerSpeed)
     {
-        if ((USB_DATABUFSTART_DA_BUF_MASK & (uint32_t)lpc3511IpState->setupData) !=
+        if ((USBHSD_DATABUFSTART_DA_BUF_MASK & (uint32_t)lpc3511IpState->setupData) !=
             lpc3511IpState->registerBase->DATABUFSTART)
         {
             /* please use the dedicated ram */
@@ -435,7 +435,7 @@ static void USB_DeviceLpc3511IpSetDefaultState(usb_device_lpc3511ip_state_struct
 #endif
     {
         /* all data buffer is in the same 4M range with this setup data buffer */
-        ((USB_Type *)(lpc3511IpState->registerBase))->DATABUFSTART = (uint32_t)lpc3511IpState->setupData;
+        lpc3511IpState->registerBase->DATABUFSTART = (uint32_t)lpc3511IpState->setupData;
     }
     /* reset registers */
     lpc3511IpState->registerBase->EPINUSE = 0x0;
@@ -796,7 +796,7 @@ static uint32_t USB_DeviceLpc3511IpTokenUpdate(usb_device_lpc3511ip_state_struct
 #endif
     {
         /* get the transaction length */
-        length = *(((uint32_t *)lpc3511IpState->registerBase->EPLISTSTART) + endpointIndex * 2 + odd);
+        length = *(lpc3511IpState->epCommandStatusList + endpointIndex * 2 + odd);
 
 #if ((defined(USB_DEVICE_CONFIG_LPCIP3511HS)) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
         if (lpc3511IpState->controllerSpeed)
@@ -1447,24 +1447,30 @@ static usb_status_t USB_DeviceLpc3511IpTransaction(usb_device_lpc3511ip_state_st
     {
         return kStatus_USB_Success;
     }
-
 #if (defined USB_DEVICE_IP3511_DOUBLE_BUFFER_ENABLE) && (USB_DEVICE_IP3511_DOUBLE_BUFFER_ENABLE)
     if ((endpointIndex >> 1U) != USB_CONTROL_ENDPOINT)
     {
         /* disable endpoint interrupts, users can use NVIC to disable/enable the USB interrupt to improve the system performance */
         USB_OSA_ENTER_CRITICAL();
         /* lpc3511IpState->registerBase->INTEN &= (uint32_t)(~(USB_LPC3511IP_MAX_PHY_ENDPOINT_MASK)); */
-
-        do
+        /* for out endpoint,only use buffer toggle, disable prime double buffer at the same time*/
+        /*host send data less than maxpacket size and in endpoint prime length more more than maxpacketsize, there will be state mismtach*/
+        if(0U == (endpointIndex & 0x1U))
         {
             status = USB_DeviceLpc3511IpGetActualBufferAndPrime(lpc3511IpState, epState, endpointIndex, 1U);
-            if (status != kStatus_USB_Success)
+        }
+        else
+        {
+            do
             {
-                break;
-            }
-        } while ((epState->transferLength > epState->transferPrimedLength) &&
-                 (epState->stateUnion.stateBitField.doubleBufferBusy < 2));
-
+                status = USB_DeviceLpc3511IpGetActualBufferAndPrime(lpc3511IpState, epState, endpointIndex, 1U);
+                if (status != kStatus_USB_Success)
+                {
+                    break;
+                }
+            } while ((epState->transferLength > epState->transferPrimedLength) &&
+                     (epState->stateUnion.stateBitField.doubleBufferBusy < 2));
+        }
         /* enable endpoint interrupt again, users can use NVIC to disable/enable the USB interrupt to improve the system performance */
         USB_OSA_EXIT_CRITICAL();
     }
@@ -1530,11 +1536,24 @@ usb_status_t USB_DeviceLpc3511IpCancel(usb_device_controller_handle controllerHa
         USB_DeviceLpc3511IpGetEndpointStateStruct(lpc3511IpState, endpointIndex);
 
     /* Cancel the transfer and notify the up layer when the endpoint is busy. */
-    if (epState->stateUnion.stateBitField.transferring)
+    if ((epState->stateUnion.stateBitField.transferring)
+#if ((defined(USB_DEVICE_CONFIG_LPCIP3511HS)) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
+        || ((epState->stateUnion.stateBitField.epControlDefault &
+           ((USB_LPC3511IP_ENDPOINT_TOGGLE_RESET_MASK) >> USB_LPC3511IP_ENDPOINT_CONFIGURE_BITS_SHIFT)) &&
+          (USB_ENDPOINT_INTERRUPT == epState->stateUnion.stateBitField.endpointType) &&
+          (lpc3511IpState->controllerSpeed) &&
+          (lpc3511IpState->epCommandStatusList[endpointIndex * 2 + epState->stateUnion.stateBitField.consumerOdd] &
+           USB_LPC3511IP_ENDPOINT_TOGGLE_RESET_MASK) &&
+          (!(lpc3511IpState->registerBase->EPTOGGLE & (0x01u << endpointIndex))))
+#endif
+          )
     {
         /* disable endpoint interrupts, users can use NVIC to disable/enable the USB interrupt to improve the system performance */
         USB_OSA_ENTER_CRITICAL();
-
+#if ((defined(USB_DEVICE_CONFIG_LPCIP3511HS)) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
+        epState->stateUnion.stateBitField.epControlDefault &=
+                (~((USB_LPC3511IP_ENDPOINT_TOGGLE_RESET_MASK) >> USB_LPC3511IP_ENDPOINT_CONFIGURE_BITS_SHIFT));
+#endif
         do
         {
             if (epState->stateUnion.stateBitField.doubleBufferBusy == 2)

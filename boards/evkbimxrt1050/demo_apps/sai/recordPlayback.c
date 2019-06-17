@@ -20,7 +20,6 @@
  ******************************************************************************/
 extern sai_edma_handle_t txHandle;
 extern sai_edma_handle_t rxHandle;
-extern sai_transfer_format_t format;
 extern uint8_t audioBuff[BUFFER_SIZE * BUFFER_NUM];
 extern volatile bool istxFinished;
 extern volatile bool isrxFinished;
@@ -34,7 +33,7 @@ extern volatile uint32_t emptyBlock;
  ******************************************************************************/
 void RecordPlayback(I2S_Type *base, uint32_t time_s)
 {
-    sai_transfer_t xfer = {0};
+    sai_transfer_t xfer    = {0};
     uint32_t playbackCount = 0, recordCount = 0;
     uint32_t txindex = 0, rxindex = 0;
 
@@ -42,7 +41,7 @@ void RecordPlayback(I2S_Type *base, uint32_t time_s)
     memset(audioBuff, 0, BUFFER_SIZE * BUFFER_NUM);
     istxFinished = false;
     isrxFinished = false;
-    sendCount = 0;
+    sendCount    = 0;
     receiveCount = 0;
 
     /* Reset SAI internal logic */
@@ -50,7 +49,7 @@ void RecordPlayback(I2S_Type *base, uint32_t time_s)
     SAI_RxSoftwareReset(base, kSAI_ResetTypeSoftware);
 
     /* Compute the begin count */
-    beginCount = time_s * SAMPLE_RATE * 4u / BUFFER_SIZE;
+    beginCount = time_s * DEMO_AUDIO_SAMPLE_RATE * 4u / BUFFER_SIZE;
 
     xfer.dataSize = BUFFER_SIZE;
     /* Wait for playback finished */

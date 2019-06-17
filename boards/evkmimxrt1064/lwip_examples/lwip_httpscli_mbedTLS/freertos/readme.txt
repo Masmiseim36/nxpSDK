@@ -4,15 +4,14 @@ Overview
 The lwip_https_client_mbedTLS demo application demonstrates an HTTPS client set up on lwIP TCP/IP and the MbedTLS stack with
 FreeRTOS. The board acts as an HTTP client and sends a request to the HTTPServer.
 
-Demo requires DHCP and DNS servers.
+Demo requires DHCP and DNS servers. The address of the DNS server is obtained from DHCP.
 
 
 Toolchain supported
 ===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.1
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
 
 Hardware requirements
 =====================
@@ -33,13 +32,15 @@ Prepare the Demo
     - No parity
     - One stop bit
     - No flow control
-3.  Insert the Ethernet Cable into the target board's RJ45 port and connect it to your PC network adapter.
+3.  Insert the Ethernet Cable into the target board's RJ45 port and connect it to a computer network which has a DHCP server and access to the internet.
 4.  Download the program to the target board.
 5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
 Running the demo
 ================
 When the demo runs successfully, the terminal will display the following:
+
+Initializing PHY...
 
 Getting IP address from DHCP ...
 
@@ -50,7 +51,7 @@ DHCP OK
   . Seeding the random number generator...  . Loading the CA root certificate ... ok (0 skipped)
   . Loading the client cert. and key... ok
   . C
-onnecting to developer.mbed.org/443...  . Setting up the SSL/TLS structure...
+onnecting to os.mbed.org/443...  . Setting up the SSL/TLS structure...
 
 SSL state connect : 0  ok
 
@@ -82,7 +83,7 @@ expires on        : 2028-01-28 12:00:00
 signed using      : RSA with SHA1
 RSA key size      : 2048 bits
 basic constraints : CA=true
-key usage        
+key usage
  : Key Cert Sign, CRL Sign
 cert. version     : 3
 serial number     : 04:00:00:00:00:01:15:4B:5A:C3:94
@@ -119,11 +120,11 @@ Verify requested for (Depth 0):
 cert. vers
 ion     : 3
 serial number     : 65:7B:6D:8D:15:A5:B6:86:87:6B:5E:BC
-issuer name       : C=BE, O=GlobalSign nv-sa, CN=GlobalSign Organization Validation 
+issuer name       : C=BE, O=GlobalSign nv-sa, CN=GlobalSign Organization Validation
 CA - SHA256 - G2
 subject name      : C=GB, ST=Cambridgeshire, L=Cambridge, O=ARM Ltd, CN=*.mbed.com
 issued  on        : 2017-04-03 13:54:02
-expires on   
+expires on
      : 2018-05-06 10:31:02
 signed using      : RSA with SHA-256
 RSA key size      : 2048 bits
@@ -136,7 +137,7 @@ ext key usage     : TLS Web Server Authentication, TLS Web Client Authentication
  ok
     [ Protocol is TLSv1.2 ]
     [ Ciphersuite is TLS-ECDHE-RSA-WITH-AES-128-GCM-SHA256 ]
-    [ Record 
+    [ Record
 expansion is 29 ]
   . Verifying peer X.509 certificate... Server Verification skipped
   > Write to server: 55 bytes written

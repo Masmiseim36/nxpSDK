@@ -7,12 +7,31 @@ Endpoint B(board B) when user press space key in terminal. Endpoint B receive th
 the message content to terminal and echo back the message. Endpoint A will increase the received
 message and waiting for the next transmission of the user initiated.
 
+For self wake up from STOP mode, since steps which MCU enters STOP mode differs on different MCUs,
+take flexcan_interrupt_transfer of twrke18f for example, user should do like this:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#include "fsl_smc.h"
+...
+...
+flexcanConfig.enableSelfWakeup = true;
+FLEXCAN_Init();
+...
+...
+SMC_SetPowerModeStop(SMC, kSMC_PartialStop1);
+if (wakenUp)
+{
+    PRINTF("B has been waken up!\r\n\r\n");
+}
+...
+...
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Toolchain supported
 ===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.1
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
+- MCUXpresso  11.0.0
+- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
 
 Hardware requirements
 =====================
@@ -45,6 +64,8 @@ One board must be chosen as node A and the other board as node B. (Note: Node B 
 Data is sent continuously between the node A and the node B.
 
 ~~~~~~~~~~~~~~~~~~~~~
+Consider special errata 005829 feature, the 1st valid MB should be used as reserved one.
+The TX MB number will change from 8 to 9, while RX MB number will change from 9 to 10 
 This message displays on the node A terminal:
 
 
@@ -52,9 +73,9 @@ This message displays on the node A terminal:
 
     Message format: Standard (11 bit id)
 
-    Message buffer 9 used for Rx.
+    Message buffer 10 used for Rx.
 
-    Message buffer 8 used for Tx.
+    Message buffer 9 used for Tx.
 
     Interrupt Mode: Enabled
 
@@ -85,9 +106,9 @@ This message displays on the node B terminal:
 
     Message format: Standard (11 bit id)
 
-    Message buffer 9 used for Rx.
+    Message buffer 10 used for Rx.
 
-    Message buffer 8 used for Tx.
+    Message buffer 9 used for Tx.
 
     Interrupt Mode: Enabled
 

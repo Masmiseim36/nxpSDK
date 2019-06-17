@@ -277,9 +277,9 @@ Some MCU allow computing and verifying the IP, UDP, TCP and ICMP checksums by ha
 #define U16_F "u"
 #define S16_F "d"
 #define X16_F "x"
-#define U32_F "u"
-#define S32_F "d"
-#define X32_F "x"
+#define U32_F "lu"
+#define S32_F "ld"
+#define X32_F "lx"
 #define SZT_F "u"
 #endif
 

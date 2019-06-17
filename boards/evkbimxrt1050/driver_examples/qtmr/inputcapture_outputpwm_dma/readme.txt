@@ -6,6 +6,14 @@ The example sets up a QTMR channel for input capture. Once the input signal is r
 this example will print the capture value.
 The example also sets up one QTMR channel to output pwm. The user should probe a 50Khz PWM signal output with
 50% dutycycle with a oscilloscope.The user can enter a value to update the Duty cycle.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -38,7 +46,7 @@ When the demo runs successfully, the following message is displayed in the termi
 
 ****Provide a signal input to the QTMR pin****
 
-Captured Period time = 998 us (±5%)
+Captured Period time = 1000 us (±5%)
 
 ****Output PWM dma example.****
 
@@ -58,11 +66,6 @@ For example: If enter '5', the duty cycle will be set to 50 percent.
 Value:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+Customization options
+=====================
 

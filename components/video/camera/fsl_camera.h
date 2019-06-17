@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2017, NXP Semiconductors, Inc.
+ * Copyright  2017 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -18,12 +18,12 @@
 /*! @brief Camera control flags. */
 enum _camera_flags
 {
-    kCAMERA_HrefActiveLow = 0U,                 /*!< HREF is active low. */
-    kCAMERA_HrefActiveHigh = (1U << 0U),        /*!< HREF is active high. */
-    kCAMERA_DataLatchOnFallingEdge = 0U,        /*!< Pixel data latched at falling edge of pixel clock. */
-    kCAMERA_DataLatchOnRisingEdge = (1U << 1U), /*!< Pixel data latched at rising edge of pixel clock. */
-    kCAMERA_VsyncActiveLow = 0U,                /*!< VSYNC is active low. */
-    kCAMERA_VsyncActiveHigh = (1U << 2U),       /*!< VSYNC is active high. */
+    kCAMERA_HrefActiveLow          = 0U,         /*!< HREF is active low. */
+    kCAMERA_HrefActiveHigh         = (1U << 0U), /*!< HREF is active high. */
+    kCAMERA_DataLatchOnFallingEdge = 0U,         /*!< Pixel data latched at falling edge of pixel clock. */
+    kCAMERA_DataLatchOnRisingEdge  = (1U << 1U), /*!< Pixel data latched at rising edge of pixel clock. */
+    kCAMERA_VsyncActiveLow         = 0U,         /*!< VSYNC is active low. */
+    kCAMERA_VsyncActiveHigh        = (1U << 2U), /*!< VSYNC is active high. */
 };
 
 /*! @brief Camera interface type. */

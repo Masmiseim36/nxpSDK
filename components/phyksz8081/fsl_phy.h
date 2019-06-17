@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_PHY_H_
@@ -40,20 +40,20 @@
 #define PHY_BCTL_SPEED_MASK 0x2000U           /*!< The PHY speed bit mask. */
 #define PHY_BCTL_LOOP_MASK 0x4000U            /*!< The PHY loop bit mask. */
 #define PHY_BCTL_RESET_MASK 0x8000U           /*!< The PHY reset bit mask. */
-#define PHY_BCTL_SPEED_100M_MASK  0x2000U     /*!< The PHY 100M speed mask. */
+#define PHY_BCTL_SPEED_100M_MASK 0x2000U      /*!< The PHY 100M speed mask. */
 
 /*!@brief Defines the mask flag of operation mode in control two register*/
 #define PHY_CTL2_REMOTELOOP_MASK 0x0004U    /*!< The PHY remote loopback mask. */
-#define PHY_CTL2_REFCLK_SELECT_MASK 0x0080U /*!< The PHY RMII reference clock select. */ 
+#define PHY_CTL2_REFCLK_SELECT_MASK 0x0080U /*!< The PHY RMII reference clock select. */
 #define PHY_CTL1_10HALFDUPLEX_MASK 0x0001U  /*!< The PHY 10M half duplex mask. */
 #define PHY_CTL1_100HALFDUPLEX_MASK 0x0002U /*!< The PHY 100M half duplex mask. */
 #define PHY_CTL1_10FULLDUPLEX_MASK 0x0005U  /*!< The PHY 10M full duplex mask. */
 #define PHY_CTL1_100FULLDUPLEX_MASK 0x0006U /*!< The PHY 100M full duplex mask. */
 #define PHY_CTL1_SPEEDUPLX_MASK 0x0007U     /*!< The PHY speed and duplex mask. */
 #define PHY_CTL1_ENERGYDETECT_MASK 0x10U    /*!< The PHY signal present on rx differential pair. */
-#define PHY_CTL1_LINKUP_MASK 0x100U         /*!< The PHY link up. */        
+#define PHY_CTL1_LINKUP_MASK 0x100U         /*!< The PHY link up. */
 #define PHY_LINK_READY_MASK (PHY_CTL1_ENERGYDETECT_MASK | PHY_CTL1_LINKUP_MASK)
-   
+
 /*! @brief Defines the mask flag in basic status register. */
 #define PHY_BSTATUS_LINKSTATUS_MASK 0x0004U  /*!< The PHY link status mask. */
 #define PHY_BSTATUS_AUTONEGABLE_MASK 0x0008U /*!< The PHY auto-negotiation ability mask. */
@@ -69,8 +69,8 @@
 /*! @brief Defines the PHY status. */
 enum _phy_status
 {
-    kStatus_PHY_SMIVisitTimeout = MAKE_STATUS(kStatusGroup_PHY, 1),  /*!< ENET PHY SMI visit timeout. */
-    kStatus_PHY_AutoNegotiateFail = MAKE_STATUS(kStatusGroup_PHY, 2) /*!< ENET PHY AutoNegotiate Fail. */
+    kStatus_PHY_SMIVisitTimeout   = MAKE_STATUS(kStatusGroup_PHY, 1), /*!< ENET PHY SMI visit timeout. */
+    kStatus_PHY_AutoNegotiateFail = MAKE_STATUS(kStatusGroup_PHY, 2)  /*!< ENET PHY AutoNegotiate Fail. */
 };
 
 /*! @brief Defines the PHY link speed. This is align with the speed for ENET MAC. */
@@ -103,16 +103,16 @@ extern "C" {
 #endif
 
 /*!
-  * @name PHY Driver
-  * @{
-  */
+ * @name PHY Driver
+ * @{
+ */
 
 /*!
  * @brief Initializes PHY.
  *
  *  This function initialize the SMI interface and initialize PHY.
  *  The SMI is the MII management interface between PHY and MAC, which should be
- *  firstly initialized before any other operation for PHY. The PHY initialize with auto-negotiation. 
+ *  firstly initialized before any other operation for PHY. The PHY initialize with auto-negotiation.
  *
  * @param base       ENET peripheral base address.
  * @param phyAddr    The PHY address.

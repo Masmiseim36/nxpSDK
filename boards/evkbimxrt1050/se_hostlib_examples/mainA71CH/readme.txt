@@ -41,9 +41,9 @@ combination with host library and MBEDTLS cryptographic library.
 Toolchain supported
 ===================
 - IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
 
 Hardware requirements
 =====================
@@ -51,6 +51,9 @@ Hardware requirements
 - EVKB-IMXRT1050 board
 - Personal Computer
 
+Board settings
+==============
+No special settings are required.
 Prepare the Demo
 ================
 1. Build the demo
@@ -85,6 +88,6 @@ SecureBox Version: 0x0000
 
 End of project
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Board settings
-==============
-No special settings are required.
+Customization options
+=====================
+

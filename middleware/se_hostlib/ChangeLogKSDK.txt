@@ -1,0 +1,36 @@
+
+/*!
+@page middleware_log Secure Element Change Log
+
+@section se_hostlib Secure Element hostlib for KSDK
+
+  - 1.6.0
+    - Host Library version goes from 01.40 to 01.41 (A71CH Host API has not been extended)
+    - Conditional translation of i2c_Failed into i2c_NoAddrAck removed (this translation is no longer required as a NACK is no longer lumped into i2c_Failed by the I2C driver wrapper)
+    - Additional update of SCI2C implementation: Ensure multiple consecutive NACK’s on address will trigger a return from function ‘sci2c_SlaveToMasterDataTx’.
+    - sci2c_Init update: initial loop fetching sci2c status modified so a SoftReset is issued for all exception types.
+    - Solved potential buffer overflow in the implementation of smApduAppendCmdData
+    - Added additional explicit checks that pointer arguments passed at the AX_API/A71CH_API level are not NULL pointers. In case this check was done through an ‘assert’ statement, the ‘assert’ statement has been removed.
+
+  - 1.5.0
+    - Added i.MX RT1050 EVKB and LPC54018 IoT module projects
+    - Added Watson IoT demo
+    - GP Storage Lookup table is no longer restricted to 5 objects, up to 254 objects can be stored (use HLSE_MAX_OBJECTS_IN_TABLE (>=8) to limit support and save memory) 
+    - GP Storage Update Counter can be disabled by defining HLSE_DISABLE_UPDATE_COUNTER (not defined by default).
+    - It’s possible to fetch the absolute storage offset of an object
+    - Specific error code when attempting to update a locked Lookup table
+    - Extended doxygen documentation
+
+  - 1.4.2
+    - Upgraded rtos\amazon-freertos\lib\pkcs11\portable\nxp\se_hostlib\pkcs11_se.c
+    - Added GCP (Google Cloud Platform Demo)
+    - Readme updates for AWS JITR Demo
+
+  - 1.4.0.1
+    - Examples: Fix time stamp printing on embedded platform.
+      (Time stams are supported only for Linux/Windows)
+
+  - 1.0.0
+    - New integration
+
+*/

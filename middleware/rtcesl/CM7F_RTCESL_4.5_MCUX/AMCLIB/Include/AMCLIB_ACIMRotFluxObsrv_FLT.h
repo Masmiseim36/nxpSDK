@@ -22,9 +22,9 @@ extern "C" {
 * Includes
 ****************************************************************************/   
 #include "amclib_types.h"  
-#include "gflib_fp.h"     
-#include "gmclib_fp.h"     
-#include "mlib_fp.h"
+#include "gflib_FP.h"     
+#include "gmclib_FP.h"     
+#include "mlib_FP.h"
 
 /******************************************************************************
 * Macros 

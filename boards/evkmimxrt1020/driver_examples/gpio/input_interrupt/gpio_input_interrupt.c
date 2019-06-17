@@ -2,10 +2,10 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
- 
+
 #include "fsl_debug_console.h"
 #include "fsl_gpio.h"
 #include "fsl_common.h"
@@ -21,7 +21,7 @@
 #define EXAMPLE_SW_IRQ BOARD_USER_BUTTON_IRQ
 #define EXAMPLE_GPIO_IRQHandler BOARD_USER_BUTTON_IRQ_HANDLER
 #define EXAMPLE_SW_NAME BOARD_USER_BUTTON_NAME
-   
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -43,7 +43,7 @@ volatile bool g_InputSignal = false;
  * @brief Interrupt service fuction of switch.
  */
 void EXAMPLE_GPIO_IRQHandler(void)
-{ 
+{
     /* clear the interrupt status */
     GPIO_PortClearInterruptFlags(EXAMPLE_SW_GPIO, 1U << EXAMPLE_SW_GPIO_PIN);
     /* Change state of switch. */
@@ -56,13 +56,14 @@ void EXAMPLE_GPIO_IRQHandler(void)
 }
 
 /*!
-* @brief Main function
-*/
+ * @brief Main function
+ */
 int main(void)
 {
     /* Define the init structure for the input switch pin */
     gpio_pin_config_t sw_config = {
-        kGPIO_DigitalInput, 0,
+        kGPIO_DigitalInput,
+        0,
         kGPIO_IntRisingEdge,
     };
 
@@ -77,20 +78,20 @@ int main(void)
     EnableIRQ(EXAMPLE_SW_IRQ);
     GPIO_PinInit(EXAMPLE_SW_GPIO, EXAMPLE_SW_GPIO_PIN, &sw_config);
 
-    /* Enable GPIO pin interrupt */  
+    /* Enable GPIO pin interrupt */
     GPIO_PortEnableInterrupts(EXAMPLE_SW_GPIO, 1U << EXAMPLE_SW_GPIO_PIN);
 
-    while(1)
+    while (1)
     {
-        if(g_InputSignal)
+        if (g_InputSignal)
         {
             delay();
-            if(1 == GPIO_PinRead(EXAMPLE_SW_GPIO, EXAMPLE_SW_GPIO_PIN))
+            if (1 == GPIO_PinRead(EXAMPLE_SW_GPIO, EXAMPLE_SW_GPIO_PIN))
             {
                 PRINTF("%s is turned on.\r\n", EXAMPLE_SW_NAME);
             }
             /* Reset state of switch. */
-            g_InputSignal = false; 
+            g_InputSignal = false;
         }
     }
 }

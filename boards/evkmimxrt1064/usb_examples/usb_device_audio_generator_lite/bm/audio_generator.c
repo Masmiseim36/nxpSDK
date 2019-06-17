@@ -28,7 +28,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #include "usb_phy.h"
 #endif
 
@@ -52,7 +52,9 @@ extern void USB_PrepareData(void);
 #if defined(AUDIO_DATA_SOURCE_DMIC) && (AUDIO_DATA_SOURCE_DMIC > 0U)
 extern void Board_DMIC_DMA_Init(void);
 #endif
-
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+extern void SCTIMER_CaptureInit(void);
+#endif
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -98,6 +100,14 @@ usb_audio_generator_struct_t s_audioGenerator = {
     .resSamplingFrequency = {0x00U, 0x00U, 0x01U},
     .speed = USB_SPEED_FULL,
     .attach = 0U,
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+    .generatorIntervalCount = 0,
+    .audioPllTicksPrev = 0,
+    .audioPllTicksDiff = 0,
+    .audioPllTicksEma = AUDIO_PLL_USB1_SOF_INTERVAL_COUNT,
+    .audioPllTickEmaFrac = 0,
+    .audioPllStep = AUDIO_PLL_FRACTIONAL_CHANGE_STEP,
+#endif
 };
 
 /*******************************************************************************
@@ -117,7 +127,9 @@ void USB_OTG2_IRQHandler(void)
 void USB_DeviceClockInit(void)
 {
     usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL, BOARD_USB_PHY_TXCAL45DP, BOARD_USB_PHY_TXCAL45DM,
+        BOARD_USB_PHY_D_CAL,
+        BOARD_USB_PHY_TXCAL45DP,
+        BOARD_USB_PHY_TXCAL45DM,
     };
 
     if (CONTROLLER_ID == kUSB_ControllerEhci0)
@@ -137,9 +149,9 @@ void USB_DeviceIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbDeviceEhciIrq[] = USBHS_IRQS;
-    irqNumber = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
+    irqNumber                  = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
 
-/* Install isr, set priority, and enable IRQ. */
+    /* Install isr, set priority, and enable IRQ. */
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
     EnableIRQ((IRQn_Type)irqNumber);
 }
@@ -886,11 +898,9 @@ usb_status_t USB_DeviceAudioProcessTerminalRequest(uint32_t audioCommand, uint32
             s_audioGenerator.curVolume[1] = **(buffer + 1);
             volume = (uint16_t)((uint16_t)s_audioGenerator.curVolume[1] << 8U);
             volume |= (uint8_t)(s_audioGenerator.curVolume[0]);
-            usb_echo("Set Cur Volume : %x\r\n", volume);
             break;
         case USB_DEVICE_AUDIO_SET_CUR_MUTE_CONTROL:
             s_audioGenerator.curMute = **(buffer);
-            usb_echo("Set Cur Mute : %x\r\n", s_audioGenerator.curMute);
             break;
         case USB_DEVICE_AUDIO_SET_CUR_BASS_CONTROL:
             s_audioGenerator.curBass = **(buffer);
@@ -1108,6 +1118,9 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
     {
         case kUSB_DeviceEventBusReset:
         {
+            /* The device BUS reset signal detected */
+            s_audioGenerator.attach = 0U;
+            s_audioGenerator.currentConfiguration = 0U;
             USB_DeviceControlPipeInit(s_audioGenerator.deviceHandle);
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
@@ -1117,14 +1130,24 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             {
                 USB_DeviceSetSpeed(s_audioGenerator.speed);
             }
-
 #endif
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
-            if (USB_AUDIO_GENERATOR_CONFIGURE_INDEX == (*temp8))
+            if (0U == (*temp8))
             {
+                s_audioGenerator.attach = 0U;
+                s_audioGenerator.currentConfiguration = 0U;
+            }
+            else if (USB_AUDIO_GENERATOR_CONFIGURE_INDEX == (*temp8))
+            {
+                /* Set the configuration request */
                 s_audioGenerator.attach = 1U;
+                s_audioGenerator.currentConfiguration = *temp8;
+            }
+            else
+            {
+                error = kStatus_USB_InvalidRequest;
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -1156,10 +1179,12 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                         if (USB_SPEED_HIGH == s_audioGenerator.speed)
                         {
                             epInitStruct.maxPacketSize = HS_ISO_IN_ENDP_PACKET_SIZE;
+                            epInitStruct.interval = HS_ISO_IN_ENDP_INTERVAL;
                         }
                         else
                         {
                             epInitStruct.maxPacketSize = FS_ISO_IN_ENDP_PACKET_SIZE;
+                            epInitStruct.interval = FS_ISO_IN_ENDP_INTERVAL;
                         }
 
                         USB_DeviceInitEndpoint(s_audioGenerator.deviceHandle, &epInitStruct, &epCallback);
@@ -1195,6 +1220,10 @@ void APPInit(void)
     SYSMPU_Enable(SYSMPU, 0);
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+    SCTIMER_CaptureInit();
+#endif
+
     if (kStatus_USB_Success != USB_DeviceInit(CONTROLLER_ID, USB_DeviceCallback, &s_audioGenerator.deviceHandle))
     {
         usb_echo("USB device failed\r\n");
@@ -1210,7 +1239,7 @@ void APPInit(void)
     USB_DeviceRun(s_audioGenerator.deviceHandle);
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)

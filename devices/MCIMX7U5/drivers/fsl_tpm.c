@@ -380,7 +380,12 @@ status_t TPM_SetupPwm(TPM_Type *base,
                     cnv = (uint16_t)(mod + 1U);
                 }
             }
-
+            /* Fix ERROR050050  When TPM is configured in EPWM mode as PS = 0, the compare event is missed on
+            the first reload/overflow after writing 1 to the CnV register and causes an incorrect duty output.*/
+#if (defined(FSL_FEATURE_TPM_HAS_ERRATA_050050) && FSL_FEATURE_TPM_HAS_ERRATA_050050)
+            assert(!(mode == kTPM_EdgeAlignedPwm && cnv == 1U &&
+                     (base->SC & TPM_SC_PS_MASK) == kTPM_Prescale_Divide_1));
+#endif
             /* When switching mode, disable channel first */
             base->CONTROLS[chnlParams->chnlNumber].CnSC &=
                 ~(TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK);
@@ -466,6 +471,11 @@ void TPM_UpdatePwmDutycycle(TPM_Type *base,
         {
             cnv = mod + 1u;
         }
+        /* Fix ERROR050050 */
+#if (defined(FSL_FEATURE_TPM_HAS_ERRATA_050050) && FSL_FEATURE_TPM_HAS_ERRATA_050050)
+        assert(!(currentPwmMode == kTPM_EdgeAlignedPwm && cnv == 1U &&
+                 (base->SC & TPM_SC_PS_MASK) == kTPM_Prescale_Divide_1));
+#endif
         base->CONTROLS[chnlNumber].CnV = cnv;
 #if defined(FSL_FEATURE_TPM_WAIT_CnV_REGISTER_UPDATE) && FSL_FEATURE_TPM_WAIT_CnV_REGISTER_UPDATE
         while (!(cnv == base->CONTROLS[chnlNumber].CnV))

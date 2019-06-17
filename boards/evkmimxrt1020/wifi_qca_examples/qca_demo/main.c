@@ -2,7 +2,7 @@
  * Copyright (c) 2013 - 2014, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -18,7 +18,7 @@
 
 #include "pin_mux.h"
 #include "clock_config.h"
-#include "wifi_shield_gt202.h"
+#include "wifi_shield.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -33,7 +33,7 @@
  ******************************************************************************/
 
 // 0 is the highest priority and priority 15 is the lowest priority
-const int TASK_MAIN_PRIO = configMAX_PRIORITIES - 3;
+const int TASK_MAIN_PRIO       = configMAX_PRIORITIES - 3;
 const int TASK_MAIN_STACK_SIZE = 800;
 
 portSTACK_TYPE *task_main_stack = NULL;
@@ -44,10 +44,10 @@ TaskHandle_t task_main_task_handler;
 #define AP_SSID "nxp"
 #define AP_PASSPHRASE "NXP0123456789"
 
-QCOM_SSID g_ssid = {.ssid = (AP_SSID)};
+QCOM_SSID g_ssid             = {.ssid = (AP_SSID)};
 QCOM_PASSPHRASE g_passphrase = {.passphrase = (AP_PASSPHRASE)};
 
-WLAN_AUTH_MODE g_auth = WLAN_AUTH_WPA2_PSK;
+WLAN_AUTH_MODE g_auth    = WLAN_AUTH_WPA2_PSK;
 WLAN_CRYPT_TYPE g_cipher = WLAN_CRYPT_AES_CRYPT;
 
 // ============================================================================
@@ -294,6 +294,7 @@ void task_main(void *param)
 
     UBaseType_t numTasks = uxTaskGetNumberOfTasks();
     PRINTF("number of FreeRTOS tasks = %d\r\n", numTasks);
+    DbgConsole_Flush();
     PRINTF("Entering main loop\r\n");
 
     printSeparator();
@@ -335,7 +336,7 @@ int main(void)
 
     /*Set clock source for LPSPI*/
     CLOCK_SetMux(kCLOCK_LpspiMux, WIFISHIELD_SPI_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_LpspiDiv, WIFISHIELD_SPI_CLOCK_SOURCE_DIVIDER);   
+    CLOCK_SetDiv(kCLOCK_LpspiDiv, WIFISHIELD_SPI_CLOCK_SOURCE_DIVIDER);
 
     result =
         xTaskCreate(task_main, "main", TASK_MAIN_STACK_SIZE, task_main_stack, TASK_MAIN_PRIO, &task_main_task_handler);

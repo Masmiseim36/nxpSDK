@@ -1,8 +1,8 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017-2019 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -27,18 +27,21 @@ enum _dcp_status
  */
 /*! @name Driver version */
 /*@{*/
-/*! @brief DCP driver version. Version 2.1.0.
+/*! @brief DCP driver version. Version 2.1.1.
  *
- * Current version: 2.1.0
+ * Current version: 2.1.1
  *
  * Change log:
- * - Version 2.1.0
+ * - Version 2.1.1
+ *   - Add DCP status clearing when channel operation is complete
+ *
+ * - 2.1.0
  *   - Add byte/word swap feature for key, input and output data
  *
  * - Version 2.0.0
  *   - Initial version
  */
-#define FSL_DCP_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
+#define FSL_DCP_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
 /*@}*/
 
 /*! @brief DCP channel enable.
@@ -46,11 +49,11 @@ enum _dcp_status
  */
 typedef enum _dcp_ch_enable
 {
-    kDCP_chDisable = 0U,    /*!< DCP channel disable */
-    kDCP_ch0Enable = 1U,    /*!< DCP channel 0 enable */
-    kDCP_ch1Enable = 2U,    /*!< DCP channel 1 enable */
-    kDCP_ch2Enable = 4U,    /*!< DCP channel 2 enable */
-    kDCP_ch3Enable = 8U,    /*!< DCP channel 3 enable */
+    kDCP_chDisable   = 0U,  /*!< DCP channel disable */
+    kDCP_ch0Enable   = 1U,  /*!< DCP channel 0 enable */
+    kDCP_ch1Enable   = 2U,  /*!< DCP channel 1 enable */
+    kDCP_ch2Enable   = 4U,  /*!< DCP channel 2 enable */
+    kDCP_ch3Enable   = 8U,  /*!< DCP channel 3 enable */
     kDCP_chEnableAll = 15U, /*!< DCP channel enable all */
 } _dcp_ch_enable_t;
 
@@ -82,13 +85,13 @@ typedef enum _dcp_channel
  */
 typedef enum _dcp_key_slot
 {
-    kDCP_KeySlot0 = 0U,     /*!< DCP key slot 0. */
-    kDCP_KeySlot1 = 1U,     /*!< DCP key slot 1. */
-    kDCP_KeySlot2 = 2U,     /*!< DCP key slot 2.*/
-    kDCP_KeySlot3 = 3U,     /*!< DCP key slot 3. */
-    kDCP_OtpKey = 4U,       /*!< DCP OTP key. */
+    kDCP_KeySlot0     = 0U, /*!< DCP key slot 0. */
+    kDCP_KeySlot1     = 1U, /*!< DCP key slot 1. */
+    kDCP_KeySlot2     = 2U, /*!< DCP key slot 2.*/
+    kDCP_KeySlot3     = 3U, /*!< DCP key slot 3. */
+    kDCP_OtpKey       = 4U, /*!< DCP OTP key. */
     kDCP_OtpUniqueKey = 5U, /*!< DCP unique OTP key. */
-    kDCP_PayloadKey = 6U,   /*!< DCP payload key. */
+    kDCP_PayloadKey   = 6U, /*!< DCP payload key. */
 } dcp_key_slot_t;
 
 /*! @brief DCP key, input & output swap options
@@ -96,11 +99,11 @@ typedef enum _dcp_key_slot
  */
 typedef enum _dcp_swap
 {
-    kDCP_NoSwap = 0x0U,
-    kDCP_KeyByteSwap = 0x40000U,
-    kDCP_KeyWordSwap = 0x80000U,
-    kDCP_InputByteSwap = 0x100000U,
-    kDCP_InputWordSwap = 0x200000U,
+    kDCP_NoSwap         = 0x0U,
+    kDCP_KeyByteSwap    = 0x40000U,
+    kDCP_KeyWordSwap    = 0x80000U,
+    kDCP_InputByteSwap  = 0x100000U,
+    kDCP_InputWordSwap  = 0x200000U,
     kDCP_OutputByteSwap = 0x400000U,
     kDCP_OutputWordSwap = 0x800000U,
 } dcp_swap_t;
@@ -374,19 +377,19 @@ status_t DCP_AES_DecryptCbc(DCP_Type *base,
  * @{
  */
 /*!
-* @brief Encrypts AES using the ECB block mode.
-*
-* Puts AES ECB encrypt work packet to DCP channel.
-*
-* @param base DCP peripheral base address
-* @param handle Handle used for this request.
-* @param[out] dcpPacket Memory for the DCP work packet.
-* @param plaintext Input plain text to encrypt.
-* @param[out] ciphertext Output cipher text
-* @param size Size of input and output data in bytes. Must be multiple of 16 bytes.
-* @return kStatus_Success The work packet has been scheduled at DCP channel.
-* @return kStatus_DCP_Again The DCP channel is busy processing previous request.
-*/
+ * @brief Encrypts AES using the ECB block mode.
+ *
+ * Puts AES ECB encrypt work packet to DCP channel.
+ *
+ * @param base DCP peripheral base address
+ * @param handle Handle used for this request.
+ * @param[out] dcpPacket Memory for the DCP work packet.
+ * @param plaintext Input plain text to encrypt.
+ * @param[out] ciphertext Output cipher text
+ * @param size Size of input and output data in bytes. Must be multiple of 16 bytes.
+ * @return kStatus_Success The work packet has been scheduled at DCP channel.
+ * @return kStatus_DCP_Again The DCP channel is busy processing previous request.
+ */
 status_t DCP_AES_EncryptEcbNonBlocking(DCP_Type *base,
                                        dcp_handle_t *handle,
                                        dcp_work_packet_t *dcpPacket,

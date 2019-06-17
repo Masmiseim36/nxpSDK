@@ -82,7 +82,9 @@ static status_t SDIO_ExecuteTuning(sdio_card_t *card);
  ******************************************************************************/
 /* define the tuple list */
 static const uint32_t g_tupleList[SDIO_COMMON_CIS_TUPLE_NUM] = {
-    SDIO_TPL_CODE_MANIFID, SDIO_TPL_CODE_FUNCID, SDIO_TPL_CODE_FUNCE,
+    SDIO_TPL_CODE_MANIFID,
+    SDIO_TPL_CODE_FUNCID,
+    SDIO_TPL_CODE_FUNCE,
 };
 
 /* g_sdmmc statement */
@@ -131,15 +133,15 @@ static status_t SDIO_SendRca(sdio_card_t *card)
     uint32_t i = FSL_SDMMC_MAX_CMD_RETRIES;
 
     SDMMCHOST_TRANSFER content = {0};
-    SDMMCHOST_COMMAND command = {0};
+    SDMMCHOST_COMMAND command  = {0};
 
-    command.index = kSDIO_SendRelativeAddress;
-    command.argument = 0U;
-    command.responseType = kCARD_ResponseTypeR6;
+    command.index              = kSDIO_SendRelativeAddress;
+    command.argument           = 0U;
+    command.responseType       = kCARD_ResponseTypeR6;
     command.responseErrorFlags = kSDIO_StatusR6Error | kSDIO_StatusIllegalCmd | kSDIO_StatusCmdCRCError;
 
     content.command = &command;
-    content.data = NULL;
+    content.data    = NULL;
 
     while (--i)
     {
@@ -172,15 +174,15 @@ static status_t SDIO_SendOperationCondition(sdio_card_t *card, uint32_t argument
     assert(card);
 
     SDMMCHOST_TRANSFER content = {0U};
-    SDMMCHOST_COMMAND command = {0U};
-    uint32_t i = SDIO_RETRY_TIMES;
+    SDMMCHOST_COMMAND command  = {0U};
+    uint32_t i                 = SDIO_RETRY_TIMES;
 
-    command.index = kSDIO_SendOperationCondition;
-    command.argument = argument;
+    command.index        = kSDIO_SendOperationCondition;
+    command.argument     = argument;
     command.responseType = kCARD_ResponseTypeR4;
 
     content.command = &command;
-    content.data = NULL;
+    content.data    = NULL;
 
     while (--i)
     {
@@ -220,19 +222,19 @@ status_t SDIO_IO_Write_Direct(sdio_card_t *card, sdio_func_num_t func, uint32_t 
     assert(func <= kSDIO_FunctionNum7);
 
     SDMMCHOST_TRANSFER content = {0U};
-    SDMMCHOST_COMMAND command = {0U};
+    SDMMCHOST_COMMAND command  = {0U};
 
-    command.index = kSDIO_RWIODirect;
+    command.index    = kSDIO_RWIODirect;
     command.argument = (func << SDIO_CMD_ARGUMENT_FUNC_NUM_POS) |
                        ((regAddr & SDIO_CMD_ARGUMENT_REG_ADDR_MASK) << SDIO_CMD_ARGUMENT_REG_ADDR_POS) |
                        (1U << SDIO_CMD_ARGUMENT_RW_POS) | ((raw ? 1U : 0U) << SDIO_DIRECT_CMD_ARGUMENT_RAW_POS) |
                        (*data & SDIO_DIRECT_CMD_DATA_MASK);
-    command.responseType = kCARD_ResponseTypeR5;
+    command.responseType       = kCARD_ResponseTypeR5;
     command.responseErrorFlags = (kSDIO_StatusCmdCRCError | kSDIO_StatusIllegalCmd | kSDIO_StatusError |
                                   kSDIO_StatusFunctionNumError | kSDIO_StatusOutofRange);
 
     content.command = &command;
-    content.data = NULL;
+    content.data    = NULL;
 
     if (kStatus_Success != card->host.transfer(card->host.base, &content))
     {
@@ -251,17 +253,17 @@ status_t SDIO_IO_Read_Direct(sdio_card_t *card, sdio_func_num_t func, uint32_t r
     assert(func <= kSDIO_FunctionNum7);
 
     SDMMCHOST_TRANSFER content = {0U};
-    SDMMCHOST_COMMAND command = {0U};
+    SDMMCHOST_COMMAND command  = {0U};
 
-    command.index = kSDIO_RWIODirect;
+    command.index    = kSDIO_RWIODirect;
     command.argument = (func << SDIO_CMD_ARGUMENT_FUNC_NUM_POS) |
                        ((regAddr & SDIO_CMD_ARGUMENT_REG_ADDR_MASK) << SDIO_CMD_ARGUMENT_REG_ADDR_POS);
-    command.responseType = kCARD_ResponseTypeR5;
+    command.responseType       = kCARD_ResponseTypeR5;
     command.responseErrorFlags = (kSDIO_StatusCmdCRCError | kSDIO_StatusIllegalCmd | kSDIO_StatusError |
                                   kSDIO_StatusFunctionNumError | kSDIO_StatusOutofRange);
 
     content.command = &command;
-    content.data = NULL;
+    content.data    = NULL;
 
     if (kStatus_Success != card->host.transfer(card->host.base, &content))
     {
@@ -285,9 +287,9 @@ status_t SDIO_IO_RW_Direct(sdio_card_t *card,
     assert(func <= kSDIO_FunctionNum7);
 
     SDMMCHOST_TRANSFER content = {0U};
-    SDMMCHOST_COMMAND command = {0U};
+    SDMMCHOST_COMMAND command  = {0U};
 
-    command.index = kSDIO_RWIODirect;
+    command.index    = kSDIO_RWIODirect;
     command.argument = (func << SDIO_CMD_ARGUMENT_FUNC_NUM_POS) |
                        ((regAddr & SDIO_CMD_ARGUMENT_REG_ADDR_MASK) << SDIO_CMD_ARGUMENT_REG_ADDR_POS);
 
@@ -301,16 +303,16 @@ status_t SDIO_IO_RW_Direct(sdio_card_t *card,
         command.argument |= dataIn & SDIO_DIRECT_CMD_DATA_MASK;
     }
 
-    command.responseType = kCARD_ResponseTypeR5;
+    command.responseType       = kCARD_ResponseTypeR5;
     command.responseErrorFlags = (kSDIO_StatusCmdCRCError | kSDIO_StatusIllegalCmd | kSDIO_StatusError |
                                   kSDIO_StatusFunctionNumError | kSDIO_StatusOutofRange);
 
-    command.responseType = kCARD_ResponseTypeR5;
+    command.responseType       = kCARD_ResponseTypeR5;
     command.responseErrorFlags = (kSDIO_StatusCmdCRCError | kSDIO_StatusIllegalCmd | kSDIO_StatusError |
                                   kSDIO_StatusFunctionNumError | kSDIO_StatusOutofRange);
 
     content.command = &command;
-    content.data = NULL;
+    content.data    = NULL;
 
     if (kStatus_Success != card->host.transfer(card->host.base, &content))
     {
@@ -334,10 +336,10 @@ status_t SDIO_IO_Write_Extended(
     assert(func <= kSDIO_FunctionNum7);
 
     SDMMCHOST_TRANSFER content = {0U};
-    SDMMCHOST_COMMAND command = {0U};
-    SDMMCHOST_DATA data = {0U};
-    bool blockMode = false;
-    bool opCode = false;
+    SDMMCHOST_COMMAND command  = {0U};
+    SDMMCHOST_DATA data        = {0U};
+    bool blockMode             = false;
+    bool opCode                = false;
 
     /* check if card support block mode */
     if ((card->cccrflags & kSDIO_CCCRSupportMultiBlock) && (flags & SDIO_EXTEND_CMD_BLOCK_MODE_MASK))
@@ -367,13 +369,13 @@ status_t SDIO_IO_Write_Extended(
         }
     }
 
-    command.index = kSDIO_RWIOExtended;
+    command.index    = kSDIO_RWIOExtended;
     command.argument = (func << SDIO_CMD_ARGUMENT_FUNC_NUM_POS) |
                        ((regAddr & SDIO_CMD_ARGUMENT_REG_ADDR_MASK) << SDIO_CMD_ARGUMENT_REG_ADDR_POS) |
                        (1U << SDIO_CMD_ARGUMENT_RW_POS) | (count & SDIO_EXTEND_CMD_COUNT_MASK) |
                        ((blockMode ? 1 : 0) << SDIO_EXTEND_CMD_ARGUMENT_BLOCK_MODE_POS |
                         ((opCode ? 1 : 0) << SDIO_EXTEND_CMD_ARGUMENT_OP_CODE_POS));
-    command.responseType = kCARD_ResponseTypeR5;
+    command.responseType       = kCARD_ResponseTypeR5;
     command.responseErrorFlags = (kSDIO_StatusCmdCRCError | kSDIO_StatusIllegalCmd | kSDIO_StatusError |
                                   kSDIO_StatusFunctionNumError | kSDIO_StatusOutofRange);
 
@@ -391,13 +393,13 @@ status_t SDIO_IO_Write_Extended(
     }
     else
     {
-        data.blockSize = count;
+        data.blockSize  = count;
         data.blockCount = 1U;
     }
     data.txData = (uint32_t *)buffer;
 
     content.command = &command;
-    content.data = &data;
+    content.data    = &data;
 
     if (kStatus_Success != card->host.transfer(card->host.base, &content))
     {
@@ -415,10 +417,10 @@ status_t SDIO_IO_Read_Extended(
     assert(func <= kSDIO_FunctionNum7);
 
     SDMMCHOST_TRANSFER content = {0U};
-    SDMMCHOST_COMMAND command = {0U};
-    SDMMCHOST_DATA data = {0U};
-    bool blockMode = false;
-    bool opCode = false;
+    SDMMCHOST_COMMAND command  = {0U};
+    SDMMCHOST_DATA data        = {0U};
+    bool blockMode             = false;
+    bool opCode                = false;
 
     /* check if card support block mode */
     if ((card->cccrflags & kSDIO_CCCRSupportMultiBlock) && (flags & SDIO_EXTEND_CMD_BLOCK_MODE_MASK))
@@ -451,13 +453,13 @@ status_t SDIO_IO_Read_Extended(
         }
     }
 
-    command.index = kSDIO_RWIOExtended;
+    command.index    = kSDIO_RWIOExtended;
     command.argument = (func << SDIO_CMD_ARGUMENT_FUNC_NUM_POS) |
                        ((regAddr & SDIO_CMD_ARGUMENT_REG_ADDR_MASK) << SDIO_CMD_ARGUMENT_REG_ADDR_POS) |
                        (count & SDIO_EXTEND_CMD_COUNT_MASK) |
                        ((blockMode ? 1U : 0U) << SDIO_EXTEND_CMD_ARGUMENT_BLOCK_MODE_POS |
                         ((opCode ? 1U : 0U) << SDIO_EXTEND_CMD_ARGUMENT_OP_CODE_POS));
-    command.responseType = kCARD_ResponseTypeR5;
+    command.responseType       = kCARD_ResponseTypeR5;
     command.responseErrorFlags = (kSDIO_StatusCmdCRCError | kSDIO_StatusIllegalCmd | kSDIO_StatusError |
                                   kSDIO_StatusFunctionNumError | kSDIO_StatusOutofRange);
 
@@ -475,13 +477,13 @@ status_t SDIO_IO_Read_Extended(
     }
     else
     {
-        data.blockSize = count;
+        data.blockSize  = count;
         data.blockCount = 1U;
     }
     data.rxData = (uint32_t *)buffer;
 
     content.command = &command;
-    content.data = &data;
+    content.data    = &data;
 
     if (kStatus_Success != card->host.transfer(card->host.base, &content))
     {
@@ -502,25 +504,25 @@ status_t SDIO_IO_Transfer(sdio_card_t *card,
 {
     assert(card != NULL);
 
-    uint32_t actualSize = dataSize;
+    uint32_t actualSize        = dataSize;
     SDMMCHOST_TRANSFER content = {0U};
-    SDMMCHOST_COMMAND command = {0U};
-    SDMMCHOST_DATA data = {0U};
-    uint32_t i = SDIO_RETRY_TIMES;
-    uint32_t *dataAddr = (uint32_t *)(txData == NULL ? rxData : txData);
+    SDMMCHOST_COMMAND command  = {0U};
+    SDMMCHOST_DATA data        = {0U};
+    uint32_t i                 = SDIO_RETRY_TIMES;
+    uint32_t *dataAddr         = (uint32_t *)(txData == NULL ? rxData : txData);
 
     if ((dataSize != 0U) && (txData != NULL) && (rxData != NULL))
     {
         return kStatus_InvalidArgument;
     }
 
-    command.index = cmd;
-    command.argument = argument;
-    command.responseType = kCARD_ResponseTypeR5;
+    command.index              = cmd;
+    command.argument           = argument;
+    command.responseType       = kCARD_ResponseTypeR5;
     command.responseErrorFlags = (kSDIO_StatusCmdCRCError | kSDIO_StatusIllegalCmd | kSDIO_StatusError |
                                   kSDIO_StatusFunctionNumError | kSDIO_StatusOutofRange);
-    content.command = &command;
-    content.data = NULL;
+    content.command            = &command;
+    content.data               = NULL;
 
     if (dataSize)
     {
@@ -533,12 +535,12 @@ status_t SDIO_IO_Transfer(sdio_card_t *card,
             }
 
             data.blockCount = actualSize / blockSize;
-            data.blockSize = blockSize;
+            data.blockSize  = blockSize;
         }
         else
         {
             data.blockCount = 1;
-            data.blockSize = dataSize;
+            data.blockSize  = dataSize;
         }
         /* if data buffer address can not meet host controller internal DMA requirement, sdio driver will try to use
          * internal align buffer if data size is not bigger than internal buffer size,
@@ -573,7 +575,8 @@ status_t SDIO_IO_Transfer(sdio_card_t *card,
     {
         if (kStatus_Success == card->host.transfer(card->host.base, &content))
         {
-            if ((!card->noInternalAlign) && rxData)
+            if ((rxData != NULL) && ((uint32_t)rxData & (SDMMCHOST_DMA_BUFFER_ADDR_ALIGN - 1U)) &&
+                (actualSize <= (SDMMC_GLOBAL_BUFFER_SIZE * sizeof(uint32_t))) && (!card->noInternalAlign))
             {
                 memcpy(rxData, g_sdmmc, dataSize);
             }
@@ -597,7 +600,7 @@ status_t SDIO_GetCardCapability(sdio_card_t *card, sdio_func_num_t func)
     assert(func <= kSDIO_FunctionNum7);
 
     uint8_t *tempBuffer = (uint8_t *)g_sdmmc;
-    uint32_t i = 0U;
+    uint32_t i          = 0U;
 
     memset(g_sdmmc, 0U, sizeof(g_sdmmc));
 
@@ -614,8 +617,8 @@ status_t SDIO_GetCardCapability(sdio_card_t *card, sdio_func_num_t func)
     {
         case kSDIO_FunctionNum0:
 
-            card->sdVersion = tempBuffer[kSDIO_RegSDVersion];
-            card->sdioVersion = tempBuffer[kSDIO_RegCCCRSdioVer] >> 4U;
+            card->sdVersion    = tempBuffer[kSDIO_RegSDVersion];
+            card->sdioVersion  = tempBuffer[kSDIO_RegCCCRSdioVer] >> 4U;
             card->cccrVersioin = tempBuffer[kSDIO_RegCCCRSdioVer] & 0xFU;
             /* continuous SPI interrupt */
             if (tempBuffer[kSDIO_RegBusInterface] & 0x40U)
@@ -820,9 +823,9 @@ status_t SDIO_SwitchToHighSpeed(sdio_card_t *card)
 {
     assert(card);
 
-    uint8_t temp = 0U;
+    uint8_t temp        = 0U;
     uint32_t retryTimes = SDIO_RETRY_TIMES;
-    status_t status = kStatus_SDMMC_SDIO_SwitchHighSpeedFail;
+    status_t status     = kStatus_SDMMC_SDIO_SwitchHighSpeedFail;
 
     if (card->cccrflags & SDIO_CCCR_SUPPORT_HIGHSPEED)
     {
@@ -864,7 +867,7 @@ status_t SDIO_SwitchToHighSpeed(sdio_card_t *card)
     {
         /* default mode 25MHZ */
         card->busClock_Hz = SDMMCHOST_SET_CARD_CLOCK(card->host.base, card->host.sourceClock_Hz, SD_CLOCK_25MHZ);
-        status = kStatus_Success;
+        status            = kStatus_Success;
     }
 
     return status;
@@ -874,9 +877,9 @@ static status_t SDIO_SelectBusTiming(sdio_card_t *card)
 {
     assert(card);
 
-    uint32_t targetBusFreq = SD_CLOCK_25MHZ;
-    uint32_t targetTiming = 0U;
-    uint8_t temp = 0U;
+    uint32_t targetBusFreq   = SD_CLOCK_25MHZ;
+    uint32_t targetTiming    = 0U;
+    uint8_t temp             = 0U;
     uint32_t supportModeFlag = 0U;
 
     do
@@ -890,9 +893,9 @@ static status_t SDIO_SelectBusTiming(sdio_card_t *card)
                     ((card->cccrflags & SDIO_CCCR_SUPPORT_SDR104) == SDIO_CCCR_SUPPORT_SDR104))
                 {
                     card->currentTiming = kSD_TimingSDR104Mode;
-                    targetTiming = SDIO_CCCR_ENABLE_SDR104_MODE;
-                    targetBusFreq = SDMMCHOST_SUPPORT_SDR104_FREQ;
-                    supportModeFlag = SDIO_CCCR_SUPPORT_SDR104;
+                    targetTiming        = SDIO_CCCR_ENABLE_SDR104_MODE;
+                    targetBusFreq       = SDMMCHOST_SUPPORT_SDR104_FREQ;
+                    supportModeFlag     = SDIO_CCCR_SUPPORT_SDR104;
                     break;
                 }
 
@@ -901,9 +904,9 @@ static status_t SDIO_SelectBusTiming(sdio_card_t *card)
                     ((card->cccrflags & SDIO_CCCR_SUPPORT_DDR50) == SDIO_CCCR_SUPPORT_DDR50))
                 {
                     card->currentTiming = kSD_TimingDDR50Mode;
-                    targetTiming = SDIO_CCCR_ENABLE_DDR50_MODE;
-                    targetBusFreq = SD_CLOCK_50MHZ;
-                    supportModeFlag = SDIO_CCCR_SUPPORT_DDR50;
+                    targetTiming        = SDIO_CCCR_ENABLE_DDR50_MODE;
+                    targetBusFreq       = SD_CLOCK_50MHZ;
+                    supportModeFlag     = SDIO_CCCR_SUPPORT_DDR50;
                     break;
                 }
 
@@ -912,9 +915,9 @@ static status_t SDIO_SelectBusTiming(sdio_card_t *card)
                     ((card->cccrflags & SDIO_CCCR_SUPPORT_SDR50) == SDIO_CCCR_SUPPORT_SDR50))
                 {
                     card->currentTiming = kSD_TimingSDR50Mode;
-                    targetTiming = SDIO_CCCR_ENABLE_SDR50_MODE;
-                    targetBusFreq = SD_CLOCK_100MHZ;
-                    supportModeFlag = SDIO_CCCR_SUPPORT_SDR50;
+                    targetTiming        = SDIO_CCCR_ENABLE_SDR50_MODE;
+                    targetBusFreq       = SD_CLOCK_100MHZ;
+                    supportModeFlag     = SDIO_CCCR_SUPPORT_SDR50;
                     break;
                 }
 
@@ -923,9 +926,9 @@ static status_t SDIO_SelectBusTiming(sdio_card_t *card)
                     (card->cccrflags & SDIO_CCCR_SUPPORT_HIGHSPEED) == SDIO_CCCR_SUPPORT_HIGHSPEED)
                 {
                     card->currentTiming = kSD_TimingSDR25HighSpeedMode;
-                    targetTiming = SDIO_CCCR_ENABLE_HIGHSPEED_MODE;
-                    targetBusFreq = SD_CLOCK_50MHZ;
-                    supportModeFlag = SDIO_CCCR_SUPPORT_HIGHSPEED;
+                    targetTiming        = SDIO_CCCR_ENABLE_HIGHSPEED_MODE;
+                    targetBusFreq       = SD_CLOCK_50MHZ;
+                    supportModeFlag     = SDIO_CCCR_SUPPORT_HIGHSPEED;
                     break;
                 }
 
@@ -1080,7 +1083,7 @@ static status_t SDIO_DecodeCIS(
         /* only decode MANIFID,FUNCID,FUNCE here  */
         if (tplCode == SDIO_TPL_CODE_MANIFID)
         {
-            card->commonCIS.mID = dataBuffer[0U] | (dataBuffer[1U] << 8U);
+            card->commonCIS.mID   = dataBuffer[0U] | (dataBuffer[1U] << 8U);
             card->commonCIS.mInfo = dataBuffer[2U] | (dataBuffer[3U] << 8U);
         }
         else if (tplCode == SDIO_TPL_CODE_FUNCID)
@@ -1111,30 +1114,30 @@ static status_t SDIO_DecodeCIS(
         {
             if (tplLink == 0x2A)
             {
-                card->funcCIS[func - 1U].funcInfo = dataBuffer[1U];
+                card->funcCIS[func - 1U].funcInfo  = dataBuffer[1U];
                 card->funcCIS[func - 1U].ioVersion = dataBuffer[2U];
                 card->funcCIS[func - 1U].cardPSN =
                     dataBuffer[3U] | (dataBuffer[4U] << 8U) | (dataBuffer[5U] << 16U) | (dataBuffer[6U] << 24U);
                 card->funcCIS[func - 1U].ioCSASize =
                     dataBuffer[7U] | (dataBuffer[8U] << 8U) | (dataBuffer[9U] << 16U) | (dataBuffer[10U] << 24U);
-                card->funcCIS[func - 1U].ioCSAProperty = dataBuffer[11U];
+                card->funcCIS[func - 1U].ioCSAProperty  = dataBuffer[11U];
                 card->funcCIS[func - 1U].ioMaxBlockSize = dataBuffer[12U] | (dataBuffer[13U] << 8U);
                 card->funcCIS[func - 1U].ioOCR =
                     dataBuffer[14U] | (dataBuffer[15U] << 8U) | (dataBuffer[16U] << 16U) | (dataBuffer[17U] << 24U);
-                card->funcCIS[func - 1U].ioOPMinPwr = dataBuffer[18U];
-                card->funcCIS[func - 1U].ioOPAvgPwr = dataBuffer[19U];
-                card->funcCIS[func - 1U].ioOPMaxPwr = dataBuffer[20U];
-                card->funcCIS[func - 1U].ioSBMinPwr = dataBuffer[21U];
-                card->funcCIS[func - 1U].ioSBAvgPwr = dataBuffer[22U];
-                card->funcCIS[func - 1U].ioSBMaxPwr = dataBuffer[23U];
-                card->funcCIS[func - 1U].ioMinBandWidth = dataBuffer[24U] | (dataBuffer[25U] << 8U);
+                card->funcCIS[func - 1U].ioOPMinPwr         = dataBuffer[18U];
+                card->funcCIS[func - 1U].ioOPAvgPwr         = dataBuffer[19U];
+                card->funcCIS[func - 1U].ioOPMaxPwr         = dataBuffer[20U];
+                card->funcCIS[func - 1U].ioSBMinPwr         = dataBuffer[21U];
+                card->funcCIS[func - 1U].ioSBAvgPwr         = dataBuffer[22U];
+                card->funcCIS[func - 1U].ioSBMaxPwr         = dataBuffer[23U];
+                card->funcCIS[func - 1U].ioMinBandWidth     = dataBuffer[24U] | (dataBuffer[25U] << 8U);
                 card->funcCIS[func - 1U].ioOptimumBandWidth = dataBuffer[26U] | (dataBuffer[27U] << 8U);
-                card->funcCIS[func - 1U].ioReadyTimeout = dataBuffer[28U] | (dataBuffer[29U] << 8U);
+                card->funcCIS[func - 1U].ioReadyTimeout     = dataBuffer[28U] | (dataBuffer[29U] << 8U);
 
                 card->funcCIS[func - 1U].ioHighCurrentAvgCurrent = dataBuffer[34U] | (dataBuffer[35U] << 8U);
                 card->funcCIS[func - 1U].ioHighCurrentMaxCurrent = dataBuffer[36U] | (dataBuffer[37U] << 8U);
-                card->funcCIS[func - 1U].ioLowCurrentAvgCurrent = dataBuffer[38U] | (dataBuffer[39U] << 8U);
-                card->funcCIS[func - 1U].ioLowCurrentMaxCurrent = dataBuffer[40U] | (dataBuffer[41U] << 8U);
+                card->funcCIS[func - 1U].ioLowCurrentAvgCurrent  = dataBuffer[38U] | (dataBuffer[39U] << 8U);
+                card->funcCIS[func - 1U].ioLowCurrentMaxCurrent  = dataBuffer[40U] | (dataBuffer[41U] << 8U);
             }
             else
             {
@@ -1250,7 +1253,7 @@ static status_t SDIO_ProbeBusVoltage(sdio_card_t *card)
 {
     assert(card);
 
-    uint32_t ocr = 0U;
+    uint32_t ocr   = 0U;
     status_t error = kStatus_Success;
 
     /* application able to set the supported voltage window */
@@ -1553,7 +1556,7 @@ status_t SDIO_EnableIO(sdio_card_t *card, sdio_func_num_t func, bool enable)
     assert(func != kSDIO_FunctionNum0);
 
     uint8_t ioEn = 0U, ioReady = 0U;
-    volatile uint32_t i = SDIO_RETRY_TIMES;
+    volatile uint32_t i       = SDIO_RETRY_TIMES;
     uint32_t ioReadyTimeoutMS = card->funcCIS[func - 1U].ioReadyTimeout * SDIO_IO_READY_TIMEOUT_UNIT;
 
     if (ioReadyTimeoutMS != 0U)
@@ -1656,7 +1659,7 @@ void SDIO_SetIOIRQHandler(sdio_card_t *card, sdio_func_num_t func, sdio_io_irq_h
     assert((func <= kSDIO_FunctionNum7) && (func != kSDIO_FunctionNum0));
 
     card->ioIRQHandler[func - 1] = handler;
-    card->ioIntIndex = func;
+    card->ioIntIndex             = func;
 }
 
 status_t SDIO_HandlePendingIOInterrupt(sdio_card_t *card)

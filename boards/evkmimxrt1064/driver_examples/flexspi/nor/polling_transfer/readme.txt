@@ -8,10 +8,10 @@ Example will first erase the sector and program a page into the flash, at last c
 
 Toolchain supported
 ===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.1
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
 
 Hardware requirements
 =====================
@@ -24,7 +24,7 @@ Board settings
 
 Prepare the Demo
 ================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
+1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
 2.  Open a serial terminal with the following settings:
     - 115200 baud rate
     - 8 data bits
@@ -41,7 +41,7 @@ When the example runs successfully, you can see the similar information from the
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 FLEXSPI example started!
-Vendor ID: 0x16
+Vendor ID: 0x9d
 Erasing Serial NOR over FlexSPI...
 Erase data - successfully.
 Program data - successfully.

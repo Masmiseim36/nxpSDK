@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -549,10 +549,12 @@ usb_status_t USB_DeviceCdcVcomSetConfigure(usb_device_handle handle, uint8_t con
         if (USB_SPEED_HIGH == g_deviceComposite->speed)
         {
             epInitStruct.maxPacketSize = HS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE;
+            epInitStruct.interval = HS_CDC_VCOM_INTERRUPT_IN_INTERVAL; 
         }
         else
         {
             epInitStruct.maxPacketSize = FS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE;
+            epInitStruct.interval = FS_CDC_VCOM_INTERRUPT_IN_INTERVAL;                             
         }
         g_deviceComposite->cdcVcom[0].interruptEndpoint = USB_CDC_VCOM_CIC_INTERRUPT_IN_ENDPOINT;
         g_deviceComposite->cdcVcom[0].interruptEndpointMaxPacketSize = epInitStruct.maxPacketSize;
@@ -564,6 +566,7 @@ usb_status_t USB_DeviceCdcVcomSetConfigure(usb_device_handle handle, uint8_t con
         epCallback.callbackParam = (void *)&g_deviceComposite->cdcVcom[0].dataInterfaceNumber;
 
         epInitStruct.zlt = 0;
+        epInitStruct.interval = 0;
         epInitStruct.transferType = USB_ENDPOINT_BULK;
         epInitStruct.endpointAddress =
             USB_CDC_VCOM_DIC_BULK_IN_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
@@ -583,6 +586,7 @@ usb_status_t USB_DeviceCdcVcomSetConfigure(usb_device_handle handle, uint8_t con
         epCallback.callbackParam = (void *)&g_deviceComposite->cdcVcom[0].dataInterfaceNumber;
 
         epInitStruct.zlt = 0;
+        epInitStruct.interval = 0;
         epInitStruct.transferType = USB_ENDPOINT_BULK;
         epInitStruct.endpointAddress =
             USB_CDC_VCOM_DIC_BULK_OUT_ENDPOINT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
@@ -619,10 +623,12 @@ usb_status_t USB_DeviceCdcVcomSetConfigure(usb_device_handle handle, uint8_t con
         if (USB_SPEED_HIGH == g_deviceComposite->speed)
         {
             epInitStruct.maxPacketSize = HS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE_2;
+            epInitStruct.interval = HS_CDC_VCOM_INTERRUPT_IN_INTERVAL_2;
         }
         else
         {
             epInitStruct.maxPacketSize = FS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE_2;
+            epInitStruct.interval = FS_CDC_VCOM_INTERRUPT_IN_INTERVAL_2;
         }
         g_deviceComposite->cdcVcom[1].interruptEndpoint = USB_CDC_VCOM_CIC_INTERRUPT_IN_ENDPOINT_2;
         g_deviceComposite->cdcVcom[1].interruptEndpointMaxPacketSize = epInitStruct.maxPacketSize;
@@ -634,6 +640,7 @@ usb_status_t USB_DeviceCdcVcomSetConfigure(usb_device_handle handle, uint8_t con
         epCallback.callbackParam = (void *)&g_deviceComposite->cdcVcom[1].dataInterfaceNumber;
 
         epInitStruct.zlt = 0;
+        epInitStruct.interval = 0;
         epInitStruct.transferType = USB_ENDPOINT_BULK;
         epInitStruct.endpointAddress =
             USB_CDC_VCOM_DIC_BULK_IN_ENDPOINT_2 | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
@@ -653,6 +660,7 @@ usb_status_t USB_DeviceCdcVcomSetConfigure(usb_device_handle handle, uint8_t con
         epCallback.callbackParam = (void *)&g_deviceComposite->cdcVcom[1].dataInterfaceNumber;
 
         epInitStruct.zlt = 0;
+        epInitStruct.interval = 0;
         epInitStruct.transferType = USB_ENDPOINT_BULK;
         epInitStruct.endpointAddress =
             USB_CDC_VCOM_DIC_BULK_OUT_ENDPOINT_2 | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);

@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2017, NXP Semiconductors, Inc.
+ * Copyright  2017 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 #include "board.h"
 #include "fsl_debug_console.h"
@@ -156,7 +156,8 @@ void BOARD_InitLcd(void)
     volatile uint32_t i = 0x100U;
 
     gpio_pin_config_t config = {
-        kGPIO_DigitalOutput, 0,
+        kGPIO_DigitalOutput,
+        0,
     };
 
     /* Reset the LCD. */
@@ -188,7 +189,10 @@ void BOARD_InitLcdifPixelClock(void)
      * Video PLL output clock is OSC24M * (loopDivider + (denominator / numerator)) / postDivider = 93MHz.
      */
     clock_video_pll_config_t config = {
-        .loopDivider = 31, .postDivider = 8, .numerator = 0, .denominator = 0,
+        .loopDivider = 31,
+        .postDivider = 8,
+        .numerator   = 0,
+        .denominator = 0,
     };
 
     CLOCK_InitVideoPll(&config);
@@ -235,18 +239,18 @@ int main(void)
 static void APP_InitLcdif(void)
 {
     const elcdif_rgb_mode_config_t config = {
-        .panelWidth = APP_IMG_WIDTH,
-        .panelHeight = APP_IMG_HEIGHT,
-        .hsw = APP_HSW,
-        .hfp = APP_HFP,
-        .hbp = APP_HBP,
-        .vsw = APP_VSW,
-        .vfp = APP_VFP,
-        .vbp = APP_VBP,
+        .panelWidth    = APP_IMG_WIDTH,
+        .panelHeight   = APP_IMG_HEIGHT,
+        .hsw           = APP_HSW,
+        .hfp           = APP_HFP,
+        .hbp           = APP_HBP,
+        .vsw           = APP_VSW,
+        .vfp           = APP_VFP,
+        .vbp           = APP_VBP,
         .polarityFlags = APP_POL_FLAGS,
-        .bufferAddr = (uint32_t)s_psBufferLcd[0],
-        .pixelFormat = kELCDIF_PixelFormatXRGB8888,
-        .dataBus = APP_LCDIF_DATA_BUS,
+        .bufferAddr    = (uint32_t)s_psBufferLcd[0],
+        .pixelFormat   = kELCDIF_PixelFormatXRGB8888,
+        .dataBus       = APP_LCDIF_DATA_BUS,
     };
 
     ELCDIF_RgbModeInit(APP_ELCDIF, &config);
@@ -265,7 +269,10 @@ static void APP_RotateCmdQueue(void)
     uint8_t curLcdBufferIdx = 1U;
 
     static const pxp_rotate_degree_t degrees[] = {
-        kPXP_Rotate0, kPXP_Rotate90, kPXP_Rotate180, kPXP_Rotate270,
+        kPXP_Rotate0,
+        kPXP_Rotate90,
+        kPXP_Rotate180,
+        kPXP_Rotate270,
     };
 
     for (;;)
@@ -273,7 +280,7 @@ static void APP_RotateCmdQueue(void)
         for (i = 0; i < ARRAY_SIZE(degrees); i++)
         {
             /* Prepare next buffer for LCD. */
-            pxpCommand.CTRL = (pxpCommand.CTRL & ~PXP_CTRL_ROTATE_MASK) | PXP_CTRL_ROTATE(degrees[i]);
+            pxpCommand.CTRL    = (pxpCommand.CTRL & ~PXP_CTRL_ROTATE_MASK) | PXP_CTRL_ROTATE(degrees[i]);
             pxpCommand.OUT_BUF = (uint32_t)s_psBufferLcd[curLcdBufferIdx];
             __DSB();
 
@@ -354,61 +361,61 @@ static void APP_InitInputBuffer(void)
 
 static void APP_InitPxpCommand(void)
 {
-    pxpCommand.CTRL = PXP_CTRL_ROT_POS(1) | PXP_CTRL_ENABLE_MASK;
-    pxpCommand.STAT = 0x00000000;                                                                /* STAT, don't care */
-    pxpCommand.OUT_CTRL = PXP_PS_CTRL_FORMAT(kPXP_OutputPixelFormatRGB888);                      /* OUT_CTRL */
-    pxpCommand.OUT_BUF = (uint32_t)s_psBufferLcd[0];                                             /* OUT_BUF */
-    pxpCommand.OUT_BUF2 = 0x00000000;                                                            /* OUT_BUF2 */
-    pxpCommand.OUT_PITCH = APP_BPP * APP_IMG_WIDTH;                                              /* OUT_PITCH */
-    pxpCommand.OUT_LRC = PXP_OUT_LRC_Y(APP_IMG_HEIGHT - 1U) | PXP_OUT_LRC_X(APP_IMG_WIDTH - 1U); /* OUT_LRC */
-    pxpCommand.OUT_PS_ULC = PXP_OUT_PS_ULC_Y(APP_PS_ULC_Y) | PXP_OUT_PS_ULC_X(APP_PS_ULC_X);     /* OUT_PS_ULC */
-    pxpCommand.OUT_PS_LRC = PXP_OUT_PS_LRC_Y(APP_PS_LRC_Y) | PXP_OUT_PS_LRC_X(APP_PS_LRC_X);     /* OUT_PS_LRC */
+    pxpCommand.CTRL       = PXP_CTRL_ROT_POS(1) | PXP_CTRL_ENABLE_MASK;
+    pxpCommand.STAT       = 0x00000000;                                       /* STAT, don't care */
+    pxpCommand.OUT_CTRL   = PXP_PS_CTRL_FORMAT(kPXP_OutputPixelFormatRGB888); /* OUT_CTRL */
+    pxpCommand.OUT_BUF    = (uint32_t)s_psBufferLcd[0];                       /* OUT_BUF */
+    pxpCommand.OUT_BUF2   = 0x00000000;                                       /* OUT_BUF2 */
+    pxpCommand.OUT_PITCH  = APP_BPP * APP_IMG_WIDTH;                          /* OUT_PITCH */
+    pxpCommand.OUT_LRC    = PXP_OUT_LRC_Y(APP_IMG_HEIGHT - 1U) | PXP_OUT_LRC_X(APP_IMG_WIDTH - 1U); /* OUT_LRC */
+    pxpCommand.OUT_PS_ULC = PXP_OUT_PS_ULC_Y(APP_PS_ULC_Y) | PXP_OUT_PS_ULC_X(APP_PS_ULC_X);        /* OUT_PS_ULC */
+    pxpCommand.OUT_PS_LRC = PXP_OUT_PS_LRC_Y(APP_PS_LRC_Y) | PXP_OUT_PS_LRC_X(APP_PS_LRC_X);        /* OUT_PS_LRC */
     /* Disable AS. */
-    pxpCommand.OUT_AS_ULC = 0x3FFF3FFF;                 /* OUT_AS_ULC */
-    pxpCommand.OUT_AS_LRC = 0x00000000;                 /* OUT_AS_LRC */
-    pxpCommand.PS_CTRL = 0x00000004;                    /* PS_CTRL */
-    pxpCommand.PS_BUF = (uint32_t)s_psBufferPxp;        /* PS_BUF */
-    pxpCommand.PS_UBUF = 0x00000000;                    /* PS_UBUF */
-    pxpCommand.PS_VBUF = 0x00000000;                    /* PS_VBUF */
-    pxpCommand.PS_PITCH = APP_BPP * APP_PS_SIZE;        /* PS_PITCH */
-    pxpCommand.PS_BACHGROUND = 0x00000000;              /* PS_BACHGROUND */
-    pxpCommand.PS_SCALE = 0x10001000;                   /* PS_SCALE */
-    pxpCommand.PS_OFFSET = 0x00000000;                  /* PS_OFFSET */
-    pxpCommand.PS_CLRKEYLOW = 0x00FFFFFF;               /* PS_CLRKEYLOW */
-    pxpCommand.PS_CLRKEYHIGH = 0x00000000;              /* PS_CLRKEYHIGH */
-    pxpCommand.AS_CTRL = 0x00000000;                    /* AS_CTRL */
-    pxpCommand.AS_BUF = 0x00000000;                     /* AS_BUF */
-    pxpCommand.AS_PITCH = 0x00000000;                   /* AS_PITCH */
-    pxpCommand.AS_CLRKEYLOW = 0x00FFFFFF;               /* AS_CLRKEYLOW */
-    pxpCommand.AS_CLRKEYHIGH = 0x00000000;              /* AS_CLRKEYHIGH */
-    pxpCommand.CSC1_COEF0 = PXP_CSC1_COEF0_BYPASS_MASK; /* CSC1_COEF0, don't care. */
-    pxpCommand.CSC1_COEF1 = 0x00000000;                 /* CSC1_COEF1, don't care. */
-    pxpCommand.CSC1_COEF2 = 0x00000000;                 /* CSC1_COEF2, don't care. */
+    pxpCommand.OUT_AS_ULC    = 0x3FFF3FFF;                 /* OUT_AS_ULC */
+    pxpCommand.OUT_AS_LRC    = 0x00000000;                 /* OUT_AS_LRC */
+    pxpCommand.PS_CTRL       = 0x00000004;                 /* PS_CTRL */
+    pxpCommand.PS_BUF        = (uint32_t)s_psBufferPxp;    /* PS_BUF */
+    pxpCommand.PS_UBUF       = 0x00000000;                 /* PS_UBUF */
+    pxpCommand.PS_VBUF       = 0x00000000;                 /* PS_VBUF */
+    pxpCommand.PS_PITCH      = APP_BPP * APP_PS_SIZE;      /* PS_PITCH */
+    pxpCommand.PS_BACHGROUND = 0x00000000;                 /* PS_BACHGROUND */
+    pxpCommand.PS_SCALE      = 0x10001000;                 /* PS_SCALE */
+    pxpCommand.PS_OFFSET     = 0x00000000;                 /* PS_OFFSET */
+    pxpCommand.PS_CLRKEYLOW  = 0x00FFFFFF;                 /* PS_CLRKEYLOW */
+    pxpCommand.PS_CLRKEYHIGH = 0x00000000;                 /* PS_CLRKEYHIGH */
+    pxpCommand.AS_CTRL       = 0x00000000;                 /* AS_CTRL */
+    pxpCommand.AS_BUF        = 0x00000000;                 /* AS_BUF */
+    pxpCommand.AS_PITCH      = 0x00000000;                 /* AS_PITCH */
+    pxpCommand.AS_CLRKEYLOW  = 0x00FFFFFF;                 /* AS_CLRKEYLOW */
+    pxpCommand.AS_CLRKEYHIGH = 0x00000000;                 /* AS_CLRKEYHIGH */
+    pxpCommand.CSC1_COEF0    = PXP_CSC1_COEF0_BYPASS_MASK; /* CSC1_COEF0, don't care. */
+    pxpCommand.CSC1_COEF1    = 0x00000000;                 /* CSC1_COEF1, don't care. */
+    pxpCommand.CSC1_COEF2    = 0x00000000;                 /* CSC1_COEF2, don't care. */
 #if !(defined(FSL_FEATURE_PXP_HAS_NO_CSC2) && FSL_FEATURE_PXP_HAS_NO_CSC2)
-    pxpCommand.CSC2_CTRL = PXP_CSC2_CTRL_BYPASS_MASK;   /* CSC2_CTRL */
-    pxpCommand.CSC2_COEF0 = 0x00000000;                 /* CSC2_COEF0, don't care. */
-    pxpCommand.CSC2_COEF1 = 0x00000000;                 /* CSC2_COEF1, don't care. */
-    pxpCommand.CSC2_COEF2 = 0x00000000;                 /* CSC2_COEF2, don't care. */
-    pxpCommand.CSC2_COEF3 = 0x00000000;                 /* CSC2_COEF3, don't care. */
-    pxpCommand.CSC2_COEF4 = 0x00000000;                 /* CSC2_COEF4, don't care. */
-    pxpCommand.CSC2_COEF5 = 0x00000000;                 /* CSC2_COEF5, don't care. */
+    pxpCommand.CSC2_CTRL  = PXP_CSC2_CTRL_BYPASS_MASK; /* CSC2_CTRL */
+    pxpCommand.CSC2_COEF0 = 0x00000000;                /* CSC2_COEF0, don't care. */
+    pxpCommand.CSC2_COEF1 = 0x00000000;                /* CSC2_COEF1, don't care. */
+    pxpCommand.CSC2_COEF2 = 0x00000000;                /* CSC2_COEF2, don't care. */
+    pxpCommand.CSC2_COEF3 = 0x00000000;                /* CSC2_COEF3, don't care. */
+    pxpCommand.CSC2_COEF4 = 0x00000000;                /* CSC2_COEF4, don't care. */
+    pxpCommand.CSC2_COEF5 = 0x00000000;                /* CSC2_COEF5, don't care. */
 #endif
 #if !(defined(FSL_FEATURE_PXP_HAS_NO_LUT) && FSL_FEATURE_PXP_HAS_NO_LUT)
-    pxpCommand.LUT_CTRL = PXP_LUT_CTRL_BYPASS_MASK;     /* LUT_CTRL */
-    pxpCommand.LUT_ADDR = 0x00000000;                   /* LUT_ADDR */
-    pxpCommand.LUT_DATA = 0x00000000;                   /* LUT_DATA */
-    pxpCommand.LUT_EXTMEM = 0x00000000;                 /* LUT_EXTMEM */
-    pxpCommand.CFA = 0x00000000;                        /* CFA */
+    pxpCommand.LUT_CTRL   = PXP_LUT_CTRL_BYPASS_MASK; /* LUT_CTRL */
+    pxpCommand.LUT_ADDR   = 0x00000000;               /* LUT_ADDR */
+    pxpCommand.LUT_DATA   = 0x00000000;               /* LUT_DATA */
+    pxpCommand.LUT_EXTMEM = 0x00000000;               /* LUT_EXTMEM */
+    pxpCommand.CFA        = 0x00000000;               /* CFA */
 #endif
-    pxpCommand.HIST_CTRL = 0x00000020;                  /* HIST_CTRL */
-    pxpCommand.HIST2_PARAM = 0x00000F00;                /* HIST2_PARAM */
-    pxpCommand.HIST4_PARAM = 0x0F0A0500;                /* HIST4_PARAM */
-    pxpCommand.HIST8_PARAM0 = 0x06040200;               /* HIST8_PARAM0 */
-    pxpCommand.HIST8_PARAM1 = 0x0F0D0B09;               /* HIST8_PARAM1 */
-    pxpCommand.HIST16_PARAM0 = 0x03020100;              /* HIST16_PARAM0 */
-    pxpCommand.HIST16_PARAM1 = 0x07060504;              /* HIST16_PARAM1 */
-    pxpCommand.HIST16_PARAM2 = 0x0B0A0908;              /* HIST16_PARAM2 */
-    pxpCommand.HIST16_PARAM3 = 0x0F0E0D0C;              /* HIST16_PARAM3 */
-    pxpCommand.POWER = 0x00000000;                      /* POWER */
-    pxpCommand.NEXT = 0x00000000;                       /* NEXT, don't care */
+    pxpCommand.HIST_CTRL     = 0x00000020; /* HIST_CTRL */
+    pxpCommand.HIST2_PARAM   = 0x00000F00; /* HIST2_PARAM */
+    pxpCommand.HIST4_PARAM   = 0x0F0A0500; /* HIST4_PARAM */
+    pxpCommand.HIST8_PARAM0  = 0x06040200; /* HIST8_PARAM0 */
+    pxpCommand.HIST8_PARAM1  = 0x0F0D0B09; /* HIST8_PARAM1 */
+    pxpCommand.HIST16_PARAM0 = 0x03020100; /* HIST16_PARAM0 */
+    pxpCommand.HIST16_PARAM1 = 0x07060504; /* HIST16_PARAM1 */
+    pxpCommand.HIST16_PARAM2 = 0x0B0A0908; /* HIST16_PARAM2 */
+    pxpCommand.HIST16_PARAM3 = 0x0F0E0D0C; /* HIST16_PARAM3 */
+    pxpCommand.POWER         = 0x00000000; /* POWER */
+    pxpCommand.NEXT          = 0x00000000; /* NEXT, don't care */
 }

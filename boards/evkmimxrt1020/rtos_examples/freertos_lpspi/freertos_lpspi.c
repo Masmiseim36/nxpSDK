@@ -2,7 +2,7 @@
  * Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -25,8 +25,8 @@
 #include "fsl_intmux.h"
 #endif
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 /* Master related */
 #define EXAMPLE_LPSPI_MASTER_BASEADDR (LPSPI3)
 #define EXAMPLE_LPSPI_MASTER_IRQN (LPSPI3_IRQn)
@@ -46,8 +46,7 @@
 /* Clock divider for master lpspi clock source */
 #define EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER (7U)
 
-#define EXAMPLE_LPSPI_CLOCK_FREQ \
-    (CLOCK_GetFreq(kCLOCK_Usb1PllPfd0Clk) / (EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER + 1U))
+#define EXAMPLE_LPSPI_CLOCK_FREQ (CLOCK_GetFreq(kCLOCK_Usb1PllPfd0Clk) / (EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER + 1U))
 
 #define EXAMPLE_LPSPI_MASTER_CLOCK_FREQ EXAMPLE_LPSPI_CLOCK_FREQ
 #define EXAMPLE_LPSPI_SLAVE_CLOCK_FREQ EXAMPLE_LPSPI_CLOCK_FREQ
@@ -71,21 +70,21 @@
 #define TRANSFER_BAUDRATE (500000U) /*! Transfer baudrate - 500k */
 
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 /* LPSPI user callback */
 void LPSPI_SlaveUserCallback(LPSPI_Type *base, lpspi_slave_handle_t *handle, status_t status, void *userData);
 extern uint32_t LPSPI_GetInstance(LPSPI_Type *base);
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 lpspi_slave_handle_t g_s_handle;
 
 uint8_t masterReceiveBuffer[TRANSFER_SIZE] = {0};
-uint8_t masterSendBuffer[TRANSFER_SIZE] = {0};
-uint8_t slaveReceiveBuffer[TRANSFER_SIZE] = {0};
-uint8_t slaveSendBuffer[TRANSFER_SIZE] = {0};
+uint8_t masterSendBuffer[TRANSFER_SIZE]    = {0};
+uint8_t slaveReceiveBuffer[TRANSFER_SIZE]  = {0};
+uint8_t slaveSendBuffer[TRANSFER_SIZE]     = {0};
 
 SemaphoreHandle_t lpspi_sem;
 /*******************************************************************************
@@ -129,7 +128,7 @@ int main(void)
     PRINTF("FreeRTOS LPSPI example start.\r\n");
 #if (EXAMPLE_CONNECT_SPI == SINGLE_BOARD)
     PRINTF("This example use one lpspi instance as master and another as slave on a single board.\r\n");
-#elif(EXAMPLE_CONNECT_SPI == BOARD_TO_BOARD)
+#elif (EXAMPLE_CONNECT_SPI == BOARD_TO_BOARD)
     PRINTF("This example use two boards to connect with one as master and anohter as slave.\r\n");
 #endif
     PRINTF("Master and slave are both use interrupt way.\r\n");
@@ -144,10 +143,10 @@ int main(void)
     /* Initialize data in transfer buffers */
     for (i = 0; i < TRANSFER_SIZE; i++)
     {
-        masterSendBuffer[i] = i % 256;
+        masterSendBuffer[i]    = i % 256;
         masterReceiveBuffer[i] = 0;
 
-        slaveSendBuffer[i] = ~masterSendBuffer[i];
+        slaveSendBuffer[i]    = ~masterSendBuffer[i];
         slaveReceiveBuffer[i] = 0;
     }
 
@@ -175,7 +174,7 @@ typedef struct _callback_message_t
 void LPSPI_SlaveUserCallback(LPSPI_Type *base, lpspi_slave_handle_t *handle, status_t status, void *userData)
 {
     callback_message_t *cb_msg = (callback_message_t *)userData;
-    BaseType_t reschedule;
+    BaseType_t reschedule      = 0;
 
     cb_msg->async_status = status;
     xSemaphoreGiveFromISR(cb_msg->sem, &reschedule);
@@ -196,7 +195,7 @@ static void slave_task(void *pvParameters)
     callback_message_t cb_msg;
 
     cb_msg.sem = xSemaphoreCreateBinary();
-    lpspi_sem = cb_msg.sem;
+    lpspi_sem  = cb_msg.sem;
     if (cb_msg.sem == NULL)
     {
         PRINTF("LPSPI slave: Error creating semaphore\r\n");
@@ -207,14 +206,14 @@ static void slave_task(void *pvParameters)
     /* Slave config */
     LPSPI_SlaveGetDefaultConfig(&slaveConfig);
 
-    slaveConfig.bitsPerFrame = 8 * TRANSFER_SIZE;
-    slaveConfig.cpol = kLPSPI_ClockPolarityActiveHigh;
-    slaveConfig.cpha = kLPSPI_ClockPhaseFirstEdge;
-    slaveConfig.direction = kLPSPI_MsbFirst;
-    slaveConfig.whichPcs = EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT;
+    slaveConfig.bitsPerFrame       = 8 * TRANSFER_SIZE;
+    slaveConfig.cpol               = kLPSPI_ClockPolarityActiveHigh;
+    slaveConfig.cpha               = kLPSPI_ClockPhaseFirstEdge;
+    slaveConfig.direction          = kLPSPI_MsbFirst;
+    slaveConfig.whichPcs           = EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT;
     slaveConfig.pcsActiveHighOrLow = kLPSPI_PcsActiveLow;
-    slaveConfig.pinCfg = kLPSPI_SdiInSdoOut;
-    slaveConfig.dataOutConfig = kLpspiDataOutRetained;
+    slaveConfig.pinCfg             = kLPSPI_SdiInSdoOut;
+    slaveConfig.dataOutConfig      = kLpspiDataOutRetained;
 
     LPSPI_SlaveInit(EXAMPLE_LPSPI_SLAVE_BASEADDR, &slaveConfig);
 
@@ -222,9 +221,9 @@ static void slave_task(void *pvParameters)
     LPSPI_SlaveTransferCreateHandle(EXAMPLE_LPSPI_SLAVE_BASEADDR, &g_s_handle, LPSPI_SlaveUserCallback, &cb_msg);
 
     /*Set slave transfer ready to receive/send data*/
-    slaveXfer.txData = slaveSendBuffer;
-    slaveXfer.rxData = slaveReceiveBuffer;
-    slaveXfer.dataSize = TRANSFER_SIZE;
+    slaveXfer.txData      = slaveSendBuffer;
+    slaveXfer.rxData      = slaveReceiveBuffer;
+    slaveXfer.dataSize    = TRANSFER_SIZE;
     slaveXfer.configFlags = EXAMPLE_LPSPI_SLAVE_PCS_FOR_TRANSFER | kLPSPI_SlaveByteSwap;
 
     LPSPI_SlaveTransferNonBlocking(EXAMPLE_LPSPI_SLAVE_BASEADDR, &g_s_handle, &slaveXfer);
@@ -262,13 +261,13 @@ static void slave_task(void *pvParameters)
         {
             errorCount++;
         }
-#elif(SPI_MASTER_SLAVE == isSLAVE)
+#elif (SPI_MASTER_SLAVE == isSLAVE)
         if (masterSendBuffer[i] != slaveReceiveBuffer[i])
         {
             errorCount++;
         }
 #endif
-#elif(EXAMPLE_CONNECT_SPI == SINGLE_BOARD)
+#elif (EXAMPLE_CONNECT_SPI == SINGLE_BOARD)
         if (masterSendBuffer[i] != slaveReceiveBuffer[i])
         {
             errorCount++;
@@ -287,7 +286,7 @@ static void slave_task(void *pvParameters)
     }
     else
     {
-        PRINTF("Error occured in LPSPI transfer !\r\n");
+        PRINTF("Error occurred in LPSPI transfer !\r\n");
     }
 
     vTaskSuspend(NULL);
@@ -317,18 +316,18 @@ static void master_task(void *pvParameters)
      */
     LPSPI_MasterGetDefaultConfig(&masterConfig);
 
-    masterConfig.baudRate = TRANSFER_BAUDRATE;
-    masterConfig.bitsPerFrame = 8 * TRANSFER_SIZE;
-    masterConfig.cpol = kLPSPI_ClockPolarityActiveHigh;
-    masterConfig.cpha = kLPSPI_ClockPhaseFirstEdge;
-    masterConfig.direction = kLPSPI_MsbFirst;
-    masterConfig.pcsToSckDelayInNanoSec = 1000000000 / masterConfig.baudRate;
-    masterConfig.lastSckToPcsDelayInNanoSec = 1000000000 / masterConfig.baudRate;
+    masterConfig.baudRate                      = TRANSFER_BAUDRATE;
+    masterConfig.bitsPerFrame                  = 8 * TRANSFER_SIZE;
+    masterConfig.cpol                          = kLPSPI_ClockPolarityActiveHigh;
+    masterConfig.cpha                          = kLPSPI_ClockPhaseFirstEdge;
+    masterConfig.direction                     = kLPSPI_MsbFirst;
+    masterConfig.pcsToSckDelayInNanoSec        = 1000000000 / masterConfig.baudRate;
+    masterConfig.lastSckToPcsDelayInNanoSec    = 1000000000 / masterConfig.baudRate;
     masterConfig.betweenTransferDelayInNanoSec = 1000000000 / masterConfig.baudRate;
-    masterConfig.whichPcs = EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT;
-    masterConfig.pcsActiveHighOrLow = kLPSPI_PcsActiveLow;
-    masterConfig.pinCfg = kLPSPI_SdiInSdoOut;
-    masterConfig.dataOutConfig = kLpspiDataOutRetained;
+    masterConfig.whichPcs                      = EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT;
+    masterConfig.pcsActiveHighOrLow            = kLPSPI_PcsActiveLow;
+    masterConfig.pinCfg                        = kLPSPI_SdiInSdoOut;
+    masterConfig.dataOutConfig                 = kLpspiDataOutRetained;
 
     sourceClock = EXAMPLE_LPSPI_MASTER_CLOCK_FREQ;
 
@@ -340,9 +339,9 @@ static void master_task(void *pvParameters)
         vTaskSuspend(NULL);
     }
     /*Start master transfer*/
-    masterXfer.txData = masterSendBuffer;
-    masterXfer.rxData = masterReceiveBuffer;
-    masterXfer.dataSize = TRANSFER_SIZE;
+    masterXfer.txData      = masterSendBuffer;
+    masterXfer.rxData      = masterReceiveBuffer;
+    masterXfer.dataSize    = TRANSFER_SIZE;
     masterXfer.configFlags = EXAMPLE_LPSPI_MASTER_PCS_FOR_TRANSFER | kLPSPI_MasterPcsContinuous | kLPSPI_SlaveByteSwap;
 
     status = LPSPI_RTOS_Transfer(&master_rtos_handle, &masterXfer);

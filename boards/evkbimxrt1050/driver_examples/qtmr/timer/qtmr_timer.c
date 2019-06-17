@@ -1,7 +1,7 @@
 /*
  * Copyright 2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -48,10 +48,10 @@ void QTMR_IRQ_HANDLER(void)
 {
     /* Clear interrupt flag.*/
     QTMR_ClearStatusFlags(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL, kQTMR_CompareFlag);
-    
+
     qtmrIsrFlag = true;
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
 #if defined __CORTEX_M && (__CORTEX_M == 4U)
     __DSB();
 #endif
@@ -94,20 +94,20 @@ int main(void)
 
     /* Enable at the NVIC */
     EnableIRQ(QTMR_IRQ_ID);
-    
+
     /* Enable timer compare interrupt */
     QTMR_EnableInterrupts(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL, kQTMR_CompareInterruptEnable);
 
     /* Start the second channel to count on rising edge of the primary source clock */
     QTMR_StartTimer(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL, kQTMR_PriSrcRiseEdge);
-    
+
     for (i = 0; i < 10; i++)
     {
         /* Check whether occur interupt */
         while (!(qtmrIsrFlag))
         {
         }
-        PRINTF("\r\n Timer interrupt has occured !");
+        PRINTF("\r\n Timer interrupt has occurred !");
         qtmrIsrFlag = false;
     }
     QTMR_Deinit(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL);
@@ -118,12 +118,13 @@ int main(void)
     qtmrConfig.primarySource = kQTMR_ClockDivide_128;
     QTMR_Init(BOARD_QTMR_BASEADDR, BOARD_FIRST_QTMR_CHANNEL, &qtmrConfig);
 
-    /* Init the second channel to use output of the first channel as we are chaining the first channel and the second channel */
+    /* Init the second channel to use output of the first channel as we are chaining the first channel and the second
+     * channel */
     qtmrConfig.primarySource = QTMR_ClockCounterOutput;
     QTMR_Init(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL, &qtmrConfig);
-   
+
     /* Set the first channel period to be 1 millisecond */
-   QTMR_SetTimerPeriod(BOARD_QTMR_BASEADDR, BOARD_FIRST_QTMR_CHANNEL, MSEC_TO_COUNT(1U, (QTMR_SOURCE_CLOCK / 128)));
+    QTMR_SetTimerPeriod(BOARD_QTMR_BASEADDR, BOARD_FIRST_QTMR_CHANNEL, MSEC_TO_COUNT(1U, (QTMR_SOURCE_CLOCK / 128)));
 
     /* Set the second channel count which increases every millisecond, set compare event for 10 second */
     QTMR_SetTimerPeriod(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL, 10000);
@@ -131,7 +132,8 @@ int main(void)
     /* Enable the second channel compare interrupt */
     QTMR_EnableInterrupts(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL, kQTMR_CompareInterruptEnable);
 
-    /* Start the second channel in cascase mode, chained to the first channel as set earlier via the primary source selection */
+    /* Start the second channel in cascase mode, chained to the first channel as set earlier via the primary source
+     * selection */
     QTMR_StartTimer(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL, kQTMR_CascadeCount);
 
     /* Start the first channel to count on rising edge of the primary source clock */
@@ -143,7 +145,7 @@ int main(void)
         while (!(qtmrIsrFlag))
         {
         }
-        PRINTF("\r\n Timer interrupt has occured !");
+        PRINTF("\r\n Timer interrupt has occurred !");
         qtmrIsrFlag = false;
     }
     PRINTF("\r\n*********QUADTIMER EXAMPLE END.*********");

@@ -39,9 +39,10 @@
 #include "sci2c.h"
 #endif
 
-/// @cond
+#if defined(I2C)
 static U8 writeStateToFile(char *szFilename, SmCommState_t *commState, Scp03SessionState_t *scp03State);
 static U8 readStateFromFile(char *szFilename, SmCommState_t *commState, Scp03SessionState_t *scp03State);
+#endif
 
 char* axExBootGetBootModeAsString(U8 bootMode)
 {
@@ -137,7 +138,7 @@ U8 exBoot(U8 bootMode)
     U16 packetSize;
 
     U16 connectStatus;
-    U8 Atr[64];
+    U8 Atr[64] = {0};
     U16 AtrLen = sizeof(Atr);
 
     SmCommState_t commState;
@@ -161,7 +162,7 @@ U8 exBoot(U8 bootMode)
         // Installing Callback (this step is optional)
         SCP_Subscribe(signalFunctionCallback, NULL);
         DEV_ClearChannelState();
-#if defined(I2C)
+#if defined(I2C)|| defined(T1oI2C)
         SM_Close(SMCOM_CLOSE_MODE_TERMINATE);
 #endif
         connectStatus = SM_Connect(&commState, Atr, &AtrLen);
@@ -173,7 +174,7 @@ U8 exBoot(U8 bootMode)
         }
         else
         {
-#ifndef RJCT_SOCKET
+#ifndef SMCOM_JRCP_V1
             int i=0;
             sm_printf(CONSOLE, "ATR=0x");
             for (i=0; i<AtrLen; i++) sm_printf(CONSOLE, "%02X.", Atr[i]);
@@ -308,8 +309,8 @@ U8 exBoot(U8 bootMode)
         Scp03SessionState_t retrScp03State;
 
         readStateFromFile(szFilename, &retrCommState, &retrScp03State);
-        PRINTF("retrCommState.param1         : 0x%04X\r\n", retrCommState.param1);
-        PRINTF("retrCommState.hostLibVersion : 0x%04X\r\n", retrCommState.hostLibVersion);
+        PRINTF("retrCommState.param1         : 0x%02X\r\n", retrCommState.param1);
+        PRINTF("retrCommState.hostLibVersion : 0x%02X\r\n", retrCommState.hostLibVersion);
         PRINTF("retrCommState.appletVersion  : 0x%04X\r\n", retrCommState.appletVersion);
 
         DEV_ClearChannelState();
@@ -421,7 +422,7 @@ U8 axExAuthenticate(U8 *keyEnc, U8 *keyMac, U8 *keyDek)
     return result;
 }
 
-/// @cond
+#if defined(I2C)
 static U8 writeStateToFile(char *szFilename, SmCommState_t *commState, Scp03SessionState_t *scp03State)
 {
     U8 result = 1;
@@ -465,4 +466,4 @@ static U8 readStateFromFile(char *szFilename, SmCommState_t *commState, Scp03Ses
 #endif
     return result;
 }
-/// @endcond
+#endif

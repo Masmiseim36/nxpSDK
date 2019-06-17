@@ -93,19 +93,15 @@ int main(void)
     EDMA_CreateHandle(&g_EDMA_Handle, EXAMPLE_DMA, 0);
     EDMA_SetCallback(&g_EDMA_Handle, EDMA_Callback, NULL);
     EDMA_ResetChannel(g_EDMA_Handle.base, g_EDMA_Handle.channel);
-
-    if (tcdMemoryPoolPtr != NULL)
-    {
-        EDMA_InstallTCDMemory(&g_EDMA_Handle, tcdMemoryPoolPtr, TCD_QUEUE_SIZE);
-        /* Configure and submit transfer structure 1 */
-        EDMA_PrepareTransfer(&transferConfig, srcAddr, sizeof(srcAddr[0]), destAddr, sizeof(destAddr[0]),
-                             sizeof(srcAddr[0]), sizeof(srcAddr[0]) * HALF_BUFFER_LENGTH, kEDMA_MemoryToMemory);
-        EDMA_SubmitTransfer(&g_EDMA_Handle, &transferConfig);
-        /* Configure and submit transfer structure 2 */
-        EDMA_PrepareTransfer(&transferConfig, &srcAddr[4], sizeof(srcAddr[0]), &destAddr[4], sizeof(destAddr[0]),
-                             sizeof(srcAddr[0]), sizeof(srcAddr[0]) * HALF_BUFFER_LENGTH, kEDMA_MemoryToMemory);
-        EDMA_SubmitTransfer(&g_EDMA_Handle, &transferConfig);
-    }
+    EDMA_InstallTCDMemory(&g_EDMA_Handle, tcdMemoryPoolPtr, TCD_QUEUE_SIZE);
+    /* Configure and submit transfer structure 1 */
+    EDMA_PrepareTransfer(&transferConfig, srcAddr, sizeof(srcAddr[0]), destAddr, sizeof(destAddr[0]),
+                         sizeof(srcAddr[0]), sizeof(srcAddr[0]) * HALF_BUFFER_LENGTH, kEDMA_MemoryToMemory);
+    EDMA_SubmitTransfer(&g_EDMA_Handle, &transferConfig);
+    /* Configure and submit transfer structure 2 */
+    EDMA_PrepareTransfer(&transferConfig, &srcAddr[4], sizeof(srcAddr[0]), &destAddr[4], sizeof(destAddr[0]),
+                         sizeof(srcAddr[0]), sizeof(srcAddr[0]) * HALF_BUFFER_LENGTH, kEDMA_MemoryToMemory);
+    EDMA_SubmitTransfer(&g_EDMA_Handle, &transferConfig);
     EDMA_StartTransfer(&g_EDMA_Handle);
     /* Wait for EDMA transfer finish */
     while (g_Transfer_Done != true)

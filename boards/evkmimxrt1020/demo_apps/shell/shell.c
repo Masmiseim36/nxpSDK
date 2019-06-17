@@ -142,7 +142,7 @@ int main(void)
     BOARD_InitDebugConsole();
 
     /* Enable clock gate for GPIO1 */
-    CLOCK_EnableClock(kCLOCK_Gpio1);    
+    CLOCK_EnableClock(kCLOCK_Gpio1);
 
     /* Init led */
     Led_Init();

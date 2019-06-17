@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -32,7 +32,7 @@ usb_device_endpoint_struct_t g_UsbDeviceAudioGeneratorEndpoints[USB_AUDIO_STREAM
     /* Audio generator ISO IN pipe */
     {
         USB_AUDIO_STREAM_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
-        USB_ENDPOINT_ISOCHRONOUS, FS_ISO_IN_ENDP_PACKET_SIZE,
+        USB_ENDPOINT_ISOCHRONOUS, FS_ISO_IN_ENDP_PACKET_SIZE, FS_ISO_IN_ENDP_INTERVAL,
     },
 };
 
@@ -40,7 +40,7 @@ usb_device_endpoint_struct_t g_UsbDeviceAudioGeneratorEndpoints[USB_AUDIO_STREAM
 usb_device_endpoint_struct_t g_UsbDeviceAudioControlEndpoints[USB_AUDIO_CONTROL_ENDPOINT_COUNT] = {
     {
         USB_AUDIO_CONTROL_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
-        USB_ENDPOINT_INTERRUPT, FS_INTERRUPT_IN_PACKET_SIZE,
+        USB_ENDPOINT_INTERRUPT, FS_INTERRUPT_IN_PACKET_SIZE, FS_INTERRUPT_IN_INTERVAL,
     },
 };
 
@@ -515,10 +515,12 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
         if (USB_SPEED_HIGH == speed)
         {
             g_UsbDeviceAudioGeneratorEndpoints[i].maxPacketSize = HS_ISO_IN_ENDP_PACKET_SIZE;
+            g_UsbDeviceAudioGeneratorEndpoints[i].interval = HS_ISO_IN_ENDP_INTERVAL;
         }
         else
         {
             g_UsbDeviceAudioGeneratorEndpoints[i].maxPacketSize = FS_ISO_IN_ENDP_PACKET_SIZE;
+            g_UsbDeviceAudioGeneratorEndpoints[i].interval = FS_ISO_IN_ENDP_INTERVAL;
         }
     }
 

@@ -1,0 +1,30 @@
+#! armcc -E -I .\startup
+
+; *************************************************************
+; *** Scatter-Loading Description File                      ***
+; *************************************************************
+#include "linker_config.h"
+
+LR_SRAM_ITC SRAM_ITC_start SRAM_ITC_end + 1 {   ; load region size_region
+	RAM_VECTOR_TABLE SRAM_ITC_start NOCOMPRESS __vector_table_size__ {
+	    vectors_mdk.o (.data)
+	}
+	
+	ER_IRAM2 RAM_interrupts_end SRAM_ITC_end - RAM_interrupts_end + 1 {
+		.ANY (+RO)
+	}
+}
+
+LR_SRAM_DTC SRAM_DTC_start SRAM_DTC_end - SRAM_DTC_start + 1 {   ; load region size_region
+	RW_IRAM1 SRAM_DTC_start m_data_size {
+		.ANY (+RW +ZI)
+	}
+	
+	SafetyRam_region m_safety_ram_start NOCOMPRESS SAFETY_RAM_SIZE {
+		main.o (.safety_ram)
+		safety_test_items.o (.data)
+	}
+	
+	ARM_LIB_STACK __BOOT_STACK_ADDRESS EMPTY -__size_cstack__{ ; Stack region growing down
+	}
+}

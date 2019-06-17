@@ -24,7 +24,7 @@
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #include "usb_phy.h"
 #endif
 
@@ -93,7 +93,9 @@ void USB_OTG2_IRQHandler(void)
 void USB_DeviceClockInit(void)
 {
     usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL, BOARD_USB_PHY_TXCAL45DP, BOARD_USB_PHY_TXCAL45DM,
+        BOARD_USB_PHY_D_CAL,
+        BOARD_USB_PHY_TXCAL45DP,
+        BOARD_USB_PHY_TXCAL45DM,
     };
 
     if (CONTROLLER_ID == kUSB_ControllerEhci0)
@@ -113,9 +115,9 @@ void USB_DeviceIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbDeviceEhciIrq[] = USBHS_IRQS;
-    irqNumber = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
+    irqNumber                  = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
 
-/* Install isr, set priority, and enable IRQ. */
+    /* Install isr, set priority, and enable IRQ. */
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
     EnableIRQ((IRQn_Type)irqNumber);
 }
@@ -147,6 +149,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         case kUSB_DeviceEventBusReset:
         {
             g_composite.attach = 0;
+            g_composite.currentConfiguration = 0U;
             error = kStatus_USB_Success;
             for (uint8_t i = 0; i < USB_DEVICE_CONFIG_CDC_ACM; i++)
             {
@@ -165,13 +168,27 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
-            if (param)
+            if (0U == (*temp8))
+            {
+                g_composite.attach = 0U;
+                g_composite.currentConfiguration = 0U;
+                for (uint8_t i = 0; i < USB_DEVICE_CONFIG_CDC_ACM; i++)
+                {
+                    g_composite.cdcVcom[i].recvSize = 0;
+                    g_composite.cdcVcom[i].sendSize = 0;
+                    g_composite.cdcVcom[i].attach = 0;
+                }
+            }
+            else if (USB_COMPOSITE_CONFIGURE_INDEX == (*temp8))
             {
                 g_composite.attach = 1;
-                g_composite.currentConfiguration = *temp8;
-
                 USB_DeviceCdcVcomSetConfigure(g_composite.cdcVcom[0].cdcAcmHandle, *temp8);
+                g_composite.currentConfiguration = *temp8;
                 error = kStatus_USB_Success;
+            }
+            else
+            {
+                error = kStatus_USB_InvalidRequest;
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -260,8 +277,10 @@ void USB_DeviceApplicationInit(void)
 
     g_composite.speed = USB_SPEED_FULL;
     g_composite.attach = 0;
-    g_composite.cdcVcom[0].cdcAcmHandle = (class_handle_t)NULL;
-    g_composite.cdcVcom[1].cdcAcmHandle = (class_handle_t)NULL;
+    for (uint8_t i = 0; i < USB_DEVICE_CONFIG_CDC_ACM; i++)
+    {
+        g_composite.cdcVcom[i].cdcAcmHandle = (class_handle_t)NULL;
+    }
     g_composite.deviceHandle = NULL;
 
     if (kStatus_USB_Success !=
@@ -274,9 +293,10 @@ void USB_DeviceApplicationInit(void)
     {
         usb_echo("USB device composite demo\r\n");
         /*Init classhandle in cdc instance*/
-        g_composite.cdcVcom[0].cdcAcmHandle = g_UsbDeviceCompositeConfigList.config[0].classHandle;
-        g_composite.cdcVcom[1].cdcAcmHandle = g_UsbDeviceCompositeConfigList.config[1].classHandle;
-
+        for (uint8_t i = 0; i < USB_DEVICE_CONFIG_CDC_ACM; i++)
+        {
+            g_composite.cdcVcom[i].cdcAcmHandle = g_UsbDeviceCompositeConfigList.config[i].classHandle;
+        }
         USB_DeviceCdcVcomInit(&g_composite);
     }
 
@@ -297,7 +317,7 @@ void APPTask(void)
     USB_DeviceCdcVcomTask();
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)

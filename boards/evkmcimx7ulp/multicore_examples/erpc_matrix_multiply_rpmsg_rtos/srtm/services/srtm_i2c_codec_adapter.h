@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018, NXP
+ * Copyright 2017-2018, NXP
  * All rights reserved.
  *
  *
@@ -10,8 +10,8 @@
 #define __SRTM_I2C_CODEC_ADAPTER_H__
 
 #include "srtm_audio_service.h"
-#include "fsl_codec_common.h"
-
+#include "fsl_codec_adapter.h"
+#include "fsl_codec_i2c.h"
 /*!
  * @addtogroup srtm_service
  * @{
@@ -26,10 +26,12 @@ typedef status_t (*srtm_i2c_write_reg_map_t)(void *handle, uint32_t reg, uint32_
 typedef struct _srtm_i2c_codec_config
 {
     uint32_t mclk;
+    uint8_t slaveAddr;
     codec_reg_addr_t addrType;
     codec_reg_width_t regWidth;
     srtm_i2c_read_reg_map_t readRegMap;
     srtm_i2c_write_reg_map_t writeRegMap;
+    void *i2cHandle;
 } srtm_i2c_codec_config_t;
 
 /*******************************************************************************

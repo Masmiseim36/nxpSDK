@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2018 NXP
+ * Copyright 2016 - 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -33,12 +33,12 @@ usb_device_endpoint_struct_t g_UsbDeviceHidGenericEndpoints[USB_HID_GENERIC_ENDP
     /* HID generic interrupt IN pipe */
     {
         USB_HID_GENERIC_ENDPOINT_IN | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
-        USB_ENDPOINT_INTERRUPT, FS_HID_GENERIC_INTERRUPT_IN_PACKET_SIZE,
+        USB_ENDPOINT_INTERRUPT, FS_HID_GENERIC_INTERRUPT_IN_PACKET_SIZE,FS_HID_GENERIC_INTERRUPT_IN_INTERVAL,
     },
     /* HID generic interrupt OUT pipe */
     {
         USB_HID_GENERIC_ENDPOINT_OUT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
-        USB_ENDPOINT_INTERRUPT, FS_HID_GENERIC_INTERRUPT_OUT_PACKET_SIZE,
+        USB_ENDPOINT_INTERRUPT, FS_HID_GENERIC_INTERRUPT_OUT_PACKET_SIZE,FS_HID_GENERIC_INTERRUPT_OUT_INTERVAL,
     }};
 
 /* HID generic interface information */
@@ -476,10 +476,12 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
             if (g_UsbDeviceHidGenericEndpoints[i].endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK)
             {
                 g_UsbDeviceHidGenericEndpoints[i].maxPacketSize = HS_HID_GENERIC_INTERRUPT_IN_PACKET_SIZE;
+                g_UsbDeviceHidGenericEndpoints[i].interval = HS_HID_GENERIC_INTERRUPT_IN_INTERVAL;
             }
             else
             {
                 g_UsbDeviceHidGenericEndpoints[i].maxPacketSize = HS_HID_GENERIC_INTERRUPT_OUT_PACKET_SIZE;
+                g_UsbDeviceHidGenericEndpoints[i].interval = HS_HID_GENERIC_INTERRUPT_OUT_INTERVAL;
             }
         }
         else
@@ -487,10 +489,12 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
             if (g_UsbDeviceHidGenericEndpoints[i].endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK)
             {
                 g_UsbDeviceHidGenericEndpoints[i].maxPacketSize = FS_HID_GENERIC_INTERRUPT_IN_PACKET_SIZE;
+                 g_UsbDeviceHidGenericEndpoints[i].interval = FS_HID_GENERIC_INTERRUPT_IN_INTERVAL;
             }
             else
             {
                 g_UsbDeviceHidGenericEndpoints[i].maxPacketSize = FS_HID_GENERIC_INTERRUPT_OUT_PACKET_SIZE;
+                g_UsbDeviceHidGenericEndpoints[i].interval = FS_HID_GENERIC_INTERRUPT_OUT_INTERVAL;
             }
         }
     }

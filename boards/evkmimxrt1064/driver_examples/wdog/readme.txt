@@ -2,17 +2,19 @@ Overview
 ========
 The WDOG Example project is to demonstrate usage of the KSDK wdog driver.
 In this example,implemented to test the wdog.
-And then after 10 times of refreshing the watchdog, a timeout reset is generated.
-We also try to refresh out of window to trigger reset after 10 times of refreshing.
-Please notice that because WDOG control registers are write-once only, so the 
-WDOG_Init function and the WDOG_Disable function can be called only once after reset.
+Please notice that because WDOG control registers are write-once only. And
+for the field WDT, once software performs a write "1" operation to this bit,
+it can not be reset/cleared until the next POR, this bit does not get reset/
+cleared due to any system reset. So the WDOG_Init function can be called 
+only once after power reset when WDT set, and the WDOG_Disable function can 
+be called only once after reset.
 
 Toolchain supported
 ===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.1
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
 
 Hardware requirements
 =====================
@@ -40,20 +42,26 @@ Running the demo
 ================
 These instructions are displayed/shown on the terminal window:
 ~~~~~~~~~~~~~~~~~~~~~~~
---- Start Wdog Ultra test ---
---- wdog Init done---
---- Refresh wdog 1 time ---
---- Refresh wdog 2 time ---
---- Refresh wdog 3 time ---
---- Refresh wdog 4 time ---
---- Refresh wdog 5 time ---
---- Refresh wdog 6 time ---
---- Refresh wdog 7 time ---
---- Refresh wdog 8 time ---
---- Refresh wdog 9 time ---
---- Refresh wdog 10 time ---
+******** System Start ********
+System reset by: Power On Reset!
 
-End of Wdog example!
+- 1.Testing System reset by software trigger.
+******** System Start ********
+System reset by: Software Reset!
+
+- 2.Testing system reset by WDOG timeout.
+--- wdog Init done---
+
+******** System Start ********
+System reset by: Time Out Reset!
+
+- 3.Test the WDOG refresh function by using interrupt.
+--- wdog Init done---
+
+WDOG has be refreshed!
+WDOG has be refreshed!
+WDOG has be refreshed!
+
 ~~~~~~~~~~~~~~~~~~~~~
 Customization options
 =====================

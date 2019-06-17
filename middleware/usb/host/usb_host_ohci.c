@@ -24,14 +24,16 @@
 static usb_status_t USB_HostOhciLinkGtdControlTr(usb_host_ohci_state_struct_t *usbHostState,
                                                  usb_host_ohci_pipe_struct_t *pipe,
                                                  usb_host_transfer_t *tr);
+#if ((defined USB_HOST_CONFIG_OHCI_MAX_ITD) && (USB_HOST_CONFIG_OHCI_MAX_ITD))
 static usb_status_t USB_HostOhciLinkItdTr(usb_host_ohci_state_struct_t *usbHostState,
-                                          usb_host_ohci_pipe_struct_t *pipe,
-                                          usb_host_transfer_t *tr);
-static usb_status_t USB_HostOhciLinkGtdTr(usb_host_ohci_state_struct_t *usbHostState,
                                           usb_host_ohci_pipe_struct_t *pipe,
                                           usb_host_transfer_t *tr);
 static usb_status_t USB_HostOhciFreeItd(usb_host_ohci_state_struct_t *usbHostState,
                                         usb_host_ohci_isochronous_transfer_descritpor_struct_t *itd);
+#endif
+static usb_status_t USB_HostOhciLinkGtdTr(usb_host_ohci_state_struct_t *usbHostState,
+                                          usb_host_ohci_pipe_struct_t *pipe,
+                                          usb_host_transfer_t *tr);
 static usb_status_t USB_HostOhciFreeGtd(usb_host_ohci_state_struct_t *usbHostState,
                                         usb_host_ohci_general_transfer_descritpor_struct_t *gtd);
 static void USB_HostOhciTdDoneHandle(usb_host_ohci_state_struct_t *usbHostState,
@@ -1367,9 +1369,11 @@ static usb_status_t USB_HostOhciCloseIsoInterruptPipe(usb_host_ohci_state_struct
     pipe->ed->stateUnion.stateBitField.K = 1U;
     if (USB_ENDPOINT_ISOCHRONOUS == pipe->pipeCommon.pipeType)
     {
+#if (defined(USB_HOST_CONFIG_OHCI_MAX_ITD) && (USB_HOST_CONFIG_OHCI_MAX_ITD > 0U))
         USB_HostOhciFreeItd(
             usbHostState,
             (usb_host_ohci_isochronous_transfer_descritpor_struct_t *)(pipe->ed->TailP & USB_HOST_OHCI_ED_HEADP_MASK));
+#endif
     }
     else
     {
@@ -2114,19 +2118,19 @@ usb_status_t USB_HostOhciDestory(usb_host_controller_handle controllerHandle)
 
     if (NULL != usbHostState->portState)
     {
-        USB_OsaMemoryFree(usbHostState->portState);
+        (void)USB_OsaMemoryFree(usbHostState->portState);
         usbHostState->portState = NULL;
     }
 
     if (NULL != usbHostState->mutex)
     {
-        USB_OsaMutexDestroy(usbHostState->mutex);
+        (void)USB_OsaMutexDestroy(usbHostState->mutex);
         usbHostState->mutex = NULL;
     }
 
     if (NULL != usbHostState->ohciEvent)
     {
-        USB_OsaEventDestroy(usbHostState->ohciEvent);
+        (void)USB_OsaEventDestroy(usbHostState->ohciEvent);
         usbHostState->ohciEvent = NULL;
     }
 
@@ -2525,7 +2529,6 @@ void USB_HostOhciTaskFunction(void *hostHandle)
 void USB_HostOhciIsrFunction(void *hostHandle)
 {
     usb_host_ohci_state_struct_t *usbHostState;
-    usb_host_ohci_pipe_struct_t *pipe;
     static uint32_t interruptStatus = 0U;
     static uint32_t sofCount = 0U;
 
@@ -2547,6 +2550,8 @@ void USB_HostOhciIsrFunction(void *hostHandle)
 
     if (interruptStatus & USB_HOST_OHCI_INTERRUPT_STATUS_SF_MASK) /* SOF interrupt */
     {
+#if ((defined USB_HOST_CONFIG_OHCI_MAX_ITD) && (USB_HOST_CONFIG_OHCI_MAX_ITD))
+        usb_host_ohci_pipe_struct_t *pipe;
         for (pipe = usbHostState->pipeListInUsing; NULL != pipe;
              pipe = (usb_host_ohci_pipe_struct_t *)pipe->pipeCommon.next)
         {
@@ -2567,6 +2572,7 @@ void USB_HostOhciIsrFunction(void *hostHandle)
                 pipe->isDone = 0U;
             }
         }
+#endif
         sofCount++;
         if (sofCount >= USB_HOST_OHCI_TRANSFER_SCAN_INTERVAL)
         {

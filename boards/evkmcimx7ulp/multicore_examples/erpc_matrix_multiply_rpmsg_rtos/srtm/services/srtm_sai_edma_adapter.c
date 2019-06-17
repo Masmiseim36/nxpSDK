@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018, NXP
+ * Copyright 2017-2018, NXP
  * All rights reserved.
  *
  *
@@ -93,8 +93,8 @@ typedef struct _srtm_sai_edma_adapter
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-static const sai_word_width_t saiFormatMap[]   = {kSAI_WordWidth16bits, kSAI_WordWidth24bits};
-static const sai_mono_stereo_t saiChannelMap[] = {kSAI_MonoLeft, kSAI_MonoRight, kSAI_Stereo};
+static const sai_word_width_t saiBitsWidthMap[] = {kSAI_WordWidth16bits, kSAI_WordWidth24bits};
+static const sai_mono_stereo_t saiChannelMap[]  = {kSAI_MonoLeft, kSAI_MonoRight, kSAI_Stereo};
 #ifdef SRTM_DEBUG_MESSAGE_FUNC
 static const char *saiDirection[] = {"Rx", "Tx"};
 #endif
@@ -767,14 +767,14 @@ static srtm_status_t SRTM_SaiEdmaAdapter_SetParam(
         return SRTM_Status_InvalidState;
     }
 
-    if (format >= ARRAY_SIZE(saiFormatMap) || channels >= ARRAY_SIZE(saiChannelMap))
+    if (format >= ARRAY_SIZE(saiBitsWidthMap) || channels >= ARRAY_SIZE(saiChannelMap))
     {
         SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_ERROR, "%s: %s unsupported format or channels %d, %d!\r\n", __func__,
                            saiDirection[dir], format, channels);
         return SRTM_Status_InvalidParameter;
     }
 
-    rtm->bitWidth = saiFormatMap[format];
+    rtm->bitWidth = saiBitsWidthMap[format];
     rtm->channels = saiChannelMap[channels];
     rtm->srate    = srate;
 

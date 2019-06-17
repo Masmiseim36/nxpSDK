@@ -11,7 +11,7 @@
 #include "usb_host_hid.h"
 #include "host_mouse.h"
 #include "app.h"
-
+#include "fsl_debug_console.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -65,6 +65,7 @@ usb_host_mouse_instance_t g_HostHidMouse;
  * by specific order. */
 static void USB_HostMouseProcessBuffer(uint8_t *buffer)
 {
+    DbgConsole_Flush();
     /* 1. Left key action */
     if (buffer[0] & 0x01)
     {

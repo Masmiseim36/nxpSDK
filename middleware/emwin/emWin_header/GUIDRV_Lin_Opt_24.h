@@ -30,11 +30,11 @@ Licensor:                 SEGGER Microcontroller Systems LLC
 Licensed to:              NXP Semiconductors, 1109 McKay Dr, M/S 76, San Jose, CA 95131, USA
 Licensed SEGGER software: emWin
 License number:           GUI-00186
-License model:            emWin License Agreement, dated August 20th 2011 and Amendment, dated October 19th 2017
-Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7
+License model:            emWin License Agreement, dated August 20th 2011 and Amendment No. 1, dated October 17th 2017 and Amendment No. 2, dated December 18th 2018
+Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2018-09-02
+SUA period:               2011-08-19 - 2019-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUIDRV_Lin_Opt_24.h
@@ -92,10 +92,9 @@ static void _FillRectOpt24(GUI_DEVICE * pDevice, int x0, int y0, int x1, int y1)
             WRITE_MEM32(pContext->VRAMAddr, Off, Data);
             break;
           }
-          //
-          // no break at this position required...
-          //
           //lint -fallthrough // No break here.
+          // Avoid GCC warning '-Wimplicit-fallthrough':
+          // fall through
         case 2:
           Data ^= 0xFFFF0000;
           WRITE_MEM32(pContext->VRAMAddr, Off, Data);
@@ -107,10 +106,9 @@ static void _FillRectOpt24(GUI_DEVICE * pDevice, int x0, int y0, int x1, int y1)
             WRITE_MEM32(pContext->VRAMAddr, Off, Data);
             break;
           }
-          //
-          // no break at this position required...
-          //
           //lint -fallthrough // No break here.
+          // Avoid GCC warning '-Wimplicit-fallthrough':
+          // fall through
         case 3:
           Data ^= 0xFFFFFF00;
           RemItems--;
@@ -200,10 +198,9 @@ static void _FillRectOpt24(GUI_DEVICE * pDevice, int x0, int y0, int x1, int y1)
             WRITE_MEM32(pContext->VRAMAddr, Off, Data);
             break;
           }
-          //
-          // no break at this position required...
-          //
           //lint -fallthrough // No break here.
+          // Avoid GCC warning '-Wimplicit-fallthrough':
+          // fall through
         case 2:
           Data &= 0x0000FFFF;
           Data |= ColorIndex << 16;
@@ -217,10 +214,9 @@ static void _FillRectOpt24(GUI_DEVICE * pDevice, int x0, int y0, int x1, int y1)
             WRITE_MEM32(pContext->VRAMAddr, Off, Data);
             break;
           }
-          //
-          // no break at this position required...
-          //
           //lint -fallthrough // No break here.
+          // Avoid GCC warning '-Wimplicit-fallthrough':
+          // fall through
         case 3:
           Data &= 0x000000FF;
           Data |= ColorIndex << 8;
@@ -312,10 +308,9 @@ static void _FillRectOpt24(GUI_DEVICE * pDevice, int x0, int y0, int x1, int y1)
             WRITE_MEM32(pContext->VRAMAddr, Off, Data);
             break;
           }
-          //
-          // no break at this position required...
-          //
           //lint -fallthrough // No break here.
+          // Avoid GCC warning '-Wimplicit-fallthrough':
+          // fall through
         case 2:
           Data ^= 0x0000FFFF;
           WRITE_MEM32(pContext->VRAMAddr, Off, Data);
@@ -327,10 +322,9 @@ static void _FillRectOpt24(GUI_DEVICE * pDevice, int x0, int y0, int x1, int y1)
             WRITE_MEM32(pContext->VRAMAddr, Off, Data);
             break;
           }
-          //
-          // no break at this position required...
-          //
           //lint -fallthrough // No break here.
+          // Avoid GCC warning '-Wimplicit-fallthrough':
+          // fall through
         case 3:
           Data ^= 0x00FFFFFF;
           RemItems--;
@@ -371,7 +365,7 @@ static void _FillRectOpt24(GUI_DEVICE * pDevice, int x0, int y0, int x1, int y1)
       for (RemLines = NumLines; RemLines; RemLines--) {
         RemItems = RemPixels;
         Off      = Off0 + OffLine * (RemLines - 1);
-        
+
         Data  = READ_MEM32(pContext->VRAMAddr, Off);
         Data ^= 0xFFFFFF00;
         RemItems--;
@@ -421,10 +415,9 @@ static void _FillRectOpt24(GUI_DEVICE * pDevice, int x0, int y0, int x1, int y1)
             WRITE_MEM32(pContext->VRAMAddr, Off, Data);
             break;
           }
-          //
-          // no break at this position required...
-          //
           //lint -fallthrough // No break here.
+          // Avoid GCC warning '-Wimplicit-fallthrough':
+          // fall through
         case 2:
           Data &= 0xFFFF0000;
           Data |= ColorIndex >> 8;
@@ -438,10 +431,9 @@ static void _FillRectOpt24(GUI_DEVICE * pDevice, int x0, int y0, int x1, int y1)
             WRITE_MEM32(pContext->VRAMAddr, Off, Data);
             break;
           }
-          //
-          // no break at this position required...
-          //
           //lint -fallthrough // No break here.
+          // Avoid GCC warning '-Wimplicit-fallthrough':
+          // fall through
         case 3:
           Data &= 0xFF000000;
           Data |= ColorIndex;

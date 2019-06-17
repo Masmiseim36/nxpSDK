@@ -66,7 +66,7 @@ void getECDSASign_RandS(
     unsigned int rdIndex = 0;
     unsigned int rdLength;
     unsigned int wrIndex = 0;
-    unsigned char signature[MBEDTLS_ECDSA_MAX_LEN];
+    unsigned char signature[MBEDTLS_ECDSA_MAX_LEN] = {0};
     size_t sig_len = sizeof(signature);
     mbedtls_entropy_context entropy;
     mbedtls_ctr_drbg_context ctr_drbg;

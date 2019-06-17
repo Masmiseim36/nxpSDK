@@ -50,6 +50,7 @@ int main(void)
     lpi2c_master_config_t masterConfig;
     status_t reVal        = kStatus_Fail;
     uint8_t deviceAddress = 0x01U;
+    size_t txCount        = 0xFFU;
 
     BOARD_InitPins();
     BOARD_BootClockRUN();
@@ -95,10 +96,21 @@ int main(void)
 
     /* Initialize the LPI2C master peripheral */
     LPI2C_MasterInit(EXAMPLE_I2C_MASTER, &masterConfig, LPI2C_MASTER_CLOCK_FREQUENCY);
-    
+
     /* Send master blocking data to slave */
     if (kStatus_Success == LPI2C_MasterStart(EXAMPLE_I2C_MASTER, LPI2C_MASTER_SLAVE_ADDR_7BIT, kLPI2C_Write))
     {
+        /* Check master tx FIFO empty or not */
+        LPI2C_MasterGetFifoCounts(EXAMPLE_I2C_MASTER, NULL, &txCount);
+        while (txCount)
+        {
+            LPI2C_MasterGetFifoCounts(EXAMPLE_I2C_MASTER, NULL, &txCount);
+        }
+        /* Check communicate with slave successful or not */
+        while (LPI2C_MasterGetStatusFlags(EXAMPLE_I2C_MASTER) & kLPI2C_MasterNackDetectFlag)
+        {
+        }
+
         /* subAddress = 0x01, data = g_master_txBuff - write to slave.
           start + slaveaddress(w) + subAddress + length of data buffer + data buffer + stop*/
         reVal = LPI2C_MasterSend(EXAMPLE_I2C_MASTER, &deviceAddress, 1);
@@ -127,15 +139,38 @@ int main(void)
     {
         __NOP();
     }
-    
+
     PRINTF("Receive sent data from slave :");
 
     /* Receive blocking data from slave */
-    /* data = g_master_rxBuff - read from slave.
-      start + slaveaddress(w) + rx data buffer + stop */
-    if (kStatus_Success == LPI2C_MasterStart(EXAMPLE_I2C_MASTER, LPI2C_MASTER_SLAVE_ADDR_7BIT, kLPI2C_Read))
+    /* subAddress = 0x01, data = g_master_rxBuff - read from slave.
+      start + slaveaddress(w) + subAddress + repeated start + slaveaddress(r) + rx data buffer + stop */
+    if (kStatus_Success == LPI2C_MasterStart(EXAMPLE_I2C_MASTER, LPI2C_MASTER_SLAVE_ADDR_7BIT, kLPI2C_Write))
     {
-        reVal = LPI2C_MasterReceive(EXAMPLE_I2C_MASTER, g_master_rxBuff, LPI2C_DATA_LENGTH -1);
+        /* Check master tx FIFO empty or not */
+        LPI2C_MasterGetFifoCounts(EXAMPLE_I2C_MASTER, NULL, &txCount);
+        while (txCount)
+        {
+            LPI2C_MasterGetFifoCounts(EXAMPLE_I2C_MASTER, NULL, &txCount);
+        }
+        /* Check communicate with slave successful or not */
+        while (LPI2C_MasterGetStatusFlags(EXAMPLE_I2C_MASTER) & kLPI2C_MasterNackDetectFlag)
+        {
+        }
+
+        reVal = LPI2C_MasterSend(EXAMPLE_I2C_MASTER, &deviceAddress, 1);
+        if (reVal != kStatus_Success)
+        {
+            return -1;
+        }
+
+        reVal = LPI2C_MasterRepeatedStart(EXAMPLE_I2C_MASTER, LPI2C_MASTER_SLAVE_ADDR_7BIT, kLPI2C_Read);
+        if (reVal != kStatus_Success)
+        {
+            return -1;
+        }
+
+        reVal = LPI2C_MasterReceive(EXAMPLE_I2C_MASTER, g_master_rxBuff, LPI2C_DATA_LENGTH - 1);
         if (reVal != kStatus_Success)
         {
             return -1;

@@ -8,10 +8,10 @@ after chip emerges from reset.
 
 Toolchain supported
 ===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.1
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
 
 Hardware requirements
 =====================
@@ -40,27 +40,31 @@ Running the demo
 When the example runs successfully, the following message is displayed in the terminal:
 
 ~~~~~~~~~~~~~~~~~~~~~
-High Byte test success
+----- Fast test starts -----
+Low Byte test starts
+Waiting for timeout reset
+Low Byte test succeeded
+----- High Byte test starts -----
+Waiting for timeout reset
+High Byte test succeeded
+----- The end of RTWDOG fast test -----
 
 ----- Refresh test start -----
 ----- None-window mode -----
-Refresh rtwdog 0 time
 Refresh rtwdog 1 time
 Refresh rtwdog 2 time
 Refresh rtwdog 3 time
 Refresh rtwdog 4 time
 Refresh rtwdog 5 time
 Refresh rtwdog 6 time
-Refresh rtwdog 7 time
-Refresh rtwdog 8 time
-Refresh rtwdog 9 time
+Waiting for time out reset
+None-window mode reset succeeded
 ----- Window mode -----
-Refresh rtwdog 0 time
 Refresh rtwdog 1 time
 Refresh rtwdog 2 time
------ Refresh test success  -----
-
------ End of RTWDOG example  -----
+Refresh rtwdog 3 time
+Waiting for time out reset
+Window mode reset succeeded
 ~~~~~~~~~~~~~~~~~~~~~
 
 Note:

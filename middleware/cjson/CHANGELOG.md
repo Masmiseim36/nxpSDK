@@ -1,3 +1,27 @@
+1.7.7
+=====
+Fixes:
+------
+* Fix a memory leak when realloc fails (see #267), thanks @AlfieDeng for reporting
+* Fix a typo in the header file (see #266), thanks @zhaozhixu
+
+1.7.6
+=====
+Fixes:
+------
+* Add `SONAME` to the ELF files built by the Makefile (see #252), thanks @YanhaoMo for reporting
+* Add include guards and `extern "C"` to `cJSON_Utils.h` (see #256), thanks @daschfg for reporting
+
+Other changes:
+--------------
+* Mark the Makefile as deprecated in the README.
+
+1.7.5
+=====
+Fixes:
+------
+* Fix a bug in the JSON Patch implementation of `cJSON Utils` (see #251), thanks @bobkocisko.
+
 1.7.4
 =====
 Fixes:

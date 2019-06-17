@@ -111,16 +111,16 @@ static U8 exPskTls1_2(U8 initMode, U8 pskMode)
     U8 indexAesKey = 0;
 
     char labelString[] = "master secret";
-    U8 label[AX_TLS_LABEL_LEN];
+    U8 label[AX_TLS_LABEL_LEN] = {0};
 
-    U8 clientHelloRandom[AX_TLS_SECRET_LEN];
+    U8 clientHelloRandom[AX_TLS_SECRET_LEN] = {0};
     U16 clientHelloRandomLen = sizeof(clientHelloRandom);
-    U8 serverHelloRandom[AX_TLS_SECRET_LEN];
+    U8 serverHelloRandom[AX_TLS_SECRET_LEN] = {0};
 
-    U8 labelAndSeed[AX_TLS_LABEL_LEN+2*AX_TLS_SECRET_LEN];
+    U8 labelAndSeed[AX_TLS_LABEL_LEN+2*AX_TLS_SECRET_LEN] = {0};
     U16 labelAndSeedLen = sizeof(labelAndSeed);
 
-    U8 serverSeed[AX_TLS_SECRET_LEN];
+    U8 serverSeed[AX_TLS_SECRET_LEN] = {0};
     U16 serverSeedLen = sizeof(serverSeed);
 
     U8 hostPsk[A71CH_SYM_KEY_MAX*16];
@@ -129,13 +129,13 @@ static U8 exPskTls1_2(U8 initMode, U8 pskMode)
     U8 premasterSecret[256];
     U16 premasterSecretLen = 0;
 
-    U8 masterSecret[AX_TLS_PSK_MASTER_SECRET_LEN];
-    U8 masterSecretHost[AX_TLS_PSK_MASTER_SECRET_LEN];
+    U8 masterSecret[AX_TLS_PSK_MASTER_SECRET_LEN] = { 0 };
+    U8 masterSecretHost[AX_TLS_PSK_MASTER_SECRET_LEN] = { 0 };
     U16 masterSecretHostLen = sizeof(masterSecretHost);
 
     SST_Index_t indexKp;
-    eccKeyComponents_t eccKcTls_0;
-    eccKeyComponents_t eccKcTls_Host;
+    eccKeyComponents_t eccKcTls_0 = { 0 };
+    eccKeyComponents_t eccKcTls_Host = { 0 };
     U8 ecdhSS[32];
     U16 ecdhSSLen = sizeof(ecdhSS);
 
@@ -146,7 +146,7 @@ static U8 exPskTls1_2(U8 initMode, U8 pskMode)
     int i;
 
     HLSE_OBJECT_HANDLE handleEccKeyPair;
-    HLSE_OBJECT_HANDLE aesKeyHandles[A71CH_SYM_KEY_MAX];
+    HLSE_OBJECT_HANDLE aesKeyHandles[A71CH_SYM_KEY_MAX] = {0};
 
     PRINTF( "\r\n-----------\r\nStart exPskTls1_2(%s, %s)\r\n------------\r\n", getInitModeAsString(initMode),
         (pskMode == 0x00) ? "PLAIN_PSK" : "ECDH_PSK");

@@ -22,7 +22,6 @@
 *
 *****************************************************************************/
 #include <stdio.h>
-#include <assert.h>
 
 #include "a71ch_api.h"
 #include "sm_apdu.h"
@@ -84,9 +83,15 @@ U16 A71_GenerateEccKeyPairWithChallenge(SST_Index_t index, const U8 *configKey, 
 {
     U16 rv;
     S32 hcRet = 0;
-    U8 challenge[A71CH_MODULE_UNLOCK_CHALLENGE_LEN];
+    U8 challenge[A71CH_MODULE_UNLOCK_CHALLENGE_LEN] = {0};
     U16 challengeLen = sizeof(challenge);
-    U8 code[A71CH_MODULE_UNLOCK_CHALLENGE_LEN];
+    U8 code[A71CH_MODULE_UNLOCK_CHALLENGE_LEN] = {0};
+
+#ifndef A71_IGNORE_PARAM_CHECK
+    if (configKey == NULL) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     if (configKeyLen != 16)
     {
@@ -116,7 +121,7 @@ U16 A71_GenerateEccKeyPairWithChallenge(SST_Index_t index, const U8 *configKey, 
 *
 * The code is calculated as follows:
     - Request a challenge from A71CH using ::A71_GetUnlockChallenge.
-    - Decrypt the challenge in ECB mode using the appropriate configuration key value (the same as stored at index ::A71CH_CFG_KEY_IDX_PRIVATE_KEYS).
+    - Decrypt the challenge in ECB mode using the appropriate configuration key value (the same as stored at index ::A71XX_CFG_KEY_IDX_PRIVATE_KEYS).
     - The decrypted value is the value of \p code
 *
 * @param[in] index  Storage index of the keypair to be created.
@@ -196,10 +201,11 @@ static U16 A71_EccSign_Local(SST_Index_t index, const U8 *pHash, U16 hashLen, U8
     apdu_t apdu;
     apdu_t * pApdu = (apdu_t *) &apdu;
 
-    assert(pHash != NULL);
-    assert(pSignature != NULL);
-    assert(pSignatureLen != NULL);
-    assert(*pSignatureLen >= 72);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if ((pHash == NULL) || (pSignature == NULL) || (pSignatureLen == NULL) || (*pSignatureLen < 72)) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     pApdu->cla   = A71CH_CLA;
     pApdu->ins   = A71CH_INS_SIGN_HASH_ECC_KEYPAIR;
@@ -276,8 +282,11 @@ U16 A71_EccRestrictedSign(SST_Index_t index, const U8 *updateBytes, U16 updateBy
     U16 rv;
     U8 isOk = 0;
 
-    assert(updateBytes != NULL);
-    assert(invocationCount != NULL);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if ((updateBytes == NULL) || (invocationCount == NULL)) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     if (updateBytesLen > (U16)0x00FF)
     {
@@ -345,9 +354,11 @@ U16 A71_EccVerify(SST_Index_t index, const U8 *pHash, U16 hashLen, const U8 *pSi
     U16 rv;
     U8 isOk = 0;
 
-    assert(pHash != NULL);
-    assert(pSignature != NULL);
-    assert(pResult != NULL);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if ((pHash == NULL) || (pSignature == NULL) || (pResult == NULL)) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     *pResult = 0;
 
@@ -410,9 +421,11 @@ U16 A71_EcdhGetSharedSecret(U8 index, const U8 *pOtherPublicKey, U16 otherPublic
     apdu_t apdu;
     apdu_t * pApdu = (apdu_t *) &apdu;
 
-    assert(pOtherPublicKey != NULL);
-    assert(pSharedSecret != NULL);
-    assert(pSharedSecretLen != NULL);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if ((pOtherPublicKey == NULL) || (pSharedSecret == NULL) || (pSharedSecretLen == NULL)) {
+        return ERR_API_ERROR;
+    }
+#endif
 
     pApdu->cla   = A71CH_CLA;
     pApdu->ins   = A71CH_INS_SHARED_SECRET_ECC_KEYPAIR;

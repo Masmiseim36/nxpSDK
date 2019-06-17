@@ -1,7 +1,7 @@
 /*
  * Copyright 2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -27,6 +27,7 @@
 #define LPI2C_CLOCK_FREQUENCY ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
 
 #define LPI2C_MASTER_CLOCK_FREQUENCY LPI2C_CLOCK_FREQUENCY
+#define WAIT_TIME 10U
 
 
 #define EXAMPLE_I2C_MASTER ((LPI2C_Type *)EXAMPLE_I2C_MASTER_BASE)
@@ -45,7 +46,6 @@
 
 uint8_t g_master_txBuff[LPI2C_DATA_LENGTH];
 uint8_t g_master_rxBuff[LPI2C_DATA_LENGTH];
-volatile bool g_MasterCompletionFlag = false;
 
 /*******************************************************************************
  * Code
@@ -57,8 +57,9 @@ volatile bool g_MasterCompletionFlag = false;
 int main(void)
 {
     lpi2c_master_config_t masterConfig;
-    status_t reVal = kStatus_Fail;
+    status_t reVal        = kStatus_Fail;
     uint8_t deviceAddress = 0x01U;
+    size_t txCount        = 0xFFU;
 
     BOARD_ConfigMPU();
     BOARD_InitPins();
@@ -68,7 +69,6 @@ int main(void)
     /*Clock setting for LPI2C*/
     CLOCK_SetMux(kCLOCK_Lpi2cMux, LPI2C_CLOCK_SOURCE_SELECT);
     CLOCK_SetDiv(kCLOCK_Lpi2cDiv, LPI2C_CLOCK_SOURCE_DIVIDER);
-
 
     PRINTF("\r\nLPI2C board2board polling example -- Master transfer.\r\n");
 
@@ -81,7 +81,7 @@ int main(void)
     }
 
     PRINTF("Master will send data :");
-    for (uint32_t i = 0U; i < LPI2C_DATA_LENGTH - 1; i++)
+    for (uint32_t i = 0U; i < LPI2C_DATA_LENGTH - 1U; i++)
     {
         if (i % 8 == 0)
         {
@@ -112,9 +112,17 @@ int main(void)
     /* Send master blocking data to slave */
     if (kStatus_Success == LPI2C_MasterStart(EXAMPLE_I2C_MASTER, LPI2C_MASTER_SLAVE_ADDR_7BIT, kLPI2C_Write))
     {
+        /* Check master tx FIFO empty or not */
+        LPI2C_MasterGetFifoCounts(EXAMPLE_I2C_MASTER, NULL, &txCount);
+        while (txCount)
+        {
+            LPI2C_MasterGetFifoCounts(EXAMPLE_I2C_MASTER, NULL, &txCount);
+        }
+        /* Check communicate with slave successful or not */
         while (LPI2C_MasterGetStatusFlags(EXAMPLE_I2C_MASTER) & kLPI2C_MasterNackDetectFlag)
         {
         }
+
         /* subAddress = 0x01, data = g_master_txBuff - write to slave.
           start + slaveaddress(w) + subAddress + length of data buffer + data buffer + stop*/
         reVal = LPI2C_MasterSend(EXAMPLE_I2C_MASTER, &deviceAddress, 1);
@@ -136,6 +144,14 @@ int main(void)
         }
     }
 
+    /* Wait until the slave is ready for transmit, wait time depend on user's case.
+       Slave devices that need some time to process received byte or are not ready yet to
+       send the next byte, can pull the clock low to signal to the master that it should wait.*/
+    for (uint32_t i = 0U; i < WAIT_TIME; i++)
+    {
+        __NOP();
+    }
+
     PRINTF("Receive sent data from slave :");
 
     /* Receive blocking data from slave */
@@ -143,6 +159,13 @@ int main(void)
       start + slaveaddress(w) + subAddress + repeated start + slaveaddress(r) + rx data buffer + stop */
     if (kStatus_Success == LPI2C_MasterStart(EXAMPLE_I2C_MASTER, LPI2C_MASTER_SLAVE_ADDR_7BIT, kLPI2C_Write))
     {
+        /* Check master tx FIFO empty or not */
+        LPI2C_MasterGetFifoCounts(EXAMPLE_I2C_MASTER, NULL, &txCount);
+        while (txCount)
+        {
+            LPI2C_MasterGetFifoCounts(EXAMPLE_I2C_MASTER, NULL, &txCount);
+        }
+        /* Check communicate with slave successful or not */
         while (LPI2C_MasterGetStatusFlags(EXAMPLE_I2C_MASTER) & kLPI2C_MasterNackDetectFlag)
         {
         }
@@ -159,7 +182,7 @@ int main(void)
             return -1;
         }
 
-        reVal = LPI2C_MasterReceive(EXAMPLE_I2C_MASTER, g_master_rxBuff, LPI2C_DATA_LENGTH);
+        reVal = LPI2C_MasterReceive(EXAMPLE_I2C_MASTER, g_master_rxBuff, LPI2C_DATA_LENGTH - 1);
         if (reVal != kStatus_Success)
         {
             return -1;
@@ -183,11 +206,11 @@ int main(void)
     PRINTF("\r\n\r\n");
 
     /* Transfer completed. Check the data.*/
-    for (uint32_t i = 0U; i < LPI2C_DATA_LENGTH - 1; i++)
+    for (uint32_t i = 0U; i < LPI2C_DATA_LENGTH - 1U; i++)
     {
         if (g_master_rxBuff[i] != g_master_txBuff[i + 1])
         {
-            PRINTF("\r\nError occured in the transfer ! \r\n");
+            PRINTF("\r\nError occurred in the transfer ! \r\n");
             break;
         }
     }

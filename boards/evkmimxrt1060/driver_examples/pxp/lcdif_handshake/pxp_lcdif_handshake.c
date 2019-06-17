@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2017, NXP Semiconductors, Inc.
+ * Copyright  2017 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 #include "board.h"
 #include "fsl_debug_console.h"
@@ -90,7 +90,8 @@ AT_NONCACHEABLE_SECTION_ALIGN(static uint32_t s_asBufferPxp[APP_AS_HEIGHT][APP_A
 void BOARD_InitLcd(void)
 {
     gpio_pin_config_t config = {
-        kGPIO_DigitalOutput, 0,
+        kGPIO_DigitalOutput,
+        0,
     };
 
     /* Backlight. */
@@ -111,7 +112,10 @@ void BOARD_InitLcdifPixelClock(void)
      * Video PLL output clock is OSC24M * (loopDivider + (denominator / numerator)) / postDivider = 93MHz.
      */
     clock_video_pll_config_t config = {
-        .loopDivider = 31, .postDivider = 8, .numerator = 0, .denominator = 0,
+        .loopDivider = 31,
+        .postDivider = 8,
+        .numerator   = 0,
+        .denominator = 0,
     };
 
     CLOCK_InitVideoPll(&config);
@@ -156,18 +160,18 @@ int main(void)
 static void APP_InitLcdif(void)
 {
     const elcdif_rgb_mode_config_t config = {
-        .panelWidth = APP_IMG_WIDTH,
-        .panelHeight = APP_IMG_HEIGHT,
-        .hsw = APP_HSW,
-        .hfp = APP_HFP,
-        .hbp = APP_HBP,
-        .vsw = APP_VSW,
-        .vfp = APP_VFP,
-        .vbp = APP_VBP,
+        .panelWidth    = APP_IMG_WIDTH,
+        .panelHeight   = APP_IMG_HEIGHT,
+        .hsw           = APP_HSW,
+        .hfp           = APP_HFP,
+        .hbp           = APP_HBP,
+        .vsw           = APP_VSW,
+        .vfp           = APP_VFP,
+        .vbp           = APP_VBP,
         .polarityFlags = APP_POL_FLAGS,
-        .bufferAddr = (uint32_t)s_HandShakeBuffer,
-        .pixelFormat = kELCDIF_PixelFormatXRGB8888,
-        .dataBus = APP_LCDIF_DATA_BUS,
+        .bufferAddr    = (uint32_t)s_HandShakeBuffer,
+        .pixelFormat   = kELCDIF_PixelFormatXRGB8888,
+        .dataBus       = APP_LCDIF_DATA_BUS,
     };
 
     ELCDIF_RgbModeInit(APP_ELCDIF, &config);
@@ -184,11 +188,11 @@ static void APP_InitPxp(void)
     /* PS configure. */
     const pxp_ps_buffer_config_t psBufferConfig = {
         .pixelFormat = kPXP_PsPixelFormatRGB888,
-        .swapByte = false,
-        .bufferAddr = (uint32_t)s_psBufferPxp,
+        .swapByte    = false,
+        .bufferAddr  = (uint32_t)s_psBufferPxp,
         .bufferAddrU = 0U,
         .bufferAddrV = 0U,
-        .pitchBytes = APP_PS_WIDTH * APP_BPP,
+        .pitchBytes  = APP_PS_WIDTH * APP_BPP,
     };
 
     PXP_SetProcessSurfaceBackGroundColor(APP_PXP, 0U);
@@ -198,27 +202,27 @@ static void APP_InitPxp(void)
     /* AS config. */
     const pxp_as_buffer_config_t asBufferConfig = {
         .pixelFormat = kPXP_AsPixelFormatRGB888,
-        .bufferAddr = (uint32_t)s_asBufferPxp,
-        .pitchBytes = APP_AS_WIDTH * APP_BPP,
+        .bufferAddr  = (uint32_t)s_asBufferPxp,
+        .pitchBytes  = APP_AS_WIDTH * APP_BPP,
     };
 
-    const pxp_as_blend_config_t asBlendConfig = {.alpha = 0U,          /* Don't care. */
+    const pxp_as_blend_config_t asBlendConfig = {.alpha       = 0U,    /* Don't care. */
                                                  .invertAlpha = false, /* Don't care. */
-                                                 .alphaMode = kPXP_AlphaRop,
-                                                 .ropMode = kPXP_RopMergeAs};
+                                                 .alphaMode   = kPXP_AlphaRop,
+                                                 .ropMode     = kPXP_RopMergeAs};
 
     PXP_SetAlphaSurfaceBufferConfig(APP_PXP, &asBufferConfig);
     PXP_SetAlphaSurfaceBlendConfig(APP_PXP, &asBlendConfig);
 
     /* Output config. */
     const pxp_output_buffer_config_t outputBufferConfig = {
-        .pixelFormat = kPXP_OutputPixelFormatRGB888,
+        .pixelFormat    = kPXP_OutputPixelFormatRGB888,
         .interlacedMode = kPXP_OutputProgressive,
-        .buffer0Addr = (uint32_t)s_HandShakeBuffer,
-        .buffer1Addr = 0U,
-        .pitchBytes = APP_IMG_WIDTH * APP_BPP,
-        .width = APP_IMG_WIDTH,
-        .height = APP_IMG_HEIGHT,
+        .buffer0Addr    = (uint32_t)s_HandShakeBuffer,
+        .buffer1Addr    = 0U,
+        .pitchBytes     = APP_IMG_WIDTH * APP_BPP,
+        .width          = APP_IMG_WIDTH,
+        .height         = APP_IMG_HEIGHT,
     };
 
     PXP_SetOutputBufferConfig(APP_PXP, &outputBufferConfig);
@@ -233,10 +237,10 @@ static void APP_InitPxp(void)
 
 static void APP_HandShake(void)
 {
-    int8_t psIncX = 1;
-    int8_t psIncY = 1;
-    int8_t asIncX = -1;
-    int8_t asIncY = -1;
+    int8_t psIncX   = 1;
+    int8_t psIncY   = 1;
+    int8_t asIncX   = -1;
+    int8_t asIncY   = -1;
     uint16_t psUlcX = 0U;
     uint16_t psUlcY = 0U;
     uint16_t asUlcX = APP_IMG_WIDTH - APP_AS_WIDTH;

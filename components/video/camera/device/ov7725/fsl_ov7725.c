@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2017-2018, NXP Semiconductors, Inc.
+ * Copyright  2017-2018 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -113,11 +113,11 @@ status_t OV7725_SetBrightness(camera_device_handle_t *handle, int32_t brightness
  * Variables
  ******************************************************************************/
 const camera_device_operations_t ov7725_ops = {
-    .init = OV7725_Init,
-    .deinit = OV7725_Deinit,
-    .start = OV7725_Start,
-    .stop = OV7725_Stop,
-    .control = OV7725_Control,
+    .init     = OV7725_Init,
+    .deinit   = OV7725_Deinit,
+    .start    = OV7725_Start,
+    .stop     = OV7725_Stop,
+    .control  = OV7725_Control,
     .init_ext = OV7725_InitExt,
 };
 
@@ -182,22 +182,28 @@ static const ov7725_night_mode_t ov7725NightModeConfigs[] = {
 
 static const ov7725_cmd_func_map_t ov7725CmdFuncMap[] = {
     {
-        kCAMERA_DeviceLightMode, OV7725_SetLightMode,
+        kCAMERA_DeviceLightMode,
+        OV7725_SetLightMode,
     },
     {
-        kCAMERA_DeviceSaturation, OV7725_SetSaturation,
+        kCAMERA_DeviceSaturation,
+        OV7725_SetSaturation,
     },
     {
-        kCAMERA_DeviceBrightness, OV7725_SetBrightness,
+        kCAMERA_DeviceBrightness,
+        OV7725_SetBrightness,
     },
     {
-        kCAMERA_DeviceContrast, OV7725_SetContrast,
+        kCAMERA_DeviceContrast,
+        OV7725_SetContrast,
     },
     {
-        kCAMERA_DeviceSpecialEffect, OV7725_SetSpecialEffect,
+        kCAMERA_DeviceSpecialEffect,
+        OV7725_SetSpecialEffect,
     },
     {
-        kCAMERA_DeviceNightMode, OV7725_SetNightMode,
+        kCAMERA_DeviceNightMode,
+        OV7725_SetNightMode,
     },
 };
 
@@ -356,7 +362,7 @@ status_t OV7725_Init(camera_device_handle_t *handle, const camera_config_t *conf
         return kStatus_InvalidArgument;
     }
 
-    width = FSL_VIDEO_EXTRACT_WIDTH(config->resolution);
+    width  = FSL_VIDEO_EXTRACT_WIDTH(config->resolution);
     height = FSL_VIDEO_EXTRACT_HEIGHT(config->resolution);
 
     if ((width > 640) || (height > 480))
@@ -476,7 +482,7 @@ status_t OV7725_Init(camera_device_handle_t *handle, const camera_config_t *conf
     /* Resolution and timing. */
     hstart = 0x22U << 2U;
     vstart = 0x07U << 1U;
-    hsize = width + 16U;
+    hsize  = width + 16U;
 
     /* Set the window size. */
     OV7725_WriteReg(handle, OV7725_HSTART_REG, hstart >> 2U);

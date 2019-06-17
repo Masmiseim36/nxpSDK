@@ -1,7 +1,7 @@
 '''
 @author    : Shubhadip.Paul@nxp.com
 @name      : ISSDKCloudBridge
-@copyright : Copyright (c) 2018, NXP Semiconductors.
+@copyright : Copyright 2018 NXP
 ********************************************************************************
 This script is used to read Data Logger Samples from a File and send to Cloud.
 

@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2017-2018, NXP Semiconductors, Inc.
+ * Copyright  2017-2018 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -26,7 +26,7 @@ status_t SCCB_WriteReg(
     {
         /* Byte swap. */
         regTmp = ((reg >> 8U) & 0xFF) | ((reg & 0xFFU) << 8U);
-        reg = regTmp;
+        reg    = regTmp;
     }
 
     return i2cSendFunc(i2cAddr, reg, addrType, &value, 1);
@@ -44,7 +44,7 @@ status_t SCCB_WriteMultiRegs(uint8_t i2cAddr,
     if (kSCCB_RegAddr16Bit == addrType)
     {
         /* Byte swap. */
-        regTmp = ((startReg >> 8U) & 0xFF) | ((startReg & 0xFFU) << 8U);
+        regTmp   = ((startReg >> 8U) & 0xFF) | ((startReg & 0xFFU) << 8U);
         startReg = regTmp;
     }
 
@@ -60,7 +60,7 @@ status_t SCCB_ReadReg(
     {
         /* Byte swap. */
         regTmp = ((reg >> 8U) & 0xFF) | ((reg & 0xFFU) << 8U);
-        reg = regTmp;
+        reg    = regTmp;
     }
 
     return i2cReceiveFunc(i2cAddr, reg, addrType, value, 1);

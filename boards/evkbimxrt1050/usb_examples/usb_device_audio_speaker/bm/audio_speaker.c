@@ -27,15 +27,16 @@
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
 
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #include "usb_phy.h"
 #endif
-
 #include "fsl_wm8960.h"
 #include "pin_mux.h"
 #include "fsl_sai.h"
 #include "fsl_dmamux.h"
 #include "fsl_sai_edma.h"
+#include "fsl_codec_common.h"
+#include "fsl_codec_adapter.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -107,6 +108,9 @@ extern void BOARD_Create_Audio_DMA_EDMA_Handle(void);
 extern void BOARD_DMA_EDMA_Set_AudioFormat(void);
 extern void BOARD_DMA_EDMA_Enable_Audio_Interrupts(void);
 extern void BOARD_DMA_EDMA_Start(void);
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+extern void SCTIMER_CaptureInit(void);
+#endif
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -115,19 +119,38 @@ extern uint8_t audioPlayDataBuff[AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO
 sai_config_t saiTxConfig;
 sai_transfer_format_t audioFormat;
 sai_edma_handle_t txHandle = {0};
-edma_handle_t dmaTxHandle = {0};
+edma_handle_t dmaTxHandle  = {0};
 
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 static uint8_t audioPlayDMATempBuff[FS_ISO_OUT_ENDP_PACKET_SIZE];
-codec_handle_t codecHandle = {0};
-extern codec_config_t boardCodecConfig;
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
-uint8_t audioPlayDataBuff[AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_OUT_ENDP_PACKET_SIZE];
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
-uint8_t audioPlayPacket[FS_ISO_OUT_ENDP_PACKET_SIZE + AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE];
+uint32_t masterClockHz                       = 0U;
+uint8_t codecHandleBuffer[CODEC_HANDLE_SIZE] = {0U};
+codec_handle_t *codecHandle                  = (codec_handle_t *)codecHandleBuffer;
+wm8960_config_t wm8960Config                 = {
+    .i2cConfig = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE, .codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ},
+    .route     = kWM8960_RoutePlaybackandRecord,
+    .rightInputSource = kWM8960_InputDifferentialMicInput2,
+    .playSource       = kWM8960_PlaySourceDAC,
+    .slaveAddress     = WM8960_I2C_ADDR,
+    .bus              = kWM8960_BusI2S,
+    .format           = {.mclk_HZ    = 12288000U,
+               .sampleRate = kWM8960_AudioSampleRate48KHz,
+               .bitWidth   = kWM8960_AudioBitWidth16bit},
+    .master_slave     = false,
+};
+codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8960, .codecDevConfig = &wm8960Config};
 
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t audioPlayDataBuff[AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_OUT_ENDP_PACKET_SIZE];
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t audioPlayPacket[FS_ISO_OUT_ENDP_PACKET_SIZE];
+#else
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t audioPlayPacket[FS_ISO_OUT_ENDP_PACKET_SIZE + AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE];
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 uint8_t audioFeedBackBuffer[3];
+#endif
 
 extern usb_device_class_struct_t g_UsbDeviceAudioClass;
 
@@ -135,9 +158,12 @@ extern usb_device_class_struct_t g_UsbDeviceAudioClass;
 usb_audio_speaker_struct_t g_UsbDeviceAudioSpeaker = {
     .deviceHandle = NULL,
     .audioHandle = (class_handle_t)NULL,
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+    .currentStreamOutMaxPacketSize = (FS_ISO_OUT_ENDP_PACKET_SIZE),
+#else
     .currentStreamOutMaxPacketSize = (FS_ISO_OUT_ENDP_PACKET_SIZE + AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE),
     .currentFeedbackMaxPacketSize = FS_ISO_FEEDBACK_ENDP_PACKET_SIZE,
-    .speed = USB_SPEED_FULL,
+#endif
     .attach = 0U,
     .copyProtect = 0x01U,
     .curMute = 0x00U,
@@ -189,6 +215,13 @@ usb_audio_speaker_struct_t g_UsbDeviceAudioSpeaker = {
     .speakerReservedSpace = 0,
     .timesFeedbackCalculate = 0,
     .speakerDetachOrNoInput = 0,
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+    .audioPllTicksPrev = 0,
+    .audioPllTicksDiff = 0,
+    .audioPllTicksEma = AUDIO_PLL_USB1_SOF_INTERVAL_COUNT,
+    .audioPllTickEmaFrac = 0,
+    .audioPllStep = AUDIO_PLL_FRACTIONAL_CHANGE_STEP,
+#endif
 };
 
 /* USB device class information */
@@ -212,7 +245,7 @@ static usb_device_class_config_list_struct_t s_audioConfigList = {
 const clock_audio_pll_config_t audioPllConfig = {
     .loopDivider = 32,  /* PLL loop divider. Valid range for DIV_SELECT divider value: 27~54. */
     .postDivider = 1,   /* Divider after the PLL, should only be 1, 2, 4, 8, 16. */
-    .numerator = 77,    /* 30 bit numerator of fractional loop divider. */
+    .numerator   = 77,  /* 30 bit numerator of fractional loop divider. */
     .denominator = 100, /* 30 bit denominator of fractional loop divider */
 };
 extern void WM8960_USB_Audio_Init(void *I2CBase, void *i2cHandle);
@@ -233,8 +266,7 @@ void BOARD_EnableSaiMclkOutput(bool enable)
 
 void BOARD_Codec_Init()
 {
-    CODEC_Init(&codecHandle, &boardCodecConfig);
-    CODEC_SetFormat(&codecHandle, audioFormat.masterClockHz, audioFormat.sampleRate_Hz, audioFormat.bitWidth);
+    CODEC_Init(codecHandle, &boardCodecConfig);
 }
 
 void SAI_USB_Audio_TxInit(I2S_Type *SAIBase)
@@ -247,13 +279,18 @@ void SAI_USB_Audio_TxInit(I2S_Type *SAIBase)
 void WM8960_Config_Audio_Formats(uint32_t samplingRate)
 {
     /* Configure the audio audioFormat */
-    audioFormat.bitWidth = kSAI_WordWidth16bits;
-    audioFormat.channel = 0U;
+    audioFormat.bitWidth      = kSAI_WordWidth16bits;
+    audioFormat.channel       = 0U;
     audioFormat.sampleRate_Hz = samplingRate;
 
-    audioFormat.masterClockHz = OVER_SAMPLE_RATE * audioFormat.sampleRate_Hz;
+#if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) || \
+    (defined FSL_FEATURE_PCC_HAS_SAI_DIVIDER && FSL_FEATURE_PCC_HAS_SAI_DIVIDER)
+    masterClockHz = OVER_SAMPLE_RATE * format.sampleRate_Hz;
+#else
+    masterClockHz = DEMO_SAI_CLK_FREQ;
+#endif
     audioFormat.protocol = saiTxConfig.protocol;
-    audioFormat.stereo = kSAI_Stereo;
+    audioFormat.stereo   = kSAI_Stereo;
 #if defined(FSL_FEATURE_SAI_FIFO_COUNT) && (FSL_FEATURE_SAI_FIFO_COUNT > 1)
     audioFormat.watermark = FSL_FEATURE_SAI_FIFO_COUNT / 2U;
 #endif
@@ -271,13 +308,13 @@ static void txCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t statu
     if ((g_UsbDeviceAudioSpeaker.audioSendTimes >= g_UsbDeviceAudioSpeaker.usbRecvTimes) &&
         (g_UsbDeviceAudioSpeaker.startPlayHalfFull == 1))
     {
-        g_UsbDeviceAudioSpeaker.startPlayHalfFull = 0;
+        g_UsbDeviceAudioSpeaker.startPlayHalfFull      = 0;
         g_UsbDeviceAudioSpeaker.speakerDetachOrNoInput = 1;
     }
     if (g_UsbDeviceAudioSpeaker.startPlayHalfFull)
     {
         xfer.dataSize = FS_ISO_OUT_ENDP_PACKET_SIZE;
-        xfer.data = audioPlayDataBuff + g_UsbDeviceAudioSpeaker.tdWriteNumberPlay;
+        xfer.data     = audioPlayDataBuff + g_UsbDeviceAudioSpeaker.tdWriteNumberPlay;
         g_UsbDeviceAudioSpeaker.audioSendCount += FS_ISO_OUT_ENDP_PACKET_SIZE;
         g_UsbDeviceAudioSpeaker.audioSendTimes++;
         g_UsbDeviceAudioSpeaker.tdWriteNumberPlay += FS_ISO_OUT_ENDP_PACKET_SIZE;
@@ -290,7 +327,7 @@ static void txCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t statu
     else
     {
         xfer.dataSize = FS_ISO_OUT_ENDP_PACKET_SIZE;
-        xfer.data = audioPlayDMATempBuff;
+        xfer.data     = audioPlayDMATempBuff;
     }
     SAI_TransferSendEDMA(base, handle, &xfer);
 }
@@ -315,8 +352,8 @@ void BOARD_Create_Audio_DMA_EDMA_Handle()
 void BOARD_DMA_EDMA_Set_AudioFormat()
 {
     uint32_t mclkSourceClockHz = 0U;
-    mclkSourceClockHz = DEMO_SAI_CLK_FREQ;
-    SAI_TransferTxSetFormatEDMA(BOARD_DEMO_SAI, &txHandle, &audioFormat, mclkSourceClockHz, audioFormat.masterClockHz);
+    mclkSourceClockHz          = DEMO_SAI_CLK_FREQ;
+    SAI_TransferTxSetFormatEDMA(BOARD_DEMO_SAI, &txHandle, &audioFormat, mclkSourceClockHz, masterClockHz);
 }
 
 void BOARD_DMA_EDMA_Enable_Audio_Interrupts()
@@ -331,7 +368,7 @@ void BOARD_DMA_EDMA_Start()
     sai_transfer_t xfer = {0};
     memset(audioPlayDMATempBuff, 0, FS_ISO_OUT_ENDP_PACKET_SIZE);
     xfer.dataSize = FS_ISO_OUT_ENDP_PACKET_SIZE;
-    xfer.data = audioPlayDMATempBuff;
+    xfer.data     = audioPlayDMATempBuff;
     SAI_TransferSendEDMA(BOARD_DEMO_SAI, &txHandle, &xfer);
 }
 
@@ -344,7 +381,6 @@ void SAI_UserTxIRQHandler(void)
         exception return operation might vector to incorrect interrupt */
     __DSB();
 }
-
 
 void USB_OTG1_IRQHandler(void)
 {
@@ -359,7 +395,9 @@ void USB_OTG2_IRQHandler(void)
 void USB_DeviceClockInit(void)
 {
     usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL, BOARD_USB_PHY_TXCAL45DP, BOARD_USB_PHY_TXCAL45DM,
+        BOARD_USB_PHY_D_CAL,
+        BOARD_USB_PHY_TXCAL45DP,
+        BOARD_USB_PHY_TXCAL45DM,
     };
 
     if (CONTROLLER_ID == kUSB_ControllerEhci0)
@@ -379,9 +417,9 @@ void USB_DeviceIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbDeviceEhciIrq[] = USBHS_IRQS;
-    irqNumber = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
+    irqNumber                  = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
 
-/* Install isr, set priority, and enable IRQ. */
+    /* Install isr, set priority, and enable IRQ. */
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
     EnableIRQ((IRQn_Type)irqNumber);
 }
@@ -794,12 +832,16 @@ uint32_t USB_AudioSpeakerBufferSpaceUsed(void)
     }
     return g_UsbDeviceAudioSpeaker.speakerReservedSpace;
 }
+
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+#else
 /* The USB_AudioFeedbackDataUpdate() function calculates the feedback data */
 void USB_AudioFeedbackDataUpdate()
 {
     static int32_t audioSpeakerUsedDiff = 0x0, audioSpeakerDiffThres = 0x0;
-    static uint32_t feedbackValue = 0x0, originFeedbackValue = 0x0, audioSpeakerUsedSpace  = 0x0, audioSpeakerLastUsedSpace = 0x0;
-    
+    static uint32_t feedbackValue = 0x0, originFeedbackValue = 0x0, audioSpeakerUsedSpace = 0x0,
+                    audioSpeakerLastUsedSpace = 0x0;
+
     if (g_UsbDeviceAudioSpeaker.speakerIntervalCount != AUDIO_CALCULATE_Ff_INTERVAL)
     {
         g_UsbDeviceAudioSpeaker.speakerIntervalCount++;
@@ -822,7 +864,7 @@ void USB_AudioFeedbackDataUpdate()
         audioSpeakerUsedSpace = USB_AudioSpeakerBufferSpaceUsed();
         audioSpeakerUsedDiff += (audioSpeakerUsedSpace - audioSpeakerLastUsedSpace);
         audioSpeakerLastUsedSpace = audioSpeakerUsedSpace;
-        
+
         if ((audioSpeakerUsedDiff > -AUDIO_SAMPLING_RATE_KHZ) && (audioSpeakerUsedDiff < AUDIO_SAMPLING_RATE_KHZ))
         {
             audioSpeakerDiffThres = 4 * AUDIO_SAMPLING_RATE_KHZ;
@@ -844,6 +886,7 @@ void USB_AudioFeedbackDataUpdate()
     }
     g_UsbDeviceAudioSpeaker.lastAudioSendCount = g_UsbDeviceAudioSpeaker.audioSendCount;
 }
+#endif
 
 /* The USB_AudioSpeakerPutBuffer() function fills the audioRecDataBuff with audioPlayPacket in every callback*/
 void USB_AudioSpeakerPutBuffer(uint8_t *buffer, uint32_t size)
@@ -881,6 +924,8 @@ usb_status_t USB_DeviceAudioCallback(class_handle_t handle, uint32_t event, void
 
     switch (event)
     {
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+#else
         case kUSB_DeviceAudioEventStreamSendResponse:
             if ((g_UsbDeviceAudioSpeaker.attach) && (ep_cb_param->length != (USB_UNINITIALIZED_VAL_32)))
             {
@@ -891,6 +936,7 @@ usb_status_t USB_DeviceAudioCallback(class_handle_t handle, uint32_t event, void
                 }
             }
             break;
+#endif
         case kUSB_DeviceAudioEventStreamRecvResponse:
             if ((g_UsbDeviceAudioSpeaker.attach) && (ep_cb_param->length != (USB_UNINITIALIZED_VAL_32)))
             {
@@ -907,11 +953,16 @@ usb_status_t USB_DeviceAudioCallback(class_handle_t handle, uint32_t event, void
                 USB_AudioSpeakerPutBuffer(audioPlayPacket, ep_cb_param->length);
                 g_UsbDeviceAudioSpeaker.usbRecvCount += ep_cb_param->length;
                 g_UsbDeviceAudioSpeaker.usbRecvTimes++;
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+                error = USB_DeviceAudioRecv(handle, USB_AUDIO_SPEAKER_STREAM_ENDPOINT, &audioPlayPacket[0],
+                                            (FS_ISO_OUT_ENDP_PACKET_SIZE));
+#else
                 USB_AUDIO_ENTER_CRITICAL();
                 USB_AudioFeedbackDataUpdate();
                 USB_AUDIO_EXIT_CRITICAL();
                 error = USB_DeviceAudioRecv(handle, USB_AUDIO_SPEAKER_STREAM_ENDPOINT, &audioPlayPacket[0],
                                             g_UsbDeviceAudioSpeaker.currentStreamOutMaxPacketSize);
+#endif
             }
             break;
 
@@ -942,6 +993,13 @@ void USB_DeviceAudioSpeakerStatusReset(void)
     g_UsbDeviceAudioSpeaker.speakerReservedSpace = 0;
     g_UsbDeviceAudioSpeaker.timesFeedbackCalculate = 0;
     g_UsbDeviceAudioSpeaker.speakerDetachOrNoInput = 0;
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+    g_UsbDeviceAudioSpeaker.audioPllTicksPrev = 0;
+    g_UsbDeviceAudioSpeaker.audioPllTicksDiff = 0;
+    g_UsbDeviceAudioSpeaker.audioPllTicksEma = AUDIO_PLL_USB1_SOF_INTERVAL_COUNT;
+    g_UsbDeviceAudioSpeaker.audioPllTickEmaFrac = 0;
+    g_UsbDeviceAudioSpeaker.audioPllStep = AUDIO_PLL_FRACTIONAL_CHANGE_STEP;
+#endif
 }
 
 /*!
@@ -977,15 +1035,19 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             }
             if (USB_SPEED_HIGH == g_UsbDeviceAudioSpeaker.speed)
             {
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+                g_UsbDeviceAudioSpeaker.currentStreamOutMaxPacketSize = (HS_ISO_OUT_ENDP_PACKET_SIZE);
+#else
                 g_UsbDeviceAudioSpeaker.currentStreamOutMaxPacketSize =
                     (HS_ISO_OUT_ENDP_PACKET_SIZE + AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE);
                 g_UsbDeviceAudioSpeaker.currentFeedbackMaxPacketSize = HS_ISO_FEEDBACK_ENDP_PACKET_SIZE;
+#endif
             }
 #endif
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
-            if (0U ==(*temp8))
+            if (0U == (*temp8))
             {
                 g_UsbDeviceAudioSpeaker.attach = 0U;
                 g_UsbDeviceAudioSpeaker.currentConfiguration = 0U;
@@ -1015,8 +1077,11 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                         USB_DeviceAudioRecv(g_UsbDeviceAudioSpeaker.audioHandle, USB_AUDIO_SPEAKER_STREAM_ENDPOINT,
                                             &audioPlayDataBuff[0],
                                             g_UsbDeviceAudioSpeaker.currentStreamOutMaxPacketSize);
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+#else
                         USB_DeviceAudioSend(g_UsbDeviceAudioSpeaker.audioHandle, USB_AUDIO_SPEAKER_FEEDBACK_ENDPOINT,
                                             audioFeedBackBuffer, g_UsbDeviceAudioSpeaker.currentFeedbackMaxPacketSize);
+#endif
                     }
                 }
             }
@@ -1088,8 +1153,11 @@ void APPInit(void)
     SYSMPU_Enable(SYSMPU, 0);
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
     Init_Board_Sai_Codec();
-
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+    SCTIMER_CaptureInit();
+#else
     AUDIO_UPDATE_FEEDBACK_DATA(audioFeedBackBuffer, AUDIO_SAMPLING_RATE_TO_10_14);
+#endif
 
     if (kStatus_USB_Success !=
         USB_DeviceClassInit(CONTROLLER_ID, &s_audioConfigList, &g_UsbDeviceAudioSpeaker.deviceHandle))

@@ -67,55 +67,55 @@
 /*! @brief SD/MMC card API's running status. */
 enum _sdmmc_status
 {
-    kStatus_SDMMC_NotSupportYet = MAKE_STATUS(kStatusGroup_SDMMC, 0U),             /*!< Haven't supported */
-    kStatus_SDMMC_TransferFailed = MAKE_STATUS(kStatusGroup_SDMMC, 1U),            /*!< Send command failed */
-    kStatus_SDMMC_SetCardBlockSizeFailed = MAKE_STATUS(kStatusGroup_SDMMC, 2U),    /*!< Set block size failed */
-    kStatus_SDMMC_HostNotSupport = MAKE_STATUS(kStatusGroup_SDMMC, 3U),            /*!< Host doesn't support */
-    kStatus_SDMMC_CardNotSupport = MAKE_STATUS(kStatusGroup_SDMMC, 4U),            /*!< Card doesn't support */
-    kStatus_SDMMC_AllSendCidFailed = MAKE_STATUS(kStatusGroup_SDMMC, 5U),          /*!< Send CID failed */
-    kStatus_SDMMC_SendRelativeAddressFailed = MAKE_STATUS(kStatusGroup_SDMMC, 6U), /*!< Send relative address failed */
-    kStatus_SDMMC_SendCsdFailed = MAKE_STATUS(kStatusGroup_SDMMC, 7U),             /*!< Send CSD failed */
-    kStatus_SDMMC_SelectCardFailed = MAKE_STATUS(kStatusGroup_SDMMC, 8U),          /*!< Select card failed */
-    kStatus_SDMMC_SendScrFailed = MAKE_STATUS(kStatusGroup_SDMMC, 9U),             /*!< Send SCR failed */
-    kStatus_SDMMC_SetDataBusWidthFailed = MAKE_STATUS(kStatusGroup_SDMMC, 10U),    /*!< Set bus width failed */
-    kStatus_SDMMC_GoIdleFailed = MAKE_STATUS(kStatusGroup_SDMMC, 11U),             /*!< Go idle failed */
+    kStatus_SDMMC_NotSupportYet             = MAKE_STATUS(kStatusGroup_SDMMC, 0U),  /*!< Haven't supported */
+    kStatus_SDMMC_TransferFailed            = MAKE_STATUS(kStatusGroup_SDMMC, 1U),  /*!< Send command failed */
+    kStatus_SDMMC_SetCardBlockSizeFailed    = MAKE_STATUS(kStatusGroup_SDMMC, 2U),  /*!< Set block size failed */
+    kStatus_SDMMC_HostNotSupport            = MAKE_STATUS(kStatusGroup_SDMMC, 3U),  /*!< Host doesn't support */
+    kStatus_SDMMC_CardNotSupport            = MAKE_STATUS(kStatusGroup_SDMMC, 4U),  /*!< Card doesn't support */
+    kStatus_SDMMC_AllSendCidFailed          = MAKE_STATUS(kStatusGroup_SDMMC, 5U),  /*!< Send CID failed */
+    kStatus_SDMMC_SendRelativeAddressFailed = MAKE_STATUS(kStatusGroup_SDMMC, 6U),  /*!< Send relative address failed */
+    kStatus_SDMMC_SendCsdFailed             = MAKE_STATUS(kStatusGroup_SDMMC, 7U),  /*!< Send CSD failed */
+    kStatus_SDMMC_SelectCardFailed          = MAKE_STATUS(kStatusGroup_SDMMC, 8U),  /*!< Select card failed */
+    kStatus_SDMMC_SendScrFailed             = MAKE_STATUS(kStatusGroup_SDMMC, 9U),  /*!< Send SCR failed */
+    kStatus_SDMMC_SetDataBusWidthFailed     = MAKE_STATUS(kStatusGroup_SDMMC, 10U), /*!< Set bus width failed */
+    kStatus_SDMMC_GoIdleFailed              = MAKE_STATUS(kStatusGroup_SDMMC, 11U), /*!< Go idle failed */
     kStatus_SDMMC_HandShakeOperationConditionFailed =
         MAKE_STATUS(kStatusGroup_SDMMC, 12U), /*!< Send Operation Condition failed */
     kStatus_SDMMC_SendApplicationCommandFailed =
-        MAKE_STATUS(kStatusGroup_SDMMC, 13U),                                    /*!< Send application command failed */
-    kStatus_SDMMC_SwitchFailed = MAKE_STATUS(kStatusGroup_SDMMC, 14U),           /*!< Switch command failed */
-    kStatus_SDMMC_StopTransmissionFailed = MAKE_STATUS(kStatusGroup_SDMMC, 15U), /*!< Stop transmission failed */
-    kStatus_SDMMC_WaitWriteCompleteFailed = MAKE_STATUS(kStatusGroup_SDMMC, 16U),    /*!< Wait write complete failed */
-    kStatus_SDMMC_SetBlockCountFailed = MAKE_STATUS(kStatusGroup_SDMMC, 17U),        /*!< Set block count failed */
-    kStatus_SDMMC_SetRelativeAddressFailed = MAKE_STATUS(kStatusGroup_SDMMC, 18U),   /*!< Set relative address failed */
-    kStatus_SDMMC_SwitchBusTimingFailed = MAKE_STATUS(kStatusGroup_SDMMC, 19U),      /*!< Switch high speed failed */
-    kStatus_SDMMC_SendExtendedCsdFailed = MAKE_STATUS(kStatusGroup_SDMMC, 20U),      /*!< Send EXT_CSD failed */
-    kStatus_SDMMC_ConfigureBootFailed = MAKE_STATUS(kStatusGroup_SDMMC, 21U),        /*!< Configure boot failed */
+        MAKE_STATUS(kStatusGroup_SDMMC, 13U), /*!< Send application command failed */
+    kStatus_SDMMC_SwitchFailed               = MAKE_STATUS(kStatusGroup_SDMMC, 14U), /*!< Switch command failed */
+    kStatus_SDMMC_StopTransmissionFailed     = MAKE_STATUS(kStatusGroup_SDMMC, 15U), /*!< Stop transmission failed */
+    kStatus_SDMMC_WaitWriteCompleteFailed    = MAKE_STATUS(kStatusGroup_SDMMC, 16U), /*!< Wait write complete failed */
+    kStatus_SDMMC_SetBlockCountFailed        = MAKE_STATUS(kStatusGroup_SDMMC, 17U), /*!< Set block count failed */
+    kStatus_SDMMC_SetRelativeAddressFailed   = MAKE_STATUS(kStatusGroup_SDMMC, 18U), /*!< Set relative address failed */
+    kStatus_SDMMC_SwitchBusTimingFailed      = MAKE_STATUS(kStatusGroup_SDMMC, 19U), /*!< Switch high speed failed */
+    kStatus_SDMMC_SendExtendedCsdFailed      = MAKE_STATUS(kStatusGroup_SDMMC, 20U), /*!< Send EXT_CSD failed */
+    kStatus_SDMMC_ConfigureBootFailed        = MAKE_STATUS(kStatusGroup_SDMMC, 21U), /*!< Configure boot failed */
     kStatus_SDMMC_ConfigureExtendedCsdFailed = MAKE_STATUS(kStatusGroup_SDMMC, 22U), /*!< Configure EXT_CSD failed */
     kStatus_SDMMC_EnableHighCapacityEraseFailed =
         MAKE_STATUS(kStatusGroup_SDMMC, 23U), /*!< Enable high capacity erase failed */
-    kStatus_SDMMC_SendTestPatternFailed = MAKE_STATUS(kStatusGroup_SDMMC, 24U),    /*!< Send test pattern failed */
+    kStatus_SDMMC_SendTestPatternFailed    = MAKE_STATUS(kStatusGroup_SDMMC, 24U), /*!< Send test pattern failed */
     kStatus_SDMMC_ReceiveTestPatternFailed = MAKE_STATUS(kStatusGroup_SDMMC, 25U), /*!< Receive test pattern failed */
-    kStatus_SDMMC_SDIO_ResponseError = MAKE_STATUS(kStatusGroup_SDMMC, 26U),       /*!< sdio response error */
+    kStatus_SDMMC_SDIO_ResponseError       = MAKE_STATUS(kStatusGroup_SDMMC, 26U), /*!< sdio response error */
     kStatus_SDMMC_SDIO_InvalidArgument =
         MAKE_STATUS(kStatusGroup_SDMMC, 27U), /*!< sdio invalid argument response error */
     kStatus_SDMMC_SDIO_SendOperationConditionFail =
-        MAKE_STATUS(kStatusGroup_SDMMC, 28U),                            /*!< sdio send operation condition fail */
-    kStatus_SDMMC_InvalidVoltage = MAKE_STATUS(kStatusGroup_SDMMC, 29U), /*!<  invaild voltage */
+        MAKE_STATUS(kStatusGroup_SDMMC, 28U), /*!< sdio send operation condition fail */
+    kStatus_SDMMC_InvalidVoltage           = MAKE_STATUS(kStatusGroup_SDMMC, 29U), /*!<  invaild voltage */
     kStatus_SDMMC_SDIO_SwitchHighSpeedFail = MAKE_STATUS(kStatusGroup_SDMMC, 30U), /*!<  switch to high speed fail */
-    kStatus_SDMMC_SDIO_ReadCISFail = MAKE_STATUS(kStatusGroup_SDMMC, 31U),         /*!<  read CIS fail */
-    kStatus_SDMMC_SDIO_InvalidCard = MAKE_STATUS(kStatusGroup_SDMMC, 32U),         /*!<  invaild SDIO card */
-    kStatus_SDMMC_TuningFail = MAKE_STATUS(kStatusGroup_SDMMC, 33U),               /*!<  tuning fail */
+    kStatus_SDMMC_SDIO_ReadCISFail         = MAKE_STATUS(kStatusGroup_SDMMC, 31U), /*!<  read CIS fail */
+    kStatus_SDMMC_SDIO_InvalidCard         = MAKE_STATUS(kStatusGroup_SDMMC, 32U), /*!<  invaild SDIO card */
+    kStatus_SDMMC_TuningFail               = MAKE_STATUS(kStatusGroup_SDMMC, 33U), /*!<  tuning fail */
 
-    kStatus_SDMMC_SwitchVoltageFail = MAKE_STATUS(kStatusGroup_SDMMC, 34U),              /*!< switch voltage fail*/
+    kStatus_SDMMC_SwitchVoltageFail              = MAKE_STATUS(kStatusGroup_SDMMC, 34U), /*!< switch voltage fail*/
     kStatus_SDMMC_SwitchVoltage18VFail33VSuccess = MAKE_STATUS(kStatusGroup_SDMMC, 35U), /*!< switch voltage fail*/
 
-    kStatus_SDMMC_ReTuningRequest = MAKE_STATUS(kStatusGroup_SDMMC, 36U),       /*!<  retuning request */
+    kStatus_SDMMC_ReTuningRequest       = MAKE_STATUS(kStatusGroup_SDMMC, 36U), /*!<  retuning request */
     kStatus_SDMMC_SetDriverStrengthFail = MAKE_STATUS(kStatusGroup_SDMMC, 37U), /*!<  set driver strength fail */
-    kStatus_SDMMC_SetPowerClassFail = MAKE_STATUS(kStatusGroup_SDMMC, 38U),     /*!<  set power class fail */
-    kStatus_SDMMC_HostNotReady = MAKE_STATUS(kStatusGroup_SDMMC, 39U),          /*!<  host controller not ready */
-    kStatus_SDMMC_CardDetectFailed = MAKE_STATUS(kStatusGroup_SDMMC, 40U),      /*!<  card detect failed */
-    kStatus_SDMMC_AuSizeNotSetProperly = MAKE_STATUS(kStatusGroup_SDMMC, 41U),  /*!<  AU size not set properly */
+    kStatus_SDMMC_SetPowerClassFail     = MAKE_STATUS(kStatusGroup_SDMMC, 38U), /*!<  set power class fail */
+    kStatus_SDMMC_HostNotReady          = MAKE_STATUS(kStatusGroup_SDMMC, 39U), /*!<  host controller not ready */
+    kStatus_SDMMC_CardDetectFailed      = MAKE_STATUS(kStatusGroup_SDMMC, 40U), /*!<  card detect failed */
+    kStatus_SDMMC_AuSizeNotSetProperly  = MAKE_STATUS(kStatusGroup_SDMMC, 41U), /*!<  AU size not set properly */
 
 };
 

@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -71,7 +71,8 @@ void BOARD_InitLcd(void)
     volatile uint32_t i = 0x100U;
 
     gpio_pin_config_t config = {
-        kGPIO_DigitalOutput, 0,
+        kGPIO_DigitalOutput,
+        0,
     };
 
     /* Reset the LCD. */
@@ -107,7 +108,10 @@ void BOARD_InitLcdifPixelClock(void)
      * Video PLL output clock is OSC24M * (loopDivider + (denominator / numerator)) / postDivider = 93MHz.
      */
     clock_video_pll_config_t config = {
-        .loopDivider = 31, .postDivider = 8, .numerator = 0, .denominator = 0,
+        .loopDivider = 31,
+        .postDivider = 8,
+        .numerator   = 0,
+        .denominator = 0,
     };
 
     CLOCK_InitVideoPll(&config);
@@ -139,7 +143,7 @@ static SLIDER_Handle hSlider1;
 static SPINBOX_Handle hSpinbox0;
 static PROGBAR_Handle hProgbar0;
 
-static const GUI_COLOR color_list[] = {GUI_BLACK,   GUI_YELLOW, GUI_ORANGE, GUI_RED,
+static const GUI_COLOR color_list[]      = {GUI_BLACK,   GUI_YELLOW, GUI_ORANGE, GUI_RED,
                                        GUI_MAGENTA, GUI_BLUE,   GUI_CYAN,   GUI_GREEN};
 static const GUI_POINT triangle_points[] = {
     {GUI_SCALE(0), GUI_SCALE(0)}, {GUI_SCALE(-50), GUI_SCALE(100)}, {GUI_SCALE(50), GUI_SCALE(100)}};
@@ -200,7 +204,7 @@ static void cbPageWin1(WM_MESSAGE *pMsg)
     switch (pMsg->MsgId)
     {
         case WM_NOTIFY_PARENT:
-            Id = WM_GetId(pMsg->hWinSrc);
+            Id    = WM_GetId(pMsg->hWinSrc);
             NCode = pMsg->Data.v;
 
             switch (Id)
@@ -248,7 +252,7 @@ static void cbPageWin2(WM_MESSAGE *pMsg)
     switch (pMsg->MsgId)
     {
         case WM_NOTIFY_PARENT:
-            Id = WM_GetId(pMsg->hWinSrc);
+            Id    = WM_GetId(pMsg->hWinSrc);
             NCode = pMsg->Data.v;
 
             switch (Id)
@@ -369,6 +373,10 @@ int main(void)
         PROGBAR_CreateEx(GUI_SCALE_RECT(60, 10, 200, 40), hPageWin, WM_CF_SHOW, PROGBAR_CF_HORIZONTAL, GUI_ID_PROGBAR0);
     PROGBAR_SetFont(hProgbar0, GUI_LARGE_FONT);
     PROGBAR_SetValue(hProgbar0, 50);
+    PROGBAR_SKINFLEX_PROPS pProps = {0};
+    PROGBAR_GetSkinFlexProps(&pProps, 0);
+    pProps.ColorText = GUI_BLACK;
+    PROGBAR_SetSkinFlexProps(&pProps, 0);
 
     WM_SetDesktopColor(GUI_WHITE);
     WM_Exec();

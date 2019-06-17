@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -19,7 +19,7 @@
 #define RX_MESSAGE_BUFFER_NUM (9)
 #define TX_MESSAGE_BUFFER_NUM (8)
 #define USE_CANFD (1)
-/* 
+/*
  *    DWORD_IN_MB    DLC    BYTES_IN_MB             Maximum MBs
  *    2              8      kFLEXCAN_8BperMB        32
  *    4              10     kFLEXCAN_16BperMB       21
@@ -160,6 +160,34 @@ int main(void)
 #endif
 #endif /* FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE */
     flexcanConfig.enableLoopBack = true;
+
+#if (defined(USE_IMPROVED_TIMING_CONFIG) && USE_IMPROVED_TIMING_CONFIG)
+    flexcan_timing_config_t timing_config;
+    memset(&timing_config, 0, sizeof(flexcan_timing_config_t));
+#if (defined(USE_CANFD) && USE_CANFD)
+    if (FLEXCAN_FDCalculateImprovedTimingValues(flexcanConfig.baudRate, flexcanConfig.baudRateFD, EXAMPLE_CAN_CLK_FREQ,
+                                                &timing_config))
+    {
+        /* Update the improved timing configuration*/
+        memcpy(&(flexcanConfig.timingConfig), &timing_config, sizeof(flexcan_timing_config_t));
+    }
+    else
+    {
+        PRINTF("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
+    }
+#else
+    if (FLEXCAN_CalculateImprovedTimingValues(flexcanConfig.baudRate, EXAMPLE_CAN_CLK_FREQ, &timing_config))
+    {
+        /* Update the improved timing configuration*/
+        memcpy(&(flexcanConfig.timingConfig), &timing_config, sizeof(flexcan_timing_config_t));
+    }
+    else
+    {
+        PRINTF("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
+    }
+#endif
+#endif
+
 #if (defined(USE_CANFD) && USE_CANFD)
     FLEXCAN_FDInit(EXAMPLE_CAN, &flexcanConfig, EXAMPLE_CAN_CLK_FREQ, BYTES_IN_MB, false);
 #else
@@ -168,8 +196,8 @@ int main(void)
 
     /* Setup Rx Message Buffer. */
     mbConfig.format = kFLEXCAN_FrameFormatStandard;
-    mbConfig.type = kFLEXCAN_FrameTypeData;
-    mbConfig.id = FLEXCAN_ID_STD(0x123);
+    mbConfig.type   = kFLEXCAN_FrameTypeData;
+    mbConfig.id     = FLEXCAN_ID_STD(0x123);
 #if (defined(USE_CANFD) && USE_CANFD)
     FLEXCAN_SetFDRxMbConfig(EXAMPLE_CAN, RX_MESSAGE_BUFFER_NUM, &mbConfig, true);
 #else
@@ -198,8 +226,8 @@ int main(void)
 
     /* Prepare Tx Frame for sending. */
     txFrame.format = kFLEXCAN_FrameFormatStandard;
-    txFrame.type = kFLEXCAN_FrameTypeData;
-    txFrame.id = FLEXCAN_ID_STD(0x123);
+    txFrame.type   = kFLEXCAN_FrameTypeData;
+    txFrame.id     = FLEXCAN_ID_STD(0x123);
     txFrame.length = DLC;
 #if (defined(USE_CANFD) && USE_CANFD)
     txFrame.brs = 1;

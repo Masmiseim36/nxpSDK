@@ -29,7 +29,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  Includes
 ///////////////////////////////////////////////////////////////////////////////
-
 /* SDK Included Files */
 #include "board.h"
 #include "fsl_debug_console.h"
@@ -39,17 +38,19 @@
 /* Amazon FreeRTOS Demo Includes */
 #include "FreeRTOS.h"
 #include "task.h"
-#include "aws_clientcredential.h"
 #include "aws_logging_task.h"
-#include "aws_wifi.h"
 #include "aws_system_init.h"
 #include "aws_dev_mode_key_provisioning.h"
 
+#include "aws_clientcredential.h"
+#include "aws_wifi.h"
 #include "clock_config.h"
-#include "wifi_shield_gt202.h"
+#include "wifi_shield.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define INIT_SUCCESS 0
+#define INIT_FAIL 1
 
 #define LOGGING_TASK_PRIORITY (tskIDLE_PRIORITY + 1)
 #define LOGGING_TASK_STACK_SIZE (200)
@@ -59,20 +60,63 @@
  * Prototypes
  ******************************************************************************/
 extern void vStartGreenGrassDiscoveryTask(void);
-static int prvWifiConnect(void);
+extern int initNetwork(void);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+const WIFINetworkParams_t pxNetworkParams = {
+    .pcSSID           = clientcredentialWIFI_SSID,
+    .ucSSIDLength     = sizeof(clientcredentialWIFI_SSID) - 1,
+    .pcPassword       = clientcredentialWIFI_PASSWORD,
+    .ucPasswordLength = sizeof(clientcredentialWIFI_PASSWORD) - 1,
+    .xSecurity        = clientcredentialWIFI_SECURITY,
+};
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
-const WIFINetworkParams_t pxNetworkParams = {
-    .pcSSID = clientcredentialWIFI_SSID,
-    .pcPassword = clientcredentialWIFI_PASSWORD,
-    .xSecurity = clientcredentialWIFI_SECURITY,
-};
+int initNetwork(void)
+{
+    WIFIReturnCode_t result;
+
+    configPRINTF(("Starting WiFi...\r\n"));
+
+    result = WIFI_On();
+    if (result != eWiFiSuccess)
+    {
+        configPRINTF(("Could not enable WiFi, reason %d.\r\n", result));
+        return INIT_FAIL;
+    }
+
+    configPRINTF(("WiFi module initialized.\r\n"));
+
+    result = WIFI_ConnectAP(&pxNetworkParams);
+    if (result != eWiFiSuccess)
+    {
+        configPRINTF(("Could not connect to WiFi, reason %d.\r\n", result));
+        return INIT_FAIL;
+    }
+
+    configPRINTF(("WiFi connected to AP %s.\r\n", pxNetworkParams.pcSSID));
+
+    uint8_t tmp_ip[4] = {0};
+    result            = WIFI_GetIP(tmp_ip);
+
+    if (result != eWiFiSuccess)
+    {
+        configPRINTF(("Could not get IP address, reason %d.\r\n", result));
+        return INIT_FAIL;
+    }
+
+    configPRINTF(("IP Address acquired %d.%d.%d.%d\r\n", tmp_ip[0], tmp_ip[1], tmp_ip[2], tmp_ip[3]));
+
+    return INIT_SUCCESS;
+}
+void print_string(const char *string)
+{
+    PRINTF(string);
+}
 
 void vApplicationDaemonTaskStartupHook(void)
 {
@@ -83,9 +127,9 @@ void vApplicationDaemonTaskStartupHook(void)
 
     if (SYSTEM_Init() == pdPASS)
     {
-        if (prvWifiConnect())
+        if (initNetwork() != 0)
         {
-            configPRINTF(("Failed to connect to wifi, stopping demo.\r\n"));
+            configPRINTF(("Network init failed, stopping demo.\r\n"));
             vTaskDelete(NULL);
         }
         else
@@ -114,44 +158,6 @@ int main(void)
     vTaskStartScheduler();
     for (;;)
         ;
-}
-
-static int prvWifiConnect(void)
-{
-    WIFIReturnCode_t result;
-
-    configPRINTF(("Starting WiFi...\r\n"));
-
-    result = WIFI_On();
-    if (result != eWiFiSuccess)
-    {
-        configPRINTF(("Could not enable WiFi, reason %d.\r\n", result));
-        return result;
-    }
-
-    configPRINTF(("WiFi module initialized.\r\n"));
-
-    result = WIFI_ConnectAP(&pxNetworkParams);
-    if (result != eWiFiSuccess)
-    {
-        configPRINTF(("Could not connect to WiFi, reason %d.\r\n", result));
-        return result;
-    }
-
-    configPRINTF(("WiFi connected to AP %s.\r\n", pxNetworkParams.pcSSID));
-
-    uint8_t tmp_ip[4] = {0};
-    result = WIFI_GetIP(tmp_ip);
-
-    if (result != eWiFiSuccess)
-    {
-        configPRINTF(("Could not get IP address, reason %d.\r\n", result));
-        return result;
-    }
-
-    configPRINTF(("IP Address acquired %d.%d.%d.%d\r\n", tmp_ip[0], tmp_ip[1], tmp_ip[2], tmp_ip[3]));
-
-    return result;
 }
 
 /* configUSE_STATIC_ALLOCATION is set to 1, so the application must provide an

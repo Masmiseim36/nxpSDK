@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -18,6 +18,9 @@
 #define EXAMPLE_CAN CAN2
 #define EXAMPLE_FLEXCAN_IRQn CAN2_IRQn
 #define EXAMPLE_FLEXCAN_IRQHandler CAN2_IRQHandler
+#define RX_MESSAGE_BUFFER_NUM (9)
+#define TX_MESSAGE_BUFFER_NUM (8)
+#define DLC (8)
 
 /* Select 80M clock divided by USB1 PLL (480 MHz) as master flexcan clock source */
 #define FLEXCAN_CLOCK_SOURCE_SELECT (2U)
@@ -25,9 +28,21 @@
 #define FLEXCAN_CLOCK_SOURCE_DIVIDER (3U)
 /* Get frequency of flexcan clock */
 #define EXAMPLE_CAN_CLK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 6) / (FLEXCAN_CLOCK_SOURCE_DIVIDER + 1U))
-#define RX_MESSAGE_BUFFER_NUM (8)
+#if (defined(FSL_FEATURE_FLEXCAN_HAS_ERRATA_5829) && FSL_FEATURE_FLEXCAN_HAS_ERRATA_5829)
+/* To consider the First valid MB must be used as Reserved TX MB for ERR005829
+   If RX FIFO enable(RFEN bit in MCE set as 1) and RFFN in CTRL2 is set default zero, the first valid TX MB Number is 8
+   If RX FIFO enable(RFEN bit in MCE set as 1) and RFFN in CTRL2 is set by other value(0x1~0xF), User should consider
+   detail first valid MB number
+   If RX FIFO disable(RFEN bit in MCE set as 0) , the first valid MB number is zero */
+#ifdef RX_MESSAGE_BUFFER_NUM
+#undef RX_MESSAGE_BUFFER_NUM
+#define RX_MESSAGE_BUFFER_NUM (10)
+#endif
+#ifdef TX_MESSAGE_BUFFER_NUM
+#undef TX_MESSAGE_BUFFER_NUM
 #define TX_MESSAGE_BUFFER_NUM (9)
-
+#endif
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -109,6 +124,34 @@ int main(void)
 #endif
 #endif /* FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE */
     flexcanConfig.enableLoopBack = true;
+
+#if (defined(USE_IMPROVED_TIMING_CONFIG) && USE_IMPROVED_TIMING_CONFIG)
+    flexcan_timing_config_t timing_config;
+    memset(&timing_config, 0, sizeof(flexcan_timing_config_t));
+#if (defined(USE_CANFD) && USE_CANFD)
+    if (FLEXCAN_FDCalculateImprovedTimingValues(flexcanConfig.baudRate, flexcanConfig.baudRateFD, EXAMPLE_CAN_CLK_FREQ,
+                                                &timing_config))
+    {
+        /* Update the improved timing configuration*/
+        memcpy(&(flexcanConfig.timingConfig), &timing_config, sizeof(flexcan_timing_config_t));
+    }
+    else
+    {
+        PRINTF("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
+    }
+#else
+    if (FLEXCAN_CalculateImprovedTimingValues(flexcanConfig.baudRate, EXAMPLE_CAN_CLK_FREQ, &timing_config))
+    {
+        /* Update the improved timing configuration*/
+        memcpy(&(flexcanConfig.timingConfig), &timing_config, sizeof(flexcan_timing_config_t));
+    }
+    else
+    {
+        PRINTF("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
+    }
+#endif
+#endif
+
 #if (defined(USE_CANFD) && USE_CANFD)
     FLEXCAN_FDInit(EXAMPLE_CAN, &flexcanConfig, EXAMPLE_CAN_CLK_FREQ, BYTES_IN_MB, true);
 #else
@@ -117,8 +160,8 @@ int main(void)
 
     /* Setup Rx Message Buffer. */
     mbConfig.format = kFLEXCAN_FrameFormatStandard;
-    mbConfig.type = kFLEXCAN_FrameTypeData;
-    mbConfig.id = FLEXCAN_ID_STD(0x123);
+    mbConfig.type   = kFLEXCAN_FrameTypeData;
+    mbConfig.id     = FLEXCAN_ID_STD(0x123);
 #if (defined(USE_CANFD) && USE_CANFD)
     FLEXCAN_SetFDRxMbConfig(EXAMPLE_CAN, RX_MESSAGE_BUFFER_NUM, &mbConfig, true);
 #else
@@ -138,13 +181,11 @@ int main(void)
 
     /* Prepare Tx Frame for sending. */
     txFrame.format = kFLEXCAN_FrameFormatStandard;
-    txFrame.type = kFLEXCAN_FrameTypeData;
-    txFrame.id = FLEXCAN_ID_STD(0x123);
-#if (defined(USE_CANFD) && USE_CANFD)
+    txFrame.type   = kFLEXCAN_FrameTypeData;
+    txFrame.id     = FLEXCAN_ID_STD(0x123);
     txFrame.length = DLC;
+#if (defined(USE_CANFD) && USE_CANFD)
     txFrame.brs = 1;
-#else
-    txFrame.length = 8;
 #endif
 #if (defined(USE_CANFD) && USE_CANFD)
     uint8_t i = 0;

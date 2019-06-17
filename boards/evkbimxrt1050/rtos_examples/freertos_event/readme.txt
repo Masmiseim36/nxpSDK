@@ -14,16 +14,14 @@ Both bits are set.z
 Bit B0 is set.
 Bit B1 is set.
 
-Running the demo
-================
-After the board is flashed the Tera Term will start printing the state of event bits.
 
-Example output:
-Bit B1 is set.
-Bit B0 is set.
-Bit B1 is set.
-Bit B0 is set.
-Bit B1 is set
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -45,11 +43,16 @@ Prepare the Demo
     - No flow control
 3.  Download the program to the target board.
 4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
+Running the demo
+================
+After the board is flashed the Tera Term will start printing the state of event bits.
 
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+Example output:
+Bit B1 is set.
+Bit B0 is set.
+Bit B1 is set.
+Bit B0 is set.
+Bit B1 is set
+Customization options
+=====================
 

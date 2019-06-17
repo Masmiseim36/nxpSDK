@@ -51,23 +51,33 @@
  */
 
 #if defined(__ICCARM__)
+/* IAR compiler */
 #   define PREPACK __packed
 #   define POSTPACK
 #   define FIELD_PACKED
 #   define PREWEAK_CODE __weak
 #   define POSTWEAK_CODE
 #elif defined(__GNUC__)
+/* GCC */
 #   define PREPACK
 #   define POSTPACK __attribute__ ((__packed__))
 #   define FIELD_PACKED
 #   define PREWEAK_CODE 
 #   define POSTWEAK_CODE __attribute__((weak))
 #elif defined(__CC_ARM)
+/* KEIL compiler v5 */
 #   define PREPACK __packed 
 #   define POSTPACK 
 #   define FIELD_PACKED
 #   define PREWEAK_CODE __weak
 #   define POSTWEAK_CODE
+#elif __ARMCC_VERSION
+/* KEIL compiler v6 */
+#   define PREPACK
+#   define POSTPACK __attribute__ ((__packed__))
+#   define FIELD_PACKED
+#   define PREWEAK_CODE 
+#   define POSTWEAK_CODE __attribute__((weak))
 #else
 #   error "Unsupported toolchain"
 #endif

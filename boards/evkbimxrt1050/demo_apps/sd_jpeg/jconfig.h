@@ -35,15 +35,25 @@
 static __INLINE size_t read_file(FIL *file, uint8_t *buf, uint32_t sizeofbuf)
 {
     static size_t BytesReadfile;
-    f_read(file, buf, sizeofbuf, &BytesReadfile);
-    return BytesReadfile;
+
+    if ((f_read(file, buf, sizeofbuf, &BytesReadfile) == FR_OK) && (BytesReadfile == sizeofbuf))
+    {
+        return BytesReadfile;
+    }
+
+    return 0;
 }
 
 static __INLINE size_t write_file(FIL *file, uint8_t *buf, uint32_t sizeofbuf)
 {
     static size_t BytesWritefile;
-    f_write(file, buf, sizeofbuf, &BytesWritefile);
-    return BytesWritefile;
+
+    if ((f_write(file, buf, sizeofbuf, &BytesWritefile) == FR_OK) && (BytesWritefile == sizeofbuf))
+    {
+        return BytesWritefile;
+    }
+
+    return 0;
 }
 
 #define JFREAD(file, buf, sizeofbuf) read_file(file, buf, sizeofbuf)

@@ -151,7 +151,7 @@ typedef struct _callback_message_t
 static void lpi2c_slave_callback(LPI2C_Type *base, lpi2c_slave_transfer_t *xfer, void *userData)
 {
     callback_message_t *cb_msg = (callback_message_t *)userData;
-    BaseType_t reschedule;
+    BaseType_t reschedule      = 0;
 
     switch (xfer->event)
     {
@@ -224,8 +224,12 @@ static void slave_task(void *pvParameters)
         PRINTF("Failed to create master task");
     }
 #endif
+
     /* Wait for transfer to finish */
-    xSemaphoreTake(cb_msg.sem, portMAX_DELAY);
+    if (xSemaphoreTake(cb_msg.sem, portMAX_DELAY) != pdTRUE)
+    {
+        PRINTF("Failed to take semaphore.\r\n");
+    }
 
 #if ((I2C_MASTER_SLAVE == isSLAVE) || (EXAMPLE_CONNECT_I2C == SINGLE_BOARD))
     if (cb_msg.async_status == kStatus_Success)

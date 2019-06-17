@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MIMXRT1064"/>
+    <definition extID="component.lpuart_adapter.MIMXRT1064"/>
+    <definition extID="component.serial_manager.MIMXRT1064"/>
+    <definition extID="component.serial_manager_uart.MIMXRT1064"/>
+    <definition extID="device.MIMXRT1064_CMSIS.MIMXRT1064"/>
+    <definition extID="device.MIMXRT1064_startup.MIMXRT1064"/>
+    <definition extID="driver.ft5406_rt.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos.freertos.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos.freertos.heap_3.MIMXRT1064"/>
+    <definition extID="middleware.littlevgl.MIMXRT1064"/>
+    <definition extID="platform.Include_common.MIMXRT1064"/>
+    <definition extID="platform.Include_core_cm7.MIMXRT1064"/>
+    <definition extID="platform.drivers.clock.MIMXRT1064"/>
+    <definition extID="platform.drivers.common.MIMXRT1064"/>
+    <definition extID="platform.drivers.elcdif.MIMXRT1064"/>
+    <definition extID="platform.drivers.igpio.MIMXRT1064"/>
+    <definition extID="platform.drivers.iomuxc.MIMXRT1064"/>
+    <definition extID="platform.drivers.lpi2c.MIMXRT1064"/>
+    <definition extID="platform.drivers.lpuart.MIMXRT1064"/>
+    <definition extID="platform.drivers.xip_board.MIMXRT1064"/>
+    <definition extID="platform.drivers.xip_device.MIMXRT1064"/>
+    <definition extID="platform.utilities.assert.MIMXRT1064"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1064"/>
+    <definition extID="utility.debug_console.MIMXRT1064"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="com.crt.advproject.config.exe.debug"/>
+    <definition extID="com.crt.advproject.config.exe.release"/>
+  </externalDefinitions>
+  <example id="evkmimxrt1064_littlevgl_terminal" name="littlevgl_terminal" category="littlevgl_examples" dependency="platform.drivers.elcdif.MIMXRT1064 platform.drivers.lpi2c.MIMXRT1064 driver.ft5406_rt.MIMXRT1064 middleware.amazon_freertos.freertos.MIMXRT1064 middleware.amazon_freertos.freertos.heap_3.MIMXRT1064 platform.drivers.common.MIMXRT1064 platform.drivers.clock.MIMXRT1064 middleware.littlevgl.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 utility.debug_console.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 component.serial_manager.MIMXRT1064 component.serial_manager_uart.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 component.lists.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 platform.utilities.assert.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.xip_board.MIMXRT1064 platform.Include_core_cm7.MIMXRT1064 platform.Include_common.MIMXRT1064 platform.utilities.misc_utilities.MIMXRT1064">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <memory>
+      <memoryBlock addr="70000000" size="00400000" access="RO" type="Flash" id="PROGRAM_FLASH_MIMXRT1064xxxxA" name="PROGRAM_FLASH"/>
+      <memoryBlock addr="80000000" size="01E00000" access="RW" type="RAM" id="BOARD_SDRAM_evkmimxrt1064" name="BOARD_SDRAM"/>
+      <memoryBlock addr="81E00000" size="00200000" access="RW" type="RAM" id="BOARD_SDRAM_NONCACHEABLE_evkmimxrt1064" name="BOARD_SDRAM_NONCACHEABLE"/>
+      <memoryBlock addr="20000000" size="00020000" access="RW" type="RAM" id="SRAM_DTC_MIMXRT1064xxxxA" name="SRAM_DTC"/>
+      <memoryBlock addr="00000000" size="00020000" access="RW" type="RAM" id="SRAM_ITC_MIMXRT1064xxxxA" name="SRAM_ITC"/>
+      <memoryBlock addr="20200000" size="000C0000" access="RW" type="RAM" id="SRAM_OC_MIMXRT1064xxxxA" name="SRAM_OC"/>
+    </memory>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>SKIP_SYSCLK_INIT</value>
+          <value>XIP_BOOT_HEADER_DCD_ENABLE=1</value>
+          <value>CPU_MIMXRT1064DVL6A</value>
+          <value>SDK_DEBUGCONSOLE=1</value>
+          <value>XIP_EXTERNAL_FLASH=1</value>
+          <value>XIP_BOOT_HEADER_ENABLE=1</value>
+          <value>LV_CONF_INCLUDE_SIMPLE=1</value>
+          <value>FSL_RTOS_FREE_RTOS</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
+          <value>&amp;Heap:Default;Default;0x4000&amp;Stack:Default;Default;Default</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=BOARD_SDRAM_NONCACHEABLE;type=.data</value>
+          <value>isd=*(NonCacheable);region=BOARD_SDRAM_NONCACHEABLE;type=.bss</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <debug_configurations>
+      <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+        <drivers>
+          <driver id_refs="PROGRAM_FLASH_MIMXRT1064xxxxA">
+            <driverBinary path="devices/MIMXRT1064/mcuxpresso" type="binary" target_path="binary">
+              <files mask="MIMXRT1064.cfx"/>
+            </driverBinary>
+          </driver>
+        </drivers>
+      </debug_configuration>
+    </debug_configurations>
+    <source path="boards/evkmimxrt1064/littlevgl_examples/littlevgl_terminal/iar" target_path="src" type="other" toolchain="iar">
+      <files mask="evkmimxrt1064.mac"/>
+    </source>
+    <source path="boards/evkmimxrt1064/littlevgl_examples/littlevgl_terminal/mdk" target_path="src" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt1064_ram.ini"/>
+    </source>
+    <source path="boards/evkmimxrt1064/littlevgl_examples/littlevgl_terminal" target_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/evkmimxrt1064/littlevgl_examples/littlevgl_terminal" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/evkmimxrt1064/littlevgl_examples/littlevgl_terminal" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/evkmimxrt1064/littlevgl_examples/littlevgl_terminal" target_path="source" type="c_include">
+      <files mask="FreeRTOSConfig.h"/>
+      <files mask="lv_conf.h"/>
+      <files mask="lv_ex_conf.h"/>
+    </source>
+    <source path="boards/evkmimxrt1064/littlevgl_examples/littlevgl_terminal" target_path="source" type="src">
+      <files mask="littlevgl_terminal.c"/>
+    </source>
+    <source path="boards/evkmimxrt1064/littlevgl_examples" target_path="board" type="c_include">
+      <files mask="littlevgl_support.h"/>
+    </source>
+    <source path="boards/evkmimxrt1064/littlevgl_examples" target_path="board" type="src">
+      <files mask="littlevgl_support.c"/>
+    </source>
+    <source path="middleware/littlevgl/lv_examples/terminal" target_path="littlevgl/lv_examples/terminal" type="c_include">
+      <files mask="terminal.h"/>
+    </source>
+    <source path="middleware/littlevgl/lv_examples/terminal" target_path="littlevgl/lv_examples/terminal" type="src">
+      <files mask="terminal.c"/>
+    </source>
+  </example>
+</ksdk:examples>

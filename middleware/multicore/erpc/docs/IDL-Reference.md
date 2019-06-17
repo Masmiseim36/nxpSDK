@@ -96,7 +96,7 @@ Annotation ``@name`` sets data type, function's param or structure's member name
 Generated files have a default-enabled generating _error checking code_ for catching errors from bad allocations. For disabling generating _errors checking code_ for bad allocation just add ``@no_alloc_errors``.
 
 ##### ``@no_const_param``
-When this annotation is set to program, then no "const" word are generated for functions parameters.
+When this annotation is set to program, then no "const" word are generated for functions parameters. This can be used also for function or parameter.
 
 ##### ``@no_infra_errors``
 Generated files have a default-enabled generating _error checking code_ for catching errors from codec functions. For disabling generating _errors checking code_ from codec, just add ``@no_infra_errors`` annotation.
@@ -190,6 +190,7 @@ Supported annotations are used _before a function declaration_.
 @external
 @id(number)
 @name(string)
+@no_const_param
 ```
 
 ### Functions parameters annotations
@@ -206,6 +207,7 @@ These are the built-in, atomic, scalar, complex types supported by ``erpcgen``. 
 ```
 @external
 @name(string)
+@no_const_param
 @shared
 ```
 
@@ -529,6 +531,7 @@ void callback1(int32_t a, int32_t b);
 ```
 #### Supported annotations
 ```
+@no_const_param
 @nullable
 ```
 

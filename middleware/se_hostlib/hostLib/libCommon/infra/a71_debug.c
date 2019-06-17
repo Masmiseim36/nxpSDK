@@ -23,7 +23,6 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <string.h>
-#include <assert.h>
 
 #include "scp.h"
 #include "sm_apdu.h"
@@ -44,7 +43,7 @@ U16 A71_DbgReset(void)
     apdu_t * pApdu = (apdu_t *) &apdu;
 
     pApdu->cla   = AX_CLA;
-    pApdu->ins   = A71CH_INS_ERASE_MODULE;
+    pApdu->ins   = A71XX_INS_ERASE_MODULE;
     pApdu->p1    = P1_RESET;
     pApdu->p2    = P2_RESET;
 
@@ -74,7 +73,7 @@ U16 A71_DbgDisableDebug(void)
     apdu_t * pApdu = (apdu_t *) &apdu;
 
     pApdu->cla   = AX_CLA;
-    pApdu->ins   = A71CH_INS_FREEZE_MODULE;
+    pApdu->ins   = A71XX_INS_FREEZE_MODULE;
     pApdu->p1    = P1_DISABLE_DEBUG;
     pApdu->p2    = P2_DISABLE_DEBUG;
 
@@ -103,8 +102,14 @@ static U16 DBG_GetFreeMem(U8 type, S16 *freeMem)
     U16 bufLen = sizeof(buf);
     U8 isOk;
 
+#ifndef A71_IGNORE_PARAM_CHECK
+    if (freeMem == NULL) {
+        return ERR_API_ERROR;
+    }
+#endif
+
     pApdu->cla   = AX_CLA;
-    pApdu->ins   = A71CH_INS_GET_MODULE;
+    pApdu->ins   = A71XX_INS_GET_MODULE;
     pApdu->p1    = type;
     pApdu->p2    = P2_FREE_MEMORY;
 
@@ -167,12 +172,14 @@ U16 A71_DbgReflect(U8 *sndBuf, U16 sndBufLen, U8 *rcvBuf, U16 *rcvBufLen)
     apdu_t * pApdu = (apdu_t *) &apdu;
     U8 isOk = 0x00;
 
-    assert(sndBuf != NULL);
-    assert(rcvBuf != NULL);
-    assert(rcvBufLen != NULL);
+#ifndef A71_IGNORE_PARAM_CHECK
+    if ((sndBuf == NULL) || (rcvBuf== NULL) || (rcvBufLen == NULL)) {
+        return ERR_API_ERROR;
+    }
+#endif
 
-    pApdu->cla   = A71CH_CLA;
-    pApdu->ins   = A71CH_INS_REFLECT;
+    pApdu->cla   = A71XX_CLA;
+    pApdu->ins   = A71XX_INS_REFLECT;
     pApdu->p1    = 0x00;
     pApdu->p2    = 0x00;
 

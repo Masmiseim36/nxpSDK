@@ -18,9 +18,9 @@ extern "C"
 {
 #endif
 
-
 static const char* TELEMETRY_MESSENGER_OPTION_EVENT_SEND_TIMEOUT_SECS = "telemetry_event_send_timeout_secs";
-static const char* TELEMETRY_MESSENGER_OPTION_SAVED_OPTIONS = "saved_telemetry_messenger_options";
+/*Static definition TELEMETRY_MESSENGER_OPTION_SAVED_OPTIONS moved to iothubtransport_amqp_telemetry_messenger.c to avoid "defined but not used" warning in ARM GCC. */
+//static const char* TELEMETRY_MESSENGER_OPTION_SAVED_OPTIONS = "saved_telemetry_messenger_options"; 
 
 typedef struct TELEMETRY_MESSENGER_INSTANCE* TELEMETRY_MESSENGER_HANDLE;
 

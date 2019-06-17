@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018, NXP
+ * Copyright 2017-2018, NXP
  * All rights reserved.
  *
  *
@@ -93,6 +93,9 @@ typedef struct _srtm_audio_iface
     uint32_t useCount;
 } * srtm_audio_iface_t;
 
+srtm_audio_format_map_t saiFormatMap[6] = {{SRTM_Audio_Stereo16Bits, 16U}, {SRTM_Audio_Stereo24Bits, 24U},
+                                           {SRTM_Audio_Stereo32Bits, 32U}, {SRTM_Audio_DSD8bits, 8U},
+                                           {SRTM_Audio_DSD16bits, 16U},    {SRTM_Audio_DSD32bits, 32U}};
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/

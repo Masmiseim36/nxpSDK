@@ -1202,7 +1202,8 @@ static void prvSOCKETS_NonBlocking_Test( Server_t xConn )
             }
 
             xEndTime = xTaskGetTickCount();
-        } while( ( ( xEndTime - xStartTime ) < xWaitTime ) && ( xMessageLength > xNumBytesReceived ) );
+        }
+        while( ( ( xEndTime - xStartTime ) < xWaitTime ) && ( xMessageLength > xNumBytesReceived ) );
 
         TEST_ASSERT_EQUAL_INT32_MESSAGE( xMessageLength, xNumBytesReceived, "Data was not received \r\n" );
 
@@ -1540,7 +1541,7 @@ static void prvTestSOCKETS_Recv_ByteByByte( Server_t xConn )
     }
 
     /* Close this socket before looping back to create another. */
-    TEST_ASSERT_EQUAL_INT32_MESSAGE( pdPASS, xResult, "Failed received\r\n" );
+    TEST_ASSERT_EQUAL_INT32_MESSAGE( pdPASS, xResult, "Failed received" );
     xResult = prvShutdownHelper( xSocket );
     TEST_ASSERT_EQUAL_INT32_MESSAGE( SOCKETS_ERROR_NONE, xResult, "Socket failed to shutdown" );
 
@@ -1644,7 +1645,7 @@ TEST( Full_TCP, AFQP_SECURE_SOCKETS_SendRecv_VaryLength )
     prvSOCKETS_SendRecv_VaryLength( eSecure );
 }
 
-/*/ *-----------------------------------------------------------* / */
+/*-----------------------------------------------------------*/
 
 static void prvSOCKETS_Socket_InvalidInputParams( Server_t xConn )
 {
@@ -1893,6 +1894,9 @@ static void prvConnect_InvalidAddressLength( Server_t xConn,
 
     if( TEST_PROTECT() )
     {
+        xEchoServerAddress.ucLength = ( uint8_t ) ulAddressLength;
+        xEchoServerAddress.ucSocketDomain = ( uint8_t ) SOCKETS_AF_INET;
+
         if( xConn == eNonsecure )
         {
             /* Populate the non-secure echo server address. */
@@ -1955,8 +1959,8 @@ TEST( Full_TCP, AFQP_SOCKETS_Connect_InvalidAddressLength )
     /* AddressLength 0. */
     prvConnect_InvalidAddressLength( eNonsecure, 0 );
 
-    /* AddressLength 1000. */
-    prvConnect_InvalidAddressLength( eNonsecure, 1000 );
+    /* AddressLength 100. */
+    prvConnect_InvalidAddressLength( eNonsecure, 100 );
 
     tcptestPRINTF( ( "%s complete.\r\n", __FUNCTION__ ) );
 }
@@ -1969,8 +1973,8 @@ TEST( Full_TCP, AFQP_SECURE_SOCKETS_Connect_InvalidAddressLength )
     /* AddressLength 0. */
     prvConnect_InvalidAddressLength( eSecure, 0 );
 
-    /* AddressLength 1000. */
-    prvConnect_InvalidAddressLength( eSecure, 1000 );
+    /* AddressLength 100. */
+    prvConnect_InvalidAddressLength( eSecure, 100 );
 
     tcptestPRINTF( ( "%s complete.\r\n", __FUNCTION__ ) );
 }

@@ -3,7 +3,7 @@ Overview
 CMSIS-Driver defines generic peripheral driver interfaces for middleware making it reusable across a wide 
 range of supported microcontroller devices. The API connects microcontroller peripherals with middleware 
 that implements for example communication stacks, file systems, or graphic user interfaces. 
-More information and usage methord please refer to http://www.keil.com/pack/doc/cmsis/Driver/html/index.html.
+More information and usage method please refer to http://www.keil.com/pack/doc/cmsis/Driver/html/index.html.
 
 The cmsis_uart_interrupt_transfer example shows how to use uart cmsis driver in interrupt way:
 
@@ -14,10 +14,10 @@ Note: The example echo every 8 characters, so input 8 characters every time.
 
 Toolchain supported
 ===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.1
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
 
 Hardware requirements
 =====================

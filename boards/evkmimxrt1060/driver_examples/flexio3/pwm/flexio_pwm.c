@@ -2,7 +2,7 @@
  * Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -50,8 +50,8 @@ static void flexio_pwm_init(uint32_t freq_Hz, uint32_t duty);
 static void flexio_pwm_start(void);
 
 /*******************************************************************************
-* Variables
-*******************************************************************************/
+ * Variables
+ *******************************************************************************/
 
 /*******************************************************************************
  * Code
@@ -62,7 +62,7 @@ static void flexio_pwm_init(uint32_t freq_Hz, uint32_t duty)
 
     uint32_t lowerValue = 0; /* Number of clock cycles in high logic state in one period */
     uint32_t upperValue = 0; /* Number of clock cycles in low logic state in one period */
-    uint32_t sum = 0;        /* Number of clock cycles in one period */
+    uint32_t sum        = 0; /* Number of clock cycles in one period */
     flexio_timer_config_t fxioTimerConfig;
 
     /* Check parameter */
@@ -72,20 +72,20 @@ static void flexio_pwm_init(uint32_t freq_Hz, uint32_t duty)
     }
 
     /* Configure the timer DEMO_FLEXIO_TIMER_CH for generating PWM */
-    fxioTimerConfig.triggerSelect = FLEXIO_TIMER_TRIGGER_SEL_SHIFTnSTAT(0U);
-    fxioTimerConfig.triggerSource = kFLEXIO_TimerTriggerSourceInternal;
+    fxioTimerConfig.triggerSelect   = FLEXIO_TIMER_TRIGGER_SEL_SHIFTnSTAT(0U);
+    fxioTimerConfig.triggerSource   = kFLEXIO_TimerTriggerSourceInternal;
     fxioTimerConfig.triggerPolarity = kFLEXIO_TimerTriggerPolarityActiveLow;
-    fxioTimerConfig.pinConfig = kFLEXIO_PinConfigOutput;
-    fxioTimerConfig.pinPolarity = kFLEXIO_PinActiveHigh;
-    fxioTimerConfig.pinSelect = DEMO_FLEXIO_OUTPUTPIN; /* Set pwm output */
-    fxioTimerConfig.timerMode = kFLEXIO_TimerModeDisabled;
-    fxioTimerConfig.timerOutput = kFLEXIO_TimerOutputOneNotAffectedByReset;
-    fxioTimerConfig.timerDecrement = kFLEXIO_TimerDecSrcOnFlexIOClockShiftTimerOutput;
-    fxioTimerConfig.timerDisable = kFLEXIO_TimerDisableNever;
-    fxioTimerConfig.timerEnable = kFLEXIO_TimerEnabledAlways;
-    fxioTimerConfig.timerReset = kFLEXIO_TimerResetNever;
-    fxioTimerConfig.timerStart = kFLEXIO_TimerStartBitDisabled;
-    fxioTimerConfig.timerStop = kFLEXIO_TimerStopBitDisabled;
+    fxioTimerConfig.pinConfig       = kFLEXIO_PinConfigOutput;
+    fxioTimerConfig.pinPolarity     = kFLEXIO_PinActiveHigh;
+    fxioTimerConfig.pinSelect       = DEMO_FLEXIO_OUTPUTPIN; /* Set pwm output */
+    fxioTimerConfig.timerMode       = kFLEXIO_TimerModeDisabled;
+    fxioTimerConfig.timerOutput     = kFLEXIO_TimerOutputOneNotAffectedByReset;
+    fxioTimerConfig.timerDecrement  = kFLEXIO_TimerDecSrcOnFlexIOClockShiftTimerOutput;
+    fxioTimerConfig.timerDisable    = kFLEXIO_TimerDisableNever;
+    fxioTimerConfig.timerEnable     = kFLEXIO_TimerEnabledAlways;
+    fxioTimerConfig.timerReset      = kFLEXIO_TimerResetNever;
+    fxioTimerConfig.timerStart      = kFLEXIO_TimerStartBitDisabled;
+    fxioTimerConfig.timerStop       = kFLEXIO_TimerStopBitDisabled;
 
     /* Calculate timer lower and upper values of TIMCMP */
     /* Calculate the nearest integer value for sum, using formula round(x) = (2 * floor(x) + 1) / 2 */
@@ -95,7 +95,7 @@ static void flexio_pwm_init(uint32_t freq_Hz, uint32_t duty)
     /* lowerValue = sum * duty / 100 */
     lowerValue = (sum * duty / 50 + 1) / 2;
     /* Calculate upper value, the low period of the pwm output */
-    upperValue = sum - lowerValue;
+    upperValue                   = sum - lowerValue;
     fxioTimerConfig.timerCompare = ((upperValue - 1) << 8U) | (lowerValue - 1);
 
     FLEXIO_SetTimerConfig(DEMO_FLEXIO_BASEADDR, DEMO_FLEXIO_TIMER_CH, &fxioTimerConfig);

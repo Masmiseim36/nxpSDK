@@ -37,7 +37,7 @@
 // connect timeout in seconds
 #define CONNECT_TIMEOUT         10
 
-#if !defined(_SYS_SIGNAL_H)
+#if !defined(_SYS_SIGNAL_H)&&!defined( __ICCARM__ )
 typedef int32_t ssize_t;
 #endif //_SYS_SIGNAL_H
 
@@ -49,12 +49,6 @@ typedef enum IO_STATE_TAG
     IO_STATE_CLOSING,
     IO_STATE_ERROR
 } IO_STATE;
-
-typedef enum ADDRESS_TYPE_TAG
-{
-    ADDRESS_TYPE_IP,
-    ADDRESS_TYPE_DOMAIN_SOCKET
-} ADDRESS_TYPE;
 
 typedef struct PENDING_SOCKET_IO_TAG
 {
@@ -68,7 +62,7 @@ typedef struct PENDING_SOCKET_IO_TAG
 typedef struct SOCKET_IO_INSTANCE_TAG
 {
     int socket;
-    ADDRESS_TYPE address_type;
+    SOCKETIO_ADDRESS_TYPE address_type;
     ON_BYTES_RECEIVED on_bytes_received;
     ON_IO_ERROR on_io_error;
     void* on_bytes_received_context;
@@ -186,6 +180,7 @@ static const IO_INTERFACE_DESCRIPTION socket_io_interface_description =
 
 static void indicate_error(SOCKET_IO_INSTANCE* socket_io_instance)
 {
+    socket_io_instance->io_state = IO_STATE_ERROR;
     if (socket_io_instance->on_io_error != NULL)
     {
         socket_io_instance->on_io_error(socket_io_instance->on_io_error_context);
@@ -233,13 +228,14 @@ static int add_pending_io(SOCKET_IO_INSTANCE* socket_io_instance, const unsigned
     return result;
 }
 
+
 static int lookup_address_and_initiate_socket_connection(SOCKET_IO_INSTANCE* socket_io_instance)
 {
-    int result;
+    int result = __FAILURE__;
     int err;
 
     struct addrinfo addrInfoHintIp;
-    struct sockaddr* connect_addr;
+    struct sockaddr* connect_addr = NULL;
     socklen_t connect_addr_len;
     struct addrinfo* addrInfoIp = NULL;
 
@@ -682,7 +678,6 @@ void socketio_dowork(CONCRETE_IO_HANDLE socket_io)
                         (void)singlylinkedlist_remove(socket_io_instance->pending_io_list, first_pending_io);
 
                         LogError("Failure: sending Socket information. errno=%d (%s).", errno, strerror(errno));
-                        socket_io_instance->io_state = IO_STATE_ERROR;
                         indicate_error(socket_io_instance);
                     }
                 }
@@ -705,7 +700,6 @@ void socketio_dowork(CONCRETE_IO_HANDLE socket_io)
                 free(pending_socket_io);
                 if (singlylinkedlist_remove(socket_io_instance->pending_io_list, first_pending_io) != 0)
                 {
-                    socket_io_instance->io_state = IO_STATE_ERROR;
                     indicate_error(socket_io_instance);
                     LogError("Failure: unable to remove socket from list");
                 }

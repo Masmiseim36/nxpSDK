@@ -4,6 +4,14 @@ The CSI CCIR656 project shows how to receive the camera data using CSI driver,
 the camera interface is CCIR656. In this example, you will see the camera input
 image shown in the LCD. Please note that the camera input image resolution
 might be smaller than the LCD panel, so part of the LCD panel might be blank.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -36,11 +44,6 @@ csi_ccir656.c.
 Running the demo
 ================
 When the demo runs successfully, the camera received pictures are shown in the LCD.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+Customization options
+=====================
 

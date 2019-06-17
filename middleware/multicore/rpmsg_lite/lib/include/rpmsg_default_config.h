@@ -2,7 +2,7 @@
  * Copyright (c) 2014, Mentor Graphics Corporation
  * Copyright (c) 2015 Xilinx, Inc.
  * Copyright (c) 2016 Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -60,7 +60,7 @@
 //!
 //! Size of the buffer payload, it must be equal to (240, 496, 1008, ...) 
 //! [2^n - 16].
-//! The default value is 495.
+//! The default value is 496.
 #ifndef RL_BUFFER_PAYLOAD_SIZE
 #define RL_BUFFER_PAYLOAD_SIZE (496)
 #endif
@@ -108,6 +108,37 @@
 #define RL_USE_MCMGR_IPC_ISR_HANDLER (0)
 #endif
 
+//! @def RL_USE_ENVIRONMENT_CONTEXT
+//!
+//! When enabled the environment layer uses its own context.
+//! Added for QNX port mainly, but can be used if required.
+//! The default value is 0 (no context, saves some RAM).
+#ifndef RL_USE_ENVIRONMENT_CONTEXT
+#define RL_USE_ENVIRONMENT_CONTEXT (0)
+#endif
+
+
+//! @def RL_DEBUG_CHECK_BUFFERS
+//!
+//! Do not use in RPMsg-Lite to Linux configuration
+#ifndef RL_DEBUG_CHECK_BUFFERS
+#define RL_DEBUG_CHECK_BUFFERS (0)
+#endif
+
+
+
+//! @def RL_HANG
+//!
+//! Default implementation of hang assert function
+ static inline void RL_HANG(void)
+ {
+     while(1)
+     {
+
+     }
+ }
+
+
 //! @def RL_ASSERT
 //!
 //! Assert implementation.
@@ -116,10 +147,15 @@
     do                \
     {                 \
         if (!(b))       \
-            while (1) \
-                ;     \
+        { \
+            RL_HANG(); \
+        } \
     } while (0);
 #define RL_ASSERT(x) RL_ASSERT_BOOL((x)!=0)
+
+
+
+
 #endif
 //@}
 

@@ -6,6 +6,25 @@ application periodically sends the ICMP echo request to a PC, and processes the 
 in the PC command window to send an ICMP echo request to the board. The lwIP stack sends the ICMP echo reply back to the
 PC.
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
+Hardware requirements
+=====================
+- Mini/micro USB cable
+- Network cable RJ45 standard
+- EVK-MIMXRT1060 board
+- Personal Computer
+
+Board settings
+==============
+No special settings are required.
+
 Prepare the Demo
 ================
 1.  Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.
@@ -57,22 +76,6 @@ When the demo runs, the log would be seen on the terminal like:
 	192.168.0.100
 	 3 ms
 
-Hardware requirements
+Customization options
 =====================
-- Mini/micro USB cable
-- Network cable RJ45 standard
-- EVK-MIMXRT1060 board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
 

@@ -308,6 +308,8 @@ status_t LPSPI_MasterTransferEDMA(LPSPI_Type *base, lpspi_master_edma_handle_t *
         }
     }
 
+    LPSPI_Enable(base, true);
+
     /*Flush FIFO , clear status , disable all the inerrupts.*/
     LPSPI_FlushFifo(base, true, true);
     LPSPI_ClearStatusFlags(base, kLPSPI_AllStatusFlag);
@@ -573,7 +575,6 @@ status_t LPSPI_MasterTransferEDMA(LPSPI_Type *base, lpspi_master_edma_handle_t *
     EDMA_StartTransfer(handle->edmaRxRegToRxDataHandle);
 
     LPSPI_EnableDMA(base, kLPSPI_RxDmaEnable | kLPSPI_TxDmaEnable);
-    LPSPI_Enable(base, true);
 
     return kStatus_Success;
 }
@@ -830,6 +831,8 @@ status_t LPSPI_SlaveTransferEDMA(LPSPI_Type *base, lpspi_slave_edma_handle_t *ha
         }
     }
 
+    LPSPI_Enable(base, true);
+
     /*Flush FIFO , clear status , disable all the inerrupts.*/
     LPSPI_FlushFifo(base, true, true);
     LPSPI_ClearStatusFlags(base, kLPSPI_AllStatusFlag);
@@ -1065,7 +1068,6 @@ status_t LPSPI_SlaveTransferEDMA(LPSPI_Type *base, lpspi_slave_edma_handle_t *ha
     EDMA_StartTransfer(handle->edmaRxRegToRxDataHandle);
 
     LPSPI_EnableDMA(base, kLPSPI_RxDmaEnable | kLPSPI_TxDmaEnable);
-    LPSPI_Enable(base, true);
 
     return kStatus_Success;
 }

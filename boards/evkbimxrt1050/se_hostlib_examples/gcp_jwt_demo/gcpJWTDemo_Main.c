@@ -199,9 +199,9 @@ void gcp_jwt_task(void * ctx) {
     /* Connect to A71CH */
     uint16_t connectStatus;
     SmCommState_t commState;
-    U8 Atr[64];
+    U8 Atr[64] = {0};
     U16 AtrLen = sizeof(Atr);
-    U8 AxUID[A71CH_MODULE_UNIQUE_ID_LEN];
+    U8 AxUID[A71CH_MODULE_UNIQUE_ID_LEN] = {0};
     U16 AxUIDLen = A71CH_MODULE_UNIQUE_ID_LEN;
     unsigned long utc_epoch;
 

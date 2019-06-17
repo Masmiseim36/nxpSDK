@@ -141,14 +141,6 @@ static status_t Sensor_I2C_SendFunc(
 static status_t Sensor_I2C_ReceiveFunc(
     uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, uint8_t *rxBuff, uint8_t rxBuffSize);
 
-/* Send data to Codec device on I2C Bus. */
-static status_t Codec_I2C_SendFunc(
-    uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, const uint8_t *txBuff, uint8_t txBuffSize);
-
-/* Receive data from Codec device on I2C Bus. */
-static status_t Codec_I2C_ReceiveFunc(
-    uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, uint8_t *rxBuff, uint8_t rxBuffSize);
-
 static srtm_status_t APP_SRTM_Sensor_EnableStateDetector(srtm_sensor_adapter_t adapter,
                                                          srtm_sensor_type_t type,
                                                          uint8_t index,
@@ -214,11 +206,10 @@ static const srtm_io_event_t llwuPinModeEvents[] = {
     SRTM_IoEventEitherEdge   /* kLLWU_ExternalPinAnyEdge */
 };
 
-static codec_config_t codecConfig = {.I2C_SendFunc    = Codec_I2C_SendFunc,
-                                     .I2C_ReceiveFunc = Codec_I2C_ReceiveFunc,
-                                     .op.Init         = WM8960_Init,
-                                     .op.Deinit       = WM8960_Deinit,
-                                     .op.SetFormat    = WM8960_ConfigDataFormat};
+wm8960_config_t wm8960Config;
+codec_config_t boardCodecConfig              = {.codecDevType = kCODEC_WM8960};
+uint8_t codecHandleBuffer[CODEC_HANDLE_SIZE] = {0U};
+codec_handle_t *codecHandle                  = (codec_handle_t *)codecHandleBuffer;
 
 static struct _srtm_sensor_adapter sensorAdapter = {.enableStateDetector = APP_SRTM_Sensor_EnableStateDetector,
                                                     .enableDataReport    = APP_SRTM_Sensor_EnableDataReport,
@@ -229,9 +220,7 @@ static lpi2c_rtos_handle_t lpi2c3Handle;
 static bool lpi2c0Init, lpi2c3Init;
 static lpi2c_rtos_handle_t *pmicI2cHandle;
 static lpi2c_rtos_handle_t *sensorI2cHandle;
-static lpi2c_rtos_handle_t *codecI2cHandle;
 static pf1550_handle_t pf1550Handle;
-static codec_handle_t wm8960Handle;
 static srtm_dispatcher_t disp;
 static srtm_peercore_t core;
 static srtm_service_t audioService;
@@ -297,12 +286,13 @@ static void APP_SRTM_WakeupCA7InIRQ(void)
 
 static void APP_SRTM_ConfigUSBWakeup(bool enable)
 {
-    if (enable && (SIM->GPR1 & 1U))
+    if (enable && (SIM->GPR1 & SIM_GPR1_USB_PHY_WAKEUP_ISO_DISABLE_MASK))
     {
         if (!NVIC_GetEnableIRQ(USBPHY_IRQn))
         {
             PRINTF("enable USB wakeup\r\n");
-            APP_UpdateSimDgo(11, (1U << 12), (1U << 12));
+            APP_UpdateSimDgo(11, SIM_SIM_DGO_GP11_USB_PHY_VLLS_WAKEUP_EN_MASK,
+                             SIM_SIM_DGO_GP11_USB_PHY_VLLS_WAKEUP_EN_MASK);
             LLWU_EnableInternalModuleInterruptWakup(LLWU, LLWU_MODULE_USBPHY, true);
             EnableIRQ(USBPHY_IRQn);
         }
@@ -312,7 +302,7 @@ static void APP_SRTM_ConfigUSBWakeup(bool enable)
         if (NVIC_GetEnableIRQ(USBPHY_IRQn))
         {
             PRINTF("disable USB wakeup\r\n");
-            APP_UpdateSimDgo(11, (1U << 12), 0);
+            APP_UpdateSimDgo(11, SIM_SIM_DGO_GP11_USB_PHY_VLLS_WAKEUP_EN_MASK, 0);
             LLWU_EnableInternalModuleInterruptWakup(LLWU, LLWU_MODULE_USBPHY, false);
             NVIC_ClearPendingIRQ(LLWU0_IRQn);
             DisableIRQ(USBPHY_IRQn);
@@ -826,20 +816,6 @@ static status_t Sensor_I2C_ReceiveFunc(
     return I2C_ReceiveFunc(sensorI2cHandle, deviceAddress, subAddress, subAddressSize, rxBuff, rxBuffSize);
 }
 
-static status_t Codec_I2C_SendFunc(
-    uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, const uint8_t *txBuff, uint8_t txBuffSize)
-{
-    /* Calling I2C Transfer API to start send. */
-    return I2C_SendFunc(codecI2cHandle, deviceAddress, subAddress, subAddressSize, txBuff, txBuffSize);
-}
-
-static status_t Codec_I2C_ReceiveFunc(
-    uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, uint8_t *rxBuff, uint8_t rxBuffSize)
-{
-    /* Calling I2C Transfer API to start receive. */
-    return I2C_ReceiveFunc(codecI2cHandle, deviceAddress, subAddress, subAddressSize, rxBuff, rxBuffSize);
-}
-
 static void APP_SRTM_PollSensor(srtm_dispatcher_t dispatcher, void *param1, void *param2)
 {
     FXOS8700_DR_STATUS_t drStatus;
@@ -1117,7 +1093,7 @@ static void APP_PowerOffCA7(bool suspendMode)
         PF1550_EnableRegulator(&pf1550Handle, kPF1550_ModuleVrefDdr, kPF1550_OperatingStatusRun, false);
         PF1550_EnableRegulator(&pf1550Handle, kPF1550_ModuleSwitch2, kPF1550_OperatingStatusRun, false);
     }
-    else if ((SIM->GPR1 & 1U) == 0) /* USB wakeup is not needed */
+    else if ((SIM->GPR1 & SIM_GPR1_USB_PHY_WAKEUP_ISO_DISABLE_MASK) == 0) /* USB wakeup is not needed */
     {
         PF1550_EnableRegulator(&pf1550Handle, kPF1550_ModuleSwitch1, kPF1550_OperatingStatusRun, false);
     }
@@ -1717,7 +1693,6 @@ static void APP_SRTM_InitCodecDevice(void)
         APP_SRTM_InitI2C(&lpi2c0Handle, LPI2C0, APP_LPI2C0_BAUDRATE, CLOCK_GetIpFreq(kCLOCK_Lpi2c0));
         lpi2c0Init = true;
     }
-    codecI2cHandle = &lpi2c0Handle;
 }
 
 static void APP_SRTM_DeinitCodecDevice(void)
@@ -1727,7 +1702,6 @@ static void APP_SRTM_DeinitCodecDevice(void)
         APP_SRTM_DeinitI2C(&lpi2c0Handle);
         lpi2c0Init = false;
     }
-    codecI2cHandle = NULL;
 }
 
 static void APP_SRTM_InitAudioDevice(void)
@@ -1755,7 +1729,7 @@ static status_t APP_SRTM_ReadCodecRegMap(void *handle, uint32_t reg, uint32_t *v
 
 static status_t APP_SRTM_WriteCodecRegMap(void *handle, uint32_t reg, uint32_t val)
 {
-    return WM8960_WriteReg((codec_handle_t *)handle, reg, val);
+    return WM8960_WriteReg((wm8960_handle_t *)((uint32_t) & (((codec_handle_t *)handle)->codecDevHandle)), reg, val);
 }
 
 static void APP_SRTM_InitAudioService(void)
@@ -1763,7 +1737,6 @@ static void APP_SRTM_InitAudioService(void)
     srtm_sai_edma_config_t saiTxConfig;
     srtm_sai_edma_config_t saiRxConfig;
     srtm_i2c_codec_config_t i2cCodecConfig;
-    wm8960_config_t wm8960Config;
     srtm_codec_adapter_t codecAdapter;
     srtm_sai_adapter_t saiAdapter;
 
@@ -1801,15 +1774,22 @@ static void APP_SRTM_InitAudioService(void)
 
     /*  Set LPI2C Master IRQ Priority. */
     NVIC_SetPriority(LPI2C0_IRQn, APP_LPI2C0_IRQ_PRIO);
+
+    wm8960Config.i2cConfig.codecI2CInstance    = 0;
+    wm8960Config.i2cConfig.codecI2CSourceClock = CLOCK_GetIpFreq(kCLOCK_Lpi2c0);
+    wm8960Config.route                         = kWM8960_RoutePlaybackandRecord;
+    wm8960Config.leftInputSource               = kWM8960_InputDifferentialMicInput3;
+    wm8960Config.rightInputSource              = kWM8960_InputClosed;
+    wm8960Config.playSource                    = kWM8960_PlaySourceDAC;
+    wm8960Config.slaveAddress                  = WM8960_I2C_ADDR;
+    wm8960Config.bus                           = kWM8960_BusI2S;
+    wm8960Config.format.mclk_HZ                = 6144000U;
+    wm8960Config.format.sampleRate             = kWM8960_AudioSampleRate16KHz;
+    wm8960Config.format.bitWidth               = kWM8960_AudioBitWidth16bit;
+    wm8960Config.master_slave                  = false;
+    boardCodecConfig.codecDevConfig            = &wm8960Config;
     /* Initialize WM8960 codec */
-    wm8960Config.route            = kWM8960_RoutePlaybackandRecord;
-    wm8960Config.bus              = kWM8960_BusI2S;
-    wm8960Config.master_slave     = false; /* Slave */
-    wm8960Config.enableSpeaker    = false;
-    wm8960Config.leftInputSource  = kWM8960_InputDifferentialMicInput3;
-    wm8960Config.rightInputSource = kWM8960_InputClosed;
-    codecConfig.codecConfig       = &wm8960Config;
-    CODEC_Init(&wm8960Handle, &codecConfig);
+    CODEC_Init(codecHandle, &boardCodecConfig);
 
     /* Create I2C Codec adaptor */
     i2cCodecConfig.mclk        = saiTxConfig.mclk;
@@ -1817,7 +1797,7 @@ static void APP_SRTM_InitAudioService(void)
     i2cCodecConfig.regWidth    = kCODEC_RegWidth8Bit;
     i2cCodecConfig.writeRegMap = APP_SRTM_WriteCodecRegMap;
     i2cCodecConfig.readRegMap  = APP_SRTM_ReadCodecRegMap;
-    codecAdapter               = SRTM_I2CCodecAdapter_Create(&wm8960Handle, &i2cCodecConfig);
+    codecAdapter               = SRTM_I2CCodecAdapter_Create(codecHandle, &i2cCodecConfig);
     assert(codecAdapter);
 
     /* Create and register audio service */

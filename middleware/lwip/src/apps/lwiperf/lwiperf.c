@@ -819,21 +819,16 @@ void* lwiperf_start_tcp_client(const ip_addr_t* remote_addr, u16_t remote_port,
 void
 lwiperf_abort(void *lwiperf_session)
 {
-  lwiperf_state_base_t *i, *dealloc, *last = NULL;
+  lwiperf_state_base_t *i, *next;
 
   LWIP_ASSERT_CORE_LOCKED();
 
-  for (i = lwiperf_all_connections; i != NULL; ) {
+  for (i = lwiperf_all_connections; i != NULL; i = next) {
+    next = i->next; /* keep pointer to next item so that we could eventually free i */
     if ((i == lwiperf_session) || (i->related_master_state == lwiperf_session)) {
-      dealloc = i;
-      i = i->next;
-      if (last != NULL) {
-        last->next = i;
+      if (i->tcp) {
+        lwiperf_tcp_close((lwiperf_state_tcp_t *)i, LWIPERF_TCP_ABORTED_LOCAL);
       }
-      LWIPERF_FREE(lwiperf_state_tcp_t, dealloc); /* @todo: type? */
-    } else {
-      last = i;
-      i = i->next;
     }
   }
 }

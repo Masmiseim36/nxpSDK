@@ -60,7 +60,7 @@ LOCK_RESULT Lock(LOCK_HANDLE handle)
         LogError("Invalid argument; handle is NULL.");
         result = LOCK_ERROR;
     }
-    else 
+    else
     {
         int rv = xSemaphoreTake((SemaphoreHandle_t)handle, portMAX_DELAY);
         switch (rv)
@@ -75,7 +75,7 @@ LOCK_RESULT Lock(LOCK_HANDLE handle)
                 result = LOCK_ERROR;
                 break;
         }
-    }    
+    }
 
     return result;
 }
@@ -105,6 +105,6 @@ LOCK_RESULT Unlock(LOCK_HANDLE handle)
                 break;
         }
     }
-    
+
     return result;
 }

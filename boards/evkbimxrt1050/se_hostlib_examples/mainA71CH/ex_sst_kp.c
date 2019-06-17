@@ -38,7 +38,7 @@
  * - ::exSstKeyPair
  *
  */
-U8 exSstKp(U16 appletVersion)
+U8 exSstKp()
 {
     U8 result = 1;
     PRINTF( "\r\n-----------\r\nStart exSstKp()\r\n------------\r\n");
@@ -46,10 +46,10 @@ U8 exSstKp(U16 appletVersion)
     DEV_ClearChannelState();
 
     // No channel encryption
-    result &= exSstKeyPair(INIT_MODE_RESET, appletVersion);
+    result &= exSstKeyPair(INIT_MODE_RESET);
 
     // With channel encryption
-    result &= exSstKeyPair(INIT_MODE_RESET_DO_SCP03, appletVersion);
+    result &= exSstKeyPair(INIT_MODE_RESET_DO_SCP03);
 
     // overall result
     PRINTF( "\r\n-----------\r\nEnd exSstKp(), result = %s\r\n------------\r\n", ((result == 1)? "OK": "FAILED"));
@@ -69,7 +69,7 @@ U8 exSstKp(U16 appletVersion)
  *
  * @return     1 if passed.
  */
-U8 exSstKeyPair(U8 initMode, U16 appletVersion)
+U8 exSstKeyPair(U8 initMode)
 {
     U8 result = 1;
     U16 err;
@@ -78,8 +78,8 @@ U8 exSstKeyPair(U8 initMode, U16 appletVersion)
 
     ECCCurve_t eccCurve = ECCCurve_NIST_P256;
 
-    EC_KEY *eccKeyTls[A71CH_KEY_PAIR_MAX];
-    eccKeyComponents_t eccKcTls[A71CH_KEY_PAIR_MAX];
+    EC_KEY *eccKeyTls[A71CH_KEY_PAIR_MAX] = {0};
+    eccKeyComponents_t eccKcTls[A71CH_KEY_PAIR_MAX] = {0};
 
     EC_KEY *eccKeyAlt = NULL;
     eccKeyComponents_t eccKcAlt;
@@ -110,6 +110,10 @@ U8 exSstKeyPair(U8 initMode, U16 appletVersion)
         eccKeyTls[i] = NULL;
         err = HOSTCRYPTO_GenerateEccKey(eccCurve, &eccKeyTls[i]);
         result &= AX_CHECK_SW(err, SW_OK, "err");
+        if ( NULL == eccKeyTls[i] ) {
+            result = 0;
+            goto exit;
+        }
 
         err = HOSTCRYPTO_GetPublicKey(eccKeyTls[i], eccKcTls[i].pub, &(eccKcTls[i].pubLen), (64 << 1)+1);
         result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -141,6 +145,10 @@ U8 exSstKeyPair(U8 initMode, U16 appletVersion)
     // Create alternative key
     err = HOSTCRYPTO_GenerateEccKey(eccCurve, &eccKeyAlt);
     result &= AX_CHECK_SW(err, SW_OK, "err");
+    if ( NULL == eccKeyAlt ) {
+        result = 0;
+        goto exit;
+    }
 
     err = HOSTCRYPTO_GetPublicKey(eccKeyAlt, eccKcAlt.pub, &(eccKcAlt.pubLen), (64 << 1)+1);
     result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -158,16 +166,8 @@ U8 exSstKeyPair(U8 initMode, U16 appletVersion)
     for (i=0; i<A71CH_KEY_PAIR_MAX; i++)
     {
         signatureLen = sizeof(signature);
-        if (appletVersion >= 0x0130)
-        {
-            PRINTF("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)i);
-            err = A71_EccSign((SST_Index_t)i, hashSha256, hashSha256Len, signature, &signatureLen);
-        }
-        else
-        {
-            PRINTF("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)i);
-            err = A71_EccSign((SST_Index_t)i, hashSha256, hashSha256Len, signature, &signatureLen);
-        }
+        PRINTF("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)i);
+        err = A71_EccSign((SST_Index_t)i, hashSha256, hashSha256Len, signature, &signatureLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
 
         // Verify ... on opposite platform
@@ -246,16 +246,8 @@ U8 exSstKeyPair(U8 initMode, U16 appletVersion)
     for (kpIndex=A71CH_KEY_PAIR_MAX>>1; kpIndex<A71CH_KEY_PAIR_MAX; kpIndex++)
     {
         signatureLen = sizeof(signature);
-        if (appletVersion >= 0x0130)
-        {
-            PRINTF("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)kpIndex);
-            err = A71_EccSign((SST_Index_t)kpIndex, hashSha256, hashSha256Len, signature, &signatureLen);
-        }
-        else
-        {
-            PRINTF("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)kpIndex);
-            err = A71_EccSign((SST_Index_t)kpIndex, hashSha256, hashSha256Len, signature, &signatureLen);
-        }
+        PRINTF("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)kpIndex);
+        err = A71_EccSign((SST_Index_t)kpIndex, hashSha256, hashSha256Len, signature, &signatureLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
 
         // Verify ... on opposite platform
@@ -288,16 +280,8 @@ U8 exSstKeyPair(U8 initMode, U16 appletVersion)
     for (i=0; i<A71CH_KEY_PAIR_MAX; i++)
     {
         signatureLen = sizeof(signature);
-        if (appletVersion >= 0x0130)
-        {
-            PRINTF("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)i);
-            err = A71_EccSign((SST_Index_t)i, hashSha256, hashSha256Len, signature, &signatureLen);
-        }
-        else
-        {
-            PRINTF("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)i);
-            err = A71_EccSign((SST_Index_t)i, hashSha256, hashSha256Len, signature, &signatureLen);
-        }
+        PRINTF("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)i);
+        err = A71_EccSign((SST_Index_t)i, hashSha256, hashSha256Len, signature, &signatureLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
 
         // Verify ... on opposite platform
@@ -337,6 +321,7 @@ U8 exSstKeyPair(U8 initMode, U16 appletVersion)
         HOSTCRYPTO_FreeEccKey(&eccKeyTls[i]);
     }
 
+exit:
     PRINTF( "\r\n-----------\r\nEnd exSstKeyPair(%s), result = %s\r\n------------\r\n", getInitModeAsString(initMode),
         ((result == 1)? "OK": "FAILED"));
 

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>           
+    <head>                 
+        <meta http-equiv="content-type" content="text/html; charset=windows-1250">                 
+        <meta name="generator" content="PSPad editor, www.pspad.com">    
+        <title>Motor Control Application Tuning Tool</title>                 
+        <link href="style.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="JS_functions\mainInclude.js"></script>
+        <script type="text/javascript">
+          includeJSfiles();
+        </script>
+        <!-- Scripts -->
+        <script type="text/javascript">
+        // Set which motor is active after page is loaded
+        var defaultMotor = 1;
+        var defaultInitPage   = 'inner_Intro_M1.html';
+        var defaultPageMotor1 = 'inner_Intro_M1.html';
+        var defaultPageMotor2 = 'inner_Intro_M2.html';
+        var defaultPageMotor3 = 'inner_Intro_M3.html';      
+        var motorNumber = 3;
+        
+        window.onbeforeunload = function(event)
+        {
+        location.reload(true);
+        };
+
+        /***************************************************************************//*!
+        *
+        * @brief   The function runs script after page load
+        * @param   
+        * @return  None
+        * @remarks 
+        ******************************************************************************/
+        function initMainPage()
+        {                          
+            // Show default page
+            var page = document.getElementById('mainFrame');
+            page.src = defaultInitPage;
+
+            if (motorNumber === 1)
+            {
+                 document.getElementById('tabMotor1').style.display='none';
+                 document.getElementById('radioMotor1').checked = true;
+            }
+            else if (motorNumber > 1)
+            {  
+                // Get active motor based on defaultMotor variable
+                var activeMotor = getActiveMotor();
+
+                if(activeMotor !== '')
+                {
+                    // Set default MOTOR 1 
+                    document.getElementById('radioMotor1').checked = true;
+                    document.getElementById('radioMotor2').checked = false;
+                    document.getElementById('radioMotor3').checked = false;
+
+                    // Set default motor
+                    document.getElementById('tabMotor1').style.display = 'none'; 
+                    document.getElementById('tabMotor2').style.display = 'none'; 
+                    document.getElementById('tabMotor3').style.display = 'none';
+
+                    if(activeMotor === 'M1_')  
+                    {
+                        document.getElementById('tabMotor1').style.display = 'inline';
+                    }
+                    else if(activeMotor === 'M2_')
+                    {
+                        document.getElementById('tabMotor2').style.display = 'inline';
+                    }
+                    else if(activeMotor === 'M3_')
+                    {
+                        document.getElementById('tabMotor3').style.display = 'inline';
+                    }
+                }
+                else
+                {
+                    alert('Error');
+                }
+            } 
+
+        }
+
+        /***************************************************************************//*!
+        * @brief   The function converts "Number of motors" from String to Number form
+        * @param   
+        * @return  None
+        * @remarks 
+        *******************************************************************************/       
+        function coversionMotorsNo(inPointer)
+        {
+            var arithmeticArray = new Array(3);
+            arithmeticArray[0] = "Single";
+            arithmeticArray[1] = "Dual";
+            arithmeticArray[2] = "Triple";
+
+            for(i=0;i<3;i++)
+            {
+                if(inPointer === arithmeticArray[i])     
+                  return (i);
+            }
+        }
+        </script>
+    </head>                 
+    <body id="mainPageTab" onload="initMainPage(); initLoadParamFiles();">
+        
+      
+        <object id="MCB_PC_Master_Services1" height="1" width="1" classid="clsid:48A185F1-FFDB-11D3-80E3-00C04F176153" name="pcm">	     
+        </object>        
+
+        <div class="Header">
+           
+            <img src="images/NXP-Logo.png" alt="NXP-Logo.png">
+            <div class="Triangle" id="UpTriang"></div>
+        
+            <div class="HLines" id="Line1"></div>
+            <div class="HLines" id="Line2"></div>
+            <div class="HLines" id="Line3"></div>
+            <div class="HLines" id="Line4"></div>  
+            
+            <span id="HeadLine">                                 
+                Motor Control Application Tuning Tool
+            </span> 
+          
+            <!-- to enable Setting panel button, delete "hidden" attribute -->
+            <div id="AppSettingButton" style="position: absolute; right: 43px; top: 1px;">
+                <a href="#"><img  src="images/ToolPic.png" onClick="setActivePage('','AppSetting.html',10)" alt="obr1.png"></a>
+            </div>
+        </div> 
+
+        <!-- Multiple motor selection radio buttons -->    
+        <div>
+            <script type="text/javascript">
+                // Creates an object for 3 motors with none display status
+                document.write(build_multi_motor_selector(defaultMotor));
+            </script>  
+        </div>
+        <!-- Main Tabs -->             
+        <div id="menu" style=" width:844px; position: absolute; left: 0px; top: 102px;"> 
+          <!--- Motor 1 Tabs --->       
+          <ul id="tabMotor1">
+            <li class="first">                     
+              <a class="active" href="#" onfocus="blur(setActivePage('tabMotor1','inner_Intro_M1.html',0))" style="display:none;">Introduction</a>        
+            </li>
+            <li>        
+            <a href="#" onfocus="blur(setActivePage('tabMotor1','inner_MID.html',1))"  style="display:none">Motor Identif</a>        
+            </li>
+            <li>          
+              <a href="#" onfocus="blur(setActivePage('tabMotor1','inner_Parameters.html',2))" style="display:none;">Parameters</a>        
+            </li>             
+            <li>          
+              <a href="#" onfocus="blur(setActivePage('tabMotor1','inner_CLoop.html',3))" style="display:none;">Current Loop</a>          
+            </li>             
+            <li>        
+              <a href="#" onfocus="blur(setActivePage('tabMotor1','inner_SLoop.html',4))" style="display:none;">Speed & Pos</a>        
+            </li>   
+            <li>        
+            <a href="#" onfocus="blur(setActivePage('tabMotor1','inner_PoSpeSensor.html',5))" style="display:none;">Sensors</a>        
+            </li>
+            <li>        
+              <a href="#" onfocus="blur(setActivePage('tabMotor1','inner_PoSpeBemfDQ.html',6))" style="display:none;">Sensorless</a>        
+            </li>
+            <li>        
+            <a href="#" onfocus="blur(setActivePage('tabMotor1','inner_CtrlStructure.html',7))" style="display:none;">Control Struc</a>
+            </li>
+            <li>        
+            <a href="#" onfocus="blur(setActivePage('tabMotor1','inner_OutputHeader.html',8))"  style="display:none;">Output File</a>        
+            </li>
+            <li>        
+            <a href="#" onfocus="blur(setActivePage('tabMotor1','../../FM_control/FM_control_M1.html',9))" style="display:none;">App Control</a>        
+            </li>
+          </ul>
+          <!--- Motor 2 Tabs---> 
+          <ul id="tabMotor2" >
+            <li class="first">                     
+              <a class="active" href="#" onfocus="blur(setActivePage('tabMotor2','inner_Intro_M2.html',0))" style="display:none;">Introduction</a>        
+            </li>
+            <li>        
+            <a href="#" onfocus="blur(setActivePage('tabMotor1','inner_MID.html',1))"  style="display:none">Motor Identif</a>        
+            </li>
+            <li>          
+              <a href="#" onfocus="blur(setActivePage('tabMotor2','inner_Parameters.html',2))" style="display:none;">Parameters</a>        
+            </li> 
+            
+            <li>          
+              <a href="#" onfocus="blur(setActivePage('tabMotor2','inner_CLoop.html',3))" style="display:none;">Current Loop</a>          
+            </li>             
+            <li>        
+              <a href="#" onfocus="blur(setActivePage('tabMotor2','inner_SLoop.html',4))" style="display:none;">Speed & Pos</a>        
+            </li>   
+            <li>        
+            <a href="#" onfocus="blur(setActivePage('tabMotor2','inner_PoSpeSensor.html',5))" style="display:none;">Sensors</a>        
+            </li>
+            <li>        
+              <a href="#" onfocus="blur(setActivePage('tabMotor2','inner_PoSpeBemfDQ.html',6))" style="display:none;">Sensorless</a>        
+            </li>
+            <li>        
+            <a href="#" onfocus="blur(setActivePage('tabMotor2','inner_CtrlStructure.html',7))" style="display:none;">Control Struc</a>
+            </li>
+            <li>        
+            <a href="#" onfocus="blur(setActivePage('tabMotor2','inner_OutputHeader.html',8))"  style="display:none;">Output File</a>        
+            </li>
+            <li>        
+            <a href="#" onfocus="blur(setActivePage('tabMotor2','../../FM_control/Control_Page.html',9))" style="display:none;">App Control</a>        
+            </li>     
+          </ul>  
+                <!--- Motor 3 Tabs---> 
+          <ul id="tabMotor3" >
+             <li class="first">                     
+              <a class="active" href="#" onfocus="blur(setActivePage('tabMotor3','inner_Intro_M3.html',0))" style="display:none;">Introduction</a>        
+            </li>
+            <li>        
+            <a href="#" onfocus="blur(setActivePage('tabMotor1','inner_MID.html',1))"  style="display:none">Motor Identif</a>        
+            </li>
+            <li>          
+              <a href="#" onfocus="blur(setActivePage('tabMotor3','inner_Parameters.html',2))" style="display:none;">Parameters</a>        
+            </li>             
+            <li>          
+              <a href="#" onfocus="blur(setActivePage('tabMotor3','inner_CLoop.html',3))" style="display:none;">Current Loop</a>          
+            </li>             
+            <li>        
+              <a href="#" onfocus="blur(setActivePage('tabMotor3','inner_SLoop.html',4))" style="display:none;">Speed Loop</a>        
+            </li>   
+            <li>        
+            <a href="#" onfocus="blur(setActivePage('tabMotor3','inner_PoSpeSensor.html',5))" style="display:none;">Sensors</a>        
+            </li>
+            <li>        
+              <a href="#" onfocus="blur(setActivePage('tabMotor3','inner_PoSpeBemfDQ.html',6))" style="display:none;">Sensorless</a>        
+            </li>
+            <li>        
+            <a href="#" onfocus="blur(setActivePage('tabMotor3','inner_CtrlStructure.html',7))" style="display:none;">Control Struc</a>
+            </li>
+            <li>        
+            <a href="#" onfocus="blur(setActivePage('tabMotor3','inner_OutputHeader.html',8))"  style="display:none;">Output File</a>        
+            </li>
+            <li>        
+            <a href="#" onfocus="blur(setActivePage('tabMotor3','../../FM_control/Control_Page.html',9))"  style="display:none;">App Control</a>        
+            </li>    
+          </ul>  
+        </div>                 
+
+        <!-- - IFrame - --> 
+        <div id="content" style=" position: absolute; left: 0px; top: 137px;">    
+           <iframe id="mainFrame" src="" style="width:844px; height:510px" frameborder="0" align="baseline" name="ramecek" ></iframe>  
+        </div> 
+
+        <!-- - Data Storage Tabs - -->
+        <div >
+         <table id = "DataStorageTable" >
+         <tr>
+          <td> <div id="paramTableSetting_"></div> </td>
+          <td> <div id="paramTableM1_" class="fontDataStorageTable"></div> </td>
+          <td> <div id="paramTableM2_" class="fontDataStorageTable"></div> </td>
+          <td> <div id="paramTableM3_" class="fontDataStorageTable"></div> </td>
+          
+         </tr>
+         </table>
+        </div>  
+
+        <script>
+            document.getElementById('DataStorageTable').className = "StorageTab_visible";
+        </script>
+
+        <!-- - Footer - -->
+        <div id="Footer" style="display:block">  
+            <div id="fline"></div> 
+            <div id="fCredits1st">NXP Semiconductor, N.V.</div>
+            <div id="fCredits2nd">by Roznov MC Teams</div>
+            <div id="fCredits3rd"></div>
+            <div class="Triangle" id="BotTriang"></div>
+        </div>   
+                
+    </body>
+</html>        

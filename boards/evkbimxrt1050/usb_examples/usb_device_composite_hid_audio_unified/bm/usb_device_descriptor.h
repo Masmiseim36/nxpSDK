@@ -10,8 +10,10 @@
 #define __USB_DEVICE_DESCRIPTOR_H__
 
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
+/*! @brief Whether USB Audio use syn mode or not. */
+#define USB_DEVICE_AUDIO_USE_SYNC_MODE (0U)
 
 #define USB_DEVICE_SPECIFIC_BCD_VERSION (0x0200U)
 #define USB_DEVICE_DEMO_BCD_VERSION (0x0101U)
@@ -46,14 +48,21 @@
 #define USB_AUDIO_SPEAKER_STREAM_INTERFACE_INDEX (2)
 #define USB_HID_KEYBOARD_INTERFACE_INDEX (3)
 
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+#define USB_AUDIO_SPEAKER_STREAM_ENDPOINT_COUNT (1)
+#else
 #define USB_AUDIO_SPEAKER_STREAM_ENDPOINT_COUNT (2)
+#endif
 #define USB_AUDIO_CONTROL_ENDPOINT_COUNT (1)
 #define USB_AUDIO_RECORDER_STREAM_ENDPOINT_COUNT (1)
 #define USB_HID_KEYBOARD_ENDPOINT_COUNT (1)
 
 #define USB_AUDIO_SPEAKER_STREAM_ENDPOINT (2)
 #define USB_AUDIO_CONTROL_ENDPOINT (1)
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+#else
 #define USB_AUDIO_SPEAKER_FEEDBACK_ENDPOINT (2)
+#endif
 #define USB_AUDIO_RECORDER_STREAM_ENDPOINT (3)
 #define USB_HID_KEYBOARD_ENDPOINT (4)
 
@@ -81,8 +90,11 @@
 #define FS_ISO_OUT_ENDP_PACKET_SIZE (AUDIO_SAMPLING_RATE_KHZ * AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE)
 #define HS_ISO_IN_ENDP_PACKET_SIZE (AUDIO_SAMPLING_RATE_KHZ * AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE)
 #define FS_ISO_IN_ENDP_PACKET_SIZE (AUDIO_SAMPLING_RATE_KHZ * AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE)
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+#else
 #define HS_ISO_FEEDBACK_ENDP_PACKET_SIZE (3)
 #define FS_ISO_FEEDBACK_ENDP_PACKET_SIZE (3)
+#endif
 #define HS_ISO_OUT_ENDP_INTERVAL (0x04)
 #define HS_ISO_IN_ENDP_INTERVAL (0x04)
 #define FS_ISO_OUT_ENDP_INTERVAL (0x01)
@@ -127,8 +139,8 @@
 #define USB_HID_KEYBOARD_REPORT_LENGTH (0x01U)
 
 /*******************************************************************************
-* API
-******************************************************************************/
+ * API
+ ******************************************************************************/
 /*!
  * @brief USB device set speed function.
  *

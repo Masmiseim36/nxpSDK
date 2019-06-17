@@ -294,7 +294,7 @@ void ecp_clear_precomputed(mbedtls_ecp_group *grp)
             mbedtls_ecp_point_free(&grp->T[i]);
         mbedtls_free(grp->T);
     }
-    grp->T = NULL;
+    grp->T      = NULL;
     grp->T_size = 0;
 }
 #else
@@ -333,7 +333,7 @@ static uint64_t benchmark_mbedtls_timing_hardclock(void)
     do
     {
         currMsCount = s_MsCount;
-        currTick = SysTick->VAL;
+        currTick    = SysTick->VAL;
     } while (currMsCount != s_MsCount);
 
     loadTick = CLOCK_GetCoreSysClkFreq() / 1000U;
@@ -343,7 +343,7 @@ static uint64_t benchmark_mbedtls_timing_hardclock(void)
 static void benchmark_mbedtls_set_alarm(int seconds)
 {
     benchmark_mbedtls_timing_alarmed = 0;
-    s_Timeout = benchmark_mbedtls_timing_hardclock() + (seconds * CLOCK_GetCoreSysClkFreq());
+    s_Timeout                        = benchmark_mbedtls_timing_hardclock() + (seconds * CLOCK_GetCoreSysClkFreq());
 }
 
 static void benchmark_mbedtls_poll_alarm(void)
@@ -971,12 +971,14 @@ int main(int argc, char *argv[])
 #if defined(MBEDTLS_DHM_C) && defined(MBEDTLS_BIGNUM_C)
     if (todo.dhm)
     {
-        int dhm_sizes[] = {2048 /*, 3072  is not supported by LTC*/};
+        int dhm_sizes[]     = {2048 /*, 3072  is not supported by LTC*/};
         const char *dhm_P[] = {
-            MBEDTLS_DHM_RFC3526_MODP_2048_P, MBEDTLS_DHM_RFC3526_MODP_3072_P,
+            MBEDTLS_DHM_RFC3526_MODP_2048_P,
+            MBEDTLS_DHM_RFC3526_MODP_3072_P,
         };
         const char *dhm_G[] = {
-            MBEDTLS_DHM_RFC3526_MODP_2048_G, MBEDTLS_DHM_RFC3526_MODP_3072_G,
+            MBEDTLS_DHM_RFC3526_MODP_2048_G,
+            MBEDTLS_DHM_RFC3526_MODP_3072_G,
         };
 
         mbedtls_dhm_context dhm;
@@ -1061,8 +1063,7 @@ int main(int argc, char *argv[])
     {
         mbedtls_ecdh_context ecdh;
         mbedtls_mpi z;
-        const mbedtls_ecp_curve_info montgomery_curve_list[] =
-        {
+        const mbedtls_ecp_curve_info montgomery_curve_list[] = {
 #if defined(MBEDTLS_ECP_DP_CURVE25519_ENABLED)
             {MBEDTLS_ECP_DP_CURVE25519, 0, 0, "Curve25519"},
 #endif

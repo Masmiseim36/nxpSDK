@@ -196,21 +196,21 @@
 /*! @brief SDHC host capability*/
 enum _host_capability
 {
-    kSDMMCHOST_SupportAdma = kSDHC_SupportAdmaFlag,
-    kSDMMCHOST_SupportHighSpeed = kSDHC_SupportHighSpeedFlag,
-    kSDMMCHOST_SupportDma = kSDHC_SupportDmaFlag,
+    kSDMMCHOST_SupportAdma          = kSDHC_SupportAdmaFlag,
+    kSDMMCHOST_SupportHighSpeed     = kSDHC_SupportHighSpeedFlag,
+    kSDMMCHOST_SupportDma           = kSDHC_SupportDmaFlag,
     kSDMMCHOST_SupportSuspendResume = kSDHC_SupportSuspendResumeFlag,
-    kSDMMCHOST_SupportV330 = kSDHC_SupportV330Flag,
-    kSDMMCHOST_SupportV300 = SDMMCHOST_NOT_SUPPORT,
-    kSDMMCHOST_SupportV180 = SDMMCHOST_NOT_SUPPORT,
-    kSDMMCHOST_SupportV120 = SDMMCHOST_NOT_SUPPORT,
-    kSDMMCHOST_Support4BitBusWidth = kSDHC_Support4BitFlag,
-    kSDMMCHOST_Support8BitBusWidth = kSDHC_Support8BitFlag,
-    kSDMMCHOST_SupportDDR50 = SDMMCHOST_NOT_SUPPORT,
-    kSDMMCHOST_SupportSDR104 = SDMMCHOST_NOT_SUPPORT,
-    kSDMMCHOST_SupportSDR50 = SDMMCHOST_NOT_SUPPORT,
-    kSDMMCHOST_SupportHS200 = SDMMCHOST_NOT_SUPPORT,
-    kSDMMCHOST_SupportHS400 = SDMMCHOST_NOT_SUPPORT,
+    kSDMMCHOST_SupportV330          = kSDHC_SupportV330Flag,
+    kSDMMCHOST_SupportV300          = SDMMCHOST_NOT_SUPPORT,
+    kSDMMCHOST_SupportV180          = SDMMCHOST_NOT_SUPPORT,
+    kSDMMCHOST_SupportV120          = SDMMCHOST_NOT_SUPPORT,
+    kSDMMCHOST_Support4BitBusWidth  = kSDHC_Support4BitFlag,
+    kSDMMCHOST_Support8BitBusWidth  = kSDHC_Support8BitFlag,
+    kSDMMCHOST_SupportDDR50         = SDMMCHOST_NOT_SUPPORT,
+    kSDMMCHOST_SupportSDR104        = SDMMCHOST_NOT_SUPPORT,
+    kSDMMCHOST_SupportSDR50         = SDMMCHOST_NOT_SUPPORT,
+    kSDMMCHOST_SupportHS200         = SDMMCHOST_NOT_SUPPORT,
+    kSDMMCHOST_SupportHS400         = SDMMCHOST_NOT_SUPPORT,
 };
 
 /* Endian mode. */
@@ -234,7 +234,7 @@ enum _host_capability
 #define SDHC_ADMA_TABLE_WORDS (8U)
 
 /*********************************************************SDIF**********************************************************/
-#elif(defined(FSL_FEATURE_SOC_SDIF_COUNT) && (FSL_FEATURE_SOC_SDIF_COUNT > 0U))
+#elif (defined(FSL_FEATURE_SOC_SDIF_COUNT) && (FSL_FEATURE_SOC_SDIF_COUNT > 0U))
 
 /*define host baseaddr ,clk freq, IRQ number*/
 #define MMC_HOST_BASEADDR BOARD_SDIF_BASEADDR
@@ -357,21 +357,21 @@ enum _host_capability
 /*! @brief SDIF host capability*/
 enum _host_capability
 {
-    kSDMMCHOST_SupportHighSpeed = kSDIF_SupportHighSpeedFlag,
-    kSDMMCHOST_SupportDma = kSDIF_SupportDmaFlag,
+    kSDMMCHOST_SupportHighSpeed     = kSDIF_SupportHighSpeedFlag,
+    kSDMMCHOST_SupportDma           = kSDIF_SupportDmaFlag,
     kSDMMCHOST_SupportSuspendResume = kSDIF_SupportSuspendResumeFlag,
-    kSDMMCHOST_SupportV330 = kSDIF_SupportV330Flag,
-    kSDMMCHOST_SupportV300 = SDMMCHOST_NOT_SUPPORT,
-    kSDMMCHOST_SupportV180 = SDMMCHOST_NOT_SUPPORT,
-    kSDMMCHOST_SupportV120 = SDMMCHOST_NOT_SUPPORT,
-    kSDMMCHOST_Support4BitBusWidth = kSDIF_Support4BitFlag,
+    kSDMMCHOST_SupportV330          = kSDIF_SupportV330Flag,
+    kSDMMCHOST_SupportV300          = SDMMCHOST_NOT_SUPPORT,
+    kSDMMCHOST_SupportV180          = SDMMCHOST_NOT_SUPPORT,
+    kSDMMCHOST_SupportV120          = SDMMCHOST_NOT_SUPPORT,
+    kSDMMCHOST_Support4BitBusWidth  = kSDIF_Support4BitFlag,
     kSDMMCHOST_Support8BitBusWidth =
         SDMMCHOST_NOT_SUPPORT, /* mask the 8 bit here,user can change depend on your board */
-    kSDMMCHOST_SupportDDR50 = SDMMCHOST_NOT_SUPPORT,
+    kSDMMCHOST_SupportDDR50  = SDMMCHOST_NOT_SUPPORT,
     kSDMMCHOST_SupportSDR104 = SDMMCHOST_NOT_SUPPORT,
-    kSDMMCHOST_SupportSDR50 = SDMMCHOST_NOT_SUPPORT,
-    kSDMMCHOST_SupportHS200 = SDMMCHOST_NOT_SUPPORT,
-    kSDMMCHOST_SupportHS400 = SDMMCHOST_NOT_SUPPORT,
+    kSDMMCHOST_SupportSDR50  = SDMMCHOST_NOT_SUPPORT,
+    kSDMMCHOST_SupportHS200  = SDMMCHOST_NOT_SUPPORT,
+    kSDMMCHOST_SupportHS400  = SDMMCHOST_NOT_SUPPORT,
 
 };
 
@@ -386,7 +386,7 @@ enum _host_capability
 #define SDMMCHOST_DMA_BUFFER_ADDR_ALIGN (4U)
 
 /*********************************************************USDHC**********************************************************/
-#elif(defined(FSL_FEATURE_SOC_USDHC_COUNT) && (FSL_FEATURE_SOC_USDHC_COUNT > 0U))
+#elif (defined(FSL_FEATURE_SOC_USDHC_COUNT) && (FSL_FEATURE_SOC_USDHC_COUNT > 0U))
 
 /*define host baseaddr ,clk freq, IRQ number*/
 #define MMC_HOST_BASEADDR BOARD_MMC_HOST_BASEADDR
@@ -546,36 +546,36 @@ enum _host_capability
 /*! @brief USDHC host capability*/
 enum _host_capability
 {
-    kSDMMCHOST_SupportAdma = kUSDHC_SupportAdmaFlag,
-    kSDMMCHOST_SupportHighSpeed = kUSDHC_SupportHighSpeedFlag,
-    kSDMMCHOST_SupportDma = kUSDHC_SupportDmaFlag,
+    kSDMMCHOST_SupportAdma          = kUSDHC_SupportAdmaFlag,
+    kSDMMCHOST_SupportHighSpeed     = kUSDHC_SupportHighSpeedFlag,
+    kSDMMCHOST_SupportDma           = kUSDHC_SupportDmaFlag,
     kSDMMCHOST_SupportSuspendResume = kUSDHC_SupportSuspendResumeFlag,
-    kSDMMCHOST_SupportV330 = kUSDHC_SupportV330Flag, /* this define should depend on your board config */
-    kSDMMCHOST_SupportV300 = kUSDHC_SupportV300Flag, /* this define should depend on your board config */
+    kSDMMCHOST_SupportV330          = kUSDHC_SupportV330Flag, /* this define should depend on your board config */
+    kSDMMCHOST_SupportV300          = kUSDHC_SupportV300Flag, /* this define should depend on your board config */
 #if defined(BOARD_SD_SUPPORT_180V) && !BOARD_SD_SUPPORT_180V
-    kSDMMCHOST_SupportV180 = SDMMCHOST_NOT_SUPPORT, /* this define should depend on you board config */
+    kSDMMCHOST_SupportV180          = SDMMCHOST_NOT_SUPPORT,  /* this define should depend on you board config */
 #else
-    kSDMMCHOST_SupportV180 = kUSDHC_SupportV180Flag, /* this define should depend on you board config */
+    kSDMMCHOST_SupportV180         = kUSDHC_SupportV180Flag, /* this define should depend on you board config */
 #endif
-    kSDMMCHOST_SupportV120 = SDMMCHOST_NOT_SUPPORT,
-    kSDMMCHOST_Support4BitBusWidth = kUSDHC_Support4BitFlag,
+    kSDMMCHOST_SupportV120          = SDMMCHOST_NOT_SUPPORT,
+    kSDMMCHOST_Support4BitBusWidth  = kUSDHC_Support4BitFlag,
 #if defined(BOARD_MMC_SUPPORT_8BIT_BUS)
 #if BOARD_MMC_SUPPORT_8BIT_BUS
-    kSDMMCHOST_Support8BitBusWidth = kUSDHC_Support8BitFlag,
+    kSDMMCHOST_Support8BitBusWidth  = kUSDHC_Support8BitFlag,
 #else
     kSDMMCHOST_Support8BitBusWidth = SDMMCHOST_NOT_SUPPORT,
 #endif
 #else
     kSDMMCHOST_Support8BitBusWidth = kUSDHC_Support8BitFlag,
 #endif
-    kSDMMCHOST_SupportDDR50 = kUSDHC_SupportDDR50Flag,
-    kSDMMCHOST_SupportSDR104 = kUSDHC_SupportSDR104Flag,
-    kSDMMCHOST_SupportSDR50 = kUSDHC_SupportSDR50Flag,
-    kSDMMCHOST_SupportHS200 = kUSDHC_SupportSDR104Flag,
+    kSDMMCHOST_SupportDDR50         = kUSDHC_SupportDDR50Flag,
+    kSDMMCHOST_SupportSDR104        = kUSDHC_SupportSDR104Flag,
+    kSDMMCHOST_SupportSDR50         = kUSDHC_SupportSDR50Flag,
+    kSDMMCHOST_SupportHS200         = kUSDHC_SupportSDR104Flag,
 #if FSL_FEATURE_USDHC_HAS_HS400_MODE
-    kSDMMCHOST_SupportHS400 = SDMMCHOST_SUPPORT
+    kSDMMCHOST_SupportHS400         = SDMMCHOST_SUPPORT
 #else
-    kSDMMCHOST_SupportHS400 = SDMMCHOST_NOT_SUPPORT,
+    kSDMMCHOST_SupportHS400        = SDMMCHOST_NOT_SUPPORT,
 #endif
 };
 
@@ -612,9 +612,9 @@ typedef void (*sdmmchost_cd_callback_t)(bool isInserted, void *userData);
  */
 enum _sdmmchost_endian_mode
 {
-    kSDMMCHOST_EndianModeBig = 0U,         /*!< Big endian mode */
+    kSDMMCHOST_EndianModeBig         = 0U, /*!< Big endian mode */
     kSDMMCHOST_EndianModeHalfWordBig = 1U, /*!< Half word big endian mode */
-    kSDMMCHOST_EndianModeLittle = 2U,      /*!< Little endian mode */
+    kSDMMCHOST_EndianModeLittle      = 2U, /*!< Little endian mode */
 };
 
 /*! @brief sd card detect type */

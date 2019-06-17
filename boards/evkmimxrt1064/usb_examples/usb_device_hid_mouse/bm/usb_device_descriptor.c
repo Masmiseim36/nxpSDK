@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2018 NXP
+ * Copyright 2016 - 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -32,7 +32,7 @@ usb_device_endpoint_struct_t g_UsbDeviceHidMouseEndpoints[USB_HID_MOUSE_ENDPOINT
     /* HID mouse interrupt IN pipe */
     {
         USB_HID_MOUSE_ENDPOINT_IN | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT), USB_ENDPOINT_INTERRUPT,
-        FS_HID_MOUSE_INTERRUPT_IN_PACKET_SIZE,
+        FS_HID_MOUSE_INTERRUPT_IN_PACKET_SIZE,FS_HID_MOUSE_INTERRUPT_IN_INTERVAL,
     },
 };
 
@@ -396,7 +396,7 @@ usb_status_t USB_DeviceGetHidPhysicalDescriptor(usb_device_handle handle,
  * current speed.
  * As the default, the device descriptors and configurations are configured by using FS parameters for both EHCI and
  * KHCI.
- * When the EHCI is enabled, the application needs to call this fucntion to update device by using current speed.
+ * When the EHCI is enabled, the application needs to call this function to update device by using current speed.
  * The updated information includes endpoint max packet size, endpoint interval, etc. */
 usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
 {
@@ -446,6 +446,7 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
             if (g_UsbDeviceHidMouseEndpoints[i].endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK)
             {
                 g_UsbDeviceHidMouseEndpoints[i].maxPacketSize = HS_HID_MOUSE_INTERRUPT_IN_PACKET_SIZE;
+                g_UsbDeviceHidMouseEndpoints[i].interval = HS_HID_MOUSE_INTERRUPT_IN_INTERVAL;
             }
         }
         else
@@ -453,6 +454,7 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
             if (g_UsbDeviceHidMouseEndpoints[i].endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK)
             {
                 g_UsbDeviceHidMouseEndpoints[i].maxPacketSize = FS_HID_MOUSE_INTERRUPT_IN_PACKET_SIZE;
+                g_UsbDeviceHidMouseEndpoints[i].interval = FS_HID_MOUSE_INTERRUPT_IN_INTERVAL;
             }
         }
     }

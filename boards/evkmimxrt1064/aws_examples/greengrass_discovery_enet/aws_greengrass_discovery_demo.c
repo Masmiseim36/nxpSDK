@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS Greengrass Demo V1.2.3
+ * Amazon FreeRTOS Greengrass Demo V1.4.7
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -152,6 +152,7 @@ static BaseType_t prvMQTTConnect( GGD_HostAddressData_t * pxHostAddressData )
     MQTTAgentConnectParams_t xConnectParams;
     BaseType_t xResult = pdPASS;
 
+    memset(&xConnectParams, 0, sizeof(MQTTAgentConnectParams_t));
     /* Connect to the broker. */
     xConnectParams.pucClientId = ( const uint8_t * ) ( clientcredentialIOT_THING_NAME );
     xConnectParams.usClientIdLength = ( uint16_t ) ( strlen( clientcredentialIOT_THING_NAME ) );
@@ -204,10 +205,9 @@ static void prvDiscoverGreenGrassCore( void * pvParameters )
             /* Report on space efficiency of this demo task. */
             #if ( INCLUDE_uxTaskGetStackHighWaterMark == 1 )
                 {
-                    configPRINTF(
-                        ( "Heap low watermark: %u. Stack high watermark: %u.\r\n",
-                          xPortGetMinimumEverFreeHeapSize(),
-                          uxTaskGetStackHighWaterMark( NULL ) ) );
+                    configPRINTF( ( "Heap low watermark: %u. Stack high watermark: %u.\r\n",
+                                    xPortGetMinimumEverFreeHeapSize(),
+                                    uxTaskGetStackHighWaterMark( NULL ) ) );
                 }
             #endif
         }
@@ -217,6 +217,7 @@ static void prvDiscoverGreenGrassCore( void * pvParameters )
         }
     }
 
+    configPRINTF( ( "----Demo finished----\r\n" ) );
     vTaskDelete( NULL );
 }
 

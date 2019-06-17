@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018, NXP Semiconductors, Inc.
+ * Copyright  2017-2018 NXP
  * All rights reserved.
  *
  *
@@ -24,14 +24,14 @@ typedef status_t (*video_i2c_receive_func_t)(
 /*! @brief Video device register address type. */
 typedef enum _video_reg_addr
 {
-    kVIDEO_RegAddr8Bit = 1U,  /*!< 8-bit register address.  */
+    kVIDEO_RegAddr8Bit  = 1U, /*!< 8-bit register address.  */
     kVIDEO_RegAddr16Bit = 2U, /*!< 16-bit register address. */
 } video_reg_addr_t;
 
 /*! @brief Video device register width. */
 typedef enum _video_reg_width
 {
-    kVIDEO_RegWidth8Bit = 1U,  /*!< 8-bit register width.  */
+    kVIDEO_RegWidth8Bit  = 1U, /*!< 8-bit register width.  */
     kVIDEO_RegWidth16Bit = 2U, /*!< 16-bit register width. */
     kVIDEO_RegWidth32Bit = 4U, /*!< 32-bit register width. */
 } video_reg_width_t;

@@ -52,7 +52,7 @@
 #include "lwip/dhcp.h"
 #include "lwip/prot/dhcp.h"
 #include "netif/ethernet.h"
-#include "ethernetif.h"
+#include "enet_ethernetif.h"
 #endif
 #include "jsmn.h"
 #include "tst_utils_kinetis.h"

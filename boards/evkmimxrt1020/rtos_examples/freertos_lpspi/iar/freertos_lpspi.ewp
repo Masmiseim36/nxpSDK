@@ -5962,10 +5962,10 @@
   <group>
     <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_clock.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_clock.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_clock.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_clock.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_lpspi.c</name>
@@ -5976,52 +5976,112 @@
     <group>
       <name>freertos</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_lpspi_freertos.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_lpspi_freertos.c</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_lpspi_freertos.h</name>
+      </file>
     </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_common.h</name>
-    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_common.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_common.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_iomuxc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_gpio.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_gpio.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_gpio.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_gpio.h</name>
     </file>
   </group>
   <group>
     <name>amazon-freertos</name>
     <group>
-      <name>license</name>
+      <name>freertos</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/LICENSE</name>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c</name>
+      </file>
+      <group>
+        <name>portable</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/port.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/portasm.s</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/portmacro.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c</name>
       </file>
     </group>
     <group>
       <name>include</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/event_groups.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/event_groups.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/message_buffer.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/mpu_prototypes.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/portable.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/threading_alt.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/queue.h</name>
@@ -6038,84 +6098,18 @@
       <file>
         <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/timers.h</name>
       </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/portable.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</name>
-      </file>
-    </group>
-    <group>
-      <name>FreeRTOS</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c</name>
-      </file>
-      <group>
-        <name>portable</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/fsl_tickless_systick.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/fsl_tickless_generic.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/port.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/portasm.s</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/portmacro.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c</name>
-        </file>
-      </group>
     </group>
   </group>
   <group>
     <name>device</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/fsl_device_registers.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/MIMXRT1021.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/MIMXRT1021_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/system_MIMXRT1021.c</name>
@@ -6127,12 +6121,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -6140,6 +6128,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console_conf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/fsl_assert.c</name>
@@ -6150,34 +6144,37 @@
     <group>
       <name>uart</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/lpuart_adapter.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/lpuart_adapter.c</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
       </file>
     </group>
     <group>
       <name>serial_manager</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_internal.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
       </file>
     </group>
   </group>
@@ -6190,10 +6187,10 @@
   <group>
     <name>xip</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../xip/evkmimxrt1020_flexspi_nor_config.c</name>
@@ -6214,30 +6211,6 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm7.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
     </file>
     <file>
@@ -6247,7 +6220,31 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>

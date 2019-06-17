@@ -26,15 +26,15 @@ static const clock_ip_name_t s_gpioClock[] = GPIO_CLOCKS;
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 
 /*!
-* @brief Gets the GPIO instance according to the GPIO base
-*
-* @param base    GPIO peripheral base pointer(PTA, PTB, PTC, etc.)
-* @retval GPIO instance
-*/
+ * @brief Gets the GPIO instance according to the GPIO base
+ *
+ * @param base    GPIO peripheral base pointer(PTA, PTB, PTC, etc.)
+ * @retval GPIO instance
+ */
 static uint32_t GPIO_GetInstance(GPIO_Type *base);
 
 /*******************************************************************************
@@ -72,7 +72,13 @@ void GPIO_PinInit(GPIO_Type *base, uint32_t pin, const gpio_pin_config_t *Config
 {
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* Enable GPIO clock. */
-    CLOCK_EnableClock(s_gpioClock[GPIO_GetInstance(base)]);
+    uint32_t instance = GPIO_GetInstance(base);
+
+    /* If The clock IP is valid, enable the clock gate. */
+    if ((instance < ARRAY_SIZE(s_gpioClock)) && (kCLOCK_IpInvalid != s_gpioClock[instance]))
+    {
+        CLOCK_EnableClock(s_gpioClock[instance]);
+    }
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 
     /* Register reset to default value */

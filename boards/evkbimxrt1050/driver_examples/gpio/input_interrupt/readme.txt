@@ -3,6 +3,14 @@ Overview
 The GPIO Example project is a demonstration program that uses the KSDK software to manipulate the general-purpose
 outputs.
 The example is supported by the set, clear registers for each GPIO pin output register. 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -37,11 +45,6 @@ If you turn on the SW8 , and "SW8 is turned on" is shown on the terminal window
  ......
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
+Customization options
+=====================
 

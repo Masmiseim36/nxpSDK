@@ -24,6 +24,8 @@ SET(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
 
 SET(CMAKE_ASM_FLAGS_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_SDRAM_DEBUG} -D__STARTUP_CLEAR_BSS")
 
+SET(CMAKE_ASM_FLAGS_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_SDRAM_DEBUG} -DDEBUG")
+
 SET(CMAKE_ASM_FLAGS_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_SDRAM_DEBUG} -D__STARTUP_INITIALIZE_NONCACHEDATA")
 
 SET(CMAKE_ASM_FLAGS_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_SDRAM_DEBUG} -g")
@@ -146,6 +148,8 @@ SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfpu=fpv5-d16")
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -D__STARTUP_CLEAR_BSS")
 
+SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -DDEBUG")
+
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -D__STARTUP_INITIALIZE_NONCACHEDATA")
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -g")
@@ -207,6 +211,8 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} 
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1")
 
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DSKIP_SYSCLK_INIT")
+
+SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DDEBUG")
 
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DFSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE")
 
@@ -370,6 +376,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DXIP_EX
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DXIP_BOOT_HEADER_ENABLE=1")
 
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DDEBUG")
+
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DFSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DCPU_MIMXRT1064DVL6A")
@@ -449,6 +457,42 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -mfp
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -MMD")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -MP")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -DDEBUG")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -g")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -O0")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -Wall")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -fno-common")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -ffunction-sections")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -fdata-sections")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -ffreestanding")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -fno-builtin")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -mthumb")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -mapcs")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -fno-rtti")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -fno-exceptions")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -mcpu=cortex-m7")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -mfloat-abi=hard")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -mfpu=fpv5-d16")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -MMD")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -MP")
 
 SET(CMAKE_CXX_FLAGS_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_RELEASE} -DNDEBUG")
 
@@ -554,73 +598,7 @@ SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -MMD")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -MP")
 
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -DNDEBUG")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -Os")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -Wall")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -fno-common")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -ffunction-sections")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -fdata-sections")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -ffreestanding")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -fno-builtin")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -mthumb")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -mapcs")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -fno-rtti")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -fno-exceptions")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -mfpu=fpv5-d16")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -MMD")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -MP")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -g")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -O0")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -Wall")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -fno-common")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -ffunction-sections")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -fdata-sections")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -ffreestanding")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -fno-builtin")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -mthumb")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -mapcs")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -fno-rtti")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -fno-exceptions")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -mfpu=fpv5-d16")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -MMD")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -MP")
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -DDEBUG")
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -g")
 
@@ -655,6 +633,40 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -mfp
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -MMD")
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -MP")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -DNDEBUG")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -Os")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -Wall")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -fno-common")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -ffunction-sections")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -fdata-sections")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -ffreestanding")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -fno-builtin")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -mthumb")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -mapcs")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -fno-rtti")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -fno-exceptions")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -mcpu=cortex-m7")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -mfloat-abi=hard")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -mfpu=fpv5-d16")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -MMD")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -MP")
 
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} -g")
 
@@ -694,11 +706,23 @@ SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} -X
 
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} -mcpu=cortex-m7")
 
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} -mfloat-abi=hard")
 
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} -mfpu=fpv5-d16")
+
+SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} --defsym=__stack_size__=0x1000")
+
+SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} --defsym=__heap_size__=0x1000")
 
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} -Xlinker")
 
@@ -740,11 +764,23 @@ SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE
 
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} -mcpu=cortex-m7")
 
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} -mfloat-abi=hard")
 
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} -mfpu=fpv5-d16")
+
+SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} --defsym=__stack_size__=0x1000")
+
+SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} --defsym=__heap_size__=0x1000")
 
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} -Xlinker")
 
@@ -788,11 +824,23 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mcpu=cortex-m7")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfloat-abi=hard")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfpu=fpv5-d16")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --defsym=__stack_size__=0x1000")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --defsym=__heap_size__=0x1000")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
 
@@ -834,11 +882,23 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mcpu=cortex-m7")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfloat-abi=hard")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfpu=fpv5-d16")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --defsym=__stack_size__=0x1000")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --defsym=__heap_size__=0x1000")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
 
@@ -882,11 +942,23 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_N
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -mcpu=cortex-m7")
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -mfloat-abi=hard")
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -mfpu=fpv5-d16")
+
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} --defsym=__stack_size__=0x1000")
+
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} --defsym=__heap_size__=0x1000")
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -Xlinker")
 
@@ -928,11 +1000,23 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -mcpu=cortex-m7")
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -mfloat-abi=hard")
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -mfpu=fpv5-d16")
+
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} --defsym=__stack_size__=0x1000")
+
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} --defsym=__heap_size__=0x1000")
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -Xlinker")
 
@@ -950,37 +1034,39 @@ include_directories(${ProjDirPath}/..)
 
 include_directories(${ProjDirPath}/..)
 
+include_directories(${ProjDirPath}/..)
+
+include_directories(${ProjDirPath}/../../../..)
+
 include_directories(${ProjDirPath}/../../../../../../CMSIS/Include)
 
 include_directories(${ProjDirPath}/../../../../../../devices)
 
-include_directories(${ProjDirPath}/..)
-
-include_directories(${ProjDirPath}/../../../..)
+include_directories(${ProjDirPath}/../../../../../../components/phyksz8081)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1064)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities/io)
-
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities/str)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities/log)
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities/debug_console)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities)
+include_directories(${ProjDirPath}/../../../../../../components/uart)
+
+include_directories(${ProjDirPath}/../../../../../../components/serial_manager)
+
+include_directories(${ProjDirPath}/../../../../../../components/lists)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1064/xip)
+
+include_directories(${ProjDirPath}/../../../../xip)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/lwip/port)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/lwip/src)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/lwip/src/include)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/apps)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/lwip/contrib/apps)
 
 add_executable(lwip_iperf_bm.elf 
 "${ProjDirPath}/../lwip_iperf_bm.c"
@@ -991,69 +1077,86 @@ add_executable(lwip_iperf_bm.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../fsl_phy.h"
-"${ProjDirPath}/../fsl_phy.c"
+"${ProjDirPath}/../../../../../../components/phyksz8081/fsl_phy.c"
+"${ProjDirPath}/../../../../../../components/phyksz8081/fsl_phy.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_cache.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_cache.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_common.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_clock.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_clock.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/system_MIMXRT1064.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/system_MIMXRT1064.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/gcc/startup_MIMXRT1064.S"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities/io/fsl_io.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities/io/fsl_io.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities/log/fsl_log.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities/log/fsl_log.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities/fsl_debug_console_conf.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_iomuxc.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities/fsl_assert.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_flexspi_nor_config.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_flexspi_nor_config.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_sdram_ini_dcd.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/xip/evkmimxrt1064_sdram_ini_dcd.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/apps/lwiperf/lwiperf.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/apps/lwiperf.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/port/sys_arch.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_clock.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_clock.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_enet.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_enet.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_common.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/MIMXRT1064.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/MIMXRT1064_features.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/fsl_device_registers.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/system_MIMXRT1064.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/system_MIMXRT1064.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.h"
+"${ProjDirPath}/../../../../../../components/uart/lpuart_adapter.c"
+"${ProjDirPath}/../../../../../../components/uart/uart.h"
+"${ProjDirPath}/../../../../../../components/serial_manager/serial_manager.c"
+"${ProjDirPath}/../../../../../../components/serial_manager/serial_manager.h"
+"${ProjDirPath}/../../../../../../components/serial_manager/serial_port_internal.h"
+"${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.c"
+"${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.h"
+"${ProjDirPath}/../../../../../../components/lists/generic_list.c"
+"${ProjDirPath}/../../../../../../components/lists/generic_list.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/gcc/startup_MIMXRT1064.S"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_iomuxc.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities/fsl_assert.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h"
+"${ProjDirPath}/../../../../xip/evkmimxrt1064_flexspi_nor_config.c"
+"${ProjDirPath}/../../../../xip/evkmimxrt1064_flexspi_nor_config.h"
+"${ProjDirPath}/../../../../xip/evkmimxrt1064_sdram_ini_dcd.c"
+"${ProjDirPath}/../../../../xip/evkmimxrt1064_sdram_ini_dcd.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_compiler.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/port/arch/cc.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/port/arch/perf.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/port/arch/sys_arch.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/port/sys_arch.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/api/api_lib.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/api/api_msg.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/api/err.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/api/if_api.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/api/netbuf.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/api/netdb.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/api/netifapi.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/api/sockets.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/api/tcpip.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/core/altcp.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/core/altcp_alloc.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/core/altcp_tcp.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/def.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/dns.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/inet_chksum.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/init.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/ip.c"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/core/mem.c"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/core/memp.c"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/core/netif.c"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/core/pbuf.c"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/core/raw.c"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/core/stats.c"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/core/sys.c"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/core/tcp.c"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/core/tcp_in.c"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/core/tcp_out.c"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/core/timeouts.c"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/core/udp.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/ipv4/autoip.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/ipv4/dhcp.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/ipv4/etharp.c"
@@ -1071,65 +1174,84 @@ add_executable(lwip_iperf_bm.elf
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/ipv6/ip6_frag.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/ipv6/mld6.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/ipv6/nd6.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/core/mem.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/core/memp.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/core/netif.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/core/pbuf.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/core/raw.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/core/stats.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/core/sys.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/core/tcp.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/core/tcp_in.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/core/tcp_out.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/core/timeouts.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/core/udp.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/compat/posix/arpa/inet.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/compat/posix/net/if.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/compat/posix/netdb.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/compat/posix/sys/socket.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/compat/stdc/errno.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/altcp.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/altcp_tcp.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/altcp_tls.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/api.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/arch.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/debug.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/dhcp.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/dns.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/errno.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/ethip6.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/icmp6.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/inet.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/init.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/ip_addr.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/ip4_addr.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/ip6.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/ip6_frag.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/memp.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/nd6.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/netdb.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/netifapi.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/pbuf.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/sio.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/sockets.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/sys.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/tcpip.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/udp.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/autoip.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/debug.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/def.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/dhcp.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/dhcp6.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/dns.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/err.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/errno.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/etharp.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/ethip6.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/icmp.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/icmp6.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/if_api.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/igmp.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/inet.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/inet_chksum.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/init.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/ip.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/ip4.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/ip4_addr.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/ip4_frag.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/ip6.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/ip6_addr.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/ip6_frag.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/ip6_zone.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/ip_addr.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/mem.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/memp.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/mld6.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/nd6.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/netbuf.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/netdb.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/netif.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/netifapi.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/opt.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/raw.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/snmp.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/stats.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/tcp.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/timeouts.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/pbuf.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/priv/altcp_priv.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/priv/api_msg.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/priv/mem_priv.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/priv/memp_priv.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/priv/memp_std.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/priv/nd6_priv.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/priv/raw_priv.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/priv/sockets_priv.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/priv/tcp_priv.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/priv/tcpip_priv.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/autoip.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/dhcp.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/dhcp6.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/dns.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/etharp.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/ethernet.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/iana.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/icmp.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/icmp6.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/ieee.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/igmp.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/ip.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/ip4.h"
@@ -1138,15 +1260,30 @@ add_executable(lwip_iperf_bm.elf
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/nd6.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/tcp.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/udp.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/raw.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/sio.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/snmp.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/sockets.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/stats.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/sys.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/tcp.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/tcpbase.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/tcpip.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/timeouts.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/udp.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/bridgeif.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/bridgeif_opts.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/etharp.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ethernet.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ieee802154.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/lowpan6.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/lowpan6_ble.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/lowpan6_common.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/lowpan6_opts.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/slipif.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/ccp.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/chap_ms.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/chap-md5.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/chap-new.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/chap_ms.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/eap.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/ecp.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/eui64.h"
@@ -1156,6 +1293,11 @@ add_executable(lwip_iperf_bm.elf
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/lcp.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/magic.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/mppe.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/arc4.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/des.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md4.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md5.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/sha1.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/ppp.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/ppp_impl.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/ppp_opts.h"
@@ -1167,22 +1309,19 @@ add_executable(lwip_iperf_bm.elf
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/pppos.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/upap.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/vj.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/arc4.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/des.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md4.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md5.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/sha1.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/posix/errno.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/posix/netdb.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/include/posix/sys/socket.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/slipif.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/netif/zepif.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/netif/bridgeif.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/netif/bridgeif_fdb.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/ethernet.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/lowpan6.c"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/netif/slipif.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/netif/lowpan6_ble.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/netif/lowpan6_common.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/ppp/auth.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/ppp/ccp.c"
-"${ProjDirPath}/../../../../../../middleware/lwip/src/netif/ppp/chap_ms.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/ppp/chap-md5.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/ppp/chap-new.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/netif/ppp/chap_ms.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/ppp/demand.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/ppp/eap.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/ppp/eui64.c"
@@ -1203,20 +1342,21 @@ add_executable(lwip_iperf_bm.elf
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/ppp/upap.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/ppp/utils.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/ppp/vj.c"
-"${ProjDirPath}/../../../../../../middleware/lwip/port/ethernetif.c"
-"${ProjDirPath}/../../../../../../middleware/lwip/port/ethernetif.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_enet.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_enet.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/netif/slipif.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/netif/zepif.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif_priv.h"
 )
 
-
-set(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} -T${ProjDirPath}/MIMXRT1064xxxxx_sdram.ld -static")
-
-set(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} -T${ProjDirPath}/MIMXRT1064xxxxx_sdram.ld -static")
 
 set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -T${ProjDirPath}/MIMXRT1064xxxxx_ram.ld -static")
 
 set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -T${ProjDirPath}/MIMXRT1064xxxxx_ram.ld -static")
+
+set(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} -T${ProjDirPath}/MIMXRT1064xxxxx_sdram.ld -static")
+
+set(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} -T${ProjDirPath}/MIMXRT1064xxxxx_sdram.ld -static")
 
 set(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -T${ProjDirPath}/MIMXRT1064xxxxx_flexspi_nor.ld -static")
 

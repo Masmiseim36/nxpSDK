@@ -1,24 +1,24 @@
 /*
  * Copyright 2014-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
-#include "fsl_device_registers.h"
-#include "bootloader_common.h"
-#include "bootloader/bootloader.h"
-#include "memory/memory.h"
-#include "normal_memory.h"
 #include "flexspi_nor_memory.h"
-#include "flexspi_nor/flexspi_nor_flash.h"
-#include "bootloader/bl_context.h"
-#include "microseconds/microseconds.h"
-#include "utilities/fsl_rtos_abstraction.h"
-#include "utilities/fsl_assert.h"
 #include <string.h>
+#include "bootloader/bl_context.h"
+#include "bootloader/bootloader.h"
+#include "bootloader_common.h"
+#include "flexspi_nor/flexspi_nor_flash.h"
+#include "fsl_device_registers.h"
+#include "memory/memory.h"
+#include "microseconds/microseconds.h"
+#include "normal_memory.h"
+#include "utilities/fsl_assert.h"
+#include "utilities/fsl_rtos_abstraction.h"
 
 #if BL_FEATURE_FLEXSPI_NOR_MODULE
 
@@ -111,7 +111,8 @@ static flexspi_nor_config_t s_flexspiNorConfigBlock; //!< Configuration block fo
 
 //! @brief Context of Flexspi operation.
 static flexspi_nor_mem_context_t s_flexspiNorContext = {
-    .isConfigured = false, .isAddingToBuffer = false,
+    .isConfigured = false,
+    .isAddingToBuffer = false,
 };
 
 //! @brief Interface to flexspi memory operations
@@ -517,7 +518,8 @@ status_t flexspi_nor_mem_read(uint32_t address, uint32_t length, uint8_t *buffer
     {
         return kStatusMemoryNotConfigured;
     }
-    return normal_mem_read(address, length, buffer);
+    uint32_t phy_address = flexspi_get_phy_address(address);
+    return flexspi_nor_memory_read((uint32_t *)buffer, phy_address, length);
 }
 
 // See flexspi_nor_memory.h for documentation on this function.
@@ -642,71 +644,50 @@ status_t flexspi_nor_mem_fill(uint32_t address, uint32_t length, uint32_t patter
 
 bool is_flexspi_nor_mem_erased(uint32_t start, uint32_t length)
 {
-    bool is_erased = true;
-#if BL_FEATURE_FLEXSPI_ENCRYPT_PROGRAMMING
-    if ((s_flexspiNorContext.isEncryptProgrammingEnabled) && bl_nor_in_encrypted_region(start, length))
+    uint32_t read_length;
+    while (length)
     {
-        uint32_t read_length;
-        while (length)
+        uint32_t readBuffer[kFlexSpiNorMemory_MaxPageSize / sizeof(uint32_t)];
+        read_length = length < sizeof(readBuffer) ? length : sizeof(readBuffer);
+        uint32_t phy_address = flexspi_get_phy_address(start);
+        flexspi_nor_memory_read(readBuffer, phy_address, read_length);
+        uint32_t *buf_32 = &readBuffer[0];
+        for (uint32_t i = 0; i < read_length / 4; i++)
         {
-            uint32_t readBuffer[kFlexSpiNorMemory_MaxPageSize / sizeof(uint32_t)];
-            read_length = length < sizeof(readBuffer) ? length : sizeof(readBuffer);
-            uint32_t phy_address = flexspi_get_phy_address(start);
-            flexspi_nor_memory_read(readBuffer, phy_address, read_length);
-            uint32_t *buf_32 = &readBuffer[0];
-            for (uint32_t i = 0; i < read_length / 4; i++)
+            if (*buf_32++ != 0xFFFFFFFFUL)
             {
-                if (*buf_32++ != 0xFFFFFFFFUL)
-                {
-                    return false;
-                }
+                return false;
             }
-            length -= read_length;
-            start += read_length;
         }
-    }
-    else
-#endif // BL_FEATURE_FLEXSPI_ENCRYPT_PROGRAMMING
-    {
-        is_erased = mem_is_erased(start, length);
+        length -= read_length;
+        start += read_length;
     }
 
-    return is_erased;
+    return true;
 }
 
 bool flexspi_nor_memory_check(uint32_t start, uint8_t *data_to_check, uint32_t length)
 {
-    bool data_match = true;
+    uint32_t buffer[kFlexSpiNorMemory_MaxPageSize / sizeof(uint32_t)];
 
-#if BL_FEATURE_FLEXSPI_ENCRYPT_PROGRAMMING
-    if ((s_flexspiNorContext.isEncryptProgrammingEnabled) && bl_nor_in_encrypted_region(start, length))
+    uint32_t read_length;
+    while (length)
     {
-        uint32_t buffer[kFlexSpiNorMemory_MaxPageSize / sizeof(uint32_t)];
+        read_length = length < sizeof(s_flexspiNorContext.buffer) ? length : sizeof(s_flexspiNorContext.buffer);
+        uint32_t phy_address = flexspi_get_phy_address(start);
+        flexspi_nor_memory_read((uint32_t *)&buffer, phy_address, read_length);
 
-        uint32_t read_length;
-        while (length)
+        if (memcmp(buffer, data_to_check, read_length) != 0)
         {
-            read_length = length < sizeof(s_flexspiNorContext.buffer) ? length : sizeof(s_flexspiNorContext.buffer);
-            uint32_t phy_address = flexspi_get_phy_address(start);
-            flexspi_nor_memory_read((uint32_t *)&buffer, phy_address, read_length);
-
-            if (memcmp(buffer, data_to_check, read_length) != 0)
-            {
-                return false;
-            }
-
-            length -= read_length;
-            start += read_length;
-            data_to_check += read_length;
+            return false;
         }
-    }
-    else
-#endif // BL_FEATURE_FLEXSPI_ENCRYPT_PROGRAMMING
-    {
-        data_match = (memcmp((void *)start, data_to_check, length) == 0) ? true : false;
+
+        length -= read_length;
+        start += read_length;
+        data_to_check += read_length;
     }
 
-    return data_match;
+    return true;
 }
 
 // See flexspi_nor_memory.h for documentation on this function.

@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2017, NXP Semiconductors, Inc.
+ * Copyright  2017 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -79,7 +79,8 @@ void BOARD_EnableLcdInterrupt(void)
 void BOARD_InitLcd(void)
 {
     gpio_pin_config_t config = {
-        kGPIO_DigitalOutput, 0,
+        kGPIO_DigitalOutput,
+        0,
     };
 
     /* Backlight. */
@@ -100,7 +101,10 @@ void BOARD_InitLcdifPixelClock(void)
      * Video PLL output clock is OSC24M * (loopDivider + (denominator / numerator)) / postDivider = 93MHz.
      */
     clock_video_pll_config_t config = {
-        .loopDivider = 31, .postDivider = 8, .numerator = 0, .denominator = 0,
+        .loopDivider = 31,
+        .postDivider = 8,
+        .numerator   = 0,
+        .denominator = 0,
     };
 
     CLOCK_InitVideoPll(&config);
@@ -143,18 +147,18 @@ void APP_LCDIF_IRQHandler(void)
 void APP_ELCDIF_Init(void)
 {
     const elcdif_rgb_mode_config_t config = {
-        .panelWidth = APP_IMG_WIDTH,
-        .panelHeight = APP_IMG_HEIGHT,
-        .hsw = APP_HSW,
-        .hfp = APP_HFP,
-        .hbp = APP_HBP,
-        .vsw = APP_VSW,
-        .vfp = APP_VFP,
-        .vbp = APP_VBP,
+        .panelWidth    = APP_IMG_WIDTH,
+        .panelHeight   = APP_IMG_HEIGHT,
+        .hsw           = APP_HSW,
+        .hfp           = APP_HFP,
+        .hbp           = APP_HBP,
+        .vsw           = APP_VSW,
+        .vfp           = APP_VFP,
+        .vbp           = APP_VBP,
         .polarityFlags = APP_POL_FLAGS,
-        .bufferAddr = (uint32_t)s_frameBuffer,
-        .pixelFormat = kELCDIF_PixelFormatRAW8,
-        .dataBus = kELCDIF_DataBus8Bit,
+        .bufferAddr    = (uint32_t)s_frameBuffer,
+        .pixelFormat   = kELCDIF_PixelFormatRAW8,
+        .dataBus       = kELCDIF_DataBus8Bit,
     };
 
     ELCDIF_RgbModeInit(APP_ELCDIF, &config);
@@ -220,7 +224,7 @@ void APP_FillFrameBuffer(void)
  */
 int main(void)
 {
-    uint32_t lutIndex = 0;
+    uint32_t lutIndex    = 0;
     uint32_t frameToWait = 0;
 
     BOARD_ConfigMPU();

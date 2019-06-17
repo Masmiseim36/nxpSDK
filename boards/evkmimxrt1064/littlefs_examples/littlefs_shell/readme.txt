@@ -29,10 +29,10 @@ Print the content of the file using 'cat mynewdir/foo.txt'. The expected output 
 
 Toolchain supported
 ===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.1
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
+- IAR embedded Workbench  8.32.3
+- MCUXpresso  11.0.0
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
 
 Hardware requirements
 =====================

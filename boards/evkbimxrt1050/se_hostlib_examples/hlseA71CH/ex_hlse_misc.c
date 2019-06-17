@@ -160,7 +160,7 @@ static U8 exGetUniqueID(U8 initMode)
 {
     U8 result = 1;
     U16 err;
-    U8 uid[A71CH_MODULE_UNIQUE_ID_LEN];
+    U8 uid[A71CH_MODULE_UNIQUE_ID_LEN] = {0};
     U16 uidLen = sizeof(uid);
 
     sm_printf(CONSOLE, "\r\n-----------\r\nStart exGetUniqueID(%s)\r\n------------\r\n", getInitModeAsString(initMode));

@@ -329,15 +329,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc 
---diag_suppress=66,1296,186 
---diag_suppress=1296,186 
---diag_suppress=177 
- 
-</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, IMX_RT, MBEDTLS_CONFIG_FILE='\"a71ch_mbedtls_evkbimxrt1050_config.h\"', TGT_A71CH, I2C, MBEDTLS, SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC</Define>
+              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=177 --diag_suppress=1296,186</MiscControls>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, IMX_RT, MBEDTLS_CONFIG_FILE='\"a71ch_mbedtls_evkbimxrt1050_config.h\"', PRINTF_ADVANCED_ENABLE=1, TGT_A71CH, I2C, MBEDTLS, SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../middleware/se_hostlib;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/se_hostlib/hostLib/libCommon/hostCrypto;../../../../../middleware/se_hostlib/hostLib/tstUtil;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../middleware/se_hostlib/hostLib/libCommon/infra;../../../../../middleware/se_hostlib/hostLib/libCommon/scp;../../../../../middleware/se_hostlib/hostLib/libCommon/smCom;../../../../../middleware/se_hostlib/hostLib/platform/inc;../../../../../middleware/se_hostlib/platform;../../../../../middleware/se_hostlib/hostLib/tstUtil;../../../../../middleware/se_hostlib/hostLib/a71ch/inc;../../../../../middleware/se_hostlib/hostLib/api/inc;../../../../../middleware/se_hostlib/hostLib/mbedtls/inc;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../devices/MIMXRT1052/drivers;../../../../../components/lists;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/xip;../../../xip</IncludePath>
+              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../middleware/se_hostlib;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/se_hostlib/hostLib/libCommon/hostCrypto;../../../../../middleware/se_hostlib/hostLib/tstUtil;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../middleware/se_hostlib/hostLib/libCommon/infra;../../../../../middleware/se_hostlib/hostLib/libCommon/scp;../../../../../middleware/se_hostlib/hostLib/inc;../../../../../middleware/se_hostlib/hostLib/libCommon/smCom;../../../../../middleware/se_hostlib/hostLib/platform/inc;../../../../../middleware/se_hostlib/platform;../../../../../middleware/se_hostlib/hostLib/tstUtil;../../../../../middleware/se_hostlib/hostLib/a71ch/inc;../../../../../middleware/se_hostlib/hostLib/api/inc;../../../../../middleware/se_hostlib/hostLib/inc;../../../../../middleware/se_hostlib/hostLib/mbedtls/inc;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../devices/MIMXRT1052/drivers;../../../../../components/lists;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/xip;../../../xip</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -371,14 +366,7 @@
             <ScatterFile>MIMXRT1052xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove 
---keep=*(.boot_hdr.ivt) 
---keep=*(.boot_hdr.boot_data) 
---keep=*(.boot_hdr.conf) 
---predefine="-DXIP_BOOT_HEADER_ENABLE=1" 
---predefine="-D__stack_size__=0x2000" 
---predefine="-D__heap_size__=0x8000" 
-</Misc>
+            <Misc>--remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -549,19 +537,14 @@
               <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_pit.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.h</FileName>
+              <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_clock.h</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common.h</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.c</FileName>
@@ -569,9 +552,9 @@
               <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.h</FileName>
+              <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.h</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.c</FileName>
@@ -579,19 +562,159 @@
               <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpio.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>se_hostlib-inc</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c</FilePath>
+              <FileName>HLSEAPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/HLSEAPI.h</FilePath>
+            </File>
+            <File>
+              <FileName>HLSEComm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/HLSEComm.h</FilePath>
+            </File>
+            <File>
+              <FileName>HLSECrypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/HLSECrypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>HLSEMisc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/HLSEMisc.h</FilePath>
+            </File>
+            <File>
+              <FileName>HLSEObjects.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/HLSEObjects.h</FilePath>
+            </File>
+            <File>
+              <FileName>HLSETypes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/HLSETypes.h</FilePath>
+            </File>
+            <File>
+              <FileName>PlugAndTrust_HostLib_Ver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/PlugAndTrust_HostLib_Ver.h</FilePath>
+            </File>
+            <File>
+              <FileName>PlugAndTrust_Pkg_Ver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/PlugAndTrust_Pkg_Ver.h</FilePath>
+            </File>
+            <File>
+              <FileName>a71ch_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/a71ch_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>a71ch_const.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/a71ch_const.h</FilePath>
+            </File>
+            <File>
+              <FileName>a71ch_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/a71ch_util.h</FilePath>
+            </File>
+            <File>
+              <FileName>ax_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/ax_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>ax_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/ax_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>ax_common_a71ch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/ax_common_a71ch.h</FilePath>
+            </File>
+            <File>
+              <FileName>ax_common_a71cl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/ax_common_a71cl.h</FilePath>
+            </File>
+            <File>
+              <FileName>ax_common_private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/ax_common_private.h</FilePath>
+            </File>
+            <File>
+              <FileName>ax_scp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/ax_scp.h</FilePath>
+            </File>
+            <File>
+              <FileName>ax_scp_private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/ax_scp_private.h</FilePath>
+            </File>
+            <File>
+              <FileName>ax_sss_scp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/ax_sss_scp.h</FilePath>
+            </File>
+            <File>
+              <FileName>ax_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/ax_util.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sss_ftr_default.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/fsl_sss_ftr_default.h</FilePath>
+            </File>
+            <File>
+              <FileName>nxEnsure.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/nxEnsure.h</FilePath>
+            </File>
+            <File>
+              <FileName>scp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/scp.h</FilePath>
+            </File>
+            <File>
+              <FileName>sci2c_cfg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/sci2c_cfg.h</FilePath>
+            </File>
+            <File>
+              <FileName>smCom.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smCom.h</FilePath>
+            </File>
+            <File>
+              <FileName>smComSCI2C.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smComSCI2C.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -607,31 +730,6 @@
               <FileName>global_platf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/global_platf.h</FilePath>
-            </File>
-            <File>
-              <FileName>sm_apdu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_apdu.c</FilePath>
-            </File>
-            <File>
-              <FileName>sm_apdu.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_apdu.h</FilePath>
-            </File>
-            <File>
-              <FileName>sm_errors.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_errors.c</FilePath>
-            </File>
-            <File>
-              <FileName>sm_errors.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_errors.h</FilePath>
-            </File>
-            <File>
-              <FileName>sm_types.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_types.h</FilePath>
             </File>
             <File>
               <FileName>nxLog.c</FileName>
@@ -652,6 +750,81 @@
               <FileName>nxLog_DefaultConfig.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_DefaultConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>nxLog_UseCases.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_UseCases.h</FilePath>
+            </File>
+            <File>
+              <FileName>nxLog_VCOM.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_VCOM.h</FilePath>
+            </File>
+            <File>
+              <FileName>nxLog_hostLib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_hostLib.h</FilePath>
+            </File>
+            <File>
+              <FileName>nxLog_mbedtls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_mbedtls.h</FilePath>
+            </File>
+            <File>
+              <FileName>nxLog_scp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_scp.h</FilePath>
+            </File>
+            <File>
+              <FileName>nxLog_smCom.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_smCom.h</FilePath>
+            </File>
+            <File>
+              <FileName>nxLog_sscp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_sscp.h</FilePath>
+            </File>
+            <File>
+              <FileName>nxLog_sss.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_sss.h</FilePath>
+            </File>
+            <File>
+              <FileName>sm_apdu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_apdu.c</FilePath>
+            </File>
+            <File>
+              <FileName>sm_apdu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_apdu.h</FilePath>
+            </File>
+            <File>
+              <FileName>sm_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>sm_errors.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_errors.c</FilePath>
+            </File>
+            <File>
+              <FileName>sm_errors.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_errors.h</FilePath>
+            </File>
+            <File>
+              <FileName>sm_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>sm_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_types.h</FilePath>
             </File>
             <File>
               <FileName>scp.c</FileName>
@@ -689,6 +862,11 @@
               <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smComSCI2C.c</FilePath>
             </File>
             <File>
+              <FileName>HostCryptoAPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/hostCrypto/HostCryptoAPI.h</FilePath>
+            </File>
+            <File>
               <FileName>axHostCrypto.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/hostCrypto/axHostCrypto.h</FilePath>
@@ -709,11 +887,6 @@
               <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/hostCrypto/hcAsn.h</FilePath>
             </File>
             <File>
-              <FileName>HostCryptoAPI.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/hostCrypto/HostCryptoAPI.h</FilePath>
-            </File>
-            <File>
               <FileName>a71_debug.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/a71_debug.c</FilePath>
@@ -728,11 +901,6 @@
         <Group>
           <GroupName>se_hostlib-platform</GroupName>
           <Files>
-            <File>
-              <FileName>sm_printf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/platform/generic/sm_printf.c</FilePath>
-            </File>
             <File>
               <FileName>i2c_a7.h</FileName>
               <FileType>5</FileType>
@@ -786,26 +954,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>se_hostlib-inc</GroupName>
-          <Files>
-            <File>
-              <FileName>smCom.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smCom.h</FilePath>
-            </File>
-            <File>
-              <FileName>smComSCI2C.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smComSCI2C.h</FilePath>
-            </File>
-            <File>
-              <FileName>sci2c_cfg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/sci2c_cfg.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>se_hostlib-src</GroupName>
           <Files>
             <File>
@@ -819,6 +967,11 @@
           <GroupName>se_hostlib-mbedtls</GroupName>
           <Files>
             <File>
+              <FileName>a71ch_mbedtls_evkbimxrt1050_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_evkbimxrt1050_config.h</FilePath>
+            </File>
+            <File>
               <FileName>a71ch_mbedtls_frdm_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_frdm_config.h</FilePath>
@@ -827,11 +980,6 @@
               <FileName>a71ch_mbedtls_frdmkw41z_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_frdmkw41z_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>a71ch_mbedtls_evkbimxrt1050_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_evkbimxrt1050_config.h</FilePath>
             </File>
             <File>
               <FileName>ax_mbedtls.h</FileName>
@@ -859,6 +1007,11 @@
           <GroupName>se_hostlib-tst</GroupName>
           <Files>
             <File>
+              <FileName>app_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/app_boot.h</FilePath>
+            </File>
+            <File>
               <FileName>axWebUtil.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/axWebUtil.h</FilePath>
@@ -872,6 +1025,16 @@
               <FileName>hkdf_mbedtls.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/hkdf_mbedtls.h</FilePath>
+            </File>
+            <File>
+              <FileName>tstHostCrypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/tstHostCrypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>tstHostCrypto_mbedtls.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/tstHostCrypto_mbedtls.c</FilePath>
             </File>
             <File>
               <FileName>tst_a71ch_util.c</FileName>
@@ -904,34 +1067,19 @@
               <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/tst_sm_util.h</FilePath>
             </File>
             <File>
-              <FileName>tstHostCrypto.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/tstHostCrypto.h</FilePath>
-            </File>
-            <File>
-              <FileName>tstHostCrypto_mbedtls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/tstHostCrypto_mbedtls.c</FilePath>
-            </File>
-            <File>
-              <FileName>app_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/app_boot.h</FilePath>
-            </File>
-            <File>
               <FileName>tst_utils_kinetis.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/tst_utils_kinetis.c</FilePath>
             </File>
             <File>
-              <FileName>tst_utils_rtos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/tst_utils_rtos.c</FilePath>
-            </File>
-            <File>
               <FileName>tst_utils_kinetis.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/tst_utils_kinetis.h</FilePath>
+            </File>
+            <File>
+              <FileName>tst_utils_rtos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/tst_utils_rtos.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -939,119 +1087,19 @@
           <GroupName>se_hostlib-ax</GroupName>
           <Files>
             <File>
-              <FileName>ax_scp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_scp.c</FilePath>
-            </File>
-            <File>
-              <FileName>ax_switch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_switch.c</FilePath>
-            </File>
-            <File>
-              <FileName>A71HLSEWrapper.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/A71HLSEWrapper.c</FilePath>
-            </File>
-            <File>
-              <FileName>ax_crypto_ecc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_crypto_ecc.c</FilePath>
-            </File>
-            <File>
-              <FileName>ax_crypto_rng.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_crypto_rng.c</FilePath>
-            </File>
-            <File>
-              <FileName>ax_util.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_util.c</FilePath>
-            </File>
-            <File>
-              <FileName>ax_sst.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_sst.c</FilePath>
-            </File>
-            <File>
-              <FileName>ax_crypto_aes_key.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_crypto_aes_key.c</FilePath>
-            </File>
-            <File>
-              <FileName>ax_scp_private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/ax_scp_private.h</FilePath>
-            </File>
-            <File>
-              <FileName>HLSEObjects.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/HLSEObjects.h</FilePath>
-            </File>
-            <File>
-              <FileName>HLSECrypto.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/HLSECrypto.h</FilePath>
-            </File>
-            <File>
-              <FileName>HLSEMisc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/HLSEMisc.h</FilePath>
-            </File>
-            <File>
-              <FileName>ax_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/ax_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>ax_util.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/ax_util.h</FilePath>
-            </File>
-            <File>
-              <FileName>ax_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/ax_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>ax_common_private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/ax_common_private.h</FilePath>
-            </File>
-            <File>
-              <FileName>HLSEComm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/HLSEComm.h</FilePath>
-            </File>
-            <File>
-              <FileName>ax_scp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/ax_scp.h</FilePath>
-            </File>
-            <File>
-              <FileName>HLSETypes.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/HLSETypes.h</FilePath>
-            </File>
-            <File>
-              <FileName>HLSEAPI.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/HLSEAPI.h</FilePath>
-            </File>
-            <File>
-              <FileName>a71ch_crypto_derive.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/a71ch/src/a71ch_crypto_derive.c</FilePath>
-            </File>
-            <File>
               <FileName>a71ch_com.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/a71ch/src/a71ch_com.c</FilePath>
             </File>
             <File>
-              <FileName>a71ch_sst.c</FileName>
+              <FileName>a71ch_com_scp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/a71ch/src/a71ch_sst.c</FilePath>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/a71ch/src/a71ch_com_scp.c</FilePath>
+            </File>
+            <File>
+              <FileName>a71ch_crypto_derive.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/a71ch/src/a71ch_crypto_derive.c</FilePath>
             </File>
             <File>
               <FileName>a71ch_crypto_ecc.c</FileName>
@@ -1064,19 +1112,54 @@
               <FilePath>../../../../../middleware/se_hostlib/hostLib/a71ch/src/a71ch_module.c</FilePath>
             </File>
             <File>
-              <FileName>a71ch_const.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/a71ch/inc/a71ch_const.h</FilePath>
+              <FileName>a71ch_sst.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/a71ch/src/a71ch_sst.c</FilePath>
             </File>
             <File>
-              <FileName>a71ch_util.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/a71ch/inc/a71ch_util.h</FilePath>
+              <FileName>A71HLSEWrapper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/A71HLSEWrapper.c</FilePath>
             </File>
             <File>
-              <FileName>a71ch_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/a71ch/inc/a71ch_api.h</FilePath>
+              <FileName>ax_crypto_aes_key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_crypto_aes_key.c</FilePath>
+            </File>
+            <File>
+              <FileName>ax_crypto_ecc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_crypto_ecc.c</FilePath>
+            </File>
+            <File>
+              <FileName>ax_crypto_rng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_crypto_rng.c</FilePath>
+            </File>
+            <File>
+              <FileName>ax_scp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_scp.c</FilePath>
+            </File>
+            <File>
+              <FileName>ax_sss_scp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_sss_scp.c</FilePath>
+            </File>
+            <File>
+              <FileName>ax_sst.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_sst.c</FilePath>
+            </File>
+            <File>
+              <FileName>ax_switch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_switch.c</FilePath>
+            </File>
+            <File>
+              <FileName>ax_util.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_util.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1274,11 +1357,6 @@
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/md.h</FilePath>
             </File>
             <File>
-              <FileName>md_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/md_internal.h</FilePath>
-            </File>
-            <File>
               <FileName>md2.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/md2.h</FilePath>
@@ -1292,6 +1370,11 @@
               <FileName>md5.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/md5.h</FilePath>
+            </File>
+            <File>
+              <FileName>md_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/md_internal.h</FilePath>
             </File>
             <File>
               <FileName>memory_buffer_alloc.h</FileName>
@@ -1339,11 +1422,6 @@
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/pk_internal.h</FilePath>
             </File>
             <File>
-              <FileName>pkcs5.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/pkcs5.h</FilePath>
-            </File>
-            <File>
               <FileName>pkcs11.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/pkcs11.h</FilePath>
@@ -1352,6 +1430,11 @@
               <FileName>pkcs12.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/pkcs12.h</FilePath>
+            </File>
+            <File>
+              <FileName>pkcs5.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/pkcs5.h</FilePath>
             </File>
             <File>
               <FileName>platform.h</FileName>
@@ -1539,16 +1622,6 @@
               <FilePath>../../../../../middleware/mbedtls/library/certs.c</FilePath>
             </File>
             <File>
-              <FileName>cipher.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/library/cipher.c</FilePath>
-            </File>
-            <File>
-              <FileName>cipher_wrap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/library/cipher_wrap.c</FilePath>
-            </File>
-            <File>
               <FileName>chacha20.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/chacha20.c</FilePath>
@@ -1557,6 +1630,16 @@
               <FileName>chachapoly.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/chachapoly.c</FilePath>
+            </File>
+            <File>
+              <FileName>cipher.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/cipher.c</FilePath>
+            </File>
+            <File>
+              <FileName>cipher_wrap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/cipher_wrap.c</FilePath>
             </File>
             <File>
               <FileName>cmac.c</FileName>
@@ -1649,11 +1732,6 @@
               <FilePath>../../../../../middleware/mbedtls/library/md.c</FilePath>
             </File>
             <File>
-              <FileName>md_wrap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/library/md_wrap.c</FilePath>
-            </File>
-            <File>
               <FileName>md2.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/md2.c</FilePath>
@@ -1667,6 +1745,11 @@
               <FileName>md5.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/md5.c</FilePath>
+            </File>
+            <File>
+              <FileName>md_wrap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/md_wrap.c</FilePath>
             </File>
             <File>
               <FileName>memory_buffer_alloc.c</FileName>
@@ -1709,14 +1792,19 @@
               <FilePath>../../../../../middleware/mbedtls/library/pk_wrap.c</FilePath>
             </File>
             <File>
-              <FileName>pkcs5.c</FileName>
+              <FileName>pkcs11.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/library/pkcs5.c</FilePath>
+              <FilePath>../../../../../middleware/mbedtls/library/pkcs11.c</FilePath>
             </File>
             <File>
               <FileName>pkcs12.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/pkcs12.c</FilePath>
+            </File>
+            <File>
+              <FileName>pkcs5.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/pkcs5.c</FilePath>
             </File>
             <File>
               <FileName>pkparse.c</FileName>
@@ -1874,6 +1962,46 @@
           <GroupName>mbedtls-mbedtls_port</GroupName>
           <Files>
             <File>
+              <FileName>aes_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>aes_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt_ksdk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_curves_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
+            </File>
+            <File>
               <FileName>ksdk_mbedtls.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
@@ -1898,56 +2026,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
             </File>
-            <File>
-              <FileName>des_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_curves_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt_ksdk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>device</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/fsl_device_registers.h</FilePath>
-            </File>
             <File>
               <FileName>MIMXRT1052.h</FileName>
               <FileType>5</FileType>
@@ -1957,6 +2040,11 @@
               <FileName>MIMXRT1052_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/MIMXRT1052_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MIMXRT1052.c</FileName>
@@ -1974,16 +2062,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -1999,6 +2077,16 @@
               <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
@@ -2006,57 +2094,62 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/uart</GroupName>
+          <GroupName>component-uart</GroupName>
           <Files>
-            <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/uart/uart.h</FilePath>
-            </File>
             <File>
               <FileName>lpuart_adapter.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/uart/lpuart_adapter.c</FilePath>
             </File>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/uart/uart.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component/serial_manager</GroupName>
+          <GroupName>component-serial_manager</GroupName>
           <Files>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
             <File>
               <FileName>serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
             </File>
             <File>
-              <FileName>serial_port_uart.h</FileName>
+              <FileName>serial_manager.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
             </File>
             <File>
               <FileName>serial_port_uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
             </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component/lists</GroupName>
+          <GroupName>component-lists</GroupName>
           <Files>
-            <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
-            </File>
             <File>
               <FileName>generic_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/lists/generic_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2074,14 +2167,14 @@
           <GroupName>xip</GroupName>
           <Files>
             <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_flexspi_nor_boot.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.h</FilePath>
             </File>
             <File>
               <FileName>evkbimxrt1050_flexspi_nor_config.c</FileName>
@@ -2114,46 +2207,6 @@
               <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_common_tables.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
@@ -2169,9 +2222,49 @@
               <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
             <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv8.h</FileName>
@@ -2507,15 +2600,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc 
---diag_suppress=66,1296,186 
---diag_suppress=1296,186 
---diag_suppress=177 
- 
-</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, IMX_RT, MBEDTLS_CONFIG_FILE='\"a71ch_mbedtls_evkbimxrt1050_config.h\"', TGT_A71CH, I2C, MBEDTLS, SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC</Define>
+              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=177 --diag_suppress=1296,186</MiscControls>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, IMX_RT, MBEDTLS_CONFIG_FILE='\"a71ch_mbedtls_evkbimxrt1050_config.h\"', PRINTF_ADVANCED_ENABLE=1, TGT_A71CH, I2C, MBEDTLS, SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../middleware/se_hostlib;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/se_hostlib/hostLib/libCommon/hostCrypto;../../../../../middleware/se_hostlib/hostLib/tstUtil;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../middleware/se_hostlib/hostLib/libCommon/infra;../../../../../middleware/se_hostlib/hostLib/libCommon/scp;../../../../../middleware/se_hostlib/hostLib/libCommon/smCom;../../../../../middleware/se_hostlib/hostLib/platform/inc;../../../../../middleware/se_hostlib/platform;../../../../../middleware/se_hostlib/hostLib/tstUtil;../../../../../middleware/se_hostlib/hostLib/a71ch/inc;../../../../../middleware/se_hostlib/hostLib/api/inc;../../../../../middleware/se_hostlib/hostLib/mbedtls/inc;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../devices/MIMXRT1052/drivers;../../../../../components/lists;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/xip;../../../xip</IncludePath>
+              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../middleware/se_hostlib;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/se_hostlib/hostLib/libCommon/hostCrypto;../../../../../middleware/se_hostlib/hostLib/tstUtil;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../middleware/se_hostlib/hostLib/libCommon/infra;../../../../../middleware/se_hostlib/hostLib/libCommon/scp;../../../../../middleware/se_hostlib/hostLib/inc;../../../../../middleware/se_hostlib/hostLib/libCommon/smCom;../../../../../middleware/se_hostlib/hostLib/platform/inc;../../../../../middleware/se_hostlib/platform;../../../../../middleware/se_hostlib/hostLib/tstUtil;../../../../../middleware/se_hostlib/hostLib/a71ch/inc;../../../../../middleware/se_hostlib/hostLib/api/inc;../../../../../middleware/se_hostlib/hostLib/inc;../../../../../middleware/se_hostlib/hostLib/mbedtls/inc;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../devices/MIMXRT1052/drivers;../../../../../components/lists;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/xip;../../../xip</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2549,14 +2637,7 @@
             <ScatterFile>MIMXRT1052xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove 
---keep=*(.boot_hdr.ivt) 
---keep=*(.boot_hdr.boot_data) 
---keep=*(.boot_hdr.conf) 
---predefine="-DXIP_BOOT_HEADER_ENABLE=1" 
---predefine="-D__stack_size__=0x2000" 
---predefine="-D__heap_size__=0x8000" 
-</Misc>
+            <Misc>--remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2727,19 +2808,14 @@
               <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_pit.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.h</FileName>
+              <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_clock.h</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common.h</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.c</FileName>
@@ -2747,9 +2823,9 @@
               <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.h</FileName>
+              <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.h</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.c</FileName>
@@ -2757,19 +2833,159 @@
               <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpio.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>se_hostlib-inc</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c</FilePath>
+              <FileName>HLSEAPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/HLSEAPI.h</FilePath>
+            </File>
+            <File>
+              <FileName>HLSEComm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/HLSEComm.h</FilePath>
+            </File>
+            <File>
+              <FileName>HLSECrypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/HLSECrypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>HLSEMisc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/HLSEMisc.h</FilePath>
+            </File>
+            <File>
+              <FileName>HLSEObjects.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/HLSEObjects.h</FilePath>
+            </File>
+            <File>
+              <FileName>HLSETypes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/HLSETypes.h</FilePath>
+            </File>
+            <File>
+              <FileName>PlugAndTrust_HostLib_Ver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/PlugAndTrust_HostLib_Ver.h</FilePath>
+            </File>
+            <File>
+              <FileName>PlugAndTrust_Pkg_Ver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/PlugAndTrust_Pkg_Ver.h</FilePath>
+            </File>
+            <File>
+              <FileName>a71ch_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/a71ch_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>a71ch_const.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/a71ch_const.h</FilePath>
+            </File>
+            <File>
+              <FileName>a71ch_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/a71ch_util.h</FilePath>
+            </File>
+            <File>
+              <FileName>ax_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/ax_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>ax_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/ax_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>ax_common_a71ch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/ax_common_a71ch.h</FilePath>
+            </File>
+            <File>
+              <FileName>ax_common_a71cl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/ax_common_a71cl.h</FilePath>
+            </File>
+            <File>
+              <FileName>ax_common_private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/ax_common_private.h</FilePath>
+            </File>
+            <File>
+              <FileName>ax_scp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/ax_scp.h</FilePath>
+            </File>
+            <File>
+              <FileName>ax_scp_private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/ax_scp_private.h</FilePath>
+            </File>
+            <File>
+              <FileName>ax_sss_scp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/ax_sss_scp.h</FilePath>
+            </File>
+            <File>
+              <FileName>ax_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/ax_util.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sss_ftr_default.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/fsl_sss_ftr_default.h</FilePath>
+            </File>
+            <File>
+              <FileName>nxEnsure.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/nxEnsure.h</FilePath>
+            </File>
+            <File>
+              <FileName>scp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/inc/scp.h</FilePath>
+            </File>
+            <File>
+              <FileName>sci2c_cfg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/sci2c_cfg.h</FilePath>
+            </File>
+            <File>
+              <FileName>smCom.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smCom.h</FilePath>
+            </File>
+            <File>
+              <FileName>smComSCI2C.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smComSCI2C.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2785,31 +3001,6 @@
               <FileName>global_platf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/global_platf.h</FilePath>
-            </File>
-            <File>
-              <FileName>sm_apdu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_apdu.c</FilePath>
-            </File>
-            <File>
-              <FileName>sm_apdu.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_apdu.h</FilePath>
-            </File>
-            <File>
-              <FileName>sm_errors.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_errors.c</FilePath>
-            </File>
-            <File>
-              <FileName>sm_errors.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_errors.h</FilePath>
-            </File>
-            <File>
-              <FileName>sm_types.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_types.h</FilePath>
             </File>
             <File>
               <FileName>nxLog.c</FileName>
@@ -2830,6 +3021,81 @@
               <FileName>nxLog_DefaultConfig.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_DefaultConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>nxLog_UseCases.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_UseCases.h</FilePath>
+            </File>
+            <File>
+              <FileName>nxLog_VCOM.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_VCOM.h</FilePath>
+            </File>
+            <File>
+              <FileName>nxLog_hostLib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_hostLib.h</FilePath>
+            </File>
+            <File>
+              <FileName>nxLog_mbedtls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_mbedtls.h</FilePath>
+            </File>
+            <File>
+              <FileName>nxLog_scp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_scp.h</FilePath>
+            </File>
+            <File>
+              <FileName>nxLog_smCom.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_smCom.h</FilePath>
+            </File>
+            <File>
+              <FileName>nxLog_sscp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_sscp.h</FilePath>
+            </File>
+            <File>
+              <FileName>nxLog_sss.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_sss.h</FilePath>
+            </File>
+            <File>
+              <FileName>sm_apdu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_apdu.c</FilePath>
+            </File>
+            <File>
+              <FileName>sm_apdu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_apdu.h</FilePath>
+            </File>
+            <File>
+              <FileName>sm_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>sm_errors.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_errors.c</FilePath>
+            </File>
+            <File>
+              <FileName>sm_errors.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_errors.h</FilePath>
+            </File>
+            <File>
+              <FileName>sm_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>sm_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_types.h</FilePath>
             </File>
             <File>
               <FileName>scp.c</FileName>
@@ -2867,6 +3133,11 @@
               <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smComSCI2C.c</FilePath>
             </File>
             <File>
+              <FileName>HostCryptoAPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/hostCrypto/HostCryptoAPI.h</FilePath>
+            </File>
+            <File>
               <FileName>axHostCrypto.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/hostCrypto/axHostCrypto.h</FilePath>
@@ -2887,11 +3158,6 @@
               <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/hostCrypto/hcAsn.h</FilePath>
             </File>
             <File>
-              <FileName>HostCryptoAPI.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/hostCrypto/HostCryptoAPI.h</FilePath>
-            </File>
-            <File>
               <FileName>a71_debug.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/infra/a71_debug.c</FilePath>
@@ -2906,11 +3172,6 @@
         <Group>
           <GroupName>se_hostlib-platform</GroupName>
           <Files>
-            <File>
-              <FileName>sm_printf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/platform/generic/sm_printf.c</FilePath>
-            </File>
             <File>
               <FileName>i2c_a7.h</FileName>
               <FileType>5</FileType>
@@ -2964,26 +3225,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>se_hostlib-inc</GroupName>
-          <Files>
-            <File>
-              <FileName>smCom.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smCom.h</FilePath>
-            </File>
-            <File>
-              <FileName>smComSCI2C.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smComSCI2C.h</FilePath>
-            </File>
-            <File>
-              <FileName>sci2c_cfg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/sci2c_cfg.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>se_hostlib-src</GroupName>
           <Files>
             <File>
@@ -2997,6 +3238,11 @@
           <GroupName>se_hostlib-mbedtls</GroupName>
           <Files>
             <File>
+              <FileName>a71ch_mbedtls_evkbimxrt1050_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_evkbimxrt1050_config.h</FilePath>
+            </File>
+            <File>
               <FileName>a71ch_mbedtls_frdm_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_frdm_config.h</FilePath>
@@ -3005,11 +3251,6 @@
               <FileName>a71ch_mbedtls_frdmkw41z_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_frdmkw41z_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>a71ch_mbedtls_evkbimxrt1050_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_evkbimxrt1050_config.h</FilePath>
             </File>
             <File>
               <FileName>ax_mbedtls.h</FileName>
@@ -3037,6 +3278,11 @@
           <GroupName>se_hostlib-tst</GroupName>
           <Files>
             <File>
+              <FileName>app_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/app_boot.h</FilePath>
+            </File>
+            <File>
               <FileName>axWebUtil.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/axWebUtil.h</FilePath>
@@ -3050,6 +3296,16 @@
               <FileName>hkdf_mbedtls.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/hkdf_mbedtls.h</FilePath>
+            </File>
+            <File>
+              <FileName>tstHostCrypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/tstHostCrypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>tstHostCrypto_mbedtls.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/tstHostCrypto_mbedtls.c</FilePath>
             </File>
             <File>
               <FileName>tst_a71ch_util.c</FileName>
@@ -3082,34 +3338,19 @@
               <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/tst_sm_util.h</FilePath>
             </File>
             <File>
-              <FileName>tstHostCrypto.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/tstHostCrypto.h</FilePath>
-            </File>
-            <File>
-              <FileName>tstHostCrypto_mbedtls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/tstHostCrypto_mbedtls.c</FilePath>
-            </File>
-            <File>
-              <FileName>app_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/app_boot.h</FilePath>
-            </File>
-            <File>
               <FileName>tst_utils_kinetis.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/tst_utils_kinetis.c</FilePath>
             </File>
             <File>
-              <FileName>tst_utils_rtos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/tst_utils_rtos.c</FilePath>
-            </File>
-            <File>
               <FileName>tst_utils_kinetis.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/tst_utils_kinetis.h</FilePath>
+            </File>
+            <File>
+              <FileName>tst_utils_rtos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/tstUtil/tst_utils_rtos.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3117,119 +3358,19 @@
           <GroupName>se_hostlib-ax</GroupName>
           <Files>
             <File>
-              <FileName>ax_scp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_scp.c</FilePath>
-            </File>
-            <File>
-              <FileName>ax_switch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_switch.c</FilePath>
-            </File>
-            <File>
-              <FileName>A71HLSEWrapper.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/A71HLSEWrapper.c</FilePath>
-            </File>
-            <File>
-              <FileName>ax_crypto_ecc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_crypto_ecc.c</FilePath>
-            </File>
-            <File>
-              <FileName>ax_crypto_rng.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_crypto_rng.c</FilePath>
-            </File>
-            <File>
-              <FileName>ax_util.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_util.c</FilePath>
-            </File>
-            <File>
-              <FileName>ax_sst.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_sst.c</FilePath>
-            </File>
-            <File>
-              <FileName>ax_crypto_aes_key.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_crypto_aes_key.c</FilePath>
-            </File>
-            <File>
-              <FileName>ax_scp_private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/ax_scp_private.h</FilePath>
-            </File>
-            <File>
-              <FileName>HLSEObjects.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/HLSEObjects.h</FilePath>
-            </File>
-            <File>
-              <FileName>HLSECrypto.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/HLSECrypto.h</FilePath>
-            </File>
-            <File>
-              <FileName>HLSEMisc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/HLSEMisc.h</FilePath>
-            </File>
-            <File>
-              <FileName>ax_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/ax_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>ax_util.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/ax_util.h</FilePath>
-            </File>
-            <File>
-              <FileName>ax_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/ax_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>ax_common_private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/ax_common_private.h</FilePath>
-            </File>
-            <File>
-              <FileName>HLSEComm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/HLSEComm.h</FilePath>
-            </File>
-            <File>
-              <FileName>ax_scp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/ax_scp.h</FilePath>
-            </File>
-            <File>
-              <FileName>HLSETypes.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/HLSETypes.h</FilePath>
-            </File>
-            <File>
-              <FileName>HLSEAPI.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/inc/HLSEAPI.h</FilePath>
-            </File>
-            <File>
-              <FileName>a71ch_crypto_derive.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/a71ch/src/a71ch_crypto_derive.c</FilePath>
-            </File>
-            <File>
               <FileName>a71ch_com.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/a71ch/src/a71ch_com.c</FilePath>
             </File>
             <File>
-              <FileName>a71ch_sst.c</FileName>
+              <FileName>a71ch_com_scp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/a71ch/src/a71ch_sst.c</FilePath>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/a71ch/src/a71ch_com_scp.c</FilePath>
+            </File>
+            <File>
+              <FileName>a71ch_crypto_derive.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/a71ch/src/a71ch_crypto_derive.c</FilePath>
             </File>
             <File>
               <FileName>a71ch_crypto_ecc.c</FileName>
@@ -3242,19 +3383,54 @@
               <FilePath>../../../../../middleware/se_hostlib/hostLib/a71ch/src/a71ch_module.c</FilePath>
             </File>
             <File>
-              <FileName>a71ch_const.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/a71ch/inc/a71ch_const.h</FilePath>
+              <FileName>a71ch_sst.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/a71ch/src/a71ch_sst.c</FilePath>
             </File>
             <File>
-              <FileName>a71ch_util.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/a71ch/inc/a71ch_util.h</FilePath>
+              <FileName>A71HLSEWrapper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/A71HLSEWrapper.c</FilePath>
             </File>
             <File>
-              <FileName>a71ch_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/a71ch/inc/a71ch_api.h</FilePath>
+              <FileName>ax_crypto_aes_key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_crypto_aes_key.c</FilePath>
+            </File>
+            <File>
+              <FileName>ax_crypto_ecc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_crypto_ecc.c</FilePath>
+            </File>
+            <File>
+              <FileName>ax_crypto_rng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_crypto_rng.c</FilePath>
+            </File>
+            <File>
+              <FileName>ax_scp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_scp.c</FilePath>
+            </File>
+            <File>
+              <FileName>ax_sss_scp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_sss_scp.c</FilePath>
+            </File>
+            <File>
+              <FileName>ax_sst.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_sst.c</FilePath>
+            </File>
+            <File>
+              <FileName>ax_switch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_switch.c</FilePath>
+            </File>
+            <File>
+              <FileName>ax_util.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostLib/api/src/ax_util.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3452,11 +3628,6 @@
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/md.h</FilePath>
             </File>
             <File>
-              <FileName>md_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/md_internal.h</FilePath>
-            </File>
-            <File>
               <FileName>md2.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/md2.h</FilePath>
@@ -3470,6 +3641,11 @@
               <FileName>md5.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/md5.h</FilePath>
+            </File>
+            <File>
+              <FileName>md_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/md_internal.h</FilePath>
             </File>
             <File>
               <FileName>memory_buffer_alloc.h</FileName>
@@ -3517,11 +3693,6 @@
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/pk_internal.h</FilePath>
             </File>
             <File>
-              <FileName>pkcs5.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/pkcs5.h</FilePath>
-            </File>
-            <File>
               <FileName>pkcs11.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/pkcs11.h</FilePath>
@@ -3530,6 +3701,11 @@
               <FileName>pkcs12.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/pkcs12.h</FilePath>
+            </File>
+            <File>
+              <FileName>pkcs5.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/pkcs5.h</FilePath>
             </File>
             <File>
               <FileName>platform.h</FileName>
@@ -3717,16 +3893,6 @@
               <FilePath>../../../../../middleware/mbedtls/library/certs.c</FilePath>
             </File>
             <File>
-              <FileName>cipher.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/library/cipher.c</FilePath>
-            </File>
-            <File>
-              <FileName>cipher_wrap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/library/cipher_wrap.c</FilePath>
-            </File>
-            <File>
               <FileName>chacha20.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/chacha20.c</FilePath>
@@ -3735,6 +3901,16 @@
               <FileName>chachapoly.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/chachapoly.c</FilePath>
+            </File>
+            <File>
+              <FileName>cipher.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/cipher.c</FilePath>
+            </File>
+            <File>
+              <FileName>cipher_wrap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/cipher_wrap.c</FilePath>
             </File>
             <File>
               <FileName>cmac.c</FileName>
@@ -3827,11 +4003,6 @@
               <FilePath>../../../../../middleware/mbedtls/library/md.c</FilePath>
             </File>
             <File>
-              <FileName>md_wrap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/library/md_wrap.c</FilePath>
-            </File>
-            <File>
               <FileName>md2.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/md2.c</FilePath>
@@ -3845,6 +4016,11 @@
               <FileName>md5.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/md5.c</FilePath>
+            </File>
+            <File>
+              <FileName>md_wrap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/md_wrap.c</FilePath>
             </File>
             <File>
               <FileName>memory_buffer_alloc.c</FileName>
@@ -3887,14 +4063,19 @@
               <FilePath>../../../../../middleware/mbedtls/library/pk_wrap.c</FilePath>
             </File>
             <File>
-              <FileName>pkcs5.c</FileName>
+              <FileName>pkcs11.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/library/pkcs5.c</FilePath>
+              <FilePath>../../../../../middleware/mbedtls/library/pkcs11.c</FilePath>
             </File>
             <File>
               <FileName>pkcs12.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/pkcs12.c</FilePath>
+            </File>
+            <File>
+              <FileName>pkcs5.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/pkcs5.c</FilePath>
             </File>
             <File>
               <FileName>pkparse.c</FileName>
@@ -4052,6 +4233,46 @@
           <GroupName>mbedtls-mbedtls_port</GroupName>
           <Files>
             <File>
+              <FileName>aes_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>aes_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt_ksdk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_curves_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
+            </File>
+            <File>
               <FileName>ksdk_mbedtls.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
@@ -4076,56 +4297,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
             </File>
-            <File>
-              <FileName>des_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_curves_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt_ksdk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>device</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/fsl_device_registers.h</FilePath>
-            </File>
             <File>
               <FileName>MIMXRT1052.h</FileName>
               <FileType>5</FileType>
@@ -4135,6 +4311,11 @@
               <FileName>MIMXRT1052_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/MIMXRT1052_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MIMXRT1052.c</FileName>
@@ -4152,16 +4333,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -4177,6 +4348,16 @@
               <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
@@ -4184,57 +4365,62 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/uart</GroupName>
+          <GroupName>component-uart</GroupName>
           <Files>
-            <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/uart/uart.h</FilePath>
-            </File>
             <File>
               <FileName>lpuart_adapter.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/uart/lpuart_adapter.c</FilePath>
             </File>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/uart/uart.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component/serial_manager</GroupName>
+          <GroupName>component-serial_manager</GroupName>
           <Files>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
             <File>
               <FileName>serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
             </File>
             <File>
-              <FileName>serial_port_uart.h</FileName>
+              <FileName>serial_manager.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
             </File>
             <File>
               <FileName>serial_port_uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
             </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component/lists</GroupName>
+          <GroupName>component-lists</GroupName>
           <Files>
-            <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
-            </File>
             <File>
               <FileName>generic_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/lists/generic_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4252,14 +4438,14 @@
           <GroupName>xip</GroupName>
           <Files>
             <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_flexspi_nor_boot.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.h</FilePath>
             </File>
             <File>
               <FileName>evkbimxrt1050_flexspi_nor_config.c</FileName>
@@ -4292,46 +4478,6 @@
               <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_common_tables.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
@@ -4347,9 +4493,49 @@
               <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
             <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv8.h</FileName>

@@ -39,6 +39,12 @@ typedef struct _lpuart_rtos_config
     lpuart_stop_bit_count_t stopbits; /*!< Number of stop bits to use */
     uint8_t *buffer;                  /*!< Buffer for background reception */
     uint32_t buffer_size;             /*!< Size of buffer for background reception */
+#if defined(FSL_FEATURE_LPUART_HAS_MODEM_SUPPORT) && FSL_FEATURE_LPUART_HAS_MODEM_SUPPORT
+    bool enableRxRTS;                         /*!< RX RTS enable */
+    bool enableTxCTS;                         /*!< TX CTS enable */
+    lpuart_transmit_cts_source_t txCtsSource; /*!< TX CTS source */
+    lpuart_transmit_cts_config_t txCtsConfig; /*!< TX CTS configure */
+#endif
 } lpuart_rtos_config_t;
 
 /*!

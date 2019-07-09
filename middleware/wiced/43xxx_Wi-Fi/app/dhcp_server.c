@@ -182,11 +182,11 @@ static void dhcp_thread( void * thread_input )
     //uint16_t rxlen;
     ip_addr_t dst_ip = IPADDR4_INIT(0xffffffff);
 
-    WWD_LOG("DHCP server start\n");
+    WWD_LOG(("DHCP server start\n"));
     conn = netconn_new(NETCONN_UDP);
     if( conn == NULL)
     {
-        WWD_LOG("udpecho: invalid conn\n");
+        WWD_LOG(("udpecho: invalid conn\n"));
         return;
     }
     netconn_bind(conn, IP_ADDR_ANY, IPPORT_DHCPS);
@@ -202,7 +202,7 @@ static void dhcp_thread( void * thread_input )
         err = netconn_join_leave_group(conn, &multiaddr, &netif_default->ip_addr, NETCONN_JOIN);
         if( err != ERR_OK )
         {
-            WWD_LOG("udpecho: join group is failed");
+            WWD_LOG(("udpecho: join group is failed"));
             return 1;
         }
     }
@@ -216,17 +216,17 @@ static void dhcp_thread( void * thread_input )
         if (err == ERR_OK)
         {
             /*  no need netconn_connect here, since the netbuf contains the address */
-            WWD_LOG("Rx Packet\r\n");
+            WWD_LOG(("Rx Packet\r\n"));
             netbuf_copy(buf,(char *) dhcp_header_ptr, sizeof(dhcp_header_buff));
             netbuf_delete(buf);
             //netbuf_data(buf, &dhcp_header_ptr, &rxlen);
-            //WWD_LOG("rxlen: %d\n", rxlen);
+            //WWD_LOG(("rxlen: %d\n", rxlen));
 
             switch ( dhcp_header_ptr->options[2] )
             {
                 case DHCPDISCOVER:
                     {
-                        WWD_LOG("Rcvd DHCP DISCOVER\n");
+                        WWD_LOG(("Rcvd DHCP DISCOVER\n"));
 
                         /* Discover command - send back OFFER response */
                         dhcp_header_ptr->opcode = BOOTP_OP_REPLY;
@@ -269,16 +269,16 @@ static void dhcp_thread( void * thread_input )
                         mem = (char *)netbuf_alloc(buf, slen);
                         if(mem == NULL)
                         {
-                            WWD_LOG("dhcp srv : Could not allocate memory for sending\n");
+                            WWD_LOG(("dhcp srv : Could not allocate memory for sending\n"));
                         }
                         memcpy(mem, dhcp_header_ptr, slen);
                         err = netconn_sendto(conn, buf,&dst_ip, IPPORT_DHCPC );
                         if( err != ERR_OK )
                         {
-                            WWD_LOG("dhcp srv: sending is failed");
+                            WWD_LOG(("dhcp srv: sending is failed"));
                         }
                         netbuf_delete(buf);
-                        WWD_LOG("Sending discover response\r\n");
+                        WWD_LOG(("Sending discover response\r\n"));
                     }
                     break;
 
@@ -290,7 +290,7 @@ static void dhcp_thread( void * thread_input )
                         uint32_t*      newip_ptr;
                         //uint32_t*      server_id_req;
 
-                        WWD_LOG("Rcvd DHCP REQUEST\n");
+                        WWD_LOG(("Rcvd DHCP REQUEST\n"));
                         /* Check that the REQUEST is for this server */
 
                         dhcp_header_ptr->opcode = BOOTP_OP_REPLY;
@@ -367,15 +367,15 @@ static void dhcp_thread( void * thread_input )
                         mem = (char *)netbuf_alloc(buf, slen);
                         if(mem == NULL)
                         {
-                            WWD_LOG("dhcp srv : Could not allocate memory for sending\n");
+                            WWD_LOG(("dhcp srv : Could not allocate memory for sending\n"));
                         }
                         memcpy(mem, dhcp_header_ptr, slen);
                         err = netconn_sendto(conn, buf,&dst_ip, IPPORT_DHCPC );
                         if( err != ERR_OK )
                         {
-                            WWD_LOG("dhcp srv: sending is failed\r\n");
+                            WWD_LOG(("dhcp srv: sending is failed\r\n"));
                         }
-                        WWD_LOG("Sent request response\r\n");
+                        WWD_LOG(("Sent request response\r\n"));
                         netbuf_delete(buf);
                     }
                     break;
@@ -386,7 +386,7 @@ static void dhcp_thread( void * thread_input )
         }
     }
 
-    WWD_LOG("DHCP server quitting..\r\n");
+    WWD_LOG(("DHCP server quitting..\r\n"));
     /* Delete DHCP socket */
     netconn_delete(conn);
 

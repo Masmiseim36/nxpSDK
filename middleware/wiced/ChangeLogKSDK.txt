@@ -2,9 +2,15 @@
 @page middleware_log Middleware Change Log
 
 @section wifi_wiced Cypress WICED framework for MCUXpresso SDK
-  The current version of Cypress WICED framework is 1.0.0.
+  The current version of Cypress WICED framework for MCUXpresso SDK is 6.1.0_rev2
 
-  - 1.0.0
-    - Initial version of Cypress WICED framework for MCUXpresso SDK
+  - 6.1.0_rev2
+    - Added backport of 43012 support (from WICED 6.4)
+
+  - 6.1.0_rev1
+    - Added experimental soft AP mode for 4343W
+
+  - 6.1.0_rev0
+    - Initial version based on Cypress WICED 6.1
 
 */

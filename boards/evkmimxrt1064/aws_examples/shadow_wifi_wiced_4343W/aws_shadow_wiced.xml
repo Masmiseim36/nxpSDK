@@ -145,9 +145,6 @@
       <files mask="data.ldt"/>
       <files mask="main_text.ldt"/>
     </source>
-    <source path="boards/evkmimxrt1064/aws_examples/shadow_wifi_wiced_4343W/mdk" target_path="src" type="configuration" toolchain="mdk">
-      <files mask="evkmimxrt1064_ram.ini"/>
-    </source>
     <source path="boards/evkmimxrt1064/aws_examples/shadow_wifi_wiced_4343W" target_path="amazon-freertos/config_files" type="c_include">
       <files mask="FreeRTOSConfig.h"/>
     </source>

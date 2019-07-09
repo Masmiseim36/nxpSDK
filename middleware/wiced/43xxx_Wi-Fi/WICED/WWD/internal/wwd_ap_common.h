@@ -50,6 +50,11 @@ extern "C" {
 #define AMPDU_RX_FACTOR_INVALID  0xff     /* invalid rx factor; ignore */
 #define AMPDU_MPDU_AUTO             (-1)  /* Auto number of mpdu in ampdu */
 
+
+#define BANDWIDTH_20MHZ            (20)  /* 802.11n, 802.11ac 20Mhz Bandwidth */
+#define BANDWIDTH_40MHZ            (40)  /* 802.11n, 802.11ac 40Mhz Bandwidth */
+#define BANDWIDTH_80MHZ            (80)  /* 802.11ac 80Mhz Bandwidth          */
+
 #define htod32(i) ((uint32_t)(i))
 #define htod16(i) ((uint16_t)(i))
 #define dtoh32(i) ((uint32_t)(i))
@@ -67,6 +72,8 @@ extern wwd_result_t wwd_wifi_set_block_ack_window_size_common( wwd_interface_t i
 extern wwd_result_t wwd_wifi_set_ampdu_parameters_common( wwd_interface_t interface, uint8_t ba_window_size, int8_t ampdu_mpdu, uint8_t rx_factor );
 extern void wwd_wifi_set_ap_is_up( wiced_bool_t new_state );
 extern wiced_bool_t wwd_wifi_get_ap_is_up( void );
+extern wwd_result_t wwd_wifi_set_chanspec ( wwd_interface_t interface, uint8_t channel, host_semaphore_type_t *wwd_wifi_sleep_flag );
+
 
 #ifdef __cplusplus
 } /*extern "C" */

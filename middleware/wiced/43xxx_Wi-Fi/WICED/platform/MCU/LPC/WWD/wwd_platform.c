@@ -136,3 +136,8 @@ wwd_result_t host_platform_init_wlan_powersave_clock( void )
 
     return WWD_SUCCESS;
 }
+
+wiced_bool_t host_platform_is_in_interrupt_context( void )
+{
+    return __get_IPSR();
+}

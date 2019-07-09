@@ -60,6 +60,7 @@
 const uint32_t  ms_to_tick_ratio = (uint32_t)( 1000 / configTICK_RATE_HZ );
 
 extern void vApplicationStackOverflowHook( TaskHandle_t *pxTask, signed portCHAR *pcTaskName );
+signed portBASE_TYPE xTaskIsTaskFinished( TaskHandle_t xTask ) PRIVILEGED_FUNCTION;
 
 /******************************************************
  *             Function definitions
@@ -91,6 +92,7 @@ wwd_result_t host_rtos_create_thread_with_arg( /*@out@*/ host_thread_type_t* thr
         tcb_buffer          = (void*)(((uint32_t)stack + portBYTE_ALIGNMENT - 1) & ~(uint32_t)(portBYTE_ALIGNMENT-1));
         stack_buffer        = (uint8_t*)tcb_buffer + tcb_size;
         adjusted_stack_size = (uint32_t)stack + stack_size - (uint32_t)stack_buffer;
+        (void) adjusted_stack_size; 
 
         //*thread = xTaskCreateStatic( (TaskFunction_t)entry_function, name, (unsigned short)(adjusted_stack_size / sizeof( portSTACK_TYPE )), (void*)arg, (unsigned portBASE_TYPE) priority, stack_buffer, tcb_buffer );
 
@@ -125,10 +127,8 @@ wwd_result_t host_rtos_create_configed_thread(  /*@out@*/ host_thread_type_t* th
  */
 wwd_result_t host_rtos_finish_thread( host_thread_type_t* thread )
 {
-#if 0
-    malloc_leak_check(*thread, LEAK_CHECK_THREAD);
+    //malloc_leak_check(*thread, LEAK_CHECK_THREAD);
     vTaskDelete( *thread );
-#endif
     return WWD_SUCCESS;
 }
 
@@ -349,27 +349,10 @@ wwd_result_t host_rtos_delay_milliseconds( uint32_t num_ms )
 
 }
 
-// Provided by application
-#if 0
-void vApplicationStackOverflowHook( TaskHandle_t *pxTask, signed portCHAR *pcTaskName )
+wwd_result_t host_rtos_init_queue( /*@special@*/ /*@out@*/ host_queue_type_t* queue, void* name, uint32_t message_size, uint32_t queue_size ) /*@allocates *queue@*/  /*@defines **queue@*/
 {
-    UNUSED_PARAMETER( pxTask );
-    UNUSED_PARAMETER( pcTaskName ); /* unused parameter in release build */
-
-    wiced_assert("Stack Overflow Detected", 0 != 0);
-}
-
-void vApplicationMallocFailedHook( void )
-{
-    WPRINT_RTOS_DEBUG(("Heap is out of memory during malloc\n"));
-    wiced_assert("Malloc failed!", 0 != 0);
-}
-#endif
-
-wwd_result_t host_rtos_init_queue( /*@special@*/ /*@out@*/ host_queue_type_t* queue, void* buffer, uint32_t buffer_size, uint32_t message_size ) /*@allocates *queue@*/  /*@defines **queue@*/
-{
-    UNUSED_PARAMETER(buffer);
-    if ( ( *queue = xQueueCreate( (unsigned portBASE_TYPE) ( buffer_size / message_size ), (unsigned portBASE_TYPE) message_size ) ) == NULL )
+    UNUSED_PARAMETER(name);
+    if ( ( *queue = xQueueCreate( (unsigned portBASE_TYPE) ( queue_size ), (unsigned portBASE_TYPE) message_size ) ) == NULL )
     {
         /*@-compdef@*/ /* Creation failed - no allocation needed*/
         return WWD_QUEUE_ERROR;

@@ -247,7 +247,7 @@ static const uint16_t mcs_data_rate_lookup_table[32][2][2] =
 
 /* Note that the qos_map is accessed by SDPCM */
 uint8_t wwd_tos_map[8] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07 };
-
+static uint32_t bandwidth = 20;          /* default 20Mhz bandwidth */
 static uint32_t wwd_wifi_mesh_flags;
 
 /******************************************************
@@ -5992,6 +5992,17 @@ wwd_result_t wwd_wifi_get_ccode( wwd_country_t *country )
 
     memcpy(country, ch, sizeof(ch));
     return WWD_SUCCESS;
+}
+
+wwd_result_t wwd_wifi_set_bandwidth( uint8_t bw )
+{
+    bandwidth = bw;
+    return WWD_SUCCESS;
+}
+
+uint32_t wwd_wifi_get_bandwidth ( void )
+{
+    return bandwidth;
 }
 
 wwd_result_t wwd_wifi_set_ccode( wwd_country_t *country )

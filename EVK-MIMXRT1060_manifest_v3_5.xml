@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_EVK-MIMXRT1060" name="EVK-MIMXRT1060" brief="This is SDK version 2.6.0 manifest file. It describes the content of the EVK-MIMXRT1060 and additional settings for tools that support SDK version 2.6.0" format_version="3.5" api_version="2.0.0" configuration="111955dac4c04c1485f5ffa3e728373c" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.5.xsd">
-  <!--Timestamp (UTC): 2019-06-17 03:09:43.144953-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_EVK-MIMXRT1060" name="EVK-MIMXRT1060" brief="This is SDK version 2.6.1 manifest file. It describes the content of the EVK-MIMXRT1060 and additional settings for tools that support SDK version 2.6.1" format_version="3.5" api_version="2.0.0" configuration="67a588787c956672796859058c217693" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.5.xsd">
+  <!--Timestamp (UTC): 2019-07-03 09:08:54.813776-->
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
   </defines>
-  <ksdk id="MCUXpresso260" name="MCUXpresso260" version="2.6.0" revision="228 2019-06-14"/>
+  <ksdk id="MCUXpresso261" name="MCUXpresso261" version="2.6.1" revision="236 2019-07-03"/>
   <compilers>
     <compiler id="compiler_armcc" name="armcc" type="armcc"/>
     <compiler id="compiler_gcc" name="gcc" type="gcc"/>
@@ -1378,9 +1378,29 @@ ${load}</script>
             <files mask="wdog01.xml"/>
           </external>
         </example>
+        <example id="evkmimxrt1060_wiced_ble_4343W" name="wiced_ble_4343W" brief="Demonstrates Cypress WiFi and BLE connected over USDHC/SDIO" toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="wifi_examples" path="boards/evkmimxrt1060/ble_cypress_examples/wiced_ble_4343W">
+          <external path="boards/evkmimxrt1060/ble_cypress_examples/wiced_ble_4343W" type="xml">
+            <files mask="wiced_ble_4343W.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1060_wiced_bt_passthrough_4343W" name="wiced_bt_passthrough_4343W" brief="Sends HCI commands to Cypress Bluetooth via UART" toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="wifi_examples" path="boards/evkmimxrt1060/ble_cypress_examples/wiced_bt_passthrough_4343W">
+          <external path="boards/evkmimxrt1060/ble_cypress_examples/wiced_bt_passthrough_4343W" type="xml">
+            <files mask="wiced_bt_passthrough_4343W.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1060_wiced_iperf_43012" name="wiced_iperf_43012" brief="Demonstrates Cypress WiFi connected over USDHC/SDIO" toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="wifi_examples" path="boards/evkmimxrt1060/wifi_cypress_examples/wiced_iperf_43012">
+          <external path="boards/evkmimxrt1060/wifi_cypress_examples/wiced_iperf_43012" type="xml">
+            <files mask="wiced_iperf_43012.xml"/>
+          </external>
+        </example>
         <example id="evkmimxrt1060_wiced_iperf_4343W" name="wiced_iperf_4343W" brief="Demonstrates Cypress WiFi connected over USDHC/SDIO" toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="wifi_examples" path="boards/evkmimxrt1060/wifi_cypress_examples/wiced_iperf_4343W">
           <external path="boards/evkmimxrt1060/wifi_cypress_examples/wiced_iperf_4343W" type="xml">
             <files mask="wiced_iperf_4343W.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1060_wiced_mfg_test_43012" name="wiced_mfg_test_43012" brief="Manufacturing Test Application" toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="wifi_examples" path="boards/evkmimxrt1060/wifi_cypress_examples/wiced_mfg_test_43012">
+          <external path="boards/evkmimxrt1060/wifi_cypress_examples/wiced_mfg_test_43012" type="xml">
+            <files mask="wiced_mfg_test_43012.xml"/>
           </external>
         </example>
         <example id="evkmimxrt1060_wiced_mfg_test_4343W" name="wiced_mfg_test_4343W" brief="Manufacturing Test Application" toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="wifi_examples" path="boards/evkmimxrt1060/wifi_cypress_examples/wiced_mfg_test_4343W">
@@ -5366,6 +5386,64 @@ EVK-MIMXRT1060 with FRDM-STBC-AGM01 Custom Kit (FRDM-STBC-AGM01 Sensor Shield De
         <define name="FSL_RTOS_BM" value=""/>
         <define name="SDK_OS_BAREMETAL" value=""/>
       </defines>
+    </component>
+    <component id="middleware.ble_wiced.MIMXRT1062" name="ble_wiced" version="1.0.0" full_name="Cypress WICED BLE" devices="MIMXRT1062xxxxA" dependency="middleware.amazon_freertos.freertos.MIMXRT1062 middleware.sdmmc.common.MIMXRT1062 middleware.sdmmc.sdio.MIMXRT1062 middleware.template_application.amazon_freertos.MIMXRT1062" user_visible="true" type="middleware">
+      <source path="middleware/wiced/43xxx_BLE/bt_app_inc" target_path="43xxx_BLE/bt_app_inc" type="c_include">
+        <files mask="wiced_bt_ble.h"/>
+        <files mask="wiced_bt_cfg.h"/>
+        <files mask="wiced_bt_dev.h"/>
+        <files mask="wiced_bt_gatt.h"/>
+        <files mask="wiced_bt_stack.h"/>
+        <files mask="wiced_bt_types.h"/>
+      </source>
+      <source path="middleware/wiced/43xxx_BLE/wiced_bt/BTE/Components/stack/include" target_path="43xxx_BLE/wiced_bt/BTE/Components/stack/include" type="c_include">
+        <files mask="bt_types.h"/>
+        <files mask="dyn_mem.h"/>
+        <files mask="gattdefs.h"/>
+        <files mask="hcidefs.h"/>
+        <files mask="hcimsgs.h"/>
+        <files mask="hiddefs.h"/>
+        <files mask="l2cdefs.h"/>
+        <files mask="sdpdefs.h"/>
+      </source>
+      <source path="middleware/wiced/43xxx_BLE/wiced_bt/BTE/Projects/bte/main" target_path="43xxx_BLE/wiced_bt/BTE/Projects/bte/main" type="c_include">
+        <files mask="bt_target.h"/>
+        <files mask="bt_trace.h"/>
+        <files mask="gki_target.h"/>
+      </source>
+      <source path="middleware/wiced/43xxx_BLE/wiced_bt/BTE/WICED" target_path="43xxx_BLE/wiced_bt/BTE/WICED" type="c_include">
+        <files mask="data_types.h"/>
+        <files mask="wiced_bt_int.h"/>
+      </source>
+      <source toolchain="armgcc mcuxpresso iar" path="middleware/wiced/43xxx_BLE/wiced_bt/BTE" target_path="libs" type="lib" device_cores="core0_MIMXRT1062xxxxA">
+        <files mask="libwicedble.a"/>
+      </source>
+      <source path="middleware/wiced/43xxx_BLE/wiced_bt/imxrt_port" target_path="43xxx_BLE/wiced_bt/imxrt_port" type="src">
+        <files mask="bt_firmware_controller.c"/>
+        <files mask="platform_bluetooth.c"/>
+        <files mask="platform_imxrt.c"/>
+        <files mask="wiced_rtos.c"/>
+      </source>
+      <source path="middleware/wiced/43xxx_BLE/wiced_bt/imxrt_port" target_path="43xxx_BLE/wiced_bt/imxrt_port" type="c_include">
+        <files mask="buildcfg.h"/>
+        <files mask="platform_bluetooth.h"/>
+        <files mask="platform_imxrt.h"/>
+        <files mask="rtos.h"/>
+        <files mask="wiced_bluetooth_result.h"/>
+        <files mask="wiced_bt_sco.h"/>
+        <files mask="wiced_bt_uuid.h"/>
+        <files mask="wiced_result.h"/>
+        <files mask="wiced_rtos.h"/>
+        <files mask="wiced_time.h"/>
+        <files mask="wiced_utilities.h"/>
+      </source>
+      <include_paths>
+        <include_path path="43xxx_BLE/bt_app_inc"/>
+        <include_path path="43xxx_BLE/wiced_bt/BTE/WICED"/>
+        <include_path path="43xxx_BLE/wiced_bt/BTE/Components/stack/include"/>
+        <include_path path="43xxx_BLE/wiced_bt/BTE/Projects/bte/main"/>
+        <include_path path="43xxx_BLE/wiced_bt/imxrt_port"/>
+      </include_paths>
     </component>
     <component id="middleware.eiq.cmsis_nn.MIMXRT1062" name="CMSIS-NN" brief="CMSIS-NN library" version="1.0.0" full_name="CMSIS-NN library" devices="MIMXRT1062xxxxA" dependency="platform.CMSIS_DSP_Lib.arm_cortexM7lfdp_math.MIMXRT1062" category="Machine Learning/eIQ" user_visible="true" type="middleware">
       <source path="middleware/eiq/cmsis-nn/Include" target_path="CMSIS/NN/Include" type="c_include">
@@ -10772,7 +10850,7 @@ EVK-MIMXRT1060 with FRDM-STBC-AGM01 Custom Kit (FRDM-STBC-AGM01 Sensor Shield De
         <files mask="fsl_sdmmc_host.c"/>
       </source>
     </component>
-    <component id="middleware.tcpip.lwip.MIMXRT1062" name="lwIP" brief="lwIP" version="2.1.2" devices="MIMXRT1062xxxxA" dependency="middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="true" type="middleware">
+    <component id="middleware.tcpip.lwip.MIMXRT1062" name="lwIP" brief="lwIP" version="2.1.2" revision="3" devices="MIMXRT1062xxxxA" dependency="middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="true" type="middleware">
       <source path="middleware/lwip" target_path="lwip" type="doc">
         <files mask="CHANGELOG"/>
         <files mask="CMakeLists.txt"/>
@@ -11080,12 +11158,12 @@ EVK-MIMXRT1060 with FRDM-STBC-AGM01 Custom Kit (FRDM-STBC-AGM01 Sensor Shield De
         <include_path path="lwip/src/include"/>
       </include_paths>
     </component>
-    <component id="middleware.tcpip.lwip.apps.httpd.MIMXRT1062" name="lwIP_HTTPD" brief="lwIP HTTP Daemon" version="2.1.2" revision="2" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.tcpip.lwip.apps.httpd.support.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
+    <component id="middleware.tcpip.lwip.apps.httpd.MIMXRT1062" name="lwIP_HTTPD" brief="lwIP HTTP Daemon" version="2.1.2" revision="3" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.tcpip.lwip.apps.httpd.support.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
       <source path="middleware/lwip/src/apps/http" target_path="lwip/src/apps/http" type="src">
         <files mask="httpd.c"/>
       </source>
     </component>
-    <component id="middleware.tcpip.lwip.apps.httpd.support.MIMXRT1062" name="lwIP_HTTPD_support" brief="lwIP HTTP Daemon Implementation Support Files" version="2.1.2" revision="2" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
+    <component id="middleware.tcpip.lwip.apps.httpd.support.MIMXRT1062" name="lwIP_HTTPD_support" brief="lwIP HTTP Daemon Implementation Support Files" version="2.1.2" revision="3" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
       <source path="middleware/lwip/src/apps/http" target_path="lwip/src/apps/http" type="src">
         <files mask="fs.c"/>
       </source>
@@ -11121,7 +11199,7 @@ EVK-MIMXRT1060 with FRDM-STBC-AGM01 Custom Kit (FRDM-STBC-AGM01 Sensor Shield De
         <files mask="httpd_opts.h"/>
       </source>
     </component>
-    <component id="middleware.tcpip.lwip.apps.httpsrv.MIMXRT1062" name="lwIP_HTTP_srv" brief="lwIP HTTP Server Implementation" version="2.1.2" revision="2" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
+    <component id="middleware.tcpip.lwip.apps.httpsrv.MIMXRT1062" name="lwIP_HTTP_srv" brief="lwIP HTTP Server Implementation" version="2.1.2" revision="3" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
       <source path="middleware/lwip/src/apps/httpsrv" target_path="lwip/src/apps/httpsrv" type="src">
         <files mask="httpsrv.c"/>
         <files mask="httpsrv_base64.c"/>
@@ -11168,7 +11246,7 @@ EVK-MIMXRT1060 with FRDM-STBC-AGM01 Custom Kit (FRDM-STBC-AGM01 Sensor Shield De
         <files mask="welcome.html"/>
       </source>
     </component>
-    <component id="middleware.tcpip.lwip.apps.lwiperf.MIMXRT1062" name="lwIP_IPERF" brief="lwIP IPERF Implementation" version="2.1.2" revision="2" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
+    <component id="middleware.tcpip.lwip.apps.lwiperf.MIMXRT1062" name="lwIP_IPERF" brief="lwIP IPERF Implementation" version="2.1.2" revision="3" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
       <source path="middleware/lwip/src/apps/lwiperf" target_path="lwip/src/apps/lwiperf" type="src">
         <files mask="lwiperf.c"/>
       </source>
@@ -11176,7 +11254,7 @@ EVK-MIMXRT1060 with FRDM-STBC-AGM01 Custom Kit (FRDM-STBC-AGM01 Sensor Shield De
         <files mask="lwiperf.h"/>
       </source>
     </component>
-    <component id="middleware.tcpip.lwip.apps.mdns.MIMXRT1062" name="lwIP_MDNS" brief="lwIP mDNS Implementation" version="2.1.2" revision="2" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
+    <component id="middleware.tcpip.lwip.apps.mdns.MIMXRT1062" name="lwIP_MDNS" brief="lwIP mDNS Implementation" version="2.1.2" revision="3" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
       <source path="middleware/lwip/src/apps/mdns" target_path="lwip/src/apps/mdns" type="src">
         <files mask="mdns.c"/>
       </source>
@@ -11189,7 +11267,7 @@ EVK-MIMXRT1060 with FRDM-STBC-AGM01 Custom Kit (FRDM-STBC-AGM01 Sensor Shield De
         <include_path path="lwip/src/include/lwip/apps"/>
       </include_paths>
     </component>
-    <component id="middleware.tcpip.lwip.apps.mqtt.MIMXRT1062" name="lwIP_MQTT" brief="lwIP MQTT Client" version="2.1.2" revision="2" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
+    <component id="middleware.tcpip.lwip.apps.mqtt.MIMXRT1062" name="lwIP_MQTT" brief="lwIP MQTT Client" version="2.1.2" revision="3" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
       <source path="middleware/lwip/src/apps/mqtt" target_path="lwip/src/apps/mqtt" type="src">
         <files mask="mqtt.c"/>
       </source>
@@ -11199,7 +11277,7 @@ EVK-MIMXRT1060 with FRDM-STBC-AGM01 Custom Kit (FRDM-STBC-AGM01 Sensor Shield De
         <files mask="mqtt_priv.h"/>
       </source>
     </component>
-    <component id="middleware.tcpip.lwip.apps.sntp.MIMXRT1062" name="lwIP_SNTP" brief="lwIP SNTP" version="2.1.2" revision="2" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
+    <component id="middleware.tcpip.lwip.apps.sntp.MIMXRT1062" name="lwIP_SNTP" brief="lwIP SNTP" version="2.1.2" revision="3" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
       <source path="middleware/lwip/src/apps/sntp" target_path="lwip/src/apps/sntp" type="src">
         <files mask="sntp.c"/>
       </source>
@@ -11211,7 +11289,7 @@ EVK-MIMXRT1060 with FRDM-STBC-AGM01 Custom Kit (FRDM-STBC-AGM01 Sensor Shield De
         <include_path path="lwip/src/include"/>
       </include_paths>
     </component>
-    <component id="middleware.tcpip.lwip.contrib.ping.MIMXRT1062" name="lwIP_ping" brief="lwIP Ping Sender contrib" version="2.1.2" revision="2" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
+    <component id="middleware.tcpip.lwip.contrib.ping.MIMXRT1062" name="lwIP_ping" brief="lwIP Ping Sender contrib" version="2.1.2" revision="3" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
       <source path="middleware/lwip/contrib/apps/ping" target_path="lwip/contrib/apps/ping" type="src">
         <files mask="ping.c"/>
       </source>
@@ -11219,7 +11297,7 @@ EVK-MIMXRT1060 with FRDM-STBC-AGM01 Custom Kit (FRDM-STBC-AGM01 Sensor Shield De
         <files mask="ping.h"/>
       </source>
     </component>
-    <component id="middleware.tcpip.lwip.contrib.tcpecho.MIMXRT1062" name="lwIP_tcpecho" brief="lwIP TCP Echo contrib" version="2.1.2" revision="2" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
+    <component id="middleware.tcpip.lwip.contrib.tcpecho.MIMXRT1062" name="lwIP_tcpecho" brief="lwIP TCP Echo contrib" version="2.1.2" revision="3" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
       <source path="middleware/lwip/contrib/apps/tcpecho" target_path="lwip/contrib/apps/tcpecho" type="src">
         <files mask="tcpecho.c"/>
       </source>
@@ -11227,7 +11305,7 @@ EVK-MIMXRT1060 with FRDM-STBC-AGM01 Custom Kit (FRDM-STBC-AGM01 Sensor Shield De
         <files mask="tcpecho.h"/>
       </source>
     </component>
-    <component id="middleware.tcpip.lwip.contrib.tcpecho_raw.MIMXRT1062" name="lwIP_tcpecho_raw" brief="lwIP TCP Echo Raw API contrib" version="2.1.2" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
+    <component id="middleware.tcpip.lwip.contrib.tcpecho_raw.MIMXRT1062" name="lwIP_tcpecho_raw" brief="lwIP TCP Echo Raw API contrib" version="2.1.2" revision="3" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
       <source path="middleware/lwip/contrib/apps/tcpecho_raw" target_path="lwip/contrib/apps/tcpecho_raw" type="src">
         <files mask="tcpecho_raw.c"/>
       </source>
@@ -11235,7 +11313,7 @@ EVK-MIMXRT1060 with FRDM-STBC-AGM01 Custom Kit (FRDM-STBC-AGM01 Sensor Shield De
         <files mask="tcpecho_raw.h"/>
       </source>
     </component>
-    <component id="middleware.tcpip.lwip.contrib.udpecho.MIMXRT1062" name="lwIP_udpecho" brief="lwIP UDP Echo contrib" version="2.1.2" revision="2" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
+    <component id="middleware.tcpip.lwip.contrib.udpecho.MIMXRT1062" name="lwIP_udpecho" brief="lwIP UDP Echo contrib" version="2.1.2" revision="3" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
       <source path="middleware/lwip/contrib/apps/udpecho" target_path="lwip/contrib/apps/udpecho" type="src">
         <files mask="udpecho.c"/>
       </source>
@@ -11243,7 +11321,7 @@ EVK-MIMXRT1060 with FRDM-STBC-AGM01 Custom Kit (FRDM-STBC-AGM01 Sensor Shield De
         <files mask="udpecho.h"/>
       </source>
     </component>
-    <component id="middleware.tcpip.lwip.contrib.udpecho_raw.MIMXRT1062" name="lwIP_udpecho_raw" brief="lwIP UDP Echo Raw API contrib" version="2.1.2" revision="2" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
+    <component id="middleware.tcpip.lwip.contrib.udpecho_raw.MIMXRT1062" name="lwIP_udpecho_raw" brief="lwIP UDP Echo Raw API contrib" version="2.1.2" revision="3" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
       <source path="middleware/lwip/contrib/apps/udpecho_raw" target_path="lwip/contrib/apps/udpecho_raw" type="src">
         <files mask="udpecho_raw.c"/>
       </source>
@@ -11251,7 +11329,7 @@ EVK-MIMXRT1060 with FRDM-STBC-AGM01 Custom Kit (FRDM-STBC-AGM01 Sensor Shield De
         <files mask="udpecho_raw.h"/>
       </source>
     </component>
-    <component id="middleware.tcpip.lwip.enet_ethernetif.MIMXRT1062" name="lwIP_enet_ethernetif" brief="lwIP ENET Interface Porting Layer" version="2.1.2" revision="2" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
+    <component id="middleware.tcpip.lwip.enet_ethernetif.MIMXRT1062" name="lwIP_enet_ethernetif" brief="lwIP ENET Interface Porting Layer" version="2.1.2" revision="3" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
       <source path="middleware/lwip/port" target_path="lwip/port" type="src">
         <files mask="enet_ethernetif.c"/>
       </source>
@@ -11260,17 +11338,17 @@ EVK-MIMXRT1060 with FRDM-STBC-AGM01 Custom Kit (FRDM-STBC-AGM01 Sensor Shield De
         <files mask="enet_ethernetif_priv.h"/>
       </source>
     </component>
-    <component id="middleware.tcpip.lwip.enet_ethernetif_kinetis.MIMXRT1062" name="lwIP_enet_ethernetif_kinetis" brief="lwIP Kinetis ENET Interface Porting Layer" version="2.1.2" revision="2" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.tcpip.lwip.enet_ethernetif.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
+    <component id="middleware.tcpip.lwip.enet_ethernetif_kinetis.MIMXRT1062" name="lwIP_enet_ethernetif_kinetis" brief="lwIP Kinetis ENET Interface Porting Layer" version="2.1.2" revision="3" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.tcpip.lwip.enet_ethernetif.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
       <source path="middleware/lwip/port" target_path="lwip/port" type="src">
         <files mask="enet_ethernetif_kinetis.c"/>
       </source>
     </component>
-    <component id="middleware.tcpip.lwip.enet_ethernetif_lpc.MIMXRT1062" name="lwIP_enet_ethernetif_lpc" brief="lwIP LPC ENET Interface Porting Layer" version="2.1.2" revision="2" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.tcpip.lwip.enet_ethernetif.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
+    <component id="middleware.tcpip.lwip.enet_ethernetif_lpc.MIMXRT1062" name="lwIP_enet_ethernetif_lpc" brief="lwIP LPC ENET Interface Porting Layer" version="2.1.2" revision="3" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.tcpip.lwip.enet_ethernetif.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
       <source path="middleware/lwip/port" target_path="lwip/port" type="src">
         <files mask="enet_ethernetif_lpc.c"/>
       </source>
     </component>
-    <component id="middleware.tcpip.lwip.unused_files.MIMXRT1062" name="lwIP_unused_files" brief="lwIP files unused by projects" version="2.1.2" revision="2" devices="MIMXRT1062xxxxA" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
+    <component id="middleware.tcpip.lwip.unused_files.MIMXRT1062" name="lwIP_unused_files" brief="lwIP files unused by projects" version="2.1.2" revision="3" devices="MIMXRT1062xxxxA" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
       <source exclude="true" path="middleware/lwip/contrib/Coverity" target_path="lwip/contrib/Coverity" type="src">
         <files mask="coverity.c"/>
       </source>
@@ -12003,7 +12081,7 @@ EVK-MIMXRT1060 with FRDM-STBC-AGM01 Custom Kit (FRDM-STBC-AGM01 Sensor Shield De
         <files mask="test_udp.h"/>
       </source>
     </component>
-    <component id="middleware.tcpip.lwip.usb_ethernetif.MIMXRT1062" name="lwIP_usb_ethernetif" brief="lwIP Ethernet Interface Porting Layer" version="2.1.2" revision="2" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
+    <component id="middleware.tcpip.lwip.usb_ethernetif.MIMXRT1062" name="lwIP_usb_ethernetif" brief="lwIP Ethernet Interface Porting Layer" version="2.1.2" revision="3" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062 middleware.template_application.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="other">
       <source path="middleware/lwip/port" target_path="lwip/port" type="c_include">
         <files mask="usb_ethernetif.h"/>
       </source>
@@ -12040,7 +12118,7 @@ EVK-MIMXRT1060 with FRDM-STBC-AGM01 Custom Kit (FRDM-STBC-AGM01 Sensor Shield De
       </source>
     </component>
     <component id="middleware.template_application.mbedtls.MIMXRT1062" name="mbedtls" brief="mbedtls template" version="2.13.1" full_name="mbedtls template application" devices="MIMXRT1062xxxxA" dependency="middleware.mbedtls.MIMXRT1062" category="Security/mbedTLS library" user_visible="true" type="middleware"/>
-    <component id="middleware.template_application.tcpip.lwip.MIMXRT1062" name="lwIP_template" brief="lwIP Template" version="2.1.2" revision="2" full_name="lwIP Template Application" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="project_template">
+    <component id="middleware.template_application.tcpip.lwip.MIMXRT1062" name="lwIP_template" brief="lwIP Template" version="2.1.2" revision="3" full_name="lwIP Template Application" devices="MIMXRT1062xxxxA" dependency="middleware.tcpip.lwip.MIMXRT1062" category="Network/lwIP TCPIP Networking Stack" user_visible="false" type="project_template">
       <source path="middleware/lwip/template_application" target_path="board" type="src">
         <files mask="fsl_phy.c"/>
       </source>
@@ -12540,6 +12618,8 @@ EVK-MIMXRT1060 with FRDM-STBC-AGM01 Custom Kit (FRDM-STBC-AGM01 Sensor Shield De
       <source path="middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/chips/43012" target_path="43xxx_wifi/WICED/WWD/internal/chips/43012" type="c_include">
         <files mask="43012.h"/>
         <files mask="43012_clm.h"/>
+        <files mask="43012_mfg.h"/>
+        <files mask="43012_mfg_clm.h"/>
         <files mask="chip_constants.h"/>
         <files mask="resources.h"/>
       </source>
@@ -12795,6 +12875,102 @@ EVK-MIMXRT1060 with FRDM-STBC-AGM01 Custom Kit (FRDM-STBC-AGM01 Sensor Shield De
       </source>
       <include_paths>
         <include_path path="43xxx_wifi/libraries/test/wl_tool/4343WA1/common/include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.wifi_wiced.wl_tool.43012.MIMXRT1062" name="wifi_wiced_wl_tool_43012" version="1.0.0" devices="MIMXRT1062xxxxA" dependency="middleware.amazon_freertos.freertos.MIMXRT1062 middleware.sdmmc.common.MIMXRT1062 middleware.sdmmc.sdio.MIMXRT1062 middleware.template_application.amazon_freertos.MIMXRT1062 middleware.wifi_wiced.common.MIMXRT1062" user_visible="true" type="other">
+      <source path="middleware/wiced/43xxx_Wi-Fi/libraries/test/wl_tool/43012C0/common/include/devctrl_if" target_path="43xxx_wifi/libraries/test/wl_tool/43012C0/common/include/devctrl_if" type="c_include">
+        <files mask="phyioctl_defs.h"/>
+        <files mask="wlioctl.h"/>
+        <files mask="wlioctl_defs.h"/>
+      </source>
+      <source path="middleware/wiced/43xxx_Wi-Fi/libraries/test/wl_tool/43012C0/common/include/proto" target_path="43xxx_wifi/libraries/test/wl_tool/43012C0/common/include/proto" type="c_include">
+        <files mask="802.11.h"/>
+        <files mask="802.11e.h"/>
+        <files mask="802.1d.h"/>
+        <files mask="bcmeth.h"/>
+        <files mask="bcmevent.h"/>
+        <files mask="bcmip.h"/>
+        <files mask="bcmipv6.h"/>
+        <files mask="ethernet.h"/>
+        <files mask="wpa.h"/>
+      </source>
+      <source path="middleware/wiced/43xxx_Wi-Fi/libraries/test/wl_tool/43012C0/include" target_path="43xxx_wifi/libraries/test/wl_tool/43012C0/include" type="c_include">
+        <files mask="bcm_cfg.h"/>
+        <files mask="bcm_mpool_pub.h"/>
+        <files mask="bcmcdc.h"/>
+        <files mask="bcmdefs.h"/>
+        <files mask="bcmdevs.h"/>
+        <files mask="bcmendian.h"/>
+        <files mask="bcmnvram.h"/>
+        <files mask="bcmsrom_fmt.h"/>
+        <files mask="bcmsrom_tbl.h"/>
+        <files mask="bcmstdlib.h"/>
+        <files mask="bcmtlv.h"/>
+        <files mask="bcmutils.h"/>
+        <files mask="dhdioctl.h"/>
+        <files mask="epictrl.h"/>
+        <files mask="epitimers.h"/>
+        <files mask="epivers.h"/>
+        <files mask="event_log.h"/>
+        <files mask="irelay.h"/>
+        <files mask="miniopt.h"/>
+        <files mask="packed_section_end.h"/>
+        <files mask="packed_section_start.h"/>
+        <files mask="rte_ioctl.h"/>
+        <files mask="sbpcmcia.h"/>
+        <files mask="sdiovar.h"/>
+        <files mask="trxhdr.h"/>
+        <files mask="typedefs.h"/>
+        <files mask="usbrdl.h"/>
+        <files mask="wl_drv.h"/>
+        <files mask="wlioctl.h"/>
+        <files mask="wlioctl_utils.h"/>
+      </source>
+      <source path="middleware/wiced/43xxx_Wi-Fi/libraries/test/wl_tool/43012C0/shared/bcmwifi/include" target_path="middleware/wiced/43xxx_Wi-Fi/libraries/test/wl_tool/43012C0/shared/bcmwifi/include" type="c_include">
+        <files mask="bcmwifi_channels.h"/>
+        <files mask="bcmwifi_monitor.h"/>
+        <files mask="bcmwifi_radiotap.h"/>
+        <files mask="bcmwifi_rates.h"/>
+        <files mask="bcmwifi_rclass.h"/>
+      </source>
+      <source path="middleware/wiced/43xxx_Wi-Fi/libraries/test/wl_tool/43012C0/wl/exe" target_path="43xxx_wifi/libraries/test/wl_tool/43012C0/wl/exe" type="c_include">
+        <files mask="wlu.h"/>
+        <files mask="wlu_client_shared.h"/>
+        <files mask="wlu_cmd.h"/>
+        <files mask="wlu_common.h"/>
+        <files mask="wlu_pipe.h"/>
+        <files mask="wlu_remote.h"/>
+        <files mask="wlu_server_shared.h"/>
+      </source>
+      <source path="middleware/wiced/43xxx_Wi-Fi/libraries/test/wl_tool/43012C0/wl/exe" target_path="43xxx_wifi/libraries/test/wl_tool/43012C0/wl/exe" type="src">
+        <files mask="wlu_pipe.c"/>
+        <files mask="wlu_server_shared.c"/>
+      </source>
+      <source path="middleware/wiced/43xxx_Wi-Fi/libraries/test/wl_tool/dummy/arpa" target_path="43xxx_wifi/libraries/test/wl_tool/dummy/arpa" type="c_include">
+        <files mask="inet.h"/>
+      </source>
+      <source path="middleware/wiced/43xxx_Wi-Fi/libraries/test/wl_tool/dummy/net" target_path="43xxx_wifi/libraries/test/wl_tool/dummy/net" type="c_include">
+        <files mask="if.h"/>
+      </source>
+      <source path="middleware/wiced/43xxx_Wi-Fi/libraries/test/wl_tool/dummy" target_path="43xxx_wifi/libraries/test/wl_tool/dummy" type="c_include">
+        <files mask="netdb.h"/>
+        <files mask="ntddndis.h"/>
+        <files mask="nuiouser.h"/>
+      </source>
+      <source path="middleware/wiced/43xxx_Wi-Fi/libraries/test/wl_tool/dummy/sys" target_path="43xxx_wifi/libraries/test/wl_tool/dummy/sys" type="c_include">
+        <files mask="socket.h"/>
+      </source>
+      <source path="middleware/wiced/43xxx_Wi-Fi/libraries/test/wl_tool" target_path="43xxx_wifi/libraries/test/wl_tool" type="other">
+        <files mask="wl43012C0.exe"/>
+      </source>
+      <source path="middleware/wiced/43xxx_Wi-Fi/libraries/test/wl_tool" target_path="43xxx_wifi/libraries/test/wl_tool" type="c_include">
+        <files mask="wl_tool.h"/>
+      </source>
+      <source path="middleware/wiced/43xxx_Wi-Fi/libraries/test/wl_tool" target_path="43xxx_wifi/libraries/test/wl_tool" type="src">
+        <files mask="wlu_server.c"/>
+      </source>
+      <include_paths>
+        <include_path path="43xxx_wifi/libraries/test/wl_tool/43012C0/common/include"/>
       </include_paths>
     </component>
     <component id="platform.utilities.misc_utilities.MIMXRT1062" name="misc_utilities" brief="Utilities which is needed for particular toolchain like the SBRK function required to address limitation between HEAP and STACK in GCC toolchain library." version="1.0.0" devices="MIMXRT1062xxxxA" user_visible="true" type="utilities">

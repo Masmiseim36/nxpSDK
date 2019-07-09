@@ -62,6 +62,7 @@
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>PRINTF_ADVANCED_ENABLE=1</value>
+          <value>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>

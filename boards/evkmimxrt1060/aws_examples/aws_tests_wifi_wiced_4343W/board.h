@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -207,6 +207,12 @@
 #define BOARD_CAMERA_I2C_CLOCK_SOURCE_SELECT (0U) /* Select USB1 PLL (480 MHz) as LPI2C's clock source */
 #define BOARD_CAMERA_I2C_CLOCK_FREQ \
     (CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8 / (BOARD_CAMERA_I2C_CLOCK_SOURCE_DIVIDER + 1U))
+
+/* @Brief Board Bluetooth HCI UART configuration */
+#define BOARD_BT_UART_BASEADDR LPUART3
+#define BOARD_BT_UART_CLK_FREQ BOARD_DebugConsoleSrcFreq()
+#define BOARD_BT_UART_IRQ LPUART3_IRQn
+#define BOARD_BT_UART_IRQ_HANDLER LPUART3_IRQHandler
 
 #if defined(__cplusplus)
 extern "C" {

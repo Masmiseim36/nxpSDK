@@ -31,6 +31,12 @@
   * so agrees to indemnify Cypress against all liability.
   */
 
+#ifdef WICED_BLUETOOTH_PLATFORM /** Define at project level for Bluetooth applications */
+#include "wiced_bluetooth_result.h"
+#endif
+
+#include "wwd_constants.h"
+
 /*
  * @file: WICED Platform Header that ports all the WICED dependent constants of WWD.
  *
@@ -171,6 +177,9 @@ typedef enum
     WICED_RESULT_LIST     ( WICED_            )  /*     0 -   999 */
     WWD_RESULT_LIST       ( WICED_WWD_        )  /*  1000 -  1999 */
     WLAN_RESULT_LIST      ( WICED_WLAN_       )  /*  2000 -  2999 */
+#ifdef WICED_BLUETOOTH_PLATFORM
+    BT_RESULT_LIST        ( WICED_BT_         )  /*  8000 -  8999 */
+#endif
 } wiced_result_t;
 
 /**

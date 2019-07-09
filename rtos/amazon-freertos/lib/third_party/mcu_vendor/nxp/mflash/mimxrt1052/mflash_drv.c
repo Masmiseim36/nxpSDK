@@ -146,7 +146,7 @@ static int32_t mflash_drv_init_internal(void)
      * TODO: store/restore previous PRIMASK on stack to avoid
      * failure in case of nested critical sections !! */
     __asm("cpsid i");
-    
+
     flexspi_config_t config;
     /* Get FLEXSPI default settings and configure the flexspi. */
     FLEXSPI_GetDefaultConfig(&config);
@@ -335,6 +335,12 @@ static status_t flexspi_nor_flash_page_program(FLEXSPI_Type *base, uint32_t addr
     return status;
 }
 
+#if defined( __GNUC__ )
+
+#pragma GCC push_options
+#pragma GCC optimize ("O0")
+
+#endif
 
 /* Internal - write single page */
 static int32_t mflash_drv_write_page_internal(uint32_t page_addr, uint32_t *data)
@@ -376,11 +382,11 @@ static int32_t mflash_drv_write_page_internal(uint32_t page_addr, uint32_t *data
 
     FLEXSPI_Enable(MFLASH_FLEXSPI, false);
     CLOCK_DisableClock(kCLOCK_FlexSpi);
-   
+
     /* Return back the changes in clocks */
     CCM_ANALOG->PFD_480 = pfd480;
     CCM->CSCMR1 = cscmr1;
-    
+
     CLOCK_EnableClock(kCLOCK_FlexSpi);
     FLEXSPI_Enable(MFLASH_FLEXSPI, true);
 
@@ -415,6 +421,11 @@ int32_t mflash_drv_write_page(void *page_addr, uint32_t *data)
     return result;
 }
 
+#if defined( __GNUC__ )
+
+#pragma GCC pop_options
+
+#endif
 
 /* Calling wrapper for 'mflash_drv_erase_sector_internal'.
  * Erase one sector starting at 'sector_addr' - must be sector aligned.

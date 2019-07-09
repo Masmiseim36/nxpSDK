@@ -184,6 +184,8 @@
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>CPU_MIMXRT1064DVL6A</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1176,6 +1178,8 @@
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>CPU_MIMXRT1064DVL6A</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2168,6 +2172,8 @@
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>CPU_MIMXRT1064DVL6A</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3158,6 +3164,8 @@
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>CPU_MIMXRT1064DVL6A</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4150,6 +4158,8 @@
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>CPU_MIMXRT1064DVL6A</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5142,6 +5152,8 @@
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>CPU_MIMXRT1064DVL6A</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
+          <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
         </option>
         <option>
           <name>CCPreprocFile</name>

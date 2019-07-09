@@ -389,8 +389,6 @@ wwd_result_t host_platform_sdio_transfer( wwd_bus_transfer_direction_t direction
 	xcommand.responseType = response_type;
 	xcommand.responseErrorFlags =response_error_flags;
 
-	xdata.txData = pdata;
-
 	// Set the transmit or receive data buffer
 	if(direction == BUS_WRITE)
 	{

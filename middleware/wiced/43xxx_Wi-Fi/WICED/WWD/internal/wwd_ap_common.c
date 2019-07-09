@@ -99,3 +99,38 @@ wwd_result_t wwd_wifi_set_ampdu_parameters_common( wwd_interface_t interface, ui
     }
     return WWD_SUCCESS;
 }
+
+wwd_result_t wwd_wifi_set_chanspec ( wwd_interface_t interface, uint8_t channel, host_semaphore_type_t *wwd_wifi_sleep_flag )
+{
+    uint16_t       chanspec;
+    uint32_t       bandwidth = BANDWIDTH_20MHZ;
+    uint32_t*      data;
+    wiced_buffer_t buffer;
+
+    bandwidth = wwd_wifi_get_bandwidth();
+    if ( bandwidth == BANDWIDTH_40MHZ )
+    {
+         chanspec = (wl_chanspec_t) htod16((channel | WL_CHANSPEC_BW_40 | WL_CHANSPEC_CTL_SB_NONE));
+    }
+#ifdef DOT11AC_CHIP
+    else if ( bandwidth == BANDWIDTH_80MHZ )
+    {
+         chanspec = (wl_chanspec_t) htod16((channel | WL_CHANSPEC_BW_80 | WL_CHANSPEC_CTL_SB_NONE));
+    }
+#endif
+    else
+    {
+         chanspec = (wl_chanspec_t) htod16((channel | WL_CHANSPEC_BW_20 | WL_CHANSPEC_CTL_SB_NONE));
+    }
+
+    chanspec |= wwd_channel_to_wl_band( channel );
+
+    /* set the chanspec */
+    data = wwd_sdpcm_get_iovar_buffer( &buffer, (uint16_t) 4, "chanspec" );
+    CHECK_IOCTL_BUFFER( data );
+    *data = chanspec;
+    WPRINT_WWD_DEBUG (( "\n calling chanspec IOVAR with chanspec=%x channel=%d\n", chanspec, channel ));
+    CHECK_RETURN_WITH_SEMAPHORE ( wwd_sdpcm_send_iovar( SDPCM_SET, buffer, 0, interface ), wwd_wifi_sleep_flag );
+
+    return WWD_SUCCESS;
+}

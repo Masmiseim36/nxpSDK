@@ -105,15 +105,15 @@
 #define FREESCALE_PKHA_INT_MAX_BYTES 512
 #endif
 
-///* Enable DCP use in library if there is DCP on chip. */
-//#if defined(FSL_FEATURE_SOC_DCP_COUNT) && (FSL_FEATURE_SOC_DCP_COUNT > 0)
-//#include "fsl_dcp.h"
+// /* Enable DCP use in library if there is DCP on chip. */
+// #if defined(FSL_FEATURE_SOC_DCP_COUNT) && (FSL_FEATURE_SOC_DCP_COUNT > 0)
+// #include "fsl_dcp.h"
 
-//#define MBEDTLS_FREESCALE_DCP_AES    /* Enable use of DCP AES.*/
-//#define MBEDTLS_FREESCALE_DCP_SHA1   /* Enable use of DCP SHA1.*/
-//#define MBEDTLS_FREESCALE_DCP_SHA256 /* Enable use of DCP SHA256.*/
+// #define MBEDTLS_FREESCALE_DCP_AES    /* Enable use of DCP AES.*/
+// #define MBEDTLS_FREESCALE_DCP_SHA1   /* Enable use of DCP SHA1.*/
+// #define MBEDTLS_FREESCALE_DCP_SHA256 /* Enable use of DCP SHA256.*/
 
-//#endif
+// #endif
 
 /* Enable HASHCRYPT use in library if there is HASHCRYPT on chip. */
 #if defined(FSL_FEATURE_SOC_HASHCRYPT_COUNT) && (FSL_FEATURE_SOC_HASHCRYPT_COUNT > 0)

@@ -2,9 +2,19 @@ Overview
 ========
 
 This is the IPerf example to check your bandwidth using the network performance measurement IPerf application on a PC as a client or a server.
-It is currently a minimal implementation providing an IPv4 TCP only.
+IPv4 is implemented. The UDP implementation is based on lwIP community experimental patches, therefore some issues could be experienced.
+UDP sending rate is calculated from the system time, which has a resolution of 1 ms in lwIP. Therefore the actual sending rate could be
+a little lower or higher due to sending a calculated (rounded) number of frames each one or more milliseconds. It can also result in higher jitter.
+The desired UDP sending rate is determined by the IPERF_UDP_CLIENT_RATE definition. If you want to change the rate without the need to compile
+the application with a new value of IPERF_UDP_CLIENT_RATE, you can run the application as a UDP server instead and control the sending rate
+by using the tradeoff mode from the PC application and determining the rate there.
+For client modes it assumes the PC application it connects to is running on the gateway.
 
 Instead of the command line IPerf application, for more convenience, it is recommended to use the JPerf2 graphical tool, which can be downloaded here: https://sourceforge.net/projects/iperf/files/jperf/jperf%202.0.0/jperf-2.0.0.zip/download
+The example supports IPerf version 2.0.5. JPerf2, downloaded from the link above, contains version 1.7.0 of iperf.exe for Windows however.
+Therefore the iperf.exe version has to be updated when using MS Windows. IPerf 2.0.5b for Windows can be downloaded from the following link:
+https://iperf.fr/download/windows/iperf-2.0.5b-win32.zip
+The contents of the downloaded archive have to be unpacked into jperf-2.0.0/bin folder, overwriting iperf.exe.
 
 To experiment with the receive throughput, try to increase the value of TCP_WND in the file lwipopts.h and make sure
 that the PBUF_POOL_SIZE is larger than (TCP_WND / TCP_MSS). Increase the PBUF_POOL_SIZE if necessary.
@@ -58,14 +68,20 @@ Running the demo
         ************************************************
         Please select one of the following modes to run IPERF with:
 
-            1: server mode (RX only test)
-            2: client mode (TX only test)
-            3: client dual mode (TX and RX in parallel)
-            4: client tradeoff mode (TX and RX sequentially)
+            1: TCP server mode (RX only test)
+            2: TCP client mode (TX only test)
+            3: TCP client dual mode (TX and RX in parallel)
+            4: TCP client tradeoff mode (TX and RX sequentially)
+            5: UDP server mode (RX only test)
+            6: UDP client mode (TX only test)
+            7: UDP client dual mode (TX and RX in parallel)
+            8: UDP client tradeoff mode (TX and RX sequentially)
 
         Enter mode number:
 2. Start the JPerf application, using the jperf-2.0.0/jperf.bat batch file.
-	It can be downloaded here: https://sourceforge.net/projects/iperf/files/jperf/jperf%202.0.0/jperf-2.0.0.zip/download.
+    It can be downloaded here: https://sourceforge.net/projects/iperf/files/jperf/jperf%202.0.0/jperf-2.0.0.zip/download.
+    When using Windows, replace the content of the jperf-2.0.0/bin folder with the files from the following zip: https://iperf.fr/download/windows/iperf-2.0.5b-win32.zip.
+    When using Linux, iperf binary version 2.0.5 must be installed separately (possibly using package manager) and present on the system path.
 3. To run lwIP IPERF in client mode, select "Server" radio button in JPerf and press the [Run iperf!] button.
 4. To run lwIP IPERF in server mode, select "Client radio button and enter the 192.168.0.102 board IPv4 address
     to the "Server address" parameter in JPerf.
@@ -130,6 +146,11 @@ Running the demo
          Bytes Transferred N
          Duration (ms) N
          Bandwidth (kbitpsec) N
+
+9. It is also possible to press the SPACE key when the test is running or finished.
+    If it is pressed when test is in progress, the running test will be aborted
+    and the main menu will appear. If the test is already finished, the main menu
+    will appear directly. From the main menu, new test can be run.
 Customization options
 =====================
 

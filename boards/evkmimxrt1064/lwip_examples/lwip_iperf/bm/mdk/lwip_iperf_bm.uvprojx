@@ -330,7 +330,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
-              <Define>DEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1064DVL6A, PRINTF_ADVANCED_ENABLE=1</Define>
+              <Define>DEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1064DVL6A, PRINTF_ADVANCED_ENABLE=1, SDK_DEBUGCONSOLE=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</Define>
               <Undefine/>
               <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../components/phyksz8081;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064;../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1064/drivers;../../../../../../components/lists;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/xip;../../../../xip;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include</IncludePath>
             </VariousControls>
@@ -2262,7 +2262,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1064DVL6A, PRINTF_ADVANCED_ENABLE=1</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1064DVL6A, PRINTF_ADVANCED_ENABLE=1, SDK_DEBUGCONSOLE=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</Define>
               <Undefine/>
               <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../components/phyksz8081;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064;../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1064/drivers;../../../../../../components/lists;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/xip;../../../../xip;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include</IncludePath>
             </VariousControls>
@@ -4194,7 +4194,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
-              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SKIP_SYSCLK_INIT, DEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1064DVL6A, PRINTF_ADVANCED_ENABLE=1</Define>
+              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SKIP_SYSCLK_INIT, DEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1064DVL6A, PRINTF_ADVANCED_ENABLE=1, SDK_DEBUGCONSOLE=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</Define>
               <Undefine/>
               <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../components/phyksz8081;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064;../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1064/drivers;../../../../../../components/lists;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/xip;../../../../xip;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include</IncludePath>
             </VariousControls>
@@ -6126,7 +6126,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
-              <Define>NDEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1064DVL6A, PRINTF_ADVANCED_ENABLE=1</Define>
+              <Define>NDEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1064DVL6A, PRINTF_ADVANCED_ENABLE=1, SDK_DEBUGCONSOLE=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</Define>
               <Undefine/>
               <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../components/phyksz8081;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064;../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1064/drivers;../../../../../../components/lists;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/xip;../../../../xip;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include</IncludePath>
             </VariousControls>
@@ -8058,7 +8058,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1064DVL6A, PRINTF_ADVANCED_ENABLE=1</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1064DVL6A, PRINTF_ADVANCED_ENABLE=1, SDK_DEBUGCONSOLE=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</Define>
               <Undefine/>
               <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../components/phyksz8081;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064;../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1064/drivers;../../../../../../components/lists;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/xip;../../../../xip;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include</IncludePath>
             </VariousControls>
@@ -9990,7 +9990,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
-              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SKIP_SYSCLK_INIT, NDEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1064DVL6A, PRINTF_ADVANCED_ENABLE=1</Define>
+              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SKIP_SYSCLK_INIT, NDEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1064DVL6A, PRINTF_ADVANCED_ENABLE=1, SDK_DEBUGCONSOLE=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</Define>
               <Undefine/>
               <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../components/phyksz8081;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064;../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1064/drivers;../../../../../../components/lists;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/drivers;../../../../../../devices/MIMXRT1064/xip;../../../../xip;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include</IncludePath>
             </VariousControls>

@@ -159,9 +159,6 @@
       <files mask="data.ldt"/>
       <files mask="main_text.ldt"/>
     </source>
-    <source path="boards/evkmimxrt1064/aws_examples/aws_tests_wifi_wiced_4343W/mdk" target_path="src" type="configuration" toolchain="mdk">
-      <files mask="evkmimxrt1064_ram.ini"/>
-    </source>
     <source path="boards/evkmimxrt1064/aws_examples/aws_tests_wifi_wiced_4343W" target_path="board" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>

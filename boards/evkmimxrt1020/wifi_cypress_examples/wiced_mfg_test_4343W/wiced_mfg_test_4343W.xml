@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MIMXRT1021"/>
+    <definition extID="component.lpuart_adapter.MIMXRT1021"/>
+    <definition extID="component.serial_manager.MIMXRT1021"/>
+    <definition extID="component.serial_manager_uart.MIMXRT1021"/>
+    <definition extID="device.MIMXRT1021_CMSIS.MIMXRT1021"/>
+    <definition extID="device.MIMXRT1021_startup.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos.freertos.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos.freertos.heap_4.MIMXRT1021"/>
+    <definition extID="middleware.sdmmc.common.MIMXRT1021"/>
+    <definition extID="middleware.sdmmc.sdio.MIMXRT1021"/>
+    <definition extID="middleware.sdmmc.usdhcadaptor.freertos.MIMXRT1021"/>
+    <definition extID="middleware.tcpip.lwip.MIMXRT1021"/>
+    <definition extID="middleware.wifi_wiced.4343W.MIMXRT1021"/>
+    <definition extID="middleware.wifi_wiced.MURATA_TYPE1DX.MIMXRT1021"/>
+    <definition extID="middleware.wifi_wiced.app.MIMXRT1021"/>
+    <definition extID="middleware.wifi_wiced.common.MIMXRT1021"/>
+    <definition extID="middleware.wifi_wiced.wl_tool.MIMXRT1021"/>
+    <definition extID="platform.Include_common.MIMXRT1021"/>
+    <definition extID="platform.Include_core_cm7.MIMXRT1021"/>
+    <definition extID="platform.drivers.clock.MIMXRT1021"/>
+    <definition extID="platform.drivers.common.MIMXRT1021"/>
+    <definition extID="platform.drivers.igpio.MIMXRT1021"/>
+    <definition extID="platform.drivers.iomuxc.MIMXRT1021"/>
+    <definition extID="platform.drivers.lpuart.MIMXRT1021"/>
+    <definition extID="platform.drivers.lpuart_freertos.MIMXRT1021"/>
+    <definition extID="platform.drivers.usdhc.MIMXRT1021"/>
+    <definition extID="platform.drivers.xip_board.MIMXRT1021"/>
+    <definition extID="platform.drivers.xip_device.MIMXRT1021"/>
+    <definition extID="platform.utilities.assert.MIMXRT1021"/>
+    <definition extID="utility.debug_console.MIMXRT1021"/>
+    <definition extID="iar"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="mdk"/>
+    <definition extID="com.crt.advproject.config.exe.debug"/>
+    <definition extID="com.crt.advproject.config.exe.release"/>
+  </externalDefinitions>
+  <example id="evkmimxrt1020_wiced_mfg_test_4343W" name="wiced_mfg_test_4343W" category="wifi_examples" dependency="platform.drivers.clock.MIMXRT1021 middleware.amazon_freertos.freertos.heap_4.MIMXRT1021 middleware.amazon_freertos.freertos.MIMXRT1021 middleware.tcpip.lwip.MIMXRT1021 middleware.wifi_wiced.MURATA_TYPE1DX.MIMXRT1021 platform.drivers.usdhc.MIMXRT1021 middleware.sdmmc.sdio.MIMXRT1021 middleware.sdmmc.usdhcadaptor.freertos.MIMXRT1021 middleware.wifi_wiced.app.MIMXRT1021 middleware.wifi_wiced.wl_tool.MIMXRT1021 platform.drivers.lpuart_freertos.MIMXRT1021 platform.drivers.common.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 utility.debug_console.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.serial_manager.MIMXRT1021 component.serial_manager_uart.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 component.lists.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 platform.utilities.assert.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.xip_board.MIMXRT1021 middleware.wifi_wiced.4343W.MIMXRT1021 middleware.wifi_wiced.common.MIMXRT1021 middleware.sdmmc.common.MIMXRT1021 platform.Include_core_cm7.MIMXRT1021 platform.Include_common.MIMXRT1021">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <memory>
+      <memoryBlock addr="60000000" size="00800000" access="RO" type="ExtFlash" id="BOARD_FLASH_evkmimxrt1020" name="BOARD_FLASH"/>
+      <memoryBlock addr="20200000" size="00020000" access="RW" type="RAM" id="SRAM_OC_evkmimxrt1020" name="SRAM_OC"/>
+      <memoryBlock addr="20000000" size="00010000" access="RW" type="RAM" id="SRAM_DTC_evkmimxrt1020" name="SRAM_DTC"/>
+      <memoryBlock addr="00000000" size="00010000" access="RW" type="RAM" id="SRAM_ITC_evkmimxrt1020" name="SRAM_ITC"/>
+      <memoryBlock addr="80000000" size="02000000" access="RW" type="RAM" id="BOARD_SDRAM_evkmimxrt1020" name="BOARD_SDRAM"/>
+    </memory>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MIMXRT1021DAG5A</value>
+          <value>SDK_DEBUGCONSOLE=1</value>
+          <value>XIP_EXTERNAL_FLASH=1</value>
+          <value>XIP_BOOT_HEADER_ENABLE=1</value>
+          <value>HIGH_SPEED_SDIO_CLOCK</value>
+          <value>PRINTF_ADVANCED_ENABLE=1</value>
+          <value>TARGET_wiced</value>
+          <value>RWL_SERIAL</value>
+          <value>LWIP_NETIF_API=1</value>
+          <value>WICED_MFG_TEST_APP</value>
+          <value>WICED_PAYLOAD_MTU=8320</value>
+          <value>PBUF_POOL_BUFSIZE=8320</value>
+          <value>FSL_RTOS_FREE_RTOS</value>
+          <value>WIFI_WICED</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
+          <value>&amp;Heap:Default;Default;0x2800&amp;Stack:Default;Default;0x1000</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <debug_configurations>
+      <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+        <drivers>
+          <driver id_refs="BOARD_FLASH_evkmimxrt1020">
+            <driverBinary path="devices/MIMXRT1021/mcuxpresso" type="binary" target_path="binary">
+              <files mask="MIMXRT1020-EVK_IS25LP064.cfx"/>
+            </driverBinary>
+          </driver>
+        </drivers>
+      </debug_configuration>
+    </debug_configurations>
+    <include_paths>
+      <include_path path="43xxx_wifi/libraries/test/wl_tool/4343WA1/common/include"/>
+      <include_path path="lwip/port"/>
+      <include_path path="lwip/src"/>
+      <include_path path="lwip/src/include"/>
+    </include_paths>
+    <source path="boards/evkmimxrt1020/wifi_cypress_examples/wiced_mfg_test_4343W" target_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/evkmimxrt1020/wifi_cypress_examples/wiced_mfg_test_4343W" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/evkmimxrt1020/wifi_cypress_examples/wiced_mfg_test_4343W" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/evkmimxrt1020/wifi_cypress_examples/wiced_mfg_test_4343W" target_path="source" type="c_include">
+      <files mask="FreeRTOSConfig.h"/>
+      <files mask="lwipopts.h"/>
+      <files mask="mfg_test.h"/>
+    </source>
+    <source path="boards/evkmimxrt1020/wifi_cypress_examples/wiced_mfg_test_4343W" target_path="source" type="src">
+      <files mask="mfg_test.c"/>
+    </source>
+  </example>
+</ksdk:examples>

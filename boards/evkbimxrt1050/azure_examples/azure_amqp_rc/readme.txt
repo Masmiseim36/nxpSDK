@@ -31,6 +31,9 @@ Perform following steps:
 1. In menu Quick Settings>> -> Defined symbols edit value of macro "SDK_DEBUGCONSOLE=1" to "SDK_DEBUGCONSOLE=0".
 2. After the step 1, new definition "SDK_DEBUGCONSOLE=1" automatically appear in the menu. Delete it, keep only "SDK_DEBUGCONSOLE=0".
 3. In menu Quick Settings>> -> Defined symbols define new macro "SDK_DEBUGCONSOLE_UART".
+
+Known issues in Keil MDK 5.27:
+This demo doesn't work in flexspi_nor_debug and flexspi_nor_release targets.
 ---------------------------------------------------------
 
 Prior to running the samples, you will need to have an instance of Azure IoT Hub available

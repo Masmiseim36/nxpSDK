@@ -107,9 +107,6 @@
     <source path="boards/evkbimxrt1050/wifi_cypress_examples/wiced_iperf_4343W/iar" target_path="src" type="other" toolchain="iar">
       <files mask="evkbimxrt1050.mac"/>
     </source>
-    <source path="boards/evkbimxrt1050/wifi_cypress_examples/wiced_iperf_4343W/mdk" target_path="src" type="configuration" toolchain="mdk">
-      <files mask="evkbimxrt1050_ram.ini"/>
-    </source>
     <source path="boards/evkbimxrt1050/wifi_cypress_examples/wiced_iperf_4343W" target_path="board" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>

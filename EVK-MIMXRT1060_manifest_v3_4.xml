@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_EVK-MIMXRT1060" name="EVK-MIMXRT1060" brief="This is SDK version 2.6.1 manifest file. It describes the content of the EVK-MIMXRT1060 and additional settings for tools that support SDK version 2.6.1" format_version="3.4" api_version="2.0.0" configuration="67a588787c956672796859058c217693" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.4.xsd">
-  <!--Timestamp (UTC): 2019-07-03 09:08:39.809324-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_EVK-MIMXRT1060" name="EVK-MIMXRT1060" brief="This is SDK version 2.6.2 manifest file. It describes the content of the EVK-MIMXRT1060 and additional settings for tools that support SDK version 2.6.2" format_version="3.4" api_version="2.0.0" configuration="a02e77e6f744634e029ec3c55bfa8d7b" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.4.xsd">
+  <!--Timestamp (UTC): 2019-07-11 08:21:33.059895-->
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
   </defines>
-  <ksdk id="MCUXpresso261" name="MCUXpresso261" version="2.6.1" revision="236 2019-07-03"/>
+  <ksdk id="MCUXpresso262" name="MCUXpresso262" version="2.6.2" revision="238 2019-07-11"/>
   <compilers>
     <compiler id="compiler_arm" name="arm" type="arm"/>
     <compiler id="compiler_gcc" name="gcc" type="gcc"/>
@@ -12397,6 +12397,15 @@ EVK-MIMXRT1060 with FRDM-STBC-AGM01 Custom Kit (FRDM-STBC-AGM01 Sensor Shield De
       </source>
       <source path="middleware/usb/phy" target_path="usb/phy" type="c_include">
         <files mask="usb_phy.h"/>
+      </source>
+    </component>
+    <component id="middleware.usb.phydcd.MIMXRT1062" name="PHYDCD driver" version="1.0.0" full_name="USB stack" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware">
+      <source path="middleware/usb/dcd" target_path="usb/dcd" type="c_include">
+        <files mask="usb_charger_detect.h"/>
+        <files mask="usb_phydcd.h"/>
+      </source>
+      <source path="middleware/usb/dcd" target_path="usb/dcd" type="src">
+        <files mask="usb_phydcd.c"/>
       </source>
     </component>
     <component id="middleware.usb.stack_common.MIMXRT1062" name="USB common" brief="USB common" version="2.2.0" full_name="USB common" devices="MIMXRT1062xxxxA" user_visible="true" type="middleware">

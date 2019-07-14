@@ -5,6 +5,7 @@
       CMSIS_CORE="Yes"
       Name="Common"
       Placement="TCM"
+      STLport="Yes"
       Target="MIMXRT1021DAG5A"
       arm_architecture="v7EM"
       arm_core_type="Cortex-M7"
@@ -20,6 +21,7 @@
       c_user_include_directories=";./..;./../../../../..;./../../../../../../../CMSIS/Include;./../../../../../../../devices;./../../../../../../../devices/MIMXRT1021/drivers;./../../../../../../../devices/MIMXRT1021/drivers;./../../../../../../../devices/MIMXRT1021/drivers;./../../../../../../../devices/MIMXRT1021/drivers;./../../../../../../../devices/MIMXRT1021;./../../../../../../../devices/MIMXRT1021/utilities/str;./../../../../../../../devices/MIMXRT1021/utilities/debug_console;./../../../../../../../components/uart;./../../../../../../../components/serial_manager;./../../../../../../../components/serial_manager;./../../../../../../../devices/MIMXRT1021/drivers;./../../../../../../../components/lists;./../../../../../../../devices/MIMXRT1021/drivers;./../../../../../../../devices/MIMXRT1021/drivers;./../../../../../../../devices/MIMXRT1021/xip;./../../../../../xip"
       debug_register_definition_file="$(TargetsDir)/iMXRT/XML/$(DeviceName)_registers.xml"
       debug_startup_completion_point="main"
+      debug_type_file="$(StudioDir)/bin/STLport.xml"
       linker_memory_map_file="$(TargetsDir)/iMXRT/MemoryMap_MIMXRT1021.xml"
       linker_section_placement_file="$(StudioDir)/targets/Cortex_M/tcm_placement.xml"
       linker_section_placement_macros=""
@@ -37,6 +39,7 @@
       <file file_name="$(TargetsDir)/iMXRT/system_$(DeviceName).c" />
       <file file_name="$(TargetsDir)/iMXRT/$(DeviceName).h" />
       <file file_name="$(TargetsDir)/iMXRT/$(DeviceName)_features.h" />
+      <file file_name="$(TargetsDir)/iMXRT/fsl_device_registers.h" />
     </folder>
     <folder Name="source">
       <file file_name="./../flexspi_nor_polling_transfer.c" />

@@ -134,6 +134,7 @@
 /* @brief XTALOSC24M availability on the SoC. */
 #define FSL_FEATURE_SOC_XTALOSC24M_COUNT (1)
 
+#define  FSL_FEATURE_SOC_USB_ANALOG_COUNT (2)
 /* ADC module features */
 
 /* @brief Remove Hardware Trigger feature. */

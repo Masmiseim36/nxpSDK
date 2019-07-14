@@ -42158,7 +42158,11 @@ typedef struct {
     __I  uint32_t VBUS_DETECT_STAT;                  /**< USB VBUS Detect Status Register, array offset: 0x1C0, array step: 0x60 */
          uint8_t RESERVED_0[12];
     __I  uint32_t CHRG_DETECT_STAT;                  /**< USB Charger Detect Status Register, array offset: 0x1D0, array step: 0x60 */
-         uint8_t RESERVED_1[28];
+    uint8_t RESERVED_1[12];
+    __IO uint32_t LOOPBACK;
+    __IO uint32_t LOOPBACK_SET;
+    __IO uint32_t LOOPBACK_CLR; 
+    uint8_t RESERVED_2[4];
     __IO uint32_t MISC;                              /**< USB Misc Register, array offset: 0x1F0, array step: 0x60 */
     __IO uint32_t MISC_SET;                          /**< USB Misc Register, array offset: 0x1F4, array step: 0x60 */
     __IO uint32_t MISC_CLR;                          /**< USB Misc Register, array offset: 0x1F8, array step: 0x60 */
@@ -42288,7 +42292,7 @@ typedef struct {
 #define USB_ANALOG_VBUS_DETECT_TOG_CHARGE_VBUS_SHIFT (27U)
 #define USB_ANALOG_VBUS_DETECT_TOG_CHARGE_VBUS(x) (((uint32_t)(((uint32_t)(x)) << USB_ANALOG_VBUS_DETECT_TOG_CHARGE_VBUS_SHIFT)) & USB_ANALOG_VBUS_DETECT_TOG_CHARGE_VBUS_MASK)
 /*! @} */
-
+#define USB_ANALOG_LOOPBACK_UTMI_TESTSTART_MASK (0x1U)
 /* The count of USB_ANALOG_VBUS_DETECT_TOG */
 #define USB_ANALOG_VBUS_DETECT_TOG_COUNT         (2U)
 

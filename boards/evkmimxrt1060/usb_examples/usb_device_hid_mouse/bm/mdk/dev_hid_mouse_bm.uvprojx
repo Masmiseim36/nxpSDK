@@ -331,7 +331,7 @@
               <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
               <Define>_DEBUG=1, DEBUG, CPU_MIMXRT1062DVL6A, USB_STACK_BM</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../components/lists</IncludePath>
+              <IncludePath>../../../dev_hid_mouse_bm/bm;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/dcd;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../components/lists</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -373,18 +373,33 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>doc</GroupName>
+          <GroupName>utility</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>usb_timer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../usb_timer.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_pit_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_pit_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_io.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_io.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
+            <File>
+              <FileName>usb_phydcd_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_phydcd_config.h</FilePath>
+            </File>
             <File>
               <FileName>mouse.c</FileName>
               <FileType>1</FileType>
@@ -409,6 +424,16 @@
               <FileName>usb_device_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../usb_device_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -521,6 +546,16 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
+              <FileName>fsl_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_pit.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pit.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_pit.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_cache.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_cache.c</FilePath>
@@ -574,6 +609,26 @@
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-dcd</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_charger_detect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/dcd/usb_charger_detect.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_phydcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/dcd/usb_phydcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_phydcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/dcd/usb_phydcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1217,7 +1272,7 @@
               <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1062DVL6A, USB_STACK_BM</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../components/lists</IncludePath>
+              <IncludePath>../../../dev_hid_mouse_bm/bm;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/dcd;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../components/lists</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1259,18 +1314,33 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>doc</GroupName>
+          <GroupName>utility</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>usb_timer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../usb_timer.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_pit_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_pit_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_io.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_io.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
+            <File>
+              <FileName>usb_phydcd_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_phydcd_config.h</FilePath>
+            </File>
             <File>
               <FileName>mouse.c</FileName>
               <FileType>1</FileType>
@@ -1295,6 +1365,16 @@
               <FileName>usb_device_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../usb_device_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -1407,6 +1487,16 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
+              <FileName>fsl_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_pit.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pit.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_pit.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_cache.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_cache.c</FilePath>
@@ -1460,6 +1550,26 @@
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-dcd</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_charger_detect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/dcd/usb_charger_detect.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_phydcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/dcd/usb_phydcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_phydcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/dcd/usb_phydcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2103,7 +2213,7 @@
               <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
               <Define>SDRAM_IS_SHAREABLE, SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1062DVL6A, USB_STACK_BM</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../components/lists</IncludePath>
+              <IncludePath>../../../dev_hid_mouse_bm/bm;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/dcd;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../components/lists</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2145,18 +2255,33 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>doc</GroupName>
+          <GroupName>utility</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>usb_timer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../usb_timer.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_pit_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_pit_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_io.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_io.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
+            <File>
+              <FileName>usb_phydcd_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_phydcd_config.h</FilePath>
+            </File>
             <File>
               <FileName>mouse.c</FileName>
               <FileType>1</FileType>
@@ -2181,6 +2306,16 @@
               <FileName>usb_device_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../usb_device_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -2293,6 +2428,16 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
+              <FileName>fsl_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_pit.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pit.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_pit.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_cache.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_cache.c</FilePath>
@@ -2346,6 +2491,26 @@
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-dcd</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_charger_detect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/dcd/usb_charger_detect.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_phydcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/dcd/usb_phydcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_phydcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/dcd/usb_phydcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2989,7 +3154,7 @@
               <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
               <Define>_DEBUG=0, NDEBUG, CPU_MIMXRT1062DVL6A, USB_STACK_BM</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../components/lists</IncludePath>
+              <IncludePath>../../../dev_hid_mouse_bm/bm;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/dcd;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../components/lists</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3031,18 +3196,33 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>doc</GroupName>
+          <GroupName>utility</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>usb_timer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../usb_timer.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_pit_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_pit_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_io.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_io.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
+            <File>
+              <FileName>usb_phydcd_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_phydcd_config.h</FilePath>
+            </File>
             <File>
               <FileName>mouse.c</FileName>
               <FileType>1</FileType>
@@ -3067,6 +3247,16 @@
               <FileName>usb_device_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../usb_device_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -3179,6 +3369,16 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
+              <FileName>fsl_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_pit.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pit.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_pit.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_cache.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_cache.c</FilePath>
@@ -3232,6 +3432,26 @@
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-dcd</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_charger_detect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/dcd/usb_charger_detect.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_phydcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/dcd/usb_phydcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_phydcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/dcd/usb_phydcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3875,7 +4095,7 @@
               <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1062DVL6A, USB_STACK_BM</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../components/lists</IncludePath>
+              <IncludePath>../../../dev_hid_mouse_bm/bm;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/dcd;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../components/lists</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3917,18 +4137,33 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>doc</GroupName>
+          <GroupName>utility</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>usb_timer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../usb_timer.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_pit_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_pit_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_io.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_io.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
+            <File>
+              <FileName>usb_phydcd_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_phydcd_config.h</FilePath>
+            </File>
             <File>
               <FileName>mouse.c</FileName>
               <FileType>1</FileType>
@@ -3953,6 +4188,16 @@
               <FileName>usb_device_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../usb_device_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -4065,6 +4310,16 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
+              <FileName>fsl_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_pit.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pit.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_pit.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_cache.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_cache.c</FilePath>
@@ -4118,6 +4373,26 @@
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-dcd</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_charger_detect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/dcd/usb_charger_detect.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_phydcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/dcd/usb_phydcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_phydcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/dcd/usb_phydcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4761,7 +5036,7 @@
               <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
               <Define>SDRAM_IS_SHAREABLE, SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1062DVL6A, USB_STACK_BM</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../components/lists</IncludePath>
+              <IncludePath>../../../dev_hid_mouse_bm/bm;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/dcd;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../components/lists</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4803,18 +5078,33 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>doc</GroupName>
+          <GroupName>utility</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>usb_timer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../usb_timer.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_pit_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_pit_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_io.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_io.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
+            <File>
+              <FileName>usb_phydcd_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_phydcd_config.h</FilePath>
+            </File>
             <File>
               <FileName>mouse.c</FileName>
               <FileType>1</FileType>
@@ -4839,6 +5129,16 @@
               <FileName>usb_device_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../usb_device_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -4951,6 +5251,16 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
+              <FileName>fsl_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_pit.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pit.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_pit.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_cache.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_cache.c</FilePath>
@@ -5004,6 +5314,26 @@
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-dcd</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_charger_detect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/dcd/usb_charger_detect.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_phydcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/dcd/usb_phydcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_phydcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/dcd/usb_phydcd.h</FilePath>
             </File>
           </Files>
         </Group>

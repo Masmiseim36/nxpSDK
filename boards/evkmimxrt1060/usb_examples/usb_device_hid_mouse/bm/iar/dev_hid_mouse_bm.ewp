@@ -312,6 +312,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$/../../../dev_hid_mouse_bm/bm</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
@@ -324,6 +325,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/dcd</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
@@ -1304,6 +1307,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$/../../../dev_hid_mouse_bm/bm</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
@@ -1316,6 +1320,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/dcd</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
@@ -2296,6 +2302,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$/../../../dev_hid_mouse_bm/bm</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
@@ -2308,6 +2315,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/dcd</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
@@ -3287,6 +3296,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$/../../../dev_hid_mouse_bm/bm</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
@@ -3299,6 +3309,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/dcd</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
@@ -4279,6 +4291,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$/../../../dev_hid_mouse_bm/bm</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
@@ -4291,6 +4304,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/dcd</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
@@ -5271,6 +5286,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$/../../../dev_hid_mouse_bm/bm</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
@@ -5283,6 +5299,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/dcd</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
@@ -5952,13 +5970,22 @@
     </settings>
   </configuration>
   <group>
-    <name>doc</name>
+    <name>utility</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../usb_timer.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../usb_pit_drv.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../usb_io.h</name>
     </file>
   </group>
   <group>
     <name>source</name>
+    <file>
+      <name>$PROJ_DIR$/../usb_phydcd_config.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../mouse.c</name>
     </file>
@@ -5973,6 +6000,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../usb_device_config.h</name>
+    </file>
+  </group>
+  <group>
+    <name>doc</name>
+    <file>
+      <name>$PROJ_DIR$/../readme.txt</name>
     </file>
   </group>
   <group>
@@ -6070,6 +6103,18 @@
         <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.h</name>
       </file>
     </group>
+    <group>
+      <name>dcd</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/dcd/usb_charger_detect.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/dcd/usb_phydcd.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/dcd/usb_phydcd.h</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>osa</name>
@@ -6085,6 +6130,12 @@
   </group>
   <group>
     <name>drivers</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_pit.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_pit.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_cache.c</name>
     </file>

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2017,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,8 +14,15 @@
 #include "usb_device_hid.h"
 #include "usb_device_ch9.h"
 #include "usb_device_descriptor.h"
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+#include "usb_hsdcd.h"
+#endif
 #include "mouse.h"
-
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
+#include "usb_phydcd.h"
+#endif
 #include "fsl_device_registers.h"
 #include "clock_config.h"
 #include "board.h"
@@ -32,6 +39,7 @@
 #endif
 
 #include "pin_mux.h"
+#include "usb_timer.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -50,7 +58,10 @@ static usb_status_t USB_DeviceHidMouseAction(void);
 static usb_status_t USB_DeviceHidMouseCallback(class_handle_t handle, uint32_t event, void *param);
 static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param);
 static void USB_DeviceApplicationInit(void);
-
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
+extern void HW_TimerControl(uint8_t enable);
+#endif
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -60,11 +71,7 @@ usb_hid_mouse_struct_t g_UsbDeviceHidMouse;
 
 extern usb_device_class_struct_t g_UsbDeviceHidMouseConfig;
 
-#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
-    ((defined(FSL_FEATURE_SOC_USBDCD_COUNT) && (FSL_FEATURE_SOC_USBDCD_COUNT > 0U)) ||        \
-     (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)))
-usb_device_dcd_charging_time_t g_UsbDeviceDcdTimingConfig;
-#endif
+
 
 /* Set class configurations */
 usb_device_class_config_struct_t g_UsbDeviceHidConfig[1] = {{
@@ -84,7 +91,23 @@ usb_device_class_config_list_struct_t g_UsbDeviceHidConfigList = {
 /*******************************************************************************
  * Code
  ******************************************************************************/
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
+void HW_TimerCallback(void)
+{
+    g_UsbDeviceHidMouse.hwTick++;
+    USB_DeviceUpdateHwTick(g_UsbDeviceHidMouse.deviceHandle, g_UsbDeviceHidMouse.hwTick);
+}
 
+void HW_TimerInit(void)
+{
+    USB_TimerInit(0, 1000U, CLOCK_GetFreq(kCLOCK_OscClk), HW_TimerCallback);
+}
+void HW_TimerControl(uint8_t enable)
+{
+    USB_TimerInt(0, enable);
+}
+#endif
 void USB_OTG1_IRQHandler(void)
 {
     USB_DeviceEhciIsrFunction(g_UsbDeviceHidMouse.deviceHandle);
@@ -261,28 +284,27 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
 #if (defined(USB_DEVICE_CONFIG_DETACH_ENABLE) && (USB_DEVICE_CONFIG_DETACH_ENABLE > 0U))
         case kUSB_DeviceEventAttach:
         {
-#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
-    ((defined(FSL_FEATURE_SOC_USBDCD_COUNT) && (FSL_FEATURE_SOC_USBDCD_COUNT > 0U)) ||        \
-     (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)))
-            g_UsbDeviceHidMouse.vReginInterruptDetected = 1;
-            g_UsbDeviceHidMouse.vbusValid = 1;
+            g_UsbDeviceHidMouse.connectStateChanged = 1U;
+            g_UsbDeviceHidMouse.connectState = 1U;
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (((defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)))  || \
+    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U)))              
+            g_UsbDeviceHidMouse.dcdDectionStatus = kUSB_DeviceDCDDectionInit;
 #else
-            usb_echo("USB device attached.\r\n");
             USB_DeviceRun(g_UsbDeviceHidMouse.deviceHandle);
 #endif
         }
         break;
         case kUSB_DeviceEventDetach:
         {
-#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
-    ((defined(FSL_FEATURE_SOC_USBDCD_COUNT) && (FSL_FEATURE_SOC_USBDCD_COUNT > 0U)) ||        \
-     (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)))
-            g_UsbDeviceHidMouse.vReginInterruptDetected = 1;
-            g_UsbDeviceHidMouse.vbusValid = 0;
-            g_UsbDeviceHidMouse.attach = 0;
+            g_UsbDeviceHidMouse.connectStateChanged = 1U;
+            g_UsbDeviceHidMouse.connectState = 0U;
+            g_UsbDeviceHidMouse.attach = 0U;
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (((defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)))  || \
+    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U)))
+            g_UsbDeviceHidMouse.dcdDectionStatus = kUSB_DeviceDCDDectionInit;
 #else
-            usb_echo("USB device detached.\r\n");
-            g_UsbDeviceHidMouse.attach = 0;
             USB_DeviceStop(g_UsbDeviceHidMouse.deviceHandle);
 #endif
         }
@@ -401,46 +423,36 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             }
             break;
 #endif
-#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
-    ((defined(FSL_FEATURE_SOC_USBDCD_COUNT) && (FSL_FEATURE_SOC_USBDCD_COUNT > 0U)) ||        \
-     (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)))
-        case kUSB_DeviceEventDcdTimeOut:
-            if (g_UsbDeviceHidMouse.dcdDevStatus == kUSB_DeviceDCDDevStatusVBUSDetect)
-            {
-                g_UsbDeviceHidMouse.dcdDevStatus = kUSB_DeviceDCDDevStatusTimeOut;
-            }
-            break;
-        case kUSB_DeviceEventDcdUnknownType:
-            if (g_UsbDeviceHidMouse.dcdDevStatus == kUSB_DeviceDCDDevStatusVBUSDetect)
-            {
-                g_UsbDeviceHidMouse.dcdDevStatus = kUSB_DeviceDCDDevStatusUnknownType;
-            }
-            break;
-        case kUSB_DeviceEventSDPDetected:
-            if (g_UsbDeviceHidMouse.dcdDevStatus == kUSB_DeviceDCDDevStatusVBUSDetect)
-            {
-                g_UsbDeviceHidMouse.dcdPortType = kUSB_DeviceDCDPortTypeSDP;
-                g_UsbDeviceHidMouse.dcdDevStatus = kUSB_DeviceDCDDevStatusDetectFinish;
-            }
-            break;
-        case kUSB_DeviceEventChargingPortDetected:
-            if (g_UsbDeviceHidMouse.dcdDevStatus == kUSB_DeviceDCDDevStatusVBUSDetect)
-            {
-                g_UsbDeviceHidMouse.dcdDevStatus = kUSB_DeviceDCDDevStatusChargingPortDetect;
-            }
-            break;
-        case kUSB_DeviceEventChargingHostDetected:
-            if (g_UsbDeviceHidMouse.dcdDevStatus == kUSB_DeviceDCDDevStatusVBUSDetect)
-            {
-                g_UsbDeviceHidMouse.dcdDevStatus = kUSB_DeviceDCDDevStatusDetectFinish;
-                g_UsbDeviceHidMouse.dcdPortType = kUSB_DeviceDCDPortTypeCDP;
-            }
-            break;
-        case kUSB_DeviceEventDedicatedChargerDetected:
-            if (g_UsbDeviceHidMouse.dcdDevStatus == kUSB_DeviceDCDDevStatusVBUSDetect)
-            {
-                g_UsbDeviceHidMouse.dcdDevStatus = kUSB_DeviceDCDDevStatusDetectFinish;
-                g_UsbDeviceHidMouse.dcdPortType = kUSB_DeviceDCDPortTypeDCP;
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (((defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)))  || \
+    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U)))      
+        case kUSB_DeviceEventDcdDetectionfinished:
+            /*temp pointer point to detection result*/
+            if(param)
+            {   
+                if(kUSB_DcdSDP == *temp8)
+                {
+                    g_UsbDeviceHidMouse.dcdDectionStatus = kUSB_DeviceDCDDectionSDP;
+                }
+                else if (kUSB_DcdCDP == *temp8)
+                {
+                    g_UsbDeviceHidMouse.dcdDectionStatus = kUSB_DeviceDCDDectionCDP;
+                }
+                else if (kUSB_DcdDCP == *temp8)
+                {
+                    g_UsbDeviceHidMouse.dcdDectionStatus = kUSB_DeviceDCDDectionDCP;
+                }
+                else if (kUSB_DcdTimeOut == *temp8)
+                {
+                    g_UsbDeviceHidMouse.dcdDectionStatus = kUSB_DeviceDCDDectionTimeOut;
+                }
+                else if (kUSB_DcdError == *temp8)
+                {
+                    g_UsbDeviceHidMouse.dcdDectionStatus = kUSB_DeviceDCDDectionError;
+                }
+                else
+                {
+                }   
             }
             break;
 #endif
@@ -465,17 +477,6 @@ static void USB_DeviceApplicationInit(void)
     g_UsbDeviceHidMouse.deviceHandle = NULL;
     g_UsbDeviceHidMouse.buffer = s_MouseBuffer;
 
-#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
-    ((defined(FSL_FEATURE_SOC_USBDCD_COUNT) && (FSL_FEATURE_SOC_USBDCD_COUNT > 0U)) ||        \
-     (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)))
-    g_UsbDeviceHidMouse.dcdDevStatus = kUSB_DeviceDCDDevStatusDetached;
-
-    g_UsbDeviceDcdTimingConfig.dcdSeqInitTime = USB_DEVICE_DCD_SEQ_INIT_TIME;
-    g_UsbDeviceDcdTimingConfig.dcdDbncTime = USB_DEVICE_DCD_DBNC_MSEC;
-    g_UsbDeviceDcdTimingConfig.dcdDpSrcOnTime = USB_DEVICE_DCD_VDPSRC_ON_MSEC;
-    g_UsbDeviceDcdTimingConfig.dcdTimeWaitAfterPrD = USB_DEVICE_DCD_TIME_WAIT_AFTER_PRI_DETECTION;
-    g_UsbDeviceDcdTimingConfig.dcdTimeDMSrcOn = USB_DEVICE_DCD_TIME_DM_SRC_ON;
-#endif
 
     /* Initialize the usb stack and class drivers */
     if (kStatus_USB_Success !=
@@ -486,9 +487,9 @@ static void USB_DeviceApplicationInit(void)
     }
     else
     {
-#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
-    ((defined(FSL_FEATURE_SOC_USBDCD_COUNT) && (FSL_FEATURE_SOC_USBDCD_COUNT > 0U)) ||        \
-     (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)))
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (((defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)))  || \
+    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U)))
         usb_echo("USB device DCD + HID mouse demo\r\n");
 #else
         usb_echo("USB device HID mouse demo\r\n");
@@ -496,12 +497,19 @@ static void USB_DeviceApplicationInit(void)
         /* Get the HID mouse class handle */
         g_UsbDeviceHidMouse.hidHandle = g_UsbDeviceHidConfigList.config->classHandle;
     }
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (((defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)))  || \
+    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U)))
+    g_UsbDeviceHidMouse.dcdDectionStatus = kUSB_DeviceDCDDectionInit;
+#endif
 
     USB_DeviceIsrEnable();
 
-#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
-    ((defined(FSL_FEATURE_SOC_USBDCD_COUNT) && (FSL_FEATURE_SOC_USBDCD_COUNT > 0U)) ||        \
-     (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)))
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (((defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)))  || \
+    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U)))
+      /*USB_DeviceRun could not be called here to avoid DP/DM confliction between DCD function and USB function in case DCD is enabled. 
+        Instead, USB_DeviceRun should be called after the DCD is finished immediately*/
 #else
     /* Start USB device HID mouse */
     USB_DeviceRun(g_UsbDeviceHidMouse.deviceHandle);
@@ -541,64 +549,87 @@ void APP_task(void *handle)
 
     while (1U)
     {
-#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
-    ((defined(FSL_FEATURE_SOC_USBDCD_COUNT) && (FSL_FEATURE_SOC_USBDCD_COUNT > 0U)) ||        \
-     (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)))
-        if (g_UsbDeviceHidMouse.vReginInterruptDetected)
+#if (defined(USB_DEVICE_CONFIG_DETACH_ENABLE) && (USB_DEVICE_CONFIG_DETACH_ENABLE > 0U))
+
+        if (g_UsbDeviceHidMouse.connectStateChanged)
         {
-            g_UsbDeviceHidMouse.vReginInterruptDetected = 0;
-            if (g_UsbDeviceHidMouse.vbusValid)
+            g_UsbDeviceHidMouse.connectStateChanged = 0;
+            if (g_UsbDeviceHidMouse.connectState)
             {
+                /*user need call USB_DeviceRun here to usb function run if dcd function is disabled*/
+                /*USB_DeviceRun(g_UsbDeviceHidMouse.deviceHandle);*/
                 usb_echo("USB device attached.\r\n");
-                USB_DeviceDcdInitModule(g_UsbDeviceHidMouse.deviceHandle, &g_UsbDeviceDcdTimingConfig);
-                g_UsbDeviceHidMouse.dcdDevStatus = kUSB_DeviceDCDDevStatusVBUSDetect;
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
+                HW_TimerControl(1U);
+#endif
             }
             else
             {
-                usb_echo("USB device detached.\r\n");
-                USB_DeviceDcdDeinitModule(g_UsbDeviceHidMouse.deviceHandle);
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U))
+                /*USB_DeviceStop be called here to avoid DP/DM confliction between DCD function and USB function in case next time DCD dection. */
                 USB_DeviceStop(g_UsbDeviceHidMouse.deviceHandle);
-                g_UsbDeviceHidMouse.dcdPortType = kUSB_DeviceDCDPortTypeNoPort;
-                g_UsbDeviceHidMouse.dcdDevStatus = kUSB_DeviceDCDDevStatusDetached;
+#endif
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
+                HW_TimerControl(0U);
+#endif
+                usb_echo("USB device detached.\r\n");
             }
         }
-
-        if (g_UsbDeviceHidMouse.dcdDevStatus == kUSB_DeviceDCDDevStatusChargingPortDetect) /* This is only for BC1.1 */
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (((defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))) || \
+      (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U)))
+        if((kUSB_DeviceDCDDectionInit != g_UsbDeviceHidMouse.dcdDectionStatus) && (kUSB_DeviceDCDDectionFinished != g_UsbDeviceHidMouse.dcdDectionStatus))
         {
-            USB_DeviceRun(g_UsbDeviceHidMouse.deviceHandle);
-        }
-        if (g_UsbDeviceHidMouse.dcdDevStatus == kUSB_DeviceDCDDevStatusTimeOut)
-        {
-            usb_echo("Timeout error.\r\n");
-            g_UsbDeviceHidMouse.dcdDevStatus = kUSB_DeviceDCDDevStatusComplete;
-        }
-        if (g_UsbDeviceHidMouse.dcdDevStatus == kUSB_DeviceDCDDevStatusUnknownType)
-        {
-            usb_echo("Unknown port type.\r\n");
-            g_UsbDeviceHidMouse.dcdDevStatus = kUSB_DeviceDCDDevStatusComplete;
-        }
-        if (g_UsbDeviceHidMouse.dcdDevStatus == kUSB_DeviceDCDDevStatusDetectFinish)
-        {
-            if (g_UsbDeviceHidMouse.dcdPortType == kUSB_DeviceDCDPortTypeSDP)
+            switch (g_UsbDeviceHidMouse.dcdDectionStatus)
             {
-                usb_echo("The device has been connected to a facility which is SDP(Standard Downstream Port).\r\n");
-                USB_DeviceRun(
-                    g_UsbDeviceHidMouse.deviceHandle); /* If the facility attached is SDP, start enumeration */
-            }
-            else if (g_UsbDeviceHidMouse.dcdPortType == kUSB_DeviceDCDPortTypeCDP)
-            {
-                usb_echo("The device has been connected to a facility which is CDP(Charging Downstream Port).\r\n");
-                USB_DeviceRun(
-                    g_UsbDeviceHidMouse.deviceHandle); /* If the facility attached is CDP, start enumeration */
-            }
-            else if (g_UsbDeviceHidMouse.dcdPortType == kUSB_DeviceDCDPortTypeDCP)
-            {
-                usb_echo("The device has been connected to a facility which is DCP(Dedicated Charging Port).\r\n");
-            }
-            g_UsbDeviceHidMouse.dcdDevStatus = kUSB_DeviceDCDDevStatusComplete;
+                case kUSB_DeviceDCDDectionSDP:
+                    {
+                         usb_echo("SDP(standard downstream port) is detected.\r\n");
+                         /* Start USB device HID mouse */
+                         USB_DeviceRun(g_UsbDeviceHidMouse.deviceHandle);
+                    }
+                    break;        
+                case kUSB_DeviceDCDDectionDCP:
+                    {
+                         usb_echo("DCP (dedicated charging port) is detected.\r\n");
+#if (defined(FSL_FEATURE_USBPHY_HAS_DCD_ANALOG) && (FSL_FEATURE_USBPHY_HAS_DCD_ANALOG > 0U))
+                         /*
+                         * This is a work-around to fix the DCP device detach event missing issue.
+                         * The device (IP3511HS controller) VBUSDEBOUNCED bit is not updated on time before softeware read this bit, 
+                         * so when DCP is detached from usb port, softeware can't detect DCP disconnection.
+                         */
+                         USB_DeviceRun(g_UsbDeviceHidMouse.deviceHandle);
+#endif
+                    }
+                    break;      
+                case kUSB_DeviceDCDDectionCDP:
+                    {
+                        usb_echo("CDP(charging downstream port) is detected.\r\n");
+                        /* Start USB device HID mouse */
+                        USB_DeviceRun(g_UsbDeviceHidMouse.deviceHandle);
+                    }
+                    break; 
+                case kUSB_DeviceDCDDectionTimeOut:
+                    {
+                        usb_echo("Timeout error.\r\n");
+                    }
+                    break;
+                case kUSB_DeviceDCDDectionError:
+                    {
+                        usb_echo("Detect error.\r\n");
+                    }
+                    break;    
+                default:
+                    break;
+                }
+                g_UsbDeviceHidMouse.dcdDectionStatus = kUSB_DeviceDCDDectionFinished;
         }
 #endif
+#endif
     }
+
 }
 
 #if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
@@ -612,6 +643,10 @@ void main(void)
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
+    HW_TimerInit();
+#endif
 
     if (xTaskCreate(APP_task,                                  /* pointer to the task */
                     "app task",                                /* task name for kernel awareness debugging */

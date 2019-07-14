@@ -990,6 +990,8 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} --defsym=__heap_size__=0x2000")
 
+include_directories(${ProjDirPath}/../../../dev_hid_mouse_bm/bm)
+
 include_directories(${ProjDirPath}/..)
 
 include_directories(${ProjDirPath}/../../../..)
@@ -1010,6 +1012,8 @@ include_directories(${ProjDirPath}/../../../../../../middleware/usb/phy)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers)
 
+include_directories(${ProjDirPath}/../../../../../../middleware/usb/dcd)
+
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1062)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1062/xip)
@@ -1027,6 +1031,10 @@ include_directories(${ProjDirPath}/../../../../../../components/serial_manager)
 include_directories(${ProjDirPath}/../../../../../../components/lists)
 
 add_executable(dev_hid_mouse_bm.elf 
+"${ProjDirPath}/../usb_timer.h"
+"${ProjDirPath}/../usb_pit_drv.c"
+"${ProjDirPath}/../usb_io.h"
+"${ProjDirPath}/../usb_phydcd_config.h"
 "${ProjDirPath}/../mouse.c"
 "${ProjDirPath}/../mouse.h"
 "${ProjDirPath}/../usb_device_descriptor.c"
@@ -1048,6 +1056,11 @@ add_executable(dev_hid_mouse_bm.elf
 "${ProjDirPath}/../../../../../../middleware/usb/osa/usb_osa_bm.h"
 "${ProjDirPath}/../../../../../../middleware/usb/phy/usb_phy.c"
 "${ProjDirPath}/../../../../../../middleware/usb/phy/usb_phy.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_pit.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_pit.h"
+"${ProjDirPath}/../../../../../../middleware/usb/dcd/usb_charger_detect.h"
+"${ProjDirPath}/../../../../../../middleware/usb/dcd/usb_phydcd.c"
+"${ProjDirPath}/../../../../../../middleware/usb/dcd/usb_phydcd.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_cache.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_cache.h"
 "${ProjDirPath}/../../../../../../middleware/usb/device/usb_device.h"

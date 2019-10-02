@@ -27,8 +27,8 @@
 
 #define MAX_LOG_LENGTH 20
 /*******************************************************************************
-* Globals
-******************************************************************************/
+ * Globals
+ ******************************************************************************/
 /* Logger queue handle */
 static QueueHandle_t log_queue = NULL;
 /*******************************************************************************
@@ -149,7 +149,10 @@ static void log_task(void *pvParameters)
     char log[MAX_LOG_LENGTH + 1];
     while (1)
     {
-        xQueueReceive(log_queue, log, portMAX_DELAY);
+        if (xQueueReceive(log_queue, log, portMAX_DELAY) != pdTRUE)
+        {
+            PRINTF("Failed to receive queue.\r\n");
+        }
         PRINTF("Log %d: %s\r\n", counter, log);
         counter++;
     }

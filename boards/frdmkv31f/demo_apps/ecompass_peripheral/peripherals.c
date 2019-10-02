@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,17 +13,24 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Peripherals v4.1
+product: Peripherals v5.0
 processor: MKV31F512xxx12
 package_id: MKV31F512VLL12
 mcu_data: ksdk2_0
-processor_version: 0.0.13
+processor_version: 0.0.18
 board: FRDM-KV31F
 functionalGroups:
 - name: BOARD_InitPeripherals
   called_from_default_init: true
   id_prefix: BOARD_
   selectedCore: core0
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+component:
+- type: 'system'
+- type_id: 'system_54b53072540eeeb8f8e9343e71f28176'
+- global_system_definitions: []
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 
@@ -50,6 +57,8 @@ instance:
 - config_sets:
   - fsl_i2c:
     - i2c_mode: 'kI2C_Master'
+    - clockSource: 'BusInterfaceClock'
+    - clockSourceFreq: 'GetFreq'
     - i2c_master_config:
       - enableMaster: 'true'
       - enableStopHold: 'false'
@@ -64,7 +73,7 @@ const i2c_master_config_t BOARD_ACCEL_I2C_config = {
 void BOARD_ACCEL_I2C_init(void)
 {
     /* Initialization function */
-    I2C_MasterInit(BOARD_ACCEL_I2C_PERIPHERAL, &BOARD_ACCEL_I2C_config, CLOCK_GetFreq(BOARD_ACCEL_I2C_CLKSRC));
+    I2C_MasterInit(BOARD_ACCEL_I2C_PERIPHERAL, &BOARD_ACCEL_I2C_config, BOARD_ACCEL_I2C_CLK_FREQ);
 }
 
 /***********************************************************************************************************************
@@ -72,6 +81,7 @@ void BOARD_ACCEL_I2C_init(void)
  **********************************************************************************************************************/
 void BOARD_InitPeripherals(void)
 {
+    /* Initialize components */
     BOARD_ACCEL_I2C_init();
 }
 

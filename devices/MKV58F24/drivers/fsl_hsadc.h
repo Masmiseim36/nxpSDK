@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -29,21 +29,21 @@
  */
 enum _hsadc_status_flags
 {
-    kHSADC_ZeroCrossingFlag = (1U << 0U),               /*!< Zero crossing. */
-    kHSADC_HighLimitFlag = (1U << 1U),                  /*!< High-limit. */
-    kHSADC_LowLimitFlag = (1U << 2U),                   /*!< Low-limit. */
-    kHSADC_ConverterAEndOfScanFlag = (1U << 3U),        /*!< End of Scan, converter A. */
-    kHSADC_ConverterBEndOfScanFlag = (1U << 4U),        /*!< End of Scan, converter B. */
-    kHSADC_ConverterAEndOfCalibrationFlag = (1U << 5U), /*!< End of Calibration, converter A. */
-    kHSADC_ConverterBEndOfCalibrationFlag = (1U << 6U), /*!< End of Calibration, converter B. */
-    kHSADC_ConverterAConvertingFlag = (1U << 7U),       /*!< Conversion in progress, converter A. */
-    kHSADC_ConverterBConvertingFlag = (1U << 8U),       /*!< Conversion in progress, converter B. */
-    kHSADC_ConverterADummyConvertingFlag = (1U << 9U),  /*!< Dummy conversion in progress, converter A. */
-    kHSADC_ConverterBDummyConvertingFlag = (1U << 10U), /*!< Dummy conversion in progress, converter B. */
-    kHSADC_ConverterACalibratingFlag = (1U << 11U),     /*!< Calibration in progress, converter A. */
-    kHSADC_ConverterBCalibratingFlag = (1U << 12U),     /*!< Calibration in progress, converter B. */
-    kHSADC_ConverterAPowerDownFlag = (1U << 13U),       /*!< The converter is powered down, converter A. */
-    kHSADC_ConverterBPowerDownFlag = (1U << 14U),       /*!< The converter is powered down, converter B. */
+    kHSADC_ZeroCrossingFlag               = (1U << 0U),  /*!< Zero crossing. */
+    kHSADC_HighLimitFlag                  = (1U << 1U),  /*!< High-limit. */
+    kHSADC_LowLimitFlag                   = (1U << 2U),  /*!< Low-limit. */
+    kHSADC_ConverterAEndOfScanFlag        = (1U << 3U),  /*!< End of Scan, converter A. */
+    kHSADC_ConverterBEndOfScanFlag        = (1U << 4U),  /*!< End of Scan, converter B. */
+    kHSADC_ConverterAEndOfCalibrationFlag = (1U << 5U),  /*!< End of Calibration, converter A. */
+    kHSADC_ConverterBEndOfCalibrationFlag = (1U << 6U),  /*!< End of Calibration, converter B. */
+    kHSADC_ConverterAConvertingFlag       = (1U << 7U),  /*!< Conversion in progress, converter A. */
+    kHSADC_ConverterBConvertingFlag       = (1U << 8U),  /*!< Conversion in progress, converter B. */
+    kHSADC_ConverterADummyConvertingFlag  = (1U << 9U),  /*!< Dummy conversion in progress, converter A. */
+    kHSADC_ConverterBDummyConvertingFlag  = (1U << 10U), /*!< Dummy conversion in progress, converter B. */
+    kHSADC_ConverterACalibratingFlag      = (1U << 11U), /*!< Calibration in progress, converter A. */
+    kHSADC_ConverterBCalibratingFlag      = (1U << 12U), /*!< Calibration in progress, converter B. */
+    kHSADC_ConverterAPowerDownFlag        = (1U << 13U), /*!< The converter is powered down, converter A. */
+    kHSADC_ConverterBPowerDownFlag        = (1U << 14U), /*!< The converter is powered down, converter B. */
 };
 
 /*!
@@ -51,11 +51,11 @@ enum _hsadc_status_flags
  */
 enum _hsadc_interrupt_enable
 {
-    kHSADC_ZeroCrossingInterruptEnable = (1U << 0U),               /*!< Zero crossing interrupt. */
-    kHSADC_HighLimitInterruptEnable = (1U << 1U),                  /*!< High-limit interrupt. */
-    kHSADC_LowLimitInterruptEnable = (1U << 2U),                   /*!< Low-limit interrupt. */
-    kHSADC_ConverterAEndOfScanInterruptEnable = (1U << 3U),        /*!< End of Scan interrupt, converter A. */
-    kHSADC_ConverterBEndOfScanInterruptEnable = (1U << 4U),        /*!< End of Scan interrupt, converter B.*/
+    kHSADC_ZeroCrossingInterruptEnable               = (1U << 0U), /*!< Zero crossing interrupt. */
+    kHSADC_HighLimitInterruptEnable                  = (1U << 1U), /*!< High-limit interrupt. */
+    kHSADC_LowLimitInterruptEnable                   = (1U << 2U), /*!< Low-limit interrupt. */
+    kHSADC_ConverterAEndOfScanInterruptEnable        = (1U << 3U), /*!< End of Scan interrupt, converter A. */
+    kHSADC_ConverterBEndOfScanInterruptEnable        = (1U << 4U), /*!< End of Scan interrupt, converter B.*/
     kHSADC_ConverterAEndOfCalibrationInterruptEnable = (1U << 5U), /*!< End of Calibration, converter A. */
     kHSADC_ConverterBEndOfCalibrationInterruptEnable = (1U << 6U), /*!< End of Calibration, converter B. */
 };
@@ -74,18 +74,18 @@ enum _hsadc_converter_id
  */
 typedef enum _hsadc_dual_converter_scan_mode
 {
-    kHSADC_DualConverterWorkAsOnceSequential = 0U,      /*!< Once (single) sequential. */
-    kHSADC_DualConverterWorkAsOnceParallel = 1U,        /*!< Once parallel. */
-    kHSADC_DualConverterWorkAsLoopSequential = 2U,      /*!< Loop sequential. */
-    kHSADC_DualConverterWorkAsLoopParallel = 3U,        /*!< Loop parallel. */
+    kHSADC_DualConverterWorkAsOnceSequential      = 0U, /*!< Once (single) sequential. */
+    kHSADC_DualConverterWorkAsOnceParallel        = 1U, /*!< Once parallel. */
+    kHSADC_DualConverterWorkAsLoopSequential      = 2U, /*!< Loop sequential. */
+    kHSADC_DualConverterWorkAsLoopParallel        = 3U, /*!< Loop parallel. */
     kHSADC_DualConverterWorkAsTriggeredSequential = 4U, /*!< Triggered sequential. */
-    kHSADC_DualConverterWorkAsTriggeredParallel = 5U,   /*!< Triggered parallel. */
+    kHSADC_DualConverterWorkAsTriggeredParallel   = 5U, /*!< Triggered parallel. */
 } hsadc_dual_converter_scan_mode_t;
 
 typedef enum _hsadc_resolution
 {
-    kHSADC_Resolution6Bit = 0U,  /*!< 6 bit resolution mode. */
-    kHSADC_Resolution8Bit = 1U,  /*!< 8 bit resolution mode. */
+    kHSADC_Resolution6Bit  = 0U, /*!< 6 bit resolution mode. */
+    kHSADC_Resolution8Bit  = 1U, /*!< 8 bit resolution mode. */
     kHSADC_Resolution10Bit = 2U, /*!< 10 bit resolution mode. */
     kHSADC_Resolution12Bit = 3U, /*!< 12 bit resolution mode. */
 } hsadc_resolution_t;
@@ -95,7 +95,7 @@ typedef enum _hsadc_resolution
  */
 typedef enum _hsadc_dma_trigger_source
 {
-    kHSADC_DMATriggerSourceAsEndOfScan = 0U,   /*!< DMA trigger source is end of scan interrupt. */
+    kHSADC_DMATriggerSourceAsEndOfScan   = 0U, /*!< DMA trigger source is end of scan interrupt. */
     kHSADC_DMATriggerSourceAsSampleReady = 1U, /*!< DMA trigger source is RDY bits. */
 } hsadc_dma_trigger_source_t;
 
@@ -104,9 +104,9 @@ typedef enum _hsadc_dma_trigger_source
  */
 typedef enum _hsadc_zero_crossing_mode
 {
-    kHSADC_ZeroCorssingDisabled = 0U,          /*!< Zero Crossing disabled. */
-    kHSADC_ZeroCorssingForPtoNSign = 1U,       /*!< Zero Crossing enabled for positive to negative sign change. */
-    kHSADC_ZeroCorssingForNtoPSign = 2U,       /*!< Zero Crossing enabled for negative to positive sign change. */
+    kHSADC_ZeroCorssingDisabled          = 0U, /*!< Zero Crossing disabled. */
+    kHSADC_ZeroCorssingForPtoNSign       = 1U, /*!< Zero Crossing enabled for positive to negative sign change. */
+    kHSADC_ZeroCorssingForNtoPSign       = 2U, /*!< Zero Crossing enabled for negative to positive sign change. */
     kHSADC_ZeroCorssingForAnySignChanged = 3U, /*!< Zero Crossing enabled for any sign change. */
 } hsadc_zero_crossing_mode_t;
 
@@ -115,8 +115,8 @@ typedef enum _hsadc_zero_crossing_mode
  */
 typedef enum _hsadc_idle_work_mode
 {
-    kHSADC_IdleKeepNormal = 0U,    /*!< Keep normal. */
-    kHSADC_IdleAutoStandby = 1U,   /*!< Fall into standby mode automatically. */
+    kHSADC_IdleKeepNormal    = 0U, /*!< Keep normal. */
+    kHSADC_IdleAutoStandby   = 1U, /*!< Fall into standby mode automatically. */
     kHSADC_IdleAutoPowerDown = 2U, /*!< Fall into power down mode automatically. */
 } hsadc_idle_work_mode_t;
 
@@ -126,7 +126,7 @@ typedef enum _hsadc_idle_work_mode
 enum _hsadc_calibration_mode
 {
     kHSADC_CalibrationModeDifferential = (1U << 0U), /*!< Calibration request for differential mode. */
-    kHSADC_CalibrationModeSingleEnded = (1U << 1U),  /*!< Calibration request for single ended mode. */
+    kHSADC_CalibrationModeSingleEnded  = (1U << 1U), /*!< Calibration request for single ended mode. */
 };
 
 /*! @brief Bit mask of calibration value for converter A in single ended mode. */
@@ -168,12 +168,11 @@ typedef struct _hsadc_converter_config
     uint16_t clockDivisor;      /*!< Converter's clock divisor for the clock source. Available range is 2-64. */
     uint16_t samplingTimeCount; /*!< Sampling time count. The resultant sampling time is (1.5 + samplingTimeCount) x
                                 clock period. Available range is 0-255. */
-    uint16_t
-        powerUpCalibrationModeMask; /*!< Calibration mode mask in the power up period. See the "_hsadc_calibration_mode".
-                                If this field isn't zero, call the function HSADC_GetStatusFlags() to
-                                check whether the End of Calibration flag is set to wait for sthe calibration process to
-                                complete. If this is zero, it indicates no calibration is executed in power
-                                up period. */
+    uint16_t powerUpCalibrationModeMask; /*!< Calibration mode mask in the power up period. See the
+                                     "_hsadc_calibration_mode". If this field isn't zero, call the function
+                                     HSADC_GetStatusFlags() to check whether the End of Calibration flag is set to wait
+                                     for sthe calibration process to complete. If this is zero, it indicates no
+                                     calibration is executed in power up period. */
 } hsadc_converter_config_t;
 
 /*!
@@ -347,8 +346,8 @@ void HSADC_EnableConverterPower(HSADC_Type *base, uint16_t converterMask, bool e
 /*!
  * @brief Triggers the converter by using the software trigger.
  *
- * This function triggers  the converter using a software trigger. The software trigger can be used to start a conversion
- * sequence.
+ * This function triggers  the converter using a software trigger. The software trigger can be used to start a
+ * conversion sequence.
  *
  * @param base          HSADC peripheral base address.
  * @param converterMask Mask for converters to be operated. See the "_hsadc_converter_id".
@@ -586,8 +585,8 @@ static inline uint16_t HSADC_GetSampleResultValue(HSADC_Type *base, uint16_t sam
  * This function starts the single ended calibration and differential calibration for converter A and converter B
  * at the same time.
  * Note that this is a non blocking function. End of Scan flag and End of Calibration flag are both be set after the
- * calibration process. As a result, the user should check these two flags by using the function HSADC_GetStatusFlags() to wait for the
- * calibration process to complete.
+ * calibration process. As a result, the user should check these two flags by using the function HSADC_GetStatusFlags()
+ * to wait for the calibration process to complete.
  *
  * @param base                HSADC peripheral base address.
  * @param converterMask       Mask for converters to be operated. See the "_hsadc_converter_id".

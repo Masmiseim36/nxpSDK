@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<control>
+  <M1_appcontrol>
+    <M1_onoff>Application Switch</M1_onoff><!-- Main application switch of MOTOR1 -->
+  </M1_appcontrol>
+
+  <M1_states FreemasterName="Application State"><!-- Application state variable of MOTOR1 -->
+    <M1_state>FAULT</M1_state>
+    <M1_state>INIT</M1_state>
+    <M1_state>STOP</M1_state>
+    <M1_state>RUN</M1_state>   
+  </M1_states>
+    
+  <M1_Parameters><!-- Variables for rotor alignment for MOTOR1 -->
+    <M1_Align_Voltage>Alignment Voltage</M1_Align_Voltage>
+    <M1_Align_Current></M1_Align_Current>
+    <M1_Align_Duration>Alignment Duration</M1_Align_Duration>
+    
+    <M1_N_max>FMSTR_M1_speedScale</M1_N_max>
+    <M1_FREQ_max>FMSTR_M1_frequencyScale</M1_FREQ_max>
+    <M1_I_max>FMSTR_M1_currentScale</M1_I_max>
+    <M1_DCB_max>FMSTR_M1_DCBvoltageScale</M1_DCB_max>
+    <M1_U_max>FMSTR_M1_voltageScale</M1_U_max>
+    <M1_E_max>FMSTR_M1_bemfScale</M1_E_max>
+    
+    <M1_DCB_trip>Fault Threshold DcBusTrip</M1_DCB_trip>
+    <M1_DCB_under>Fault Threshold DcBusUnder</M1_DCB_under>
+    <M1_DCB_over>Fault Threshold DcBusOver</M1_DCB_over>
+    <M1_N_min>Fault Threshold SpeedMin</M1_N_min>
+    <M1_N_over>Fault Threshold SpeedOver</M1_N_over>
+    <M1_N_nom>Fault Threshold SpeedNom</M1_N_nom>
+    <M1_E_block>Fault Threshold BemfBlocked</M1_E_block>
+    
+    <M1_Fast_Loop_Freq>Fast Control Loop Frequency</M1_Fast_Loop_Freq>
+    <M1_Slow_Loop_Freq>Slow Control Loop Frequency</M1_Slow_Loop_Freq>
+  </M1_Parameters>
+ 
+  <M1_SpeedPiController><!-- Variables for Speed Controller for MOTOR1 -->
+    <M1_SL_Kp_g>Speed Loop Kp Gain</M1_SL_Kp_g><!-- Parallel PI KP gain --> 
+    <M1_SL_Kp_sc>Speed Loop Kp Shift</M1_SL_Kp_sc><!-- Parallel PI KP gain scale --> 
+    <M1_SL_Ki_g>Speed Loop Ki Gain</M1_SL_Ki_g><!-- Parallel PI KI gain -->
+    <M1_SL_Ki_sc>Speed Loop Ki Shift</M1_SL_Ki_sc><!-- Parallel PI KI gain scale -->
+    <M1_SL_Nsh></M1_SL_Nsh><!-- Reccurent PI shift -->
+    <M1_SL_CC1SC></M1_SL_CC1SC><!-- Reccurent PI CC1 constant --> 
+    <M1_SL_CC2SC></M1_SL_CC2SC><!-- Reccurent PI CC2 constant  -->
+    <M1_SL_UP_LIM>Speed Loop Limit High</M1_SL_UP_LIM><!-- PI High limit -->
+    <M1_SL_LOW_LIM>Speed Loop Limit Low</M1_SL_LOW_LIM><!-- PI Low limit -->
+    <M1_RAMP_UP_g>Speed Ramp Up</M1_RAMP_UP_g><!-- Speed ramp increment UP -->
+    <M1_RAMP_DOWN_g>Speed Ramp Down</M1_RAMP_DOWN_g><!-- Speed ramp increment DOWN -->
+    <M1_SPEED_MAF_sc></M1_SPEED_MAF_sc><!-- Actual Speed Filter, number of samples -->
+    <M1_SPEED_IIR_B0_g>Speed Filter B0</M1_SPEED_IIR_B0_g><!-- Actual Speed IIR Filter constant -->
+    <M1_SPEED_IIR_B1_g>Speed Filter B1</M1_SPEED_IIR_B1_g><!-- Actual Speed IIR Filter constant -->
+    <M1_SPEED_IIR_A1_g>Speed Filter A1</M1_SPEED_IIR_A1_g><!-- Actual Speed IIR Filter constant -->
+  </M1_SpeedPiController>
+  
+  <M1_CurrentPiController><!-- Variables for Current Controller for MOTOR1 -->
+    <M1_CL_LIMIT>Current Loop Limit</M1_CL_LIMIT><!-- Current loop limit -->
+    <M1_D_Kp_g>Id Kp Gain</M1_D_Kp_g><!-- Parallel D_PI KP gain --> 
+    <M1_D_Ki_g>Id Ki Gain</M1_D_Ki_g><!-- Parallel D_PI KIgain  --> 
+    <M1_D_Kp_sc>Id Kp Shift</M1_D_Kp_sc><!-- Parallel D_PI KP gain scale -->
+    <M1_D_Ki_sc>Id Ki Shift</M1_D_Ki_sc><!-- Parallel D_PI KI gain scale -->
+    <M1_Q_Kp_g>Iq Kp Gain</M1_Q_Kp_g><!-- Parallel Q_PI KP gain -->
+    <M1_Q_Ki_g>Iq Ki Gain</M1_Q_Ki_g><!-- Parallel Q_PI KI gain -->
+    <M1_Q_Kp_sc>Iq Kp Shift</M1_Q_Kp_sc><!-- Parallel Q_PI KP gain scale -->
+    <M1_Q_Ki_sc>Iq Ki Shift</M1_Q_Ki_sc><!-- Parallel Q_PI KI gain scale -->
+    <M1_D_NSHIFT></M1_D_NSHIFT><!-- Reccurent D_PI shift -->
+    <M1_D_CC1SC></M1_D_CC1SC><!-- Reccurent D_PI constant CC1 -->
+    <M1_D_CC2SC></M1_D_CC2SC><!-- Reccurent D_PI constant CC2 -->
+    <M1_Q_NSHIFT></M1_Q_NSHIFT><!-- Reccurent Q_PI shift -->
+    <M1_Q_CC1SC></M1_Q_CC1SC><!-- Reccurent Q_PI constant CC1 -->
+    <M1_Q_CC2SC></M1_Q_CC2SC><!-- Reccurent Q_PI constant CC2 -->
+    <M1_D_ZC_B0></M1_D_ZC_B0><!-- Zero Cancelation Filter constant D_B1 -->
+    <M1_D_ZC_B1></M1_D_ZC_B1><!-- Zero Cancelation Filter constant D_B2 -->
+    <M1_D_ZC_A1></M1_D_ZC_A1><!-- Zero Cancelation Filter constant D_A2 -->
+    <M1_Q_ZC_B0></M1_Q_ZC_B0><!-- Zero Cancelation Filter constant Q_B1 -->
+    <M1_Q_ZC_B1></M1_Q_ZC_B1><!-- Zero Cancelation Filter constant Q_B2 -->
+    <M1_Q_ZC_A1></M1_Q_ZC_A1><!-- Zero Cancelation Filter constant Q_A2 -->
+  </M1_CurrentPiController>
+  
+  <M1_PoSpeBemfDQ><!-- Variables for BEMF and Tracking Observers for MOTOR1 -->
+    <M1_E_scale>Obsrv E gain</M1_E_scale>
+    <M1_I_scale>Obsrv I gain</M1_I_scale>
+    <M1_U_scale>Obsrv U gain</M1_U_scale>
+    <M1_WI_scale>Obsrv WI gain</M1_WI_scale>
+    <M1_BEMF_DQ_Kp_g>Obsrv Kp gain</M1_BEMF_DQ_Kp_g>
+    <M1_BEMF_DQ_Ki_g>Obsrv Ki gain</M1_BEMF_DQ_Ki_g>
+    <M1_BEMF_DQ_Kp_sc>Obsrv Kp shift</M1_BEMF_DQ_Kp_sc>
+    <M1_BEMF_DQ_Ki_sc>Obsrv Ki shift</M1_BEMF_DQ_Ki_sc>
+    <M1_TO_Kp_g>Obsrv To Kp gain</M1_TO_Kp_g>
+    <M1_TO_Ki_g>Obsrv To Ki gain</M1_TO_Ki_g>
+    <M1_TO_Kp_sc>Obsrv To Kp shift</M1_TO_Kp_sc>
+    <M1_TO_Ki_sc>Obsrv To Ki shift</M1_TO_Ki_sc>
+    <M1_Theta_g>Obsrv To Theta gain</M1_Theta_g>
+    <M1_Theta_sc>Obsrv To Theta shift</M1_Theta_sc>
+    <M1_Startup_Ramp_inc>Startup Ramp Inc</M1_Startup_Ramp_inc><!-- Start-up ramp increment -->
+    <M1_Startup_Ramp_dec>Startup Ramp Dec</M1_Startup_Ramp_dec><!-- Start-up ramp increment -->
+    <M1_Startup_I_scaled_FM>Startup Current</M1_Startup_I_scaled_FM><!-- Start-up current -->
+    <M1_Startup_N_merging>Merging Speed Catch Up</M1_Startup_N_merging><!-- Start-up merging speed trigger -->
+    <M1_Startup_coeff_merging>Merging Coefficient</M1_Startup_coeff_merging><!-- Start-up merging coefficient -->
+  </M1_PoSpeBemfDQ>
+  
+  <M1_PoSpeSensor><!-- Variables for Position and Speed sensors of MOTOR1 -->
+    <M1_ATO_Kp_g>POSPE Kp Gain</M1_ATO_Kp_g>
+    <M1_ATO_Kp_sc>POSPE Kp Shift</M1_ATO_Kp_sc>
+    <M1_ATO_Ki_g>POSPE Ki Gain</M1_ATO_Ki_g>
+    <M1_ATO_Ki_sc>POSPE Ki Shift</M1_ATO_Ki_sc>
+    <M1_ATO_Nsh></M1_ATO_Nsh>
+    <M1_ATO_CC1></M1_ATO_CC1>
+    <M1_ATO_CC2></M1_ATO_CC2>
+    <M1_Integ_g>POSPE Integ Gain</M1_Integ_g>
+    <M1_Integ_sc>POSPE Integ Shift</M1_Integ_sc>
+  </M1_PoSpeSensor>
+  
+  <M1_MID><!-- Variables for Measurement of MOTOR1 -->
+  
+    <!-- General Fault -->
+    <M1_fm_Fault>Fault Pending</M1_fm_Fault>
+  
+    <!-- MID State Machine control variables -->
+    <M1_fm_MeasFault>MID FaultMID</M1_fm_MeasFault>
+    <M1_fm_MID_state>MID State</M1_fm_MID_state>
+    <M1_fm_EnableMeasurement>MID EnableMeasurement</M1_fm_EnableMeasurement>
+    <M1_fm_Calibration>MID Calibration</M1_fm_Calibration>
+    <M1_fm_ElectricalParameters>MID ElectricalParameters</M1_fm_ElectricalParameters>
+    <M1_fm_PolePairs>MID PolePairs</M1_fm_PolePairs>
+    
+    <!-- MID FMSTR scales -->
+    <M1_fm_R_MAX_scale>MID FMSTR_resistanceScale</M1_fm_R_MAX_scale>
+    <M1_fm_Z_MAX_scale>MID FMSTR_impedanceScale</M1_fm_Z_MAX_scale>
+    <M1_fm_F_MAX_scale>MID FMSTR_frequencyScale</M1_fm_F_MAX_scale>
+    <M1_fm_LD_MAX_scale>MID FMSTR_inductanceDScale</M1_fm_LD_MAX_scale>
+    <M1_fm_LQ_MAX_scale>MID FMSTR_inductanceQScale</M1_fm_LQ_MAX_scale>
+    <M1_fm_KE_MAX_scale>MID FMSTR_bemfConstScale</M1_fm_KE_MAX_scale>
+    
+    <!-- MID Align -->
+    <M1_fm_AlignActive>MID Align Active</M1_fm_AlignActive>
+    <M1_fm_MID_AlignCurrent>MID Align CurrentAlign</M1_fm_MID_AlignCurrent>
+    <M1_fm_MID_AlignDuration>MID Align AlignDuration</M1_fm_MID_AlignDuration>
+    
+    <!-- MID Ke -->
+    <M1_fm_KeActive>MID Ke Active</M1_fm_KeActive>
+    <M1_fm_MID_IdReqOpenLoop>MID Ke IdReqOpenLoop</M1_fm_MID_IdReqOpenLoop>
+    <M1_fm_MID_SpeedElReq>MID Ke SpeedElReq</M1_fm_MID_SpeedElReq>
+    <M1_fm_MID_MCATObserverDone>MID Ke MCATObsrvDone</M1_fm_MID_MCATObserverDone>
+    <M1_fm_Ke_meas>MID Ke Ke</M1_fm_Ke_meas>
+    <M1_fm_K_KE_MAX_SHIFT>MID Ke ShiftKeMax</M1_fm_K_KE_MAX_SHIFT>
+    <M1_fm_K_SpeedIntegGain>MID Ke SpeedIntegrator</M1_fm_K_SpeedIntegGain>
+    <M1_fm_K_SpeedIntegShift>MID Ke SpeedIntegrator.u16NShift</M1_fm_K_SpeedIntegShift>
+    
+    <!-- MID Ls -->
+    <M1_fm_LsActive>MID Ls Active</M1_fm_LsActive>
+    <M1_fm_VoltInc>MID Ls UdIncrement</M1_fm_VoltInc>
+    <M1_fm_FreqDec>MID Ls FreqDecrement</M1_fm_FreqDec>
+    <M1_fm_FreqStart>MID Ls FreqStart</M1_fm_FreqStart>
+    <M1_fm_FreqMin>MID Ls FreqMin</M1_fm_FreqMin>
+    <M1_fm_Ls_meas>MID Ls Ls</M1_fm_Ls_meas>
+    <M1_fm_Ld_meas>MID Ls Ld</M1_fm_Ld_meas>
+    <M1_fm_Lq_meas>MID Ls Lq</M1_fm_Lq_meas>
+    <M1_fm_Rs_meas>MID Ls Rs</M1_fm_Rs_meas>
+    <M1_fm_Id_ampl>MID Ls IdAmplitudeReq</M1_fm_Id_ampl>
+    <M1_fm_K_ZD_MAX_SHIFT>MID Ls ShiftZdMax</M1_fm_K_ZD_MAX_SHIFT>
+    <M1_fm_K_ZQ_MAX_SHIFT>MID Ls ShiftZqMax</M1_fm_K_ZQ_MAX_SHIFT>
+    <M1_fm_K_LD_MAX_SHIFT>MID Ls ShiftLdMax</M1_fm_K_LD_MAX_SHIFT>
+    <M1_fm_K_LQ_MAX_SHIFT>MID Ls ShiftLqMax</M1_fm_K_LQ_MAX_SHIFT>
+    <M1_fm_K_RS_TO_Z>MID Ls RescaleRsMaxToZMax</M1_fm_K_RS_TO_Z>
+    
+    <!-- MID Pp -->
+    <M1_fm_PpActive>MID Pp Active</M1_fm_PpActive>
+    <M1_fm_PpCurrent>MID Pp IdReqOpenLoop</M1_fm_PpCurrent>
+    <M1_fm_PpSpeed>MID Pp SpeedElReq</M1_fm_PpSpeed>
+    <M1_fm_PpDetermined>MID Pp PpDetermined</M1_fm_PpDetermined>
+    
+    <!-- MID PwrStg -->
+    <M1_fm_CharActive>MID PwrStg Active</M1_fm_CharActive>
+    <M1_fm_Rs_calib>MID PwrStg Rs</M1_fm_Rs_calib>
+    <M1_fm_Id_calib>MID PwrStg IdCalib</M1_fm_Id_calib>
+    <M1_fm_Id_increment>MID PwrStg IdIncrement</M1_fm_Id_increment>
+    <M1_fm_KCHAR_RS_MAX_SHIFT>MID PwrStg ShiftRsMax</M1_fm_KCHAR_RS_MAX_SHIFT>
+    <M1_fm_PWRSTG_LookUp>sMIDPwrStgChar.f16UdErrorLookUp</M1_fm_PWRSTG_LookUp>
+    
+    <!-- MID Rs -->
+    <M1_fm_RsActive>MID Rs Active</M1_fm_RsActive>
+    <M1_fm_Id_meas>MID Rs IdMeas</M1_fm_Id_meas>
+    <M1_fm_KRS_RS_MAX_SHIFT>MID Rs ShiftRsMax</M1_fm_KRS_RS_MAX_SHIFT> 
+    <M1_fm_Rescale_LUT_gain>MID Rs RescaleIdLUTGain</M1_fm_Rescale_LUT_gain>
+    <M1_fm_Rescale_LUT_shift>MID Rs RescaleIdLUTShift</M1_fm_Rescale_LUT_shift>
+    <M1_fm_Rs_meas>MID Rs Rs</M1_fm_Rs_meas>
+    
+    <!-- MID TransChar -->
+    <M1_fm_Rs_Meas_LookUp>MID TransCharError</M1_fm_Rs_Meas_LookUp>
+  </M1_MID>
+  
+  <M1_ControlStructure><!-- Cascade Structure State Variables of MOTOR1 -->
+    <M1_ControlStructureMethod>MCAT Control</M1_ControlStructureMethod>
+    <M1_ControlStructurePoSpe>MCAT POSPE Sensor</M1_ControlStructurePoSpe>
+  </M1_ControlStructure>
+  
+  <M1_ControlVariables><!-- Control Cascade Structure Variables of MOTOR1 -->
+    <M1_Freq_req>Scalar Speed Required</M1_Freq_req><!-- V/Hz required speed -->
+    <M1_SCALAR_VHZ_FACTOR_GAIN>VHz Factor Gain</M1_SCALAR_VHZ_FACTOR_GAIN><!-- V/Hz ratio -->
+    <M1_SCALAR_VHZ_FACTOR_SHIFT>VHz Factor Gain Shift</M1_SCALAR_VHZ_FACTOR_SHIFT><!-- V/Hz ratio -->
+    <M1_Scalar_ramp_up>Scalar Ramp Up</M1_Scalar_ramp_up><!-- V/Hz frequency ramp increment -->
+    <M1_Scalar_ramp_down>Scalar Ramp Down</M1_Scalar_ramp_down><!-- V/Hz frequency ramp increment -->
+    <M1_Ud_req>MCAT Ud Required</M1_Ud_req><!-- Voltage FOC - Ud required -->
+    <M1_Uq_req>MCAT Uq Required</M1_Uq_req><!-- Voltage FOC - Uq required -->
+    <M1_Id_req>MCAT Id Required</M1_Id_req><!-- Current FOC - Id required -->
+    <M1_Iq_req>MCAT Iq Required</M1_Iq_req><!-- Current FOC - Id required -->
+    <M1_Speed_req>Speed Required</M1_Speed_req><!-- Speed FOC - Speed required -->
+    <M1_FltClr>Fault Clear</M1_FltClr><!-- Clear fault button -->
+  </M1_ControlVariables>
+</control>
+
+

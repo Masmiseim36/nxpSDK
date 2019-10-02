@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -38,8 +38,7 @@ uint32_t g_frdivValue = 0U; /* The FRDIV value.*/
  */
 bool APP_GetAvailableFrdiv(void)
 {
-    const uint32_t allowedRefFreq[][2U] =
-    {
+    const uint32_t allowedRefFreq[][2U] = {
         /*  Min          Max   */
         {1000000U, 1250000U},
         {2000000U, 2500000U},
@@ -90,9 +89,9 @@ static void APP_FllStableDelay(void)
 void APP_ChangeFeeToBlpeExample(void)
 {
     /* Change FEE -> FBE
-    * It's transitional mode, don't need to wait for FLL stable,
-    * so NULL is passed as variable here.
-    */
+     * It's transitional mode, don't need to wait for FLL stable,
+     * so NULL is passed as variable here.
+     */
     CLOCK_SetFbeMode(g_frdivValue, kMCG_Dmx32Default, kMCG_DrsLow, NULL);
     assert(kMCG_ModeFBE == CLOCK_GetMode());
 
@@ -119,7 +118,7 @@ void APP_ChangeBlpeToFeeExample(void)
 void APP_BootToFeeExample(void)
 {
     /* Boot to Fee mode */
-#if (!defined (BOARD_XTAL0_CLK_HZ))
+#if (!defined(BOARD_XTAL0_CLK_HZ))
     /* alternative clock's source */
 #if defined BOARD_IRC48M_CLK_HZ
     CLOCK_BootToFeeMode(kMCG_OscselIrc, g_frdivValue, kMCG_Dmx32Default, kMCG_DrsLow, APP_FllStableDelay);
@@ -140,9 +139,9 @@ int main(void)
 
     /* Structure for OSC configuration */
     osc_config_t oscConfig;
-    oscConfig.freq = BOARD_XTAL0_CLK_HZ;
-    oscConfig.capLoad = 0U;
-    oscConfig.workMode = kOSC_ModeOscLowPower;
+    oscConfig.freq                   = BOARD_XTAL0_CLK_HZ;
+    oscConfig.capLoad                = 0U;
+    oscConfig.workMode               = kOSC_ModeOscLowPower;
     oscConfig.oscerConfig.enableMode = kOSC_ErClkEnable;
 
     BOARD_InitPins();

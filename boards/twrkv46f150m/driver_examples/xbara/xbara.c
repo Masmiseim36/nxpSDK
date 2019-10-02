@@ -90,7 +90,7 @@ int main(void)
     XBARA_SetSignalsConnection(DEMO_XBARA_BASEADDR, DEMO_XBARA_USER_CHANNEL_INPUT, DEMO_XBARA_USER_CHANNEL_OUTPUT);
 
     /* Configure the XBARA interrupt. */
-    xbaraConfig.activeEdge = kXBARA_EdgeRising;
+    xbaraConfig.activeEdge  = kXBARA_EdgeRising;
     xbaraConfig.requestType = kXBARA_RequestInterruptEnalbe;
     XBARA_SetOutputSignalConfig(DEMO_XBARA_BASEADDR, DEMO_XBARA_USER_CHANNEL_OUTPUT, &xbaraConfig);
 
@@ -101,7 +101,7 @@ int main(void)
     {
         if (true == xbaraIsrFlag)
         {
-            PRINTF("\r\nXBARA interrupt is occured !");
+            PRINTF("\r\nXBARA interrupt is occurred !");
             xbaraIsrFlag = false;
         }
     }

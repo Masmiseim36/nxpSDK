@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html style="text-align: center;">     
+  <head>       
+    <meta http-equiv="content-type" content="text/html; charset=windows-1250">       
+    <meta name="generator" content="PSPad editor, www.pspad.com">       
+    <title>    
+    </title>       
+    <link href="style.css" rel="stylesheet" type="text/css" />      
+    <script type="text/javascript" src="JS_functions\mainInclude.js"></script>
+    <script LANGUAGE="JavaScript" type ="text/javascript">
+      includeJSfiles();
+    </script>
+     
+   </head>     
+   <body  id="CLoop" onload="innerHTMLonload(); initLoadFormCloop()" background="images/pozadi.png" style="display: inline-block; margin: 10px auto; text-align: center;">                                          
+    <OBJECT id="MCB_PC_Master_Services1" style="display:none;" classid="clsid:48A185F1-FFDB-11D3-80E3-00C04F176153" name="pcm">	     
+    </OBJECT>	     
+     
+    <OBJECT style="display:none;" CLASSID = "clsid:5220cb21-c88d-11cf-b347-00aa00a28331">         
+      <PARAM NAME="LPKPath" VALUE="gmsctls.lpk">         
+    </OBJECT>  
+    <!-- Headline -->
+    <div class="HeadBorder fontTitle" style="width: 740px;">Current Control Loop</div>  
+    
+    <div>              
+      <table style="width: 740px;" class="MainTab" >               
+        <tr>                 
+            <td width="40%" align="left" valign="top" style="padding-right: 15px;">                      		                            
+            <!-- current controller input parameters-->     
+              <fieldset  style="width: 100%;" class="ContBox">
+                <legend class="fontControlLabel">Loop Parameters</legend>        
+                <table id="inParameterTable" width="100%"  border="0"   class="ContBoxTab" >            
+                              
+                <script>
+    	            // current control loop sampling period
+                  document.write( build_parameter_line( "Sample&nbsp;Time","CLOOP_Ts", "sec", "Current Control Loop Sampling Period, typical range <50us;200us>", 0, ""));
+                  // current control loop bandwidth
+                  document.write( build_parameter_line( "F0","CLOOP_F0", "Hz", "Current Control Loop Bandwidth, typical range <150;350>", 0, ""));
+                  // current control loop attenuation
+                  document.write( build_parameter_line( "&xi;","CLOOP_Att", "-", "Current Control Loop Attenuation, typical range <0.707;1>", 0, ""));
+                </script>	
+                
+                </table>
+                <table width="100%"  border="0"   class="ContBoxTab" >            
+                            
+                <script>
+                    document.write( build_informative_line("Ccontroller","PI controller type", "Parallel"));                   
+                </script>
+           
+                </table>
+              </fieldset> 
+              <!-- current controller limits-->
+              <fieldset style="width: 100%;"  class="ContBox">     
+                <legend class="fontControlLabel">Current PI Controller Limits</legend>        
+                <table id="parameterTable" border="0" width="100%"  class="ContBoxTab"  >            
+                        
+                  <script>
+                  // current controller limits
+                  document.write( build_parameter_line("Output&nbsp;limit", "CLOOP_LIM", "%", "Limit of Current Loop in percentage of filtered DC-Bus voltage", 0, ""));
+                  </script>	
+               </table>
+              </fieldset>
+             </td>                            
+            <td width="30%" align="center" valign="top" style="padding-right: 10px;">                                                 
+              <!-- D-axis parameters-->   
+              <fieldset id="Daxis_PIparal" style="width: 100%; "  class="ContBox">
+                  <legend class="fontControlLabel" >D axis PI Controller</legend>        
+                <table id="parameterTable"  width="100%" class="ContBoxTab">            
+                  <script>
+                    // D-axis controller proportional gain and gain scales
+                    document.write( build_constant_line("D_Kp","D_Kp_g", "D-Axis PI Controller Kp constant in Z domain"));
+                    document.write( build_constant_line("D_Ki","D_Ki_g", "D-Axis PI Controller Ki constant in Z domain"));
+                   </script>	
+               </table>
+              </fieldset> 
+              <fieldset  id="Daxis_PIrecur" style="width: 100%; display: none;"  class="ContBox">
+                <legend class="fontControlLabel">D axis PI Controller</legend>        
+                <table id="parameterTable"  width="100%"  class="ContBoxTab">            
+                    
+                  <script>                 
+                    // D-axis controller proportional gain and gain scales
+                    document.write( build_constant_line("D_CC1","D_CC1", "D-Axis Controller CC1 constant in Z domain"));
+                    document.write( build_constant_line("D_CC2","D_CC2", "D-Axis Controller CC2 constant in Z domain"));                 
+                 </script>	
+                                        
+               </table>
+              </fieldset>
+              <!-- D-axis ZC constants-->   
+              <fieldset id="Daxis_ZC" style="width: 100%; display: none;"  class="ContBox">
+                <legend class="fontControlLabel">D axis ZC Constants</legend>        
+                <table id="parameterTableQ"   width="100%"  class="ContBoxTab">            
+                  <script>
+    	          document.write( build_constant_line("D_B0", "D_ZC_B0", "D-Axis Zero Cancelation Filter Constant B0"));
+                  document.write( build_constant_line("D_B1", "D_ZC_B1", "D-Axis Zero Cancelation Filter Constant B1"));
+                  document.write( build_constant_line("D_A1", "D_ZC_A1", "D-Axis Zero Cancelation Filter Constant A1"));
+                  </script>	
+                                       
+               </table>
+              </fieldset> 
+             </td>	
+            <td width="30%" align="right" valign="top" style="padding-left: 10px;">                                                 
+              <!-- Q-axis parameters-->   
+              <fieldset  id="Qaxis_PIparal" style="width: 100%;" class="ContBox">
+                <legend class="fontControlLabel">Q axis PI Controller</legend>        
+                <table id="parameterTable"   width="100%"  class="ContBoxTab">            
+                     
+                  <script>
+    	            // Q-axis controller proportional gain and gain scales 
+                  document.write( build_constant_line("Q_Kp","Q_Kp_g", "Q-Axis PI Controller Kp constant in Z domain"));
+                  document.write( build_constant_line("Q_Ki","Q_Ki_g", "Q-Axis PI Controller Ki constant in Z domain"));
+                  </script>	
+                                        
+               </table>
+              </fieldset> 
+              <fieldset  id="Qaxis_PIrecur" style="width: 100%; " class="ContBox">
+                <legend class="fontControlLabel">Q axis PI Controller</legend>        
+                <table id="parameterTable"   width="100%"  class="ContBoxTab">            
+                      
+                  <script>      
+                  // Q-axis controller proportional gain and gain scales 
+                  document.write( build_constant_line("Q_CC1","Q_CC1", "Q-Axis PI Controller CC1 constant in Z domain"));
+                  document.write( build_constant_line("Q_CC2","Q_CC2", "Q-Axis PI Controller CC2 constant in Z domain"));
+                  </script>	
+            	                            
+               </table>
+              </fieldset> 
+              <!-- Q-axis ZC constants-->   
+              <fieldset id="Qaxis_ZC" style="width: 100%;" class="ContBox">
+                <legend class="fontControlLabel">Q axis ZC Constants</legend>        
+                <table id="parameterTable"   width="100%"  class="ContBoxTab">            
+                       
+                  <script>
+    	          document.write( build_constant_line("Q_B0", "Q_ZC_B0", "Q-Axis Zero Cancelation Filter Constant B0"));
+                  document.write( build_constant_line("Q_B1", "Q_ZC_B1", "Q-Axis Zero Cancelation Filter Constant B1"));
+                  document.write( build_constant_line("Q_A1", "Q_ZC_A1", "Q-Axis Zero Cancelation Filter Constant A1"));
+                  </script>	
+                                          
+               </table>
+              </fieldset>
+             </td>
+        </tr>         
+      </table>                      
+      <table class = "fButtonGroup" >                     
+            <tr>  
+                <td><input type="button" class="fButtonsEnabled" value="Update Target" id="CurrUpdateFrm" onmouseout="unmarkUpdateCLField()" onmouseover="markUpdateCLField()" onclick="clickUpdateCloopFM()" /></td> 
+                <td><input type="button" class="fButtonsDisabled" value="Reload Data" id="ReloadData" onclick="clickReloadData(); initLoadFormCloop();" disabled="disabled" /></td> 
+                <td><input type="button" class="fButtonsDisabled" value="Store Data" id="StoreData" onclick="clickStoreData()" disabled="disabled" /></td> 
+            </tr>            
+      </table>   
+        
+     <span style="visibility: hidden;" face="sans-serif" id="txtErrMsg">       
+      </span>  
+      
+    </div>     
+  </body>
+</html>

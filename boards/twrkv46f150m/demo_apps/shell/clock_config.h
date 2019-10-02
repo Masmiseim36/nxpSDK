@@ -14,7 +14,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_XTAL0_CLK_HZ                          8000000U  /*!< Board xtal0 frequency in Hz */
+#define BOARD_XTAL0_CLK_HZ 8000000U /*!< Board xtal0 frequency in Hz */
 
 /*******************************************************************************
  ********************* Configuration BOARD_BootClockHSRUN **********************
@@ -22,7 +22,7 @@
 /*******************************************************************************
  * Definitions for BOARD_BootClockHSRUN configuration
  ******************************************************************************/
-#define BOARD_BOOTCLOCKHSRUN_CORE_CLOCK           168000000U  /*!< Core clock frequency: 168000000Hz */
+#define BOARD_BOOTCLOCKHSRUN_CORE_CLOCK 168000000U /*!< Core clock frequency: 168000000Hz */
 
 /*! @brief MCG set for BOARD_BootClockHSRUN configuration.
  */
@@ -57,7 +57,7 @@ void BOARD_BootClockHSRUN(void);
 /*******************************************************************************
  * Definitions for BOARD_BootClockRUN configuration
  ******************************************************************************/
-#define BOARD_BOOTCLOCKRUN_CORE_CLOCK              84000000U  /*!< Core clock frequency: 84000000Hz */
+#define BOARD_BOOTCLOCKRUN_CORE_CLOCK 84000000U /*!< Core clock frequency: 84000000Hz */
 
 /*! @brief MCG set for BOARD_BootClockRUN configuration.
  */
@@ -92,7 +92,7 @@ void BOARD_BootClockRUN(void);
 /*******************************************************************************
  * Definitions for BOARD_BootClockVLPR configuration
  ******************************************************************************/
-#define BOARD_BOOTCLOCKVLPR_CORE_CLOCK              4000000U  /*!< Core clock frequency: 4000000Hz */
+#define BOARD_BOOTCLOCKVLPR_CORE_CLOCK 4000000U /*!< Core clock frequency: 4000000Hz */
 
 /*! @brief MCG set for BOARD_BootClockVLPR configuration.
  */
@@ -122,4 +122,3 @@ void BOARD_BootClockVLPR(void);
 #endif /* __cplusplus*/
 
 #endif /* _CLOCK_CONFIG_H_ */
-

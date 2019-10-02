@@ -27,7 +27,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="twrkv46f150m_cadc_pit_trigger" name="cadc_pit_trigger" category="demo_apps/cadc" dependency="platform.drivers.port.MKV46F16 platform.drivers.uart.MKV46F16 platform.drivers.cadc.MKV46F16 platform.drivers.dac.MKV46F16 platform.drivers.smc.MKV46F16 platform.drivers.sim.MKV46F16 platform.drivers.pit.MKV46F16 platform.drivers.clock.MKV46F16 platform.drivers.common.MKV46F16 device.MKV46F16_CMSIS.MKV46F16 utility.debug_console.MKV46F16 component.uart_adapter.MKV46F16 component.serial_manager.MKV46F16 component.serial_manager_uart.MKV46F16 component.lists.MKV46F16 device.MKV46F16_startup.MKV46F16 platform.drivers.gpio.MKV46F16 platform.utilities.assert.MKV46F16 platform.Include_core_cm4.MKV46F16 platform.Include_common.MKV46F16" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="twrkv46f150m_cadc_pit_trigger" name="cadc_pit_trigger" category="demo_apps/cadc" dependency="platform.drivers.port.MKV46F16 platform.drivers.uart.MKV46F16 platform.drivers.cadc.MKV46F16 platform.drivers.dac.MKV46F16 platform.drivers.smc.MKV46F16 platform.drivers.sim.MKV46F16 platform.drivers.pit.MKV46F16 platform.drivers.clock.MKV46F16 platform.drivers.common.MKV46F16 device.MKV46F16_CMSIS.MKV46F16 utility.debug_console.MKV46F16 component.uart_adapter.MKV46F16 component.serial_manager.MKV46F16 component.serial_manager_uart.MKV46F16 component.lists.MKV46F16 device.MKV46F16_startup.MKV46F16 platform.drivers.gpio.MKV46F16 platform.utilities.assert.MKV46F16 platform.Include_core_cm4.MKV46F16 platform.Include_common.MKV46F16">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -85,6 +85,9 @@
     </source>
     <source path="boards/twrkv46f150m/demo_apps/cadc/pit_trigger" target_path="source" type="src">
       <files mask="cadc_pit_trigger.c"/>
+    </source>
+    <source path="boards/twrkv46f150m/demo_apps/cadc/pit_trigger" target_path="src" type="binary" exclude="true">
+      <files mask="cadc_pit_trigger.bin"/>
     </source>
   </example>
 </ksdk:examples>

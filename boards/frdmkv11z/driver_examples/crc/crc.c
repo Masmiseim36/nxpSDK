@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -31,12 +31,12 @@
  ******************************************************************************/
 
 /*!
-* @brief Init for CRC-16-CCIT.
-* @details Init CRC peripheral module for CRC-16/CCIT-FALSE protocol:
-*          width=16 poly=0x1021 init=0xffff refin=false refout=false xorout=0x0000 check=0x29b1
-*          http://reveng.sourceforge.net/crc-catalogue/
-* name="CRC-16/CCITT-FALSE"
-*/
+ * @brief Init for CRC-16-CCIT.
+ * @details Init CRC peripheral module for CRC-16/CCIT-FALSE protocol:
+ *          width=16 poly=0x1021 init=0xffff refin=false refout=false xorout=0x0000 check=0x29b1
+ *          http://reveng.sourceforge.net/crc-catalogue/
+ * name="CRC-16/CCITT-FALSE"
+ */
 static void InitCrc16_CcitFalse(CRC_Type *base, uint32_t seed)
 {
     crc_config_t config;
@@ -65,13 +65,13 @@ static void InitCrc16(CRC_Type *base, uint32_t seed)
 {
     crc_config_t config;
 
-    config.polynomial = 0x8005;
-    config.seed = seed;
-    config.reflectIn = true;
-    config.reflectOut = true;
+    config.polynomial         = 0x8005;
+    config.seed               = seed;
+    config.reflectIn          = true;
+    config.reflectOut         = true;
     config.complementChecksum = true;
-    config.crcBits = kCrcBits16;
-    config.crcResult = kCrcFinalChecksum;
+    config.crcBits            = kCrcBits16;
+    config.crcResult          = kCrcFinalChecksum;
 
     CRC_Init(base, &config);
 }
@@ -86,13 +86,13 @@ static void InitCrc16_Kermit(CRC_Type *base, uint32_t seed)
 {
     crc_config_t config;
 
-    config.polynomial = 0x1021;
-    config.seed = seed;
-    config.reflectIn = true;
-    config.reflectOut = true;
+    config.polynomial         = 0x1021;
+    config.seed               = seed;
+    config.reflectIn          = true;
+    config.reflectOut         = true;
     config.complementChecksum = false;
-    config.crcBits = kCrcBits16;
-    config.crcResult = kCrcFinalChecksum;
+    config.crcBits            = kCrcBits16;
+    config.crcResult          = kCrcFinalChecksum;
 
     CRC_Init(base, &config);
 }
@@ -108,13 +108,13 @@ static void InitCrc32(CRC_Type *base, uint32_t seed)
 {
     crc_config_t config;
 
-    config.polynomial = 0x04C11DB7U;
-    config.seed = seed;
-    config.reflectIn = true;
-    config.reflectOut = true;
+    config.polynomial         = 0x04C11DB7U;
+    config.seed               = seed;
+    config.reflectIn          = true;
+    config.reflectOut         = true;
     config.complementChecksum = true;
-    config.crcBits = kCrcBits32;
-    config.crcResult = kCrcFinalChecksum;
+    config.crcBits            = kCrcBits32;
+    config.crcResult          = kCrcFinalChecksum;
 
     CRC_Init(base, &config);
 }
@@ -130,13 +130,13 @@ static void InitCrc32_Posix(CRC_Type *base, uint32_t seed)
 {
     crc_config_t config;
 
-    config.polynomial = 0x04c11db7u;
-    config.seed = seed;
-    config.reflectIn = false;
-    config.reflectOut = false;
+    config.polynomial         = 0x04c11db7u;
+    config.seed               = seed;
+    config.reflectIn          = false;
+    config.reflectOut         = false;
     config.complementChecksum = true;
-    config.crcBits = kCrcBits32;
-    config.crcResult = kCrcFinalChecksum;
+    config.crcBits            = kCrcBits32;
+    config.crcResult          = kCrcFinalChecksum;
 
     CRC_Init(base, &config);
 }
@@ -146,12 +146,12 @@ static void InitCrc32_Posix(CRC_Type *base, uint32_t seed)
  */
 int main(void)
 {
-    char testData[] = "123456789";
+    char testData[]                    = "123456789";
     const uint16_t checkCcitFalseCrc16 = 0x29b1u;
-    const uint16_t checkMaximCrc16 = 0x44c2u;
-    const uint16_t checkKermitCrc16 = 0x2189u;
-    const uint32_t checkCrc32 = 0xcbf43926u;
-    const uint32_t checkPosixCrc32 = 0x765e7680u;
+    const uint16_t checkMaximCrc16     = 0x44c2u;
+    const uint16_t checkKermitCrc16    = 0x2189u;
+    const uint32_t checkCrc32          = 0xcbf43926u;
+    const uint32_t checkPosixCrc32     = 0x765e7680u;
 
     CRC_Type *base = CRC0;
     uint16_t checksum16;
@@ -165,8 +165,8 @@ int main(void)
     PRINTF("CRC Peripheral Driver Example\r\n\r\n");
 
     /* ***************
-    * CRC-16/CCIT-FALSE *
-    *************** */
+     * CRC-16/CCIT-FALSE *
+     *************** */
     InitCrc16_CcitFalse(base, 0xFFFFU);
     CRC_WriteData(base, (uint8_t *)&testData[0], sizeof(testData) - 1);
     checksum16 = CRC_Get16bitResult(base);
@@ -179,8 +179,8 @@ int main(void)
     }
 
     /* ***************
-    * CRC-16/MAXIM *
-    *************** */
+     * CRC-16/MAXIM *
+     *************** */
     InitCrc16(base, 0x0U);
     CRC_WriteData(base, (uint8_t *)&testData[0], sizeof(testData) - 1);
     checksum16 = CRC_Get16bitResult(base);
@@ -192,8 +192,8 @@ int main(void)
     }
 
     /* ***************
-    * CRC-16 KERMIT *
-    *************** */
+     * CRC-16 KERMIT *
+     *************** */
     InitCrc16_Kermit(base, 0x0U);
     CRC_WriteData(base, (uint8_t *)&testData[0], sizeof(testData) - 1);
     checksum16 = CRC_Get16bitResult(base);
@@ -205,8 +205,8 @@ int main(void)
     }
 
     /* ***************
-    * CRC-32 *
-    *************** */
+     * CRC-32 *
+     *************** */
     InitCrc32(base, 0xFFFFFFFFU);
     CRC_WriteData(base, (uint8_t *)&testData[0], sizeof(testData) - 1);
     checksum32 = CRC_Get32bitResult(base);
@@ -218,8 +218,8 @@ int main(void)
     }
 
     /* ***************
-    * CRC-32/POSIX *
-    *************** */
+     * CRC-32/POSIX *
+     *************** */
     InitCrc32_Posix(base, 0);
     CRC_WriteData(base, (uint8_t *)&testData[0], sizeof(testData) - 1);
     checksum32 = CRC_Get32bitResult(base);

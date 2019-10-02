@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -42,9 +42,9 @@ volatile uint8_t g_slave_buff[I2C_DATA_LENGTH];
 volatile uint8_t g_master_buff[I2C_DATA_LENGTH];
 volatile uint8_t g_masterTxIndex = 0;
 volatile uint8_t g_masterRxIndex = 0xFFU;
-volatile uint8_t g_slaveTxIndex = 0xFFU;
-volatile uint8_t g_slaveRxIndex = 0;
-volatile bool g_masterReadBegin = false;
+volatile uint8_t g_slaveTxIndex  = 0xFFU;
+volatile uint8_t g_slaveRxIndex  = 0;
+volatile bool g_masterReadBegin  = false;
 
 /*******************************************************************************
  * Code
@@ -93,8 +93,8 @@ void I2C_MASTER_IRQHandler(void)
             EXAMPLE_I2C_MASTER_BASEADDR->C1 |= I2C_C1_TXAK_MASK;
         }
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
 #if defined __CORTEX_M && (__CORTEX_M == 4U)
     __DSB();
 #endif
@@ -158,8 +158,8 @@ void I2C_SLAVE_IRQHandler(void)
         g_slave_buff[g_slaveRxIndex] = EXAMPLE_I2C_SLAVE_BASEADDR->D;
         g_slaveRxIndex++;
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
 #if defined __CORTEX_M && (__CORTEX_M == 4U)
     __DSB();
 #endif
@@ -200,7 +200,7 @@ int main(void)
     I2C_SlaveGetDefaultConfig(&slaveConfig);
 
     slaveConfig.addressingMode = kI2C_Address7bit;
-    slaveConfig.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;
+    slaveConfig.slaveAddress   = I2C_MASTER_SLAVE_ADDR_7BIT;
 
     I2C_SlaveInit(EXAMPLE_I2C_SLAVE_BASEADDR, &slaveConfig, I2C_SLAVE_CLK_FREQ);
 
@@ -263,7 +263,7 @@ int main(void)
     {
         if (g_slave_buff[i] != g_master_buff[i])
         {
-            PRINTF("\r\nError occured in this transfer ! \r\n");
+            PRINTF("\r\nError occurred in this transfer ! \r\n");
             break;
         }
     }
@@ -331,7 +331,7 @@ int main(void)
     {
         if (g_slave_buff[i] != g_master_buff[i])
         {
-            PRINTF("\r\nError occured in the transfer ! \r\n");
+            PRINTF("\r\nError occurred in the transfer ! \r\n");
             break;
         }
     }

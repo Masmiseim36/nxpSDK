@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -104,14 +104,14 @@ int main(void)
 
     /* subAddress = 0x01, data = g_master_txBuff - write to slave.
       start + slaveaddress(w) + subAddress + length of data buffer + data buffer + stop*/
-    uint8_t deviceAddress = 0x01U;
-    masterXfer.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;
-    masterXfer.direction = kI2C_Write;
-    masterXfer.subaddress = (uint32_t)deviceAddress;
+    uint8_t deviceAddress     = 0x01U;
+    masterXfer.slaveAddress   = I2C_MASTER_SLAVE_ADDR_7BIT;
+    masterXfer.direction      = kI2C_Write;
+    masterXfer.subaddress     = (uint32_t)deviceAddress;
     masterXfer.subaddressSize = 1;
-    masterXfer.data = g_master_txBuff;
-    masterXfer.dataSize = I2C_DATA_LENGTH;
-    masterXfer.flags = kI2C_TransferDefaultFlag;
+    masterXfer.data           = g_master_txBuff;
+    masterXfer.dataSize       = I2C_DATA_LENGTH;
+    masterXfer.flags          = kI2C_TransferDefaultFlag;
 
     I2C_MasterTransferCreateHandle(EXAMPLE_I2C_MASTER_BASEADDR, &g_m_handle, i2c_master_callback, NULL);
     I2C_MasterTransferNonBlocking(EXAMPLE_I2C_MASTER_BASEADDR, &g_m_handle, &masterXfer);
@@ -126,13 +126,13 @@ int main(void)
 
     /* subAddress = 0x01, data = g_master_rxBuff - read from slave.
       start + slaveaddress(w) + subAddress + repeated start + slaveaddress(r) + rx data buffer + stop */
-    masterXfer.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;
-    masterXfer.direction = kI2C_Read;
-    masterXfer.subaddress = (uint32_t)deviceAddress;
+    masterXfer.slaveAddress   = I2C_MASTER_SLAVE_ADDR_7BIT;
+    masterXfer.direction      = kI2C_Read;
+    masterXfer.subaddress     = (uint32_t)deviceAddress;
     masterXfer.subaddressSize = 1;
-    masterXfer.data = g_master_rxBuff;
-    masterXfer.dataSize = I2C_DATA_LENGTH - 1;
-    masterXfer.flags = kI2C_TransferDefaultFlag;
+    masterXfer.data           = g_master_rxBuff;
+    masterXfer.dataSize       = I2C_DATA_LENGTH - 1;
+    masterXfer.flags          = kI2C_TransferDefaultFlag;
 
     I2C_MasterTransferNonBlocking(EXAMPLE_I2C_MASTER_BASEADDR, &g_m_handle, &masterXfer);
 
@@ -160,7 +160,7 @@ int main(void)
     {
         if (g_master_rxBuff[i] != g_master_txBuff[i + 1])
         {
-            PRINTF("\r\nError occured in the transfer ! \r\n");
+            PRINTF("\r\nError occurred in the transfer ! \r\n");
             break;
         }
     }

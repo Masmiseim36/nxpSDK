@@ -778,6 +778,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
+          <state> --redirect __aeabi_idiv=__iar_small___aeabi_idiv </state>
+          <state> --redirect __aeabi_idivmod=__iar_small___aeabi_idivmod </state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -984,34 +986,34 @@
   <group>
     <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers/fsl_clock.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers/fsl_clock.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers/fsl_uart.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers/fsl_clock.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers/fsl_uart.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers/fsl_common.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers/fsl_uart.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers/fsl_common.h</name>
     </file>
   </group>
   <group>
     <name>device</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV46F16/fsl_device_registers.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV46F16/MKV46F16.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV46F16/MKV46F16_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV46F16/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV46F16/system_MKV46F16.c</name>
@@ -1040,10 +1042,10 @@
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/flashloader_image.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_flashloader.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_exception_handler.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_exception_handler.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_flashloader.c</name>
       </file>
     </group>
     <group>
@@ -1068,30 +1070,6 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm4.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
     </file>
     <file>
@@ -1101,7 +1079,31 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>

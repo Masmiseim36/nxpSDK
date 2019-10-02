@@ -1,7 +1,7 @@
 /*
  * Copyright 2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -54,8 +54,8 @@ static void DSPI_MasterInterruptCallback(SPI_Type *base,
 int main(void)
 {
     uint32_t srcFreq = 0;
-    uint32_t i = 0;
-    uint32_t err = 0U;
+    uint32_t i       = 0;
+    uint32_t err     = 0U;
     /* Transfer structure for half-duplex. */
     dspi_half_duplex_transfer_t xfer = {0};
     dspi_master_config_t masterConfig;
@@ -71,24 +71,24 @@ int main(void)
     PRINTF("\r\nMaster start to tansfer...\r\n");
 
     /* Master config */
-    masterConfig.whichCtar = kDSPI_Ctar0;
-    masterConfig.ctarConfig.baudRate = TRANSFER_BAUDRATE;
-    masterConfig.ctarConfig.bitsPerFrame = 8;
-    masterConfig.ctarConfig.cpol = kDSPI_ClockPolarityActiveHigh;
-    masterConfig.ctarConfig.cpha = kDSPI_ClockPhaseFirstEdge;
-    masterConfig.ctarConfig.direction = kDSPI_MsbFirst;
-    masterConfig.ctarConfig.pcsToSckDelayInNanoSec = 1000000000U / TRANSFER_BAUDRATE;
-    masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec = 1000000000U / TRANSFER_BAUDRATE;
+    masterConfig.whichCtar                                = kDSPI_Ctar0;
+    masterConfig.ctarConfig.baudRate                      = TRANSFER_BAUDRATE;
+    masterConfig.ctarConfig.bitsPerFrame                  = 8;
+    masterConfig.ctarConfig.cpol                          = kDSPI_ClockPolarityActiveHigh;
+    masterConfig.ctarConfig.cpha                          = kDSPI_ClockPhaseFirstEdge;
+    masterConfig.ctarConfig.direction                     = kDSPI_MsbFirst;
+    masterConfig.ctarConfig.pcsToSckDelayInNanoSec        = 1000000000U / TRANSFER_BAUDRATE;
+    masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec    = 1000000000U / TRANSFER_BAUDRATE;
     masterConfig.ctarConfig.betweenTransferDelayInNanoSec = 1000000000U / TRANSFER_BAUDRATE;
 
-    masterConfig.whichPcs = EXAMPLE_DSPI_MASTER_PCS_FOR_INIT;
+    masterConfig.whichPcs           = EXAMPLE_DSPI_MASTER_PCS_FOR_INIT;
     masterConfig.pcsActiveHighOrLow = kDSPI_PcsActiveLow;
 
-    masterConfig.enableContinuousSCK = false;
-    masterConfig.enableRxFifoOverWrite = false;
+    masterConfig.enableContinuousSCK        = false;
+    masterConfig.enableRxFifoOverWrite      = false;
     masterConfig.enableModifiedTimingFormat = false;
-    masterConfig.samplePoint = kDSPI_SckToSin0Clock;
-    srcFreq = DSPI_MASTER_CLK_FREQ;
+    masterConfig.samplePoint                = kDSPI_SckToSin0Clock;
+    srcFreq                                 = DSPI_MASTER_CLK_FREQ;
     DSPI_MasterInit(EXAMPLE_DSPI_MASTER_BASEADDR, &masterConfig, srcFreq);
 
     /* Init Buffer*/
@@ -97,13 +97,13 @@ int main(void)
         txData[i] = i + 1;
     }
 
-    xfer.txData = txData;
-    xfer.rxData = rxData;
-    xfer.txDataSize = sizeof(txData);
-    xfer.rxDataSize = sizeof(rxData);
-    xfer.isTransmitFirst = true;
+    xfer.txData                = txData;
+    xfer.rxData                = rxData;
+    xfer.txDataSize            = sizeof(txData);
+    xfer.rxDataSize            = sizeof(rxData);
+    xfer.isTransmitFirst       = true;
     xfer.isPcsAssertInTransfer = true;
-    xfer.configFlags = kDSPI_MasterCtar0 | EXAMPLE_DSPI_MASTER_PCS_FOR_TRANSFER | kDSPI_MasterPcsContinuous;
+    xfer.configFlags           = kDSPI_MasterCtar0 | EXAMPLE_DSPI_MASTER_PCS_FOR_TRANSFER | kDSPI_MasterPcsContinuous;
 
     DSPI_MasterTransferCreateHandle(EXAMPLE_DSPI_MASTER_BASEADDR, &handle, DSPI_MasterInterruptCallback, NULL);
     DSPI_MasterHalfDuplexTransferNonBlocking(EXAMPLE_DSPI_MASTER_BASEADDR, &handle, &xfer);

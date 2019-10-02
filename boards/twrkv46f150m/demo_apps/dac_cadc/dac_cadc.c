@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -62,8 +62,8 @@ static void Demo_CADC_Init(void)
 
     /* Configure the CADC */
     CADC_GetDefaultConfig(&cadcConfigStruct);
-    cadcConfigStruct.dualConverterScanMode = kCADC_DualConverterWorkAsOnceSequential;
-    cadcConfigStruct.powerUpDelay = 0x2AU;
+    cadcConfigStruct.dualConverterScanMode  = kCADC_DualConverterWorkAsOnceSequential;
+    cadcConfigStruct.powerUpDelay           = 0x2AU;
     cadcConfigStruct.enableSimultaneousMode = false;
     CADC_Init(DEMO_CADC_BASEADDR, &cadcConfigStruct);
 
@@ -75,20 +75,20 @@ static void Demo_CADC_Init(void)
 
     CADC_GetDefaultConverterConfig(&cadcConverterConfigStruct);
     cadcConverterConfigStruct.clockDivisor = 0xAU;
-    cadcConverterConfigStruct.speedMode = kCADC_SpeedMode3;
+    cadcConverterConfigStruct.speedMode    = kCADC_SpeedMode3;
     CADC_SetConverterConfig(DEMO_CADC_BASEADDR, kCADC_ConverterA, &cadcConverterConfigStruct);
     CADC_EnableConverterPower(DEMO_CADC_BASEADDR, kCADC_ConverterA, true);
 
     /* Configure slot in conversion sequence. */
     /* Common setting. */
     CADC_EnableSample(DEMO_CADC_BASEADDR, 0U, false);
-    cadcSampleConfigStruct.channelNumber = DEMO_CADC_CHANNEL;
+    cadcSampleConfigStruct.channelNumber          = DEMO_CADC_CHANNEL;
     cadcSampleConfigStruct.enableDifferentialPair = 0U;
-    cadcSampleConfigStruct.zeroCrossingMode = kCADC_ZeroCorssingDisabled;
-    cadcSampleConfigStruct.lowLimitValue = 0U;
-    cadcSampleConfigStruct.highLimitValue = 0xFFFFU;
-    cadcSampleConfigStruct.offsetValue = 0U;
-    cadcSampleConfigStruct.enableWaitSync = false;
+    cadcSampleConfigStruct.zeroCrossingMode       = kCADC_ZeroCorssingDisabled;
+    cadcSampleConfigStruct.lowLimitValue          = 0U;
+    cadcSampleConfigStruct.highLimitValue         = 0xFFFFU;
+    cadcSampleConfigStruct.offsetValue            = 0U;
+    cadcSampleConfigStruct.enableWaitSync         = false;
     CADC_SetSampleConfig(DEMO_CADC_BASEADDR, 0U, &cadcSampleConfigStruct);
     CADC_EnableSample(DEMO_CADC_BASEADDR, 0U, true);
     CADC_SetSampleConfig(DEMO_CADC_BASEADDR, 1U, &cadcSampleConfigStruct);
@@ -99,10 +99,10 @@ static void Demo_CADC_Init(void)
  */
 int main(void)
 {
-    uint8_t msg = ' ';
-    uint32_t i = 0;
+    uint8_t msg                  = ' ';
+    uint32_t i                   = 0;
     uint32_t CadcConversionValue = 0U;
-    float voltRead = 0;
+    float voltRead               = 0;
 
     BOARD_InitPins();
     BOARD_BootClockRUN();

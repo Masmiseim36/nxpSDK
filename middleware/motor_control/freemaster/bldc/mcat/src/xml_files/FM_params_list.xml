@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<control>
+  <appcontrol>
+    <M1_onoff>M1.switchAppOnOff</M1_onoff><!-- Main application switch of MOTOR1 -->
+    <M2_onoff>M2.switchAppOnOff</M2_onoff><!-- Main application switch of MOTOR2 -->
+    <M3_onoff></M3_onoff><!-- Main application switch of MOTOR3 -->
+  </appcontrol>
+
+  <M1_states FreemasterName="M1.state"><!-- Application state variable of MOTOR1 -->
+    <M1_state>INIT</M1_state>
+    <M1_state>FAULT</M1_state>
+    <M1_state>READY</M1_state>
+    <M1_state>CALIB</M1_state>
+    <M1_state>ALIGN</M1_state>
+    <M1_state>RUN</M1_state>    
+  </M1_states>
+    
+  <M1_Parameters><!-- Variables for rotor alignment for MOTOR1 -->
+    <M1_Align_Voltage></M1_Align_Voltage>
+    <M1_Align_Current>Align Current</M1_Align_Current>
+    <M1_Align_Duration>Align Duration</M1_Align_Duration>
+  </M1_Parameters>
+  
+   
+  <M1_BLDCControlLoop><!-- Variables for BLDC Control Loop for MOTOR1 -->
+    <M1_SL_Kp_g>Speed Loop Kp</M1_SL_Kp_g><!-- Parallel PI KP gain -->
+    <M1_SL_Kp_sc>Speed Loop Kp Shift</M1_SL_Kp_sc><!-- Parallel PI KP gain scale --> 
+    <M1_SL_Ki_g>Speed Loop Ki</M1_SL_Ki_g><!-- Parallel PI KI gain -->
+    <M1_SL_Ki_sc>Speed Loop Ki Shift</M1_SL_Ki_sc><!-- Parallel PI KI gain scale -->
+    <M1_SL_Nsh></M1_SL_Nsh><!-- Reccurent PI shift -->
+    <M1_SL_CC1SC></M1_SL_CC1SC><!-- Reccurent PI CC1 constant --> 
+    <M1_SL_CC2SC></M1_SL_CC2SC><!-- Reccurent PI CC2 constant  -->
+    <M1_TL_Kp_g>Torque Loop Kp</M1_TL_Kp_g><!-- Parallel PI KP gain -->
+    <M1_TL_Kp_sc>Torque Loop Kp Shift</M1_TL_Kp_sc><!-- Parallel PI KP gain scale --> 
+    <M1_TL_Ki_g>Torque Loop Ki</M1_TL_Ki_g><!-- Parallel PI KI gain -->
+    <M1_TL_Ki_sc>Torque Loop Ki Shift</M1_TL_Ki_sc><!-- Parallel PI KI gain scale -->
+    <M1_TL_Nsh></M1_TL_Nsh><!-- Reccurent PI shift -->
+    <M1_TL_CC1SC></M1_TL_CC1SC><!-- Reccurent PI CC1 constant --> 
+    <M1_TL_CC2SC></M1_TL_CC2SC><!-- Reccurent PI CC2 constant  -->
+    <M1_RAMP_UP_g>Speed Ramp Up</M1_RAMP_UP_g><!-- Speed ramp increment UP -->
+    <M1_RAMP_DOWN_g>Speed Ramp Down</M1_RAMP_DOWN_g><!-- Speed ramp increment DOWN -->
+    <M1_SL_UP_LIM>Speed Loop Limit High</M1_SL_UP_LIM><!-- PI High limit -->
+    <M1_SL_LOW_LIM>Speed Loop Limit Low</M1_SL_LOW_LIM><!-- PI Low limit -->
+    <M1_TL_UP_LIM>Torque Loop Limit High</M1_TL_UP_LIM><!-- PI High limit -->
+    <M1_TL_LOW_LIM>Torque Loop Limit Low</M1_TL_LOW_LIM><!-- PI Low limit -->
+   </M1_BLDCControlLoop>
+  
+   <M1_BLDCSensorless><!-- Variables for BLDC Sensorless control for MOTOR1 -->
+    <M1_Speed_min_sc>Speed Minimal</M1_Speed_min_sc><!-- Minimal speed scaled -->
+    <M1_Freewheel_long>Freewheel Period Long</M1_Freewheel_long><!-- Freewheel time long -->
+    <M1_Freewheel_short>Freewheel Period Short</M1_Freewheel_short><!-- Freewheel time short -->
+    <M1_Start_cmt_accel>Start Commution Acceleration</M1_Start_cmt_accel><!-- Startup commutation acceleration -->
+    <M1_Start_cmt_cnt>Start Commutation Counter</M1_Start_cmt_cnt><!-- Startup commutation counts -->
+    <M1_Start_cmt_per>Next Commutation Period</M1_Start_cmt_per><!-- Startup commutation period -->
+    <M1_Cmt_time_off>Period Toff</M1_Cmt_time_off><!-- Commutation time off -->
+    <M1_Flux_trh>Back-EMF Integration Threshold</M1_Flux_trh><!-- Flux treshold -->
+  </M1_BLDCSensorless>  
+  
+ 
+  
+  <M1_CurrentPiController><!-- Variables for Current Controller for MOTOR1 -->
+    <M1_D_Kp_g></M1_D_Kp_g><!-- Parallel D_PI KP gain --> 
+    <M1_D_Ki_g></M1_D_Ki_g><!-- Parallel D_PI KIgain  --> 
+    <M1_D_Kp_sc></M1_D_Kp_sc><!-- Parallel D_PI KP gain scale -->
+    <M1_D_Ki_sc></M1_D_Ki_sc><!-- Parallel D_PI KI gain scale -->
+    <M1_Q_Kp_g></M1_Q_Kp_g><!-- Parallel Q_PI KP gain -->
+    <M1_Q_Ki_g></M1_Q_Ki_g><!-- Parallel Q_PI KI gain -->
+    <M1_Q_Kp_sc></M1_Q_Kp_sc><!-- Parallel Q_PI KP gain scale -->
+    <M1_Q_Ki_sc></M1_Q_Ki_sc><!-- Parallel Q_PI KI gain scale -->
+    <M1_D_NSHIFT></M1_D_NSHIFT><!-- Reccurent D_PI shift -->
+    <M1_D_CC1SC>M1.dAxisPI.fltCC1sc</M1_D_CC1SC><!-- Reccurent D_PI constant CC1 -->
+    <M1_D_CC2SC>M1.dAxisPI.fltCC2sc</M1_D_CC2SC><!-- Reccurent D_PI constant CC2 -->
+    <M1_Q_NSHIFT></M1_Q_NSHIFT><!-- Reccurent Q_PI shift -->
+    <M1_Q_CC1SC>M1.qAxisPI.fltCC1sc</M1_Q_CC1SC><!-- Reccurent Q_PI constant CC1 -->
+    <M1_Q_CC2SC>M1.qAxisPI.fltCC2sc</M1_Q_CC2SC><!-- Reccurent Q_PI constant CC2 -->
+    <M1_D_ZC_B0>M1.dAxisZC.trFiltCoeff.fltB0</M1_D_ZC_B0><!-- Zero Cancelation Filter constant D_B1 -->
+    <M1_D_ZC_B1>M1.dAxisZC.trFiltCoeff.fltB1</M1_D_ZC_B1><!-- Zero Cancelation Filter constant D_B2 -->
+    <M1_D_ZC_A1>M1.dAxisZC.trFiltCoeff.fltA1</M1_D_ZC_A1><!-- Zero Cancelation Filter constant D_A2 -->
+    <M1_Q_ZC_B0>M1.qAxisZC.trFiltCoeff.fltB0</M1_Q_ZC_B0><!-- Zero Cancelation Filter constant Q_B1 -->
+    <M1_Q_ZC_B1>M1.qAxisZC.trFiltCoeff.fltB1</M1_Q_ZC_B1><!-- Zero Cancelation Filter constant Q_B2 -->
+    <M1_Q_ZC_A1>M1.qAxisZC.trFiltCoeff.fltA1</M1_Q_ZC_A1><!-- Zero Cancelation Filter constant Q_A2 -->
+  </M1_CurrentPiController>
+  
+  
+  
+  
+  <M1_PoSpeBemfDQ><!-- Variables for BEMF and Tracking Observers for MOTOR1 -->
+    <M1_E_scale></M1_E_scale>
+    <M1_I_scale></M1_I_scale>
+    <M1_U_scale></M1_U_scale>
+    <M1_WI_scale></M1_WI_scale>
+    <M1_BEMF_DQ_Kp_g></M1_BEMF_DQ_Kp_g>
+    <M1_BEMF_DQ_Ki_g></M1_BEMF_DQ_Ki_g>
+    <M1_BEMF_DQ_Kp_sc></M1_BEMF_DQ_Kp_sc>
+    <M1_BEMF_DQ_Ki_sc></M1_BEMF_DQ_Ki_sc>
+    <M1_TO_Kp_g></M1_TO_Kp_g>
+    <M1_TO_Ki_g></M1_TO_Ki_g>
+    <M1_TO_Kp_sc></M1_TO_Kp_sc>
+    <M1_TO_Ki_sc></M1_TO_Ki_sc>
+    <M1_Theta_g></M1_Theta_g>
+    <M1_Theta_sc></M1_Theta_sc>
+    <M1_Startup_Ramp_inc></M1_Startup_Ramp_inc><!-- Start-up ramp increment -->
+    <M1_Startup_I_scaled_FM></M1_Startup_I_scaled_FM><!-- Start-up current -->
+    <M1_Startup_N_merging></M1_Startup_N_merging><!-- Start-up merging speed trigger -->
+    <M1_Startup_coeff_merging></M1_Startup_coeff_merging><!-- Start-up merging coefficient -->
+  </M1_PoSpeBemfDQ>
+  
+ 
+  
+  
+  <M1_PoSpeSensor><!-- Variables for Position and Speed sensors of MOTOR1 -->
+    <M1_ATO_Kp_g></M1_ATO_Kp_g>
+    <M1_ATO_Kp_sc></M1_ATO_Kp_sc>
+    <M1_ATO_Ki_g></M1_ATO_Ki_g>
+    <M1_ATO_Ki_sc></M1_ATO_Ki_sc>
+    <M1_ATO_Nsh></M1_ATO_Nsh>
+    <M1_ATO_CC1></M1_ATO_CC1>
+    <M1_ATO_CC2></M1_ATO_CC2>
+    <M1_Integ_g></M1_Integ_g>
+    <M1_Integ_sc></M1_Integ_sc>
+  </M1_PoSpeSensor>
+  
+   
+  <M1_ControlStructure><!-- Cascade Structure State Variables of MOTOR1 -->
+    <M1_ControlStructureMethod></M1_ControlStructureMethod>
+    <M1_ControlStructurePoSpe></M1_ControlStructurePoSpe>
+  </M1_ControlStructure>
+  
+ 
+      <M1_ControlVariables><!-- Control Cascade Structure Variables of MOTOR1 -->
+    <M1_VHz_ratio></M1_VHz_ratio><!-- V/Hz ratio -->
+    <M1_Freq_req>gsM1_Drive.sScalarPMSM.f32SpeedCmd</M1_Freq_req><!-- V/Hz required speed -->
+    <M1_VHz_const>gsM1_Drive.sScalarPMSM.f32VoltHertzRatio</M1_VHz_const><!-- V/Hz constant --> 
+    <M1_VHz_ramp_inc></M1_VHz_ramp_inc><!-- V/Hz ramp increment -->
+    <M1_Ud_req>gsM1_Drive.sFocPMSM.sCascadeControl.sUDQReqMCTW.f32D</M1_Ud_req><!-- Voltage FOC - Ud required -->
+    <M1_Uq_req>gsM1_Drive.sFocPMSM.sCascadeControl.sUDQReqMCTW.f32Q</M1_Uq_req><!-- Voltage FOC - Uq required -->
+    <M1_Id_req>gsM1_Drive.sFocPMSM.sCascadeControl.sIDQReqMCTW.f32D</M1_Id_req><!-- Current FOC - Id required -->
+    <M1_Iq_req>gsM1_Drive.sFocPMSM.sCascadeControl.sIDQReqMCTW.f32Q</M1_Iq_req><!-- Current FOC - Id required -->
+    <M1_Speed_req>Required Speed</M1_Speed_req><!-- Speed FOC - Speed required -->
+  </M1_ControlVariables>
+  
+  
+
+</control>
+
+

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -26,17 +26,11 @@
 
 typedef struct _mcdrv_ftm_cmt
 {
-    FTM_Type *pui32FtmBase;     /* pointer FlexTimer base address */
-    uint16_t *pui16FtmCntAct;   /* pointer to actual value of FTM counter */
+    FTM_Type *pui32FtmBase; /* pointer FlexTimer base address */
+    uint16_t *pui16FtmCntAct; /* pointer to actual value of FTM counter */
     uint16_t *pui16FtmValueAct; /* pointer to actual value of FTM value register */
-    uint16_t ui16ChannelNum;    /* number of FTM channel used for compare event */
-} mcdrv_ftm_cmt_t;
-
-typedef struct _mcdrv_ftm_cmt_init
-{
-    FTM_Type *pui32FtmBase;  /* pointer FlexTimer base address */
     uint16_t ui16ChannelNum; /* number of FTM channel used for compare event */
-} mcdrv_ftm_cmt_init_t;
+} mcdrv_ftm_cmt_t;
 
 /*******************************************************************************
  * API
@@ -45,16 +39,6 @@ typedef struct _mcdrv_ftm_cmt_init
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/*!
- * @brief Initialization function of asynchronous time event
- *
- * @param this   Pointer to the current object
- * @param init   Pointer to initialization structure
- *
- * @return boot_t true on success
- */
-bool_t MCDRV_FtmCmtInit(mcdrv_ftm_cmt_t *this, mcdrv_ftm_cmt_init_t *init);
 
 /*!
  * @brief Function read actual values of FTM counter and value register

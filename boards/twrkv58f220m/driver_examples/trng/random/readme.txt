@@ -19,6 +19,14 @@ The issue is fixed in TRNG driver version 2.0.3, by regenerating entropy bits wi
 TRNG settings already during TRNG_Init().
 
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - J-Link ARM
@@ -61,11 +69,6 @@ Random[9] = 0x84611992
 
  Press any key to continue...
  
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

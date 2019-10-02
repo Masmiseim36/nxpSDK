@@ -8,8 +8,8 @@
     <definition extID="component.uart_adapter.MKV46F16"/>
     <definition extID="device.MKV46F16_CMSIS.MKV46F16"/>
     <definition extID="device.MKV46F16_startup.MKV46F16"/>
-    <definition extID="middleware.freertos.MKV46F16"/>
-    <definition extID="middleware.freertos.heap.heap_4.MKV46F16"/>
+    <definition extID="middleware.amazon_freertos.freertos.MKV46F16"/>
+    <definition extID="middleware.amazon_freertos.freertos.heap_4.MKV46F16"/>
     <definition extID="platform.Include_common.MKV46F16"/>
     <definition extID="platform.Include_core_cm4.MKV46F16"/>
     <definition extID="platform.drivers.clock.MKV46F16"/>
@@ -25,7 +25,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="twrkv46f150m_freertos_mutex" name="freertos_mutex" category="rtos_examples" dependency="platform.drivers.port.MKV46F16 platform.drivers.gpio.MKV46F16 platform.drivers.clock.MKV46F16 middleware.freertos.MKV46F16 middleware.freertos.heap.heap_4.MKV46F16 platform.drivers.common.MKV46F16 device.MKV46F16_CMSIS.MKV46F16 utility.debug_console.MKV46F16 component.uart_adapter.MKV46F16 component.serial_manager.MKV46F16 component.serial_manager_uart.MKV46F16 platform.drivers.uart.MKV46F16 component.lists.MKV46F16 device.MKV46F16_startup.MKV46F16 platform.drivers.smc.MKV46F16 platform.utilities.assert.MKV46F16 platform.Include_core_cm4.MKV46F16 platform.Include_common.MKV46F16" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="twrkv46f150m_freertos_mutex" name="freertos_mutex" category="rtos_examples" dependency="platform.drivers.port.MKV46F16 platform.drivers.gpio.MKV46F16 platform.drivers.clock.MKV46F16 middleware.amazon_freertos.freertos.MKV46F16 middleware.amazon_freertos.freertos.heap_4.MKV46F16 platform.drivers.common.MKV46F16 device.MKV46F16_CMSIS.MKV46F16 utility.debug_console.MKV46F16 component.uart_adapter.MKV46F16 component.serial_manager.MKV46F16 component.serial_manager_uart.MKV46F16 platform.drivers.uart.MKV46F16 component.lists.MKV46F16 device.MKV46F16_startup.MKV46F16 platform.drivers.smc.MKV46F16 platform.utilities.assert.MKV46F16 platform.Include_core_cm4.MKV46F16 platform.Include_common.MKV46F16">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>

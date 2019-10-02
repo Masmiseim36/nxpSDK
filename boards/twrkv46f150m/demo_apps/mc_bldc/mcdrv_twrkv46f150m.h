@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,8 +9,6 @@
 #ifndef _MCDRV_TWR_KV46F15_H_
 #define _MCDRV_TWR_KV46F15_H_
 
-#include "fsl_device_registers.h"
-#include "m1_sm_ref_sol.h"
 #include "mcdrv_pwm3ph_ftm.h"
 #include "mcdrv_ftm_cmt.h"
 #include "mcdrv_mosfet_predrv_spi.h"
@@ -19,36 +17,57 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+/* Version info */
+#define MCRSP_VER "1.3.1" /* motor control package version */
 
+/* Application info */
+typedef struct 
+{
+    char cBoardID[15];
+    char cMotorType[4];
+    char cAppVer[5];
+}app_ver_t;
+   
 /* Structure used during clocks and modulo calculations */
 typedef struct _clock_setup
 {
-    uint32_t ui32CoreSystemClock;
-    uint32_t ui32FastBusClock;
-    uint32_t ui32BusFlashClock;
+  uint32_t ui32FastPeripheralClock;
+    uint32_t ui32BusClock;
     uint16_t ui16PwmFreq;
     uint16_t ui16PwmModulo;
-    uint16_t ui32CmtTimerFreq;
+    uint32_t ui32CmtTimerFreq;
     uint16_t ui16CtrlLoopFreq;
+    uint16_t ui16CtrlLoopModulo;
 } clock_setup_t;
 
 /* Define motor 1 ADC periphery (ADC12) */
-#define M1_MCDRV_ADC MCDRV_ADC12
+#define M1_MCDRV_ADC (MCDRV_ADC12)
 
 /* Define motor 1 3-ph PWM periphery */
-#define M1_MCDRV_PWM3PH MCDRV_FTM0
+#define M1_MCDRV_PWM3PH (MCDRV_FTM0)
+
+/* define motor 1 driver */
+#define M1_MCDRV_SPI_DRV3PH (MCDRV_SPI_DRV)
 
 /* Define motor 1 asynchronous time event*/
-#define M1_MCDRV_TMR_CMT MCDRV_FTM1
+#define M1_MCDRV_TMR_CMT (MCDRV_FTM1)
 
 /* Define motor 1 slow control loop timer */
-#define M1_MCDRV_TMR_SLOWLOOP MCDRV_FTM3
+#define M1_MCDRV_TMR_SLOWLOOP (MCDRV_FTM3)
 
 /* Define motor 1 ADC trigger PDB */
-#define M1_MCDRV_PDB MCDRV_PDB0
+#define M1_MCDRV_PDB (MCDRV_PDB0)
 
-/* Define motor 1 driver */
-#define M1_MCDRV_SPI_DRV3PH MCDRV_SPI_DRV
+/*******************************************************************************
+ * FreeMASTER communication constants
+ ******************************************************************************/
+/*! @brief The UART to use for FreeMASTER communication */
+#define BOARD_FMSTR_UART (1) 
+#define BOARD_FMSTR_LPUART (2) 
+#define BOARD_FMSTR_UART_PORT UART1
+#define BOARD_FMSTR_UART_BAUDRATE 115200
+#define BOARD_FMSTR_UART_TYPE BOARD_FMSTR_UART 
+#define BOARD_FMSTR_USE_TSA (1)
 
 /******************************************************************************
  * Clock & PWM definition
@@ -77,7 +96,7 @@ extern const char bldcCommutationTableComp[16];
 
 /* Predefined values of ADC channels */
 #define ADC_TEMPERATURE (26) /* Temperature sensor */
-#define ADC_NO_CHAN (31)     /* Default value for unassigned channel */
+#define ADC_NO_CHAN (31) /* Default value for unassigned channel */
 
 /* Configuration table of ADC channels according to the input pin signals:
  * Valid for Kinetis KV46 Freedom board (TWR-KV46F) together with TWR-MC-LV3PH

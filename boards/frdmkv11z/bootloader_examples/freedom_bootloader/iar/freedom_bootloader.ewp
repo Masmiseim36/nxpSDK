@@ -788,6 +788,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
+          <state> --redirect __aeabi_idiv=__iar_small___aeabi_idiv </state>
+          <state> --redirect __aeabi_idivmod=__iar_small___aeabi_idivmod </state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1768,6 +1770,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
+          <state> --redirect __aeabi_idiv=__iar_small___aeabi_idiv </state>
+          <state> --redirect __aeabi_idivmod=__iar_small___aeabi_idivmod </state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1965,31 +1969,16 @@
   <group>
     <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_clock.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_clock.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_clock.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_flash.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_adapter.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_utilities.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_controller.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_controller.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_flash.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_flash.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_cache.c</name>
@@ -1998,40 +1987,55 @@
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_cache.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_controller.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_controller.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_flash.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_flash.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_flexnvm.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_flexnvm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_flash.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_uart.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_utilities.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_uart.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_gpio.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_uart.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_gpio.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_i2c.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_gpio.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_i2c.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_i2c.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_port.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_dspi.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_dspi.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_dspi.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_dspi.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_crc.c</name>
@@ -2040,28 +2044,28 @@
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_crc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_flexcan.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_flexcan.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_common.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_flexcan.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_common.h</name>
     </file>
   </group>
   <group>
     <name>device</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/fsl_device_registers.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/MKV11Z7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/MKV11Z7_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/system_MKV11Z7.c</name>
@@ -2099,7 +2103,25 @@
     <group>
       <name>bootloader</name>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_app_crc_check.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_command.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_context.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_irq_common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_peripheral.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_peripheral_interface.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_shutdown_cleanup.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_user_entry.h</name>
@@ -2110,25 +2132,13 @@
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bootloader.h</name>
       </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_command.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_context.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_peripheral.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_shutdown_cleanup.h</name>
-      </file>
       <group>
         <name>src</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_user_entry.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_app_crc_check.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_main.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_command.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_context.c</name>
@@ -2137,42 +2147,36 @@
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_exception_handler.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_tree_root.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_command.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_shutdown_cleanup.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_app_crc_check.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_main.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_misc.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_reliable_update.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_shutdown_cleanup.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/uart_peripheral_interface.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_tree_root.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_user_entry.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_reliable_update.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/dspi_peripheral_interface.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/flexcan_peripheral_interface.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/i2c_peripheral_interface.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/flexcan_peripheral_interface.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/uart_peripheral_interface.c</name>
         </file>
       </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_irq_common.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_app_crc_check.h</name>
-      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_reliable_update.h</name>
       </file>
@@ -2209,34 +2213,34 @@
       <group>
         <name>src</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/sram_init.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/memory.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/device_memory.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/device_memory.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/device_memory.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/normal_memory.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/memory.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/normal_memory.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.s</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/normal_memory.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/flash_memory.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.s</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/sram_init.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/flash_memory.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/flash_memory.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/sram_init_cm0plus.c</name>
@@ -2273,10 +2277,10 @@
     <group>
       <name>sbloader</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/sbloader/sbloader.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/sbloader/sb_file_format.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/sbloader/sb_file_format.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/sbloader/sbloader.h</name>
       </file>
       <group>
         <name>src</name>
@@ -2288,13 +2292,10 @@
     <group>
       <name>utilities</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/fsl_rtos_abstraction.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/fsl_assert.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/vector_table_info.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/fsl_rtos_abstraction.h</name>
       </file>
       <group>
         <name>src</name>
@@ -2305,6 +2306,9 @@
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/src/fsl_rtos_abstraction.c</name>
         </file>
       </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/vector_table_info.h</name>
+      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/kinetis_family.h</name>
       </file>
@@ -2355,9 +2359,6 @@
       <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV11Z7/src/target_config.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/common/src/pinmux_utility_common.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/common/src/bl_dspi_irq_config_common.c</name>
     </file>
     <file>
@@ -2366,35 +2367,14 @@
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/common/src/bl_uart_irq_config_common.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/common/src/pinmux_utility_common.c</name>
+    </file>
   </group>
   <group>
     <name>CMSIS</name>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm0plus.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
@@ -2406,7 +2386,31 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>

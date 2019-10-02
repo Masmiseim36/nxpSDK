@@ -34,7 +34,6 @@
 #define LED_3_ON() LED_BLUE_ON()
 #define LED_3_OFF() LED_BLUE_OFF()
 
-
 #define SHELL_Printf PRINTF
 /*******************************************************************************
  * Prototypes

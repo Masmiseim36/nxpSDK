@@ -6,6 +6,30 @@ application periodically sends the ICMP echo request to a PC, and processes the 
 in the PC command window to send an ICMP echo request to the board. The lwIP stack sends the ICMP echo reply back to the
 PC.
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
+Hardware requirements
+=====================
+- Mini/micro USB cable
+- Network cable RJ45 standard
+- TWR-KV58F220M board
+- TWR-SER board
+- Personal Computer
+
+Board settings
+==============
+TWR-SER:
+    - RMII mode - J2 3-4 shunt on, J3 2-3 shunt on, J12 shunt on 9,10.
+Clock setting for TWR-KV58F220M board
+    - J29 1-2 shunt on
+    - Place R110 with 0 Ohm resister.
+	- J11 no shunt, to avoid wrong reset button behaviour.
 Prepare the Demo
 ================
 1.  Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.
@@ -24,6 +48,7 @@ Prepare the Demo
 Running the demo
 ================
 When the demo runs, the log would be seen on the terminal like:
+	Initializing PHY...
 
 	************************************************
 	 PING example
@@ -56,27 +81,6 @@ When the demo runs, the log would be seen on the terminal like:
 	192.168.0.100
 	 3 ms
 
-Hardware requirements
+Customization options
 =====================
-- Mini/micro USB cable
-- Network cable RJ45 standard
-- TWR-KV58F220M board
-- TWR-SER board
-- Personal Computer
-
-Board settings
-==============
-TWR-SER:
-    - RMII mode - J2 3-4 shunt on, J3 2-3 shunt on, J12 shunt on 9,10.
-Clock setting for TWR-KV58F220M board
-    - J29 1-2 shunt on
-    - Place R110 with 0 Ohm resister.
-	- J11 no shunt, to avoid wrong reset button behaviour.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
 

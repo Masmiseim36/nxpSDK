@@ -7,9 +7,9 @@ including closed-loop speed control and dynamic motor current limitation.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 8.30.1
-- Keil MDK 5.25
-- MCUXpresso IDE 10.2.1
+- IAR embedded Workbench 8.32.3
+- Keil MDK 5.27
+- MCUXpresso IDE 11.0.0
 
 Hardware requirements
 =====================

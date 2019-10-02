@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -30,26 +30,14 @@ const char bldcCommutationTableComp[16] = {
  * Variables
  ******************************************************************************/
 
-/* Configuration structure for 3-phase PWM driver */
-mcdrv_pwm3ph_ftm_init_t g_sM1Pwm3phInit;
-
-/* Configuration structure for ADC driver - phase currents,
-   DC-bus voltage, aux */
-mcdrv_adc12_init_t g_sM1AdcInit;
-
-/* Configuration structure for 3-phase MOSFET pre-driver */
-mcdrv_spi_drv3ph_init_t g_sM1Driver3phInit;
-
-/* Configuration structure for time event driver */
-mcdrv_ftm_cmt_init_t g_sM1CmtTmrInit;
-
-/* Structure for 3-phase PWM MC driver */
+/* Structure for 3-phase PWM mc driver */
 mcdrv_pwm3ph_ftm_t g_sM1Pwm3ph;
 
 /* Structure for time event driver */
 mcdrv_ftm_cmt_t g_sM1CmtTmr;
 
-/* Structure for current and voltage measurement */
+/* Structure for current and voltage measurement*/
+mcdrv_adc12_init_t g_sM1AdcInit;
 mcdrv_adc12_t g_sM1AdcSensor;
 
 /* Structure for 3-phase MOSFET pre-driver MC driver*/
@@ -74,7 +62,10 @@ clock_setup_t g_sClockSetup;
 */
 void MCDRV_Init_M1(void)
 {
-    /* SPI peripheral init for 3-phase MOSFET pre-driver configuration */
+     /* Init application clock dependent variables */
+    InitClock();
+	
+	/* SPI peripheral init for 3-phase MOSFET pre-driver configuration */
     M1_MCDRV_DRV3PH_INIT();
 
     /* Init ADC */
@@ -102,16 +93,13 @@ void MCDRV_Init_M1(void)
 */
 void InitClock(void)
 {
-    g_sClockSetup.ui32CoreSystemClock = SystemCoreClock;
-    g_sClockSetup.ui32FastBusClock =
-        SystemCoreClock / (((SIM->CLKDIV1 & SIM_CLKDIV1_OUTDIV2_MASK) >> SIM_CLKDIV1_OUTDIV2_SHIFT) + 1);
-    g_sClockSetup.ui32BusFlashClock =
-        SystemCoreClock / (((SIM->CLKDIV1 & SIM_CLKDIV1_OUTDIV4_MASK) >> SIM_CLKDIV1_OUTDIV4_SHIFT) + 1);
+    /* Calculate clock dependant variables for BLDC sensorless control algorithm */
+    g_sClockSetup.ui32FastPeripheralClock = CLOCK_GetFreq(kCLOCK_CoreSysClk);
+    g_sClockSetup.ui32BusClock = CLOCK_GetFreq(kCLOCK_BusClk);
     g_sClockSetup.ui16PwmFreq = PWM_FREQ; /* 20 kHz */
-                                          /* PWM module calculated as follows:
-                                           * PWM_MOD = FAST_BUS_CLOCK / PWM_FREQUNCY = 74 MHz / 20 kHz = 3750   */
-    g_sClockSetup.ui16PwmModulo = g_sClockSetup.ui32FastBusClock / g_sClockSetup.ui16PwmFreq;
-    g_sClockSetup.ui32CmtTimerFreq = g_sClockSetup.ui32FastBusClock / 128;
+                                             /* PWM module calculated as follows:
+                                              * PWM_MOD = PWM_CLOCK / PWM_FREQUNCY = 74 MHz / 20 kHz = 3700 */
+    g_sClockSetup.ui16PwmModulo = g_sClockSetup.ui32FastPeripheralClock / g_sClockSetup.ui16PwmFreq;
     g_sClockSetup.ui16CtrlLoopFreq = CTRL_LOOP_FREQ; /* 1 kHz */
 }
 
@@ -204,19 +192,17 @@ void InitFTM0(void)
     FTM0->PWMLOAD |= FTM_PWMLOAD_LDOK_MASK;
 
     /* Initialization FTM 3-phase PWM MC driver */
-    g_sM1Pwm3phInit.pui32PwmBase = (FTM_Type *)(FTM0);    /* FTM0 base address */
-    g_sM1Pwm3phInit.ui16ChanPairNumPhA = M1_PWM_PAIR_PHA; /* PWM phase A */
-    g_sM1Pwm3phInit.ui16ChanPairNumPhB = M1_PWM_PAIR_PHB; /* PWM phase B */
-    g_sM1Pwm3phInit.ui16ChanPairNumPhC = M1_PWM_PAIR_PHC; /* PWM phase C */
+    g_sM1Pwm3ph.pui32PwmBase = (FTM_Type *)(FTM0);    /* FTM0 base address */
+    g_sM1Pwm3ph.ui16ChanPhA = M1_PWM_PAIR_PHA; /* PWM phase A top&bottom channel pair number */
+    g_sM1Pwm3ph.ui16ChanPhB = M1_PWM_PAIR_PHB; /* PWM phase B top&bottom channel pair number */
+    g_sM1Pwm3ph.ui16ChanPhC = M1_PWM_PAIR_PHC; /* PWM phase C top&bottom channel pair number */
 
     /* Initialization of PWM modulo */
-    g_sM1Pwm3phInit.ui16PwmModulo = g_sClockSetup.ui16PwmModulo;
+    g_sM1Pwm3ph.ui16PwmModulo = g_sClockSetup.ui16PwmModulo;
 
     /* Initialization of BLDC commutation table */
-    g_sM1Pwm3phInit.pcBldcTable = &bldcCommutationTableComp[0];
-
-    /* Pass initialization structure to the MC driver */
-    MCDRV_FtmPwm3PhInit(&g_sM1Pwm3ph, &g_sM1Pwm3phInit); /* MC driver initialization */
+    g_sM1Pwm3ph.pcBldcTable = &bldcCommutationTableComp[0];
+    
 }
 
 /*!
@@ -246,6 +232,10 @@ void InitFTM1(void)
     /* Pre-scale factor 128 */
     FTM1->SC = FTM_SC_PS(7) | FTM_SC_CLKS(1);
 
+    /* Calculate frequency of timer used for forced commutation
+     * Bus clock divided by 2^FTM_prescaler */
+    g_sClockSetup.ui32CmtTimerFreq = g_sClockSetup.ui32FastPeripheralClock >> (FTM1->SC & FTM_SC_PS_MASK);
+
     /* Enable Output Compare interrupt, output Compare, Software Output
      * Compare only (ELSnB:ELSnA = 0:0, output pin is not controlled by FTM) */
     FTM1->CONTROLS[0].CnSC = FTM_CnSC_MSA_MASK | FTM_CnSC_CHIE_MASK;
@@ -256,16 +246,9 @@ void InitFTM1(void)
     /* Set priority to interrupt */
     NVIC_SetPriority(FTM1_IRQn, 1);
 
-    /* Initialization FTM time event driver */
-    g_sM1CmtTmrInit.pui32FtmBase = (FTM_Type *)(FTM1); /* FTM1 base address */
-    g_sM1CmtTmrInit.ui16ChannelNum = M1_FTM_CMT_CHAN;  /* FTM1 compare channel selection */
-
-    /* Pass initialization structure to the MC driver */
-    MCDRV_FtmCmtInit(&g_sM1CmtTmr, &g_sM1CmtTmrInit);
-
-    /* Timer variables pointer assertion */
-    g_sM1CmtTmr.pui16FtmCntAct = &g_sM1Drive.ui16TimeCurrent;
-    g_sM1CmtTmr.pui16FtmValueAct = &g_sM1Drive.ui16TimeCurrentEvent;
+    /* initialization FTM time event driver */
+    g_sM1CmtTmr.pui32FtmBase = (FTM_Type *)(FTM1); /* FTM1 base address */
+    g_sM1CmtTmr.ui16ChannelNum = M1_FTM_CMT_CHAN;  /* FTM1 compare channel selection */
 }
 
 /*!
@@ -311,11 +294,14 @@ void InitFTM3(void)
 }
 
 /*!
-* @brief      Initialization of the SPI for MOSFET pre-driver MC33937 configuration
+* @brief   void InitSPI(void)
+*           - Initialization of the SPI peripheral for motor M1 3-phase MOSFET
+*             pre-driver
+*           - SPI configuration for MOSFET pre-driver MC33937
 *
-* @param      void
+* @param   void
 *
-* @return     none
+* @return  none
 */
 void InitSPI(void)
 {
@@ -344,31 +330,23 @@ void InitSPI(void)
     srcClock_Hz = CLOCK_GetFreq(SYS_CLK);
     DSPI_MasterInit(SPI0, &masterConfig, srcClock_Hz);
 
-    /* Initialization of pins required by MC33937 pre-driver */
-    g_sM1Driver3phInit.pSpiBase = (SPI_Type *)(SPI); /* SPI Base Address */
-    g_sM1Driver3phInit.ui32Pcs = (0);                /* PCS number */
+    /* ---------------------------------------------------- */
+    /* Initialization of pins required by MC33937 predriver */
+    g_sM1Driver3ph.sSpiData.pSpiBase = (SPI_Type *)(SPI); /* SPI Base Address */
+    g_sM1Driver3ph.sSpiData.ui32Pcs = (1 << 0); /* 1 << PCS_number */
 
     /* Enable PIN & PORT */
-    CLOCK_EnableClock(kCLOCK_PortB);
-    g_sM1Driver3phInit.pGpioEnBase = (GPIO_Type *)(PTB);   /* GPIOx Base Address */
-    g_sM1Driver3phInit.pPortEnBase = (PORT_Type *)(PORTB); /* PORTx Base Address */
-    g_sM1Driver3phInit.ui32GpioEnPin = 16;                 /* Pin number for driver enabled */
+    g_sM1Driver3ph.sSpiData.pGpioEnBase = (GPIO_Type *)(PTB); /* GPIOx Base Address */
+    g_sM1Driver3ph.sSpiData.ui32GpioEnPin = 16; /* pin number for driver enabled */
 
     /* Interrupt PIN & PORT */
-    CLOCK_EnableClock(kCLOCK_PortC);
-    g_sM1Driver3phInit.pGpioIntBase = (GPIO_Type *)(PTC);   /* GPIOx Base Address */
-    g_sM1Driver3phInit.pPortIntBase = (PORT_Type *)(PORTC); /* PORTx Base Address */
-    g_sM1Driver3phInit.ui32GpioIntPin = 6;                  /* Pin number for interrupt detection */
+    g_sM1Driver3ph.sSpiData.pGpioIntBase = (GPIO_Type *)(PTC); /* GPIOx Base Address */
+    g_sM1Driver3ph.sSpiData.ui32GpioIntPin = 6; /* pin number for interrupt detection */
 
     /* Reset PIN & PORT */
-    g_sM1Driver3phInit.pGpioResetBase = (GPIO_Type *)(PTC);   /* GPIOx Base Address */
-    g_sM1Driver3phInit.pPortResetBase = (PORT_Type *)(PORTC); /* PORTx Base Address */
-    g_sM1Driver3phInit.ui32GpioResetPin = 7;                  /* Pin number for reset, driver */
+    g_sM1Driver3ph.sSpiData.bResetPinControl = FALSE;
 
-    /* Pass initialization structure to the MC driver */
-    MCDRV_Driver3PhInit(&g_sM1Driver3ph, &g_sM1Driver3phInit);
-
-    /* Zero dead-time set in MC33937, dead time control from FTM */
+    /* zero deadtime set in MC33937, dead time control from FTM*/
     g_sM1Driver3ph.ui16Deadtime = 0;
     MCDRV_Driver3PhConfig(&g_sM1Driver3ph);
     MCDRV_Driver3PhGetSr0(&g_sM1Driver3ph);

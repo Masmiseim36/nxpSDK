@@ -9,15 +9,15 @@
 **                          MKV11Z64VLF7
 **                          MKV11Z64VLH7
 **
-**     Compilers:           Keil ARM C/C++ Compiler
-**                          Freescale C/C++ for Embedded ARM
+**     Compilers:           Freescale C/C++ for Embedded ARM
 **                          GNU C Compiler
 **                          IAR ANSI C/C++ Compiler for ARM
+**                          Keil ARM C/C++ Compiler
 **                          MCUXpresso Compiler
 **
 **     Reference manual:    KV11P64M75RM Rev.2, April 2015
 **     Version:             rev. 1.1, 2017-03-22
-**     Build:               b180801
+**     Build:               b181105
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
@@ -26,6 +26,7 @@
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
 **     Copyright 2016-2018 NXP
+**     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
 **
@@ -146,6 +147,7 @@ void SystemCoreClockUpdate (void) {
         MCGOUTClock *= 2929U;
         break;
       default:
+        MCGOUTClock *= 640U;
         break;
     }
   } else if ((MCG->C1 & MCG_C1_CLKS_MASK) == 0x40U) {

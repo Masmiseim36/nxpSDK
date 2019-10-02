@@ -2,7 +2,6 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
-    <definition extID="RTE_Device.MKV46F16"/>
     <definition extID="component.lists.MKV46F16"/>
     <definition extID="component.serial_manager.MKV46F16"/>
     <definition extID="component.serial_manager_uart.MKV46F16"/>
@@ -31,7 +30,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="twrkv46f150m_cmsis_dspi_edma_b2b_transfer_slave" name="cmsis_dspi_edma_b2b_transfer_slave" category="cmsis_driver_examples/dspi" dependency="platform.drivers.port.MKV46F16 platform.drivers.clock.MKV46F16 platform.drivers.gpio.MKV46F16 platform.drivers.edma.MKV46F16 platform.drivers.dmamux.MKV46F16 platform.drivers.dspi.MKV46F16 platform.drivers.dspi_edma.MKV46F16 platform.drivers.dspi_cmsis.MKV46F16 platform.drivers.common.MKV46F16 device.MKV46F16_CMSIS.MKV46F16 utility.debug_console.MKV46F16 component.uart_adapter.MKV46F16 component.serial_manager.MKV46F16 component.serial_manager_uart.MKV46F16 platform.drivers.uart.MKV46F16 component.lists.MKV46F16 device.MKV46F16_startup.MKV46F16 platform.drivers.smc.MKV46F16 platform.utilities.assert.MKV46F16 platform.Include_core_cm4.MKV46F16 platform.Include_common.MKV46F16 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MKV46F16 platform.CMSIS_Driver_Include.Common_CMSISInclude.MKV46F16 RTE_Device.MKV46F16" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="twrkv46f150m_cmsis_dspi_edma_b2b_transfer_slave" name="cmsis_dspi_edma_b2b_transfer_slave" category="cmsis_driver_examples/dspi" dependency="platform.drivers.port.MKV46F16 platform.drivers.clock.MKV46F16 platform.drivers.gpio.MKV46F16 platform.drivers.edma.MKV46F16 platform.drivers.dmamux.MKV46F16 platform.drivers.dspi.MKV46F16 platform.drivers.dspi_edma.MKV46F16 platform.drivers.dspi_cmsis.MKV46F16 platform.drivers.common.MKV46F16 device.MKV46F16_CMSIS.MKV46F16 utility.debug_console.MKV46F16 component.uart_adapter.MKV46F16 component.serial_manager.MKV46F16 component.serial_manager_uart.MKV46F16 platform.drivers.uart.MKV46F16 component.lists.MKV46F16 device.MKV46F16_startup.MKV46F16 platform.drivers.smc.MKV46F16 platform.utilities.assert.MKV46F16 platform.Include_core_cm4.MKV46F16 platform.Include_common.MKV46F16 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MKV46F16 platform.CMSIS_Driver_Include.Common_CMSISInclude.MKV46F16">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -73,6 +72,10 @@
     </source>
     <source path="boards/twrkv46f150m/cmsis_driver_examples/dspi/edma_b2b_transfer/slave/mdk" target_path="src" type="linker" toolchain="mdk">
       <files mask="MKV46F256xxx16_flash.scf"/>
+    </source>
+    <source path="boards/twrkv46f150m/cmsis_driver_examples/dspi/edma_b2b_transfer/slave" target_path="CMSIS" type="c_include" exclude="true">
+      <files mask="Driver_Common.h"/>
+      <files mask="Driver_SPI.h"/>
     </source>
     <source path="boards/twrkv46f150m/cmsis_driver_examples/dspi/edma_b2b_transfer/slave" target_path="board" type="c_include">
       <files mask="RTE_Device.h"/>

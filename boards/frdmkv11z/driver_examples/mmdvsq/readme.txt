@@ -12,6 +12,14 @@ Calculation division to get remainder and quotient
 Enter dividend and divisor
 Remainder of 10 and 5 is 0
 Quotient of 10 and 5 is 2
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -53,11 +61,6 @@ Remainder of 12 and 3 is 0
 
 Quotient of 12 and 3 is 4
 ~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

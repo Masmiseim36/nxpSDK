@@ -361,10 +361,7 @@
             <uC99>1</uC99>
             <useXO>0</useXO>
             <VariousControls>
-              <MiscControls>--library_interface=armcc 
---diag_suppress=66,1296,186,170,2748,1461,1295,177,550 
---library_type=standardlib 
-</MiscControls>
+              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186,170,2748,1461,1295,177,550 --library_type=standardlib</MiscControls>
               <Define>NDEBUG, CPU_MKV46F256VLL16, TOWER, TWR_KV46F150M</Define>
               <Undefine/>
               <IncludePath>../../../../../../CMSIS/Include;../../../../../../devices/MKV46F16;../../../../../../middleware/mcu-boot/targets/MKV46F16/src;../../../../../../middleware/mcu-boot/src/startup;../../../../../../middleware/mcu-boot/src/include;../../../../../../middleware/mcu-boot/apps/led_demo/src;..;../../../../../../devices/MKV46F16</IncludePath>
@@ -381,9 +378,7 @@
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
             <VariousControls>
-              <MiscControls>--cpreproc 
---diag_suppress=1609,1581 
-</MiscControls>
+              <MiscControls>--cpreproc --diag_suppress=1609,1581</MiscControls>
               <Define>BL_HAS_BOOTLOADER_CONFIG=1</Define>
               <Undefine/>
               <IncludePath/>
@@ -402,12 +397,7 @@
             <ScatterFile>MKV46F256xxx16_application_0x0000.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove 
---datacompressor 
-off 
---feedback_type=unused,noiw 
---predefine="-D__ram_vector_table__=1" 
-</Misc>
+            <Misc>--remove --datacompressor off --feedback_type=unused,noiw --predefine="-D__ram_vector_table__=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -438,11 +428,6 @@ off
           <GroupName>device</GroupName>
           <Files>
             <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MKV46F16/fsl_device_registers.h</FilePath>
-            </File>
-            <File>
               <FileName>MKV46F16.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MKV46F16/MKV46F16.h</FilePath>
@@ -451,6 +436,11 @@ off
               <FileName>MKV46F16_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MKV46F16/MKV46F16_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MKV46F16/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MKV46F16.c</FileName>
@@ -498,46 +488,6 @@ off
               <FilePath>../../../../../../CMSIS/Include/core_cm4.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_common_tables.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
@@ -553,9 +503,49 @@ off
               <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
             <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv8.h</FileName>

@@ -1,7 +1,7 @@
 /*
  * Copyright 2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -119,14 +119,14 @@ int main(void)
 
     /* subAddress = 0x01, data = g_master_txBuff - write to slave.
       start + slaveaddress(w) + subAddress + length of data buffer + data buffer + stop*/
-    uint8_t deviceAddress = 0x01U;
-    masterXfer.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;
-    masterXfer.direction = kI2C_Write;
-    masterXfer.subaddress = (uint32_t)deviceAddress;
+    uint8_t deviceAddress     = 0x01U;
+    masterXfer.slaveAddress   = I2C_MASTER_SLAVE_ADDR_7BIT;
+    masterXfer.direction      = kI2C_Write;
+    masterXfer.subaddress     = (uint32_t)deviceAddress;
     masterXfer.subaddressSize = 1;
-    masterXfer.data = g_master_txBuff;
-    masterXfer.dataSize = I2C_DATA_LENGTH;
-    masterXfer.flags = kI2C_TransferDefaultFlag;
+    masterXfer.data           = g_master_txBuff;
+    masterXfer.dataSize       = I2C_DATA_LENGTH;
+    masterXfer.flags          = kI2C_TransferDefaultFlag;
 
     DMAMUX_SetSource(EXAMPLE_I2C_DMAMUX_BASEADDR, I2C_DMA_CHANNEL, DMA_REQUEST_SRC);
     EDMA_CreateHandle(&edmaHandle, EXAMPLE_I2C_DMA_BASEADDR, I2C_DMA_CHANNEL);
@@ -145,14 +145,14 @@ int main(void)
 
     /* subAddress = 0x01, data = g_master_rxBuff - read from slave.
       start + slaveaddress(w) + subAddress + repeated start + slaveaddress(r) + rx data buffer + stop */
-    masterXfer.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;
-    masterXfer.direction = kI2C_Read;
-    masterXfer.subaddress = (uint32_t)deviceAddress;
+    masterXfer.slaveAddress   = I2C_MASTER_SLAVE_ADDR_7BIT;
+    masterXfer.direction      = kI2C_Read;
+    masterXfer.subaddress     = (uint32_t)deviceAddress;
     masterXfer.subaddressSize = 1;
-    masterXfer.data = g_master_rxBuff;
-    masterXfer.dataSize = I2C_DATA_LENGTH - 1;
-    masterXfer.flags = kI2C_TransferDefaultFlag;
-    masterXfer.flags = kI2C_TransferDefaultFlag;
+    masterXfer.data           = g_master_rxBuff;
+    masterXfer.dataSize       = I2C_DATA_LENGTH - 1;
+    masterXfer.flags          = kI2C_TransferDefaultFlag;
+    masterXfer.flags          = kI2C_TransferDefaultFlag;
 
     I2C_MasterTransferEDMA(EXAMPLE_I2C_MASTER_BASEADDR, &g_m_dma_handle, &masterXfer);
 
@@ -180,7 +180,7 @@ int main(void)
     {
         if (g_master_rxBuff[i] != g_master_txBuff[i + 1])
         {
-            PRINTF("\r\nError occured in the transfer ! \r\n");
+            PRINTF("\r\nError occurred in the transfer ! \r\n");
             break;
         }
     }

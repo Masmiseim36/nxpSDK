@@ -19,13 +19,13 @@
 typedef enum _app_power_mode
 {
     kAPP_PowerModeMin = 'A' - 1,
-    kAPP_PowerModeRun,  /* Normal RUN mode */
-    kAPP_PowerModeWait, /* WAIT mode. */
-    kAPP_PowerModeStop, /* STOP mode. */
-    kAPP_PowerModeVlpr, /* VLPR mode. */
-    kAPP_PowerModeVlpw, /* VLPW mode. */
-    kAPP_PowerModeVlps, /* VLPS mode. */
-    kAPP_PowerModeLls, /* LLS mode. */
+    kAPP_PowerModeRun,   /* Normal RUN mode */
+    kAPP_PowerModeWait,  /* WAIT mode. */
+    kAPP_PowerModeStop,  /* STOP mode. */
+    kAPP_PowerModeVlpr,  /* VLPR mode. */
+    kAPP_PowerModeVlpw,  /* VLPW mode. */
+    kAPP_PowerModeVlps,  /* VLPS mode. */
+    kAPP_PowerModeLls,   /* LLS mode. */
     kAPP_PowerModeVlls0, /* VLLS0 mode. */
     kAPP_PowerModeVlls1, /* VLLS1 mode. */
     kAPP_PowerModeVlls2, /* VLLS2 mode. */

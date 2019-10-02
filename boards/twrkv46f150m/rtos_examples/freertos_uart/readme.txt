@@ -3,6 +3,14 @@ Overview
 The UART example for FreeRTOS demonstrates the possibility to use the UART driver in the RTOS.
 The example uses single instance of UART IP and writes string into, then reads back chars.
 After every 4B received, these are sent back on UART.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/Micro USB cable
@@ -29,11 +37,6 @@ Running the demo
 ================
 You will see the welcome string printed out on the console.
 You can send characters to the console back and they will be printed out onto console in a group of 4 characters.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

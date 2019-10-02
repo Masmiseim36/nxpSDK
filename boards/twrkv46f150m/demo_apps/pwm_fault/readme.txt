@@ -4,6 +4,14 @@ This demo application demonstrates the EflexPWM fault demo.
 This application demonstrates the pulse with modulation function of EflexPWM module. It outputs the
 PWM to control the intensity of the LED. PWM shut down when a fault signal is detected on the CMP
 output. One input of CMP, other input is from internal DAC.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -37,11 +45,6 @@ Connect pin J501_13 to high level and ground to see change.
 Note: When connect pin J501_13
 - to GND: the PWM signal will output at pin J501_9.
 - to VCC: the PWM signal output will be disabled.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

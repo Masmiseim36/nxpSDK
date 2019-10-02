@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,6 +9,7 @@
 #ifndef _MCDRV_FRDM_KV31F_H_
 #define _MCDRV_FRDM_KV31F_H_
 
+#include "fsl_device_registers.h"
 #include "mcdrv_pwm3ph_ftm.h"
 #include "mcdrv_ftm_cmt.h"
 #include "mcdrv_adc_adc16.h"
@@ -16,16 +17,27 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+/* Version info */
+#define MCRSP_VER "1.3.1" /* motor control package version */
+
+/* Application info */
+typedef struct _app_ver
+{
+    char cBoardID[15];
+    char cMotorType[4];
+    char cAppVer[5];
+}app_ver_t;
 
 /* Structure used during clocks and modulo calculations */
 typedef struct _clock_setup
 {
-    uint32_t ui32CoreSystemClock;
+     uint32_t ui32SystemClock;
     uint32_t ui32BusClock;
     uint16_t ui16PwmFreq;
     uint16_t ui16PwmModulo;
-    uint16_t ui32CmtTimerFreq;
+    uint32_t ui32CmtTimerFreq;
     uint16_t ui16CtrlLoopFreq;
+    uint16_t ui16CtrlLoopModulo;
 } clock_setup_t;
 
 /* Define motor 1 ADC periphery (ADC16) */
@@ -44,17 +56,25 @@ typedef struct _clock_setup
 #define M1_MCDRV_PDB MCDRV_PDB0
 
 /* ISR priority */
-#define ISR_PRIORITY_PDB0 (1)       /* PDB interrupt priority */
-#define ISR_PRIORITY_ADC0 (1)       /* sensorless control */
+#define ISR_PRIORITY_PDB0 (1) /* PDB interrupt priority */
+#define ISR_PRIORITY_ADC0 (1) /* sensorless control */
 #define ISR_PRIORITY_SLOW_TIMER (3) /* speed control loop (low ISR priority) */
 #define ISR_PRIORITY_FORCED_CMT (1) /* forced commutation (when missed sensorless cmt, open loop, timing) */
+
+/*******************************************************************************
+ * FreeMASTER communication constants
+ ******************************************************************************/
+/*! @brief The UART to use for FreeMASTER communication */
+#define BOARD_FMSTR_UART (1) 
+#define BOARD_FMSTR_LPUART (2) 
+#define BOARD_FMSTR_UART_PORT UART0
+#define BOARD_FMSTR_UART_BAUDRATE 115200
+#define BOARD_FMSTR_UART_TYPE BOARD_FMSTR_UART 
+#define BOARD_FMSTR_USE_TSA (1)
 
 /******************************************************************************
  * Clock & PWM definition                                                     *
  ******************************************************************************/
-#define CPU_CLOCK (DEFAULT_SYSTEM_CLOCK) /* 120 MHz, CLOCK_SETUP = 1 */
-#define BUS_CLOCK (60000000)
-#define CMT_TIMER_FREQ (BUS_CLOCK / 128) /* Frequency of commutation timer in Hz (FTM1) */
 #define CTRL_LOOP_FREQ (1000)            /* Frequency of control loop in Hz */
 #define PWM_FREQ (20000)                 /* PWM frequency - 20kHz */
 
@@ -114,12 +134,16 @@ extern const char bldcCommutationTableComp[16];
 /* Aux channel is assigned to ADC1 only */
 #define M1_ADC0_AUX ADC_NO_CHAN
 #define M1_ADC1_AUX ADC_TEMPERATURE
+   
+/* offset measurement filter window */     
+#define ADC_OFFSET_WINDOW (3)   
 
 /******************************************************************************
  * MC driver macro definition and check - do not change this part
  ******************************************************************************/
+
 /******************************************************************************
- * define motor 1 ADC control functions
+ * Define motor 1 ADC control functions
  ******************************************************************************/
 #ifdef M1_MCDRV_ADC
 #if (M1_MCDRV_ADC == MCDRV_ADC16)

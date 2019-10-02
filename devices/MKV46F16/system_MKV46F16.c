@@ -5,15 +5,15 @@
 **                          MKV46F256VLH16
 **                          MKV46F256VLL16
 **
-**     Compilers:           Keil ARM C/C++ Compiler
-**                          Freescale C/C++ for Embedded ARM
+**     Compilers:           Freescale C/C++ for Embedded ARM
 **                          GNU C Compiler
 **                          IAR ANSI C/C++ Compiler for ARM
+**                          Keil ARM C/C++ Compiler
 **                          MCUXpresso Compiler
 **
 **     Reference manual:    KV4XP100M168RM Rev 3.2, 09/2015
 **     Version:             rev. 1.3, 2015-07-29
-**     Build:               b180801
+**     Build:               b181105
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
@@ -22,6 +22,7 @@
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
 **     Copyright 2016-2018 NXP
+**     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
 **
@@ -155,6 +156,7 @@ void SystemCoreClockUpdate (void) {
           MCGOUTClock *= 2929U;
           break;
         default:
+          MCGOUTClock *= 640U;
           break;
       }
     } else { /* (!((MCG->C6 & MCG_C6_PLLS_MASK) == 0x0U)) */

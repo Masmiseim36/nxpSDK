@@ -23,7 +23,7 @@
 #define BOARD_FTM_HANDLER FTM0_IRQHandler
 
 /* Get source clock for FTM driver */
-#define FTM_SOURCE_CLOCK (CLOCK_GetFreq(kCLOCK_FastPeriphClk)/4)
+#define FTM_SOURCE_CLOCK (CLOCK_GetFreq(kCLOCK_FastPeriphClk) / 4)
 
 /*******************************************************************************
  * Prototypes
@@ -32,7 +32,7 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-volatile bool ftmIsrFlag = false;
+volatile bool ftmIsrFlag           = false;
 volatile uint32_t milisecondCounts = 0U;
 
 /*******************************************************************************
@@ -41,7 +41,7 @@ volatile uint32_t milisecondCounts = 0U;
 int main(void)
 {
     uint32_t cnt;
-    uint32_t loop = 2U;
+    uint32_t loop       = 2U;
     uint32_t secondLoop = 1000U;
     const char *signals = "-|";
     ftm_config_t ftmInfo;
@@ -65,7 +65,7 @@ int main(void)
 
     /*
      * Set timer period.
-    */
+     */
     FTM_SetTimerPeriod(BOARD_FTM_BASEADDR, USEC_TO_COUNT(1000U, FTM_SOURCE_CLOCK));
 
     FTM_EnableInterrupts(BOARD_FTM_BASEADDR, kFTM_TimeOverflowInterruptEnable);

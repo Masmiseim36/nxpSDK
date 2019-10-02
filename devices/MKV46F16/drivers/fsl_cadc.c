@@ -182,11 +182,11 @@ void CADC_GetDefaultConfig(cadc_config_t *config)
     memset(config, 0, sizeof(*config));
 
     /* The default values are from power up reset state. */
-    config->dualConverterScanMode = kCADC_DualConverterWorkAsTriggeredParallel;
+    config->dualConverterScanMode  = kCADC_DualConverterWorkAsTriggeredParallel;
     config->enableSimultaneousMode = true;
-    config->DMATriggerSoruce = kCADC_DMATriggerSourceAsEndOfScan;
-    config->idleWorkMode = kCADC_IdleKeepNormal;
-    config->powerUpDelay = 26U;
+    config->DMATriggerSoruce       = kCADC_DMATriggerSourceAsEndOfScan;
+    config->idleWorkMode           = kCADC_IdleKeepNormal;
+    config->powerUpDelay           = 26U;
 }
 
 /*!
@@ -319,11 +319,11 @@ void CADC_GetDefaultConverterConfig(cadc_converter_config_t *config)
     memset(config, 0, sizeof(*config));
 
     /* The default values are from power up reset state. */
-    config->clockDivisor = 4U;
-    config->speedMode = kCADC_SpeedMode0;
+    config->clockDivisor               = 4U;
+    config->speedMode                  = kCADC_SpeedMode0;
     config->highReferenceVoltageSource = kCADC_ReferenceVoltageVrefPad;
-    config->lowReferenceVoltageSource = kCADC_ReferenceVoltageVrefPad;
-    config->sampleWindowCount = 0U;
+    config->lowReferenceVoltageSource  = kCADC_ReferenceVoltageVrefPad;
+    config->sampleWindowCount          = 0U;
 }
 
 /*!

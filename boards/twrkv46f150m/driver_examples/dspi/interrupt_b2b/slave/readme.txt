@@ -7,6 +7,14 @@ The file 'dspi_interrupt_b2b_slave.c' includes the DSPI slave code.
 This example does not use the transactional API in DSPI driver. It's a demonstration that how to use the interrupt in KSDK driver.
 
 1. DSPI master send/received data to/from DSPI slave in interrupt . (DSPI Slave using interrupt to receive/send the data)
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -58,11 +66,6 @@ When the demo runs successfully, the log would be seen on the OpenSDA terminal l
 
  Slave example is running...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

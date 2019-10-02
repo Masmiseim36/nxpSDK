@@ -45,7 +45,7 @@ int32_t MMDVSQ_GetDivideRemainder(MMDVSQ_Type *base, int32_t dividend, int32_t d
     /* Start calculation by writing 1 to SRT bit in case Fast-Start is disabled */
     base->CSR |= MMDVSQ_CSR_SRT_MASK;
     /* Return remainder, if divide-by-zero is enabled and occurred, reading from
-    * RES result is error terminated */
+     * RES result is error terminated */
     return base->RES;
 }
 
@@ -77,7 +77,7 @@ int32_t MMDVSQ_GetDivideQuotient(MMDVSQ_Type *base, int32_t dividend, int32_t di
     /* Start calculation by writing 1 to SRT bit in case Fast-Start is disabled */
     base->CSR |= MMDVSQ_CSR_SRT_MASK;
     /* Return quotient, if divide-by-zero is enabled and occurred, reading from
-    * RES result is error terminated */
+     * RES result is error terminated */
     return base->RES;
 }
 

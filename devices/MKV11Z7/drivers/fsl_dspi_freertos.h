@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef __FSL_DSPI_FREERTOS_H__
@@ -26,14 +26,14 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief DSPI FREERTOS driver version 2.2.0. */
-#define FSL_DSPI_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
+/*! @brief DSPI FREERTOS driver version 2.2.1. */
+#define FSL_DSPI_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 2, 1))
 /*@}*/
 
 /*!
-* @cond RTOS_PRIVATE
-* @brief DSPI FreeRTOS handle
-*/
+ * @cond RTOS_PRIVATE
+ * @brief DSPI FreeRTOS handle
+ */
 typedef struct _dspi_rtos_handle
 {
     SPI_Type *base;                  /*!< DSPI base address */

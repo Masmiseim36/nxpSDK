@@ -4,6 +4,14 @@ The FTM pwm two channel Example project is a demonstration program that uses the
 pulse PWM on 2 channel to control the LED brightness.
 - FTM generates a PWM with the increasing and decreasing duty cycle.
 - LED brightness is increasing and then dimming. This is a continuous process.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -36,11 +44,6 @@ If no LED is connected to the FTM pin, then probe the signal using an oscillosco
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 You can use oscilloscope to measure FTM signal output J30-1 and J30-3
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

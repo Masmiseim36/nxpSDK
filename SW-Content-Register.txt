@@ -76,6 +76,25 @@ sdmmc                      name: SD MMC SDIO Card middleware
                            version: 2.2.7                                    
                            Format: source code                               
 
+sdmmc_sdspi                name: SD Card middleware                          
+                           Location: middleware/sdmmc                        
+                           License: Open Source - BSC-3-Clause               
+                           Description: A software component support access  
+                           SD card through spi.                              
+                           Author: Freescale                                 
+                           version: 2.1.4                                    
+                           Format: source code                               
+
+mmcau                      Author: Freescale                                 
+                           Description: S/W library that works with the      
+                           memory-mapped cryptographic acceleration unit     
+                           present on some MCUXpresso SoCs                   
+                           Format: source code                               
+                           License: Open Source - BSD-3-Clause               
+                           Location: middleware/mmcau                        
+                           name: mmCAU S/W Library                           
+                           version: 2.0.1                                    
+
 fatfs                      Approved Open Source License: Yes                 
                            Author: Electronic Lives Mfg. by ChaN of Ageo     
                            city, Japan (hobbyist)                            
@@ -390,6 +409,16 @@ Host tools - SHA-1         Description: Implementation of the SHA-1 algorithm
                            Format: source code                               
                            Location: tools/tools/elftosb/common/SHA1.h,      
                            tools/tools/elftosb/common/SHA1.cpp               
+
+Utility Source - elf.py    Description: Python implementation of an ELF file 
+                           reader                                            
+                           Author: Chris Liechti (cliechti@gmx.net)          
+                           License: BSD License                              
+                           URL:                                              
+                           http://bazaar.launchpad.net/~zsquareplusc/python-m
+                           sp430-tools/trunk/view/head:/msp430/memory/elf.py 
+                           Format: source code                               
+                           Location: middleware/mcu-boot/bin/elf.py          
 
 ELFtoSB - MBED TLS stack   Description: Cryptographic and SSL/TLS Library    
                            Author: ARM                                       

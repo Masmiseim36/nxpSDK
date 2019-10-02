@@ -3,7 +3,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -74,10 +74,10 @@ int main(void)
     PRINTF("HSADC dual separate conversion example.\r\n");
 
     /* Initialize the HSADC common digital control.
-    * "kHSADC_DualConverterWorkAsTriggeredParallel" is used and simultaneous mode is disabled in this case. The two
-    * conversion sequence would be executed by each converter. Two converter has independent control logic such as
-    * start, stop, DMA enable, sync input etc.
-    */
+     * "kHSADC_DualConverterWorkAsTriggeredParallel" is used and simultaneous mode is disabled in this case. The two
+     * conversion sequence would be executed by each converter. Two converter has independent control logic such as
+     * start, stop, DMA enable, sync input etc.
+     */
     HSADC_GetDefaultConfig(&hsadcConfigStruct);
     hsadcConfigStruct.enableSimultaneousMode = false;
     HSADC_Init(DEMO_HSADC_BASEADDR, &hsadcConfigStruct);
@@ -98,24 +98,24 @@ int main(void)
     /* Configure the samples. */
     HSADC_GetDefaultSampleConfig(&hsadcSampleConfigStruct);
     /* For converter A. */
-    hsadcSampleConfigStruct.channelNumber = DEMO_HSADC_CONVA_CHN_NUM1;
-    hsadcSampleConfigStruct.channel67MuxNumber = DEMO_HSADC_CONVA_CHN67_MUX_NUM1;
+    hsadcSampleConfigStruct.channelNumber          = DEMO_HSADC_CONVA_CHN_NUM1;
+    hsadcSampleConfigStruct.channel67MuxNumber     = DEMO_HSADC_CONVA_CHN67_MUX_NUM1;
     hsadcSampleConfigStruct.enableDifferentialPair = DEMO_HSADC_CONVA_CHN_NUM1_ENABLE_DIFF;
     HSADC_SetSampleConfig(DEMO_HSADC_BASEADDR, 0U, &hsadcSampleConfigStruct);
-    hsadcSampleConfigStruct.channelNumber = DEMO_HSADC_CONVA_CHN_NUM2;
-    hsadcSampleConfigStruct.channel67MuxNumber = DEMO_HSADC_CONVA_CHN67_MUX_NUM2;
+    hsadcSampleConfigStruct.channelNumber          = DEMO_HSADC_CONVA_CHN_NUM2;
+    hsadcSampleConfigStruct.channel67MuxNumber     = DEMO_HSADC_CONVA_CHN67_MUX_NUM2;
     hsadcSampleConfigStruct.enableDifferentialPair = DEMO_HSADC_CONVA_CHN_NUM2_ENABLE_DIFF;
     HSADC_SetSampleConfig(DEMO_HSADC_BASEADDR, 1U, &hsadcSampleConfigStruct);
     /* For converter B.
      * In HSADC_SetSampleConfig(), the channel number 0~7 represents input 0~7 of converter A and channel number 8~15
      * represents input 0~7 of converter B.
      */
-    hsadcSampleConfigStruct.channelNumber = (DEMO_HSADC_CONVB_CHN_NUM1 + 8U);
-    hsadcSampleConfigStruct.channel67MuxNumber = DEMO_HSADC_CONVB_CHN67_MUX_NUM1;
+    hsadcSampleConfigStruct.channelNumber          = (DEMO_HSADC_CONVB_CHN_NUM1 + 8U);
+    hsadcSampleConfigStruct.channel67MuxNumber     = DEMO_HSADC_CONVB_CHN67_MUX_NUM1;
     hsadcSampleConfigStruct.enableDifferentialPair = DEMO_HSADC_CONVB_CHN_NUM1_ENABLE_DIFF;
     HSADC_SetSampleConfig(DEMO_HSADC_BASEADDR, 8U, &hsadcSampleConfigStruct);
-    hsadcSampleConfigStruct.channelNumber = (DEMO_HSADC_CONVB_CHN_NUM2 + 8U);
-    hsadcSampleConfigStruct.channel67MuxNumber = DEMO_HSADC_CONVB_CHN67_MUX_NUM2;
+    hsadcSampleConfigStruct.channelNumber          = (DEMO_HSADC_CONVB_CHN_NUM2 + 8U);
+    hsadcSampleConfigStruct.channel67MuxNumber     = DEMO_HSADC_CONVB_CHN67_MUX_NUM2;
     hsadcSampleConfigStruct.enableDifferentialPair = DEMO_HSADC_CONVB_CHN_NUM2_ENABLE_DIFF;
     HSADC_SetSampleConfig(DEMO_HSADC_BASEADDR, 9U, &hsadcSampleConfigStruct);
     /* Enable the sample slot.
@@ -126,7 +126,7 @@ int main(void)
     sampleConvAMask = HSADC_SAMPLE_MASK(0U) | HSADC_SAMPLE_MASK(1U);
     /* For converter B. */
     sampleConvBMask = HSADC_SAMPLE_MASK(8U) | HSADC_SAMPLE_MASK(9U);
-    sampleMask = sampleConvAMask | sampleConvBMask;
+    sampleMask      = sampleConvAMask | sampleConvBMask;
     HSADC_EnableSample(DEMO_HSADC_BASEADDR, sampleMask, true);
     HSADC_EnableSample(DEMO_HSADC_BASEADDR, (uint16_t)(~sampleMask), false); /* Disable other sample slots. */
 

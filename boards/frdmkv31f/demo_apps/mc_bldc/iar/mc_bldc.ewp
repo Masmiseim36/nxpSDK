@@ -807,8 +807,8 @@
         <option>
           <name>IlinkAdditionalLibs</name>
           <state>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/AMCLIB/AMCLIB.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/GFLIB.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GDFLIB/GDFLIB.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/GFLIB.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GMCLIB/GMCLIB.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/MLIB.a</state>
         </option>
@@ -1808,8 +1808,8 @@
         <option>
           <name>IlinkAdditionalLibs</name>
           <state>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/AMCLIB/AMCLIB.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/GFLIB.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GDFLIB/GDFLIB.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/GFLIB.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GMCLIB/GMCLIB.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/MLIB.a</state>
         </option>
@@ -2032,6 +2032,15 @@
     <file>
       <name>$PROJ_DIR$/../m1_bldc_appconfig.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/bldc/fm_tsa_bldc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/bldc/fm_tsa_bldc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/bldc/freemaster_cfg.h</name>
+    </file>
   </group>
   <group>
     <name>board</name>
@@ -2072,64 +2081,61 @@
   <group>
     <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_sim.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_sim.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_sim.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_sim.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_port.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_dmamux.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_dmamux.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_clock.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_dmamux.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_clock.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_common.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_clock.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_common.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_uart.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_common.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_uart.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_lpuart.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_uart.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_lpuart.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_smc.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_lpuart.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_smc.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_gpio.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_smc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_gpio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_gpio.h</name>
     </file>
   </group>
   <group>
     <name>rtcesl</name>
     <group>
       <name>amclib</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/AMCLIB/Include/amclib.h</name>
-      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/AMCLIB/Include/AMCLIB_ACIMCtrlMTPA_FLT.h</name>
       </file>
@@ -2152,9 +2158,6 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/AMCLIB/Include/AMCLIB_CtrlFluxWkng_FLT.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/AMCLIB/Include/amclib_FP.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/AMCLIB/Include/AMCLIB_PMSMBemfObsrvAB_A32.h</name>
       </file>
       <file>
@@ -2173,14 +2176,17 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/AMCLIB/Include/AMCLIB_TrackObsrv_FLT.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/AMCLIB/Include/amclib.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/AMCLIB/Include/amclib_FP.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/AMCLIB/Include/amclib_types.h</name>
       </file>
     </group>
     <group>
       <name>gdflib</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GDFLIB/Include/gdflib.h</name>
-      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GDFLIB/Include/GDFLIB_FilterExp_F32.h</name>
       </file>
@@ -2221,6 +2227,9 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GDFLIB/Include/GDFLIB_FilterMA_FLT.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GDFLIB/Include/gdflib.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GDFLIB/Include/gdflib_FP.h</name>
       </file>
       <file>
@@ -2229,9 +2238,6 @@
     </group>
     <group>
       <name>gflib</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/gflib.h</name>
-      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_Acos_F16.h</name>
       </file>
@@ -2245,16 +2251,16 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_Asin_FLT.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_Atan_F32.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_Atan_FLT.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_AtanYX_F16.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_AtanYX_FLT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_Atan_F32.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_Atan_FLT.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_CtrlBetaIPDp_A32.h</name>
@@ -2308,9 +2314,6 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_FlexSRamp_FLT.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/gflib_FP.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_Hyst_F16_Asmi.h</name>
       </file>
       <file>
@@ -2341,15 +2344,6 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_LowerLimit_FLT.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_Lut_F16_Asmi.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_Lut_F32.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_Lut_FLT.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_LutPer_F16_Asmi.h</name>
       </file>
       <file>
@@ -2357,6 +2351,15 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_LutPer_FLT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_Lut_F16_Asmi.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_Lut_F32.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_Lut_FLT.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_Ramp_F16.h</name>
@@ -2389,9 +2392,6 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_Tan_FLT.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/gflib_types.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_UpperLimit_F16.h</name>
       </file>
       <file>
@@ -2406,12 +2406,18 @@
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/GFLIB_VectorLimit_FLT.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/gflib.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/gflib_FP.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/gflib_types.h</name>
+      </file>
     </group>
     <group>
       <name>gmclib</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GMCLIB/Include/gmclib.h</name>
-      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GMCLIB/Include/GMCLIB_Clark_F16_Asmi.h</name>
       </file>
@@ -2434,9 +2440,6 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GMCLIB/Include/GMCLIB_ElimDcBusRip_FLT.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GMCLIB/Include/gmclib_FP.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GMCLIB/Include/GMCLIB_Park_F16_Asmi.h</name>
       </file>
       <file>
@@ -2446,17 +2449,17 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GMCLIB/Include/GMCLIB_Svm_F16.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GMCLIB/Include/gmclib.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GMCLIB/Include/gmclib_FP.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GMCLIB/Include/gmclib_types.h</name>
       </file>
     </group>
     <group>
       <name>mlib</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/asm_mac.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/mlib.h</name>
-      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Abs_F16.h</name>
       </file>
@@ -2474,6 +2477,15 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Abs_FLT_Asmi.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Add4_F16_Asmi.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Add4_F32_Asmi.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Add4_FLT.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Add_A32.h</name>
@@ -2494,15 +2506,6 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Add_FLT.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Add4_F16_Asmi.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Add4_F32_Asmi.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Add4_FLT.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_BiShift_F16.h</name>
       </file>
       <file>
@@ -2515,13 +2518,22 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Clb_F32.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_ConvSc_FLT_Asmi.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Conv_F32.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Conv_FLT_Asmi.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_ConvSc_FLT_Asmi.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Div1Q_A32.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Div1Q_F16.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Div1Q_F32.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Div_A32.h</name>
@@ -2536,19 +2548,37 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Div_FLT.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Div1Q_A32.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Div1Q_F16.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Div1Q_F32.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/mlib_FP.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Log2_U16.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Mac4Rnd_F16_Asmi.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Mac4Rnd_F32.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Mac4Rnd_F32_Asmi.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Mac4_F32.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Mac4_F32_Asmi.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Mac4_FLT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MacRnd_A32.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MacRnd_F16_Asmi.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MacRnd_F32.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MacRnd_F32_Asmi.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Mac_A32.h</name>
@@ -2566,34 +2596,16 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Mac_FLT.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Mac4_F32.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MnacRnd_A32.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Mac4_F32_Asmi.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MnacRnd_F16_Asmi.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Mac4_FLT.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MnacRnd_F32.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Mac4Rnd_F16_Asmi.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Mac4Rnd_F32.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Mac4Rnd_F32_Asmi.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MacRnd_A32.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MacRnd_F16_Asmi.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MacRnd_F32.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MacRnd_F32_Asmi.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MnacRnd_F32_Asmi.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Mnac_A32.h</name>
@@ -2611,16 +2623,37 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Mnac_FLT.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MnacRnd_A32.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Msu4Rnd_F16.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MnacRnd_F16_Asmi.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Msu4Rnd_F16_Asmi.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MnacRnd_F32.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Msu4Rnd_F32.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MnacRnd_F32_Asmi.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Msu4Rnd_F32_Asmi.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Msu4_F32.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Msu4_F32_Asmi.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Msu4_FLT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MsuRnd_A32.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MsuRnd_F16_Asmi.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MsuRnd_F32.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MsuRnd_F32_Asmi.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Msu_A32.h</name>
@@ -2635,37 +2668,22 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Msu_FLT.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Msu4_F32.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MulRnd_A32.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Msu4_F32_Asmi.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MulRnd_A32_Asmi.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Msu4_FLT.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MulRnd_F16.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Msu4Rnd_F16.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MulRnd_F16_Asmi.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Msu4Rnd_F16_Asmi.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MulRnd_F32.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Msu4Rnd_F32.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Msu4Rnd_F32_Asmi.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MsuRnd_A32.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MsuRnd_F16_Asmi.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MsuRnd_F32.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MsuRnd_F32_Asmi.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MulRnd_F32_Asmi.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Mul_A32.h</name>
@@ -2689,24 +2707,6 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Mul_FLT.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MulRnd_A32.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MulRnd_A32_Asmi.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MulRnd_F16.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MulRnd_F16_Asmi.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MulRnd_F32.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_MulRnd_F32_Asmi.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Neg_F16.h</name>
       </file>
       <file>
@@ -2722,10 +2722,10 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Neg_FLT.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Rcp_A32.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Rcp1Q_A32.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Rcp1Q_A32.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Rcp_A32.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Rnd_F32.h</name>
@@ -2758,6 +2758,15 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Sign_FLT_Asmi.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Sub4_F16_Asmi.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Sub4_F32_Asmi.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Sub4_FLT.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Sub_A32.h</name>
       </file>
       <file>
@@ -2779,19 +2788,19 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Sub_FLT.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Sub4_F16_Asmi.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/RTCESL_cfg.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Sub4_F32_Asmi.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/asm_mac.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/MLIB_Sub4_FLT.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/mlib.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/mlib_FP.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/mlib_types.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/RTCESL_cfg.h</name>
       </file>
     </group>
   </group>
@@ -2823,15 +2832,75 @@
     </file>
   </group>
   <group>
-    <name>device</name>
+    <name>freemaster</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/fsl_device_registers.h</name>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_Kxx.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_Kxx.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_appcmd.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_bdm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_can.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_defcfg.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_lin.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_pipes.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_private.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_protocol.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_protocol.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_rec.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_rec.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_scope.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_serial.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_sfio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_tsa.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_tsa.h</name>
+    </file>
+  </group>
+  <group>
+    <name>device</name>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/MKV31F51212.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/MKV31F51212_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/system_MKV31F51212.c</name>
@@ -2843,12 +2912,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -2856,6 +2919,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/debug_console/fsl_debug_console_conf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/str/fsl_str.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/fsl_assert.c</name>
@@ -2875,25 +2944,28 @@
     <group>
       <name>serial_manager</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_internal.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
       </file>
     </group>
   </group>
@@ -2909,30 +2981,6 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm4.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
     </file>
     <file>
@@ -2942,7 +2990,31 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>

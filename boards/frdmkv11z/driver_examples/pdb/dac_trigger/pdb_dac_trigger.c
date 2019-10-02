@@ -2,7 +2,7 @@
  * Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -85,7 +85,7 @@ void static DEMO_InitPDB_DAC(void)
 #if defined(FSL_FEATURE_DAC_HAS_WATERMARK_SELECTION) && FSL_FEATURE_DAC_HAS_WATERMARK_SELECTION
     g_DacBufferWatermarkInterruptFlag = false;
 #endif /* FSL_FEATURE_DAC_HAS_WATERMARK_SELECTION */
-    g_DacBufferReadPointerTopPositionInterruptFlag = false;
+    g_DacBufferReadPointerTopPositionInterruptFlag    = false;
     g_DacBufferReadPointerBottomPositionInterruptFlag = false;
 
     /* Enable interrupts. */
@@ -185,7 +185,7 @@ int main(void)
 
     /* Configure the DAC trigger. */
     pdbDacTriggerConfigStruct.enableExternalTriggerInput = false;
-    pdbDacTriggerConfigStruct.enableIntervalTrigger = true;
+    pdbDacTriggerConfigStruct.enableIntervalTrigger      = true;
     PDB_SetDACTriggerConfig(DEMO_PDB_BASE, DEMO_DAC_CHANNEL, &pdbDacTriggerConfigStruct);
     PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASE, DEMO_DAC_CHANNEL, DEMO_PDB_DAC_INTERVAL_VALUE);
 

@@ -5,6 +5,14 @@ CADC is first set to Loop Sequential mode. In Loop Sequential convert configurat
 observed, and until conversion is aborted, the CADC continues to do conversions on the same CLIST register that initiated the conversion. 
 EDMA request will be asserted during an CADC conversion READY event noted when any of the ADC_RDY[RDYn] flags is asserted. EDMA will transfer
 CADC results to memory and if users press any key, demo will average CADC results stored in memory and print average on the terminal.  
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini USB cable
@@ -41,11 +49,6 @@ ADC value: 1479
 ADC value: 1480
 ADC value: 1480
 
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

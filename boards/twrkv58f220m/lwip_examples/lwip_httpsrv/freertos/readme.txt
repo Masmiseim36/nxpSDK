@@ -5,6 +5,30 @@ The lwip_httpsrv demo application demonstrates an HTTPServer on the lwIP TCP/IP 
 The user uses an Internet browser to send a request for connection. The board acts as an HTTP server and sends a Web
 page back to the PC.
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
+Hardware requirements
+=====================
+- Mini/micro USB cable
+- RJ45 Network cable
+- TWR-KV58F220M board
+- TWR-SER board
+- Personal Computer
+
+Board settings
+==============
+TWR-SER:
+    - RMII mode - J2 3-4 shunt on, J3 2-3 shunt on, J12 shunt on 9,10.
+Clock setting for TWR-KV58F220M board
+    - J29 1-2 shunt on
+    - Place R110 with 0 Ohm resister.
+	- J11 no shunt, to avoid wrong reset button behaviour.
 Prepare the Demo
 ================
 1.  Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.
@@ -23,6 +47,8 @@ Prepare the Demo
 Running the demo
 ================
 1.  When the demo runs successfully, the terminal will display the following:
+        Initializing PHY...
+
         ************************************************
          HTTP Server example
         ************************************************
@@ -37,10 +63,10 @@ Running the demo
 
 Modifying content of static web pages
 To modify content available through the web server you must complete following steps:
-  1. Modify, add or delete files in folder "middleware\lwip_2.0.3\src\apps\httpsrv\mkfs\web_pages".
-  2. Run the script file "middleware\lwip_2.0.3\src\apps\httpsrv\mkfs\mkfs.pl <directory name>" to generate new "httpsrv_fs_data.c".
+  1. Modify, add or delete files in folder "middleware\lwip\src\apps\httpsrv\mkfs\web_pages".
+  2. Run the script file "middleware\lwip\src\apps\httpsrv\mkfs\mkfs.pl <directory name>" to generate new "httpsrv_fs_data.c".
 	 For example:
-		C:\sdk\middleware\lwip_2.0.3\src\apps\httpsrv\mkfs> mkfs.pl webpage
+		C:\sdk\middleware\lwip\src\apps\httpsrv\mkfs> mkfs.pl webpage
 		Processing file webpage/auth.html
 		Processing file webpage/cgi.html
 		Processing file webpage/favicon.ico
@@ -53,29 +79,8 @@ To modify content available through the web server you must complete following s
 		Processing file webpage/ssi.shtml
 		Processing file webpage/welcome.html
 		Done.
-  3. Overwrite the middleware\lwip_2.0.3\src\apps\httpsrv\httpsrv_fs_data.c file by the new generated middleware\lwip_2.0.3\src\apps\httpsrv\mkfs\httpsrv_fs_data.c file.
+  3. Overwrite the middleware\lwip\src\apps\httpsrv\httpsrv_fs_data.c file by the new generated middleware\lwip\src\apps\httpsrv\mkfs\httpsrv_fs_data.c file.
   4. Re-compile the HTTP server application example and download it to your board. 
-Hardware requirements
+Customization options
 =====================
-- Mini/micro USB cable
-- RJ45 Network cable
-- TWR-KV58F220M board
-- TWR-SER board
-- Personal Computer
-
-Board settings
-==============
-TWR-SER:
-    - RMII mode - J2 3-4 shunt on, J3 2-3 shunt on, J12 shunt on 9,10.
-Clock setting for TWR-KV58F220M board
-    - J29 1-2 shunt on
-    - Place R110 with 0 Ohm resister.
-	- J11 no shunt, to avoid wrong reset button behaviour.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
 

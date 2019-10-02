@@ -25,7 +25,7 @@
 #define APP_DEBUG_UART_BAUDRATE 9600                 /* Debug console baud rate. */
 #define APP_DEBUG_UART_CLKSRC_NAME kCLOCK_CoreSysClk /* System clock */
 
-#define LLWU_LPTMR_IDX 0U       /* LLWU_M0IF */
+#define LLWU_LPTMR_IDX 0U      /* LLWU_M0IF */
 #define LLWU_WAKEUP_PIN_IDX 3U /* LLWU_P3 */
 #define LLWU_WAKEUP_PIN_TYPE kLLWU_ExternalPinRisingEdge
 
@@ -96,8 +96,8 @@ static void APP_FllStableDelay(void)
 void APP_SetClockVlpr(void)
 {
     const sim_clock_config_t simConfig = {
-        .er32kSrc = 3U,         /* ERCLK32K selection, use LPO. */
-        .clkdiv1 = 0x00040000U, /* SIM_CLKDIV1. */
+        .er32kSrc = 3U,          /* ERCLK32K selection, use LPO. */
+        .clkdiv1  = 0x00040000U, /* SIM_CLKDIV1. */
     };
 
     CLOCK_SetSimSafeDivs();
@@ -114,8 +114,8 @@ void APP_SetClockVlpr(void)
 void APP_SetClockRunFromVlpr(void)
 {
     const sim_clock_config_t simConfig = {
-        .er32kSrc = 3U,         /* ERCLK32K selection, use LPO. */
-        .clkdiv1 = 0x00020000U, /* SIM_CLKDIV1. */
+        .er32kSrc = 3U,          /* ERCLK32K selection, use LPO. */
+        .clkdiv1  = 0x00020000U, /* SIM_CLKDIV1. */
     };
 
     CLOCK_SetSimSafeDivs();
@@ -284,7 +284,7 @@ static app_wakeup_source_t APP_GetWakeupSource(void)
 /* Get wakeup timeout and wakeup source. */
 void APP_GetWakeupConfig(app_power_mode_t targetMode)
 {
-/* Get wakeup source by user input. */
+    /* Get wakeup source by user input. */
     if (targetMode == kAPP_PowerModeVlls0)
     {
         /* In VLLS0 mode, the LPO is disabled, LPTMR could not work. */
@@ -378,7 +378,6 @@ bool APP_CheckPowerMode(smc_power_state_t curPowerState, app_power_mode_t target
      */
     switch (curPowerState)
     {
-
         case kSMC_PowerStateRun:
             if (kAPP_PowerModeVlpw == targetPowerMode)
             {
@@ -388,8 +387,7 @@ bool APP_CheckPowerMode(smc_power_state_t curPowerState, app_power_mode_t target
             break;
 
         case kSMC_PowerStateVlpr:
-            if ((kAPP_PowerModeWait == targetPowerMode) ||
-                (kAPP_PowerModeStop == targetPowerMode))
+            if ((kAPP_PowerModeWait == targetPowerMode) || (kAPP_PowerModeStop == targetPowerMode))
             {
                 PRINTF("Could not enter HSRUN/STOP/WAIT modes from VLPR mode.\r\n");
                 modeValid = false;
@@ -450,7 +448,6 @@ void APP_PowerModeSwitch(smc_power_state_t curPowerState, app_power_mode_t targe
             }
             break;
 
-
         case kAPP_PowerModeWait:
             SMC_PreEnterWaitModes();
             SMC_SetPowerModeWait(SMC);
@@ -475,7 +472,6 @@ void APP_PowerModeSwitch(smc_power_state_t curPowerState, app_power_mode_t targe
             SMC_PostExitStopModes();
             break;
 
-
         case kAPP_PowerModeVlls0:
             vlls_config.subMode = kSMC_StopSub0;
             SMC_PreEnterStopModes();
@@ -489,7 +485,6 @@ void APP_PowerModeSwitch(smc_power_state_t curPowerState, app_power_mode_t targe
             SMC_SetPowerModeVlls(SMC, &vlls_config);
             SMC_PostExitStopModes();
             break;
-
 
         case kAPP_PowerModeVlls3:
             vlls_config.subMode = kSMC_StopSub3;
@@ -542,7 +537,7 @@ int main(void)
      */
     LPTMR_GetDefaultConfig(&lptmrConfig);
     lptmrConfig.prescalerClockSource = kLPTMR_PrescalerClock_1; /* Use LPO as clock source. */
-    lptmrConfig.bypassPrescaler = true;
+    lptmrConfig.bypassPrescaler      = true;
 
     LPTMR_Init(LPTMR0, &lptmrConfig);
 
@@ -597,8 +592,7 @@ int main(void)
             }
 
             /* If target mode is RUN/VLPR/HSRUN, don't need to set wakeup source. */
-            if ((kAPP_PowerModeRun == targetPowerMode) ||
-                (kAPP_PowerModeVlpr == targetPowerMode))
+            if ((kAPP_PowerModeRun == targetPowerMode) || (kAPP_PowerModeVlpr == targetPowerMode))
             {
                 needSetWakeup = false;
             }

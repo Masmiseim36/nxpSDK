@@ -1,11 +1,11 @@
 /*
-* Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
-* All rights reserved.
-*
-*
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
+ * All rights reserved.
+ *
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 /*******************************************************************************
  * Includes
@@ -29,7 +29,7 @@
 #include "lwip/sockets.h"
 #include "netif/etharp.h"
 
-#include "ethernetif.h"
+#include "enet_ethernetif.h"
 #include "board.h"
 
 #include "ksdk_mbedtls.h"
@@ -64,7 +64,10 @@
 #define configGW_ADDR3 100
 
 /* MAC address configuration. */
-#define configMAC_ADDR {0x02, 0x12, 0x13, 0x10, 0x15, 0x11}
+#define configMAC_ADDR                     \
+    {                                      \
+        0x02, 0x12, 0x13, 0x10, 0x15, 0x11 \
+    }
 
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
@@ -89,8 +92,8 @@
 #define CGI_DATA_LENGTH_MAX (96)
 
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 
 static void cgi_urldecode(char *url);
 static int cgi_rtc_data(HTTPSRV_CGI_REQ_STRUCT *param);
@@ -99,9 +102,12 @@ static int ssi_date_time(HTTPSRV_SSI_PARAM_STRUCT *param);
 static bool cgi_get_varval(char *var_str, char *var_name, char *var_val, uint32_t length);
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 static struct netif fsl_netif0;
+#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
+static mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
+#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
 /* FS data.*/
 extern const HTTPSRV_FS_DIR_ENTRY httpsrv_fs_data[];
 
@@ -153,15 +159,15 @@ static int cgi_rtc_data(HTTPSRV_CGI_REQ_STRUCT *param)
 
     time = sys_now();
 
-    sec = time / 1000;
-    min = sec / 60;
+    sec  = time / 1000;
+    min  = sec / 60;
     hour = min / 60;
     min %= 60;
     sec %= 60;
 
-    response.ses_handle = param->ses_handle;
+    response.ses_handle   = param->ses_handle;
     response.content_type = HTTPSRV_CONTENT_TYPE_PLAIN;
-    response.status_code = HTTPSRV_CODE_OK;
+    response.status_code  = HTTPSRV_CODE_OK;
     /*
     ** When the keep-alive is used we have to calculate a correct content length
     ** so the receiver knows when to ACK the data and continue with a next request.
@@ -169,9 +175,9 @@ static int cgi_rtc_data(HTTPSRV_CGI_REQ_STRUCT *param)
     */
 
     /* Calculate content length while saving it to buffer */
-    length = snprintf(str, BUFF_SIZE, "%ld\n%ld\n%ld\n", hour, min, sec);
-    response.data = str;
-    response.data_length = length;
+    length                  = snprintf(str, BUFF_SIZE, "%ld\n%ld\n%ld\n", hour, min, sec);
+    response.data           = str;
+    response.data_length    = length;
     response.content_length = response.data_length;
     /* Send response */
     HTTPSRV_cgi_write(&response);
@@ -183,7 +189,7 @@ static int cgi_example(HTTPSRV_CGI_REQ_STRUCT *param)
 {
     HTTPSRV_CGI_RES_STRUCT response = {0};
 
-    response.ses_handle = param->ses_handle;
+    response.ses_handle  = param->ses_handle;
     response.status_code = HTTPSRV_CODE_OK;
 
     if (param->request_method == HTTPSRV_REQ_GET)
@@ -195,9 +201,9 @@ static int cgi_example(HTTPSRV_CGI_REQ_STRUCT *param)
         {
             *c = ' ';
         }
-        response.content_type = HTTPSRV_CONTENT_TYPE_PLAIN;
-        response.data = cgi_data;
-        response.data_length = strlen(cgi_data);
+        response.content_type   = HTTPSRV_CONTENT_TYPE_PLAIN;
+        response.data           = cgi_data;
+        response.data_length    = strlen(cgi_data);
         response.content_length = response.data_length;
         HTTPSRV_cgi_write(&response);
     }
@@ -208,7 +214,7 @@ static int cgi_example(HTTPSRV_CGI_REQ_STRUCT *param)
         char buffer[sizeof("post_input = ") + CGI_DATA_LENGTH_MAX] = {0};
 
         length = param->content_length;
-        read = HTTPSRV_cgi_read(param->ses_handle, buffer, (length > sizeof(buffer)) ? sizeof(buffer) : length);
+        read   = HTTPSRV_cgi_read(param->ses_handle, buffer, (length > sizeof(buffer)) ? sizeof(buffer) : length);
 
         if (read > 0)
         {
@@ -220,13 +226,13 @@ static int cgi_example(HTTPSRV_CGI_REQ_STRUCT *param)
         response.content_type = HTTPSRV_CONTENT_TYPE_HTML;
         /* Set content length to -1 to indicate unknown content length. */
         response.content_length = -1;
-        response.data = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">";
+        response.data           = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">";
+        response.data_length    = strlen(response.data);
+        HTTPSRV_cgi_write(&response);
+        response.data        = "<html><head><title>POST successfull!</title>";
         response.data_length = strlen(response.data);
         HTTPSRV_cgi_write(&response);
-        response.data = "<html><head><title>POST successfull!</title>";
-        response.data_length = strlen(response.data);
-        HTTPSRV_cgi_write(&response);
-        response.data = "<meta http-equiv=\"refresh\" content=\"0; url=cgi.html\"></head><body></body></html>";
+        response.data        = "<meta http-equiv=\"refresh\" content=\"0; url=cgi.html\"></head><body></body></html>";
         response.data_length = strlen(response.data);
         HTTPSRV_cgi_write(&response);
         response.data_length = 0;
@@ -245,11 +251,11 @@ static bool cgi_get_varval(char *src, char *var_name, char *dst, uint32_t length
 
     result = false;
     dst[0] = 0;
-    name = src;
+    name   = src;
 
     n_length = strlen(var_name);
 
-    while ((name = strstr(name, var_name)) != 0)
+    while ((name != NULL) && ((name = strstr(name, var_name)) != NULL))
     {
         if (name[n_length] == '=')
         {
@@ -262,7 +268,7 @@ static bool cgi_get_varval(char *src, char *var_name, char *dst, uint32_t length
             }
             strncpy(dst, name, index);
             dst[index] = '\0';
-            result = true;
+            result     = true;
             break;
         }
         else
@@ -296,12 +302,12 @@ static void cgi_urldecode(char *url)
 
     while (*src != '\0')
     {
-        if ((*src == '%') && (isxdigit((int)*(src + 1))) && (isxdigit((int)*(src + 2))))
+        if ((*src == '%') && (isxdigit((unsigned char)*(src + 1))) && (isxdigit((unsigned char)*(src + 2))))
         {
-            *src = *(src + 1);
+            *src       = *(src + 1);
             *(src + 1) = *(src + 2);
             *(src + 2) = '\0';
-            *dst++ = strtol(src, NULL, 16);
+            *dst++     = strtol(src, NULL, 16);
             src += 3;
         }
         else
@@ -376,7 +382,12 @@ static void stack_init(void)
 {
     ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
     ethernetif_config_t fsl_enet_config0 = {
-        .phyAddress = EXAMPLE_PHY_ADDRESS, .clockName = EXAMPLE_CLOCK_NAME, .macAddress = configMAC_ADDR,
+        .phyAddress = EXAMPLE_PHY_ADDRESS,
+        .clockName  = EXAMPLE_CLOCK_NAME,
+        .macAddress = configMAC_ADDR,
+#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
+        .non_dma_memory = non_dma_memory,
+#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     };
 
     CRYPTO_InitHardware();
@@ -419,18 +430,18 @@ static void http_server_socket_init(void)
 
     /* Init HTTPSRV parameters.*/
     memset(&params, 0, sizeof(params));
-    params.root_dir = "";
-    params.index_page = "/index.html";
-    params.auth_table = auth_realms;
+    params.root_dir    = "";
+    params.index_page  = "/index.html";
+    params.auth_table  = auth_realms;
     params.cgi_lnk_tbl = cgi_lnk_tbl;
     params.ssi_lnk_tbl = ssi_lnk_tbl;
 #if HTTPSRV_CFG_WEBSOCKET_ENABLED
     params.ws_tbl = ws_tbl;
 #endif
 #if HTTPSRV_CFG_MBEDTLS_ENABLE
-    tls_params.certificate_buffer = (const unsigned char *)mbedtls_test_srv_crt;
+    tls_params.certificate_buffer      = (const unsigned char *)mbedtls_test_srv_crt;
     tls_params.certificate_buffer_size = mbedtls_test_srv_crt_len;
-    tls_params.private_key_buffer = (const unsigned char *)mbedtls_test_srv_key;
+    tls_params.private_key_buffer      = (const unsigned char *)mbedtls_test_srv_key;
     tls_params.private_key_buffer_size = mbedtls_test_srv_key_len;
 
     params.tls_param = &tls_params;

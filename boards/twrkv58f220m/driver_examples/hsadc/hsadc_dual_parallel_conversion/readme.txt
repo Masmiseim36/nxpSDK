@@ -9,6 +9,14 @@ In "kHSADC_DualConverterWorkAsTriggeredParallel" mode, the converter A converts 
 
 When running the project, typing any key into debug console would trigger the conversion. And then, the conversion result data of the four sample slots (Sample 0, 1, 8, 9) would be displayed in the terminal. 
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -45,11 +53,6 @@ When the example runs successfully, following information can be seen on the Ope
 Press any key to trigger the conversion ...
 Sample 0    Sample 1    Sample 8    Sample 9
 Result 0    Result 1    Result 2    Result 3
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

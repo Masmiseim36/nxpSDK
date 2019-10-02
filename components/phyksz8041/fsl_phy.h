@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_PHY_H_
@@ -40,7 +40,7 @@
 #define PHY_BCTL_SPEED_MASK 0x2000U           /*!< The PHY speed bit mask. */
 #define PHY_BCTL_LOOP_MASK 0x4000U            /*!< The PHY loop bit mask. */
 #define PHY_BCTL_RESET_MASK 0x8000U           /*!< The PHY reset bit mask. */
-#define PHY_BCTL_SPEED_100M_MASK  0x2000U     /*!< The PHY 100M speed mask. */
+#define PHY_BCTL_SPEED_100M_MASK 0x2000U      /*!< The PHY 100M speed mask. */
 
 /*!@brief Defines the mask flag of operation mode in control two register*/
 #define PHY_CTL1_REMOTELOOP_MASK 0x0008U    /*!< The PHY remote loopback mask. */
@@ -65,8 +65,8 @@
 /*! @brief Defines the PHY status. */
 enum _phy_status
 {
-    kStatus_PHY_SMIVisitTimeout = MAKE_STATUS(kStatusGroup_PHY, 0),  /*!< ENET PHY SMI visit timeout. */
-    kStatus_PHY_AutoNegotiateFail = MAKE_STATUS(kStatusGroup_PHY, 1) /*!< ENET PHY AutoNegotiate Fail. */
+    kStatus_PHY_SMIVisitTimeout   = MAKE_STATUS(kStatusGroup_PHY, 0), /*!< ENET PHY SMI visit timeout. */
+    kStatus_PHY_AutoNegotiateFail = MAKE_STATUS(kStatusGroup_PHY, 1)  /*!< ENET PHY AutoNegotiate Fail. */
 };
 
 /*! @brief Defines the PHY link speed. This is align with the speed for ENET MAC. */
@@ -99,9 +99,9 @@ extern "C" {
 #endif
 
 /*!
-  * @name PHY Driver
-  * @{
-  */
+ * @name PHY Driver
+ * @{
+ */
 
 /*!
  * @brief Initializes PHY.

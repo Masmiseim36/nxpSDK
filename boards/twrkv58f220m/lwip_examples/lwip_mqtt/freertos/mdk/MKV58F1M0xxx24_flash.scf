@@ -1,0 +1,83 @@
+#! armcc -E
+/*
+** ###################################################################
+**     Processors:          MKV58F1M0VLL24
+**                          MKV58F1M0VLQ24
+**                          MKV58F1M0VMD24
+**
+**     Compiler:            Keil ARM C/C++ Compiler
+**     Reference manual:    KV5XP144M240RM Rev. 3, 02/2016
+**     Version:             rev. 0.3, 2016-02-29
+**     Build:               b180801
+**
+**     Abstract:
+**         Linker file for the Keil ARM C/C++ Compiler
+**
+**     Copyright 2016 Freescale Semiconductor, Inc.
+**     Copyright 2016-2018 NXP
+**
+**     SPDX-License-Identifier: BSD-3-Clause
+**
+**     http:                 www.nxp.com
+**     mail:                 support@nxp.com
+**
+** ###################################################################
+*/
+
+#define m_data_start                   0x00000004
+#define m_data_size                    0x0000FFFC
+
+#define m_interrupts_start             0x10000000
+#define m_interrupts_size              0x00000400
+
+#define m_flash_config_start           0x10000400
+#define m_flash_config_size            0x00000010
+
+#define m_text_start                   0x10000410
+#define m_text_size                    0x000FFBF0
+
+#define m_data_2_start                 0x20000000
+#define m_data_2_size                  0x00020000
+
+#define m_data_3_start                 0x2F000000
+#define m_data_3_size                  0x00010000
+
+/* Sizes */
+#if (defined(__stack_size__))
+  #define Stack_Size                   __stack_size__
+#else
+  #define Stack_Size                   1000
+#endif
+
+#if (defined(__heap_size__))
+  #define Heap_Size                    __heap_size__
+#else
+  #define Heap_Size                    25600
+#endif
+
+LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start { ; load region size_region
+  VECTOR_ROM m_interrupts_start m_interrupts_size { ; load address = execution address
+    * (RESET,+FIRST)
+  }
+  ER_m_flash_config m_flash_config_start FIXED m_flash_config_size { ; load address = execution address
+    * (FlashConfig)
+  }
+  ER_m_text m_text_start m_text_size { ; load address = execution address
+    * (InRoot$$Sections)
+    .ANY (+RO)
+  }
+
+  RW_m_data m_data_start m_data_size { ; RW data
+    * (NonCacheable.init)
+    * (NonCacheable)
+    .ANY (+RW +ZI)
+  }
+  RW_m_data_2 m_data_2_start m_data_2_size-Stack_Size-Heap_Size { ; RW data
+    .ANY (+RW +ZI)
+  }
+  ARM_LIB_HEAP ((ImageLimit(RW_m_data_2) == m_data_2_start) ? m_data_2_start : +0) EMPTY Heap_Size { ; Heap region growing up
+  }
+  ARM_LIB_STACK m_data_2_start+m_data_2_size EMPTY -Stack_Size { ; Stack region growing down
+  }
+}
+

@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -15,7 +15,6 @@
  * @addtogroup cadc
  * @{
  */
-
 
 /*******************************************************************************
  * Definitions
@@ -34,15 +33,15 @@
  */
 enum _cadc_status_flags
 {
-    kCADC_ZeroCrossingFlag = (1U << 0U),         /*!< Zero crossing. */
-    kCADC_HighLimitFlag = (1U << 2U),            /*!< High limit. */
-    kCADC_LowLimitFlag = (1U << 1U),             /*!< Low limit. */
+    kCADC_ZeroCrossingFlag         = (1U << 0U), /*!< Zero crossing. */
+    kCADC_HighLimitFlag            = (1U << 2U), /*!< High limit. */
+    kCADC_LowLimitFlag             = (1U << 1U), /*!< Low limit. */
     kCADC_ConverterAInProgressFlag = (1U << 3U), /*!< Conversion in progress, converter A. */
     kCADC_ConverterBInProgressFlag = (1U << 4U), /*!< Conversion in progress, converter B. */
-    kCADC_ConverterAEndOfScanFlag = (1U << 5U),  /*!< End of scan, converter A. */
-    kCADC_ConverterBEndOfScanFlag = (1U << 6U),  /*!< End of scan, converter B. */
-    kCADC_ConverterAPowerDownFlag = (1U << 7U),  /*!< The converter is powered down, converter A. */
-    kCADC_ConverterBPowerDownFlag = (1U << 8U),  /*!< The converter is powered down, converter B. */
+    kCADC_ConverterAEndOfScanFlag  = (1U << 5U), /*!< End of scan, converter A. */
+    kCADC_ConverterBEndOfScanFlag  = (1U << 6U), /*!< End of scan, converter B. */
+    kCADC_ConverterAPowerDownFlag  = (1U << 7U), /*!< The converter is powered down, converter A. */
+    kCADC_ConverterBPowerDownFlag  = (1U << 8U), /*!< The converter is powered down, converter B. */
 };
 
 /*!
@@ -50,9 +49,9 @@ enum _cadc_status_flags
  */
 enum _cadc_interrupt_enable
 {
-    kCADC_ZeroCrossingInterruptEnable = (1U << 0U),        /*!< Zero crossing interrupt. */
-    kCADC_HighLimitInterruptEnable = (1U << 1U),           /*!< High limit interrupt. */
-    kCADC_LowLimitInterruptEnable = (1U << 2U),            /*!< Low limit interrupt. */
+    kCADC_ZeroCrossingInterruptEnable        = (1U << 0U), /*!< Zero crossing interrupt. */
+    kCADC_HighLimitInterruptEnable           = (1U << 1U), /*!< High limit interrupt. */
+    kCADC_LowLimitInterruptEnable            = (1U << 2U), /*!< Low limit interrupt. */
     kCADC_ConverterAEndOfScanInterruptEnable = (1U << 3U), /*!< End of scan interrupt, converter A. */
     kCADC_ConverterBEndOfScanInterruptEnable = (1U << 4U), /*!< End of scan interrupt, converter B.*/
 };
@@ -71,12 +70,12 @@ enum _cadc_converter_id
  */
 typedef enum _cadc_dual_converter_scan_mode
 {
-    kCADC_DualConverterWorkAsOnceSequential = 0U,      /*!< Once (single) sequential. */
-    kCADC_DualConverterWorkAsOnceParallel = 1U,        /*!< Once parallel. */
-    kCADC_DualConverterWorkAsLoopSequential = 2U,      /*!< Loop sequential. */
-    kCADC_DualConverterWorkAsLoopParallel = 3U,        /*!< Loop parallel. */
+    kCADC_DualConverterWorkAsOnceSequential      = 0U, /*!< Once (single) sequential. */
+    kCADC_DualConverterWorkAsOnceParallel        = 1U, /*!< Once parallel. */
+    kCADC_DualConverterWorkAsLoopSequential      = 2U, /*!< Loop sequential. */
+    kCADC_DualConverterWorkAsLoopParallel        = 3U, /*!< Loop parallel. */
     kCADC_DualConverterWorkAsTriggeredSequential = 4U, /*!< Triggered sequential. */
-    kCADC_DualConverterWorkAsTriggeredParallel = 5U,   /*!< Triggered parallel. */
+    kCADC_DualConverterWorkAsTriggeredParallel   = 5U, /*!< Triggered parallel. */
 } cadc_dual_converter_scan_mode_t;
 
 /*!
@@ -84,7 +83,7 @@ typedef enum _cadc_dual_converter_scan_mode
  */
 typedef enum _cadc_dma_trigger_source
 {
-    kCADC_DMATriggerSourceAsEndOfScan = 0U,   /*!< DMA trigger source is end of scan interrupt. */
+    kCADC_DMATriggerSourceAsEndOfScan   = 0U, /*!< DMA trigger source is end of scan interrupt. */
     kCADC_DMATriggerSourceAsSampleReady = 1U, /*!< DMA trigger source is RDY bits. */
 } cadc_dma_trigger_source_t;
 
@@ -93,7 +92,7 @@ typedef enum _cadc_dma_trigger_source
  */
 typedef enum _cadc_reference_voltage_source
 {
-    kCADC_ReferenceVoltageVrefPad = 0U,    /*!< VREF pin. */
+    kCADC_ReferenceVoltageVrefPad    = 0U, /*!< VREF pin. */
     kCADC_ReferenceVoltageChannelPad = 1U, /*!< ANx2 or ANx3 pin. */
 } cadc_reference_voltage_source_t;
 
@@ -123,9 +122,9 @@ typedef enum _cadc_speed_mode
  */
 typedef enum _cadc_zero_crossing_mode
 {
-    kCADC_ZeroCorssingDisabled = 0U,          /*!< Zero Crossing disabled. */
-    kCADC_ZeroCorssingForPtoNSign = 1U,       /*!< Zero Crossing enabled for positive to negative sign change. */
-    kCADC_ZeroCorssingForNtoPSign = 2U,       /*!< Zero Crossing enabled for negative to positive sign change. */
+    kCADC_ZeroCorssingDisabled          = 0U, /*!< Zero Crossing disabled. */
+    kCADC_ZeroCorssingForPtoNSign       = 1U, /*!< Zero Crossing enabled for positive to negative sign change. */
+    kCADC_ZeroCorssingForNtoPSign       = 2U, /*!< Zero Crossing enabled for negative to positive sign change. */
     kCADC_ZeroCorssingForAnySignChanged = 3U, /*!< Zero Crossing enabled for any sign change. */
 } cadc_zero_crossing_mode_t;
 

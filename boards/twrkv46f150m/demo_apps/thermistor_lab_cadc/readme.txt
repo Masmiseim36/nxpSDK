@@ -4,6 +4,14 @@ The Thermistor Lab Demo application demonstrates how to use PDB to trigger ADC a
 This demo shows how to configure and use the ADC module to sample the differential voltage across onboard thermistors RT1-RT4.
 If the user touches any on-board thermistor with a finger, the lab application detects a change in the thermistor temperature
 and starts flashing the corresponding LED pair.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -36,11 +44,6 @@ Begin test...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Change the temperature of thermistors to see changes of LEDs.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

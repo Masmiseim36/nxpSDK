@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -57,10 +57,10 @@ int main(void)
     PRINTF("CADC sequential conversion example.\r\n");
 
     /* Initialize the CADC common digital control.
-    * "kCADC_DualConverterWorkAsTriggeredSequential" is used in this case. The a long conversion sequence would be
-    * executed by both converter. The sequence would be controlled by converter A's control logic, including the
-    * trigger input.
-    */
+     * "kCADC_DualConverterWorkAsTriggeredSequential" is used in this case. The a long conversion sequence would be
+     * executed by both converter. The sequence would be controlled by converter A's control logic, including the
+     * trigger input.
+     */
     /*
      * cadcConfigStruct.dualConverterScanMode = kCADC_DualConverterWorkAsTriggeredParallel;
      * cadcConfigStruct.enableSimultaneousMode = true;
@@ -85,26 +85,26 @@ int main(void)
     CADC_EnableConverter(DEMO_CADC_BASEADDR, kCADC_ConverterA | kCADC_ConverterB, true);
 
     /* Configure the samples. */
-    cadcSampleConfigStruct.channelGain = kCADC_ChannelGainx1;
+    cadcSampleConfigStruct.channelGain      = kCADC_ChannelGainx1;
     cadcSampleConfigStruct.zeroCrossingMode = kCADC_ZeroCorssingDisabled;
-    cadcSampleConfigStruct.highLimitValue = 0xFFFFU;
-    cadcSampleConfigStruct.lowLimitValue = 0x0U;
-    cadcSampleConfigStruct.offsetValue = 0x0U;
-    cadcSampleConfigStruct.enableWaitSync = false;
+    cadcSampleConfigStruct.highLimitValue   = 0xFFFFU;
+    cadcSampleConfigStruct.lowLimitValue    = 0x0U;
+    cadcSampleConfigStruct.offsetValue      = 0x0U;
+    cadcSampleConfigStruct.enableWaitSync   = false;
 
     /* For converter A. */
-    cadcSampleConfigStruct.channelNumber = DEMO_CADC_CHANNEL1_NUMBER;
+    cadcSampleConfigStruct.channelNumber          = DEMO_CADC_CHANNEL1_NUMBER;
     cadcSampleConfigStruct.enableDifferentialPair = DEMO_CADC_CHANNEL1_ENABLE_DIFF;
     CADC_SetSampleConfig(DEMO_CADC_BASEADDR, 0U, &cadcSampleConfigStruct);
-    cadcSampleConfigStruct.channelNumber = DEMO_CADC_CHANNEL2_NUMBER;
+    cadcSampleConfigStruct.channelNumber          = DEMO_CADC_CHANNEL2_NUMBER;
     cadcSampleConfigStruct.enableDifferentialPair = DEMO_CADC_CHANNEL2_ENABLE_DIFF;
     CADC_SetSampleConfig(DEMO_CADC_BASEADDR, 1U, &cadcSampleConfigStruct);
 
     /* For converter B. */
-    cadcSampleConfigStruct.channelNumber = DEMO_CADC_CHANNEL3_NUMBER;
+    cadcSampleConfigStruct.channelNumber          = DEMO_CADC_CHANNEL3_NUMBER;
     cadcSampleConfigStruct.enableDifferentialPair = DEMO_CADC_CHANNEL3_ENABLE_DIFF;
     CADC_SetSampleConfig(DEMO_CADC_BASEADDR, 2U, &cadcSampleConfigStruct);
-    cadcSampleConfigStruct.channelNumber = DEMO_CADC_CHANNEL4_NUMBER;
+    cadcSampleConfigStruct.channelNumber          = DEMO_CADC_CHANNEL4_NUMBER;
     cadcSampleConfigStruct.enableDifferentialPair = DEMO_CADC_CHANNEL4_ENABLE_DIFF;
     CADC_SetSampleConfig(DEMO_CADC_BASEADDR, 3U, &cadcSampleConfigStruct);
 

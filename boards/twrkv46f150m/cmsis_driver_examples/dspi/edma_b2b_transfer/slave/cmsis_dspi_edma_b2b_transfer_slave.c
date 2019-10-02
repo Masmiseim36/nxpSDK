@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -33,8 +33,8 @@ void DSPI_SlaveSignalEvent_t(uint32_t event);
 uint8_t slaveRxData[TRANSFER_SIZE] = {0};
 
 volatile bool isTransferCompleted = false;
-volatile bool isSlaveOnTransmit = false;
-volatile bool isSlaveOnReceive = false;
+volatile bool isSlaveOnTransmit   = false;
+volatile bool isSlaveOnReceive    = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -97,7 +97,7 @@ int main(void)
         }
 
         isTransferCompleted = false;
-        isSlaveOnReceive = true;
+        isSlaveOnReceive    = true;
         /* Set slave transfer to receive data */
         DRIVER_SLAVE_SPI.Receive(slaveRxData, TRANSFER_SIZE);
 
@@ -106,7 +106,7 @@ int main(void)
         }
 
         isTransferCompleted = false;
-        isSlaveOnTransmit = true;
+        isSlaveOnTransmit   = true;
         /* Set slave transfer to send back data */
         DRIVER_SLAVE_SPI.Send(slaveRxData, TRANSFER_SIZE);
 

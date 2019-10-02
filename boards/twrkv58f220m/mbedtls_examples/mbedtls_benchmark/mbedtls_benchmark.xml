@@ -9,7 +9,6 @@
     <definition extID="device.MKV58F24_CMSIS.MKV58F24"/>
     <definition extID="device.MKV58F24_startup.MKV58F24"/>
     <definition extID="middleware.mbedtls.MKV58F24"/>
-    <definition extID="middleware.mbedtls.pkcs11.MKV58F24"/>
     <definition extID="middleware.mmcau_cm4_cm7.MKV58F24"/>
     <definition extID="platform.Include_common.MKV58F24"/>
     <definition extID="platform.Include_core_cm7.MKV58F24"/>
@@ -27,7 +26,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="twrkv58f220m_mbedtls_benchmark" name="mbedtls_benchmark" category="mbedtls_examples" dependency="platform.drivers.uart.MKV58F24 platform.drivers.trng.MKV58F24 middleware.mmcau_cm4_cm7.MKV58F24 platform.drivers.port.MKV58F24 middleware.mbedtls.MKV58F24 middleware.mbedtls.pkcs11.MKV58F24 platform.drivers.clock.MKV58F24 platform.drivers.common.MKV58F24 device.MKV58F24_CMSIS.MKV58F24 utility.debug_console.MKV58F24 component.uart_adapter.MKV58F24 component.serial_manager.MKV58F24 component.serial_manager_uart.MKV58F24 component.lists.MKV58F24 device.MKV58F24_startup.MKV58F24 platform.drivers.smc.MKV58F24 platform.drivers.gpio.MKV58F24 platform.utilities.assert.MKV58F24 platform.Include_core_cm7.MKV58F24 platform.Include_common.MKV58F24" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="twrkv58f220m_mbedtls_benchmark" name="mbedtls_benchmark" category="mbedtls_examples" dependency="platform.drivers.uart.MKV58F24 platform.drivers.trng.MKV58F24 middleware.mmcau_cm4_cm7.MKV58F24 platform.drivers.port.MKV58F24 middleware.mbedtls.MKV58F24 platform.drivers.clock.MKV58F24 platform.drivers.common.MKV58F24 device.MKV58F24_CMSIS.MKV58F24 utility.debug_console.MKV58F24 component.uart_adapter.MKV58F24 component.serial_manager.MKV58F24 component.serial_manager_uart.MKV58F24 component.lists.MKV58F24 device.MKV58F24_startup.MKV58F24 platform.drivers.smc.MKV58F24 platform.drivers.gpio.MKV58F24 platform.utilities.assert.MKV58F24 platform.Include_core_cm7.MKV58F24 platform.Include_common.MKV58F24">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -55,7 +54,7 @@
           <value>-fno-common</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin  -fomit-frame-pointer</value>
+          <value>-fomit-frame-pointer  -c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
         </option>
         <option id="com.crt.advproject.link.fpu" type="enum">
           <value>com.crt.advproject.link.fpu.fpv5sp.hard</value>

@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -50,9 +50,9 @@ static void APP_FllStableDelay(void)
 void APP_ChangeFeiToBlpiExample(void)
 {
     /* Change FEI -> FBI
-    * It's transitional mode, don't need to wait for FLL stable,
-    * so NULL is passed as variable here.
-    */
+     * It's transitional mode, don't need to wait for FLL stable,
+     * so NULL is passed as variable here.
+     */
     CLOCK_SetFbiMode(kMCG_Dmx32Default, kMCG_DrsLow, NULL);
     assert(kMCG_ModeFBI == CLOCK_GetMode());
 

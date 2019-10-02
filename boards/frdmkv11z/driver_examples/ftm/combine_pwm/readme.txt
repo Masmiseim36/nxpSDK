@@ -5,6 +5,14 @@ hardware block to output PWM signals on two TPM channels. The example also shows
 and deadtime insertion.
 On boards that have 2 LEDs connected to the FTM pins, the user will see a change in LED brightness.
 And if the board do not support LEDs to show, the outputs can be observed by oscilloscope.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -37,11 +45,6 @@ You will see a change in LED brightness if an LED is connected to the FTM pin
 If no LED is connected to the FTM pin, then probe the signal using an oscilloscope
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - Red led and blue led will change brightness.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

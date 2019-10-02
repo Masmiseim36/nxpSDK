@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -30,8 +30,8 @@
  * Code
  ******************************************************************************/
 /*!
-* @brief Main function
-*/
+ * @brief Main function
+ */
 int main(void)
 {
     /* Variables */
@@ -42,7 +42,7 @@ int main(void)
     uint32_t rdata;
     uint32_t n;
     int32_t *p_mram = (int32_t *)MRAM_START_ADDRESS;
-    bool result = true;
+    bool result     = true;
     /* FlexBus configuration structure */
     flexbus_config_t flexbusUserConfig;
 
@@ -77,9 +77,9 @@ int main(void)
      */
     FLEXBUS_GetDefaultConfig(&flexbusUserConfig);
     /* Configure some parameters when using MRAM */
-    flexbusUserConfig.waitStates = 2U;                      /* Wait 2 states */
-    flexbusUserConfig.chipBaseAddress = MRAM_START_ADDRESS; /* MRAM address for using FlexBus */
-    flexbusUserConfig.chipBaseAddressMask = 7U;             /* 512 Kbytes memory size */
+    flexbusUserConfig.waitStates          = 2U;                 /* Wait 2 states */
+    flexbusUserConfig.chipBaseAddress     = MRAM_START_ADDRESS; /* MRAM address for using FlexBus */
+    flexbusUserConfig.chipBaseAddressMask = 7U;                 /* 512 Kbytes memory size */
 
     PRINTF("\r\nInitialize FLEXBUS.\r\n");
     /* Initialize and configure FLEXBUS module */

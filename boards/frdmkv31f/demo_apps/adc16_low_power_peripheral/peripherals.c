@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,11 +13,11 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Peripherals v4.1
+product: Peripherals v5.0
 processor: MKV31F512xxx12
 package_id: MKV31F512VLL12
 mcu_data: ksdk2_0
-processor_version: 0.0.11
+processor_version: 0.0.18
 board: FRDM-KV31F
 functionalGroups:
 - name: BOARD_InitPeripherals
@@ -71,27 +71,26 @@ instance:
       - enableFreeRunning: 'false'
       - bypassPrescaler: 'true'
       - prescalerClockSource: 'kLPTMR_PrescalerClock_1'
-      - clockSource: 'BOARD_BootClockRUN'
+      - clockSource: 'BOARD_BootClockVLPR'
       - value: 'kLPTMR_Prescale_Glitch_0'
       - timerPeriod: '1000000 us'
     - quick_selection: 'QS_LPTMR_1'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
-const lptmr_config_t DEMO_LPTMR_config = {
-  .timerMode = kLPTMR_TimerModeTimeCounter,
-  .pinSelect = kLPTMR_PinSelectInput_0,
-  .pinPolarity = kLPTMR_PinPolarityActiveHigh,
-  .enableFreeRunning = false,
-  .bypassPrescaler = true,
-  .prescalerClockSource = kLPTMR_PrescalerClock_1,
-  .value = kLPTMR_Prescale_Glitch_0
-};
+const lptmr_config_t DEMO_LPTMR_config = {.timerMode            = kLPTMR_TimerModeTimeCounter,
+                                          .pinSelect            = kLPTMR_PinSelectInput_0,
+                                          .pinPolarity          = kLPTMR_PinPolarityActiveHigh,
+                                          .enableFreeRunning    = false,
+                                          .bypassPrescaler      = true,
+                                          .prescalerClockSource = kLPTMR_PrescalerClock_1,
+                                          .value                = kLPTMR_Prescale_Glitch_0};
 
-void DEMO_LPTMR_init(void) {
-  /* Initialize the LPTMR */
-  LPTMR_Init(DEMO_LPTMR_PERIPHERAL, &DEMO_LPTMR_config);
-  /* Set LPTMR period to 1000000us */
-  LPTMR_SetTimerPeriod(DEMO_LPTMR_PERIPHERAL, DEMO_LPTMR_TICKS);
+void DEMO_LPTMR_init(void)
+{
+    /* Initialize the LPTMR */
+    LPTMR_Init(DEMO_LPTMR_PERIPHERAL, &DEMO_LPTMR_config);
+    /* Set LPTMR period to 1000000us */
+    LPTMR_SetTimerPeriod(DEMO_LPTMR_PERIPHERAL, DEMO_LPTMR_TICKS);
 }
 
 /***********************************************************************************************************************
@@ -144,42 +143,32 @@ instance:
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 adc16_channel_config_t DEMO_ADC16_channelsConfig[2] = {
-  {
-    .channelNumber = 26U,
-    .enableDifferentialConversion = false,
-    .enableInterruptOnConversionCompleted = true
-  },
-  {
-    .channelNumber = 27U,
-    .enableDifferentialConversion = false,
-    .enableInterruptOnConversionCompleted = false
-  }
-};
-const adc16_config_t DEMO_ADC16_config = {
-  .referenceVoltageSource = kADC16_ReferenceVoltageSourceVref,
-  .clockSource = kADC16_ClockSourceAsynchronousClock,
-  .enableAsynchronousClock = true,
-  .clockDivider = kADC16_ClockDivider8,
-  .resolution = kADC16_ResolutionSE16Bit,
-  .longSampleMode = kADC16_LongSampleCycle24,
-  .enableHighSpeed = false,
-  .enableLowPower = true,
-  .enableContinuousConversion = false
-};
+    {.channelNumber = 26U, .enableDifferentialConversion = false, .enableInterruptOnConversionCompleted = true},
+    {.channelNumber = 27U, .enableDifferentialConversion = false, .enableInterruptOnConversionCompleted = false}};
+const adc16_config_t DEMO_ADC16_config            = {.referenceVoltageSource     = kADC16_ReferenceVoltageSourceVref,
+                                          .clockSource                = kADC16_ClockSourceAsynchronousClock,
+                                          .enableAsynchronousClock    = true,
+                                          .clockDivider               = kADC16_ClockDivider8,
+                                          .resolution                 = kADC16_ResolutionSE16Bit,
+                                          .longSampleMode             = kADC16_LongSampleCycle24,
+                                          .enableHighSpeed            = false,
+                                          .enableLowPower             = true,
+                                          .enableContinuousConversion = false};
 const adc16_channel_mux_mode_t DEMO_ADC16_muxMode = kADC16_ChannelMuxA;
 const adc16_hardware_average_mode_t DEMO_ADC16_hardwareAverageMode = kADC16_HardwareAverageCount32;
 
-void DEMO_ADC16_init(void) {
-  /* Enable interrupt ADC0_IRQn request in the NVIC */
-  EnableIRQ(ADC0_IRQn);
-  /* Initialize ADC16 converter */
-  ADC16_Init(DEMO_ADC16_PERIPHERAL, &DEMO_ADC16_config);
-  /* Make sure, that software trigger is used */
-  ADC16_EnableHardwareTrigger(DEMO_ADC16_PERIPHERAL, false);
-  /* Configure hardware average mode */
-  ADC16_SetHardwareAverage(DEMO_ADC16_PERIPHERAL, DEMO_ADC16_hardwareAverageMode);
-  /* Configure channel multiplexing mode */
-  ADC16_SetChannelMuxMode(DEMO_ADC16_PERIPHERAL, DEMO_ADC16_muxMode);
+void DEMO_ADC16_init(void)
+{
+    /* Enable interrupt ADC0_IRQn request in the NVIC */
+    EnableIRQ(ADC0_IRQn);
+    /* Initialize ADC16 converter */
+    ADC16_Init(DEMO_ADC16_PERIPHERAL, &DEMO_ADC16_config);
+    /* Make sure, that software trigger is used */
+    ADC16_EnableHardwareTrigger(DEMO_ADC16_PERIPHERAL, false);
+    /* Configure hardware average mode */
+    ADC16_SetHardwareAverage(DEMO_ADC16_PERIPHERAL, DEMO_ADC16_hardwareAverageMode);
+    /* Configure channel multiplexing mode */
+    ADC16_SetChannelMuxMode(DEMO_ADC16_PERIPHERAL, DEMO_ADC16_muxMode);
 }
 
 /***********************************************************************************************************************
@@ -187,14 +176,14 @@ void DEMO_ADC16_init(void) {
  **********************************************************************************************************************/
 void BOARD_InitPeripherals(void)
 {
-  /* Initialize components */
-  DEMO_LPTMR_init();
+    /* Initialize components */
+    DEMO_LPTMR_init();
 }
 
 void BOARD_InitADCPeripheral(void)
 {
-  /* Initialize components */
-  DEMO_ADC16_init();
+    /* Initialize components */
+    DEMO_ADC16_init();
 }
 
 /***********************************************************************************************************************
@@ -202,5 +191,5 @@ void BOARD_InitADCPeripheral(void)
  **********************************************************************************************************************/
 void BOARD_InitBootPeripherals(void)
 {
-  BOARD_InitPeripherals();
+    BOARD_InitPeripherals();
 }

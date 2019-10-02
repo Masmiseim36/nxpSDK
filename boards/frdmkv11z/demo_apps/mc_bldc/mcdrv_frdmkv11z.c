@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,7 +8,6 @@
 
 #include "mcdrv_frdmkv11z.h"
 #include "fsl_common.h"
-#include "clock_config.h"
 
 /*******************************************************************************
  * Definitions
@@ -31,23 +30,14 @@ const char bldcCommutationTableComp[16] = {
  * Variables
  ******************************************************************************/
 
-/* Configuration structure for 3-phase PWM driver */
-mcdrv_pwm3ph_ftm_init_t g_sM1Pwm3phInit;
-
-/* Configuration structure for ADC driver - phase currents,
-   DC-bus voltage, aux */
-mcdrv_adc16_init_t g_sM1Adc16Init;
-
-/* Configuration structure for time event driver */
-mcdrv_ftm_cmt_init_t g_sM1CmtTmrInit;
-
-/* Structure for 3-phase PWM mc driver */
+/* configuration structure for 3-phase PWM mc driver */
 mcdrv_pwm3ph_ftm_t g_sM1Pwm3ph;
 
 /* Structure for time event driver */
 mcdrv_ftm_cmt_t g_sM1CmtTmr;
 
-/* Structure for current and voltage measurement */
+/* structure for current and voltage measurement*/
+mcdrv_adc16_init_t g_sM1Adc16Init;
 mcdrv_adc16_t g_sM1AdcSensor;
 /* Clock setup structure */
 clock_setup_t g_sClockSetup;
@@ -67,6 +57,9 @@ clock_setup_t g_sClockSetup;
 */
 void MCDRV_Init_M1(void)
 {
+    /* Init application clock dependent variables */
+    InitClock();
+  
     /* Init ADC */
     M1_MCDRV_ADC_PERIPH_INIT();
 
@@ -92,18 +85,15 @@ void MCDRV_Init_M1(void)
 */
 void InitClock(void)
 {
-    /* Core Clock: 75MHz */
-    BOARD_BootClockRUN();
-
     /* Calculate clock dependant variables for BLDC sensorless control algorithm */
-    g_sClockSetup.ui32CoreSystemClock = SystemCoreClock;
-    g_sClockSetup.ui32BusFlashClock =
+    g_sClockSetup.ui32SystemClock = 
+        SystemCoreClock / (((SIM->CLKDIV1 & SIM_CLKDIV1_OUTDIV1_MASK) >> SIM_CLKDIV1_OUTDIV1_SHIFT) + 1);
+    g_sClockSetup.ui32BusClock =
         SystemCoreClock / (((SIM->CLKDIV1 & SIM_CLKDIV1_OUTDIV4_MASK) >> SIM_CLKDIV1_OUTDIV4_SHIFT) + 1);
     g_sClockSetup.ui16PwmFreq = PWM_FREQ; /* 20 kHz */
-                                          /* PWM module calculated as follows:
-                                          * PWM_MOD = CPU_CLOCK / PWM_FREQUNCY = 75 MHz / 20 kHz = 3750   */
-    g_sClockSetup.ui16PwmModulo = SystemCoreClock / g_sClockSetup.ui16PwmFreq;
-    g_sClockSetup.ui32CmtTimerFreq = SystemCoreClock / 128;
+                                             /* PWM module calculated as follows:
+                                              * PWM_MOD = PWM_CLOCK / PWM_FREQUNCY = 75 MHz / 20 kHz = 3750 */
+    g_sClockSetup.ui16PwmModulo = g_sClockSetup.ui32SystemClock / g_sClockSetup.ui16PwmFreq;
     g_sClockSetup.ui16CtrlLoopFreq = CTRL_LOOP_FREQ; /* 1 kHz */
 }
 
@@ -196,19 +186,17 @@ void InitFTM0(void)
     FTM0->PWMLOAD |= FTM_PWMLOAD_LDOK_MASK;
 
     /* Initialization FTM 3-phase PWM mc driver */
-    g_sM1Pwm3phInit.pui32PwmBase = (FTM_Type *)(FTM0);    /* FTM0 base address */
-    g_sM1Pwm3phInit.ui16ChanPairNumPhA = M1_PWM_PAIR_PHA; /* PWM phase A top&bottom channel pair number */
-    g_sM1Pwm3phInit.ui16ChanPairNumPhB = M1_PWM_PAIR_PHB; /* PWM phase B top&bottom channel pair number */
-    g_sM1Pwm3phInit.ui16ChanPairNumPhC = M1_PWM_PAIR_PHC; /* PWM phase C top&bottom channel pair number */
+    g_sM1Pwm3ph.pui32PwmBase = (FTM_Type *)(FTM0);    /* FTM0 base address */
+    g_sM1Pwm3ph.ui16ChanPhA = M1_PWM_PAIR_PHA; /* PWM phase A top&bottom channel pair number */
+    g_sM1Pwm3ph.ui16ChanPhB = M1_PWM_PAIR_PHB; /* PWM phase B top&bottom channel pair number */
+    g_sM1Pwm3ph.ui16ChanPhC = M1_PWM_PAIR_PHC; /* PWM phase C top&bottom channel pair number */
 
     /* initialization of PWM modulo */
-    g_sM1Pwm3phInit.ui16PwmModulo = g_sClockSetup.ui16PwmModulo;
+    g_sM1Pwm3ph.ui16PwmModulo = g_sClockSetup.ui16PwmModulo;
 
     /* initialization of BLDC commucation table */
-    g_sM1Pwm3phInit.pcBldcTable = &bldcCommutationTableComp[0];
-
-    /* Pass initialization structure to the mc driver */
-    MCDRV_FtmPwm3PhInit(&g_sM1Pwm3ph, &g_sM1Pwm3phInit); /* MC driver initialization */
+    g_sM1Pwm3ph.pcBldcTable = &bldcCommutationTableComp[0];
+    
 }
 
 /*!
@@ -237,6 +225,10 @@ void InitFTM1(void)
     /* bus clock as source clock for FTM */
     /* Prescale factor 128 */
     FTM1->SC = FTM_SC_PS(7) | FTM_SC_CLKS(1);
+    
+    /* calculate frequency of timer used for forced commutation
+     * System clock divided by 2^FTM_prescaler */
+    g_sClockSetup.ui32CmtTimerFreq = g_sClockSetup.ui32SystemClock >> (FTM1->SC&FTM_SC_PS_MASK);
 
     /* Enable Output Compare interrupt, output Compare, Software Output
      * Compare only (ELSnB:ELSnA = 0:0, output pin is not controlled by FTM) */
@@ -248,12 +240,9 @@ void InitFTM1(void)
     /* Set priority to interrupt */
     NVIC_SetPriority(FTM1_IRQn, ISR_PRIORITY_FORCED_CMT);
 
-    /* Initialization FTM time event driver */
-    g_sM1CmtTmrInit.pui32FtmBase = (FTM_Type *)(FTM1); /* FTM1 base address */
-    g_sM1CmtTmrInit.ui16ChannelNum = M1_FTM_CMT_CHAN;  /* FTM1 compare channel selection */
-
-    /* Pass initialization structure to the MC driver */
-    MCDRV_FtmCmtInit(&g_sM1CmtTmr, &g_sM1CmtTmrInit); /* MC driver initialization */
+    /* initialization FTM time event driver */
+    g_sM1CmtTmr.pui32FtmBase = (FTM_Type *)(FTM1); /* FTM1 base address */
+    g_sM1CmtTmr.ui16ChannelNum = M1_FTM_CMT_CHAN;  /* FTM1 compare channel selection */
 }
 
 /*!

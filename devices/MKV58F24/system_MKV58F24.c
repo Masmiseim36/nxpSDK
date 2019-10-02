@@ -7,15 +7,15 @@
 **                          MKV58F512VLQ24
 **                          MKV58F512VMD24
 **
-**     Compilers:           Keil ARM C/C++ Compiler
-**                          Freescale C/C++ for Embedded ARM
+**     Compilers:           Freescale C/C++ for Embedded ARM
 **                          GNU C Compiler
 **                          IAR ANSI C/C++ Compiler for ARM
+**                          Keil ARM C/C++ Compiler
 **                          MCUXpresso Compiler
 **
 **     Reference manual:    KV5XP144M240RM Rev. 3, 02/2016
 **     Version:             rev. 0.3, 2016-02-29
-**     Build:               b180801
+**     Build:               b181105
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
@@ -24,6 +24,7 @@
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
 **     Copyright 2016-2018 NXP
+**     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
 **
@@ -163,6 +164,7 @@ void SystemCoreClockUpdate (void) {
           MCGOUTClock *= 2929U;
           break;
         default:
+          MCGOUTClock *= 640U;
           break;
       }
     } else { /* (!((MCG->C6 & MCG_C6_PLLS_MASK) == 0x0U)) */

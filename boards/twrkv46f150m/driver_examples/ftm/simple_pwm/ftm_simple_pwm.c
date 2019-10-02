@@ -41,8 +41,8 @@ void delay(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-volatile bool ftmIsrFlag = false;
-volatile bool brightnessUp = true; /* Indicate LED is brighter or dimmer */
+volatile bool ftmIsrFlag          = false;
+volatile bool brightnessUp        = true; /* Indicate LED is brighter or dimmer */
 volatile uint8_t updatedDutycycle = 10U;
 
 /*******************************************************************************
@@ -69,7 +69,7 @@ void FTM_LED_HANDLER(void)
         if (++updatedDutycycle >= 99U)
         {
             updatedDutycycle = 99U;
-            brightnessUp = false;
+            brightnessUp     = false;
         }
     }
     else
@@ -99,9 +99,9 @@ int main(void)
     ftm_pwm_level_select_t pwmLevel = kFTM_LowTrue;
 
     /* Configure ftm params with frequency 24kHZ */
-    ftmParam.chnlNumber = BOARD_FTM_CHANNEL;
-    ftmParam.level = pwmLevel;
-    ftmParam.dutyCyclePercent = updatedDutycycle;
+    ftmParam.chnlNumber            = BOARD_FTM_CHANNEL;
+    ftmParam.level                 = pwmLevel;
+    ftmParam.dutyCyclePercent      = updatedDutycycle;
     ftmParam.firstEdgeDelayPercent = 0U;
 
     /* Board pin, clock, debug console init */

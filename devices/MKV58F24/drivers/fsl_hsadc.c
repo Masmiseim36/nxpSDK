@@ -167,12 +167,12 @@ void HSADC_GetDefaultConfig(hsadc_config_t *config)
     /* Initializes the configure structure to zero. */
     memset(config, 0, sizeof(*config));
 
-    config->dualConverterScanMode = kHSADC_DualConverterWorkAsTriggeredParallel;
+    config->dualConverterScanMode  = kHSADC_DualConverterWorkAsTriggeredParallel;
     config->enableSimultaneousMode = true;
-    config->resolution = kHSADC_Resolution12Bit;
-    config->DMATriggerSoruce = kHSADC_DMATriggerSourceAsEndOfScan;
-    config->idleWorkMode = kHSADC_IdleKeepNormal;
-    config->powerUpDelayCount = 18U;
+    config->resolution             = kHSADC_Resolution12Bit;
+    config->DMATriggerSoruce       = kHSADC_DMATriggerSourceAsEndOfScan;
+    config->idleWorkMode           = kHSADC_IdleKeepNormal;
+    config->powerUpDelayCount      = 18U;
 }
 
 /*!
@@ -284,8 +284,8 @@ void HSADC_GetDefaultConverterConfig(hsadc_converter_config_t *config)
 {
     assert(NULL != config);
 
-    config->clockDivisor = 5U;
-    config->samplingTimeCount = 0U;
+    config->clockDivisor               = 5U;
+    config->samplingTimeCount          = 0U;
     config->powerUpCalibrationModeMask = 0U;
 }
 
@@ -903,14 +903,14 @@ void HSADC_GetDefaultSampleConfig(hsadc_sample_config_t *config)
 {
     assert(NULL != config);
 
-    config->channelNumber = 0U;
-    config->channel67MuxNumber = 0U;
+    config->channelNumber          = 0U;
+    config->channel67MuxNumber     = 0U;
     config->enableDifferentialPair = false;
-    config->zeroCrossingMode = kHSADC_ZeroCorssingDisabled;
-    config->highLimitValue = 0x7FF8U;
-    config->lowLimitValue = 0U;
-    config->offsetValue = 0U;
-    config->enableWaitSync = false;
+    config->zeroCrossingMode       = kHSADC_ZeroCorssingDisabled;
+    config->highLimitValue         = 0x7FF8U;
+    config->lowLimitValue          = 0U;
+    config->offsetValue            = 0U;
+    config->enableWaitSync         = false;
 }
 
 /*!

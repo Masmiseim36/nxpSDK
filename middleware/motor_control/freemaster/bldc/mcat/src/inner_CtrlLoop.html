@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html style="text-align: center;">     
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=windows-1250">
+        <meta name="generator" content="PSPad editor, www.pspad.com">
+        <title>
+        </title>
+        <link href="style.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="JS_functions\mainInclude.js"></script>
+        <script LANGUAGE="JavaScript" type ="text/javascript">
+            includeJSfiles();
+        </script>
+    </head>
+    <body id="CtrlLoop"  onload=" initLoadFormCtrlLoop()" background="images/pozadi.png" >
+        <OBJECT id="MCB_PC_Master_Services1" style="display:none;" classid="clsid:48A185F1-FFDB-11D3-80E3-00C04F176153" name="pcm">
+        </OBJECT>
+        <OBJECT style="display:none;" CLASSID = "clsid:5220cb21-c88d-11cf-b347-00aa00a28331">
+            <PARAM NAME="LPKPath" VALUE="gmsctls.lpk">
+        </OBJECT>
+      
+        <!-- Headline -->
+        <div class="HeadBorder fontTitle" style="width: 740px;">BLDC Control Loop</div>
+        <div>
+            <table style="width: 740px;" class="MainTab">
+                <tr>
+                <td width="45%" align="left" valign="top" style="padding-right: 10px;">
+                    <!-- control control loop input parameters-->
+                    <fieldset  style="width: 100%;" class="ContBox">
+                    <legend class="fontControlLabel">Loop Sample Time</legend>
+                    <table id="parameterTable" width="100%"  border="0"   class="ContBoxTab">
+                        <script>
+                            // control loop sampling period
+                            document.write( build_parameter_line("Sample&nbsp;time", "CtrlLOOP_Ts", "sec", "Torque and Speed Control Loop Sampling Period, typical range <1ms;10ms>", 0, ""));
+                            // PWM frequency
+                            document.write( build_parameter_line( "PWM&nbsp;freq","PWM_freq", "Hz", "PWM frequency, typical range <4000;20000>", 0, ""));
+                        </script>
+                    </table>
+                    <table id="parameterTable" border="0" width="100%"  class="ContBoxTab">
+                      <script>
+                          document.write( build_informative_line("Loop_controllers","PI controller type:", "Parallel"));
+                      </script>
+                    </table>
+                    </fieldset>
+                    <!-- TORQUE CONTROL LOOP PARAMETERS -->
+                    <!-- torque controller limits-->
+                    <fieldset  style="width: 100%;" class="ContBox">
+                    <legend class="fontControlLabel">Control Loop Output Limits</legend>
+                    <table border="0" >
+                        <script>
+                            // torque controller limits
+                            document.write( build_parameter_line("Output&nbsp;limit&nbsp;high", "CtrlLOOP_LIM_HIGH", "%", "High limit of BLDC control loop output in percentage of duty cycle", 0, ""));
+                            document.write( build_parameter_line("Output&nbsp;limit&nbsp;low", "CtrlLOOP_LIM_LOW", "%", "Low limit of BLDC control loop output in percentage of duty cycle", 0, ""));
+                        </script>
+                    </table>
+                    </fieldset>
+                    <!-- speed ramp-->
+                    <fieldset  id="SpeedRamp" style="width: 100%;" class="ContBox">
+                    <legend class="fontControlLabel">Speed Ramp </legend>
+                    <table  border="0" >
+                        <script>
+                            // speed controller ramp
+                            document.write( build_parameter_line("Inc Up","RAMP_UP", "rpm/sec", "Speed Ramp Up Increment , typical range <50;3000> ", 0, "sat"));
+                            document.write( build_parameter_line("Inc Down", "RAMP_DOWN", "rpm/sec", "Speed Ramp Down Decrement, typical range <50;3000> ", 0, "sat"));
+                        </script>
+                    </table>
+                    </fieldset>
+                </td>
+                <!-- SPEED CONTROL LOOP PARAMETERS -->
+                <td width="55%"  align="right" valign="top" style="padding-left: 10px;">
+                    <!-- Speed PI parallel controller parameters-->
+                    <fieldset id="Speed_PIparal" style="width: 100%;" class="ContBox">
+                    <legend class="fontControlLabel">Speed PI Controller Constants</legend>
+                    <table id="SL_PI_const" border="0" style="display:;">
+                        <script>
+                            // speed controller proportional gain and gain scales
+                            document.write( build_constant_line("SL_Kp", "SL_Kp_g", "Speed Controller Proportional constant in time domain"));
+                            // speed controller integral gain and gain scales
+                            document.write( build_constant_line( "SL_Ki","SL_Ki_g", "Speed Controller Intergration constant in time domain"));
+                        </script>
+                    </table>
+                    <table id="SL_PI_const_param" border="0" >
+                        <script>
+                            // speed loop controller P and I constant manually edited
+                            document.write(build_parameter_line("Speed&nbsp;Loop&nbsp;Kp" ,"SLOOP_KP_MAN", "", "Speed Controller Proportional constant in time domain", 0, ""));
+                            document.write(build_parameter_line("Speed&nbsp;Loop&nbsp;Ki" ,"SLOOP_KI_MAN", "", "Speed Controller Intergration constant in time domain", 0, ""));
+                        </script>
+                    </table>
+                    </fieldset>
+                    <!-- Speed PI reccurent controller parameters-->
+                    <fieldset  id="Speed_PIrecur" style="width: 100%; " class="ContBox">
+                    <legend class="fontControlLabel">Speed PI Controller Constants</legend>
+                    <table border="0" >
+                        <script>
+                            document.write( build_constant_line("CC1", "SL_CC1", "Speed Controller Controller CC1 constant in time domain"));
+                            document.write( build_constant_line("CC2","SL_CC2", "Speed Controller Controller CC2 constant in time domain"));
+                        </script>
+                    </table>
+                    </fieldset>
+                    <!-- Torque loop parameters-->
+                    <fieldset id="Tloop_PIparal" style="width: 100%; " class="ContBox">
+                    <legend class="fontControlLabel">Torque PI Controller Constants</legend>
+                    <table id="TL_PI_const" border="0" >
+                        <script>
+                        // Torque controller proportional and integration gains
+                            document.write( build_constant_line("TL_Kp","TL_Kp_g", "Torque Controller Kp constant in time domain"));
+                            document.write( build_constant_line("TL_Ki","TL_Ki_g", "Torque Controller Ki constant in time domain"));
+                        </script>
+                    </table>
+                    <table id="TL_PI_const_param" border="0" >
+                        <script>
+                            // Torque loop controller P and I constant manually edited
+                            document.write(build_parameter_line("Torque&nbsp;Loop&nbsp;Kp" ,"TLOOP_KP_MAN", "", "Torque Controller Proportional constant in time domain", 0, ""));
+                            document.write(build_parameter_line("Torque&nbsp;Loop&nbsp;Ki" ,"TLOOP_KI_MAN", "", "Torque Controller Intergration constant in time domain", 0, ""));
+                        </script>
+                    </table>
+                    </fieldset>
+                    <fieldset  id="Tloop_PIrecur" style="width: 100%; " class="ContBox">
+                    <legend class="fontControlLabel">Torque PI Controller Constants</legend>
+                    <table border="0" >
+                        <script>
+                            // Torque controller proportional and integration gains
+                            document.write( build_constant_line("TL_CC1","TL_CC1", "Torque Controller CC1 constant in time domain"));
+                            document.write( build_constant_line("TL_CC2","TL_CC2", "Torque Controller CC2 constant in time domain"));
+                        </script>
+                    </table>
+                    </fieldset>
+                </td>
+                </tr>
+            </table>
+            <!-- calculation buttons-->
+            <table class = "fButtonGroup" >
+                <tr>
+                    <td><input type="button" class="fButtonsEnabled" value="Update Target" id="CtrlLoopUpdateFrm" onclick="clickUpdateCtrlLoopFM()" /></td>
+                    <td><input type="button" class="fButtonsDisabled" value="Reload Data" id="ReloadData" onclick="clickReloadData(); initLoadFormCtrlLoop();" disabled="disabled" /></td>
+                    <td><input type="button" class="fButtonsDisabled" value="Store Data" id="StoreData" onclick="clickStoreData()" disabled="disabled" /></td>
+                </tr>
+            </table>
+        </div>
+        <!--<div id="chart1" style="height:300px; width:500px;"></div>-->
+    </body>
+</html>

@@ -9,6 +9,14 @@ In this example, FLEXBUS driver is configured with  some specific parameter:
     - Wait 2 states
     - MRAM address for using FlexBus
     - 512 Kbytes memory size
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -46,11 +54,6 @@ Start write/read MRAM.
 
 FLEXBUS (MRAM) test: succeed.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

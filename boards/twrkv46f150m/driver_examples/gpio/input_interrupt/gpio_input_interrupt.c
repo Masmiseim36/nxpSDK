@@ -64,12 +64,14 @@ int main(void)
 {
     /* Define the init structure for the input switch pin */
     gpio_pin_config_t sw_config = {
-        kGPIO_DigitalInput, 0,
+        kGPIO_DigitalInput,
+        0,
     };
 
     /* Define the init structure for the output LED pin */
     gpio_pin_config_t led_config = {
-        kGPIO_DigitalOutput, 0,
+        kGPIO_DigitalOutput,
+        0,
     };
 
     BOARD_InitPins();

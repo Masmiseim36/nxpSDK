@@ -1,0 +1,226 @@
+<!DOCTYPE HTML>
+<html style="text-align: center;">
+ <head>
+  <meta http-equiv="content-type" content="text/html; charset=windows-1250">
+  <meta name="generator" content="pspad editor, www.pspad.com">
+ 
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="JS_functions\mainInclude.js"></script>
+  <script LANGUAGE="JavaScript" type ="text/javascript">
+     includeJSfiles();
+  </script>
+
+<script language="JavaScript">
+
+var currentFolder="";
+
+function GetDriveList(){
+  var fso, obj, n, e, item, arr=[];
+
+  try {  fso = new ActiveXObject("Scripting.FileSystemObject");}
+  
+  catch(er) {
+  alert('Could not load Drives. The ActiveX control could not be started.');
+  cancelFolder();
+  return;}
+
+  e = new Enumerator(fso.Drives);
+  for(;!e.atEnd();e.moveNext()){
+    item = e.item();
+    obj = {letter:"",description:""};
+    obj.letter = item.DriveLetter;
+    if (item.DriveType == 3) obj.description = item.ShareName;
+    else if (item.IsReady) obj.description = item.VolumeName;
+    else obj.description = "[Drive not ready]";
+    arr[arr.length]=obj;
+  }
+  return(arr);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+function GetSubFolderList(fld){
+  var e, arr=[];
+  var fso = new ActiveXObject("Scripting.FileSystemObject");
+  var f = fso.GetFolder(fld.toString());
+  var e = new Enumerator(f.SubFolders);
+  for(;!e.atEnd();e.moveNext()){
+    arr[arr.length]=e.item().Name;
+  }
+  return(arr);
+}
+////////////////////////////////////////////////////////////////////////////////
+function loadDrives(){
+  var drives=GetDriveList();
+
+  // get absolute path of the MCAT folder located in active FreeMASTER project  
+  var fso = new ActiveXObject("Scripting.FileSystemObject");
+  var f = fso.GetAbsolutePathName('MCAT');
+  // get the drive name of the freemaster project
+  var Dri = fso.GetDriveName(f);
+ // parent.document.getElementById('projectPathWrite4').innerHTML = Dri; 
+
+  var list="";
+
+  // look for the same drive unit as the drive of active FRM project, e.g. if FRM project is on D:// ...
+  // the "if" is looking for D:==D: condition     
+  for(var i=0;i<drives.length;i++){
+   if(drives[i].letter+':' == Dri)
+      list+="<div onclick=\"loadList('"+drives[i].letter+':\\\\\')" class="folders" onmouseover="highlight(this)" onmouseout="unhighlight(this)">'+drives[i].letter+':\\ - '+ drives[i].description+'</div>';
+  }  
+  
+  document.getElementById("path").innerHTML='<a href="" onclick="loadDrives(); return false;" title="My Computer">My Computer</a>\\';
+  document.getElementById("list").innerHTML=list;
+
+  currentFolder="";
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+function loadList(fld){
+  var path="",list="",paths=fld.split("\\");
+  var divPath=document.getElementById("path");
+  var divList=document.getElementById("list");
+  for(var i=0;i<paths.length-1;i++){
+    if(i==paths.length-2){
+      path+=paths[i]+' \\';
+    }else{
+      path+="<a href=\"\" onclick=\"loadList('";
+      for(var j=0;j<i+1;j++){
+        path+=paths[j]+"\\\\";
+      } 
+      path+='\');return false">'+paths[i]+'</a> \\ ';
+    }
+  }
+  divPath.innerHTML='<a href="" onclick="loadDrives();return false;">My Computer</a> \\ '+path;
+  divPath.title="My Computer\\"+paths.toString().replace(/,/g,"\\");
+  currentFolder =paths.toString().replace(/,/g,"\\");
+  
+  var subfolders=GetSubFolderList(fld);
+  for(var j=0;j<subfolders.length;j++){
+    list+="<div onclick=\"loadList('"+(fld+subfolders[j]).replace(/\\/g,"\\\\")+'\\\\\')" onmouseover="highlight(this)" onmouseout="unhighlight(this)" title="'+subfolders[j]+'" class="folders">'+subfolders[j]+"</div>";
+  }
+  divList.innerHTML=list;
+  resizeList();
+  divPath.scrollIntoView(); 
+}
+
+////////////////////////////////////////////////////////////////////////////////
+function resizeList(){
+  var divList=document.getElementById("list");
+  var divPath=document.getElementById("path");
+  if(document.body.clientHeight>0 && divPath.offsetHeight>0){
+    divList.style.height=document.body.clientHeight-divPath.scrollHeight;
+    divList.style.width=200;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+function highlight(div){
+  div.className="folderButton";
+}
+
+////////////////////////////////////////////////////////////////////////////////
+function unhighlight(div){
+  div.className="folders";
+}
+
+////////////////////////////////////////////////////////////////////////////////
+function getRelativePath(target) {
+  var fso = new ActiveXObject("Scripting.FileSystemObject");
+  var source = fso.GetAbsolutePathName('MCAT');
+  
+	var sep = (source.indexOf("/") !== -1) ? "/" : "\\",
+		targetArr = target.split(sep),
+		sourceArr = source.split(sep),
+		targetPath = targetArr.join(sep),
+		relativePath = "";
+
+    sourceArr.pop();
+   
+	while (targetPath.indexOf(sourceArr.join(sep)) == -1) {
+		sourceArr.pop();
+		relativePath += ".." + sep.replace('\\','/');    
+	}
+	
+	var relPathArr = targetArr.slice(sourceArr.length);
+  relPathArr.length && (relativePath += relPathArr.join(sep.replace('\\','/')) );
+	
+  return relativePath;
+  
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+function selectFolder(){
+
+  var fLine;
+  var sLine;
+
+  var pathRelativeFolder = getRelativePath(currentFolder);
+  var pathRelativeFolderOutput = "{FM_project_loc}" + pathRelativeFolder; 
+  
+  if (pathRelativeFolderOutput.length>80)
+  {
+    for (var i=0;i<80;i++)
+    {
+        if (i>50 && pathRelativeFolderOutput.charAt(i)=='\\')
+        {
+          fLine = pathRelativeFolderOutput.substring(0,i+1);
+          sLine = pathRelativeFolderOutput.substring(i+1);
+          parent.document.getElementById('projectPathWrite1').innerHTML = fLine;
+          parent.document.getElementById('projectPathWrite2').innerHTML = sLine;         
+        }
+    }
+  }
+  else 
+  {
+    parent.document.getElementById('projectPathWrite2').innerHTML = '';
+    parent.document.getElementById('projectPathWrite1').innerHTML = pathRelativeFolderOutput;
+  }  
+ 
+
+  parent.parent.document.getElementById('ProjectPath').innerHTML = pathRelativeFolder;
+  
+  var object  = parent.document.getElementById('projectPathFrameSelect');
+  object.style.display = "none";
+}
+
+////////////////////////////////////////////////////////////////////////////////
+function cancelFolder(){
+  var object  = parent.document.getElementById('projectPathFrameSelect');
+  object.style.display = "none";
+}
+
+</script>
+
+</head>
+<body onload="loadDrives()" style="background-color: #DDDDDD; display: inline-block; margin: 1px auto; text-align: center;">
+
+  
+<div class="HeadBorder fontTitle" style="width: 500px; ">Select Target Project Path</div> 
+<div id="container" style="border: none; background-color: #DDDDDD;">
+  <table border=0 id="header">
+  <tr><td colspan="2" style="border: none; vertical-align: middle; height: 50px; background-color: #DDDDDD;"><div id="path"> </div></td></tr>
+    
+    <tr style="background-color: #DDDDDD; border-color: #DDDDDD;">  
+       
+       <td align="center" width="5%">
+        <input type="button" value="Select" onclick="selectFolder()" style = "width: 50%;">
+       </td>
+       <td align="center" width="5%"> 
+        <input type="button" value="Cancel" onclick="cancelFolder()" style = "width: 50%;">
+      </td>
+    </tr>
+  </table>
+ 
+  <table width="450" align="center"  border="0" cellpadding="0" cellspacing="0" id="header">
+  <tr>
+  <td><div id="list">You must allow the ActiveX control to run in order to use this dialog.</div></td>
+  </tr>  
+  </table>
+  
+</div>
+
+</body>
+</html>
+

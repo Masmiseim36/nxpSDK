@@ -22,7 +22,7 @@ static void UART_RTOS_Callback(UART_Type *base, uart_handle_t *state, status_t s
     BaseType_t xHigherPriorityTaskWoken, xResult;
 
     xHigherPriorityTaskWoken = pdFALSE;
-    xResult = pdFAIL;
+    xResult                  = pdFAIL;
 
     if (status == kStatus_UART_RxIdle)
     {
@@ -93,7 +93,7 @@ int UART_RTOS_Init(uart_rtos_handle_t *handle, uart_handle_t *t_handle, const ua
         return kStatus_InvalidArgument;
     }
 
-    handle->base = cfg->base;
+    handle->base    = cfg->base;
     handle->t_state = t_handle;
 #if (configSUPPORT_STATIC_ALLOCATION == 1)
     handle->txSemaphore = xSemaphoreCreateMutexStatic(&handle->txSemaphoreBuffer);
@@ -117,7 +117,7 @@ int UART_RTOS_Init(uart_rtos_handle_t *handle, uart_handle_t *t_handle, const ua
 #if (configSUPPORT_STATIC_ALLOCATION == 1)
     handle->txEvent = xEventGroupCreateStatic(&handle->txEventBuffer);
 #else
-    handle->txEvent = xEventGroupCreate();
+    handle->txEvent     = xEventGroupCreate();
 #endif
     if (NULL == handle->txEvent)
     {
@@ -128,7 +128,7 @@ int UART_RTOS_Init(uart_rtos_handle_t *handle, uart_handle_t *t_handle, const ua
 #if (configSUPPORT_STATIC_ALLOCATION == 1)
     handle->rxEvent = xEventGroupCreateStatic(&handle->rxEventBuffer);
 #else
-    handle->rxEvent = xEventGroupCreate();
+    handle->rxEvent     = xEventGroupCreate();
 #endif
     if (NULL == handle->rxEvent)
     {
@@ -140,7 +140,7 @@ int UART_RTOS_Init(uart_rtos_handle_t *handle, uart_handle_t *t_handle, const ua
     UART_GetDefaultConfig(&defcfg);
 
     defcfg.baudRate_Bps = cfg->baudrate;
-    defcfg.parityMode = cfg->parity;
+    defcfg.parityMode   = cfg->parity;
 #if defined(FSL_FEATURE_UART_HAS_STOP_BIT_CONFIG_SUPPORT) && FSL_FEATURE_UART_HAS_STOP_BIT_CONFIG_SUPPORT
     defcfg.stopBitCount = cfg->stopbits;
 #endif
@@ -184,7 +184,7 @@ int UART_RTOS_Deinit(uart_rtos_handle_t *handle)
     vSemaphoreDelete(handle->rxSemaphore);
 
     /* Invalidate the handle */
-    handle->base = NULL;
+    handle->base    = NULL;
     handle->t_state = NULL;
 
     return 0;
@@ -231,7 +231,7 @@ int UART_RTOS_Send(uart_rtos_handle_t *handle, const uint8_t *buffer, uint32_t l
         return kStatus_Fail;
     }
 
-    handle->txTransfer.data = (uint8_t *)buffer;
+    handle->txTransfer.data     = (uint8_t *)buffer;
     handle->txTransfer.dataSize = (uint32_t)length;
 
     /* Non-blocking call */
@@ -272,8 +272,8 @@ int UART_RTOS_Send(uart_rtos_handle_t *handle, const uint8_t *buffer, uint32_t l
 int UART_RTOS_Receive(uart_rtos_handle_t *handle, uint8_t *buffer, uint32_t length, size_t *received)
 {
     EventBits_t ev;
-    size_t n = 0;
-    int retval = kStatus_Fail;
+    size_t n              = 0;
+    int retval            = kStatus_Fail;
     size_t local_received = 0;
 
     if (NULL == handle->base)
@@ -301,7 +301,7 @@ int UART_RTOS_Receive(uart_rtos_handle_t *handle, uint8_t *buffer, uint32_t leng
         return kStatus_Fail;
     }
 
-    handle->rxTransfer.data = buffer;
+    handle->rxTransfer.data     = buffer;
     handle->rxTransfer.dataSize = (uint32_t)length;
 
     /* Non-blocking call */
@@ -317,7 +317,7 @@ int UART_RTOS_Receive(uart_rtos_handle_t *handle, uint8_t *buffer, uint32_t leng
         /* Prevent false indication of successful transfer in next call of UART_RTOS_Receive.
            RTOS_UART_COMPLETE flag could be set meanwhile overrun is handled */
         xEventGroupClearBits(handle->rxEvent, RTOS_UART_COMPLETE);
-        retval = kStatus_UART_RxHardwareOverrun;
+        retval         = kStatus_UART_RxHardwareOverrun;
         local_received = 0;
     }
     else if (ev & RTOS_UART_RING_BUFFER_OVERRUN)
@@ -327,12 +327,12 @@ int UART_RTOS_Receive(uart_rtos_handle_t *handle, uint8_t *buffer, uint32_t leng
         /* Prevent false indication of successful transfer in next call of UART_RTOS_Receive.
            RTOS_UART_COMPLETE flag could be set meanwhile overrun is handled */
         xEventGroupClearBits(handle->rxEvent, RTOS_UART_COMPLETE);
-        retval = kStatus_UART_RxRingBufferOverrun;
+        retval         = kStatus_UART_RxRingBufferOverrun;
         local_received = 0;
     }
     else if (ev & RTOS_UART_COMPLETE)
     {
-        retval = kStatus_Success;
+        retval         = kStatus_Success;
         local_received = length;
     }
 

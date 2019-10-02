@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -28,10 +28,10 @@ const uint8_t g_tipString[] =
     "USART CMSIS interrupt example\r\nBoard receives 8 characters then sends them out\r\nNow please input:\r\n";
 uint8_t g_txBuffer[ECHO_BUFFER_LENGTH] = {0};
 uint8_t g_rxBuffer[ECHO_BUFFER_LENGTH] = {0};
-volatile bool rxBufferEmpty = true;
-volatile bool txBufferFull = false;
-volatile bool txOnGoing = false;
-volatile bool rxOnGoing = false;
+volatile bool rxBufferEmpty            = true;
+volatile bool txBufferFull             = false;
+volatile bool txOnGoing                = false;
+volatile bool rxOnGoing                = false;
 
 /*******************************************************************************
  * Code
@@ -52,13 +52,13 @@ void USART_SignalEvent_t(uint32_t event)
     if (ARM_USART_EVENT_SEND_COMPLETE == event)
     {
         txBufferFull = false;
-        txOnGoing = false;
+        txOnGoing    = false;
     }
 
     if (ARM_USART_EVENT_RECEIVE_COMPLETE == event)
     {
         rxBufferEmpty = false;
-        rxOnGoing = false;
+        rxOnGoing     = false;
     }
 }
 
@@ -92,14 +92,14 @@ int main(void)
         {
             memcpy(g_txBuffer, g_rxBuffer, ECHO_BUFFER_LENGTH);
             rxBufferEmpty = true;
-            txBufferFull = true;
+            txBufferFull  = true;
         }
         /* If g_txBuffer is empty and g_rxBuffer is full, copy g_rxBuffer to g_txBuffer. */
         if ((!rxBufferEmpty) && (!txBufferFull))
         {
             memcpy(g_txBuffer, g_rxBuffer, ECHO_BUFFER_LENGTH);
             rxBufferEmpty = true;
-            txBufferFull = true;
+            txBufferFull  = true;
         }
 
         /* If RX is idle and g_rxBuffer is empty, start to read data to g_rxBuffer. */

@@ -55,15 +55,15 @@ board: FRDM-KV31F
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define MCG_PLL_DISABLE                                   0U  /*!< MCGPLLCLK disabled */
-#define OSC_ER_CLK_DISABLE                                0U  /*!< Disable external reference clock */
-#define SIM_CLKOUT_SEL_FLEXBUS_CLK                        0U  /*!< CLKOUT pin clock select: FlexBus clock */
-#define SIM_LPUART_CLK_SEL_OSCERCLK_CLK                   2U  /*!< LPUART clock select: OSCERCLK clock */
-#define SIM_OSC32KSEL_LPO_CLK                             3U  /*!< OSC32KSEL select: LPO clock */
-#define SIM_OSC32KSEL_OSC32KCLK_CLK                       0U  /*!< OSC32KSEL select: OSC32KCLK clock */
-#define SIM_PLLFLLSEL_IRC48MCLK_CLK                       3U  /*!< PLLFLL select: IRC48MCLK clock */
-#define SIM_PLLFLLSEL_MCGFLLCLK_CLK                       0U  /*!< PLLFLL select: MCGFLLCLK clock */
-#define SIM_TRACE_CLK_SEL_CORE_SYSTEM_CLK                 1U  /*!< Trace clock select: Core/system clock */
+#define MCG_PLL_DISABLE 0U                   /*!< MCGPLLCLK disabled */
+#define OSC_ER_CLK_DISABLE 0U                /*!< Disable external reference clock */
+#define SIM_CLKOUT_SEL_FLEXBUS_CLK 0U        /*!< CLKOUT pin clock select: FlexBus clock */
+#define SIM_LPUART_CLK_SEL_OSCERCLK_CLK 2U   /*!< LPUART clock select: OSCERCLK clock */
+#define SIM_OSC32KSEL_LPO_CLK 3U             /*!< OSC32KSEL select: LPO clock */
+#define SIM_OSC32KSEL_OSC32KCLK_CLK 0U       /*!< OSC32KSEL select: OSC32KCLK clock */
+#define SIM_PLLFLLSEL_IRC48MCLK_CLK 3U       /*!< PLLFLL select: IRC48MCLK clock */
+#define SIM_PLLFLLSEL_MCGFLLCLK_CLK 0U       /*!< PLLFLL select: MCGFLLCLK clock */
+#define SIM_TRACE_CLK_SEL_CORE_SYSTEM_CLK 1U /*!< Trace clock select: Core/system clock */
 
 /*******************************************************************************
  * Variables
@@ -154,40 +154,36 @@ sources:
 /*******************************************************************************
  * Variables for BOARD_BootClockHSRUN configuration
  ******************************************************************************/
-const mcg_config_t mcgConfig_BOARD_BootClockHSRUN =
-    {
-        .mcgMode = kMCG_ModePEE,                  /* PEE - PLL Engaged External */
-        .irclkEnableMode = kMCG_IrclkEnable,      /* MCGIRCLK enabled, MCGIRCLK disabled in STOP mode */
-        .ircs = kMCG_IrcFast,                     /* Fast internal reference clock selected */
-        .fcrdiv = 0x0U,                           /* Fast IRC divider: divided by 1 */
-        .frdiv = 0x0U,                            /* FLL reference clock divider: divided by 32 */
-        .drs = kMCG_DrsLow,                       /* Low frequency range */
-        .dmx32 = kMCG_Dmx32Default,               /* DCO has a default range of 25% */
-        .oscsel = kMCG_OscselOsc,                 /* Selects System Oscillator (OSCCLK) */
-        .pll0Config =
-            {
-                .enableMode = MCG_PLL_DISABLE,    /* MCGPLLCLK disabled */
-                .prdiv = 0x2U,                    /* PLL Reference divider: divided by 3 */
-                .vdiv = 0x15U,                    /* VCO divider: multiplied by 45 */
-            },
-    };
-const sim_clock_config_t simConfig_BOARD_BootClockHSRUN =
-    {
-        .pllFllSel = SIM_PLLFLLSEL_IRC48MCLK_CLK, /* PLLFLL select: IRC48MCLK clock */
-        .er32kSrc = SIM_OSC32KSEL_LPO_CLK,        /* OSC32KSEL select: LPO clock */
-        .clkdiv1 = 0x1340000U,                    /* SIM_CLKDIV1 - OUTDIV1: /1, OUTDIV2: /2, OUTDIV3: /4, OUTDIV4: /5 */
-    };
-const osc_config_t oscConfig_BOARD_BootClockHSRUN =
-    {
-        .freq = 8000000U,                         /* Oscillator frequency: 8000000Hz */
-        .capLoad = (kOSC_Cap2P | kOSC_Cap16P),    /* Oscillator capacity load: 18pF */
-        .workMode = kOSC_ModeOscLowPower,         /* Oscillator low power */
-        .oscerConfig =
-            {
-                .enableMode = kOSC_ErClkEnable,   /* Enable external reference clock, disable external reference clock in STOP mode */
-                .erclkDiv = 0,                    /* Divider for OSCERCLK: divided by 1 */
-            }
-    };
+const mcg_config_t mcgConfig_BOARD_BootClockHSRUN = {
+    .mcgMode         = kMCG_ModePEE,      /* PEE - PLL Engaged External */
+    .irclkEnableMode = kMCG_IrclkEnable,  /* MCGIRCLK enabled, MCGIRCLK disabled in STOP mode */
+    .ircs            = kMCG_IrcFast,      /* Fast internal reference clock selected */
+    .fcrdiv          = 0x0U,              /* Fast IRC divider: divided by 1 */
+    .frdiv           = 0x0U,              /* FLL reference clock divider: divided by 32 */
+    .drs             = kMCG_DrsLow,       /* Low frequency range */
+    .dmx32           = kMCG_Dmx32Default, /* DCO has a default range of 25% */
+    .oscsel          = kMCG_OscselOsc,    /* Selects System Oscillator (OSCCLK) */
+    .pll0Config =
+        {
+            .enableMode = MCG_PLL_DISABLE, /* MCGPLLCLK disabled */
+            .prdiv      = 0x2U,            /* PLL Reference divider: divided by 3 */
+            .vdiv       = 0x15U,           /* VCO divider: multiplied by 45 */
+        },
+};
+const sim_clock_config_t simConfig_BOARD_BootClockHSRUN = {
+    .pllFllSel = SIM_PLLFLLSEL_IRC48MCLK_CLK, /* PLLFLL select: IRC48MCLK clock */
+    .er32kSrc  = SIM_OSC32KSEL_LPO_CLK,       /* OSC32KSEL select: LPO clock */
+    .clkdiv1   = 0x1340000U,                  /* SIM_CLKDIV1 - OUTDIV1: /1, OUTDIV2: /2, OUTDIV3: /4, OUTDIV4: /5 */
+};
+const osc_config_t oscConfig_BOARD_BootClockHSRUN = {
+    .freq        = 8000000U,                   /* Oscillator frequency: 8000000Hz */
+    .capLoad     = (kOSC_Cap2P | kOSC_Cap16P), /* Oscillator capacity load: 18pF */
+    .workMode    = kOSC_ModeOscLowPower,       /* Oscillator low power */
+    .oscerConfig = {
+        .enableMode =
+            kOSC_ErClkEnable, /* Enable external reference clock, disable external reference clock in STOP mode */
+        .erclkDiv = 0,        /* Divider for OSCERCLK: divided by 1 */
+    }};
 
 /*******************************************************************************
  * Code for BOARD_BootClockHSRUN configuration
@@ -206,14 +202,12 @@ void BOARD_BootClockHSRUN(void)
     CLOCK_InitOsc0(&oscConfig_BOARD_BootClockHSRUN);
     CLOCK_SetXtal0Freq(oscConfig_BOARD_BootClockHSRUN.freq);
     /* Configure the Internal Reference clock (MCGIRCLK). */
-    CLOCK_SetInternalRefClkConfig(mcgConfig_BOARD_BootClockHSRUN.irclkEnableMode,
-                                  mcgConfig_BOARD_BootClockHSRUN.ircs, 
+    CLOCK_SetInternalRefClkConfig(mcgConfig_BOARD_BootClockHSRUN.irclkEnableMode, mcgConfig_BOARD_BootClockHSRUN.ircs,
                                   mcgConfig_BOARD_BootClockHSRUN.fcrdiv);
     /* Configure FLL external reference divider (FRDIV). */
     CLOCK_CONFIG_SetFllExtRefDiv(mcgConfig_BOARD_BootClockHSRUN.frdiv);
     /* Set MCG to PEE mode. */
-    CLOCK_BootToPeeMode(mcgConfig_BOARD_BootClockHSRUN.oscsel,
-                        kMCG_PllClkSelPll0,
+    CLOCK_BootToPeeMode(mcgConfig_BOARD_BootClockHSRUN.oscsel, kMCG_PllClkSelPll0,
                         &mcgConfig_BOARD_BootClockHSRUN.pll0Config);
     /* Set the clock configuration in SIM module. */
     CLOCK_SetSimConfig(&simConfig_BOARD_BootClockHSRUN);
@@ -264,40 +258,35 @@ sources:
 /*******************************************************************************
  * Variables for BOARD_BootClockVLPR configuration
  ******************************************************************************/
-const mcg_config_t mcgConfig_BOARD_BootClockVLPR =
-    {
-        .mcgMode = kMCG_ModeBLPI,                 /* BLPI - Bypassed Low Power Internal */
-        .irclkEnableMode = kMCG_IrclkEnable,      /* MCGIRCLK enabled, MCGIRCLK disabled in STOP mode */
-        .ircs = kMCG_IrcFast,                     /* Fast internal reference clock selected */
-        .fcrdiv = 0x0U,                           /* Fast IRC divider: divided by 1 */
-        .frdiv = 0x0U,                            /* FLL reference clock divider: divided by 32 */
-        .drs = kMCG_DrsLow,                       /* Low frequency range */
-        .dmx32 = kMCG_Dmx32Default,               /* DCO has a default range of 25% */
-        .oscsel = kMCG_OscselOsc,                 /* Selects System Oscillator (OSCCLK) */
-        .pll0Config =
-            {
-                .enableMode = MCG_PLL_DISABLE,    /* MCGPLLCLK disabled */
-                .prdiv = 0x0U,                    /* PLL Reference divider: divided by 1 */
-                .vdiv = 0x0U,                     /* VCO divider: multiplied by 24 */
-            },
-    };
-const sim_clock_config_t simConfig_BOARD_BootClockVLPR =
-    {
-        .pllFllSel = SIM_PLLFLLSEL_MCGFLLCLK_CLK, /* PLLFLL select: MCGFLLCLK clock */
-        .er32kSrc = SIM_OSC32KSEL_OSC32KCLK_CLK,  /* OSC32KSEL select: OSC32KCLK clock */
-        .clkdiv1 = 0x40000U,                      /* SIM_CLKDIV1 - OUTDIV1: /1, OUTDIV2: /1, OUTDIV3: /1, OUTDIV4: /5 */
-    };
-const osc_config_t oscConfig_BOARD_BootClockVLPR =
-    {
-        .freq = 0U,                               /* Oscillator frequency: 0Hz */
-        .capLoad = (kOSC_Cap8P),                  /* Oscillator capacity load: 8pF */
-        .workMode = kOSC_ModeOscLowPower,         /* Oscillator low power */
-        .oscerConfig =
-            {
-                .enableMode = OSC_ER_CLK_DISABLE, /* Disable external reference clock */
-                .erclkDiv = 0,                    /* Divider for OSCERCLK: divided by 1 */
-            }
-    };
+const mcg_config_t mcgConfig_BOARD_BootClockVLPR = {
+    .mcgMode         = kMCG_ModeBLPI,     /* BLPI - Bypassed Low Power Internal */
+    .irclkEnableMode = kMCG_IrclkEnable,  /* MCGIRCLK enabled, MCGIRCLK disabled in STOP mode */
+    .ircs            = kMCG_IrcFast,      /* Fast internal reference clock selected */
+    .fcrdiv          = 0x0U,              /* Fast IRC divider: divided by 1 */
+    .frdiv           = 0x0U,              /* FLL reference clock divider: divided by 32 */
+    .drs             = kMCG_DrsLow,       /* Low frequency range */
+    .dmx32           = kMCG_Dmx32Default, /* DCO has a default range of 25% */
+    .oscsel          = kMCG_OscselOsc,    /* Selects System Oscillator (OSCCLK) */
+    .pll0Config =
+        {
+            .enableMode = MCG_PLL_DISABLE, /* MCGPLLCLK disabled */
+            .prdiv      = 0x0U,            /* PLL Reference divider: divided by 1 */
+            .vdiv       = 0x0U,            /* VCO divider: multiplied by 24 */
+        },
+};
+const sim_clock_config_t simConfig_BOARD_BootClockVLPR = {
+    .pllFllSel = SIM_PLLFLLSEL_MCGFLLCLK_CLK, /* PLLFLL select: MCGFLLCLK clock */
+    .er32kSrc  = SIM_OSC32KSEL_OSC32KCLK_CLK, /* OSC32KSEL select: OSC32KCLK clock */
+    .clkdiv1   = 0x40000U,                    /* SIM_CLKDIV1 - OUTDIV1: /1, OUTDIV2: /1, OUTDIV3: /1, OUTDIV4: /5 */
+};
+const osc_config_t oscConfig_BOARD_BootClockVLPR = {
+    .freq        = 0U,                   /* Oscillator frequency: 0Hz */
+    .capLoad     = (kOSC_Cap8P),         /* Oscillator capacity load: 8pF */
+    .workMode    = kOSC_ModeOscLowPower, /* Oscillator low power */
+    .oscerConfig = {
+        .enableMode = OSC_ER_CLK_DISABLE, /* Disable external reference clock */
+        .erclkDiv   = 0,                  /* Divider for OSCERCLK: divided by 1 */
+    }};
 
 /*******************************************************************************
  * Code for BOARD_BootClockVLPR configuration
@@ -307,8 +296,7 @@ void BOARD_BootClockVLPR(void)
     /* Set the system clock dividers in SIM to safe value. */
     CLOCK_SetSimSafeDivs();
     /* Set MCG to BLPI mode. */
-    CLOCK_BootToBlpiMode(mcgConfig_BOARD_BootClockVLPR.fcrdiv,
-                         mcgConfig_BOARD_BootClockVLPR.ircs,
+    CLOCK_BootToBlpiMode(mcgConfig_BOARD_BootClockVLPR.fcrdiv, mcgConfig_BOARD_BootClockVLPR.ircs,
                          mcgConfig_BOARD_BootClockVLPR.irclkEnableMode);
     /* Set the clock configuration in SIM module. */
     CLOCK_SetSimConfig(&simConfig_BOARD_BootClockVLPR);
@@ -325,4 +313,3 @@ void BOARD_BootClockVLPR(void)
     /* Set SystemCoreClock variable. */
     SystemCoreClock = BOARD_BOOTCLOCKVLPR_CORE_CLOCK;
 }
-

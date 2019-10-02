@@ -9,6 +9,14 @@ data back to master, so the address of the receive buffer is &rxDataPolling[64].
 In this example, one spi instance as slave and another spi instance on the other board as master. Master sends a 
 piece of data to slave, and receive a piece of data from slave. This example checks if the data received from 
 master is correct. And slave will print what it received.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -62,11 +70,6 @@ The received data of half-duplex polling transfer are:
 
 Slave transfer completed.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

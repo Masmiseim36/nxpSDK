@@ -2,7 +2,6 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
-    <definition extID="RTE_Device.MKV11Z7"/>
     <definition extID="component.lists.MKV11Z7"/>
     <definition extID="component.serial_manager.MKV11Z7"/>
     <definition extID="component.serial_manager_uart.MKV11Z7"/>
@@ -31,7 +30,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmkv11z_cmsis_i2c_read_accel_value_transfer" name="cmsis_i2c_read_accel_value_transfer" category="cmsis_driver_examples/i2c" dependency="platform.drivers.port.MKV11Z7 platform.drivers.clock.MKV11Z7 platform.drivers.edma.MKV11Z7 platform.drivers.dmamux.MKV11Z7 platform.drivers.i2c.MKV11Z7 platform.drivers.i2c_edma.MKV11Z7 platform.drivers.i2c_cmsis_edma.MKV11Z7 platform.drivers.common.MKV11Z7 device.MKV11Z7_CMSIS.MKV11Z7 utility.debug_console.MKV11Z7 component.uart_adapter.MKV11Z7 component.serial_manager.MKV11Z7 component.serial_manager_uart.MKV11Z7 platform.drivers.uart.MKV11Z7 component.lists.MKV11Z7 device.MKV11Z7_startup.MKV11Z7 platform.drivers.smc.MKV11Z7 platform.drivers.gpio.MKV11Z7 platform.utilities.assert.MKV11Z7 platform.Include_core_cm0plus.MKV11Z7 platform.Include_common.MKV11Z7 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKV11Z7 platform.CMSIS_Driver_Include.Common_CMSISInclude.MKV11Z7 RTE_Device.MKV11Z7" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmkv11z_cmsis_i2c_read_accel_value_transfer" name="cmsis_i2c_read_accel_value_transfer" category="cmsis_driver_examples/i2c" dependency="platform.drivers.port.MKV11Z7 platform.drivers.clock.MKV11Z7 platform.drivers.edma.MKV11Z7 platform.drivers.dmamux.MKV11Z7 platform.drivers.i2c.MKV11Z7 platform.drivers.i2c_edma.MKV11Z7 platform.drivers.i2c_cmsis_edma.MKV11Z7 platform.drivers.common.MKV11Z7 device.MKV11Z7_CMSIS.MKV11Z7 utility.debug_console.MKV11Z7 component.uart_adapter.MKV11Z7 component.serial_manager.MKV11Z7 component.serial_manager_uart.MKV11Z7 platform.drivers.uart.MKV11Z7 component.lists.MKV11Z7 device.MKV11Z7_startup.MKV11Z7 platform.drivers.smc.MKV11Z7 platform.drivers.gpio.MKV11Z7 platform.utilities.assert.MKV11Z7 platform.Include_core_cm0plus.MKV11Z7 platform.Include_common.MKV11Z7 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKV11Z7 platform.CMSIS_Driver_Include.Common_CMSISInclude.MKV11Z7">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -73,6 +72,10 @@
     </source>
     <source path="boards/frdmkv11z/cmsis_driver_examples/i2c/read_accel_value_transfer/mdk" target_path="src" type="linker" toolchain="mdk">
       <files mask="MKV11Z128xxx7_flash.scf"/>
+    </source>
+    <source path="boards/frdmkv11z/cmsis_driver_examples/i2c/read_accel_value_transfer" target_path="CMSIS" type="c_include" exclude="true">
+      <files mask="Driver_Common.h"/>
+      <files mask="Driver_I2C.h"/>
     </source>
     <source path="boards/frdmkv11z/cmsis_driver_examples/i2c/read_accel_value_transfer" target_path="board" type="c_include">
       <files mask="RTE_Device.h"/>

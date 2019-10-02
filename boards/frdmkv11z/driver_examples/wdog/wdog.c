@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -29,10 +29,10 @@
  ******************************************************************************/
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 static WDOG_Type *wdog_base = WDOG;
-static RCM_Type *rcm_base = RCM;
+static RCM_Type *rcm_base   = RCM;
 
 /*******************************************************************************
  * Code
@@ -81,7 +81,7 @@ int main(void)
     if (wdog_reset_count == 0)
     {
         /*quick test*/
-        test_config.testMode = kWDOG_QuickTest;
+        test_config.testMode     = kWDOG_QuickTest;
         test_config.timeoutValue = 0xfffffu;
         /*Not necessary to configure tested byte for quick test, just to get rid of using uninitialized value check*/
         test_config.testedByte = kWDOG_TestByte0;
@@ -97,16 +97,16 @@ int main(void)
     else if (wdog_reset_count == 1)
     {
         PRINTF("--- Quick test done ---\r\n");
-    /*
-     * config.enableWdog = true;
-     * config.clockSource = kWDOG_LpoClockSource;
-     * config.prescaler = kWDOG_ClockPrescalerDivide1;
-     * config.enableUpdate = true;
-     * config.enableInterrupt = false;
-     * config.enableWindowMode = false;
-     * config.windowValue = 0U;
-     * config.timeoutValue = 0xFFFFU;
-     */
+        /*
+         * config.enableWdog = true;
+         * config.clockSource = kWDOG_LpoClockSource;
+         * config.prescaler = kWDOG_ClockPrescalerDivide1;
+         * config.enableUpdate = true;
+         * config.enableInterrupt = false;
+         * config.enableWindowMode = false;
+         * config.windowValue = 0U;
+         * config.timeoutValue = 0xFFFFU;
+         */
         WDOG_GetDefaultConfig(&config);
         config.timeoutValue = 0x7ffU;
         /* wdog refresh test in none-window mode */
@@ -130,20 +130,20 @@ int main(void)
     else if (wdog_reset_count == 2)
     {
         PRINTF("--- None-window mode refresh test done ---\r\n");
-    /*
-     * config.enableWdog = true;
-     * config.clockSource = kWDOG_LpoClockSource;
-     * config.prescaler = kWDOG_ClockPrescalerDivide1;
-     * config.enableUpdate = true;
-     * config.enableInterrupt = false;
-     * config.enableWindowMode = false;
-     * config.windowValue = 0U;
-     * config.timeoutValue = 0xFFFFU;
-     */
+        /*
+         * config.enableWdog = true;
+         * config.clockSource = kWDOG_LpoClockSource;
+         * config.prescaler = kWDOG_ClockPrescalerDivide1;
+         * config.enableUpdate = true;
+         * config.enableInterrupt = false;
+         * config.enableWindowMode = false;
+         * config.windowValue = 0U;
+         * config.timeoutValue = 0xFFFFU;
+         */
         WDOG_GetDefaultConfig(&config);
-        config.timeoutValue = 0x7ffU;
+        config.timeoutValue     = 0x7ffU;
         config.enableWindowMode = true;
-        config.windowValue = 0x1ffU;
+        config.windowValue      = 0x1ffU;
         /* wdog refresh test in window mode */
         PRINTF("\r\n--- Window mode refresh test start---\r\n");
         WDOG_Init(wdog_base, &config);

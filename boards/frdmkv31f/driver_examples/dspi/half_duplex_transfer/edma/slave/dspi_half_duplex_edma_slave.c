@@ -1,7 +1,7 @@
 /*
  * Copyright 2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -58,7 +58,7 @@ void DSPI_SlaveUserCallback(SPI_Type *base, dspi_slave_edma_handle_t *handle, st
 
 int main(void)
 {
-    uint32_t i = 0;
+    uint32_t i           = 0;
     dspi_transfer_t xfer = {0};
     dspi_slave_config_t slaveConfig;
 
@@ -99,14 +99,14 @@ int main(void)
     EDMA_Init(EXAMPLE_DSPI_SLAVE_DMA_BASEADDR, &userConfig);
 
     /* Slave config */
-    slaveConfig.whichCtar = kDSPI_Ctar0;
-    slaveConfig.ctarConfig.bitsPerFrame = 8U;
-    slaveConfig.ctarConfig.cpol = kDSPI_ClockPolarityActiveHigh;
-    slaveConfig.ctarConfig.cpha = kDSPI_ClockPhaseFirstEdge;
-    slaveConfig.enableContinuousSCK = false;
-    slaveConfig.enableRxFifoOverWrite = false;
+    slaveConfig.whichCtar                  = kDSPI_Ctar0;
+    slaveConfig.ctarConfig.bitsPerFrame    = 8U;
+    slaveConfig.ctarConfig.cpol            = kDSPI_ClockPolarityActiveHigh;
+    slaveConfig.ctarConfig.cpha            = kDSPI_ClockPhaseFirstEdge;
+    slaveConfig.enableContinuousSCK        = false;
+    slaveConfig.enableRxFifoOverWrite      = false;
     slaveConfig.enableModifiedTimingFormat = false;
-    slaveConfig.samplePoint = kDSPI_SckToSin0Clock;
+    slaveConfig.samplePoint                = kDSPI_SckToSin0Clock;
     DSPI_SlaveInit(EXAMPLE_DSPI_SLAVE_BASEADDR, &slaveConfig);
 
     /* Set up dspi slave first */
@@ -118,8 +118,8 @@ int main(void)
                                        &dspiEdmaSlaveRxRegToRxDataHandle, &dspiEdmaSlaveTxDataToTxRegHandle);
 
     /* Receive data from master board.*/
-    xfer.txData = dataBuff;
-    xfer.rxData = &dataBuff[RX_BUFFER_INDEX];
+    xfer.txData   = dataBuff;
+    xfer.rxData   = &dataBuff[RX_BUFFER_INDEX];
     xfer.dataSize = TRANSFER_DATA_SIZE;
     DSPI_SlaveTransferEDMA(EXAMPLE_DSPI_SLAVE_BASEADDR, &g_dspi_edma_s_handle, &xfer);
 

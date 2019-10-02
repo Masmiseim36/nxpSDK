@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html style="text-align: center;">     
+  <head>       
+    <meta http-equiv="content-type" content="text/html; charset=windows-1250">       
+    <meta name="generator" content="PSPad editor, www.pspad.com">       
+    <title>    
+    </title>       
+    <link href="style.css" rel="stylesheet" type="text/css" />      
+    <script type="text/javascript" src="JS_functions\mainInclude.js"></script>
+    <script LANGUAGE="JavaScript" type ="text/javascript">
+      includeJSfiles();
+    </script>
+   </head>
+        
+   <body id="Parameters" onload="initLoadFormParamValues()"  background="images/pozadi.png" style="display: inline-block; margin: 10px auto; text-align: center;">                                          
+   <!-- <OBJECT id="MCB_PC_Master_Services1" style="display:none;" classid="clsid:48A185F1-FFDB-11D3-80E3-00C04F176153" name="pcm"></OBJECT>    -->
+    <OBJECT id="pcm" style="display:none;" classid="clsid:48A185F1-FFDB-11D3-80E3-00C04F176153"></OBJECT> 
+    <OBJECT  CLASSID = "clsid:5220cb21-c88d-11cf-b347-00aa00a28331" style="display:none;">         
+        <PARAM NAME="LPKPath" VALUE="gmsctls.lpk">         
+    </OBJECT>  
+     <!-- Headline -->
+    <div class="HeadBorder fontTitle" style="width: 740px;">Input Application Parameters</div>   
+    <div>   
+       
+        <script>
+           // calc floating iFrame
+           document.write("<iframe id=\"calcFrame\" width=\"380\" frameborder=\"1\" scrolling=\"no\"  src=\"\" style=\" visibility:hidden; position:absolute; top:70px; left:200; \"></iframe>");
+        </script>
+        
+      <!-- header table-->             
+      <table style="width: 740px;" class="MainTab" >               
+        <tr>                 
+          <!--<form name="MainPage">      -->    
+            <td valign="top" style =" width:35%; padding-right: 10px;" >                      		                            
+              <!-- parameter table-->     
+              <fieldset  style="width: 100%" class="ContBox">
+                <legend class="fontControlLabel">Motor Parameters</legend>        
+                <table id="parameterTable" width="100%"  border="0" align="left" class="ContBoxTab">            
+              
+                  <script>
+                  // pole-pair number
+                  document.write( build_parameter_line( "pp","pp", "-", "Motor Pole-Pair Number, typical range <1;24>",0 , ""));
+                  // motor nominal phase current
+                  document.write( build_parameter_line( "Iph&nbsp;nom","I_ph_nom", "A", "Nominal Phase Current, typical range <0.5;10>", 0, ""));
+                  // motor nominal phase voltage
+                  document.write( build_parameter_line( "Uph&nbsp;nom","U_ph_nom", "V", "Nominal Phase Voltage, typical range <12;240>", 0, ""));
+                  // motor required maximal angular velocity
+                  document.write( build_parameter_line( "N&nbsp;nom","N_req", "rpm", "Nominal Motor Speed, typical range <500;20000>", 0, ""));
+                  </script>	
+                                    
+               </table>
+            </fieldset>     	                               
+            
+            <!-- parameter table-->     
+              <fieldset  style="width: 100%; "  class="ContBox">
+                <legend class="fontControlLabel">Hardware Scales</legend>        
+                <table id="parameterTable" width="100%" border="0" align="left" class="ContBoxTab">            
+             
+                  <script> 
+                  // phase current measurement scale
+                  document.write( build_parameter_line("I&nbsp;max","I_max", "A", "Phase Current Measurement Scale, typical range <0.5;15>", 0, ""));
+                  // DC-Bus voltage measurement scale
+                  document.write( build_parameter_line("U&nbsp;DCB&nbsp;max","UDC_max", "V", "DC-Bus Voltage Measurement Scale, typical range <12;450>", 0, ""));
+                  </script>		                            
+               </table>
+            </fieldset>
+          </td>                              
+          <td width="50%" align="right" valign="top" > 
+             <!-- application scales table-->   
+             <fieldset  style="width: 100%;"  class="ContBox" >
+             <legend class="fontControlLabel">Fault Limits</legend>        
+                <table id="parameterTable" width="100%;" border="0" align="left" class="ContBoxTab">              
+             
+                  <script>
+                  // Trip DC-Bus voltage for braking into resistor
+                  document.write( build_parameter_line("U&nbsp;DCB&nbsp;trip","UDC_trip", "V", "Trip DC-Bus Voltage for Braking into Resistor", 0, ""));
+                  // DC-Bus Undervoltage fault trigger
+                  document.write( build_parameter_line("U&nbsp;DCB&nbsp;under","UDC_under", "V", "DC-Bus Undervoltage fault trigger", 0, ""));
+                  // DC-Bus Undervoltage fault trigger
+                  document.write( build_parameter_line("U&nbsp;DCB&nbsp;over","UDC_over", "V", "DC-Bus Overvoltage fault trigger", 0, ""));
+                  // Over speed fault trigger
+                  document.write( build_parameter_line("N&nbsp;over","N_over", "rpm", "Over speed fault trigger", 0, ""));
+                  // Under speed fault trigger
+                  document.write( build_parameter_line("N&nbsp;min","N_min", "rpm", "Minimal motor controller speed", 0, ""));
+                </script>		                            
+          
+               </table>	
+             </fieldset>
+             <!-- application scales table-->   
+             <fieldset  style="width: 100%;;"  class="ContBox">
+             <legend class="fontControlLabel">Application Scales</legend>        
+                <table id="parameterTable" width="100%;" border="0" align="left" class="ContBoxTab">              
+              
+                 <script>
+                  // mechanical velocity measurement scale
+                  document.write( build_parameter_line("N&nbsp;max","N_max", "rpm", "Mechanical Speed Measurement Maximum Limit",0 , ""));
+                  // BEMF constant
+                  document.write( build_parameter_line( "ke","ke", "V.sec/rad", "Back-EMF Constant, typical range <0.00001;0.01>", 0, ""));
+                </script>
+         
+               </table>	
+             </fieldset>  
+             <fieldset  id="Alignment" style="width: 100%;;"  class="ContBox">
+             <legend class="fontControlLabel">Alignment</legend>        
+                  <!-- Curr alignment table-->   
+                 <fieldset  id="Curr_align" style="border: none; padding: 0px 0px 0px 0px;">
+                    <table width="100%" border="0" align="left" >              
+                    <tr><td>
+                    <script>
+                    // current  applied on D-axis for mechanical alignment
+                    document.write( build_parameter_line( "Align&nbsp;current","ALIGN_I", "A", "Current Applied on D-axis for Mechanical Rotor Alignment", 0, ""));
+                  </script>		                            
+                  </td></tr>
+                  </table>	
+                </fieldset>
+                <!-- Voltage alignment table-->
+                <fieldset  id="Volt_align" style="border: none; padding: 0px 0px 0px 0px;">
+                  <table width="100%;" border="0" align="left">              
+                    <tr><td>
+                    <script>
+                      // voltage  applied on D-axis for mechanical alignment
+                      document.write( build_parameter_line( "Align&nbsp;voltage","ALIGN_U", "V", "Voltage Applied on D-axis for Mechanical Rotor Alignment", 0, ""));
+                    </script>		                            
+                  </td></tr>
+                  </table>	
+                </fieldset>
+                <fieldset style="border: none;  padding: 0px 0px 0px 0px;">
+                <table width="100%;" border="0" align="left">              
+                    <tr><td>
+                    <script>
+                    // alignment duration
+                    document.write( build_parameter_line( "Align&nbsp;duration","ALIGN_T", "sec", "Time of rotor alignment", 0, ""));
+                    </script>	
+                    </td></tr>
+                </table> 
+                </fieldset>
+             </fieldset>
+            </td>                     
+         <!-- </form> -->                                                   
+        </tr>         
+      </table>                      
+      <table class = "fButtonGroup">               
+        <tr>
+            <td><input type="button" class="fButtonsEnabled" value="Update Target" id="ParamsUpdateFrm" onmouseup="clickUpdateParamFM()" /></td>
+          <td><input type="button" class="fButtonsDisabled" value="Reload Data" id="ReloadData" onclick="clickReloadData(); initLoadFormParamValues();" disabled="disabled" /></td>
+          <td><input type="button" class="fButtonsDisabled" value="Store Data" id="StoreData" onclick="clickStoreData()" disabled="disabled" /></td>
+        </tr>            
+      </table>                 
+      <!--<span style="visibility: hidden" face="sans-serif" id="txtErrMsg">.       
+      </span>          -->
+    </div>     
+  </body>
+</html>
+

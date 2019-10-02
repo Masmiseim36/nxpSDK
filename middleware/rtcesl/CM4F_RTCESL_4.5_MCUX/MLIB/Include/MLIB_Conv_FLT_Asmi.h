@@ -159,7 +159,7 @@ RTCESL_INLINE_OPTIM_SAVE
 RTCESL_INLINE_OPTIM_SET 
 static inline frac16_t MLIB_Conv_F16f_FAsmi(register float_t fltVal)
 {
-    register frac16_t f16Out;
+    register frac16_t f16Out=0;
 
     #if defined(__CC_ARM)                                   /* For ARM Compiler */
     register float_t fltConv = 32768.0f;

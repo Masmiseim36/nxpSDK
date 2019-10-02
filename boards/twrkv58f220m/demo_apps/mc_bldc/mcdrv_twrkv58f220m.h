@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,46 +9,65 @@
 #ifndef _MCDRV_TWR_KV58F220_H_
 #define _MCDRV_TWR_KV58F220_H_
 
-#include "fsl_device_registers.h"
-#include "m1_sm_ref_sol.h"
 #include "mcdrv_ftm_cmt.h"
 #include "mcdrv_pwm3ph_pwma.h"
 #include "mcdrv_mosfet_predrv_spi.h"
 #include "mcdrv_adc_hsadc.h"
+#include "fsl_xbara.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+/* Version info */
+#define MCRSP_VER "1.3.1" /* motor control package version */
 
+/* Application info */
+typedef struct 
+{
+    char cBoardID[15];
+    char cMotorType[4];
+    char cAppVer[5];
+}app_ver_t;
+   
 /* Structure used during clocks and modulo calculations */
 typedef struct _clock_setup
 {
-    uint32_t ui32CoreSystemClock;
-    uint32_t ui32FastBusClock;
-    uint32_t ui32BusFlashClock;
+    uint32_t ui32FastPeripheralClock;
+    uint32_t ui32BusClock;
     uint16_t ui16PwmFreq;
     uint16_t ui16PwmModulo;
     uint32_t ui32CmtTimerFreq;
     uint16_t ui16CtrlLoopFreq;
+    uint16_t ui16CtrlLoopModulo;
 } clock_setup_t;
 
 /* Define motor 1 ADC periphery (HSADC) */
-#define M1_MCDRV_ADC MCDRV_HSADC
+#define M1_MCDRV_ADC (MCDRV_HSADC)
 
 /* Define motor 1 3-ph PWM periphery */
-#define M1_MCDRV_PWM3PH MCDRV_PWMA
+#define M1_MCDRV_PWM3PH (MCDRV_PWMA) 
 
 /* Define motor 1 asynchronous time event*/
-#define M1_MCDRV_TMR_CMT MCDRV_FTM1
+#define M1_MCDRV_TMR_CMT (MCDRV_FTM1)
 
 /* Define motor 1 slow control loop timer */
-#define M1_MCDRV_TMR_SLOWLOOP MCDRV_FTM2
+#define M1_MCDRV_TMR_SLOWLOOP (MCDRV_FTM2)
 
 /* Define motor 1 ADC trigger PDB */
 #define M1_MCDRV_PDB MCDRV_PDB0
 
 /* Define motor 1 driver */
 #define M1_MCDRV_SPI_DRV3PH MCDRV_SPI_DRV
+/*******************************************************************************
+ * FreeMASTER communication constants
+ ******************************************************************************/
+/*! @brief The UART to use for FreeMASTER communication */
+#define BOARD_FMSTR_UART   (1) 
+#define BOARD_FMSTR_LPUART (2) 
+#define BOARD_FMSTR_UART_PORT UART0
+#define BOARD_FMSTR_UART_BAUDRATE 115200
+#define BOARD_FMSTR_UART_TYPE BOARD_FMSTR_UART 
+#define BOARD_FMSTR_USE_TSA (1)
 
 /******************************************************************************
  * Clock & PWM definition
@@ -221,6 +240,11 @@ extern const uint16_t bldcCommutationTableComp[16];
 #endif
 
 /******************************************************************************
+* Define motor 1 3-ph driver control functions
+******************************************************************************/
+#define M1_MCDRV_XBAR_PERIPH_INIT() InitXBAR()
+
+/******************************************************************************
  * Global variable definitions
  ******************************************************************************/
 extern mcdrv_pwm3ph_pwma_t g_sM1Pwm3ph;
@@ -244,6 +268,7 @@ void InitPDB(void);
 void InitHSADC(void);
 void InitSPI(void);
 void InitClock(void);
+void InitXBAR(void);
 
 #ifdef __cplusplus
 }

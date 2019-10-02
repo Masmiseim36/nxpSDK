@@ -74,7 +74,7 @@ static inline void AMCLIB_CtrlFluxWkngInit_F16_FCi(frac16_t f16InitVal,
 {
     GFLIB_CtrlPIpAWInit_F16(f16InitVal, &psCtrl->sFWPiParam);
     GDFLIB_FilterIIR1Init_F16 (&psCtrl->sIqErrII1Param);
-    psCtrl->bStopIntegFlag = FALSE; 
+
 }
 
 #if defined(__cplusplus) 

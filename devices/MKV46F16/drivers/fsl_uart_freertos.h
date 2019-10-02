@@ -42,11 +42,11 @@ typedef struct _uart_rtos_config
 } uart_rtos_config_t;
 
 /*!
-* @cond RTOS_PRIVATE
-* @name UART FreeRTOS handler
-*
-* These are the only valid states for txEvent and rxEvent (uart_rtos_handle_t).
-*/
+ * @cond RTOS_PRIVATE
+ * @name UART FreeRTOS handler
+ *
+ * These are the only valid states for txEvent and rxEvent (uart_rtos_handle_t).
+ */
 /*@{*/
 /*! @brief Event flag - transfer complete. */
 #define RTOS_UART_COMPLETE 0x1

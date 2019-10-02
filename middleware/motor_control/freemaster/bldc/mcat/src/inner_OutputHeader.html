@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html style="text-align: center;">
+  <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <style type="text/css">
+    .xlink {cursor:pointer}
+    //.fontControlLabel {font-size:15px; font-family:verdana; font-weight: normal;text-align: center; font-weight: bold; padding: 4px;}  
+    
+ .hGenButton{
+    padding:0px;
+    border: 1px solid #888888;
+    color: rgb(136,13,19);
+    text-decoration:none;
+    background-color: transparent;  
+    text-align: center;
+    font-size:15px;
+    font-family:verdana;
+    font-weight: bold;
+    border-radius: 3px;
+    width: 400px; 
+    height: 30px;
+    cursor: pointer;
+    border-right: 3px solid #888888;
+    border-bottom: 3px solid #888888;
+}
+
+.hGenButton:hover{  
+    background-color:#DDDDDD;
+ }
+ 
+.hGenButton:active{ 
+    background: #F4F4F4 no-repeat scroll 6px 9px;
+    border-right: 1px solid #888888;
+    border-bottom:  1px solid #888888;
+    border-top: 3px solid #888888;
+    border-left: 3px solid #888888;
+}
+  </style> 
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="JS_functions\mainInclude.js"></script>
+  <script LANGUAGE="JavaScript" type ="text/javascript">
+     includeJSfiles();
+  </script>
+  </head>
+  <body id="HeaderFileTab" onload="" background="images/pozadi.png" style="display: inline-block; margin: 10px auto; text-align: center;">
+       <OBJECT id="MCB_PC_Master_Services1" style="display:none;" classid="clsid:48A185F1-FFDB-11D3-80E3-00C04F176153" name="pcm">	     
+    </OBJECT>	        
+    <OBJECT  style="display:none;" CLASSID = "clsid:5220cb21-c88d-11cf-b347-00aa00a28331">         
+      <PARAM NAME="LPKPath" VALUE="gmsctls.lpk">         
+    </OBJECT>           
+
+  <!--- Header ---> 
+  <div style="width: 740px;">
+  <table width="740px" cellspacing="3px"  > 
+    <tr>
+       <td><input type="button" class="hGenButton" value="Generate Configuration File" name="Save_h" id="Save_h_id" onclick="Save_h_click()" /></td>
+    </tr>                                               
+  </table>
+  <hr width="740" size="1" color="#8F8F8F" align="left" noshade>
+  <!--- Application roots --->
+  <table width="740px" cellspacing="2px"  border="0" >
+    <tr>
+      <td id = "headTable_Ntab"></td> 
+      <td id = "headTable_Dtab"></td>
+    </tr>
+    <tr>
+        <script>
+            var today       = new Date();
+            var mounth      = MounthConverter(today.getMonth());
+            var time_out;
+            var c = ":";
+            var hours       = today.getHours();
+            var minutes     = today.getMinutes();
+            var seconds     = today.getSeconds();
+
+            time_out = hours + c;
+            (minutes<10) ? (time_out += '0' + minutes + c) : (time_out += minutes + c);
+            (seconds<10) ? (time_out += '0' + seconds) : (time_out += seconds);
+
+            //get active motor to selct proper prefix
+            var prefixM = getActiveMotor();
+            var prefix = prefixM;
+
+            /*************** Read application settings from parent document tables ******/
+            var MotorsNumber    = parent.document.getElementById("MotorsNo").innerText;
+
+            // if single motor app then without prefix
+            //if (MotorsNumber == "Single") prefix = "";
+            var prefixM = getActiveMotor();
+
+            document.write(HTML_write_head_line("File Name:","{FM_project_loc}/" + parent.document.getElementById(prefixM + "ProjectPath").innerHTML + prefix.toLowerCase() + "bldc_appconfig.h"));
+            document.write(HTML_write_head_line("Date:",""+mounth+ " "+ today.getDate() + ", " + today.getFullYear() + ", " + time_out + ""));
+            document.write(HTML_write_head_line("Description:","Automatically generated file for static configuration of the BLDC control application"));
+
+        </script>
+    </tr>
+  </table>  
+
+  <hr width="740" size="1" color="#8F8F8F" align="left" noshade>
+  <!--- ************************* Body ************************************ --->
+  
+  <!--- Application Scales --->  
+  <table width="600px" cellspacing="1px"  border="0" >
+        <script>
+        
+        // input paramters
+        if(testActiveTab('Parameters'))
+            HTML_write_output_blocks('Parameters');
+       
+        // current loop              
+        if(testActiveTab('Control Loop'))
+            HTML_write_output_blocks('Control Loop');
+      
+        // Speed loop              
+        if(testActiveTab('Speed Loop'))
+          HTML_write_output_blocks('Speed Loop');
+          
+        // Sensorless BLDC control
+        if(testActiveTab('Sensorless'))
+          HTML_write_output_blocks('Sensorless');  
+        
+        // Cascade Control Structure              
+        //if(testActiveTab('Cascade'))
+        //  HTML_write_output_blocks('Cascade');
+          
+        // FreeMASTER Scales              
+        if(testActiveTab('Parameters'))
+          HTML_write_output_blocks('FM Scales');  
+        
+        </script>	
+    </table>   
+  
+  <hr width="740" size="2" color="#8F8F8F" align="left" noshade>
+
+  <table width="800px" cellspacing="2px"  border="0" >
+    <td>
+        <script>
+              document.write(HTML_write_head_line("End of Header File",""));
+        </script>
+    </td>
+  </table> 
+</div>
+  </body>
+</html>

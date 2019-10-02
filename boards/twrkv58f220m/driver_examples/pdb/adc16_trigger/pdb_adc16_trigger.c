@@ -86,7 +86,7 @@ void static DEMO_InitPDB_ADC(void)
 #endif /* FSL_FEATURE_ADC16_HAS_CALIBRATION */
     ADC16_EnableHardwareTrigger(DEMO_ADC_BASE, true);
 
-    adc16ChannelConfigStruct.channelNumber = DEMO_ADC_USER_CHANNEL;
+    adc16ChannelConfigStruct.channelNumber                        = DEMO_ADC_USER_CHANNEL;
     adc16ChannelConfigStruct.enableInterruptOnConversionCompleted = true; /* Enable the interrupt. */
 #if defined(FSL_FEATURE_ADC16_HAS_DIFF_MODE) && FSL_FEATURE_ADC16_HAS_DIFF_MODE
     adc16ChannelConfigStruct.enableDifferentialConversion = false;
@@ -161,8 +161,8 @@ int main(void)
     PDB_EnableInterrupts(DEMO_PDB_BASE, kPDB_DelayInterruptEnable);
 
     /* Configure the ADC Pre-Trigger. */
-    pdbAdcPreTriggerConfigStruct.enablePreTriggerMask = 1U << DEMO_PDB_ADC_PRETRIGGER_CHANNEL;
-    pdbAdcPreTriggerConfigStruct.enableOutputMask = 1U << DEMO_PDB_ADC_PRETRIGGER_CHANNEL;
+    pdbAdcPreTriggerConfigStruct.enablePreTriggerMask          = 1U << DEMO_PDB_ADC_PRETRIGGER_CHANNEL;
+    pdbAdcPreTriggerConfigStruct.enableOutputMask              = 1U << DEMO_PDB_ADC_PRETRIGGER_CHANNEL;
     pdbAdcPreTriggerConfigStruct.enableBackToBackOperationMask = 0U;
     PDB_SetADCPreTriggerConfig(DEMO_PDB_BASE, DEMO_PDB_ADC_TRIGGER_CHANNEL, &pdbAdcPreTriggerConfigStruct);
     PDB_SetADCPreTriggerDelayValue(DEMO_PDB_BASE, DEMO_PDB_ADC_TRIGGER_CHANNEL, DEMO_PDB_ADC_PRETRIGGER_CHANNEL, 200U);
@@ -174,7 +174,7 @@ int main(void)
     DEMO_InitPDB_ADC();
 
     g_PdbDelayInterruptCounter = 0U;
-    g_AdcInterruptCounter = 0U;
+    g_AdcInterruptCounter      = 0U;
 
     PRINTF("ADC Full Range: %d\r\n", g_Adc16_12bitFullRange);
     while (1)
@@ -183,7 +183,7 @@ int main(void)
         GETCHAR();
 
         g_PdbDelayInterruptFlag = false;
-        g_AdcInterruptFlag = false;
+        g_AdcInterruptFlag      = false;
         PDB_DoSoftwareTrigger(DEMO_PDB_BASE);
         while ((!g_PdbDelayInterruptFlag) || (!g_AdcInterruptFlag))
         {

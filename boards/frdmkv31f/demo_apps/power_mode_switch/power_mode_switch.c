@@ -25,8 +25,8 @@
 #define APP_DEBUG_UART_BAUDRATE 9600                 /* Debug console baud rate. */
 #define APP_DEBUG_UART_CLKSRC_NAME kCLOCK_CoreSysClk /* System clock */
 
-#define LLWU_LPTMR_IDX 0U       /* LLWU_M0IF */
-#define LLWU_WAKEUP_PIN_IDX 3U  /* LLWU_P3 */
+#define LLWU_LPTMR_IDX 0U      /* LLWU_M0IF */
+#define LLWU_WAKEUP_PIN_IDX 3U /* LLWU_P3 */
 #define LLWU_WAKEUP_PIN_TYPE kLLWU_ExternalPinRisingEdge
 
 #define APP_WAKEUP_BUTTON_PORT BOARD_SW2_PORT
@@ -95,9 +95,9 @@ static app_wakeup_source_t s_wakeupSource; /* Wakeup source.                 */
 void APP_SetClockVlpr(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 3U,        /* PLLFLLSEL select IRC48MCLK. */
-        .er32kSrc = 5U,         /* ERCLK32K selection, use RTC. */
-        .clkdiv1 = 0x00040000U, /* SIM_CLKDIV1. */
+        .pllFllSel = 3U,          /* PLLFLLSEL select IRC48MCLK. */
+        .er32kSrc  = 5U,          /* ERCLK32K selection, use RTC. */
+        .clkdiv1   = 0x00040000U, /* SIM_CLKDIV1. */
     };
 
     CLOCK_SetSimSafeDivs();
@@ -115,13 +115,15 @@ void APP_SetClockVlpr(void)
 void APP_SetClockRunFromVlpr(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 1U,        /* PLLFLLSEL select PLL. */
-        .er32kSrc = 5U,         /* ERCLK32K selection, use RTC. */
-        .clkdiv1 = 0x01230000U, /* SIM_CLKDIV1. */
+        .pllFllSel = 1U,          /* PLLFLLSEL select PLL. */
+        .er32kSrc  = 5U,          /* ERCLK32K selection, use RTC. */
+        .clkdiv1   = 0x01230000U, /* SIM_CLKDIV1. */
     };
 
     const mcg_pll_config_t pll0Config = {
-        .enableMode = 0U, .prdiv = 0x03U, .vdiv = 0x10U,
+        .enableMode = 0U,
+        .prdiv      = 0x03U,
+        .vdiv       = 0x10U,
     };
 
     CLOCK_SetSimSafeDivs();
@@ -142,13 +144,15 @@ void APP_SetClockRunFromVlpr(void)
 void APP_SetClockHsrun(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 1U,        /* PLLFLLSEL select PLL. */
-        .er32kSrc = 5U,         /* ERCLK32K selection, use RTC. */
-        .clkdiv1 = 0x01340000U, /* SIM_CLKDIV1. */
+        .pllFllSel = 1U,          /* PLLFLLSEL select PLL. */
+        .er32kSrc  = 5U,          /* ERCLK32K selection, use RTC. */
+        .clkdiv1   = 0x01340000U, /* SIM_CLKDIV1. */
     };
 
     const mcg_pll_config_t pll0Config = {
-        .enableMode = 0U, .prdiv = 0x01U, .vdiv = 0x06U,
+        .enableMode = 0U,
+        .prdiv      = 0x01U,
+        .vdiv       = 0x06U,
     };
 
     CLOCK_SetPbeMode(kMCG_PllClkSelPll0, &pll0Config);
@@ -160,13 +164,15 @@ void APP_SetClockHsrun(void)
 void APP_SetClockRunFromHsrun(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 1U,        /* PLLFLLSEL select PLL. */
-        .er32kSrc = 5U,         /* ERCLK32K selection, use RTC. */
-        .clkdiv1 = 0x01230000U, /* SIM_CLKDIV1. */
+        .pllFllSel = 1U,          /* PLLFLLSEL select PLL. */
+        .er32kSrc  = 5U,          /* ERCLK32K selection, use RTC. */
+        .clkdiv1   = 0x01230000U, /* SIM_CLKDIV1. */
     };
 
     const mcg_pll_config_t pll0Config = {
-        .enableMode = 0U, .prdiv = 0x03U, .vdiv = 0x10U,
+        .enableMode = 0U,
+        .prdiv      = 0x03U,
+        .vdiv       = 0x10U,
     };
 
     CLOCK_SetPbeMode(kMCG_PllClkSelPll0, &pll0Config);
@@ -356,7 +362,7 @@ static app_wakeup_source_t APP_GetWakeupSource(void)
 /* Get wakeup timeout and wakeup source. */
 void APP_GetWakeupConfig(app_power_mode_t targetMode)
 {
-/* Get wakeup source by user input. */
+    /* Get wakeup source by user input. */
     if (targetMode == kAPP_PowerModeVlls0)
     {
         /* In VLLS0 mode, the LPO is disabled, LPTMR could not work. */
@@ -470,8 +476,7 @@ bool APP_CheckPowerMode(smc_power_state_t curPowerState, app_power_mode_t target
             break;
 
         case kSMC_PowerStateVlpr:
-            if ((kAPP_PowerModeWait == targetPowerMode) ||
-                (kAPP_PowerModeHsrun == targetPowerMode) ||
+            if ((kAPP_PowerModeWait == targetPowerMode) || (kAPP_PowerModeHsrun == targetPowerMode) ||
                 (kAPP_PowerModeStop == targetPowerMode))
             {
                 PRINTF("Could not enter HSRUN/STOP/WAIT modes from VLPR mode.\r\n");
@@ -652,7 +657,7 @@ int main(void)
      */
     LPTMR_GetDefaultConfig(&lptmrConfig);
     lptmrConfig.prescalerClockSource = kLPTMR_PrescalerClock_1; /* Use LPO as clock source. */
-    lptmrConfig.bypassPrescaler = true;
+    lptmrConfig.bypassPrescaler      = true;
 
     LPTMR_Init(LPTMR0, &lptmrConfig);
 
@@ -710,8 +715,7 @@ int main(void)
             }
 
             /* If target mode is RUN/VLPR/HSRUN, don't need to set wakeup source. */
-            if ((kAPP_PowerModeRun == targetPowerMode) ||
-                (kAPP_PowerModeHsrun == targetPowerMode) ||
+            if ((kAPP_PowerModeRun == targetPowerMode) || (kAPP_PowerModeHsrun == targetPowerMode) ||
                 (kAPP_PowerModeVlpr == targetPowerMode))
             {
                 needSetWakeup = false;

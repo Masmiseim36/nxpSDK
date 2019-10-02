@@ -4,6 +4,14 @@ Overview
 The DAC / CADC demo application demonstrates the use of the DAC and CADC peripherals.
 This application demonstrates how to configure the DAC and set the output on the DAC.
 This demo also demonstrates how to configure the CADC and how to read CADC values.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -71,11 +79,6 @@ Select DAC output level:
         5. 3.0 V
 -->
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

@@ -5,6 +5,14 @@ API to receive data with interrupt method:
 
 In this example, one lpuart instance connect to PC, the board will
 send back all characters that PC send to the board.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Micro/Mini USB cable
@@ -40,11 +48,6 @@ Lpuart functional interrupt example
 Board receives characters then sends them out
 Now please input:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

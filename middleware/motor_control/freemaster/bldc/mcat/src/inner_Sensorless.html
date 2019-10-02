@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html style="text-align: center;">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=windows-1250">
+        <meta name="generator" content="PSPad editor, www.pspad.com">
+        <title>
+        </title>
+        <link href="style.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="JS_functions\mainInclude.js"></script>
+        <script LANGUAGE="JavaScript" type ="text/javascript">
+            includeJSfiles();
+        </script>
+    </head>
+    <body id="SensorlessModule" onload="initLoadFormSensorless(); " background="images/pozadi.png" >
+        <OBJECT id="MCB_PC_Master_Services1" style="display:none;" classid="clsid:48A185F1-FFDB-11D3-80E3-00C04F176153" name="pcm">
+        </OBJECT>
+        <OBJECT style="display:none;" CLASSID = "clsid:5220cb21-c88d-11cf-b347-00aa00a28331">
+            <PARAM NAME="LPKPath" VALUE="gmsctls.lpk">
+        </OBJECT>
+
+         <!-- Headline -->
+        <div class="HeadBorder fontTitle" style="width: 740px;">Sensorless Control</div>
+        <div>
+            <table style="width: 740px;" class="MainTab">
+                <tr>
+                <td width="45%" align="left" valign="top" style="padding-right: 10px;">
+                    <!-- Timer frequncy -->
+                    <fieldset id="SensorlessParam" style="width: 100%;" class="ContBox">
+                    <legend class="fontControlLabel">Sensorless Parameters</legend>
+                    <table id="parameterTable" width="100%"  border="0"   class="ContBoxTab">
+                        <script>
+                            // Timer frequency
+                            document.write( build_parameter_line("Timer&nbsp;freq ", "TIMER_FREQ", "Hz", "Timer Frequency, see manual", 0, ""));
+                            // Minimal speed treshold
+                            document.write( build_parameter_line("Speed&nbsp;min ", "SPEED_MIN", "rpm", "Minimal speed for sensorless control", 0, ""));
+                            // Minimal speed treshold
+                            document.write( build_parameter_line("Freewheel&nbsp;time ", "FREEWHEEL_TIME", "sec", "Motor Freewheel period from any motor speed", 0, ""));
+                        </script>
+                    </table>
+                    </fieldset>
+                    <!-- Open loop startup parameters-->
+                    <fieldset  style="width: 100%;" class="ContBox">
+                    <legend class="fontControlLabel">Open Loop Start-up Parameters</legend>
+                    <table id="parameterTable" width="100%"  border="0"   class="ContBoxTab">
+                        <script>
+                            // Start-up minimal speed to switch to close-loop control
+                            document.write( build_parameter_line("OL&nbsp;speed&nbsp;lim","STARTUP_SPEED", "rpm", "Open Loop Start-up minimal speed to switch to close-loop control <10%;30%> of nominal speed ", 0, "sat"));
+                            // Start-up number of open loop commutations
+                            document.write( build_parameter_line("Cmt&nbsp;count","STARTUP_CMT_COUNT", "#", "Open Loop Start-up commutation number <10%;30%> of nominal speed ", 0, "sat"));
+                            // Start-up number of open loop commutations
+                            document.write( build_parameter_line("1st&nbsp;cmt&nbsp;period","STARTUP_CMT_PER", "sec", "First commutation period", 0, "sat"));
+                        </script>
+                    </table>
+                    </fieldset>
+                    <!-- Commutation Parameters-->
+                    <fieldset  id="Commutation_params" style="width: 100%;" class="ContBox">
+                    <legend class="fontControlLabel">Commutation Parameters</legend>
+                    <table id="parameterTable" width="100%"  border="0"   class="ContBoxTab">
+                        <script>
+                            // Time off after commutation
+                            document.write( build_parameter_line("Time off","T_OFF_CMT", "%", "Time off after commutation", 0, ""));
+                            // Integration treshold correction constant
+                            document.write( build_parameter_line("Integ thr corr.","INTEG_TRH_CORR", "%", "Integration threshold correction constant with range <10;200>", 0, ""));
+                        </script>
+                    </table>
+                    </fieldset>
+                </td>
+                <td width="55%"  align="right" valign="top" style="padding-left: 10px;">
+                    <!-- Speed PI reccurent controller parameters-->
+                    <fieldset  id="Speed_PIrecur" style="width: 100%;" class="ContBox">
+                    <legend class="fontControlLabel">Sensorless Control Constants</legend>
+                    <table id="parameterTable" width="100%"  border="0"   class="ContBoxTab">
+                        <script>
+                            document.write( build_constant_line("Cmt_period_min", "CMT_PER_MIN", "Number of timer interrupt counts for maximal speed"));
+                            document.write( build_constant_line("Cmt_period_start", "CMT_PER_START", "Number of timer interrupt counts for startup speed"));
+                            document.write( build_constant_line("Speed_scale", "SPEED_SC_CONST", "Speed scale constant for actual speed calcultation"));
+                            document.write( build_constant_line("Start_acceleration", "START_CMT_ACCELER", "Start up accesleration constant"));
+                            document.write( build_constant_line("Integration_treshold", "INTEG_TRH", "Integration treshold constant"));
+                        </script>
+                    </table>
+                    </fieldset>
+                </td>
+                </tr>
+            </table>
+            <!-- calculation buttons-->
+            <table class = "fButtonGroup" >
+                <tr>
+                    <td><input type="button" class="fButtonsEnabled" value="Update Target" id="SensorlessUpdateFrm" onclick="clickUpdateSensorlessFM()" /></td>
+                    <td><input type="button" class="fButtonsDisabled" value="Reload Data" id="ReloadData" onclick="clickReloadData(); initLoadFormSensorless();" disabled="disabled" /></td>
+                    <td><input type="button" class="fButtonsDisabled" value="Store Data" id="StoreData" onclick="clickStoreData()" disabled="disabled" /></td>
+                </tr>
+            </table>
+        </div>
+        <!--<div id="chart1" style="height:300px; width:500px;"></div>-->
+    </body>
+</html>

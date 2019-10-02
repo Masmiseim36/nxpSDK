@@ -5,6 +5,14 @@ ADC16 is first set to continuous mode. In continuous convert configuration, only
 observed, and until conversion is aborted, the ADC16 continues to do conversions on the same SCn register that initiated the conversion. 
 EDMA request will be asserted during an ADC16 conversion complete event noted when any of the SC1n[COCO] flags is asserted. EDMA will transfer
 ADC16 results to memory and if users press any key, demo will average ADC16 results stored in memory and print average on the terminal.  
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/Micro USB cable
@@ -44,11 +52,6 @@ ADC value: 12493
 ADC value: 22425
 ADC value: 19049
 
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

@@ -25,6 +25,14 @@ if (wakenUp)
 ...
 ...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Two Mini/micro USB cables
@@ -131,11 +139,6 @@ Rx MB ID: 0x321, Rx MB data: 0x1, Time stamp: 57276
 Wait Node A to trigger the next transmission!
 ~~~~~~~~~~~~~~~~~~~~~
 
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -15,7 +15,6 @@
  * @addtogroup mmdvsq
  * @{
  */
-
 
 /*******************************************************************************
  * Definitions
@@ -30,9 +29,9 @@
 typedef enum _mmdvsq_execution_status
 {
     kMMDVSQ_IdleSquareRoot = 0x01U, /*!< MMDVSQ is idle; the last calculation was a square root */
-    kMMDVSQ_IdleDivide = 0x02U,     /*!< MMDVSQ is idle; the last calculation was division */
+    kMMDVSQ_IdleDivide     = 0x02U, /*!< MMDVSQ is idle; the last calculation was division */
     kMMDVSQ_BusySquareRoot = 0x05U, /*!< MMDVSQ is busy processing a square root calculation */
-    kMMDVSQ_BusyDivide = 0x06U      /*!< MMDVSQ is busy processing a division calculation */
+    kMMDVSQ_BusyDivide     = 0x06U  /*!< MMDVSQ is busy processing a division calculation */
 } mmdvsq_execution_status_t;
 
 /*! @brief MMDVSQ divide fast start select */
@@ -171,7 +170,6 @@ static inline void MMDVSQ_SetDivideByZeroConfig(MMDVSQ_Type *base, bool isDivByZ
 
 #if defined(__cplusplus)
 }
-
 #endif /* __cplusplus */
 
 /*! @}*/

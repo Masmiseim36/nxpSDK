@@ -38,8 +38,8 @@
  ******************************************************************************/
 uint8_t masterRxData[TRANSFER_SIZE] = {0U};
 uint8_t masterTxData[TRANSFER_SIZE] = {0U};
-uint8_t slaveRxData[TRANSFER_SIZE] = {0U};
-uint8_t slaveTxData[TRANSFER_SIZE] = {0U};
+uint8_t slaveRxData[TRANSFER_SIZE]  = {0U};
+uint8_t slaveTxData[TRANSFER_SIZE]  = {0U};
 
 volatile uint32_t slaveTxCount;
 volatile uint32_t slaveRxCount;
@@ -177,36 +177,36 @@ int main(void)
     dspi_slave_config_t slaveConfig;
 
     /* Master config */
-    masterConfig.whichCtar = kDSPI_Ctar0;
-    masterConfig.ctarConfig.baudRate = TRANSFER_BAUDRATE;
-    masterConfig.ctarConfig.bitsPerFrame = 8;
-    masterConfig.ctarConfig.cpol = kDSPI_ClockPolarityActiveHigh;
-    masterConfig.ctarConfig.cpha = kDSPI_ClockPhaseFirstEdge;
-    masterConfig.ctarConfig.direction = kDSPI_MsbFirst;
-    masterConfig.ctarConfig.pcsToSckDelayInNanoSec = 1000000000U / TRANSFER_BAUDRATE;
-    masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec = 1000000000U / TRANSFER_BAUDRATE;
+    masterConfig.whichCtar                                = kDSPI_Ctar0;
+    masterConfig.ctarConfig.baudRate                      = TRANSFER_BAUDRATE;
+    masterConfig.ctarConfig.bitsPerFrame                  = 8;
+    masterConfig.ctarConfig.cpol                          = kDSPI_ClockPolarityActiveHigh;
+    masterConfig.ctarConfig.cpha                          = kDSPI_ClockPhaseFirstEdge;
+    masterConfig.ctarConfig.direction                     = kDSPI_MsbFirst;
+    masterConfig.ctarConfig.pcsToSckDelayInNanoSec        = 1000000000U / TRANSFER_BAUDRATE;
+    masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec    = 1000000000U / TRANSFER_BAUDRATE;
     masterConfig.ctarConfig.betweenTransferDelayInNanoSec = 1000000000U / TRANSFER_BAUDRATE;
 
-    masterConfig.whichPcs = EXAMPLE_DSPI_MASTER_PCS;
+    masterConfig.whichPcs           = EXAMPLE_DSPI_MASTER_PCS;
     masterConfig.pcsActiveHighOrLow = kDSPI_PcsActiveLow;
 
-    masterConfig.enableContinuousSCK = false;
-    masterConfig.enableRxFifoOverWrite = false;
+    masterConfig.enableContinuousSCK        = false;
+    masterConfig.enableRxFifoOverWrite      = false;
     masterConfig.enableModifiedTimingFormat = false;
-    masterConfig.samplePoint = kDSPI_SckToSin0Clock;
+    masterConfig.samplePoint                = kDSPI_SckToSin0Clock;
 
     srcClock_Hz = EXAMPLE_DSPI_MASTER_CLK_FREQ;
     DSPI_MasterInit(EXAMPLE_DSPI_MASTER_BASEADDR, &masterConfig, srcClock_Hz);
 
     /* Slave config */
-    slaveConfig.whichCtar = kDSPI_Ctar0;
-    slaveConfig.ctarConfig.bitsPerFrame = masterConfig.ctarConfig.bitsPerFrame;
-    slaveConfig.ctarConfig.cpol = masterConfig.ctarConfig.cpol;
-    slaveConfig.ctarConfig.cpha = masterConfig.ctarConfig.cpha;
-    slaveConfig.enableContinuousSCK = masterConfig.enableContinuousSCK;
-    slaveConfig.enableRxFifoOverWrite = masterConfig.enableRxFifoOverWrite;
+    slaveConfig.whichCtar                  = kDSPI_Ctar0;
+    slaveConfig.ctarConfig.bitsPerFrame    = masterConfig.ctarConfig.bitsPerFrame;
+    slaveConfig.ctarConfig.cpol            = masterConfig.ctarConfig.cpol;
+    slaveConfig.ctarConfig.cpha            = masterConfig.ctarConfig.cpha;
+    slaveConfig.enableContinuousSCK        = masterConfig.enableContinuousSCK;
+    slaveConfig.enableRxFifoOverWrite      = masterConfig.enableRxFifoOverWrite;
     slaveConfig.enableModifiedTimingFormat = masterConfig.enableModifiedTimingFormat;
-    slaveConfig.samplePoint = masterConfig.samplePoint;
+    slaveConfig.samplePoint                = masterConfig.samplePoint;
 
     DSPI_SlaveInit(EXAMPLE_DSPI_SLAVE_BASEADDR, &slaveConfig);
 
@@ -265,17 +265,17 @@ int main(void)
 
     /* Start master transfer*/
     dspi_command_data_config_t commandData;
-    commandData.isPcsContinuous = false;
-    commandData.whichCtar = kDSPI_Ctar0;
-    commandData.whichPcs = EXAMPLE_DSPI_MASTER_PCS;
-    commandData.isEndOfQueue = false;
+    commandData.isPcsContinuous    = false;
+    commandData.whichCtar          = kDSPI_Ctar0;
+    commandData.whichPcs           = EXAMPLE_DSPI_MASTER_PCS;
+    commandData.isEndOfQueue       = false;
     commandData.clearTransferCount = false;
 
     masterCommand = DSPI_MasterGetFormattedCommand(&commandData);
 
     masterFifoSize = FSL_FEATURE_DSPI_FIFO_SIZEn(EXAMPLE_DSPI_MASTER_BASEADDR);
-    masterTxCount = 0;
-    masterRxCount = 0;
+    masterTxCount  = 0;
+    masterRxCount  = 0;
 
     DSPI_StopTransfer(EXAMPLE_DSPI_MASTER_BASEADDR);
     DSPI_FlushFifo(EXAMPLE_DSPI_MASTER_BASEADDR, true, true);
@@ -328,7 +328,7 @@ int main(void)
     }
     else
     {
-        PRINTF(" \r\nError occured in DSPI transfer ! \r\n");
+        PRINTF(" \r\nError occurred in DSPI transfer ! \r\n");
     }
 
     DSPI_Deinit(EXAMPLE_DSPI_MASTER_BASEADDR);

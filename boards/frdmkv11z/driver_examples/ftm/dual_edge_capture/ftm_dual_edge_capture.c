@@ -41,12 +41,12 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-volatile bool ftmFirstChannelInterruptFlag = false;
+volatile bool ftmFirstChannelInterruptFlag  = false;
 volatile bool ftmSecondChannelInterruptFlag = false;
 /* Record FTM TOF interrupt times */
 volatile uint32_t g_timerOverflowInterruptCount = 0u;
-volatile uint32_t g_firstChannelOverflowCount = 0u;
-volatile uint32_t g_secondChannelOverflowCount = 0u;
+volatile uint32_t g_firstChannelOverflowCount   = 0u;
+volatile uint32_t g_secondChannelOverflowCount  = 0u;
 
 /*******************************************************************************
  * Code
@@ -64,7 +64,7 @@ void FTM_INPUT_CAPTURE_HANDLER(void)
     {
         /* Disable first channel interrupt.*/
         FTM_DisableInterrupts(DEMO_FTM_BASEADDR, FTM_FIRST_CHANNEL_INTERRUPT_ENABLE);
-        g_firstChannelOverflowCount = g_timerOverflowInterruptCount;
+        g_firstChannelOverflowCount  = g_timerOverflowInterruptCount;
         ftmFirstChannelInterruptFlag = true;
     }
     else if ((FTM_GetStatusFlags(DEMO_FTM_BASEADDR) & FTM_SECOND_CHANNEL_FLAG) == FTM_SECOND_CHANNEL_FLAG)
@@ -73,7 +73,7 @@ void FTM_INPUT_CAPTURE_HANDLER(void)
         FTM_ClearStatusFlags(DEMO_FTM_BASEADDR, FTM_SECOND_CHANNEL_FLAG);
         /* Disable second channel interrupt.*/
         FTM_DisableInterrupts(DEMO_FTM_BASEADDR, FTM_SECOND_CHANNEL_INTERRUPT_ENABLE);
-        g_secondChannelOverflowCount = g_timerOverflowInterruptCount;
+        g_secondChannelOverflowCount  = g_timerOverflowInterruptCount;
         ftmSecondChannelInterruptFlag = true;
     }
     else

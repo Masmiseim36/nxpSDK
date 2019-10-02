@@ -19,12 +19,12 @@
 typedef enum _app_power_mode
 {
     kAPP_PowerModeMin = 'A' - 1,
-    kAPP_PowerModeRun,  /*!< Run mode. All Kinetis chips. */
-    kAPP_PowerModeWait, /*!< Wait mode. All Kinetis chips. */
-    kAPP_PowerModeStop, /*!< Stop mode. All Kinetis chips. */
-    kAPP_PowerModeVlpr, /*!< Very low power run mode. All Kinetis chips. */
-    kAPP_PowerModeVlpw, /*!< Very low power wait mode. All Kinetis chips. */
-    kAPP_PowerModeVlps, /*!< Very low power stop mode. All Kinetis chips. */
+    kAPP_PowerModeRun,   /*!< Run mode. All Kinetis chips. */
+    kAPP_PowerModeWait,  /*!< Wait mode. All Kinetis chips. */
+    kAPP_PowerModeStop,  /*!< Stop mode. All Kinetis chips. */
+    kAPP_PowerModeVlpr,  /*!< Very low power run mode. All Kinetis chips. */
+    kAPP_PowerModeVlpw,  /*!< Very low power wait mode. All Kinetis chips. */
+    kAPP_PowerModeVlps,  /*!< Very low power stop mode. All Kinetis chips. */
     kAPP_PowerModeVlls0, /*!< Very low leakage stop 0 mode. Chip-specific. */
     kAPP_PowerModeVlls1, /*!< Very low leakage stop 1 mode. All Kinetis chips. */
     kAPP_PowerModeVlls3, /*!< Very low leakage stop 3 mode. All Kinetis chips. */
@@ -56,10 +56,8 @@ typedef struct power_user_config
 {
     app_power_mode_t mode; /*!< Power mode. */
 
-
     bool enablePorDetectInVlls0; /*!< true - Power on reset detection circuit is enabled in Very low leakage stop 0
                                     mode, false - Power on reset detection circuit is disabled. */
-
 
     bool enableLpoClock; /*!< true - The 1 kHz Low power oscillator is enabled in any Low leakage or Very low leakage
                             stop mode - false, oscillator is disabled in these modes. */

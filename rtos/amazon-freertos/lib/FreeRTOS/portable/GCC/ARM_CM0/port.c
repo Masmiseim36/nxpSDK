@@ -1,6 +1,6 @@
 /*
- * FreeRTOS Kernel V10.0.1
- * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS Kernel V10.2.0
+ * Copyright (C) 2019 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -32,9 +32,21 @@
 /* Scheduler includes. */
 #include "FreeRTOS.h"
 #include "task.h"
-#include "fsl_tickless_generic.h"
 
 extern uint32_t SystemCoreClock; /* in Kinetis SDK, this contains the system core clock speed */
+/* Constants required to manipulate the NVIC. */
+#define portNVIC_SYSTICK_CTRL			( ( volatile uint32_t * ) 0xe000e010 )
+#define portNVIC_SYSTICK_LOAD			( ( volatile uint32_t * ) 0xe000e014 )
+#define portNVIC_SYSTICK_CURRENT_VALUE	( ( volatile uint32_t * ) 0xe000e018 )
+#define portNVIC_INT_CTRL				( ( volatile uint32_t *) 0xe000ed04 )
+#define portNVIC_SYSPRI2				( ( volatile uint32_t *) 0xe000ed20 )
+#define portNVIC_SYSTICK_CLK			0x00000004
+#define portNVIC_SYSTICK_INT			0x00000002
+#define portNVIC_SYSTICK_ENABLE			0x00000001
+#define portNVIC_PENDSVSET				0x10000000
+#define portMIN_INTERRUPT_PRIORITY		( 255UL )
+#define portNVIC_PENDSV_PRI				( portMIN_INTERRUPT_PRIORITY << 16UL )
+#define portNVIC_SYSTICK_PRI			( portMIN_INTERRUPT_PRIORITY << 24UL )
 
 /* Constants required to set up the initial stack. */
 #define portINITIAL_XPSR			( 0x01000000 )
@@ -55,6 +67,10 @@ debugger. */
 	#define portTASK_RETURN_ADDRESS	prvTaskExitError
 #endif
 
+/*
+ * Setup the timer to generate the tick interrupts.
+ */
+static void prvSetupTimerInterrupt( void );
 
 /*
  * Exception handlers.
@@ -102,6 +118,12 @@ StackType_t *pxPortInitialiseStack( StackType_t *pxTopOfStack, TaskFunction_t px
 }
 /*-----------------------------------------------------------*/
 
+#if INCLUDE_vTaskEndScheduler
+#include <setjmp.h>
+static jmp_buf xJumpBuf; /* Used to restore the original context when the scheduler is ended. */
+#endif
+
+/*-----------------------------------------------------------*/
 static void prvTaskExitError( void )
 {
 volatile uint32_t ulDummy = 0UL;
@@ -167,7 +189,7 @@ void vPortStartFirstTask( void )
  */
 BaseType_t xPortStartScheduler( void )
 {
-	/* Make PendSV, CallSV and SysTick the same priroity as the kernel. */
+	/* Make PendSV, CallSV and SysTick the same priority as the kernel. */
 	*(portNVIC_SYSPRI2) |= portNVIC_PENDSV_PRI;
 	*(portNVIC_SYSPRI2) |= portNVIC_SYSTICK_PRI;
 
@@ -177,6 +199,19 @@ BaseType_t xPortStartScheduler( void )
 
 	/* Initialise the critical nesting count ready for the first task. */
 	uxCriticalNesting = 0;
+
+#if INCLUDE_vTaskEndScheduler
+    if(setjmp(xJumpBuf) != 0 ) {
+      /* here we will get in case of call to vTaskEndScheduler() */
+      __asm volatile(
+        " movs r0, #1         \n" /* Switch back to the MSP stack. */
+        " msr CONTROL, r0     \n"
+      );
+      __asm volatile("dsb");
+      __asm volatile("isb");
+      return pdFALSE;
+    }
+#endif
 
 	/* Start the first task. */
 	vPortStartFirstTask();
@@ -193,13 +228,19 @@ BaseType_t xPortStartScheduler( void )
 	/* Should not get here! */
 	return 0;
 }
-/*-----------------------------------------------------------*/
 
-void vPortEndScheduler( void )
-{
-	/* Not implemented in ports where there is nothing to return to.
-	Artificially force an assert. */
-	configASSERT( uxCriticalNesting == 1000UL );
+/*-----------------------------------------------------------*/
+void vPortEndScheduler(void) {
+    /* stop tick timer */
+    *( portNVIC_SYSTICK_CTRL ) = portNVIC_SYSTICK_CLK | portNVIC_SYSTICK_INT;
+    /* Jump back to the processor state prior to starting the
+     scheduler.  This means we are not going to be using a
+     task stack frame so the task can be deleted. */
+#if INCLUDE_vTaskEndScheduler
+    longjmp(xJumpBuf, 1);
+#else
+  for(;;){} /* wait here */
+#endif
 }
 /*-----------------------------------------------------------*/
 
@@ -336,4 +377,19 @@ uint32_t ulPreviousMask;
 }
 /*-----------------------------------------------------------*/
 
+/*
+ * Setup the systick timer to generate the tick interrupts at the required
+ * frequency.
+ */
+void prvSetupTimerInterrupt( void )
+{
+	/* Stop and reset the SysTick. */
+	*(portNVIC_SYSTICK_CTRL) = 0UL;
+	*(portNVIC_SYSTICK_CURRENT_VALUE) = 0UL;
+
+	/* Configure SysTick to interrupt at the requested rate. */
+	*(portNVIC_SYSTICK_LOAD) = ( configCPU_CLOCK_HZ / configTICK_RATE_HZ ) - 1UL;
+	*(portNVIC_SYSTICK_CTRL) = portNVIC_SYSTICK_CLK | portNVIC_SYSTICK_INT | portNVIC_SYSTICK_ENABLE;
+}
+/*-----------------------------------------------------------*/
 

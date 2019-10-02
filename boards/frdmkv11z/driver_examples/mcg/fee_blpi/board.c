@@ -47,13 +47,13 @@ status_t BOARD_I2C_Send(I2C_Type *base,
     i2c_master_transfer_t masterXfer;
 
     /* Prepare transfer structure. */
-    masterXfer.slaveAddress = deviceAddress;
-    masterXfer.direction = kI2C_Write;
-    masterXfer.subaddress = subAddress;
+    masterXfer.slaveAddress   = deviceAddress;
+    masterXfer.direction      = kI2C_Write;
+    masterXfer.subaddress     = subAddress;
     masterXfer.subaddressSize = subaddressSize;
-    masterXfer.data = txBuff;
-    masterXfer.dataSize = txBuffSize;
-    masterXfer.flags = kI2C_TransferDefaultFlag;
+    masterXfer.data           = txBuff;
+    masterXfer.dataSize       = txBuffSize;
+    masterXfer.flags          = kI2C_TransferDefaultFlag;
 
     return I2C_MasterTransferBlocking(base, &masterXfer);
 }
@@ -68,13 +68,13 @@ status_t BOARD_I2C_Receive(I2C_Type *base,
     i2c_master_transfer_t masterXfer;
 
     /* Prepare transfer structure. */
-    masterXfer.slaveAddress = deviceAddress;
-    masterXfer.subaddress = subAddress;
+    masterXfer.slaveAddress   = deviceAddress;
+    masterXfer.subaddress     = subAddress;
     masterXfer.subaddressSize = subaddressSize;
-    masterXfer.data = rxBuff;
-    masterXfer.dataSize = rxBuffSize;
-    masterXfer.direction = kI2C_Read;
-    masterXfer.flags = kI2C_TransferDefaultFlag;
+    masterXfer.data           = rxBuff;
+    masterXfer.dataSize       = rxBuffSize;
+    masterXfer.direction      = kI2C_Read;
+    masterXfer.flags          = kI2C_TransferDefaultFlag;
 
     return I2C_MasterTransferBlocking(base, &masterXfer);
 }

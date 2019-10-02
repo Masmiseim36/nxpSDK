@@ -22,10 +22,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_DEBUG_UART_BAUDRATE 9600                 /* Debug console baud rate. */
+#define APP_DEBUG_UART_BAUDRATE 9600                    /* Debug console baud rate. */
 #define APP_DEBUG_UART_CLKSRC_NAME kCLOCK_FastPeriphClk /* Fast peripheral clock  */
 
-#define LLWU_LPTMR_IDX 0U       /* LLWU_M0IF */
+#define LLWU_LPTMR_IDX 0U      /* LLWU_M0IF */
 #define LLWU_WAKEUP_PIN_IDX 3U /* LLWU_P3 */
 #define LLWU_WAKEUP_PIN_TYPE kLLWU_ExternalPinRisingEdge
 
@@ -95,9 +95,9 @@ static app_wakeup_source_t s_wakeupSource; /* Wakeup source.                 */
 void APP_SetClockVlpr(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 1U,        /* PLLFLLSEL select PLL */
-        .er32kSrc = 3U,         /* ERCLK32K selection, use LPO. */
-        .clkdiv1 = 0x00070000U, /* SIM_CLKDIV1. */
+        .pllFllSel = 1U,          /* PLLFLLSEL select PLL */
+        .er32kSrc  = 3U,          /* ERCLK32K selection, use LPO. */
+        .clkdiv1   = 0x00070000U, /* SIM_CLKDIV1. */
     };
 
     CLOCK_SetSimSafeDivs();
@@ -115,13 +115,15 @@ void APP_SetClockVlpr(void)
 void APP_SetClockRunFromVlpr(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 1U,        /* PLLFLLSEL select PLL */
-        .er32kSrc = 3U,         /* ERCLK32K selection, use RTC. */
-        .clkdiv1 = 0x01150000U, /* SIM_CLKDIV1. */
+        .pllFllSel = 1U,          /* PLLFLLSEL select PLL */
+        .er32kSrc  = 3U,          /* ERCLK32K selection, use RTC. */
+        .clkdiv1   = 0x01150000U, /* SIM_CLKDIV1. */
     };
 
     const mcg_pll_config_t pll0Config = {
-        .enableMode = 0U, .prdiv = 0x3U, .vdiv = 0x8U,
+        .enableMode = 0U,
+        .prdiv      = 0x3U,
+        .vdiv       = 0x8U,
     };
 
     CLOCK_SetSimSafeDivs();
@@ -142,13 +144,15 @@ void APP_SetClockRunFromVlpr(void)
 void APP_SetClockHsrun(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 1U,        /* PLLFLLSEL select PLL */
-        .er32kSrc = 3U,         /* ERCLK32K selection, use LPO. */
-        .clkdiv1 = 0x01170000U, /* SIM_CLKDIV1. */
+        .pllFllSel = 1U,          /* PLLFLLSEL select PLL */
+        .er32kSrc  = 3U,          /* ERCLK32K selection, use LPO. */
+        .clkdiv1   = 0x01170000U, /* SIM_CLKDIV1. */
     };
 
     const mcg_pll_config_t pll0Config = {
-        .enableMode = 0U, .prdiv = 0x3U, .vdiv = 0x10U,
+        .enableMode = 0U,
+        .prdiv      = 0x3U,
+        .vdiv       = 0x10U,
     };
 
     CLOCK_SetPbeMode(kMCG_PllClkSelPll0, &pll0Config);
@@ -160,13 +164,15 @@ void APP_SetClockHsrun(void)
 void APP_SetClockRunFromHsrun(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 1U,        /* PLLFLLSEL select PLL */
-        .er32kSrc = 3U,         /* ERCLK32K selection, use RTC. */
-        .clkdiv1 = 0x01150000U, /* SIM_CLKDIV1. */
+        .pllFllSel = 1U,          /* PLLFLLSEL select PLL */
+        .er32kSrc  = 3U,          /* ERCLK32K selection, use RTC. */
+        .clkdiv1   = 0x01150000U, /* SIM_CLKDIV1. */
     };
 
     const mcg_pll_config_t pll0Config = {
-        .enableMode = 0U, .prdiv = 0x3U, .vdiv = 0x8U,
+        .enableMode = 0U,
+        .prdiv      = 0x3U,
+        .vdiv       = 0x8U,
     };
 
     CLOCK_SetPbeMode(kMCG_PllClkSelPll0, &pll0Config);
@@ -503,8 +509,8 @@ void APP_PowerModeSwitch(smc_power_state_t curPowerState, app_power_mode_t targe
 {
     smc_power_mode_vlls_config_t vlls_config;
     vlls_config.enablePorDetectInVlls0 = true;
-    vlls_config.enableRam2InVlls2 = true; /*!< Enable RAM2 power in VLLS2 */
-    vlls_config.enableLpoClock = true;    /*!< Enable LPO clock in VLLS mode */
+    vlls_config.enableRam2InVlls2      = true; /*!< Enable RAM2 power in VLLS2 */
+    vlls_config.enableLpoClock         = true; /*!< Enable LPO clock in VLLS mode */
     switch (targetPowerMode)
     {
         case kAPP_PowerModeVlpr:
@@ -640,7 +646,7 @@ int main(void)
      */
     LPTMR_GetDefaultConfig(&lptmrConfig);
     lptmrConfig.prescalerClockSource = kLPTMR_PrescalerClock_1; /* Use LPO as clock source. */
-    lptmrConfig.bypassPrescaler = true;
+    lptmrConfig.bypassPrescaler      = true;
 
     LPTMR_Init(LPTMR0, &lptmrConfig);
 

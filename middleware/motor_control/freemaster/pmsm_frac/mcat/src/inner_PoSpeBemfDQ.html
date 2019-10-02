@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html style="text-align: center;">     
+  <head>       
+    <meta http-equiv="content-type" content="text/html; charset=windows-1250">       
+    <meta name="generator" content="PSPad editor, www.pspad.com">       
+    <title>    
+    </title>       
+    <link href="style.css" rel="stylesheet" type="text/css" />      
+    <link href="style.css" rel="stylesheet" type="text/css" />      
+    <script type="text/javascript" src="JS_functions\mainInclude.js"></script>
+    <script LANGUAGE="JavaScript" type ="text/javascript">
+     includeJSfiles();
+    </script>
+   </head>   
+  <body id="BemfDqObsrv" onload=" innerHTMLonload(); initLoadFormBemfDqObsvr();"  background="images/pozadi.png"  style="display: inline-block; margin: 10px auto; text-align: center;">                                          
+    <OBJECT id="MCB_PC_Master_Services1" style="display:none;" classid="clsid:48A185F1-FFDB-11D3-80E3-00C04F176153" name="pcm">	     
+    </OBJECT>	
+    
+    <OBJECT style="display:none;" CLASSID = "clsid:5220cb21-c88d-11cf-b347-00aa00a28331">         
+      <PARAM NAME="LPKPath" VALUE="gmsctls.lpk">         
+    </OBJECT>     
+    <!-- Headline -->
+    <div class="HeadBorder fontTitle" style="width: 740px;">BEMF Observer DQ - Position and Speed Calculation</div>   
+      
+    <div>              
+              
+      <table style="width: 740px;" class="MainTab">               
+        <tr>                 
+            <td width="45%" align="left" valign="top" style="padding-right: 10px;">                      		                            
+            <!-- BEMF Dq observer input parameters-->     
+              <fieldset style="width: 100%;" class="ContBox">
+                <legend class="fontControlLabel">BEMF Observer Parameters</legend>        
+                <table id="parameterTable" width="100%"  border="0" class="ContBoxTab">            
+                  <script>
+                  // BEMF DQ observer bandwidth
+                  document.write( build_parameter_line("F0", "BEMF_DQ_F0", "Hz", "BEMF DQ Observer Bandwidth, typical range <150;350>", 0, ""));
+                  // BEMF DQ observer attenuation
+                  document.write( build_parameter_line("&xi;" ,"BEMF_DQ_Att", "-", "BEMF DQ Observer Attenuation, typical range <0.707;1>", 0, ""));
+                  </script>	
+                                            
+               </table>
+              </fieldset>
+              <!-- Tracking observer input parameters-->     
+              <fieldset  style="width: 100%;" class="ContBox">
+                <legend class="fontControlLabel">Tracking Observer Parameters</legend>        
+                <table id="parameterTable" width="100%"  border="0" class="ContBoxTab">            
+                           
+                  <script>    
+                  // Tracking observer bandwidth
+                  document.write( build_parameter_line("F0", "TO_F0", "Hz", "Tracking Observer Bandwidth, typical range <10;50>", 0, ""));
+                  // Tracking observer attenuation
+                  document.write( build_parameter_line("&xi;","TO_Att", "-", "Tracking Observer Attenuation, typical range <0.707;1>", 0, ""));
+                  </script>	
+                                          
+               </table>
+              </fieldset>
+              <!-- Open loop startup parameters-->     
+              <fieldset  style="width: 100%;" class="ContBox">
+                <legend class="fontControlLabel">Open Loop Start-up Parameters</legend>        
+                <table id="parameterTable" width="100%"  border="0" class="ContBoxTab">            
+                           
+                  <script>    
+                  // start-up speed ramp 
+                  document.write( build_parameter_line("Start-up&nbsp;ramp","STARTUP_RAMP", "rpm/sec", "Open Loop Start-up Ramp Increment Up, typical range <100;3500> ", 0, "sat"));
+                  // Start-up current
+                  document.write( build_parameter_line("Start-up&nbsp;current","STARTUP_CURRENT", "A", "Open Loop Start-up Current, typical range <10%;30%> of nominal current ", 0, "sat"));
+                  // Start-up merging speed
+                  document.write( build_parameter_line("Merging&nbsp;speed","STARTUP_MERG_SPEED", "rpm", "Speed where algortihm switches from open loop to closed loop, typically 10% of nominal speed .", 0, "sat"));
+                  // Start-up merging speed
+                  document.write( build_parameter_line("Merging&nbsp;coeff","STARTUP_MERG_COEFF", "%", "Position weight merging coefficient, typically 50%", 0, "sat"));                                    
+                  </script>	
+                                          
+               </table>
+               </fieldset>  
+             </td>                                      
+            <td width="55%" align="right" valign="top" style="padding-left: 10px;">                                                 
+              <!-- BEMF DQ observer parameters-->   
+              <fieldset id="DQbemfObs" style="width: 100%;" class="ContBox">
+                <legend class="fontControlLabel">BEMF DQ Observer Constants</legend>        
+                <table width="100%" class="ContBoxTab">            
+                  <script>
+    	            // BEMF DQ observer gain and gain scales, scales 
+                    document.write( build_constant_line("I&nbsp;scale", "I_scale", "Observer Current Scale"));
+                    document.write( build_constant_line("U&nbsp;scale", "U_scale", "Observer Voltage Scale"));
+                    document.write( build_constant_line("E&nbsp;scale", "E_scale", "Observer back-EMF Scale"));
+                    document.write( build_constant_line("WI&nbsp;scale", "WI_scale", "Observer Angular Speed Scale"));
+                  </script>	
+               </table>
+              </fieldset> 
+              
+              
+              
+              <fieldset  id="BemfPIpar" style="width: 100%;" class="ContBox">
+                <legend class="fontControlLabel">BEMF DQ Observer PI Constants</legend>        
+                <table  width="100%" style="margin-top: 5px;"> 
+                  <tr><td>          
+                  <script>
+    	            // BEMF DQ observer PI controller constants 
+                  // postition observer integral gain and gain scales 
+                  document.write( build_constant_line("BEMF_Kp", "BEMF_DQ_Kp_g", "Back-EMF Observer Proportional Gain in Z domain"));
+                  // postition observer proportional gain and gain scales
+                  document.write( build_constant_line("BEMF_Ki", "BEMF_DQ_Ki_g", "Back-EMF Observer Integral Gain in Z domain"));
+                  </script>
+                  </td></tr> 
+               </table>
+              </fieldset>
+              <fieldset  hidden id="BemfPIrec" style="width: 100%;" class="ContBox">
+                <legend class="fontControlLabel">BEMF DQ Observer PI Constants</legend>        
+                <table  width="100%" style="margin-top: 5px;"> 
+                  <tr><td> 
+                  <script>
+    	            // BEMF DQ observer PI controller constants 
+                  // postition observer PI controller CC1 
+                  document.write( build_constant_line("BEMF_CC1", "BEMF_DQ_CC1_g", "Back-EMF Observer CC1 Gain in Z domain"));
+                  // postition observer PI controller CC2
+                  document.write( build_constant_line("BEMF_CC2", "BEMF_DQ_CC2_g", "Back-EMF Observer CC2 Gain in Z domain"));
+                  </script>
+                  </td></tr> 
+               </table>
+              </fieldset> 
+              
+            <!-- </td>
+            <td width="55%" align="right" valign="top" style="padding-left: 10px;">                                                 -->
+              <!-- Tracking Observer parameters-->   
+              <fieldset id="ToPIparam" style="width: 100%;" class="ContBox">
+                <legend class="fontControlLabel">TO Constants</legend>        
+                <table width="100%" id="TO_par">            
+                  <tr><td>              
+                  <script>  
+                  // tracking observer integral gain and gain scales 
+                  document.write( build_constant_line("TO_Kp", "TO_Kp_g", "Tracking Observer Proportional Gain in Z domain"));
+                  // angle tracking observer proportional gain and gain scales
+                  document.write( build_constant_line("TO_Ki", "TO_Ki_g", "Tracking Observer Integral Gain in Z domain"));
+                  </script>	
+                  </td></tr>	                            
+               </table>
+                <table width="100%" id="TO_integ">            
+                  <tr><td>              
+                  <script>  
+                  document.write( build_divider_line(""));
+                  // observer theta gain and gain scales
+                  document.write( build_constant_line("Theta_K", "Theta_g", "Tracking Observer Theta Gain in Z domain"));
+                  </script>	
+                  </td></tr>	                            
+               </table> 
+              </fieldset>
+              <!-- Open loop start-up constants-->   
+              <fieldset  style="width: 100%; display: none;" class="ContBox">
+                <legend class="fontControlLabel">OL Start-up Constants</legend>        
+                <table id="parameterTable" width="100%" border="0" class="ContBoxTab">            
+                          
+                  <script>
+                    // spart-up speed ramp increment
+                    document.write( build_constant_line("Start-up&nbsp;Inc","Startup_Ramp_inc",  "Start-up Speed Scaled Increment Up "));
+                    // start-up current scaled
+                    document.write( build_constant_line("Start-up&nbsp;I&nbsp;Scaled","Startup_I_scaled",  "Start-up Current "));
+                    // start-up merging speed scaled
+                    document.write( build_constant_line("Merging&nbsp;N&nbsp;Scaled","Startup_N_merging",  "Merging Speed "));
+                    // start-up merging weight coeff
+                    document.write( build_constant_line("Merging&nbsp;Coeff","Startup_coeff_merging",  "Merging Weight Coefficient "));
+                  </script>	
+                                            
+               </table>
+               <table style="display:none;">              
+            
+                    <script>
+                      // start-up current scaled for FreeMASTER
+                      document.write( build_constant_line("Start-up Current", "Startup_I_scaled_FM", "Start-up Current for FM update"));
+                    </script>	
+               
+                </table>
+              </fieldset>                                            
+             </td>                                                    
+        </tr>         
+      </table>                      
+      <!-- calculation buttons-->
+      <table class = "fButtonGroup" >                     
+            <tr>  
+                <td><input type="button" class="fButtonsEnabled" value="Update Target" id="BemfObsrvUpdateFrm" onmouseout="unmarkUpdateSLSField()" onmouseover="markUpdateSLSField()" onclick="clickUpdatePoSpeBemfDQFM()" /></td> 
+                <td><input type="button" class="fButtonsDisabled" value="Reload Data" id="ReloadData" onclick="clickReloadData(); initLoadFormBemfDqObsvr();" disabled="disabled" /></td> 
+                <td><input type="button" class="fButtonsDisabled" value="Store Data" id="StoreData" onclick="clickStoreData()" disabled="disabled" /></td> 
+            </tr>            
+      </table>                 
+      <span style="visibility: hidden" face="sans-serif" id="txtErrMsg">       
+      </span>          
+    </div>     
+  </body>
+</html>

@@ -1,10 +1,11 @@
 //*****************************************************************************
 // MKV31F51212 startup code for use with MCUXpresso IDE
 //
-// Version : 010818
+// Version : 240119
 //*****************************************************************************
 //
-// Copyright 2016-2018 NXP
+// Copyright 2016-2019 NXP
+// All rights reserved.
 //
 // SPDX-License-Identifier: BSD-3-Clause
 //*****************************************************************************
@@ -408,6 +409,7 @@ void ResetISR(void) {
     // Disable interrupts
     __asm volatile ("cpsid i");
 
+
 #if defined (__USE_CMSIS)
 // If __USE_CMSIS defined, then call CMSIS SystemInit code
     SystemInit();
@@ -466,6 +468,7 @@ void ResetISR(void) {
 #endif // (__VFP_FP__) && !(__SOFTFP__)
 #endif // (__USE_CMSIS)
 
+
 #if !defined (__USE_CMSIS)
 // Assume that if __USE_CMSIS defined, then CMSIS SystemInit code
 // will setup the VTOR register
@@ -479,7 +482,6 @@ void ResetISR(void) {
         *pSCB_VTOR = (unsigned int)g_pfnVectors;
     }
 #endif // (__USE_CMSIS)
-
 #if defined (__cplusplus)
     //
     // Call C++ library initialisation

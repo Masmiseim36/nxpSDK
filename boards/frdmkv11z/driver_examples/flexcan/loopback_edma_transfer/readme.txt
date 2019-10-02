@@ -8,6 +8,14 @@ Buffer to Tx Message Buffer and also setup Rx FIFO. After that, the example will
 from Tx Message Buffer to Rx FIFO through internal loopback interconnect and read them out using
 EDMA version FlexCAN transactional driver. The Sent and received message will be print out to terminal
 at last.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -56,11 +64,6 @@ Receive Msg4 from FIFO: word0 = 0x44444444, word1 = 0x44444444, ID Filter Hit2.
 
 ==FlexCAN loopback EDMA example -- Finish.==
 ~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

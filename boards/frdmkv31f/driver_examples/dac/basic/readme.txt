@@ -6,6 +6,14 @@ The dac_basic example shows how to use DAC module simply as the general DAC conv
 When the DAC's buffer feature is not enabled, the first item of the buffer is used as the DAC output data register.
 The converter would always output the value of the first item. In this example, it gets the value from terminal,
 outputs the DAC output voltage through DAC output pin.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/Micro USB cable
@@ -40,11 +48,6 @@ DAC out: 200
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Then user can measure the DAC output pin(J4-11) to check responding voltage.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

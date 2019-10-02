@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -68,7 +68,7 @@ static void Systick_Configuration(void);
 static volatile bool gAdcDone = false;
 static sparse_node_ptr gChartHead[CHART_ROWS]; /* Sparse matrix head */
 static sparse_node_t gChartNodes[NR_SAMPLES];  /* Sparse matrix nodes */
-static uint32_t gFreeNode = 0;                 /* Free node slot index for gChartNodes[] */
+static uint32_t gFreeNode        = 0;          /* Free node slot index for gChartNodes[] */
 static volatile uint8_t gCurChan = 0;
 
 /* DAC buffer output data to create sine wave */
@@ -93,7 +93,7 @@ static void SparseInsert(uint32_t index, uint8_t value)
 
     if (!p)
     {
-        gChartHead[index] = &gChartNodes[gFreeNode++];
+        gChartHead[index]        = &gChartNodes[gFreeNode++];
         gChartHead[index]->value = value;
     }
     else
@@ -102,7 +102,7 @@ static void SparseInsert(uint32_t index, uint8_t value)
         {
             p = p->next;
         }
-        p->next = &gChartNodes[gFreeNode++];
+        p->next        = &gChartNodes[gFreeNode++];
         p->next->value = value;
     }
 }
@@ -137,14 +137,14 @@ static void InitTriggerSource(void)
      * pdbConfigStruct.enableContinuousMode = false;
      */
     PDB_GetDefaultConfig(&pdbConfigStruct);
-    pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider8;
+    pdbConfigStruct.prescalerDivider     = kPDB_PrescalerDivider8;
     pdbConfigStruct.enableContinuousMode = true;
     PDB_Init(DEMO_PDB_BASEADDR, &pdbConfigStruct);
     PDB_EnableDMA(DEMO_PDB_BASEADDR, false);
 
     /* Configure the ADC Pre-Trigger. */
-    pdbAdcPreTriggerConfigStruct.enablePreTriggerMask = 0x3U;
-    pdbAdcPreTriggerConfigStruct.enableOutputMask = 0x3U;
+    pdbAdcPreTriggerConfigStruct.enablePreTriggerMask          = 0x3U;
+    pdbAdcPreTriggerConfigStruct.enableOutputMask              = 0x3U;
     pdbAdcPreTriggerConfigStruct.enableBackToBackOperationMask = 0U;
     PDB_SetADCPreTriggerConfig(DEMO_PDB_BASEADDR, kPDB_ADCTriggerChannel0, &pdbAdcPreTriggerConfigStruct);
 
@@ -173,8 +173,8 @@ static void Init_ADC(void)
     cadc_sample_config_t cadcSampleConfigStruct;
 
     /* Configure the CADC */
-    cadcConfigStruct.dualConverterScanMode = kCADC_DualConverterWorkAsTriggeredSequential;
-    cadcConfigStruct.powerUpDelay = 0x2AU;
+    cadcConfigStruct.dualConverterScanMode  = kCADC_DualConverterWorkAsTriggeredSequential;
+    cadcConfigStruct.powerUpDelay           = 0x2AU;
     cadcConfigStruct.enableSimultaneousMode = false;
     CADC_Init(DEMO_CADC_BASEADDR, &cadcConfigStruct);
     CADC_EnableInterrupts(DEMO_CADC_BASEADDR, kCADC_ZeroCrossingInterruptEnable | kCADC_LowLimitInterruptEnable |
@@ -188,21 +188,21 @@ static void Init_ADC(void)
 
     CADC_GetDefaultConverterConfig(&cadcConverterConfigStruct);
     cadcConverterConfigStruct.clockDivisor = 0xAU;
-    cadcConverterConfigStruct.speedMode = kCADC_SpeedMode3;
+    cadcConverterConfigStruct.speedMode    = kCADC_SpeedMode3;
     CADC_SetConverterConfig(DEMO_CADC_BASEADDR, kCADC_ConverterA, &cadcConverterConfigStruct);
     CADC_EnableConverterPower(DEMO_CADC_BASEADDR, kCADC_ConverterA, true);
     CADC_EnableConverterPower(DEMO_CADC_BASEADDR, kCADC_ConverterB, false);
 
     /* Configure slot in conversion sequence. */
     /* Common setting. */
-    cadcSampleConfigStruct.channelNumber = DEMO_CADC_CHANNEL;
-    cadcSampleConfigStruct.channelGain = kCADC_ChannelGainx1;
+    cadcSampleConfigStruct.channelNumber          = DEMO_CADC_CHANNEL;
+    cadcSampleConfigStruct.channelGain            = kCADC_ChannelGainx1;
     cadcSampleConfigStruct.enableDifferentialPair = 0U;
-    cadcSampleConfigStruct.zeroCrossingMode = kCADC_ZeroCorssingDisabled;
-    cadcSampleConfigStruct.lowLimitValue = 0U;
-    cadcSampleConfigStruct.highLimitValue = 0xFFFFU;
-    cadcSampleConfigStruct.offsetValue = 0U;
-    cadcSampleConfigStruct.enableWaitSync = false;
+    cadcSampleConfigStruct.zeroCrossingMode       = kCADC_ZeroCorssingDisabled;
+    cadcSampleConfigStruct.lowLimitValue          = 0U;
+    cadcSampleConfigStruct.highLimitValue         = 0xFFFFU;
+    cadcSampleConfigStruct.offsetValue            = 0U;
+    cadcSampleConfigStruct.enableWaitSync         = false;
     CADC_SetSampleConfig(DEMO_CADC_BASEADDR, 0U, &cadcSampleConfigStruct);
     CADC_EnableSample(DEMO_CADC_BASEADDR, 0U, false);
     DEMO_CADC_BASEADDR->SDIS |= (1U << 1U);
@@ -226,7 +226,7 @@ static void Systick_Configuration(void)
 static void DAC_genWave(void)
 {
     uint8_t buffLen = 0U;
-    uint8_t index = 0U;
+    uint8_t index   = 0U;
     dac_config_t dacConfigStruct;
     dac_buffer_config_t dacBufferConfigStruct;
 
@@ -239,7 +239,7 @@ static void DAC_genWave(void)
     DAC_GetDefaultBufferConfig(&dacBufferConfigStruct);
 
     dacBufferConfigStruct.watermark = kDAC_BufferWatermark2Word;
-    dacBufferConfigStruct.workMode = kDAC_BufferWorkAsSwingMode; /* Swing mode. */
+    dacBufferConfigStruct.workMode  = kDAC_BufferWorkAsSwingMode; /* Swing mode. */
     DAC_SetBufferConfig(DEMO_DAC_BASEADDR, &dacBufferConfigStruct);
     DAC_EnableBuffer(DEMO_DAC_BASEADDR, true);
 
@@ -257,10 +257,10 @@ void SysTick_Handler(void)
 
 int main(void)
 {
-    uint8_t cnt = 0U;
-    int32_t row = 0U;
+    uint8_t cnt     = 0U;
+    int32_t row     = 0U;
     uint16_t result = 0U;
-    uint32_t last = 0U;
+    uint32_t last   = 0U;
 
     /* Init board hardware. */
     BOARD_InitPins();
@@ -285,8 +285,8 @@ int main(void)
         {
         }
 
-        result = CADC_GetSampleResultValue(DEMO_CADC_BASEADDR, (uint16_t)gCurChan);
-        result = result >> 3U;
+        result   = CADC_GetSampleResultValue(DEMO_CADC_BASEADDR, (uint16_t)gCurChan);
+        result   = result >> 3U;
         gAdcDone = false;
 
         /* Insert the sample data into the sparse matrix */
@@ -304,7 +304,7 @@ int main(void)
     for (row = CHART_ROWS - 1; row >= 0; row--)
     {
         sparse_node_ptr p = gChartHead[row];
-        last = 0;
+        last              = 0;
 
         while (p)
         {

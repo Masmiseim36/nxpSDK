@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -107,7 +107,7 @@ int main(void)
         PRINTF("ADC16_DoAutoCalibration() Failed.\r\n");
     }
 #endif /* FSL_FEATURE_ADC16_HAS_CALIBRATION */
-    adc16ChannelConfigStruct.channelNumber = DEMO_ADC16_USER_CHANNEL;
+    adc16ChannelConfigStruct.channelNumber                        = DEMO_ADC16_USER_CHANNEL;
     adc16ChannelConfigStruct.enableInterruptOnConversionCompleted = false;
 #if defined(FSL_FEATURE_ADC16_HAS_DIFF_MODE) && FSL_FEATURE_ADC16_HAS_DIFF_MODE
     adc16ChannelConfigStruct.enableDifferentialConversion = false;

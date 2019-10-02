@@ -13,6 +13,14 @@ When running the project, typing any key into debug console would trigger the co
 result data of the converter A's sample slots (Sample 0, 1) would be displayed in the terminal. Type the keyboard again
 to trigger the converter B, the conversion result data of the converter B's two sample slots (Sample 8, 9) would be 
 displayed.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini USB cable
@@ -53,11 +61,6 @@ Sample 0        Sample 1        Sample 8        Sample 9
 ~~~~~~~~~~~~~~~~~~~~~~~~
 User can press any key to continue the converter and get more converter data. Touching thermistor
 on board to change output values.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

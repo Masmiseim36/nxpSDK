@@ -24,7 +24,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmkv11z_adc16_polling" name="adc16_polling" category="driver_examples/adc16" dependency="platform.drivers.adc16.MKV11Z7 platform.drivers.port.MKV11Z7 platform.drivers.clock.MKV11Z7 platform.drivers.common.MKV11Z7 device.MKV11Z7_CMSIS.MKV11Z7 utility.debug_console.MKV11Z7 component.uart_adapter.MKV11Z7 component.serial_manager.MKV11Z7 component.serial_manager_uart.MKV11Z7 platform.drivers.uart.MKV11Z7 component.lists.MKV11Z7 device.MKV11Z7_startup.MKV11Z7 platform.drivers.smc.MKV11Z7 platform.drivers.gpio.MKV11Z7 platform.utilities.assert.MKV11Z7 platform.Include_core_cm0plus.MKV11Z7 platform.Include_common.MKV11Z7" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmkv11z_adc16_polling" name="adc16_polling" category="driver_examples/adc16" dependency="platform.drivers.adc16.MKV11Z7 platform.drivers.port.MKV11Z7 platform.drivers.clock.MKV11Z7 platform.drivers.common.MKV11Z7 device.MKV11Z7_CMSIS.MKV11Z7 utility.debug_console.MKV11Z7 component.uart_adapter.MKV11Z7 component.serial_manager.MKV11Z7 component.serial_manager_uart.MKV11Z7 platform.drivers.uart.MKV11Z7 component.lists.MKV11Z7 device.MKV11Z7_startup.MKV11Z7 platform.drivers.smc.MKV11Z7 platform.drivers.gpio.MKV11Z7 platform.utilities.assert.MKV11Z7 platform.Include_core_cm0plus.MKV11Z7 platform.Include_common.MKV11Z7">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>

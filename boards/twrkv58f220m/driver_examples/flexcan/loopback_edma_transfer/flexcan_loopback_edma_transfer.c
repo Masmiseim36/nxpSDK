@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -116,6 +116,21 @@ int main(void)
 #endif
 #endif /* FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE */
     flexcanConfig.enableLoopBack = true;
+
+#if (defined(USE_IMPROVED_TIMING_CONFIG) && USE_IMPROVED_TIMING_CONFIG)
+    flexcan_timing_config_t timing_config;
+    memset(&timing_config, 0, sizeof(flexcan_timing_config_t));
+    if (FLEXCAN_CalculateImprovedTimingValues(flexcanConfig.baudRate, EXAMPLE_CAN_CLK_FREQ, &timing_config))
+    {
+        /* Update the improved timing configuration*/
+        memcpy(&(flexcanConfig.timingConfig), &timing_config, sizeof(flexcan_timing_config_t));
+    }
+    else
+    {
+        PRINTF("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
+    }
+#endif
+
     FLEXCAN_Init(EXAMPLE_CAN, &flexcanConfig, EXAMPLE_CAN_CLK_FREQ);
 
 #if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
@@ -142,9 +157,9 @@ int main(void)
 
     /* Setup Rx FIFO. */
     rxFifoConfig.idFilterTable = rxFifoFilter;
-    rxFifoConfig.idFilterType = kFLEXCAN_RxFifoFilterTypeA;
-    rxFifoConfig.idFilterNum = sizeof(rxFifoFilter) / sizeof(rxFifoFilter[0]);
-    rxFifoConfig.priority = kFLEXCAN_RxFifoPrioHigh;
+    rxFifoConfig.idFilterType  = kFLEXCAN_RxFifoFilterTypeA;
+    rxFifoConfig.idFilterNum   = sizeof(rxFifoFilter) / sizeof(rxFifoFilter[0]);
+    rxFifoConfig.priority      = kFLEXCAN_RxFifoPrioHigh;
     FLEXCAN_SetRxFifoConfig(EXAMPLE_CAN, &rxFifoConfig, true);
 
     /* Create FlexCAN handle structure and set call back function. */
@@ -155,10 +170,10 @@ int main(void)
                                      &flexcanRxFifoEdmaHandle);
 
     /* Send first message through Tx Message Buffer. */
-    txFrame.format = kFLEXCAN_FrameFormatStandard;
-    txFrame.type = kFLEXCAN_FrameTypeData;
-    txFrame.id = FLEXCAN_ID_STD(0x123);
-    txFrame.length = 8;
+    txFrame.format    = kFLEXCAN_FrameFormatStandard;
+    txFrame.type      = kFLEXCAN_FrameTypeData;
+    txFrame.id        = FLEXCAN_ID_STD(0x123);
+    txFrame.length    = 8;
     txFrame.dataWord0 = CAN_WORD0_DATA_BYTE_0(0x11) | CAN_WORD0_DATA_BYTE_1(0x11) | CAN_WORD0_DATA_BYTE_2(0x11) |
                         CAN_WORD0_DATA_BYTE_3(0x11);
     txFrame.dataWord1 = CAN_WORD1_DATA_BYTE_4(0x11) | CAN_WORD1_DATA_BYTE_5(0x11) | CAN_WORD1_DATA_BYTE_6(0x11) |
@@ -186,8 +201,8 @@ int main(void)
     PRINTF("Send Msg2 to Rx FIFO: word0 = 0x%x, word1 = 0x%x.\r\n", txFrame.dataWord0, txFrame.dataWord1);
 
     /* Send third message through Tx Message Buffer. */
-    txXfer.frame = &txFrame;
-    txXfer.mbIdx = TX_MESSAGE_BUFFER_NUM;
+    txXfer.frame      = &txFrame;
+    txXfer.mbIdx      = TX_MESSAGE_BUFFER_NUM;
     txFrame.dataWord0 = CAN_WORD0_DATA_BYTE_0(0x33) | CAN_WORD0_DATA_BYTE_1(0x33) | CAN_WORD0_DATA_BYTE_2(0x33) |
                         CAN_WORD0_DATA_BYTE_3(0x33);
     txFrame.dataWord1 = CAN_WORD1_DATA_BYTE_4(0x33) | CAN_WORD1_DATA_BYTE_5(0x33) | CAN_WORD1_DATA_BYTE_6(0x33) |
@@ -200,8 +215,8 @@ int main(void)
     PRINTF("Send Msg3 to Rx FIFO: word0 = 0x%x, word1 = 0x%x.\r\n", txFrame.dataWord0, txFrame.dataWord1);
 
     /* Send fourth message through Tx Message Buffer. */
-    txXfer.frame = &txFrame;
-    txXfer.mbIdx = TX_MESSAGE_BUFFER_NUM;
+    txXfer.frame      = &txFrame;
+    txXfer.mbIdx      = TX_MESSAGE_BUFFER_NUM;
     txFrame.dataWord0 = CAN_WORD0_DATA_BYTE_0(0x44) | CAN_WORD0_DATA_BYTE_1(0x44) | CAN_WORD0_DATA_BYTE_2(0x44) |
                         CAN_WORD0_DATA_BYTE_3(0x44);
     txFrame.dataWord1 = CAN_WORD1_DATA_BYTE_4(0x44) | CAN_WORD1_DATA_BYTE_5(0x44) | CAN_WORD1_DATA_BYTE_6(0x44) |

@@ -15,6 +15,14 @@ the sequence.
 When running the project, typing any key into debug console would trigger the conversion. And then, the conversion 
 result data of the four sample slots (Sample 0, 1, 2, 3) would be displayed in the terminal. 
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini USB cable
@@ -57,11 +65,6 @@ Sample 0        Sample 1        Sample 2        Sample 3
 
 User can press any key to continue the converter and get more converter data. Touching thermistor
 on board to change output values.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

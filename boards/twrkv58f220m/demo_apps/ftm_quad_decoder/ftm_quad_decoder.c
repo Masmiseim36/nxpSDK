@@ -38,13 +38,13 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-volatile uint32_t encoder_count = 0U;
-volatile uint8_t dir_when_overflow = 0U;
-volatile uint8_t counter_overflow_flag = 0U;
+volatile uint32_t encoder_count         = 0U;
+volatile uint8_t dir_when_overflow      = 0U;
+volatile uint8_t counter_overflow_flag  = 0U;
 volatile uint8_t counter_overflow_count = 0U;
-volatile uint32_t loop_counter = 0U;
-volatile bool encoder_direction = false;
-volatile bool gQdFreshReady = false;
+volatile uint32_t loop_counter          = 0U;
+volatile bool encoder_direction         = false;
+volatile bool gQdFreshReady             = false;
 
 /*******************************************************************************
  * Code
@@ -75,7 +75,7 @@ void PIT_IRQ_HANDLER(void)
     loop_counter++;
     if (loop_counter > 1000U) /* 1s. */
     {
-        loop_counter = 0U;
+        loop_counter  = 0U;
         gQdFreshReady = true;
         /* Read counter value */
         encoder_count = FTM_GetQuadDecoderCounterValue(DEMO_FTM_BASEADDR);
@@ -127,8 +127,8 @@ int main(void)
 
     /* Enable the Quad Decoder mode. */
     phaseParamsConfigStruct.enablePhaseFilter = true;
-    phaseParamsConfigStruct.phaseFilterVal = 0U;
-    phaseParamsConfigStruct.phasePolarity = kFTM_QuadPhaseNormal;
+    phaseParamsConfigStruct.phaseFilterVal    = 0U;
+    phaseParamsConfigStruct.phasePolarity     = kFTM_QuadPhaseNormal;
     FTM_SetupQuadDecode(DEMO_FTM_BASEADDR, &phaseParamsConfigStruct, /* Phase A. */
                         &phaseParamsConfigStruct,                    /* Phase B. */
                         kFTM_QuadPhaseEncode);

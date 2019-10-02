@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -58,8 +58,8 @@
 #define LPTMR_COMPARE_VALUE (500U) /* Low Power Timer interrupt time in miliseconds */
 
 /*!
-* @brief Boundaries struct
-*/
+ * @brief Boundaries struct
+ */
 typedef struct lowPowerAdcBoundaries
 {
     int32_t upperBoundary; /*! upper boundary in degree */
@@ -122,8 +122,8 @@ static lowPowerAdcBoundaries_t TempSensorCalibration(uint32_t updateBoundariesCo
  * Variables
  ******************************************************************************/
 volatile static uint32_t adcValue = 0; /*! ADC value */
-static uint32_t adcrTemp25 = 0;        /*! Calibrated ADCR_TEMP25 */
-static uint32_t adcr100m = 0;
+static uint32_t adcrTemp25        = 0; /*! Calibrated ADCR_TEMP25 */
+static uint32_t adcr100m          = 0;
 volatile bool conversionCompleted = false; /*! Conversion is completed Flag */
 
 /*******************************************************************************
@@ -170,7 +170,7 @@ static void ADC16_PauseConversion(ADC_Type *base)
 {
     adc16_channel_config_t adcChnConfig;
 
-    adcChnConfig.channelNumber = 31U; /*!< AD31 channel */
+    adcChnConfig.channelNumber                        = 31U; /*!< AD31 channel */
     adcChnConfig.enableInterruptOnConversionCompleted = false;
 #if defined(FSL_FEATURE_ADC16_HAS_DIFF_MODE) && FSL_FEATURE_ADC16_HAS_DIFF_MODE
     adcChnConfig.enableDifferentialConversion = false;
@@ -184,7 +184,7 @@ static void ADC16_PauseConversion(ADC_Type *base)
 static void ADC16_CalibrateParams(ADC_Type *base)
 {
     uint32_t bandgapValue = 0; /*! ADC value of BANDGAP */
-    uint32_t vdd = 0;          /*! VDD in mV */
+    uint32_t vdd          = 0; /*! VDD in mV */
 
     adc16_config_t adcUserConfig;
     adc16_channel_config_t adcChnConfig;
@@ -202,11 +202,11 @@ static void ADC16_CalibrateParams(ADC_Type *base)
     PMC_ConfigureBandgapBuffer(PMC, &pmcBandgapConfig);
 
     /*
-    * Initialization ADC for
-    * 16bit resolution, interrupt mode, hw trigger disabled.
-    * normal convert speed, VREFH/L as reference,
-    * disable continuous convert mode
-    */
+     * Initialization ADC for
+     * 16bit resolution, interrupt mode, hw trigger disabled.
+     * normal convert speed, VREFH/L as reference,
+     * disable continuous convert mode
+     */
     /*
      * adcUserConfig.referenceVoltageSource = kADC16_ReferenceVoltageSourceVref;
      * adcUserConfig.clockSource = kADC16_ClockSourceAsynchronousClock;
@@ -225,9 +225,9 @@ static void ADC16_CalibrateParams(ADC_Type *base)
     adcUserConfig.resolution = kADC16_ResolutionSE12Bit;
 #endif
     adcUserConfig.enableContinuousConversion = false;
-    adcUserConfig.clockSource = kADC16_ClockSourceAsynchronousClock;
-    adcUserConfig.enableLowPower = 1;
-    adcUserConfig.longSampleMode = kADC16_LongSampleCycle24;
+    adcUserConfig.clockSource                = kADC16_ClockSourceAsynchronousClock;
+    adcUserConfig.enableLowPower             = 1;
+    adcUserConfig.longSampleMode             = kADC16_LongSampleCycle24;
 #ifdef BOARD_ADC_USE_ALT_VREF
     adcUserConfig.referenceVoltageSource = kADC16_ReferenceVoltageSourceValt;
 #endif
@@ -235,7 +235,14 @@ static void ADC16_CalibrateParams(ADC_Type *base)
 
 #if defined(FSL_FEATURE_ADC16_HAS_CALIBRATION) && FSL_FEATURE_ADC16_HAS_CALIBRATION
     /* Auto calibration */
-    ADC16_DoAutoCalibration(base);
+    if (kStatus_Success == ADC16_DoAutoCalibration(base))
+    {
+        PRINTF("ADC16_DoAutoCalibration() Done.\r\n");
+    }
+    else
+    {
+        PRINTF("ADC16_DoAutoCalibration() Failed.\r\n");
+    }
 #endif
 
 #if defined(FSL_FEATURE_ADC16_HAS_HW_AVERAGE) && FSL_FEATURE_ADC16_HAS_HW_AVERAGE
@@ -285,16 +292,19 @@ static bool ADC16_InitHardwareTrigger(ADC_Type *base)
 
 #if defined(FSL_FEATURE_ADC16_HAS_CALIBRATION) && FSL_FEATURE_ADC16_HAS_CALIBRATION
     /* Auto calibration */
-    ADC16_DoAutoCalibration(base);
+    if (kStatus_Success != ADC16_DoAutoCalibration(base))
+    {
+        return false;
+    }
     offsetValue = base->OFS;
     ADC16_SetOffsetValue(base, offsetValue);
 #endif
     /*
-    * Initialization ADC for
-    * 16bit resolution, interrupt mode, hw trigger enabled.
-    * normal convert speed, VREFH/L as reference,
-    * disable continuous convert mode.
-    */
+     * Initialization ADC for
+     * 16bit resolution, interrupt mode, hw trigger enabled.
+     * normal convert speed, VREFH/L as reference,
+     * disable continuous convert mode.
+     */
     /*
      * adcUserConfig.referenceVoltageSource = kADC16_ReferenceVoltageSourceVref;
      * adcUserConfig.clockSource = kADC16_ClockSourceAsynchronousClock;
@@ -315,7 +325,7 @@ static bool ADC16_InitHardwareTrigger(ADC_Type *base)
     /* enabled hardware trigger  */
     ADC16_EnableHardwareTrigger(base, true);
     adcUserConfig.enableContinuousConversion = false;
-    adcUserConfig.clockSource = kADC16_ClockSourceAsynchronousClock;
+    adcUserConfig.clockSource                = kADC16_ClockSourceAsynchronousClock;
 
     adcUserConfig.longSampleMode = kADC16_LongSampleCycle24;
     adcUserConfig.enableLowPower = 1;
@@ -386,7 +396,7 @@ void DEMO_ADC16_IRQ_HANDLER_FUNC(void)
  */
 int main(void)
 {
-    int32_t currentTemperature = 0;
+    int32_t currentTemperature       = 0;
     uint32_t updateBoundariesCounter = 0;
     int32_t tempArray[UPDATE_BOUNDARIES_TIME * 2];
     lowPowerAdcBoundaries_t boundaries;
@@ -431,14 +441,14 @@ int main(void)
         while (!conversionCompleted)
         {
         }
-        currentTemperature = GetCurrentTempValue();
+        currentTemperature                 = GetCurrentTempValue();
         tempArray[updateBoundariesCounter] = currentTemperature;
         updateBoundariesCounter++;
         conversionCompleted = false;
     }
 
     /* Temp Sensor Calibration */
-    boundaries = TempSensorCalibration(updateBoundariesCounter, tempArray);
+    boundaries              = TempSensorCalibration(updateBoundariesCounter, tempArray);
     updateBoundariesCounter = 0;
 
     /* Two LED is turned on indicating calibration is done */
@@ -481,7 +491,7 @@ int main(void)
         /* Call update function */
         if (updateBoundariesCounter >= (UPDATE_BOUNDARIES_TIME))
         {
-            boundaries = TempSensorCalibration(updateBoundariesCounter, tempArray);
+            boundaries              = TempSensorCalibration(updateBoundariesCounter, tempArray);
             updateBoundariesCounter = 0;
         }
         else

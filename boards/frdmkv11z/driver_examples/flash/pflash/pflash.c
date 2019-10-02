@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2018 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -23,8 +23,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* In case of the protected sectors at the end of the pFlash just select 
-the block from the end of pFlash to be used for operations 
+/* In case of the protected sectors at the end of the pFlash just select
+the block from the end of pFlash to be used for operations
 SECTOR_INDEX_FROM_END = 1 means the last sector,
 SECTOR_INDEX_FROM_END = 2 means (the last sector - 1) ...
 in case of FSL_FEATURE_FLASH_HAS_PFLASH_BLOCK_SWAP it is
@@ -61,10 +61,10 @@ static uint32_t s_buffer_rbc[BUFFER_LEN];
  ******************************************************************************/
 
 /*
-* @brief Gets called when an error occurs.
-*
-* @details Print error message and trap forever.
-*/
+ * @brief Gets called when an error occurs.
+ *
+ * @details Print error message and trap forever.
+ */
 void error_trap(void)
 {
     PRINTF("\r\n\r\n\r\n\t---- HALTED DUE TO FLASH ERROR! ----");
@@ -74,10 +74,10 @@ void error_trap(void)
 }
 
 /*
-* @brief Gets called when the app is complete.
-*
-* @details Print finshed message and trap forever.
-*/
+ * @brief Gets called when the app is complete.
+ *
+ * @details Print finshed message and trap forever.
+ */
 void app_finalize(void)
 {
     /* Print finished message. */
@@ -102,8 +102,8 @@ int main(void)
     uint32_t destAdrss; /* Address of the target location */
     uint32_t i, failAddr, failDat;
 
-    uint32_t pflashBlockBase = 0;
-    uint32_t pflashTotalSize = 0;
+    uint32_t pflashBlockBase  = 0;
+    uint32_t pflashTotalSize  = 0;
     uint32_t pflashSectorSize = 0;
 
     /* Init hardware */
@@ -172,7 +172,6 @@ int main(void)
         /* Erase several sectors on upper pflash block where there is no code */
         PRINTF("\r\n Erase a sector of flash");
 
-
 /* In case of the protected sectors at the end of the pFlash just select
 the block from the end of pFlash to be used for operations
 SECTOR_INDEX_FROM_END = 1 means the last sector,
@@ -183,7 +182,7 @@ SECTOR_INDEX_FROM_END = 2 means the last 4 sectors back
 with width of 2 sectors ...
 */
 #ifndef SECTOR_INDEX_FROM_END
-  #define SECTOR_INDEX_FROM_END 1U
+#define SECTOR_INDEX_FROM_END 1U
 #endif
 
 /* Erase a sector from destAdrss. */
@@ -226,8 +225,8 @@ with width of 2 sectors ...
         }
 
         /* Verify programming by Program Check command with user margin levels */
-        result = FLASH_VerifyProgram(&s_flashDriver, destAdrss, sizeof(s_buffer), (const uint8_t *)s_buffer, kFTFx_MarginValueUser,
-                                     &failAddr, &failDat);
+        result = FLASH_VerifyProgram(&s_flashDriver, destAdrss, sizeof(s_buffer), (const uint8_t *)s_buffer,
+                                     kFTFx_MarginValueUser, &failAddr, &failDat);
         if (kStatus_FTFx_Success != result)
         {
             error_trap();

@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<OBJECT id="pcm" height="0" width="0" classid="clsid:48A185F1-FFDB-11D3-80E3-00C04F176153">
+</OBJECT>
+<html lang="en">
+<head>
+    <title id='Description'>Motor Control FreeMASTER demo page.</title>
+    <link rel="stylesheet" href="styles/jqx.base.css" type="text/css" />
+	<link rel="stylesheet" href="styles/jqx.energyblue.css" type="text/css" />
+    <script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="jqxcore.js"></script>
+    <script type="text/javascript" src="jqxdraw.js"></script>
+    <script type="text/javascript" src="jqxgauge.js"></script>
+	<script type="text/javascript" src="jqxslider.js"></script>
+    <script type="text/javascript" src="jqxbuttons.js"></script>
+    <script type="text/javascript" src="jqxscrollbar.js"></script>
+    <script type="text/javascript" src="jqxpanel.js"></script>
+	<script type="text/javascript" src="jqxwindow.js"></script>
+	<script type="text/javascript" src="jqxnotification.js"></script>
+	<script type="text/javascript" src="jqxmenu.js"></script>
+	<script type="text/javascript" src="jqxswitchbutton.js"></script>
+	<script type="text/javascript" src="jqxtooltip.js"></script>
+	 <!-- User motor control page script files -->
+    <script type="text/javascript" src="control_page_scripts.js"></script>
+    <script type="text/javascript" src="control_page_config.js"></script>
+    <style>
+        html, body {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+    </style>
+    	
+	
+</head>
+<body >
+ <script language="VBScript">
+                Sub pcm_OnVariableChanged(a1,a2)
+                    Event_OnVariableChanged a1,a2
+                End Sub
+    </script>
+	
+
+    <div align = "center" style="position:absolute; top:5px; left:80px; font-family : courier;"><span id="title" size="6"><b> Freescale</b></span></div>
+    <div align = "center" style="position:absolute; top:470px; left:50px; "><span id="heel" size="6"><b> Freescale Semiconductor, Inc. 2015. Designed by Motor Control Team / Microcontroller Product Group</b></span></div>
+    <div align = "center" style="position:absolute; top:240px; left:530px; "><span id="DCVoltage" size="6"><b> DC Bus Voltage </b></span></div>
+    <div align = "center" style="position:absolute; top:400px; left:530px; "><span id="CurrentLimit" size="6"><b> Current Limitation </b></span></div>
+    <div align = "center" style="position:absolute; top:320px; left:535px; "><span id="CurrentAct" size="6"><b> Motor Current </b></span></div>
+    <div align = "center" style="position:absolute; top:400px; left:150px; "><span id="SpeedSlider" size="6"><b> Speed Slider </b></span></div>
+ 
+    <div id="gaugeContainerSpeedActual" style="position:absolute; top:80px; left:70px;" ></div><!-- top:100px; left:5px; -->
+    <div id="gaugeContainerSpeedRequired" style="position:absolute; top:80px; left:70px;" ></div><!-- top:100px; left:5px; -->
+    <div id="gaugeLinearDCBusVoltage" style="position:absolute; top:260px; left:450px;" ></div> <!-- top:670px; left:50px; -->
+    <div id="gaugeLinearCurrent" style="position:absolute; top:340px; left:450px;" ></div> <!-- top:670px; left:50px; -->
+    <div id="jqxSliderSetSpeed" style="position:absolute; top:420px; left:60px; " ></div>  <!-- top:550px; left:50px;" --> <!-- top:80%; left:11%; -->
+    <div id="jqxSliderSetCurrentLimit" style="position:absolute; top:420px; left:450px;" ></div>  <!-- top:400px; left:510px;" -->
+    <img id="logo" src="logo.png" style=" width: 60px; position:absolute; top:270px; left:188px ">
+     
+    <button id='jqxAppSwitchButton' style="position:absolute; top:120px; left:450px;"/>STOP</button>
+    <button id='jqxDemoButton'  style="position:absolute; top:60px; left:450px;"/>Demo Mode</button>
+    <div id="jqxAppState"  style="position:absolute; top:160px; left:450px; z-index:1;"align="center"><div><span id="jqxAppStateText"></span></div></div>
+	
+	
+	
+	
+	
+	 	 	 
+</body>
+</html>
+
+
+
+
+

@@ -2,7 +2,7 @@
  * Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -33,18 +33,18 @@
  * Prototypes
  ******************************************************************************/
 /*!
-* @brief Initialize the EDMA.
-*/
+ * @brief Initialize the EDMA.
+ */
 static void EDMA_Configuration(void);
 
 /*!
-* @brief Initialize the DMAMUX.
-*/
+ * @brief Initialize the DMAMUX.
+ */
 static void DMAMUX_Configuration(void);
 
 /*!
-* @brief Initialize the CADC.
-*/
+ * @brief Initialize the CADC.
+ */
 static void CADC_Configuration(void);
 
 /*!
@@ -150,7 +150,7 @@ static void CADC_Configuration(void)
      */
     CADC_GetDefaultConfig(&cadcConfigStruct);
     cadcConfigStruct.dualConverterScanMode = kCADC_DualConverterWorkAsLoopSequential;
-    cadcConfigStruct.DMATriggerSoruce = kCADC_DMATriggerSourceAsSampleReady;
+    cadcConfigStruct.DMATriggerSoruce      = kCADC_DMATriggerSourceAsSampleReady;
     CADC_Init(DEMO_CADC_BASEADDR, &cadcConfigStruct);
 
     /* Configure converterA. */
@@ -166,15 +166,15 @@ static void CADC_Configuration(void)
     CADC_EnableConverter(DEMO_CADC_BASEADDR, kCADC_ConverterA, true);
 
     /* Configure the samples. */
-    cadcSampleConfigStruct.channelGain = kCADC_ChannelGainx1;
+    cadcSampleConfigStruct.channelGain      = kCADC_ChannelGainx1;
     cadcSampleConfigStruct.zeroCrossingMode = kCADC_ZeroCorssingDisabled;
-    cadcSampleConfigStruct.highLimitValue = 0xFFFFU;
-    cadcSampleConfigStruct.lowLimitValue = 0x0U;
-    cadcSampleConfigStruct.offsetValue = 0x0U;
-    cadcSampleConfigStruct.enableWaitSync = false;
+    cadcSampleConfigStruct.highLimitValue   = 0xFFFFU;
+    cadcSampleConfigStruct.lowLimitValue    = 0x0U;
+    cadcSampleConfigStruct.offsetValue      = 0x0U;
+    cadcSampleConfigStruct.enableWaitSync   = false;
 
     /* For converter A. */
-    cadcSampleConfigStruct.channelNumber = DEMO_CADC_USER_CHANNEL;
+    cadcSampleConfigStruct.channelNumber          = DEMO_CADC_USER_CHANNEL;
     cadcSampleConfigStruct.enableDifferentialPair = false;
     CADC_SetSampleConfig(DEMO_CADC_BASEADDR, 0U, &cadcSampleConfigStruct);
 

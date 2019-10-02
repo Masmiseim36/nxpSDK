@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -122,15 +122,15 @@ static void ADC16_Configuration(void)
     adc16_config_t adcUserConfig;
     adc16_channel_config_t adcChnConfig;
     /*
-    * Initialization ADC for
-    * 16bit resolution, interrupt mode, hw trigger enabled.
-    * normal convert speed, VREFH/L as reference,
-    * disable continuous convert mode.
-    */
+     * Initialization ADC for
+     * 16bit resolution, interrupt mode, hw trigger enabled.
+     * normal convert speed, VREFH/L as reference,
+     * disable continuous convert mode.
+     */
     ADC16_GetDefaultConfig(&adcUserConfig);
-    adcUserConfig.resolution = kADC16_Resolution16Bit;
+    adcUserConfig.resolution                 = kADC16_Resolution16Bit;
     adcUserConfig.enableContinuousConversion = false;
-    adcUserConfig.clockSource = kADC16_ClockSourceAsynchronousClock;
+    adcUserConfig.clockSource                = kADC16_ClockSourceAsynchronousClock;
 
     adcUserConfig.longSampleMode = kADC16_LongSampleCycle24;
     adcUserConfig.enableLowPower = true;
@@ -141,7 +141,14 @@ static void ADC16_Configuration(void)
 
 #if defined(FSL_FEATURE_ADC16_HAS_CALIBRATION) && FSL_FEATURE_ADC16_HAS_CALIBRATION
     /* Auto calibration */
-    ADC16_DoAutoCalibration(DEMO_ADC16_BASEADDR);
+    if (kStatus_Success == ADC16_DoAutoCalibration(DEMO_ADC16_BASEADDR))
+    {
+        PRINTF("ADC16_DoAutoCalibration() Done.\r\n");
+    }
+    else
+    {
+        PRINTF("ADC16_DoAutoCalibration() Failed.\r\n");
+    }
 #endif
 
     adcChnConfig.channelNumber = DEMO_ADC16_CHANNEL;

@@ -6,6 +6,14 @@ hardware trigger event. Because the PIT trigger event can be used to trigger one
 this demo uses the PIT as a trigger source for a CADCx channel. The PIT triggers the CADC in a
 fixed frequency and the demo gets the CADC conversion result in the CADC Conversion Complete (COCO) interrupt.
 This demo uses DAC fifo to generate sinewave on DACx_OUT.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini USB cable
@@ -48,11 +56,6 @@ adc_pit_trigger demo running...
 ***                                             *****                                         *   **
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

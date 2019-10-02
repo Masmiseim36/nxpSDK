@@ -15,7 +15,7 @@
     <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmkv11z_flashloader_loader" name="flashloader_loader" category="bootloader_examples" dependency="platform.drivers.clock.MKV11Z7 device.MKV11Z7_CMSIS.MKV11Z7 middleware.mcu-boot.MKV11Z7_startup.MKV11Z7 middleware.mcu-boot.loadersources.MKV11Z7 platform.drivers.uart.MKV11Z7 middleware.mcu-boot.src_startup.MKV11Z7 platform.drivers.common.MKV11Z7 platform.Include_core_cm0plus.MKV11Z7 platform.Include_common.MKV11Z7" toolchain="iar mdk mcuxpresso">
+  <example id="frdmkv11z_flashloader_loader" name="flashloader_loader" category="bootloader_examples" dependency="platform.drivers.clock.MKV11Z7 device.MKV11Z7_CMSIS.MKV11Z7 middleware.mcu-boot.MKV11Z7_startup.MKV11Z7 middleware.mcu-boot.loadersources.MKV11Z7 platform.drivers.uart.MKV11Z7 middleware.mcu-boot.src_startup.MKV11Z7 platform.drivers.common.MKV11Z7 platform.Include_core_cm0plus.MKV11Z7 platform.Include_common.MKV11Z7">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -56,7 +56,7 @@
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>
-          <value>true</value>
+          <value>false</value>
         </option>
         <option id="com.crt.advproject.link.fpu" type="enum">
           <value>com.crt.advproject.link.fpu.none</value>

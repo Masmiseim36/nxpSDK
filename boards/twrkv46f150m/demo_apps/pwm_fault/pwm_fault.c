@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -17,20 +17,20 @@
  * Definitions
  ******************************************************************************/
 /* The PWM base address */
-#define DEMO_PWM_BASEADDR             PWMA
-#define DEMO_PWM_SUBMODULE            kPWM_Module_0
-#define DEMO_PWM_FAULT_INPUT_PIN      kPWM_Fault_0
-#define DEMO_PWM_CONTROL_SUBMODULE    kPWM_Control_Module_0
-#define DEMO_PWM_CHANNEL              kPWM_PwmA
-#define DEMO_PWM_DELAY_VAL            0x0FFFU
+#define DEMO_PWM_BASEADDR PWMA
+#define DEMO_PWM_SUBMODULE kPWM_Module_0
+#define DEMO_PWM_FAULT_INPUT_PIN kPWM_Fault_0
+#define DEMO_PWM_CONTROL_SUBMODULE kPWM_Control_Module_0
+#define DEMO_PWM_CHANNEL kPWM_PwmA
+#define DEMO_PWM_DELAY_VAL 0x0FFFU
 
-#define DEMO_PWM_CHANNEL_LOCATION_ON_BOARD   "J501 Pin 9"
+#define DEMO_PWM_CHANNEL_LOCATION_ON_BOARD "J501 Pin 9"
 
 #define PWM_SOURCE_CLOCK_IN_HZ CLOCK_GetFreq(kCLOCK_FastPeriphClk)
 
-#define DEMO_CMP_BASE                   CMP0
-#define DEMO_CMP_USER_CHANNEL           2U
-#define DEMO_CMP_DAC_CHANNEL            7U
+#define DEMO_CMP_BASE CMP0
+#define DEMO_CMP_USER_CHANNEL 2U
+#define DEMO_CMP_DAC_CHANNEL 7U
 #define DEMO_CMP_INPUT_PIN_LOCATION_ON_BOARD "J501_13"
 
 #define DEMO_DEADTIME_VAL 650U
@@ -62,14 +62,14 @@ static void PWM_InitPhasePwm(void)
 
     pwmSourceClockInHz = PWM_SRC_CLK_FREQ;
     /* Set deadtime count */
-    deadTimeVal = ((uint64_t)pwmSourceClockInHz * DEMO_DEADTIME_VAL) / 1000000000U;
-    pwmSignal.pwmChannel = DEMO_PWM_CHANNEL;
-    pwmSignal.level = kPWM_HighTrue;
+    deadTimeVal                = ((uint64_t)pwmSourceClockInHz * DEMO_DEADTIME_VAL) / 1000000000U;
+    pwmSignal.pwmChannel       = DEMO_PWM_CHANNEL;
+    pwmSignal.level            = kPWM_HighTrue;
     pwmSignal.dutyCyclePercent = 50U; /* 50 percent dutycycle */
-    pwmSignal.deadtimeValue = deadTimeVal;
+    pwmSignal.deadtimeValue    = deadTimeVal;
 
-    PWM_SetupPwm(DEMO_PWM_BASEADDR, DEMO_PWM_SUBMODULE, &pwmSignal, 1U, kPWM_SignedCenterAligned,\
-                             pwmFrequencyInHz,pwmSourceClockInHz);
+    PWM_SetupPwm(DEMO_PWM_BASEADDR, DEMO_PWM_SUBMODULE, &pwmSignal, 1U, kPWM_SignedCenterAligned, pwmFrequencyInHz,
+                 pwmSourceClockInHz);
 
     /* Set the load okay bit for all submodules to load registers from their buffer */
     PWM_SetPwmLdok(DEMO_PWM_BASEADDR, DEMO_PWM_CONTROL_SUBMODULE, true);
@@ -91,7 +91,7 @@ static void PWM_SetupFaultPwm(void)
      * If use Manual fault clearing mode, then the user must clear fault flags
      */
     pwmFaultParam.faultClearingMode = kPWM_Automatic;
-    pwmFaultParam.recoverMode = kPWM_RecoverFullCycle;
+    pwmFaultParam.recoverMode       = kPWM_RecoverFullCycle;
 
     PWM_SetupFaults(DEMO_PWM_BASEADDR, DEMO_PWM_FAULT_INPUT_PIN, &pwmFaultParam);
 
@@ -107,8 +107,8 @@ int main(void)
     cmp_config_t mCmpConfigStruct;
     cmp_dac_config_t mCmpDacConfigStruct;
 
-    uint8_t ret = 0U;
-    uint16_t i = 0U;
+    uint8_t ret     = 0U;
+    uint16_t i      = 0U;
     uint32_t pwmVal = 4U;
 
     BOARD_InitPins();
@@ -134,7 +134,7 @@ int main(void)
 
     /* Configure the DAC channel. */
     mCmpDacConfigStruct.referenceVoltageSource = kCMP_VrefSourceVin2; /* VCC. */
-    mCmpDacConfigStruct.DACValue = 32U;                               /* Half voltage of logic high level. */
+    mCmpDacConfigStruct.DACValue               = 32U;                 /* Half voltage of logic high level. */
     CMP_SetDACConfig(DEMO_CMP_BASE, &mCmpDacConfigStruct);
     CMP_SetInputChannels(DEMO_CMP_BASE, DEMO_CMP_USER_CHANNEL, DEMO_CMP_DAC_CHANNEL);
 
@@ -157,16 +157,16 @@ int main(void)
     pwmConfig.faultFilterCount = 0x07U;
     /* Fault filter period; value of 0 will bypass the filter */
     pwmConfig.faultFilterPeriod = 0x14U;
-    pwmConfig.prescale = kPWM_Prescale_Divide_1;
+    pwmConfig.prescale          = kPWM_Prescale_Divide_1;
     /* Use full cycle reload */
     pwmConfig.reloadLogic = kPWM_ReloadPwmFullCycle;
     /* PWM A & PWM B operate as 2 independent channels */
-    pwmConfig.pairOperation = kPWM_Independent;
+    pwmConfig.pairOperation   = kPWM_Independent;
     pwmConfig.enableDebugMode = true;
 
     /* Initialize submodule 0 */
     ret = PWM_Init(DEMO_PWM_BASEADDR, DEMO_PWM_SUBMODULE, &pwmConfig);
-    if(ret != kStatus_Success)
+    if (ret != kStatus_Success)
     {
         PRINTF("\r\nPWM INIT FAILED");
         return 1;
@@ -183,7 +183,7 @@ int main(void)
     PWM_StartTimer(DEMO_PWM_BASEADDR, DEMO_PWM_CONTROL_SUBMODULE);
     CMP_Enable(DEMO_CMP_BASE, true);
 
-    while(1)
+    while (1)
     {
         /* Time delay for update the duty cycle percentage */
         for (i = 0U; i < DEMO_PWM_DELAY_VAL; i++)
@@ -199,7 +199,8 @@ int main(void)
         }
 
         /* Update duty cycles for PWM signals */
-        PWM_UpdatePwmDutycycle(DEMO_PWM_BASEADDR, DEMO_PWM_SUBMODULE, DEMO_PWM_CHANNEL, kPWM_SignedCenterAligned, pwmVal);
+        PWM_UpdatePwmDutycycle(DEMO_PWM_BASEADDR, DEMO_PWM_SUBMODULE, DEMO_PWM_CHANNEL, kPWM_SignedCenterAligned,
+                               pwmVal);
         /* Set the load okay bit for all submodules to load registers from their buffer */
         PWM_SetPwmLdok(DEMO_PWM_BASEADDR, DEMO_PWM_CONTROL_SUBMODULE, true);
     }

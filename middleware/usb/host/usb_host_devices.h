@@ -84,9 +84,8 @@ typedef struct _usb_host_enum_process_entry
 {
     uint8_t successState; /*!< When the last step is successful, the next state value */
     uint8_t retryState;   /*!< When the last step need retry, the next state value */
-    usb_status_t (*process)(usb_host_device_instance_t *deviceInstance); /*!< When the last step transfer is done, the
-                                                                            function is used to process the transfer
-                                                                            data */
+    /*! When the last step transfer is done, the function is used to process the transfer data */
+    usb_status_t (*process)(usb_host_device_instance_t *deviceInstance, uint32_t dataLength);
 } usb_host_enum_process_entry_t;
 
 /*******************************************************************************

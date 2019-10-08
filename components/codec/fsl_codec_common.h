@@ -15,8 +15,8 @@
  ******************************************************************************/
 /*! @name Driver version */
 /*@{*/
-/*! @brief CLOCK driver version 2.1.0. */
-#define FSL_CODEC_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
+/*! @brief CLOCK driver version 2.1.1. */
+#define FSL_CODEC_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
 /*@}*/
 
 /*! @brief CODEC handle buffer size */
@@ -214,7 +214,7 @@ enum _codec_capability_flag
 };
 
 /*!@brief codec handle declaration */
-typedef struct codec_handle codec_handle_t;
+typedef struct _codec_handle codec_handle_t;
 
 /*! @brief Initialize structure of the codec */
 typedef struct _codec_config
@@ -236,11 +236,11 @@ typedef struct _codec_capability
  * uint8_t codecHandleBuffer[CODEC_HANDLE_SIZE];
  * codec_handle_t *codecHandle = codecHandleBuffer;
  */
-struct codec_handle
+struct _codec_handle
 {
-    codec_config_t *codecConfig;        /*!< codec configuration function pointer */
-    codec_capability_t codecCapability; /*!< codec capability */
-    void *codecDevHandle;               /*!< codec device handle */
+    codec_config_t *codecConfig;               /*!< codec configuration function pointer */
+    const codec_capability_t *codecCapability; /*!< codec capability */
+    uint8_t codecDevHandle[CODEC_HANDLE_SIZE]; /*!< codec device handle */
 };
 
 /*******************************************************************************

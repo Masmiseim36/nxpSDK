@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016 - 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -579,6 +579,10 @@ typedef struct _usb_host_ip3516hs_state_struct
 {
     volatile usb_host_ip3516hs_register_struct_t *usbRegBase; /*!< The base address of the register */
     void *hostHandle;                                         /*!< Related host handle*/
+#if (defined(USB_HOST_CONFIG_BATTERY_CHARGER) && (USB_HOST_CONFIG_BATTERY_CHARGER > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+    void *dcdHandle; /*!< Dcd handle used to identify the device object belongs to */
+#endif
     usb_host_ip3516hs_port_state_struct_t *portState;
     usb_host_ip3516hs_pipe_struct_t *pipeList;
     usb_host_ip3516hs_pipe_struct_t *pipeListInUsing;
@@ -602,7 +606,11 @@ typedef struct _usb_host_ip3516hs_state_struct
     uint8_t hirdValue;
     uint8_t L1remoteWakeupEnable;
 #endif
-    bus_ip3516hs_suspend_request_state_t busSuspendStatus; /*!< Bus Suspend Status*/
+    uint8_t busSuspendStatus; /*!< Bus Suspend Status*/
+#endif
+#if (defined(USB_HOST_CONFIG_BATTERY_CHARGER) && (USB_HOST_CONFIG_BATTERY_CHARGER > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+    uint8_t chargerType;
 #endif
 } usb_host_ip3516hs_state_struct_t;
 

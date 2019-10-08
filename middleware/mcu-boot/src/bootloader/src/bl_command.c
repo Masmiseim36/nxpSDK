@@ -126,9 +126,10 @@ enum _secure_commands
                                   HAS_CMD(kCommandTag_Reset) | HAS_CMD(kCommandTag_SetProperty) |
                                   HAS_CMD(kCommandTag_FlashEraseAllUnsecure) | HAS_CMD(kCommandTag_ReceiveSbFile)
 #if BL_FEATURE_KEY_PROVISIONING
-                                  | HAS_CMD(kCommandTag_KeyProvisioning) 
+                                  |
+                                  HAS_CMD(kCommandTag_KeyProvisioning)
 #endif // BL_FEATURE_KEY_PROVISIONING
-                                  )
+                                      )
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -160,7 +161,7 @@ const command_handler_entry_t g_commandHandlerTable[] = {
 #else  // BL_FEATURE_ERASEALL_UNSECURE
     { 0 }, // kCommandTag_FlashEraseAllUnsecure = 0x0d
 #endif // BL_FEATURE_ERASEALL_UNSECURE
-#if (((!BL_FEATURE_HAS_NO_INTERNAL_FLASH) || BL_FEATURE_OCOTP_MODULE) && (!BL_DEVICE_IS_LPC_SERIES))|| \
+#if (((!BL_FEATURE_HAS_NO_INTERNAL_FLASH) || BL_FEATURE_OCOTP_MODULE) && (!BL_DEVICE_IS_LPC_SERIES)) || \
     ((BL_DEVICE_IS_LPC_SERIES) && defined(OTP_API))
     { handle_flash_program_once, NULL }, // kCommandTag_ProgramOnce = 0x0e
     { handle_flash_read_once, NULL },    // kCommandTag_ReadOnce = 0x0f
@@ -173,13 +174,15 @@ const command_handler_entry_t g_commandHandlerTable[] = {
     { 0 },
     { 0 },
     { 0 },
-#endif // #if (((!BL_FEATURE_HAS_NO_INTERNAL_FLASH) || BL_FEATURE_OCOTP_MODULE) && (!BL_DEVICE_IS_LPC_SERIES))|| ((BL_DEVICE_IS_LPC_SERIES) && defined(OTP_API))
+#endif // #if (((!BL_FEATURE_HAS_NO_INTERNAL_FLASH) || BL_FEATURE_OCOTP_MODULE) && (!BL_DEVICE_IS_LPC_SERIES))||
+       // ((BL_DEVICE_IS_LPC_SERIES) && defined(OTP_API))
 #if BL_FEATURE_QSPI_MODULE || BL_FEATURE_FLEXSPI_NOR_MODULE || BL_FEATURE_SEMC_NOR_MODULE || \
     BL_FEATURE_EXPAND_MEMORY || BL_FEATURE_SPI_NOR_EEPROM_MODULE || BL_FEATURE_SPIFI_NOR_MODULE
     { handle_configure_memory, NULL }, // kCommandTag_ConfigureMemory = 0x11
 #else
     { 0 }, // kCommandTag_ConfigureMemory = 0x11
-#endif // BL_FEATURE_QSPI_MODULE || BL_FEATURE_FLEXSPI_NOR_MODULE || BL_FEATURE_SEMC_NOR_MODULE || BL_FEATURE_EXPAND_MEMORY || BL_FEATURE_SPI_NOR_EEPROM_MODULE || BL_FEATURE_SPIFI_NOR_MODULE
+#endif // BL_FEATURE_QSPI_MODULE || BL_FEATURE_FLEXSPI_NOR_MODULE || BL_FEATURE_SEMC_NOR_MODULE ||
+       // BL_FEATURE_EXPAND_MEMORY || BL_FEATURE_SPI_NOR_EEPROM_MODULE || BL_FEATURE_SPIFI_NOR_MODULE
 #if BL_FEATURE_RELIABLE_UPDATE
     { handle_reliable_update, NULL }, // kCommandTag_ReliableUpdate = 0x12
 #else
@@ -192,8 +195,8 @@ const command_handler_entry_t g_commandHandlerTable[] = {
     { 0 },
 #if BL_FEATURE_KEY_PROVISIONING
     { handle_key_provisioning, handle_data_bidirection }, // kCommandTag_KeyProvisioning = 0x15
-#endif // BL_FEATURE_KEY_PROVISIONING
-#else // BL_FEATURE_MIN_PROFILE
+#endif                                                    // BL_FEATURE_KEY_PROVISIONING
+#else                                                     // BL_FEATURE_MIN_PROFILE
     { handle_flash_erase_all, NULL },    // kCommandTag_FlashEraseAll = 0x01
     { handle_flash_erase_region, NULL }, // kCommandTag_FlashEraseRegion = 0x02
 #if BL_FEATURE_READ_MEMORY
@@ -247,7 +250,7 @@ command_interface_t g_commandInterface = { bootloader_command_init, bootloader_c
                                            (command_handler_entry_t *)&g_commandHandlerTable, &g_commandData };
 
 #if BL_FEATURE_EXPAND_PACKET_SIZE
-static uint8_t s_dataProducerPacket[kMaxBootloaderPacketSize];
+static uint8_t s_dataProducerPacket[kMaxBootloaderPacketSize] __attribute__((aligned(4)));
 #endif // BL_FEATURE_EXPAND_PACKET_SIZE
 
 #if BL_FEATURE_KEY_PROVISIONING
@@ -352,8 +355,8 @@ static status_t handle_command(uint8_t *packet, uint32_t packetLength)
         // Note: Both Main and Secondary flash share the same security state
         //  So it doesn't matter what index of allFlashState[] we use for this FLASH API.
         ftfx_security_state_t securityState;
-        status = g_bootloaderContext.flashDriverInterface->flash_get_security_state(
-            g_bootloaderContext.allFlashState, &securityState);
+        status = g_bootloaderContext.flashDriverInterface->flash_get_security_state(g_bootloaderContext.allFlashState,
+                                                                                    &securityState);
         if (status == kStatus_Success)
         {
             // If flash security is enabled, make sure the command is one that is allowed. If
@@ -483,12 +486,12 @@ void handle_flash_erase_all(uint8_t *packet, uint32_t packetLength)
 #if ((!BL_FEATURE_QSPI_MODULE) && (!BL_FEATURE_FAC_ERASE) && (!BL_FEATURE_EXPAND_MEMORY) && \
      (!BL_FEATURE_HAS_NO_INTERNAL_FLASH))
     status = flash_mem_erase_all();
-#if BL_FEATURE_SUPPORT_DFLASH 
+#if BL_FEATURE_SUPPORT_DFLASH
     if (g_bootloaderContext.dflashDriverInterface != NULL)
     {
-        status += flexNVM_mem_erase_all();   
+        status += flexNVM_mem_erase_all();
     }
-#endif // BL_FEATURE_SUPPORT_DFLASH    
+#endif // BL_FEATURE_SUPPORT_DFLASH
 #else
     switch (commandPacket->memoryId)
     {
@@ -496,12 +499,12 @@ void handle_flash_erase_all(uint8_t *packet, uint32_t packetLength)
 #if BL_FEATURE_FAC_ERASE
         case kMemoryInternal:
             status = flash_mem_erase_all(kFlashEraseAllOption_Blocks);
-#if BL_FEATURE_SUPPORT_DFLASH 
+#if BL_FEATURE_SUPPORT_DFLASH
             if (g_bootloaderContext.dflashDriverInterface != NULL)
             {
-                status += flexNVM_mem_erase_all();  
+                status += flexNVM_mem_erase_all();
             }
-#endif // BL_FEATURE_SUPPORT_DFLASH             
+#endif // BL_FEATURE_SUPPORT_DFLASH
             break;
         case kMemoryFlashExecuteOnly:
             status = flash_mem_erase_all(kFlashEraseAllOption_ExecuteOnlySegments);
@@ -509,12 +512,12 @@ void handle_flash_erase_all(uint8_t *packet, uint32_t packetLength)
 #else
         case kMemoryInternal:
             status = flash_mem_erase_all();
-#if BL_FEATURE_SUPPORT_DFLASH 
+#if BL_FEATURE_SUPPORT_DFLASH
             if (g_bootloaderContext.dflashDriverInterface != NULL)
             {
-                status += flexNVM_mem_erase_all();   
+                status += flexNVM_mem_erase_all();
             }
-#endif // BL_FEATURE_SUPPORT_DFLASH             
+#endif // BL_FEATURE_SUPPORT_DFLASH
             break;
 #endif // BL_FEATURE_FAC_ERASE
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
@@ -568,7 +571,7 @@ void handle_flash_erase_all(uint8_t *packet, uint32_t packetLength)
             break;
     }
 #endif // #if ((!BL_FEATURE_QSPI_MODULE) && (!BL_FEATURE_FAC_ERASE) && (!BL_FEATURE_EXPAND_MEMORY) &&
-// (!BL_FEATURE_HAS_NO_INTERNAL_FLASH))
+       // (!BL_FEATURE_HAS_NO_INTERNAL_FLASH))
 
     send_generic_response(status, commandPacket->commandPacket.commandTag);
 }
@@ -582,13 +585,13 @@ void handle_flash_erase_all_unsecure(uint8_t *packet, uint32_t packetLength)
 // Call flash erase all unsecure implementation.
 #if BL_FEATURE_ERASEALL_UNSECURE
     status = flash_mem_erase_all_unsecure();
-#if BL_FEATURE_SUPPORT_DFLASH 
+#if BL_FEATURE_SUPPORT_DFLASH
     if (g_bootloaderContext.dflashDriverInterface != NULL)
     {
-        status += flexNVM_mem_erase_all_unsecure();   
+        status += flexNVM_mem_erase_all_unsecure();
     }
-#endif // BL_FEATURE_SUPPORT_DFLASH     
-#endif //BL_FEATURE_ERASEALL_UNSECURE
+#endif // BL_FEATURE_SUPPORT_DFLASH
+#endif // BL_FEATURE_ERASEALL_UNSECURE
 
     send_generic_response(status, commandPacket->commandTag);
 }
@@ -599,7 +602,7 @@ void handle_flash_erase_region(uint8_t *packet, uint32_t packetLength)
     flash_erase_region_packet_t *command = (flash_erase_region_packet_t *)packet;
     status_t status = kStatus_Success;
 
-// Call flash erase region implementation.
+    // Call flash erase region implementation.
     status = g_bootloaderContext.memoryInterface->erase(command->startAddress, command->byteCount, command->memoryId);
 
     send_generic_response(status, command->commandPacket.commandTag);
@@ -664,7 +667,7 @@ void handle_configure_memory(uint8_t *packet, uint32_t packetLength)
 #endif // BL_FEATURE_QSPI_MODULE
 
 #if BL_FEATURE_FLEXSPI_NOR_MODULE
-        if (command->flashMemId == kMemoryFlexSpiNor)
+    if (command->flashMemId == kMemoryFlexSpiNor)
     {
         status = flexspi_nor_mem_config((uint32_t *)command->configBlockAddress);
     }
@@ -678,7 +681,7 @@ void handle_configure_memory(uint8_t *packet, uint32_t packetLength)
 #endif // #if BL_FEATURE_SPIFI_NOR_MODULE
 
 #if BL_FEATURE_SEMC_NOR_MODULE
-        if (command->flashMemId == kMemorySemcNor)
+    if (command->flashMemId == kMemorySemcNor)
     {
         status = semc_nor_mem_config((uint32_t *)command->configBlockAddress);
     }
@@ -700,7 +703,8 @@ void handle_configure_memory(uint8_t *packet, uint32_t packetLength)
 #endif // #if BL_FEATURE_EXPAND_MEMORY
     send_generic_response(status, command->commandPacket.commandTag);
 }
-#endif // BL_FEATURE_QSPI_MODULE || BL_FEATURE_FLEXSPI_NOR_MODULE || BL_FEATURE_EXPAND_MEMORY || BL_FEATURE_SPI_NOR_EEPROM_MODULE || BL_FEATURE_SPIFI_NOR_MODULE
+#endif // BL_FEATURE_QSPI_MODULE || BL_FEATURE_FLEXSPI_NOR_MODULE || BL_FEATURE_EXPAND_MEMORY ||
+       // BL_FEATURE_SPI_NOR_EEPROM_MODULE || BL_FEATURE_SPIFI_NOR_MODULE
 
 #if BL_FEATURE_QSPI_MODULE
 status_t configure_qspi(const uint32_t address)
@@ -1072,15 +1076,14 @@ status_t handle_data_producer(bool *hasMoreData)
 #if !BL_DEVICE_IS_LPC_SERIES
         else if (commandTag == kCommandTag_FlashReadResource)
         {
-// Read data from special-purpose flash memory
+            // Read data from special-purpose flash memory
             ftfx_read_resource_opt_t option =
                 (ftfx_read_resource_opt_t)g_bootloaderContext.commandInterface->stateData->dataPhase.option;
             lock_acquire();
             // Note: Both Main and Secondary flash share the same IFR Memory
             //  So it doesn't matter what index of allFlashState[] we use for this FLASH API.
             status = g_bootloaderContext.flashDriverInterface->flash_read_resource(
-                g_bootloaderContext.allFlashState, dataAddress, (uint8_t *)packet, packetSize,
-                option);
+                g_bootloaderContext.allFlashState, dataAddress, (uint8_t *)packet, packetSize, option);
             lock_release();
         }
 #endif // !BL_DEVICE_IS_LPC_SERIES
@@ -1251,8 +1254,8 @@ void handle_flash_security_disable(uint8_t *packet, uint32_t packetLength)
     // Flash interface wants little endian, so just send two uint32s.
     // Note: Both Main and Secondary flash share the same security control
     //  So it doesn't matter what index of allFlashState[] we use for this FLASH API.
-    status = g_bootloaderContext.flashDriverInterface->flash_security_bypass(
-        g_bootloaderContext.allFlashState, (uint8_t *)&command->keyLow);
+    status = g_bootloaderContext.flashDriverInterface->flash_security_bypass(g_bootloaderContext.allFlashState,
+                                                                             (uint8_t *)&command->keyLow);
 #endif // !BL_DEVICE_IS_LPC_SERIES
 #endif
 
@@ -1273,7 +1276,8 @@ void handle_flash_program_once(uint8_t *packet, uint32_t length)
     // Note: Both Main and Secondary flash share the same IFR Memory
     //  So it doesn't matter what index of allFlashState[] we use for this FLASH API.
     status = g_bootloaderContext.flashDriverInterface->flash_program_once(
-        &g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main], command->index, (uint8_t *)&command->data[0], command->byteCount);
+        &g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main], command->index, (uint8_t *)&command->data[0],
+        command->byteCount);
 #endif // !BL_DEVICE_IS_LPC_SERIES
 #elif BL_FEATURE_OCOTP_MODULE
     status = ocotp_program_once(OCOTP, command->index, &command->data[0], command->byteCount);
@@ -1300,7 +1304,8 @@ void handle_flash_read_once(uint8_t *packet, uint32_t length)
     // Note: Both Main and Secondary flash share the same IFR Memory
     //  So it doesn't matter what index of allFlashState[] we use for this FLASH API.
     status = g_bootloaderContext.flashDriverInterface->flash_read_once(
-        &g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main], command->index, (uint8_t *)&readOnceItemData[0], command->byteCount);
+        &g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main], command->index,
+        (uint8_t *)&readOnceItemData[0], command->byteCount);
 #endif // !BL_DEVICE_IS_LPC_SERIES
 #elif BL_FEATURE_OCOTP_MODULE
     status = ocotp_read_once(OCOTP, command->index, &readOnceItemData[0], command->byteCount);

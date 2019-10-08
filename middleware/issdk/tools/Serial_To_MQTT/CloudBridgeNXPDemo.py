@@ -1,7 +1,12 @@
+# Copyright 2018 NXP
+# All rights reserved.
+#
+# SPDX-License-Identifier: BSD-3-Clause
+
 '''
 @author    : Shubhadip.Paul@nxp.com
 @name      : ISSDKCloudBridge
-@copyright : Copyright 2018 NXP
+
 ********************************************************************************
 This script is used to read Data Logger Samples from a File and send to Cloud.
 

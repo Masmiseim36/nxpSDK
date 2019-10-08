@@ -534,103 +534,12 @@ static usb_status_t USB_DeviceAttachNotification(usb_device_struct_t *handle,
 }
 #endif
 
-#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
-    ((defined(FSL_FEATURE_SOC_USBDCD_COUNT) && (FSL_FEATURE_SOC_USBDCD_COUNT > 0U)) ||        \
-     (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)))
-/*!
- * @brief Handle the dcd module timeout notification.
- *
- * This function is used to handle the dcd module timeout notification.
- *
- * @param handle                 The device handle. It equals the value returned from USB_DeviceInit.
- * @param message                The device callback message handle.
- *
- * @return A USB error code or kStatus_USB_Success.
- */
-static usb_status_t USB_DeviceDcdTimeOutNotification(usb_device_struct_t *handle,
-                                                     usb_device_callback_message_struct_t *message)
-{
-    /* Call device callback to notify the application that the device charger detect timeout happened.
-    the deviceCallback is the second parameter of USB_DeviceInit */
-    return handle->deviceCallback(handle, kUSB_DeviceEventDcdTimeOut, NULL);
-}
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U))
 
 /*!
- * @brief Handle the dcd module unknown port type notification.
+ * @brief Handle the DCP detection finished notification.
  *
- * This function is used to handle the dcd module unknown port type notification.
- *
- * @param handle                 The device handle. It equals the value returned from USB_DeviceInit.
- * @param message                The device callback message handle.
- *
- * @return A USB error code or kStatus_USB_Success.
- */
-static usb_status_t USB_DeviceDcdUnknownPortTypeNotification(usb_device_struct_t *handle,
-                                                             usb_device_callback_message_struct_t *message)
-{
-    /* Call device callback to notify the application that the device charger detect unknown port type happened.
-    the deviceCallback is the second parameter of USB_DeviceInit */
-    return handle->deviceCallback(handle, kUSB_DeviceEventDcdUnknownType, NULL);
-}
-
-/*!
- * @brief Handle the SDP facility is detected notification.
- *
- * This function is used to handle the SDP facility is detectednotification.
- *
- * @param handle                 The device handle. It equals the value returned from USB_DeviceInit.
- * @param message                The device callback message handle.
- *
- * @return A USB error code or kStatus_USB_Success.
- */
-static usb_status_t USB_DeviceDcdSDPDetectNotification(usb_device_struct_t *handle,
-                                                       usb_device_callback_message_struct_t *message)
-{
-    /* Call device callback to notify the application that the SDP facility is detected.
-    the deviceCallback is the second parameter of USB_DeviceInit */
-    return handle->deviceCallback(handle, kUSB_DeviceEventSDPDetected, NULL);
-}
-
-/*!
- * @brief Handle the charging port is detected notification.
- *
- * This function is used to handle the charging port is detectednotification.
- *
- * @param handle                 The device handle. It equals the value returned from USB_DeviceInit.
- * @param message                The device callback message handle.
- *
- * @return A USB error code or kStatus_USB_Success.
- */
-static usb_status_t USB_DeviceDcdChargingPortDetectNotification(usb_device_struct_t *handle,
-                                                                usb_device_callback_message_struct_t *message)
-{
-    /* Call device callback to notify the application that the charing port is detected.
-    the deviceCallback is the second parameter of USB_DeviceInit */
-    return handle->deviceCallback(handle, kUSB_DeviceEventChargingPortDetected, NULL);
-}
-
-/*!
- * @brief Handle the CDP facility is detected notification.
- *
- * This function is used to handle the CDP facility is detectednotification.
- *
- * @param handle                 The device handle. It equals the value returned from USB_DeviceInit.
- * @param message                The device callback message handle.
- *
- * @return A USB error code or kStatus_USB_Success.
- */
-static usb_status_t USB_DeviceDcdChargingHostDetectNotification(usb_device_struct_t *handle,
-                                                                usb_device_callback_message_struct_t *message)
-{
-    /* Call device callback to notify the application that the CDP facility is detected.
-    the deviceCallback is the second parameter of USB_DeviceInit */
-    return handle->deviceCallback(handle, kUSB_DeviceEventChargingHostDetected, NULL);
-}
-
-/*!
- * @brief Handle the DCP facility is detected notification.
- *
- * This function is used to handle the DCP facility is detectednotification.
+ * This function is used to notify detection notification.
  *
  * @param handle                 The device handle. It equals the value returned from USB_DeviceInit.
  * @param message                The device callback message handle.
@@ -638,12 +547,12 @@ static usb_status_t USB_DeviceDcdChargingHostDetectNotification(usb_device_struc
  * @return A USB error code or kStatus_USB_Success.
  */
 
-static usb_status_t USB_DeviceDcdDedicatedChargerDetectNotification(usb_device_struct_t *handle,
+static usb_status_t USB_DeviceDcdDetectFinihsedNotification(usb_device_struct_t *handle,
                                                                     usb_device_callback_message_struct_t *message)
 {
     /* Call device callback to notify the application that the DCP facility is detected.
     the deviceCallback is the second parameter of USB_DeviceInit */
-    return handle->deviceCallback(handle, kUSB_DeviceEventDedicatedChargerDetected, NULL);
+    return handle->deviceCallback(handle, kUSB_DeviceEventDcdDetectionfinished, message->buffer);
 }
 #endif
 
@@ -697,26 +606,9 @@ static usb_status_t USB_DeviceNotification(usb_device_struct_t *handle, usb_devi
             error = USB_DeviceAttachNotification(handle, message);
             break;
 #endif
-#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
-    ((defined(FSL_FEATURE_SOC_USBDCD_COUNT) && (FSL_FEATURE_SOC_USBDCD_COUNT > 0U)) ||        \
-     (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)))
-        case kUSB_DeviceNotifyDcdTimeOut:
-            error = USB_DeviceDcdTimeOutNotification(handle, message);
-            break;
-        case kUSB_DeviceNotifyDcdUnknownPortType:
-            error = USB_DeviceDcdUnknownPortTypeNotification(handle, message);
-            break;
-        case kUSB_DeviceNotifySDPDetected:
-            error = USB_DeviceDcdSDPDetectNotification(handle, message);
-            break;
-        case kUSB_DeviceNotifyChargingPortDetected:
-            error = USB_DeviceDcdChargingPortDetectNotification(handle, message);
-            break;
-        case kUSB_DeviceNotifyChargingHostDetected:
-            error = USB_DeviceDcdChargingHostDetectNotification(handle, message);
-            break;
-        case kUSB_DeviceNotifyDedicatedChargerDetected:
-            error = USB_DeviceDcdDedicatedChargerDetectNotification(handle, message);
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) 
+        case kUSB_DeviceNotifyDcdDetectFinished:
+            error = USB_DeviceDcdDetectFinihsedNotification(handle, message);
             break;
 #endif
 
@@ -1083,7 +975,7 @@ usb_status_t USB_DeviceCancel(usb_device_handle handle, uint8_t endpointAddress)
  * @retval kStatus_USB_Success              The endpoint is initialized successfully.
  * @retval kStatus_USB_InvalidHandle        The handle is a NULL pointer. Or the controller handle is invalid.
  * @retval kStatus_USB_InvalidParameter     The epInit or epCallback is NULL pointer. Or the endpoint number is
- * more than USB_DEVICE_CONFIG_ENDPOINTS.
+ * not less than USB_DEVICE_CONFIG_ENDPOINTS.
  * @retval kStatus_USB_Busy                 The endpoint is busy in EHCI driver.
  * @retval kStatus_USB_ControllerNotFound   Cannot find the controller.
  */
@@ -1373,40 +1265,38 @@ usb_status_t USB_DeviceSetStatus(usb_device_handle handle, usb_device_status_t t
     return error;
 }
 
-#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
-    ((defined(FSL_FEATURE_SOC_USBDCD_COUNT) && (FSL_FEATURE_SOC_USBDCD_COUNT > 0U)) ||        \
-     (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)))
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U))
 /*!
- * @brief Initializes the device dcd module.
+ * @brief Enable the device dcd module.
  *
- * The function initializes the device dcd module.
+ * The function enable the device dcd module.
  *
- * @param handle The device handle got from USB_DeviceInit.
+ * @param[in] handle The device handle got from #USB_DeviceInit.
  *
- * @retval kStatus_USB_Success              The device is run successfully.
+ * @retval kStatus_USB_Success              The device could run.
  * @retval kStatus_USB_ControllerNotFound   Cannot find the controller.
  * @retval kStatus_USB_InvalidHandle        The device handle is a NULL pointer. Or the controller handle is invalid.
  *
  */
-usb_status_t USB_DeviceDcdInitModule(usb_device_handle handle, void *time_param)
+usb_status_t USB_DeviceDcdEnable(usb_device_handle handle)
 {
-    return USB_DeviceControl(handle, kUSB_DeviceControlDcdInitModule, time_param);
+    return USB_DeviceControl(handle, kUSB_DeviceControlDcdEnable, NULL);
 }
-
 /*!
- * @brief De-initializes the device dcd module.
+ * @brief Disable the device dcd module.
  *
- * The function de-intializes the device dcd module.
+ * The function disable the device dcd module.
  *
- * @param handle The device handle got from USB_DeviceInit.
+ * @param[in] handle The device handle got from #USB_DeviceInit.
  *
- * @retval kStatus_USB_Success              The device is run successfully.
- * @retval kStatus_USB_InvalidHandle        The device handle is a NULL pointer. Or the controller handle is invalid.
+ * @retval kStatus_USB_Success              The dcd is reset and stopped.
+ * @retval kStatus_USB_ControllerNotFound   Cannot find the controller.
+ * @retval kStatus_USB_InvalidHandle        The device handle is a NULL pointer or the controller handle is invalid.
  *
  */
-usb_status_t USB_DeviceDcdDeinitModule(usb_device_handle handle)
+usb_status_t USB_DeviceDcdDisable(usb_device_handle handle)
 {
-    return USB_DeviceControl(handle, kUSB_DeviceControlDcdDeinitModule, NULL);
+    return USB_DeviceControl(handle, kUSB_DeviceControlDcdDisable, NULL);
 }
 #endif
 
@@ -1453,7 +1343,9 @@ void USB_DeviceGetVersion(uint32_t *version)
     }
 }
 
-#if ((defined(USB_DEVICE_CONFIG_REMOTE_WAKEUP)) && (USB_DEVICE_CONFIG_REMOTE_WAKEUP > 0U))
+#if ((defined(USB_DEVICE_CONFIG_REMOTE_WAKEUP)) && (USB_DEVICE_CONFIG_REMOTE_WAKEUP > 0U)) || \
+    (((defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))))
 /*!
  * @brief Update the hardware tick.
  *
@@ -1475,7 +1367,10 @@ usb_status_t USB_DeviceUpdateHwTick(usb_device_handle handle, uint64_t tick)
     deviceHandle = (usb_device_struct_t *)handle;
 
     deviceHandle->hwTick = tick;
-
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
+    status = USB_DeviceControl(handle, kUSB_DeviceControlUpdateHwTick, (void*)(&deviceHandle->hwTick)); 
+#endif
     return status;
 }
 #endif

@@ -31,7 +31,7 @@
     BYTE*   dirbuf;       <span class="c">/* Directory entry block scratchpad buffer */</span>
 <span class="k">#endif</span>
 <span class="k">#if</span> FF_FS_REENTRANT
-    FF_SYNC_t sobj;         <span class="c">/* Identifier of sync object */</span>
+    FF_SYNC_t sobj;       <span class="c">/* Identifier of sync object */</span>
 <span class="k">#endif</span>
 <span class="k">#if</span> !FF_FS_READONLY
     DWORD   last_clust;   <span class="c">/* FSINFO: Last allocated cluster (0xFFFFFFFF if invalid) */</span>

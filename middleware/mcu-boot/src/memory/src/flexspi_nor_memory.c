@@ -39,6 +39,11 @@
 
 #define FLASH_AMBA_BASE BL_FLEXSPI_AMBA_BASE
 
+#ifdef BL_FLASH_CFG_BLOCK_OFFSET
+#define FLASH_CFG_BLOCK_BASE (BL_FLEXSPI_AMBA_BASE + BL_FLASH_CFG_BLOCK_OFFSET)
+#else
+#define FLASH_CFG_BLOCK_BASE (BL_FLEXSPI_AMBA_BASE)
+#endif
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
@@ -111,8 +116,7 @@ static flexspi_nor_config_t s_flexspiNorConfigBlock; //!< Configuration block fo
 
 //! @brief Context of Flexspi operation.
 static flexspi_nor_mem_context_t s_flexspiNorContext = {
-    .isConfigured = false,
-    .isAddingToBuffer = false,
+    .isConfigured = false, .isAddingToBuffer = false,
 };
 
 //! @brief Interface to flexspi memory operations
@@ -224,12 +228,14 @@ status_t check_update_keyblob_info(void *config)
             // Check key blob address range
             if ((keyblob_size + keyblob_offset) > image_max_size)
             {
+                status = kStatusMemoryRangeInvalid;
                 break;
             }
 
             // Invalid key blob address, key blob must be page size aligned.
             if (keyblob_addr & (page_size - 1))
             {
+                status = kStatusMemoryAlignmentError;
                 break;
             }
 
@@ -419,7 +425,7 @@ status_t flexspi_nor_mem_config(uint32_t *config)
                 }
 
                 // Update flexspi nor config block if it is not present
-                if (mem_is_erased(FLASH_AMBA_BASE, sizeof(flexspi_nor_config_t)))
+                if (mem_is_erased(FLASH_CFG_BLOCK_BASE, sizeof(flexspi_nor_config_t)))
                 {
                     bool needSwapConfigBlock = s_flexspiNorConfigBlock.isDataOrderSwapped;
                     // Swap before write
@@ -433,7 +439,7 @@ status_t flexspi_nor_mem_config(uint32_t *config)
                         }
                         config_buffer = (uint8_t *)temp_buf;
                     }
-                    status = flexspi_nor_mem_write(FLASH_AMBA_BASE, sizeof(flexspi_nor_config_t),
+                    status = flexspi_nor_mem_write(FLASH_CFG_BLOCK_BASE, sizeof(flexspi_nor_config_t),
                                                    (const uint8_t *)config_buffer);
                     if (status != kStatus_Success)
                     {
@@ -441,7 +447,7 @@ status_t flexspi_nor_mem_config(uint32_t *config)
                         // is
                         // wrong
                         // because erase always executes at 30MHz while the read can work at the specified frequency
-                        flexspi_nor_memory_erase(FLASH_AMBA_BASE, sizeof(s_flexspiNorConfigBlock));
+                        flexspi_nor_memory_erase(FLASH_CFG_BLOCK_BASE, sizeof(s_flexspiNorConfigBlock));
                         hasError = true;
                         break;
                     }
@@ -449,7 +455,7 @@ status_t flexspi_nor_mem_config(uint32_t *config)
                     if (status != kStatus_Success)
                     {
                         // Erase the error config block
-                        flexspi_nor_mem_erase(FLASH_AMBA_BASE, s_flexspiNorConfigBlock.sectorSize);
+                        flexspi_nor_mem_erase(FLASH_CFG_BLOCK_BASE, s_flexspiNorConfigBlock.sectorSize);
                         hasError = true;
                         break;
                     }

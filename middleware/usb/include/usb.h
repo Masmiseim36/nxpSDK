@@ -29,9 +29,9 @@
 /*! @brief Defines USB stack major version */
 #define USB_STACK_VERSION_MAJOR (2U)
 /*! @brief Defines USB stack minor version */
-#define USB_STACK_VERSION_MINOR (2U)
+#define USB_STACK_VERSION_MINOR (4U)
 /*! @brief Defines USB stack bugfix version */
-#define USB_STACK_VERSION_BUGFIX (0U)
+#define USB_STACK_VERSION_BUGFIX (2U)
 
 /*! @brief USB stack version definition */
 #define USB_MAKE_VERSION(major, minor, bugfix) (((major) << 16) | ((minor) << 8) | (bugfix))
@@ -39,7 +39,7 @@
 #define MAKE_VERSION(major, minor, bugfix) (((major) << 16) | ((minor) << 8) | (bugfix))
 
 /*! @brief USB stack component version definition, changed with component in yaml together */
-#define USB_STACK_COMPONENT_VERSION MAKE_VERSION(2, 2, 0)
+#define USB_STACK_COMPONENT_VERSION MAKE_VERSION(2, 4, 2)
 
 /* 
  * Component ID used by tools
@@ -71,6 +71,9 @@ typedef enum _usb_status
     kStatus_USB_MSDStatusFail,  /*!< For MSD, the CSW status means fail */
     kStatus_USB_EHCIAttached,
     kStatus_USB_EHCIDetached,
+    kStatus_USB_DataOverRun,    /*!< The amount of data returned by the endpoint exceeded
+                                     either the size of the maximum data packet allowed 
+                                     from the endpoint or the remaining buffer size. */
 } usb_status_t;
 
 /*! @brief USB host handle type define */

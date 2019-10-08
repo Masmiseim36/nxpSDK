@@ -32,13 +32,8 @@ typedef enum _usb_device_notification
     kUSB_DeviceNotifyError,            /*!< Errors happened in bus */
     kUSB_DeviceNotifyDetach,           /*!< Device disconnected from a host */
     kUSB_DeviceNotifyAttach,           /*!< Device connected to a host */
-#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U))
-    kUSB_DeviceNotifyDcdTimeOut,               /*!< Device charger detection timeout */
-    kUSB_DeviceNotifyDcdUnknownPortType,       /*!< Device charger detection unknown port type */
-    kUSB_DeviceNotifySDPDetected,              /*!< The SDP facility is detected */
-    kUSB_DeviceNotifyChargingPortDetected,     /*!< The charging port is detected */
-    kUSB_DeviceNotifyChargingHostDetected,     /*!< The CDP facility is detected */
-    kUSB_DeviceNotifyDedicatedChargerDetected, /*!< The DCP facility is detected */
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U))
+    kUSB_DeviceNotifyDcdDetectFinished,               /*!< Device charger detection finished */
 #endif
 } usb_device_notification_t;
 
@@ -74,11 +69,12 @@ typedef enum _usb_device_control_type
     kUSB_DeviceControlSetOtgStatus,      /*!< Set OTG status */
     kUSB_DeviceControlSetTestMode,       /*!< Drive xCHI into test mode */
     kUSB_DeviceControlGetRemoteWakeUp,   /*!< Get flag of LPM Remote Wake-up Enabled by USB host. */
-#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U))
-    kUSB_DeviceControlDcdInitModule,
-    kUSB_DeviceControlDcdDeinitModule,
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U))
+    kUSB_DeviceControlDcdDisable,       /*!< disable dcd module function. */
+    kUSB_DeviceControlDcdEnable,        /*!< enable dcd module function. */
 #endif
     kUSB_DeviceControlPreSetDeviceAddress, /*!< Pre set device address */
+    kUSB_DeviceControlUpdateHwTick,        /*!< update hardware tick */
 } usb_device_control_type_t;
 
 /*! @brief USB device controller initialization function typedef */
@@ -124,7 +120,8 @@ typedef struct _usb_device_controller_interface_struct
 /*! @brief USB device status structure */
 typedef struct _usb_device_struct
 {
-#if ((defined(USB_DEVICE_CONFIG_REMOTE_WAKEUP)) && (USB_DEVICE_CONFIG_REMOTE_WAKEUP > 0U))
+#if ((defined(USB_DEVICE_CONFIG_REMOTE_WAKEUP)) && (USB_DEVICE_CONFIG_REMOTE_WAKEUP > 0U))  || \
+    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
     volatile uint64_t hwTick; /*!< Current hw tick(ms)*/
 #endif
     usb_device_controller_handle controllerHandle;                       /*!< Controller handle */

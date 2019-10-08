@@ -42,20 +42,20 @@ typedef enum _list_status
 } list_status_t;
 
 /*! @brief The list structure*/
-typedef struct list_tag
+typedef struct list_label
 {
     struct list_element_tag *head; /*!< list head */
     struct list_element_tag *tail; /*!< list tail */
     uint16_t size;                 /*!< list size */
     uint16_t max;                  /*!< list max number of elements */
-} list_t, *list_handle_t;
+} list_label_t, *list_handle_t;
 
 /*! @brief The list element*/
 typedef struct list_element_tag
 {
     struct list_element_tag *next; /*!< next list element   */
     struct list_element_tag *prev; /*!< previous list element */
-    struct list_tag *list;         /*!< pointer to the list */
+    struct list_label *list;       /*!< pointer to the list */
 } list_element_t, *list_element_handle_t;
 
 /*! *********************************************************************************

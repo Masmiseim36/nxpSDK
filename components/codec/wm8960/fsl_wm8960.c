@@ -41,7 +41,7 @@ status_t WM8960_Init(wm8960_handle_t *handle, const wm8960_config_t *wm8960Confi
     handle->config                = config;
 
     /* i2c bus initialization */
-    if (CODEC_I2C_Init(&(handle->i2cHandle), config->i2cConfig.codecI2CInstance, WM8960_I2C_BAUDRATE,
+    if (CODEC_I2C_Init(handle->i2cHandle, config->i2cConfig.codecI2CInstance, WM8960_I2C_BAUDRATE,
                        config->i2cConfig.codecI2CSourceClock) != kStatus_HAL_I2cSuccess)
     {
         return kStatus_Fail;
@@ -122,7 +122,7 @@ status_t WM8960_Deinit(wm8960_handle_t *handle)
     WM8960_SetModule(handle, kWM8960_ModuleLineOut, false);
     WM8960_SetModule(handle, kWM8960_ModuleSpeaker, false);
 
-    return CODEC_I2C_Deinit(&(handle->i2cHandle));
+    return CODEC_I2C_Deinit(handle->i2cHandle);
 }
 
 void WM8960_SetMasterSlave(wm8960_handle_t *handle, bool master)
@@ -553,41 +553,6 @@ status_t WM8960_ConfigDataFormat(wm8960_handle_t *handle, uint32_t sysclk, uint3
 
     retval = WM8960_WriteReg(handle, WM8960_CLOCK1, val);
 
-    /* Compute bclk divider */
-    divider /= bits * 2;
-    switch (divider)
-    {
-        case 4:
-        case 5:
-        case 6:
-            val = (0x1C0 | divider);
-            break;
-        case 8:
-            val = 0x1C7;
-            break;
-        case 11:
-            val = 0x1C8;
-            break;
-        case 12:
-            val = 0x1C9;
-            break;
-        case 16:
-            val = 0x1CA;
-            break;
-        case 22:
-            val = 0x1CB;
-            break;
-        case 24:
-            val = 0x1CC;
-            break;
-        case 32:
-            val = 0x1CF;
-            break;
-        default:
-            return kStatus_InvalidArgument;
-    }
-
-    retval = WM8960_WriteReg(handle, WM8960_CLOCK2, val);
     /*
      * Slave mode (MS = 0), LRP = 0, 32bit WL, left justified (FORMAT[1:0]=0b01)
      */
@@ -647,7 +612,7 @@ status_t WM8960_WriteReg(wm8960_handle_t *handle, uint8_t reg, uint16_t val)
 
     reg_cache[reg] = buff;
 
-    return CODEC_I2C_Send(&(handle->i2cHandle), handle->config->slaveAddress, cmd, 1U, (uint8_t *)&buff, 2U);
+    return CODEC_I2C_Send(handle->i2cHandle, handle->config->slaveAddress, cmd, 1U, (uint8_t *)&buff, 2U);
 }
 
 status_t WM8960_ReadReg(uint8_t reg, uint16_t *val)

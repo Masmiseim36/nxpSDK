@@ -66,8 +66,7 @@ static status_t check_update_keyblob_info(void *config);
 
 //! @brief Context of SEMC parallel nor.
 static semc_nor_mem_context_t s_semcNorContext = {
-    .isConfigured = false,
-    .cachedBytesInProgBuf = 0,
+    .isConfigured = false, .cachedBytesInProgBuf = 0,
 };
 //! @brief Interface to semc nor memory operations
 const memory_region_interface_t g_semcNorMemoryInterface = {
@@ -165,12 +164,14 @@ status_t check_update_keyblob_info(void *config)
             // Check key blob address range
             if ((keyblob_size + keyblob_offset) > image_max_size)
             {
+                status = kStatusMemoryRangeInvalid;
                 break;
             }
 
             // Invalid key blob address, key blob must be page size aligned.
             if (keyblob_addr & (page_size - 1))
             {
+                status = kStatusMemoryAlignmentError;
                 break;
             }
 
@@ -271,7 +272,8 @@ status_t semc_nor_mem_config(uint32_t *config)
 
         // Default config block shouldn't depend on eFUSE setting
         s_semcNorContext.norConfig.memConfig.asyncClkFreq = SEMC_2ND_MAX_CLK_FREQ;
-        s_semcNorContext.norConfig.memConfig.norMemConfig.addressPortWidth = kSemcMiscProperty_NOR_BaseFlashAddressPortWidth;
+        s_semcNorContext.norConfig.memConfig.norMemConfig.addressPortWidth =
+            kSemcMiscProperty_NOR_BaseFlashAddressPortWidth;
 
         // Configure nor memory according to Option
         s_semcNorContext.norConfig.deviceCommandSet = norOption->option.B.commandSet;
@@ -376,8 +378,7 @@ status_t semc_nor_mem_write(uint32_t address, uint32_t length, const uint8_t *bu
     while (length)
     {
         // Set start address when storing first byte into program buffer
-        if ((!s_semcNorContext.cachedBytesInProgBuf) &&
-            (!s_semcNorContext.progStartAddress))
+        if ((!s_semcNorContext.cachedBytesInProgBuf) && (!s_semcNorContext.progStartAddress))
         {
             // Check address alignment
             uint32_t alignmentBaseByte = s_semcNorContext.norConfig.memConfig.norMemConfig.dataPortWidth / 8;
@@ -515,7 +516,8 @@ status_t semc_nor_mem_flush(void)
         s_semcNorContext.cachedBytesInProgBuf = 0;
 
         // Program data into SEMC NOR memory
-        status = semc_nor_flash_page_program(&s_semcNorContext.norConfig, address, s_semcNorContext.programBuffer, length);
+        status =
+            semc_nor_flash_page_program(&s_semcNorContext.norConfig, address, s_semcNorContext.programBuffer, length);
         if (status != kStatus_Success)
         {
             return status;

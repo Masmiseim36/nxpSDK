@@ -18,7 +18,14 @@
 #if (defined(USB_DEVICE_CONFIG_LOW_POWER_MODE) && (USB_DEVICE_CONFIG_LOW_POWER_MODE > 0U))
 #include "usb_phy.h"
 #endif
-
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+#include "usb_hsdcd.h"
+#endif
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
+#include "usb_phydcd.h"
+#endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -76,11 +83,7 @@ static usb_device_ehci_state_struct_t g_UsbDeviceEhciState[USB_DEVICE_CONFIG_EHC
 /* Apply for whether the corresponding g_UsbDeviceEhciState is used or not, if used, it is set to 1, if not used, it is set to 0 */
 static uint8_t g_UsbDeviceEhciStateStatus[USB_DEVICE_CONFIG_EHCI]= {0}; 
 
-#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
-    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
-/* Apply for device dcd state structure */
-static usb_device_dcd_state_struct_t s_UsbDeviceDcdHSState[USB_DEVICE_CONFIG_EHCI];
-#endif
+
 
 /*******************************************************************************
  * Code
@@ -1104,6 +1107,67 @@ void *USB_EhciGetValidEhciState(uint8_t *instanceIndex)
     return NULL;
 }
 
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
+/* The device dcd callback */
+static usb_phydcd_status_t USB_DeviceEhciIsrPHYDCDCallback(void *handle, uint32_t event, void *param)
+{
+    usb_phydcd_status_t error = kStatus_phydcd_Success;
+    usb_device_callback_message_struct_t message;
+    usb_device_ehci_state_struct_t *ehciState = (usb_device_ehci_state_struct_t *)handle;
+  
+    if (ehciState == NULL)
+    {
+        return kStatus_phydcd_Error;
+    }
+    
+   /*messsgae buffer contain event information*/
+    message.buffer = (uint8_t *)param;
+    message.length = 0U;
+    message.isSetup = 0U;
+    message.code = kUSB_DeviceNotifyDcdDetectFinished;
+    USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+            
+    return error;
+}
+#endif
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+     (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+/* The device dcd callback */
+static usb_hsdcd_status_t USB_DeviceEhciIsrHSDCDCallback(void *handle, uint32_t event, void *param)
+{
+    usb_hsdcd_status_t error = kStatus_hsdcd_Success;
+    usb_device_callback_message_struct_t message;
+    usb_device_ehci_state_struct_t *ehciState = (usb_device_ehci_state_struct_t *)handle;
+  
+    if (ehciState == NULL)
+    {
+        return kStatus_hsdcd_Error;
+    }
+    
+   /*messsgae buffer contain event information*/
+    message.buffer = (uint8_t *)param;
+    message.length = 0U;
+    message.isSetup = 0U;
+    message.code = kUSB_DeviceNotifyDcdDetectFinished;
+    USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+            
+    return error;
+}
+
+void USB_DeviceEhciIsrHSDCDFunction(void *deviceHandle)
+{
+    usb_device_struct_t *handle = (usb_device_struct_t *)deviceHandle;
+    usb_device_ehci_state_struct_t *ehciState;
+    if (NULL == deviceHandle)
+    {
+        return;
+    }
+    ehciState = (usb_device_ehci_state_struct_t *)(handle->controllerHandle);
+    USB_HSDcdIsrFunction(ehciState->dcdHandle);
+}
+#endif
+
 /*!
  * @brief Initialize the USB device EHCI instance.
  *
@@ -1123,13 +1187,27 @@ usb_status_t USB_DeviceEhciInit(uint8_t controllerId,
     uint32_t ehci_base[] = USBHS_BASE_ADDRS;
     uint8_t intanceIndex;
 
-#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
-    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
-    usb_device_dcd_state_struct_t *dcdHSState;
-    uint32_t dcd_base[] = USBHSDCD_BASE_ADDRS;
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    ((defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)) || \
+    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U)))
+
     usb_device_callback_message_struct_t message;
 #endif
 
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    ((defined FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
+
+    uint8_t index;
+    usb_phydcd_config_struct_t phyDcdParamConfig;
+    usb_phydcd_status_t phyDcdError = kStatus_phydcd_Success;
+#endif
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+     (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+    uint32_t hsdcd_base[] = USBHSDCD_BASE_ADDRS;
+    USBHSDCD_Type *base;
+    usb_hsdcd_config_struct_t dcdParamConfig;
+    usb_hsdcd_status_t dcdError = kStatus_hsdcd_Success;
+#endif
     if ((controllerId < kUSB_ControllerEhci0) ||
         ((uint32_t)(controllerId - kUSB_ControllerEhci0) >= (sizeof(ehci_base) / sizeof(uint32_t))))
     {
@@ -1170,27 +1248,50 @@ usb_status_t USB_DeviceEhciInit(uint8_t controllerId,
     /* Set the EHCI to default status. */
     USB_DeviceEhciSetDefaultState(ehciState);
     *ehciHandle = (usb_device_controller_handle)ehciState;
-#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
-    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
-    dcdHSState = &s_UsbDeviceDcdHSState[controllerId - kUSB_ControllerEhci0];
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
 
-    dcdHSState->controllerId = controllerId;
+    index = controllerId - kUSB_ControllerEhci0;
 
-    dcdHSState->dcdRegisterBase = (USBHSDCD_Type *)dcd_base[controllerId - kUSB_ControllerEhci0];
+    phyDcdParamConfig.dcdCallback = USB_DeviceEhciIsrPHYDCDCallback;
+    phyDcdParamConfig.dcdCallbackParam = (void *)ehciState;
 
-    dcdHSState->deviceHandle = (usb_device_struct_t *)handle;
+    phyDcdError = USB_PHYDCD_Init(index, (usb_phydcd_config_struct_t *)&phyDcdParamConfig, (void *)&ehciState->dcdHandle);
+    if(kStatus_phydcd_Success != phyDcdError)
+    {
+        return kStatus_USB_Error;
+    }
 
-    message.buffer = (uint8_t *)NULL;
-    message.length = 0U;
-    message.isSetup = 0U;
     if (ehciState->registerBase->OTGSC & USBHS_OTGSC_BSV_MASK)
     {
         /* Device is connected to a host. */
         message.code = kUSB_DeviceNotifyAttach;
         USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+
+        USB_PHYDCD_Control(ehciState->dcdHandle, kUSB_DevicePHYDcdRun, NULL);
+
     }
 #endif
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+    base = (USBHSDCD_Type *)hsdcd_base[controllerId - kUSB_ControllerEhci0];
+    dcdParamConfig.dcdCallback = USB_DeviceEhciIsrHSDCDCallback;
+    dcdParamConfig.dcdCallbackParam = (void *)ehciState;
+    dcdError = USB_HSDCD_Init(base, &dcdParamConfig,&ehciState->dcdHandle);
+    if(kStatus_hsdcd_Success != dcdError)
+    {
+        return kStatus_USB_Error;
+    }
+        
+    if (ehciState->registerBase->OTGSC & USBHS_OTGSC_BSV_MASK)
+    {
+        /* Device is connected to a host. */
+        message.code = kUSB_DeviceNotifyAttach;
+        USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+        USB_HSDCD_Control(ehciState->dcdHandle, kUSB_DeviceHSDcdRun, NULL);
 
+    }
+#endif
     return kStatus_USB_Success;
 }
 
@@ -1225,7 +1326,14 @@ usb_status_t USB_DeviceEhciDeinit(usb_device_controller_handle ehciHandle)
     ehciState->registerBase->USBCMD &= ~USBHS_USBCMD_RS_MASK;
     /* Reset the controller. */
     ehciState->registerBase->USBCMD |= USBHS_USBCMD_RST_MASK;
-
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
+    USB_PHYDCD_Deinit(ehciState->dcdHandle);
+#endif
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+    USB_HSDCD_Deinit(ehciState->dcdHandle);
+#endif
     return kStatus_USB_Success;
 }
 
@@ -1437,13 +1545,7 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
     usb_status_t error = kStatus_USB_Error;
     uint16_t *temp16;
     uint8_t *temp8;
-#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
-    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
-    usb_device_dcd_state_struct_t *dcdHSState;
-    dcdHSState =
-        &s_UsbDeviceDcdHSState[ehciState->controllerId - kUSB_ControllerEhci0]; /*The hard code should be replaced*/
-    usb_device_dcd_charging_time_t *deviceDcdTimingConfig = (usb_device_dcd_charging_time_t *)param;
-#endif
+
 #if ((defined(USB_DEVICE_CONFIG_REMOTE_WAKEUP)) && (USB_DEVICE_CONFIG_REMOTE_WAKEUP > 0U))
     usb_device_struct_t *deviceHandle;
     uint64_t startTick;
@@ -1536,13 +1638,16 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
                 }
             }
             break;
-        case kUSB_DeviceControlSetDeviceAddress:
+        case kUSB_DeviceControlPreSetDeviceAddress:
             if (param)
             {
                 temp8 = (uint8_t *)param;
-                ehciState->registerBase->DEVICEADDR = (((uint32_t)(*temp8)) << USBHS_DEVICEADDR_USBADR_SHIFT);
+                ehciState->registerBase->DEVICEADDR = ((((uint32_t)(*temp8)) << USBHS_DEVICEADDR_USBADR_SHIFT) | USBHS_DEVICEADDR_USBADRA_MASK);
                 error = kStatus_USB_Success;
             }
+            break;
+        case kUSB_DeviceControlSetDeviceAddress:
+            error = kStatus_USB_Success;
             break;
         case kUSB_DeviceControlGetSynchFrame:
             break;
@@ -1622,23 +1727,42 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
             }
             break;
 #endif
-#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
-    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
-        case kUSB_DeviceControlDcdInitModule:
-            dcdHSState->dcdRegisterBase->CONTROL |= USBDCD_CONTROL_SR_MASK;
-            dcdHSState->dcdRegisterBase->TIMER0 = USBDCD_TIMER0_TSEQ_INIT(deviceDcdTimingConfig->dcdSeqInitTime);
-            dcdHSState->dcdRegisterBase->TIMER1 = USBDCD_TIMER1_TDCD_DBNC(deviceDcdTimingConfig->dcdDbncTime);
-            dcdHSState->dcdRegisterBase->TIMER1 |= USBDCD_TIMER1_TVDPSRC_ON(deviceDcdTimingConfig->dcdDpSrcOnTime);
-            dcdHSState->dcdRegisterBase->TIMER2_BC12 =
-                USBDCD_TIMER2_BC12_TWAIT_AFTER_PRD(deviceDcdTimingConfig->dcdTimeWaitAfterPrD);
-            dcdHSState->dcdRegisterBase->TIMER2_BC12 |=
-                USBDCD_TIMER2_BC12_TVDMSRC_ON(deviceDcdTimingConfig->dcdTimeDMSrcOn);
-            dcdHSState->dcdRegisterBase->CONTROL |= USBDCD_CONTROL_IE_MASK;
-            dcdHSState->dcdRegisterBase->CONTROL |= USBDCD_CONTROL_BC12_MASK;
-            dcdHSState->dcdRegisterBase->CONTROL |= USBDCD_CONTROL_START_MASK;
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) 
+
+        case kUSB_DeviceControlUpdateHwTick:
+            /*udpate 1ms time tick*/
+#if (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
+            USB_PHYDCD_TimerIsrFunction(ehciState->dcdHandle);
+#endif
+            error = kStatus_USB_Success;
             break;
-        case kUSB_DeviceControlDcdDeinitModule:
-            dcdHSState->dcdRegisterBase->CONTROL |= USBDCD_CONTROL_SR_MASK;
+        case kUSB_DeviceControlDcdEnable:
+#if (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
+            if (kStatus_phydcd_Success == USB_PHYDCD_Control(ehciState->dcdHandle, kUSB_DevicePHYDcdEnable, NULL))
+            {
+                error = kStatus_USB_Success;
+            }
+#endif
+#if (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+            if(kStatus_hsdcd_Success == USB_HSDCD_Control(ehciState->dcdHandle, kUSB_DeviceHSDcdEnable, NULL))
+            {
+                error = kStatus_USB_Success;
+            }
+#endif
+            break;
+        case kUSB_DeviceControlDcdDisable:
+#if (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
+            if(kStatus_phydcd_Success == USB_PHYDCD_Control(ehciState->dcdHandle, kUSB_DevicePHYDcdDisable, NULL))
+            {
+                error = kStatus_USB_Success;
+            }
+#endif
+#if (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+            if(kStatus_hsdcd_Success == USB_HSDCD_Control(ehciState->dcdHandle, kUSB_DeviceHSDcdDisable, NULL))
+            {
+                error = kStatus_USB_Success;
+            }
+#endif
             break;
 #endif
 
@@ -1719,6 +1843,15 @@ void USB_DeviceEhciIsrFunction(void *deviceHandle)
             /* Device is connected to a host. */
             message.code = kUSB_DeviceNotifyAttach;
             USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
+            USB_PHYDCD_Control(ehciState->dcdHandle, kUSB_DevicePHYDcdRun, NULL);
+#endif
+#if (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)) && \
+    (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U))
+
+             USB_HSDCD_Control(ehciState->dcdHandle, kUSB_DeviceHSDcdRun, NULL);
+#endif
         }
         else
         {
@@ -1775,88 +1908,6 @@ void USB_DeviceEhciIsrFunction(void *deviceHandle)
     }
 }
 
-#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
-    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
-void USB_DeviceDcdHSIsrFunction(void *deviceHandle)
-{
-    usb_device_struct_t *handle = (usb_device_struct_t *)deviceHandle;
-    usb_device_ehci_state_struct_t *ehciState;
-    usb_device_dcd_state_struct_t *dcdHSState;
-    uint32_t status;
-    uint32_t chargerType;
-    usb_device_callback_message_struct_t message;
 
-    if (NULL == deviceHandle)
-    {
-        return;
-    }
-
-    ehciState = (usb_device_ehci_state_struct_t *)(handle->controllerHandle);
-
-    dcdHSState = &s_UsbDeviceDcdHSState[ehciState->controllerId - kUSB_ControllerEhci0];
-
-    status = dcdHSState->dcdRegisterBase->STATUS;
-
-    dcdHSState->dcdRegisterBase->CONTROL |= USBDCD_CONTROL_IACK_MASK;
-
-    message.buffer = (uint8_t *)NULL;
-    message.length = 0U;
-    message.isSetup = 0U;
-
-    if (status & USBDCD_STATUS_ERR_MASK)
-    {
-        if (status & USBDCD_STATUS_TO_MASK)
-        {
-            dcdHSState->dcdRegisterBase->CONTROL |= USBDCD_CONTROL_SR_MASK;
-            message.code = kUSB_DeviceNotifyDcdTimeOut;
-            USB_DeviceNotificationTrigger(dcdHSState->deviceHandle, &message);
-        }
-        else
-        {
-            dcdHSState->dcdRegisterBase->CONTROL |= USBDCD_CONTROL_SR_MASK;
-            message.code = kUSB_DeviceNotifyDcdUnknownPortType;
-            USB_DeviceNotificationTrigger(dcdHSState->deviceHandle, &message);
-        }
-    }
-    else
-    {
-        switch (status & USBDCD_STATUS_SEQ_STAT_MASK)
-        {
-            case USBDCD_STATUS_SEQ_STAT(kUSB_DcdChargingPortDetectionCompleted):
-                chargerType = status & USBDCD_STATUS_SEQ_RES_MASK;
-                if (chargerType == USBDCD_STATUS_SEQ_RES(kUSB_DcdDetectionStandardHost))
-                {
-                    dcdHSState->dcdRegisterBase->CONTROL |= USBDCD_CONTROL_SR_MASK;
-                    message.code = kUSB_DeviceNotifySDPDetected;
-                    USB_DeviceNotificationTrigger(dcdHSState->deviceHandle, &message);
-                }
-                else if (chargerType == USBDCD_STATUS_SEQ_RES(kUSB_DcdDetectionChargingPort))
-                {
-                    message.code = kUSB_DeviceNotifyChargingPortDetected;
-                    USB_DeviceNotificationTrigger(dcdHSState->deviceHandle, &message);
-                }
-                break;
-            case USBDCD_STATUS_SEQ_STAT(kUSB_DcdChargerTypeDetectionCompleted):
-                chargerType = status & USBDCD_STATUS_SEQ_RES_MASK;
-                if (chargerType == USBDCD_STATUS_SEQ_RES(kUSB_DcdDetectionChargingPort))
-                {
-                    dcdHSState->dcdRegisterBase->CONTROL |= USBDCD_CONTROL_SR_MASK;
-                    message.code = kUSB_DeviceNotifyChargingHostDetected;
-                    USB_DeviceNotificationTrigger(dcdHSState->deviceHandle, &message);
-                }
-                else if (chargerType == USBDCD_STATUS_SEQ_RES(kUSB_DcdDetectionDedicatedCharger))
-                {
-                    dcdHSState->dcdRegisterBase->CONTROL |= USBDCD_CONTROL_SR_MASK;
-                    message.code = kUSB_DeviceNotifyDedicatedChargerDetected;
-                    USB_DeviceNotificationTrigger(dcdHSState->deviceHandle, &message);
-                }
-                break;
-
-            default:
-                break;
-        }
-    }
-}
-#endif
 
 #endif /* USB_DEVICE_CONFIG_EHCI */

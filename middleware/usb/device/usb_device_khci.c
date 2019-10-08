@@ -669,10 +669,7 @@ static void USB_DeviceKhciInterruptTokenDone(usb_device_khci_state_struct_t *khc
                     khciState->endpointState[index].transferBuffer + khciState->endpointState[index].transferDone;
                 if (buffer != transferBuffer)
                 {
-                    for (uint32_t i = 0U; i < length; i++)
-                    {
-                        transferBuffer[i] = buffer[i];
-                    }
+                    memcpy(transferBuffer, buffer, length);
                 }
                 khciState->isDmaAlignBufferInusing = 0U;
             }
@@ -827,8 +824,7 @@ static void USB_DeviceKhciInterruptResume(usb_device_khci_state_struct_t *khciSt
 }
 #endif /* USB_DEVICE_CONFIG_LOW_POWER_MODE */
 
-#if (defined(USB_DEVICE_CONFIG_DETACH_ENABLE) && (USB_DEVICE_CONFIG_DETACH_ENABLE > 0U)) && \
-    (defined(FSL_FEATURE_USB_KHCI_VBUS_DETECT_ENABLED) && (FSL_FEATURE_USB_KHCI_VBUS_DETECT_ENABLED > 0U))
+#if (defined(USB_DEVICE_CONFIG_DETACH_ENABLE) && (USB_DEVICE_CONFIG_DETACH_ENABLE > 0U)) 
 /*!
  * @brief Handle the VBUS rising interrupt.
  *
@@ -960,11 +956,6 @@ usb_status_t USB_DeviceKhciInit(uint8_t controllerId,
 {
     usb_device_khci_state_struct_t *khciState;
     uint32_t khci_base[] = USB_BASE_ADDRS;
-#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
-    (defined(FSL_FEATURE_SOC_USBDCD_COUNT) && (FSL_FEATURE_SOC_USBDCD_COUNT > 0U))
-    usb_device_dcd_state_struct_t *dcdState;
-    uint32_t dcd_base[] = USBDCD_BASE_ADDRS;
-#endif
 
     if (((controllerId - kUSB_ControllerKhci0) >= (uint8_t)USB_DEVICE_CONFIG_KHCI) ||
         ((controllerId - kUSB_ControllerKhci0) >= (sizeof(khci_base) / sizeof(uint32_t))))
@@ -996,8 +987,7 @@ usb_status_t USB_DeviceKhciInit(uint8_t controllerId,
     khciState->registerBase->BDTPAGE2 = (uint8_t)((((uint32_t)khciState->bdt) >> 16U) & 0xFFU);
     khciState->registerBase->BDTPAGE3 = (uint8_t)((((uint32_t)khciState->bdt) >> 24U) & 0xFFU);
 
-#if (defined(USB_DEVICE_CONFIG_DETACH_ENABLE) && (USB_DEVICE_CONFIG_DETACH_ENABLE > 0U)) && \
-    (defined(FSL_FEATURE_USB_KHCI_VBUS_DETECT_ENABLED) && (FSL_FEATURE_USB_KHCI_VBUS_DETECT_ENABLED > 0U))
+#if (defined(USB_DEVICE_CONFIG_DETACH_ENABLE) && (USB_DEVICE_CONFIG_DETACH_ENABLE > 0U))
     khciState->registerBase->MISCCTRL |= USB_MISCCTRL_VREDG_EN_MASK | USB_MISCCTRL_VFEDG_EN_MASK;
 #endif
 
@@ -1024,16 +1014,6 @@ usb_status_t USB_DeviceKhciInit(uint8_t controllerId,
 
     *khciHandle = khciState;
     khciState->deviceHandle = (usb_device_struct_t *)handle;
-#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
-    (defined(FSL_FEATURE_SOC_USBDCD_COUNT) && (FSL_FEATURE_SOC_USBDCD_COUNT > 0U))
-    dcdState = &s_UsbDeviceDcdState[controllerId - kUSB_ControllerKhci0];
-
-    dcdState->controllerId = controllerId;
-
-    dcdState->dcdRegisterBase = (USBDCD_Type *)dcd_base[controllerId - kUSB_ControllerKhci0];
-
-    dcdState->deviceHandle = (usb_device_struct_t *)handle;
-#endif
 
     return kStatus_USB_Success;
 }
@@ -1410,23 +1390,10 @@ usb_status_t USB_DeviceKhciControl(usb_device_controller_handle khciHandle, usb_
 #endif
         case kUSB_DeviceControlSetTestMode:
             break;
-#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
-    (defined(FSL_FEATURE_SOC_USBDCD_COUNT) && (FSL_FEATURE_SOC_USBDCD_COUNT > 0U))
-        case kUSB_DeviceControlDcdInitModule:
-            dcdState->dcdRegisterBase->CONTROL |= USBDCD_CONTROL_SR_MASK;
-            dcdState->dcdRegisterBase->TIMER0 = USBDCD_TIMER0_TSEQ_INIT(deviceDcdTimingConfig->dcdSeqInitTime);
-            dcdState->dcdRegisterBase->TIMER1 = USBDCD_TIMER1_TDCD_DBNC(deviceDcdTimingConfig->dcdDbncTime);
-            dcdState->dcdRegisterBase->TIMER1 |= USBDCD_TIMER1_TVDPSRC_ON(deviceDcdTimingConfig->dcdDpSrcOnTime);
-            dcdState->dcdRegisterBase->TIMER2_BC12 =
-                USBDCD_TIMER2_BC12_TWAIT_AFTER_PRD(deviceDcdTimingConfig->dcdTimeWaitAfterPrD);
-            dcdState->dcdRegisterBase->TIMER2_BC12 |=
-                USBDCD_TIMER2_BC12_TVDMSRC_ON(deviceDcdTimingConfig->dcdTimeDMSrcOn);
-            dcdState->dcdRegisterBase->CONTROL |= USBDCD_CONTROL_IE_MASK;
-            dcdState->dcdRegisterBase->CONTROL |= USBDCD_CONTROL_BC12_MASK;
-            dcdState->dcdRegisterBase->CONTROL |= USBDCD_CONTROL_START_MASK;
-            break;
-        case kUSB_DeviceControlDcdDeinitModule:
-            dcdState->dcdRegisterBase->CONTROL |= USBDCD_CONTROL_SR_MASK;
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U))
+        case kUSB_DeviceControlUpdateHwTick:
+            /*udpate 1ms time tick*/
+            error = kStatus_USB_Success;
             break;
 #endif
 
@@ -1559,97 +1526,4 @@ void USB_DeviceKhciIsrFunction(void *deviceHandle)
 #endif
 }
 
-#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
-    (defined(FSL_FEATURE_SOC_USBDCD_COUNT) && (FSL_FEATURE_SOC_USBDCD_COUNT > 0U))
-/*!
- * @brief Handle the device DCD module interrupt.
- *
- * The function is used to handle the device DCD module interrupt.
- *
- * @param deviceHandle    The device handle got from USB_DeviceInit.
- *
- */
-void USB_DeviceDcdIsrFunction(void *deviceHandle)
-{
-    usb_device_struct_t *handle = (usb_device_struct_t *)deviceHandle;
-    usb_device_khci_state_struct_t *khciState;
-    usb_device_dcd_state_struct_t *dcdState;
-    uint32_t status;
-    uint32_t chargerType;
-    usb_device_callback_message_struct_t message;
-
-    if (NULL == deviceHandle)
-    {
-        return;
-    }
-
-    khciState = (usb_device_khci_state_struct_t *)(handle->controllerHandle);
-
-    dcdState = &s_UsbDeviceDcdState[khciState->controllerId - kUSB_ControllerKhci0];
-
-    /* Read the STATUS register in the interrupt routine. */
-    status = dcdState->dcdRegisterBase->STATUS;
-
-    /* Clear the interrupt flag bit. */
-    dcdState->dcdRegisterBase->CONTROL |= USBDCD_CONTROL_IACK_MASK;
-
-    message.buffer = (uint8_t *)NULL;
-    message.length = 0U;
-    message.isSetup = 0U;
-
-    if (status & USBDCD_STATUS_ERR_MASK)
-    {
-        if (status & USBDCD_STATUS_TO_MASK)
-        {
-            dcdState->dcdRegisterBase->CONTROL |= USBDCD_CONTROL_SR_MASK;
-            message.code = kUSB_DeviceNotifyDcdTimeOut;
-            USB_DeviceNotificationTrigger(dcdState->deviceHandle, &message);
-        }
-        else
-        {
-            dcdState->dcdRegisterBase->CONTROL |= USBDCD_CONTROL_SR_MASK;
-            message.code = kUSB_DeviceNotifyDcdUnknownPortType;
-            USB_DeviceNotificationTrigger(dcdState->deviceHandle, &message);
-        }
-    }
-    else
-    {
-        switch (status & USBDCD_STATUS_SEQ_STAT_MASK)
-        {
-            case USBDCD_STATUS_SEQ_STAT(kUSB_DcdChargingPortDetectionCompleted):
-                chargerType = status & USBDCD_STATUS_SEQ_RES_MASK;
-                if (chargerType == USBDCD_STATUS_SEQ_RES(kUSB_DcdDetectionStandardHost))
-                {
-                    dcdState->dcdRegisterBase->CONTROL |= USBDCD_CONTROL_SR_MASK;
-                    message.code = kUSB_DeviceNotifySDPDetected;
-                    USB_DeviceNotificationTrigger(dcdState->deviceHandle, &message);
-                }
-                else if (chargerType == USBDCD_STATUS_SEQ_RES(kUSB_DcdDetectionChargingPort))
-                {
-                    message.code = kUSB_DeviceNotifyChargingPortDetected;
-                    USB_DeviceNotificationTrigger(dcdState->deviceHandle, &message);
-                }
-                break;
-            case USBDCD_STATUS_SEQ_STAT(kUSB_DcdChargerTypeDetectionCompleted):
-                chargerType = status & USBDCD_STATUS_SEQ_RES_MASK;
-                if (chargerType == USBDCD_STATUS_SEQ_RES(kUSB_DcdDetectionChargingPort))
-                {
-                    dcdState->dcdRegisterBase->CONTROL |= USBDCD_CONTROL_SR_MASK;
-                    message.code = kUSB_DeviceNotifyChargingHostDetected;
-                    USB_DeviceNotificationTrigger(dcdState->deviceHandle, &message);
-                }
-                else if (chargerType == USBDCD_STATUS_SEQ_RES(kUSB_DcdDetectionDedicatedCharger))
-                {
-                    dcdState->dcdRegisterBase->CONTROL |= USBDCD_CONTROL_SR_MASK;
-                    message.code = kUSB_DeviceNotifyDedicatedChargerDetected;
-                    USB_DeviceNotificationTrigger(dcdState->deviceHandle, &message);
-                }
-                break;
-
-            default:
-                break;
-        }
-    }
-}
-#endif
 #endif /* USB_DEVICE_CONFIG_KHCI */

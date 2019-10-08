@@ -22,13 +22,13 @@
  ******************************************************************************/
 /*! @name Driver version */
 /*@{*/
-/*! @brief CLOCK driver version 2.1.0 */
-#define FSL_WM8960_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
+/*! @brief CLOCK driver version 2.1.1 */
+#define FSL_WM8960_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
 /*@}*/
 
 /*! @brief wm8960 handle size */
-#ifndef WM8960_HANDLE_SIZE
-#define WM8960_HANDLE_SIZE (100U)
+#ifndef WM8960_I2C_HANDLER_SIZE
+#define WM8960_I2C_HANDLER_SIZE CODEC_I2C_MASTER_HANDLER_SIZE
 #endif
 
 /*! @brief Define the register address of WM8960. */
@@ -316,14 +316,11 @@ typedef struct wm8960_config
 } wm8960_config_t;
 
 /*! @brief wm8960 codec handler
- * Applicationi should allocate a buffer with WM8960_HANDLE_SIZE for handle definition, such as
- * uint8_t wm8960HandleBuffer[WM8960_HANDLE_SIZE];
- * wm8904_handle_t *wm8904Handle = wm8960HandleBuffer;
  */
 typedef struct _wm8960_handle
 {
-    const wm8960_config_t *config; /*!< wm8904 config pointer */
-    void *i2cHandle;               /*!< i2c handle */
+    const wm8960_config_t *config;              /*!< wm8904 config pointer */
+    uint8_t i2cHandle[WM8960_I2C_HANDLER_SIZE]; /*!< i2c handle */
 } wm8960_handle_t;
 /*******************************************************************************
  * API

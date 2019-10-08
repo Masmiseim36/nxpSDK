@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016 - 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -34,6 +34,7 @@ typedef enum _usb_host_controller_control
     kUSB_HostPortAttachDisable,            /*!< Disable the port attach event */
     kUSB_HostPortAttachEnable,             /*!< Enable the port attach event */
     kUSB_HostL1Config,                     /*!< L1 suspend Bus control code */
+    kUSB_HostSetChargerType,               /*!< set charger type */
 } usb_host_controller_control_t;
 
 /*! @brief USB host controller bus control code */

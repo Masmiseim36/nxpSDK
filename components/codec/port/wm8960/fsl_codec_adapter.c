@@ -63,7 +63,11 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-
+static const codec_capability_t s_wm8960_capability = {
+    .codecPlayCapability   = HAL_WM8960_PLAY_CAPABILITY,
+    .codecModuleCapability = HAL_WM8960_MODULE_CAPABILITY,
+    .codecRecordCapability = HAL_WM8960_RECORD_CAPABILITY,
+};
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -77,21 +81,14 @@
 status_t HAL_CODEC_Init(codec_handle_t *handle, void *config)
 {
     assert((config != NULL) && (handle != NULL));
-    assert(CODEC_HANDLE_SIZE >= (sizeof(codec_handle_t) + sizeof(wm8960_handle_t)) + HAL_I2C_MASTER_HANDLE_SIZE);
 
     codec_config_t *codecConfig = (codec_config_t *)config;
 
     wm8960_config_t *wm8960Config = (wm8960_config_t *)(codecConfig->codecDevConfig);
-    wm8960_handle_t *wm8960Handle = (wm8960_handle_t *)((uint32_t) & (handle->codecDevHandle));
+    wm8960_handle_t *wm8960Handle = (wm8960_handle_t *)((uint32_t)(handle->codecDevHandle));
 
-    /* load codec capability */
-    handle->codecCapability.codecModuleCapability = HAL_WM8960_MODULE_CAPABILITY;
-    /* add nop to aovid alignment fault, since that the compiler may generate 'strd' instruction to store 64 bit
-    with one instruction, but the address may not word-aligned
-    Will remove the __NOP in next release and use a word align address.
-    */
-    __NOP();
-    handle->codecCapability.codecPlayCapability = HAL_WM8960_PLAY_CAPABILITY;
+    handle->codecCapability = &s_wm8960_capability;
+
     /* codec device initialization */
     return WM8960_Init(wm8960Handle, wm8960Config);
 }
@@ -106,7 +103,7 @@ status_t HAL_CODEC_Deinit(codec_handle_t *handle)
 {
     assert(handle != NULL);
 
-    return WM8960_Deinit((wm8960_handle_t *)((uint32_t) & (handle->codecDevHandle)));
+    return WM8960_Deinit((wm8960_handle_t *)((uint32_t)(handle->codecDevHandle)));
 }
 
 /*!
@@ -122,8 +119,7 @@ status_t HAL_CODEC_SetFormat(codec_handle_t *handle, uint32_t mclk, uint32_t sam
 {
     assert(handle != NULL);
 
-    return WM8960_ConfigDataFormat((wm8960_handle_t *)((uint32_t) & (handle->codecDevHandle)), mclk, sampleRate,
-                                   bitWidth);
+    return WM8960_ConfigDataFormat((wm8960_handle_t *)((uint32_t)(handle->codecDevHandle)), mclk, sampleRate, bitWidth);
 }
 
 /*!
@@ -142,13 +138,13 @@ status_t HAL_CODEC_SetVolume(codec_handle_t *handle, uint32_t playChannel, uint3
 
     if ((playChannel & kWM8960_HeadphoneLeft) || (playChannel & kWM8960_HeadphoneRight))
     {
-        retVal = WM8960_SetVolume((wm8960_handle_t *)((uint32_t) & (handle->codecDevHandle)), kWM8960_ModuleHP, volume);
+        retVal = WM8960_SetVolume((wm8960_handle_t *)((uint32_t)(handle->codecDevHandle)), kWM8960_ModuleHP, volume);
     }
 
     if ((playChannel & kWM8960_SpeakerLeft) || (playChannel & kWM8960_SpeakerRight))
     {
         retVal =
-            WM8960_SetVolume((wm8960_handle_t *)((uint32_t) & (handle->codecDevHandle)), kWM8960_ModuleSpeaker, volume);
+            WM8960_SetVolume((wm8960_handle_t *)((uint32_t)(handle->codecDevHandle)), kWM8960_ModuleSpeaker, volume);
     }
 
     return retVal;
@@ -170,13 +166,12 @@ status_t HAL_CODEC_SetMute(codec_handle_t *handle, uint32_t playChannel, bool is
 
     if ((playChannel & kWM8960_HeadphoneLeft) || (playChannel & kWM8960_HeadphoneRight))
     {
-        retVal = WM8960_SetMute((wm8960_handle_t *)((uint32_t) & (handle->codecDevHandle)), kWM8960_ModuleHP, isMute);
+        retVal = WM8960_SetMute((wm8960_handle_t *)((uint32_t)(handle->codecDevHandle)), kWM8960_ModuleHP, isMute);
     }
 
     if ((playChannel & kWM8960_SpeakerLeft) || (playChannel & kWM8960_SpeakerRight))
     {
-        retVal =
-            WM8960_SetMute((wm8960_handle_t *)((uint32_t) & (handle->codecDevHandle)), kWM8960_ModuleSpeaker, isMute);
+        retVal = WM8960_SetMute((wm8960_handle_t *)((uint32_t)(handle->codecDevHandle)), kWM8960_ModuleSpeaker, isMute);
     }
 
     return retVal;
@@ -194,7 +189,7 @@ status_t HAL_CODEC_SetPower(codec_handle_t *handle, codec_module_t module, bool 
 {
     assert(handle != NULL);
 
-    return WM8960_SetModule((wm8960_handle_t *)((uint32_t) & (handle->codecDevHandle)), HAL_WM8960_MAP_MODULE(module),
+    return WM8960_SetModule((wm8960_handle_t *)((uint32_t)(handle->codecDevHandle)), HAL_WM8960_MAP_MODULE(module),
                             powerOn);
 }
 
@@ -239,7 +234,7 @@ status_t HAL_CODEC_SetPlay(codec_handle_t *handle, uint32_t playSource)
 {
     assert(handle != NULL);
 
-    return WM8960_SetPlay((wm8960_handle_t *)((uint32_t) & (handle->codecDevHandle)), playSource);
+    return WM8960_SetPlay((wm8960_handle_t *)((uint32_t)(handle->codecDevHandle)), playSource);
 }
 
 /*!

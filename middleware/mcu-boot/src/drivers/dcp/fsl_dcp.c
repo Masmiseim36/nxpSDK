@@ -1,7 +1,7 @@
 /*
  * Copyright 2016-2018 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "fsl_device_registers.h"
@@ -489,9 +489,9 @@ void aes_ccm_format_ctr0(uint8_t *ctr, const uint8_t *iv, uint8_t iv_len)
 
 void num_increment_be(uint8_t *big_num, uint32_t bytes)
 {
-    uint32_t i;
+    int32_t i; // signed type shall be used
 
-    for (i = bytes - 1; i > 0; i--)
+    for (i = bytes - 1; i >= 0; i--)
     {
         big_num[i]++;
         if (big_num[i] != 0)

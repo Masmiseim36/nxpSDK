@@ -202,7 +202,7 @@ extern usb_osa_status_t USB_OsaEventSet(usb_osa_event_handle handle, uint32_t bi
  * @brief Waits for an event flag.
  *
  * This function waits for a combination of flags to be set in an event object.
- * An applications can wait for any/all bits to be set. This function can
+ * An application can wait for any/all bits to be set. This function can
  * get the flags that wake up the waiting task.
  *
  * @param handle    Pointer to the event object.

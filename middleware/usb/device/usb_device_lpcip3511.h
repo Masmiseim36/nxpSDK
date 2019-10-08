@@ -38,6 +38,15 @@
 #define USB_DEVICE_IP3511_ENDPOINTS_NUM FSL_FEATURE_USB_EP_NUM
 #endif
 
+/* for out endpoint,only use buffer toggle, disable prime double buffer at the same time*/
+/*host send data less than maxpacket size and in endpoint prime length more more than maxpacketsize, there will be state
+ * mismtach*/
+#if USB_DEVICE_IP3511_DOUBLE_BUFFER_ENABLE
+#define USB_DEVICE_IP3511_DISABLE_OUT_DOUBLE_BUFFER (1u)
+#else
+#define USB_DEVICE_IP3511_DISABLE_OUT_DOUBLE_BUFFER (0u)
+#endif
+
 /*! @brief Endpoint state structure */
 typedef struct _usb_device_lpc3511ip_endpoint_state_struct
 {
@@ -90,18 +99,25 @@ typedef struct _usb_device_lpc3511ip_state_struct
     uint8_t *zeroTransactionData;
     /* Endpoint state structures */
     usb_device_lpc3511ip_endpoint_state_struct_t endpointState[(USB_DEVICE_IP3511_ENDPOINTS_NUM * 2)];
-    usb_device_handle deviceHandle; /*!< (4 bytes) Device handle used to identify the device object belongs to */
-    USB_LPC3511IP_Type *registerBase;         /*!< (4 bytes) ip base address */
+    usb_device_handle deviceHandle;   /*!< (4 bytes) Device handle used to identify the device object belongs to */
+    USB_LPC3511IP_Type *registerBase; /*!< (4 bytes) ip base address */
     volatile uint32_t *epCommandStatusList; /* endpoint list */
-    uint8_t controllerId;                   /*!< Controller ID */
-    uint8_t isResetting;                    /*!< Is doing device reset or not */
-    uint8_t deviceSpeed;                    /*!< some controller support the HS */
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+    void *dcdHandle; /*!< Dcd handle used to identify the device object belongs to */
+#endif
+    uint8_t controllerId; /*!< Controller ID */
+    uint8_t isResetting;  /*!< Is doing device reset or not */
+    uint8_t deviceSpeed;  /*!< some controller support the HS */
 #if ((defined(USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY)) && (USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY > 0U))
     uint8_t *epReservedBuffer;
     uint8_t epReservedBufferBits[(USB_DEVICE_IP3511_BITS_FOR_RESERVED_BUFFER + 7) / 8];
 #endif
 #if ((defined(USB_DEVICE_CONFIG_LPCIP3511HS)) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
     uint8_t controllerSpeed;
+#endif
+#if (defined(USB_DEVICE_CONFIG_DETACH_ENABLE) && (USB_DEVICE_CONFIG_DETACH_ENABLE))
+    uint8_t deviceState; /*!< Is device attached,1 attached,0 detached */
 #endif
 } usb_device_lpc3511ip_state_struct_t;
 

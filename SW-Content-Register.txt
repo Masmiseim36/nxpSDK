@@ -226,6 +226,23 @@ cmsis_drivers              Author: Freescale
                            Location: devices/<device>/cmsis_drivers          
                            License: Open Source - Apache 2.0 & BSD-3-Clause  
 
+MCMGR                      version: 4.0.3                                    
+                           Location: middleware/multicore/mcmgr              
+                           Description: Multicore manager                    
+                           License: Open Source - BSD-3-Clause               
+                           Author: NXP                                       
+                           name: MCMGR                                       
+                           Format: source code                               
+
+multicore                  version: 2.6.0                                    
+                           Location: middleware/multicore                    
+                           Description: NXP Multicore Software Development   
+                           Kit.                                              
+                           License: Open Source - BSD-3-Clause               
+                           Author: NXP                                       
+                           name: Multicore SDK                               
+                           Format: source code                               
+
 segger_systemview          version: 2.40a                                    
                            Location:                                         
                            boards/<board>/rtos_examples/visualization/freerto
@@ -265,6 +282,61 @@ freemaster                 Author: NXP
                            LA_OPT_NXP_Software_License.                      
                            Location: middleware/freemaster                   
                            Description: FreeMASTER run-time debugging tool   
+
+rpmsg_lite                 version: 2.2.0                                    
+                           Location: middleware/multicore/rpmsg_lite         
+                           Description: Open Asymmetric Multi Processing     
+                           (OpenAMP) framework project                       
+                           License: Open Source - BSD-3-Clause               
+                           Author: Mentor Graphics Corporation & community   
+                           contributors                                      
+                           name: RPMsg-Lite                                  
+                           Format: source code                               
+                           URL: https://github.com/OpenAMP/open-amp          
+
+erpc                       version: 1.7.2                                    
+                           Location: middleware/multicore/erpc               
+                           Description: Embedded Remote Procedure Call       
+                           License: Open Source - BSD-3-Clause               
+                           Author: NXP                                       
+                           name: eRPC                                        
+                           Format: source code                               
+                           URL: https://github.com/EmbeddedRPC/erpc          
+
+the_bus_pirate             version: NA                                       
+                           Location:                                         
+                           middleware/multicore/erpc/erpc_c/port/erpc_serial.
+                           h,                                                
+                           middleware/multicore/erpc/erpc_c/port/erpc_serial.
+                           cpp                                               
+                           Description: OS independent serial interface      
+                           License: Open Source - CC0 (Public Domain         
+                           Dedication License)                               
+                           Author: Community                                 
+                           name: The Bus Pirate                              
+                           Format: source code                               
+                           URL: http://code.google.com/p/the-bus-pirate/     
+
+cpp_template               version: NA                                       
+                           Location:                                         
+                           middleware/multicore/erpc/erpcgen/src/cpptemplate 
+                           Description: CPP Template                         
+                           License: Open Source - MIT                        
+                           Author: Ryan Ginstrom & Martinho Fernandes        
+                           name: CPP Template                                
+                           Format: source code                               
+
+cpp_option_parser          version: NA                                       
+                           Location:                                         
+                           middleware/multicore/erpc/erpcgen/src/options.cpp 
+                           Description: C++ option-parser                    
+                           License: Brad Appleton's license                  
+                           Author: Brad Appleton bradapp@enteract.com        
+                           name: C++ option-parser                           
+                           Format: Plain Text                                
+                           URL:                                              
+                           http://www.bradapp.com/ftp/src/libs/C++/Options.ht
+                           ml                                                
 
 wifi_qca                   version: 2.0.0                                    
                            Location: middleware/wifi_qca                     

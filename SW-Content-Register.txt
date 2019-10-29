@@ -371,15 +371,14 @@ gradle                     version: 4.1
                            Format: binary library                            
                            URL: https://github.com/gradle/gradle             
 
-AwsRemoteControl           Location:                                         
-                           boards/<board>/aws_examples/remote_control_android
-                           /AwsRemoteControl.apk                             
+AwsRemoteControl           Location: boards/<board>/aws_examples/remote_contr
+                           ol_android/AwsRemoteControl.apk                   
                            Description: AWS Remote Control example Android   
                            application                                       
                            License: Apache-2-Clause & BSD                    
                            Author: Android Open Source Project & NXP         
                            name: AWS Remote Control                          
-                           version: 1.0                                      
+                           version: 1.1                                      
                            Format: binary                                    
 
 AwsDeviceConfiguration     Location:                                         

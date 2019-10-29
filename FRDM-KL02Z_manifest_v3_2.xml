@@ -1,0 +1,1144 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.2.xsd" format_version="3.2" api_version="2.0.0" name="SDK version 2.3.1 package for FRDM-KL02Z board" brief="This is SDK version 2.3.1 manifest file. It describes the content of the SDK version 2.3.1 package for FRDM-KL02Z board and additional settings for tools that support SDK version 2.3.1" id="SDK_2.x_FRDM-KL02Z" configuration="ba53e1704f8382c78e473c928980eb2d">
+  <defines>
+    <define name="CPU_$|package|" value=""/>
+    <define name="CPU_$|package|_$|core|" value=""/>
+  </defines>
+  <ksdk id="KSDK231" name="KSDK231" version="2.3.1"/>
+  <compilers>
+    <compiler id="compiler_arm" type="arm" name="arm"/>
+    <compiler id="compiler_gcc" type="gcc" name="gcc"/>
+    <compiler id="compiler_iar" type="iar" name="iar"/>
+  </compilers>
+  <toolchainSettings>
+    <toolchainSetting id="ilg.gnuarmeclipse.managedbuild.cross.toolchain.elf.debug" name="kds" full_name="Cross ARM GCC" version="1.0.0" compiler="compiler_gcc" toolchain="kds">
+      <option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.defs" type="stringList" user_name="Defined symbols (-D)" variants="NpwNonPe Configuration_Release">
+        <value>NDEBUG</value>
+      </option>
+      <option id="ilg.gnuarmeclipse.managedbuild.cross.option.cpp.compiler.defs" type="stringList" user_name="Defined symbols (-D)" variants="NpwNonPe Configuration_Release">
+        <value>NDEBUG</value>
+      </option>
+      <option id="ilg.gnuarmeclipse.managedbuild.cross.option.cpp.linker.scriptfile" type="stringList" user_name="Script files (-T)" variants="NpwPe">
+        <value>"${ProjDirPath}/Project_Settings/Linker_Files/ProcessorExpert.ld"</value>
+      </option>
+      <option id="ilg.gnuarmeclipse.managedbuild.cross.option.cpp.linker.usenewlibnano" type="boolean" user_name="Use newlib-nano" variants="NpwNonPe">
+        <value>true</value>
+      </option>
+      <option id="ilg.gnuarmeclipse.managedbuild.cross.option.cpp.linker.other" type="string" user_name="Other linker flags" variants="NpwPe NpwNonPe">
+        <value>-specs=nosys.specs -Xlinker -z -Xlinker muldefs</value>
+      </option>
+      <option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.linker.usenewlibnano" type="boolean" user_name="Use newlib-nano" variants="NpwNonPe">
+        <value>true</value>
+      </option>
+      <option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.linker.other" type="string" user_name="Other linker flags" variants="NpwPe NpwNonPe">
+        <value>-specs=nosys.specs -Xlinker -z -Xlinker muldefs</value>
+      </option>
+      <option id="ilg.gnuarmeclipse.managedbuild.cross.option.addtools.printsize" type="boolean" user_name="Print size" variants="NpwPe NpwNonPe">
+        <value>true</value>
+      </option>
+      <option id="ilg.gnuarmeclipse.managedbuild.cross.option.warnings.allwarn" type="boolean" user_name="Enable all common warnings (-Wall)" variants="NpwPe NpwNonPe">
+        <value>true</value>
+      </option>
+      <option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.std" type="enum" user_name="Language standard" variants="NpwNonPe">
+        <value>ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.std.gnu99</value>
+      </option>
+      <option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.linker.libs" type="stringList" user_name="Libraries (-l)" variants="NpwNonPe">
+        <value>m</value>
+        <value>g</value>
+        <value>gcc</value>
+        <value>nosys</value>
+      </option>
+    </toolchainSetting>
+    <toolchainSetting id="com.nxp.mcuxpresso" name="mcuxpresso" full_name="MCUXpresso IDE" version="1.0.0" compiler="compiler_gcc" toolchain="mcuxpresso">
+      <option id="gnu.cpp.compiler.option.optimization.flags" type="string" user_name="" variants="">
+        <value>-fno-common</value>
+      </option>
+      <option id="gnu.c.compiler.option.optimization.flags" type="string" user_name="" variants="">
+        <value>-fno-common</value>
+      </option>
+      <option id="gnu.cpp.link.option.nostdlibs" type="boolean" user_name="" variants="">
+        <value>true</value>
+      </option>
+      <option id="gnu.cpp.link.option.other" type="stringList" user_name="" variants="">
+        <value>-Map="${BuildArtifactFileBaseName}.map"</value>
+        <value>--gc-sections</value>
+        <value>-print-memory-usage</value>
+      </option>
+      <option id="com.crt.advproject.link.cpp.flashconfigenable" type="boolean" user_name="" variants="">
+        <value>true</value>
+      </option>
+      <option id="com.crt.advproject.link.flashconfigenable" type="boolean" user_name="" variants="">
+        <value>true</value>
+      </option>
+      <option id="gnu.c.link.option.nostdlibs" type="boolean" user_name="" variants="">
+        <value>true</value>
+      </option>
+      <option id="gnu.c.link.option.other" type="stringList" user_name="" variants="">
+        <value>-Map="${BuildArtifactFileBaseName}.map"</value>
+        <value>--gc-sections</value>
+        <value>-print-memory-usage</value>
+      </option>
+    </toolchainSetting>
+  </toolchainSettings>
+  <toolchains>
+    <toolchain id="armgcc" name="GCC_ARM_Embedded" full_name="GCC ARM Embedded" type="armgcc" compiler="compiler_gcc" version="5.4.2016.3" vendor="GCC ARM Embedded" vendor_url="http://launchpad.net/gcc-arm-embedded"/>
+    <toolchain id="iar" name="IAR_Embedded_Workbench_for_ARM" full_name="IAR Embedded Workbench for ARM" type="iar" compiler="compiler_iar" version="8.11.1" vendor="IAR Systems" vendor_url="http://www.iar.com"/>
+    <toolchain id="kds" name="Kinetis_Design_Studio" full_name="Kinetis Design Studio" type="kds" compiler="compiler_gcc" version="3.2.0" vendor="NXP Semiconductors" vendor_url="http://www.nxp.com"/>
+    <toolchain id="mcuxpresso" name="MCUXpresso_IDE" full_name="MCUXpresso IDE" type="mcuxpresso" compiler="compiler_gcc" version="10.1.0" vendor="NXP Semiconductors" vendor_url="http://www.nxp.com">
+      <debug>
+        <debug_configuration id="com.crt.advproject.config.exe.debug" name="Debug Configuration" probe="LinkServer">
+          <scripts>
+            <script type="init" silent="false" emulators="${gdb.stub} -mi -info-emu">
+              <script>
+set remotetimeout 60000
+##target_extended_remote##
+set mem inaccessible-by-default ${mem.access}
+mon ondisconnect ${ondisconnect}
+set arm force-mode thumb
+${load}
+        </script>
+            </script>
+            <script type="run" silent="false" emulators="${gdb.stub} -mi -info-emu">
+              <script>
+${run}
+        </script>
+            </script>
+          </scripts>
+          <params>
+            <params id="vector.catch.debug.mcuxpresso" name="vector.catch" value="false"/>
+            <params id="internal.cache.debug.mcuxpresso" name="internal.cache" value="Disable"/>
+          </params>
+        </debug_configuration>
+        <debug_configuration id="com.crt.advproject.config.exe.release" name="Release Configuration" probe="LinkServer">
+          <scripts>
+            <script type="init" silent="false" emulators="${gdb.stub} -mi -info-emu">
+              <script>
+set remotetimeout 60000
+##target_extended_remote##
+set mem inaccessible-by-default ${mem.access}
+mon ondisconnect ${ondisconnect}
+set arm force-mode thumb
+${load}
+        </script>
+            </script>
+            <script type="run" silent="false" emulators="${gdb.stub} -mi -info-emu">
+              <script>
+${run}
+        </script>
+            </script>
+          </scripts>
+          <params>
+            <params id="vector.catch.release.mcuxpresso" name="vector.catch" value="false"/>
+            <params id="internal.cache.release.mcuxpresso" name="internal.cache" value="Disable"/>
+          </params>
+        </debug_configuration>
+      </debug>
+    </toolchain>
+    <toolchain id="mdk" name="Keil_MDK" full_name="Keil MDK" type="mdk" compiler="compiler_arm" version="5.23" vendor="ARM" vendor_url="http://www.arm.com"/>
+  </toolchains>
+  <boards>
+    <board id="frdmkl02z" name="FRDM-KL02Z" package="MKL02Z32VFM4" version="1.0.0" href="http://www.nxp.com/frdm-kl02z">
+      <description>
+FRDM-KL02Z: Freedom Development Platform for the Kinetis KL02 Family
+        </description>
+      <image type="image" path="docs/images">
+        <files mask="FRDM-KL02Z.gif"/>
+      </image>
+      <metadataSet>
+        <metadata key="html">
+          <specific>
+            <content>
+The FRDM-KL02Z is an ultra-low-cost development platform enabled by the Kinetis® L series KL02 family built on the ARM® Cortex®-M0+ processor.
+
+Features include the open standard embedded serial and debug adapter (OpenSDA), providing easy access to MCU I/O, battery-ready, low-power operation, a standard-based form factor with expansion board options and a built-in debug interface for flash programming and run-control. The FRDM-KL02Z is supported by a range of NXP® and third-party development software.
+
+This hardware can be purchased through NXP distribution partners.
+        </content>
+          </specific>
+        </metadata>
+      </metadataSet>
+      <examples>
+        <example id="frdmkl02z_cmsis_i2c_int_b2b_transfer_master" name="cmsis_i2c_int_b2b_transfer_master" category="cmsis_driver_examples/i2c" path="boards/frdmkl02z/cmsis_driver_examples/i2c/int_b2b_transfer/master" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/cmsis_driver_examples/i2c/int_b2b_transfer/master" type="xml">
+            <files mask="cmsis_i2c_int_b2b_transfer_master.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_cmsis_i2c_int_b2b_transfer_slave" name="cmsis_i2c_int_b2b_transfer_slave" category="cmsis_driver_examples/i2c" path="boards/frdmkl02z/cmsis_driver_examples/i2c/int_b2b_transfer/slave" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/cmsis_driver_examples/i2c/int_b2b_transfer/slave" type="xml">
+            <files mask="cmsis_i2c_int_b2b_transfer_slave.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_cmsis_i2c_read_accel_value_transfer" name="cmsis_i2c_read_accel_value_transfer" category="cmsis_driver_examples/i2c" path="boards/frdmkl02z/cmsis_driver_examples/i2c/read_accel_value_transfer" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/cmsis_driver_examples/i2c/read_accel_value_transfer" type="xml">
+            <files mask="cmsis_i2c_read_accel_value_transfer.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_cmsis_lpsci_interrupt_transfer" name="cmsis_lpsci_interrupt_transfer" category="cmsis_driver_examples/lpsci" path="boards/frdmkl02z/cmsis_driver_examples/lpsci/interrupt_transfer" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/cmsis_driver_examples/lpsci/interrupt_transfer" type="xml">
+            <files mask="cmsis_lpsci_interrupt_transfer.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_cmsis_spi_interrupt_b2b_transfer_master" name="cmsis_spi_interrupt_b2b_transfer_master" category="cmsis_driver_examples/spi" path="boards/frdmkl02z/cmsis_driver_examples/spi/interrupt_b2b_transfer/master" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/cmsis_driver_examples/spi/interrupt_b2b_transfer/master" type="xml">
+            <files mask="cmsis_spi_interrupt_b2b_transfer_master.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_cmsis_spi_interrupt_b2b_transfer_slave" name="cmsis_spi_interrupt_b2b_transfer_slave" category="cmsis_driver_examples/spi" path="boards/frdmkl02z/cmsis_driver_examples/spi/interrupt_b2b_transfer/slave" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/cmsis_driver_examples/spi/interrupt_b2b_transfer/slave" type="xml">
+            <files mask="cmsis_spi_interrupt_b2b_transfer_slave.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_adc16_low_power" name="adc16_low_power" category="demo_apps" path="boards/frdmkl02z/demo_apps/adc16_low_power" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/demo_apps/adc16_low_power" type="xml">
+            <files mask="adc16_low_power.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_bubble" name="bubble" category="demo_apps" path="boards/frdmkl02z/demo_apps/bubble" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/demo_apps/bubble" type="xml">
+            <files mask="bubble.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_hello_world" name="hello_world" category="demo_apps" path="boards/frdmkl02z/demo_apps/hello_world" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/demo_apps/hello_world" type="xml">
+            <files mask="hello_world.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_power_manager" name="power_manager" category="demo_apps" path="boards/frdmkl02z/demo_apps/power_manager" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/demo_apps/power_manager" type="xml">
+            <files mask="power_manager.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_power_mode_switch" name="power_mode_switch" category="demo_apps" path="boards/frdmkl02z/demo_apps/power_mode_switch" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/demo_apps/power_mode_switch" type="xml">
+            <files mask="power_mode_switch.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_shell" name="shell" category="demo_apps" path="boards/frdmkl02z/demo_apps/shell" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/demo_apps/shell" type="xml">
+            <files mask="shell.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_adc16_interrupt" name="adc16_interrupt" category="driver_examples/adc16" path="boards/frdmkl02z/driver_examples/adc16/interrupt" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/adc16/interrupt" type="xml">
+            <files mask="adc16_interrupt.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_adc16_polling" name="adc16_polling" category="driver_examples/adc16" path="boards/frdmkl02z/driver_examples/adc16/polling" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/adc16/polling" type="xml">
+            <files mask="adc16_polling.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_cmp_interrupt" name="cmp_interrupt" category="driver_examples/cmp" path="boards/frdmkl02z/driver_examples/cmp/interrupt" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/cmp/interrupt" type="xml">
+            <files mask="cmp_interrupt.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_cmp_polling" name="cmp_polling" category="driver_examples/cmp" path="boards/frdmkl02z/driver_examples/cmp/polling" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/cmp/polling" type="xml">
+            <files mask="cmp_polling.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_cop" name="cop" category="driver_examples" path="boards/frdmkl02z/driver_examples/cop" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/cop" type="xml">
+            <files mask="cop.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_pflash" name="pflash" category="driver_examples/flash" path="boards/frdmkl02z/driver_examples/flash/pflash" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/flash/pflash" type="xml">
+            <files mask="pflash.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_gpio_led_output" name="gpio_led_output" category="driver_examples/gpio" path="boards/frdmkl02z/driver_examples/gpio/led_output" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/gpio/led_output" type="xml">
+            <files mask="gpio_led_output.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_i2c_interrupt" name="i2c_interrupt" category="driver_examples/i2c" path="boards/frdmkl02z/driver_examples/i2c/interrupt" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/i2c/interrupt" type="xml">
+            <files mask="i2c_interrupt.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_i2c_interrupt_b2b_transfer_master" name="i2c_interrupt_b2b_transfer_master" category="driver_examples/i2c" path="boards/frdmkl02z/driver_examples/i2c/interrupt_b2b_transfer/master" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/i2c/interrupt_b2b_transfer/master" type="xml">
+            <files mask="i2c_interrupt_b2b_transfer_master.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_i2c_interrupt_b2b_transfer_slave" name="i2c_interrupt_b2b_transfer_slave" category="driver_examples/i2c" path="boards/frdmkl02z/driver_examples/i2c/interrupt_b2b_transfer/slave" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/i2c/interrupt_b2b_transfer/slave" type="xml">
+            <files mask="i2c_interrupt_b2b_transfer_slave.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_i2c_polling_b2b_transfer_master" name="i2c_polling_b2b_transfer_master" category="driver_examples/i2c" path="boards/frdmkl02z/driver_examples/i2c/polling_b2b_transfer/master" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/i2c/polling_b2b_transfer/master" type="xml">
+            <files mask="i2c_polling_b2b_transfer_master.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_i2c_polling_b2b_transfer_slave" name="i2c_polling_b2b_transfer_slave" category="driver_examples/i2c" path="boards/frdmkl02z/driver_examples/i2c/polling_b2b_transfer/slave" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/i2c/polling_b2b_transfer/slave" type="xml">
+            <files mask="i2c_polling_b2b_transfer_slave.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_i2c_read_accel_value_transfer" name="i2c_read_accel_value_transfer" category="driver_examples/i2c" path="boards/frdmkl02z/driver_examples/i2c/read_accel_value_transfer" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/i2c/read_accel_value_transfer" type="xml">
+            <files mask="i2c_read_accel_value_transfer.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_lpsci_interrupt" name="lpsci_interrupt" category="driver_examples/lpsci" path="boards/frdmkl02z/driver_examples/lpsci/interrupt" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/lpsci/interrupt" type="xml">
+            <files mask="lpsci_interrupt.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_lpsci_interrupt_rb_transfer" name="lpsci_interrupt_rb_transfer" category="driver_examples/lpsci" path="boards/frdmkl02z/driver_examples/lpsci/interrupt_rb_transfer" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/lpsci/interrupt_rb_transfer" type="xml">
+            <files mask="lpsci_interrupt_rb_transfer.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_lpsci_interrupt_transfer" name="lpsci_interrupt_transfer" category="driver_examples/lpsci" path="boards/frdmkl02z/driver_examples/lpsci/interrupt_transfer" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/lpsci/interrupt_transfer" type="xml">
+            <files mask="lpsci_interrupt_transfer.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_lpsci_polling" name="lpsci_polling" category="driver_examples/lpsci" path="boards/frdmkl02z/driver_examples/lpsci/polling" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/lpsci/polling" type="xml">
+            <files mask="lpsci_polling.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_lptmr" name="lptmr" category="driver_examples" path="boards/frdmkl02z/driver_examples/lptmr" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/lptmr" type="xml">
+            <files mask="lptmr.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_mcg_fee_blpe" name="mcg_fee_blpe" category="driver_examples/mcg" path="boards/frdmkl02z/driver_examples/mcg/fee_blpe" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/mcg/fee_blpe" type="xml">
+            <files mask="mcg_fee_blpe.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_mcg_fee_blpi" name="mcg_fee_blpi" category="driver_examples/mcg" path="boards/frdmkl02z/driver_examples/mcg/fee_blpi" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/mcg/fee_blpi" type="xml">
+            <files mask="mcg_fee_blpi.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_mcg_fei_blpi" name="mcg_fei_blpi" category="driver_examples/mcg" path="boards/frdmkl02z/driver_examples/mcg/fei_blpi" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/mcg/fei_blpi" type="xml">
+            <files mask="mcg_fei_blpi.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_spi_interrupt_b2b_master" name="spi_interrupt_b2b_master" category="driver_examples/spi" path="boards/frdmkl02z/driver_examples/spi/interrupt_b2b/master" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/spi/interrupt_b2b/master" type="xml">
+            <files mask="spi_interrupt_b2b_master.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_spi_interrupt_b2b_slave" name="spi_interrupt_b2b_slave" category="driver_examples/spi" path="boards/frdmkl02z/driver_examples/spi/interrupt_b2b/slave" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/spi/interrupt_b2b/slave" type="xml">
+            <files mask="spi_interrupt_b2b_slave.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_spi_interrupt_b2b_transfer_master" name="spi_interrupt_b2b_transfer_master" category="driver_examples/spi" path="boards/frdmkl02z/driver_examples/spi/interrupt_b2b_transfer/master" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/spi/interrupt_b2b_transfer/master" type="xml">
+            <files mask="spi_interrupt_b2b_transfer_master.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_spi_interrupt_b2b_transfer_slave" name="spi_interrupt_b2b_transfer_slave" category="driver_examples/spi" path="boards/frdmkl02z/driver_examples/spi/interrupt_b2b_transfer/slave" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/spi/interrupt_b2b_transfer/slave" type="xml">
+            <files mask="spi_interrupt_b2b_transfer_slave.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_spi_polling_b2b_transfer_master" name="spi_polling_b2b_transfer_master" category="driver_examples/spi" path="boards/frdmkl02z/driver_examples/spi/polling_b2b_transfer/master" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/spi/polling_b2b_transfer/master" type="xml">
+            <files mask="spi_polling_b2b_transfer_master.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_spi_polling_b2b_transfer_slave" name="spi_polling_b2b_transfer_slave" category="driver_examples/spi" path="boards/frdmkl02z/driver_examples/spi/polling_b2b_transfer/slave" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/spi/polling_b2b_transfer/slave" type="xml">
+            <files mask="spi_polling_b2b_transfer_slave.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_tpm_input_capture" name="tpm_input_capture" category="driver_examples/tpm" path="boards/frdmkl02z/driver_examples/tpm/input_capture" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/tpm/input_capture" type="xml">
+            <files mask="tpm_input_capture.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_tpm_output_compare" name="tpm_output_compare" category="driver_examples/tpm" path="boards/frdmkl02z/driver_examples/tpm/output_compare" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/tpm/output_compare" type="xml">
+            <files mask="tpm_output_compare.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_tpm_pwm_twochannel" name="tpm_pwm_twochannel" category="driver_examples/tpm" path="boards/frdmkl02z/driver_examples/tpm/pwm_twochannel" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/tpm/pwm_twochannel" type="xml">
+            <files mask="tpm_pwm_twochannel.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_tpm_simple_pwm" name="tpm_simple_pwm" category="driver_examples/tpm" path="boards/frdmkl02z/driver_examples/tpm/simple_pwm" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/tpm/simple_pwm" type="xml">
+            <files mask="tpm_simple_pwm.xml"/>
+          </external>
+        </example>
+        <example id="frdmkl02z_tpm_timer" name="tpm_timer" category="driver_examples/tpm" path="boards/frdmkl02z/driver_examples/tpm/timer" toolchain="armgcc iar kds mcuxpresso mdk">
+          <external path="boards/frdmkl02z/driver_examples/tpm/timer" type="xml">
+            <files mask="tpm_timer.xml"/>
+          </external>
+        </example>
+      </examples>
+    </board>
+  </boards>
+  <devices>
+    <device id="MKL02Z32xxx4" full_name="MKL02Z32xxx4" name="MKL02Z4" version="1.0.0" href="http://www.nxp.com/kinetis">
+      <description>
+KL02: Kinetis® KL02-48 MHz, Dual I2C, Small packages, Entry-Level Ultra-Low Power Microcontrollers (MCUs) based on ARM® Cortex®-M0+ Core
+        </description>
+      <image type="image" path="docs/images">
+        <files mask="device.jpg"/>
+      </image>
+      <metadataSet>
+        <metadata key="html">
+          <specific>
+            <content>
+As an entry point to the Kinetis® L series, the KL02 chip-scale package (CSP) MCU offers one of the world's smallest ARM Powered® microcontrollers for low-power devices, remote sensing nodes, portable consumer devices, and ingestible healthcare sensing.
+&lt;ul&gt;
+&lt;li&gt;Consumes 25 percent less PCB area, while delivering 60 percent more GPIO than the nearest competitor&lt;/li&gt;
+&lt;li&gt;Allows designers to dramatically reduce their board size without compromising performance, feature integration, or power consumption of end products&lt;/li&gt;
+&lt;li&gt;Promotes multiple, flexible, low-power modes&lt;/li&gt;
+&lt;li&gt;Supported by a cost effective development platform for quick application prototyping and demonstration&lt;/li&gt;
+&lt;/ul&gt;
+        </content>
+          </specific>
+        </metadata>
+        <metadata key="vendor" value="NXP"/>
+        <metadata key="vendor.device.type" value="Kinetis"/>
+        <metadata key="vendor.device.family" value="KL0x"/>
+      </metadataSet>
+      <core fpu="false" id="core0_MKL02Z32xxx4" name="core0" type="cm0plus"/>
+      <memory>
+        <memoryBlock access="RO" addr="00000000" id="PROGRAM_FLASH_MKL02Z32xxx4" name="PROGRAM_FLASH" size="00008000" type="Flash"/>
+        <memoryBlock access="RW" addr="1ffffc00" id="SRAM_MKL02Z32xxx4" name="SRAM" size="00001000" type="RAM"/>
+      </memory>
+      <total_memory flash_size_kb="32" ram_size_kb="4"/>
+      <package id="MKL02Z32VFG4" name="MKL02Z32VFG4"/>
+      <package id="MKL02Z32VFK4" name="MKL02Z32VFK4"/>
+      <package id="MKL02Z32CAF4" name="MKL02Z32CAF4"/>
+      <package id="MKL02Z32VFM4" name="MKL02Z32VFM4"/>
+      <evaluation_boards>
+        <evaluation_board name="frdmkl02z"/>
+      </evaluation_boards>
+      <toolchainSettings>
+        <toolchainSetting id_refs="ilg.gnuarmeclipse.managedbuild.cross.toolchain.elf.debug">
+          <option id="ilg.gnuarmeclipse.managedbuild.cross.option.arm.target.family" type="enum" user_name="ARM family" variants="NpwNonPe">
+            <value>ilg.gnuarmeclipse.managedbuild.cross.option.arm.target.mcpu.cortex-m0plus</value>
+          </option>
+          <option id="ilg.gnuarmeclipse.managedbuild.cross.option.arm.target.fpu.abi" type="enum" user_name="Float ABI" variants="NpwNonPe">
+            <value>ilg.gnuarmeclipse.managedbuild.cross.option.arm.target.fpu.abi.default</value>
+          </option>
+          <option id="ilg.gnuarmeclipse.managedbuild.cross.option.arm.target.fpu.unit" type="enum" user_name="FPU Type" variants="NpwNonPe">
+            <value>ilg.gnuarmeclipse.managedbuild.cross.option.arm.target.fpu.unit.default</value>
+          </option>
+        </toolchainSetting>
+      </toolchainSettings>
+      <debug_configurations>
+        <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+          <params>
+            <params id="internal.wiretype.release.MKL02Z32xxx4" name="internal.wiretype" value="SWD"/>
+            <params id="internal.has_swo.release.MKL02Z32xxx4" name="internal.has_swo" value="false"/>
+            <params id="internal.connect.script.debug.mcuxpresso.MKL02Z32xxx4" name="internal.connect.script" value="kinetisconnect.scp"/>
+          </params>
+          <drivers>
+            <driver id_refs="PROGRAM_FLASH_MKL02Z32xxx4">
+              <driverBinary path="devices/MKL02Z4/mcuxpresso" type="binary">
+                <files mask="FTFA_1K_Tiny.cfx"/>
+              </driverBinary>
+            </driver>
+          </drivers>
+        </debug_configuration>
+      </debug_configurations>
+      <linkerSettings nature="c_nature">
+        <linker property="start_symbol" value="ResetISR"/>
+        <linker property="text_align" value="4"/>
+        <linker property="data_align" value="4"/>
+        <linker property="bss_align" value="4"/>
+        <linker property="flash_security_address" value="0x400"/>
+        <linker property="mtb_supported" value="true"/>
+      </linkerSettings>
+      <linkerSettings nature="cpp_nature">
+        <linker property="start_symbol" value="ResetISR"/>
+        <linker property="text_align" value="4"/>
+        <linker property="data_align" value="4"/>
+        <linker property="bss_align" value="4"/>
+        <linker property="flash_security_address" value="0x400"/>
+        <linker property="mtb_supported" value="true"/>
+      </linkerSettings>
+    </device>
+  </devices>
+  <components>
+    <component id="platform.drivers.adc16.MKL02Z4" name="adc" full_name="ADC16 Driver" type="driver" brief="ADC16 Driver" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4" devices="MKL02Z32xxx4" version="2.0.0" user_visible="true">
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_adc16.c"/>
+      </source>
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_adc16.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.clock.MKL02Z4" name="clock" full_name="Clock Driver" type="driver" brief="Clock Driver" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.common.MKL02Z4" devices="MKL02Z32xxx4" version="2.1.0" user_visible="true">
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_clock.c"/>
+      </source>
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_clock.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.cmp.MKL02Z4" name="cmp" full_name="CMP Driver" type="driver" brief="CMP Driver" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4" devices="MKL02Z32xxx4" version="2.0.0" user_visible="true">
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_cmp.c"/>
+      </source>
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_cmp.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.common.MKL02Z4" name="common" full_name="COMMON Driver" type="driver" brief="COMMON Driver" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4" devices="MKL02Z32xxx4" version="2.0.0" user_visible="true">
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_common.c"/>
+      </source>
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_common.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.cop.MKL02Z4" name="cop" full_name="COP Driver" type="driver" brief="COP Driver" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4" devices="MKL02Z32xxx4" version="2.0.0" user_visible="true">
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_cop.c"/>
+      </source>
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_cop.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.flash.MKL02Z4" name="flash" full_name="Flash Driver" type="driver" brief="Flash Driver" devices="MKL02Z32xxx4" version="2.4.1" user_visible="true">
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_flash.c"/>
+      </source>
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_flash.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.gpio.MKL02Z4" name="gpio" full_name="GPIO Driver" type="driver" brief="GPIO Driver" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4" devices="MKL02Z32xxx4" version="2.2.1" user_visible="true">
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_gpio.c"/>
+      </source>
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_gpio.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.i2c.MKL02Z4" name="i2c" full_name="I2C Driver" type="driver" brief="I2C Driver" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4" devices="MKL02Z32xxx4" version="2.0.5" user_visible="true">
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_i2c.c"/>
+      </source>
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_i2c.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.lpsci.MKL02Z4" name="lpsci" full_name="LPSCI Driver" type="driver" brief="LPSCI Driver" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4" devices="MKL02Z32xxx4" version="2.0.4" user_visible="true">
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_lpsci.c"/>
+      </source>
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_lpsci.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.lptmr.MKL02Z4" name="lptmr" full_name="LPTMR Driver" type="driver" brief="LPTMR Driver" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4" devices="MKL02Z32xxx4" version="2.0.1" user_visible="true">
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_lptmr.c"/>
+      </source>
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_lptmr.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.pmc.MKL02Z4" name="pmc" full_name="PMC Driver" type="driver" brief="PMC Driver" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4" devices="MKL02Z32xxx4" version="2.0.0" user_visible="true">
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_pmc.c"/>
+      </source>
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_pmc.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.port.MKL02Z4" name="port" full_name="PORT Driver" type="driver" brief="PORT Driver" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4" devices="MKL02Z32xxx4" version="2.0.2" user_visible="true">
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_port.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.rcm.MKL02Z4" name="rcm" full_name="RCM Driver" type="driver" brief="RCM Driver" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4" devices="MKL02Z32xxx4" version="2.0.1" user_visible="true">
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_rcm.c"/>
+      </source>
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_rcm.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.sim.MKL02Z4" name="sim" full_name="SIM Driver" type="driver" brief="SIM Driver" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4" devices="MKL02Z32xxx4" version="2.1.0" user_visible="true">
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_sim.c"/>
+      </source>
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_sim.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.smc.MKL02Z4" name="smc" full_name="SMC Driver" type="driver" brief="SMC Driver" dependency="platform.drivers.flash.MKL02Z4" devices="MKL02Z32xxx4" version="2.0.3" user_visible="true">
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_smc.c"/>
+      </source>
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_smc.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.spi.MKL02Z4" name="spi" full_name="SPI Driver" type="driver" brief="SPI Driver" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4" devices="MKL02Z32xxx4" version="2.0.4" user_visible="true">
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_spi.c"/>
+      </source>
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_spi.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.tpm.MKL02Z4" name="tpm" full_name="TPM Driver" type="driver" brief="TPM Driver" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4" devices="MKL02Z32xxx4" version="2.0.2" user_visible="true">
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_tpm.c"/>
+      </source>
+      <source path="devices/MKL02Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_tpm.h"/>
+      </source>
+    </component>
+    <component id="platform.utilities.assert.MKL02Z4" name="assert" type="utilities" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4 platform.drivers.lpsci.MKL02Z4 platform.utilities.debug_console.MKL02Z4" devices="MKL02Z32xxx4" version="1.0.0" user_visible="true">
+      <source path="devices/MKL02Z4/utilities" target_path="utilities" type="src">
+        <files mask="fsl_assert.c"/>
+      </source>
+    </component>
+    <component id="platform.utilities.debug_console.MKL02Z4" name="debug_console" type="utilities" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4 platform.drivers.lpsci.MKL02Z4" devices="MKL02Z32xxx4" version="1.0.0" user_visible="true">
+      <source path="devices/MKL02Z4/utilities/io" target_path="utilities" type="src">
+        <files mask="fsl_io.c"/>
+      </source>
+      <source path="devices/MKL02Z4/utilities/io" target_path="utilities" type="c_include">
+        <files mask="fsl_io.h"/>
+      </source>
+      <source path="devices/MKL02Z4/utilities/log" target_path="utilities" type="src">
+        <files mask="fsl_log.c"/>
+      </source>
+      <source path="devices/MKL02Z4/utilities/log" target_path="utilities" type="c_include">
+        <files mask="fsl_log.h"/>
+      </source>
+      <source path="devices/MKL02Z4/utilities/str" target_path="utilities" type="src">
+        <files mask="fsl_str.c"/>
+      </source>
+      <source path="devices/MKL02Z4/utilities/str" target_path="utilities" type="c_include">
+        <files mask="fsl_str.h"/>
+      </source>
+      <source path="devices/MKL02Z4/utilities" target_path="utilities" type="src">
+        <files mask="fsl_debug_console.c"/>
+      </source>
+      <source path="devices/MKL02Z4/utilities" target_path="utilities" type="c_include">
+        <files mask="fsl_debug_console.h"/>
+        <files mask="fsl_debug_console_conf.h"/>
+      </source>
+    </component>
+    <component id="platform.utilities.notifier.MKL02Z4" name="notifier" type="utilities" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4" devices="MKL02Z32xxx4" version="1.0.0" user_visible="true">
+      <source path="devices/MKL02Z4/utilities" target_path="utilities" type="src">
+        <files mask="fsl_notifier.c"/>
+      </source>
+      <source path="devices/MKL02Z4/utilities" target_path="utilities" type="c_include">
+        <files mask="fsl_notifier.h"/>
+      </source>
+    </component>
+    <component id="platform.utilities.shell.MKL02Z4" name="shell" type="utilities" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4" devices="MKL02Z32xxx4" version="1.0.0" user_visible="true">
+      <source path="devices/MKL02Z4/utilities" target_path="utilities" type="src">
+        <files mask="fsl_shell.c"/>
+      </source>
+      <source path="devices/MKL02Z4/utilities" target_path="utilities" type="c_include">
+        <files mask="fsl_shell.h"/>
+      </source>
+    </component>
+    <component id="docs.images.MKL02Z4" name="images" type="other" devices="MKL02Z32xxx4" version="1.0.0" user_visible="true">
+      <source path="docs/images" type="image">
+        <files mask="device.jpg"/>
+      </source>
+      <source path="docs/images" type="image">
+        <files mask="FRDM-KL02Z.gif"/>
+      </source>
+    </component>
+    <component id="middleware.freertos.freertos_tickless_lptmr.MKL02Z4" name="freertos_tickless_lptmr" full_name="FreeRTOS_lptmr_tickless" type="other" brief="FreeRTOS lptmr tickless" category="Operating System/FreeRTOS Operating System" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4 platform.drivers.lptmr.MKL02Z4" devices="MKL02Z32xxx4" version="1.0.0" user_visible="true">
+      <source path="rtos/freertos/Source/portable/low_power_tickless" target_path="freertos/portable" device_cores="core0_MKL02Z32xxx4" core="cm0plus" type="src">
+        <files mask="fsl_tickless_lptmr.c"/>
+      </source>
+    </component>
+    <component id="middleware.freertos.heap.heap_1.MKL02Z4" name="heap_1" full_name="FreeRTOS_heap_1" type="other" brief="FreeRTOS heap_1 allocator" category="Operating System/FreeRTOS Operating System" devices="MKL02Z32xxx4" version="1.0.0" user_visible="true">
+      <source path="rtos/freertos/Source/portable/MemMang" target_path="freertos/portable" type="src">
+        <files mask="heap_1.c"/>
+      </source>
+    </component>
+    <component id="middleware.freertos.heap.heap_2.MKL02Z4" name="heap_2" full_name="FreeRTOS_heap_2" type="other" brief="FreeRTOS heap_2 allocator" category="Operating System/FreeRTOS Operating System" devices="MKL02Z32xxx4" version="1.0.0" user_visible="true">
+      <source path="rtos/freertos/Source/portable/MemMang" target_path="freertos/portable" type="src">
+        <files mask="heap_2.c"/>
+      </source>
+    </component>
+    <component id="middleware.freertos.heap.heap_4.MKL02Z4" name="heap_4" full_name="FreeRTOS_heap_4" type="other" brief="FreeRTOS heap_4 allocator" category="Operating System/FreeRTOS Operating System" devices="MKL02Z32xxx4" version="1.0.0" user_visible="true">
+      <source path="rtos/freertos/Source/portable/MemMang" target_path="freertos/portable" type="src">
+        <files mask="heap_4.c"/>
+      </source>
+    </component>
+    <component id="middleware.freertos.heap.heap_5.MKL02Z4" name="heap_5" full_name="FreeRTOS_heap_5" type="other" brief="FreeRTOS heap_5 allocator" category="Operating System/FreeRTOS Operating System" devices="MKL02Z32xxx4" version="1.0.0" user_visible="true">
+      <source path="rtos/freertos/Source/portable/MemMang" target_path="freertos/portable" type="src">
+        <files mask="heap_5.c"/>
+      </source>
+    </component>
+    <component id="project_generator_template.frdmkl02z.MKL02Z4" name="frdmkl02z" type="other" devices="MKL02Z32xxx4" version="1.0.0" user_visible="true">
+      <source path="boards/frdmkl02z/project_template/cproject_generator_templates/iar" type="linker" toolchain="iar">
+        <files mask="MKL02Z32xxx4_flash.icf"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cproject_generator_templates/iar" type="project" toolchain="iar">
+        <files mask="$[project_name].ewp"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cproject_generator_templates/iar" type="workspace" toolchain="iar">
+        <files mask="$[project_name].eww"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cproject_generator_templates/iar" type="debug" toolchain="iar">
+        <files mask="$[project_name].ewd"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cproject_generator_templates/iar/settings" type="configuration" toolchain="iar">
+        <files mask="cproject_templates.dni"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cproject_generator_templates/mdk" type="working_set" toolchain="mdk">
+        <files mask="$[project_name].uvmpw"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cproject_generator_templates/mdk" type="linker" toolchain="mdk">
+        <files mask="MKL02Z32xxx4_flash.scf"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cproject_generator_templates/mdk" type="project" toolchain="mdk">
+        <files mask="$[project_name].uvprojx"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cproject_generator_templates/mdk" type="configuration" toolchain="mdk">
+        <files mask="pemicro_connection_settings.ini"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cproject_generator_templates/armgcc" type="script" toolchain="armgcc">
+        <files mask="build_all.bat"/>
+        <files mask="build_all.sh"/>
+        <files mask="build_debug.bat"/>
+        <files mask="build_debug.sh"/>
+        <files mask="build_release.bat"/>
+        <files mask="build_release.sh"/>
+        <files mask="clean.bat"/>
+        <files mask="clean.sh"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cproject_generator_templates/armgcc" type="doc" toolchain="armgcc">
+        <files mask="CMakeLists.txt"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cproject_generator_templates/armgcc" type="linker" toolchain="armgcc">
+        <files mask="MKL02Z32xxx4_flash.ld"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cproject_generator_templates/kds" type="project" toolchain="kds">
+        <files mask=".cproject"/>
+        <files mask=".project"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cproject_generator_templates/kds/settings" type="linker" toolchain="kds">
+        <files mask="MKL02Z32xxx4_flash.ld"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cproject_generator_templates/kds/settings" type="debug" toolchain="kds">
+        <files mask="$[project_name]_frdmkl02z debug cmsisdap.launch"/>
+        <files mask="$[project_name]_frdmkl02z debug jlink.launch"/>
+        <files mask="$[project_name]_frdmkl02z debug pne.launch"/>
+        <files mask="$[project_name]_frdmkl02z release cmsisdap.launch"/>
+        <files mask="$[project_name]_frdmkl02z release jlink.launch"/>
+        <files mask="$[project_name]_frdmkl02z release pne.launch"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cppproject_generator_templates/iar" type="linker" toolchain="iar">
+        <files mask="MKL02Z32xxx4_flash.icf"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cppproject_generator_templates/iar" type="project" toolchain="iar">
+        <files mask="$[project_name].ewp"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cppproject_generator_templates/iar" type="workspace" toolchain="iar">
+        <files mask="$[project_name].eww"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cppproject_generator_templates/iar" type="debug" toolchain="iar">
+        <files mask="$[project_name].ewd"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cppproject_generator_templates/iar/settings" type="configuration" toolchain="iar">
+        <files mask="cppproject_templates.dni"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cppproject_generator_templates/mdk" type="working_set" toolchain="mdk">
+        <files mask="$[project_name].uvmpw"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cppproject_generator_templates/mdk" type="linker" toolchain="mdk">
+        <files mask="MKL02Z32xxx4_flash.scf"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cppproject_generator_templates/mdk" type="project" toolchain="mdk">
+        <files mask="$[project_name].uvprojx"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cppproject_generator_templates/mdk" type="configuration" toolchain="mdk">
+        <files mask="pemicro_connection_settings.ini"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cppproject_generator_templates/armgcc" type="script" toolchain="armgcc">
+        <files mask="build_all.bat"/>
+        <files mask="build_all.sh"/>
+        <files mask="build_debug.bat"/>
+        <files mask="build_debug.sh"/>
+        <files mask="build_release.bat"/>
+        <files mask="build_release.sh"/>
+        <files mask="clean.bat"/>
+        <files mask="clean.sh"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cppproject_generator_templates/armgcc" type="doc" toolchain="armgcc">
+        <files mask="CMakeLists.txt"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cppproject_generator_templates/armgcc" type="linker" toolchain="armgcc">
+        <files mask="MKL02Z32xxx4_flash.ld"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cppproject_generator_templates/kds" type="project" toolchain="kds">
+        <files mask=".cproject"/>
+        <files mask=".project"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cppproject_generator_templates/kds/settings" type="linker" toolchain="kds">
+        <files mask="MKL02Z32xxx4_flash.ld"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template/cppproject_generator_templates/kds/settings" type="debug" toolchain="kds">
+        <files mask="$[project_name]_frdmkl02z debug cmsisdap.launch"/>
+        <files mask="$[project_name]_frdmkl02z debug jlink.launch"/>
+        <files mask="$[project_name]_frdmkl02z debug pne.launch"/>
+        <files mask="$[project_name]_frdmkl02z release cmsisdap.launch"/>
+        <files mask="$[project_name]_frdmkl02z release jlink.launch"/>
+        <files mask="$[project_name]_frdmkl02z release pne.launch"/>
+      </source>
+    </component>
+    <component id="tools.MKL02Z4" name="tools" type="other" devices="MKL02Z32xxx4" version="1.0.0" user_visible="true">
+      <source path="tools/cmake_toolchain_files" type="script">
+        <files mask="armgcc.cmake"/>
+        <files mask="armgcc_force_cpp.cmake"/>
+      </source>
+    </component>
+    <component id="middleware.mmcau_cm0p.MKL02Z4" name="mmcau_cm0p" type="middleware" brief="MMCAU library for ARM Cortex M0 core" category="Security/MMCAU library" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4 platform.drivers.lpsci.MKL02Z4 platform.utilities.debug_console.MKL02Z4" devices="MKL02Z32xxx4" version="2.0.1" user_visible="true">
+      <source path="middleware/mmcau/asm-cm0p" target_path="libs" type="lib" toolchain="armgcc">
+        <files mask="lib_mmcau-cm0p.a"/>
+      </source>
+      <source path="middleware/mmcau/asm-cm0p" target_path="libs" type="lib" toolchain="mdk">
+        <files mask="lib_mmcau-cm0p.lib"/>
+      </source>
+      <source path="middleware/mmcau/asm-cm0p" target_path="libs" type="lib" toolchain="mcuxpresso">
+        <files mask="lib_mmcau-cm0p.a"/>
+      </source>
+      <source path="middleware/mmcau/asm-cm0p" target_path="libs" type="lib" toolchain="kds">
+        <files mask="lib_mmcau-cm0p.a"/>
+      </source>
+      <source path="middleware/mmcau/asm-cm0p" target_path="libs" type="lib" toolchain="iar">
+        <files mask="lib_mmcau-cm0p.a"/>
+      </source>
+      <source path="middleware/mmcau" target_path="mmcau/mmcau_source" type="src">
+        <files mask="fsl_mmcau.c"/>
+      </source>
+      <source path="middleware/mmcau" target_path="mmcau/mmcau_include" type="c_include">
+        <files mask="cau_api.h"/>
+        <files mask="fsl_mmcau.h"/>
+      </source>
+    </component>
+    <component id="middleware.sdmmc.common.MKL02Z4" name="common" full_name="SDMMC common stack" type="middleware" category="Memories/SDMMC Stack" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4 platform.drivers.spi.MKL02Z4" devices="MKL02Z32xxx4" version="2.2.1" user_visible="true">
+      <source path="middleware/sdmmc/inc" target_path="sdmmc/inc" type="c_include">
+        <files mask="fsl_sdmmc_common.h"/>
+        <files mask="fsl_sdmmc_host.h"/>
+        <files mask="fsl_sdmmc_spec.h"/>
+      </source>
+      <source path="middleware/sdmmc/src" target_path="sdmmc/src" type="src">
+        <files mask="fsl_sdmmc_common.c"/>
+      </source>
+    </component>
+    <component id="middleware.sdmmc.mmc.MKL02Z4" name="mmc" full_name="SDMMC mmc stack" type="middleware" category="Memories/SDMMC Stack" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="middleware.sdmmc.common.MKL02Z4 platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4 platform.drivers.spi.MKL02Z4" devices="MKL02Z32xxx4" version="2.2.1" user_visible="true">
+      <source path="middleware/sdmmc/inc" target_path="sdmmc/inc" type="c_include">
+        <files mask="fsl_mmc.h"/>
+      </source>
+      <source path="middleware/sdmmc/src" target_path="sdmmc/src" type="src">
+        <files mask="fsl_mmc.c"/>
+      </source>
+    </component>
+    <component id="middleware.sdmmc.sd.MKL02Z4" name="sd" full_name="SDMMC sd stack" type="middleware" category="Memories/SDMMC Stack" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="middleware.sdmmc.common.MKL02Z4 platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4 platform.drivers.spi.MKL02Z4" devices="MKL02Z32xxx4" version="2.2.1" user_visible="true">
+      <source path="middleware/sdmmc/inc" target_path="sdmmc/inc" type="c_include">
+        <files mask="fsl_sd.h"/>
+      </source>
+      <source path="middleware/sdmmc/src" target_path="sdmmc/src" type="src">
+        <files mask="fsl_sd.c"/>
+      </source>
+    </component>
+    <component id="middleware.sdmmc.sdio.MKL02Z4" name="sdio" full_name="SDMMC sdio stack" type="middleware" category="Memories/SDMMC Stack" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="middleware.sdmmc.common.MKL02Z4 platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4 platform.drivers.spi.MKL02Z4" devices="MKL02Z32xxx4" version="2.2.1" user_visible="true">
+      <source path="middleware/sdmmc/inc" target_path="sdmmc/inc" type="c_include">
+        <files mask="fsl_sdio.h"/>
+      </source>
+      <source path="middleware/sdmmc/src" target_path="sdmmc/src" type="src">
+        <files mask="fsl_sdio.c"/>
+      </source>
+    </component>
+    <component id="middleware.sdmmc.sdspi.MKL02Z4" name="sdspi" full_name="SDMMC sdspi stack" type="middleware" category="Memories/SDMMC Stack" devices="MKL02Z32xxx4" version="2.1.2" user_visible="true">
+      <source path="middleware/sdmmc/inc" target_path="sdmmc/inc" type="c_include">
+        <files mask="fsl_sdmmc_spec.h"/>
+        <files mask="fsl_sdspi.h"/>
+      </source>
+      <source path="middleware/sdmmc/src" target_path="sdmmc/src" type="src">
+        <files mask="fsl_sdspi.c"/>
+      </source>
+    </component>
+    <component id="middleware.baremetal.MKL02Z4" name="baremetal" full_name="Baremetal" type="OS" devices="MKL02Z32xxx4" version="1.0.0" user_visible="true">
+      <defines>
+        <define name="FSL_RTOS_BM" value=""/>
+        <define name="SDK_OS_BAREMETAL" value=""/>
+      </defines>
+    </component>
+    <component id="platform.CMSIS" name="CMSIS" type="CMSIS" dependency="platform.CMSIS_Driver platform.CMSIS_Driver_Include.CAN_CMSISInclude.MKL02Z4 platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL02Z4 platform.CMSIS_Driver_Include.Ethernet_CMSISInclude.MKL02Z4 platform.CMSIS_Driver_Include.Ethernet_MAC_CMSISInclude.MKL02Z4 platform.CMSIS_Driver_Include.Ethernet_PHY_CMSISInclude.MKL02Z4 platform.CMSIS_Driver_Include.Flash_CMSISInclude.MKL02Z4 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKL02Z4 platform.CMSIS_Driver_Include.MCI_CMSISInclude.MKL02Z4 platform.CMSIS_Driver_Include.NAND_CMSISInclude.MKL02Z4 platform.CMSIS_Driver_Include.SAI_CMSISInclude.MKL02Z4 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MKL02Z4 platform.CMSIS_Driver_Include.USART_CMSISInclude.MKL02Z4 platform.CMSIS_Driver_Include.USB_CMSISInclude.MKL02Z4 platform.CMSIS_Driver_Include.USB_Device_CMSISInclude.MKL02Z4 platform.CMSIS_Driver_Include.USB_Host_CMSISInclude.MKL02Z4 platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4" version="5.0.1" user_visible="true">
+      <source path="CMSIS" type="doc">
+        <files mask="LICENSE.txt"/>
+      </source>
+      <source path="CMSIS/Include" type="c_include">
+        <files mask="arm_common_tables.h"/>
+        <files mask="arm_const_structs.h"/>
+        <files mask="arm_math.h"/>
+        <files mask="cmsis_armcc.h"/>
+        <files mask="cmsis_armclang.h"/>
+        <files mask="cmsis_compiler.h"/>
+        <files mask="cmsis_gcc.h"/>
+        <files mask="cmsis_version.h"/>
+        <files mask="core_armv8mbl.h"/>
+        <files mask="core_armv8mml.h"/>
+        <files mask="core_cm0.h"/>
+        <files mask="core_cm0plus.h"/>
+        <files mask="core_cm23.h"/>
+        <files mask="core_cm3.h"/>
+        <files mask="core_cm33.h"/>
+        <files mask="core_cm4.h"/>
+        <files mask="core_cm7.h"/>
+        <files mask="core_sc000.h"/>
+        <files mask="core_sc300.h"/>
+        <files mask="mpu_armv7.h"/>
+        <files mask="tz_context.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver" name="CMSIS_Driver" type="CMSIS" version="5.0.1" user_visible="true">
+      <source path="CMSIS/Driver/DriverTemplates" type="src">
+        <files mask="Driver_CAN.c"/>
+        <files mask="Driver_ETH_MAC.c"/>
+        <files mask="Driver_ETH_PHY.c"/>
+        <files mask="Driver_Flash.c"/>
+        <files mask="Driver_I2C.c"/>
+        <files mask="Driver_MCI.c"/>
+        <files mask="Driver_SAI.c"/>
+        <files mask="Driver_SPI.c"/>
+        <files mask="Driver_Storage.c"/>
+        <files mask="Driver_USART.c"/>
+        <files mask="Driver_USBD.c"/>
+        <files mask="Driver_USBH.c"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.CAN_CMSISInclude.MKL02Z4" name="CAN_CMSISInclude" type="CMSIS_driver" brief="CMSIS Driver_CAN.h" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL02Z4" devices="MKL02Z32xxx4" version="5.0.1" user_visible="true">
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_CAN.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL02Z4" name="Common_CMSISInclude" type="CMSIS_driver" brief="CMSIS Driver_Common.h" devices="MKL02Z32xxx4" version="5.0.1" user_visible="true">
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_Common.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.Ethernet_CMSISInclude.MKL02Z4" name="Ethernet_CMSISInclude" type="CMSIS_driver" brief="CMSIS Driver_ETH.h" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL02Z4" devices="MKL02Z32xxx4" version="5.0.1" user_visible="true">
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_ETH.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.Ethernet_MAC_CMSISInclude.MKL02Z4" name="Ethernet_MAC_CMSISInclude" type="CMSIS_driver" brief="CMSIS Driver_ETH_MAC.h" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL02Z4 platform.CMSIS_Driver_Include.Ethernet_CMSISInclude.MKL02Z4" devices="MKL02Z32xxx4" version="5.0.1" user_visible="true">
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_ETH_MAC.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.Ethernet_PHY_CMSISInclude.MKL02Z4" name="Ethernet_PHY_CMSISInclude" type="CMSIS_driver" brief="CMSIS Driver_ETH_PHY.h" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL02Z4 platform.CMSIS_Driver_Include.Ethernet_CMSISInclude.MKL02Z4" devices="MKL02Z32xxx4" version="5.0.1" user_visible="true">
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_ETH_PHY.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.Flash_CMSISInclude.MKL02Z4" name="Flash_CMSISInclude" type="CMSIS_driver" brief="CMSIS Driver_Flash.h" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL02Z4" devices="MKL02Z32xxx4" version="5.0.1" user_visible="true">
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_Flash.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKL02Z4" name="I2C_CMSISInclude" type="CMSIS_driver" brief="CMSIS Driver_I2C.h" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL02Z4" devices="MKL02Z32xxx4" version="5.0.1" user_visible="true">
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_I2C.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.MCI_CMSISInclude.MKL02Z4" name="MCI_CMSISInclude" type="CMSIS_driver" brief="CMSIS Driver_MCI.h" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL02Z4" devices="MKL02Z32xxx4" version="5.0.1" user_visible="true">
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_MCI.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.NAND_CMSISInclude.MKL02Z4" name="NAND_CMSISInclude" type="CMSIS_driver" brief="CMSIS Driver_NAND.h" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL02Z4" devices="MKL02Z32xxx4" version="5.0.1" user_visible="true">
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_NAND.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.SAI_CMSISInclude.MKL02Z4" name="SAI_CMSISInclude" type="CMSIS_driver" brief="CMSIS Driver_SAI.h" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL02Z4" devices="MKL02Z32xxx4" version="5.0.1" user_visible="true">
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_SAI.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.SPI_CMSISInclude.MKL02Z4" name="SPI_CMSISInclude" type="CMSIS_driver" brief="CMSIS Driver_SPI.h" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL02Z4" devices="MKL02Z32xxx4" version="5.0.1" user_visible="true">
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_SPI.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.USART_CMSISInclude.MKL02Z4" name="USART_CMSISInclude" type="CMSIS_driver" brief="CMSIS Driver_USART.h" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL02Z4" devices="MKL02Z32xxx4" version="5.0.1" user_visible="true">
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_USART.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.USB_CMSISInclude.MKL02Z4" name="USB_CMSISInclude" type="CMSIS_driver" brief="CMSIS Driver_USB.h" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL02Z4" devices="MKL02Z32xxx4" version="5.0.1" user_visible="true">
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_USB.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.USB_Device_CMSISInclude.MKL02Z4" name="USB_Device_CMSISInclude" type="CMSIS_driver" brief="CMSIS Driver_USBD.h" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL02Z4 platform.CMSIS_Driver_Include.USB_CMSISInclude.MKL02Z4" devices="MKL02Z32xxx4" version="5.0.1" user_visible="true">
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_USBD.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.USB_Host_CMSISInclude.MKL02Z4" name="USB_Host_CMSISInclude" type="CMSIS_driver" brief="CMSIS Driver_USBH.h" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL02Z4 platform.CMSIS_Driver_Include.USB_CMSISInclude.MKL02Z4" devices="MKL02Z32xxx4" version="5.0.1" user_visible="true">
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_USBH.h"/>
+      </source>
+    </component>
+    <component id="platform.Include_common.MKL02Z4" name="Include_common" type="CMSIS_Include" devices="MKL02Z32xxx4" version="5.0.1" user_visible="true">
+      <source path="CMSIS/Include" type="c_include">
+        <files mask="arm_common_tables.h"/>
+        <files mask="arm_const_structs.h"/>
+        <files mask="arm_math.h"/>
+        <files mask="cmsis_armcc.h"/>
+        <files mask="cmsis_armclang.h"/>
+        <files mask="cmsis_compiler.h"/>
+        <files mask="cmsis_gcc.h"/>
+        <files mask="cmsis_version.h"/>
+        <files mask="core_armv8mbl.h"/>
+        <files mask="core_armv8mml.h"/>
+        <files mask="mpu_armv7.h"/>
+      </source>
+    </component>
+    <component id="platform.Include_core_cm0plus.MKL02Z4" name="Include_core_cm0plus" type="CMSIS_Include" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4" devices="MKL02Z32xxx4" version="5.0.1" user_visible="true">
+      <source path="CMSIS/Include" type="c_include">
+        <files mask="core_cm0plus.h"/>
+      </source>
+    </component>
+    <component id="platform.devices.MKL02Z4_CMSIS.MKL02Z4" name="MKL02Z4_CMSIS" type="CMSIS_Include" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4" devices="MKL02Z32xxx4" version="1.0.0" user_visible="true">
+      <source path="devices/MKL02Z4" type="src">
+        <files mask="system_MKL02Z4.c"/>
+      </source>
+      <source path="devices/MKL02Z4" type="c_include">
+        <files mask="fsl_device_registers.h"/>
+        <files mask="MKL02Z4.h"/>
+        <files mask="MKL02Z4_features.h"/>
+        <files mask="system_MKL02Z4.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.i2c_cmsis.MKL02Z4" name="i2c_cmsis" type="CMSIS_driver" brief="I2C CMSIS Driver" category="Device/SDK CMSIS Drivers" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="RTE_Device.MKL02Z4 platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL02Z4 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKL02Z4 platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4 platform.drivers.i2c.MKL02Z4" devices="MKL02Z32xxx4" version="2.0.1" user_visible="true">
+      <source path="devices/MKL02Z4/cmsis_drivers" target_path="drivers" type="src">
+        <files mask="fsl_i2c_cmsis.c"/>
+      </source>
+      <source path="devices/MKL02Z4/cmsis_drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_i2c_cmsis.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.lpsci_cmsis.MKL02Z4" name="lpsci_cmsis" type="CMSIS_driver" brief="LPSCI CMSIS Driver" category="Device/SDK CMSIS Drivers" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="RTE_Device.MKL02Z4 platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL02Z4 platform.CMSIS_Driver_Include.USART_CMSISInclude.MKL02Z4 platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4 platform.drivers.lpsci.MKL02Z4" devices="MKL02Z32xxx4" version="2.0.0" user_visible="true">
+      <source path="devices/MKL02Z4/cmsis_drivers" target_path="drivers" type="src">
+        <files mask="fsl_lpsci_cmsis.c"/>
+      </source>
+      <source path="devices/MKL02Z4/cmsis_drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_lpsci_cmsis.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.spi_cmsis.MKL02Z4" name="spi_cmsis" type="CMSIS_driver" brief="SPI CMSIS Driver" category="Device/SDK CMSIS Drivers" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="RTE_Device.MKL02Z4 platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL02Z4 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MKL02Z4 platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4 platform.drivers.spi.MKL02Z4" devices="MKL02Z32xxx4" version="2.0.0" user_visible="true">
+      <source path="devices/MKL02Z4/cmsis_drivers" target_path="drivers" type="src">
+        <files mask="fsl_spi_cmsis.c"/>
+      </source>
+      <source path="devices/MKL02Z4/cmsis_drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_spi_cmsis.h"/>
+      </source>
+    </component>
+    <component id="platform.devices.MKL02Z4_linker.MKL02Z4" name="MKL02Z4_linker" type="linker" devices="MKL02Z32xxx4" version="1.0.0" user_visible="true">
+      <source path="devices/MKL02Z4/arm" type="linker" toolchain="mdk">
+        <files mask="MKL02Z32xxx4_flash.scf"/>
+        <files mask="MKL02Z32xxx4_ram.scf"/>
+      </source>
+      <source path="devices/MKL02Z4/gcc" type="linker" toolchain="armgcc">
+        <files mask="MKL02Z32xxx4_flash.ld"/>
+        <files mask="MKL02Z32xxx4_ram.ld"/>
+      </source>
+      <source path="devices/MKL02Z4/gcc" type="linker" toolchain="kds">
+        <files mask="MKL02Z32xxx4_flash.ld"/>
+        <files mask="MKL02Z32xxx4_ram.ld"/>
+      </source>
+      <source path="devices/MKL02Z4/iar" type="linker" toolchain="iar">
+        <files mask="MKL02Z32xxx4_flash.icf"/>
+        <files mask="MKL02Z32xxx4_ram.icf"/>
+      </source>
+    </component>
+    <component id="platform.devices.MKL02Z4_startup.MKL02Z4" name="MKL02Z4_startup" type="startup" devices="MKL02Z32xxx4" version="1.0.0" user_visible="true">
+      <source path="devices/MKL02Z4/arm" type="asm_include" toolchain="mdk">
+        <files mask="startup_MKL02Z4.s"/>
+      </source>
+      <source path="devices/MKL02Z4/gcc" type="asm_include" toolchain="kds">
+        <files mask="startup_MKL02Z4.S"/>
+      </source>
+      <source path="devices/MKL02Z4/gcc" type="asm_include" toolchain="armgcc">
+        <files mask="startup_MKL02Z4.S"/>
+      </source>
+      <source path="devices/MKL02Z4/iar" type="asm_include" toolchain="iar">
+        <files mask="startup_MKL02Z4.s"/>
+      </source>
+      <source path="devices/MKL02Z4/mcuxpresso" type="src_cpp" toolchain="mcuxpresso">
+        <files mask="startup_mkl02z4.cpp"/>
+      </source>
+      <source path="devices/MKL02Z4/mcuxpresso" type="src_c" toolchain="mcuxpresso">
+        <files mask="startup_mkl02z4.c"/>
+      </source>
+    </component>
+    <component id="RTE_Device.MKL02Z4" name="RTE_Device" type="project_template" category="Device/SDK Project Template" devices="MKL02Z32xxx4" version="1.0.0" user_visible="true">
+      <source path="devices/MKL02Z4/template" target_path="board" type="c_include">
+        <files mask="RTE_Device.h"/>
+      </source>
+    </component>
+    <component id="platform.devices.MKL02Z4_debugger.MKL02Z4" name="MKL02Z4_debugger" type="debugger" devices="MKL02Z32xxx4" version="1.0.0" user_visible="true">
+      <source path="devices/MKL02Z4" type="xml">
+        <files mask="MKL02Z4.xml"/>
+      </source>
+    </component>
+    <component id="platform.devices.MKL02Z4_flash.MKL02Z4" name="MKL02Z4_flash" type="debugger" devices="MKL02Z32xxx4" version="1.0.0" user_visible="true">
+      <source path="devices/MKL02Z4/mcuxpresso" type="binary" toolchain="mcuxpresso">
+        <files mask="FTFA_1K_Tiny.cfx"/>
+      </source>
+    </component>
+    <component id="project_template.MKL02Z4.MKL02Z4" name="MKL02Z4" type="project_template" category="Board Support/SDK Project Template" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.devices.MKL02Z4_startup.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4 platform.drivers.flash.MKL02Z4 platform.drivers.gpio.MKL02Z4 platform.drivers.lpsci.MKL02Z4 platform.drivers.port.MKL02Z4 platform.drivers.smc.MKL02Z4 platform.utilities.debug_console.MKL02Z4" devices="MKL02Z32xxx4" version="1.0.0" user_visible="true">
+      <source path="devices/MKL02Z4/project_template" type="src">
+        <files mask="board.c"/>
+        <files mask="clock_config.c"/>
+        <files mask="peripherals.c"/>
+        <files mask="pin_mux.c"/>
+      </source>
+      <source path="devices/MKL02Z4/project_template" type="c_include">
+        <files mask="board.h"/>
+        <files mask="clock_config.h"/>
+        <files mask="peripherals.h"/>
+        <files mask="pin_mux.h"/>
+      </source>
+    </component>
+    <component id="project_template.frdmkl02z.MKL02Z4" name="frdmkl02z" type="project_template" category="Board Support/SDK Project Template" device_cores="core0_MKL02Z32xxx4" core="cm0plus" dependency="platform.Include_common.MKL02Z4 platform.Include_core_cm0plus.MKL02Z4 platform.devices.MKL02Z4_CMSIS.MKL02Z4 platform.devices.MKL02Z4_startup.MKL02Z4 platform.drivers.clock.MKL02Z4 platform.drivers.common.MKL02Z4 platform.drivers.flash.MKL02Z4 platform.drivers.gpio.MKL02Z4 platform.drivers.lpsci.MKL02Z4 platform.drivers.port.MKL02Z4 platform.drivers.smc.MKL02Z4 platform.utilities.debug_console.MKL02Z4" devices="MKL02Z32xxx4" version="1.0.0" user_visible="true">
+      <source path="boards/frdmkl02z/project_template" type="src">
+        <files mask="board.c"/>
+        <files mask="clock_config.c"/>
+        <files mask="peripherals.c"/>
+        <files mask="pin_mux.c"/>
+      </source>
+      <source path="boards/frdmkl02z/project_template" type="c_include">
+        <files mask="board.h"/>
+        <files mask="clock_config.h"/>
+        <files mask="peripherals.h"/>
+        <files mask="pin_mux.h"/>
+      </source>
+    </component>
+    <component id="docs.MKL02Z4.MKL02Z4" name="MKL02Z4" type="documentation" devices="MKL02Z32xxx4" version="1.0.0" user_visible="true">
+      <source path="docs" type="doc">
+        <files mask="Getting Started with MCUXpresso SDK.pdf"/>
+        <files mask="MCUXpresso SDK Release Notes_MKL02Z4.pdf"/>
+      </source>
+    </component>
+    </components>
+</ksdk:manifest>

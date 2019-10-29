@@ -1,9 +1,35 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * All rights reserved.
  *
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
+ *
+ * o Redistributions of source code must retain the above copyright notice, this list
+ *   of conditions and the following disclaimer.
+ *
+ * o Redistributions in binary form must reproduce the above copyright notice, this
+ *   list of conditions and the following disclaimer in the documentation and/or
+ *   other materials provided with the distribution.
+ *
+ * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
+ *   contributors may be used to endorse or promote products derived from this
+ *   software without specific prior written permission.
+ *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #ifndef _CAU_API_H_
 #define _CAU_API_H_
@@ -16,24 +42,24 @@
  * @addtogroup mmcau MMCAU Peripheral Driver
  * @{
  */
-#define cau_aes_set_key mmcau_aes_set_key
-#define cau_aes_encrypt mmcau_aes_encrypt
-#define cau_aes_decrypt mmcau_aes_decrypt
-#define cau_des_chk_parity mmcau_des_chk_parity
-#define cau_des_encrypt mmcau_des_encrypt
-#define cau_des_decrypt mmcau_des_decrypt
-#define cau_md5_initialize_output mmcau_md5_initialize_output
-#define cau_md5_hash_n mmcau_md5_hash_n
-#define cau_md5_update mmcau_md5_update
-#define cau_md5_hash mmcau_md5_hash
-#define cau_sha1_initialize_output mmcau_sha1_initialize_output
-#define cau_sha1_hash_n mmcau_sha1_hash_n
-#define cau_sha1_update mmcau_sha1_update
-#define cau_sha1_hash mmcau_sha1_hash
-#define cau_sha256_initialize_output mmcau_sha256_initialize_output
-#define cau_sha256_hash_n mmcau_sha256_hash_n
-#define cau_sha256_update mmcau_sha256_update
-#define cau_sha256_hash mmcau_sha256_hash
+#define cau_aes_set_key               mmcau_aes_set_key
+#define cau_aes_encrypt               mmcau_aes_encrypt
+#define cau_aes_decrypt               mmcau_aes_decrypt
+#define cau_des_chk_parity            mmcau_des_chk_parity
+#define cau_des_encrypt               mmcau_des_encrypt
+#define cau_des_decrypt               mmcau_des_decrypt
+#define cau_md5_initialize_output     mmcau_md5_initialize_output
+#define cau_md5_hash_n                mmcau_md5_hash_n
+#define cau_md5_update                mmcau_md5_update
+#define cau_md5_hash                  mmcau_md5_hash
+#define cau_sha1_initialize_output    mmcau_sha1_initialize_output
+#define cau_sha1_hash_n               mmcau_sha1_hash_n
+#define cau_sha1_update               mmcau_sha1_update
+#define cau_sha1_hash                 mmcau_sha1_hash
+#define cau_sha256_initialize_output  mmcau_sha256_initialize_output
+#define cau_sha256_hash_n             mmcau_sha256_hash_n
+#define cau_sha256_update             mmcau_sha256_update
+#define cau_sha256_hash               mmcau_sha256_hash
 
 /*******************************************************************************
  * API

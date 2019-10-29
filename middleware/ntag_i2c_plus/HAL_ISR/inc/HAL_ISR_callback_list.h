@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, NXP Semiconductor
+ * Copyright 2016 NXP
  * All rights reserved.
  *
  * 
@@ -27,6 +27,9 @@ ISR_CALLBACK_ENTRY(ISR_INT_PORTE, 0, 24) /* PTE24  */
 #if defined(FRDM_KL43Z)
 ISR_CALLBACK_ENTRY(ISR_INT_PORTA, 0, 5) /* PTA5  */
 #endif
+#if defined(FRDM_K32L2B)
+ISR_CALLBACK_ENTRY(ISR_INT_PORTA, 0, 5) /* PTA5  */
+#endif
 #if defined(FRDM_K22F)
 ISR_CALLBACK_ENTRY(ISR_INT_PORTB, 0, 18) /* PTB18  */
 #endif
@@ -37,6 +40,9 @@ ISR_CALLBACK_ENTRY(ISR_INT_PORTA, 0, 12) /* PTA12  */
 ISR_CALLBACK_ENTRY(ISR_INT_PORTC, 0, 17) /* PTC17  */
 #endif
 #if defined(CPU_LPC55S69JBD100_cm33_core0)
+ISR_CALLBACK_ENTRY(ISR_INT_IOCON, 0, 5) /* Pin5  */
+#endif
+#if defined(CPU_LPC5528JBD100)
 ISR_CALLBACK_ENTRY(ISR_INT_IOCON, 0, 5) /* Pin5  */
 #endif
 

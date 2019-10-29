@@ -74,7 +74,7 @@
 #define USB_LPC3511IP_DEVCMDSTAT_DRES_C_MASK USB_DEVCMDSTAT_DRES_C_MASK
 #define USB_LPC3511IP_DEVCMDSTAT_DSUS_C_MASK USB_DEVCMDSTAT_DSUS_C_MASK
 #define USB_LPC3511IP_DEVCMDSTAT_DCON_C_MASK USB_DEVCMDSTAT_DCON_C_MASK
-#define USB_LPC3511IP_DEVCMDSTAT_VBUS_DEBOUNCED_MASK USB_DEVCMDSTAT_VBUSDEBOUNCED_MASK
+#define USB_LPC3511IP_DEVCMDSTAT_VBUS_MASK USB_DEVCMDSTAT_VBUS_DEBOUNCED_MASK
 #endif
 
 #define USB_LPC3511IP_USB_LPM_ADPPROBE_MASK (0x00100000u)
@@ -1147,6 +1147,7 @@ static void USB_DeviceLpc3511IpInterruptDetach(usb_device_lpc3511ip_state_struct
     /* Notify up layer the USB VBUS falling signal detected. */
     USB_DeviceNotificationTrigger(lpc3511IpState->deviceHandle, &message);
 }
+#if ((defined(USB_DEVICE_CONFIG_LPCIP3511HS)) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
 
 /*!
  * @brief Handle Attach interrupt.
@@ -1168,6 +1169,7 @@ static void USB_DeviceLpc3511IpInterruptAttach(usb_device_lpc3511ip_state_struct
     /* Notify up layer the USB VBUS rising signal detected. */
     USB_DeviceNotificationTrigger(lpc3511IpState->deviceHandle, &message);
 }
+#endif
 #endif
 #if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
     (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
@@ -1954,16 +1956,13 @@ void USB_DeviceLpcIp3511IsrFunction(void *deviceHandle)
             USB_DeviceLpc3511IpInterruptReset(lpc3511IpState);
         }
 #if (defined(USB_DEVICE_CONFIG_DETACH_ENABLE) && (USB_DEVICE_CONFIG_DETACH_ENABLE))
-        if ((0U == lpc3511IpState->deviceState) &&
-                ((lpc3511IpState->registerBase->DEVCMDSTAT & USB_LPC3511IP_DEVCMDSTAT_DCON_MASK) &&
-                 (devState & USB_LPC3511IP_DEVCMDSTAT_VBUS_DEBOUNCED_MASK))
 #if ((defined(USB_DEVICE_CONFIG_LPCIP3511HS)) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
-            || ((!(lpc3511IpState->registerBase->DEVCMDSTAT & USB_LPC3511IP_DEVCMDSTAT_DCON_MASK)) &&
-                (lpc3511IpState->registerBase->LPM & USB_LPC3511IP_USB_LPM_ADPPROBE_MASK) &&
-                (1U == lpc3511IpState->controllerSpeed))
-#endif
-        )
-
+        if ((0U == lpc3511IpState->deviceState) &&
+            (((lpc3511IpState->registerBase->DEVCMDSTAT & USB_LPC3511IP_DEVCMDSTAT_DCON_MASK) &&
+              (devState & USB_LPC3511IP_DEVCMDSTAT_VBUS_DEBOUNCED_MASK)) ||
+             ((!(lpc3511IpState->registerBase->DEVCMDSTAT & USB_LPC3511IP_DEVCMDSTAT_DCON_MASK)) &&
+              (lpc3511IpState->registerBase->LPM & USB_LPC3511IP_USB_LPM_ADPPROBE_MASK))) &&
+            (1U == lpc3511IpState->controllerSpeed))
         {
             lpc3511IpState->deviceState = 1U;
             USB_DeviceLpc3511IpInterruptAttach(lpc3511IpState);
@@ -1974,18 +1973,23 @@ void USB_DeviceLpcIp3511IsrFunction(void *deviceHandle)
 #endif
         }
         else if ((1U == lpc3511IpState->deviceState) &&
-                     ((lpc3511IpState->registerBase->DEVCMDSTAT & USB_LPC3511IP_DEVCMDSTAT_DCON_MASK) &&
-                      (!(devState & USB_LPC3511IP_DEVCMDSTAT_VBUS_DEBOUNCED_MASK)))
-#if ((defined(USB_DEVICE_CONFIG_LPCIP3511HS)) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
-                 || ((!(lpc3511IpState->registerBase->DEVCMDSTAT & USB_LPC3511IP_DEVCMDSTAT_DCON_MASK)) &&
-                     (!(lpc3511IpState->registerBase->LPM & USB_LPC3511IP_USB_LPM_ADPPROBE_MASK)) &&
-                     (1U == lpc3511IpState->controllerSpeed))
-#endif
-        )
+                 (((lpc3511IpState->registerBase->DEVCMDSTAT & USB_LPC3511IP_DEVCMDSTAT_DCON_MASK) &&
+                   (!(devState & USB_LPC3511IP_DEVCMDSTAT_VBUS_DEBOUNCED_MASK))) ||
+                  ((!(lpc3511IpState->registerBase->DEVCMDSTAT & USB_LPC3511IP_DEVCMDSTAT_DCON_MASK)) &&
+                   (!(lpc3511IpState->registerBase->LPM & USB_LPC3511IP_USB_LPM_ADPPROBE_MASK)))) &&
+                 (1U == lpc3511IpState->controllerSpeed))
         {
             lpc3511IpState->deviceState = 0U;
             USB_DeviceLpc3511IpInterruptDetach(lpc3511IpState);
         }
+#endif
+#if ((defined(USB_DEVICE_CONFIG_LPCIP3511FS)) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U))
+        /* dis-connect change */
+        if ((devState & USB_LPC3511IP_DEVCMDSTAT_DCON_C_MASK) && (0U == lpc3511IpState->controllerSpeed))
+        {
+            USB_DeviceLpc3511IpInterruptDetach(lpc3511IpState);
+        }
+#endif
 #endif
 
 /* Suspend/Resume */

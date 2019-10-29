@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2019 NXP
  * All rights reserved.
  *
  *
@@ -9,58 +9,88 @@
 #ifndef __BUTTON_H__
 #define __BUTTON_H__
 
+/*!
+ * @addtogroup Button
+ * @{
+ */
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
-/* TIMER_HANDLE_SIZE + HAL_GPIO_HANDLE_SIZE + button dedicated size */
-#define BUTTON_HANDLE_SIZE                       (48 + 20 + 68)
+/*! @brief Definition of button handle size as HAL_GPIO_HANDLE_SIZE + button dedicated size. */
+#define BUTTON_HANDLE_SIZE (16U + 24U)
 
-#define BUTTON_TIMER_INTERVAL                    (10U)  /* unit is ms */
-#define BUTTON_SHORT_PRESS_THRESHOLD             (200U) /* unit is ms */
-#define BUTTON_LONG_PRESS_THRESHOLD              (500U) /* unit is ms */
-#define BUTTON_BOUBLE_CLICK_THRESHOLD            (200U) /* unit is ms */
+/*! @brief Definition of button timer interval,unit is ms. */
+#define BUTTON_TIMER_INTERVAL (25U)
 
-#define BUTTON_USE_COMMON_TASK                   (1U)
-#define BUTTON_TASK_PRIORITY                     (2U)
-#define BUTTON_TASK_STACK_SIZE                   (1000U)
+/*! @brief Definition of button short press threshold,unit is ms. */
+#define BUTTON_SHORT_PRESS_THRESHOLD (200U)
 
-#define BUTTON_EVENT_BUTTON                      (1U)
+/*! @brief Definition of button long press threshold,unit is ms. */
+#define BUTTON_LONG_PRESS_THRESHOLD (500U)
 
-typedef void* button_handle_t;
+/*! @brief Definition of button double click threshold,unit is ms. */
+#define BUTTON_DOUBLE_CLICK_THRESHOLD (200U)
 
+/*! @brief Definition to determine whether use common task. */
+#define BUTTON_USE_COMMON_TASK (1U)
+
+/*! @brief Definition of button task priority. */
+#define BUTTON_TASK_PRIORITY (2U)
+
+/*! @brief Definition of button task stack size. */
+#define BUTTON_TASK_STACK_SIZE (1000U)
+
+/*! @brief Definition of button event. */
+#define BUTTON_EVENT_BUTTON (1U)
+
+/*! @brief The handle of button */
+typedef void *button_handle_t;
+
+/*! @brief The status type of button */
 typedef enum _button_status
 {
-    kStatus_BUTTON_Success = kStatus_Success,                             /*!< Success */
-    kStatus_BUTTON_Error = MAKE_STATUS(kStatusGroup_BUTTON, 1),           /*!< Failed */
-    kStatus_BUTTON_LackSource = MAKE_STATUS(kStatusGroup_BUTTON, 2),      /*!< Lack of sources */
+    kStatus_BUTTON_Success    = kStatus_Success,                     /*!< Success */
+    kStatus_BUTTON_Error      = MAKE_STATUS(kStatusGroup_BUTTON, 1), /*!< Failed */
+    kStatus_BUTTON_LackSource = MAKE_STATUS(kStatusGroup_BUTTON, 2), /*!< Lack of sources */
 } button_status_t;
 
+/*! @brief The event type of button */
 typedef enum _button_event
 {
-    kBUTTON_EventOneClick = 0x01U, /*!< One click with short time, the duration of key down and key up is less than #BUTTON_SHORT_PRESS_THRESHOLD. */
-    kBUTTON_EventDoubleClick,      /*!< Double click with short time, the duration of key down and key up is less than #BUTTON_SHORT_PRESS_THRESHOLD.
-                                        And the duration of the two button actions does not exceed #BUTTON_BOUBLE_CLICK_THRESHOLD. */
-    kBUTTON_EventShortPress,       /*!< Press with short time, the duration of key down and key up is no less than #BUTTON_SHORT_PRESS_THRESHOLD
-                                        and less than #BUTTON_LONG_PRESS_THRESHOLD. */
-    kBUTTON_EventLongPress,        /*!< Press with long time, the duration of key down and key up is no less than #BUTTON_LONG_PRESS_THRESHOLD. */
+    kBUTTON_EventOneClick = 0x01U, /*!< One click with short time, the duration of key down and key up is less than
+                                      #BUTTON_SHORT_PRESS_THRESHOLD. */
+    kBUTTON_EventDoubleClick,      /*!< Double click with short time, the duration of key down and key up is less than
+                                      #BUTTON_SHORT_PRESS_THRESHOLD.      And the duration of the two button actions does not
+                                      exceed #BUTTON_DOUBLE_CLICK_THRESHOLD. */
+    kBUTTON_EventShortPress,       /*!< Press with short time, the duration of key down and key up is no less than
+                                      #BUTTON_SHORT_PRESS_THRESHOLD       and less than #BUTTON_LONG_PRESS_THRESHOLD. */
+    kBUTTON_EventLongPress,        /*!< Press with long time, the duration of key down and key up is no less than
+                                      #BUTTON_LONG_PRESS_THRESHOLD. */
     kBUTTON_EventError,            /*!< Error event if the button actions cannot be identified. */
 } button_event_t;
 
+/*! @brief The callback message struct of button */
 typedef struct _button_callback_message_struct
 {
     button_event_t event;
 } button_callback_message_t;
 
-typedef button_status_t (*button_callback_t)(void* buttonHandle, button_callback_message_t *message, void *callbackParam);
+/*! @brief The callback function of button */
+typedef button_status_t (*button_callback_t)(void *buttonHandle,
+                                             button_callback_message_t *message,
+                                             void *callbackParam);
 
+/*! @brief The button gpio config structure */
 typedef struct _button_gpio_config
 {
-    uint8_t   port;               /*!< GPIO Port */
-    uint8_t   pin;                /*!< GPIO Pin */
-    uint8_t   pinStateDefault;    /*!< GPIO Pin voltage when button is not pressed (0 - low level, 1 - high level)*/
+    uint8_t port;            /*!< GPIO Port */
+    uint8_t pin;             /*!< GPIO Pin */
+    uint8_t pinStateDefault; /*!< GPIO Pin voltage when button is not pressed (0 - low level, 1 - high level)*/
 } button_gpio_config_t;
 
+/*! @brief The button config structure */
 typedef struct _button_config
 {
     button_gpio_config_t gpio;
@@ -75,10 +105,16 @@ extern "C" {
 #endif /* __cplusplus */
 
 /*!
+ * @name Initialization
+ * @{
+ */
+
+/*!
  * @brief Initializes a button with the button handle and the user configuration structure.
  *
  * This function configures the button with user-defined settings. The user can configure the configuration
- * structure. The parameter buttonHandle is a pointer to point to a memory space of size #BUTTON_HANDLE_SIZE allocated by the caller.
+ * structure. The parameter buttonHandle is a pointer to point to a memory space of size #BUTTON_HANDLE_SIZE allocated
+ * by the caller.
  *
  * Example below shows how to use this API to configure the button.
  *  @code
@@ -93,10 +129,18 @@ extern "C" {
  *
  * @param buttonHandle Pointer to point to a memory space of size #BUTTON_HANDLE_SIZE allocated by the caller.
  * @param buttonConfig Pointer to user-defined configuration structure.
+ * @return Indicates whether initialization was successful or not.
  * @retval kStatus_BUTTON_Error An error occurred.
  * @retval kStatus_BUTTON_Success Button initialization succeed.
  */
-button_status_t BUTTON_Init(button_handle_t buttonHandle, button_config_t* buttonConfig);
+button_status_t BUTTON_Init(button_handle_t buttonHandle, button_config_t *buttonConfig);
+
+/*! @}*/
+
+/*!
+ * @name Install callback
+ * @{
+ */
 
 /*!
  * @brief Installs a callback and callback parameter.
@@ -110,9 +154,12 @@ button_status_t BUTTON_Init(button_handle_t buttonHandle, button_config_t* butto
  * @param buttonHandle Button handle pointer.
  * @param callback The callback function.
  * @param callbackParam The parameter of the callback function.
+ * @return Indicates whether callback install was successful or not.
  * @retval kStatus_BUTTON_Success Successfully install the callback.
  */
-button_status_t BUTTON_InstallCallback(button_handle_t buttonHandle, button_callback_t callback, void* callbackParam);
+button_status_t BUTTON_InstallCallback(button_handle_t buttonHandle, button_callback_t callback, void *callbackParam);
+
+/*! @}*/
 
 /*!
  * @brief Deinitializes a button instance.
@@ -159,5 +206,7 @@ button_status_t BUTTON_ExitLowpower(button_handle_t buttonHandle);
 #if defined(__cplusplus)
 }
 #endif /* __cplusplus */
+
+/*! @}*/
 
 #endif /* __BUTTON_H__ */

@@ -1267,8 +1267,10 @@ usb_status_t USB_DeviceEhciInit(uint8_t controllerId,
         /* Device is connected to a host. */
         message.code = kUSB_DeviceNotifyAttach;
         USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
-
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+     (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
         USB_PHYDCD_Control(ehciState->dcdHandle, kUSB_DevicePHYDcdRun, NULL);
+#endif
 
     }
 #endif
@@ -1288,7 +1290,10 @@ usb_status_t USB_DeviceEhciInit(uint8_t controllerId,
         /* Device is connected to a host. */
         message.code = kUSB_DeviceNotifyAttach;
         USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+     (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
         USB_HSDCD_Control(ehciState->dcdHandle, kUSB_DeviceHSDcdRun, NULL);
+#endif
 
     }
 #endif

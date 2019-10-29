@@ -49,7 +49,7 @@ static volatile uint8_t ufiIng;
 static volatile usb_status_t ufiStatus;
 
 #if (defined(USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE)) ||\
-    (defined(DATA_SECTION_IS_CACHEABLE) && (DATA_SECTION_IS_CACHEABLE))
+    ((!(defined(FSL_FEATURE_HAS_NO_NONCACHEABLE_SECTION) && FSL_FEATURE_HAS_NO_NONCACHEABLE_SECTION)) && defined(FSL_FEATURE_L1ICACHE_LINESIZE_BYTE))
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_UsbTransferBuffer[FF_MAX_SS];
 #else
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_UsbTransferBuffer[20];
@@ -162,7 +162,7 @@ DRESULT USB_HostMsdReadDisk(BYTE pdrv, BYTE *buff, DWORD sector, UINT count)
     uint32_t sectorCount;
     uint32_t sectorIndex;
 #if (defined(USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE)) ||\
-    (defined(DATA_SECTION_IS_CACHEABLE) && (DATA_SECTION_IS_CACHEABLE))
+    ((!(defined(FSL_FEATURE_HAS_NO_NONCACHEABLE_SECTION) && FSL_FEATURE_HAS_NO_NONCACHEABLE_SECTION)) && defined(FSL_FEATURE_L1ICACHE_LINESIZE_BYTE))
     uint32_t index;
 #endif
 
@@ -172,7 +172,7 @@ DRESULT USB_HostMsdReadDisk(BYTE pdrv, BYTE *buff, DWORD sector, UINT count)
     }
 
 #if (defined(USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE)) ||\
-    (defined(DATA_SECTION_IS_CACHEABLE) && (DATA_SECTION_IS_CACHEABLE))
+    ((!(defined(FSL_FEATURE_HAS_NO_NONCACHEABLE_SECTION) && FSL_FEATURE_HAS_NO_NONCACHEABLE_SECTION)) && defined(FSL_FEATURE_L1ICACHE_LINESIZE_BYTE))
     transferBuf = s_UsbTransferBuffer;
     sectorCount = 1;
     for (index = 0; index < count; ++index)
@@ -215,7 +215,7 @@ DRESULT USB_HostMsdReadDisk(BYTE pdrv, BYTE *buff, DWORD sector, UINT count)
             }
         }
 #if (defined(USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE)) ||\
-    (defined(DATA_SECTION_IS_CACHEABLE) && (DATA_SECTION_IS_CACHEABLE))
+    ((!(defined(FSL_FEATURE_HAS_NO_NONCACHEABLE_SECTION) && FSL_FEATURE_HAS_NO_NONCACHEABLE_SECTION)) && defined(FSL_FEATURE_L1ICACHE_LINESIZE_BYTE))
         memcpy(buff + index * s_FatfsSectorSize, s_UsbTransferBuffer, s_FatfsSectorSize);
     }
 #endif
@@ -231,7 +231,7 @@ DRESULT USB_HostMsdWriteDisk(BYTE pdrv, const BYTE *buff, DWORD sector, UINT cou
     uint32_t sectorCount;
     uint32_t sectorIndex;
 #if (defined(USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE)) ||\
-    (defined(DATA_SECTION_IS_CACHEABLE) && (DATA_SECTION_IS_CACHEABLE))
+    ((!(defined(FSL_FEATURE_HAS_NO_NONCACHEABLE_SECTION) && FSL_FEATURE_HAS_NO_NONCACHEABLE_SECTION)) && defined(FSL_FEATURE_L1ICACHE_LINESIZE_BYTE))
     uint32_t index;
 #endif
 
@@ -241,7 +241,7 @@ DRESULT USB_HostMsdWriteDisk(BYTE pdrv, const BYTE *buff, DWORD sector, UINT cou
     }
 
 #if (defined(USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE)) ||\
-    (defined(DATA_SECTION_IS_CACHEABLE) && (DATA_SECTION_IS_CACHEABLE))
+    ((!(defined(FSL_FEATURE_HAS_NO_NONCACHEABLE_SECTION) && FSL_FEATURE_HAS_NO_NONCACHEABLE_SECTION)) && defined(FSL_FEATURE_L1ICACHE_LINESIZE_BYTE))
     transferBuf = (const uint8_t *)s_UsbTransferBuffer;
     sectorCount = 1;
     for (index = 0; index < count; ++index)
@@ -285,7 +285,7 @@ DRESULT USB_HostMsdWriteDisk(BYTE pdrv, const BYTE *buff, DWORD sector, UINT cou
             }
         }
 #if (defined(USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE)) ||\
-    (defined(DATA_SECTION_IS_CACHEABLE) && (DATA_SECTION_IS_CACHEABLE))
+    ((!(defined(FSL_FEATURE_HAS_NO_NONCACHEABLE_SECTION) && FSL_FEATURE_HAS_NO_NONCACHEABLE_SECTION)) && defined(FSL_FEATURE_L1ICACHE_LINESIZE_BYTE))
     }
 #endif
     return fatfs_code;

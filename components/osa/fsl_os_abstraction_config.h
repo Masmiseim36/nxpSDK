@@ -1,12 +1,11 @@
 /*!
-* Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
-*
-* ile
-*
-* SPDX-License-Identifier: BSD-3-Clause
-*/
-
+ * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2018 NXP
+ *
+ * ile
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 #ifndef _FSL_OS_ABSTRACTION_CONFIG_H_
 #define _FSL_OS_ABSTRACTION_CONFIG_H_
@@ -20,11 +19,11 @@
 #endif
 
 #ifndef gTaskMultipleInstancesManagement_c
-#define gTaskMultipleInstancesManagement_c  0
+#define gTaskMultipleInstancesManagement_c 0
 #endif
 
 #ifndef osCustomStartup
-#define osCustomStartup 0
+#define osCustomStartup 1
 #endif
 
 #endif /* _FSL_OS_ABSTRACTION_CONFIG_H_ */

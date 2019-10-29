@@ -1286,11 +1286,11 @@ status_t SF_SetFCCMacroChannel(sf_drv_data_t *drvData, const uint32_t fhMask[],
 
     /* Send the command. */
     SF_PackFrame(sfSpiCmdSetFCCMacroCh, SF_SET_FCC_CH_INF_PLD_B, NULL, (uint8_t*)spiSndBuf);
-    for (i = 0U; i < SF_MACRO_CH_CFG_B; i += 4U) {
-        spiSndBuf[SF_INF_PAYLOAD_OF + i] = (uint8_t)(fhMask[i] >> 24U);
-        spiSndBuf[SF_INF_PAYLOAD_OF + i + 1U] = (uint8_t)(fhMask[i] >> 16U);
-        spiSndBuf[SF_INF_PAYLOAD_OF + i + 2U] = (uint8_t)(fhMask[i] >> 8U);
-        spiSndBuf[SF_INF_PAYLOAD_OF + i + 3U] = (uint8_t)(fhMask[i]);
+    for (i = 0U; i < (SF_MACRO_CH_CFG_B / 4); i++) {
+        spiSndBuf[SF_INF_PAYLOAD_OF + 4*i] = (uint8_t)(fhMask[i] >> 24U);
+        spiSndBuf[SF_INF_PAYLOAD_OF + 4*i + 1U] = (uint8_t)(fhMask[i] >> 16U);
+        spiSndBuf[SF_INF_PAYLOAD_OF + 4*i + 2U] = (uint8_t)(fhMask[i] >> 8U);
+        spiSndBuf[SF_INF_PAYLOAD_OF + 4*i + 3U] = (uint8_t)(fhMask[i]);
     }
     spiSndBuf[SF_DEFAULT_CHANNEL_OF] = defaultChNo;
 

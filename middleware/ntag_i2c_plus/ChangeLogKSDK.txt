@@ -1,0 +1,10 @@
+/*!
+@page middleware_log Middleware Change Log
+ 
+@section ntag_i2c_plus NTAG I2C plus library 
+  The current version is 1.0.0.
+ 
+  - 1.0.0
+    - initial release.
+ 
+*/

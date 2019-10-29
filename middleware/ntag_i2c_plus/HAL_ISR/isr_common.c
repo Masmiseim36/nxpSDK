@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, NXP Semiconductor
+ * Copyright 2016 NXP
  * All rights reserved.
  *
  * 
@@ -57,7 +57,7 @@ void HAL_ISR_RegisterCallback(ISR_SOURCE_T source, ISR_MODE_T mode, ISR_HANDLER_
     ISR_SEMAPHORE_INIT(callback->sema);
 
     /* setup interrupt mode */
-#if defined(__LPC8XX__) || defined(__LPC11UXX__) || defined(__LPC11U37H__) ||defined(CPU_LPC55S69JBD100_cm33_core0)
+#if defined(__LPC8XX__) || defined(__LPC11UXX__) || defined(__LPC11U37H__) ||defined(CPU_LPC55S69JBD100_cm33_core0) ||defined(CPU_LPC5528JBD100)
     setupMode(EXT_INT_FD_PORT, callback->pin_func, callback->mode, callback->handler);
 #else
     setupMode(EXT_INT_FD_PORT, callback->pin_func, callback->mode);
@@ -87,7 +87,7 @@ BOOL HAL_ISR_SleepWithTimeout(ISR_SOURCE_T source, uint32_t timeout_ms)
     if (ISR_SEMAPHORE_IS_GIVEN(callback->sema))
     {
         /* reinit mode - necessary for edge sensitive on LPCxxx */
-#if defined(__LPC8XX__) || defined(__LPC11UXX__) || defined(__LPC11U37H__) ||defined(CPU_LPC55S69JBD100_cm33_core0)
+#if defined(__LPC8XX__) || defined(__LPC11UXX__) || defined(__LPC11U37H__) ||defined(CPU_LPC55S69JBD100_cm33_core0) || defined(CPU_LPC5528JBD100)
         setupMode(EXT_INT_FD_PORT, callback->pin_func, callback->mode, callback->handler);
 #else
         setupMode(EXT_INT_FD_PORT, callback->pin_func, callback->mode);

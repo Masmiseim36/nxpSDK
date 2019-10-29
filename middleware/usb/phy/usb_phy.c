@@ -158,7 +158,7 @@ uint32_t USB_EhciLowPowerPhyInit(uint8_t controllerId, uint32_t freq, usb_phy_co
     usbPhyBase->CTRL |= USBPHY_CTRL_SET_ENUTMILEVEL3_MASK; /* support external FS Hub with LS device connected. */
     /* PWD register provides overall control of the PHY power state */
     usbPhyBase->PWD = 0U;
-#if (defined USBPHY_ANACTRL_PFD_CLKGATE_MASK)
+#if ((!(defined FSL_FEATURE_SOC_CCM_ANALOG_COUNT)) && (!(defined FSL_FEATURE_SOC_ANATOP_COUNT)) && (!(defined FSL_FEATURE_USBHSD_USB_RAM)))
     /* now the 480MHz USB clock is up, then configure fractional divider after PLL with PFD
      * pfd clock = 480MHz*18/N, where N=18~35
      * Please note that USB1PFDCLK has to be less than 180MHz for RUN or HSRUN mode

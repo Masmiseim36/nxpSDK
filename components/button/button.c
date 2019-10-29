@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2019 NXP
  * All rights reserved.
  *
  *
@@ -10,6 +10,7 @@
 #include "gpio.h"
 #include "timer_manager.h"
 
+#include "button.h"
 /*
  * The OSA_USED macro can only be defined when the OSA component is used.
  * If the source code of the OSA component does not exist, the OSA_USED cannot be defined.
@@ -25,8 +26,6 @@
 #endif
 #endif
 
-#include "button.h"
-
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -34,26 +33,41 @@
 #define BUTTON_ENTER_CRITICAL() uint32_t regPrimask = DisableGlobalIRQ();
 #define BUTTON_EXIT_CRITICAL() EnableGlobalIRQ(regPrimask);
 
-typedef struct _button
+typedef enum _button_press_status
 {
-    uint64_t pushPeriodCount;
-    uint64_t pushPeriodCountLast;
-    button_callback_t callback;
-    void *callbackParam;
-    uint8_t port;
-    uint8_t pin;
-    uint8_t pinStateDefault;
-    volatile uint8_t pressed;
-    volatile uint8_t pending;
-} button_t;
+    kStatus_BUTTON_PressIdle          = 0, /*!< Idle */
+    kStatus_BUTTON_Pressed            = 1, /*!< Pressed */
+    kStatus_BUTTON_PressDoubleStart   = 2, /*!< Start double click */
+    kStatus_BUTTON_PressDoublePressed = 3, /*!< Second press for double click */
+} button_press_status_t;
 
 typedef struct _button_state
 {
-    uint64_t periodCount;
-    uint8_t timerHandleBuffer[TIMER_HANDLE_SIZE];
-    timer_handle_t timerHandle;
-    uint8_t gpioHandleBuffer[HAL_GPIO_HANDLE_SIZE];
-    hal_gpio_handle_t gpioHandle;
+    struct _button_state *next;
+    button_callback_t callback;
+    void *callbackParam;
+    uint8_t gpioHandle[HAL_GPIO_HANDLE_SIZE];
+    volatile uint32_t pushPeriodCount;
+    volatile uint32_t pushPeriodCountLast;
+    struct
+    {
+        uint16_t port : 3U;
+        uint16_t reserved : 1U;
+        uint16_t pin : 5U;
+        uint16_t pinStateDefault : 1U;
+        uint16_t reserved2 : 6U;
+    } config;
+    struct
+    {
+        volatile uint8_t pressed;
+        volatile uint8_t msg;
+    } state;
+} button_state_t;
+
+typedef struct _button_list
+{
+    volatile uint32_t periodCount;
+    uint8_t timerHandle[TIMER_HANDLE_SIZE];
 #if defined(OSA_USED)
 
 #if (defined(BUTTON_USE_COMMON_TASK) && (BUTTON_USE_COMMON_TASK > 0U))
@@ -64,10 +78,8 @@ typedef struct _button_state
 #endif
 
 #endif
-    button_t button;
-    button_callback_message_t msg;
-    uint8_t newMessage;
-} button_state_t;
+    button_state_t *button;
+} button_list_t;
 
 /*******************************************************************************
  * Prototypes
@@ -79,7 +91,11 @@ static void BUTTON_Task(void *param);
  * Variables
  ******************************************************************************/
 
+static button_list_t s_buttonList;
+
+#if defined(OSA_USED)
 extern const uint8_t gUseRtos_c;
+#endif
 
 #if (defined(BUTTON_USE_COMMON_TASK) && (BUTTON_USE_COMMON_TASK > 0U))
 
@@ -96,75 +112,70 @@ OSA_TASK_DEFINE(BUTTON_Task, BUTTON_TASK_PRIORITY, 1, BUTTON_TASK_STACK_SIZE, fa
 
 static void BUTTON_NotificationUpdate(button_state_t *buttonState, button_event_t event)
 {
-    buttonState->button.pending = 0;
-    buttonState->newMessage = 1;
-    buttonState->msg.event = event;
+    buttonState->state.pressed = (uint8_t)kStatus_BUTTON_PressIdle;
+    buttonState->state.msg     = (uint8_t)event;
 #if defined(OSA_USED)
 
 #if (defined(BUTTON_USE_COMMON_TASK) && (BUTTON_USE_COMMON_TASK > 0U))
-    buttonState->commonTaskMsg.callback = BUTTON_Task;
-    buttonState->commonTaskMsg.callbackParam = buttonState;
-    COMMON_TASK_post_message(&buttonState->commonTaskMsg);
+    s_buttonList.commonTaskMsg.callback      = BUTTON_Task;
+    s_buttonList.commonTaskMsg.callbackParam = buttonState;
+    COMMON_TASK_post_message(&s_buttonList.commonTaskMsg);
 #else
-    (void)OSA_EventSet((osa_event_handle_t)buttonState->eventHandle, BUTTON_EVENT_BUTTON);
+    (void)OSA_EventSet((osa_event_handle_t)s_buttonList.eventHandle, BUTTON_EVENT_BUTTON);
 #endif
 
 #else
-    BUTTON_Task(buttonState);
+    BUTTON_Task(&s_buttonList);
 #endif
 }
 
 static void BUTTON_Event(void *param)
 {
     button_state_t *buttonState = (button_state_t *)param;
-    uint8_t pinState = 0U;
+    uint8_t pinState            = 0U;
 
-    HAL_GpioGetInput(buttonState->gpioHandle, &pinState);
+    assert(param);
 
+    (void)HAL_GpioGetInput(buttonState->gpioHandle, &pinState);
+    pinState = (0U != pinState) ? 1U : 0U;
+    if (((uint8_t)kStatus_BUTTON_PressIdle == buttonState->state.pressed) ||
+        ((uint8_t)kStatus_BUTTON_PressDoubleStart == buttonState->state.pressed))
     {
-        pinState = (pinState) ? 1U : 0U;
-        if (!buttonState->button.pressed)
+        if (buttonState->config.pinStateDefault != pinState)
         {
-            if (buttonState->button.pinStateDefault != pinState)
-            {
-                buttonState->button.pressed = 1;
-                buttonState->button.pushPeriodCount = buttonState->periodCount;
-            }
+            buttonState->state.pressed++;
+            buttonState->pushPeriodCount = s_buttonList.periodCount;
         }
-        else
+    }
+    else
+    {
+        if (buttonState->config.pinStateDefault == pinState)
         {
-            if (buttonState->button.pinStateDefault == pinState)
+            if ((BUTTON_DOUBLE_CLICK_THRESHOLD + buttonState->pushPeriodCountLast) >= buttonState->pushPeriodCount)
             {
-                buttonState->button.pressed = 0;
-
-                if ((BUTTON_BOUBLE_CLICK_THRESHOLD + buttonState->button.pushPeriodCountLast) >=
-                    buttonState->button.pushPeriodCount)
+                if ((s_buttonList.periodCount - buttonState->pushPeriodCount) < BUTTON_SHORT_PRESS_THRESHOLD)
                 {
-                    if ((buttonState->periodCount - buttonState->button.pushPeriodCount) < BUTTON_SHORT_PRESS_THRESHOLD)
-                    {
-                        BUTTON_NotificationUpdate(buttonState, kBUTTON_EventDoubleClick);
-                    }
-                    else
-                    {
-                        BUTTON_NotificationUpdate(buttonState, kBUTTON_EventError);
-                    }
+                    BUTTON_NotificationUpdate(buttonState, kBUTTON_EventDoubleClick);
                 }
                 else
                 {
-                    if ((buttonState->periodCount - buttonState->button.pushPeriodCount) < BUTTON_SHORT_PRESS_THRESHOLD)
-                    {
-                        buttonState->button.pushPeriodCountLast = buttonState->periodCount;
-                        buttonState->button.pending = 1;
-                    }
-                    else if ((buttonState->periodCount - buttonState->button.pushPeriodCount) <
-                             BUTTON_LONG_PRESS_THRESHOLD)
-                    {
-                        BUTTON_NotificationUpdate(buttonState, kBUTTON_EventShortPress);
-                    }
-                    else
-                    {
-                        BUTTON_NotificationUpdate(buttonState, kBUTTON_EventLongPress);
-                    }
+                    BUTTON_NotificationUpdate(buttonState, kBUTTON_EventError);
+                }
+            }
+            else
+            {
+                if ((s_buttonList.periodCount - buttonState->pushPeriodCount) < BUTTON_SHORT_PRESS_THRESHOLD)
+                {
+                    buttonState->pushPeriodCountLast = s_buttonList.periodCount;
+                    buttonState->state.pressed       = (uint8_t)kStatus_BUTTON_PressDoubleStart;
+                }
+                else if ((s_buttonList.periodCount - buttonState->pushPeriodCount) < BUTTON_LONG_PRESS_THRESHOLD)
+                {
+                    BUTTON_NotificationUpdate(buttonState, kBUTTON_EventShortPress);
+                }
+                else
+                {
+                    BUTTON_NotificationUpdate(buttonState, kBUTTON_EventLongPress);
                 }
             }
         }
@@ -173,166 +184,160 @@ static void BUTTON_Event(void *param)
 
 static void BUTTON_Task(void *param)
 {
-    button_state_t *buttonState = (button_state_t *)param;
-    if (NULL != buttonState)
+#if defined(OSA_USED)
+
+#if (defined(BUTTON_USE_COMMON_TASK) && (BUTTON_USE_COMMON_TASK > 0U))
+#else
+    osa_event_flags_t ev = 0;
+
+    do
     {
-#if defined(OSA_USED)
-
-#if (defined(BUTTON_USE_COMMON_TASK) && (BUTTON_USE_COMMON_TASK > 0U))
-#else
-        osa_event_flags_t ev = 0;
-
-        do
+        if (KOSA_StatusSuccess == OSA_EventWait((osa_event_handle_t)s_buttonList.eventHandle, osaEventFlagsAll_c, false,
+                                                osaWaitForever_c, &ev))
         {
-            if (KOSA_StatusSuccess == OSA_EventWait((osa_event_handle_t)buttonState->eventHandle, osaEventFlagsAll_c,
-                                                    false, osaWaitForever_c, &ev))
-            {
 #endif
 
 #endif
-        if (buttonState->newMessage)
+    button_state_t *buttonState = s_buttonList.button;
+
+    BUTTON_ENTER_CRITICAL();
+    while (buttonState != NULL)
+    {
+        if (0U != buttonState->state.msg)
         {
-            buttonState->button.callback(buttonState, &buttonState->msg, buttonState->button.callbackParam);
-            buttonState->newMessage = 0;
+            button_callback_message_t msg;
+            BUTTON_EXIT_CRITICAL();
+            msg.event = (button_event_t)buttonState->state.msg;
+            (void)buttonState->callback(buttonState, &msg, buttonState->callbackParam);
+            buttonState->state.msg = 0U;
+            regPrimask             = DisableGlobalIRQ();
         }
+        buttonState = buttonState->next;
+    }
+    BUTTON_EXIT_CRITICAL();
 #if defined(OSA_USED)
 
 #if (defined(BUTTON_USE_COMMON_TASK) && (BUTTON_USE_COMMON_TASK > 0U))
 #else
-            }
-        } while (gUseRtos_c);
+        }
+    } while (gUseRtos_c);
 #endif
 
 #endif
-    }
 }
 
 static void BUTTON_TimerEvent(void *param)
 {
-    button_state_t *buttonState = (button_state_t *)param;
-    if (NULL != buttonState)
-    {
-        buttonState->periodCount += BUTTON_TIMER_INTERVAL;
+    button_state_t *buttonState;
 
+    s_buttonList.periodCount += BUTTON_TIMER_INTERVAL;
+
+    BUTTON_ENTER_CRITICAL();
+    buttonState = s_buttonList.button;
+    while (buttonState != NULL)
+    {
         /*
          * The code block is used to indentify the button event is one click or double click.
          * If the flag pending is set and the button is not pressed, check the user activity is timeout or not.
          * If is times out, notify the upper layer it is kBUTTON_EventOneClick.
          * Otherwise, check the status next time.
          */
-        if ((buttonState->button.pending) && (!buttonState->button.pressed))
+        if ((uint8_t)kStatus_BUTTON_PressDoubleStart == buttonState->state.pressed)
         {
-            /* If the flag pending and pressed are set, enter the critical section. */
-            BUTTON_ENTER_CRITICAL();
-            /* Check the flag pending and pressed again to make sure the flag is not changed. */
-            if ((buttonState->button.pending) && (!buttonState->button.pressed))
+            if ((BUTTON_DOUBLE_CLICK_THRESHOLD + buttonState->pushPeriodCountLast) < s_buttonList.periodCount)
             {
-                if ((BUTTON_BOUBLE_CLICK_THRESHOLD + buttonState->button.pushPeriodCountLast) <
-                    buttonState->periodCount)
-                {
-                    BUTTON_NotificationUpdate(buttonState, kBUTTON_EventOneClick);
-                    buttonState->button.pushPeriodCountLast = 0;
-                }
+                BUTTON_NotificationUpdate(buttonState, kBUTTON_EventOneClick);
+                buttonState->pushPeriodCountLast = 0U;
             }
-            BUTTON_EXIT_CRITICAL();
         }
+        buttonState = buttonState->next;
     }
+    BUTTON_EXIT_CRITICAL();
 }
 
 button_status_t BUTTON_Init(button_handle_t buttonHandle, button_config_t *buttonConfig)
 {
     hal_gpio_pin_config_t controlPin;
     button_state_t *buttonState;
+    uint32_t regPrimask;
+    hal_gpio_status_t gpioStatus;
+    timer_status_t timerStatus;
 
-    assert(buttonHandle);
-    assert(buttonConfig);
-
-    if (BUTTON_HANDLE_SIZE < sizeof(button_state_t))
-    {
-        return kStatus_BUTTON_Error;
-    }
+    assert(buttonHandle && buttonConfig);
+    assert(BUTTON_HANDLE_SIZE >= sizeof(button_state_t));
 
     buttonState = (button_state_t *)buttonHandle;
 
-    for (int i = 0; i < sizeof(button_state_t); i++)
-    {
-        *(((uint8_t *)buttonState) + i) = 0x00;
-    }
+    (void)memset(buttonHandle, 0, sizeof(button_state_t));
 
+    regPrimask = DisableGlobalIRQ();
+
+    if (NULL == s_buttonList.button)
+    {
 #if defined(OSA_USED)
 
 #if (defined(BUTTON_USE_COMMON_TASK) && (BUTTON_USE_COMMON_TASK > 0U))
-    COMMON_TASK_init();
+        COMMON_TASK_init();
 #else
-    if (KOSA_StatusSuccess != OSA_EventCreate((osa_event_handle_t)buttonState->eventHandle, true))
-    {
-        return kStatus_BUTTON_Error;
-    }
+        if (KOSA_StatusSuccess != OSA_EventCreate((osa_event_handle_t)s_buttonList.eventHandle, true))
+        {
+            return kStatus_BUTTON_Error;
+        }
 
-    if (KOSA_StatusSuccess !=
-        OSA_TaskCreate((osa_task_handle_t)buttonState->taskHandle, OSA_TASK(BUTTON_Task), buttonState))
-    {
-        return kStatus_BUTTON_Error;
-    }
+        if (KOSA_StatusSuccess !=
+            OSA_TaskCreate((osa_task_handle_t)s_buttonList.taskHandle, OSA_TASK(BUTTON_Task), &s_buttonList))
+        {
+            return kStatus_BUTTON_Error;
+        }
 #endif
 
 #endif
-
-    buttonState->timerHandle = (timer_handle_t)&buttonState->timerHandleBuffer[0];
-    if (kStatus_TimerSuccess != TM_Open(buttonState->timerHandle))
-    {
-        return kStatus_BUTTON_LackSource;
+        timerStatus = TM_Open((timer_handle_t)s_buttonList.timerHandle);
+        assert(kStatus_TimerSuccess == timerStatus);
+        (void)timerStatus;
+        timerStatus = TM_InstallCallback(s_buttonList.timerHandle, BUTTON_TimerEvent, &s_buttonList);
+        assert(kStatus_TimerSuccess == timerStatus);
+        (void)timerStatus;
+        timerStatus = TM_Start(s_buttonList.timerHandle, kTimerModeIntervalTimer, BUTTON_TIMER_INTERVAL);
+        assert(kStatus_TimerSuccess == timerStatus);
+        (void)timerStatus;
     }
+    else
+    {
+        buttonState->next = s_buttonList.button;
+    }
+    s_buttonList.button = buttonState;
+    EnableGlobalIRQ(regPrimask);
 
-    controlPin.port = buttonConfig->gpio.port;
-    controlPin.pin = buttonConfig->gpio.pin;
+    controlPin.port      = buttonConfig->gpio.port;
+    controlPin.pin       = buttonConfig->gpio.pin;
     controlPin.direction = kHAL_GpioDirectionIn;
-    buttonState->gpioHandle = (hal_gpio_handle_t)&buttonState->gpioHandleBuffer[0];
-    if (kStatus_HAL_GpioSuccess != HAL_GpioInit(buttonState->gpioHandle, &controlPin))
-    {
-        return kStatus_BUTTON_Error;
-    }
+    gpioStatus           = HAL_GpioInit(buttonState->gpioHandle, &controlPin);
+    assert(kStatus_HAL_GpioSuccess == gpioStatus);
+    (void)gpioStatus;
 
-    buttonState->button.port = buttonConfig->gpio.port;
-    buttonState->button.pin = buttonConfig->gpio.pin;
-    buttonState->button.pinStateDefault = (buttonConfig->gpio.pinStateDefault) ? 1U : 0U;
-    buttonState->button.pushPeriodCount = 0U;
-    buttonState->button.pressed = 0U;
-    buttonState->button.pending = 0U;
-    buttonState->button.pushPeriodCountLast = 0U;
+    buttonState->config.port            = buttonConfig->gpio.port;
+    buttonState->config.pin             = buttonConfig->gpio.pin;
+    buttonState->config.pinStateDefault = (0U != buttonConfig->gpio.pinStateDefault) ? 1U : 0U;
 
-    if (kStatus_HAL_GpioSuccess != HAL_GpioSetTriggerMode(buttonState->gpioHandle, kHAL_GpioInterruptEitherEdge))
-    {
-        return kStatus_BUTTON_Error;
-    }
+    gpioStatus = HAL_GpioSetTriggerMode(buttonState->gpioHandle, kHAL_GpioInterruptEitherEdge);
+    assert(kStatus_HAL_GpioSuccess == gpioStatus);
+    (void)gpioStatus;
+
     return kStatus_BUTTON_Success;
 }
 
 button_status_t BUTTON_InstallCallback(button_handle_t buttonHandle, button_callback_t callback, void *callbackParam)
 {
     button_state_t *buttonState;
-
     assert(buttonHandle);
 
     buttonState = (button_state_t *)buttonHandle;
 
-    buttonState->button.callback = callback;
-    buttonState->button.callbackParam = callbackParam;
+    buttonState->callback      = callback;
+    buttonState->callbackParam = callbackParam;
 
-    if (kStatus_HAL_GpioSuccess != HAL_GpioInstallCallback(buttonState->gpioHandle, BUTTON_Event, buttonState))
-    {
-        return kStatus_BUTTON_Error;
-    }
-
-    if (kStatus_TimerSuccess != TM_InstallCallback(buttonState->timerHandle, BUTTON_TimerEvent, buttonState))
-    {
-        return kStatus_BUTTON_Error;
-    }
-
-    if (kStatus_TimerSuccess != TM_Start(buttonState->timerHandle, kTimerModeIntervalTimer, BUTTON_TIMER_INTERVAL))
-    {
-        return kStatus_BUTTON_Error;
-    }
+    (void)HAL_GpioInstallCallback(buttonState->gpioHandle, BUTTON_Event, buttonState);
 
     return kStatus_BUTTON_Success;
 }
@@ -340,26 +345,48 @@ button_status_t BUTTON_InstallCallback(button_handle_t buttonHandle, button_call
 button_status_t BUTTON_Deinit(button_handle_t buttonHandle)
 {
     button_state_t *buttonState;
+    button_state_t *buttonStatePre;
+    uint32_t regPrimask;
 
     assert(buttonHandle);
 
     buttonState = (button_state_t *)buttonHandle;
+
+    regPrimask     = DisableGlobalIRQ();
+    buttonStatePre = s_buttonList.button;
+    if (buttonStatePre != buttonState)
+    {
+        while ((NULL != buttonStatePre) && (buttonStatePre->next != buttonState))
+        {
+            buttonStatePre = buttonStatePre->next;
+        }
+        if (NULL != buttonStatePre)
+        {
+            buttonStatePre->next = buttonState->next;
+        }
+    }
+    else
+    {
+        s_buttonList.button = buttonState->next;
+    }
+
+    if (NULL == s_buttonList.button)
+    {
 #if defined(OSA_USED)
 
 #if (defined(BUTTON_USE_COMMON_TASK) && (BUTTON_USE_COMMON_TASK > 0U))
 
 #else
-    OSA_TaskDestroy((osa_task_handle_t)buttonState->taskHandle);
-    OSA_EventDestroy((osa_event_handle_t)buttonState->eventHandle);
+        (void)OSA_TaskDestroy((osa_task_handle_t)s_buttonList.taskHandle);
+        (void)OSA_EventDestroy((osa_event_handle_t)s_buttonList.eventHandle);
 #endif
 
 #endif
-    TM_Close(buttonState->timerHandle);
+        (void)TM_Close(s_buttonList.timerHandle);
+    }
+    EnableGlobalIRQ(regPrimask);
 
-    HAL_GpioDeinit(buttonState->gpioHandle);
-
-    buttonState->gpioHandle = NULL;
-    buttonState->newMessage = 0;
+    (void)HAL_GpioDeinit(buttonState->gpioHandle);
 
     return kStatus_BUTTON_Success;
 }

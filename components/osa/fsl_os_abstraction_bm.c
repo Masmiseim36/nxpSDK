@@ -1,13 +1,13 @@
 /*!
-* Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
-*
-* ile
-*
-* This is the source file for the OS Abstraction layer for MQXLite.
-*
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
+ *
+ * ile
+ *
+ * This is the source file for the OS Abstraction layer for MQXLite.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -52,11 +52,15 @@
 /*! @brief State structure for bm osa manager. */
 typedef struct _osa_state
 {
-    list_t taskList;
+#if (defined(FSL_OSA_BM_TASK_ENABLE) && (FSL_OSA_BM_TASK_ENABLE > 0U))
+    list_label_t taskList;
     task_handler_t curTaskHandler;
+#endif
     volatile uint32_t interruptDisableCount;
     volatile uint32_t tickCounter;
+#if (defined(FSL_OSA_BM_TASK_ENABLE) && (FSL_OSA_BM_TASK_ENABLE > 0U))
     uint8_t mainTaskHandle[OSA_TASK_HANDLE_SIZE];
+#endif
 } osa_state_t;
 
 /*! *********************************************************************************
@@ -64,8 +68,10 @@ typedef struct _osa_state
 * Private prototypes
 *************************************************************************************
 ********************************************************************************** */
-extern void main_task(void *argument);
-void task_init(void);
+__WEAK_FUNC void main_task(osa_task_param_t arg);
+__WEAK_FUNC void main_task(osa_task_param_t arg)
+{
+}
 __WEAK_FUNC void OSA_TimeInit(void);
 __WEAK_FUNC uint32_t OSA_TimeDiff(uint32_t time_start, uint32_t time_end);
 osa_status_t OSA_Init(void);
@@ -98,11 +104,11 @@ static osa_state_t s_osaState;
  *END**************************************************************************/
 void OSA_EnableIRQGlobal(void)
 {
-    if (s_osaState.interruptDisableCount > 0)
+    if (s_osaState.interruptDisableCount > 0U)
     {
         s_osaState.interruptDisableCount--;
 
-        if (s_osaState.interruptDisableCount == 0)
+        if (s_osaState.interruptDisableCount == 0U)
         {
             __enable_irq();
         }
@@ -131,11 +137,12 @@ void OSA_DisableIRQGlobal(void)
  * Description   : This function is used to get current active task's handler.
  *
  *END**************************************************************************/
-
+#if (defined(FSL_OSA_BM_TASK_ENABLE) && (FSL_OSA_BM_TASK_ENABLE > 0U))
 osa_task_handle_t OSA_TaskGetCurrentHandle(void)
 {
     return (osa_task_handle_t)s_osaState.curTaskHandler;
 }
+#endif
 /*FUNCTION**********************************************************************
  *
  * Function Name : OSA_EXT_TaskYield
@@ -143,22 +150,26 @@ osa_task_handle_t OSA_TaskGetCurrentHandle(void)
  * itself to the tail of ready list.
  *
  *END**************************************************************************/
+#if (defined(FSL_OSA_BM_TASK_ENABLE) && (FSL_OSA_BM_TASK_ENABLE > 0U))
 osa_status_t OSA_TaskYield(void)
 {
     return KOSA_StatusSuccess;
 }
+#endif
 /*FUNCTION**********************************************************************
  *
  * Function Name : OSA_TaskGetPriority
  * Description   : This function returns task's priority by task handler.
  *
  *END**************************************************************************/
-
+#if (defined(FSL_OSA_BM_TASK_ENABLE) && (FSL_OSA_BM_TASK_ENABLE > 0U))
 osa_task_priority_t OSA_TaskGetPriority(osa_task_handle_t taskHandle)
 {
+    assert(taskHandle);
     task_handler_t handler = (task_handler_t)taskHandle;
     return handler->priority;
 }
+#endif
 
 /*FUNCTION**********************************************************************
  *
@@ -166,21 +177,24 @@ osa_task_priority_t OSA_TaskGetPriority(osa_task_handle_t taskHandle)
  * Description   : This function sets task's priority by task handler.
  *
  *END**************************************************************************/
+#if (defined(FSL_OSA_BM_TASK_ENABLE) && (FSL_OSA_BM_TASK_ENABLE > 0U))
 osa_status_t OSA_TaskSetPriority(osa_task_handle_t taskHandle, osa_task_priority_t taskPriority)
 {
+    assert(taskHandle);
     list_element_handle_t list_element;
-    task_control_block_t *tcb = NULL;
+    task_control_block_t *tcb         = NULL;
     task_control_block_t *ptaskStruct = (task_control_block_t *)taskHandle;
 
     ptaskStruct->priority = taskPriority;
+    (void)LIST_RemoveElement(&ptaskStruct->link);
     /* Insert task control block into the task list. */
     list_element = LIST_GetHead(&s_osaState.taskList);
     while (list_element != NULL)
     {
-        tcb = (task_control_block_t *)list_element;
+        tcb = (task_control_block_t *)(void *)list_element;
         if (ptaskStruct->priority <= tcb->priority)
         {
-            LIST_AddPrevElement(&tcb->link, &ptaskStruct->link);
+            (void)LIST_AddPrevElement(&tcb->link, &ptaskStruct->link);
             break;
         }
         list_element = LIST_GetNext(list_element);
@@ -188,12 +202,13 @@ osa_status_t OSA_TaskSetPriority(osa_task_handle_t taskHandle, osa_task_priority
     if (ptaskStruct->priority > tcb->priority)
     {
         OSA_InterruptDisable();
-        LIST_AddTail(&s_osaState.taskList, (list_element_handle_t) & (ptaskStruct->link));
+        (void)LIST_AddTail(&s_osaState.taskList, (list_element_handle_t)(void *)&(ptaskStruct->link));
         OSA_InterruptEnable();
     }
 
     return KOSA_StatusSuccess;
 }
+#endif
 
 /*FUNCTION**********************************************************************
  *
@@ -202,45 +217,53 @@ osa_status_t OSA_TaskSetPriority(osa_task_handle_t taskHandle, osa_task_priority
  * Param[in]     :  threadDef  - Definition of the thread.
  *                  task_param - Parameter to pass to the new thread.
  * Return Thread handle of the new thread, or NULL if failed.
-  *
+ *
  *END**************************************************************************/
+#if (defined(FSL_OSA_BM_TASK_ENABLE) && (FSL_OSA_BM_TASK_ENABLE > 0U))
 osa_status_t OSA_TaskCreate(osa_task_handle_t taskHandle, osa_task_def_t *thread_def, osa_task_param_t task_param)
 {
     list_element_handle_t list_element;
-    task_control_block_t *tcb = NULL;
+    list_status_t listStatus;
+    task_control_block_t *tcb         = NULL;
     task_control_block_t *ptaskStruct = (task_control_block_t *)taskHandle;
     assert(sizeof(task_control_block_t) == OSA_TASK_HANDLE_SIZE);
     assert(taskHandle);
-    if (taskHandle == NULL)
-    {
-        return KOSA_StatusError;
-    }
 
-    ptaskStruct->p_func = thread_def->pthread;
+    ptaskStruct->p_func    = thread_def->pthread;
     ptaskStruct->haveToRun = true;
-    ptaskStruct->priority = PRIORITY_OSA_TO_RTOS(thread_def->tpriority);
-    ptaskStruct->param = task_param;
+    ptaskStruct->priority  = (uint16_t)PRIORITY_OSA_TO_RTOS(thread_def->tpriority);
+    ptaskStruct->param     = task_param;
 
     list_element = LIST_GetHead(&s_osaState.taskList);
     while (list_element != NULL)
     {
-        tcb = (task_control_block_t *)list_element;
+        tcb = (task_control_block_t *)(void *)list_element;
         if (ptaskStruct->priority <= tcb->priority)
         {
-            LIST_AddPrevElement(&tcb->link, &ptaskStruct->link);
+            OSA_InterruptDisable();
+            listStatus = LIST_AddPrevElement(&tcb->link, &ptaskStruct->link);
+            if (listStatus == (list_status_t)kLIST_DuplicateError)
+            {
+                OSA_InterruptEnable();
+                return KOSA_StatusError;
+            }
+            OSA_InterruptEnable();
             break;
         }
         list_element = LIST_GetNext(list_element);
     }
+
     if ((NULL == tcb) || (ptaskStruct->priority > tcb->priority))
     {
         OSA_InterruptDisable();
-        LIST_AddTail(&s_osaState.taskList, (list_element_handle_t) & (ptaskStruct->link));
+        listStatus = LIST_AddTail(&s_osaState.taskList, (list_element_handle_t)(void *)&(ptaskStruct->link));
+        assert(listStatus == kLIST_Ok);
         OSA_InterruptEnable();
     }
 
     return KOSA_StatusSuccess;
 }
+#endif
 
 /*FUNCTION**********************************************************************
  *
@@ -250,18 +273,17 @@ osa_status_t OSA_TaskCreate(osa_task_handle_t taskHandle, osa_task_def_t *thread
  * Return KOSA_StatusSuccess if the task is destroied, otherwise return KOSA_StatusError.
  *
  *END**************************************************************************/
+#if (defined(FSL_OSA_BM_TASK_ENABLE) && (FSL_OSA_BM_TASK_ENABLE > 0U))
 osa_status_t OSA_TaskDestroy(osa_task_handle_t taskHandle)
 {
-    if (taskHandle == NULL)
-    {
-        return KOSA_StatusError;
-    }
+    assert(taskHandle);
 
     OSA_InterruptDisable();
-    LIST_RemoveElement(taskHandle);
+    (void)LIST_RemoveElement(taskHandle);
     OSA_InterruptEnable();
     return KOSA_StatusSuccess;
 }
+#endif
 
 /*FUNCTION**********************************************************************
  *
@@ -275,8 +297,8 @@ __WEAK_FUNC void OSA_TimeInit(void)
 {
 #if (FSL_OSA_BM_TIMER_CONFIG != FSL_OSA_BM_TIMER_NONE)
     SysTick->CTRL &= ~(SysTick_CTRL_ENABLE_Msk);
-    SysTick->LOAD = SystemCoreClock / 1000 - 1;
-    SysTick->VAL = 0;
+    SysTick->LOAD = (uint32_t)(SystemCoreClock / 1000U - 1U);
+    SysTick->VAL  = 0;
     SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk | SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_CLKSOURCE_Msk;
 #endif
 }
@@ -296,7 +318,7 @@ __WEAK_FUNC uint32_t OSA_TimeDiff(uint32_t time_start, uint32_t time_end)
     }
     else
     {
-        return FSL_OSA_TIME_RANGE - time_start + time_end + 1;
+        return FSL_OSA_TIME_RANGE - time_start + time_end + 1UL;
     }
 }
 
@@ -308,6 +330,7 @@ __WEAK_FUNC uint32_t OSA_TimeDiff(uint32_t time_start, uint32_t time_end)
  *END**************************************************************************/
 void OSA_TimeDelay(uint32_t millisec)
 {
+#if (FSL_OSA_BM_TIMER_CONFIG != FSL_OSA_BM_TIMER_NONE)
     uint32_t currTime, timeStart;
 
     timeStart = OSA_TimeGetMsec();
@@ -316,6 +339,7 @@ void OSA_TimeDelay(uint32_t millisec)
     {
         currTime = OSA_TimeGetMsec(); /* Get current time stamp */
     } while (millisec >= OSA_TimeDiff(timeStart, currTime));
+#endif
 }
 /*FUNCTION**********************************************************************
  *
@@ -336,7 +360,7 @@ __WEAK_FUNC uint32_t OSA_TimeGetMsec(void)
  * Function Name : OSA_SemaphoreCreate
  * Description   : This function is used to create a semaphore.
  * Return         : Semaphore handle of the new semaphore, or NULL if failed.
-  *
+ *
  *END**************************************************************************/
 
 osa_status_t OSA_SemaphoreCreate(osa_semaphore_handle_t semaphoreHandle, uint32_t initValue)
@@ -344,14 +368,11 @@ osa_status_t OSA_SemaphoreCreate(osa_semaphore_handle_t semaphoreHandle, uint32_
     semaphore_t *pSemStruct = (semaphore_t *)semaphoreHandle;
     assert(sizeof(semaphore_t) == OSA_SEM_HANDLE_SIZE);
     assert(semaphoreHandle);
-    if (semaphoreHandle == NULL)
-    {
-        return KOSA_StatusError;
-    }
-    pSemStruct->semCount = initValue;
-    pSemStruct->isWaiting = false;
+
+    pSemStruct->semCount   = (uint8_t)initValue;
+    pSemStruct->isWaiting  = false;
     pSemStruct->time_start = 0u;
-    pSemStruct->timeout = 0u;
+    pSemStruct->timeout    = 0u;
     return KOSA_StatusSuccess;
 }
 /*FUNCTION**********************************************************************
@@ -364,6 +385,11 @@ osa_status_t OSA_SemaphoreCreate(osa_semaphore_handle_t semaphoreHandle, uint32_
 osa_status_t OSA_SemaphoreDestroy(osa_semaphore_handle_t semaphoreHandle)
 {
     assert(semaphoreHandle);
+    semaphore_t *pSemStruct = (semaphore_t *)semaphoreHandle;
+
+    /* Destroy semaphoreHandle's data */
+    memset(pSemStruct, 0, sizeof(semaphore_t));
+
     return KOSA_StatusSuccess;
 }
 /*FUNCTION**********************************************************************
@@ -388,7 +414,7 @@ osa_status_t OSA_SemaphoreWait(osa_semaphore_handle_t semaphoreHandle, uint32_t 
 #endif
     /* Check the sem count first. Deal with timeout only if not already set */
 
-    if (pSemStruct->semCount)
+    if (pSemStruct->semCount != 0U)
     {
         OSA_DisableIRQGlobal();
         pSemStruct->semCount--;
@@ -398,13 +424,13 @@ osa_status_t OSA_SemaphoreWait(osa_semaphore_handle_t semaphoreHandle, uint32_t 
     }
     else
     {
-        if (0 == millisec)
+        if (0U == millisec)
         {
             /* If timeout is 0 and semaphore is not available, return kStatus_OSA_Timeout. */
             return KOSA_StatusTimeout;
         }
 #if (FSL_OSA_BM_TIMER_CONFIG != FSL_OSA_BM_TIMER_NONE)
-        else if (pSemStruct->isWaiting)
+        else if (pSemStruct->isWaiting != false)
         {
             /* Check for timeout */
             currentTime = OSA_TimeGetMsec();
@@ -423,9 +449,13 @@ osa_status_t OSA_SemaphoreWait(osa_semaphore_handle_t semaphoreHandle, uint32_t 
             pSemStruct->isWaiting = true;
             OSA_EnableIRQGlobal();
             pSemStruct->time_start = OSA_TimeGetMsec();
-            pSemStruct->timeout = millisec;
+            pSemStruct->timeout    = millisec;
         }
 #endif
+        else
+        {
+            ;
+        }
     }
 
     return KOSA_StatusIdle;
@@ -445,7 +475,7 @@ osa_status_t OSA_SemaphorePost(osa_semaphore_handle_t semaphoreHandle)
     assert(semaphoreHandle);
 
     /* The max value is 0xFF */
-    if (0xFF == pSemStruct->semCount)
+    if (0xFFU == pSemStruct->semCount)
     {
         return KOSA_StatusError;
     }
@@ -468,14 +498,11 @@ osa_status_t OSA_MutexCreate(osa_mutex_handle_t mutexHandle)
     mutex_t *pMutexStruct = (mutex_t *)mutexHandle;
     assert(sizeof(mutex_t) == OSA_MUTEX_HANDLE_SIZE);
     assert(mutexHandle);
-    if (mutexHandle == NULL)
-    {
-        return KOSA_StatusError;
-    }
-    pMutexStruct->isLocked = false;
-    pMutexStruct->isWaiting = false;
+
+    pMutexStruct->isLocked   = false;
+    pMutexStruct->isWaiting  = false;
     pMutexStruct->time_start = 0u;
-    pMutexStruct->timeout = 0u;
+    pMutexStruct->timeout    = 0u;
     return KOSA_StatusSuccess;
 }
 
@@ -502,20 +529,20 @@ osa_status_t OSA_MutexLock(osa_mutex_handle_t mutexHandle, uint32_t millisec)
     {
         /* Get the lock and return success */
         OSA_DisableIRQGlobal();
-        pMutexStruct->isLocked = true;
+        pMutexStruct->isLocked  = true;
         pMutexStruct->isWaiting = false;
         OSA_EnableIRQGlobal();
         return KOSA_StatusSuccess;
     }
     else
     {
-        if (0 == millisec)
+        if (0U == millisec)
         {
             /* If timeout is 0 and mutex is not available, return kStatus_OSA_Timeout. */
             return KOSA_StatusTimeout;
         }
 #if (FSL_OSA_BM_TIMER_CONFIG != FSL_OSA_BM_TIMER_NONE)
-        else if (pMutexStruct->isWaiting)
+        else if (pMutexStruct->isWaiting != false)
         {
             /* Check for timeout */
             currentTime = OSA_TimeGetMsec();
@@ -534,9 +561,13 @@ osa_status_t OSA_MutexLock(osa_mutex_handle_t mutexHandle, uint32_t millisec)
             pMutexStruct->isWaiting = true;
             OSA_EnableIRQGlobal();
             pMutexStruct->time_start = OSA_TimeGetMsec();
-            pMutexStruct->timeout = millisec;
+            pMutexStruct->timeout    = millisec;
         }
 #endif
+        else
+        {
+            ;
+        }
     }
 
     return KOSA_StatusIdle;
@@ -567,6 +598,11 @@ osa_status_t OSA_MutexUnlock(osa_mutex_handle_t mutexHandle)
 osa_status_t OSA_MutexDestroy(osa_mutex_handle_t mutexHandle)
 {
     assert(mutexHandle);
+    mutex_t *pMutexStruct = (mutex_t *)mutexHandle;
+
+    /* Destory mutexHandle's data */
+    memset(pMutexStruct, 0, sizeof(mutex_t));
+
     return KOSA_StatusSuccess;
 }
 /*FUNCTION**********************************************************************
@@ -581,16 +617,15 @@ osa_status_t OSA_EventCreate(osa_event_handle_t eventHandle, uint8_t autoClear)
     event_t *pEventStruct = eventHandle;
     assert(sizeof(event_t) == OSA_EVENT_HANDLE_SIZE);
     assert(eventHandle);
-    if (eventHandle == NULL)
-    {
-        return KOSA_StatusError;
-    }
-    pEventStruct->isWaiting = false;
-    pEventStruct->flags = 0;
-    pEventStruct->autoClear = autoClear;
+
+    pEventStruct->isWaiting  = false;
+    pEventStruct->flags      = 0;
+    pEventStruct->autoClear  = (bool)autoClear;
     pEventStruct->time_start = 0u;
-    pEventStruct->timeout = 0u;
+    pEventStruct->timeout    = 0u;
+#if (defined(FSL_OSA_BM_TASK_ENABLE) && (FSL_OSA_BM_TASK_ENABLE > 0U))
     pEventStruct->waitingTask = NULL;
+#endif
     return KOSA_StatusSuccess;
 }
 /*FUNCTION**********************************************************************
@@ -607,10 +642,12 @@ osa_status_t OSA_EventSet(osa_event_handle_t eventHandle, osa_event_flags_t flag
     /* Set flags ensuring atomic operation */
     OSA_DisableIRQGlobal();
     pEventStruct->flags |= flagsToSet;
+#if (defined(FSL_OSA_BM_TASK_ENABLE) && (FSL_OSA_BM_TASK_ENABLE > 0U))
     if (pEventStruct->waitingTask != NULL)
     {
         pEventStruct->waitingTask->haveToRun = true;
     }
+#endif
     OSA_EnableIRQGlobal();
 
     return KOSA_StatusSuccess;
@@ -629,12 +666,14 @@ osa_status_t OSA_EventClear(osa_event_handle_t eventHandle, osa_event_flags_t fl
     /* Clear flags ensuring atomic operation */
     OSA_DisableIRQGlobal();
     pEventStruct->flags &= ~flagsToClear;
-    if (pEventStruct->flags != 0x00)
+    if (pEventStruct->flags != 0x00U)
     {
+#if (defined(FSL_OSA_BM_TASK_ENABLE) && (FSL_OSA_BM_TASK_ENABLE > 0U))
         if (pEventStruct->waitingTask != NULL)
         {
             pEventStruct->waitingTask->haveToRun = true;
         }
+#endif
     }
     OSA_EnableIRQGlobal();
 
@@ -674,14 +713,16 @@ osa_status_t OSA_EventWait(osa_event_handle_t eventHandle,
     pEventStruct = (event_t *)eventHandle;
 
     OSA_DisableIRQGlobal();
+#if (defined(FSL_OSA_BM_TASK_ENABLE) && (FSL_OSA_BM_TASK_ENABLE > 0U))
 #if (TASK_MAX_NUM > 0)
     pEventStruct->waitingTask = OSA_TaskGetCurrentHandle();
+#endif
 #endif
 
     *pSetFlags = pEventStruct->flags & flagsToWait;
 
     /* Check the event flag first, if does not meet wait condition, deal with timeout. */
-    if ((((!waitAll) && (*pSetFlags))) || (*pSetFlags == flagsToWait))
+    if (((waitAll == 0U) && (*pSetFlags != 0U)) || (*pSetFlags == flagsToWait))
     {
         pEventStruct->isWaiting = false;
         if (true == pEventStruct->autoClear)
@@ -692,33 +733,35 @@ osa_status_t OSA_EventWait(osa_event_handle_t eventHandle,
     }
     else
     {
-        if (0 == millisec)
+        if (0U == millisec)
         {
             /* If timeout is 0 and wait condition is not met, return kStatus_OSA_Timeout. */
             retVal = KOSA_StatusTimeout;
         }
 #if (FSL_OSA_BM_TIMER_CONFIG != FSL_OSA_BM_TIMER_NONE)
-        else if (pEventStruct->isWaiting)
+        else if (pEventStruct->isWaiting != false)
         {
             /* Check for timeout */
             currentTime = OSA_TimeGetMsec();
             if (pEventStruct->timeout < OSA_TimeDiff(pEventStruct->time_start, currentTime))
             {
                 pEventStruct->isWaiting = false;
-                retVal = KOSA_StatusTimeout;
+                retVal                  = KOSA_StatusTimeout;
             }
         }
         else if (millisec != osaWaitForever_c) /* If no timeout, don't start the timer */
         {
             /* Start the timeout counter */
-            pEventStruct->isWaiting = true;
+            pEventStruct->isWaiting  = true;
             pEventStruct->time_start = OSA_TimeGetMsec();
-            pEventStruct->timeout = millisec;
+            pEventStruct->timeout    = millisec;
         }
 #endif
         else
         {
+#if (defined(FSL_OSA_BM_TASK_ENABLE) && (FSL_OSA_BM_TASK_ENABLE > 0U))
             pEventStruct->waitingTask->haveToRun = false;
+#endif
         }
     }
 
@@ -736,6 +779,12 @@ osa_status_t OSA_EventWait(osa_event_handle_t eventHandle,
  *END**************************************************************************/
 osa_status_t OSA_EventDestroy(osa_event_handle_t eventHandle)
 {
+    assert(eventHandle);
+    event_t *pEventStruct = (event_t *)eventHandle;
+
+    /* Destroy eventHandle's data */
+    memset(pEventStruct, 0, sizeof(event_t));
+
     return KOSA_StatusSuccess;
 }
 
@@ -747,21 +796,18 @@ osa_status_t OSA_EventDestroy(osa_event_handle_t eventHandle)
  * return NULL.
  *
  *END**************************************************************************/
-osa_status_t OSA_MsgQCreate(osa_msgq_handle_t msgqHandle, uint32_t msgNo)
+osa_status_t OSA_MsgQCreate(osa_msgq_handle_t msgqHandle, uint32_t msgNo, uint32_t msgSize)
 {
     msg_queue_t *pMsgQStruct = msgqHandle;
     assert(sizeof(msg_queue_t) == OSA_MSGQ_HANDLE_SIZE);
     assert(msgqHandle);
-    if (msgqHandle == NULL)
-    {
-        return KOSA_StatusError;
-    }
 
-    pMsgQStruct->max = msgNo;
-    pMsgQStruct->number = 0;
-    pMsgQStruct->head = 0;
-    pMsgQStruct->tail = 0;
-    pMsgQStruct->queueMem = (uint32_t *)((uint32_t)msgqHandle + sizeof(msg_queue_t));
+    pMsgQStruct->max      = (uint16_t)msgNo;
+    pMsgQStruct->number   = 0;
+    pMsgQStruct->head     = 0;
+    pMsgQStruct->tail     = 0;
+    pMsgQStruct->size     = msgSize;
+    pMsgQStruct->queueMem = (uint8_t *)((uint8_t *)msgqHandle + sizeof(msg_queue_t));
     return KOSA_StatusSuccess;
 }
 
@@ -769,20 +815,23 @@ osa_status_t OSA_MsgQCreate(osa_msgq_handle_t msgqHandle, uint32_t msgNo)
  *
  * Function Name : OSA_MsgQPut
  * Description   : This function is used to put a message to a message queue.
-* Return         : KOSA_StatusSuccess if the message is put successfully, otherwise return KOSA_StatusError.
+ * Return         : KOSA_StatusSuccess if the message is put successfully, otherwise return KOSA_StatusError.
  *
  *END**************************************************************************/
-osa_status_t OSA_MsgQPut(osa_msgq_handle_t msgqHandle, void *pMessage)
+osa_status_t OSA_MsgQPut(osa_msgq_handle_t msgqHandle, osa_msg_handle_t pMessage)
 {
     assert(msgqHandle);
     msg_queue_t *pQueue;
     osa_status_t status = KOSA_StatusSuccess;
-    if (msgqHandle == NULL)
+
+    uint8_t *pMsgArray;
+
+    pQueue = (msg_queue_t *)msgqHandle;
+
+    if (NULL == pQueue->queueMem)
     {
         return KOSA_StatusError;
     }
-
-    pQueue = (msg_queue_t *)msgqHandle;
 
     OSA_DisableIRQGlobal();
     if (pQueue->number >= pQueue->max)
@@ -791,19 +840,25 @@ osa_status_t OSA_MsgQPut(osa_msgq_handle_t msgqHandle, void *pMessage)
     }
     else
     {
-        pQueue->queueMem[pQueue->tail] = *((uint32_t *)pMessage);
-        pQueue->number++;
-        pQueue->tail++;
+        pMsgArray = &pQueue->queueMem[pQueue->tail];
+        for (uint32_t i = 0; i < pQueue->size; i++)
+        {
+            pMsgArray[i] = *((uint8_t *)pMessage + i);
+        }
 
-        if (pQueue->tail >= pQueue->max)
+        pQueue->number++;
+        pQueue->tail += pQueue->size;
+
+        if (pQueue->tail >= (pQueue->max * pQueue->size))
         {
             pQueue->tail = 0;
         }
-
-        if (pQueue->waitingTask)
+#if (defined(FSL_OSA_BM_TASK_ENABLE) && (FSL_OSA_BM_TASK_ENABLE > 0U))
+        if (pQueue->waitingTask != NULL)
         {
-            pQueue->waitingTask->haveToRun = 1;
+            pQueue->waitingTask->haveToRun = true;
         }
+#endif
     }
     OSA_EnableIRQGlobal();
     return status;
@@ -821,32 +876,43 @@ osa_status_t OSA_MsgQPut(osa_msgq_handle_t msgqHandle, void *pMessage)
  * 'timeout', returns KOSA_StatusError if any errors occur during waiting.
  *
  *END**************************************************************************/
-osa_status_t OSA_MsgQGet(osa_msgq_handle_t msgqHandle, void *pMessage, uint32_t millisec)
+osa_status_t OSA_MsgQGet(osa_msgq_handle_t msgqHandle, osa_msg_handle_t pMessage, uint32_t millisec)
 {
     assert(msgqHandle);
     msg_queue_t *pQueue;
     osa_status_t status = KOSA_StatusSuccess;
-    if (msgqHandle == NULL)
-    {
-        return KOSA_StatusError;
-    }
+
+    uint8_t *pMsgArray;
 
 #if (FSL_OSA_BM_TIMER_CONFIG != FSL_OSA_BM_TIMER_NONE)
     uint32_t currentTime;
 #endif
 
     pQueue = (msg_queue_t *)msgqHandle;
+
+    if (NULL == pQueue->queueMem)
+    {
+        return KOSA_StatusError;
+    }
+
+#if (defined(FSL_OSA_BM_TASK_ENABLE) && (FSL_OSA_BM_TASK_ENABLE > 0U))
     pQueue->waitingTask = OSA_TaskGetCurrentHandle();
+#endif
 
     OSA_DisableIRQGlobal();
-    if (pQueue->number)
+    if (pQueue->number != 0U)
     {
-        *((uint32_t *)pMessage) = pQueue->queueMem[pQueue->head];
-        pQueue->number--;
-        pQueue->head++;
-        pQueue->isWaiting = 0;
+        pMsgArray = (uint8_t *)pMessage;
+        for (uint32_t i = 0; i < pQueue->size; i++)
+        {
+            pMsgArray[i] = pQueue->queueMem[pQueue->head + i];
+        }
 
-        if (pQueue->head >= pQueue->max)
+        pQueue->number--;
+        pQueue->head += pQueue->size;
+        pQueue->isWaiting = false;
+
+        if (pQueue->head >= (pQueue->max * pQueue->size))
         {
             pQueue->head = 0;
         }
@@ -854,34 +920,38 @@ osa_status_t OSA_MsgQGet(osa_msgq_handle_t msgqHandle, void *pMessage, uint32_t 
     }
     else
     {
-        if (0 == millisec)
+        if (0U == millisec)
         {
             /* If timeout is 0 and wait condition is not met, return kStatus_OSA_Timeout. */
             status = KOSA_StatusTimeout;
         }
 #if (FSL_OSA_BM_TIMER_CONFIG != FSL_OSA_BM_TIMER_NONE)
-        else if (pQueue->isWaiting)
+        else if (pQueue->isWaiting != false)
         {
             /* Check for timeout */
+            status      = KOSA_StatusIdle; /* Before a timeout, the status should be idle. */
             currentTime = OSA_TimeGetMsec();
             if (pQueue->timeout < OSA_TimeDiff(pQueue->time_start, currentTime))
             {
-                pQueue->isWaiting = 0;
-                status = KOSA_StatusTimeout;
+                pQueue->isWaiting = false;
+                status            = KOSA_StatusTimeout;
             }
         }
         else if (millisec != osaWaitForever_c) /* If no timeout, don't start the timer */
         {
             /* Start the timeout counter */
-            pQueue->isWaiting = 1;
+            pQueue->isWaiting  = true;
             pQueue->time_start = OSA_TimeGetMsec();
-            pQueue->timeout = millisec;
+            pQueue->timeout    = millisec;
+            status             = KOSA_StatusIdle;
         }
 #endif
         else
         {
-            pQueue->waitingTask->haveToRun = 0;
-            status = KOSA_StatusTimeout;
+#if (defined(FSL_OSA_BM_TASK_ENABLE) && (FSL_OSA_BM_TASK_ENABLE > 0U))
+            pQueue->waitingTask->haveToRun = false;
+#endif
+            status = KOSA_StatusIdle;
         }
     }
     OSA_EnableIRQGlobal();
@@ -899,22 +969,13 @@ osa_status_t OSA_MsgQGet(osa_msgq_handle_t msgqHandle, void *pMessage, uint32_t 
 osa_status_t OSA_MsgQDestroy(osa_msgq_handle_t msgqHandle)
 {
     assert(msgqHandle);
-    msg_queue_t *pQueue;
-    osa_status_t status = KOSA_StatusSuccess;
-    if (msgqHandle == NULL)
-    {
-        return KOSA_StatusError;
-    }
+    msg_queue_t *pQueue = (msg_queue_t *)msgqHandle;
 
-    pQueue = (msg_queue_t *)msgqHandle;
+    /* Destory msgqHandle's data */
+    /* OSA_MsgQGet() & OSA_MsgQPut() will check queueMem, if NULL will return an error. */
+    memset(pQueue, 0, sizeof(msg_queue_t));
 
-    if (pQueue->waitingTask)
-    {
-        pQueue->waitingTask->haveToRun = 1;
-        pQueue->waitingTask = NULL;
-    }
-
-    return status;
+    return KOSA_StatusSuccess;
 }
 
 /*FUNCTION**********************************************************************
@@ -950,7 +1011,7 @@ void OSA_InstallIntHandler(uint32_t IRQNumber, void (*handler)(void))
     _Pragma("diag_suppress = Pm138")
 #endif
 #if defined(ENABLE_RAM_VECTOR_TABLE)
-        InstallIRQHandler((IRQn_Type)IRQNumber, (uint32_t)handler);
+        (void) InstallIRQHandler((IRQn_Type)IRQNumber, (uint32_t) * (uint32_t *)&handler);
 #endif /* ENABLE_RAM_VECTOR_TABLE. */
 #if defined(__IAR_SYSTEMS_ICC__)
     _Pragma("diag_remark = PM138")
@@ -963,17 +1024,17 @@ void OSA_InstallIntHandler(uint32_t IRQNumber, void (*handler)(void))
 *************************************************************************************
 ********************************************************************************** */
 #if (osCustomStartup == 0)
-OSA_TASK_DEFINE(main_task, gMainThreadPriority_c, 1, gMainThreadStackSize_c, 0);
+
+static OSA_TASK_DEFINE(main_task, gMainThreadPriority_c, 1, gMainThreadStackSize_c, 0);
 
 int main(void)
 {
     extern void BOARD_InitHardware(void);
-
-    OSA_Init();
+    (void)OSA_Init();
     /* Initialize MCU clock */
     BOARD_InitHardware();
     OSA_TimeInit();
-    OSA_TaskCreate((osa_task_handle_t)s_osaState.mainTaskHandle, OSA_TASK(main_task), NULL);
+    (void)OSA_TaskCreate((osa_task_handle_t)s_osaState.mainTaskHandle, OSA_TASK(main_task), NULL);
     OSA_Start();
 
     return 0;
@@ -988,11 +1049,13 @@ int main(void)
  * are initialized successfully, otherwise return kStatus_OSA_Error.
  *
  *END**************************************************************************/
+#if (defined(FSL_OSA_BM_TASK_ENABLE) && (FSL_OSA_BM_TASK_ENABLE > 0U))
 osa_status_t OSA_Init(void)
 {
     LIST_Init((&s_osaState.taskList), 0);
     return KOSA_StatusSuccess;
 }
+#endif
 
 /*FUNCTION**********************************************************************
  *
@@ -1000,6 +1063,7 @@ osa_status_t OSA_Init(void)
  * Description   : This function is used to start RTOS scheduler.
  *
  *END**************************************************************************/
+#if (defined(FSL_OSA_BM_TASK_ENABLE) && (FSL_OSA_BM_TASK_ENABLE > 0U))
 void OSA_Start(void)
 {
     list_element_handle_t list_element;
@@ -1010,11 +1074,11 @@ void OSA_Start(void)
         list_element = LIST_GetHead(&s_osaState.taskList);
         while (list_element != NULL)
         {
-            tcb = (task_control_block_t *)list_element;
+            tcb                       = (task_control_block_t *)(void *)list_element;
             s_osaState.curTaskHandler = (osa_task_handle_t)tcb;
-            if (tcb->haveToRun)
+            if (tcb->haveToRun != false)
             {
-                if (tcb->p_func)
+                if (tcb->p_func != NULL)
                 {
                     tcb->p_func(tcb->param);
                 }
@@ -1023,6 +1087,7 @@ void OSA_Start(void)
         }
     }
 }
+#endif
 
 /*FUNCTION**********************************************************************
  *
@@ -1031,6 +1096,7 @@ void OSA_Start(void)
  *
  *END**************************************************************************/
 #if (FSL_OSA_BM_TIMER_CONFIG != FSL_OSA_BM_TIMER_NONE)
+void SysTick_Handler(void);
 void SysTick_Handler(void)
 {
     s_osaState.tickCounter++;

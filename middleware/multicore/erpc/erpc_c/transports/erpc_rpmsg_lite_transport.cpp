@@ -23,7 +23,7 @@ struct rpmsg_lite_instance *RPMsgBaseTransport::s_rpmsg = NULL;
 // Code
 ////////////////////////////////////////////////////////////////////////////////
 
-int RPMsgTransport::rpmsg_read_cb(void *payload, int payload_len, unsigned long src, void *priv)
+int RPMsgTransport::rpmsg_read_cb(void *payload, unsigned int payload_len, unsigned long src, void *priv)
 {
     RPMsgTransport *transport = (RPMsgTransport *)priv;
     if (payload_len <= ERPC_DEFAULT_BUFFER_SIZE)

@@ -9,115 +9,139 @@
 #ifndef __LED_H__
 #define __LED_H__
 
+/*!
+ * @addtogroup LED
+ * @{
+ */
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+/*! @brief Definition to determine whether enable dimming. */
+#define LED_DIMMING_ENABLEMENT (0U) /*!< Enable or disable the dimming feature */
 
-#define LED_DIMMING_ENABLEMENT        (0U)   /*!< Enable or disable the dimming feature */
-
+/*! @brief Definition of LED handle size. */
 #if (defined(LED_DIMMING_ENABLEMENT) && (LED_DIMMING_ENABLEMENT > 0U))
-/* TIMER_HANDLE_SIZE + HAL_GPIO_HANDLE_SIZE * 3 + HAL_PWM_HANDLE_SIZE *3 + LED dedicated size */
-#define LED_HANDLE_SIZE               (48 + (20 * 3) + (8 * 3) + 118)
+/* HAL_GPIO_HANDLE_SIZE * 3 + HAL_PWM_HANDLE_SIZE *3 + LED dedicated size */
+#define LED_HANDLE_SIZE ((16U * 3U) + (8U * 3U) + 40U)
 #else
-/* TIMER_HANDLE_SIZE + HAL_GPIO_HANDLE_SIZE * 3 + LED dedicated size */
-#define LED_HANDLE_SIZE               (48 + (20 * 3) + 104)
+/* HAL_GPIO_HANDLE_SIZE * 3 + LED dedicated size */
+#define LED_HANDLE_SIZE ((16U * 3U) + 36U)
 #endif
 
-#define LED_TIMER_INTERVAL                                    (10U)   /*!< Unit is ms */
-#define LED_DIMMING_UPDATE_INTERVAL                           (100U)  /*!< Unit is ms */
-#define LED_FLASH_CYCLE_FOREVER                               (0xFFFFFFFFU)   /*!< Flashing forever */
+/*! @brief Definition of LED timer interval,unit is ms. */
+#define LED_TIMER_INTERVAL (100U)
 
-#define LED_BLIP_INTERVAL                                     (250)   /*!< Unit is ms */
+/*! @brief Definition of LED dimming update interval,unit is ms. */
+#define LED_DIMMING_UPDATE_INTERVAL (100U)
 
-typedef void* led_handle_t;
+/*! @brief Definition of LED flash cycle forever. */
+#define LED_FLASH_CYCLE_FOREVER (0xFFFFFFFFU)
 
+/*! @brief Definition of LED blip interval,unit is ms. */
+#define LED_BLIP_INTERVAL (250U)
+
+/*! @brief The handle of LED */
+typedef void *led_handle_t;
+
+/*! @brief The status type of LED */
 typedef enum _led_status
 {
-    kStatus_LED_Success = kStatus_Success,                                   /*!< Success */
-    kStatus_LED_Error = MAKE_STATUS(kStatusGroup_LED, 1),                    /*!< Failed */
-    kStatus_LED_InvalidParameter = MAKE_STATUS(kStatusGroup_LED, 2),         /*!< Invalid parameter*/
+    kStatus_LED_Success          = kStatus_Success,                  /*!< Success */
+    kStatus_LED_Error            = MAKE_STATUS(kStatusGroup_LED, 1), /*!< Failed */
+    kStatus_LED_InvalidParameter = MAKE_STATUS(kStatusGroup_LED, 2), /*!< Invalid parameter*/
 } led_status_t;
 
+/*! @brief The flash type of LED */
 typedef enum _led_flash_type
 {
-    kLED_FlashOneColor = 0x00U,     /*!< Fast with one color */
-    kLED_FlashColorWheel,           /*!< Fast with color wheel */
+    kLED_FlashOneColor = 0x00U, /*!< Fast with one color */
+    kLED_FlashColorWheel,       /*!< Fast with color wheel */
 } led_flash_type_t;
 
+/*! @brief The color struct of LED */
 typedef uint32_t led_color_t;
 
+/*! @brief Definition to set LED color. */
 #define LED_MAKE_COLOR(r, g, b) ((led_color_t)((((led_color_t)b) << 16) | (((led_color_t)g) << 8) | ((led_color_t)r)))
 
+/*! @brief The color type of LED */
 enum _led_color
 {
-    kLED_Black      = LED_MAKE_COLOR(0, 0, 0),            /*!< Black */
-    kLED_Red        = LED_MAKE_COLOR(255, 0, 0),          /*!< Red */
-    kLED_Green      = LED_MAKE_COLOR(0, 255, 0),          /*!< Green */
-    kLED_Yellow     = LED_MAKE_COLOR(255, 255, 0),        /*!< Yellow */
-    kLED_Blue       = LED_MAKE_COLOR(0, 0, 255),          /*!< Blue */
-    kLED_Pink       = LED_MAKE_COLOR(255, 0, 255),        /*!< Pink */
-    kLED_Aquamarine = LED_MAKE_COLOR(0, 255, 255),        /*!< Aquamarine */
-    kLED_White      = LED_MAKE_COLOR(255, 255, 255),      /*!< White */
+    kLED_Black      = LED_MAKE_COLOR(0, 0, 0),       /*!< Black */
+    kLED_Red        = LED_MAKE_COLOR(255, 0, 0),     /*!< Red */
+    kLED_Green      = LED_MAKE_COLOR(0, 255, 0),     /*!< Green */
+    kLED_Yellow     = LED_MAKE_COLOR(255, 255, 0),   /*!< Yellow */
+    kLED_Blue       = LED_MAKE_COLOR(0, 0, 255),     /*!< Blue */
+    kLED_Pink       = LED_MAKE_COLOR(255, 0, 255),   /*!< Pink */
+    kLED_Aquamarine = LED_MAKE_COLOR(0, 255, 255),   /*!< Aquamarine */
+    kLED_White      = LED_MAKE_COLOR(255, 255, 255), /*!< White */
 };
 
 #if defined(__CC_ARM)
 #pragma anon_unions
 #endif
+/*! @brief The pin config struct of LED */
 typedef struct _led_pin_config
 {
-    uint8_t   dimmingEnable;                 /*!< dimming enable, 0 - disable, 1 - enable */
+    uint8_t dimmingEnable; /*!< dimming enable, 0 - disable, 1 - enable */
     union
     {
         struct
         {
-            uint8_t   port;                  /*!< GPIO Port */
-            uint8_t   pin;                   /*!< GPIO Pin */
-            uint8_t   pinStateDefault;       /*!< GPIO Pin voltage when LED is off (0 - low level, 1 - high level)*/
+            uint8_t port;            /*!< GPIO Port */
+            uint8_t pin;             /*!< GPIO Pin */
+            uint8_t pinStateDefault; /*!< GPIO Pin voltage when LED is off (0 - low level, 1 - high level)*/
         } gpio;
         struct
         {
-            uint32_t  sourceClock;           /*!< The clock source of the PWM module */
-            uint8_t   instace;               /*!< PWM instance of the pin */
-            uint8_t   channel;               /*!< PWM channel of the pin */
-            uint8_t   pinStateDefault;       /*!< The Pin voltage when LED is off (0 - low level, 1 - high level)*/
+            uint32_t sourceClock;    /*!< The clock source of the PWM module */
+            uint8_t instance;        /*!< PWM instance of the pin */
+            uint8_t channel;         /*!< PWM channel of the pin */
+            uint8_t pinStateDefault; /*!< The Pin voltage when LED is off (0 - low level, 1 - high level)*/
         } dimming;
     };
 } led_pin_config_t;
 
+/*! @brief The pin config struct of rgb LED */
 typedef struct _led_rgb_config
 {
-    led_pin_config_t redPin;               /*!< Red pin setting */
-    led_pin_config_t greenPin;             /*!< Green pin setting */
-    led_pin_config_t bluePin;              /*!< Blue pin setting */
+    led_pin_config_t redPin;   /*!< Red pin setting */
+    led_pin_config_t greenPin; /*!< Green pin setting */
+    led_pin_config_t bluePin;  /*!< Blue pin setting */
 } led_rgb_config_t;
 
+/*! @brief The pin config struct of monochrome LED */
 typedef struct _led_monochrome_config
 {
-    led_pin_config_t monochromePin;        /*!< Monochrome pin setting */
+    led_pin_config_t monochromePin; /*!< Monochrome pin setting */
 } led_monochrome_config_t;
 
+/*! @brief The type of LED */
 typedef enum _led_type
 {
-    kLED_TypeRgb        = 0x01U,           /*!< RGB LED */
-    kLED_TypeMonochrome = 0x02U,           /*!< Monochrome LED */
+    kLED_TypeRgb        = 0x01U, /*!< RGB LED */
+    kLED_TypeMonochrome = 0x02U, /*!< Monochrome LED */
 } led_type_t;
 
+/*! @brief The config struct of LED */
 typedef struct _led_config
 {
     led_type_t type;
     union
     {
-        led_rgb_config_t        ledRgb;          /*!< RGB setting */
-        led_monochrome_config_t ledMonochrome;   /*!< Monochrome setting */
+        led_rgb_config_t ledRgb;               /*!< RGB setting */
+        led_monochrome_config_t ledMonochrome; /*!< Monochrome setting */
     };
 } led_config_t;
 
+/*! @brief The flash config struct of LED */
 typedef struct _led_flash_config
 {
-    uint32_t times;                       /*!< Flash times, LED_FLASH_CYCLE_FOREVER for forever */
-    uint16_t period;                      /*!< Flash period, unit is ms */
-    led_flash_type_t flashType;           /*!< Flash type, one color or color wheel. Refer to #led_flash_type_t */
-    uint8_t duty;                         /*!< Duty of the LED on for one period (duration = duty * period / 100). */
+    uint32_t times;             /*!< Flash times, LED_FLASH_CYCLE_FOREVER for forever */
+    uint16_t period;            /*!< Flash period, unit is ms */
+    led_flash_type_t flashType; /*!< Flash type, one color or color wheel. Refer to #led_flash_type_t */
+    uint8_t duty;               /*!< Duty of the LED on for one period (duration = duty * period / 100). */
 } led_flash_config_t;
 
 /*******************************************************************************
@@ -132,9 +156,9 @@ extern "C" {
  * @brief Initializes a LED with the LED handle and the user configuration structure.
  *
  * This function configures the LED with user-defined settings. The user can configure the configuration
- * structure. The parameter ledHandle is a pointer to point to a memory space of size #LED_HANDLE_SIZE allocated by the caller.
- * The LED supports two types LED, RGB and monochrome. Please refer to #led_type_t. These two types can be set by using #led_config_t.
- * The LED also supports LED dimming mode.
+ * structure. The parameter ledHandle is a pointer to point to a memory space of size #LED_HANDLE_SIZE allocated by the
+ * caller. The LED supports two types LED, RGB and monochrome. Please refer to #led_type_t. These two types can be set
+ * by using #led_config_t. The LED also supports LED dimming mode.
  *
  * Example below shows how to use this API to configure the LED.
  * For monochrome LED,
@@ -177,7 +201,7 @@ extern "C" {
  *   ledMonochromeConfig.type = kLED_TypeMonochrome;
  *   ledMonochromeConfig.ledMonochrome.monochromePin.dimmingEnable = 1;
  *   ledMonochromeConfig.ledMonochrome.monochromePin.dimming.sourceClock = 48000000;
- *   ledMonochromeConfig.ledMonochrome.monochromePin.dimming.instace = 0;
+ *   ledMonochromeConfig.ledMonochrome.monochromePin.dimming.instance = 0;
  *   ledMonochromeConfig.ledMonochrome.monochromePin.dimming.channel = 1;
  *   ledMonochromeConfig.ledMonochrome.monochromePin.dimming.pinStateDefault = 0;
  *   LED_Init(s_ledMonochromeHandle, &ledMonochromeConfig);
@@ -188,7 +212,7 @@ extern "C" {
  * @retval kStatus_LED_Error An error occurred.
  * @retval kStatus_LED_Success LED initialization succeed.
  */
-led_status_t LED_Init(led_handle_t ledHandle, led_config_t* ledConfig);
+led_status_t LED_Init(led_handle_t ledHandle, led_config_t *ledConfig);
 
 /*!
  * @brief Deinitializes a LED instance.
@@ -246,7 +270,7 @@ led_status_t LED_Blip(led_handle_t ledHandle);
  * @retval kStatus_LED_Error An error occurred.
  * @retval kStatus_LED_Success Successfully flash the LED.
  */
-led_status_t LED_Flash(led_handle_t ledHandle, led_flash_config_t* ledFlash);
+led_status_t LED_Flash(led_handle_t ledHandle, led_flash_config_t *ledFlash);
 
 /*!
  * @brief Adjusts the brightness of the LED.
@@ -284,5 +308,5 @@ led_status_t LED_ExitLowpower(led_handle_t ledHandle);
 #if defined(__cplusplus)
 }
 #endif
-
+/*! @}*/
 #endif /* __LED_H__ */

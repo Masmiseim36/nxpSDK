@@ -85,6 +85,14 @@ sdmmc_sdspi                name: SD Card middleware
                            version: 2.1.4                                    
                            Format: source code                               
 
+ntag_i2c_plus              Author: NXP                                       
+                           Description: NTAG I2C plus communication library  
+                           Format: source code                               
+                           License: Open Source - BSD-3-Clause               
+                           Location: middleware/ntag_i2c_plus                
+                           name: NTAG I2C plus                               
+                           version: 1.0.0                                    
+
 mmcau                      Author: Freescale                                 
                            Description: S/W library that works with the      
                            memory-mapped cryptographic acceleration unit     
@@ -690,3 +698,19 @@ littlevgl                  version: 5.3
                            name: LittlevGL                                   
                            Format: source code                               
                            URL: https://github.com/littlevgl                 
+
+aml                        Author: NXP                                       
+                           version: 1.4.2                                    
+                           name: aml                                         
+                           Format: source code & header files                
+                           License: Open Source - BSD-3-Clause               
+                           Location: middleware/aml                          
+                           Description: NXP Analog Middleware Layer          
+
+sigfox                     Author: NXP                                       
+                           version: 1.0.0                                    
+                           name: sigfox                                      
+                           Format: source code & header files                
+                           License: Open Source - BSD-3-Clause               
+                           Location: middleware/sigfox                       
+                           Description: NXP Sigfox driver                    

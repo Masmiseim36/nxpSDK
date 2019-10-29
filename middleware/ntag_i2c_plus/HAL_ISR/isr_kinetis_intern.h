@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, NXP Semiconductor
+ * Copyright 2016 NXP
  * All rights reserved.
  *
  * 
@@ -51,6 +51,12 @@
 #define EXT_INT_FD_PORT PORTA
 #define EXT_INT_FD_PIN 5U
 #endif /* FRDM_KL43Z */
+#if defined(FRDM_K32L2B)
+#define GPIO_PININT_NVIC(channel) ((IRQn_Type)(PORTA_IRQn + channel))
+#define EXT_INT_FD_GPIO GPIOA
+#define EXT_INT_FD_PORT PORTA
+#define EXT_INT_FD_PIN 5U
+#endif /* FRDM_K32L2B */
 #if defined(FRDM_K22F)
 #define GPIO_PININT_NVIC(channel) ((IRQn_Type)(PORTB_IRQn + channel))
 #define EXT_INT_FD_GPIO GPIOB

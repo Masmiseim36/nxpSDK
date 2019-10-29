@@ -36,12 +36,12 @@
 /**@brief Timer status. */
 typedef enum _timer_state
 {
-    kTimerStateFree_c = 0x00,     /**< The timer free status. */
-    kTimerStateActive_c = 0x20,   /**< The timer active status. */
-    kTimerStateReady_c = 0x40,    /**< The timer ready status. */
+    kTimerStateFree_c     = 0x00, /**< The timer free status. */
+    kTimerStateActive_c   = 0x20, /**< The timer active status. */
+    kTimerStateReady_c    = 0x40, /**< The timer ready status. */
     kTimerStateInactive_c = 0x80, /**< The timer inactive status. */
-    kTimerStateMask_c = 0xE0,     /**< The timer status mask all. */
-    kTimerModeMask_c = 0x1F,      /**< The timer mode mask all. */
+    kTimerStateMask_c     = 0xE0, /**< The timer status mask all. */
+    kTimerModeMask_c      = 0x1F, /**< The timer mode mask all. */
 } timer_state_t;
 
 /*****************************************************************************
@@ -67,7 +67,7 @@ typedef struct _timermanager_state
 {
     uint32_t mUsInTimerInterval;                   /*!< Timer intervl in microseconds */
     uint32_t previousTimeInUs;                     /*!< Previous timer count in microseconds */
-    list_t timerHead;                              /*!< Timer list head */
+    list_label_t timerHead;                        /*!< Timer list head */
     uint8_t halTimerHandle[HAL_TIMER_HANDLE_SIZE]; /*!< Timer handle buffer */
 #if defined(OSA_USED)
 #if (defined(TM_COMMON_TASK_ENABLE) && (TM_COMMON_TASK_ENABLE > 0U))
@@ -130,8 +130,8 @@ static timermanager_state_t s_timermanager = {0};
                                         (--s_timermanager.numberOfActiveTimers))
 
 /*
-* \brief Detect if the timer is a low-power timer
-*/
+ * \brief Detect if the timer is a low-power timer
+ */
 #define IsLowPowerTimer(type) ((type)&kTimerModeLowPowerTimer)
 
 #if (defined(TM_COMMON_TASK_ENABLE) && (TM_COMMON_TASK_ENABLE > 0U))
@@ -150,10 +150,10 @@ OSA_TASK_DEFINE(TimerManagerTask, TM_TASK_PRIORITY, 1, TM_TASK_STACK_SIZE, false
 ******************************************************************************
 *****************************************************************************/
 /*!-------------------------------------------------------------------------
-* \brief     Returns the timer status
-* \param[in] timerHandle - the handle of timer
-* \return    see definition of uint8_t
-*---------------------------------------------------------------------------*/
+ * \brief     Returns the timer status
+ * \param[in] timerHandle - the handle of timer
+ * \return    see definition of uint8_t
+ *---------------------------------------------------------------------------*/
 static uint8_t TimerGetTimerStatus(timer_handle_t timerHandle)
 {
     timer_handle_struct_t *timer = (timer_handle_struct_t *)timerHandle;
@@ -161,10 +161,10 @@ static uint8_t TimerGetTimerStatus(timer_handle_t timerHandle)
 }
 
 /*! -------------------------------------------------------------------------
-* \brief     Set the timer status
-* \param[in] timerHandle - the handle of timer
-* \param[in] status - the status of the timer
-*---------------------------------------------------------------------------*/
+ * \brief     Set the timer status
+ * \param[in] timerHandle - the handle of timer
+ * \param[in] status - the status of the timer
+ *---------------------------------------------------------------------------*/
 static void TimerSetTimerStatus(timer_handle_t timerHandle, uint8_t status)
 {
     timer_handle_struct_t *timer = (timer_handle_struct_t *)timerHandle;
@@ -173,10 +173,10 @@ static void TimerSetTimerStatus(timer_handle_t timerHandle, uint8_t status)
 }
 
 /*! -------------------------------------------------------------------------
-* \brief     Returns the timer type
-* \param[in] timerHandle - the handle of timer
-* \return    see definition of uint8_t
-*---------------------------------------------------------------------------*/
+ * \brief     Returns the timer type
+ * \param[in] timerHandle - the handle of timer
+ * \return    see definition of uint8_t
+ *---------------------------------------------------------------------------*/
 static uint8_t TimerGetTimerType(timer_handle_t timerHandle)
 {
     timer_handle_struct_t *timer = (timer_handle_struct_t *)timerHandle;
@@ -184,10 +184,10 @@ static uint8_t TimerGetTimerType(timer_handle_t timerHandle)
 }
 
 /*! -------------------------------------------------------------------------
-* \brief     Set the timer type
-* \param[in] timerHandle - the handle of timer
-* \param[in] type - timer type
-*---------------------------------------------------------------------------*/
+ * \brief     Set the timer type
+ * \param[in] timerHandle - the handle of timer
+ * \param[in] type - timer type
+ *---------------------------------------------------------------------------*/
 static void TimerSetTimerType(timer_handle_t timerHandle, uint8_t type)
 {
     timer_handle_struct_t *timer = (timer_handle_struct_t *)timerHandle;
@@ -196,14 +196,14 @@ static void TimerSetTimerType(timer_handle_t timerHandle, uint8_t type)
 }
 
 /*! -------------------------------------------------------------------------
-* \brief     Set the timer free
-* \param[in] timerHandle - the handle of timer
-* \param[in] type - timer type
-*---------------------------------------------------------------------------*/
+ * \brief     Set the timer free
+ * \param[in] timerHandle - the handle of timer
+ * \param[in] type - timer type
+ *---------------------------------------------------------------------------*/
 static void TimerMarkTimerFree(timer_handle_t timerHandle)
 {
     timer_handle_struct_t *timer = (timer_handle_struct_t *)timerHandle;
-    timer->tmrStatus = 0;
+    timer->tmrStatus             = 0;
 }
 
 /*! -------------------------------------------------------------------------
@@ -282,12 +282,12 @@ static void TimerManagerTask(void *param)
         uint32_t regPrimask = DisableGlobalIRQ();
         ;
         s_timermanager.mUsInTimerInterval = HAL_TimerGetMaxTimeout((hal_timer_handle_t)s_timermanager.halTimerHandle);
-        list_element = LIST_GetHead(timerHandle);
+        list_element                      = LIST_GetHead(timerHandle);
         while (list_element != NULL)
         {
             timer_handle_struct_t *th = (timer_handle_struct_t *)list_element;
-            timerType = TimerGetTimerType(th);
-            state = (timer_state_t)TimerGetTimerStatus(th);
+            timerType                 = TimerGetTimerType(th);
+            state                     = (timer_state_t)TimerGetTimerStatus(th);
             if (state == kTimerStateReady_c)
             {
                 TimerSetTimerStatus(th, kTimerStateActive_c);
@@ -353,7 +353,7 @@ static void TimerManagerTask(void *param)
             {
                 HAL_TimerDisable((hal_timer_handle_t)s_timermanager.halTimerHandle);
                 s_timermanager.timerHardwareIsRunning = false;
-                s_timermanager.mUsInTimerInterval = 0;
+                s_timermanager.mUsInTimerInterval     = 0;
             }
         }
         EnableGlobalIRQ(regPrimask);
@@ -393,30 +393,31 @@ static void TimerEnable(timer_handle_t timerHandle)
 ******************************************************************************
 *****************************************************************************/
 /*!
-* @brief Initializes timer manager module with the user configuration structure.
-*
-*
-* @param timerConfig              Pointer to user-defined timer configuration structure.
-* @retval kStatus_TimerSuccess      Timer manager initialization succeed.
-* @retval kStatus_TimerError      An error occurred.
-*/
+ * @brief Initializes timer manager module with the user configuration structure.
+ *
+ *
+ * @param timerConfig              Pointer to user-defined timer configuration structure.
+ * @retval kStatus_TimerSuccess      Timer manager initialization succeed.
+ * @retval kStatus_TimerError      An error occurred.
+ */
 timer_status_t TM_Init(timer_config_t *timerConfig)
 {
     static uint8_t initialized = false;
     hal_timer_config_t halTimerConfig;
     hal_timer_handle_t halTimerHandle = &s_timermanager.halTimerHandle[0];
+    hal_timer_status_t status;
     assert(timerConfig);
     /* Check if TMR is already initialized */
     if (!initialized)
     {
         LIST_Init((&s_timermanager.timerHead), 0);
-        halTimerConfig.timeout = 1000;
+        halTimerConfig.timeout     = 1000;
         halTimerConfig.srcClock_Hz = timerConfig->srcClock_Hz;
-        halTimerConfig.instance = timerConfig->instance;
-        if (kStatus_HAL_TimerSuccess != HAL_TimerInit(halTimerHandle, &halTimerConfig))
-        {
-            return kStatus_TimerError;
-        }
+        halTimerConfig.instance    = timerConfig->instance;
+        status                     = HAL_TimerInit(halTimerHandle, &halTimerConfig);
+        assert(kStatus_HAL_TimerSuccess == status);
+        (void)status;
+
         HAL_TimerInstallCallback(halTimerHandle, HAL_TIMER_Callback, NULL);
         s_timermanager.mUsInTimerInterval = halTimerConfig.timeout;
 #if defined(OSA_USED)
@@ -515,20 +516,21 @@ timer_status_t TM_Close(timer_handle_t timerHandle)
 
     status = TM_Stop(timerHandle);
 
-    if (status == kStatus_TimerSuccess)
-    {
-        TimerMarkTimerFree(timerHandle);
-        LIST_RemoveElement(timerHandle);
-    }
+    assert(kStatus_TimerSuccess == status);
+    (void)status;
+
+    TimerMarkTimerFree(timerHandle);
+    LIST_RemoveElement(timerHandle);
+
     return kStatus_TimerSuccess;
 }
 
 /*!
-* @brief   Check if all timers except the LP timers are OFF
-*
-*
-* @retval return 1 there are no active non-low power timers, 0 otherwise.
-*/
+ * @brief   Check if all timers except the LP timers are OFF
+ *
+ *
+ * @retval return 1 there are no active non-low power timers, 0 otherwise.
+ */
 
 uint8_t TM_AreAllTimersOff(void)
 {
@@ -577,7 +579,7 @@ timer_status_t TM_InstallCallback(timer_handle_t timerHandle, timer_callback_t c
 
     assert(timerHandle);
     th->pfCallBack = callback;
-    th->param = callbackParam;
+    th->param      = callbackParam;
 
     return kStatus_TimerSuccess;
 }
@@ -599,29 +601,28 @@ timer_status_t TM_Start(timer_handle_t timerHandle, timer_mode_t timerType, uint
     assert(timerHandle);
     /* Stopping an already stopped timer is harmless. */
     status = TM_Stop(timerHandle);
-    if (status == kStatus_TimerSuccess)
+    assert(status == kStatus_TimerSuccess);
+
+    TimerSetTimerType(timerHandle, timerType);
+
+    if (timerType & kTimerModeSetMinuteTimer)
     {
-        TimerSetTimerType(timerHandle, timerType);
-
-        if (timerType & kTimerModeSetMinuteTimer)
-        {
-            th->timeoutInUs = 1000 * 1000 * 60 * timerTimeout;
-            th->remainingUs = 1000 * 1000 * 60 * timerTimeout;
-        }
-        else if (timerType & kTimerModeSetSecondTimer)
-        {
-            th->timeoutInUs = 1000 * 1000 * timerTimeout;
-            th->remainingUs = 1000 * 1000 * timerTimeout;
-        }
-        else
-        {
-            th->timeoutInUs = 1000 * timerTimeout;
-            th->remainingUs = 1000 * timerTimeout;
-        }
-
-        /* Enable timer, the timer task will do the rest of the work. */
-        TimerEnable(timerHandle);
+        th->timeoutInUs = 1000 * 1000 * 60 * timerTimeout;
+        th->remainingUs = 1000 * 1000 * 60 * timerTimeout;
     }
+    else if (timerType & kTimerModeSetSecondTimer)
+    {
+        th->timeoutInUs = 1000 * 1000 * timerTimeout;
+        th->remainingUs = 1000 * 1000 * timerTimeout;
+    }
+    else
+    {
+        th->timeoutInUs = 1000 * timerTimeout;
+        th->remainingUs = 1000 * timerTimeout;
+    }
+
+    /* Enable timer, the timer task will do the rest of the work. */
+    TimerEnable(timerHandle);
 
     return status;
 }
@@ -636,14 +637,14 @@ timer_status_t TM_Start(timer_handle_t timerHandle, timer_mode_t timerType, uint
  */
 timer_status_t TM_Stop(timer_handle_t timerHandle)
 {
-    timer_status_t err = kStatus_TimerSuccess;
+    timer_status_t status             = kStatus_TimerSuccess;
     timer_handle_struct_t *timerState = timerHandle;
     timer_state_t state;
 
     /* check if timer is not allocated or if it has an invalid ID (fix@ENGR00323423) */
     if (timerHandle == NULL)
     {
-        err = kStatus_TimerInvalidId;
+        status = kStatus_TimerInvalidId;
     }
     else
     {
@@ -670,7 +671,7 @@ timer_status_t TM_Stop(timer_handle_t timerHandle)
         ;
     }
 
-    return err;
+    return status;
 }
 
 /*!
@@ -690,12 +691,12 @@ uint32_t TM_GetRemainingTime(timer_handle_t timerHandle)
 }
 
 /*!
-* @brief Get the first expire time of timer
-*
-* @param timerHandle - the handle of the timer
-*
-* @retval return the first expire time of all timer.
-*/
+ * @brief Get the first expire time of timer
+ *
+ * @param timerHandle - the handle of the timer
+ *
+ * @retval return the first expire time of all timer.
+ */
 uint32_t TM_GetFirstExpireTime(uint8_t timerType)
 {
     uint32_t min = 0xFFFFFFFF;
@@ -707,7 +708,8 @@ uint32_t TM_GetFirstExpireTime(uint8_t timerType)
     while (list_element != NULL)
     {
         timer_handle_struct_t *th = (timer_handle_struct_t *)list_element;
-        if (TM_IsTimerActive(th) && ((timerType & TimerGetTimerType(timerHandle)) > 0))
+
+        if (TM_IsTimerActive(th) && ((timerType & TimerGetTimerType(th)) > 0))
         {
             remainingTime = HAL_TimerGetCurrentTimerCount((hal_timer_handle_t)s_timermanager.halTimerHandle);
             if (remainingTime < min)
@@ -721,13 +723,13 @@ uint32_t TM_GetFirstExpireTime(uint8_t timerType)
 }
 
 /*!
-* @brief Returns the handle of the timer of the first allocated timer that has the
-*        specified parameter.
-*
-* @param param - specified parameter of timer
-*
-* @retval return the handle of the timer if success.
-*/
+ * @brief Returns the handle of the timer of the first allocated timer that has the
+ *        specified parameter.
+ *
+ * @param param - specified parameter of timer
+ *
+ * @retval return the handle of the timer if success.
+ */
 timer_handle_t TM_GetFirstTimerWithParam(void *param)
 {
     list_element_handle_t list_element;
@@ -747,11 +749,11 @@ timer_handle_t TM_GetFirstTimerWithParam(void *param)
 }
 
 /*!
-* @brief Returns not counted time before entering in sleep,This function is called
-*        by Low Power module;
-*
-* @retval return microseconds that wasn't counted before entering in sleep.
-*/
+ * @brief Returns not counted time before entering in sleep,This function is called
+ *        by Low Power module;
+ *
+ * @retval return microseconds that wasn't counted before entering in sleep.
+ */
 uint32_t TM_NotCountedTimeBeforeSleep(void)
 {
     uint32_t timeUs = 0;
@@ -776,11 +778,11 @@ uint32_t TM_NotCountedTimeBeforeSleep(void)
 }
 
 /*!
-* @brief Sync low power timer in sleep mode,This function is called by Low Power module;
-*
-* @param sleepDurationTmrUs - sleep duration in TMR microseconds
-*
-*/
+ * @brief Sync low power timer in sleep mode,This function is called by Low Power module;
+ *
+ * @param sleepDurationTmrUs - sleep duration in TMR microseconds
+ *
+ */
 void TM_SyncLpmTimers(uint32_t sleepDurationTmrUs)
 {
 #if (defined(TM_ENABLE_LOW_POWER_TIMER) && (TM_ENABLE_LOW_POWER_TIMER > 0U))
@@ -796,8 +798,8 @@ void TM_SyncLpmTimers(uint32_t sleepDurationTmrUs)
         while (list_element != NULL)
         {
             timer_handle_struct_t *th = (timer_handle_struct_t *)list_element;
-            state = (timer_state_t)TimerGetTimerStatus(th);
-            timerType = TimerGetTimerType(th);
+            state                     = (timer_state_t)TimerGetTimerStatus(th);
+            timerType                 = TimerGetTimerType(th);
             if ((state == kTimerStateActive_c) && (IsLowPowerTimer(timerType)))
             {
                 /* Timer expired when MCU was in sleep mode??? */
@@ -824,10 +826,10 @@ void TM_SyncLpmTimers(uint32_t sleepDurationTmrUs)
 }
 
 /*!
-* @brief Make timer task ready after wakeup from lowpower mode,This function is called
-*        by Low Power module;
-*
-*/
+ * @brief Make timer task ready after wakeup from lowpower mode,This function is called
+ *        by Low Power module;
+ *
+ */
 void TM_MakeTimerTaskReady(void)
 {
 #if (defined(TM_ENABLE_LOW_POWER_TIMER) && (TM_ENABLE_LOW_POWER_TIMER > 0U))

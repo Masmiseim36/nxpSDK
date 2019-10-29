@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<workspace>
+  <batchBuild>
+    <batchDefinition>
+      <name>all</name>
+      <member>
+        <project>ntag_i2c_explorer_demo</project>
+        <configuration>release</configuration>
+      </member>
+      <member>
+        <project>ntag_i2c_explorer_demo</project>
+        <configuration>debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>release</name>
+      <member>
+        <project>ntag_i2c_explorer_demo</project>
+        <configuration>release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>debug</name>
+      <member>
+        <project>ntag_i2c_explorer_demo</project>
+        <configuration>debug</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+  <project>
+    <path>$WS_DIR$/ntag_i2c_explorer_demo.ewp</path>
+  </project>
+</workspace>

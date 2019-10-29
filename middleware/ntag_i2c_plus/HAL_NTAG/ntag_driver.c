@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, NXP Semiconductor
+ * Copyright 2016 NXP
  * All rights reserved.
  *
  * 
@@ -118,6 +118,7 @@ BOOL NTAG_ReadBytes(NTAG_HANDLE_T ntag, uint16_t address, uint8_t *bytes, uint16
 
             /* modify rx_buffer */
             for (i = 0; i < current_len; i++)
+                if (sizeof(ntag->rx_buffer) > (RX_START + begin + i))
                 bytes[bytes_read + i] = ntag->rx_buffer[RX_START + begin + i];
         }
         else
@@ -164,6 +165,7 @@ BOOL NTAG_WriteBytes(NTAG_HANDLE_T ntag, uint16_t address, const uint8_t *bytes,
 
             /* modify rx_buffer */
             for (i = 0; i < current_len; i++)
+                if (sizeof(ntag->rx_buffer) > (RX_START + begin + i))
                 ntag->rx_buffer[RX_START + begin + i] = bytes[bytes_written + i];
 
             /* writeback modified buffer */

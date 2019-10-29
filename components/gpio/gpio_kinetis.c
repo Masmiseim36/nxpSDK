@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018 - 2019 NXP
  * All rights reserved.
  *
  *
@@ -23,15 +23,26 @@
 #else
 #error The tool-chain is not supported.
 #endif
-#define HAL_GPIO_BSR(x) (31 - HAL_GPIO_CLZ(x))
+#define HAL_GPIO_BSR(x) (31U - (uint8_t)HAL_GPIO_CLZ(x))
+
+/*! @brief The pin config struct of gpio adapter. */
+
+typedef struct _hal_gpio_pin
+{
+    uint16_t port : 3U;
+    uint16_t reserved : 1U;
+    uint16_t pin : 5U;
+    uint16_t direction : 1U;
+    uint16_t trigger : 3U;
+    uint16_t reserved2 : 3U;
+} hal_gpio_pin_t;
 
 typedef struct _hal_gpio_state
 {
     struct _hal_gpio_state *next;
     hal_gpio_callback_t callback;
     void *callbackParam;
-    hal_gpio_pin_config_t pin;
-    hal_gpio_interrupt_trigger_t trigger;
+    hal_gpio_pin_t pin;
 } hal_gpio_state_t;
 
 /*******************************************************************************
@@ -49,12 +60,12 @@ static hal_gpio_state_t *s_GpioHead;
 
 static void HAL_GpioInterruptHandle(uint8_t port)
 {
-    GPIO_Type *gpioList[] = GPIO_BASE_PTRS;
+    GPIO_Type *gpioList[]  = GPIO_BASE_PTRS;
     hal_gpio_state_t *head = s_GpioHead;
     uint32_t pinInterruptSetFlag;
     uint8_t pin;
 
-    while (head)
+    while (head != NULL)
     {
         if (head->pin.port == port)
         {
@@ -74,10 +85,10 @@ static void HAL_GpioInterruptHandle(uint8_t port)
     /* Clear external interrupt flag. */
     GPIO_PortClearInterruptFlags(gpioList[port], pinInterruptSetFlag);
 
-    if (pinInterruptSetFlag)
+    if (pinInterruptSetFlag != 0U)
     {
         pin = HAL_GPIO_BSR(pinInterruptSetFlag);
-        while (head)
+        while (head != NULL)
         {
             if ((pin == head->pin.pin) && (port == head->pin.port))
             {
@@ -85,8 +96,8 @@ static void HAL_GpioInterruptHandle(uint8_t port)
                 {
                     head->callback(head->callbackParam);
                 }
-                pinInterruptSetFlag &= ~(1U << pin);
-                if (!pinInterruptSetFlag)
+                pinInterruptSetFlag &= ~(0x01UL << pin);
+                if (pinInterruptSetFlag == 0U)
                 {
                     break;
                 }
@@ -99,7 +110,7 @@ static void HAL_GpioInterruptHandle(uint8_t port)
 
 static hal_gpio_status_t HAL_GpioConflictSearch(hal_gpio_state_t *head, uint8_t port, uint8_t pin)
 {
-    while (head)
+    while (head != NULL)
     {
         if ((head->pin.port == port) && (head->pin.pin == pin))
         {
@@ -124,7 +135,7 @@ static hal_gpio_status_t HAL_GpioAddItem(hal_gpio_state_t **head, hal_gpio_state
     }
     else
     {
-        while (p)
+        while (p != NULL)
         {
             if (p == node)
             {
@@ -149,7 +160,7 @@ static hal_gpio_status_t HAL_GpioRemoveItem(hal_gpio_state_t **head, hal_gpio_st
     uint32_t regPrimask;
 
     regPrimask = DisableGlobalIRQ();
-    while (p)
+    while (p != NULL)
     {
         if (p == node)
         {
@@ -173,6 +184,8 @@ static hal_gpio_status_t HAL_GpioRemoveItem(hal_gpio_state_t **head, hal_gpio_st
     return kStatus_HAL_GpioSuccess;
 }
 
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 0U)
+void PORTA_IRQHandler(void);
 void PORTA_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(0);
@@ -182,7 +195,10 @@ void PORTA_IRQHandler(void)
     __DSB();
 #endif
 }
+#endif
 
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 1U)
+void PORTB_IRQHandler(void);
 void PORTB_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(1);
@@ -192,7 +208,10 @@ void PORTB_IRQHandler(void)
     __DSB();
 #endif
 }
+#endif
 
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 2U)
+void PORTC_IRQHandler(void);
 void PORTC_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(2);
@@ -202,7 +221,10 @@ void PORTC_IRQHandler(void)
     __DSB();
 #endif
 }
+#endif
 
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 2U)
+void PORTB_PORTC_IRQHandler(void);
 void PORTB_PORTC_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(1);
@@ -211,7 +233,10 @@ void PORTB_PORTC_IRQHandler(void)
     __DSB();
 #endif
 }
+#endif
 
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 4U)
+void PORTB_PORTC_PORTD_PORTE_IRQHandler(void);
 void PORTB_PORTC_PORTD_PORTE_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(1);
@@ -222,7 +247,10 @@ void PORTB_PORTC_PORTD_PORTE_IRQHandler(void)
     __DSB();
 #endif
 }
+#endif
 
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 3U)
+void PORTC_PORTD_IRQHandler(void);
 void PORTC_PORTD_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(2);
@@ -231,7 +259,10 @@ void PORTC_PORTD_IRQHandler(void)
     __DSB();
 #endif
 }
+#endif
 
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 3U)
+void PORTD_IRQHandler(void);
 void PORTD_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(3);
@@ -241,7 +272,10 @@ void PORTD_IRQHandler(void)
     __DSB();
 #endif
 }
+#endif
 
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 4U)
+void PORTE_IRQHandler(void);
 void PORTE_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(4);
@@ -251,7 +285,10 @@ void PORTE_IRQHandler(void)
     __DSB();
 #endif
 }
+#endif
 
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 5U)
+void PORTF_IRQHandler(void);
 void PORTF_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(5);
@@ -261,6 +298,7 @@ void PORTF_IRQHandler(void)
     __DSB();
 #endif
 }
+#endif
 
 hal_gpio_status_t HAL_GpioInit(hal_gpio_handle_t gpioHandle, hal_gpio_pin_config_t *pinConfig)
 {
@@ -268,16 +306,13 @@ hal_gpio_status_t HAL_GpioInit(hal_gpio_handle_t gpioHandle, hal_gpio_pin_config
     GPIO_Type *gpioList[] = GPIO_BASE_PTRS;
     hal_gpio_status_t status;
     gpio_pin_config_t gpioPinconfig = {
-        kGPIO_DigitalInput, 0,
+        kGPIO_DigitalInput,
+        0,
     };
 
     assert(gpioHandle);
     assert(pinConfig);
-
-    if (HAL_GPIO_HANDLE_SIZE < sizeof(hal_gpio_state_t))
-    {
-        return kStatus_HAL_GpioError;
-    }
+    assert(HAL_GPIO_HANDLE_SIZE >= sizeof(hal_gpio_state_t));
 
     gpioState = (hal_gpio_state_t *)gpioHandle;
 
@@ -293,9 +328,9 @@ hal_gpio_status_t HAL_GpioInit(hal_gpio_handle_t gpioHandle, hal_gpio_pin_config
         return status;
     }
 
-    gpioState->pin.pin = pinConfig->pin;
-    gpioState->pin.port = pinConfig->port;
-    gpioState->pin.direction = pinConfig->direction;
+    gpioState->pin.pin       = pinConfig->pin;
+    gpioState->pin.port      = pinConfig->port;
+    gpioState->pin.direction = (uint16_t)pinConfig->direction;
     if (kHAL_GpioDirectionOut == pinConfig->direction)
     {
         gpioPinconfig.pinDirection = kGPIO_DigitalOutput;
@@ -316,11 +351,11 @@ hal_gpio_status_t HAL_GpioDeinit(hal_gpio_handle_t gpioHandle)
     assert(gpioHandle);
 
     gpioState = (hal_gpio_state_t *)gpioHandle;
-    if (kHAL_GpioDirectionIn == gpioState->pin.direction)
+    if ((uint16_t)kHAL_GpioDirectionIn == gpioState->pin.direction)
     {
-        HAL_GpioSetTriggerMode(gpioHandle, kHAL_GpioInterruptDisable);
+        (void)HAL_GpioSetTriggerMode(gpioHandle, kHAL_GpioInterruptDisable);
     }
-    HAL_GpioRemoveItem(&s_GpioHead, gpioState);
+    (void)HAL_GpioRemoveItem(&s_GpioHead, gpioState);
     return kStatus_HAL_GpioSuccess;
 }
 
@@ -334,7 +369,7 @@ hal_gpio_status_t HAL_GpioGetInput(hal_gpio_handle_t gpioHandle, uint8_t *pinSta
 
     gpioState = (hal_gpio_state_t *)gpioHandle;
 
-    *pinState = (GPIO_PinRead(gpioList[gpioState->pin.port], gpioState->pin.pin)) ? 1 : 0;
+    *pinState = (GPIO_PinRead(gpioList[gpioState->pin.port], gpioState->pin.pin) != 0U) ? 1U : 0U;
     return kStatus_HAL_GpioSuccess;
 }
 
@@ -347,7 +382,7 @@ hal_gpio_status_t HAL_GpioSetOutput(hal_gpio_handle_t gpioHandle, uint8_t pinSta
 
     gpioState = (hal_gpio_state_t *)gpioHandle;
 
-    GPIO_PinWrite(gpioList[gpioState->pin.port], gpioState->pin.pin, (pinState) ? 1 : 0);
+    GPIO_PinWrite(gpioList[gpioState->pin.port], gpioState->pin.pin, (pinState != 0U) ? 1U : 0U);
     return kStatus_HAL_GpioSuccess;
 }
 
@@ -362,7 +397,7 @@ hal_gpio_status_t HAL_GpioInstallCallback(hal_gpio_handle_t gpioHandle,
     gpioState = (hal_gpio_state_t *)gpioHandle;
 
     gpioState->callbackParam = callbackParam;
-    gpioState->callback = callback;
+    gpioState->callback      = callback;
 
     return kStatus_HAL_GpioSuccess;
 }
@@ -375,19 +410,19 @@ hal_gpio_status_t HAL_GpioGetTriggerMode(hal_gpio_handle_t gpioHandle, hal_gpio_
 
     gpioState = (hal_gpio_state_t *)gpioHandle;
 
-    if (kHAL_GpioDirectionOut == gpioState->pin.direction)
+    if ((uint16_t)kHAL_GpioDirectionOut == gpioState->pin.direction)
     {
         return kStatus_HAL_GpioError;
     }
 
-    *gpioTrigger = gpioState->trigger;
+    *gpioTrigger = (hal_gpio_interrupt_trigger_t)gpioState->pin.trigger;
     return kStatus_HAL_GpioSuccess;
 }
 
 hal_gpio_status_t HAL_GpioSetTriggerMode(hal_gpio_handle_t gpioHandle, hal_gpio_interrupt_trigger_t gpioTrigger)
 {
     PORT_Type *portList[] = PORT_BASE_PTRS;
-    IRQn_Type portIrq[] = PORT_IRQS;
+    IRQn_Type portIrq[]   = PORT_IRQS;
     hal_gpio_state_t *gpioState;
     port_interrupt_t pinInt;
 
@@ -395,7 +430,7 @@ hal_gpio_status_t HAL_GpioSetTriggerMode(hal_gpio_handle_t gpioHandle, hal_gpio_
 
     gpioState = (hal_gpio_state_t *)gpioHandle;
 
-    if (kHAL_GpioDirectionOut == gpioState->pin.direction)
+    if ((uint16_t)kHAL_GpioDirectionOut == gpioState->pin.direction)
     {
         return kStatus_HAL_GpioError;
     }
@@ -422,10 +457,11 @@ hal_gpio_status_t HAL_GpioSetTriggerMode(hal_gpio_handle_t gpioHandle, hal_gpio_
             break;
     }
 
-    gpioState->trigger = gpioTrigger;
+    gpioState->pin.trigger = (uint16_t)gpioTrigger;
 
     /* initialize port interrupt */
     PORT_SetPinInterruptConfig(portList[gpioState->pin.port], gpioState->pin.pin, pinInt);
+    NVIC_SetPriority(portIrq[gpioState->pin.port], HAL_GPIO_HANDLE_ISR_PRIORITY);
     NVIC_EnableIRQ(portIrq[gpioState->pin.port]);
 
     return kStatus_HAL_GpioSuccess;
@@ -439,12 +475,12 @@ hal_gpio_status_t HAL_GpioWakeUpSetting(hal_gpio_handle_t gpioHandle, uint8_t en
 
     gpioState = (hal_gpio_state_t *)gpioHandle;
 
-    if (kHAL_GpioDirectionOut == gpioState->pin.direction)
+    if ((uint16_t)kHAL_GpioDirectionOut == gpioState->pin.direction)
     {
         return kStatus_HAL_GpioError;
     }
     /* The wakeup feature of GPIO cannot be disabled. */
-    if (!enable)
+    if (enable == 0U)
     {
         return kStatus_HAL_GpioError;
     }

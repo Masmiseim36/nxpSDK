@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.K32L2B31A"/>
+    <definition extID="component.lpuart_adapter.K32L2B31A"/>
+    <definition extID="component.serial_manager.K32L2B31A"/>
+    <definition extID="component.serial_manager_uart.K32L2B31A"/>
+    <definition extID="device.K32L2B31A_CMSIS.K32L2B31A"/>
+    <definition extID="device.K32L2B31A_startup.K32L2B31A"/>
+    <definition extID="platform.CMSIS_Driver_Include.Common_CMSISInclude.K32L2B31A"/>
+    <definition extID="platform.CMSIS_Driver_Include.USART_CMSISInclude.K32L2B31A"/>
+    <definition extID="platform.Include_common.K32L2B31A"/>
+    <definition extID="platform.Include_core_cm0plus.K32L2B31A"/>
+    <definition extID="platform.Include_dsp.K32L2B31A"/>
+    <definition extID="platform.drivers.clock.K32L2B31A"/>
+    <definition extID="platform.drivers.common.K32L2B31A"/>
+    <definition extID="platform.drivers.dma.K32L2B31A"/>
+    <definition extID="platform.drivers.dmamux.K32L2B31A"/>
+    <definition extID="platform.drivers.gpio.K32L2B31A"/>
+    <definition extID="platform.drivers.lpuart.K32L2B31A"/>
+    <definition extID="platform.drivers.port.K32L2B31A"/>
+    <definition extID="platform.drivers.smc.K32L2B31A"/>
+    <definition extID="platform.drivers.uart.K32L2B31A"/>
+    <definition extID="platform.drivers.uart_cmsis_dma.K32L2B31A"/>
+    <definition extID="platform.drivers.uart_dma.K32L2B31A"/>
+    <definition extID="platform.utilities.assert.K32L2B31A"/>
+    <definition extID="utility.debug_console.K32L2B31A"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+  </externalDefinitions>
+  <example id="frdmk32l2b_cmsis_uart_interrupt_transfer" name="cmsis_uart_interrupt_transfer" category="cmsis_driver_examples/uart" dependency="platform.drivers.port.K32L2B31A platform.drivers.clock.K32L2B31A platform.drivers.dma.K32L2B31A platform.drivers.dmamux.K32L2B31A platform.drivers.uart.K32L2B31A platform.drivers.uart_dma.K32L2B31A platform.drivers.uart_cmsis_dma.K32L2B31A platform.drivers.common.K32L2B31A device.K32L2B31A_CMSIS.K32L2B31A utility.debug_console.K32L2B31A component.lpuart_adapter.K32L2B31A component.serial_manager.K32L2B31A component.serial_manager_uart.K32L2B31A platform.drivers.lpuart.K32L2B31A component.lists.K32L2B31A device.K32L2B31A_startup.K32L2B31A platform.drivers.smc.K32L2B31A platform.drivers.gpio.K32L2B31A platform.utilities.assert.K32L2B31A platform.Include_core_cm0plus.K32L2B31A platform.Include_common.K32L2B31A platform.Include_dsp.K32L2B31A platform.CMSIS_Driver_Include.USART_CMSISInclude.K32L2B31A platform.CMSIS_Driver_Include.Common_CMSISInclude.K32L2B31A">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.none</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.none</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_K32L2B31VLH0A</value>
+          <value>FRDM_K32L2B</value>
+          <value>FREEDOM</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.none</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <source path="boards/frdmk32l2b/cmsis_driver_examples/uart/interrupt_transfer/armgcc" target_path="src" type="linker" toolchain="armgcc">
+      <files mask="K32L2B31xxxxA_flash.ld"/>
+    </source>
+    <source path="boards/frdmk32l2b/cmsis_driver_examples/uart/interrupt_transfer/iar" target_path="src" type="configuration" toolchain="iar">
+      <files mask="FlashKLxx256KROM_with_config_write_enabled.board"/>
+    </source>
+    <source path="boards/frdmk32l2b/cmsis_driver_examples/uart/interrupt_transfer/iar" target_path="src" type="linker" toolchain="iar">
+      <files mask="K32L2B31xxxxA_flash.icf"/>
+    </source>
+    <source path="boards/frdmk32l2b/cmsis_driver_examples/uart/interrupt_transfer/mdk" target_path="src" type="linker" toolchain="mdk">
+      <files mask="K32L2B31xxxxA_flash.scf"/>
+    </source>
+    <source path="boards/frdmk32l2b/cmsis_driver_examples/uart/interrupt_transfer" target_path="board" type="c_include">
+      <files mask="RTE_Device.h"/>
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/frdmk32l2b/cmsis_driver_examples/uart/interrupt_transfer" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/frdmk32l2b/cmsis_driver_examples/uart/interrupt_transfer" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/frdmk32l2b/cmsis_driver_examples/uart/interrupt_transfer" target_path="source" type="src">
+      <files mask="cmsis_usart_interrupt_transfer.c"/>
+    </source>
+  </example>
+</ksdk:examples>

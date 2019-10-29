@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2016, NXP Semiconductor
+ * Copyright 2016 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
@@ -114,6 +114,25 @@ HAL_I2C_STATUS_T HAL_I2C_SendBytes(HAL_I2C_HANDLE_T i2cbus, uint8_t address, con
 /***********************************************************************/
 /* INTERFACING FOR FSL I2C DRIVERS - MACRO BASED EXAMPLE                      */
 /***********************************************************************/
+
+#ifdef I2C_LPC
+
+#include "HAL_I2C_lpc_fsl.h"
+
+#define HAL_I2C_HANDLE_T I2C_Type *
+#define HAL_I2C_INIT_PARAM_T uint32_t
+#define HAL_I2C_INIT_DEFAULT 100000 /*278500 */
+#define HAL_I2C_INVALID_HANDLE NULL
+#define HAL_I2C_STATUS_T uint16_t
+#define HAL_I2C_OK 0
+#define HAL_I2C_InitDevice(bitrate, input_clock, instance) I2C_InitDevice(bitrate, input_clock, instance)
+#define HAL_I2C_SendBytes(handle, address, bytes, len) TransmitPoll(handle, address, bytes, len)
+#define HAL_I2C_RecvBytes(handle, address, bytes, len) ReceivePoll(handle, address, bytes, len)
+#define HAL_I2C_CloseDevice(handle) /* not necessary */
+#define HAL_I2C_RX_RESERVED_BYTES 0
+#define HAL_I2C_TX_RESERVED_BYTES 0
+
+#endif
 
 #ifdef I2C_FSL
 

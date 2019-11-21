@@ -34,17 +34,6 @@
 #include "rpmsg_ns.h"
 #include <stdint.h>
 
-/* from rpmsg_lite.c { */
-
-int rpmsg_lite_format_message(struct rpmsg_lite_instance *rpmsg_lite_dev,
-                              unsigned long src,
-                              unsigned long dst,
-                              char *data,
-                              unsigned long size,
-                              int flags,
-                              unsigned long timeout);
-/* } from rpmsg_lite.c*/
-
 #define RL_NS_NAME_SIZE (32)
 
 /*!
@@ -79,12 +68,12 @@ struct rpmsg_ns_msg
  * @return  RL_RELEASE, message is always freed
  *
  */
-static int rpmsg_ns_rx_cb(void *payload, int payload_len, unsigned long src, void *priv)
+static int rpmsg_ns_rx_cb(void *payload, unsigned int payload_len, unsigned long src, void *priv)
 {
     struct rpmsg_ns_msg *ns_msg_ptr = payload;
     struct rpmsg_ns_callback_data *cb_ctxt = priv;
-    RL_ASSERT(priv);
-    RL_ASSERT(cb_ctxt->cb);
+    RL_ASSERT(priv != RL_NULL);
+    RL_ASSERT(cb_ctxt->cb != RL_NULL);
 
     /* Drop likely bad messages received at nameservice address */
     if (payload_len == sizeof(struct rpmsg_ns_msg))
@@ -106,15 +95,15 @@ rpmsg_ns_handle rpmsg_ns_bind(struct rpmsg_lite_instance *rpmsg_lite_dev, rpmsg_
 {
     struct rpmsg_ns_context *ns_ctxt;
 
-    if (app_cb == NULL)
+    if (app_cb == RL_NULL)
     {
-        return NULL;
+        return RL_NULL;
     }
 
 #if defined(RL_USE_STATIC_API) && (RL_USE_STATIC_API == 1)
-    if (ns_ept_ctxt == NULL)
+    if (ns_ept_ctxt == RL_NULL)
     {
-        return NULL;
+        return RL_NULL;
     }
 
     ns_ctxt = &ns_ept_ctxt->ns_ctxt;
@@ -132,15 +121,15 @@ rpmsg_ns_handle rpmsg_ns_bind(struct rpmsg_lite_instance *rpmsg_lite_dev, rpmsg_
         struct rpmsg_ns_callback_data *cb_ctxt;
 
         cb_ctxt = env_allocate_memory(sizeof(struct rpmsg_ns_callback_data));
-        if (cb_ctxt == NULL)
+        if (cb_ctxt == RL_NULL)
         {
-            return NULL;
+            return RL_NULL;
         }
         ns_ctxt = env_allocate_memory(sizeof(struct rpmsg_ns_context));
-        if (ns_ctxt == NULL)
+        if (ns_ctxt == RL_NULL)
         {
             env_free_memory(cb_ctxt);
-            return NULL;
+            return RL_NULL;
         }
 
         /* Set-up the nameservice callback context */
@@ -181,12 +170,12 @@ int rpmsg_ns_announce(struct rpmsg_lite_instance *rpmsg_lite_dev,
 {
     struct rpmsg_ns_msg ns_msg;
 
-    if (ept_name == NULL)
+    if (ept_name == RL_NULL)
     {
         return RL_ERR_PARAM;
     }
 
-    if (new_ept == NULL)
+    if (new_ept == RL_NULL)
     {
         return RL_ERR_PARAM;
     }
@@ -195,6 +184,10 @@ int rpmsg_ns_announce(struct rpmsg_lite_instance *rpmsg_lite_dev,
     ns_msg.flags = flags;
     ns_msg.addr = new_ept->addr;
 
-    return rpmsg_lite_format_message(rpmsg_lite_dev, new_ept->addr, RL_NS_EPT_ADDR, (char *)&ns_msg,
-                                     sizeof(struct rpmsg_ns_msg), RL_NO_FLAGS, RL_BLOCK);
+    return rpmsg_lite_send(rpmsg_lite_dev,
+                    new_ept,
+                    RL_NS_EPT_ADDR,
+                    (char *)&ns_msg,
+                    sizeof(struct rpmsg_ns_msg),
+                    RL_BLOCK);
 }

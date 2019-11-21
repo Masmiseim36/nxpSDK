@@ -67,7 +67,7 @@ extern "C" {
 *
 * @return RL_HOLD or RL_RELEASE to release or hold the buffer in payload
 */
-int rpmsg_queue_rx_cb(void *payload, int payload_len, unsigned long src, void *priv);
+int rpmsg_queue_rx_cb(void *payload, unsigned int payload_len, unsigned long src, void *priv);
 
 /*!
 * @brief
@@ -122,8 +122,8 @@ int rpmsg_queue_recv(struct rpmsg_lite_instance *rpmsg_lite_dev,
                      rpmsg_queue_handle q,
                      unsigned long *src,
                      char *data,
-                     int maxlen,
-                     int *len,
+                     unsigned int maxlen,
+                     unsigned int *len,
                      unsigned long timeout);
 
 /*!
@@ -155,7 +155,7 @@ int rpmsg_queue_recv_nocopy(struct rpmsg_lite_instance *rpmsg_lite_dev,
                             rpmsg_queue_handle q,
                             unsigned long *src,
                             char **data,
-                            int *len,
+                            unsigned int *len,
                             unsigned long timeout);
 
 /*!

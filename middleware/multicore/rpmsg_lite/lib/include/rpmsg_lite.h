@@ -56,10 +56,10 @@ extern "C" {
 /* Shared memory "allocator" parameters */
 #define RL_WORD_SIZE (sizeof(unsigned long))
 #define RL_WORD_ALIGN_UP(a)                                                                                  \
-    (((((unsigned long)a) & (RL_WORD_SIZE - 1)) != 0) ? ((((unsigned long)a) & (~(RL_WORD_SIZE - 1))) + 4) : \
+    (((((unsigned long)a) & (RL_WORD_SIZE - 1U)) != 0U) ? ((((unsigned long)a) & (~(RL_WORD_SIZE - 1U))) + 4U) : \
                                                         ((unsigned long)a))
 #define RL_WORD_ALIGN_DOWN(a)                                                                          \
-    (((((unsigned long)a) & (RL_WORD_SIZE - 1)) != 0) ? (((unsigned long)a) & (~(RL_WORD_SIZE - 1))) : \
+    (((((unsigned long)a) & (RL_WORD_SIZE - 1U)) != 0U) ? (((unsigned long)a) & (~(RL_WORD_SIZE - 1U))) : \
                                                         ((unsigned long)a))
 
 /* Definitions for device types , null pointer, etc.*/
@@ -67,8 +67,8 @@ extern "C" {
 #define RL_NULL ((void *)0)
 #define RL_REMOTE (0)
 #define RL_MASTER (1)
-#define RL_TRUE (1)
-#define RL_FALSE (0)
+#define RL_TRUE (1U)
+#define RL_FALSE (0U)
 #define RL_ADDR_ANY (0xFFFFFFFF)
 #define RL_RELEASE (0)
 #define RL_HOLD (1)
@@ -92,7 +92,7 @@ extern "C" {
 /*! \typedef rl_ept_rx_cb_t
     \brief Receive callback function type.
 */
-typedef int (*rl_ept_rx_cb_t)(void *payload, int payload_len, unsigned long src, void *priv);
+typedef int (*rl_ept_rx_cb_t)(void *payload, unsigned int payload_len, unsigned long src, void *priv);
 
 /*!
  * RPMsg Lite Endpoint structure
@@ -166,19 +166,19 @@ struct rpmsg_lite_instance
 #if defined(RL_USE_STATIC_API) && (RL_USE_STATIC_API == 1)
 struct rpmsg_lite_instance *rpmsg_lite_master_init(void *shmem_addr,
                                                    size_t shmem_length,
-                                                   int link_id,
+                                                   uint32_t link_id,
                                                    uint32_t init_flags,
                                                    struct rpmsg_lite_instance *static_context);
 #elif defined(RL_USE_ENVIRONMENT_CONTEXT) && (RL_USE_ENVIRONMENT_CONTEXT == 1)
 struct rpmsg_lite_instance *rpmsg_lite_master_init(void *shmem_addr,
                                                     size_t shmem_length,
-                                                    int link_id,
+                                                    uint32_t link_id,
                                                     uint32_t init_flags,
                                                     void *env_cfg);
 #else
 struct rpmsg_lite_instance *rpmsg_lite_master_init(void *shmem_addr,
                                                    size_t shmem_length,
-                                                   int link_id,
+                                                   uint32_t link_id,
                                                    uint32_t init_flags);
 #endif
 
@@ -199,13 +199,13 @@ struct rpmsg_lite_instance *rpmsg_lite_master_init(void *shmem_addr,
  */
 #if defined(RL_USE_STATIC_API) && (RL_USE_STATIC_API == 1)
 struct rpmsg_lite_instance *rpmsg_lite_remote_init(void *shmem_addr,
-                                                   int link_id,
+                                                   uint32_t link_id,
                                                    uint32_t init_flags,
                                                    struct rpmsg_lite_instance *static_context);
 #elif defined(RL_USE_ENVIRONMENT_CONTEXT) && (RL_USE_ENVIRONMENT_CONTEXT == 1)
-struct rpmsg_lite_instance *rpmsg_lite_remote_init(void *shmem_addr, int link_id, uint32_t init_flags, void *env_cfg);
+struct rpmsg_lite_instance *rpmsg_lite_remote_init(void *shmem_addr, uint32_t link_id, uint32_t init_flags, void *env_cfg);
 #else
-struct rpmsg_lite_instance *rpmsg_lite_remote_init(void *shmem_addr, int link_id, uint32_t init_flags);
+struct rpmsg_lite_instance *rpmsg_lite_remote_init(void *shmem_addr, uint32_t link_id, uint32_t init_flags);
 #endif
 
 /*!

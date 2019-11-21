@@ -126,25 +126,25 @@ struct vring
  * versa. They are at the end for backwards compatibility.
  */
 #define vring_used_event(vr) ((vr)->avail->ring[(vr)->num])
-#define vring_avail_event(vr) ((uint16_t *)&(vr)->used->ring[(vr)->num])
+#define vring_avail_event(vr) ((vr)->used->ring[(vr)->num].id)
 
 static inline int vring_size(unsigned int num, unsigned long align)
 {
-    int size;
+    unsigned int size;
 
     size = num * sizeof(struct vring_desc);
     size += sizeof(struct vring_avail) + (num * sizeof(uint16_t)) + sizeof(uint16_t);
-    size = (size + align - 1) & ~(align - 1);
+    size = (size + align - 1UL) & ~(align - 1UL);
     size += sizeof(struct vring_used) + (num * sizeof(struct vring_used_elem)) + sizeof(uint16_t);
-    return (size);
+    return ((int)size);
 }
 
 static inline void vring_init(struct vring *vr, unsigned int num, uint8_t *p, unsigned long align)
 {
     vr->num = num;
-    vr->desc = (struct vring_desc *)p;
-    vr->avail = (struct vring_avail *)(p + num * sizeof(struct vring_desc));
-    vr->used = (struct vring_used *)(((unsigned long)&vr->avail->ring[num] + align - 1) & ~(align - 1));
+    vr->desc = (struct vring_desc *)(void *)p;
+    vr->avail = (struct vring_avail *)(void *)(p + num * sizeof(struct vring_desc));
+    vr->used = (struct vring_used *)(((unsigned long)&vr->avail->ring[num] + align - 1UL) & ~(align - 1UL));
 }
 
 /*
@@ -156,6 +156,13 @@ static inline void vring_init(struct vring *vr, unsigned int num, uint8_t *p, un
  */
 static inline int vring_need_event(uint16_t event_idx, uint16_t new_idx, uint16_t old)
 {
-    return (uint16_t)(new_idx - event_idx - 1) < (uint16_t)(new_idx - old);
+    if ((uint16_t)(new_idx - event_idx - 1U) < (uint16_t)(new_idx - old))
+    {
+         return 1;
+    }
+    else
+    {
+         return 0;
+    }
 }
 #endif /* VIRTIO_RING_H */

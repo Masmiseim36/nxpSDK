@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<workspace>
+  <batchBuild>
+    <batchDefinition>
+      <name>all</name>
+      <member>
+        <project>asrc_p2p_out_sdma</project>
+        <configuration>ddr_debug</configuration>
+      </member>
+      <member>
+        <project>asrc_p2p_out_sdma</project>
+        <configuration>ddr_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>ddr_debug</name>
+      <member>
+        <project>asrc_p2p_out_sdma</project>
+        <configuration>ddr_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>ddr_release</name>
+      <member>
+        <project>asrc_p2p_out_sdma</project>
+        <configuration>ddr_release</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+  <project>
+    <path>$WS_DIR$/asrc_p2p_out_sdma.ewp</path>
+  </project>
+</workspace>

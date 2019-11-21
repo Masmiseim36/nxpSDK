@@ -95,7 +95,7 @@ extern "C" {
  * @param app_cb            Application nameservice callback
  * @param user_data         Application nameservice callback data
  *
- * @return NameService handle, to be kept for unbinding.
+ * @return RL_NULL on error, NameService handle on success.
  *
  */
 #if defined(RL_USE_STATIC_API) && (RL_USE_STATIC_API == 1)

@@ -54,7 +54,7 @@
 static int env_init_counter = 0;
 
 /* Max supported ISR counts */
-#define ISR_COUNT (12) /* Change for multiple remote cores */
+#define ISR_COUNT (12U) /* Change for multiple remote cores */
                       /*!
                        * Structure to keep track of registered ISR's.
                        */
@@ -136,7 +136,7 @@ void *env_allocate_memory(unsigned int size)
  */
 void env_free_memory(void *ptr)
 {
-    if (ptr != NULL)
+    if (ptr != ((void *)0))
     {
         free(ptr);
     }
@@ -306,7 +306,7 @@ void env_unlock_mutex(void *lock)
  *
  * Suspends the calling thread for given time , in msecs.
  */
-void env_sleep_msec(int num_msec)
+void env_sleep_msec(unsigned int num_msec)
 {
     platform_time_delay(num_msec);
 }
@@ -319,7 +319,7 @@ void env_sleep_msec(int num_msec)
  * @param vector_id - virtual interrupt vector number
  * @param data      - interrupt handler data (virtqueue)
  */
-void env_register_isr(int vector_id, void *data)
+void env_register_isr(unsigned int vector_id, void *data)
 {
     RL_ASSERT(vector_id < ISR_COUNT);
     if (vector_id < ISR_COUNT)
@@ -335,7 +335,7 @@ void env_register_isr(int vector_id, void *data)
  *
  * @param vector_id - virtual interrupt vector number
  */
-void env_unregister_isr(int vector_id)
+void env_unregister_isr(unsigned int vector_id)
 {
     RL_ASSERT(vector_id < ISR_COUNT);
     if (vector_id < ISR_COUNT)
@@ -402,7 +402,7 @@ void env_disable_cache(void)
 /*========================================================= */
 /* Util data / functions for BM */
 
-void env_isr(int vector)
+void env_isr(unsigned int vector)
 {
     struct isr_info *info;
     RL_ASSERT(vector < ISR_COUNT);

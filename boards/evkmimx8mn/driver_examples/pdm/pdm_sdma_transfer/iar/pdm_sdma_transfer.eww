@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<workspace>
+  <batchBuild>
+    <batchDefinition>
+      <name>all</name>
+      <member>
+        <project>pdm_sdma_transfer</project>
+        <configuration>ddr_debug</configuration>
+      </member>
+      <member>
+        <project>pdm_sdma_transfer</project>
+        <configuration>ddr_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>ddr_debug</name>
+      <member>
+        <project>pdm_sdma_transfer</project>
+        <configuration>ddr_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>ddr_release</name>
+      <member>
+        <project>pdm_sdma_transfer</project>
+        <configuration>ddr_release</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+  <project>
+    <path>$WS_DIR$/pdm_sdma_transfer.ewp</path>
+  </project>
+</workspace>

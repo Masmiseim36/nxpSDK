@@ -60,17 +60,17 @@
 //!
 //! Size of the buffer payload, it must be equal to (240, 496, 1008, ...) 
 //! [2^n - 16].
-//! The default value is 496.
+//! The default value is 496U.
 #ifndef RL_BUFFER_PAYLOAD_SIZE
-#define RL_BUFFER_PAYLOAD_SIZE (496)
+#define RL_BUFFER_PAYLOAD_SIZE (496U)
 #endif
 
 //! @def RL_BUFFER_COUNT
 //!
 //! Number of the buffers, it must be power of two (2, 4, ...).
-//! The default value is 2.
+//! The default value is 2U.
 #ifndef RL_BUFFER_COUNT
-#define RL_BUFFER_COUNT (2)
+#define RL_BUFFER_COUNT (2U)
 #endif
 
 //! @def RL_API_HAS_ZEROCOPY
@@ -151,7 +151,7 @@
             RL_HANG(); \
         } \
     } while (0);
-#define RL_ASSERT(x) RL_ASSERT_BOOL((x)!=0)
+#define RL_ASSERT(x) RL_ASSERT_BOOL((int)(x)!=0)
 
 
 

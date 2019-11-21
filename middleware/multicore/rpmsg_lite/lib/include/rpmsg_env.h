@@ -334,7 +334,7 @@ void env_release_sync_lock(void *lock);
  *
  * @param num_msec -  delay in msecs
  */
-void env_sleep_msec(int num_msec);
+void env_sleep_msec(unsigned int num_msec);
 
 /*!
  * env_register_isr
@@ -346,9 +346,9 @@ void env_sleep_msec(int num_msec);
  * @param data          Interrupt handler data (virtqueue)
  */
 #if defined(RL_USE_ENVIRONMENT_CONTEXT) && (RL_USE_ENVIRONMENT_CONTEXT == 1)
-void env_register_isr(void *env, int vector_id, void *data);
+void env_register_isr(void *env, unsigned int vector_id, void *data);
 #else
-void env_register_isr(int vector_id, void *data);
+void env_register_isr(unsigned int vector_id, void *data);
 #endif
 
 /*!
@@ -360,9 +360,9 @@ void env_register_isr(int vector_id, void *data);
  * @param vector_id     Virtual interrupt vector number
  */
 #if defined(RL_USE_ENVIRONMENT_CONTEXT) && (RL_USE_ENVIRONMENT_CONTEXT == 1)
-void env_unregister_isr(void *env, int vector_id);
+void env_unregister_isr(void *env, unsigned int vector_id);
 #else
-void env_unregister_isr(int vector_id);
+void env_unregister_isr(unsigned int vector_id);
 #endif
 
 /*!
@@ -487,7 +487,7 @@ void env_delete_queue(void *queue);
  * @return - status of function execution
  */
 
-int env_put_queue(void *queue, void *msg, int timeout_ms);
+int env_put_queue(void *queue, void *msg, unsigned int timeout_ms);
 
 /*!
  * env_get_queue
@@ -501,7 +501,7 @@ int env_put_queue(void *queue, void *msg, int timeout_ms);
  * @return - status of function execution
  */
 
-int env_get_queue(void *queue, void *msg, int timeout_ms);
+int env_get_queue(void *queue, void *msg, unsigned int timeout_ms);
 
 /*!
  * env_get_current_queue_size
@@ -524,9 +524,9 @@ int env_get_current_queue_size(void *queue);
  * @param vector        RPMSG IRQ vector ID.
  */
 #if defined(RL_USE_ENVIRONMENT_CONTEXT) && (RL_USE_ENVIRONMENT_CONTEXT == 1)
-void env_isr(void *env, int vector);
+void env_isr(void *env, unsigned int vector);
 #else
-void env_isr(int vector);
+void env_isr(unsigned int vector);
 #endif
 
 

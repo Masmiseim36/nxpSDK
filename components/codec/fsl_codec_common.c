@@ -85,12 +85,11 @@ status_t CODEC_SetFormat(codec_handle_t *handle, uint32_t mclk, uint32_t sampleR
 status_t CODEC_ModuleControl(codec_handle_t *handle, codec_module_ctrl_cmd_t cmd, uint32_t data)
 {
     assert((handle != NULL) && (handle->codecConfig != NULL));
-    assert(handle->codecCapability != NULL);
 
     switch (cmd)
     {
         case kCODEC_ModuleSwitchI2SInInterface:
-            if ((handle->codecCapability->codecModuleCapability & kCODEC_SupportModuleI2SInSwitchInterface) == 0U)
+            if ((handle->codecCapability.codecModuleCapability & kCODEC_SupportModuleI2SInSwitchInterface) == 0U)
             {
                 return kStatus_CODEC_NotSupport;
             }
@@ -115,10 +114,9 @@ status_t CODEC_SetVolume(codec_handle_t *handle, uint32_t playChannel, uint32_t 
 {
     assert((handle != NULL) && (handle->codecConfig != NULL));
     assert(volume <= CODEC_VOLUME_MAX_VALUE);
-    assert(handle->codecCapability != NULL);
 
     /* check capability of set volume */
-    if ((GET_PLAY_CHANNEL_CAPABILITY(handle->codecCapability->codecPlayCapability) & playChannel) == 0U)
+    if ((GET_PLAY_CHANNEL_CAPABILITY(handle->codecCapability.codecPlayCapability) & playChannel) == 0U)
     {
         return kStatus_CODEC_NotSupport;
     }
@@ -137,10 +135,9 @@ status_t CODEC_SetVolume(codec_handle_t *handle, uint32_t playChannel, uint32_t 
 status_t CODEC_SetMute(codec_handle_t *handle, uint32_t playChannel, bool mute)
 {
     assert((handle != NULL) && (handle->codecConfig != NULL));
-    assert(handle->codecCapability != NULL);
 
     /* check capability of mute */
-    if ((GET_PLAY_CHANNEL_CAPABILITY(handle->codecCapability->codecPlayCapability) & playChannel) == 0U)
+    if ((GET_PLAY_CHANNEL_CAPABILITY(handle->codecCapability.codecPlayCapability) & playChannel) == 0U)
     {
         return kStatus_CODEC_NotSupport;
     }
@@ -159,10 +156,9 @@ status_t CODEC_SetMute(codec_handle_t *handle, uint32_t playChannel, bool mute)
 status_t CODEC_SetPower(codec_handle_t *handle, codec_module_t module, bool powerOn)
 {
     assert((handle != NULL) && (handle->codecConfig != NULL));
-    assert(handle->codecCapability != NULL);
 
     /* check capability of power switch */
-    if ((handle->codecCapability->codecModuleCapability & (1U << module)) == 0U)
+    if ((handle->codecCapability.codecModuleCapability & (1U << module)) == 0U)
     {
         return kStatus_CODEC_NotSupport;
     }
@@ -181,10 +177,9 @@ status_t CODEC_SetPower(codec_handle_t *handle, codec_module_t module, bool powe
 status_t CODEC_SetRecord(codec_handle_t *handle, uint32_t recordSource)
 {
     assert((handle != NULL) && (handle->codecConfig != NULL));
-    assert(handle->codecCapability != NULL);
 
     /* check capability of record capability */
-    if ((GET_RECORD_SOURCE_CAPABILITY(handle->codecCapability->codecRecordCapability) & recordSource) == 0U)
+    if ((GET_RECORD_SOURCE_CAPABILITY(handle->codecCapability.codecRecordCapability) & recordSource) == 0U)
     {
         return kStatus_CODEC_NotSupport;
     }
@@ -206,15 +201,14 @@ status_t CODEC_SetRecord(codec_handle_t *handle, uint32_t recordSource)
 status_t CODEC_SetRecordChannel(codec_handle_t *handle, uint32_t leftRecordChannel, uint32_t rightRecordChannel)
 {
     assert((handle != NULL) && (handle->codecConfig != NULL));
-    assert(handle->codecCapability != NULL);
 
     /* check capability of record capability */
-    if ((GET_RECORD_CHANNEL_CAPABILITY(handle->codecCapability->codecRecordCapability) & leftRecordChannel) == 0U)
+    if ((GET_RECORD_CHANNEL_CAPABILITY(handle->codecCapability.codecRecordCapability) & leftRecordChannel) == 0U)
     {
         return kStatus_CODEC_NotSupport;
     }
 
-    if ((GET_RECORD_CHANNEL_CAPABILITY(handle->codecCapability->codecRecordCapability) & rightRecordChannel) == 0U)
+    if ((GET_RECORD_CHANNEL_CAPABILITY(handle->codecCapability.codecRecordCapability) & rightRecordChannel) == 0U)
     {
         return kStatus_CODEC_NotSupport;
     }
@@ -233,10 +227,9 @@ status_t CODEC_SetRecordChannel(codec_handle_t *handle, uint32_t leftRecordChann
 status_t CODEC_SetPlay(codec_handle_t *handle, uint32_t playSource)
 {
     assert((handle != NULL) && (handle->codecConfig != NULL));
-    assert(handle->codecCapability != NULL);
 
     /* check capability of record capability */
-    if ((GET_PLAY_SOURCE_CAPABILITY(handle->codecCapability->codecPlayCapability) & playSource) == 0U)
+    if ((GET_PLAY_SOURCE_CAPABILITY(handle->codecCapability.codecPlayCapability) & playSource) == 0U)
     {
         return kStatus_CODEC_NotSupport;
     }

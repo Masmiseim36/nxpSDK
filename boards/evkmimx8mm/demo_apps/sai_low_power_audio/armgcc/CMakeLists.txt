@@ -104,6 +104,10 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCODEC_AK4497_ENABLE")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFSL_RTOS_FREE_RTOS")
 
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DBOARD_USE_CODEC=1")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCODEC_WM8524_ENABLE")
+
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
@@ -151,6 +155,10 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSDK_I2C_BASED_COMPONENT_US
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCODEC_AK4497_ENABLE")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFSL_RTOS_FREE_RTOS")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DBOARD_USE_CODEC=1")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCODEC_WM8524_ENABLE")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
 
@@ -384,7 +392,13 @@ include_directories(${ProjDirPath}/../../../../../components/codec/port)
 
 include_directories(${ProjDirPath}/../../../../../components/codec/ak4497)
 
+include_directories(${ProjDirPath}/../../../../../components/codec/port/ak4497)
+
 include_directories(${ProjDirPath}/../../../../../components/i2c)
+
+include_directories(${ProjDirPath}/../../../../../components/codec/wm8524)
+
+include_directories(${ProjDirPath}/../../../../../components/codec/port/wm8524)
 
 include_directories(${ProjDirPath}/../../../../../devices/MIMX8MM6)
 
@@ -435,6 +449,8 @@ add_executable(sai_low_power_audio.elf
 "${ProjDirPath}/../../../../../components/srtm/services/srtm_i2c_codec_adapter.h"
 "${ProjDirPath}/../../../../../components/srtm/services/srtm_sai_sdma_adapter.c"
 "${ProjDirPath}/../../../../../components/srtm/services/srtm_sai_sdma_adapter.h"
+"${ProjDirPath}/../../../../../components/srtm/services/srtm_wm8524_adapter.c"
+"${ProjDirPath}/../../../../../components/srtm/services/srtm_wm8524_adapter.h"
 "${ProjDirPath}/../../../../../devices/MIMX8MM6/drivers/fsl_uart.c"
 "${ProjDirPath}/../../../../../devices/MIMX8MM6/drivers/fsl_uart.h"
 "${ProjDirPath}/../../../../../devices/MIMX8MM6/drivers/fsl_gpc.c"
@@ -444,9 +460,14 @@ add_executable(sai_low_power_audio.elf
 "${ProjDirPath}/../../../../../components/codec/fsl_codec_common.c"
 "${ProjDirPath}/../../../../../components/codec/fsl_codec_common.h"
 "${ProjDirPath}/../../../../../components/codec/port/fsl_codec_adapter.h"
-"${ProjDirPath}/../../../../../components/codec/port/ak4497/fsl_codec_adapter.c"
+"${ProjDirPath}/../../../../../components/codec/port/ak4497/fsl_ak4497_adapter.c"
+"${ProjDirPath}/../../../../../components/codec/port/ak4497/fsl_ak4497_adapter.h"
+"${ProjDirPath}/../../../../../components/codec/port/fsl_codec_adapter.c"
 "${ProjDirPath}/../../../../../components/i2c/i2c.h"
 "${ProjDirPath}/../../../../../components/i2c/ii2c_adapter.c"
+"${ProjDirPath}/../../../../../components/codec/port/fsl_codec_adapter.c"
+"${ProjDirPath}/../../../../../components/codec/port/wm8524/fsl_wm8524_adapter.c"
+"${ProjDirPath}/../../../../../components/codec/port/wm8524/fsl_wm8524_adapter.h"
 "${ProjDirPath}/../../../../../devices/MIMX8MM6/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../devices/MIMX8MM6/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../devices/MIMX8MM6/drivers/fsl_sai.c"
@@ -572,6 +593,8 @@ add_executable(sai_low_power_audio.elf
 "${ProjDirPath}/../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c"
 "${ProjDirPath}/../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c"
+"${ProjDirPath}/../../../../../components/codec/wm8524/fsl_wm8524.c"
+"${ProjDirPath}/../../../../../components/codec/wm8524/fsl_wm8524.h"
 )
 
 

@@ -15,10 +15,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/*! @brief codec i2c handler */
-#ifndef CODEC_I2C_MASTER_HANDLER_SIZE
-#define CODEC_I2C_MASTER_HANDLER_SIZE HAL_I2C_MASTER_HANDLE_SIZE
-#endif
 
 /*! @brief CODEC device register address type. */
 typedef enum _codec_reg_addr

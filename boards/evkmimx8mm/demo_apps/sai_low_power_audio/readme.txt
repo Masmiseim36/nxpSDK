@@ -26,8 +26,7 @@ Board settings
 No special settings are required.
 
 #### Note! ####
-1.  This case does not support flash targets because of SDMA3 burst DMA not supporting for accessing flexspi.
-2.  This case does not support ddr target because of the mass of the music data decoded by A core will be placed in DDR. 
+1.  This case does not support ddr and flash target. 
 
 Prepare the Demo
 ================
@@ -45,11 +44,12 @@ Prepare the Demo
 ******************
 NOTE
 ******************
-1.  The 48/96/192/384/768kHz, stereo, 16/24/32bit for PCM and DSD64/128/256/512 Music stream are supported
-2.  Only ak4497 codecs on the audio board supported.
+1.  The 16/32bit for PCM and DSD64/128/256/512( DSD playabck only supported by ak4497 codec) Music stream are supported
+2.  The wm8524 codec on the EVK board and the ak4497 codec on the audio board are both supported,
+    but please note that only one codec can be used at the same time which is determained by the macro "APP_SRTM_CODEC_WM8524_USED" and "APP_SRTM_CODEC_AK4497_USED" in app_srtm.h.
 3.  Since the  DSD files are typically large, users could create a new large size patition in the SD card to place the music files.
-4.  After M4 running, please make sure the linux kernel is boot up, then press "s" or "S" to start the demo.
-5.  If there is no audio playback, the M4 will enter the STOP mode, then the whole system would enter DSM mode once A53 suspend.
+4.  After M core running, please make sure the linux kernel is boot up, then press "s" or "S" to start the demo.
+5.  If there is no audio playback, the M core will enter the STOP mode, then the whole system would enter DSM mode once A53 suspend.
     Press the ON/OFF button on the EVK board, could wakeup A53 core;
 6.  Please make sure here exists xxx.wav file in the SD card.
     If the music file is placed at the Windows FAT32 paritions, after the linux kernel boot up and logged as root,
@@ -61,19 +61,22 @@ Playback command
 ******************
 When playback the .wav file:
 1.  If want to test free run, could use command: 
-    aplay -Dhw:1 xxx.wav;
+    aplay -Dhw:0 xxx.wav;
 2.  If want to test pause command, could use command: 
-    aplay -Dhw:1 -i xxx.wav -N;
+    aplay -Dhw:0 -i xxx.wav -N;
     press space key on the keyboard to pause, and press the space key again to resume.
 3.  If want to test play back with specified period-size, could use command:
-    aplay -Dhw:1 -i --buffer-size=xxx --period-size=xxx xxx.wav -N &;
+    "aplay -Dhw:0 --buffer-size=xxx --period-size=xxx xxx.wav -N &" or
+    "aplay -Dhw:0 --buffer-time=xxx --period-time=xxx xxx.wav -N &".
+    E.g: aplay -Dhw:0 --period-time=500000 --buffer-time=5000000 xxx.wav -N &
 4.  Support music playabck when A core enters suspend.
     
-When playback the .dsd/.dff file: 
+When playback the .dsd/.dff file (only supported by AK4497 codec): 
 1.  Enter folder where the DSD execution procedure exists, using command:
      "cd /unit_tests/ALSA_DSD"
 2.  If want to test play back with specified period-size, could use command:
-      "./mxc_alsa_dsd_player -Dhw:1 --buffer-size=xxx --period-size=xxx music path"
+      "./mxc_alsa_dsd_player -Dhw:0 --buffer-size=xxx --period-size=xxx music path" or
+      "./mxc_alsa_dsd_player -Dhw:0 --buffer-time=xxx --period-time=xxx music path"
     Please note that the "music path" means where the DSD file exists.
 3.  Support music playabck when A core enters suspend.
 
@@ -83,14 +86,15 @@ When the demo runs successfully, the log would be seen on the terminal like:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ####################  LOW POWER AUDIO TASK ####################
 
-    Build Time: Sep 17 2018--09:32:59 
+    Build Time: Oct 11 2019--12:37:28 
 ********************************
-Please:
-  1) Boot A53 kernel first to create the link between M core and A core;
-  2) Then press "s" or "S" to start the demo.
+Please follow:
+  (1) Boot Linux kernel first to create the link between M core and A core;
+  (2) If want to make the M core enter STOP mode when there is no audio playback, press "s" or "S" first;
+  (3) Audio playback is allowed even skip the step 2 using the playback command.
 ********************************
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-M4 is running now, please boot the linux kernel and use the command to playback music.
+M core is running now, please boot the linux kernel and use the command to playback music.
 
 
 

@@ -52,7 +52,6 @@ typedef struct _wm8524_config
     wm8524_protocol_t protocol;       /*!< Protocol of the codec */
 } wm8524_config_t;
 
-/*!@brief WM8524 handler */
 typedef struct _wm8524_handle_t
 {
     wm8524_config_t *config; /*!< wm8524 config pointer */

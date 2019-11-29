@@ -1,7 +1,7 @@
 /*
 ** ###################################################################
 **     Version:             rev. 4.0, 2019-02-18
-**     Build:               b190306
+**     Build:               b190711
 **
 **     Abstract:
 **         Chip specific module features.
@@ -132,6 +132,11 @@
 /* @brief Has Additional 1588 Timer Channel Interrupt. */
 #define FSL_FEATURE_ENET_HAS_ADD_1588_TIMER_CHN_INT (1)
 
+/* GPC module features */
+
+/* @brief Has PGC MF. */
+#define FSL_FEATURE_GPC_HAS_PGC_MF (1)
+
 /* IGPIO module features */
 
 /* @brief Has data register set DR_SET. */
@@ -171,12 +176,12 @@
 #define FSL_FEATURE_SAI_HAS_MDR (0)
 /* @brief Has support the BCLK bypass mode when BCLK = MCLK. */
 #define FSL_FEATURE_SAI_HAS_BCLK_BYPASS (1)
-/* @brief SAI5 AND SAI6 SHARE ONE IRQNUMBER. */
-#define FSL_FEATURE_SAI_SAI5_SAI6_SHARE_IRQ  (1)
 /* @brief Has DIV bit fields of MCR register (register bit fields MCR[DIV]. */
 #define FSL_FEATURE_SAI_HAS_MCR_MCLK_POST_DIV (1)
 /* @brief Support Channel Mode (register bit fields TCR4[CHMOD]). */
 #define FSL_FEATURE_SAI_HAS_CHANNEL_MODE (1)
+/* @brief SAI5 AND SAI6 SHARE ONE IRQNUMBER. */
+#define FSL_FEATURE_SAI_SAI5_SAI6_SHARE_IRQ  (1)
 
 /* LMEM module features */
 
@@ -279,12 +284,12 @@
 
 /* @brief SPBA module start address. */
 #define FSL_FEATURE_SPBA_STARTn(x) \
-    (((x) == SPBA1) ? (0x30800000U) : \
-    (((x) == SPBA2) ? (0x30000000U) : (-1)))
+    (((x) == SPBA2) ? (0x30000000U) : \
+    (((x) == SPBA1) ? (0x30800000U) : (-1)))
 /* @brief SPBA module end address. */
 #define FSL_FEATURE_SPBA_ENDn(x) \
-    (((x) == SPBA1) ? (0x308FFFFFU) : \
-    (((x) == SPBA2) ? (0x300FFFFFU) : (-1)))
+    (((x) == SPBA2) ? (0x300FFFFFU) : \
+    (((x) == SPBA1) ? (0x308FFFFFU) : (-1)))
 
 /* SysTick module features */
 
@@ -310,6 +315,10 @@
 #define FSL_FEATURE_USDHC_HAS_SDR50_MODE (1)
 /* @brief Has SDR104 support (HOST_CTRL_CAP[SDR104_SUPPORT]) */
 #define FSL_FEATURE_USDHC_HAS_SDR104_MODE (1)
+/* @brief USDHC has reset control */
+#define FSL_FEATURE_USDHC_HAS_RESET (0)
+/* @brief USDHC has no bitfield WTMK_LVL[WR_BRST_LEN] and WTMK_LVL[RD_BRST_LEN] */
+#define FSL_FEATURE_USDHC_HAS_NO_RW_BURST_LEN (0)
 
 #endif /* _MIMX8MM6_cm4_FEATURES_H_ */
 

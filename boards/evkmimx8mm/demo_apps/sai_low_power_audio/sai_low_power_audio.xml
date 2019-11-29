@@ -2,8 +2,9 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
-    <definition extID="component.ak4497_adapter.MIMX8MM6"/>
+    <definition extID="component.codec_ak4497_adapter.MIMX8MM6"/>
     <definition extID="component.codec_i2c.MIMX8MM6"/>
+    <definition extID="component.codec_wm8524_adapter.MIMX8MM6"/>
     <definition extID="component.ii2c_adapter.MIMX8MM6"/>
     <definition extID="component.iuart_adapter.MIMX8MM6"/>
     <definition extID="component.lists.MIMX8MM6"/>
@@ -15,6 +16,7 @@
     <definition extID="driver.codec.MIMX8MM6"/>
     <definition extID="driver.srtm.MIMX8MM6"/>
     <definition extID="driver.srtm.freertos.MIMX8MM6"/>
+    <definition extID="driver.wm8524.MIMX8MM6"/>
     <definition extID="middleware.amazon_freertos.freertos.MIMX8MM6"/>
     <definition extID="middleware.amazon_freertos.freertos.heap_4.MIMX8MM6"/>
     <definition extID="middleware.multicore.rpmsg_lite.MIMX8MM6"/>
@@ -42,7 +44,7 @@
     <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkmimx8mm_sai_low_power_audio" name="sai_low_power_audio" category="demo_apps/sai_low_power_audio" dependency="platform.drivers.igpio.MIMX8MM6 platform.drivers.iuart.MIMX8MM6 platform.drivers.gpc_2.MIMX8MM6 platform.drivers.gpt.MIMX8MM6 driver.codec.MIMX8MM6 component.ak4497_adapter.MIMX8MM6 component.ii2c_adapter.MIMX8MM6 platform.drivers.clock.MIMX8MM6 platform.drivers.sai.MIMX8MM6 platform.drivers.sai_sdma.MIMX8MM6 platform.drivers.common.MIMX8MM6 platform.drivers.rdc.MIMX8MM6 device.MIMX8MM6_CMSIS.MIMX8MM6 utility.debug_console.MIMX8MM6 component.iuart_adapter.MIMX8MM6 component.serial_manager.MIMX8MM6 component.serial_manager_uart.MIMX8MM6 component.lists.MIMX8MM6 device.MIMX8MM6_startup.MIMX8MM6 platform.utilities.assert.MIMX8MM6 platform.Include_core_cm4.MIMX8MM6 platform.Include_common.MIMX8MM6 platform.drivers.sdma.MIMX8MM6 platform.drivers.mu.MIMX8MM6 driver.ak4497.MIMX8MM6 component.codec_i2c.MIMX8MM6 driver.srtm.freertos.MIMX8MM6 driver.srtm.MIMX8MM6 platform.drivers.ii2c_freertos.MIMX8MM6 platform.drivers.ii2c.MIMX8MM6 middleware.amazon_freertos.freertos.MIMX8MM6 middleware.multicore.rpmsg_lite.imx8mm_m4_freertos.MIMX8MM6 middleware.multicore.rpmsg_lite.freertos.MIMX8MM6 middleware.multicore.rpmsg_lite.MIMX8MM6 middleware.amazon_freertos.freertos.heap_4.MIMX8MM6">
+  <example id="evkmimx8mm_sai_low_power_audio" name="sai_low_power_audio" category="demo_apps/sai_low_power_audio" dependency="platform.drivers.igpio.MIMX8MM6 platform.drivers.iuart.MIMX8MM6 platform.drivers.gpc_2.MIMX8MM6 platform.drivers.gpt.MIMX8MM6 driver.codec.MIMX8MM6 component.codec_ak4497_adapter.MIMX8MM6 component.ii2c_adapter.MIMX8MM6 component.codec_wm8524_adapter.MIMX8MM6 platform.drivers.clock.MIMX8MM6 platform.drivers.sai.MIMX8MM6 platform.drivers.sai_sdma.MIMX8MM6 platform.drivers.common.MIMX8MM6 platform.drivers.rdc.MIMX8MM6 device.MIMX8MM6_CMSIS.MIMX8MM6 utility.debug_console.MIMX8MM6 component.iuart_adapter.MIMX8MM6 component.serial_manager.MIMX8MM6 component.serial_manager_uart.MIMX8MM6 component.lists.MIMX8MM6 device.MIMX8MM6_startup.MIMX8MM6 platform.utilities.assert.MIMX8MM6 platform.Include_core_cm4.MIMX8MM6 platform.Include_common.MIMX8MM6 platform.drivers.sdma.MIMX8MM6 platform.drivers.mu.MIMX8MM6 driver.ak4497.MIMX8MM6 component.codec_i2c.MIMX8MM6 driver.srtm.freertos.MIMX8MM6 driver.srtm.MIMX8MM6 platform.drivers.ii2c_freertos.MIMX8MM6 platform.drivers.ii2c.MIMX8MM6 middleware.amazon_freertos.freertos.MIMX8MM6 middleware.multicore.rpmsg_lite.imx8mm_m4_freertos.MIMX8MM6 middleware.multicore.rpmsg_lite.freertos.MIMX8MM6 middleware.multicore.rpmsg_lite.MIMX8MM6 middleware.amazon_freertos.freertos.heap_4.MIMX8MM6 driver.wm8524.MIMX8MM6">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -65,6 +67,8 @@
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>CODEC_AK4497_ENABLE</value>
           <value>FSL_RTOS_FREE_RTOS</value>
+          <value>BOARD_USE_CODEC=1</value>
+          <value>CODEC_WM8524_ENABLE</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -123,11 +127,13 @@
       <files mask="srtm_audio_service.h"/>
       <files mask="srtm_i2c_codec_adapter.h"/>
       <files mask="srtm_sai_sdma_adapter.h"/>
+      <files mask="srtm_wm8524_adapter.h"/>
     </source>
     <source path="components/srtm/services" target_path="srtm/services" type="src">
       <files mask="srtm_audio_service.c"/>
       <files mask="srtm_i2c_codec_adapter.c"/>
       <files mask="srtm_sai_sdma_adapter.c"/>
+      <files mask="srtm_wm8524_adapter.c"/>
     </source>
   </example>
 </ksdk:examples>

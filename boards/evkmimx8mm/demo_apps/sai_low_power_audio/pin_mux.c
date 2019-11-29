@@ -59,6 +59,7 @@ BOARD_InitPins:
  *
  * END ****************************************************************************************************************/
 void BOARD_InitPins(void) {                                /*!< Function assigned for the core: Cortex-M4[m4] */
+    IOMUXC_SetPinMux(IOMUXC_I2C4_SDA_GPIO5_IO21, 0U);
     IOMUXC_SetPinMux(IOMUXC_SAI1_MCLK_SAI1_MCLK, 0U);
     IOMUXC_SetPinConfig(IOMUXC_SAI1_MCLK_SAI1_MCLK, 
                         IOMUXC_SW_PAD_CTL_PAD_DSE(2U) |
@@ -76,6 +77,26 @@ void BOARD_InitPins(void) {                                /*!< Function assigne
                         IOMUXC_SW_PAD_CTL_PAD_HYS_MASK);
     IOMUXC_SetPinMux(IOMUXC_SAI1_TXD0_SAI1_TX_DATA0, 0U);
     IOMUXC_SetPinConfig(IOMUXC_SAI1_TXD0_SAI1_TX_DATA0, 
+                        IOMUXC_SW_PAD_CTL_PAD_DSE(2U) |
+                        IOMUXC_SW_PAD_CTL_PAD_FSEL(2U) |
+                        IOMUXC_SW_PAD_CTL_PAD_HYS_MASK);
+    IOMUXC_SetPinMux(IOMUXC_SAI3_MCLK_SAI3_MCLK, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_SAI3_MCLK_SAI3_MCLK, 
+                        IOMUXC_SW_PAD_CTL_PAD_DSE(2U) |
+                        IOMUXC_SW_PAD_CTL_PAD_FSEL(2U) |
+                        IOMUXC_SW_PAD_CTL_PAD_HYS_MASK);
+    IOMUXC_SetPinMux(IOMUXC_SAI3_TXC_SAI3_TX_BCLK, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_SAI3_TXC_SAI3_TX_BCLK, 
+                        IOMUXC_SW_PAD_CTL_PAD_DSE(2U) |
+                        IOMUXC_SW_PAD_CTL_PAD_FSEL(2U) |
+                        IOMUXC_SW_PAD_CTL_PAD_HYS_MASK);
+    IOMUXC_SetPinMux(IOMUXC_SAI3_TXD_SAI3_TX_DATA0, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_SAI3_TXD_SAI3_TX_DATA0, 
+                        IOMUXC_SW_PAD_CTL_PAD_DSE(2U) |
+                        IOMUXC_SW_PAD_CTL_PAD_FSEL(2U) |
+                        IOMUXC_SW_PAD_CTL_PAD_HYS_MASK);
+    IOMUXC_SetPinMux(IOMUXC_SAI3_TXFS_SAI3_TX_SYNC, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_SAI3_TXFS_SAI3_TX_SYNC, 
                         IOMUXC_SW_PAD_CTL_PAD_DSE(2U) |
                         IOMUXC_SW_PAD_CTL_PAD_FSEL(2U) |
                         IOMUXC_SW_PAD_CTL_PAD_HYS_MASK);

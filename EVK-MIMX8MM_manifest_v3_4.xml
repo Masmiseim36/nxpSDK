@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_EVK-MIMX8MM" name="EVK-MIMX8MM" brief="This is SDK version 2.6.0 manifest file. It describes the content of the EVK-MIMX8MM and additional settings for tools that support SDK version 2.6.0" format_version="3.4" api_version="2.0.0" configuration="667b38ede03d9bd9c299cc2d475ad66f" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.4.xsd">
-  <!--Timestamp (UTC): 2019-06-18 08:31:44.082410-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_EVK-MIMX8MM" name="EVK-MIMX8MM" brief="This is SDK version 2.6.1 manifest file. It describes the content of the EVK-MIMX8MM and additional settings for tools that support SDK version 2.6.1" format_version="3.4" api_version="2.0.0" configuration="bebeaccf14998dc9816c3fd525d4e388" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.4.xsd">
+  <!--Timestamp (UTC): 2019-11-29 09:50:04.424968-->
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
@@ -10,7 +10,7 @@
     <definition extID="com.crt.advproject.config.exe.release"/>
     <definition extID="QSPI_FLASH_MIMX8MM6xxxLZ"/>
   </externalDefinitions>
-  <ksdk id="MCUXpresso260" name="MCUXpresso260" version="2.6.0" revision="228 2019-06-14"/>
+  <ksdk id="MCUXpresso261" name="MCUXpresso261" version="2.6.1" revision="291 2019-11-29"/>
   <compilers>
     <compiler id="compiler_gcc" name="gcc" type="gcc"/>
     <compiler id="compiler_iar" name="iar" type="iar"/>
@@ -24,7 +24,7 @@
     <board id="evkmimx8mm" name="EVK-MIMX8MM" href="http://www.nxp.com/iMX8M" version="1.0.0" package="MIMX8MM6DVTLZ">
       <description>The evkmimx8mm is an development platform for MIMX8MM3, MIMX8MM4, MIMX8MM5, MIMX8MM6 MCUs</description>
       <image path="docs/images" type="image">
-        <files mask="ZEBU-MIMX8MM.gif"/>
+        <files mask="EVK-MIMX8MM.gif"/>
       </image>
       <metadataSet>
         <metadata key="vendor" value="NXP"/>
@@ -1351,8 +1351,14 @@
         <files mask="xcc.cmake"/>
       </source>
     </component>
-    <component id="component.ak4497_adapter.MIMX8MM6" name="ak4497_adapter" version="2.1.0" devices="MIMX8MM6xxxLZ" dependency="component.codec_i2c.MIMX8MM6 device.MIMX8MM6_CMSIS.MIMX8MM6 driver.ak4497.MIMX8MM6 driver.codec.MIMX8MM6 platform.Include_common.MIMX8MM6 platform.Include_core_cm4.MIMX8MM6 platform.drivers.clock.MIMX8MM6 platform.drivers.common.MIMX8MM6" category="Device/SDK Drivers" user_visible="true" type="other">
+    <component id="component.codec_ak4497_adapter.MIMX8MM6" name="codec_ak4497_adapter" version="2.1.0" devices="MIMX8MM6xxxLZ" dependency="component.codec_i2c.MIMX8MM6 device.MIMX8MM6_CMSIS.MIMX8MM6 driver.ak4497.MIMX8MM6 driver.codec.MIMX8MM6 platform.Include_common.MIMX8MM6 platform.Include_core_cm4.MIMX8MM6 platform.drivers.clock.MIMX8MM6 platform.drivers.common.MIMX8MM6" category="Device/SDK Drivers" user_visible="true" type="other">
       <source path="components/codec/port/ak4497" target_path="codec" type="src">
+        <files mask="fsl_ak4497_adapter.c"/>
+      </source>
+      <source path="components/codec/port/ak4497" target_path="codec" type="c_include">
+        <files mask="fsl_ak4497_adapter.h"/>
+      </source>
+      <source path="components/codec/port" target_path="codec" type="src">
         <files mask="fsl_codec_adapter.c"/>
       </source>
     </component>
@@ -1362,6 +1368,17 @@
       </source>
       <source path="components/codec/i2c" target_path="codec" type="c_include">
         <files mask="fsl_codec_i2c.h"/>
+      </source>
+    </component>
+    <component id="component.codec_wm8524_adapter.MIMX8MM6" name="codec_wm8524_adapter" version="2.1.0" devices="MIMX8MM6xxxLZ" dependency="device.MIMX8MM6_CMSIS.MIMX8MM6 driver.codec.MIMX8MM6 driver.wm8524.MIMX8MM6 platform.Include_common.MIMX8MM6 platform.Include_core_cm4.MIMX8MM6 platform.drivers.clock.MIMX8MM6 platform.drivers.common.MIMX8MM6" category="Device/SDK Drivers" user_visible="true" type="other">
+      <source path="components/codec/port" target_path="codec" type="src">
+        <files mask="fsl_codec_adapter.c"/>
+      </source>
+      <source path="components/codec/port/wm8524" target_path="codec" type="src">
+        <files mask="fsl_wm8524_adapter.c"/>
+      </source>
+      <source path="components/codec/port/wm8524" target_path="codec" type="c_include">
+        <files mask="fsl_wm8524_adapter.h"/>
       </source>
     </component>
     <component id="component.ii2c_adapter.MIMX8MM6" name="ii2c_adapter" version="1.0.0" devices="MIMX8MM6xxxLZ" dependency="device.MIMX8MM6_CMSIS.MIMX8MM6 platform.Include_common.MIMX8MM6 platform.Include_core_cm4.MIMX8MM6 platform.drivers.clock.MIMX8MM6 platform.drivers.common.MIMX8MM6 platform.drivers.ii2c.MIMX8MM6" category="Device/SDK Drivers" user_visible="true" type="other">

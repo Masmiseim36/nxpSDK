@@ -19,7 +19,7 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-static const codec_capability_t s_wm8524_capability;
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -33,13 +33,12 @@ static const codec_capability_t s_wm8524_capability;
 status_t HAL_CODEC_Init(codec_handle_t *handle, void *config)
 {
     assert((config != NULL) && (handle != NULL));
+    assert(CODEC_HANDLE_SIZE >= (sizeof(codec_handle_t) + sizeof(wm8524_handle_t)));
 
     codec_config_t *codecConfig = (codec_config_t *)config;
 
     wm8524_config_t *wm8524Config = (wm8524_config_t *)(codecConfig->codecDevConfig);
-    wm8524_handle_t *wm8524Handle = (wm8524_handle_t *)((uint32_t)(handle->codecDevHandle));
-
-    handle->codecCapability = &s_wm8524_capability;
+    wm8524_handle_t *wm8524Handle = (wm8524_handle_t *)((uint32_t) & (handle->codecDevHandle));
 
     /* codec device initialization */
     return WM8524_Init(wm8524Handle, wm8524Config);
@@ -95,7 +94,7 @@ status_t HAL_CODEC_SetMute(codec_handle_t *handle, uint32_t playChannel, bool is
 {
     assert(handle != NULL);
 
-    WM8524_SetMute((wm8524_handle_t *)((uint32_t)(handle->codecDevHandle)), isMute);
+    WM8524_SetMute((wm8524_handle_t *)((uint32_t) & (handle->codecDevHandle)), isMute);
 
     return kStatus_Success;
 }

@@ -56,11 +56,10 @@ void Peripheral_RdcSetting(void)
     RDC_SetPeriphAccessConfig(RDC, &periphConfig);
     periphConfig.periph = kRDC_Periph_GPT1;
     RDC_SetPeriphAccessConfig(RDC, &periphConfig);
-    /* Do not allow the m4 domain(domain1) to access SAI3.
-     * The purpose is to avoid system hang when A core to access SAI3 once M4 enters STOP mode.
-     */
-    periphConfig.policy = RDC_DISABLE_M4_ACCESS;
-    periphConfig.periph = kRDC_Periph_SAI3;
+    /* For SAI3, both kRDC_Periph_SAI3_ACCESS and kRDC_Periph_SAI3_LPM registers need set.*/
+    periphConfig.periph = kRDC_Periph_SAI3_ACCESS;
+    RDC_SetPeriphAccessConfig(RDC, &periphConfig);
+    periphConfig.periph = kRDC_Periph_SAI3_LPM;
     RDC_SetPeriphAccessConfig(RDC, &periphConfig);
 }
 /*
@@ -193,16 +192,19 @@ void MainTask(void *pvParameters)
 {
     uint8_t control_char;
 
-    /* Treat M4 as busy status by default.*/
+    /* Treat M core as busy status by default.*/
     ServiceFlagAddr = ServiceBusy;
 
     /*
-     * Wait For A53 Side Become Ready
+     * Wait For A core Side Become Ready
      */
     PRINTF("********************************\r\n");
-    PRINTF("Please:\r\n");
-    PRINTF("  1) Boot A53 kernel first to create the link between M core and A core;\r\n");
-    PRINTF("  2) Then press \"s\" or \"S\" to start the demo.\r\n");
+    PRINTF("Please follow:\r\n");
+    PRINTF("  (1) Boot Linux kernel first to create the link between M core and A core;\r\n");
+    PRINTF(
+        "  (2) If want to make the M core enter STOP mode when there is no audio playback, press \"s\" or \"S\" "
+        "first;\r\n");
+    PRINTF("  (3) Audio playback is allowed even skip the step 2 using the playback command.\r\n");
     PRINTF("********************************\r\n");
 
     for (;;)
@@ -249,13 +251,15 @@ int main(void)
     {
         CCM->PLL_CTRL[i].PLL_CTRL = kCLOCK_ClockNeededRun;
     }
-    CLOCK_SetRootMux(kCLOCK_RootSai1, kCLOCK_SaiRootmuxAudioPll1); /* Set SAI source to Audio PLL1 786432000HZ */
-    CLOCK_SetRootDivider(kCLOCK_RootSai1, 1U, 16U);                /* Set root clock to 786432000HZ / 16 = 49152000HZ */
+    CLOCK_SetRootMux(kCLOCK_RootSai1, kCLOCK_SaiRootmuxAudioPll1); /* Set SAI source to Audio PLL1 393215996HZ */
+    CLOCK_SetRootDivider(kCLOCK_RootSai1, 1U, 8U);                 /* Set root clock to 393215996HZ / 8 = 49152000HZ */
+    CLOCK_SetRootMux(kCLOCK_RootSai3, kCLOCK_SaiRootmuxAudioPll1); /* Set SAI source to Audio PLL1 393215996HZ */
+    CLOCK_SetRootDivider(kCLOCK_RootSai3, 1U, 16U);                /* Set root clock to 393215996HZ / 16 = 27576000HZ */
     CLOCK_SetRootMux(kCLOCK_RootI2c3, kCLOCK_I2cRootmuxSysPll1Div5); /* Set I2C source to SysPLL1 Div5 160MHZ */
     CLOCK_SetRootDivider(kCLOCK_RootI2c3, 1U, 10U);                  /* Set root clock to 160MHZ / 10 = 16MHZ */
     CLOCK_SetRootMux(kCLOCK_RootGpt1, kCLOCK_GptRootmuxOsc24M);      /* Set GPT source to Osc24 MHZ */
     CLOCK_SetRootDivider(kCLOCK_RootGpt1, 1U, 1U);
-#if APP_SRTM_CODEC_USED_I2C
+#if APP_SRTM_CODEC_AK4497_USED
     APP_SRTM_I2C_ReleaseBus();
     BOARD_I2C_ConfigurePins();
 #endif

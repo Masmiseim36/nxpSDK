@@ -22,11 +22,11 @@ MESSAGE(STATUS "TOOLCHAIN_DIR: " ${TOOLCHAIN_DIR})
 
 SET(XTENSA_SYSTEM $ENV{XTENSA_SYSTEM})
 IF(NOT XTENSA_SYSTEM)
-    SET(XTENSA_SYSTEM "/opt/xtensa/builds/RI-2019.1-linux/nxp_rt600_RI2019_newlib/config")
+    SET(XTENSA_SYSTEM "/opt/xtensa/builds/RG-2017.8-linux/nxp_rt600_ext_dual/config")
 ENDIF()
 SET(XTENSA_CORE $ENV{XTENSA_CORE})
 IF(NOT XTENSA_CORE)
-    SET(XTENSA_CORE "nxp_rt600_RI2019_newlib")
+    SET(XTENSA_CORE "nxp_rt600_ext_dual")
 ENDIF()
 
 # TARGET_TRIPLET

@@ -44,7 +44,7 @@ BOARD_InitPins:
 - pin_list:
   - {pin_num: F19, peripheral: UART4, signal: uart_rx, pin_signal: UART4_RXD, PE: Disabled, PUE: Disabled, DSE: X6_0}
   - {pin_num: F18, peripheral: UART4, signal: uart_tx, pin_signal: UART4_TXD, PE: Disabled, PUE: Disabled, DSE: X6_0}
-  - {pin_num: E13, peripheral: GPIO5, signal: 'gpio_io, 21', pin_signal: I2C4_SDA, SION: ENABLED}
+  - {pin_num: E13, peripheral: GPIO5, signal: 'gpio_io, 21', pin_signal: I2C4_SDA, SION: Disabled}
   - {pin_num: AD6, peripheral: SAI3, signal: sai_mclk, pin_signal: SAI3_MCLK, PE: Disabled, HYS: Enabled, DSE: X4_0}
   - {pin_num: AG6, peripheral: SAI3, signal: sai_tx_bclk, pin_signal: SAI3_TXC, PE: Disabled, HYS: Enabled, DSE: X4_0}
   - {pin_num: AF6, peripheral: SAI3, signal: 'sai_tx_data, 0', pin_signal: SAI3_TXD, PE: Disabled, HYS: Enabled, DSE: X4_0}
@@ -59,7 +59,7 @@ BOARD_InitPins:
  *
  * END ****************************************************************************************************************/
 void BOARD_InitPins(void) {                                /*!< Function assigned for the core: Cortex-M4[m4] */
-    IOMUXC_SetPinMux(IOMUXC_I2C4_SDA_GPIO5_IO21, 1U);
+    IOMUXC_SetPinMux(IOMUXC_I2C4_SDA_GPIO5_IO21, 0U);
     IOMUXC_SetPinMux(IOMUXC_SAI3_MCLK_SAI3_MCLK, 0U);
     IOMUXC_SetPinConfig(IOMUXC_SAI3_MCLK_SAI3_MCLK, 
                         IOMUXC_SW_PAD_CTL_PAD_DSE(2U) |

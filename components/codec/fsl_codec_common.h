@@ -214,7 +214,7 @@ enum _codec_capability_flag
 };
 
 /*!@brief codec handle declaration */
-typedef struct _codec_handle codec_handle_t;
+typedef struct codec_handle codec_handle_t;
 
 /*! @brief Initialize structure of the codec */
 typedef struct _codec_config
@@ -236,11 +236,11 @@ typedef struct _codec_capability
  * uint8_t codecHandleBuffer[CODEC_HANDLE_SIZE];
  * codec_handle_t *codecHandle = codecHandleBuffer;
  */
-struct _codec_handle
+struct codec_handle
 {
-    codec_config_t *codecConfig;               /*!< codec configuration function pointer */
-    const codec_capability_t *codecCapability; /*!< codec capability */
-    uint8_t codecDevHandle[CODEC_HANDLE_SIZE]; /*!< codec device handle */
+    codec_config_t *codecConfig;        /*!< codec configuration function pointer */
+    codec_capability_t codecCapability; /*!< codec capability */
+    void *codecDevHandle;               /*!< codec device handle */
 };
 
 /*******************************************************************************

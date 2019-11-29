@@ -4,6 +4,14 @@ Overview
 The sdramc example shows how to use SDRAM controller driver to initialize the external SDRAM chip.
 After the SDRAM initialization, SDRAM address access is very simple.
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini USB cable
@@ -48,11 +56,6 @@ SDRAM Write Data and Read Data Succeed.
 
 SDRAM Example End.
 
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

@@ -25,7 +25,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk28f_qspi_polling_transfer" name="qspi_polling_transfer" category="driver_examples/qspi" dependency="platform.drivers.port.MK28F15 platform.drivers.gpio.MK28F15 platform.drivers.clock.MK28F15 platform.drivers.qspi.MK28F15 platform.drivers.common.MK28F15 device.MK28F15_CMSIS.MK28F15 utility.debug_console.MK28F15 component.lpuart_adapter.MK28F15 component.serial_manager.MK28F15 component.serial_manager_uart.MK28F15 platform.drivers.lpuart.MK28F15 component.lists.MK28F15 device.MK28F15_startup.MK28F15 platform.drivers.smc.MK28F15 platform.drivers.sysmpu.MK28F15 platform.utilities.assert.MK28F15 platform.Include_core_cm4.MK28F15 platform.Include_common.MK28F15" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmk28f_qspi_polling_transfer" name="qspi_polling_transfer" category="driver_examples/qspi" dependency="platform.drivers.port.MK28F15 platform.drivers.gpio.MK28F15 platform.drivers.clock.MK28F15 platform.drivers.qspi.MK28F15 platform.drivers.common.MK28F15 device.MK28F15_CMSIS.MK28F15 utility.debug_console.MK28F15 component.lpuart_adapter.MK28F15 component.serial_manager.MK28F15 component.serial_manager_uart.MK28F15 platform.drivers.lpuart.MK28F15 component.lists.MK28F15 device.MK28F15_startup.MK28F15 platform.drivers.smc.MK28F15 platform.drivers.sysmpu.MK28F15 platform.utilities.assert.MK28F15 platform.Include_core_cm4.MK28F15 platform.Include_common.MK28F15">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -85,7 +85,11 @@
     <source path="boards/frdmk28f/driver_examples/qspi/polling_transfer" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>
     </source>
+    <source path="boards/frdmk28f/driver_examples/qspi/polling_transfer" target_path="source" type="c_include">
+      <files mask="app.h"/>
+    </source>
     <source path="boards/frdmk28f/driver_examples/qspi/polling_transfer" target_path="source" type="src">
+      <files mask="qspi_nor_flash_ops.c"/>
       <files mask="qspi_polling_transfer.c"/>
     </source>
   </example>

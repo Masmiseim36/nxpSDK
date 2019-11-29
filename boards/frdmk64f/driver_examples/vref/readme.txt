@@ -2,13 +2,20 @@ Overview
 ========
 The vref example shows how to use the vref driver.
 
-In this example, the adc16 module is initiealized by using VALT reference voltage, that is, VREF module provides a
-stable reference voltage to ADC16.
+In this example, the adc16 module is initiealized and used to measure the VREF output voltage. So, it cannot use interal
+VREF as the reference voltage.
 
-Then, user should indicate a channel to provide a voltage signal (can be controlled by user) as the ADC16's sample
-input. When running the project, typing any key into debug console would trigger the conversion. The execution would
-check the conversion completed flag in loop until the flag is asserted, which means the conversion is completed. Then
-read the conversion result value and print it to debug console.
+Then, user should configure the VREF output pin as the ADC16's sample input. When running the project, it will firstly
+measure the VREF output voltage within the default (factory) trim value. Then, it will measure the VREF output voltage
+under different trim value.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/Micro USB cable
@@ -17,7 +24,7 @@ Hardware requirements
 
 Board settings
 ==============
-- ADC CH12 input signal J4-2(ptb2).
+- Connect VREF_OUT (J2-17) to a 100nF load capacitance.
 
 Prepare the Demo
 ================
@@ -28,38 +35,36 @@ Prepare the Demo
     - No parity
     - One stop bit
     - No flow control
-3.  Connect external signal source to user-defined channel, defined by "DEMO_ADC16_USER_CHANNEL" in source code. 
-4.  Download the program to the target board.
-5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
+3.  Download the program to the target board.
+4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
 Running the demo
 ================
 When the demo runs successfully, the log would be seen on the OpenSDA terminal like:
+
 VREF example
 
 ADC16_DoAutoCalibration() Done.
 
 ADC Full Range: 4096
 
-Defalut Trim Value: 34
+Defalut (Factory) trim value is :34
 
-Press any key to get user channel's ADC value ...
+ADC value: 1336
 
-ADC value: 3724
-ADC value: 3348
-ADC value: 4033
-ADC value: 4093
-ADC value: 3692
-ADC value: 3724
-ADC value: 3348
-ADC value: 3684
+Use trim value: 0
 
+ADC value: 1340
 
+Use trim value: 4
 
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+ADC value: 1338
+
+......
+
+Use trim value: 60
+
+ADC value: 1337
+Customization options
+=====================
 

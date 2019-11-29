@@ -128,23 +128,23 @@ int main(void)
     dspi_master_config_t masterConfig;
 
     /* Master config */
-    masterConfig.whichCtar = kDSPI_Ctar0;
-    masterConfig.ctarConfig.baudRate = TRANSFER_BAUDRATE;
-    masterConfig.ctarConfig.bitsPerFrame = 8U;
-    masterConfig.ctarConfig.cpol = kDSPI_ClockPolarityActiveHigh;
-    masterConfig.ctarConfig.cpha = kDSPI_ClockPhaseFirstEdge;
-    masterConfig.ctarConfig.direction = kDSPI_MsbFirst;
-    masterConfig.ctarConfig.pcsToSckDelayInNanoSec = 1000000000U / TRANSFER_BAUDRATE;
-    masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec = 1000000000U / TRANSFER_BAUDRATE;
+    masterConfig.whichCtar                                = kDSPI_Ctar0;
+    masterConfig.ctarConfig.baudRate                      = TRANSFER_BAUDRATE;
+    masterConfig.ctarConfig.bitsPerFrame                  = 8U;
+    masterConfig.ctarConfig.cpol                          = kDSPI_ClockPolarityActiveHigh;
+    masterConfig.ctarConfig.cpha                          = kDSPI_ClockPhaseFirstEdge;
+    masterConfig.ctarConfig.direction                     = kDSPI_MsbFirst;
+    masterConfig.ctarConfig.pcsToSckDelayInNanoSec        = 1000000000U / TRANSFER_BAUDRATE;
+    masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec    = 1000000000U / TRANSFER_BAUDRATE;
     masterConfig.ctarConfig.betweenTransferDelayInNanoSec = 1000000000U / TRANSFER_BAUDRATE;
 
-    masterConfig.whichPcs = EXAMPLE_DSPI_MASTER_PCS;
+    masterConfig.whichPcs           = EXAMPLE_DSPI_MASTER_PCS;
     masterConfig.pcsActiveHighOrLow = kDSPI_PcsActiveLow;
 
-    masterConfig.enableContinuousSCK = false;
-    masterConfig.enableRxFifoOverWrite = false;
+    masterConfig.enableContinuousSCK        = false;
+    masterConfig.enableRxFifoOverWrite      = false;
     masterConfig.enableModifiedTimingFormat = false;
-    masterConfig.samplePoint = kDSPI_SckToSin0Clock;
+    masterConfig.samplePoint                = kDSPI_SckToSin0Clock;
 
     srcClock_Hz = EXAMPLE_DSPI_MASTER_CLK_FREQ;
     DSPI_MasterInit(EXAMPLE_DSPI_MASTER_BASEADDR, &masterConfig, srcClock_Hz);
@@ -153,13 +153,13 @@ int main(void)
     EnableIRQ(EXAMPLE_DSPI_MASTER_IRQ);
 
     dspi_command_data_config_t commandData;
-    commandData.isPcsContinuous = false;
-    commandData.whichCtar = kDSPI_Ctar0;
-    commandData.whichPcs = EXAMPLE_DSPI_MASTER_PCS;
-    commandData.isEndOfQueue = false;
+    commandData.isPcsContinuous    = false;
+    commandData.whichCtar          = kDSPI_Ctar0;
+    commandData.whichPcs           = EXAMPLE_DSPI_MASTER_PCS;
+    commandData.isEndOfQueue       = false;
     commandData.clearTransferCount = false;
 
-    masterCommand = DSPI_MasterGetFormattedCommand(&commandData);
+    masterCommand  = DSPI_MasterGetFormattedCommand(&commandData);
     masterFifoSize = FSL_FEATURE_DSPI_FIFO_SIZEn(EXAMPLE_DSPI_MASTER_BASEADDR);
 
     while (1)
@@ -231,8 +231,8 @@ int main(void)
         }
 
         /* 2nd round , read RX data from slave*/
-        masterTxCount = 0;
-        masterRxCount = 0;
+        masterTxCount       = 0;
+        masterRxCount       = 0;
         isTransferCompleted = false;
         DSPI_StopTransfer(EXAMPLE_DSPI_MASTER_BASEADDR);
         DSPI_FlushFifo(EXAMPLE_DSPI_MASTER_BASEADDR, true, true);
@@ -289,7 +289,7 @@ int main(void)
         }
         else
         {
-            PRINTF(" \r\nError occured in DSPI transfer ! \r\n");
+            PRINTF(" \r\nError occurred in DSPI transfer ! \r\n");
         }
 
         /* Wait for press any key */

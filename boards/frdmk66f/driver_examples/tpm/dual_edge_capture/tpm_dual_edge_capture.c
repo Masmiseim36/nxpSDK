@@ -41,14 +41,14 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-volatile bool tpmFirstChannelInterruptFlag = false;
+volatile bool tpmFirstChannelInterruptFlag  = false;
 volatile bool tpmSecondChannelInterruptFlag = false;
 /* Record TPM TOF interrupt times */
 volatile uint32_t g_timerOverflowInterruptCount = 0u;
-volatile uint32_t g_firstChannelOverflowCount = 0u;
-volatile uint32_t g_secondChannelOverflowCount = 0u;
-volatile uint32_t capture1Val = 0;
-volatile uint32_t capture2Val = 0;
+volatile uint32_t g_firstChannelOverflowCount   = 0u;
+volatile uint32_t g_secondChannelOverflowCount  = 0u;
+volatile uint32_t capture1Val                   = 0;
+volatile uint32_t capture2Val                   = 0;
 
 /*******************************************************************************
  * Code
@@ -70,7 +70,7 @@ void TPM_INPUT_CAPTURE_HANDLER(void)
             capture2Val = DEMO_TPM_BASEADDR->CONTROLS[(BOARD_TPM_INPUT_CAPTURE_CHANNEL_PAIR * 2) + 1].CnV;
             /* Disable second channel interrupt.*/
             TPM_DisableInterrupts(DEMO_TPM_BASEADDR, TPM_SECOND_CHANNEL_INTERRUPT_ENABLE);
-            g_secondChannelOverflowCount = g_timerOverflowInterruptCount;
+            g_secondChannelOverflowCount  = g_timerOverflowInterruptCount;
             tpmSecondChannelInterruptFlag = true;
         }
     }
@@ -82,7 +82,7 @@ void TPM_INPUT_CAPTURE_HANDLER(void)
         /* Disable first channel interrupt.*/
         TPM_DisableInterrupts(DEMO_TPM_BASEADDR, TPM_FIRST_CHANNEL_INTERRUPT_ENABLE);
 
-        g_firstChannelOverflowCount = g_timerOverflowInterruptCount;
+        g_firstChannelOverflowCount  = g_timerOverflowInterruptCount;
         tpmFirstChannelInterruptFlag = true;
     }
     else
@@ -98,7 +98,8 @@ int main(void)
 {
     tpm_config_t tpmInfo;
     tpm_dual_edge_capture_param_t edgeParam;
-    uint32_t pulseWidth = 0;
+    uint32_t tpm_source_clock_ms = 0;
+    uint32_t pulseWidth          = 0;
 
     /* Board pin, clock, debug console init */
     BOARD_InitPins();
@@ -163,9 +164,11 @@ int main(void)
     /* TPM clock source is not prescaled and is
      * divided by 1000000 as the output is printed in microseconds
      */
+    tpm_source_clock_ms = TPM_SOURCE_CLOCK / 1000000;
+    assert(0 != tpm_source_clock_ms);
     pulseWidth =
         (((g_secondChannelOverflowCount - g_firstChannelOverflowCount) * 65536 + capture2Val - capture1Val) + 1) /
-        (TPM_SOURCE_CLOCK / 1000000);
+        tpm_source_clock_ms;
 
     PRINTF("\r\nInput signals pulse width=%d us\r\n", pulseWidth);
     while (1)

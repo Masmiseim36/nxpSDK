@@ -31,29 +31,23 @@
 
 static inline uint16_t get16(const uint8_t *ptr)
 {
-    return ((ptr[0] << 8) | ptr[1]);
+    uint16_t result;
+    memcpy(&result, ptr, sizeof(result));
+    return cbor_ntohs(result);
 }
 
 static inline uint32_t get32(const uint8_t *ptr)
 {
-    uint32_t result = *ptr++;
-    for (int i = 4; --i; )
-    {
-        result <<= 8;
-        result |= *ptr++;
-    }
-    return result;
+    uint32_t result;
+    memcpy(&result, ptr, sizeof(result));
+    return cbor_ntohl(result);
 }
 
 static inline uint64_t get64(const uint8_t *ptr)
 {
-    uint64_t result = *ptr++;
-    for (int i = 8; --i; )
-    {
-        result <<= 8;
-        result |= *ptr++;
-    }
-    return result;
+    uint64_t result;
+    memcpy(&result, ptr, sizeof(result));
+    return cbor_ntohll(result);
 }
 
 static CborError extract_number(const uint8_t **ptr, const uint8_t *end, uint64_t *len)

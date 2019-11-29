@@ -4,6 +4,7 @@ This example demonstrates how the board can discover Greengrass core and communi
 You will need device (A Mac, Windows PC, or UNIX-like system) for running AWS Greengrass. Example will connect to WiFi network, try to discover your AWS Greengrass device and send Hello World message to AWS IoT cloud through it.
 This demo needs network with internet access and opened 8883 and 8443 ports.
 
+
 Prepare the AWS Greengrass and AWS IoT
 Before running the demo it is needed to configure AWS IoT Console, AWS Greengrass:
 
@@ -24,6 +25,24 @@ Before running the demo it is needed to configure AWS IoT Console, AWS Greengras
 5.  Go to AWS IoT, find your Greengrass group and deploy it again. You should do new deployment after every configuration change.
 
 
+
+Toolchain supported
+===================
+- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- MCUXpresso  11.0.0
+
+Hardware requirements
+=====================
+- Mini/micro USB cable
+- FRDM-K66F board
+- Personal Computer
+- Network cable RJ45 standard (Network with Internet access)
+
+Board settings
+==============
+No special settings are required.
 Prepare the Demo
 ================
 
@@ -33,22 +52,22 @@ Prepare the Demo
         static const char clientcredentialMQTT_BROKER_ENDPOINT[] = "abcdefgh123456.iot.us-west-2.amazonaws.com";
         #define clientcredentialIOT_THING_NAME "HelloWorldDevice"
 
-    Each of device certificates needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h" or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\amazon-freertos\demos\common\devmode_key_provisioning\CertificateConfigurationTool) to generate the "aws_clientcredential_keys.h".
+    The device certificate and private key needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h" or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\amazon-freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
 
-    clientcredentialCLIENT_CERTIFICATE_PEM is stored in <device id>.cert.pem file and clientcredentialCLIENT_PRIVATE_KEY_PEM is stored in <device id>.private.key file.
+    keyCLIENT_CERTIFICATE_PEM is stored in <device id>.cert.pem file and keyCLIENT_PRIVATE_KEY_PEM is stored in <device id>.private.key file.
 
     Example:
-        static const char clientcredentialCLIENT_CERTIFICATE_PEM[] = "Paste client certificate here.";
+        #define keyCLIENT_CERTIFICATE_PEM "Paste client certificate here."
 
         Needs to be changed to:
 
-        static const char clientcredentialCLIENT_CERTIFICATE_PEM[] =
-            "-----BEGIN CERTIFICATE-----\n"
-            "MIIDWTCCAkGgAwIBAgIUPwbiJBIJhO6eF498l1GZ8siO/K0wDQYJKoZIhvcNAQEL\n"
-            .
-            .
-            "KByzyTutxTeI9UKcIPFxK40s4qF50a40/6UFxrGueW+TzZ4iubWzP7eG+47r\n"
-            "-----END CERTIFICATE-----\n";
+        #define keyCLIENT_CERTIFICATE_PEM "-----BEGIN CERTIFICATE-----\n"\
+        "MIIDWTCCAkGgAwIBAgIUfmv3zA+JULlMOxmz+upkAzhEkQ0wDQYJKoZIhvcNAQEL\n"\
+        .
+        .
+        .
+        "mepuT3lKmD0jZupsQ9vLQOA09rMjVMd0YPmI9ozvvWqLpjVvNTKVhsf/3slM\n"\
+        "-----END CERTIFICATE-----\n"
 
     In the same way update the private key array.
 
@@ -78,6 +97,7 @@ You can check connection log in Greengrass device on path: /greengrass/ggc/var/l
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Initializing PHY...
 0 0 [Tmr Svc] Starting key provisioning...
 1 0 [Tmr Svc] Write root certificate...
 2 6 [Tmr Svc] Write device private key...
@@ -101,21 +121,6 @@ You can check connection log in Greengrass device on path: /greengrass/ggc/var/l
 20 33981 [IoT_GGD] Heap low watermark: 6456. Stack high watermark: 906.
 21 33981 [IoT_GGD] ----Demo finished----
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Hardware requirements
+Customization options
 =====================
-- Mini/micro USB cable
-- FRDM-K66F board
-- Personal Computer
-- Network cable RJ45 standard (Network with Internet access)
-
-Board settings
-==============
-No special settings are required.
-
-Toolchain supported
-===================
-- GCC ARM Embedded  7.3.1
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- MCUXpresso 10.3.0
 

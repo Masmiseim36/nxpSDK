@@ -664,13 +664,13 @@ usb_status_t USB_HostAudioEvent(usb_device_handle deviceHandle,
                     continue;
                 }
                 id = interface_ptr->interfaceDesc->bInterfaceSubClass;
-                if ((id == USB_AUDIO_SUBCLASS_CODE_CONTROL))
+                if (id == USB_AUDIO_SUBCLASS_CODE_CONTROL)
                 {
                     g_audioDeviceHandle = deviceHandle;
                     g_audioOutControlifHandle = interface_ptr;
                     continue;
                 }
-                else if ((id == USB_AUDIO_SUBCLASS_CODE_AUDIOSTREAMING))
+                else if (id == USB_AUDIO_SUBCLASS_CODE_AUDIOSTREAMING)
                 {
                     g_audioDeviceHandle = deviceHandle;
                     g_audioOutStreamifHandle = interface_ptr;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -19,14 +19,21 @@
 #include "fsl_common.h"
 #include "fsl_i2c.h"
 
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
 /***********************************************************************************************************************
  * Definitions
  **********************************************************************************************************************/
+/* Definitions for BOARD_InitPeripherals functional group */
 /* BOARD_InitPeripherals defines for I2C0 */
 /* Definition of peripheral ID */
 #define BOARD_ACCEL_I2C_PERIPHERAL I2C0
 /* Definition of the clock source */
-#define BOARD_ACCEL_I2C_CLKSRC I2C0_CLK_SRC
+#define BOARD_ACCEL_I2C_CLOCK_SOURCE I2C0_CLK_SRC
+/* Definition of the clock source frequency */
+#define BOARD_ACCEL_I2C_CLK_FREQ CLOCK_GetFreq(BOARD_ACCEL_I2C_CLOCK_SOURCE)
 
 /***********************************************************************************************************************
  * Global variables
@@ -42,5 +49,9 @@ void BOARD_InitPeripherals(void);
  * BOARD_InitBootPeripherals function
  **********************************************************************************************************************/
 void BOARD_InitBootPeripherals(void);
+
+#if defined(__cplusplus)
+}
+#endif
 
 #endif /* _PERIPHERALS_H_ */

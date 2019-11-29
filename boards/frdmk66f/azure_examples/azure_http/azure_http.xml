@@ -9,20 +9,22 @@
     <definition extID="device.MK66F18_CMSIS.MK66F18"/>
     <definition extID="device.MK66F18_startup.MK66F18"/>
     <definition extID="driver.phyksz8081.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.freertos.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.freertos.heap_3.MK66F18"/>
     <definition extID="middleware.azure_iot.MK66F18"/>
     <definition extID="middleware.azure_iot.adapters.MK66F18"/>
+    <definition extID="middleware.azure_iot.adapters.freertos.MK66F18"/>
     <definition extID="middleware.azure_iot.certs.MK66F18"/>
-    <definition extID="middleware.azure_iot.http.MK66F18"/>
     <definition extID="middleware.azure_iot.iothub_client.MK66F18"/>
+    <definition extID="middleware.azure_iot.iothub_client.http.MK66F18"/>
     <definition extID="middleware.azure_iot.mbedtls.MK66F18"/>
     <definition extID="middleware.azure_iot.parson.MK66F18"/>
-    <definition extID="middleware.freertos.MK66F18"/>
-    <definition extID="middleware.freertos.heap.heap_3.MK66F18"/>
     <definition extID="middleware.mbedtls.MK66F18"/>
     <definition extID="middleware.mmcau_cm4_cm7.MK66F18"/>
     <definition extID="middleware.tcpip.lwip.MK66F18"/>
     <definition extID="middleware.tcpip.lwip.apps.sntp.MK66F18"/>
-    <definition extID="middleware.tcpip.lwip.ethernetif.MK66F18"/>
+    <definition extID="middleware.tcpip.lwip.enet_ethernetif.MK66F18"/>
+    <definition extID="middleware.tcpip.lwip.enet_ethernetif_kinetis.MK66F18"/>
     <definition extID="platform.Include_common.MK66F18"/>
     <definition extID="platform.Include_core_cm4.MK66F18"/>
     <definition extID="platform.drivers.clock.MK66F18"/>
@@ -44,7 +46,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk66f_azure_http" name="azure_http" category="azure_examples" dependency="driver.phyksz8081.MK66F18 middleware.mmcau_cm4_cm7.MK66F18 platform.drivers.rnga.MK66F18 platform.drivers.port.MK66F18 platform.drivers.sim.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.enet.MK66F18 middleware.freertos.MK66F18 middleware.freertos.heap.heap_3.MK66F18 middleware.tcpip.lwip.MK66F18 middleware.mbedtls.MK66F18 middleware.tcpip.lwip.apps.sntp.MK66F18 middleware.tcpip.lwip.ethernetif.MK66F18 middleware.azure_iot.MK66F18 middleware.azure_iot.http.MK66F18 middleware.azure_iot.adapters.MK66F18 middleware.azure_iot.iothub_client.MK66F18 middleware.azure_iot.certs.MK66F18 middleware.azure_iot.parson.MK66F18 middleware.azure_iot.mbedtls.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 component.lists.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 platform.utilities.misc_utilities.MK66F18" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmk66f_azure_http" name="azure_http" category="azure_examples" dependency="driver.phyksz8081.MK66F18 middleware.mmcau_cm4_cm7.MK66F18 platform.drivers.rnga.MK66F18 platform.drivers.port.MK66F18 platform.drivers.sim.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.enet.MK66F18 middleware.amazon_freertos.freertos.MK66F18 middleware.amazon_freertos.freertos.heap_3.MK66F18 middleware.mbedtls.MK66F18 middleware.tcpip.lwip.MK66F18 middleware.tcpip.lwip.apps.sntp.MK66F18 middleware.tcpip.lwip.enet_ethernetif_kinetis.MK66F18 middleware.azure_iot.MK66F18 middleware.azure_iot.adapters.MK66F18 middleware.azure_iot.adapters.freertos.MK66F18 middleware.azure_iot.iothub_client.MK66F18 middleware.azure_iot.iothub_client.http.MK66F18 middleware.azure_iot.certs.MK66F18 middleware.azure_iot.parson.MK66F18 middleware.azure_iot.mbedtls.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 component.lists.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 platform.utilities.misc_utilities.MK66F18 middleware.tcpip.lwip.enet_ethernetif.MK66F18">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -79,7 +81,7 @@
           <value>-fno-common</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin  -fomit-frame-pointer</value>
+          <value>-fomit-frame-pointer  -c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
         </option>
         <option id="com.crt.advproject.link.fpu" type="enum">
           <value>com.crt.advproject.link.fpu.none</value>
@@ -114,7 +116,6 @@
       <include_path path="azure_iot/c-utility/adapters"/>
       <include_path path="azure_iot/c-utility/inc"/>
       <include_path path="azure_iot/c-utility/pal"/>
-      <include_path path="azure_iot/c-utility/pal/freertos"/>
       <include_path path="azure_iot/c-utility/pal/generic"/>
       <include_path path="azure_iot/c-utility/pal/inc"/>
       <include_path path="azure_iot/c-utility/pal/lwip"/>
@@ -151,12 +152,12 @@
     </source>
     <source path="boards/frdmk66f/azure_examples/azure_http" target_path="source" type="c_include">
       <files mask="FreeRTOSConfig.h"/>
+      <files mask="azure_http.h"/>
       <files mask="azure_mbedtls_config.h"/>
-      <files mask="iothub_client_sample_http.h"/>
       <files mask="lwipopts.h"/>
     </source>
     <source path="boards/frdmk66f/azure_examples/azure_http" target_path="source" type="src">
-      <files mask="iothub_client_sample_http.c"/>
+      <files mask="azure_http.c"/>
     </source>
   </example>
 </ksdk:examples>

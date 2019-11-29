@@ -2,7 +2,7 @@
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -148,11 +148,11 @@ int main(void)
         }
 
         /*! Process the sample and convert the raw sensor data. */
-        rawData.pressure = (uint32_t)((data[0]) << 16) | ((data[1]) << 8) | ((data[2]));
+        rawData.pressure  = (uint32_t)((data[0]) << 16) | ((data[1]) << 8) | ((data[2]));
         pressureInPascals = rawData.pressure / MPL3115_PRESSURE_CONV_FACTOR;
 
         rawData.temperature = (int16_t)((data[3]) << 8) | (data[4]);
-        tempInDegrees = rawData.temperature / MPL3115_TEMPERATURE_CONV_FACTOR;
+        tempInDegrees       = rawData.temperature / MPL3115_TEMPERATURE_CONV_FACTOR;
 
         PRINTF("\r\nPressure    = %d Pa\r\n", pressureInPascals);
         PRINTF("\r\nTemperature = %d degC\r\n", tempInDegrees);

@@ -179,7 +179,7 @@
 <p>If the size of name member is insufficient for the LFN, the item is treated as without LFN. When LFN is not enabled, these options have no effect.</p>
 
 <h4 id="strf_encode">FF_STRF_ENCODE</h4>
-<p>When character encoding on the API is Unicode (<tt>FF_LFN_UNICODE &gt;= 1</tt>), string I/O functions, <tt>f_gets</tt>, <tt>f_putc</tt>, <tt>f_puts</tt> and <tt>f_printf</tt>, convert the character encoding in it. This option defines the assumption of character encoding <em>on the file</em> to be read/written via those functions. When LFN is not enabled or <tt>FF_LFN_UNICODE == 0</tt>, the string functions work without any encoding conversion and this option has no effect.</p>
+<p>When character encoding on the API is Unicode (<tt>FF_LFN_UNICODE &gt;= 1</tt>), string I/O functions, <tt>f_gets</tt>, <tt>f_putc</tt>, <tt>f_puts</tt> and <tt>f_printf</tt>, convert the character encodins in it. This option defines the assumption of character encoding <em>on the file</em> to be read/written via those functions. When LFN is not enabled or <tt>FF_LFN_UNICODE == 0</tt>, the string functions work without any encoding conversion and this option has no effect.</p>
 <table class="lst2">
 <tr><th>Value</th><th>Character encoding on the file</th></tr>
 <tr><td>0</td><td>ANSI/OEM in current code page</td></tr>
@@ -216,7 +216,7 @@
 </table>
 
 <h4 id="volume_strs">FF_VOLUME_STRS</h4>
-<p>This option defines the volume ID strings for each logical drives. Number of items must not be less than <tt>FF_VOLUMES</tt>. Valid characters for the volume ID string are A-Z, a-z and 0-9, however, they are compared in case-insensitive. If <tt>FF_STR_VOLUME_ID == 0</tt>, this option has no effect. If <tt>FF_STR_VOLUME_ID &gt;= 1</tt> and this option is not defined, a user defined volume string table needs to be defined as shown below. The table should not be modified on the fly.</p>
+<p>This option defines the volume ID strings for each logical drives. Number of items must not be less than <tt>FF_VOLUMES</tt>. Valid characters for the volume ID string are A-Z, a-z and 0-9, however, they are compared in case-insensitive. If <tt>FF_STR_VOLUME_ID == 0</tt>, this option has no effect. If <tt>FF_STR_VOLUME_ID &gt;= 1</tt> and this option is not defined, a user defined volume string table needs to be defined as shown below. The table should not be changed on the fly.</p>
 <pre>
 <span class="c">/* User defined volume ID strings for 0:    1:      2:    3:   ... */</span>
 const char* VolumeStr[FF_VOLUMES] = {"ram","flash","sdc","usb"};

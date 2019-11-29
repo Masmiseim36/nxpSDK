@@ -2037,19 +2037,19 @@
   <group>
     <name>lcd</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../components/ili9341/fsl_ili9341.h</name>
+      <name>$PROJ_DIR$/../../../../../components/ili9341/fsl_ili9341.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../components/ili9341/fsl_ili9341.c</name>
+      <name>$PROJ_DIR$/../../../../../components/ili9341/fsl_ili9341.h</name>
     </file>
   </group>
   <group>
     <name>touchpanel</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../components/ft6x06/fsl_ft6x06.h</name>
+      <name>$PROJ_DIR$/../../../../../components/ft6x06/fsl_ft6x06.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../components/ft6x06/fsl_ft6x06.c</name>
+      <name>$PROJ_DIR$/../../../../../components/ft6x06/fsl_ft6x06.h</name>
     </file>
   </group>
   <group>
@@ -2058,58 +2058,58 @@
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_port.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_clock.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_clock.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_gpio.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_clock.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_gpio.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_lpuart.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_gpio.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_lpuart.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_edma.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_lpuart.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_edma.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_dmamux.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_edma.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_dmamux.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_dspi.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_dmamux.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_dspi.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_dspi_edma.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_dspi.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_dspi_edma.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/cmsis_drivers/fsl_dspi_cmsis.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_dspi_edma.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/cmsis_drivers/fsl_dspi_cmsis.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_i2c.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/cmsis_drivers/fsl_dspi_cmsis.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_i2c.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_i2c.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_i2c_edma.c</name>
@@ -2118,37 +2118,22 @@
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_i2c_edma.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/cmsis_drivers/fsl_i2c_cmsis.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/cmsis_drivers/fsl_i2c_cmsis.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_common.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/cmsis_drivers/fsl_i2c_cmsis.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_common.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_flash.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_adapter.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.c</name>
@@ -2157,29 +2142,53 @@
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_flash.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_uart.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_uart.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_smc.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_uart.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_smc.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_smc.h</name>
+    </file>
   </group>
   <group>
     <name>emwin</name>
+    <group>
+      <name>emWin_Config</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_Config/GUIConf.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_Config/LCDConf.h</name>
+      </file>
+    </group>
     <group>
       <name>emWin_header</name>
       <file>
@@ -2228,9 +2237,6 @@
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/FRAMEWIN_Private.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/Global.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GRAPH.h</name>
       </file>
       <file>
@@ -2238,63 +2244,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Brackets_800.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Types_800.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_ARRAY.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_ARRAY_Private.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_BMP_Private.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_ConfDefaults.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_Debug.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_FontIntern.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_GCache_Private.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_GIF_Private.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_HOOK.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_JPEG_Private.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_Private.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_SetOrientation.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_SetOrientationCX.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_SPRITE_Private.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_Type.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_Version.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_VNC.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUIDRV_BitPlains.h</name>
@@ -2385,6 +2334,66 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUITDRV_ADS7846.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_ARRAY.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_ARRAY_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_BMP_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_ConfDefaults.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_Debug.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_FontIntern.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_GCache_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_GIF_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_HOOK.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_JPEG_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_SPRITE_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_SetOrientation.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_SetOrientationCX.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_Type.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_VNC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_Version.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Brackets_800.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Types_800.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/Global.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/HEADER.h</name>
@@ -2531,26 +2540,17 @@
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/WM_Intern.h</name>
       </file>
     </group>
-    <group>
-      <name>emWin_Config</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_Config/GUIConf.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_Config/LCDConf.h</name>
-      </file>
-    </group>
   </group>
   <group>
     <name>device</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/fsl_device_registers.h</name>
-    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/MK66F18.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/MK66F18_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/system_MK66F18.c</name>
@@ -2562,12 +2562,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -2575,6 +2569,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/utilities/debug_console/fsl_debug_console_conf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/utilities/str/fsl_str.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/utilities/fsl_assert.c</name>
@@ -2594,25 +2594,28 @@
     <group>
       <name>serial_manager</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_internal.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
       </file>
     </group>
   </group>
@@ -2620,6 +2623,51 @@
     <name>startup</name>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/iar/startup_MK66F18.s</name>
+    </file>
+  </group>
+  <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm4.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_const_structs.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
   </group>
   <group>
@@ -2632,51 +2680,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Driver/Include/Driver_SPI.h</name>
-    </file>
-  </group>
-  <group>
-    <name>CMSIS</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm4.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_const_structs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
   </group>
 </project>

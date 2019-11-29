@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -30,6 +30,12 @@
 /* The max value of LCDC_FPR to generate the lshift clock (pixel clock). */
 #define SSD1963_LCDC_FPR_MAX 0xFFFFFU
 
+#if (SSD1963_DATA_WITDH != 16) && (SSD1963_DATA_WITDH != 8)
+#error Only support 8-bit or 16-bit data bus
+#endif
+
+#define SSD1963_DATA_WITDH_BYTE (SSD1963_DATA_WITDH / 8)
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -55,14 +61,6 @@ static void SSD1963_Delay(uint32_t loops);
  */
 static uint32_t SSD1963_GetPllDivider(uint8_t *multi, uint8_t *div, uint32_t srcClock_Hz);
 
-/*!
- * @brief SSD1963 EDMA transfer complete callback function.
- */
-void SSD1963_TransferCompletedCallback(FLEXIO_MCULCD_Type *base,
-                                       flexio_mculcd_edma_handle_t *handle,
-                                       status_t status,
-                                       void *userData);
-
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -79,24 +77,13 @@ static void SSD1963_Delay(uint32_t loops)
     }
 }
 
-void SSD1963_TransferCompletedCallback(FLEXIO_MCULCD_Type *base,
-                                       flexio_mculcd_edma_handle_t *handle,
-                                       status_t status,
-                                       void *userData)
-{
-    if (kStatus_FLEXIO_MCULCD_Idle == status)
-    {
-        ((ssd1963_handle_t *)userData)->transferCompletedFlag = true;
-    }
-}
-
 static uint32_t SSD1963_GetPllDivider(uint8_t *multi, uint8_t *div, uint32_t srcClock_Hz)
 {
     uint32_t multiCur, divCur, pllFreqCur, vcoCur, diffCur;
-    uint32_t multiCandidate = 0U;
-    uint32_t divCandidate = 0U;
+    uint32_t multiCandidate   = 0U;
+    uint32_t divCandidate     = 0U;
     uint32_t pllFreqCandidate = 0U;
-    uint32_t diff = 0xFFFFFFFFU;
+    uint32_t diff             = 0xFFFFFFFFU;
 
     for (multiCur = SSD1963_PLL_MULTI_MIN; multiCur <= SSD1963_PLL_MULTI_MAX; multiCur++)
     {
@@ -144,24 +131,23 @@ static uint32_t SSD1963_GetPllDivider(uint8_t *multi, uint8_t *div, uint32_t src
         /* Find better multi and divider. */
         if (diff > diffCur)
         {
-            diff = diffCur;
-            multiCandidate = multiCur;
-            divCandidate = divCur;
+            diff             = diffCur;
+            multiCandidate   = multiCur;
+            divCandidate     = divCur;
             pllFreqCandidate = pllFreqCur;
         }
     }
 
     *multi = (uint8_t)multiCandidate;
-    *div = (uint8_t)divCandidate;
+    *div   = (uint8_t)divCandidate;
 
     return pllFreqCandidate;
 }
 
 status_t SSD1963_Init(ssd1963_handle_t *handle,
                       const ssd1963_config_t *config,
-                      FLEXIO_MCULCD_Type *base,
-                      edma_handle_t *txEdmaHandle,
-                      edma_handle_t *rxEdmaHandle,
+                      const dbi_xfer_ops_t *xferOps,
+                      void *xferOpsData,
                       uint32_t srcClock_Hz)
 {
     assert(handle);
@@ -170,9 +156,12 @@ status_t SSD1963_Init(ssd1963_handle_t *handle,
     uint8_t multi, div;
     uint32_t pllFreq_Hz;
     uint32_t fpr; /* Pixel clock = PLL clock * ((fpr + 1) / 2^20) */
+#if (16 == SSD1963_DATA_WITDH)
     uint16_t commandParam[8];
+#else
+    uint8_t commandParam[8];
+#endif
     uint16_t vt, vps, ht, hps;
-    status_t status;
 
     pllFreq_Hz = SSD1963_GetPllDivider(&multi, &div, srcClock_Hz);
 
@@ -194,22 +183,13 @@ status_t SSD1963_Init(ssd1963_handle_t *handle,
     /* Initialize the handle. */
     memset(handle, 0, sizeof(ssd1963_handle_t));
 
-    status = FLEXIO_MCULCD_TransferCreateHandleEDMA(base, &handle->flexioLcdHandle, SSD1963_TransferCompletedCallback,
-                                                    handle, txEdmaHandle, rxEdmaHandle);
-
-    if (kStatus_Success != status)
-    {
-        return status;
-    }
-
-    handle->base = base;
-    handle->panelWidth = config->panelWidth;
+    handle->panelWidth  = config->panelWidth;
     handle->panelHeight = config->panelHeight;
-
-    FLEXIO_MCULCD_StartTransfer(base);
+    handle->xferOps     = xferOps;
+    handle->xferOpsData = xferOpsData;
 
     /* Soft reset. */
-    FLEXIO_MCULCD_WriteCommandBlocking(base, SSD1963_SOFT_RESET);
+    handle->xferOps->writeCommand(xferOpsData, SSD1963_SOFT_RESET);
     SSD1963_Delay(50000);
 
     /* Setup the PLL. */
@@ -217,28 +197,28 @@ status_t SSD1963_Init(ssd1963_handle_t *handle,
     commandParam[0] = multi;
     commandParam[1] = div | (1U << 5U);
     commandParam[2] = 1U << 2U;
-    FLEXIO_MCULCD_WriteCommandBlocking(base, SSD1963_SET_PLL_MN);
-    FLEXIO_MCULCD_WriteDataArrayBlocking(base, commandParam, 3U * 2U);
+    handle->xferOps->writeCommand(xferOpsData, SSD1963_SET_PLL_MN);
+    handle->xferOps->writeData(xferOpsData, commandParam, 3U * SSD1963_DATA_WITDH_BYTE);
 
     /* Enable PLL. */
     commandParam[0] = 0x01U;
-    FLEXIO_MCULCD_WriteCommandBlocking(base, SSD1963_SET_PLL);
-    FLEXIO_MCULCD_WriteDataArrayBlocking(base, commandParam, 1U * 2U);
+    handle->xferOps->writeCommand(xferOpsData, SSD1963_SET_PLL);
+    handle->xferOps->writeData(xferOpsData, commandParam, 1U * SSD1963_DATA_WITDH_BYTE);
 
     /* Delay at least 100us, to wait for the PLL stable. */
     SSD1963_Delay(500);
 
     /* Use the PLL. */
     commandParam[0] = 0x03U;
-    FLEXIO_MCULCD_WriteCommandBlocking(base, SSD1963_SET_PLL);
-    FLEXIO_MCULCD_WriteDataArrayBlocking(base, commandParam, 1U * 2U);
+    handle->xferOps->writeCommand(xferOpsData, SSD1963_SET_PLL);
+    handle->xferOps->writeData(xferOpsData, commandParam, 1U * SSD1963_DATA_WITDH_BYTE);
 
     /* Configure the pixel clock. */
     commandParam[0] = (fpr & 0xFF0000U) >> 16U;
     commandParam[1] = (fpr & 0xFF00U) >> 8U;
     commandParam[2] = (fpr & 0xFFU);
-    FLEXIO_MCULCD_WriteCommandBlocking(base, SSD1963_SET_LSHIFT_FREQ);
-    FLEXIO_MCULCD_WriteDataArrayBlocking(base, commandParam, 3U * 2U);
+    handle->xferOps->writeCommand(xferOpsData, SSD1963_SET_LSHIFT_FREQ);
+    handle->xferOps->writeData(xferOpsData, commandParam, 3U * SSD1963_DATA_WITDH_BYTE);
 
     /* Configure LCD panel. */
     commandParam[0] = config->panelDataWidth | config->polarityFlags; /* Not enable FRC, dithering. */
@@ -248,12 +228,12 @@ status_t SSD1963_Init(ssd1963_handle_t *handle,
     commandParam[4] = (config->panelHeight - 1) >> 8;
     commandParam[5] = (config->panelHeight - 1) & 0xFFU;
     commandParam[6] = 0;
-    FLEXIO_MCULCD_WriteCommandBlocking(base, SSD1963_SET_LCD_MODE);
-    FLEXIO_MCULCD_WriteDataArrayBlocking(base, commandParam, 7 * 2U);
+    handle->xferOps->writeCommand(xferOpsData, SSD1963_SET_LCD_MODE);
+    handle->xferOps->writeData(xferOpsData, commandParam, 7 * SSD1963_DATA_WITDH_BYTE);
 
     /* Horizontal period setting. */
-    ht = config->panelWidth + config->hsw + config->hfp + config->hbp;
-    hps = config->hsw + config->hbp;
+    ht              = config->panelWidth + config->hsw + config->hfp + config->hbp;
+    hps             = config->hsw + config->hbp;
     commandParam[0] = (ht - 1U) >> 8U;
     commandParam[1] = (ht - 1U) & 0xFFU;
     commandParam[2] = hps >> 8U;
@@ -262,12 +242,12 @@ status_t SSD1963_Init(ssd1963_handle_t *handle,
     commandParam[5] = 0U;
     commandParam[6] = 0U;
     commandParam[7] = 0U;
-    FLEXIO_MCULCD_WriteCommandBlocking(base, SSD1963_SET_HORI_PERIOD);
-    FLEXIO_MCULCD_WriteDataArrayBlocking(base, commandParam, 8 * 2U);
+    handle->xferOps->writeCommand(xferOpsData, SSD1963_SET_HORI_PERIOD);
+    handle->xferOps->writeData(xferOpsData, commandParam, 8 * SSD1963_DATA_WITDH_BYTE);
 
     /* Vertical period setting. */
-    vt = config->panelHeight + config->vsw + config->vfp + config->vbp;
-    vps = config->vsw + config->vbp;
+    vt              = config->panelHeight + config->vsw + config->vfp + config->vbp;
+    vps             = config->vsw + config->vbp;
     commandParam[0] = (vt - 1U) >> 8U;
     commandParam[1] = (vt - 1U) & 0xFFU;
     commandParam[2] = vps >> 8U;
@@ -275,22 +255,27 @@ status_t SSD1963_Init(ssd1963_handle_t *handle,
     commandParam[4] = config->vsw - 1U;
     commandParam[5] = 0U;
     commandParam[6] = 0U;
-    FLEXIO_MCULCD_WriteCommandBlocking(base, SSD1963_SET_VERT_PERIOD);
-    FLEXIO_MCULCD_WriteDataArrayBlocking(base, commandParam, 7 * 2U);
+    handle->xferOps->writeCommand(xferOpsData, SSD1963_SET_VERT_PERIOD);
+    handle->xferOps->writeData(xferOpsData, commandParam, 7 * SSD1963_DATA_WITDH_BYTE);
 
     /* Data interface. */
     commandParam[0] = config->pixelInterface;
-    FLEXIO_MCULCD_WriteCommandBlocking(base, SSD1963_SET_PIXEL_DATA_INTERFACE);
-    FLEXIO_MCULCD_WriteDataArrayBlocking(base, commandParam, 1 * 2U);
+    handle->xferOps->writeCommand(xferOpsData, SSD1963_SET_PIXEL_DATA_INTERFACE);
+    handle->xferOps->writeData(xferOpsData, commandParam, 1 * SSD1963_DATA_WITDH_BYTE);
 
     /* Address mode. */
     commandParam[0] = 0U;
-    FLEXIO_MCULCD_WriteCommandBlocking(base, SSD1963_SET_ADDRESS_MODE);
-    FLEXIO_MCULCD_WriteDataArrayBlocking(base, commandParam, 1 * 2U);
-
-    FLEXIO_MCULCD_StopTransfer(base);
+    handle->xferOps->writeCommand(xferOpsData, SSD1963_SET_ADDRESS_MODE);
+    handle->xferOps->writeData(xferOpsData, commandParam, 1 * SSD1963_DATA_WITDH_BYTE);
 
     return kStatus_Success;
+}
+
+void SSD1963_SetMemoryDoneCallback(ssd1963_handle_t *handle, dbi_mem_done_callback_t callback, void *userData)
+{
+    assert(handle);
+
+    handle->xferOps->setMemoryDoneCallback(handle->xferOpsData, callback, userData);
 }
 
 void SSD1963_Deinit(ssd1963_handle_t *handle)
@@ -302,38 +287,42 @@ void SSD1963_Deinit(ssd1963_handle_t *handle)
 
 void SSD1963_StartDisplay(ssd1963_handle_t *handle)
 {
-    FLEXIO_MCULCD_StartTransfer(handle->base);
-    FLEXIO_MCULCD_WriteCommandBlocking(handle->base, SSD1963_SET_DISPLAY_ON);
-    FLEXIO_MCULCD_StopTransfer(handle->base);
+    handle->xferOps->writeCommand(handle->xferOpsData, SSD1963_SET_DISPLAY_ON);
 }
 
 void SSD1963_StopDisplay(ssd1963_handle_t *handle)
 {
-    FLEXIO_MCULCD_StartTransfer(handle->base);
-    FLEXIO_MCULCD_WriteCommandBlocking(handle->base, SSD1963_SET_DISPLAY_OFF);
-    FLEXIO_MCULCD_StopTransfer(handle->base);
+    handle->xferOps->writeCommand(handle->xferOpsData, SSD1963_SET_DISPLAY_OFF);
 }
 
 void SSD1963_SetFlipMode(ssd1963_handle_t *handle, ssd1963_flip_mode_t mode)
 {
-    uint8_t newAddrMode = (handle->addrMode & ~SSD1963_FLIP_MODE_MASK) | mode;
+#if (16 == SSD1963_DATA_WITDH)
+    uint16_t newAddrMode;
+#else
+    uint8_t newAddrMode;
+#endif
 
-    FLEXIO_MCULCD_StartTransfer(handle->base);
-    FLEXIO_MCULCD_WriteCommandBlocking(handle->base, SSD1963_SET_ADDRESS_MODE);
-    FLEXIO_MCULCD_WriteSameValueBlocking(handle->base, newAddrMode, 2);
-    FLEXIO_MCULCD_StopTransfer(handle->base);
+    newAddrMode = (handle->addrMode & ~SSD1963_FLIP_MODE_MASK) | mode;
+
+    handle->xferOps->writeCommand(handle->xferOpsData, SSD1963_SET_ADDRESS_MODE);
+    handle->xferOps->writeData(handle->xferOpsData, &newAddrMode, 1 * SSD1963_DATA_WITDH_BYTE);
 
     handle->addrMode = newAddrMode;
 }
 
 void SSD1963_SetOrientationMode(ssd1963_handle_t *handle, ssd1963_orientation_mode_t mode)
 {
-    uint8_t newAddrMode = (handle->addrMode & ~SSD1963_ORIENTATION_MODE_MASK) | mode;
+#if (16 == SSD1963_DATA_WITDH)
+    uint16_t newAddrMode;
+#else
+    uint8_t newAddrMode;
+#endif
 
-    FLEXIO_MCULCD_StartTransfer(handle->base);
-    FLEXIO_MCULCD_WriteCommandBlocking(handle->base, SSD1963_SET_ADDRESS_MODE);
-    FLEXIO_MCULCD_WriteSameValueBlocking(handle->base, newAddrMode, 2);
-    FLEXIO_MCULCD_StopTransfer(handle->base);
+    newAddrMode = (handle->addrMode & ~SSD1963_ORIENTATION_MODE_MASK) | mode;
+
+    handle->xferOps->writeCommand(handle->xferOpsData, SSD1963_SET_ADDRESS_MODE);
+    handle->xferOps->writeData(handle->xferOpsData, &newAddrMode, 1 * SSD1963_DATA_WITDH_BYTE);
 
     handle->addrMode = newAddrMode;
 }
@@ -345,7 +334,11 @@ void SSD1963_SelectArea(ssd1963_handle_t *handle, uint16_t startX, uint16_t star
     uint16_t sp; /* Start of page number. */
     uint16_t ep; /* End of page number. */
     ssd1963_orientation_mode_t mode;
+#if (16 == SSD1963_DATA_WITDH)
     uint16_t commandParam[4]; /* Command parameters for set_page_address and set_column_address. */
+#else
+    uint8_t commandParam[4]; /* Command parameters for set_page_address and set_column_address. */
+#endif
 
     mode = (ssd1963_orientation_mode_t)(handle->addrMode & SSD1963_ORIENTATION_MODE_MASK);
 
@@ -387,9 +380,8 @@ void SSD1963_SelectArea(ssd1963_handle_t *handle, uint16_t startX, uint16_t star
     commandParam[2] = (ep & 0xFF00U) >> 8U;
     commandParam[3] = ep & 0xFFU;
 
-    FLEXIO_MCULCD_StartTransfer(handle->base);
-    FLEXIO_MCULCD_WriteCommandBlocking(handle->base, SSD1963_SET_PAGE_ADDRESS);
-    FLEXIO_MCULCD_WriteDataArrayBlocking(handle->base, commandParam, 4 * 2);
+    handle->xferOps->writeCommand(handle->xferOpsData, SSD1963_SET_PAGE_ADDRESS);
+    handle->xferOps->writeData(handle->xferOpsData, commandParam, 4 * SSD1963_DATA_WITDH_BYTE);
 
     /* Send the set_column_address command. */
     commandParam[0] = (sc & 0xFF00U) >> 8U;
@@ -397,80 +389,55 @@ void SSD1963_SelectArea(ssd1963_handle_t *handle, uint16_t startX, uint16_t star
     commandParam[2] = (ec & 0xFF00U) >> 8U;
     commandParam[3] = ec & 0xFFU;
 
-    FLEXIO_MCULCD_WriteCommandBlocking(handle->base, SSD1963_SET_COLUMN_ADDRESS);
-    FLEXIO_MCULCD_WriteDataArrayBlocking(handle->base, commandParam, 4 * 2);
-    FLEXIO_MCULCD_StopTransfer(handle->base);
+    handle->xferOps->writeCommand(handle->xferOpsData, SSD1963_SET_COLUMN_ADDRESS);
+    handle->xferOps->writeData(handle->xferOpsData, commandParam, 4 * SSD1963_DATA_WITDH_BYTE);
 }
 
+#if (16 == SSD1963_DATA_WITDH)
 void SSD1963_WritePixels(ssd1963_handle_t *handle, const uint16_t *pixels, uint32_t length)
 {
-    flexio_mculcd_transfer_t xfer;
-
-    xfer.command = SSD1963_WRITE_MEMORY_START;
-    xfer.mode = kFLEXIO_MCULCD_WriteArray;
-    xfer.dataAddrOrSameValue = (uint32_t)pixels;
-    xfer.dataSize = length * 2;
-
-    handle->transferCompletedFlag = false;
-    FLEXIO_MCULCD_TransferEDMA(handle->base, &handle->flexioLcdHandle, &xfer);
-    while (!handle->transferCompletedFlag)
-    {
-    }
+    handle->xferOps->writeMemory(handle->xferOpsData, SSD1963_WRITE_MEMORY_START, (const uint8_t *)pixels, length * 2);
 }
 
 void SSD1963_ReadPixels(ssd1963_handle_t *handle, uint16_t *pixels, uint32_t length)
 {
-    flexio_mculcd_transfer_t xfer;
-
-    xfer.command = SSD1963_READ_MEMORY_START;
-    xfer.mode = kFLEXIO_MCULCD_ReadArray;
-    xfer.dataAddrOrSameValue = (uint32_t)pixels;
-    xfer.dataSize = length * 2;
-
-    handle->transferCompletedFlag = false;
-    FLEXIO_MCULCD_TransferEDMA(handle->base, &handle->flexioLcdHandle, &xfer);
-    while (!handle->transferCompletedFlag)
-    {
-    }
+    handle->xferOps->readMemory(handle->xferOpsData, SSD1963_READ_MEMORY_START, (uint8_t *)pixels, length * 2);
 }
+#endif
 
 void SSD1963_SetBackLight(ssd1963_handle_t *handle, uint8_t value)
 {
+#if (16 == SSD1963_DATA_WITDH)
     uint16_t commandParam[] = {0x06U, value, 0x01U, 0xFFU, 0x00U, 0x01U};
+#else
+    uint8_t commandParam[] = {0x06U, value, 0x01U, 0xFFU, 0x00U, 0x01U};
+#endif
 
-    FLEXIO_MCULCD_StartTransfer(handle->base);
-    FLEXIO_MCULCD_WriteCommandBlocking(handle->base, SSD1963_SET_PWM_CONF);
-    FLEXIO_MCULCD_WriteDataArrayBlocking(handle->base, commandParam, sizeof(commandParam));
-    FLEXIO_MCULCD_StopTransfer(handle->base);
-}
-
-void SSD1963_WriteSamePixels(ssd1963_handle_t *handle, const uint32_t color, uint32_t pixelCount)
-{
-    flexio_mculcd_transfer_t xfer;
-
-    xfer.command = SSD1963_WRITE_MEMORY_START;
-    xfer.mode = kFLEXIO_MCULCD_WriteSameValue;
-    xfer.dataAddrOrSameValue = color;
-    xfer.dataSize = pixelCount * 2;
-
-    handle->transferCompletedFlag = false;
-    FLEXIO_MCULCD_TransferEDMA(handle->base, &handle->flexioLcdHandle, &xfer);
-    while (!handle->transferCompletedFlag)
-    {
-    }
+    handle->xferOps->writeCommand(handle->xferOpsData, SSD1963_SET_PWM_CONF);
+    handle->xferOps->writeData(handle->xferOpsData, commandParam, sizeof(commandParam));
 }
 
 void SSD1963_EnableTearEffect(ssd1963_handle_t *handle, bool enable)
 {
-    FLEXIO_MCULCD_StartTransfer(handle->base);
+    uint16_t regVal = 0;
+
     if (enable)
     {
-        FLEXIO_MCULCD_WriteCommandBlocking(handle->base, SSD1963_SET_TEAR_ON);
-        FLEXIO_MCULCD_WriteSameValueBlocking(handle->base, 0U, 2U);
+        handle->xferOps->writeCommand(handle->xferOpsData, SSD1963_SET_TEAR_ON);
+        handle->xferOps->writeData(handle->xferOpsData, &regVal, SSD1963_DATA_WITDH_BYTE);
     }
     else
     {
-        FLEXIO_MCULCD_WriteCommandBlocking(handle->base, SSD1963_SET_TEAR_OFF);
+        handle->xferOps->writeCommand(handle->xferOpsData, SSD1963_SET_TEAR_OFF);
     }
-    FLEXIO_MCULCD_StopTransfer(handle->base);
+}
+
+void SSD1963_ReadMemory(ssd1963_handle_t *handle, uint8_t *data, uint32_t length)
+{
+    handle->xferOps->readMemory(handle->xferOpsData, SSD1963_READ_MEMORY_START, data, length);
+}
+
+void SSD1963_WriteMemory(ssd1963_handle_t *handle, const uint8_t *data, uint32_t length)
+{
+    handle->xferOps->writeMemory(handle->xferOpsData, SSD1963_WRITE_MEMORY_START, data, length);
 }

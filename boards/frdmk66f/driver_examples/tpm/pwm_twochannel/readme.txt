@@ -4,6 +4,14 @@ The TPM project is a simple demonstration program of the SDK TPM driver. It sets
 hardware block to output PWM signals on two TPM channels. The PWM dutycycle on both channels
 is manually updated. On boards that have an LED connected to the TPM pins, the user will see
 a change in LED brightness if user enter different values.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -48,11 +56,6 @@ Note: The range of value is 0 to 9.
 For example: If enter '5', the duty cycle will be set to 50 percent.
 Value:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

@@ -2,7 +2,7 @@
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -153,7 +153,7 @@ int main(void)
         altitudeInMeters = rawData.altitude / MPL3115_ALTITUDE_CONV_FACTOR;
 
         rawData.temperature = (int16_t)((data[3]) << 8) | (data[4]);
-        tempInDegrees = rawData.temperature / MPL3115_TEMPERATURE_CONV_FACTOR;
+        tempInDegrees       = rawData.temperature / MPL3115_TEMPERATURE_CONV_FACTOR;
 
         PRINTF("\r\nAltitude    = %d Meters\r\n", altitudeInMeters);
         PRINTF("\r\nTemperature = %d degC\r\n", tempInDegrees);

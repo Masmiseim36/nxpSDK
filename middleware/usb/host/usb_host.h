@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2019 NXP
+ * Copyright 2016 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -47,16 +47,6 @@ typedef enum _usb_host_event
     kUSB_HostEventDetach,          /*!< Device is detached */
     kUSB_HostEventEnumerationDone, /*!< Device's enumeration is done and the device is supported */
     kUSB_HostEventNotSupported,    /*!< Device's enumeration is done and the device is not supported */
-    /*! Device's enumeration failed due to errors
-     * fail reason is put in the high 2 bytes of callback event code.
-     * kStatus_USB_TransferFailed - the transfer failed.
-     * kStatus_USB_TransferCancel - transfer is canceled by application.
-     * kStatus_USB_Error - parsing descriptor failed, the power cannot satisfy device's requirement,
-     *                     device addresss allocation failed, transfer is not enough
-     *                     or the transfer API failed.
-     * kStatus_USB_AllocFail - malloc failed.
-     */
-    kUSB_HostEventEnumerationFail,
 #if ((defined(USB_HOST_CONFIG_LOW_POWER_MODE)) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U))
     kUSB_HostEventNotSuspended,      /*!< Suspend failed */
     kUSB_HostEventSuspended,         /*!< Suspend successful */
@@ -702,19 +692,6 @@ extern usb_status_t USB_HostL1SleepDeviceResquestConfig(usb_host_handle hostHand
  */
 extern usb_status_t USB_HostUpdateHwTick(usb_host_handle hostHandle, uint64_t tick);
 
-#endif
-
-#if ((defined(USB_HOST_CONFIG_BATTERY_CHARGER)) && (USB_HOST_CONFIG_BATTERY_CHARGER > 0U))
-/*!
- * @brief Set the charger type. It is only supported on RT600 currently.
- *
- * The set charger type becomes valid in next attach.
- *
- * @param[in] hostHandle The host handle.
- * @param[in] type.
- *
- */
-extern usb_status_t USB_HostSetChargerType(usb_host_handle hostHandle, uint8_t type);
 #endif
 
 /*! @}*/

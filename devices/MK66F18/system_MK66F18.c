@@ -5,15 +5,15 @@
 **                          MK66FX1M0VLQ18
 **                          MK66FX1M0VMD18
 **
-**     Compilers:           Keil ARM C/C++ Compiler
-**                          Freescale C/C++ for Embedded ARM
+**     Compilers:           Freescale C/C++ for Embedded ARM
 **                          GNU C Compiler
 **                          IAR ANSI C/C++ Compiler for ARM
+**                          Keil ARM C/C++ Compiler
 **                          MCUXpresso Compiler
 **
 **     Reference manual:    K66P144M180SF5RMV2, Rev. 1, Mar 2015
 **     Version:             rev. 3.0, 2015-03-25
-**     Build:               b180801
+**     Build:               b181105
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
@@ -22,6 +22,7 @@
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
 **     Copyright 2016-2018 NXP
+**     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
 **
@@ -172,6 +173,7 @@ void SystemCoreClockUpdate (void) {
           MCGOUTClock *= 2929U;
           break;
         default:
+          MCGOUTClock *= 640U;
           break;
       }
     } else { /* (!((MCG->C6 & MCG_C6_PLLS_MASK) == 0x00U)) */

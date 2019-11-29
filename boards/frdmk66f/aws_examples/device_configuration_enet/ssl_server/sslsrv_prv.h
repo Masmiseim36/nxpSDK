@@ -21,8 +21,8 @@
 #define SSLSRV_SES_BUF_SIZE_PRV (SSLSRV_CFG_SES_BUFFER_SIZE)
 
 /*
-* SSL session buffer
-*/
+ * SSL session buffer
+ */
 typedef struct sslsrv_buffer
 {
     uint32_t offset; /* Write offset */
@@ -35,8 +35,8 @@ typedef struct sslsrv_buffer
 typedef void (*SSLSRV_SES_FUNC)(void *server, void *session);
 
 /*
-* SSL session structure
-*/
+ * SSL session structure
+ */
 typedef struct sslsrv_session_struct
 {
     SSLSRV_SES_FUNC process_func; /* Session process function */

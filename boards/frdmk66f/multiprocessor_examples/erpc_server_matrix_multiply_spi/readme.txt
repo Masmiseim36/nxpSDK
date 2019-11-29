@@ -10,6 +10,14 @@ eRPC specific files are stored in: middleware\multicore\erpc
 eRPC documentation is stored in: middleware\multicore\erpc\doc
 eRPC is open-source project stored on github: https://github.com/EmbeddedRPC/erpc
 eRPC documentation can be also found in: http://embeddedrpc.github.io
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- MCUXpresso  11.0.0
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+
 Hardware requirements
 =====================
 - Mini USB cable
@@ -88,11 +96,6 @@ Result matrix
 
 Press the button to initiate the next matrix multiplication
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- MCUXpresso 10.3.0
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
+Customization options
+=====================
 

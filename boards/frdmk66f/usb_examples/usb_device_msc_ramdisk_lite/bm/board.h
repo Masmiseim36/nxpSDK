@@ -151,10 +151,10 @@
     BOARD_LED_BLUE_GPIO->PDDR |= (1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Enable target LED_BLUE */
 #define LED_BLUE_ON()                                                                                 \
     GPIO_PortClear(BOARD_LED_BLUE_GPIO, 1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Turn on target LED_BLUE \ \
-                                                                           */
+                                                                        */
 #define LED_BLUE_OFF()                                                                               \
     GPIO_PortSet(BOARD_LED_BLUE_GPIO, 1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Turn off target LED_BLUE \ \
-                                                                         */
+                                                                      */
 #define LED_BLUE_TOGGLE() \
     GPIO_PortToggle(BOARD_LED_BLUE_GPIO, 1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Toggle on target LED_BLUE */
 
@@ -200,6 +200,7 @@
 #define BOARD_ACCEL_FXOS
 
 #define BOARD_CODEC_I2C_BASEADDR I2C1
+#define BOARD_CODEC_I2C_INSTANCE 1U
 #define BOARD_CODEC_I2C_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_BusClk)
 
 #if defined(__cplusplus)

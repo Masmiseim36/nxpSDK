@@ -23,8 +23,8 @@
 extern const uint16_t demoPictures[DEMO_PIC_NUM][DEMO_PIC_HEIGHT * DEMO_PIC_WIDTH];
 #else
 #define DEMO_PIC_ADDR 0x68000400
-extern const uint16_t (*demoPictures)[DEMO_PIC_HEIGHT * DEMO_PIC_WIDTH];
-const uint16_t (*demoPictures)[DEMO_PIC_HEIGHT * DEMO_PIC_WIDTH] = (void *)DEMO_PIC_ADDR;
+extern const uint8_t (*demoPictures)[DEMO_PIC_HEIGHT * DEMO_PIC_WIDTH * DEMO_BYTE_PER_PIXEL];
+const uint8_t (*demoPictures)[DEMO_PIC_HEIGHT * DEMO_PIC_WIDTH * DEMO_BYTE_PER_PIXEL] = (void *)DEMO_PIC_ADDR;
 #endif
 
 #endif /* _PICTURES_H_ */

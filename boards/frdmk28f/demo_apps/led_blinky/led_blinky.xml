@@ -24,7 +24,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk28f_led_blinky" name="led_blinky" category="demo_apps" dependency="platform.drivers.gpio.MK28F15 platform.drivers.clock.MK28F15 platform.drivers.common.MK28F15 device.MK28F15_CMSIS.MK28F15 utility.debug_console.MK28F15 component.lpuart_adapter.MK28F15 component.serial_manager.MK28F15 component.serial_manager_uart.MK28F15 platform.drivers.lpuart.MK28F15 component.lists.MK28F15 device.MK28F15_startup.MK28F15 platform.drivers.port.MK28F15 platform.drivers.smc.MK28F15 platform.drivers.sysmpu.MK28F15 platform.utilities.assert.MK28F15 platform.Include_core_cm4.MK28F15 platform.Include_common.MK28F15" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmk28f_led_blinky" name="led_blinky" category="demo_apps" dependency="platform.drivers.gpio.MK28F15 platform.drivers.clock.MK28F15 platform.drivers.common.MK28F15 device.MK28F15_CMSIS.MK28F15 utility.debug_console.MK28F15 component.lpuart_adapter.MK28F15 component.serial_manager.MK28F15 component.serial_manager_uart.MK28F15 platform.drivers.lpuart.MK28F15 component.lists.MK28F15 device.MK28F15_startup.MK28F15 platform.drivers.port.MK28F15 platform.drivers.smc.MK28F15 platform.drivers.sysmpu.MK28F15 platform.utilities.assert.MK28F15 platform.Include_core_cm4.MK28F15 platform.Include_common.MK28F15">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -86,6 +86,9 @@
     </source>
     <source path="boards/frdmk28f/demo_apps/led_blinky" target_path="source" type="src">
       <files mask="led_blinky.c"/>
+    </source>
+    <source path="boards/frdmk28f/demo_apps/led_blinky" target_path="src" type="binary" exclude="true">
+      <files mask="led_blinky.bin"/>
     </source>
   </example>
 </ksdk:examples>

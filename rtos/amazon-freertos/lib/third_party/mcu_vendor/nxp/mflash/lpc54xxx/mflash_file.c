@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
+
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -148,3 +149,4 @@ BaseType_t mflash_read_file(
     *ppucData = (uint8_t*)(tmp_file.flash_addr + sizeof(*tmp_meta));
     return pdTRUE;
 }
+

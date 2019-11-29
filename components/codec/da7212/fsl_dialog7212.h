@@ -1,18 +1,29 @@
 /*
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_DIALOG7212_H_
 #define _FSL_DIALOG7212_H_
 
-#include "fsl_codec_common.h"
+#include "fsl_codec_i2c.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+/*! @name Driver version */
+/*@{*/
+/*! @brief CLOCK driver version 2.1.0. */
+#define FSL_DA7212_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
+/*@}*/
+
+/*! @brief da7212 handle size */
+#ifndef DA7212_HANDLE_SIZE
+#define DA7212_HANDLE_SIZE (100U)
+#endif
+
 #define DA7212_INIT_SIZE (35)
 #define DA7212_DAC_MAX_VOL (DA7213_DAC_GAIN_12DB)
 #define DA7212_DAC_MIN_VOL (DA7212_DAC_GAIN_MUTE)
@@ -35,6 +46,8 @@
 #define DA7212_CHANGE_FREQ_SIZE (0x05)
 
 #define CLEAR_REGISTER (0x00)
+
+#define DA7212_I2C_BAUDRATE (100000U)
 /***************************************************************************************************/
 /* * Register values. */
 
@@ -967,6 +980,14 @@ typedef enum _da7212_Input
     kDA7212_Input_MAX
 } da7212_Input_t;
 
+/*! @brief da7212 play channel  */
+enum _da7212_play_channel
+{
+    kDA7212_HeadphoneLeft  = 1U, /*!< headphone left */
+    kDA7212_HeadphoneRight = 2U, /*!< headphone right */
+    kDA7212_Speaker        = 4U, /*!< speaker channel */
+};
+
 /*! @brief DA7212 output device select */
 typedef enum _da7212_Output
 {
@@ -975,17 +996,26 @@ typedef enum _da7212_Output
     kDA7212_Output_MAX
 } da7212_Output_t;
 
+/*! @brief DA7212 module */
+enum _da7212_module
+{
+    kDA7212_ModuleADC,       /*!< module ADC*/
+    kDA7212_ModuleDAC,       /*!< module DAC */
+    kDA7212_ModuleHeadphone, /*!< module headphone */
+    kDA7212_ModuleSpeaker,   /*!< module speaker */
+};
+
 /*! @brief DA7212 functionality */
 typedef enum _da7212_dac_source
 {
-    kDA7212_DACSourceADC = 0x0U,        /*!< DAC source from ADC */
-    kDA7212_DACSourceInputStream = 0x3U /*!< DAC source from  */
+    kDA7212_DACSourceADC         = 0x0U, /*!< DAC source from ADC */
+    kDA7212_DACSourceInputStream = 0x3U  /*!< DAC source from  */
 } da7212_dac_source_t;
 
 /*! @brief DA7212 volume */
 typedef enum _da7212_volume
 {
-    kDA7212_DACGainMute = 0x7,   /*!< Mute DAC */
+    kDA7212_DACGainMute  = 0x7,  /*!< Mute DAC */
     kDA7212_DACGainM72DB = 0x17, /*!< DAC volume -72db */
     kDA7212_DACGainM60DB = 0x1F, /*!< DAC volume -60db */
     kDA7212_DACGainM54DB = 0x27, /*!< DAC volume -54db */
@@ -996,15 +1026,15 @@ typedef enum _da7212_volume
     kDA7212_DACGainM24DB = 0x4F, /*!< DAC volume -24db */
     kDA7212_DACGainM18DB = 0x57, /*!< DAC volume -18db */
     kDA7212_DACGainM12DB = 0x5F, /*!< DAC volume -12db */
-    kDA7212_DACGainM6DB = 0x67,  /*!< DAC volume -6bb */
-    kDA7212_DACGain0DB = 0x6F,   /*!< DAC volume +0db */
-    kDA7212_DACGain6DB = 0x77,   /*!< DAC volume +6db */
-    kDA7212_DACGain12DB = 0x7F   /*!< DAC volume +12db */
+    kDA7212_DACGainM6DB  = 0x67, /*!< DAC volume -6bb */
+    kDA7212_DACGain0DB   = 0x6F, /*!< DAC volume +0db */
+    kDA7212_DACGain6DB   = 0x77, /*!< DAC volume +6db */
+    kDA7212_DACGain12DB  = 0x7F  /*!< DAC volume +12db */
 } da7212_volume_t;
 
 /*!
-* @brief The audio data transfer protocol choice.
-*/
+ * @brief The audio data transfer protocol choice.
+ */
 typedef enum _da7212_protocol
 {
     kDA7212_BusI2S = 0x0,      /*!< I2S Type */
@@ -1013,13 +1043,35 @@ typedef enum _da7212_protocol
     kDA7212_BusDSPMode,        /*!< DSP mode */
 } da7212_protocol_t;
 
+/*! @brief da7212 audio format */
+typedef struct _da7212_audio_format
+{
+    uint32_t mclk_HZ;    /*!< master clock frequency */
+    uint32_t sampleRate; /*!< sample rate */
+    uint32_t bitWidth;   /*!< bit width */
+} da7212_audio_format_t;
+
 /*! @brief DA7212 configure structure */
 typedef struct da7212_config
 {
     bool isMaster;                 /*!< If DA7212 is master, true means master, false means slave. */
     da7212_protocol_t protocol;    /*!< Audio bus format, can be I2S, LJ, RJ or DSP mode. */
     da7212_dac_source_t dacSource; /*!< DA7212 data source. */
+    da7212_audio_format_t format;  /*!< audio format */
+    uint8_t slaveAddress;          /*!< device address */
+    codec_i2c_config_t i2cConfig;  /*!< i2c configuration */
 } da7212_config_t;
+
+/*! @brief da7212 codec handler
+ * Applicationi should allocate a buffer with DA7212_HANDLE_SIZE for handle definition, such as
+ * uint8_t da7212HandleBuffer[DA7212_HANDLE_SIZE];
+ * da7212_handle_t *da7212Handle = da7212HandleBuffer;
+ */
+typedef struct _da7212_handle
+{
+    da7212_config_t *config; /*!< da7212 config pointer */
+    void *i2cHandle;         /*!< i2c handle */
+} da7212_handle_t;
 
 /*******************************************************************************
  * API
@@ -1042,7 +1094,7 @@ extern "C" {
  * codec_config.isMaster = false
  * @endcode
  */
-status_t DA7212_Init(codec_handle_t *handle, void *config);
+status_t DA7212_Init(da7212_handle_t *handle, da7212_config_t *config);
 
 /*!
  * @brief Set DA7212 audio format.
@@ -1054,10 +1106,10 @@ status_t DA7212_Init(codec_handle_t *handle, void *config);
  * 11.025K/22.05K/44.1K
  * @param dataBits How many bits in a word of a audio frame, DA7212 only supports 16/20/24/32 bits.
  */
-status_t DA7212_ConfigAudioFormat(codec_handle_t *handle,
-                              uint32_t masterClock_Hz,
-                              uint32_t sampleRate_Hz,
-                              uint32_t dataBits);
+status_t DA7212_ConfigAudioFormat(da7212_handle_t *handle,
+                                  uint32_t masterClock_Hz,
+                                  uint32_t sampleRate_Hz,
+                                  uint32_t dataBits);
 
 /*!
  * @brief Set DA7212 playback volume.
@@ -1065,7 +1117,7 @@ status_t DA7212_ConfigAudioFormat(codec_handle_t *handle,
  * @param handle DA7212 handle pointer.
  * @param volume The volume of playback.
  */
-void DA7212_ChangeHPVolume(codec_handle_t *handle, da7212_volume_t volume);
+void DA7212_ChangeHPVolume(da7212_handle_t *handle, da7212_volume_t volume);
 
 /*!
  * @brief Mute or unmute DA7212.
@@ -1073,7 +1125,7 @@ void DA7212_ChangeHPVolume(codec_handle_t *handle, da7212_volume_t volume);
  * @param handle DA7212 handle pointer.
  * @param isMuted True means mute, false means unmute.
  */
-void DA7212_Mute(codec_handle_t *handle, bool isMuted);
+void DA7212_Mute(da7212_handle_t *handle, bool isMuted);
 
 /*!
  * @brief Set the input data source of DA7212.
@@ -1081,7 +1133,7 @@ void DA7212_Mute(codec_handle_t *handle, bool isMuted);
  * @param handle DA7212 handle pointer.
  * @param DA7212_Input Input data source.
  */
-void DA7212_ChangeInput(codec_handle_t *handle, da7212_Input_t DA7212_Input);
+void DA7212_ChangeInput(da7212_handle_t *handle, da7212_Input_t DA7212_Input);
 
 /*!
  * @brief Set the output device of DA7212.
@@ -1089,7 +1141,33 @@ void DA7212_ChangeInput(codec_handle_t *handle, da7212_Input_t DA7212_Input);
  * @param handle DA7212 handle pointer.
  * @param DA7212_Output Output device of DA7212.
  */
-void DA7212_ChangeOutput(codec_handle_t *handle, da7212_Output_t DA7212_Output);
+void DA7212_ChangeOutput(da7212_handle_t *handle, da7212_Output_t DA7212_Output);
+
+/*!
+ * @brief Set module volume.
+ *
+ * @param handle DA7212 handle pointer.
+ * @param module shoule be a value of _da7212_module
+ * @param volume volume range 0 - 100, 0 is mute, 100 is the maximum value.
+ */
+status_t DA7212_SetChannelVolume(da7212_handle_t *handle, uint32_t module, uint32_t volume);
+
+/*!
+ * @brief Set module mute.
+ *
+ * @param handle DA7212 handle pointer.
+ * @param module shoule be a value of _da7212_module
+ * @param isMute true is mute, false is unmute.
+ */
+status_t DA7212_SetChannelMute(da7212_handle_t *handle, uint32_t module, bool isMute);
+
+/*!
+ * @brief Set protocol for DA7212.
+ *
+ * @param handle DA7212 handle pointer.
+ * @param protocol da7212_protocol_t.
+ */
+status_t DA7212_SetProtocol(da7212_handle_t *handle, da7212_protocol_t protocol);
 
 /*!
  * @brief Write a register for DA7212.
@@ -1098,7 +1176,7 @@ void DA7212_ChangeOutput(codec_handle_t *handle, da7212_Output_t DA7212_Output);
  * @param u8Register DA7212 register address to be written.
  * @param u8RegisterData Data to be written into regsiter
  */
-status_t DA7212_WriteRegister(codec_handle_t *handle, uint8_t u8Register, uint8_t u8RegisterData);
+status_t DA7212_WriteRegister(da7212_handle_t *handle, uint8_t u8Register, uint8_t u8RegisterData);
 
 /*!
  * @brief Get a register value of DA7212.
@@ -1107,14 +1185,14 @@ status_t DA7212_WriteRegister(codec_handle_t *handle, uint8_t u8Register, uint8_
  * @param u8Register DA7212 register address to be read.
  * @param pu8RegisterData Pointer where the read out value to be stored.
  */
-status_t DA7212_ReadRegister(codec_handle_t *handle, uint8_t u8Register, uint8_t *pu8RegisterData);
+status_t DA7212_ReadRegister(da7212_handle_t *handle, uint8_t u8Register, uint8_t *pu8RegisterData);
 
 /*!
  * @brief Deinit DA7212.
  *
  * @param handle DA7212 handle pointer.
  */
-status_t DA7212_Deinit(codec_handle_t *handle);
+status_t DA7212_Deinit(da7212_handle_t *handle);
 
 #if defined(__cplusplus)
 }

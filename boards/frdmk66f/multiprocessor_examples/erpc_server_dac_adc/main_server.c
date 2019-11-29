@@ -73,12 +73,13 @@ void Delay(uint32_t ticks);
 adc16_channel_config_t g_adc16ChannelConfigStruct;
 
 gpio_pin_config_t led_config = {
-    kGPIO_DigitalOutput, 0,
+    kGPIO_DigitalOutput,
+    0,
 };
 
 /*******************************************************************************
  * Code
-******************************************************************************/
+ ******************************************************************************/
 
 static void i2c_release_bus_delay(void)
 {
@@ -97,10 +98,10 @@ void BOARD_I2C_ReleaseBus(void)
 
     /* Config pin mux as gpio */
     i2c_pin_config.pullSelect = kPORT_PullUp;
-    i2c_pin_config.mux = kPORT_MuxAsGpio;
+    i2c_pin_config.mux        = kPORT_MuxAsGpio;
 
     pin_config.pinDirection = kGPIO_DigitalOutput;
-    pin_config.outputLogic = 1U;
+    pin_config.outputLogic  = 1U;
     CLOCK_EnableClock(kCLOCK_PortD);
     PORT_SetPinConfig(I2C_RELEASE_SCL_PORT, I2C_RELEASE_SCL_PIN, &i2c_pin_config);
     PORT_SetPinConfig(I2C_RELEASE_SDA_PORT, I2C_RELEASE_SDA_PIN, &i2c_pin_config);
@@ -166,7 +167,7 @@ void convert_dac_adc(uint32_t numberToConvert, uint32_t *result)
 
 void adc_get_config(AdcConfig *config)
 {
-    config->vref = VREF_BRD;
+    config->vref        = VREF_BRD;
     config->atomicSteps = SE_12BIT;
 }
 
@@ -262,7 +263,7 @@ void DAC_ADC_Init(void)
 #endif /* FSL_FEATURE_ADC16_HAS_CALIBRATION */
 
     /* Prepare ADC channel setting */
-    g_adc16ChannelConfigStruct.channelNumber = DEMO_ADC16_USER_CHANNEL;
+    g_adc16ChannelConfigStruct.channelNumber                        = DEMO_ADC16_USER_CHANNEL;
     g_adc16ChannelConfigStruct.enableInterruptOnConversionCompleted = false;
 
 #if defined(FSL_FEATURE_ADC16_HAS_DIFF_MODE) && FSL_FEATURE_ADC16_HAS_DIFF_MODE

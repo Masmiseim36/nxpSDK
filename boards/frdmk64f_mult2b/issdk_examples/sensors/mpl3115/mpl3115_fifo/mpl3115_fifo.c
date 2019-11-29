@@ -2,7 +2,7 @@
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -152,7 +152,7 @@ int main(void)
 
         /* Reset Counters */
         pressureInPascals = 0;
-        tempInDegrees = 0;
+        tempInDegrees     = 0;
 
         for (uint8_t i = 0; i < FIFO_WMRK_SIZE; i++)
         { /*! Process all samples and convert the raw sensor data. */

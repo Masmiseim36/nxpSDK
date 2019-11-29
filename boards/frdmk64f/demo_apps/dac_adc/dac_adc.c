@@ -18,7 +18,7 @@
  ******************************************************************************/
 #define DEMO_ADC16_BASEADDR ADC0
 #define DEMO_ADC16_CHANNEL_GROUP 0U
-#define DEMO_ADC16_USER_CHANNEL 12U /* PTB2, ADC0_SE12 */
+#define DEMO_ADC16_USER_CHANNEL 23U /* PTB2, ADC0_SE23 */
 #define DEMO_DAC_BASEADDR DAC0
 
 #define DEMO_ADC16_IRQn ADC0_IRQn
@@ -41,7 +41,7 @@ static void DAC_ADC_Init(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-volatile bool g_Adc16ConversionDoneFlag = false;
+volatile bool g_Adc16ConversionDoneFlag  = false;
 volatile uint32_t g_Adc16ConversionValue = 0;
 adc16_channel_config_t g_adc16ChannelConfigStruct;
 const uint32_t g_Adc16_12bitFullRange = 4096U;
@@ -95,7 +95,7 @@ static void DAC_ADC_Init(void)
 #endif /* FSL_FEATURE_ADC16_HAS_CALIBRATION */
 
     /* Prepare ADC channel setting */
-    g_adc16ChannelConfigStruct.channelNumber = DEMO_ADC16_USER_CHANNEL;
+    g_adc16ChannelConfigStruct.channelNumber                        = DEMO_ADC16_USER_CHANNEL;
     g_adc16ChannelConfigStruct.enableInterruptOnConversionCompleted = true;
 
 #if defined(FSL_FEATURE_ADC16_HAS_DIFF_MODE) && FSL_FEATURE_ADC16_HAS_DIFF_MODE

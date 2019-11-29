@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -31,6 +31,7 @@
 #define I2C_BAUDRATE 100000U
 #define FXOS8700_WHOAMI 0xC7U
 #define MMA8451_WHOAMI 0x1AU
+#define MMA8652_WHOAMI 0x4AU
 #define ACCEL_STATUS 0x00U
 #define ACCEL_XYZ_DATA_CFG 0x0EU
 #define ACCEL_CTRL_REG1 0x2AU
@@ -59,7 +60,7 @@ i2c_master_handle_t g_m_handle;
 uint8_t g_accel_addr_found = 0x00;
 
 volatile bool completionFlag = false;
-volatile bool nakFlag = false;
+volatile bool nakFlag        = false;
 
 /*******************************************************************************
  * Code
@@ -82,10 +83,10 @@ void BOARD_I2C_ReleaseBus(void)
 
     /* Config pin mux as gpio */
     i2c_pin_config.pullSelect = kPORT_PullUp;
-    i2c_pin_config.mux = kPORT_MuxAsGpio;
+    i2c_pin_config.mux        = kPORT_MuxAsGpio;
 
     pin_config.pinDirection = kGPIO_DigitalOutput;
-    pin_config.outputLogic = 1U;
+    pin_config.outputLogic  = 1U;
     CLOCK_EnableClock(kCLOCK_PortD);
     PORT_SetPinConfig(I2C_RELEASE_SCL_PORT, I2C_RELEASE_SCL_PIN, &i2c_pin_config);
     PORT_SetPinConfig(I2C_RELEASE_SCL_PORT, I2C_RELEASE_SDA_PIN, &i2c_pin_config);
@@ -146,12 +147,12 @@ static bool I2C_ReadAccelWhoAmI(void)
     Start + Device_address_Write , who_am_I_register;
     Repeart_Start + Device_address_Read , who_am_I_value.
     */
-    uint8_t who_am_i_reg = ACCEL_WHOAMI_REG;
-    uint8_t who_am_i_value = 0x00;
+    uint8_t who_am_i_reg          = ACCEL_WHOAMI_REG;
+    uint8_t who_am_i_value        = 0x00;
     uint8_t accel_addr_array_size = 0x00;
-    bool find_device = false;
-    uint8_t i = 0;
-    uint32_t sourceClock = 0;
+    bool find_device              = false;
+    uint8_t i                     = 0;
+    uint32_t sourceClock          = 0;
 
     i2c_master_config_t masterConfig;
 
@@ -172,13 +173,13 @@ static bool I2C_ReadAccelWhoAmI(void)
     i2c_master_transfer_t masterXfer;
     memset(&masterXfer, 0, sizeof(masterXfer));
 
-    masterXfer.slaveAddress = g_accel_address[0];
-    masterXfer.direction = kI2C_Write;
-    masterXfer.subaddress = 0;
+    masterXfer.slaveAddress   = g_accel_address[0];
+    masterXfer.direction      = kI2C_Write;
+    masterXfer.subaddress     = 0;
     masterXfer.subaddressSize = 0;
-    masterXfer.data = &who_am_i_reg;
-    masterXfer.dataSize = 1;
-    masterXfer.flags = kI2C_TransferNoStopFlag;
+    masterXfer.data           = &who_am_i_reg;
+    masterXfer.dataSize       = 1;
+    masterXfer.flags          = kI2C_TransferNoStopFlag;
 
     accel_addr_array_size = sizeof(g_accel_address) / sizeof(g_accel_address[0]);
 
@@ -197,8 +198,8 @@ static bool I2C_ReadAccelWhoAmI(void)
 
         if (completionFlag == true)
         {
-            completionFlag = false;
-            find_device = true;
+            completionFlag     = false;
+            find_device        = true;
             g_accel_addr_found = masterXfer.slaveAddress;
             break;
         }
@@ -206,12 +207,12 @@ static bool I2C_ReadAccelWhoAmI(void)
 
     if (find_device == true)
     {
-        masterXfer.direction = kI2C_Read;
-        masterXfer.subaddress = 0;
+        masterXfer.direction      = kI2C_Read;
+        masterXfer.subaddress     = 0;
         masterXfer.subaddressSize = 0;
-        masterXfer.data = &who_am_i_value;
-        masterXfer.dataSize = 1;
-        masterXfer.flags = kI2C_TransferRepeatedStartFlag;
+        masterXfer.data           = &who_am_i_value;
+        masterXfer.dataSize       = 1;
+        masterXfer.flags          = kI2C_TransferRepeatedStartFlag;
 
         I2C_MasterTransferNonBlocking(BOARD_ACCEL_I2C_BASEADDR, &g_m_handle, &masterXfer);
 
@@ -235,10 +236,15 @@ static bool I2C_ReadAccelWhoAmI(void)
                 PRINTF("Found an MMA8451 on board , the device address is 0x%x . \r\n", masterXfer.slaveAddress);
                 return true;
             }
+            else if (who_am_i_value == MMA8652_WHOAMI)
+            {
+                PRINTF("Found an MMA8652 on board , the device address is 0x%x . \r\n", masterXfer.slaveAddress);
+                return true;
+            }
             else
             {
                 PRINTF("Found a device, the WhoAmI value is 0x%x\r\n", who_am_i_value);
-                PRINTF("It's not MMA8451 or FXOS8700. \r\n");
+                PRINTF("It's not MMA8451 or FXOS8700 or MMA8652. \r\n");
                 PRINTF("The device address is 0x%x. \r\n", masterXfer.slaveAddress);
                 return false;
             }
@@ -261,13 +267,13 @@ static bool I2C_WriteAccelReg(I2C_Type *base, uint8_t device_addr, uint8_t reg_a
     i2c_master_transfer_t masterXfer;
     memset(&masterXfer, 0, sizeof(masterXfer));
 
-    masterXfer.slaveAddress = device_addr;
-    masterXfer.direction = kI2C_Write;
-    masterXfer.subaddress = reg_addr;
+    masterXfer.slaveAddress   = device_addr;
+    masterXfer.direction      = kI2C_Write;
+    masterXfer.subaddress     = reg_addr;
     masterXfer.subaddressSize = 1;
-    masterXfer.data = &value;
-    masterXfer.dataSize = 1;
-    masterXfer.flags = kI2C_TransferDefaultFlag;
+    masterXfer.data           = &value;
+    masterXfer.dataSize       = 1;
+    masterXfer.flags          = kI2C_TransferDefaultFlag;
 
     /*  direction=write : start+device_write;cmdbuff;xBuff; */
     /*  direction=recive : start+device_write;cmdbuff;repeatStart+device_read;xBuff; */
@@ -296,13 +302,13 @@ static bool I2C_ReadAccelRegs(I2C_Type *base, uint8_t device_addr, uint8_t reg_a
 {
     i2c_master_transfer_t masterXfer;
     memset(&masterXfer, 0, sizeof(masterXfer));
-    masterXfer.slaveAddress = device_addr;
-    masterXfer.direction = kI2C_Read;
-    masterXfer.subaddress = reg_addr;
+    masterXfer.slaveAddress   = device_addr;
+    masterXfer.direction      = kI2C_Read;
+    masterXfer.subaddress     = reg_addr;
     masterXfer.subaddressSize = 1;
-    masterXfer.data = rxBuff;
-    masterXfer.dataSize = rxSize;
-    masterXfer.flags = kI2C_TransferDefaultFlag;
+    masterXfer.data           = rxBuff;
+    masterXfer.dataSize       = rxSize;
+    masterXfer.flags          = kI2C_TransferDefaultFlag;
 
     /*  direction=write : start+device_write;cmdbuff;xBuff; */
     /*  direction=recive : start+device_write;cmdbuff;repeatStart+device_read;xBuff; */
@@ -347,12 +353,12 @@ int main(void)
     /*  read the accel xyz value if there is accel device on board */
     if (true == isThereAccel)
     {
-        uint8_t databyte = 0;
+        uint8_t databyte  = 0;
         uint8_t write_reg = 0;
         uint8_t readBuff[7];
         int16_t x, y, z;
         uint8_t status0_value = 0;
-        uint32_t i = 0U;
+        uint32_t i            = 0U;
 
         /*  please refer to the "example FXOS8700CQ Driver Code" in FXOS8700 datasheet. */
         /*  write 0000 0000 = 0x00 to accelerometer control register 1 */
@@ -360,7 +366,7 @@ int main(void)
         /*  [7-1] = 0000 000 */
         /*  [0]: active=0 */
         write_reg = ACCEL_CTRL_REG1;
-        databyte = 0;
+        databyte  = 0;
         I2C_WriteAccelReg(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, write_reg, databyte);
 
         /*  write 0000 0001= 0x01 to XYZ_DATA_CFG register */
@@ -373,7 +379,7 @@ int main(void)
         /*  [1-0]: fs=01 for accelerometer range of +/-4g range with 0.488mg/LSB */
         /*  databyte = 0x01; */
         write_reg = ACCEL_XYZ_DATA_CFG;
-        databyte = 0x01;
+        databyte  = 0x01;
         I2C_WriteAccelReg(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, write_reg, databyte);
 
         /*  write 0000 1101 = 0x0D to accelerometer control register 1 */
@@ -384,7 +390,7 @@ int main(void)
         /*  [0]: active=1 to take the part out of standby and enable sampling */
         /*   databyte = 0x0D; */
         write_reg = ACCEL_CTRL_REG1;
-        databyte = 0x0d;
+        databyte  = 0x0d;
         I2C_WriteAccelReg(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, write_reg, databyte);
         PRINTF("The accel values:\r\n");
         for (i = 0; i < ACCEL_READ_TIMES; i++)
@@ -400,9 +406,9 @@ int main(void)
             I2C_ReadAccelRegs(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, ACCEL_STATUS, readBuff, 7);
 
             status0_value = readBuff[0];
-            x = ((int16_t)(((readBuff[1] * 256U) | readBuff[2]))) / 4U;
-            y = ((int16_t)(((readBuff[3] * 256U) | readBuff[4]))) / 4U;
-            z = ((int16_t)(((readBuff[5] * 256U) | readBuff[6]))) / 4U;
+            x             = ((int16_t)(((readBuff[1] * 256U) | readBuff[2]))) / 4U;
+            y             = ((int16_t)(((readBuff[3] * 256U) | readBuff[4]))) / 4U;
+            z             = ((int16_t)(((readBuff[5] * 256U) | readBuff[6]))) / 4U;
 
             PRINTF("status_reg = 0x%x , x = %5d , y = %5d , z = %5d \r\n", status0_value, x, y, z);
         }

@@ -11,7 +11,7 @@
     <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk66f_led_demo_freedom_0000" name="led_demo_freedom_0000" category="bootloader_examples/demo_apps" dependency="device.MK66F18_CMSIS.MK66F18 middleware.mcu-boot.MK66F18_startup.MK66F18 middleware.mcu-boot.src_startup.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18" toolchain="iar mdk mcuxpresso">
+  <example id="frdmk66f_led_demo_freedom_0000" name="led_demo_freedom_0000" category="bootloader_examples/demo_apps" dependency="device.MK66F18_CMSIS.MK66F18 middleware.mcu-boot.MK66F18_startup.MK66F18 middleware.mcu-boot.src_startup.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -52,7 +52,7 @@
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>
-          <value>true</value>
+          <value>false</value>
         </option>
         <option id="com.crt.advproject.link.fpu" type="enum">
           <value>com.crt.advproject.link.fpu.fpv4.hard</value>

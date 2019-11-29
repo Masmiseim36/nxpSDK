@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -186,7 +186,7 @@ usb_status_t USB_DeviceHidClassRequest(usb_device_handle handle,
         case USB_DEVICE_HID_REQUEST_SET_REPORT:
             break;
         case USB_DEVICE_HID_REQUEST_SET_IDLE:
-            error = kStatus_USB_Success;
+            error                                = kStatus_USB_Success;
             g_deviceComposite->hidMouse.idleRate = 125U;
             break;
         case USB_DEVICE_HID_REQUEST_SET_PROTOCOL:
@@ -215,18 +215,20 @@ usb_status_t USB_DeviceHidMouseSetConfigure(usb_device_handle handle, uint8_t co
 
     g_deviceComposite->hidMouse.attach = 1U;
 
-    epCallback.callbackFn = USB_DeviceHidInterruptIn;
-    epCallback.callbackParam = handle;
-    epInitStruct.zlt = 0U;
-    epInitStruct.transferType = USB_ENDPOINT_INTERRUPT;
+    epCallback.callbackFn        = USB_DeviceHidInterruptIn;
+    epCallback.callbackParam     = handle;
+    epInitStruct.zlt             = 0U;
+    epInitStruct.transferType    = USB_ENDPOINT_INTERRUPT;
     epInitStruct.endpointAddress = USB_HID_MOUSE_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
     if (USB_SPEED_HIGH == g_deviceComposite->speed)
     {
         epInitStruct.maxPacketSize = HS_INTERRUPT_IN_PACKET_SIZE;
+        epInitStruct.interval      = HS_INTERRUPT_IN_INTERVAL;
     }
     else
     {
         epInitStruct.maxPacketSize = FS_INTERRUPT_IN_PACKET_SIZE;
+        epInitStruct.interval      = FS_INTERRUPT_IN_INTERVAL;
     }
 
     USB_DeviceInitEndpoint(handle, &epInitStruct, &epCallback);
@@ -244,7 +246,7 @@ usb_status_t USB_DeviceHidMouseSetConfigure(usb_device_handle handle, uint8_t co
  */
 usb_status_t USB_DeviceHidMouseInit(usb_device_composite_struct_t *deviceComposite)
 {
-    g_deviceComposite = deviceComposite;
+    g_deviceComposite                  = deviceComposite;
     g_deviceComposite->hidMouse.buffer = s_MouseBuffer;
     return kStatus_USB_Success;
 }

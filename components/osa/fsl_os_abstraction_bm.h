@@ -16,11 +16,6 @@
  * Declarations
  ******************************************************************************/
 
-/*! @brief Definition to determine whether enable TASK module. */
-#ifndef FSL_OSA_BM_TASK_ENABLE
-#define FSL_OSA_BM_TASK_ENABLE 1U
-#endif
-
 /*! @brief Bare Metal does not use timer. */
 #define FSL_OSA_BM_TIMER_NONE 0U
 
@@ -82,28 +77,23 @@ typedef struct Event
     uint32_t time_start;          /*!< The time to start timeout                        */
     uint32_t timeout;             /*!< Timeout to wait in milliseconds                  */
     volatile event_flags_t flags; /*!< The flags status                                 */
-#if (defined(FSL_OSA_BM_TASK_ENABLE) && (FSL_OSA_BM_TASK_ENABLE > 0U))
-    task_handler_t waitingTask; /*!< Handler to the waiting task                      */
-#endif
-    bool autoClear;          /*!< Auto clear or manual clear                       */
-    volatile bool isWaiting; /*!< Is any task waiting for a timeout on this event  */
+    task_handler_t waitingTask;   /*!< Handler to the waiting task                      */
+    bool autoClear;               /*!< Auto clear or manual clear                       */
+    volatile bool isWaiting;      /*!< Is any task waiting for a timeout on this event  */
 } event_t;
 
 /*! @brief Type for a message queue */
 typedef struct MsgQueue
 {
-    volatile bool isWaiting; /*!< Is any task waiting for a timeout    */
-    uint32_t time_start;     /*!< The time to start timeout            */
-    uint32_t timeout;        /*!< Timeout to wait in milliseconds      */
-    uint32_t size;           /*!< The size(byte) of a single message   */
-#if (defined(FSL_OSA_BM_TASK_ENABLE) && (FSL_OSA_BM_TASK_ENABLE > 0U))
+    volatile bool isWaiting;    /*!< Is any task waiting for a timeout    */
+    uint32_t time_start;        /*!< The time to start timeout            */
+    uint32_t timeout;           /*!< Timeout to wait in milliseconds      */
     task_handler_t waitingTask; /*!< Handler to the waiting task          */
-#endif
-    uint8_t *queueMem; /*!< Points to the queue memory           */
-    uint16_t number;   /*!< The number of messages in the queue  */
-    uint16_t max;      /*!< The max number of queue messages     */
-    uint16_t head;     /*!< Index of the next message to be read */
-    uint16_t tail;     /*!< Index of the next place to write to  */
+    uint32_t *queueMem;         /*!< Points to the queue memory           */
+    uint16_t number;            /*!< The number of messages in the queue  */
+    uint16_t max;               /*!< The max number of queue messages     */
+    uint16_t head;              /*!< Index of the next message to be read */
+    uint16_t tail;              /*!< Index of the next place to write to  */
 } msg_queue_t;
 
 /*! @brief Type for a message queue handler */

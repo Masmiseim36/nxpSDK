@@ -2,7 +2,7 @@
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -118,8 +118,8 @@ int main(void)
     /*! We do not need to call MPL3115_I2C_Configure() in this case as we are going to read samples on demand.
      *  Instead we directly write register settings for One-Shot Mode... */
     deviceInfo.deviceInstance = I2C_S_DEVICE_INDEX;
-    deviceInfo.functionParam = SMC;
-    deviceInfo.idleFunction = (registeridlefunction_t)SMC_SetPowerModeVlpr;
+    deviceInfo.functionParam  = SMC;
+    deviceInfo.idleFunction   = (registeridlefunction_t)SMC_SetPowerModeVlpr;
     status = Sensor_I2C_Write(mpl3115Driver.pCommDrv, &deviceInfo, mpl3115Driver.slaveAddress, cMpl3115ConfigAltitude);
     if (ARM_DRIVER_OK != status)
     {
@@ -158,10 +158,10 @@ int main(void)
         }
 
         /*! Process the sample and convert the raw sensor data. */
-        rawData.altitude = (int32_t)((data[0]) << 24) | ((data[1]) << 16) | ((data[2]) << 8);
+        rawData.altitude    = (int32_t)((data[0]) << 24) | ((data[1]) << 16) | ((data[2]) << 8);
         rawData.temperature = (int16_t)((data[3]) << 8) | (data[4]);
-        altitudeInMeters = rawData.altitude / MPL3115_ALTITUDE_CONV_FACTOR;
-        tempInDegrees = rawData.temperature / MPL3115_TEMPERATURE_CONV_FACTOR;
+        altitudeInMeters    = rawData.altitude / MPL3115_ALTITUDE_CONV_FACTOR;
+        tempInDegrees       = rawData.temperature / MPL3115_TEMPERATURE_CONV_FACTOR;
 
         PRINTF("\r\nAltitude    = %d Meters\r\n", altitudeInMeters);
         PRINTF("\r\nTemperature = %d degC\r\n", tempInDegrees);

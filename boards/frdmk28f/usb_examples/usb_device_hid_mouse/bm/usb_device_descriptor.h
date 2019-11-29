@@ -47,7 +47,7 @@
 
 #define HS_HID_MOUSE_INTERRUPT_IN_PACKET_SIZE (8U)
 #define FS_HID_MOUSE_INTERRUPT_IN_PACKET_SIZE (8U)
-#define HS_HID_MOUSE_INTERRUPT_IN_INTERVAL (0x06U) /* 2^(6-1) = 1ms */
+#define HS_HID_MOUSE_INTERRUPT_IN_INTERVAL (0x06U) /* 2^(6-1) = 4ms */
 #define FS_HID_MOUSE_INTERRUPT_IN_INTERVAL (0x04U)
 
 /*******************************************************************************

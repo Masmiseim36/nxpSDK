@@ -5,6 +5,14 @@ The qspi_edma example shows how to use qspi driver with EDMA:
 In this example, qspi will send data and operate the external flash connected with QSPI. Some simple flash command will
 be executed, such as Write Enable, Erase sector, Program page.
 Example will first erase the sector and programe a page into the flash, at last check if the data in flash is correct.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/Micro USB cable
@@ -41,11 +49,6 @@ Program data finished!
 
 Program through QSPI EDMA succeed!
 ~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

@@ -2,7 +2,6 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
-    <definition extID="RTE_Device.MK28F15"/>
     <definition extID="component.lists.MK28F15"/>
     <definition extID="component.lpuart_adapter.MK28F15"/>
     <definition extID="component.serial_manager.MK28F15"/>
@@ -32,7 +31,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk28f_cmsis_dspi_int_b2b_transfer_slave" name="cmsis_dspi_int_b2b_transfer_slave" category="cmsis_driver_examples/dspi" dependency="platform.drivers.port.MK28F15 platform.drivers.clock.MK28F15 platform.drivers.gpio.MK28F15 platform.drivers.lpuart.MK28F15 platform.drivers.edma.MK28F15 platform.drivers.dmamux.MK28F15 platform.drivers.dspi.MK28F15 platform.drivers.dspi_edma.MK28F15 platform.drivers.dspi_cmsis.MK28F15 platform.drivers.common.MK28F15 device.MK28F15_CMSIS.MK28F15 utility.debug_console.MK28F15 component.lpuart_adapter.MK28F15 component.serial_manager.MK28F15 component.serial_manager_uart.MK28F15 component.lists.MK28F15 device.MK28F15_startup.MK28F15 platform.drivers.smc.MK28F15 platform.drivers.sysmpu.MK28F15 platform.utilities.assert.MK28F15 platform.Include_core_cm4.MK28F15 platform.Include_common.MK28F15 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MK28F15 platform.CMSIS_Driver_Include.Common_CMSISInclude.MK28F15 RTE_Device.MK28F15" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmk28f_cmsis_dspi_int_b2b_transfer_slave" name="cmsis_dspi_int_b2b_transfer_slave" category="cmsis_driver_examples/dspi" dependency="platform.drivers.port.MK28F15 platform.drivers.clock.MK28F15 platform.drivers.gpio.MK28F15 platform.drivers.lpuart.MK28F15 platform.drivers.edma.MK28F15 platform.drivers.dmamux.MK28F15 platform.drivers.dspi.MK28F15 platform.drivers.dspi_edma.MK28F15 platform.drivers.dspi_cmsis.MK28F15 platform.drivers.common.MK28F15 device.MK28F15_CMSIS.MK28F15 utility.debug_console.MK28F15 component.lpuart_adapter.MK28F15 component.serial_manager.MK28F15 component.serial_manager_uart.MK28F15 component.lists.MK28F15 device.MK28F15_startup.MK28F15 platform.drivers.smc.MK28F15 platform.drivers.sysmpu.MK28F15 platform.utilities.assert.MK28F15 platform.Include_core_cm4.MK28F15 platform.Include_common.MK28F15 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MK28F15 platform.CMSIS_Driver_Include.Common_CMSISInclude.MK28F15">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -78,6 +77,10 @@
     </source>
     <source path="boards/frdmk28f/cmsis_driver_examples/dspi/int_b2b_transfer/slave/mdk" target_path="src" type="linker" toolchain="mdk">
       <files mask="MK28FN2M0xxx15_flash.scf"/>
+    </source>
+    <source path="boards/frdmk28f/cmsis_driver_examples/dspi/int_b2b_transfer/slave" target_path="CMSIS" type="c_include" exclude="true">
+      <files mask="Driver_Common.h"/>
+      <files mask="Driver_SPI.h"/>
     </source>
     <source path="boards/frdmk28f/cmsis_driver_examples/dspi/int_b2b_transfer/slave" target_path="board" type="c_include">
       <files mask="RTE_Device.h"/>

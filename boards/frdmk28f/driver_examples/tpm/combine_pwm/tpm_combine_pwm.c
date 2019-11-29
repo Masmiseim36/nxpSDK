@@ -35,9 +35,9 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-volatile bool brightnessUp = true; /* Indicate LED is brighter or dimmer */
+volatile bool brightnessUp        = true; /* Indicate LED is brighter or dimmer */
 volatile uint8_t updatedDutycycle = 10U;
-volatile uint8_t getCharValue = 0U;
+volatile uint8_t getCharValue     = 0U;
 
 /*******************************************************************************
  * Code
@@ -52,13 +52,13 @@ int main(void)
     uint8_t deadtimeValue;
     uint32_t filterVal;
 
-#ifndef TPM_LED_ON_LEVEL  
-  #define TPM_LED_ON_LEVEL kTPM_LowTrue
-#endif      
-    
+#ifndef TPM_LED_ON_LEVEL
+#define TPM_LED_ON_LEVEL kTPM_LowTrue
+#endif
+
     /* Configure tpm params with frequency 24kHZ */
-    tpmParam.chnlNumber = BOARD_TPM_CHANNEL_PAIR;
-    tpmParam.level = TPM_LED_ON_LEVEL;
+    tpmParam.chnlNumber       = BOARD_TPM_CHANNEL_PAIR;
+    tpmParam.level            = TPM_LED_ON_LEVEL;
     tpmParam.dutyCyclePercent = updatedDutycycle;
     /* Note: If setting deadtime insertion, the value of firstEdgeDelayPercent must be non-zero */
     tpmParam.firstEdgeDelayPercent = 10U;
@@ -78,7 +78,9 @@ int main(void)
 
     /* Print a note to terminal */
     PRINTF("\r\nTPM example to output combined complementary PWM signals on two channels\r\n");
-    PRINTF("\r\nIf an LED is connected to the TPM pin, you will see a change in LED brightness if you enter different values");
+    PRINTF(
+        "\r\nIf an LED is connected to the TPM pin, you will see a change in LED brightness if you enter different "
+        "values");
     PRINTF("\r\nIf no LED is connected to the TPM pin, then probe the signal using an oscilloscope");
 
     TPM_GetDefaultConfig(&tpmInfo);
@@ -130,7 +132,8 @@ int main(void)
 
         /* Start output on each channel of the pair with updated dutycycle */
         TPM_UpdateChnlEdgeLevelSelect(BOARD_TPM_BASEADDR, (tpm_chnl_t)(BOARD_TPM_CHANNEL_PAIR * 2), TPM_LED_ON_LEVEL);
-        TPM_UpdateChnlEdgeLevelSelect(BOARD_TPM_BASEADDR, (tpm_chnl_t)((BOARD_TPM_CHANNEL_PAIR * 2) + 1), TPM_LED_ON_LEVEL);
+        TPM_UpdateChnlEdgeLevelSelect(BOARD_TPM_BASEADDR, (tpm_chnl_t)((BOARD_TPM_CHANNEL_PAIR * 2) + 1),
+                                      TPM_LED_ON_LEVEL);
 
         PRINTF("The duty cycle was successfully updated!\r\n");
     }

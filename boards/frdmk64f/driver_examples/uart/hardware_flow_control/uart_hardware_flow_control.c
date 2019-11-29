@@ -1,7 +1,7 @@
 /*
  * Copyright 2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -77,10 +77,10 @@ int main(void)
      */
     UART_GetDefaultConfig(&config);
     config.baudRate_Bps = BOARD_DEBUG_UART_BAUDRATE;
-    config.enableTx = true;
-    config.enableRx = true;
-    config.enableRxRTS = true;
-    config.enableTxCTS = true;
+    config.enableTx     = true;
+    config.enableRx     = true;
+    config.enableRxRTS  = true;
+    config.enableTxCTS  = true;
 
     UART_Init(DEMO_UART, &config, DEMO_UART_CLK_FREQ);
     UART_TransferCreateHandle(DEMO_UART, &g_uartHandle, UART_UserCallback, NULL);
@@ -92,7 +92,7 @@ int main(void)
         transferRxData[i] = 0U;
     }
 
-    sendXfer.data = (uint8_t *)transferTxData;
+    sendXfer.data     = (uint8_t *)transferTxData;
     sendXfer.dataSize = TRANSFER_SIZE;
     UART_TransferSendNonBlocking(DEMO_UART, &g_uartHandle, &sendXfer);
 
@@ -105,7 +105,7 @@ int main(void)
     status = UART_ReadBlocking(DEMO_UART, transferRxData, TRANSFER_SIZE);
     if (kStatus_Success != status)
     {
-        PRINTF(" Error occured when UART receiving data.\r\n");
+        PRINTF(" Error occurred when UART receiving data.\r\n");
     }
     /* Wait for the transmit complete. */
     while (!isTransferCompleted)

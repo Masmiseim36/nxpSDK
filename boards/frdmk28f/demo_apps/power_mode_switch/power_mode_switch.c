@@ -107,11 +107,11 @@ static app_wakeup_source_t s_wakeupSource; /* Wakeup source.                 */
 void APP_SetClockVlpr(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 3U,        /* PLLFLLSEL select IRC48MCLK. */
-        .pllFllDiv = 0U,        /* PLLFLLSEL clock divider divisor. */
-        .pllFllFrac = 0U,       /* PLLFLLSEL clock divider fraction. */
-        .er32kSrc = 5U,         /* ERCLK32K selection, use RTC. */
-        .clkdiv1 = 0x00040000U, /* SIM_CLKDIV1. */
+        .pllFllSel  = 3U,          /* PLLFLLSEL select IRC48MCLK. */
+        .pllFllDiv  = 0U,          /* PLLFLLSEL clock divider divisor. */
+        .pllFllFrac = 0U,          /* PLLFLLSEL clock divider fraction. */
+        .er32kSrc   = 5U,          /* ERCLK32K selection, use RTC. */
+        .clkdiv1    = 0x00040000U, /* SIM_CLKDIV1. */
     };
 
     CLOCK_SetSimSafeDivs();
@@ -129,15 +129,17 @@ void APP_SetClockVlpr(void)
 void APP_SetClockRunFromVlpr(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 1U,        /* PLLFLLSEL select PLL. */
-        .pllFllDiv = 0U,        /* PLLFLLSEL clock divider divisor. */
-        .pllFllFrac = 0U,       /* PLLFLLSEL clock divider fraction. */
-        .er32kSrc = 5U,         /* ERCLK32K selection, use RTC. */
-        .clkdiv1 = 0x01140000U, /* SIM_CLKDIV1. */
+        .pllFllSel  = 1U,          /* PLLFLLSEL select PLL. */
+        .pllFllDiv  = 0U,          /* PLLFLLSEL clock divider divisor. */
+        .pllFllFrac = 0U,          /* PLLFLLSEL clock divider fraction. */
+        .er32kSrc   = 5U,          /* ERCLK32K selection, use RTC. */
+        .clkdiv1    = 0x01140000U, /* SIM_CLKDIV1. */
     };
 
     const mcg_pll_config_t pll0Config = {
-        .enableMode = 0U, .prdiv = 0x00U, .vdiv = 0x04U,
+        .enableMode = 0U,
+        .prdiv      = 0x00U,
+        .vdiv       = 0x04U,
     };
 
     CLOCK_SetSimSafeDivs();
@@ -158,15 +160,17 @@ void APP_SetClockRunFromVlpr(void)
 void APP_SetClockHsrun(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 1U,        /* PLLFLLSEL select PLL. */
-        .pllFllDiv = 0U,        /* PLLFLLSEL clock divider divisor. */
-        .pllFllFrac = 0U,       /* PLLFLLSEL clock divider fraction. */
-        .er32kSrc = 5U,         /* ERCLK32K selection, use RTC. */
-        .clkdiv1 = 0x01150000U, /* SIM_CLKDIV1. */
+        .pllFllSel  = 1U,          /* PLLFLLSEL select PLL. */
+        .pllFllDiv  = 0U,          /* PLLFLLSEL clock divider divisor. */
+        .pllFllFrac = 0U,          /* PLLFLLSEL clock divider fraction. */
+        .er32kSrc   = 5U,          /* ERCLK32K selection, use RTC. */
+        .clkdiv1    = 0x01150000U, /* SIM_CLKDIV1. */
     };
 
     const mcg_pll_config_t pll0Config = {
-        .enableMode = 0U, .prdiv = 0x00U, .vdiv = 0x09U,
+        .enableMode = 0U,
+        .prdiv      = 0x00U,
+        .vdiv       = 0x09U,
     };
 
     CLOCK_SetPbeMode(kMCG_PllClkSelPll0, &pll0Config);
@@ -178,15 +182,17 @@ void APP_SetClockHsrun(void)
 void APP_SetClockRunFromHsrun(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 1U,        /* PLLFLLSEL select PLL. */
-        .pllFllDiv = 0U,        /* PLLFLLSEL clock divider divisor. */
-        .pllFllFrac = 0U,       /* PLLFLLSEL clock divider fraction. */
-        .er32kSrc = 5U,         /* ERCLK32K selection, use RTC. */
-        .clkdiv1 = 0x01140000U, /* SIM_CLKDIV1. */
+        .pllFllSel  = 1U,          /* PLLFLLSEL select PLL. */
+        .pllFllDiv  = 0U,          /* PLLFLLSEL clock divider divisor. */
+        .pllFllFrac = 0U,          /* PLLFLLSEL clock divider fraction. */
+        .er32kSrc   = 5U,          /* ERCLK32K selection, use RTC. */
+        .clkdiv1    = 0x01140000U, /* SIM_CLKDIV1. */
     };
 
     const mcg_pll_config_t pll0Config = {
-        .enableMode = 0U, .prdiv = 0x00U, .vdiv = 0x04U,
+        .enableMode = 0U,
+        .prdiv      = 0x00U,
+        .vdiv       = 0x04U,
     };
 
     CLOCK_SetPbeMode(kMCG_PllClkSelPll0, &pll0Config);
@@ -548,11 +554,11 @@ void APP_PowerModeSwitch(smc_power_state_t curPowerState, app_power_mode_t targe
 {
     smc_power_mode_vlls_config_t vlls_config;
     vlls_config.enablePorDetectInVlls0 = true;
-    vlls_config.enableLpoClock = true; /*!< Enable LPO clock in VLLS mode */
+    vlls_config.enableLpoClock         = true; /*!< Enable LPO clock in VLLS mode */
 
     smc_power_mode_lls_config_t lls_config;
     lls_config.enableLpoClock = true;
-    lls_config.subMode = kSMC_StopSub3;
+    lls_config.subMode        = kSMC_StopSub3;
 
     switch (targetPowerMode)
     {
@@ -623,7 +629,7 @@ void APP_PowerModeSwitch(smc_power_state_t curPowerState, app_power_mode_t targe
             SMC_PostExitStopModes();
             break;
 
-#if (defined(FSL_FEATURE_SMC_HAS_STOP_SUBMODE0 ) && FSL_FEATURE_SMC_HAS_STOP_SUBMODE0 )
+#if (defined(FSL_FEATURE_SMC_HAS_STOP_SUBMODE0) && FSL_FEATURE_SMC_HAS_STOP_SUBMODE0)
         case kAPP_PowerModeVlls0:
             vlls_config.subMode = kSMC_StopSub0;
             SMC_PreEnterStopModes();
@@ -631,11 +637,11 @@ void APP_PowerModeSwitch(smc_power_state_t curPowerState, app_power_mode_t targe
             SMC_PostExitStopModes();
             break;
 #endif /* FSL_FEATURE_SMC_HAS_STOP_SUBMODE0 */
-#if (defined(FSL_FEATURE_SMC_HAS_STOP_SUBMODE1 ) && FSL_FEATURE_SMC_HAS_STOP_SUBMODE1 )
-/*
- * As the FRDM-K28F board is to demo the K27F and K28F,
- * but the K27F has the VLLS1 while K28F does not have.
- */
+#if (defined(FSL_FEATURE_SMC_HAS_STOP_SUBMODE1) && FSL_FEATURE_SMC_HAS_STOP_SUBMODE1)
+            /*
+             * As the FRDM-K28F board is to demo the K27F and K28F,
+             * but the K27F has the VLLS1 while K28F does not have.
+             */
         case kAPP_PowerModeVlls1:
             vlls_config.subMode = kSMC_StopSub1;
             SMC_PreEnterStopModes();
@@ -701,7 +707,7 @@ int main(void)
      */
     LPTMR_GetDefaultConfig(&lptmrConfig);
     lptmrConfig.prescalerClockSource = kLPTMR_PrescalerClock_1; /* Use LPO as clock source. */
-    lptmrConfig.bypassPrescaler = true;
+    lptmrConfig.bypassPrescaler      = true;
 
     LPTMR_Init(LPTMR0, &lptmrConfig);
 

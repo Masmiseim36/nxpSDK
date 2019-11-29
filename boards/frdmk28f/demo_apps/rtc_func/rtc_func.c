@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -54,7 +54,7 @@ static void ReceiveFromConsole(char *buf, uint32_t size);
  * Variables
  ******************************************************************************/
 volatile uint8_t g_AlarmPending = 0U;
-volatile bool g_SecsFlag = false;
+volatile bool g_SecsFlag        = false;
 
 static char g_StrMenu[] =
     "\r\n"
@@ -243,10 +243,10 @@ int main(void)
 #endif /* FSL_FEATURE_RTC_HAS_NO_CR_OSCE */
 
     /* Set a start date time and start RTC */
-    date.year = 2015U;
-    date.month = 11U;
-    date.day = 11U;
-    date.hour = 11U;
+    date.year   = 2015U;
+    date.month  = 11U;
+    date.day    = 11U;
+    date.hour   = 11U;
     date.minute = 11U;
     date.second = 11U;
 
@@ -292,10 +292,10 @@ int main(void)
                     PRINTF(g_StrInvalid);
                     break;
                 }
-                date.year = (uint16_t)year;
-                date.month = (uint8_t)month;
-                date.day = (uint8_t)day;
-                date.hour = (uint8_t)hour;
+                date.year   = (uint16_t)year;
+                date.month  = (uint8_t)month;
+                date.day    = (uint8_t)day;
+                date.hour   = (uint8_t)hour;
                 date.minute = (uint8_t)minute;
                 date.second = (uint8_t)second;
 

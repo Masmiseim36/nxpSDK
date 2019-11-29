@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "fsl_device_registers.h"
@@ -46,8 +46,8 @@ int main(void)
     uint32_t index;
     uint32_t clockSrc;
     uint32_t datalen = SDRAM_EXAMPLE_DATALEN;
-    uint32_t *sdram = (uint32_t *)SDRAM_START_ADDRESS; /* SDRAM start address. */
-    bool result = true;
+    uint32_t *sdram  = (uint32_t *)SDRAM_START_ADDRESS; /* SDRAM start address. */
+    bool result      = true;
 
     /* Hardware initialize. */
     uint32_t soptReg;
@@ -61,19 +61,19 @@ int main(void)
     CLOCK_SetClkOutClock(0);
 
     /* Sets the Flexbus security level*/
-    soptReg = SIM->SOPT2 & ~SIM_SOPT2_FBSL_MASK;
+    soptReg    = SIM->SOPT2 & ~SIM_SOPT2_FBSL_MASK;
     SIM->SOPT2 = soptReg | SIM_SOPT2_FBSL(3);
 
     /* Enable the FB_BE_xx_yy signal in Flexbus */
     CLOCK_EnableClock(kCLOCK_Flexbus0);
 
-    fbReg = FB->CSPMCR & ~FB_CSPMCR_GROUP2_MASK;
+    fbReg      = FB->CSPMCR & ~FB_CSPMCR_GROUP2_MASK;
     FB->CSPMCR = fbReg | FB_CSPMCR_GROUP2(2);
-    fbReg = FB->CSPMCR & ~FB_CSPMCR_GROUP3_MASK;
+    fbReg      = FB->CSPMCR & ~FB_CSPMCR_GROUP3_MASK;
     FB->CSPMCR = fbReg | FB_CSPMCR_GROUP3(2);
-    fbReg = FB->CSPMCR & ~FB_CSPMCR_GROUP4_MASK;
+    fbReg      = FB->CSPMCR & ~FB_CSPMCR_GROUP4_MASK;
     FB->CSPMCR = fbReg | FB_CSPMCR_GROUP4(2);
-    fbReg = FB->CSPMCR & ~FB_CSPMCR_GROUP5_MASK;
+    fbReg      = FB->CSPMCR & ~FB_CSPMCR_GROUP5_MASK;
     FB->CSPMCR = fbReg | FB_CSPMCR_GROUP5(2);
     /* SDRAM initialize. */
     clockSrc = BUS_CLK_FREQ;
@@ -87,7 +87,7 @@ int main(void)
     /* Prepare data and write to SDRAM. */
     for (index = 0; index < datalen; index++)
     {
-        sdram_writeBuffer[index] = index;
+        sdram_writeBuffer[index]     = index;
         *(uint32_t *)(sdram + index) = sdram_writeBuffer[index];
     }
     PRINTF("\r\n SDRAM Write finished!\r\n");

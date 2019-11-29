@@ -16,17 +16,17 @@
 #define SDRAM_DELAY_COUNTS (125U)
 
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 
 static status_t SDRAM_InitSequence(SDRAM_Type *base,
-                               uint32_t address,
-                               sdramc_block_selection_t whichBlock,
-                               sdram_burst_len_t burstLen,
-                               sdram_burst_type_t burstType,
-                               sdram_cas_latency_t casLatency,
-                               sdram_operation_mode_t opMode,
-                               sdram_write_burst_mode_t writeBurstMode);
+                                   uint32_t address,
+                                   sdramc_block_selection_t whichBlock,
+                                   sdram_burst_len_t burstLen,
+                                   sdram_burst_type_t burstType,
+                                   sdram_cas_latency_t casLatency,
+                                   sdram_operation_mode_t opMode,
+                                   sdram_write_burst_mode_t writeBurstMode);
 
 /*******************************************************************************
  * Code
@@ -44,28 +44,28 @@ status_t SDRAM_Init(SDRAM_Type *base, uint32_t address, uint32_t busClock_Hz)
     refConfig.refreshTime = kSDRAMC_RefreshThreeClocks;
     /* Refresh time 4096 rows/ 64ms. */
     refConfig.sdramRefreshRow = 15625;
-    refConfig.busClock_Hz = busClock_Hz;
+    refConfig.busClock_Hz     = busClock_Hz;
 
     /* SDRAM controller configuration. */
     /* Port size: 16 bit, Command bit location: bit 20. */
     ctlConfig.portSize = kSDRAMC_PortSize16Bit;
     ctlConfig.location = kSDRAMC_Commandbit20;
-    ctlConfig.block = kSDRAMC_Block0;
+    ctlConfig.block    = kSDRAMC_Block0;
     /* SDRAM with trcd-15ns(min), trp-15ns(min), tras-37ns (min). */
-    ctlConfig.latency = kSDRAMC_LatencyOne;
-    ctlConfig.address = address;
+    ctlConfig.latency     = kSDRAMC_LatencyOne;
+    ctlConfig.address     = address;
     ctlConfig.addressMask = 0xfc0000;
 
-    config.refreshConfig = &refConfig;
-    config.blockConfig = &ctlConfig;
+    config.refreshConfig  = &refConfig;
+    config.blockConfig    = &ctlConfig;
     config.numBlockConfig = 1;
 
     /* SDRAM controller initialization. */
     SDRAMC_Init(base, &config);
 
     /* SDRAM initialization sequence. */
-    return SDRAM_InitSequence(base, address, kSDRAMC_Block0, kSDRAM_MrsBurstLenOne, kSDRAM_MrsSequential, kSDRAM_MrsLatencyTwo,
-                       kSDRAM_MrsStandOperation, kSDRAM_MrsWriteBurst);
+    return SDRAM_InitSequence(base, address, kSDRAMC_Block0, kSDRAM_MrsBurstLenOne, kSDRAM_MrsSequential,
+                              kSDRAM_MrsLatencyTwo, kSDRAM_MrsStandOperation, kSDRAM_MrsWriteBurst);
 }
 
 /*!
@@ -73,21 +73,20 @@ status_t SDRAM_Init(SDRAM_Type *base, uint32_t address, uint32_t busClock_Hz)
  *
  */
 static status_t SDRAM_InitSequence(SDRAM_Type *base,
-                               uint32_t address,
-                               sdramc_block_selection_t whichBlock,
-                               sdram_burst_len_t burstLen,
-                               sdram_burst_type_t burstType,
-                               sdram_cas_latency_t casLatency,
-                               sdram_operation_mode_t opMode,
-                               sdram_write_burst_mode_t writeBurstMode)
+                                   uint32_t address,
+                                   sdramc_block_selection_t whichBlock,
+                                   sdram_burst_len_t burstLen,
+                                   sdram_burst_type_t burstType,
+                                   sdram_cas_latency_t casLatency,
+                                   sdram_operation_mode_t opMode,
+                                   sdram_write_burst_mode_t writeBurstMode)
 {
-    uint32_t count = SDRAM_DELAY_COUNTS;
+    uint32_t count   = SDRAM_DELAY_COUNTS;
     uint8_t *mrsAddr = 0;
-    uint32_t addr = 0;
+    uint32_t addr    = 0;
 
     /* Issue a PALL command. */
     SDRAMC_SendCommand(base, whichBlock, kSDRAMC_PrechargeCommand);
-
 
     /* Accessing a SDRAM location. */
     *(uint8_t *)(address) = SDRAM_COMMAND_ACCESSVALUE;
@@ -106,30 +105,30 @@ static status_t SDRAM_InitSequence(SDRAM_Type *base,
     SDRAMC_SendCommand(base, whichBlock, kSDRAMC_ImrsCommand);
 
     /* Put the right value on SDRAM address bus for SDRAM mode register,
-    *  The address of SDRAM Pins is as below:
-    *  A2 ~ A0:   burst length   0
-    *     000->1
-    *     001->2
-    *     010->4
-    *     011->8
-    *     res
-    * A3:   burst type
-    *        0 -> seq
-    *        1 -> Interleave
-    *
-    * A6 ~ A4:  CAS latency  (should be set to equal to the tcasl in "sdram_latency_t")
-    *       000-> res
-    *       001-> 1
-    *       010-> 2
-    *       011-> 3
-    *       res
-    * A8 ~ A7:  Operationg Mode
-    *       00->Stardard Operation
-    *       res
-    * A9:    Write Burst Mode
-    *       0-> Programmed Burst Length
-    *      1-> Single Location Access
-    */
+     *  The address of SDRAM Pins is as below:
+     *  A2 ~ A0:   burst length   0
+     *     000->1
+     *     001->2
+     *     010->4
+     *     011->8
+     *     res
+     * A3:   burst type
+     *        0 -> seq
+     *        1 -> Interleave
+     *
+     * A6 ~ A4:  CAS latency  (should be set to equal to the tcasl in "sdram_latency_t")
+     *       000-> res
+     *       001-> 1
+     *       010-> 2
+     *       011-> 3
+     *       res
+     * A8 ~ A7:  Operationg Mode
+     *       00->Stardard Operation
+     *       res
+     * A9:    Write Burst Mode
+     *       0-> Programmed Burst Length
+     *      1-> Single Location Access
+     */
     /* A2-A0. */
     if (burstLen & 0x1)
     {

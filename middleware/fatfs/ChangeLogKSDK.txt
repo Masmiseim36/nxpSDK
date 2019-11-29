@@ -1,10 +1,7 @@
 /**
 @page middleware_log Middleware Change Log
 @section FatFs FatFs for MCUXpresso SDK
-Current version is FatFs R0.13c_rev0.
-  - R0.13c_rev0
-      - Upgraded to version 0.13c
-      - Apply patches ff_13c_p1.diff,ff_13c_p2.diff, ff_13c_p3.diff and ff_13c_p4.diff.
+Current version is FatFs R0.13b_rev0.
   - R0.13b_rev0
       - Upgraded to version 0.13b
   - R0.13a_rev0
@@ -13,8 +10,10 @@ Current version is FatFs R0.13c_rev0.
       - Add NAND disk support.
   - R0.12c_rev0
       - Upgraded to version 0.12c and applied patches ff_12c_p1.diff and ff_12c_p2.diff.
+
   - R0.12b_rev0
       - Upgraded to version 0.12b.
+
   - R0.11a
       - Added glue functions for low-level drivers (SDHC, SDSPI, RAM, MMC). Modified diskio.c.
       - Added RTOS wrappers to make FatFs thread safe. Modified syscall.c.

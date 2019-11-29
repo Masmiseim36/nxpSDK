@@ -86,7 +86,8 @@ int main()
 #if defined(BOARD_SW1_GPIO) || defined(BOARD_SW2_GPIO) || defined(BOARD_SW3_GPIO)
     /* Define the init structure for the input switch pin */
     gpio_pin_config_t button_config = {
-        kGPIO_DigitalInput, 0,
+        kGPIO_DigitalInput,
+        0,
     };
     /* Configure BUTTON */
     BUTTON_INIT();
@@ -130,7 +131,7 @@ int main()
 
         erpcMatrixMultiply(matrix1, matrix2, result_matrix);
 
-        /* Check if some error occured in eRPC */
+        /* Check if some error occurred in eRPC */
         if (g_erpc_error_occurred)
         {
             /* Exit program loop */

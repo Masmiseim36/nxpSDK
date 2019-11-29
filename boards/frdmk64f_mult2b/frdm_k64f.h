@@ -9,7 +9,7 @@
 /**
  * @file frdm_k64f.h
  * @brief The frdm_k64f.h file defines GPIO pin mappings for FRDM-K64F board
-*/
+ */
 
 #ifndef FRDM_K64F_H_
 #define FRDM_K64F_H_
@@ -104,7 +104,7 @@ extern gpioHandleKSDK_t INT2;
 
 /* @brief  Ask use input to resume after specified samples have been processed. */
 #define ASK_USER_TO_RESUME(x)                                                          \
-    static volatile bool askResume = true;                                             \
+    static volatile bool askResume   = true;                                           \
     static uint16_t samplesToProcess = x - 1;                                          \
     if (askResume && !samplesToProcess--)                                              \
     {                                                                                  \

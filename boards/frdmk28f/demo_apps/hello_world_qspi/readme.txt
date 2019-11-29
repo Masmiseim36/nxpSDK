@@ -9,6 +9,30 @@ Program boot from QSPI region.
 
 Program boot from QSPI alias region (if the chip supports QSPI alias region).
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
+Hardware requirements
+=====================
+- Mini/Micro USB cable
+- FRDM-K28F board
+- Personal Computer
+
+Board settings
+==============
+No special settings are required.
+
+Prepare the Demo
+================
+On the FRDMK-28 board, the user can use the USB port to download the demo program through blhost. At step 1, press the
+SW2 button and connect to the USB cable to the target hardware.
+
+
 Running the demo
 ================
 Tool dependencies: Use the blhost and the elftosb tool included in Kinetis Bootloader for the K8x devices. The
@@ -91,27 +115,6 @@ The project can generate the srec file directly. If you want to generate the src
 7. Press the reset button on your board.
 
 8. You should see the "Hello World" string printed to your terminal.
-Hardware requirements
+Customization options
 =====================
-- Mini/Micro USB cable
-- FRDM-K28F board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-On the FRDMK-28 board, the user can use the USB port to download the demo program through blhost. At step 1, press the
-SW2 button and connect to the USB cable to the target hardware.
-
-
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
 

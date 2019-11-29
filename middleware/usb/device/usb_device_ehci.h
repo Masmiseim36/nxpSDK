@@ -147,11 +147,6 @@ typedef struct _usb_device_ehci_state_struct
     USBNC_Type *registerNcBase; /*!< The base address of the USBNC register */
 #endif
 #endif
-#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
-    ((defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)) || \
-    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U)))
-    void* dcdHandle; /*!< Dcd handle used to identify the device object belongs to */
-#endif  
     usb_device_ehci_qh_struct_t *qh;       /*!< The QH structure base address */
     usb_device_ehci_dtd_struct_t *dtd;     /*!< The DTD structure base address */
     usb_device_ehci_dtd_struct_t *dtdFree; /*!< The idle DTD list head */
@@ -167,7 +162,15 @@ typedef struct _usb_device_ehci_state_struct
     uint8_t isSuspending;                          /*!< Is suspending of the PORT */
 } usb_device_ehci_state_struct_t;
 
-
+#if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+typedef struct _usb_device_dcd_state_struct
+{
+    usb_device_struct_t *deviceHandle; /*!< Device handle used to identify the device object belongs to */
+    USBHSDCD_Type *dcdRegisterBase;    /*!< The base address of the dcd module */
+    uint8_t controllerId;              /*!< Controller ID */
+} usb_device_dcd_state_struct_t;
+#endif
 
 #if defined(__cplusplus)
 extern "C" {

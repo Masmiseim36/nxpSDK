@@ -100,6 +100,17 @@ int main(void)
     srcClock_Hz = LPSPI_MASTER_CLK_FREQ;
     LPSPI_MasterInit(EXAMPLE_LPSPI_MASTER_BASEADDR, &masterConfig, srcClock_Hz);
 
+	// MK test
+	uint8_t WriteData [64] = {0x9F, 0, 0, 0, 0, 0, 0, 0};
+	uint8_t ReadData [sizeof(WriteData)] = {0, 0, 0, 0, 0, 0, 0, 0};
+	masterXfer.txData   = WriteData;
+	masterXfer.rxData   = ReadData;
+	masterXfer.dataSize = sizeof(WriteData);
+	masterXfer.configFlags = EXAMPLE_LPSPI_MASTER_PCS_FOR_TRANSFER | kLPSPI_MasterPcsContinuous | kLPSPI_SlaveByteSwap;
+	LPSPI_MasterTransferBlocking(EXAMPLE_LPSPI_MASTER_BASEADDR, &masterXfer);
+	// MK test ende
+
+
     while (1)
     {
         /* Set up the transfer data */

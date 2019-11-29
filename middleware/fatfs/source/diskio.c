@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
  * 
@@ -14,10 +14,9 @@
 /* This is an example of glue functions to attach various exsisting      */
 /* storage control modules to the FatFs module with a defined API.       */
 /*-----------------------------------------------------------------------*/
-#include "ffconf.h"     /* FatFs configuration options */
-#include "ff.h"			/* Obtains integer types */
-#include "diskio.h"		/* Declarations of disk functions */
 
+#include "ffconf.h"     /* FatFs configuration options */
+#include "diskio.h"     /* FatFs lower layer API */
 #ifdef RAM_DISK_ENABLE
 #include "fsl_ram_disk.h"
 #endif

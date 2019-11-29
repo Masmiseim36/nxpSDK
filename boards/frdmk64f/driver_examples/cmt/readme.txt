@@ -14,6 +14,14 @@ of the current modulation cycle. The CMT internal down-counter and space period 
 updated at the end of every modulation cycle, irrespective of interrupt handling and the state
 of the interrupt. so please make sure the IRQ handler process is shorter than the modulation
 cycle to ensure the new mark/space counter is prepared before each end of modulation cycle.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -65,11 +73,6 @@ The output waveform is captured on the oscilloscope like:
     - the period of the basic carrier generator signal is 25 microsecond
     - bit 1 is about four normal carrier signal period.
     - bit 0 is about one normal carrier signal period and three space carrier signal period.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -27,7 +27,7 @@
  * Variables
  ******************************************************************************/
 FLEXIO_UART_Type uartDev;
-uint8_t txbuff[] = "Flexio uart polling example\r\nBoard will send back received characters\r\n";
+uint8_t txbuff[]   = "Flexio uart polling example\r\nBoard will send back received characters\r\n";
 uint8_t rxbuff[20] = {0};
 /*******************************************************************************
  * Code
@@ -56,15 +56,15 @@ int main(void)
      */
     FLEXIO_UART_GetDefaultConfig(&config);
     config.baudRate_Bps = BOARD_DEBUG_UART_BAUDRATE;
-    config.enableUart = true;
+    config.enableUart   = true;
 
-    uartDev.flexioBase = BOARD_FLEXIO_BASE;
-    uartDev.TxPinIndex = FLEXIO_UART_TX_PIN;
-    uartDev.RxPinIndex = FLEXIO_UART_RX_PIN;
+    uartDev.flexioBase      = BOARD_FLEXIO_BASE;
+    uartDev.TxPinIndex      = FLEXIO_UART_TX_PIN;
+    uartDev.RxPinIndex      = FLEXIO_UART_RX_PIN;
     uartDev.shifterIndex[0] = 0U;
     uartDev.shifterIndex[1] = 1U;
-    uartDev.timerIndex[0] = 0U;
-    uartDev.timerIndex[1] = 1U;
+    uartDev.timerIndex[0]   = 0U;
+    uartDev.timerIndex[1]   = 1U;
 
     result = FLEXIO_UART_Init(&uartDev, &config, FLEXIO_CLOCK_FREQUENCY);
     if (result != kStatus_Success)

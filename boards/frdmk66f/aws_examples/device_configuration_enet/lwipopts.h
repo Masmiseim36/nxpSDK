@@ -4,7 +4,7 @@
   * This file is based on \src\include\lwip\opt.h
   ******************************************************************************
    * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
-   * Copyright 2016-2017 NXP
+   * Copyright 2016-2019 NXP
    * All rights reserved.
    *
    * SPDX-License-Identifier: BSD-3-Clause
@@ -163,6 +163,12 @@
 #define TCP_LISTEN_BACKLOG 1
 #endif
 
+/* ---------- Network Interfaces options ---------- */
+/* Support netif api (in netifapi.c). */
+#ifndef LWIP_NETIF_API
+#define LWIP_NETIF_API 1
+#endif
+
 /* ---------- ICMP options ---------- */
 #ifndef LWIP_ICMP
 #define LWIP_ICMP 1
@@ -271,9 +277,9 @@ Some MCU allow computing and verifying the IP, UDP, TCP and ICMP checksums by ha
 #define U16_F "u"
 #define S16_F "d"
 #define X16_F "x"
-#define U32_F "u"
-#define S32_F "d"
-#define X32_F "x"
+#define U32_F "lu"
+#define S32_F "ld"
+#define X32_F "lx"
 #define SZT_F "u"
 #endif
 

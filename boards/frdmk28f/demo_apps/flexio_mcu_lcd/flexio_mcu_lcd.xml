@@ -8,6 +8,8 @@
     <definition extID="component.serial_manager_uart.MK28F15"/>
     <definition extID="device.MK28F15_CMSIS.MK28F15"/>
     <definition extID="device.MK28F15_startup.MK28F15"/>
+    <definition extID="driver.dbi.MK28F15"/>
+    <definition extID="driver.dbi_flexio.MK28F15"/>
     <definition extID="driver.ft5406.MK28F15"/>
     <definition extID="driver.ssd1963.MK28F15"/>
     <definition extID="platform.Include_common.MK28F15"/>
@@ -33,7 +35,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk28f_flexio_mcu_lcd" name="flexio_mcu_lcd" category="demo_apps" dependency="platform.drivers.i2c.MK28F15 driver.ssd1963.MK28F15 driver.ft5406.MK28F15 platform.drivers.port.MK28F15 platform.drivers.flexio.MK28F15 platform.drivers.flexio_mculcd.MK28F15 platform.drivers.flexio_mculcd_edma.MK28F15 platform.drivers.qspi.MK28F15 platform.drivers.edma.MK28F15 platform.drivers.dmamux.MK28F15 platform.drivers.clock.MK28F15 platform.drivers.common.MK28F15 device.MK28F15_CMSIS.MK28F15 utility.debug_console.MK28F15 component.lpuart_adapter.MK28F15 component.serial_manager.MK28F15 component.serial_manager_uart.MK28F15 platform.drivers.lpuart.MK28F15 component.lists.MK28F15 device.MK28F15_startup.MK28F15 platform.drivers.gpio.MK28F15 platform.drivers.smc.MK28F15 platform.drivers.sysmpu.MK28F15 platform.utilities.assert.MK28F15 platform.Include_core_cm4.MK28F15 platform.Include_common.MK28F15" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmk28f_flexio_mcu_lcd" name="flexio_mcu_lcd" category="demo_apps" dependency="platform.drivers.i2c.MK28F15 driver.ssd1963.MK28F15 driver.dbi.MK28F15 driver.dbi_flexio.MK28F15 driver.ft5406.MK28F15 platform.drivers.port.MK28F15 platform.drivers.flexio.MK28F15 platform.drivers.flexio_mculcd.MK28F15 platform.drivers.flexio_mculcd_edma.MK28F15 platform.drivers.qspi.MK28F15 platform.drivers.edma.MK28F15 platform.drivers.dmamux.MK28F15 platform.drivers.clock.MK28F15 platform.drivers.common.MK28F15 device.MK28F15_CMSIS.MK28F15 utility.debug_console.MK28F15 component.lpuart_adapter.MK28F15 component.serial_manager.MK28F15 component.serial_manager_uart.MK28F15 platform.drivers.lpuart.MK28F15 component.lists.MK28F15 device.MK28F15_startup.MK28F15 platform.drivers.gpio.MK28F15 platform.drivers.smc.MK28F15 platform.drivers.sysmpu.MK28F15 platform.utilities.assert.MK28F15 platform.Include_core_cm4.MK28F15 platform.Include_common.MK28F15">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -98,6 +100,14 @@
     </source>
     <source path="boards/frdmk28f/demo_apps/flexio_mcu_lcd" target_path="source" type="src">
       <files mask="flexio_mcu_lcd.c"/>
+    </source>
+    <source path="boards/frdmk28f/demo_apps/flexio_mcu_lcd" target_path="src" type="binary" exclude="true">
+      <files mask="flexio_mcu_lcd.bin"/>
+      <files mask="pictures.bin"/>
+      <files mask="qspi_config_block.bin"/>
+    </source>
+    <source path="boards/frdmk28f/demo_apps/flexio_mcu_lcd" target_path="src" type="src" exclude="true">
+      <files mask="pictures.c"/>
     </source>
   </example>
 </ksdk:examples>

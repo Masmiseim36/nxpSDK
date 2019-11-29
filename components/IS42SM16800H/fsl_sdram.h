@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -97,11 +97,11 @@ typedef enum _sdram_burst_type
 /*! @brief SDRAM Mode register burst length setting. */
 typedef enum _sdram_burst_len
 {
-    kSDRAM_MrsBurstLenOne = 0x0U,    /*!< 1. */
-    kSDRAM_MrsBurstLenTwo = 0x1U,    /*!< 2. */
-    kSDRAM_MrsBurstLenFour = 0x2U,   /*!< 4. */
-    kSDRAM_MrsBurstLenEight = 0x3U,  /*!< 8. */
-    kSDRAM_MrsBurstLenAllPage = 0x7U /*!< Full page only for sequential burst type. */
+    kSDRAM_MrsBurstLenOne     = 0x0U, /*!< 1. */
+    kSDRAM_MrsBurstLenTwo     = 0x1U, /*!< 2. */
+    kSDRAM_MrsBurstLenFour    = 0x2U, /*!< 4. */
+    kSDRAM_MrsBurstLenEight   = 0x3U, /*!< 8. */
+    kSDRAM_MrsBurstLenAllPage = 0x7U  /*!< Full page only for sequential burst type. */
 } sdram_burst_len_t;
 /*******************************************************************************
  * API

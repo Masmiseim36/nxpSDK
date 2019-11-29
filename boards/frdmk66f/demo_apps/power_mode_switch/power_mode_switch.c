@@ -96,11 +96,11 @@ static app_wakeup_source_t s_wakeupSource; /* Wakeup source.                 */
 void APP_SetClockVlpr(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 3U, /* PLLFLLSEL select IRC48MCLK. */
-        .pllFllDiv = 0U,
+        .pllFllSel  = 3U, /* PLLFLLSEL select IRC48MCLK. */
+        .pllFllDiv  = 0U,
         .pllFllFrac = 0U,
-        .er32kSrc = 2U,         /* ERCLK32K selection, use RTC. */
-        .clkdiv1 = 0x00040000U, /* SIM_CLKDIV1. */
+        .er32kSrc   = 2U,          /* ERCLK32K selection, use RTC. */
+        .clkdiv1    = 0x00040000U, /* SIM_CLKDIV1. */
     };
 
     CLOCK_SetSimSafeDivs();
@@ -118,15 +118,17 @@ void APP_SetClockVlpr(void)
 void APP_SetClockRunFromVlpr(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 1U, /* PLLFLLSEL select PLL. */
-        .pllFllDiv = 0U,
+        .pllFllSel  = 1U, /* PLLFLLSEL select PLL. */
+        .pllFllDiv  = 0U,
         .pllFllFrac = 0U,
-        .er32kSrc = 2U,         /* ERCLK32K selection, use RTC. */
-        .clkdiv1 = 0x01140000U, /* SIM_CLKDIV1. */
+        .er32kSrc   = 2U,          /* ERCLK32K selection, use RTC. */
+        .clkdiv1    = 0x01140000U, /* SIM_CLKDIV1. */
     };
 
     const mcg_pll_config_t pll0Config = {
-        .enableMode = 0U, .prdiv = 0x00U, .vdiv = 0x04U,
+        .enableMode = 0U,
+        .prdiv      = 0x00U,
+        .vdiv       = 0x04U,
     };
 
     CLOCK_SetSimSafeDivs();
@@ -147,13 +149,15 @@ void APP_SetClockRunFromVlpr(void)
 void APP_SetClockHsrun(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 1U,        /* PLLFLLSEL select PLL. */
-        .er32kSrc = 2U,         /* ERCLK32K selection, use RTC. */
-        .clkdiv1 = 0x02260000U, /* SIM_CLKDIV1. */
+        .pllFllSel = 1U,          /* PLLFLLSEL select PLL. */
+        .er32kSrc  = 2U,          /* ERCLK32K selection, use RTC. */
+        .clkdiv1   = 0x02260000U, /* SIM_CLKDIV1. */
     };
 
     const mcg_pll_config_t pll0Config = {
-        .enableMode = 0U, .prdiv = 0x00U, .vdiv = 0x0EU,
+        .enableMode = 0U,
+        .prdiv      = 0x00U,
+        .vdiv       = 0x0EU,
     };
 
     CLOCK_SetSimSafeDivs();
@@ -166,15 +170,17 @@ void APP_SetClockHsrun(void)
 void APP_SetClockRunFromHsrun(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 1U, /* PLLFLLSEL select PLL. */
-        .pllFllDiv = 0U,
+        .pllFllSel  = 1U, /* PLLFLLSEL select PLL. */
+        .pllFllDiv  = 0U,
         .pllFllFrac = 0U,
-        .er32kSrc = 2U,         /* ERCLK32K selection, use RTC. */
-        .clkdiv1 = 0x01140000U, /* SIM_CLKDIV1. */
+        .er32kSrc   = 2U,          /* ERCLK32K selection, use RTC. */
+        .clkdiv1    = 0x01140000U, /* SIM_CLKDIV1. */
     };
 
     const mcg_pll_config_t pll0Config = {
-        .enableMode = 0U, .prdiv = 0x00U, .vdiv = 0x04U,
+        .enableMode = 0U,
+        .prdiv      = 0x00U,
+        .vdiv       = 0x04U,
     };
 
     CLOCK_SetPbeMode(kMCG_PllClkSelPll0, &pll0Config);
@@ -515,7 +521,7 @@ void APP_PowerModeSwitch(smc_power_state_t curPowerState, app_power_mode_t targe
 {
     smc_power_mode_vlls_config_t vlls_config;
     vlls_config.enablePorDetectInVlls0 = true;
-    vlls_config.enableRam2InVlls2 = true; /* Enable RAM2 power in VLLS2 */
+    vlls_config.enableRam2InVlls2      = true; /* Enable RAM2 power in VLLS2 */
     smc_power_mode_lls_config_t lls_config;
     lls_config.subMode = kSMC_StopSub3;
     switch (targetPowerMode)
@@ -659,7 +665,7 @@ int main(void)
      */
     LPTMR_GetDefaultConfig(&lptmrConfig);
     lptmrConfig.prescalerClockSource = kLPTMR_PrescalerClock_1; /* Use LPO as clock source. */
-    lptmrConfig.bypassPrescaler = true;
+    lptmrConfig.bypassPrescaler      = true;
 
     LPTMR_Init(LPTMR0, &lptmrConfig);
 

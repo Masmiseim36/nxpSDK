@@ -5,6 +5,14 @@ This example will send data to itself(loopback), and hardware flow control will 
 The CTS(clear-to-send) pin is for transmiter to check if receiver is ready, if the CTS pin is assert, transmiter start
 to send data. The RTS(request-to-send) is a pin for receiver to inform the transmiter if receiver is ready to receive
 data. So, please connect RTS to CTS pin directly.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/Micro USB cable
@@ -49,11 +57,6 @@ Please make sure you make the correct line connection. Basically, the connection
       LPUART_RTS   --     LPUART_CTS   
 Data matched! Transfer successfully.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

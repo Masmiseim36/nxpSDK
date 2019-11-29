@@ -318,6 +318,8 @@
           <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/ssd1963</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/dbi</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/dbi/flexio</state>
           <state>$PROJ_DIR$/../../../../../components/ft5406</state>
           <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
@@ -1307,6 +1309,8 @@
           <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/ssd1963</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/dbi</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/dbi/flexio</state>
           <state>$PROJ_DIR$/../../../../../components/ft5406</state>
           <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
@@ -2018,10 +2022,10 @@
   <group>
     <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_i2c.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_i2c.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_i2c.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_i2c.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_port.h</name>
@@ -2045,88 +2049,100 @@
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_flexio_mculcd_edma.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_qspi.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_qspi.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_edma.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_qspi.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_edma.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_dmamux.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_edma.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_dmamux.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_clock.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_dmamux.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_clock.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_common.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_clock.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_common.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_lpuart.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_common.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_lpuart.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_gpio.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_lpuart.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_gpio.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_smc.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_gpio.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_smc.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_sysmpu.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_smc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_sysmpu.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_sysmpu.h</name>
     </file>
   </group>
   <group>
     <name>lcdc</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../components/ssd1963/fsl_ssd1963.h</name>
+      <name>$PROJ_DIR$/../../../../../components/ssd1963/fsl_ssd1963.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../components/ssd1963/fsl_ssd1963.c</name>
+      <name>$PROJ_DIR$/../../../../../components/ssd1963/fsl_ssd1963.h</name>
+    </file>
+  </group>
+  <group>
+    <name>video</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/video/display/dbi/fsl_dbi.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/video/display/dbi/flexio/fsl_dbi_flexio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/video/display/dbi/flexio/fsl_dbi_flexio.h</name>
     </file>
   </group>
   <group>
     <name>touchpanel</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../components/ft5406/fsl_ft5406.h</name>
+      <name>$PROJ_DIR$/../../../../../components/ft5406/fsl_ft5406.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../components/ft5406/fsl_ft5406.c</name>
+      <name>$PROJ_DIR$/../../../../../components/ft5406/fsl_ft5406.h</name>
     </file>
   </group>
   <group>
     <name>device</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/fsl_device_registers.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/MK28F15.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/MK28F15_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/system_MK28F15.c</name>
@@ -2138,12 +2154,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -2151,6 +2161,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/debug_console/fsl_debug_console_conf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/str/fsl_str.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/fsl_assert.c</name>
@@ -2161,34 +2177,37 @@
     <group>
       <name>uart</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/lpuart_adapter.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/lpuart_adapter.c</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
       </file>
     </group>
     <group>
       <name>serial_manager</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_internal.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
       </file>
     </group>
   </group>
@@ -2204,30 +2223,6 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm4.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
     </file>
     <file>
@@ -2237,7 +2232,31 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>

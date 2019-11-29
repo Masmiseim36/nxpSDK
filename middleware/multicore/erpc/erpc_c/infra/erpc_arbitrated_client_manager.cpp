@@ -29,7 +29,7 @@ void ArbitratedClientManager::setArbitrator(TransportArbitrator *arbitrator)
     m_transport = arbitrator;
 }
 
-void ArbitratedClientManager::performClientRequest(RequestContext &request)
+erpc_status_t ArbitratedClientManager::performClientRequest(RequestContext &request)
 {
     assert(m_arbitrator && "arbitrator not set");
 
@@ -42,15 +42,13 @@ void ArbitratedClientManager::performClientRequest(RequestContext &request)
 #if ERPC_NESTED_CALLS_DETECTION
         if (nestingDetection)
         {
-            request.getCodec()->updateStatus(kErpcStatus_NestedCallFailure);
-            return;
+            return kErpcStatus_NestedCallFailure;
         }
 #endif
         token = m_arbitrator->prepareClientReceive(request);
         if (!token)
         {
-            request.getCodec()->updateStatus(kErpcStatus_Fail);
-            return;
+            return kErpcStatus_Fail;
         }
     }
 
@@ -60,8 +58,7 @@ void ArbitratedClientManager::performClientRequest(RequestContext &request)
     err = logMessage(request.getCodec()->getBuffer());
     if (err)
     {
-        request.getCodec()->updateStatus(err);
-        return;
+        return err;
     }
 #endif
 
@@ -69,8 +66,7 @@ void ArbitratedClientManager::performClientRequest(RequestContext &request)
     err = m_arbitrator->send(request.getCodec()->getBuffer());
     if (err)
     {
-        request.getCodec()->updateStatus(err);
-        return;
+        return err;
     }
 
     if (!request.isOneway())
@@ -79,16 +75,14 @@ void ArbitratedClientManager::performClientRequest(RequestContext &request)
         err = m_arbitrator->clientReceive(token);
         if (err)
         {
-            request.getCodec()->updateStatus(err);
-            return;
+            return err;
         }
 
 #if ERPC_MESSAGE_LOGGING
         err = logMessage(request.getCodec()->getBuffer());
         if (err)
         {
-            request.getCodec()->updateStatus(err);
-            return;
+            return err;
         }
 #endif
 
@@ -96,10 +90,9 @@ void ArbitratedClientManager::performClientRequest(RequestContext &request)
         err = verifyReply(request);
         if (err)
         {
-            request.getCodec()->updateStatus(err);
-            return;
+            return err;
         }
     }
 
-    return;
+    return kErpcStatus_Success;
 }

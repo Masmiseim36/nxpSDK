@@ -88,9 +88,9 @@ static app_wakeup_source_t s_wakeupSource; /* Wakeup source.                 */
 void APP_SetClockVlpr(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 3U,        /* PLLFLLSEL select IRC48MCLK. */
-        .er32kSrc = 2U,         /* ERCLK32K selection, use RTC. */
-        .clkdiv1 = 0x00040000U, /* SIM_CLKDIV1. */
+        .pllFllSel = 3U,          /* PLLFLLSEL select IRC48MCLK. */
+        .er32kSrc  = 2U,          /* ERCLK32K selection, use RTC. */
+        .clkdiv1   = 0x00040000U, /* SIM_CLKDIV1. */
     };
 
     CLOCK_SetSimSafeDivs();
@@ -108,13 +108,15 @@ void APP_SetClockVlpr(void)
 void APP_SetClockRunFromVlpr(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 1U,        /* PLLFLLSEL select PLL. */
-        .er32kSrc = 2U,         /* ERCLK32K selection, use RTC. */
-        .clkdiv1 = 0x01140000U, /* SIM_CLKDIV1. */
+        .pllFllSel = 1U,          /* PLLFLLSEL select PLL. */
+        .er32kSrc  = 2U,          /* ERCLK32K selection, use RTC. */
+        .clkdiv1   = 0x01140000U, /* SIM_CLKDIV1. */
     };
 
     const mcg_pll_config_t pll0Config = {
-        .enableMode = 0U, .prdiv = 0x13U, .vdiv = 0x18U,
+        .enableMode = 0U,
+        .prdiv      = 0x13U,
+        .vdiv       = 0x18U,
     };
 
     CLOCK_SetSimSafeDivs();
@@ -163,19 +165,19 @@ void APP_PowerPreSwitchHook(smc_power_state_t originPowerState, app_power_mode_t
     if (kAPP_PowerModeWait == targetMode)
     {
         const mcg_config_t mcgConfigStruct = {
-            .mcgMode = kMCG_ModeFEI,             /* FEI - FLL with internal RTC. */
-            .irclkEnableMode = kMCG_IrclkEnable, /* MCGIRCLK enabled, MCGIRCLK disabled in STOP mode */
-            .ircs = kMCG_IrcSlow,                /* Slow internal reference clock selected */
-            .fcrdiv = 0x0U,                      /* Fast IRC divider: divided by 1 */
-            .frdiv = 0x0U,                       /* FLL reference clock divider: divided by 32 */
-            .drs = kMCG_DrsLow,                  /* Low frequency range */
-            .dmx32 = kMCG_Dmx32Default,          /* DCO has a default range of 25% */
-            .oscsel = kMCG_OscselOsc,            /* Selects System Oscillator (OSCCLK) */
+            .mcgMode         = kMCG_ModeFEI,      /* FEI - FLL with internal RTC. */
+            .irclkEnableMode = kMCG_IrclkEnable,  /* MCGIRCLK enabled, MCGIRCLK disabled in STOP mode */
+            .ircs            = kMCG_IrcSlow,      /* Slow internal reference clock selected */
+            .fcrdiv          = 0x0U,              /* Fast IRC divider: divided by 1 */
+            .frdiv           = 0x0U,              /* FLL reference clock divider: divided by 32 */
+            .drs             = kMCG_DrsLow,       /* Low frequency range */
+            .dmx32           = kMCG_Dmx32Default, /* DCO has a default range of 25% */
+            .oscsel          = kMCG_OscselOsc,    /* Selects System Oscillator (OSCCLK) */
             .pll0Config =
                 {
-                    .enableMode = 0, /* MCGPLLCLK disabled */
-                    .prdiv = 0x13U,  /* PLL Reference divider: divided by 20 */
-                    .vdiv = 0x18U,   /* VCO divider: multiplied by 48 */
+                    .enableMode = 0,     /* MCGPLLCLK disabled */
+                    .prdiv      = 0x13U, /* PLL Reference divider: divided by 20 */
+                    .vdiv       = 0x18U, /* VCO divider: multiplied by 48 */
                 },
         };
 
@@ -228,19 +230,19 @@ void APP_PowerPostSwitchHook(smc_power_state_t originPowerState, app_power_mode_
     if ((kAPP_PowerModeWait == targetMode) && (kSMC_PowerStateRun == originPowerState))
     {
         const mcg_config_t mcgConfigStruct = {
-            .mcgMode = kMCG_ModePEE,             /* PEE - PLL Engaged External */
-            .irclkEnableMode = kMCG_IrclkEnable, /* MCGIRCLK enabled, MCGIRCLK disabled in STOP mode */
-            .ircs = kMCG_IrcSlow,                /* Slow internal reference clock selected */
-            .fcrdiv = 0x0U,                      /* Fast IRC divider: divided by 1 */
-            .frdiv = 0x0U,                       /* FLL reference clock divider: divided by 32 */
-            .drs = kMCG_DrsLow,                  /* Low frequency range */
-            .dmx32 = kMCG_Dmx32Default,          /* DCO has a default range of 25% */
-            .oscsel = kMCG_OscselOsc,            /* Selects System Oscillator (OSCCLK) */
+            .mcgMode         = kMCG_ModePEE,      /* PEE - PLL Engaged External */
+            .irclkEnableMode = kMCG_IrclkEnable,  /* MCGIRCLK enabled, MCGIRCLK disabled in STOP mode */
+            .ircs            = kMCG_IrcSlow,      /* Slow internal reference clock selected */
+            .fcrdiv          = 0x0U,              /* Fast IRC divider: divided by 1 */
+            .frdiv           = 0x0U,              /* FLL reference clock divider: divided by 32 */
+            .drs             = kMCG_DrsLow,       /* Low frequency range */
+            .dmx32           = kMCG_Dmx32Default, /* DCO has a default range of 25% */
+            .oscsel          = kMCG_OscselOsc,    /* Selects System Oscillator (OSCCLK) */
             .pll0Config =
                 {
-                    .enableMode = 0, /* MCGPLLCLK disabled */
-                    .prdiv = 0x13U,  /* PLL Reference divider: divided by 20 */
-                    .vdiv = 0x18U,   /* VCO divider: multiplied by 48 */
+                    .enableMode = 0,     /* MCGPLLCLK disabled */
+                    .prdiv      = 0x13U, /* PLL Reference divider: divided by 20 */
+                    .vdiv       = 0x18U, /* VCO divider: multiplied by 48 */
                 },
         };
 
@@ -628,7 +630,7 @@ int main(void)
      */
     LPTMR_GetDefaultConfig(&lptmrConfig);
     lptmrConfig.prescalerClockSource = kLPTMR_PrescalerClock_1; /* Use LPO as clock source. */
-    lptmrConfig.bypassPrescaler = true;
+    lptmrConfig.bypassPrescaler      = true;
 
     LPTMR_Init(LPTMR0, &lptmrConfig);
 

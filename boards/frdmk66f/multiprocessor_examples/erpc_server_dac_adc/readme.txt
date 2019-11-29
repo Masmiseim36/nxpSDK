@@ -26,6 +26,14 @@ of=/dev/mmcblk0 bs=1M
 - Once you boot and login (user root), enter enum34, erpc and pyserial directories
 and run in each of them: python setup.py install
 - now you can use: python run.py -p <PORT> -b <BAUDRATE>, to run the example
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- MCUXpresso  11.0.0
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+
 Hardware requirements
 =====================
 - Mini USB cable
@@ -83,11 +91,6 @@ Read value from Magnetometer:
 ->Press '1' for DAC ADC conversion
 ->Press '2' for GPIO LED
 ->Press '3' for Accelerometer and Magnetometer
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- MCUXpresso 10.3.0
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
+Customization options
+=====================
 

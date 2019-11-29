@@ -14,8 +14,8 @@
 #endif
 
 /*******************************************************************************
-* Definitations
-******************************************************************************/
+ * Definitations
+ ******************************************************************************/
 
 enum _mculcd_transfer_state
 {
@@ -105,11 +105,11 @@ void FLEXIO_MCULCD_GetDefaultConfig(flexio_mculcd_config_t *config)
     /* Initializes the configure structure to zero. */
     memset(config, 0, sizeof(*config));
 
-    config->enable = true;
-    config->enableInDoze = false;
-    config->enableInDebug = true;
+    config->enable           = true;
+    config->enableInDoze     = false;
+    config->enableInDebug    = true;
     config->enableFastAccess = true;
-    config->baudRate_Bps = 96000000U;
+    config->baudRate_Bps     = 96000000U;
 }
 
 /*!
@@ -396,12 +396,12 @@ void FLEXIO_MCULCD_SetSingleBeatReadConfig(FLEXIO_MCULCD_Type *base)
     /* Timer output to RD pin (8080 mode), to WR/EN pin in 6800 mode. */
     if (kFLEXIO_MCULCD_8080 == base->busType)
     {
-        timerPin = base->RDPinIndex;
+        timerPin         = base->RDPinIndex;
         timerPinPolarity = kFLEXIO_PinActiveLow;
     }
     else
     {
-        timerPin = base->ENWRPinIndex;
+        timerPin         = base->ENWRPinIndex;
         timerPinPolarity = kFLEXIO_PinActiveHigh;
     }
 
@@ -593,12 +593,12 @@ void FLEXIO_MCULCD_SetMultiBeatsReadConfig(FLEXIO_MCULCD_Type *base)
     /* Timer output to RD pin (8080 mode), to WR/EN pin in 6800 mode. */
     if (kFLEXIO_MCULCD_8080 == base->busType)
     {
-        timerPin = base->RDPinIndex;
+        timerPin         = base->RDPinIndex;
         timerPinPolarity = kFLEXIO_PinActiveLow;
     }
     else
     {
-        timerPin = base->ENWRPinIndex;
+        timerPin         = base->ENWRPinIndex;
         timerPinPolarity = kFLEXIO_PinActiveHigh;
     }
 
@@ -1001,7 +1001,7 @@ status_t FLEXIO_MCULCD_TransferCreateHandle(FLEXIO_MCULCD_Type *base,
 
     /* Register callback and userData. */
     handle->completionCallback = callback;
-    handle->userData = userData;
+    handle->userData           = userData;
 
     /* Enable interrupt in NVIC. */
     EnableIRQ(flexio_irqs[FLEXIO_GetInstance(base->flexioBase)]);
@@ -1056,7 +1056,7 @@ status_t FLEXIO_MCULCD_TransferNonBlocking(FLEXIO_MCULCD_Type *base,
     /* Send the command. */
     FLEXIO_MCULCD_WriteCommandBlocking(base, xfer->command);
 
-    /* If tranfer count is 0 (only to send command), return directly. */
+    /* If transfer count is 0 (only to send command), return directly. */
     if (0U == xfer->dataSize)
     {
         handle->state = kFLEXIO_MCULCD_StateIdle;
@@ -1116,7 +1116,7 @@ status_t FLEXIO_MCULCD_TransferNonBlocking(FLEXIO_MCULCD_Type *base,
  */
 void FLEXIO_MCULCD_TransferAbort(FLEXIO_MCULCD_Type *base, flexio_mculcd_handle_t *handle)
 {
-    /* If no tranfer in process, return directly. */
+    /* If no transfer in process, return directly. */
     if (kFLEXIO_MCULCD_StateIdle == handle->state)
     {
         return;
@@ -1142,9 +1142,9 @@ void FLEXIO_MCULCD_TransferAbort(FLEXIO_MCULCD_Type *base, flexio_mculcd_handle_
     /* De-assert the nCS. */
     FLEXIO_MCULCD_StopTransfer(base);
 
-    handle->dataCount = 0;
+    handle->dataCount      = 0;
     handle->remainingCount = 0;
-    handle->state = kFLEXIO_MCULCD_StateIdle;
+    handle->state          = kFLEXIO_MCULCD_StateIdle;
 }
 
 /*!
@@ -1155,7 +1155,7 @@ void FLEXIO_MCULCD_TransferAbort(FLEXIO_MCULCD_Type *base, flexio_mculcd_handle_
  * transfer state.
  * param count How many bytes transferred so far by the non-blocking transaction.
  * retval kStatus_Success Get the transferred count Successfully.
- * retval kStatus_NoTransferInProgress No tranfer in process.
+ * retval kStatus_NoTransferInProgress No transfer in process.
  */
 status_t FLEXIO_MCULCD_TransferGetCount(FLEXIO_MCULCD_Type *base, flexio_mculcd_handle_t *handle, size_t *count)
 {
@@ -1184,9 +1184,9 @@ status_t FLEXIO_MCULCD_TransferGetCount(FLEXIO_MCULCD_Type *base, flexio_mculcd_
  */
 void FLEXIO_MCULCD_TransferHandleIRQ(void *base, void *handle)
 {
-    FLEXIO_MCULCD_Type *flexioLcdMcuBase = (FLEXIO_MCULCD_Type *)base;
+    FLEXIO_MCULCD_Type *flexioLcdMcuBase       = (FLEXIO_MCULCD_Type *)base;
     flexio_mculcd_handle_t *flexioLcdMcuHandle = (flexio_mculcd_handle_t *)handle;
-    uint32_t statusFlags = FLEXIO_MCULCD_GetStatusFlags(flexioLcdMcuBase);
+    uint32_t statusFlags                       = FLEXIO_MCULCD_GetStatusFlags(flexioLcdMcuBase);
     uint32_t data;
 
     if (kFLEXIO_MCULCD_StateReadArray == flexioLcdMcuHandle->state)

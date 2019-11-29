@@ -131,7 +131,7 @@ protected:
      *
      * @return
      */
-    static int rpmsg_read_cb(void *payload, unsigned int payload_len, unsigned long src, void *priv);
+    static int rpmsg_read_cb(void *payload, int payload_len, unsigned long src, void *priv);
 
     StaticQueue<MessageBuffer, ERPC_DEFAULT_BUFFERS_COUNT>
         m_messageQueue; /*!< Received messages. Queue of messages with buffers filled in rpmsg callback. */

@@ -18,7 +18,6 @@
  * limitations under the License.
  */
 
-
 #include "fsl_enet_phy_cmsis.h"
 #include "fsl_phy.h"
 
@@ -199,8 +198,8 @@ int32_t PHY0_SetMode(uint32_t mode)
 
     if (mode == ARM_ETH_PHY_LOOPBACK)
     {
-        status =
-            PHY_EnableLoopback(ENETPHY0_State.resource->base, ENETPHY0_State.resource->phyAddr, kPHY_RemoteLoop, kPHY_Speed100M, true);
+        status = PHY_EnableLoopback(ENETPHY0_State.resource->base, ENETPHY0_State.resource->phyAddr, kPHY_RemoteLoop,
+                                    kPHY_Speed100M, true);
     }
     else if (mode == ARM_ETH_PHY_AUTO_NEGOTIATE)
     {

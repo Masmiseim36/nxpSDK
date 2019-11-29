@@ -462,11 +462,11 @@ static void configure_quadspi_as_needed(void)
         // Get the start address and flash size
         // Note: Basically BCA is always stored in Main flash memory
         uint32_t flashStart;
-        g_bootloaderContext.flashDriverInterface->flash_get_property(g_bootloaderContext.allFlashState,
-                                                                     kFLASH_PropertyPflash0BlockBaseAddr, &flashStart);
+        g_bootloaderContext.flashDriverInterface->flash_get_property(
+            g_bootloaderContext.allFlashState, kFLASH_PropertyPflash0BlockBaseAddr, &flashStart);
         uint32_t flashSize;
-        g_bootloaderContext.flashDriverInterface->flash_get_property(g_bootloaderContext.allFlashState,
-                                                                     kFLASH_PropertyPflash0TotalSize, &flashSize);
+        g_bootloaderContext.flashDriverInterface->flash_get_property(
+            g_bootloaderContext.allFlashState, kFLASH_PropertyPflash0TotalSize, &flashSize);
 
         // Check if the pointer of qspi config block is valid.
         if ((qspi_config_block_base != 0xFFFFFFFF) && (qspi_config_block_base > flashStart) &&
@@ -508,7 +508,7 @@ static void bootloader_flash_init(void)
     {
         g_bootloaderContext.dflashDriverInterface->flash_init(g_bootloaderContext.dFlashState);
     }
-#endif // BL_FEATURE_SUPPORT_DFLASH
+#endif // BL_FEATURE_SUPPORT_DFLASH    
 }
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 

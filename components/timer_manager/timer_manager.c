@@ -67,7 +67,7 @@ typedef struct _timermanager_state
 {
     uint32_t mUsInTimerInterval;                   /*!< Timer intervl in microseconds */
     uint32_t previousTimeInUs;                     /*!< Previous timer count in microseconds */
-    list_label_t timerHead;                        /*!< Timer list head */
+    list_t timerHead;                              /*!< Timer list head */
     uint8_t halTimerHandle[HAL_TIMER_HANDLE_SIZE]; /*!< Timer handle buffer */
 #if defined(OSA_USED)
 #if (defined(TM_COMMON_TASK_ENABLE) && (TM_COMMON_TASK_ENABLE > 0U))

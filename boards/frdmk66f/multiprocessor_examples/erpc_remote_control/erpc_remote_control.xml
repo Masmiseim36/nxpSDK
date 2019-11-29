@@ -10,8 +10,8 @@
     <definition extID="device.MK66F18_CMSIS.MK66F18"/>
     <definition extID="device.MK66F18_startup.MK66F18"/>
     <definition extID="driver.fxos8700cq.MK66F18"/>
-    <definition extID="middleware.freertos.MK66F18"/>
-    <definition extID="middleware.freertos.heap.heap_4.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.freertos.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.freertos.heap_4.MK66F18"/>
     <definition extID="middleware.multicore.erpc.common.MK66F18"/>
     <definition extID="middleware.multicore.erpc.doc.MK66F18"/>
     <definition extID="middleware.multicore.erpc.eRPC_arbitrator.MK66F18"/>
@@ -43,7 +43,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk66f_erpc_remote_control" name="erpc_remote_control" category="multiprocessor_examples" dependency="platform.drivers.edma.MK66F18 platform.drivers.uart.MK66F18 platform.drivers.uart_edma.MK66F18 platform.drivers.dac.MK66F18 driver.fxos8700cq.MK66F18 platform.drivers.uart_cmsis_edma.MK66F18 platform.drivers.gpio.MK66F18 platform.drivers.port.MK66F18 platform.drivers.i2c.MK66F18 platform.drivers.adc16.MK66F18 platform.drivers.dmamux.MK66F18 middleware.multicore.erpc.eRPC_arbitrator.MK66F18 middleware.multicore.erpc.eRPC_port_freertos.MK66F18 middleware.multicore.erpc.eRPC_uart_cmsis_transport.MK66F18 middleware.freertos.heap.heap_4.MK66F18 middleware.freertos.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.serial_manager_uart.MK66F18 component.lists.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.utilities.assert.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 platform.CMSIS_Driver_Include.USART_CMSISInclude.MK66F18 platform.CMSIS_Driver_Include.Common_CMSISInclude.MK66F18 RTE_Device.MK66F18 middleware.multicore.erpc.common.MK66F18 middleware.multicore.erpc.doc.MK66F18" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmk66f_erpc_remote_control" name="erpc_remote_control" category="multiprocessor_examples" dependency="platform.drivers.edma.MK66F18 platform.drivers.uart.MK66F18 platform.drivers.uart_edma.MK66F18 platform.drivers.dac.MK66F18 driver.fxos8700cq.MK66F18 platform.drivers.uart_cmsis_edma.MK66F18 platform.drivers.gpio.MK66F18 platform.drivers.port.MK66F18 platform.drivers.i2c.MK66F18 platform.drivers.adc16.MK66F18 platform.drivers.dmamux.MK66F18 middleware.multicore.erpc.eRPC_arbitrator.MK66F18 middleware.multicore.erpc.eRPC_port_freertos.MK66F18 middleware.multicore.erpc.eRPC_uart_cmsis_transport.MK66F18 middleware.amazon_freertos.freertos.heap_4.MK66F18 middleware.amazon_freertos.freertos.MK66F18 middleware.multicore.erpc.doc.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.serial_manager_uart.MK66F18 component.lists.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.utilities.assert.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 platform.CMSIS_Driver_Include.USART_CMSISInclude.MK66F18 platform.CMSIS_Driver_Include.Common_CMSISInclude.MK66F18 RTE_Device.MK66F18 middleware.multicore.erpc.common.MK66F18">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.ccnature"/>
     </projects>
@@ -102,10 +102,10 @@
       <files mask="Driver_Common.h"/>
       <files mask="Driver_USART.h"/>
     </source>
-    <source path="boards/frdmk66f/multiprocessor_examples/erpc_common" target_path="erpc" type="c_include">
+    <source path="boards/frdmk66f/multiprocessor_examples/erpc_common" target_path="source" type="c_include">
       <files mask="erpc_error_handler.h"/>
     </source>
-    <source path="boards/frdmk66f/multiprocessor_examples/erpc_common" target_path="erpc" type="src">
+    <source path="boards/frdmk66f/multiprocessor_examples/erpc_common" target_path="source" type="src">
       <files mask="erpc_error_handler.cpp"/>
     </source>
     <source path="boards/frdmk66f/multiprocessor_examples/erpc_remote_control/armgcc" target_path="src" type="linker" toolchain="armgcc">
@@ -117,6 +117,20 @@
     <source path="boards/frdmk66f/multiprocessor_examples/erpc_remote_control/mdk" target_path="src" type="linker" toolchain="mdk">
       <files mask="MK66FN2M0xxx18_flash.scf"/>
     </source>
+    <source path="boards/frdmk66f/multiprocessor_examples/erpc_remote_control/service/erpc_remote_control_app_0" target_path="erpc/service/erpc_remote_control_app_0" type="script" exclude="true">
+      <files mask="__init__.py"/>
+      <files mask="client.py"/>
+      <files mask="common.py"/>
+      <files mask="interface.py"/>
+      <files mask="server.py"/>
+    </source>
+    <source path="boards/frdmk66f/multiprocessor_examples/erpc_remote_control/service/erpc_remote_control_app_1" target_path="erpc/service/erpc_remote_control_app_1" type="script" exclude="true">
+      <files mask="__init__.py"/>
+      <files mask="client.py"/>
+      <files mask="common.py"/>
+      <files mask="interface.py"/>
+      <files mask="server.py"/>
+    </source>
     <source path="boards/frdmk66f/multiprocessor_examples/erpc_remote_control/service" target_path="erpc/service" type="c_include">
       <files mask="erpc_remote_control.h"/>
       <files mask="erpc_remote_control_app_0.h"/>
@@ -125,6 +139,9 @@
     </source>
     <source path="boards/frdmk66f/multiprocessor_examples/erpc_remote_control/service" target_path="erpc/service" type="script">
       <files mask="erpc_remote_control.erpc"/>
+    </source>
+    <source path="boards/frdmk66f/multiprocessor_examples/erpc_remote_control/service" target_path="erpc/service" type="script" exclude="true">
+      <files mask="__init__.py"/>
     </source>
     <source path="boards/frdmk66f/multiprocessor_examples/erpc_remote_control/service" target_path="erpc/service" type="src">
       <files mask="erpc_remote_control_app_0_server.cpp"/>
@@ -147,6 +164,9 @@
     <source path="boards/frdmk66f/multiprocessor_examples/erpc_remote_control" target_path="source" type="c_include">
       <files mask="FreeRTOSConfig.h"/>
       <files mask="erpc_config.h"/>
+    </source>
+    <source path="boards/frdmk66f/multiprocessor_examples/erpc_remote_control" target_path="source" type="script" exclude="true">
+      <files mask="run.py"/>
     </source>
     <source path="boards/frdmk66f/multiprocessor_examples/erpc_remote_control" target_path="source" type="src">
       <files mask="remote_control.c"/>

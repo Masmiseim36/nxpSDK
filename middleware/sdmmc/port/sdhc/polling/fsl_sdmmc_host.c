@@ -16,15 +16,11 @@
  * Prototypes
  ******************************************************************************/
 /*!
- * @brief SDMMCHOST detect card by GPIO.
+ * @brief SDMMCHOST notify card insertion status.
+ * @param inserted true is inserted, false is not
+ * @param cd card detect descriptor
  */
-static void SDMMCHOST_DetectCardByGpio(const sdmmchost_detect_card_t *cd);
-
-/*!
- * @brief SDMMCHOST detect card insert status by host controller.
- * @param base host base address.
- */
-static void SDMMCHOST_DetectCardInsertByHost(SDMMCHOST_TYPE *base);
+static void SDMMCHOST_NotifyCardInsertStatus(bool inserted, const sdmmchost_detect_card_t *cd);
 
 /*!
  * @brief SDMMCHOST transfer function.
@@ -55,17 +51,9 @@ extern volatile uint32_t s_timeMilliseconds;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static void SDMMCHOST_DetectCardByGpio(const sdmmchost_detect_card_t *cd)
+static void SDMMCHOST_NotifyCardInsertStatus(bool inserted, const sdmmchost_detect_card_t *cd)
 {
-    if (GPIO_PinRead(BOARD_SDHC_CD_GPIO_BASE, BOARD_SDHC_CD_GPIO_PIN) == SDMMCHOST_CARD_INSERT_CD_LEVEL)
-    {
-        s_sdInsertedFlag = true;
-        if (cd && (cd->cardInserted))
-        {
-            cd->cardInserted(true, cd->userData);
-        }
-    }
-    else
+    if (inserted == false)
     {
         s_sdInsertedFlag = false;
         if (cd && (cd->cardRemoved))
@@ -73,13 +61,13 @@ static void SDMMCHOST_DetectCardByGpio(const sdmmchost_detect_card_t *cd)
             cd->cardRemoved(false, cd->userData);
         }
     }
-}
-
-static void SDMMCHOST_DetectCardInsertByHost(SDMMCHOST_TYPE *base)
-{
-    if (SDMMCHOST_CARD_DETECT_INSERT_STATUS(base))
+    else
     {
         s_sdInsertedFlag = true;
+        if (cd && (cd->cardInserted))
+        {
+            cd->cardInserted(true, cd->userData);
+        }
     }
 }
 
@@ -119,6 +107,7 @@ void SDMMCHOST_ErrorRecovery(SDMMCHOST_TYPE *base)
 static status_t SDMMCHOST_CardDetectInit(SDMMCHOST_TYPE *base, const sdmmchost_detect_card_t *cd)
 {
     sdmmchost_detect_card_type_t cdType = kSDMMCHOST_DetectCardByGpioCD;
+    bool cardInsert                     = true;
 
     if (cd != NULL)
     {
@@ -127,7 +116,10 @@ static status_t SDMMCHOST_CardDetectInit(SDMMCHOST_TYPE *base, const sdmmchost_d
 
     if (cdType == kSDMMCHOST_DetectCardByGpioCD)
     {
-        SDMMCHOST_DetectCardByGpio(cd);
+        if (GPIO_PinRead(BOARD_SDHC_CD_GPIO_BASE, BOARD_SDHC_CD_GPIO_PIN) == SDMMCHOST_CARD_INSERT_CD_LEVEL)
+        {
+            cardInsert = true;
+        }
     }
     else if (cdType == kSDMMCHOST_DetectCardByHostDATA3)
     {
@@ -135,12 +127,19 @@ static status_t SDMMCHOST_CardDetectInit(SDMMCHOST_TYPE *base, const sdmmchost_d
         SDMMCHOST_CARD_DETECT_DATA3_ENABLE(base, true);
         /* enable card detect status */
         SDMMCHOST_CARD_DETECT_INSERT_ENABLE(base);
+        if (SDMMCHOST_CARD_DETECT_INSERT_STATUS(base))
+        {
+            s_sdInsertedFlag = true;
+        }
     }
     else
     {
         /* SDHC do not support detect card through CD */
         return kStatus_Fail;
     }
+
+    /* notify application about the card insertion status */
+    SDMMCHOST_NotifyCardInsertStatus(cardInsert, cd);
 
     return kStatus_Success;
 }
@@ -171,11 +170,17 @@ status_t SDMMCHOST_WaitCardDetectStatus(SDMMCHOST_TYPE *base, const sdmmchost_de
         {
             if (cdType != kSDMMCHOST_DetectCardByGpioCD)
             {
-                SDMMCHOST_DetectCardInsertByHost(base);
+                if (SDMMCHOST_CARD_DETECT_INSERT_STATUS(base))
+                {
+                    s_sdInsertedFlag = true;
+                }
             }
             else
             {
-                SDMMCHOST_DetectCardByGpio(cd);
+                if (GPIO_PinRead(BOARD_SDHC_CD_GPIO_BASE, BOARD_SDHC_CD_GPIO_PIN) == SDMMCHOST_CARD_INSERT_CD_LEVEL)
+                {
+                    s_sdInsertedFlag = true;
+                }
             }
         } while (waitCardStatus != s_sdInsertedFlag);
     }
@@ -220,17 +225,17 @@ status_t SDMMCHOST_Init(SDMMCHOST_CONFIG *host, void *userData)
     SDMMCEVENT_InitTimer();
 
     /* Initializes SDHC. */
-    sdhcHost->config.cardDetectDat3 = false;
-    sdhcHost->config.endianMode = SDHC_ENDIAN_MODE;
-    sdhcHost->config.dmaMode = SDHC_DMA_MODE;
-    sdhcHost->config.readWatermarkLevel = SDHC_READ_WATERMARK_LEVEL;
+    sdhcHost->config.cardDetectDat3      = false;
+    sdhcHost->config.endianMode          = SDHC_ENDIAN_MODE;
+    sdhcHost->config.dmaMode             = SDHC_DMA_MODE;
+    sdhcHost->config.readWatermarkLevel  = SDHC_READ_WATERMARK_LEVEL;
     sdhcHost->config.writeWatermarkLevel = SDHC_WRITE_WATERMARK_LEVEL;
     SDHC_Init(sdhcHost->base, &(sdhcHost->config));
 
     /* Define transfer function. */
     sdhcHost->transfer = SDMMCHOST_TransferFunction;
     /* card detect init */
-    SDMMCHOST_CardDetectInit(sdhcHost->base, userData);
+    SDMMCHOST_CardDetectInit(sdhcHost->base, (userData == NULL) ? NULL : (((sdmmhostcard_usr_param_t *)userData)->cd));
 
     return kStatus_Success;
 }

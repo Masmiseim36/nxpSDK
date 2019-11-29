@@ -38,21 +38,20 @@
 /* Amazon FreeRTOS Demo Includes */
 #include "FreeRTOS.h"
 #include "task.h"
-#include "aws_clientcredential.h"
 #include "aws_logging_task.h"
 #include "aws_system_init.h"
-
-/* lwIP Includes */
-#include "lwip/tcpip.h"
-#include "lwip/dhcp.h"
-#include "lwip/prot/dhcp.h"
-#include "netif/ethernet.h"
-#include "ethernetif.h"
 
 #include "device_configuration.h"
 
 #include "fsl_device_registers.h"
 #include "clock_config.h"
+/* lwIP Includes */
+#include "lwip/tcpip.h"
+#include "lwip/dhcp.h"
+#include "lwip/prot/dhcp.h"
+#include "netif/ethernet.h"
+#include "enet_ethernetif.h"
+#include "lwip/netifapi.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -68,6 +67,8 @@
 
 /* System clock name. */
 #define EXAMPLE_CLOCK_NAME kCLOCK_CoreSysClk
+#define INIT_SUCCESS 0
+#define INIT_FAIL 1
 #define LOGGING_TASK_PRIORITY (tskIDLE_PRIORITY + 1)
 #define LOGGING_TASK_STACK_SIZE (200)
 #define LOGGING_QUEUE_LENGTH (16)
@@ -76,21 +77,32 @@
  * Prototypes
  ******************************************************************************/
 extern void vStartShadowDemoTasks(void);
+extern int initNetwork(void);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-static struct netif fsl_netif0;
+struct netif fsl_netif0;
+#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
+mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
+#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
+extern struct netif fsl_netif0;
+const char *clientcredentialJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM = NULL;
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
 
-void BOARD_InitNetwork(void)
+int initNetwork(void)
 {
     ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
     ethernetif_config_t fsl_enet_config0 = {
-        .phyAddress = EXAMPLE_PHY_ADDRESS, .clockName = EXAMPLE_CLOCK_NAME, .macAddress = configMAC_ADDR,
+        .phyAddress = EXAMPLE_PHY_ADDRESS,
+        .clockName  = EXAMPLE_CLOCK_NAME,
+        .macAddress = configMAC_ADDR,
+#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
+        .non_dma_memory = non_dma_memory,
+#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     };
 
     IP4_ADDR(&fsl_netif0_ipaddr, 0, 0, 0, 0);
@@ -99,13 +111,13 @@ void BOARD_InitNetwork(void)
 
     tcpip_init(NULL, NULL);
 
-    netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0, ethernetif0_init,
-              tcpip_input);
-    netif_set_default(&fsl_netif0);
-    netif_set_up(&fsl_netif0);
+    netifapi_netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0,
+                       ethernetif0_init, tcpip_input);
+    netifapi_netif_set_default(&fsl_netif0);
+    netifapi_netif_set_up(&fsl_netif0);
 
     configPRINTF(("Getting IP address from DHCP ...\r\n"));
-    dhcp_start(&fsl_netif0);
+    netifapi_dhcp_start(&fsl_netif0);
 
     struct dhcp *dhcp;
     dhcp = (struct dhcp *)netif_get_client_data(&fsl_netif0, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP);
@@ -115,18 +127,26 @@ void BOARD_InitNetwork(void)
         vTaskDelay(1000);
     }
 
-    configPRINTF(("IPv4 Address: %u.%u.%u.%u\r\n", ((u8_t *)&fsl_netif0.ip_addr.addr)[0],
-                  ((u8_t *)&fsl_netif0.ip_addr.addr)[1], ((u8_t *)&fsl_netif0.ip_addr.addr)[2],
-                  ((u8_t *)&fsl_netif0.ip_addr.addr)[3]));
-
+    if (dhcp->state == DHCP_STATE_BOUND)
+    {
+        configPRINTF(("IPv4 Address: %u.%u.%u.%u\r\n", ((u8_t *)&fsl_netif0.ip_addr.addr)[0],
+                      ((u8_t *)&fsl_netif0.ip_addr.addr)[1], ((u8_t *)&fsl_netif0.ip_addr.addr)[2],
+                      ((u8_t *)&fsl_netif0.ip_addr.addr)[3]));
+    }
     configPRINTF(("DHCP OK\r\n"));
+
+    return INIT_SUCCESS;
+}
+void print_string(const char *string)
+{
+    PRINTF(string);
 }
 
 void vApplicationDaemonTaskStartupHook(void)
 {
     if (SYSTEM_Init() == pdPASS)
     {
-        BOARD_InitNetwork();
+        initNetwork();
 
         /* Initialize mflash file system for device configuration */
         if (dev_cfg_init() != 0)

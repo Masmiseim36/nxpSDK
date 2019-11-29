@@ -2,7 +2,7 @@
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -40,8 +40,9 @@ const registerwritelist_t fxas21002_Config_Isr[] = {
     /*! Configure CTRL_REG1 register to put FXAS21002 to 12.5Hz sampling rate. */
     {FXAS21002_CTRL_REG1, FXAS21002_CTRL_REG1_DR_12_5HZ, FXAS21002_CTRL_REG1_DR_MASK},
     /*! Configure CTRL_REG2 register to set interrupt configuration settings. */
-    {FXAS21002_CTRL_REG2, FXAS21002_CTRL_REG2_IPOL_ACTIVE_HIGH | FXAS21002_CTRL_REG2_INT_EN_DRDY_ENABLE |
-                              FXAS21002_CTRL_REG2_INT_CFG_DRDY_INT1,
+    {FXAS21002_CTRL_REG2,
+     FXAS21002_CTRL_REG2_IPOL_ACTIVE_HIGH | FXAS21002_CTRL_REG2_INT_EN_DRDY_ENABLE |
+         FXAS21002_CTRL_REG2_INT_CFG_DRDY_INT1,
      FXAS21002_CTRL_REG2_IPOL_MASK | FXAS21002_CTRL_REG2_INT_EN_DRDY_MASK | FXAS21002_CTRL_REG2_INT_CFG_DRDY_MASK},
     __END_WRITE_DATA__};
 

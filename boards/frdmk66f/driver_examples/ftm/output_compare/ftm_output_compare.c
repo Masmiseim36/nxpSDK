@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -52,12 +52,12 @@ int main(void)
     PRINTF("\r\nProbe the signal using an oscilloscope");
 
     FTM_GetDefaultConfig(&ftmInfo);
-    
+
 #if defined(FTM_PRESCALER_VALUE)
     /* Set divider to FTM_PRESCALER_VALUE instead of default 1 to be the led toggling visible */
     ftmInfo.prescale = FTM_PRESCALER_VALUE;
-#endif    
-    
+#endif
+
     /* Initialize FTM module */
     FTM_Init(BOARD_FTM_BASEADDR, &ftmInfo);
 

@@ -2,21 +2,24 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
 #include "fsl_i2c.h"
+#include "fsl_dbi_flexio.h"
 #include "fsl_ssd1963.h"
 #include "fsl_ft5406.h"
-#include "fsl_port.h"
+#if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
 #include "fsl_dmamux.h"
+#endif
 #include "pictures.h"
 #include "board.h"
 
 #include "pin_mux.h"
 #include "fsl_gpio.h"
+#include "fsl_port.h"
 #include "fsl_qspi.h"
 #include "clock_config.h"
 /*******************************************************************************
@@ -58,6 +61,11 @@
 #define DEMO_TOUCH_INT_IRQHandler PORTA_IRQHandler
 #define DEMO_TOUCH_INT_PORT PORTA
 #define DEMO_TOUCH_INT_PIN 2
+#define DEMO_CONFIG_TOUCH_INTERRUPT() \
+    PORT_SetPinInterruptConfig(DEMO_TOUCH_INT_PORT, DEMO_TOUCH_INT_PIN, kPORT_InterruptFallingEdge)
+#define DEMO_TOUCH_INTERRUPT_PENDING() ((1U << DEMO_TOUCH_INT_PIN) & PORT_GetPinsInterruptFlags(DEMO_TOUCH_INT_PORT))
+#define DEMO_CLEAR_TOUCH_INTERRUPT_PENDING() \
+    PORT_ClearPinsInterruptFlags(DEMO_TOUCH_INT_PORT, (1U << DEMO_TOUCH_INT_PIN))
 
 /* Macros for LCD EDMA. */
 #define DEMO_FLEXIO_TX_DMA_CHANNEL 16
@@ -79,7 +87,6 @@
 #define DEMO_ARROW_START_X 680
 #define DEMO_ARROW_START_Y 380
 #define DEMO_ARROW_SIZE 64
-#define DEMO_ARROW_COLOR 0x001FU
 
 /* Macros of the QSPI flash. */
 #define QSPI_CLK_FREQ CLOCK_GetCoreSysClkFreq()
@@ -88,11 +95,24 @@
 #define FLASH_SIZE 0x00400000U
 #define DEMO_I2C_BAUDRATE 100000U
 
+/* Color to fill the arraw. */
+#if DEMO_BYTE_PER_PIXEL == 1
+#define DEMO_ARROW_COLOR 0x03
+#elif DEMO_BYTE_PER_PIXEL == 2
+#define DEMO_ARROW_COLOR 0x001F
+#elif DEMO_BYTE_PER_PIXEL == 3
+#define DEMO_ARROW_COLOR 0x00FF
+#elif DEMO_BYTE_PER_PIXEL == 4
+#define DEMO_ARROW_COLOR 0x00FF
+#endif
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 void BOARD_SetCSPin(bool set);
 void BOARD_SetRSPin(bool set);
+void BOARD_SetResetPin(bool set);
+static void DEMO_DbiMemoryDoneCallback(status_t status, void *userData);
 
 /*******************************************************************************
  * Variables
@@ -103,26 +123,39 @@ ft5406_handle_t touchHandle;
 ssd1963_handle_t lcdHandle;
 /* The FlexIO MCU LCD device. */
 FLEXIO_MCULCD_Type flexioLcdDev = {
-    .flexioBase = DEMO_FLEXIO,
-    .busType = kFLEXIO_MCULCD_8080,
-    .dataPinStartIndex = DEMO_FLEXIO_DATA_PIN_START,
-    .ENWRPinIndex = DEMO_FLEXIO_WR_PIN,
-    .RDPinIndex = DEMO_FLEXIO_RD_PIN,
+    .flexioBase          = DEMO_FLEXIO,
+    .busType             = kFLEXIO_MCULCD_8080,
+    .dataPinStartIndex   = DEMO_FLEXIO_DATA_PIN_START,
+    .ENWRPinIndex        = DEMO_FLEXIO_WR_PIN,
+    .RDPinIndex          = DEMO_FLEXIO_RD_PIN,
     .txShifterStartIndex = DEMO_FLEXIO_TX_START_SHIFTER,
-    .txShifterEndIndex = DEMO_FLEXIO_TX_END_SHIFTER,
+    .txShifterEndIndex   = DEMO_FLEXIO_TX_END_SHIFTER,
     .rxShifterStartIndex = DEMO_FLEXIO_RX_START_SHIFTER,
-    .rxShifterEndIndex = DEMO_FLEXIO_RX_END_SHIFTER,
-    .timerIndex = DEMO_FLEXIO_TIMER,
-    .setCSPin = BOARD_SetCSPin,
-    .setRSPin = BOARD_SetRSPin,
-    .setRDWRPin = NULL /* Not used in 8080 mode. */
+    .rxShifterEndIndex   = DEMO_FLEXIO_RX_END_SHIFTER,
+    .timerIndex          = DEMO_FLEXIO_TIMER,
+    .setCSPin            = BOARD_SetCSPin,
+    .setRSPin            = BOARD_SetRSPin,
+    .setRDWRPin          = NULL /* Not used in 8080 mode. */
 };
 
 /* Touch interrupt occurs. */
 volatile bool touchFlag = false;
 
 /* Pictures filled with the arrow. */
-uint16_t picWithArrow[DEMO_PIC_NUM][DEMO_ARROW_SIZE * DEMO_ARROW_SIZE];
+uint8_t picWithArrow[DEMO_PIC_NUM][DEMO_ARROW_SIZE * DEMO_ARROW_SIZE * DEMO_BYTE_PER_PIXEL];
+
+dbi_flexio_xfer_handle_t g_dbiFlexioXferHandle;
+
+/* FlexIO MCU LCD DMA handle. */
+#if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
+static edma_handle_t rxDmaHandle;
+static edma_handle_t txDmaHandle;
+#else
+static dma_handle_t rxDmaHandle;
+static dma_handle_t txDmaHandle;
+#endif
+
+static volatile bool s_dbiMemoryDone = false;
 
 /*******************************************************************************
  * Code
@@ -130,75 +163,81 @@ uint16_t picWithArrow[DEMO_PIC_NUM][DEMO_ARROW_SIZE * DEMO_ARROW_SIZE];
 void BOARD_ConfigQspiFlash(void)
 {
     const uint32_t lut[FSL_FEATURE_QSPI_LUT_DEPTH] = {
-            /* Seq0 :Quad Read */
-            /* CMD:        0xEB - Quad Read, Single pad */
-            /* ADDR:       0x18 - 24bit address, Quad pads */
-            /* DUMMY:      0x06 - 6 clock cyles, Quad pads */
-            /* READ:       0x80 - Read 128 bytes, Quad pads */
-            /* JUMP_ON_CS: 0 */
-            [0] = 0x0A1804EB, [1] = 0x1E800E0A, [2] = 0x2400,
+        /* Seq0 :Quad Read */
+        /* CMD:        0xEB - Quad Read, Single pad */
+        /* ADDR:       0x18 - 24bit address, Quad pads */
+        /* DUMMY:      0x06 - 6 clock cyles, Quad pads */
+        /* READ:       0x80 - Read 128 bytes, Quad pads */
+        /* JUMP_ON_CS: 0 */
+        [0] = 0x0A1804EB,
+        [1] = 0x1E800E0A,
+        [2] = 0x2400,
 
-            /* Seq1: Write Enable */
-            /* CMD:      0x06 - Write Enable, Single pad */
-            [4] = 0x406,
+        /* Seq1: Write Enable */
+        /* CMD:      0x06 - Write Enable, Single pad */
+        [4] = 0x406,
 
-            /* Seq2: Erase All */
-            /* CMD:    0x60 - Erase All chip, Single pad */
-            [8] = 0x460,
+        /* Seq2: Erase All */
+        /* CMD:    0x60 - Erase All chip, Single pad */
+        [8] = 0x460,
 
-            /* Seq3: Read Status */
-            /* CMD:    0x05 - Read Status, single pad */
-            /* READ:   0x01 - Read 1 byte */
-            [12] = 0x1c010405,
+        /* Seq3: Read Status */
+        /* CMD:    0x05 - Read Status, single pad */
+        /* READ:   0x01 - Read 1 byte */
+        [12] = 0x1c010405,
 
-            /* Seq4: Page Program */
-            /* CMD:    0x02 - Page Program, Single pad */
-            /* ADDR:   0x18 - 24bit address, Single pad */
-            /* WRITE:  0x80 - Write 128 bytes at one pass, Single pad */
-            [16] = 0x08180402, [17] = 0x2080,
+        /* Seq4: Page Program */
+        /* CMD:    0x02 - Page Program, Single pad */
+        /* ADDR:   0x18 - 24bit address, Single pad */
+        /* WRITE:  0x80 - Write 128 bytes at one pass, Single pad */
+        [16] = 0x08180402,
+        [17] = 0x2080,
 
-            /* Seq5: Write Register */
-            /* CMD:    0x01 - Write Status Register, single pad */
-            /* WRITE:  0x01 - Write 1 byte of data, single pad */
-            [20] = 0x20010401,
+        /* Seq5: Write Register */
+        /* CMD:    0x01 - Write Status Register, single pad */
+        /* WRITE:  0x01 - Write 1 byte of data, single pad */
+        [20] = 0x20010401,
 
-            /* Seq6: Read Config Register */
-            /* CMD:  0x05 - Read Config register, single pad */
-            /* READ: 0x01 - Read 1 byte */
-            [24] = 0x1c010405,
+        /* Seq6: Read Config Register */
+        /* CMD:  0x05 - Read Config register, single pad */
+        /* READ: 0x01 - Read 1 byte */
+        [24] = 0x1c010405,
 
-            /* Seq7: Erase Sector */
-            /* CMD:  0x20 - Sector Erase, single pad */
-            /* ADDR: 0x18 - 24 bit address, single pad */
-            [28] = 0x08180420,
+        /* Seq7: Erase Sector */
+        /* CMD:  0x20 - Sector Erase, single pad */
+        /* ADDR: 0x18 - 24 bit address, single pad */
+        [28] = 0x08180420,
 
-            /* Seq8: Dummy */
-            /* CMD:    0xFF - Dummy command, used to force SPI flash to exit continuous read mode */
-            [32] = 0x4FF,
+        /* Seq8: Dummy */
+        /* CMD:    0xFF - Dummy command, used to force SPI flash to exit continuous read mode */
+        [32] = 0x4FF,
 
-            /* Seq9: Fast Single read */
-            /* CMD:        0x0B - Fast Read, Single Pad */
-            /* ADDR:       0x18 - 24bit address, Single Pad */
-            /* DUMMY:      0x08 - 8 clock cyles, Single Pad */
-            /* READ:       0x80 - Read 128 bytes, Single Pad */
-            /* JUMP_ON_CS: 0 */
-            [36] = 0x0818040B, [37] = 0x1C800C08, [38] = 0x2400,
+        /* Seq9: Fast Single read */
+        /* CMD:        0x0B - Fast Read, Single Pad */
+        /* ADDR:       0x18 - 24bit address, Single Pad */
+        /* DUMMY:      0x08 - 8 clock cyles, Single Pad */
+        /* READ:       0x80 - Read 128 bytes, Single Pad */
+        /* JUMP_ON_CS: 0 */
+        [36] = 0x0818040B,
+        [37] = 0x1C800C08,
+        [38] = 0x2400,
 
-            /* Seq10: Fast Dual read */
-            /* CMD:        0x3B - Dual Read, Single Pad */
-            /* ADDR:       0x18 - 24bit address, Single Pad */
-            /* DUMMY:      0x08 - 8 clock cyles, Single Pad */
-            /* READ:       0x80 - Read 128 bytes, Dual pads */
-            /* JUMP_ON_CS: 0 */
-            [40] = 0x0818043B, [41] = 0x1D800C08, [42] = 0x2400,
+        /* Seq10: Fast Dual read */
+        /* CMD:        0x3B - Dual Read, Single Pad */
+        /* ADDR:       0x18 - 24bit address, Single Pad */
+        /* DUMMY:      0x08 - 8 clock cyles, Single Pad */
+        /* READ:       0x80 - Read 128 bytes, Dual pads */
+        /* JUMP_ON_CS: 0 */
+        [40] = 0x0818043B,
+        [41] = 0x1D800C08,
+        [42] = 0x2400,
 
-            /* Match MISRA rule */
-            [63] = 0};
+        /* Match MISRA rule */
+        [63] = 0};
 
     qspi_config_t config = {0};
 
-    qspi_flash_config_t single_config =
-    {
+    qspi_flash_config_t single_config = {
         .flashA1Size = FLASH_SIZE, /* 4MB */
         .flashA2Size = 0,
 #if defined(FSL_FEATURE_QSPI_SUPPORT_PARALLEL_MODE) && (FSL_FEATURE_QSPI_SUPPORT_PARALLEL_MODE)
@@ -208,11 +247,11 @@ void BOARD_ConfigQspiFlash(void)
 #if !defined(FSL_FEATURE_QSPI_HAS_NO_TDH) || (!FSL_FEATURE_QSPI_HAS_NO_TDH)
         .dataHoldTime = 0,
 #endif
-        .CSHoldTime = 0,
-        .CSSetupTime = 0,
-        .cloumnspace = 0,
-        .dataLearnValue = 0,
-        .endian = kQSPI_64LittleEndian,
+        .CSHoldTime        = 0,
+        .CSSetupTime       = 0,
+        .cloumnspace       = 0,
+        .dataLearnValue    = 0,
+        .endian            = kQSPI_64LittleEndian,
         .enableWordAddress = false
     };
 
@@ -241,6 +280,16 @@ void BOARD_SetRSPin(bool set)
     GPIO_PinWrite(DEMO_SSD1963_RS_GPIO, DEMO_SSD1963_RS_PIN, (uint8_t)set);
 }
 
+void BOARD_SetResetPin(bool set)
+{
+    GPIO_PinWrite(DEMO_SSD1963_RST_GPIO, DEMO_SSD1963_RST_PIN, (uint8_t)set);
+}
+
+static void DEMO_DbiMemoryDoneCallback(status_t status, void *userData)
+{
+    s_dbiMemoryDone = true;
+}
+
 void DEMO_Delay(uint32_t loops)
 {
     while (loops--)
@@ -251,10 +300,10 @@ void DEMO_Delay(uint32_t loops)
 
 void DEMO_TOUCH_INT_IRQHandler(void)
 {
-    if ((1U << DEMO_TOUCH_INT_PIN) & PORT_GetPinsInterruptFlags(DEMO_TOUCH_INT_PORT))
+    if (DEMO_TOUCH_INTERRUPT_PENDING())
     {
         touchFlag = true;
-        PORT_ClearPinsInterruptFlags(DEMO_TOUCH_INT_PORT, (1U << DEMO_TOUCH_INT_PIN));
+        DEMO_CLEAR_TOUCH_INTERRUPT_PENDING();
     }
     /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
       exception return operation might vector to incorrect interrupt */
@@ -265,6 +314,7 @@ void DEMO_TOUCH_INT_IRQHandler(void)
 
 void DEMO_InitDma(void)
 {
+#if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
     edma_config_t edmaConfig;
 
     /*
@@ -277,6 +327,25 @@ void DEMO_InitDma(void)
     EDMA_Init(DEMO_DMA, &edmaConfig);
 
     DMAMUX_Init(DEMO_DMAMUX);
+
+    DMAMUX_SetSource(DEMO_DMAMUX, DEMO_FLEXIO_RX_DMA_CHANNEL, DEMO_FLEXIO_RX_DMA_REQUEST);
+    DMAMUX_SetSource(DEMO_DMAMUX, DEMO_FLEXIO_TX_DMA_CHANNEL, DEMO_FLEXIO_TX_DMA_REQUEST);
+    DMAMUX_EnableChannel(DEMO_DMAMUX, DEMO_FLEXIO_RX_DMA_CHANNEL);
+    DMAMUX_EnableChannel(DEMO_DMAMUX, DEMO_FLEXIO_TX_DMA_CHANNEL);
+
+    EDMA_CreateHandle(&rxDmaHandle, DEMO_DMA, DEMO_FLEXIO_RX_DMA_CHANNEL);
+    EDMA_CreateHandle(&txDmaHandle, DEMO_DMA, DEMO_FLEXIO_TX_DMA_CHANNEL);
+
+#else
+
+    DMA_Init(DEMO_DMA);
+
+    DMA_EnableChannel(DEMO_DMA, DEMO_FLEXIO_RX_DMA_CHANNEL);
+    DMA_EnableChannel(DEMO_DMA, DEMO_FLEXIO_TX_DMA_CHANNEL);
+
+    DMA_CreateHandle(&rxDmaHandle, DEMO_DMA, DEMO_FLEXIO_RX_DMA_CHANNEL);
+    DMA_CreateHandle(&txDmaHandle, DEMO_DMA, DEMO_FLEXIO_TX_DMA_CHANNEL);
+#endif
 }
 
 void DEMO_InitTouch(void)
@@ -303,31 +372,33 @@ void DEMO_InitTouch(void)
     NVIC_EnableIRQ(DEMO_TOUCH_INT_IRQn);
 
     /* Enable the touch panel I2C interrupt. */
-    PORT_SetPinInterruptConfig(DEMO_TOUCH_INT_PORT, DEMO_TOUCH_INT_PIN, kPORT_InterruptFallingEdge);
+    DEMO_CONFIG_TOUCH_INTERRUPT();
 }
 
 status_t DEMO_InitLcd(void)
 {
     status_t status;
 
-    /* FlexIO MCU LCD EDMA handle. */
-    static edma_handle_t rxEdmaHandle;
-    static edma_handle_t txEdmaHandle;
-
     flexio_mculcd_config_t flexioMcuLcdConfig;
 
-    const ssd1963_config_t ssd1963Config = {.pclkFreq_Hz = DEMO_SSD1963_PCLK_FREQ,
-                                            .pixelInterface = kSSD1963_PixelInterface16Bit565,
-                                            .panelDataWidth = kSSD1963_PanelData24Bit,
-                                            .polarityFlags = DEMO_SSD1963_POLARITY_FLAG,
-                                            .panelWidth = DEMO_PIC_WIDTH,
-                                            .panelHeight = DEMO_PIC_HEIGHT,
-                                            .hsw = DEMO_SSD1963_HSW,
-                                            .hfp = DEMO_SSD1963_HFP,
-                                            .hbp = DEMO_SSD1963_HBP,
-                                            .vsw = DEMO_SSD1963_VSW,
-                                            .vfp = DEMO_SSD1963_VFP,
-                                            .vbp = DEMO_SSD1963_VBP};
+    const ssd1963_config_t ssd1963Config = {
+        .pclkFreq_Hz = DEMO_SSD1963_PCLK_FREQ,
+#if SSD1963_DATA_WITDH == 16
+        .pixelInterface = kSSD1963_PixelInterface16Bit565,
+#else
+        .pixelInterface = kSSD1963_PixelInterface8BitBGR888,
+#endif
+        .panelDataWidth = kSSD1963_PanelData24Bit,
+        .polarityFlags  = DEMO_SSD1963_POLARITY_FLAG,
+        .panelWidth     = DEMO_PIC_WIDTH,
+        .panelHeight    = DEMO_PIC_HEIGHT,
+        .hsw            = DEMO_SSD1963_HSW,
+        .hfp            = DEMO_SSD1963_HFP,
+        .hbp            = DEMO_SSD1963_HBP,
+        .vsw            = DEMO_SSD1963_VSW,
+        .vfp            = DEMO_SSD1963_VFP,
+        .vbp            = DEMO_SSD1963_VBP
+    };
 
     /* Initialize the flexio MCU LCD. */
     /*
@@ -347,22 +418,27 @@ status_t DEMO_InitLcd(void)
         return status;
     }
 
-    DMAMUX_SetSource(DEMO_DMAMUX, DEMO_FLEXIO_RX_DMA_CHANNEL, DEMO_FLEXIO_RX_DMA_REQUEST);
-    DMAMUX_SetSource(DEMO_DMAMUX, DEMO_FLEXIO_TX_DMA_CHANNEL, DEMO_FLEXIO_TX_DMA_REQUEST);
-    DMAMUX_EnableChannel(DEMO_DMAMUX, DEMO_FLEXIO_RX_DMA_CHANNEL);
-    DMAMUX_EnableChannel(DEMO_DMAMUX, DEMO_FLEXIO_TX_DMA_CHANNEL);
+    /* Create the DBI XFER handle. */
+    status = DBI_FLEXIO_CreateXferHandle(&g_dbiFlexioXferHandle, &flexioLcdDev, &txDmaHandle, &rxDmaHandle);
 
-    EDMA_CreateHandle(&rxEdmaHandle, DEMO_DMA, DEMO_FLEXIO_RX_DMA_CHANNEL);
-    EDMA_CreateHandle(&txEdmaHandle, DEMO_DMA, DEMO_FLEXIO_TX_DMA_CHANNEL);
+    if (kStatus_Success != status)
+    {
+        return status;
+    }
 
     /* Reset the SSD1963 LCD controller. */
-    GPIO_PinWrite(DEMO_SSD1963_RST_GPIO, DEMO_SSD1963_RST_PIN, 0);
+    BOARD_SetResetPin(false);
     DEMO_Delay(2); /* Delay 10ns. */
-    GPIO_PinWrite(DEMO_SSD1963_RST_GPIO, DEMO_SSD1963_RST_PIN, 1);
+    BOARD_SetResetPin(true);
     DEMO_Delay(250000); /* Delay 5ms. */
 
     status =
-        SSD1963_Init(&lcdHandle, &ssd1963Config, &flexioLcdDev, &txEdmaHandle, &rxEdmaHandle, DEMO_SSD1963_XTAL_FREQ);
+        SSD1963_Init(&lcdHandle, &ssd1963Config, &g_dbiFlexioXferOps, &g_dbiFlexioXferHandle, DEMO_SSD1963_XTAL_FREQ);
+
+    if (kStatus_Success == status)
+    {
+        SSD1963_SetMemoryDoneCallback(&lcdHandle, DEMO_DbiMemoryDoneCallback, NULL);
+    }
 
     return status;
 }
@@ -370,25 +446,62 @@ status_t DEMO_InitLcd(void)
 /*
  * Fill arrow to the picture,
  */
-void DEMO_FillArrow(uint16_t pic[])
+void DEMO_FillArrow(uint8_t pic[])
 {
     uint32_t i;
     uint32_t j;
 
+    /*
+     *                 |\
+     *                 | \
+     *                 |  \
+     *       ----------    \
+     *      |               \
+     *      |   1        2  /
+     *       ----------    /
+     *                 |  /
+     *                 | /
+     *                 |/
+     *
+     */
+
+    /* Draw part 1. */
     for (j = DEMO_ARROW_SIZE / 4; j <= DEMO_ARROW_SIZE * 3 / 4; j++)
     {
         for (i = 0; i < DEMO_ARROW_SIZE / 2; i++)
         {
-            pic[j * DEMO_ARROW_SIZE + i] = DEMO_ARROW_COLOR;
+            pic[(j * DEMO_ARROW_SIZE + i) * DEMO_BYTE_PER_PIXEL + 0] = (DEMO_ARROW_COLOR >> 0U) & 0xFF;
+#if (DEMO_BYTE_PER_PIXEL > 1)
+            pic[(j * DEMO_ARROW_SIZE + i) * DEMO_BYTE_PER_PIXEL + 1] = (DEMO_ARROW_COLOR >> 8U) & 0xFF;
+#elif (DEMO_BYTE_PER_PIXEL > 2)
+            pic[(j * DEMO_ARROW_SIZE + i) * DEMO_BYTE_PER_PIXEL + 2] = (DEMO_ARROW_COLOR >> 16U) & 0xFF;
+#elif (DEMO_BYTE_PER_PIXEL > 3)
+            pic[(j * DEMO_ARROW_SIZE + i) * DEMO_BYTE_PER_PIXEL + 3] = (DEMO_ARROW_COLOR >> 24U) & 0xFF;
+#endif
         }
     }
 
+    /* Draw part 2. */
     for (j = 0; j <= DEMO_ARROW_SIZE / 2; j++)
     {
         for (i = DEMO_ARROW_SIZE / 2; i < DEMO_ARROW_SIZE / 2 + j; i++)
         {
-            pic[j * DEMO_ARROW_SIZE + i] = DEMO_ARROW_COLOR;
-            pic[(DEMO_ARROW_SIZE - j - 1) * DEMO_ARROW_SIZE + i] = DEMO_ARROW_COLOR;
+            pic[(j * DEMO_ARROW_SIZE + i) * DEMO_BYTE_PER_PIXEL + 0] = (DEMO_ARROW_COLOR >> 0U) & 0xFF;
+            pic[((DEMO_ARROW_SIZE - j - 1) * DEMO_ARROW_SIZE + i) * DEMO_BYTE_PER_PIXEL + 0] =
+                (DEMO_ARROW_COLOR >> 0U) & 0xFF;
+#if (DEMO_BYTE_PER_PIXEL > 1)
+            pic[(j * DEMO_ARROW_SIZE + i) * DEMO_BYTE_PER_PIXEL + 1] = (DEMO_ARROW_COLOR >> 8U) & 0xFF;
+            pic[((DEMO_ARROW_SIZE - j - 1) * DEMO_ARROW_SIZE + i) * DEMO_BYTE_PER_PIXEL + 1] =
+                (DEMO_ARROW_COLOR >> 8U) & 0xFF;
+#elif (DEMO_BYTE_PER_PIXEL > 2)
+            pic[(j * DEMO_ARROW_SIZE + i) * DEMO_BYTE_PER_PIXEL + 2] = (DEMO_ARROW_COLOR >> 16U) & 0xFF;
+            pic[((DEMO_ARROW_SIZE - j - 1) * DEMO_ARROW_SIZE + i) * DEMO_BYTE_PER_PIXEL + 2] =
+                (DEMO_ARROW_COLOR >> 16U) & 0xFF;
+#elif (DEMO_BYTE_PER_PIXEL > 3)
+            pic[(j * DEMO_ARROW_SIZE + i) * DEMO_BYTE_PER_PIXEL + 3] = (DEMO_ARROW_COLOR >> 24U) & 0xFF;
+            pic[((DEMO_ARROW_SIZE - j - 1) * DEMO_ARROW_SIZE + i) * DEMO_BYTE_PER_PIXEL + 3] =
+                (DEMO_ARROW_COLOR >> 24U) & 0xFF;
+#endif
         }
     }
 }
@@ -409,9 +522,10 @@ void DEMO_InitArrow(void)
         /* Copy the area. */
         for (j = 0; j < DEMO_ARROW_SIZE; j++)
         {
-            memcpy(&picWithArrow[i][j * DEMO_ARROW_SIZE],
-                   &demoPictures[i][(DEMO_ARROW_START_Y + j) * DEMO_PIC_WIDTH + DEMO_ARROW_START_X],
-                   DEMO_ARROW_SIZE * sizeof(uint16_t));
+            memcpy(&picWithArrow[i][j * DEMO_ARROW_SIZE * DEMO_BYTE_PER_PIXEL],
+                   &demoPictures[i][((DEMO_ARROW_START_Y + j) * DEMO_PIC_WIDTH + DEMO_ARROW_START_X) *
+                                    DEMO_BYTE_PER_PIXEL],
+                   DEMO_ARROW_SIZE * DEMO_BYTE_PER_PIXEL);
         }
 
         DEMO_FillArrow(picWithArrow[i]);
@@ -428,7 +542,8 @@ int main(void)
 
     /* Init board hardware. */
     const gpio_pin_config_t resetPinConfig = {
-        .pinDirection = kGPIO_DigitalOutput, .outputLogic = 1,
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic  = 1,
     };
 
     BOARD_InitPins();
@@ -462,12 +577,22 @@ int main(void)
 
     /* Send first picture. */
     SSD1963_SelectArea(&lcdHandle, 0, 0, DEMO_PIC_WIDTH - 1, DEMO_PIC_HEIGHT - 1);
-    SSD1963_WritePixels(&lcdHandle, demoPictures[picIdx], DEMO_PIC_HEIGHT * DEMO_PIC_WIDTH);
+
+    s_dbiMemoryDone = false;
+    SSD1963_WriteMemory(&lcdHandle, demoPictures[picIdx], DEMO_PIC_HEIGHT * DEMO_PIC_WIDTH * DEMO_BYTE_PER_PIXEL);
+    while (s_dbiMemoryDone == false)
+    {
+    }
 
     /* Send the arrow. */
     SSD1963_SelectArea(&lcdHandle, DEMO_ARROW_START_X, DEMO_ARROW_START_Y, DEMO_ARROW_START_X + DEMO_ARROW_SIZE - 1,
                        DEMO_ARROW_START_Y + DEMO_ARROW_SIZE - 1);
-    SSD1963_WritePixels(&lcdHandle, picWithArrow[picIdx], DEMO_ARROW_SIZE * DEMO_ARROW_SIZE);
+
+    s_dbiMemoryDone = false;
+    SSD1963_WriteMemory(&lcdHandle, picWithArrow[picIdx], DEMO_ARROW_SIZE * DEMO_ARROW_SIZE * DEMO_BYTE_PER_PIXEL);
+    while (s_dbiMemoryDone == false)
+    {
+    }
 
     SSD1963_StartDisplay(&lcdHandle);
 
@@ -528,11 +653,21 @@ int main(void)
 
         /* Send picture. */
         SSD1963_SelectArea(&lcdHandle, 0, 0, DEMO_PIC_WIDTH - 1, DEMO_PIC_HEIGHT - 1);
-        SSD1963_WritePixels(&lcdHandle, demoPictures[picIdx], DEMO_PIC_HEIGHT * DEMO_PIC_WIDTH);
+
+        s_dbiMemoryDone = false;
+        SSD1963_WriteMemory(&lcdHandle, demoPictures[picIdx], DEMO_PIC_HEIGHT * DEMO_PIC_WIDTH * DEMO_BYTE_PER_PIXEL);
+        while (s_dbiMemoryDone == false)
+        {
+        }
 
         /* Send arrow. */
         SSD1963_SelectArea(&lcdHandle, DEMO_ARROW_START_X, DEMO_ARROW_START_Y, DEMO_ARROW_START_X + DEMO_ARROW_SIZE - 1,
                            DEMO_ARROW_START_Y + DEMO_ARROW_SIZE - 1);
-        SSD1963_WritePixels(&lcdHandle, picWithArrow[picIdx], DEMO_ARROW_SIZE * DEMO_ARROW_SIZE);
+
+        s_dbiMemoryDone = false;
+        SSD1963_WriteMemory(&lcdHandle, picWithArrow[picIdx], DEMO_ARROW_SIZE * DEMO_ARROW_SIZE * DEMO_BYTE_PER_PIXEL);
+        while (s_dbiMemoryDone == false)
+        {
+        }
     }
 }

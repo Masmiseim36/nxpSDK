@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -171,11 +171,11 @@ int main(void)
 
         /* Swap bytes for 2 byte fields for Big Endian to Little Endian conversion. */
         pedometerData.statusRegister = (pedometerData.statusRegister >> 8) | (pedometerData.statusRegister << 8);
-        pedometerData.stepCount = (pedometerData.stepCount >> 8) | (pedometerData.stepCount << 8);
-        pedometerData.distance = (pedometerData.distance >> 8) | (pedometerData.distance << 8);
-        pedometerData.speed = (pedometerData.speed >> 8) | (pedometerData.speed << 8);
-        pedometerData.calories = (pedometerData.calories >> 8) | (pedometerData.calories << 8);
-        pedometerData.sleepCount = (pedometerData.sleepCount >> 8) | (pedometerData.sleepCount << 8);
+        pedometerData.stepCount      = (pedometerData.stepCount >> 8) | (pedometerData.stepCount << 8);
+        pedometerData.distance       = (pedometerData.distance >> 8) | (pedometerData.distance << 8);
+        pedometerData.speed          = (pedometerData.speed >> 8) | (pedometerData.speed << 8);
+        pedometerData.calories       = (pedometerData.calories >> 8) | (pedometerData.calories << 8);
+        pedometerData.sleepCount     = (pedometerData.sleepCount >> 8) | (pedometerData.sleepCount << 8);
 
         PRINTF("\r\n Steps = %d  Distance = %dm  Speed = %dm/h  Calories = %d \r\n", pedometerData.stepCount,
                pedometerData.distance, pedometerData.speed, pedometerData.calories);

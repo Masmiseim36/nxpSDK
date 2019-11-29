@@ -96,14 +96,14 @@ int main(void)
     dspi_slave_config_t slaveConfig;
 
     /* Slave config */
-    slaveConfig.whichCtar = kDSPI_Ctar0;
-    slaveConfig.ctarConfig.bitsPerFrame = 8U;
-    slaveConfig.ctarConfig.cpol = kDSPI_ClockPolarityActiveHigh;
-    slaveConfig.ctarConfig.cpha = kDSPI_ClockPhaseFirstEdge;
-    slaveConfig.enableContinuousSCK = false;
-    slaveConfig.enableRxFifoOverWrite = false;
+    slaveConfig.whichCtar                  = kDSPI_Ctar0;
+    slaveConfig.ctarConfig.bitsPerFrame    = 8U;
+    slaveConfig.ctarConfig.cpol            = kDSPI_ClockPolarityActiveHigh;
+    slaveConfig.ctarConfig.cpha            = kDSPI_ClockPhaseFirstEdge;
+    slaveConfig.enableContinuousSCK        = false;
+    slaveConfig.enableRxFifoOverWrite      = false;
     slaveConfig.enableModifiedTimingFormat = false;
-    slaveConfig.samplePoint = kDSPI_SckToSin0Clock;
+    slaveConfig.samplePoint                = kDSPI_SckToSin0Clock;
 
     DSPI_SlaveInit(EXAMPLE_DSPI_SLAVE_BASEADDR, &slaveConfig);
 
@@ -122,8 +122,8 @@ int main(void)
 
         /* Set up slave to receive data */
         isTransferCompleted = false;
-        slaveTxCount = 0;
-        slaveRxCount = 0;
+        slaveTxCount        = 0;
+        slaveRxCount        = 0;
 
         DSPI_StopTransfer(EXAMPLE_DSPI_SLAVE_BASEADDR);
         DSPI_FlushFifo(EXAMPLE_DSPI_SLAVE_BASEADDR, true, true);
@@ -166,8 +166,8 @@ int main(void)
 
         /* Set up slave to receive data */
         isTransferCompleted = false;
-        slaveTxCount = 0;
-        slaveRxCount = 0;
+        slaveTxCount        = 0;
+        slaveRxCount        = 0;
 
         DSPI_StopTransfer(EXAMPLE_DSPI_SLAVE_BASEADDR);
         DSPI_FlushFifo(EXAMPLE_DSPI_SLAVE_BASEADDR, true, true);

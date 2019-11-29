@@ -71,9 +71,6 @@ typedef enum _usb_status
     kStatus_USB_MSDStatusFail,  /*!< For MSD, the CSW status means fail */
     kStatus_USB_EHCIAttached,
     kStatus_USB_EHCIDetached,
-    kStatus_USB_DataOverRun,    /*!< The amount of data returned by the endpoint exceeded
-                                     either the size of the maximum data packet allowed 
-                                     from the endpoint or the remaining buffer size. */
 } usb_status_t;
 
 /*! @brief USB host handle type define */

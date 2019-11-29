@@ -855,7 +855,10 @@ static int32_t _USB_HostKhciTransactionDone(usb_khci_host_state_struct_t *usbHos
         usbHostPointer->sXferSts.isDmaAlign = 1U;
         if (transferResult > 0)
         {
-            memcpy(usbHostPointer->sXferSts.rxBufOrig, usbHostPointer->sXferSts.rxBuf, transferResult);
+            for (int j = 0; j < transferResult; j++)
+            {
+                usbHostPointer->sXferSts.rxBufOrig[j] = usbHostPointer->sXferSts.rxBuf[j];
+            }
         }
     }
     return transferResult;
@@ -2074,7 +2077,6 @@ usb_status_t USB_HostKciIoctl(usb_host_controller_handle controllerHandle, uint3
             break;
 
         default:
-            status = kStatus_USB_NotSupported;
             break;
     }
     return status;

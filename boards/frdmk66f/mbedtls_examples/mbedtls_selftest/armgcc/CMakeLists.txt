@@ -100,6 +100,8 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
 
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fomit-frame-pointer")
+
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fno-common")
@@ -128,8 +130,6 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -MMD")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -MP")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fomit-frame-pointer")
-
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MK66FN2M0VMD18")
@@ -143,6 +143,8 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFRDM_K66F")
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFREEDOM")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fomit-frame-pointer")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall")
 
@@ -171,8 +173,6 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mfpu=fpv4-sp-d16")
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -MMD")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -MP")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fomit-frame-pointer")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG")
 
@@ -397,8 +397,8 @@ add_executable(mbedtls_selftest.elf
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_rnga.c"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_rnga.h"
 "${ProjDirPath}/../../../../../middleware/mmcau/cau_api.h"
-"${ProjDirPath}/../../../../../middleware/mmcau/fsl_mmcau.h"
 "${ProjDirPath}/../../../../../middleware/mmcau/fsl_mmcau.c"
+"${ProjDirPath}/../../../../../middleware/mmcau/fsl_mmcau.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_port.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/aes.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/aesni.h"
@@ -438,10 +438,10 @@ add_executable(mbedtls_selftest.elf
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/hkdf.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/hmac_drbg.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/md.h"
-"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/md_internal.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/md2.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/md4.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/md5.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/md_internal.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/memory_buffer_alloc.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/net.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/net_sockets.h"
@@ -451,9 +451,9 @@ add_executable(mbedtls_selftest.elf
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/pem.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/pk.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/pk_internal.h"
-"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/pkcs5.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/pkcs11.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/pkcs12.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/pkcs5.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/platform.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/platform_time.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/platform_util.h"
@@ -490,10 +490,10 @@ add_executable(mbedtls_selftest.elf
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/camellia.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/ccm.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/certs.c"
-"${ProjDirPath}/../../../../../middleware/mbedtls/library/cipher.c"
-"${ProjDirPath}/../../../../../middleware/mbedtls/library/cipher_wrap.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/chacha20.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/chachapoly.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/cipher.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/cipher_wrap.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/cmac.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/ctr_drbg.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/debug.c"
@@ -512,10 +512,10 @@ add_executable(mbedtls_selftest.elf
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/hkdf.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/hmac_drbg.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/md.c"
-"${ProjDirPath}/../../../../../middleware/mbedtls/library/md_wrap.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/md2.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/md4.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/md5.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/md_wrap.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/memory_buffer_alloc.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/net_sockets.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/nist_kw.c"
@@ -524,8 +524,9 @@ add_executable(mbedtls_selftest.elf
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/pem.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/pk.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/pk_wrap.c"
-"${ProjDirPath}/../../../../../middleware/mbedtls/library/pkcs5.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/pkcs11.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/pkcs12.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/pkcs5.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/pkparse.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/pkwrite.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/platform.c"
@@ -556,73 +557,77 @@ add_executable(mbedtls_selftest.elf
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/x509write_crt.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/x509write_csr.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/xtea.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/aes_alt.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/aes_alt.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/des_alt.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/des_alt.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h"
-"${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/des_alt.h"
-"${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/des_alt.c"
-"${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/aes_alt.h"
-"${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/aes_alt.c"
-"${ProjDirPath}/../../../../../middleware/mbedtls/library/pkcs11.c"
-"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_clock.c"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_clock.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_flash.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_adapter.h"
-"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h"
-"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h"
-"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.c"
-"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.h"
-"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.c"
-"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.c"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.c"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.c"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.c"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.h"
-"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_flash.h"
-"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_common.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../devices/MK66F18/fsl_device_registers.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/MK66F18.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/MK66F18_features.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/fsl_device_registers.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/system_MK66F18.c"
 "${ProjDirPath}/../../../../../devices/MK66F18/system_MK66F18.h"
-"${ProjDirPath}/../../../../../devices/MK66F18/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../devices/MK66F18/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/utilities/debug_console/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../devices/MK66F18/utilities/debug_console/fsl_debug_console.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/utilities/debug_console/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../devices/MK66F18/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../components/uart/uart.h"
 "${ProjDirPath}/../../../../../components/uart/uart_adapter.c"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"
 "${ProjDirPath}/../../../../../components/serial_manager/serial_manager.c"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_internal.h"
 "${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.c"
-"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_uart.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_uart.c"
-"${ProjDirPath}/../../../../../components/lists/generic_list.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_uart.h"
 "${ProjDirPath}/../../../../../components/lists/generic_list.c"
+"${ProjDirPath}/../../../../../components/lists/generic_list.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/gcc/startup_MK66F18.S"
-"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_lpuart.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_lpuart.c"
-"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_smc.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_lpuart.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_smc.c"
-"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_gpio.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_smc.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_gpio.c"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_gpio.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/utilities/fsl_assert.c"
 "${ProjDirPath}/../../../../../CMSIS/Include/core_cm4.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_compiler.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_compiler.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
 )
 

@@ -9,6 +9,15 @@
 #ifndef __RTE_DEVICE_H
 #define __RTE_DEVICE_H
 
+/* ENET configuration. */
+#define RTE_ENET              1
+#define RTE_ENET_PHY_ADDRESS   0
+
+
+#define RTE_ENET_MII          0
+//   <e> RMII (Reduced Media Independent Interface)
+#define   RTE_ENET_RMII                 1
+
 /* UART select, UART0-UART5 */
 /* User needs to provide the implementation for XXX_GetFreq/XXX_InitPins/XXX_DeinitPins 
 in the application for enabling according instance. */ 

@@ -130,8 +130,8 @@ static int32_t DSPI_CommonControl(uint32_t control,
      defined(RTE_SPI0_BETWEEN_TRANSFER_DELAY))
     if (0U == resource->instance)
     {
-        masterConfig.ctarConfig.pcsToSckDelayInNanoSec = RTE_SPI0_PCS_TO_SCK_DELAY;
-        masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec = RTE_SPI0_SCK_TO_PSC_DELAY;
+        masterConfig.ctarConfig.pcsToSckDelayInNanoSec        = RTE_SPI0_PCS_TO_SCK_DELAY;
+        masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec    = RTE_SPI0_SCK_TO_PSC_DELAY;
         masterConfig.ctarConfig.betweenTransferDelayInNanoSec = RTE_SPI0_BETWEEN_TRANSFER_DELAY;
     }
 #endif /*RTE DSPI0 trnafer delay time configure */
@@ -140,8 +140,8 @@ static int32_t DSPI_CommonControl(uint32_t control,
      defined(RTE_SPI1_BETWEEN_TRANSFER_DELAY))
     if (1U == resource->instance)
     {
-        masterConfig.ctarConfig.pcsToSckDelayInNanoSec = RTE_SPI1_PCS_TO_SCK_DELAY;
-        masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec = RTE_SPI1_SCK_TO_PSC_DELAY;
+        masterConfig.ctarConfig.pcsToSckDelayInNanoSec        = RTE_SPI1_PCS_TO_SCK_DELAY;
+        masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec    = RTE_SPI1_SCK_TO_PSC_DELAY;
         masterConfig.ctarConfig.betweenTransferDelayInNanoSec = RTE_SPI1_BETWEEN_TRANSFER_DELAY;
     }
 #endif /*RTE DSPI1 trnafer delay time configure */
@@ -150,8 +150,8 @@ static int32_t DSPI_CommonControl(uint32_t control,
      defined(RTE_SPI2_BETWEEN_TRANSFER_DELAY))
     if (2U == resource->instance)
     {
-        masterConfig.ctarConfig.pcsToSckDelayInNanoSec = RTE_SPI2_PCS_TO_SCK_DELAY;
-        masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec = RTE_SPI2_SCK_TO_PSC_DELAY;
+        masterConfig.ctarConfig.pcsToSckDelayInNanoSec        = RTE_SPI2_PCS_TO_SCK_DELAY;
+        masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec    = RTE_SPI2_SCK_TO_PSC_DELAY;
         masterConfig.ctarConfig.betweenTransferDelayInNanoSec = RTE_SPI2_BETWEEN_TRANSFER_DELAY;
     }
 #endif /*RTE DSPI2 trnafer delay time configure */
@@ -423,8 +423,8 @@ static int32_t DSPI_EdmaSend(const void *data, uint32_t num, cmsis_dspi_edma_dri
     status_t status;
     dspi_transfer_t xfer = {0};
 
-    xfer.rxData = NULL;
-    xfer.txData = (uint8_t *)data;
+    xfer.rxData   = NULL;
+    xfer.txData   = (uint8_t *)data;
     xfer.dataSize = num;
 
     if (DSPI_IsMaster(dspi->resource->base))
@@ -488,8 +488,8 @@ static int32_t DSPI_EdmaReceive(void *data, uint32_t num, cmsis_dspi_edma_driver
     status_t status;
     dspi_transfer_t xfer = {0};
 
-    xfer.txData = NULL;
-    xfer.rxData = (uint8_t *)data;
+    xfer.txData   = NULL;
+    xfer.rxData   = (uint8_t *)data;
     xfer.dataSize = num;
 
     if (DSPI_IsMaster(dspi->resource->base))
@@ -556,8 +556,8 @@ static int32_t DSPI_EdmaTransfer(const void *data_out,
     status_t status;
     dspi_transfer_t xfer = {0};
 
-    xfer.txData = (uint8_t *)data_out;
-    xfer.rxData = (uint8_t *)data_in;
+    xfer.txData   = (uint8_t *)data_out;
+    xfer.rxData   = (uint8_t *)data_in;
     xfer.dataSize = num;
 
     if (DSPI_IsMaster(dspi->resource->base))
@@ -786,7 +786,7 @@ ARM_SPI_STATUS DSPI_EdmaGetStatus(cmsis_dspi_edma_driver_state_t *dspi)
     stat.data_lost =
         ((ksdk_dspi_status & kDSPI_TxFifoUnderflowFlag) || (ksdk_dspi_status & kDSPI_RxFifoOverflowFlag)) ? (1U) : (0U);
     stat.mode_fault = 0U;
-    stat.reserved = 0U;
+    stat.reserved   = 0U;
 
     return stat;
 }
@@ -894,8 +894,8 @@ static int32_t DSPI_InterruptSend(const void *data, uint32_t num, cmsis_dspi_int
     status_t status;
     dspi_transfer_t xfer = {0};
 
-    xfer.rxData = NULL;
-    xfer.txData = (uint8_t *)data;
+    xfer.rxData   = NULL;
+    xfer.txData   = (uint8_t *)data;
     xfer.dataSize = num;
 
     if (DSPI_IsMaster(dspi->resource->base))
@@ -959,8 +959,8 @@ static int32_t DSPI_InterruptReceive(void *data, uint32_t num, cmsis_dspi_interr
     status_t status;
     dspi_transfer_t xfer = {0};
 
-    xfer.txData = NULL;
-    xfer.rxData = (uint8_t *)data;
+    xfer.txData   = NULL;
+    xfer.rxData   = (uint8_t *)data;
     xfer.dataSize = num;
 
     if (DSPI_IsMaster(dspi->resource->base))
@@ -1027,8 +1027,8 @@ static int32_t DSPI_InterruptTransfer(const void *data_out,
     status_t status;
     dspi_transfer_t xfer = {0};
 
-    xfer.txData = (uint8_t *)data_out;
-    xfer.rxData = (uint8_t *)data_in;
+    xfer.txData   = (uint8_t *)data_out;
+    xfer.rxData   = (uint8_t *)data_in;
     xfer.dataSize = num;
 
     if (DSPI_IsMaster(dspi->resource->base))
@@ -1201,7 +1201,7 @@ ARM_SPI_STATUS DSPI_InterruptGetStatus(cmsis_dspi_interrupt_driver_state_t *dspi
     stat.data_lost =
         ((ksdk_dspi_status & kDSPI_TxFifoUnderflowFlag) || (ksdk_dspi_status & kDSPI_RxFifoOverflowFlag)) ? (1U) : (0U);
     stat.mode_fault = 0U;
-    stat.reserved = 0U;
+    stat.reserved   = 0U;
 
     return stat;
 }
@@ -1308,7 +1308,8 @@ cmsis_dspi_interrupt_driver_state_t DSPI0_InterruptDriverState = {
 #else
 cmsis_dspi_interrupt_driver_state_t DSPI0_InterruptDriverState = {
 #endif
-    &DSPI0_Resource, &DSPI0_Handle,
+    &DSPI0_Resource,
+    &DSPI0_Handle,
 };
 
 static int32_t DSPI0_InterruptInitialize(ARM_SPI_SignalEvent_t cb_event)
@@ -1366,9 +1367,15 @@ ARM_DRIVER_SPI Driver_SPI0 = {DSPIx_GetVersion,     DSPIx_GetCapabilities,
                               DSPI0_EdmaReceive,    DSPI0_EdmaTransfer,     DSPI0_EdmaGetCount,     DSPI0_EdmaControl,
                               DSPI0_EdmaGetStatus
 #else
-                              DSPI0_InterruptInitialize, DSPI0_InterruptUninitialize, DSPI0_InterruptPowerControl,
-                              DSPI0_InterruptSend, DSPI0_InterruptReceive, DSPI0_InterruptTransfer,
-                              DSPI0_InterruptGetCount, DSPI0_InterruptControl, DSPI0_InterruptGetStatus
+                              DSPI0_InterruptInitialize,
+                              DSPI0_InterruptUninitialize,
+                              DSPI0_InterruptPowerControl,
+                              DSPI0_InterruptSend,
+                              DSPI0_InterruptReceive,
+                              DSPI0_InterruptTransfer,
+                              DSPI0_InterruptGetCount,
+                              DSPI0_InterruptControl,
+                              DSPI0_InterruptGetStatus
 #endif
 };
 
@@ -1475,7 +1482,8 @@ cmsis_dspi_interrupt_driver_state_t DSPI1_InterruptDriverState = {
 #else
 cmsis_dspi_interrupt_driver_state_t DSPI1_InterruptDriverState = {
 #endif
-    &DSPI1_Resource, &DSPI1_Handle,
+    &DSPI1_Resource,
+    &DSPI1_Handle,
 };
 
 static int32_t DSPI1_InterruptInitialize(ARM_SPI_SignalEvent_t cb_event)
@@ -1533,9 +1541,15 @@ ARM_DRIVER_SPI Driver_SPI1 = {DSPIx_GetVersion,     DSPIx_GetCapabilities,
                               DSPI1_EdmaReceive,    DSPI1_EdmaTransfer,     DSPI1_EdmaGetCount,     DSPI1_EdmaControl,
                               DSPI1_EdmaGetStatus
 #else
-                              DSPI1_InterruptInitialize, DSPI1_InterruptUninitialize, DSPI1_InterruptPowerControl,
-                              DSPI1_InterruptSend, DSPI1_InterruptReceive, DSPI1_InterruptTransfer,
-                              DSPI1_InterruptGetCount, DSPI1_InterruptControl, DSPI1_InterruptGetStatus
+                              DSPI1_InterruptInitialize,
+                              DSPI1_InterruptUninitialize,
+                              DSPI1_InterruptPowerControl,
+                              DSPI1_InterruptSend,
+                              DSPI1_InterruptReceive,
+                              DSPI1_InterruptTransfer,
+                              DSPI1_InterruptGetCount,
+                              DSPI1_InterruptControl,
+                              DSPI1_InterruptGetStatus
 #endif
 };
 
@@ -1642,7 +1656,8 @@ cmsis_dspi_interrupt_driver_state_t DSPI2_InterruptDriverState = {
 #else
 cmsis_dspi_interrupt_driver_state_t DSPI2_InterruptDriverState = {
 #endif
-    &DSPI2_Resource, &DSPI2_Handle,
+    &DSPI2_Resource,
+    &DSPI2_Handle,
 };
 
 static int32_t DSPI2_InterruptInitialize(ARM_SPI_SignalEvent_t cb_event)
@@ -1699,9 +1714,15 @@ ARM_DRIVER_SPI Driver_SPI2 = {DSPIx_GetVersion,     DSPIx_GetCapabilities,
                               DSPI2_EdmaReceive,    DSPI2_EdmaTransfer,     DSPI2_EdmaGetCount,     DSPI2_EdmaControl,
                               DSPI2_EdmaGetStatus
 #else
-                              DSPI2_InterruptInitialize, DSPI2_InterruptUninitialize, DSPI2_InterruptPowerControl,
-                              DSPI2_InterruptSend, DSPI2_InterruptReceive, DSPI2_InterruptTransfer,
-                              DSPI2_InterruptGetCount, DSPI2_InterruptControl, DSPI2_InterruptGetStatus
+                              DSPI2_InterruptInitialize,
+                              DSPI2_InterruptUninitialize,
+                              DSPI2_InterruptPowerControl,
+                              DSPI2_InterruptSend,
+                              DSPI2_InterruptReceive,
+                              DSPI2_InterruptTransfer,
+                              DSPI2_InterruptGetCount,
+                              DSPI2_InterruptControl,
+                              DSPI2_InterruptGetStatus
 #endif
 };
 

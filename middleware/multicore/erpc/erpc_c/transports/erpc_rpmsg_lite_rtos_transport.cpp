@@ -111,7 +111,7 @@ erpc_status_t RPMsgRTOSTransport::init(unsigned long src_addr, unsigned long dst
 erpc_status_t RPMsgRTOSTransport::receive(MessageBuffer *message)
 {
     char *buf = NULL;
-    unsigned int length = 0;
+    int length = 0;
     int ret_val = rpmsg_queue_recv_nocopy(s_rpmsg, m_rpmsg_queue, &m_dst_addr, &buf, &length, RL_BLOCK);
     assert(buf);
     message->set((uint8_t *)buf, length);

@@ -28,7 +28,7 @@
 #  define __STDC_LIMIT_MACROS 1
 #endif
 
-#include "cborpretty.h"
+#include "cbor.h"
 #include "compilersupport_p.h"
 #include "math_support_p.h"
 

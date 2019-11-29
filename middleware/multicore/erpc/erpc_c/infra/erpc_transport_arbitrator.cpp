@@ -115,11 +115,12 @@ erpc_status_t TransportArbitrator::send(MessageBuffer *message)
 TransportArbitrator::client_token_t TransportArbitrator::prepareClientReceive(RequestContext &request)
 {
     PendingClientInfo *info = addPendingClient();
-    if (NULL != info)
+    if (!info)
     {
-        info->m_request = &request;
-        info->m_isValid = true;
+        return kErpcStatus_Fail;
     }
+    info->m_request = &request;
+    info->m_isValid = true;
     return reinterpret_cast<client_token_t>(info);
 }
 

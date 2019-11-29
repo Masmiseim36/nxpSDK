@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -31,7 +31,7 @@
  ******************************************************************************/
 
 volatile uint32_t g_CmtDataBitLen = 0;
-volatile bool g_CmtFinish = false;
+volatile bool g_CmtFinish         = false;
 uint32_t g_CmtModDataOneMarkCount;
 uint32_t g_CmtModDataOneSpaceCount;
 uint32_t g_CmtModDataZeroMarkCount;
@@ -61,7 +61,7 @@ void CMT_PrepareModulateConfig(cmt_modulate_config_t *modulateConfig, uint32_t b
 
     /* Get the carrier generator for 50% duty cycle. */
     cgHighCount = (frequency / CMT_CG_FREQUENCY) / 2;
-    cgLowCount = cgHighCount;
+    cgLowCount  = cgHighCount;
     /* Get the carrier modulator total counts.
     Set the modulate mark space count for the first transmitted data. */
     cmTotalCount = (frequency / 8) / CMT_DATA_MODULATE_RATE;
@@ -69,24 +69,24 @@ void CMT_PrepareModulateConfig(cmt_modulate_config_t *modulateConfig, uint32_t b
     if (data & 0x1)
     {
         /* Data bit "1" - set the space time to min. */
-        cmMarkCount = cmTotalCount - 1;
+        cmMarkCount  = cmTotalCount - 1;
         cmSpaceCount = 0;
     }
     else
     {
         /* Data bit "0" - set the mark time to min. */
-        cmMarkCount = 0;
+        cmMarkCount  = 0;
         cmSpaceCount = cmTotalCount - 1;
     }
     modulateConfig->highCount1 = cgHighCount;
-    modulateConfig->lowCount1 = cgLowCount;
-    modulateConfig->markCount = cmMarkCount;
+    modulateConfig->lowCount1  = cgLowCount;
+    modulateConfig->markCount  = cmMarkCount;
     modulateConfig->spaceCount = cmSpaceCount;
 
     /* CMT carrier modulate mark and space set for bit 1 and bit 0. */
-    g_CmtModDataOneMarkCount = cmTotalCount - 1;
-    g_CmtModDataOneSpaceCount = 0;
-    g_CmtModDataZeroMarkCount = 0;
+    g_CmtModDataOneMarkCount   = cmTotalCount - 1;
+    g_CmtModDataOneSpaceCount  = 0;
+    g_CmtModDataZeroMarkCount  = 0;
     g_CmtModDataZeroSpaceCount = cmTotalCount - 1;
 
     /* The initialized mark/space count is for the first Data. */

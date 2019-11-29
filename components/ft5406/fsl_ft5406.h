@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -34,10 +34,10 @@
 
 typedef enum _touch_event
 {
-    kTouch_Down = 0,    /*!< The state changed to touched. */
-    kTouch_Up = 1,      /*!< The state changed to not touched. */
-    kTouch_Contact = 2, /*!< There is a continuous touch being detected. */
-    kTouch_Reserved = 3 /*!< No touch information available. */
+    kTouch_Down     = 0, /*!< The state changed to touched. */
+    kTouch_Up       = 1, /*!< The state changed to not touched. */
+    kTouch_Contact  = 2, /*!< There is a continuous touch being detected. */
+    kTouch_Reserved = 3  /*!< No touch information available. */
 } touch_event_t;
 
 typedef struct _touch_point

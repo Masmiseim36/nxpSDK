@@ -10,16 +10,24 @@
     <definition extID="device.MK66F18_startup.MK66F18"/>
     <definition extID="driver.phyksz8081.MK66F18"/>
     <definition extID="middleware.amazon_freertos.aws_iot.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.drivers_frdmk66f.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.jsmn.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.secure_sockets_lwip.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.bufferpool.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.crypto.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.mflash.frdmk66f.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.mqtt.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.pkcs11.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.secure_sockets.lwip.MK66F18"/>
     <definition extID="middleware.amazon_freertos.aws_iot.shadow.MK66F18"/>
-    <definition extID="middleware.freertos.MK66F18"/>
-    <definition extID="middleware.freertos.heap.heap_4.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.tls.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.utils.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.freertos.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.freertos.heap_4.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.third_party.jsmn.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.third_party.pkcs11.MK66F18"/>
     <definition extID="middleware.mbedtls.MK66F18"/>
     <definition extID="middleware.mmcau_cm4_cm7.MK66F18"/>
     <definition extID="middleware.tcpip.lwip.MK66F18"/>
-    <definition extID="middleware.tcpip.lwip.ethernetif.MK66F18"/>
+    <definition extID="middleware.tcpip.lwip.enet_ethernetif.MK66F18"/>
+    <definition extID="middleware.tcpip.lwip.enet_ethernetif_kinetis.MK66F18"/>
     <definition extID="platform.Include_common.MK66F18"/>
     <definition extID="platform.Include_core_cm4.MK66F18"/>
     <definition extID="platform.drivers.clock.MK66F18"/>
@@ -30,7 +38,6 @@
     <definition extID="platform.drivers.lpuart.MK66F18"/>
     <definition extID="platform.drivers.port.MK66F18"/>
     <definition extID="platform.drivers.rnga.MK66F18"/>
-    <definition extID="platform.drivers.sim.MK66F18"/>
     <definition extID="platform.drivers.smc.MK66F18"/>
     <definition extID="platform.drivers.uart.MK66F18"/>
     <definition extID="platform.utilities.assert.MK66F18"/>
@@ -40,7 +47,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk66f_aws_device_configuration_enet" name="aws_device_configuration_enet" category="aws_examples" dependency="driver.phyksz8081.MK66F18 platform.drivers.rnga.MK66F18 middleware.mmcau_cm4_cm7.MK66F18 middleware.amazon_freertos.aws_iot.drivers_frdmk66f.MK66F18 middleware.mbedtls.MK66F18 middleware.freertos.MK66F18 middleware.freertos.heap.heap_4.MK66F18 middleware.amazon_freertos.aws_iot.MK66F18 middleware.amazon_freertos.aws_iot.shadow.MK66F18 middleware.amazon_freertos.aws_iot.jsmn.MK66F18 middleware.amazon_freertos.aws_iot.secure_sockets_lwip.MK66F18 middleware.tcpip.lwip.ethernetif.MK66F18 platform.drivers.port.MK66F18 platform.drivers.sim.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.enet.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 component.lists.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 middleware.tcpip.lwip.MK66F18" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmk66f_aws_device_configuration_enet" name="aws_device_configuration_enet" category="aws_examples" dependency="driver.phyksz8081.MK66F18 platform.drivers.rnga.MK66F18 middleware.mmcau_cm4_cm7.MK66F18 middleware.amazon_freertos.aws_iot.mflash.frdmk66f.MK66F18 platform.drivers.enet.MK66F18 middleware.tcpip.lwip.enet_ethernetif_kinetis.MK66F18 platform.drivers.port.MK66F18 middleware.amazon_freertos.aws_iot.secure_sockets.lwip.MK66F18 middleware.amazon_freertos.freertos.MK66F18 middleware.amazon_freertos.freertos.heap_4.MK66F18 middleware.amazon_freertos.aws_iot.MK66F18 middleware.amazon_freertos.aws_iot.bufferpool.MK66F18 middleware.amazon_freertos.aws_iot.crypto.MK66F18 middleware.amazon_freertos.aws_iot.mqtt.MK66F18 middleware.amazon_freertos.aws_iot.pkcs11.MK66F18 middleware.amazon_freertos.aws_iot.shadow.MK66F18 middleware.amazon_freertos.aws_iot.tls.MK66F18 middleware.amazon_freertos.aws_iot.utils.MK66F18 middleware.amazon_freertos.third_party.jsmn.MK66F18 middleware.amazon_freertos.third_party.pkcs11.MK66F18 middleware.mbedtls.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 component.lists.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 middleware.tcpip.lwip.enet_ethernetif.MK66F18 middleware.tcpip.lwip.MK66F18">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -70,7 +77,7 @@
           <value>-fno-common</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin  -fomit-frame-pointer</value>
+          <value>-fomit-frame-pointer  -c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
         </option>
         <option id="com.crt.advproject.link.fpu" type="enum">
           <value>com.crt.advproject.link.fpu.fpv4.hard</value>
@@ -99,12 +106,135 @@
       </toolchainSetting>
     </toolchainSettings>
     <include_paths>
-      <include_path path="amazon-freertos/third_party"/>
       <include_path path="lwip/port"/>
       <include_path path="lwip/src"/>
       <include_path path="lwip/src/include"/>
       <include_path path="mbedtls/include"/>
     </include_paths>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android/.idea/codeStyles" target_path="source" type="xml" exclude="true">
+      <files mask="Project.xml"/>
+    </source>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android/.idea" target_path="source" type="xml" exclude="true">
+      <files mask="assetWizardSettings.xml"/>
+      <files mask="gradle.xml"/>
+      <files mask="misc.xml"/>
+      <files mask="modules.xml"/>
+      <files mask="runConfigurations.xml"/>
+      <files mask="vcs.xml"/>
+    </source>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android/app/src/main/java/com/nxp/awsdeviceconfiguration/activities/about" target_path="source" type="other" exclude="true">
+      <files mask="AboutActivity.java"/>
+    </source>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android/app/src/main/java/com/nxp/awsdeviceconfiguration/activities/device" target_path="source" type="other" exclude="true">
+      <files mask="DeviceActivity.java"/>
+      <files mask="DeviceFragment.java"/>
+      <files mask="DeviceSetupFragment.java"/>
+      <files mask="DevicesListAdapter.java"/>
+      <files mask="DevicesListFragment.java"/>
+      <files mask="DevicesListViewModel.java"/>
+    </source>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android/app/src/main/java/com/nxp/awsdeviceconfiguration/activities/example" target_path="source" type="other" exclude="true">
+      <files mask="ShadowExampleActivity.java"/>
+    </source>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android/app/src/main/java/com/nxp/awsdeviceconfiguration/iot/listeners" target_path="source" type="other" exclude="true">
+      <files mask="IAWSIoTClientListener.java"/>
+      <files mask="IDeviceRequestAsyncTaskListener.java"/>
+    </source>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android/app/src/main/java/com/nxp/awsdeviceconfiguration/iot/ssl" target_path="source" type="other" exclude="true">
+      <files mask="ISSLConnectionStatus.java"/>
+      <files mask="SSLConnection.java"/>
+    </source>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android/app/src/main/java/com/nxp/awsdeviceconfiguration/iot" target_path="source" type="other" exclude="true">
+      <files mask="AWSResult.java"/>
+      <files mask="AwsConfig.java"/>
+      <files mask="AwsConnection.java"/>
+      <files mask="AwsConstants.java"/>
+      <files mask="AwsIoTConnection.java"/>
+      <files mask="DeviceRequest.java"/>
+      <files mask="DeviceRequestAsyncTask.java"/>
+      <files mask="DeviceRequestCommand.java"/>
+      <files mask="DeviceRequestResponse.java"/>
+      <files mask="MQTTConnection.java"/>
+      <files mask="WiFiSecurity.java"/>
+    </source>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android/app/src/main/java/com/nxp/awsdeviceconfiguration/nsd" target_path="source" type="other" exclude="true">
+      <files mask="DeviceInfo.java"/>
+      <files mask="INetworkServiceDiscoveryListener.java"/>
+      <files mask="NetworkServiceDiscovery.java"/>
+    </source>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android/app/src/main/res/drawable" target_path="source" type="image" exclude="true">
+      <files mask="aws.png"/>
+      <files mask="nxp.png"/>
+    </source>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android/app/src/main/res/layout" target_path="source" type="xml" exclude="true">
+      <files mask="activity_about.xml"/>
+      <files mask="activity_device.xml"/>
+      <files mask="activity_shadow_example.xml"/>
+      <files mask="content_about.xml"/>
+      <files mask="content_shadow_example.xml"/>
+      <files mask="dialog_create_aws_thing.xml"/>
+      <files mask="dialog_device_login.xml"/>
+      <files mask="dialog_progress.xml"/>
+      <files mask="fragment_device_setup.xml"/>
+      <files mask="fragment_devices_list.xml"/>
+      <files mask="item_devices_list.xml"/>
+    </source>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android/app/src/main/res/menu" target_path="source" type="xml" exclude="true">
+      <files mask="main.xml"/>
+    </source>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android/app/src/main/res/mipmap-hdpi" target_path="source" type="image" exclude="true">
+      <files mask="ic_launcher.png"/>
+      <files mask="ic_launcher_round.png"/>
+    </source>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android/app/src/main/res/mipmap-mdpi" target_path="source" type="image" exclude="true">
+      <files mask="ic_launcher.png"/>
+      <files mask="ic_launcher_round.png"/>
+    </source>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android/app/src/main/res/mipmap-xhdpi" target_path="source" type="image" exclude="true">
+      <files mask="ic_launcher.png"/>
+      <files mask="ic_launcher_round.png"/>
+    </source>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android/app/src/main/res/mipmap-xxhdpi" target_path="source" type="image" exclude="true">
+      <files mask="ic_launcher.png"/>
+      <files mask="ic_launcher_round.png"/>
+    </source>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android/app/src/main/res/mipmap-xxxhdpi" target_path="source" type="image" exclude="true">
+      <files mask="ic_launcher.png"/>
+      <files mask="ic_launcher_round.png"/>
+    </source>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android/app/src/main/res/values" target_path="source" type="xml" exclude="true">
+      <files mask="colors.xml"/>
+      <files mask="dimens.xml"/>
+      <files mask="drawables.xml"/>
+      <files mask="strings.xml"/>
+      <files mask="styles.xml"/>
+    </source>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android/app/src/main" target_path="source" type="image" exclude="true">
+      <files mask="ic_launcher-web.png"/>
+      <files mask="ic_launcher_round-web.png"/>
+    </source>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android/app/src/main" target_path="source" type="xml" exclude="true">
+      <files mask="AndroidManifest.xml"/>
+    </source>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android/app" target_path="source" type="other" exclude="true">
+      <files mask=".gitignore"/>
+      <files mask="build.gradle"/>
+      <files mask="proguard-rules.pro"/>
+    </source>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android/gradle/wrapper" target_path="source" type="other" exclude="true">
+      <files mask="gradle-wrapper.jar"/>
+      <files mask="gradle-wrapper.properties"/>
+    </source>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android" target_path="source" type="other" exclude="true">
+      <files mask="AwsDeviceConfiguration.apk"/>
+      <files mask="build.gradle"/>
+      <files mask="gradle.properties"/>
+      <files mask="gradlew"/>
+      <files mask="settings.gradle"/>
+    </source>
+    <source path="boards/frdmk66f/aws_examples/device_configuration_android" target_path="source" type="script" exclude="true">
+      <files mask="gradlew.bat"/>
+    </source>
     <source path="boards/frdmk66f/aws_examples/device_configuration_enet/armgcc" target_path="src" type="linker" toolchain="armgcc">
       <files mask="MK66FN2M0xxx18_flash_data.ld"/>
     </source>
@@ -171,7 +301,6 @@
     </source>
     <source path="boards/frdmk66f/aws_examples/device_configuration_enet" target_path="source" type="c_include">
       <files mask="aws_clientcredential.h"/>
-      <files mask="aws_clientcredential_keys.h"/>
       <files mask="aws_logging_task.h"/>
       <files mask="aws_mbedtls_config.h"/>
       <files mask="device_configuration.h"/>

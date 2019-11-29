@@ -21,10 +21,8 @@
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
-    <definition extID="kds"/>
-    <definition extID="atl"/>
   </externalDefinitions>
-  <example id="frdmk28f_hello_world_qspi_alias" name="hello_world_qspi_alias" category="demo_apps" dependency="platform.drivers.port.MK28F15 platform.drivers.clock.MK28F15 platform.drivers.common.MK28F15 utility.debug_console.MK28F15 component.lpuart_adapter.MK28F15 component.serial_manager.MK28F15 component.serial_manager_uart.MK28F15 platform.drivers.lpuart.MK28F15 component.lists.MK28F15 platform.drivers.gpio.MK28F15 platform.drivers.smc.MK28F15 platform.drivers.sysmpu.MK28F15 platform.utilities.assert.MK28F15 platform.Include_core_cm4.MK28F15 platform.Include_common.MK28F15" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmk28f_hello_world_qspi_alias" name="hello_world_qspi_alias" category="demo_apps" dependency="platform.drivers.port.MK28F15 platform.drivers.clock.MK28F15 platform.drivers.common.MK28F15 utility.debug_console.MK28F15 component.lpuart_adapter.MK28F15 component.serial_manager.MK28F15 component.serial_manager_uart.MK28F15 platform.drivers.lpuart.MK28F15 component.lists.MK28F15 platform.drivers.gpio.MK28F15 platform.drivers.smc.MK28F15 platform.drivers.sysmpu.MK28F15 platform.utilities.assert.MK28F15 platform.Include_core_cm4.MK28F15 platform.Include_common.MK28F15">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -77,7 +75,7 @@
     <source path="boards/frdmk28f/demo_apps/hello_world_qspi_alias/startup/arm" target_path="startup" type="asm_include" toolchain="mdk">
       <files mask="startup_MK28F15.s"/>
     </source>
-    <source path="boards/frdmk28f/demo_apps/hello_world_qspi_alias/startup/gcc" target_path="startup" type="asm_include" toolchain="kds atl armgcc">
+    <source path="boards/frdmk28f/demo_apps/hello_world_qspi_alias/startup/gcc" target_path="startup" type="asm_include" toolchain="armgcc">
       <files mask="startup_MK28F15.S"/>
     </source>
     <source path="boards/frdmk28f/demo_apps/hello_world_qspi_alias/startup/iar" target_path="startup" type="asm_include" toolchain="iar">
@@ -86,10 +84,10 @@
     <source path="boards/frdmk28f/demo_apps/hello_world_qspi_alias/startup/mcuxpresso" target_path="startup" type="src" toolchain="mcuxpresso">
       <files mask="startup_mk28f15.c"/>
     </source>
-    <source path="boards/frdmk28f/demo_apps/hello_world_qspi_alias/startup" target_path="startup" type="c_include" toolchain="iar mdk kds atl armgcc">
+    <source path="boards/frdmk28f/demo_apps/hello_world_qspi_alias/startup" target_path="startup" type="c_include" toolchain="iar mdk armgcc">
       <files mask="system_MK28F15.h"/>
     </source>
-    <source path="boards/frdmk28f/demo_apps/hello_world_qspi_alias/startup" target_path="startup" type="src" toolchain="iar mdk kds atl armgcc">
+    <source path="boards/frdmk28f/demo_apps/hello_world_qspi_alias/startup" target_path="startup" type="src" toolchain="iar mdk armgcc">
       <files mask="system_MK28F15.c"/>
     </source>
     <source path="boards/frdmk28f/demo_apps/hello_world_qspi_alias" target_path="board" type="c_include">
@@ -108,7 +106,13 @@
     <source path="boards/frdmk28f/demo_apps/hello_world_qspi_alias" target_path="source" type="src">
       <files mask="hello_world_qspi_alias.c"/>
     </source>
-    <source path="devices/MK28F15" target_path="device" type="c_include" toolchain="iar mdk kds atl armgcc">
+    <source path="boards/frdmk28f/demo_apps/hello_world_qspi_alias" target_path="src" type="binary" exclude="true">
+      <files mask="qspi_config_block.bin"/>
+    </source>
+    <source path="boards/frdmk28f/demo_apps/hello_world_qspi_alias" target_path="src" type="other" exclude="true">
+      <files mask="hello_world_qspi_alias.bd"/>
+    </source>
+    <source path="devices/MK28F15" target_path="device" type="c_include" toolchain="iar mdk armgcc">
       <files mask="MK28F15.h"/>
       <files mask="MK28F15_features.h"/>
       <files mask="fsl_device_registers.h"/>

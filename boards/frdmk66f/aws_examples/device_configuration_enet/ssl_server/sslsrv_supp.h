@@ -7,8 +7,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 /*
-*   SSLSRV support functions header.
-*/
+ *   SSLSRV support functions header.
+ */
 
 #ifndef _SSLSRV_SUPP_H_
 #define _SSLSRV_SUPP_H_

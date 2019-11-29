@@ -31,7 +31,7 @@ volatile uint32_t g_systickCounter;
 void SysTick_Handler(void)
 {
     if (g_systickCounter != 0U)
-    { 
+    {
         g_systickCounter--;
     }
 }
@@ -39,7 +39,7 @@ void SysTick_Handler(void)
 void SysTick_DelayTicks(uint32_t n)
 {
     g_systickCounter = n;
-    while(g_systickCounter != 0U)
+    while (g_systickCounter != 0U)
     {
     }
 }
@@ -51,7 +51,8 @@ int main(void)
 {
     /* Define the init structure for the output LED pin*/
     gpio_pin_config_t led_config = {
-        kGPIO_DigitalOutput, 0,
+        kGPIO_DigitalOutput,
+        0,
     };
 
     /* Board pin init */
@@ -63,9 +64,9 @@ int main(void)
     GPIO_PinInit(BOARD_LED_GPIO, BOARD_LED_GPIO_PIN, &led_config);
 
     /* Set systick reload value to generate 1ms interrupt */
-    if(SysTick_Config(SystemCoreClock / 1000U))
+    if (SysTick_Config(SystemCoreClock / 1000U))
     {
-        while(1)
+        while (1)
         {
         }
     }

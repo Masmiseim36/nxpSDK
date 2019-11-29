@@ -1,17 +1,19 @@
 /**
-  ******************************************************************************
-  * @file    lwipopts.h
-  * This file is based on \src\include\lwip\opt.h
-  ******************************************************************************
-   * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
-   * Copyright 2016-2017 NXP
-   * All rights reserved.
-   *
-   * SPDX-License-Identifier: BSD-3-Clause
-   */
+ ******************************************************************************
+ * @file    lwipopts.h
+ * This file is based on \src\include\lwip\opt.h
+ ******************************************************************************
+ * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 #ifndef __LWIPOPTS_H__
 #define __LWIPOPTS_H__
+
+#include "fsl_device_registers.h"
 
 #if USE_RTOS
 
@@ -54,6 +56,16 @@
  * LWIP_SOCKET==0: Disable Socket API (require to use sockets.c)
  */
 #define LWIP_SOCKET 0
+
+/**
+ * LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT=1: we need to free PBUF_RAM pbufs
+ * from ISR context on LPC.
+ */
+#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
+#ifndef LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT
+#define LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT 1
+#endif
+#endif
 
 #endif
 /* ---------- Memory options ---------- */

@@ -4,6 +4,14 @@ The ADC Low Power demo application demonstrates the usage of the ADC peripheral 
 microcontroller is first set to very low power stop (VLPS) mode. Every 500 ms, an interrupt wakes up the ADC module and
 reads the current temperature of the microcontroller. While the temperature remains within boundaries, both LEDs are on.
 If the core temperature is higher or lower than average, the LEDs change state respectively.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -48,11 +56,6 @@ ADC LOW POWER DEMO
 Note:
  - when the temperature is above the average: LED RED on, LED GREEN off.
  - when the temperature is below the average: LED GREEN on, LED RED off.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

@@ -30,7 +30,7 @@
 
 #define FLASH_SIZE 0x8000
 
-#ifndef XIP_EXTERNAL_FLASH
+
 flexspi_device_config_t deviceconfig = {
     .flexspiRootClk = 100000000,
     .flashSize = FLASH_SIZE,
@@ -48,7 +48,6 @@ flexspi_device_config_t deviceconfig = {
     .AHBWriteWaitUnit = kFLEXSPI_AhbWriteWaitUnit2AhbCycle,
     .AHBWriteWaitInterval = 0,
 };
-#endif
 
 const uint32_t customLUT[CUSTOM_LUT_LENGTH] = {
         /* Normal read mode -SDR */
@@ -374,9 +373,9 @@ static int32_t mflash_drv_init_internal(void)
      * failure in case of nested critical sections !! */
     __asm("cpsid i");
     
-#ifndef XIP_EXTERNAL_FLASH
     flexspi_config_t config;
-
+    status_t status;
+	
     /* Get FLEXSPI default settings and configure the flexspi. */
     FLEXSPI_GetDefaultConfig(&config);
 
@@ -392,22 +391,17 @@ static int32_t mflash_drv_init_internal(void)
 
     /* Configure flash settings according to serial flash feature. */
     FLEXSPI_SetFlashConfig(MFLASH_FLEXSPI, &deviceconfig, kFLEXSPI_PortA1);
-#endif
 
     /* Update LUT table. */
     FLEXSPI_UpdateLUT(MFLASH_FLEXSPI, 0, customLUT, CUSTOM_LUT_LENGTH);
-
-#ifndef XIP_EXTERNAL_FLASH
-    status_t status;
-
+    
     /* Enter quad mode. */
     status = flexspi_nor_enable_quad_mode(MFLASH_FLEXSPI);
     if (status != kStatus_Success)
     {
         return -1;
     }
-#endif
-
+	
     __asm("cpsie i");
 
     return 0;

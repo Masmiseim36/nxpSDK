@@ -26,8 +26,7 @@
 #endif
 
 /*! @brief USB interrupt priority */
-#define USB_DEVICE_INTERRUPT_PRIORITY (3U)
-/*! @brief Association request length */
+#define USB_DEVICE_INTERRUPT_PRIORITY (3U) /*! @brief Association request length */
 #define ASSOCIATION_REQUEST_LENGTH (54U)
 /*! @brief Configuration event report length */
 #define EVENT_REPORT_CONFIGURATION_LENGTH (166U)

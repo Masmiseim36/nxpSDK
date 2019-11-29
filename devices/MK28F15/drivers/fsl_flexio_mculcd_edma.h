@@ -31,7 +31,7 @@ typedef struct _flexio_mculcd_edma_handle flexio_mculcd_edma_handle_t;
 
 /*! @brief FlexIO MCULCD master callback for transfer complete.
  *
- * When tranfer finished, the callback function is called and returns the
+ * When transfer finished, the callback function is called and returns the
  * @p status as kStatus_FLEXIO_MCULCD_Idle.
  */
 typedef void (*flexio_mculcd_edma_transfer_callback_t)(FLEXIO_MCULCD_Type *base,
@@ -56,8 +56,8 @@ struct _flexio_mculcd_edma_handle
     size_t dataCount;               /*!< Total count to be transferred. */
     volatile size_t remainingCount; /*!< Remaining count still not transfered. */
     volatile uint32_t state;        /*!< FlexIO MCULCD driver internal state. */
-    edma_handle_t *txEdmaHandle;    /*!< DMA handle for MCULCD TX */
-    edma_handle_t *rxEdmaHandle;    /*!< DMA handle for MCULCD RX */
+    edma_handle_t *txDmaHandle;     /*!< DMA handle for MCULCD TX */
+    edma_handle_t *rxDmaHandle;     /*!< DMA handle for MCULCD RX */
     flexio_mculcd_edma_transfer_callback_t completionCallback; /*!< Callback for MCULCD DMA transfer */
     void *userData;                                            /*!< User Data for MCULCD DMA callback */
 };
@@ -86,9 +86,9 @@ extern "C" {
  * transfer state.
  * @param callback MCULCD transfer complete callback, NULL means no callback.
  * @param userData callback function parameter.
- * @param txEdmaHandle User requested eDMA handle for FlexIO MCULCD eDMA TX,
+ * @param txDmaHandle User requested eDMA handle for FlexIO MCULCD eDMA TX,
  * the DMA request source of this handle should be the first of TX shifters.
- * @param rxEdmaHandle User requested eDMA handle for FlexIO MCULCD eDMA RX,
+ * @param rxDmaHandle User requested eDMA handle for FlexIO MCULCD eDMA RX,
  * the DMA request source of this handle should be the last of RX shifters.
  * @retval kStatus_Success Successfully create the handle.
  */
@@ -96,14 +96,14 @@ status_t FLEXIO_MCULCD_TransferCreateHandleEDMA(FLEXIO_MCULCD_Type *base,
                                                 flexio_mculcd_edma_handle_t *handle,
                                                 flexio_mculcd_edma_transfer_callback_t callback,
                                                 void *userData,
-                                                edma_handle_t *txEdmaHandle,
-                                                edma_handle_t *rxEdmaHandle);
+                                                edma_handle_t *txDmaHandle,
+                                                edma_handle_t *rxDmaHandle);
 
 /*!
  * @brief Performs a non-blocking FlexIO MCULCD transfer using eDMA.
  *
  * This function returns immediately after transfer initiates. To check whether
- * the tranfer is completed, user could:
+ * the transfer is completed, user could:
  * 1. Use the transfer completed callback;
  * 2. Polling function @ref FLEXIO_MCULCD_GetTransferCountEDMA
  *
@@ -135,7 +135,7 @@ void FLEXIO_MCULCD_TransferAbortEDMA(FLEXIO_MCULCD_Type *base, flexio_mculcd_edm
  * @param handle FlexIO MCULCD eDMA handle pointer.
  * @param count Number of count transferred so far by the eDMA transaction.
  * @retval kStatus_Success Get the transferred count Successfully.
- * @retval kStatus_NoTransferInProgress No tranfer in process.
+ * @retval kStatus_NoTransferInProgress No transfer in process.
  */
 status_t FLEXIO_MCULCD_TransferGetCountEDMA(FLEXIO_MCULCD_Type *base,
                                             flexio_mculcd_edma_handle_t *handle,

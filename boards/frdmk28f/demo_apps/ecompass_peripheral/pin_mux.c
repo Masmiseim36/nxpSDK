@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,11 +14,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v5.0
 processor: MK28FN2M0xxx15
 package_id: MK28FN2M0VMI15
 mcu_data: ksdk2_0
-processor_version: 4.0.0
+processor_version: 0.0.20
 pin_labels:
 - {pin_num: A7, pin_signal: PTC25/LPUART0_RX/FB_A4/SDRAM_D4/QSPI0A_SCLK, label: DEBUG_UART_RX, identifier: DEBUG_UART_RX}
 - {pin_num: B7, pin_signal: PTC24/LPUART0_TX/FB_A5/SDRAM_D5/QSPI0A_DATA3, label: DEBUG_UART_TX, identifier: DEBUG_UART_TX}

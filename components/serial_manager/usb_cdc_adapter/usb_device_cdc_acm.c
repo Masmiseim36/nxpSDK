@@ -258,10 +258,6 @@ usb_status_t USB_DeviceCdcAcmEndpointsInit(usb_device_cdc_acm_struct_t *cdcAcmHa
         epCallback.callbackParam = cdcAcmHandle;
 
         error = USB_DeviceInitEndpoint(cdcAcmHandle->handle, &epInitStruct, &epCallback);
-        if (kStatus_USB_Success != error)
-        {
-           return error;
-        }   
     }
 
     for (uint32_t count = 0; count < interfaceList->count; count++)

@@ -3,6 +3,14 @@ Overview
 The TPM project is a simple demonstration program of the SDK TPM driver to use TPM as a timer.
 It sets up the TPM hardware block to trigger an interrupt every 1 millisecond.
 When the TPM interrupt is triggered a message a printed on the UART terminal.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -35,11 +43,6 @@ TPM example to simulate a timer
 You will see a "-" or "|" in terminal every 1 second:
 -|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

@@ -76,7 +76,9 @@ void USB_HostClockInit(void)
 {
 #if defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 0U)
     usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL, BOARD_USB_PHY_TXCAL45DP, BOARD_USB_PHY_TXCAL45DM,
+        BOARD_USB_PHY_D_CAL,
+        BOARD_USB_PHY_TXCAL45DP,
+        BOARD_USB_PHY_TXCAL45DM,
     };
 #endif
 
@@ -92,11 +94,11 @@ void USB_HostIsrEnable(void)
     uint8_t irqNumber;
 #if defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 0U)
     uint8_t usbHOSTEhciIrq[] = USBHS_IRQS;
-    irqNumber = usbHOSTEhciIrq[0];
+    irqNumber                = usbHOSTEhciIrq[0];
 #endif /* USB_HOST_CONFIG_EHCI */
 #if defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)
     uint8_t usbHOSTKhciIrq[] = USB_IRQS;
-    irqNumber = usbHOSTKhciIrq[0];
+    irqNumber                = usbHOSTKhciIrq[0];
 #endif /* USB_HOST_CONFIG_KHCI */
 
 /* Install isr, set priority, and enable IRQ. */
@@ -113,11 +115,11 @@ void USB_HostIsrDisable(void)
     uint8_t irqNumber;
 #if defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 0U)
     uint8_t usbHOSTEhciIrq[] = USBHS_IRQS;
-    irqNumber = usbHOSTEhciIrq[0];
+    irqNumber                = usbHOSTEhciIrq[0];
 #endif /* USB_HOST_CONFIG_EHCI */
 #if defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)
     uint8_t usbHOSTKhciIrq[] = USB_IRQS;
-    irqNumber = usbHOSTKhciIrq[0];
+    irqNumber                = usbHOSTKhciIrq[0];
 #endif /* USB_HOST_CONFIG_KHCI */
 
 /* Install isr, set priority, and enable IRQ. */
@@ -142,7 +144,9 @@ void USB_DeviceClockInit(void)
 {
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
     usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL, BOARD_USB_PHY_TXCAL45DP, BOARD_USB_PHY_TXCAL45DM,
+        BOARD_USB_PHY_D_CAL,
+        BOARD_USB_PHY_TXCAL45DP,
+        BOARD_USB_PHY_TXCAL45DM,
     };
 #endif
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
@@ -173,13 +177,13 @@ void USB_DeviceIsrEnable(void)
     uint8_t irqNumber;
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
     uint8_t usbDeviceEhciIrq[] = USBHS_IRQS;
-    irqNumber = usbDeviceEhciIrq[0];
+    irqNumber                  = usbDeviceEhciIrq[0];
 #endif
 #if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
     uint8_t usbDeviceKhciIrq[] = USB_IRQS;
-    irqNumber = usbDeviceKhciIrq[0];
+    irqNumber                  = usbDeviceKhciIrq[0];
 #endif
-/* Install isr, set priority, and enable IRQ. */
+    /* Install isr, set priority, and enable IRQ. */
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
     EnableIRQ((IRQn_Type)irqNumber);
 }
@@ -189,13 +193,13 @@ void USB_DeviceIsrDisable(void)
     uint8_t irqNumber;
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
     uint8_t usbDeviceEhciIrq[] = USBHS_IRQS;
-    irqNumber = usbDeviceEhciIrq[0];
+    irqNumber                  = usbDeviceEhciIrq[0];
 #endif
 #if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
     uint8_t usbDeviceKhciIrq[] = USB_IRQS;
-    irqNumber = usbDeviceKhciIrq[0];
+    irqNumber                  = usbDeviceKhciIrq[0];
 #endif
-/* Install isr, set priority, and enable IRQ. */
+    /* Install isr, set priority, and enable IRQ. */
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
     DisableIRQ((IRQn_Type)irqNumber);
 }
@@ -369,11 +373,11 @@ void main(void)
 
     /* Enable USB ID PIN */
     CLOCK_EnableClock(kCLOCK_PortA);
-    portConfig.pullSelect = kPORT_PullUp;
-    portConfig.openDrainEnable = 1;
-    portConfig.mux = kPORT_MuxAlt7; /*?*/
-    portConfig.driveStrength = kPORT_LowDriveStrength;
-    portConfig.slewRate = kPORT_SlowSlewRate;
+    portConfig.pullSelect          = kPORT_PullUp;
+    portConfig.openDrainEnable     = 1;
+    portConfig.mux                 = kPORT_MuxAlt7; /*?*/
+    portConfig.driveStrength       = kPORT_LowDriveStrength;
+    portConfig.slewRate            = kPORT_SlowSlewRate;
     portConfig.passiveFilterEnable = 0;
 #if defined(FSL_FEATURE_PORT_HAS_PIN_CONTROL_LOCK) && FSL_FEATURE_PORT_HAS_PIN_CONTROL_LOCK
     portConfig.lockRegister = 0;

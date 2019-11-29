@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -55,10 +55,19 @@
 /*! @brief FlexIO LCD transfer status */
 enum _flexio_mculcd_status
 {
-    kStatus_FLEXIO_MCULCD_Idle = MAKE_STATUS(kStatusGroup_FLEXIO_MCULCD, 0),  /*!< FlexIO LCD is idle. */
-    kStatus_FLEXIO_MCULCD_Busy = MAKE_STATUS(kStatusGroup_FLEXIO_MCULCD, 1),  /*!< FlexIO LCD is busy */
+    kStatus_FLEXIO_MCULCD_Idle  = MAKE_STATUS(kStatusGroup_FLEXIO_MCULCD, 0), /*!< FlexIO LCD is idle. */
+    kStatus_FLEXIO_MCULCD_Busy  = MAKE_STATUS(kStatusGroup_FLEXIO_MCULCD, 1), /*!< FlexIO LCD is busy */
     kStatus_FLEXIO_MCULCD_Error = MAKE_STATUS(kStatusGroup_FLEXIO_MCULCD, 2), /*!< FlexIO LCD error occurred */
 };
+
+/*! @brief Define FlexIO MCULCD pixel format. */
+typedef enum _flexio_mculcd_pixel_format
+{
+    kFLEXIO_MCULCD_RGB565 = 0, /*!< RGB565, 16-bit. */
+    kFLEXIO_MCULCD_BGR565,     /*!< BGR565, 16-bit. */
+    kFLEXIO_MCULCD_RGB888,     /*!< RGB888, 24-bit. */
+    kFLEXIO_MCULCD_BGR888,     /*!< BGR888, 24-bit. */
+} flexio_mculcd_pixel_format_t;
 
 /*! @brief Define FlexIO MCULCD bus type. */
 typedef enum _flexio_mculcd_bus
@@ -71,14 +80,14 @@ typedef enum _flexio_mculcd_bus
 enum _flexio_mculcd_interrupt_enable
 {
     kFLEXIO_MCULCD_TxEmptyInterruptEnable = (1U << 0U), /*!< Transmit buffer empty interrupt enable. */
-    kFLEXIO_MCULCD_RxFullInterruptEnable = (1U << 1U),  /*!< Receive buffer full interrupt enable. */
+    kFLEXIO_MCULCD_RxFullInterruptEnable  = (1U << 1U), /*!< Receive buffer full interrupt enable. */
 };
 
 /*! @brief Define FlexIO MCULCD status mask. */
 enum _flexio_mculcd_status_flags
 {
     kFLEXIO_MCULCD_TxEmptyFlag = (1U << 0U), /*!< Transmit buffer empty flag. */
-    kFLEXIO_MCULCD_RxFullFlag = (1U << 1U),  /*!< Receive buffer full flag. */
+    kFLEXIO_MCULCD_RxFullFlag  = (1U << 1U), /*!< Receive buffer full flag. */
 };
 
 /*! @brief Define FlexIO MCULCD DMA mask. */
@@ -145,9 +154,9 @@ typedef struct _flexio_mculcd_transfer
 /*! @brief typedef for flexio_mculcd_handle_t in advance. */
 typedef struct _flexio_mculcd_handle flexio_mculcd_handle_t;
 
-/*! @brief FlexIO MCULCD callback for finished tranfer.
+/*! @brief FlexIO MCULCD callback for finished transfer.
  *
- * When tranfer finished, the callback function is called and returns the
+ * When transfer finished, the callback function is called and returns the
  * @p status as kStatus_FLEXIO_MCULCD_Idle.
  */
 typedef void (*flexio_mculcd_transfer_callback_t)(FLEXIO_MCULCD_Type *base,
@@ -455,7 +464,7 @@ void FLEXIO_MCULCD_ClearMultiBeatsReadConfig(FLEXIO_MCULCD_Type *base);
  *
  * @param base Pointer to the FLEXIO_MCULCD_Type.
  * @param enable True to enable, false does not have any effect.
-*/
+ */
 static inline void FLEXIO_MCULCD_Enable(FLEXIO_MCULCD_Type *base, bool enable)
 {
     if (enable)
@@ -655,7 +664,7 @@ void FLEXIO_MCULCD_TransferAbort(FLEXIO_MCULCD_Type *base, flexio_mculcd_handle_
  * transfer state.
  * @param count How many bytes transferred so far by the non-blocking transaction.
  * @retval kStatus_Success Get the transferred count Successfully.
- * @retval kStatus_NoTransferInProgress No tranfer in process.
+ * @retval kStatus_NoTransferInProgress No transfer in process.
  */
 status_t FLEXIO_MCULCD_TransferGetCount(FLEXIO_MCULCD_Type *base, flexio_mculcd_handle_t *handle, size_t *count);
 

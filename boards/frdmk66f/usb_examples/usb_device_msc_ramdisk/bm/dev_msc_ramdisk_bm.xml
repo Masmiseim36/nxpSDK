@@ -29,7 +29,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk66f_dev_msc_ramdisk_bm" name="dev_msc_ramdisk_bm" category="usb_examples" dependency="middleware.usb.device_controller_khci.MK66F18 middleware.usb.device_controller_ehci.MK66F18 middleware.usb.phy.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.uart.MK66F18 platform.drivers.gpio.MK66F18 platform.drivers.sysmpu.MK66F18 platform.utilities.assert.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.serial_manager_uart.MK66F18 component.lists.MK66F18 platform.drivers.port.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 middleware.baremetal.MK66F18" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmk66f_dev_msc_ramdisk_bm" name="dev_msc_ramdisk_bm" category="usb_examples" dependency="middleware.usb.device_controller_khci.MK66F18 middleware.usb.device_controller_ehci.MK66F18 middleware.usb.phy.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.uart.MK66F18 platform.drivers.gpio.MK66F18 platform.drivers.sysmpu.MK66F18 platform.utilities.assert.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.serial_manager_uart.MK66F18 component.lists.MK66F18 platform.drivers.port.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 middleware.baremetal.MK66F18">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -96,6 +96,9 @@
     <source path="boards/frdmk66f/usb_examples/usb_device_msc_ramdisk/bm" target_path="source" type="src">
       <files mask="disk.c"/>
       <files mask="usb_device_descriptor.c"/>
+    </source>
+    <source path="boards/frdmk66f/usb_examples/usb_device_msc_ramdisk/bm" target_path="src" type="doc" exclude="true">
+      <files mask="readme.pdf"/>
     </source>
     <source path="boards/frdmk66f/usb_examples/usb_device_msc_ramdisk/bm" target_path="usb/device/class/msc" type="c_include">
       <files mask="usb_device_msc.h"/>

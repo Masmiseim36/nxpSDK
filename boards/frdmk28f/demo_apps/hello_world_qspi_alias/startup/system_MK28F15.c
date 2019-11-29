@@ -80,11 +80,10 @@ typedef struct SystemBootloaderConfig
                              cleared (0).
                                  bit 0 - HighSpeed Enable high speed mode (i.e., 48 MHz). */
     uint8_t clockDivider; /*!< Inverted value of the divider to use for core and bus clocks when in high speed mode */
-    uint8_t
-        bootFlags; /*!< If bit 0 is cleared, then Kinetis bootloader will jump to either Quad SPI Flash or internal
-                      flash image depending on FOPT BOOTSRC_SEL bits.
-                          If the bit is set, then Kinetis bootloader will prepare for host communication over serial
-                      peripherals. */
+    uint8_t bootFlags; /*!< If bit 0 is cleared, then Kinetis bootloader will jump to either Quad SPI Flash or internal
+                          flash image depending on FOPT BOOTSRC_SEL bits.
+                              If the bit is set, then Kinetis bootloader will prepare for host communication over serial
+                          peripherals. */
     uint8_t RESERVED1;
     uint32_t mmcauConfigPointer; /*!< A pointer to the MMCAU configuration structure in memory. */
     uint32_t keyBlobPointer;     /*!< A pointer to the keyblob data in memory. */
@@ -108,23 +107,23 @@ __attribute__((section("BootloaderConfig"))) const system_bootloader_config_t Bo
 #error Unsupported compiler!
 #endif
     {
-        .tag = 0x6766636BU,                      /* Magic Number */
-        .crcStartAddress = 0xFFFFFFFFU,          /* Disable CRC check */
-        .crcByteCount = 0xFFFFFFFFU,             /* Disable CRC check */
-        .crcExpectedValue = 0xFFFFFFFFU,         /* Disable CRC check */
-        .enabledPeripherals = 0x17,              /* Enable all peripherals */
-        .i2cSlaveAddress = 0xFF,                 /* Use default I2C address */
-        .peripheralDetectionTimeoutMs = 0x01F4U, /* Use default timeout */
-        .usbVid = 0xFFFFU,                       /* Use default USB Vendor ID */
-        .usbPid = 0xFFFFU,                       /* Use default USB Product ID */
-        .usbStringsPointer = 0xFFFFFFFFU,        /* Use default USB Strings */
-        .clockFlags = 0x01,                      /* Enable High speed mode */
-        .clockDivider = 0xFF,                    /* Use clock divider 1 */
-        .bootFlags = 0x01,                       /* Enable communication with host */
-        .mmcauConfigPointer = 0xFFFFFFFFU,       /* No MMCAU configuration */
-        .keyBlobPointer = 0x000001000,           /* keyblob data is at 0x1000 */
-        .qspiConfigBlockPtr = 0xFFFFFFFFU        /* No QSPI configuration */
-};
+        .tag                          = 0x6766636BU, /* Magic Number */
+        .crcStartAddress              = 0xFFFFFFFFU, /* Disable CRC check */
+        .crcByteCount                 = 0xFFFFFFFFU, /* Disable CRC check */
+        .crcExpectedValue             = 0xFFFFFFFFU, /* Disable CRC check */
+        .enabledPeripherals           = 0x17,        /* Enable all peripherals */
+        .i2cSlaveAddress              = 0xFF,        /* Use default I2C address */
+        .peripheralDetectionTimeoutMs = 0x01F4U,     /* Use default timeout */
+        .usbVid                       = 0xFFFFU,     /* Use default USB Vendor ID */
+        .usbPid                       = 0xFFFFU,     /* Use default USB Product ID */
+        .usbStringsPointer            = 0xFFFFFFFFU, /* Use default USB Strings */
+        .clockFlags                   = 0x01,        /* Enable High speed mode */
+        .clockDivider                 = 0xFF,        /* Use clock divider 1 */
+        .bootFlags                    = 0x01,        /* Enable communication with host */
+        .mmcauConfigPointer           = 0xFFFFFFFFU, /* No MMCAU configuration */
+        .keyBlobPointer               = 0x000001000, /* keyblob data is at 0x1000 */
+        .qspiConfigBlockPtr           = 0xFFFFFFFFU  /* No QSPI configuration */
+    };
 #endif
 
 /* ----------------------------------------------------------------------------
@@ -203,7 +202,7 @@ void SystemInit(void)
 
     /* Set system prescalers and clock sources */
     SIM->CLKDIV1 = SYSTEM_SIM_CLKDIV1_VALUE; /* Set system prescalers */
-    SIM->SOPT1 = ((SIM->SOPT1) & (uint32_t)(~(SIM_SOPT1_OSC32KSEL_MASK))) |
+    SIM->SOPT1   = ((SIM->SOPT1) & (uint32_t)(~(SIM_SOPT1_OSC32KSEL_MASK))) |
                  ((SYSTEM_SIM_SOPT1_VALUE) & (SIM_SOPT1_OSC32KSEL_MASK)); /* Set 32 kHz clock source (ERCLK32K) */
     SIM->SOPT2 =
         ((SIM->SOPT2) & (uint32_t)(~(SIM_SOPT2_PLLFLLSEL_MASK))) |
@@ -273,9 +272,8 @@ void SystemInit(void)
     OSC->CR = SYSTEM_OSC_CR_VALUE;            /* Set OSC_CR (OSCERCLK enable, oscillator capacitor load) */
     MCG->C7 = SYSTEM_MCG_C7_VALUE;            /* Set C7 (OSC Clock Select) */
 #if (MCG_MODE == MCG_MODE_PEE)
-    MCG->C1 =
-        (SYSTEM_MCG_C1_VALUE) | MCG_C1_CLKS(0x02); /* Set C1 (clock source selection, FLL ext. reference divider, int.
-                                                      reference enable etc.) - PBE mode*/
+    MCG->C1 = (SYSTEM_MCG_C1_VALUE) | MCG_C1_CLKS(0x02); /* Set C1 (clock source selection, FLL ext. reference divider,
+                                                            int. reference enable etc.) - PBE mode*/
 #else
     MCG->C1 = SYSTEM_MCG_C1_VALUE; /* Set C1 (clock source selection, FLL ext. reference divider, int. reference enable
                                       etc.) */
@@ -318,7 +316,7 @@ void SystemInit(void)
 #if ((MCG_MODE == MCG_MODE_BLPI) || (MCG_MODE == MCG_MODE_BLPE))
     MCG->C2 |= (MCG_C2_LP_MASK); /* Disable FLL and PLL in bypass mode */
                                  /* PEE and PBE MCG mode specific */
-#elif((MCG_MODE == MCG_MODE_PBE) || (MCG_MODE == MCG_MODE_PEE))
+#elif ((MCG_MODE == MCG_MODE_PBE) || (MCG_MODE == MCG_MODE_PEE))
     MCG->C6 |= (MCG_C6_PLLS_MASK);                                    /* Set C6 (PLL select, VCO divider etc.) */
     while ((MCG->S & MCG_S_LOCK0_MASK) == 0x00U)
     { /* Wait until PLL is locked*/
@@ -344,15 +342,15 @@ void SystemInit(void)
     }
     LPTMR0->CSR = 0x00; /* Disable LPTMR */
     SIM->SCGC5 &= (uint32_t) ~(uint32_t)SIM_SCGC5_LPTMR_MASK;
-#elif((MCG_MODE == MCG_MODE_FBI) || (MCG_MODE == MCG_MODE_BLPI))
+#elif ((MCG_MODE == MCG_MODE_FBI) || (MCG_MODE == MCG_MODE_BLPI))
     while ((MCG->S & MCG_S_CLKST_MASK) != 0x04U)
     { /* Wait until internal reference clock is selected as MCG output */
     }
-#elif((MCG_MODE == MCG_MODE_FBE) || (MCG_MODE == MCG_MODE_PBE) || (MCG_MODE == MCG_MODE_BLPE))
+#elif ((MCG_MODE == MCG_MODE_FBE) || (MCG_MODE == MCG_MODE_PBE) || (MCG_MODE == MCG_MODE_BLPE))
     while ((MCG->S & MCG_S_CLKST_MASK) != 0x08U)
     { /* Wait until external reference clock is selected as MCG output */
     }
-#elif(MCG_MODE == MCG_MODE_PEE)
+#elif (MCG_MODE == MCG_MODE_PEE)
     while ((MCG->S & MCG_S_CLKST_MASK) != 0x0CU)
     { /* Wait until output of the PLL is selected */
     }
@@ -475,9 +473,9 @@ void SystemCoreClockUpdate(void)
         else
         { /* (!((MCG->C6 & MCG_C6_PLLS_MASK) == 0x00U)) */
             /* PLL is selected */
-            Divider = (((uint16_t)MCG->C5 & MCG_C5_PRDIV_MASK) + 0x01U);
+            Divider     = (((uint16_t)MCG->C5 & MCG_C5_PRDIV_MASK) + 0x01U);
             MCGOUTClock = (uint32_t)(CPU_XTAL_CLK_HZ / Divider); /* Calculate the PLL reference clock */
-            Divider = (((uint16_t)MCG->C6 & MCG_C6_VDIV_MASK) + 16U);
+            Divider     = (((uint16_t)MCG->C6 & MCG_C6_VDIV_MASK) + 16U);
             MCGOUTClock *= Divider; /* Calculate the VCO output clock */
             MCGOUTClock /= 2;       /* Calculate the MCG output clock */
         }                           /* (!((MCG->C6 & MCG_C6_PLLS_MASK) == 0x00U)) */
@@ -491,7 +489,7 @@ void SystemCoreClockUpdate(void)
         }
         else
         { /* (!((MCG->C2 & MCG_C2_IRCS_MASK) == 0x00U)) */
-            Divider = (uint16_t)(0x01LU << ((MCG->SC & MCG_SC_FCRDIV_MASK) >> MCG_SC_FCRDIV_SHIFT));
+            Divider     = (uint16_t)(0x01LU << ((MCG->SC & MCG_SC_FCRDIV_MASK) >> MCG_SC_FCRDIV_SHIFT));
             MCGOUTClock = (uint32_t)(CPU_INT_FAST_CLK_HZ / Divider); /* Fast internal reference clock selected */
         }                                                            /* (!((MCG->C2 & MCG_C2_IRCS_MASK) == 0x00U)) */
     }

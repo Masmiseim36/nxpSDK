@@ -4,6 +4,14 @@ The RTC project is a simple demonstration program of the SDK RTC driver. It sets
 hardware block to trigger an alarm after a user specified time period. The test will set the current
 date and time to a predefined value. The alarm will be set with reference to this predefined date
 and time.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -44,11 +52,6 @@ The second must be positive value
 ...............................................
 ...............................................
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

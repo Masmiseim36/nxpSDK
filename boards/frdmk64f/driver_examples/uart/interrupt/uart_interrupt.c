@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -98,8 +98,8 @@ int main(void)
      */
     UART_GetDefaultConfig(&config);
     config.baudRate_Bps = BOARD_DEBUG_UART_BAUDRATE;
-    config.enableTx = true;
-    config.enableRx = true;
+    config.enableTx     = true;
+    config.enableRx     = true;
 
     UART_Init(DEMO_UART, &config, DEMO_UART_CLK_FREQ);
 

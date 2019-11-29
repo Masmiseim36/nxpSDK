@@ -2,7 +2,7 @@
  * Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -53,19 +53,19 @@ int main(void)
     DAC_Enable(DEMO_DAC_BASEADDR, true);             /* Enable output. */
     DAC_SetBufferReadPointer(DEMO_DAC_BASEADDR, 0U); /* Make sure the read pointer to the start. */
                                                      /*
-                                                     * The buffer is not enabled, so the read pointer can not move automatically. However, the buffer's read pointer
-                                                     * and itemss can be written manually by user.
-                                                     */
+                                                      * The buffer is not enabled, so the read pointer can not move automatically. However, the buffer's read pointer
+                                                      * and itemss can be written manually by user.
+                                                      */
 
     while (1)
     {
-        index = 0;
+        index    = 0;
         dacValue = 0;
         PRINTF("\r\nPlease input a value (0 - 4095) to output with DAC: ");
         while (index != 0x0D)
         {
             index = GETCHAR();
-            if((index >= '0') && (index <= '9'))
+            if ((index >= '0') && (index <= '9'))
             {
                 PUTCHAR(index);
                 dacValue = dacValue * 10 + (index - 0x30U);
@@ -80,7 +80,7 @@ int main(void)
         DAC_SetBufferValue(DEMO_DAC_BASEADDR, 0U, dacValue);
         PRINTF("DAC out: %d\r\n", dacValue);
         /*
-        * The value in the first item would be converted. User can measure the output voltage from DAC_OUTx pin.
-        */
+         * The value in the first item would be converted. User can measure the output voltage from DAC_OUTx pin.
+         */
     }
 }

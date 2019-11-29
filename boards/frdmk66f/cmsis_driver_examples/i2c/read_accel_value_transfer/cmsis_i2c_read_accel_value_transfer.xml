@@ -2,7 +2,6 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
-    <definition extID="RTE_Device.MK66F18"/>
     <definition extID="component.lists.MK66F18"/>
     <definition extID="component.serial_manager.MK66F18"/>
     <definition extID="component.serial_manager_uart.MK66F18"/>
@@ -33,7 +32,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk66f_cmsis_i2c_read_accel_value_transfer" name="cmsis_i2c_read_accel_value_transfer" category="cmsis_driver_examples/i2c" dependency="platform.drivers.port.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.edma.MK66F18 platform.drivers.dmamux.MK66F18 platform.drivers.i2c.MK66F18 platform.drivers.i2c_edma.MK66F18 platform.drivers.i2c_cmsis_edma.MK66F18 platform.drivers.common.MK66F18 platform.drivers.flash.MK66F18 device.MK66F18_CMSIS.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 component.lists.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MK66F18 platform.CMSIS_Driver_Include.Common_CMSISInclude.MK66F18 RTE_Device.MK66F18" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmk66f_cmsis_i2c_read_accel_value_transfer" name="cmsis_i2c_read_accel_value_transfer" category="cmsis_driver_examples/i2c" dependency="platform.drivers.port.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.edma.MK66F18 platform.drivers.dmamux.MK66F18 platform.drivers.i2c.MK66F18 platform.drivers.i2c_edma.MK66F18 platform.drivers.i2c_cmsis_edma.MK66F18 platform.drivers.common.MK66F18 platform.drivers.flash.MK66F18 device.MK66F18_CMSIS.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 component.lists.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MK66F18 platform.CMSIS_Driver_Include.Common_CMSISInclude.MK66F18">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -79,6 +78,10 @@
     </source>
     <source path="boards/frdmk66f/cmsis_driver_examples/i2c/read_accel_value_transfer/mdk" target_path="src" type="linker" toolchain="mdk">
       <files mask="MK66FN2M0xxx18_flash.scf"/>
+    </source>
+    <source path="boards/frdmk66f/cmsis_driver_examples/i2c/read_accel_value_transfer" target_path="CMSIS" type="c_include" exclude="true">
+      <files mask="Driver_Common.h"/>
+      <files mask="Driver_I2C.h"/>
     </source>
     <source path="boards/frdmk66f/cmsis_driver_examples/i2c/read_accel_value_transfer" target_path="board" type="c_include">
       <files mask="RTE_Device.h"/>

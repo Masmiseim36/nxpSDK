@@ -9,13 +9,15 @@
 extern "C" {
 #endif
 
+#include "integer.h"
+
 /* Definitions of physical drive number for each drive */
 #define RAMDISK         0       /* Example: ram disk to physical drive 0 */
 #define USBDISK         1       /* usb disk to physical drive 1 */
 #define SDDISK          2       /* sd disk to physical drive 2 */
 #define MMCDISK         3       /* mmc disk to physical drive 3 */
 #define SDSPIDISK       4       /* sdspi disk to physical drive 4 */
-#define NANDDISK        5       /* nand disk to physical drive 5 */
+#define NANDDISK       5       /* nand disk to physical drive 5 */
 
 /* Status of Disk Functions */
 typedef BYTE	DSTATUS;
@@ -48,7 +50,7 @@ DRESULT disk_ioctl (BYTE pdrv, BYTE cmd, void* buff);
 #define STA_PROTECT		0x04	/* Write protected */
 
 
-/* Command code for disk_ioctrl fucntion */
+/* Command code for disk_ioctrl function */
 
 /* Generic command (Used by FatFs) */
 #define CTRL_SYNC			0	/* Complete pending write process (needed at FF_FS_READONLY == 0) */

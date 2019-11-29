@@ -73,8 +73,7 @@ void HardFault_Handler(void)
 void BusFault_Handler(void)
 #endif
 {
-    sysmpu_rwxrights_master_access_control_t accessRights =
-    {
+    sysmpu_rwxrights_master_access_control_t accessRights = {
         kSYSMPU_SupervisorEqualToUsermode,
         kSYSMPU_UserReadWriteExecute,
 #if FSL_FEATURE_SYSMPU_HAS_PROCESS_IDENTIFIER
@@ -110,8 +109,7 @@ int main(void)
     memset((void *)&userConfig2, 0, sizeof(sysmpu_config_t));
 
     /* Initialize the region 1, region 3, master 0 -  core access rights supervisior r/w/x , user r/w/x. */
-    sysmpu_rwxrights_master_access_control_t right1 =
-    {
+    sysmpu_rwxrights_master_access_control_t right1 = {
         kSYSMPU_SupervisorEqualToUsermode,
         kSYSMPU_UserReadWriteExecute,
 #if FSL_FEATURE_SYSMPU_HAS_PROCESS_IDENTIFIER
@@ -119,8 +117,7 @@ int main(void)
 #endif /* FSL_FEATURE_SYSMPU_HAS_PROCESS_IDENTIFIER */
     };
     /* Initialize the region 2, master 0 -  core access rights supervisior r/x , user no access. */
-    sysmpu_rwxrights_master_access_control_t right2 =
-    {
+    sysmpu_rwxrights_master_access_control_t right2 = {
         kSYSMPU_SupervisorReadExecute,
         kSYSMPU_UserNoAccessRights,
 #if FSL_FEATURE_SYSMPU_HAS_PROCESS_IDENTIFIER
@@ -128,12 +125,12 @@ int main(void)
 #endif /* FSL_FEATURE_SYSMPU_HAS_PROCESS_IDENTIFIER */
     };
 
-    userConfig0.regionConfig.regionNum = 1;    /*!< SYSMPU region number 1. */
+    userConfig0.regionConfig.regionNum    = 1; /*!< SYSMPU region number 1. */
     userConfig0.regionConfig.startAddress = 0; /*!< Memory region start address. */
     userConfig0.regionConfig.endAddress =
         ACTUAL_REGION_START_ADDR((uint32_t)&regionArray[0]) - 0x1; /*!< Memory region end address. */
     userConfig0.regionConfig.accessRights1[0] = right1;            /*!< Low masters access permission. master 0. */
-    userConfig0.next = &userConfig1;
+    userConfig0.next                          = &userConfig1;
 
     userConfig1.regionConfig.regionNum = 2; /*!< SYSMPU region number 2. */
     userConfig1.regionConfig.startAddress =
@@ -141,14 +138,14 @@ int main(void)
     userConfig1.regionConfig.endAddress =
         ACTUAL_REGION_END_ADDR((uint32_t)&regionArray[SYSMPU_EXAMPLE_TEST_SIZE - 1]); /*!< Memory region end address. */
     userConfig1.regionConfig.accessRights1[0] = right2; /*!< Low masters access permission. master 0. */
-    userConfig1.next = &userConfig2;
+    userConfig1.next                          = &userConfig2;
 
     userConfig2.regionConfig.regionNum = 3; /*!< SYSMPU region number 3. */
     userConfig2.regionConfig.startAddress =
         ACTUAL_REGION_START_ADDR(userConfig1.regionConfig.endAddress + 1); /*!< Memory region start address. */
-    userConfig2.regionConfig.endAddress = 0xFFFFFFFFU;                     /*!< Memory region end address. */
+    userConfig2.regionConfig.endAddress       = 0xFFFFFFFFU;               /*!< Memory region end address. */
     userConfig2.regionConfig.accessRights1[0] = right1; /*!< Low masters access permission. master 0. */
-    userConfig2.next = NULL;
+    userConfig2.next                          = NULL;
 
     /* Hardware Initialization. */
     BOARD_InitPins();

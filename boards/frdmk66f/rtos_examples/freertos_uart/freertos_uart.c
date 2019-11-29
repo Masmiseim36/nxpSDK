@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -39,8 +39,8 @@ static void uart_task(void *pvParameters);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-const char *to_send = "FreeRTOS UART driver example!\r\n";
-const char *send_ring_overrun = "\r\nRing buffer overrun!\r\n";
+const char *to_send               = "FreeRTOS UART driver example!\r\n";
+const char *send_ring_overrun     = "\r\nRing buffer overrun!\r\n";
 const char *send_hardware_overrun = "\r\nHardware buffer overrun!\r\n";
 uint8_t background_buffer[32];
 uint8_t recv_buffer[4];
@@ -49,10 +49,10 @@ uart_rtos_handle_t handle;
 struct _uart_handle t_handle;
 
 uart_rtos_config_t uart_config = {
-    .baudrate = 115200,
-    .parity = kUART_ParityDisabled,
-    .stopbits = kUART_OneStopBit,
-    .buffer = background_buffer,
+    .baudrate    = 115200,
+    .parity      = kUART_ParityDisabled,
+    .stopbits    = kUART_OneStopBit,
+    .buffer      = background_buffer,
     .buffer_size = sizeof(background_buffer),
 };
 
@@ -85,10 +85,10 @@ int main(void)
 static void uart_task(void *pvParameters)
 {
     int error;
-    size_t n;
+    size_t n = 0;
 
     uart_config.srcclk = DEMO_UART_CLK_FREQ;
-    uart_config.base = DEMO_UART;
+    uart_config.base   = DEMO_UART;
 
     if (0 > UART_RTOS_Init(&handle, &t_handle, &uart_config))
     {

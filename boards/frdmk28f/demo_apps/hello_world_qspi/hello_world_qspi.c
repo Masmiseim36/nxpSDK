@@ -86,16 +86,16 @@ void copy_to_ram()
     uint32_t codeRelocateSize;
     uint8_t *codeReloocateRamStart;
 #if defined(__ICCARM__)
-    codeRelocateRomStart = (uint8_t *)__section_begin("ramfunc_section_init");
-    codeRelocateSize = (uint32_t)__section_size("ramfunc_section_init");
+    codeRelocateRomStart  = (uint8_t *)__section_begin("ramfunc_section_init");
+    codeRelocateSize      = (uint32_t)__section_size("ramfunc_section_init");
     codeReloocateRamStart = (uint8_t *)__section_begin("ramfunc_section");
 #elif defined(__CC_ARM) || defined(__ARMCC_VERSION)
-    codeRelocateRomStart = (uint8_t *)Load$$EXEC_m_ramfunc$$Base;
-    codeRelocateSize = (uint32_t)Load$$EXEC_m_ramfunc$$Length;
+    codeRelocateRomStart  = (uint8_t *)Load$$EXEC_m_ramfunc$$Base;
+    codeRelocateSize      = (uint32_t)Load$$EXEC_m_ramfunc$$Length;
     codeReloocateRamStart = (uint8_t *)Image$$EXEC_m_ramfunc$$Base;
 #elif defined(__GNUC__)
-    codeRelocateRomStart = (uint8_t *)ramfunc_load_address;
-    codeRelocateSize = (uint32_t)ramfunc_length;
+    codeRelocateRomStart  = (uint8_t *)ramfunc_load_address;
+    codeRelocateSize      = (uint32_t)ramfunc_length;
     codeReloocateRamStart = (uint8_t *)ramfunc_execution_address;
 #endif
 

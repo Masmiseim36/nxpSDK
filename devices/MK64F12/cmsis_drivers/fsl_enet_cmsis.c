@@ -104,7 +104,7 @@ static int32_t ENET_CommonInitialize(ARM_ETH_MAC_SignalEvent_t cb_event, cmsis_e
         return ARM_DRIVER_OK;
     }
     enet->cb_event = cb_event;
-    enet->flags = ENET_FLAG_INIT;
+    enet->flags    = ENET_FLAG_INIT;
 
     return ARM_DRIVER_OK;
 }

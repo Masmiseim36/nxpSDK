@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2019 NXP
  * All rights reserved.
  *
  *
@@ -11,7 +11,7 @@
 #include "fsl_device_registers.h"
 #include "fsl_ftm.h"
 
-#define gHalTimerInstanceNum_c (0x3)
+#define gHalTimerInstanceNum_c (FSL_FEATURE_SOC_FTM_COUNT)
 typedef struct _hal_timer_handle_struct_t
 {
     uint32_t timeout;
@@ -33,7 +33,7 @@ static hal_timer_handle_t g_timerHandle[gHalTimerInstanceNum_c];
 ************************************************************************************/
 static void HAL_TimerInterruptHandle(uint8_t instance)
 {
-    FTM_Type *mFTMBase[] = FTM_BASE_PTRS;
+    FTM_Type *mFTMBase[]                     = FTM_BASE_PTRS;
     hal_timer_handle_struct_t *halTimerState = (hal_timer_handle_struct_t *)g_timerHandle[instance];
 
     FTM_ClearStatusFlags(mFTMBase[instance], kFTM_TimeOverflowFlag);
@@ -78,8 +78,8 @@ void FTM2_IRQHandler(void)
 ************************************************************************************/
 hal_timer_status_t HAL_TimerInit(hal_timer_handle_t halTimerHandle, hal_timer_config_t *halTimerConfig)
 {
-    IRQn_Type mFTMIrqId[] = FTM_IRQS;
-    FTM_Type *mFTMBase[] = FTM_BASE_PTRS;
+    IRQn_Type mFTMIrqId[]                    = FTM_IRQS;
+    FTM_Type *mFTMBase[]                     = FTM_BASE_PTRS;
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
     IRQn_Type irqId;
     ftm_config_t ftmInfo;
@@ -88,12 +88,13 @@ hal_timer_status_t HAL_TimerInit(hal_timer_handle_t halTimerHandle, hal_timer_co
     assert(sizeof(hal_timer_handle_struct_t) == HAL_TIMER_HANDLE_SIZE);
     assert(halTimerConfig);
     assert(halTimerHandle);
-    if (halTimerState->instance >= gHalTimerInstanceNum_c)
+    if (halTimerConfig->instance >= gHalTimerInstanceNum_c)
+    {
         return kStatus_HAL_TimerOutOfRanger;
-
-    halTimerState->timeout = halTimerConfig->timeout;
+    }
+    halTimerState->timeout  = halTimerConfig->timeout;
     halTimerState->instance = halTimerConfig->instance;
-    FTMBaseAddr = (FTM_Type *)mFTMBase[halTimerState->instance];
+    FTMBaseAddr             = (FTM_Type *)mFTMBase[halTimerState->instance];
     assert(FTMBaseAddr);
     FTM_GetDefaultConfig(&ftmInfo);
     /* FTM clock divide by 128 */
@@ -111,7 +112,7 @@ hal_timer_status_t HAL_TimerInit(hal_timer_handle_t halTimerHandle, hal_timer_co
     /* Install ISR */
     irqId = mFTMIrqId[halTimerState->instance];
     FTM_EnableInterrupts(FTMBaseAddr, kFTM_TimeOverflowInterruptEnable);
-    NVIC_SetPriority((IRQn_Type)irqId, 4);
+    NVIC_SetPriority((IRQn_Type)irqId, HAL_TIMER_ISR_PRIORITY);
     g_timerHandle[halTimerState->instance] = halTimerHandle;
     EnableIRQ(irqId);
     return kStatus_HAL_TimerSuccess;
@@ -121,7 +122,7 @@ void HAL_TimerDeinit(hal_timer_handle_t halTimerHandle)
     FTM_Type *mFTMBase[] = FTM_BASE_PTRS;
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
-    g_timerHandle[halTimerState->instance] = NULL;
+    g_timerHandle[halTimerState->instance]   = NULL;
     FTM_Deinit(mFTMBase[halTimerState->instance]);
 }
 /*************************************************************************************/
@@ -148,8 +149,8 @@ void HAL_TimerInstallCallback(hal_timer_handle_t halTimerHandle, hal_timer_callb
 {
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
-    halTimerState->callback = callback;
-    halTimerState->callbackParam = callbackParam;
+    halTimerState->callback                  = callback;
+    halTimerState->callbackParam             = callbackParam;
 }
 
 // return micro us
@@ -166,7 +167,7 @@ uint32_t HAL_TimerGetMaxTimeout(hal_timer_handle_t halTimerHandle)
     uint32_t reserveCount;
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
-    reserveCount = MSEC_TO_COUNT(4, halTimerState->timerClock_Hz);
+    reserveCount                             = MSEC_TO_COUNT(4, halTimerState->timerClock_Hz);
     if (reserveCount < MSEC_TO_COUNT(1, halTimerState->timerClock_Hz))
         return 1000;
     return COUNT_TO_USEC(0xFFFF - reserveCount, halTimerState->timerClock_Hz);
@@ -178,8 +179,8 @@ hal_timer_status_t HAL_TimerUpdateTimeout(hal_timer_handle_t halTimerHandle, uin
     FTM_Type *mFTMBase[] = FTM_BASE_PTRS;
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
-    halTimerState->timeout = timeout;
-    tickCount = USEC_TO_COUNT(halTimerState->timeout, halTimerState->timerClock_Hz);
+    halTimerState->timeout                   = timeout;
+    tickCount                                = USEC_TO_COUNT(halTimerState->timeout, halTimerState->timerClock_Hz);
     if ((tickCount < 1) || (tickCount > 0xfff0))
         return kStatus_HAL_TimerOutOfRanger;
     FTM_SetTimerPeriod(mFTMBase[halTimerState->instance], tickCount);

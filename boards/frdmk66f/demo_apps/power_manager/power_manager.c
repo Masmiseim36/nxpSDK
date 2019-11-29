@@ -90,11 +90,11 @@ static app_wakeup_source_t s_wakeupSource; /* Wakeup source.                 */
 void APP_SetClockVlpr(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 3U, /* PLLFLLSEL select IRC48MCLK. */
-        .pllFllDiv = 0U,
+        .pllFllSel  = 3U, /* PLLFLLSEL select IRC48MCLK. */
+        .pllFllDiv  = 0U,
         .pllFllFrac = 0U,
-        .er32kSrc = 2U,         /* ERCLK32K selection, use RTC. */
-        .clkdiv1 = 0x00040000U, /* SIM_CLKDIV1. */
+        .er32kSrc   = 2U,          /* ERCLK32K selection, use RTC. */
+        .clkdiv1    = 0x00040000U, /* SIM_CLKDIV1. */
     };
 
     CLOCK_SetSimSafeDivs();
@@ -112,15 +112,17 @@ void APP_SetClockVlpr(void)
 void APP_SetClockRunFromVlpr(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 1U, /* PLLFLLSEL select PLL. */
-        .pllFllDiv = 0U,
+        .pllFllSel  = 1U, /* PLLFLLSEL select PLL. */
+        .pllFllDiv  = 0U,
         .pllFllFrac = 0U,
-        .er32kSrc = 2U,         /* ERCLK32K selection, use RTC. */
-        .clkdiv1 = 0x01140000U, /* SIM_CLKDIV1. */
+        .er32kSrc   = 2U,          /* ERCLK32K selection, use RTC. */
+        .clkdiv1    = 0x01140000U, /* SIM_CLKDIV1. */
     };
 
     const mcg_pll_config_t pll0Config = {
-        .enableMode = 0U, .prdiv = 0x00U, .vdiv = 0x04U,
+        .enableMode = 0U,
+        .prdiv      = 0x00U,
+        .vdiv       = 0x04U,
     };
 
     CLOCK_SetSimSafeDivs();
@@ -141,13 +143,15 @@ void APP_SetClockRunFromVlpr(void)
 void APP_SetClockHsrun(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 1U,        /* PLLFLLSEL select PLL. */
-        .er32kSrc = 2U,         /* ERCLK32K selection, use RTC. */
-        .clkdiv1 = 0x02260000U, /* SIM_CLKDIV1. */
+        .pllFllSel = 1U,          /* PLLFLLSEL select PLL. */
+        .er32kSrc  = 2U,          /* ERCLK32K selection, use RTC. */
+        .clkdiv1   = 0x02260000U, /* SIM_CLKDIV1. */
     };
 
     const mcg_pll_config_t pll0Config = {
-        .enableMode = 0U, .prdiv = 0x00U, .vdiv = 0x0EU,
+        .enableMode = 0U,
+        .prdiv      = 0x00U,
+        .vdiv       = 0x0EU,
     };
 
     CLOCK_SetSimSafeDivs();
@@ -160,15 +164,17 @@ void APP_SetClockHsrun(void)
 void APP_SetClockRunFromHsrun(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 1U, /* PLLFLLSEL select PLL. */
-        .pllFllDiv = 0U,
+        .pllFllSel  = 1U, /* PLLFLLSEL select PLL. */
+        .pllFllDiv  = 0U,
         .pllFllFrac = 0U,
-        .er32kSrc = 2U,         /* ERCLK32K selection, use RTC. */
-        .clkdiv1 = 0x01140000U, /* SIM_CLKDIV1. */
+        .er32kSrc   = 2U,          /* ERCLK32K selection, use RTC. */
+        .clkdiv1    = 0x01140000U, /* SIM_CLKDIV1. */
     };
 
     const mcg_pll_config_t pll0Config = {
-        .enableMode = 0U, .prdiv = 0x00U, .vdiv = 0x04U,
+        .enableMode = 0U,
+        .prdiv      = 0x00U,
+        .vdiv       = 0x04U,
     };
 
     CLOCK_SetPbeMode(kMCG_PllClkSelPll0, &pll0Config);
@@ -187,9 +193,9 @@ static void APP_InitDebugConsole(void)
 
 status_t callback0(notifier_notification_block_t *notify, void *dataPtr)
 {
-    user_callback_data_t *userData = (user_callback_data_t *)dataPtr;
-    status_t ret = kStatus_Fail;
-    app_power_mode_t targetMode = ((power_user_config_t *)notify->targetConfig)->mode;
+    user_callback_data_t *userData     = (user_callback_data_t *)dataPtr;
+    status_t ret                       = kStatus_Fail;
+    app_power_mode_t targetMode        = ((power_user_config_t *)notify->targetConfig)->mode;
     smc_power_state_t originPowerState = userData->originPowerState;
 
     switch (notify->notifyType)
@@ -539,15 +545,15 @@ status_t APP_PowerModeSwitch(notifier_user_config_t *targetConfig, void *userDat
 {
     smc_power_state_t currentPowerMode;         /* Local variable with current power mode */
     app_power_mode_t targetPowerMode;           /* Local variable with target power mode name*/
-    power_user_config_t *targetPowerModeConfig; /* Local variable with target power mode configruation */
+    power_user_config_t *targetPowerModeConfig; /* Local variable with target power mode configuration */
 
     smc_power_mode_lls_config_t lls_config; /* Local variable for lls configuration */
 
     smc_power_mode_vlls_config_t vlls_config; /* Local variable for vlls configuration */
 
     targetPowerModeConfig = (power_user_config_t *)targetConfig;
-    currentPowerMode = SMC_GetPowerModeState(SMC);
-    targetPowerMode = targetPowerModeConfig->mode;
+    currentPowerMode      = SMC_GetPowerModeState(SMC);
+    targetPowerMode       = targetPowerModeConfig->mode;
 
     switch (targetPowerMode)
     {
@@ -641,7 +647,7 @@ status_t APP_PowerModeSwitch(notifier_user_config_t *targetConfig, void *userDat
                 vlls_config.subMode = kSMC_StopSub1;
             }
             vlls_config.enablePorDetectInVlls0 = targetPowerModeConfig->enablePorDetectInVlls0;
-            vlls_config.enableRam2InVlls2 = targetPowerModeConfig->enableRam2InVlls2;
+            vlls_config.enableRam2InVlls2      = targetPowerModeConfig->enableRam2InVlls2;
             SMC_PreEnterStopModes();
             SMC_SetPowerModeVlls(SMC, &vlls_config);
             SMC_PostExitStopModes();
@@ -677,13 +683,13 @@ int main(void)
 
     };
 
-    power_user_config_t vlpwConfig = vlprConfig;
+    power_user_config_t vlpwConfig  = vlprConfig;
     power_user_config_t vlls1Config = vlprConfig;
     power_user_config_t vlls3Config = vlprConfig;
-    power_user_config_t vlpsConfig = vlprConfig;
-    power_user_config_t waitConfig = vlprConfig;
-    power_user_config_t stopConfig = vlprConfig;
-    power_user_config_t runConfig = vlprConfig;
+    power_user_config_t vlpsConfig  = vlprConfig;
+    power_user_config_t waitConfig  = vlprConfig;
+    power_user_config_t stopConfig  = vlprConfig;
+    power_user_config_t runConfig   = vlprConfig;
 
     power_user_config_t llsConfig = vlprConfig;
 
@@ -720,13 +726,13 @@ int main(void)
     memset(&callbackData0, 0, sizeof(user_callback_data_t));
 
     /* Initializes configuration structures */
-    vlpwConfig.mode = kAPP_PowerModeVlpw;
+    vlpwConfig.mode  = kAPP_PowerModeVlpw;
     vlls1Config.mode = kAPP_PowerModeVlls1;
     vlls3Config.mode = kAPP_PowerModeVlls3;
-    vlpsConfig.mode = kAPP_PowerModeVlps;
-    waitConfig.mode = kAPP_PowerModeWait;
-    stopConfig.mode = kAPP_PowerModeStop;
-    runConfig.mode = kAPP_PowerModeRun;
+    vlpsConfig.mode  = kAPP_PowerModeVlps;
+    waitConfig.mode  = kAPP_PowerModeWait;
+    stopConfig.mode  = kAPP_PowerModeStop;
+    runConfig.mode   = kAPP_PowerModeRun;
 
     llsConfig.mode = kAPP_PowerModeLls;
 
@@ -767,7 +773,7 @@ int main(void)
     LPTMR_GetDefaultConfig(&lptmrConfig);
     /* Use LPO as clock source. */
     lptmrConfig.prescalerClockSource = kLPTMR_PrescalerClock_1;
-    lptmrConfig.bypassPrescaler = true;
+    lptmrConfig.bypassPrescaler      = true;
 
     LPTMR_Init(LPTMR0, &lptmrConfig);
 
@@ -851,7 +857,7 @@ int main(void)
             }
 
             callbackData0.originPowerState = currentPowerState;
-            targetConfigIndex = targetPowerMode - kAPP_PowerModeMin - 1;
+            targetConfigIndex              = targetPowerMode - kAPP_PowerModeMin - 1;
             NOTIFIER_SwitchConfig(&powerModeHandle, targetConfigIndex, kNOTIFIER_PolicyAgreement);
             PRINTF("\r\nNext loop\r\n");
         }

@@ -102,7 +102,7 @@ void SDRAMC_Init(SDRAM_Type *base, sdramc_config_t *configure)
     assert(configure->blockConfig);
     assert(configure->refreshConfig->busClock_Hz);
 
-    sdramc_blockctl_config_t *bctlConfig = configure->blockConfig;
+    sdramc_blockctl_config_t *bctlConfig   = configure->blockConfig;
     sdramc_refresh_config_t *refreshConfig = configure->refreshConfig;
     uint32_t count;
     uint32_t index;
@@ -113,8 +113,8 @@ void SDRAMC_Init(SDRAM_Type *base, sdramc_config_t *configure)
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 
     /* Initialize sdram Auto refresh timing. */
-    count = refreshConfig->sdramRefreshRow * (refreshConfig->busClock_Hz / SDRAMC_ONESECOND_MILLISECONDS);
-    count = (count / SDRAMC_ONEMILLSEC_NANOSECONDS) / 16 - 1;
+    count      = refreshConfig->sdramRefreshRow * (refreshConfig->busClock_Hz / SDRAMC_ONESECOND_MILLISECONDS);
+    count      = (count / SDRAMC_ONEMILLSEC_NANOSECONDS) / 16 - 1;
     base->CTRL = SDRAM_CTRL_RC(count) | SDRAM_CTRL_RTIM(refreshConfig->refreshTime);
 
     for (index = 0; index < configure->numBlockConfig; index++)

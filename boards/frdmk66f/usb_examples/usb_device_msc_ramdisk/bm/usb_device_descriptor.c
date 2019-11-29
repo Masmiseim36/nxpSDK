@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2018 NXP
+ * Copyright 2016 - 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -30,12 +30,12 @@ usb_device_endpoint_struct_t g_UsbDeviceMscEndpoints[USB_MSC_ENDPOINT_COUNT] = {
     /* msc bulk in endpoint */
     {
         USB_MSC_BULK_IN_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT), USB_ENDPOINT_BULK,
-        FS_MSC_BULK_IN_PACKET_SIZE,
+        FS_MSC_BULK_IN_PACKET_SIZE,0U,
     },
     /* msc bulk out endpoint */
     {
         USB_MSC_BULK_OUT_ENDPOINT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT), USB_ENDPOINT_BULK,
-        FS_MSC_BULK_OUT_PACKET_SIZE,
+        FS_MSC_BULK_OUT_PACKET_SIZE,0U,
     }};
 /* msc interface information */
 usb_device_interface_struct_t g_UsbDeviceMscInterface[] = {{

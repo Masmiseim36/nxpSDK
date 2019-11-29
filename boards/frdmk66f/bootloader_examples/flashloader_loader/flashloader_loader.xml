@@ -15,7 +15,7 @@
     <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk66f_flashloader_loader" name="flashloader_loader" category="bootloader_examples" dependency="platform.drivers.clock.MK66F18 device.MK66F18_CMSIS.MK66F18 middleware.mcu-boot.MK66F18_startup.MK66F18 middleware.mcu-boot.loadersources.MK66F18 platform.drivers.uart.MK66F18 middleware.mcu-boot.src_startup.MK66F18 platform.drivers.common.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18" toolchain="iar mdk mcuxpresso">
+  <example id="frdmk66f_flashloader_loader" name="flashloader_loader" category="bootloader_examples" dependency="platform.drivers.clock.MK66F18 device.MK66F18_CMSIS.MK66F18 middleware.mcu-boot.MK66F18_startup.MK66F18 middleware.mcu-boot.loadersources.MK66F18 platform.drivers.uart.MK66F18 middleware.mcu-boot.src_startup.MK66F18 platform.drivers.common.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -57,7 +57,7 @@
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>
-          <value>true</value>
+          <value>false</value>
         </option>
         <option id="com.crt.advproject.link.fpu" type="enum">
           <value>com.crt.advproject.link.fpu.fpv4.hard</value>

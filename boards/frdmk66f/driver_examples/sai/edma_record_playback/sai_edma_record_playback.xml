@@ -2,12 +2,16 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.codec_i2c.MK66F18"/>
+    <definition extID="component.da7212_adapter.MK66F18"/>
+    <definition extID="component.i2c_adapter.MK66F18"/>
     <definition extID="component.lists.MK66F18"/>
     <definition extID="component.serial_manager.MK66F18"/>
     <definition extID="component.serial_manager_uart.MK66F18"/>
     <definition extID="component.uart_adapter.MK66F18"/>
     <definition extID="device.MK66F18_CMSIS.MK66F18"/>
     <definition extID="device.MK66F18_startup.MK66F18"/>
+    <definition extID="driver.codec.MK66F18"/>
     <definition extID="driver.dialog7212.MK66F18"/>
     <definition extID="platform.Include_common.MK66F18"/>
     <definition extID="platform.Include_core_cm4.MK66F18"/>
@@ -31,7 +35,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk66f_sai_edma_record_playback" name="sai_edma_record_playback" category="driver_examples/sai" dependency="platform.drivers.i2c.MK66F18 driver.dialog7212.MK66F18 platform.drivers.port.MK66F18 platform.drivers.gpio.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.sai.MK66F18 platform.drivers.sai_edma.MK66F18 platform.drivers.dmamux.MK66F18 platform.drivers.edma.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 component.lists.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.utilities.assert.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmk66f_sai_edma_record_playback" name="sai_edma_record_playback" category="driver_examples/sai" dependency="platform.drivers.i2c.MK66F18 driver.dialog7212.MK66F18 driver.codec.MK66F18 component.da7212_adapter.MK66F18 component.i2c_adapter.MK66F18 platform.drivers.port.MK66F18 platform.drivers.gpio.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.sai.MK66F18 platform.drivers.sai_edma.MK66F18 platform.drivers.dmamux.MK66F18 platform.drivers.edma.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 component.lists.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.utilities.assert.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 component.codec_i2c.MK66F18">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -52,6 +56,7 @@
           <value>FREEDOM</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>BOARD_USE_CODEC=1</value>
+          <value>CODEC_DA7212_ENABLE</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>

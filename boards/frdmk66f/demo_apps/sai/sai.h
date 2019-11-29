@@ -7,21 +7,33 @@
  */
 
 #include "board.h"
+#include "fsl_debug_console.h"
 #include "fsl_dmamux.h"
 #include "fsl_sai_edma.h"
-#include "fsl_debug_console.h"
 #include "arm_math.h"
-
+#include "fsl_codec_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define OVER_SAMPLE_RATE (384U)
-#define SAMPLE_RATE (kSAI_SampleRate16KHz)
 #define BUFFER_SIZE (512)
 #define BUFFER_NUM (4)
 #if defined BOARD_HAS_SDCARD && (BOARD_HAS_SDCARD != 0)
 #define DEMO_SDCARD (1U)
 #endif
+/* demo audio sample rate */
+#define DEMO_AUDIO_SAMPLE_RATE (kSAI_SampleRate16KHz)
+/* demo audio master clock */
+#if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) || \
+    (defined FSL_FEATURE_PCC_HAS_SAI_DIVIDER && FSL_FEATURE_PCC_HAS_SAI_DIVIDER)
+#define DEMO_AUDIO_MASTER_CLOCK OVER_SAMPLE_RATE *DEMO_AUDIO_SAMPLE_RATE
+#else
+#define DEMO_AUDIO_MASTER_CLOCK DEMO_SAI_CLK_FREQ
+#endif
+/* demo audio data channel */
+#define DEMO_AUDIO_DATA_CHANNEL (2U)
+/* demo audio bit width */
+#define DEMO_AUDIO_BIT_WIDTH (kSAI_WordWidth16bits)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/

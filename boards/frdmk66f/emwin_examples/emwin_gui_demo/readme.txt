@@ -2,11 +2,14 @@ Overview
 ========
 The example demonstrates graphical widgets of the emWin library.
 
-Running the demo
-================
-Known issue: The MCU is not able to generate hardware reset of the LCD due to hardware limitation of the boards interconnection.
-Because of this the LCD may not get initialized (stays blank) following a cold start (power on) of the board even if the demo was
-correctly programmed to the FLASH memory. In such a case simply press the reset button to restart the demo.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -27,11 +30,11 @@ Prepare the Demo
 3.  Download the program to the target board.
 4.  Reset the SoC and run the project.
 
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Running the demo
+================
+Known issue: The MCU is not able to generate hardware reset of the LCD due to hardware limitation of the boards interconnection.
+Because of this the LCD may not get initialized (stays blank) following a cold start (power on) of the board even if the demo was
+correctly programmed to the FLASH memory. In such a case simply press the reset button to restart the demo.
+Customization options
+=====================
 

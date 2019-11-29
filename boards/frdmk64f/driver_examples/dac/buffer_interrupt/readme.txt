@@ -10,6 +10,14 @@ like normal (cycle) mode, swing mode, one-time-scan mode or FIFO mode.
 
 In this example, it captures the user's type-in operation from terminal and does the software trigger to the buffer.
 The terminal would also display the log that shows the current buffer pointer's position with buffer events.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.3
+- Keil MDK  5.27
+- GCC ARM Embedded  8.2.1
+- MCUXpresso  11.0.0
+
 Hardware requirements
 =====================
 - Mini/Micro USB cable
@@ -68,11 +76,6 @@ Buffer Index  3:
 
 User can take a look at how the pointer is moved by triggered, then user can also measure the DAC output
 pin to check responding voltage.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

@@ -247,6 +247,7 @@ DRESULT USB_HostMsdWriteDisk(BYTE pdrv, const BYTE *buff, DWORD sector, UINT cou
         sectorCount = count;
         sectorIndex = sector;
 #endif
+        retry = USB_HOST_FATFS_RW_RETRY_TIMES;
         while (retry--)
         {
             ufiIng = 1;

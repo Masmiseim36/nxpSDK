@@ -7,7 +7,7 @@
     <definition extID="component.serial_manager.MK28F15"/>
     <definition extID="component.serial_manager_uart.MK28F15"/>
     <definition extID="component.serial_manager_usb_cdc.MK28F15"/>
-    <definition extID="component.serial_manager_usb_cdc_device_config.MK28F15"/>
+    <definition extID="component.serial_manager_usb_cdc_device_config.frdmk28f.MK28F15"/>
     <definition extID="device.MK28F15_CMSIS.MK28F15"/>
     <definition extID="device.MK28F15_startup.MK28F15"/>
     <definition extID="middleware.baremetal.MK28F15"/>
@@ -30,7 +30,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk28f_hello_world_virtual_com" name="hello_world_virtual_com" category="demo_apps" dependency="component.serial_manager.MK28F15 component.serial_manager_usb_cdc.MK28F15 middleware.usb.phy.MK28F15 middleware.usb.device_controller_ehci.MK28F15 middleware.usb.device_controller_khci.MK28F15 platform.drivers.sysmpu.MK28F15 platform.drivers.clock.MK28F15 platform.drivers.common.MK28F15 device.MK28F15_CMSIS.MK28F15 utility.debug_console.MK28F15 component.lpuart_adapter.MK28F15 component.serial_manager_uart.MK28F15 platform.drivers.lpuart.MK28F15 component.lists.MK28F15 device.MK28F15_startup.MK28F15 platform.drivers.gpio.MK28F15 platform.drivers.port.MK28F15 platform.drivers.smc.MK28F15 platform.utilities.assert.MK28F15 platform.Include_core_cm4.MK28F15 platform.Include_common.MK28F15 middleware.baremetal.MK28F15 component.serial_manager_usb_cdc_device_config.MK28F15" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmk28f_hello_world_virtual_com" name="hello_world_virtual_com" category="demo_apps" dependency="component.serial_manager.MK28F15 component.serial_manager_usb_cdc.MK28F15 component.serial_manager_usb_cdc_device_config.frdmk28f.MK28F15 middleware.usb.phy.MK28F15 middleware.usb.device_controller_ehci.MK28F15 middleware.usb.device_controller_khci.MK28F15 platform.drivers.sysmpu.MK28F15 platform.drivers.clock.MK28F15 platform.drivers.common.MK28F15 device.MK28F15_CMSIS.MK28F15 utility.debug_console.MK28F15 component.lpuart_adapter.MK28F15 component.serial_manager_uart.MK28F15 platform.drivers.lpuart.MK28F15 component.lists.MK28F15 device.MK28F15_startup.MK28F15 platform.drivers.gpio.MK28F15 platform.drivers.port.MK28F15 platform.drivers.smc.MK28F15 platform.utilities.assert.MK28F15 platform.Include_core_cm4.MK28F15 platform.Include_common.MK28F15 middleware.baremetal.MK28F15">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -99,8 +99,8 @@
     <source path="boards/frdmk28f/demo_apps/hello_world_virtual_com" target_path="source" type="src">
       <files mask="hello_world.c"/>
     </source>
-    <source path="devices/MK28F15/utilities" target_path="component/serial_manager/usb_cdc_adapter" type="c_include">
-      <files mask="usb_device_config.h"/>
+    <source path="boards/frdmk28f/demo_apps/hello_world_virtual_com" target_path="src" type="binary" exclude="true">
+      <files mask="hello_world_virtual_com.bin"/>
     </source>
   </example>
 </ksdk:examples>

@@ -34,18 +34,18 @@
  * Prototypes
  ******************************************************************************/
 /*!
-* @brief Initialize the EDMA.
-*/
+ * @brief Initialize the EDMA.
+ */
 static void EDMA_Configuration(void);
 
 /*!
-* @brief Initialize the DMAMUX.
-*/
+ * @brief Initialize the DMAMUX.
+ */
 static void DMAMUX_Configuration(void);
 
 /*!
-* @brief Initialize the ADC16.
-*/
+ * @brief Initialize the ADC16.
+ */
 static void ADC16_Configuration(void);
 
 /*!
@@ -147,13 +147,13 @@ static void ADC16_Configuration(void)
     adc16_config_t adcUserConfig;
 
     /*
-    * Initialization ADC for 16bit resolution, DMA mode, normal convert speed, VREFH/L as reference,
-    * enable continuous convert mode.
-    */
+     * Initialization ADC for 16bit resolution, DMA mode, normal convert speed, VREFH/L as reference,
+     * enable continuous convert mode.
+     */
     ADC16_GetDefaultConfig(&adcUserConfig);
-    adcUserConfig.resolution = kADC16_Resolution16Bit;
+    adcUserConfig.resolution                 = kADC16_Resolution16Bit;
     adcUserConfig.enableContinuousConversion = true;
-    adcUserConfig.clockSource = kADC16_ClockSourceAsynchronousClock;
+    adcUserConfig.clockSource                = kADC16_ClockSourceAsynchronousClock;
 
     adcUserConfig.enableLowPower = true;
 #if ((defined BOARD_ADC_USE_ALT_VREF) && BOARD_ADC_USE_ALT_VREF)

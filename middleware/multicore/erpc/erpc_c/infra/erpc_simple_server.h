@@ -42,6 +42,11 @@ public:
     }
 
     /*!
+     * @brief SimpleServer destructor
+     */
+    virtual ~SimpleServer(void);
+
+    /*!
      * @brief Run server in infinite loop.
      *
      * Will never jump out from this function.

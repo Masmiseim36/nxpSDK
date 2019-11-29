@@ -366,10 +366,7 @@
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
             <VariousControls>
-              <MiscControls>--library_interface=armcc 
---diag_suppress=1296,186 
- 
-</MiscControls>
+              <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
               <Define>DEBUG, CPU_MK66FN2M0VMD18, USB_STACK_BM, FRDM_K66F, FREEDOM</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../middleware/lwip/src/include/lwip;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/phy;../../../../../../devices/MK66F18/drivers;../../../../../../devices/MK66F18/drivers;../../../../../../devices/MK66F18/drivers;../../../../../../devices/MK66F18/drivers;../../../../../../middleware/lwip/contrib/apps/ping;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/host/class;../../../../../../devices/MK66F18/drivers;../../../../../../devices/MK66F18/drivers;../../../../../../devices/MK66F18;../../../../../../devices/MK66F18/utilities/str;../../../../../../devices/MK66F18/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../devices/MK66F18/drivers;../../../../../../components/lists;../../../../../../devices/MK66F18/drivers;../../../../../../devices/MK66F18/drivers;../../../../../../devices/MK66F18/drivers;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include</IncludePath>
@@ -405,11 +402,7 @@
             <ScatterFile>MK66FN2M0xxx18_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove 
---predefine="-D__stack_size__=0x1000" 
---predefine="-D__heap_size__=0x1000" 
---predefine="-D__ram_vector_table__=1" 
-</Misc>
+            <Misc>--remove --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000" --predefine="-D__ram_vector_table__=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -510,16 +503,6 @@
               <FilePath>../../../../../../middleware/usb/host/usb_host.h</FilePath>
             </File>
             <File>
-              <FileName>usb_host_hci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/usb_host_hci.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_hci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/host/usb_host_hci.h</FilePath>
-            </File>
-            <File>
               <FileName>usb_host_devices.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/host/usb_host_devices.c</FilePath>
@@ -530,14 +513,24 @@
               <FilePath>../../../../../../middleware/usb/host/usb_host_devices.h</FilePath>
             </File>
             <File>
+              <FileName>usb_host_framework.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_framework.c</FilePath>
+            </File>
+            <File>
               <FileName>usb_host_framework.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/usb_host_framework.h</FilePath>
             </File>
             <File>
-              <FileName>usb_host_framework.c</FileName>
+              <FileName>usb_host_hci.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/usb_host_framework.c</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_hci.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_hci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_hci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -585,14 +578,14 @@
               <FilePath>../../../../../../middleware/usb/osa/usb_osa.h</FilePath>
             </File>
             <File>
-              <FileName>usb_osa_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/osa/usb_osa_bm.h</FilePath>
-            </File>
-            <File>
               <FileName>usb_osa_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/osa/usb_osa_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_osa_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/osa/usb_osa_bm.h</FilePath>
             </File>
             <File>
               <FileName>usb_osa.h</FileName>
@@ -600,14 +593,14 @@
               <FilePath>../../../../../../middleware/usb/osa/usb_osa.h</FilePath>
             </File>
             <File>
-              <FileName>usb_osa_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/osa/usb_osa_bm.h</FilePath>
-            </File>
-            <File>
               <FileName>usb_osa_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/osa/usb_osa_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_osa_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/osa/usb_osa_bm.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -635,19 +628,14 @@
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_port.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_enet.h</FileName>
+              <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_enet.h</FilePath>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
               <FileName>fsl_enet.c</FileName>
@@ -655,9 +643,9 @@
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_enet.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_sysmpu.h</FileName>
+              <FileName>fsl_enet.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_sysmpu.h</FilePath>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_enet.h</FilePath>
             </File>
             <File>
               <FileName>fsl_sysmpu.c</FileName>
@@ -665,39 +653,19 @@
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_sysmpu.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_sysmpu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_sysmpu.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_flash.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_ftfx_adapter.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_adapter.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_utilities.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_controller.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_controller.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_flash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.h</FilePath>
             </File>
             <File>
               <FileName>fsl_ftfx_cache.c</FileName>
@@ -710,6 +678,31 @@
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_ftfx_flexnvm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.c</FilePath>
@@ -720,14 +713,9 @@
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.h</FileName>
+              <FileName>fsl_ftfx_utilities.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_flash.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_common.h</FilePath>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h</FilePath>
             </File>
             <File>
               <FileName>fsl_common.c</FileName>
@@ -735,9 +723,9 @@
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_common.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_uart.h</FileName>
+              <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_uart.h</FilePath>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_common.h</FilePath>
             </File>
             <File>
               <FileName>fsl_uart.c</FileName>
@@ -745,9 +733,9 @@
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_uart.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.h</FileName>
+              <FileName>fsl_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_lpuart.h</FilePath>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_uart.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.c</FileName>
@@ -755,9 +743,9 @@
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_smc.h</FileName>
+              <FileName>fsl_lpuart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_smc.h</FilePath>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
               <FileName>fsl_smc.c</FileName>
@@ -765,14 +753,19 @@
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_smc.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.h</FileName>
+              <FileName>fsl_smc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_gpio.h</FilePath>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_smc.h</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_gpio.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -780,14 +773,14 @@
           <GroupName>lwip-port</GroupName>
           <Files>
             <File>
-              <FileName>usb_ethernetif_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/usb_ethernetif_bm.c</FilePath>
-            </File>
-            <File>
               <FileName>usb_ethernetif.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/port/usb_ethernetif.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_ethernetif_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/usb_ethernetif_bm.c</FilePath>
             </File>
             <File>
               <FileName>sys_arch.c</FileName>
@@ -860,11 +853,6 @@
           <GroupName>device</GroupName>
           <Files>
             <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/fsl_device_registers.h</FilePath>
-            </File>
-            <File>
               <FileName>MK66F18.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK66F18/MK66F18.h</FilePath>
@@ -873,6 +861,11 @@
               <FileName>MK66F18_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK66F18/MK66F18_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK66F18/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MK66F18.c</FileName>
@@ -890,16 +883,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK66F18/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK66F18/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -915,6 +898,16 @@
               <FilePath>../../../../../../devices/MK66F18/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK66F18/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK66F18/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK66F18/utilities/fsl_assert.c</FilePath>
@@ -922,7 +915,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/uart</GroupName>
+          <GroupName>component-uart</GroupName>
           <Files>
             <File>
               <FileName>uart.h</FileName>
@@ -937,42 +930,47 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/serial_manager</GroupName>
+          <GroupName>component-serial_manager</GroupName>
           <Files>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
             <File>
               <FileName>serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/serial_manager.c</FilePath>
             </File>
             <File>
-              <FileName>serial_port_uart.h</FileName>
+              <FileName>serial_manager.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_port_internal.h</FilePath>
             </File>
             <File>
               <FileName>serial_port_uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
             </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component/lists</GroupName>
+          <GroupName>component-lists</GroupName>
           <Files>
-            <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/lists/generic_list.h</FilePath>
-            </File>
             <File>
               <FileName>generic_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/lists/generic_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/generic_list.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -995,46 +993,6 @@
               <FilePath>../../../../../../CMSIS/Include/core_cm4.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_common_tables.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
@@ -1050,9 +1008,49 @@
               <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
             <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv8.h</FileName>
@@ -1100,6 +1098,11 @@
               <FilePath>../../../../../../middleware/lwip/src/api/err.c</FilePath>
             </File>
             <File>
+              <FileName>if_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/api/if_api.c</FilePath>
+            </File>
+            <File>
               <FileName>netbuf.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/src/api/netbuf.c</FilePath>
@@ -1129,6 +1132,21 @@
         <Group>
           <GroupName>lwip-src-core</GroupName>
           <Files>
+            <File>
+              <FileName>altcp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/core/altcp.c</FilePath>
+            </File>
+            <File>
+              <FileName>altcp_alloc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/core/altcp_alloc.c</FilePath>
+            </File>
+            <File>
+              <FileName>altcp_tcp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/core/altcp_tcp.c</FilePath>
+            </File>
             <File>
               <FileName>def.c</FileName>
               <FileType>1</FileType>
@@ -1312,8 +1330,73 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lwip-src-include-compat-posix-arpa</GroupName>
+          <Files>
+            <File>
+              <FileName>inet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/compat/posix/arpa/inet.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip-src-include-compat-posix-net</GroupName>
+          <Files>
+            <File>
+              <FileName>if.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/compat/posix/net/if.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip-src-include-compat-posix</GroupName>
+          <Files>
+            <File>
+              <FileName>netdb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/compat/posix/netdb.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip-src-include-compat-posix-sys</GroupName>
+          <Files>
+            <File>
+              <FileName>socket.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/compat/posix/sys/socket.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip-src-include-compat-stdc</GroupName>
+          <Files>
+            <File>
+              <FileName>errno.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/compat/stdc/errno.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lwip-src-include-lwip</GroupName>
           <Files>
+            <File>
+              <FileName>altcp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/altcp.h</FilePath>
+            </File>
+            <File>
+              <FileName>altcp_tcp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/altcp_tcp.h</FilePath>
+            </File>
+            <File>
+              <FileName>altcp_tls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/altcp_tls.h</FilePath>
+            </File>
             <File>
               <FileName>api.h</FileName>
               <FileType>5</FileType>
@@ -1325,119 +1408,14 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/arch.h</FilePath>
             </File>
             <File>
-              <FileName>debug.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/debug.h</FilePath>
-            </File>
-            <File>
-              <FileName>dhcp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/dhcp.h</FilePath>
-            </File>
-            <File>
-              <FileName>dns.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/dns.h</FilePath>
-            </File>
-            <File>
-              <FileName>errno.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/errno.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethip6.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/ethip6.h</FilePath>
-            </File>
-            <File>
-              <FileName>icmp6.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/icmp6.h</FilePath>
-            </File>
-            <File>
-              <FileName>inet.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/inet.h</FilePath>
-            </File>
-            <File>
-              <FileName>init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/init.h</FilePath>
-            </File>
-            <File>
-              <FileName>ip_addr.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip_addr.h</FilePath>
-            </File>
-            <File>
-              <FileName>ip4_addr.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip4_addr.h</FilePath>
-            </File>
-            <File>
-              <FileName>ip6.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip6.h</FilePath>
-            </File>
-            <File>
-              <FileName>ip6_frag.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip6_frag.h</FilePath>
-            </File>
-            <File>
-              <FileName>memp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/memp.h</FilePath>
-            </File>
-            <File>
-              <FileName>nd6.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/nd6.h</FilePath>
-            </File>
-            <File>
-              <FileName>netdb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/netdb.h</FilePath>
-            </File>
-            <File>
-              <FileName>netifapi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/netifapi.h</FilePath>
-            </File>
-            <File>
-              <FileName>pbuf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/pbuf.h</FilePath>
-            </File>
-            <File>
-              <FileName>sio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/sio.h</FilePath>
-            </File>
-            <File>
-              <FileName>sockets.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/sockets.h</FilePath>
-            </File>
-            <File>
-              <FileName>sys.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/sys.h</FilePath>
-            </File>
-            <File>
-              <FileName>tcpip.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/tcpip.h</FilePath>
-            </File>
-            <File>
-              <FileName>udp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/udp.h</FilePath>
-            </File>
-            <File>
               <FileName>autoip.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/autoip.h</FilePath>
+            </File>
+            <File>
+              <FileName>debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/debug.h</FilePath>
             </File>
             <File>
               <FileName>def.h</FileName>
@@ -1445,9 +1423,19 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/def.h</FilePath>
             </File>
             <File>
+              <FileName>dhcp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/dhcp.h</FilePath>
+            </File>
+            <File>
               <FileName>dhcp6.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/dhcp6.h</FilePath>
+            </File>
+            <File>
+              <FileName>dns.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/dns.h</FilePath>
             </File>
             <File>
               <FileName>err.h</FileName>
@@ -1455,9 +1443,19 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/err.h</FilePath>
             </File>
             <File>
+              <FileName>errno.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/errno.h</FilePath>
+            </File>
+            <File>
               <FileName>etharp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/etharp.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethip6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/ethip6.h</FilePath>
             </File>
             <File>
               <FileName>icmp.h</FileName>
@@ -1465,14 +1463,34 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/icmp.h</FilePath>
             </File>
             <File>
+              <FileName>icmp6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/icmp6.h</FilePath>
+            </File>
+            <File>
+              <FileName>if_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/if_api.h</FilePath>
+            </File>
+            <File>
               <FileName>igmp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/igmp.h</FilePath>
             </File>
             <File>
+              <FileName>inet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/inet.h</FilePath>
+            </File>
+            <File>
               <FileName>inet_chksum.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/inet_chksum.h</FilePath>
+            </File>
+            <File>
+              <FileName>init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/init.h</FilePath>
             </File>
             <File>
               <FileName>ip.h</FileName>
@@ -1485,9 +1503,19 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip4.h</FilePath>
             </File>
             <File>
+              <FileName>ip4_addr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip4_addr.h</FilePath>
+            </File>
+            <File>
               <FileName>ip4_frag.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip4_frag.h</FilePath>
+            </File>
+            <File>
+              <FileName>ip6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip6.h</FilePath>
             </File>
             <File>
               <FileName>ip6_addr.h</FileName>
@@ -1495,9 +1523,29 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip6_addr.h</FilePath>
             </File>
             <File>
+              <FileName>ip6_frag.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip6_frag.h</FilePath>
+            </File>
+            <File>
+              <FileName>ip6_zone.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip6_zone.h</FilePath>
+            </File>
+            <File>
+              <FileName>ip_addr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip_addr.h</FilePath>
+            </File>
+            <File>
               <FileName>mem.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/mem.h</FilePath>
+            </File>
+            <File>
+              <FileName>memp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/memp.h</FilePath>
             </File>
             <File>
               <FileName>mld6.h</FileName>
@@ -1505,9 +1553,19 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/mld6.h</FilePath>
             </File>
             <File>
+              <FileName>nd6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/nd6.h</FilePath>
+            </File>
+            <File>
               <FileName>netbuf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/netbuf.h</FilePath>
+            </File>
+            <File>
+              <FileName>netdb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/netdb.h</FilePath>
             </File>
             <File>
               <FileName>netif.h</FileName>
@@ -1515,9 +1573,19 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/netif.h</FilePath>
             </File>
             <File>
+              <FileName>netifapi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/netifapi.h</FilePath>
+            </File>
+            <File>
               <FileName>opt.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/opt.h</FilePath>
+            </File>
+            <File>
+              <FileName>pbuf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/pbuf.h</FilePath>
             </File>
             <File>
               <FileName>raw.h</FileName>
@@ -1525,9 +1593,19 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/raw.h</FilePath>
             </File>
             <File>
+              <FileName>sio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/sio.h</FilePath>
+            </File>
+            <File>
               <FileName>snmp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/snmp.h</FilePath>
+            </File>
+            <File>
+              <FileName>sockets.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/sockets.h</FilePath>
             </File>
             <File>
               <FileName>stats.h</FileName>
@@ -1535,14 +1613,34 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/stats.h</FilePath>
             </File>
             <File>
+              <FileName>sys.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/sys.h</FilePath>
+            </File>
+            <File>
               <FileName>tcp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/tcp.h</FilePath>
             </File>
             <File>
+              <FileName>tcpbase.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/tcpbase.h</FilePath>
+            </File>
+            <File>
+              <FileName>tcpip.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/tcpip.h</FilePath>
+            </File>
+            <File>
               <FileName>timeouts.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/timeouts.h</FilePath>
+            </File>
+            <File>
+              <FileName>udp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/udp.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1550,9 +1648,19 @@
           <GroupName>lwip-src-include-lwip-priv</GroupName>
           <Files>
             <File>
+              <FileName>altcp_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/priv/altcp_priv.h</FilePath>
+            </File>
+            <File>
               <FileName>api_msg.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/priv/api_msg.h</FilePath>
+            </File>
+            <File>
+              <FileName>mem_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/priv/mem_priv.h</FilePath>
             </File>
             <File>
               <FileName>memp_priv.h</FileName>
@@ -1568,6 +1676,16 @@
               <FileName>nd6_priv.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/priv/nd6_priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>raw_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/priv/raw_priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>sockets_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/priv/sockets_priv.h</FilePath>
             </File>
             <File>
               <FileName>tcp_priv.h</FileName>
@@ -1595,6 +1713,11 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/prot/dhcp.h</FilePath>
             </File>
             <File>
+              <FileName>dhcp6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/prot/dhcp6.h</FilePath>
+            </File>
+            <File>
               <FileName>dns.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/prot/dns.h</FilePath>
@@ -1610,6 +1733,11 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/prot/ethernet.h</FilePath>
             </File>
             <File>
+              <FileName>iana.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/prot/iana.h</FilePath>
+            </File>
+            <File>
               <FileName>icmp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/prot/icmp.h</FilePath>
@@ -1618,6 +1746,11 @@
               <FileName>icmp6.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/prot/icmp6.h</FilePath>
+            </File>
+            <File>
+              <FileName>ieee.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/prot/ieee.h</FilePath>
             </File>
             <File>
               <FileName>igmp.h</FileName>
@@ -1665,6 +1798,16 @@
           <GroupName>lwip-src-include-netif</GroupName>
           <Files>
             <File>
+              <FileName>bridgeif.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/netif/bridgeif.h</FilePath>
+            </File>
+            <File>
+              <FileName>bridgeif_opts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/netif/bridgeif_opts.h</FilePath>
+            </File>
+            <File>
               <FileName>etharp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/netif/etharp.h</FilePath>
@@ -1675,9 +1818,24 @@
               <FilePath>../../../../../../middleware/lwip/src/include/netif/ethernet.h</FilePath>
             </File>
             <File>
+              <FileName>ieee802154.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/netif/ieee802154.h</FilePath>
+            </File>
+            <File>
               <FileName>lowpan6.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/netif/lowpan6.h</FilePath>
+            </File>
+            <File>
+              <FileName>lowpan6_ble.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/netif/lowpan6_ble.h</FilePath>
+            </File>
+            <File>
+              <FileName>lowpan6_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/netif/lowpan6_common.h</FilePath>
             </File>
             <File>
               <FileName>lowpan6_opts.h</FileName>
@@ -1688,6 +1846,11 @@
               <FileName>slipif.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/netif/slipif.h</FilePath>
+            </File>
+            <File>
+              <FileName>zepif.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/netif/zepif.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1700,11 +1863,6 @@
               <FilePath>../../../../../../middleware/lwip/src/include/netif/ppp/ccp.h</FilePath>
             </File>
             <File>
-              <FileName>chap_ms.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/netif/ppp/chap_ms.h</FilePath>
-            </File>
-            <File>
               <FileName>chap-md5.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/netif/ppp/chap-md5.h</FilePath>
@@ -1713,6 +1871,11 @@
               <FileName>chap-new.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/netif/ppp/chap-new.h</FilePath>
+            </File>
+            <File>
+              <FileName>chap_ms.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/netif/ppp/chap_ms.h</FilePath>
             </File>
             <File>
               <FileName>eap.h</FileName>
@@ -1847,33 +2010,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lwip-src-include-posix</GroupName>
-          <Files>
-            <File>
-              <FileName>errno.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/posix/errno.h</FilePath>
-            </File>
-            <File>
-              <FileName>netdb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/posix/netdb.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lwip-src-include-posix-sys</GroupName>
-          <Files>
-            <File>
-              <FileName>socket.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/posix/sys/socket.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>lwip-src-netif</GroupName>
           <Files>
+            <File>
+              <FileName>bridgeif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/netif/bridgeif.c</FilePath>
+            </File>
+            <File>
+              <FileName>bridgeif_fdb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/netif/bridgeif_fdb.c</FilePath>
+            </File>
             <File>
               <FileName>ethernet.c</FileName>
               <FileType>1</FileType>
@@ -1885,9 +2033,24 @@
               <FilePath>../../../../../../middleware/lwip/src/netif/lowpan6.c</FilePath>
             </File>
             <File>
+              <FileName>lowpan6_ble.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/netif/lowpan6_ble.c</FilePath>
+            </File>
+            <File>
+              <FileName>lowpan6_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/netif/lowpan6_common.c</FilePath>
+            </File>
+            <File>
               <FileName>slipif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/src/netif/slipif.c</FilePath>
+            </File>
+            <File>
+              <FileName>zepif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/netif/zepif.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1905,11 +2068,6 @@
               <FilePath>../../../../../../middleware/lwip/src/netif/ppp/ccp.c</FilePath>
             </File>
             <File>
-              <FileName>chap_ms.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/netif/ppp/chap_ms.c</FilePath>
-            </File>
-            <File>
               <FileName>chap-md5.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/src/netif/ppp/chap-md5.c</FilePath>
@@ -1918,6 +2076,11 @@
               <FileName>chap-new.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/src/netif/ppp/chap-new.c</FilePath>
+            </File>
+            <File>
+              <FileName>chap_ms.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/netif/ppp/chap_ms.c</FilePath>
             </File>
             <File>
               <FileName>demand.c</FileName>
@@ -2386,10 +2549,7 @@
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
             <VariousControls>
-              <MiscControls>--library_interface=armcc 
---diag_suppress=1296,186 
- 
-</MiscControls>
+              <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
               <Define>NDEBUG, CPU_MK66FN2M0VMD18, USB_STACK_BM, FRDM_K66F, FREEDOM</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../middleware/lwip/src/include/lwip;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/phy;../../../../../../devices/MK66F18/drivers;../../../../../../devices/MK66F18/drivers;../../../../../../devices/MK66F18/drivers;../../../../../../devices/MK66F18/drivers;../../../../../../middleware/lwip/contrib/apps/ping;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/host/class;../../../../../../devices/MK66F18/drivers;../../../../../../devices/MK66F18/drivers;../../../../../../devices/MK66F18;../../../../../../devices/MK66F18/utilities/str;../../../../../../devices/MK66F18/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../devices/MK66F18/drivers;../../../../../../components/lists;../../../../../../devices/MK66F18/drivers;../../../../../../devices/MK66F18/drivers;../../../../../../devices/MK66F18/drivers;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include</IncludePath>
@@ -2425,11 +2585,7 @@
             <ScatterFile>MK66FN2M0xxx18_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove 
---predefine="-D__stack_size__=0x1000" 
---predefine="-D__heap_size__=0x1000" 
---predefine="-D__ram_vector_table__=1" 
-</Misc>
+            <Misc>--remove --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000" --predefine="-D__ram_vector_table__=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2530,16 +2686,6 @@
               <FilePath>../../../../../../middleware/usb/host/usb_host.h</FilePath>
             </File>
             <File>
-              <FileName>usb_host_hci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/usb_host_hci.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_hci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/host/usb_host_hci.h</FilePath>
-            </File>
-            <File>
               <FileName>usb_host_devices.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/host/usb_host_devices.c</FilePath>
@@ -2550,14 +2696,24 @@
               <FilePath>../../../../../../middleware/usb/host/usb_host_devices.h</FilePath>
             </File>
             <File>
+              <FileName>usb_host_framework.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_framework.c</FilePath>
+            </File>
+            <File>
               <FileName>usb_host_framework.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/usb_host_framework.h</FilePath>
             </File>
             <File>
-              <FileName>usb_host_framework.c</FileName>
+              <FileName>usb_host_hci.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/usb_host_framework.c</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_hci.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_hci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_hci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2605,14 +2761,14 @@
               <FilePath>../../../../../../middleware/usb/osa/usb_osa.h</FilePath>
             </File>
             <File>
-              <FileName>usb_osa_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/osa/usb_osa_bm.h</FilePath>
-            </File>
-            <File>
               <FileName>usb_osa_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/osa/usb_osa_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_osa_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/osa/usb_osa_bm.h</FilePath>
             </File>
             <File>
               <FileName>usb_osa.h</FileName>
@@ -2620,14 +2776,14 @@
               <FilePath>../../../../../../middleware/usb/osa/usb_osa.h</FilePath>
             </File>
             <File>
-              <FileName>usb_osa_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/osa/usb_osa_bm.h</FilePath>
-            </File>
-            <File>
               <FileName>usb_osa_bm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/osa/usb_osa_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_osa_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/osa/usb_osa_bm.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2655,19 +2811,14 @@
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_port.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_enet.h</FileName>
+              <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_enet.h</FilePath>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
               <FileName>fsl_enet.c</FileName>
@@ -2675,9 +2826,9 @@
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_enet.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_sysmpu.h</FileName>
+              <FileName>fsl_enet.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_sysmpu.h</FilePath>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_enet.h</FilePath>
             </File>
             <File>
               <FileName>fsl_sysmpu.c</FileName>
@@ -2685,39 +2836,19 @@
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_sysmpu.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_sysmpu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_sysmpu.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_flash.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_ftfx_adapter.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_adapter.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_utilities.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_controller.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_controller.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_flash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.h</FilePath>
             </File>
             <File>
               <FileName>fsl_ftfx_cache.c</FileName>
@@ -2730,6 +2861,31 @@
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_ftfx_flexnvm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.c</FilePath>
@@ -2740,14 +2896,9 @@
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.h</FileName>
+              <FileName>fsl_ftfx_utilities.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_flash.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_common.h</FilePath>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h</FilePath>
             </File>
             <File>
               <FileName>fsl_common.c</FileName>
@@ -2755,9 +2906,9 @@
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_common.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_uart.h</FileName>
+              <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_uart.h</FilePath>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_common.h</FilePath>
             </File>
             <File>
               <FileName>fsl_uart.c</FileName>
@@ -2765,9 +2916,9 @@
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_uart.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.h</FileName>
+              <FileName>fsl_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_lpuart.h</FilePath>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_uart.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.c</FileName>
@@ -2775,9 +2926,9 @@
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_smc.h</FileName>
+              <FileName>fsl_lpuart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_smc.h</FilePath>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
               <FileName>fsl_smc.c</FileName>
@@ -2785,14 +2936,19 @@
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_smc.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.h</FileName>
+              <FileName>fsl_smc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_gpio.h</FilePath>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_smc.h</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK66F18/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK66F18/drivers/fsl_gpio.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2800,14 +2956,14 @@
           <GroupName>lwip-port</GroupName>
           <Files>
             <File>
-              <FileName>usb_ethernetif_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/usb_ethernetif_bm.c</FilePath>
-            </File>
-            <File>
               <FileName>usb_ethernetif.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/port/usb_ethernetif.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_ethernetif_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/usb_ethernetif_bm.c</FilePath>
             </File>
             <File>
               <FileName>sys_arch.c</FileName>
@@ -2880,11 +3036,6 @@
           <GroupName>device</GroupName>
           <Files>
             <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/fsl_device_registers.h</FilePath>
-            </File>
-            <File>
               <FileName>MK66F18.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK66F18/MK66F18.h</FilePath>
@@ -2893,6 +3044,11 @@
               <FileName>MK66F18_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK66F18/MK66F18_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK66F18/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MK66F18.c</FileName>
@@ -2910,16 +3066,6 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK66F18/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK66F18/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK66F18/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -2935,6 +3081,16 @@
               <FilePath>../../../../../../devices/MK66F18/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK66F18/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK66F18/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK66F18/utilities/fsl_assert.c</FilePath>
@@ -2942,7 +3098,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/uart</GroupName>
+          <GroupName>component-uart</GroupName>
           <Files>
             <File>
               <FileName>uart.h</FileName>
@@ -2957,42 +3113,47 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/serial_manager</GroupName>
+          <GroupName>component-serial_manager</GroupName>
           <Files>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
             <File>
               <FileName>serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/serial_manager.c</FilePath>
             </File>
             <File>
-              <FileName>serial_port_uart.h</FileName>
+              <FileName>serial_manager.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_port_internal.h</FilePath>
             </File>
             <File>
               <FileName>serial_port_uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
             </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component/lists</GroupName>
+          <GroupName>component-lists</GroupName>
           <Files>
-            <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/lists/generic_list.h</FilePath>
-            </File>
             <File>
               <FileName>generic_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/lists/generic_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/generic_list.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3015,46 +3176,6 @@
               <FilePath>../../../../../../CMSIS/Include/core_cm4.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_common_tables.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
@@ -3070,9 +3191,49 @@
               <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
             <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv8.h</FileName>
@@ -3120,6 +3281,11 @@
               <FilePath>../../../../../../middleware/lwip/src/api/err.c</FilePath>
             </File>
             <File>
+              <FileName>if_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/api/if_api.c</FilePath>
+            </File>
+            <File>
               <FileName>netbuf.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/src/api/netbuf.c</FilePath>
@@ -3149,6 +3315,21 @@
         <Group>
           <GroupName>lwip-src-core</GroupName>
           <Files>
+            <File>
+              <FileName>altcp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/core/altcp.c</FilePath>
+            </File>
+            <File>
+              <FileName>altcp_alloc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/core/altcp_alloc.c</FilePath>
+            </File>
+            <File>
+              <FileName>altcp_tcp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/core/altcp_tcp.c</FilePath>
+            </File>
             <File>
               <FileName>def.c</FileName>
               <FileType>1</FileType>
@@ -3332,8 +3513,73 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lwip-src-include-compat-posix-arpa</GroupName>
+          <Files>
+            <File>
+              <FileName>inet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/compat/posix/arpa/inet.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip-src-include-compat-posix-net</GroupName>
+          <Files>
+            <File>
+              <FileName>if.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/compat/posix/net/if.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip-src-include-compat-posix</GroupName>
+          <Files>
+            <File>
+              <FileName>netdb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/compat/posix/netdb.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip-src-include-compat-posix-sys</GroupName>
+          <Files>
+            <File>
+              <FileName>socket.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/compat/posix/sys/socket.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip-src-include-compat-stdc</GroupName>
+          <Files>
+            <File>
+              <FileName>errno.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/compat/stdc/errno.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lwip-src-include-lwip</GroupName>
           <Files>
+            <File>
+              <FileName>altcp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/altcp.h</FilePath>
+            </File>
+            <File>
+              <FileName>altcp_tcp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/altcp_tcp.h</FilePath>
+            </File>
+            <File>
+              <FileName>altcp_tls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/altcp_tls.h</FilePath>
+            </File>
             <File>
               <FileName>api.h</FileName>
               <FileType>5</FileType>
@@ -3345,119 +3591,14 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/arch.h</FilePath>
             </File>
             <File>
-              <FileName>debug.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/debug.h</FilePath>
-            </File>
-            <File>
-              <FileName>dhcp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/dhcp.h</FilePath>
-            </File>
-            <File>
-              <FileName>dns.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/dns.h</FilePath>
-            </File>
-            <File>
-              <FileName>errno.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/errno.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethip6.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/ethip6.h</FilePath>
-            </File>
-            <File>
-              <FileName>icmp6.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/icmp6.h</FilePath>
-            </File>
-            <File>
-              <FileName>inet.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/inet.h</FilePath>
-            </File>
-            <File>
-              <FileName>init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/init.h</FilePath>
-            </File>
-            <File>
-              <FileName>ip_addr.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip_addr.h</FilePath>
-            </File>
-            <File>
-              <FileName>ip4_addr.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip4_addr.h</FilePath>
-            </File>
-            <File>
-              <FileName>ip6.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip6.h</FilePath>
-            </File>
-            <File>
-              <FileName>ip6_frag.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip6_frag.h</FilePath>
-            </File>
-            <File>
-              <FileName>memp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/memp.h</FilePath>
-            </File>
-            <File>
-              <FileName>nd6.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/nd6.h</FilePath>
-            </File>
-            <File>
-              <FileName>netdb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/netdb.h</FilePath>
-            </File>
-            <File>
-              <FileName>netifapi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/netifapi.h</FilePath>
-            </File>
-            <File>
-              <FileName>pbuf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/pbuf.h</FilePath>
-            </File>
-            <File>
-              <FileName>sio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/sio.h</FilePath>
-            </File>
-            <File>
-              <FileName>sockets.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/sockets.h</FilePath>
-            </File>
-            <File>
-              <FileName>sys.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/sys.h</FilePath>
-            </File>
-            <File>
-              <FileName>tcpip.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/tcpip.h</FilePath>
-            </File>
-            <File>
-              <FileName>udp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/lwip/udp.h</FilePath>
-            </File>
-            <File>
               <FileName>autoip.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/autoip.h</FilePath>
+            </File>
+            <File>
+              <FileName>debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/debug.h</FilePath>
             </File>
             <File>
               <FileName>def.h</FileName>
@@ -3465,9 +3606,19 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/def.h</FilePath>
             </File>
             <File>
+              <FileName>dhcp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/dhcp.h</FilePath>
+            </File>
+            <File>
               <FileName>dhcp6.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/dhcp6.h</FilePath>
+            </File>
+            <File>
+              <FileName>dns.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/dns.h</FilePath>
             </File>
             <File>
               <FileName>err.h</FileName>
@@ -3475,9 +3626,19 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/err.h</FilePath>
             </File>
             <File>
+              <FileName>errno.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/errno.h</FilePath>
+            </File>
+            <File>
               <FileName>etharp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/etharp.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethip6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/ethip6.h</FilePath>
             </File>
             <File>
               <FileName>icmp.h</FileName>
@@ -3485,14 +3646,34 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/icmp.h</FilePath>
             </File>
             <File>
+              <FileName>icmp6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/icmp6.h</FilePath>
+            </File>
+            <File>
+              <FileName>if_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/if_api.h</FilePath>
+            </File>
+            <File>
               <FileName>igmp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/igmp.h</FilePath>
             </File>
             <File>
+              <FileName>inet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/inet.h</FilePath>
+            </File>
+            <File>
               <FileName>inet_chksum.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/inet_chksum.h</FilePath>
+            </File>
+            <File>
+              <FileName>init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/init.h</FilePath>
             </File>
             <File>
               <FileName>ip.h</FileName>
@@ -3505,9 +3686,19 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip4.h</FilePath>
             </File>
             <File>
+              <FileName>ip4_addr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip4_addr.h</FilePath>
+            </File>
+            <File>
               <FileName>ip4_frag.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip4_frag.h</FilePath>
+            </File>
+            <File>
+              <FileName>ip6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip6.h</FilePath>
             </File>
             <File>
               <FileName>ip6_addr.h</FileName>
@@ -3515,9 +3706,29 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip6_addr.h</FilePath>
             </File>
             <File>
+              <FileName>ip6_frag.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip6_frag.h</FilePath>
+            </File>
+            <File>
+              <FileName>ip6_zone.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip6_zone.h</FilePath>
+            </File>
+            <File>
+              <FileName>ip_addr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/ip_addr.h</FilePath>
+            </File>
+            <File>
               <FileName>mem.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/mem.h</FilePath>
+            </File>
+            <File>
+              <FileName>memp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/memp.h</FilePath>
             </File>
             <File>
               <FileName>mld6.h</FileName>
@@ -3525,9 +3736,19 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/mld6.h</FilePath>
             </File>
             <File>
+              <FileName>nd6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/nd6.h</FilePath>
+            </File>
+            <File>
               <FileName>netbuf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/netbuf.h</FilePath>
+            </File>
+            <File>
+              <FileName>netdb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/netdb.h</FilePath>
             </File>
             <File>
               <FileName>netif.h</FileName>
@@ -3535,9 +3756,19 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/netif.h</FilePath>
             </File>
             <File>
+              <FileName>netifapi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/netifapi.h</FilePath>
+            </File>
+            <File>
               <FileName>opt.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/opt.h</FilePath>
+            </File>
+            <File>
+              <FileName>pbuf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/pbuf.h</FilePath>
             </File>
             <File>
               <FileName>raw.h</FileName>
@@ -3545,9 +3776,19 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/raw.h</FilePath>
             </File>
             <File>
+              <FileName>sio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/sio.h</FilePath>
+            </File>
+            <File>
               <FileName>snmp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/snmp.h</FilePath>
+            </File>
+            <File>
+              <FileName>sockets.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/sockets.h</FilePath>
             </File>
             <File>
               <FileName>stats.h</FileName>
@@ -3555,14 +3796,34 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/stats.h</FilePath>
             </File>
             <File>
+              <FileName>sys.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/sys.h</FilePath>
+            </File>
+            <File>
               <FileName>tcp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/tcp.h</FilePath>
             </File>
             <File>
+              <FileName>tcpbase.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/tcpbase.h</FilePath>
+            </File>
+            <File>
+              <FileName>tcpip.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/tcpip.h</FilePath>
+            </File>
+            <File>
               <FileName>timeouts.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/timeouts.h</FilePath>
+            </File>
+            <File>
+              <FileName>udp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/udp.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3570,9 +3831,19 @@
           <GroupName>lwip-src-include-lwip-priv</GroupName>
           <Files>
             <File>
+              <FileName>altcp_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/priv/altcp_priv.h</FilePath>
+            </File>
+            <File>
               <FileName>api_msg.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/priv/api_msg.h</FilePath>
+            </File>
+            <File>
+              <FileName>mem_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/priv/mem_priv.h</FilePath>
             </File>
             <File>
               <FileName>memp_priv.h</FileName>
@@ -3588,6 +3859,16 @@
               <FileName>nd6_priv.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/priv/nd6_priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>raw_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/priv/raw_priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>sockets_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/priv/sockets_priv.h</FilePath>
             </File>
             <File>
               <FileName>tcp_priv.h</FileName>
@@ -3615,6 +3896,11 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/prot/dhcp.h</FilePath>
             </File>
             <File>
+              <FileName>dhcp6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/prot/dhcp6.h</FilePath>
+            </File>
+            <File>
               <FileName>dns.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/prot/dns.h</FilePath>
@@ -3630,6 +3916,11 @@
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/prot/ethernet.h</FilePath>
             </File>
             <File>
+              <FileName>iana.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/prot/iana.h</FilePath>
+            </File>
+            <File>
               <FileName>icmp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/prot/icmp.h</FilePath>
@@ -3638,6 +3929,11 @@
               <FileName>icmp6.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/lwip/prot/icmp6.h</FilePath>
+            </File>
+            <File>
+              <FileName>ieee.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/prot/ieee.h</FilePath>
             </File>
             <File>
               <FileName>igmp.h</FileName>
@@ -3685,6 +3981,16 @@
           <GroupName>lwip-src-include-netif</GroupName>
           <Files>
             <File>
+              <FileName>bridgeif.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/netif/bridgeif.h</FilePath>
+            </File>
+            <File>
+              <FileName>bridgeif_opts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/netif/bridgeif_opts.h</FilePath>
+            </File>
+            <File>
               <FileName>etharp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/netif/etharp.h</FilePath>
@@ -3695,9 +4001,24 @@
               <FilePath>../../../../../../middleware/lwip/src/include/netif/ethernet.h</FilePath>
             </File>
             <File>
+              <FileName>ieee802154.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/netif/ieee802154.h</FilePath>
+            </File>
+            <File>
               <FileName>lowpan6.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/netif/lowpan6.h</FilePath>
+            </File>
+            <File>
+              <FileName>lowpan6_ble.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/netif/lowpan6_ble.h</FilePath>
+            </File>
+            <File>
+              <FileName>lowpan6_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/netif/lowpan6_common.h</FilePath>
             </File>
             <File>
               <FileName>lowpan6_opts.h</FileName>
@@ -3708,6 +4029,11 @@
               <FileName>slipif.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/netif/slipif.h</FilePath>
+            </File>
+            <File>
+              <FileName>zepif.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/netif/zepif.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3720,11 +4046,6 @@
               <FilePath>../../../../../../middleware/lwip/src/include/netif/ppp/ccp.h</FilePath>
             </File>
             <File>
-              <FileName>chap_ms.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/netif/ppp/chap_ms.h</FilePath>
-            </File>
-            <File>
               <FileName>chap-md5.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/netif/ppp/chap-md5.h</FilePath>
@@ -3733,6 +4054,11 @@
               <FileName>chap-new.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/src/include/netif/ppp/chap-new.h</FilePath>
+            </File>
+            <File>
+              <FileName>chap_ms.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/netif/ppp/chap_ms.h</FilePath>
             </File>
             <File>
               <FileName>eap.h</FileName>
@@ -3867,33 +4193,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lwip-src-include-posix</GroupName>
-          <Files>
-            <File>
-              <FileName>errno.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/posix/errno.h</FilePath>
-            </File>
-            <File>
-              <FileName>netdb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/posix/netdb.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lwip-src-include-posix-sys</GroupName>
-          <Files>
-            <File>
-              <FileName>socket.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/include/posix/sys/socket.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>lwip-src-netif</GroupName>
           <Files>
+            <File>
+              <FileName>bridgeif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/netif/bridgeif.c</FilePath>
+            </File>
+            <File>
+              <FileName>bridgeif_fdb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/netif/bridgeif_fdb.c</FilePath>
+            </File>
             <File>
               <FileName>ethernet.c</FileName>
               <FileType>1</FileType>
@@ -3905,9 +4216,24 @@
               <FilePath>../../../../../../middleware/lwip/src/netif/lowpan6.c</FilePath>
             </File>
             <File>
+              <FileName>lowpan6_ble.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/netif/lowpan6_ble.c</FilePath>
+            </File>
+            <File>
+              <FileName>lowpan6_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/netif/lowpan6_common.c</FilePath>
+            </File>
+            <File>
               <FileName>slipif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/src/netif/slipif.c</FilePath>
+            </File>
+            <File>
+              <FileName>zepif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/netif/zepif.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3925,11 +4251,6 @@
               <FilePath>../../../../../../middleware/lwip/src/netif/ppp/ccp.c</FilePath>
             </File>
             <File>
-              <FileName>chap_ms.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lwip/src/netif/ppp/chap_ms.c</FilePath>
-            </File>
-            <File>
               <FileName>chap-md5.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/src/netif/ppp/chap-md5.c</FilePath>
@@ -3938,6 +4259,11 @@
               <FileName>chap-new.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/src/netif/ppp/chap-new.c</FilePath>
+            </File>
+            <File>
+              <FileName>chap_ms.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/netif/ppp/chap_ms.c</FilePath>
             </File>
             <File>
               <FileName>demand.c</FileName>

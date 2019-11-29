@@ -2,7 +2,7 @@
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -116,8 +116,8 @@ int main(void)
     /*! We do not need to call MAG3110_I2C_Configure() in this case as we are going to read samples on demand.
      *  Instead we directly write register settings for One-Shot Mode... */
     deviceInfo.deviceInstance = I2C_S_DEVICE_INDEX;
-    deviceInfo.functionParam = SMC;
-    deviceInfo.idleFunction = (registeridlefunction_t)SMC_SetPowerModeVlpr;
+    deviceInfo.functionParam  = SMC;
+    deviceInfo.idleFunction   = (registeridlefunction_t)SMC_SetPowerModeVlpr;
     status = Sensor_I2C_Write(mag3110Driver.pCommDrv, &deviceInfo, mag3110Driver.slaveAddress, cMag3110ConfigOneShot);
     if (ARM_DRIVER_OK != status)
     {

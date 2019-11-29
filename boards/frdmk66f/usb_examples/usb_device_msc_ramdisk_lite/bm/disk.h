@@ -23,7 +23,6 @@
 #endif
 
 #define USB_DEVICE_INTERRUPT_PRIORITY (3U)
-
 /* Length of Each Logical Address Block */
 #define LENGTH_OF_EACH_LBA (512U)
 /* total number of logical blocks present */

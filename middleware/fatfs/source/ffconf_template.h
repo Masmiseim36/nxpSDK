@@ -1,8 +1,8 @@
 /*---------------------------------------------------------------------------/
-/  FatFs Functional Configurations
+/  FatFs - Configuration file
 /---------------------------------------------------------------------------*/
 
-#define FFCONF_DEF	86604	/* Revision ID */
+#define FFCONF_DEF 63463	/* Revision ID */
 
 /*---------------------------------------------------------------------------/
 / Function Configurations
@@ -232,7 +232,7 @@
 
 #define FF_FS_EXFAT		0
 /* This option switches support for exFAT filesystem. (0:Disable or 1:Enable)
-/  To enable exFAT, also LFN needs to be enabled. (FF_USE_LFN >= 1)
+/  To enable exFAT, also LFN needs to be enabled.
 /  Note that enabling exFAT discards ANSI C (C89) compatibility. */
 
 
@@ -262,7 +262,6 @@
 /      lock control is independent of re-entrancy. */
 
 
-/* #include <somertos.h>	// O/S definitions */
 #define FF_FS_REENTRANT	0
 #define FF_FS_TIMEOUT	1000
 #define FF_SYNC_t		HANDLE
@@ -282,6 +281,8 @@
 /  The FF_SYNC_t defines O/S dependent sync object type. e.g. HANDLE, ID, OS_EVENT*,
 /  SemaphoreHandle_t and etc. A header file for O/S definitions needs to be
 /  included somewhere in the scope of ff.h. */
+
+/* #include <windows.h>	// O/S definitions  */
 
 
 

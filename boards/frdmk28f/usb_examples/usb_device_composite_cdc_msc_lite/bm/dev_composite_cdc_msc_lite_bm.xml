@@ -28,7 +28,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk28f_dev_composite_cdc_msc_lite_bm" name="dev_composite_cdc_msc_lite_bm" category="usb_examples" dependency="middleware.usb.device_controller_khci.MK28F15 middleware.usb.device_controller_ehci.MK28F15 middleware.usb.phy.MK28F15 platform.drivers.smc.MK28F15 platform.drivers.clock.MK28F15 platform.drivers.common.MK28F15 device.MK28F15_CMSIS.MK28F15 device.MK28F15_startup.MK28F15 platform.drivers.lpuart.MK28F15 platform.drivers.gpio.MK28F15 platform.drivers.sysmpu.MK28F15 platform.utilities.assert.MK28F15 utility.debug_console.MK28F15 component.lpuart_adapter.MK28F15 component.serial_manager.MK28F15 component.serial_manager_uart.MK28F15 component.lists.MK28F15 platform.drivers.port.MK28F15 platform.Include_core_cm4.MK28F15 platform.Include_common.MK28F15 middleware.baremetal.MK28F15" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmk28f_dev_composite_cdc_msc_lite_bm" name="dev_composite_cdc_msc_lite_bm" category="usb_examples" dependency="middleware.usb.device_controller_khci.MK28F15 middleware.usb.device_controller_ehci.MK28F15 middleware.usb.phy.MK28F15 platform.drivers.smc.MK28F15 platform.drivers.clock.MK28F15 platform.drivers.common.MK28F15 device.MK28F15_CMSIS.MK28F15 device.MK28F15_startup.MK28F15 platform.drivers.lpuart.MK28F15 platform.drivers.gpio.MK28F15 platform.drivers.sysmpu.MK28F15 platform.utilities.assert.MK28F15 utility.debug_console.MK28F15 component.lpuart_adapter.MK28F15 component.serial_manager.MK28F15 component.serial_manager_uart.MK28F15 component.lists.MK28F15 platform.drivers.port.MK28F15 platform.Include_core_cm4.MK28F15 platform.Include_common.MK28F15 middleware.baremetal.MK28F15">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -107,6 +107,18 @@
       <files mask="usb_device_msc.c"/>
       <files mask="usb_device_msc_ufi.c"/>
       <files mask="virtual_com.c"/>
+    </source>
+    <source path="boards/frdmk28f/usb_examples/usb_device_composite_cdc_msc_lite/bm" target_path="src" type="binary" exclude="true">
+      <files mask="dev_composite_cdc_msc_lite_bm.bin"/>
+    </source>
+    <source path="boards/frdmk28f/usb_examples/usb_device_composite_cdc_msc_lite/bm" target_path="src" type="doc" exclude="true">
+      <files mask="readme.pdf"/>
+    </source>
+    <source path="boards/frdmk28f/usb_examples/usb_device_composite_cdc_msc_lite/inf" target_path="src" type="configuration" exclude="true">
+      <files mask="fsl_ucwxp.inf"/>
+    </source>
+    <source path="boards/frdmk28f/usb_examples/usb_device_composite_cdc_msc_lite/inf" target_path="src" type="other" exclude="true">
+      <files mask="cdc.cat"/>
     </source>
   </example>
 </ksdk:examples>

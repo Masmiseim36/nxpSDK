@@ -5,10 +5,10 @@
  * trcConfig.h
  *
  * Configuration parameters for the snapshot trace recorder library. Before using
- * the trace recorder library, please check that the default settings are 
- * appropriate for your system, and if necessary adjust these. Most likely, you 
- * will need to adjust the NTask, NISR, NQueue, NMutex and NSemaphore values to 
- * reflect the number of such objects in your system. These may be 
+ * the trace recorder library, please check that the default settings are
+ * appropriate for your system, and if necessary adjust these. Most likely, you
+ * will need to adjust the NTask, NISR, NQueue, NMutex and NSemaphore values to
+ * reflect the number of such objects in your system. These may be
  * over-approximated, although larger values values implies more RAM usage.
  *
  *******************************************************************************
@@ -50,7 +50,7 @@
 /******************************************************************************
  * SELECTED_PORT
  *
- * Macro that specifies what hardware port that should be used. 
+ * Macro that specifies what hardware port that should be used.
  * Available ports are:
  *
  * Port Name							Code	 Official	OS supported
@@ -80,26 +80,26 @@
 #define SELECTED_PORT PORT_ARM_CortexM_SysTick
 
 #if (SELECTED_PORT == PORT_ARM_CortexM || SELECTED_PORT == PORT_ARM_CortexM_SysTick)
-	/* For ARM Cortex-M: make sure ARM's CMSIS library is included here, which
-       is used for accessing the PRIMASK register. e.g. #include "board.h" */
+/* For ARM Cortex-M: make sure ARM's CMSIS library is included here, which
+      is used for accessing the PRIMASK register. e.g. #include "board.h" */
 #endif
 
 #if (SELECTED_PORT == PORT_NOT_SET)
-	#error "You need to define SELECTED_PORT here!"
+#error "You need to define SELECTED_PORT here!"
 #endif
 
 /******************************************************************************
  * FREERTOS_VERSION
- * 
- * Specify what version of FreeRTOS that is used. This is necessary compensate 
+ *
+ * Specify what version of FreeRTOS that is used. This is necessary compensate
  * for renamed symbols in the FreeRTOS kernel (does not build if incorrect).
- * 
+ *
  * FREERTOS_VERSION_7_3_OR_7_4 (= 1)		If using FreeRTOS v7.3.0 - v7.4.2
  * FREERTOS_VERSION_7_5_OR_7_6 (= 2)		If using FreeRTOS v7.5.0 - v7.6.0
  * FREERTOS_VERSION_8_X (= 3)				If using FreeRTOS v8.X.X
  * FREERTOS_VERSION_9_X (= 4)				If using FreeRTOS v9.X.X
  *****************************************************************************/
-#define FREERTOS_VERSION	FREERTOS_VERSION_9_X
+#define FREERTOS_VERSION FREERTOS_VERSION_9_X
 //#define FREERTOS_VERSION	FREERTOS_VERSION_8_X
 
 /******************************************************************************
@@ -110,13 +110,13 @@
  * - TRACE_STORE_MODE_STOP_WHEN_FULL
  * Default is TRACE_STORE_MODE_RING_BUFFER.
  *
- * With TRACE_RECORDER_STORE_MODE set to TRACE_STORE_MODE_RING_BUFFER, the 
- * events are stored in a ring buffer, i.e., where the oldest events are 
+ * With TRACE_RECORDER_STORE_MODE set to TRACE_STORE_MODE_RING_BUFFER, the
+ * events are stored in a ring buffer, i.e., where the oldest events are
  * overwritten when the buffer becomes full. This allows you to get the last
- * events leading up to an interesting state, e.g., an error, without having 
+ * events leading up to an interesting state, e.g., an error, without having
  * to store the whole run since startup.
  *
- * When TRACE_RECORDER_STORE_MODE is TRACE_STORE_MODE_STOP_WHEN_FULL, the 
+ * When TRACE_RECORDER_STORE_MODE is TRACE_STORE_MODE_STOP_WHEN_FULL, the
  * recording is stopped when the buffer becomes full. This is useful for
  * recording events following a specific state, e.g., the startup sequence.
  *****************************************************************************/
@@ -144,10 +144,10 @@
  * Macro which should be defined as an integer value.
  *
  * This defines the capacity of the event buffer, i.e., the number of records
- * it may store. Most events use one record (4 byte), although some events 
+ * it may store. Most events use one record (4 byte), although some events
  * require multiple 4-byte records. You should adjust this to the amount of RAM
  * available in the target system.
- * 
+ *
  * Default value is 1000, which means that 4000 bytes is allocated for the
  * event buffer.
  ******************************************************************************/
@@ -159,33 +159,33 @@
  * A group of macros which should be defined as integer values, zero or larger.
  *
  * These define the capacity of the Object Property Table, i.e., the maximum
- * number of objects active at any given point, within each object class (e.g., 
+ * number of objects active at any given point, within each object class (e.g.,
  * task, queue, semaphore, ...).
- * 
+ *
  * If tasks or other other objects are deleted in your system, this
  * setting does not limit the total amount of objects created, only the number
  * of objects that have been successfully created but not yet deleted.
  *
- * Using too small values will cause vTraceError to be called, which stores an 
+ * Using too small values will cause vTraceError to be called, which stores an
  * error message in the trace that is shown when opening the trace file.
  *
- * It can be wise to start with large values for these constants, 
+ * It can be wise to start with large values for these constants,
  * unless you are very confident on these numbers. Then do a recording and
- * check the actual usage by selecting View menu -> Trace Details -> 
- * Resource Usage -> Object Table. 
+ * check the actual usage by selecting View menu -> Trace Details ->
+ * Resource Usage -> Object Table.
  ******************************************************************************/
-#define NTask			15
-#define NISR			5
-#define NQueue			10
-#define NSemaphore		10
-#define NMutex			10
-#define NTimer			2
-#define NEventGroup		2
+#define NTask 15
+#define NISR 5
+#define NQueue 10
+#define NSemaphore 10
+#define NMutex 10
+#define NTimer 2
+#define NEventGroup 2
 
 /******************************************************************************
  * INCLUDE_MEMMANG_EVENTS
- * 
- * Macro which should be defined as either zero (0) or one (1). 
+ *
+ * Macro which should be defined as either zero (0) or one (1).
  *
  * This controls if malloc and free calls should be traced. Set this to zero to
  * exclude malloc/free calls, or one (1) to include such events in the trace.
@@ -197,14 +197,14 @@
 /******************************************************************************
  * INCLUDE_USER_EVENTS
  *
- * Macro which should be defined as either zero (0) or one (1). 
+ * Macro which should be defined as either zero (0) or one (1).
  *
  * If this is zero (0) the code for creating User Events is excluded to
- * reduce code size. User Events are application-generated events, like 
- * "printf" but for the trace log instead of console output. User Events are 
+ * reduce code size. User Events are application-generated events, like
+ * "printf" but for the trace log instead of console output. User Events are
  * much faster than a printf and can therefore be used in timing critical code.
  * See vTraceUserEvent() and vTracePrintF() in trcUser.h
- * 
+ *
  * Default value is 1.
  *
  * Note that User Events are only displayed in Professional Edition.
@@ -214,15 +214,15 @@
 /*****************************************************************************
  * INCLUDE_ISR_TRACING
  *
- * Macro which should be defined as either zero (0) or one (1). 
+ * Macro which should be defined as either zero (0) or one (1).
  *
- * If this is zero (0), the code for recording Interrupt Service Routines is 
+ * If this is zero (0), the code for recording Interrupt Service Routines is
  * excluded to reduce code size.
  *
  * Default value is 1.
- * 
- * Note, if the kernel has no central interrupt dispatcher, recording ISRs 
- * require that you insert calls to vTraceStoreISRBegin and vTraceStoreISREnd 
+ *
+ * Note, if the kernel has no central interrupt dispatcher, recording ISRs
+ * require that you insert calls to vTraceStoreISRBegin and vTraceStoreISREnd
  * in your interrupt handlers.
  *****************************************************************************/
 #define INCLUDE_ISR_TRACING 1
@@ -230,12 +230,12 @@
 /*****************************************************************************
  * INCLUDE_READY_EVENTS
  *
- * Macro which should be defined as either zero (0) or one (1). 
+ * Macro which should be defined as either zero (0) or one (1).
  *
- * If one (1), events are recorded when tasks enter scheduling state "ready". 
- * This uses a lot of space in the event buffer, so excluding "ready events" 
- * will allow for longer traces. Including ready events however allows for 
- * showing the initial pending time before tasks enter the execution state, and 
+ * If one (1), events are recorded when tasks enter scheduling state "ready".
+ * This uses a lot of space in the event buffer, so excluding "ready events"
+ * will allow for longer traces. Including ready events however allows for
+ * showing the initial pending time before tasks enter the execution state, and
  * for presenting accurate response times.
  *
  * Default value is 1.
@@ -245,7 +245,7 @@
 /*****************************************************************************
  * INCLUDE_NEW_TIME_EVENTS
  *
- * Macro which should be defined as either zero (0) or one (1). 
+ * Macro which should be defined as either zero (0) or one (1).
  *
  * If this is zero (1), events will be generated whenever the OS clock is
  * increased.
@@ -257,12 +257,12 @@
 /******************************************************************************
  * INCLUDE_FLOAT_SUPPORT
  *
- * Macro which should be defined as either zero (0) or one (1). 
+ * Macro which should be defined as either zero (0) or one (1).
  *
  * If this is zero (0), all references to floating point values are removed,
  * in case floating point values are not supported by the platform used.
- * Floating point values are only used in vTracePrintF and its subroutines, to 
- * store float (%f) or double (%lf) arguments. 
+ * Floating point values are only used in vTracePrintF and its subroutines, to
+ * store float (%f) or double (%lf) arguments.
  *
  * vTracePrintF can be used with integer and string arguments in either case.
  *
@@ -272,11 +272,11 @@
 
 /******************************************************************************
  * INCLUDE_OBJECT_DELETE
- * 
- * Macro which should be defined as either zero (0) or one (1). 
  *
- * This must be enabled (1) if tasks, queues or other 
- * traced kernel objects are deleted at runtime. If no deletes are made, this 
+ * Macro which should be defined as either zero (0) or one (1).
+ *
+ * This must be enabled (1) if tasks, queues or other
+ * traced kernel objects are deleted at runtime. If no deletes are made, this
  * can be set to 0 in order to exclude the delete-handling code.
  *
  * Default value is 1.
@@ -288,11 +288,11 @@
  *
  * Macro which should be defined as an integer value.
  *
- * This defines the capacity of the symbol table, in bytes. This symbol table 
+ * This defines the capacity of the symbol table, in bytes. This symbol table
  * stores User Events labels and names of deleted tasks, queues, or other kernel
- * objects. If you don't use User Events or delete any kernel 
+ * objects. If you don't use User Events or delete any kernel
  * objects you set this to a very low value. The minimum recommended value is 4.
- * A size of zero (0) is not allowed since a zero-sized array may result in a 
+ * A size of zero (0) is not allowed since a zero-sized array may result in a
  * 32-bit pointer, i.e., using 4 bytes rather than 0.
  *
  * Default value is 800.
@@ -310,33 +310,31 @@
  * kernel objects, such as tasks and queues. If longer names are used, they will
  * be truncated when stored in the recorder.
  *****************************************************************************/
-#define NameLenTask			15
-#define NameLenISR			15
-#define NameLenQueue		15
-#define NameLenSemaphore	15
-#define NameLenMutex		15
-#define NameLenTimer		15
-#define NameLenEventGroup 	15
+#define NameLenTask 15
+#define NameLenISR 15
+#define NameLenQueue 15
+#define NameLenSemaphore 15
+#define NameLenMutex 15
+#define NameLenTimer 15
+#define NameLenEventGroup 15
 
 /******************************************************************************
  * TRACE_DATA_ALLOCATION
  *
- * This defines how to allocate the recorder data structure, i.e., using a 
+ * This defines how to allocate the recorder data structure, i.e., using a
  * static declaration or using a dynamic allocation in runtime (malloc).
  *
  * Should be one of these two options:
  * - TRACE_DATA_ALLOCATION_STATIC (default)
  * - TRACE_DATA_ALLOCATION_DYNAMIC
  *
- * Using static allocation has the benefits of compile-time errors if the buffer 
- * is too large (too large constants in trcConfig.h) and no need to call the 
+ * Using static allocation has the benefits of compile-time errors if the buffer
+ * is too large (too large constants in trcConfig.h) and no need to call the
  * initialization routine (xTraceInitTraceData).
  *
  * Using dynamic allocation may give more flexibility in some cases.
  *****************************************************************************/
 #define TRACE_DATA_ALLOCATION TRACE_DATA_ALLOCATION_STATIC
-
-
 
 /******************************************************************************
  *** ADVANCED SETTINGS ********************************************************
@@ -344,18 +342,18 @@
  * The remaining settings are not necessary to modify but allows for optimizing
  * the recorder setup for your specific needs, e.g., to exclude events that you
  * are not interested in, in order to get longer traces.
- *****************************************************************************/ 
+ *****************************************************************************/
 
 /******************************************************************************
-* HEAP_SIZE_BELOW_16M
-*
-* An integer constant that can be used to reduce the buffer usage of memory
-* allocation events (malloc/free). This value should be 1 if the heap size is 
-* below 16 MB (2^24 byte), and you can live with reported addresses showing the 
-* lower 24 bits only. If 0, you get the full 32-bit addresses.
-*
-* Default value is 0.
-******************************************************************************/
+ * HEAP_SIZE_BELOW_16M
+ *
+ * An integer constant that can be used to reduce the buffer usage of memory
+ * allocation events (malloc/free). This value should be 1 if the heap size is
+ * below 16 MB (2^24 byte), and you can live with reported addresses showing the
+ * lower 24 bits only. If 0, you get the full 32-bit addresses.
+ *
+ * Default value is 0.
+ ******************************************************************************/
 #define HEAP_SIZE_BELOW_16M 0
 
 /******************************************************************************
@@ -364,16 +362,16 @@
  * Macro which should be defined as an integer value, default is 0.
  *
  * If this is 1, the header file "recorderdata_linker_pragma.h" is included just
- * before the declaration of RecorderData (in trcBase.c), i.e., the trace data 
- * structure. This allows the user to specify a pragma with linker options. 
+ * before the declaration of RecorderData (in trcBase.c), i.e., the trace data
+ * structure. This allows the user to specify a pragma with linker options.
  *
  * Example (for IAR Embedded Workbench and NXP LPC17xx):
  * #pragma location="AHB_RAM_MEMORY"
- * 
- * This example instructs the IAR linker to place RecorderData in another RAM 
+ *
+ * This example instructs the IAR linker to place RecorderData in another RAM
  * bank, the AHB RAM. This can also be used for other compilers with a similar
  * pragmas for linker options.
- * 
+ *
  * Note that this only applies if using static allocation, see below.
  ******************************************************************************/
 #define USE_LINKER_PRAGMA 0
@@ -381,21 +379,21 @@
 /******************************************************************************
  * USE_IMPLICIT_IFE_RULES
  *
- * Macro which should be defined as either zero (0) or one (1). 
+ * Macro which should be defined as either zero (0) or one (1).
  * Default is 1.
  *
  * Tracealyzer groups the events into actor instances, based on context-switches
- * and a definition of "Instance Finish Events", or IFEs. These are kernel calls 
- * considered to be the last event in a task instance. Some kernel calls are 
+ * and a definition of "Instance Finish Events", or IFEs. These are kernel calls
+ * considered to be the last event in a task instance. Some kernel calls are
  * considered IFEs by default (e.g., delay functions), but it is also possible
  * to specify this individually for each task (see vTraceTaskInstanceFinish).
  *
  * If USE_IMPLICIT_IFE_RULES is one (1), the default IFEs will be enabled, which
- * gives a "typical" grouping of events into instances. You can combine this 
+ * gives a "typical" grouping of events into instances. You can combine this
  * with calls to vTraceTaskInstanceFinish for specific tasks.
  *
  * If USE_IMPLICIT_IFE_RULES is zero (0), the implicit IFEs are disabled and all
- * events withing each task is then shown as a single instance, unless  you call 
+ * events withing each task is then shown as a single instance, unless  you call
  * vTraceTaskInstanceFinish() at suitable locations to mark the IFEs.
  *****************************************************************************/
 #define USE_IMPLICIT_IFE_RULES 1
@@ -404,22 +402,22 @@
  * USE_16BIT_OBJECT_HANDLES
  *
  * Macro which should be defined as either zero (0) or one (1).
- * 
- * If set to 0 (zero), the recorder uses 8-bit handles to identify kernel 
+ *
+ * If set to 0 (zero), the recorder uses 8-bit handles to identify kernel
  * objects such as tasks and queues. This limits the supported number of
  * concurrently active objects to 255 of each type (object class).
  *
- * If set to 1 (one), the recorder uses 16-bit handles to identify kernel 
+ * If set to 1 (one), the recorder uses 16-bit handles to identify kernel
  * objects such as tasks and queues. This limits the supported number of
  * concurrent objects to 65535 of each type (object class). However, since the
  * object property table is limited to 64 KB, the practical limit is about
- * 3000 objects in total. 
- * 
+ * 3000 objects in total.
+ *
  * Default is 0.
  *
- * NOTE: An object with handle above 255 will use an extra 4-byte record in 
- * the event buffer whenever referenced. Moreover, some internal tables in the 
- * recorder gets larger when using 16-bit handles. The additional RAM usage is 
+ * NOTE: An object with handle above 255 will use an extra 4-byte record in
+ * the event buffer whenever referenced. Moreover, some internal tables in the
+ * recorder gets larger when using 16-bit handles. The additional RAM usage is
  * 5-10 byte plus 1 byte per kernel object i.e., task, queue, mutex, etc.
  *****************************************************************************/
 #define USE_16BIT_OBJECT_HANDLES 0
@@ -427,10 +425,10 @@
 /******************************************************************************
  * USE_TRACE_ASSERT
  *
- * Macro which should be defined as either zero (0) or one (1). 
+ * Macro which should be defined as either zero (0) or one (1).
  * Default is 1.
  *
- * If this is one (1), the TRACE_ASSERT macro will verify that a condition is 
+ * If this is one (1), the TRACE_ASSERT macro will verify that a condition is
  * true. If the condition is false, vTraceError() will be called.
  * This is used on several places in the recorder code for sanity checks on
  * parameters. Can be switched off to reduce CPU usage of the tracing.
@@ -443,13 +441,13 @@
  * Macro which should be defined as an integer value.
  * Default is zero (0).
  *
- * This enables and disables the use of the separate user event buffer. Using 
- * this separate buffer has the benefit of not overwriting the user events with 
- * kernel events (usually generated at a much higher rate), i.e., when using 
+ * This enables and disables the use of the separate user event buffer. Using
+ * this separate buffer has the benefit of not overwriting the user events with
+ * kernel events (usually generated at a much higher rate), i.e., when using
  * ring-buffer mode.
  *
  * Note: When using the separate user event buffer, you may get an artificial
- * task instance named "Unknown actor". This is added as a placeholder when the 
+ * task instance named "Unknown actor". This is added as a placeholder when the
  * user event history is longer than the task scheduling history.
  ******************************************************************************/
 #define USE_SEPARATE_USER_EVENT_BUFFER 0
@@ -478,4 +476,3 @@
 #define CHANNEL_FORMAT_PAIRS 32
 
 #endif
-

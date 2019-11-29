@@ -10,17 +10,26 @@
     <definition extID="device.MK66F18_startup.MK66F18"/>
     <definition extID="driver.phyksz8081.MK66F18"/>
     <definition extID="middleware.amazon_freertos.aws_iot.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.drivers_frdmk66f.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.bufferpool.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.crypto.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.demos.MK66F18"/>
     <definition extID="middleware.amazon_freertos.aws_iot.greengrass.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.jsmn.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.secure_sockets_lwip.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.aws_iot_demos.MK66F18"/>
-    <definition extID="middleware.freertos.MK66F18"/>
-    <definition extID="middleware.freertos.heap.heap_4.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.mflash.frdmk66f.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.mqtt.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.pkcs11.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.secure_sockets.lwip.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.shadow.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.tls.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.utils.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.freertos.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.freertos.heap_4.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.third_party.jsmn.MK66F18"/>
+    <definition extID="middleware.amazon_freertos.third_party.pkcs11.MK66F18"/>
     <definition extID="middleware.mbedtls.MK66F18"/>
     <definition extID="middleware.mmcau_cm4_cm7.MK66F18"/>
     <definition extID="middleware.tcpip.lwip.MK66F18"/>
-    <definition extID="middleware.tcpip.lwip.ethernetif.MK66F18"/>
+    <definition extID="middleware.tcpip.lwip.enet_ethernetif.MK66F18"/>
+    <definition extID="middleware.tcpip.lwip.enet_ethernetif_kinetis.MK66F18"/>
     <definition extID="platform.Include_common.MK66F18"/>
     <definition extID="platform.Include_core_cm4.MK66F18"/>
     <definition extID="platform.drivers.clock.MK66F18"/>
@@ -31,7 +40,6 @@
     <definition extID="platform.drivers.lpuart.MK66F18"/>
     <definition extID="platform.drivers.port.MK66F18"/>
     <definition extID="platform.drivers.rnga.MK66F18"/>
-    <definition extID="platform.drivers.sim.MK66F18"/>
     <definition extID="platform.drivers.smc.MK66F18"/>
     <definition extID="platform.drivers.uart.MK66F18"/>
     <definition extID="platform.utilities.assert.MK66F18"/>
@@ -41,7 +49,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk66f_aws_greengrass_discovery_enet" name="aws_greengrass_discovery_enet" category="aws_examples" dependency="driver.phyksz8081.MK66F18 platform.drivers.rnga.MK66F18 middleware.mmcau_cm4_cm7.MK66F18 middleware.amazon_freertos.aws_iot.drivers_frdmk66f.MK66F18 middleware.freertos.MK66F18 middleware.freertos.heap.heap_4.MK66F18 middleware.amazon_freertos.aws_iot.MK66F18 middleware.amazon_freertos.aws_iot.jsmn.MK66F18 middleware.amazon_freertos.aws_iot.secure_sockets_lwip.MK66F18 middleware.tcpip.lwip.ethernetif.MK66F18 platform.drivers.port.MK66F18 platform.drivers.sim.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.enet.MK66F18 middleware.mbedtls.MK66F18 middleware.amazon_freertos.aws_iot.greengrass.MK66F18 middleware.amazon_freertos.aws_iot_demos.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 component.lists.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 middleware.tcpip.lwip.MK66F18" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmk66f_aws_greengrass_discovery_enet" name="aws_greengrass_discovery_enet" category="aws_examples" dependency="driver.phyksz8081.MK66F18 platform.drivers.rnga.MK66F18 middleware.mmcau_cm4_cm7.MK66F18 middleware.amazon_freertos.aws_iot.mflash.frdmk66f.MK66F18 platform.drivers.enet.MK66F18 middleware.tcpip.lwip.enet_ethernetif_kinetis.MK66F18 platform.drivers.port.MK66F18 middleware.amazon_freertos.aws_iot.secure_sockets.lwip.MK66F18 middleware.amazon_freertos.aws_iot.greengrass.MK66F18 middleware.amazon_freertos.aws_iot.demos.MK66F18 middleware.amazon_freertos.freertos.MK66F18 middleware.amazon_freertos.freertos.heap_4.MK66F18 middleware.amazon_freertos.aws_iot.MK66F18 middleware.amazon_freertos.aws_iot.bufferpool.MK66F18 middleware.amazon_freertos.aws_iot.crypto.MK66F18 middleware.amazon_freertos.aws_iot.mqtt.MK66F18 middleware.amazon_freertos.aws_iot.pkcs11.MK66F18 middleware.amazon_freertos.aws_iot.shadow.MK66F18 middleware.amazon_freertos.aws_iot.tls.MK66F18 middleware.amazon_freertos.aws_iot.utils.MK66F18 middleware.amazon_freertos.third_party.jsmn.MK66F18 middleware.amazon_freertos.third_party.pkcs11.MK66F18 middleware.mbedtls.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 component.lists.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 middleware.tcpip.lwip.enet_ethernetif.MK66F18 middleware.tcpip.lwip.MK66F18">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -69,7 +77,7 @@
           <value>-fno-common</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin  -fomit-frame-pointer</value>
+          <value>-fomit-frame-pointer  -c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
         </option>
         <option id="com.crt.advproject.link.fpu" type="enum">
           <value>com.crt.advproject.link.fpu.fpv4.hard</value>
@@ -83,7 +91,6 @@
       </toolchainSetting>
     </toolchainSettings>
     <include_paths>
-      <include_path path="amazon-freertos/third_party"/>
       <include_path path="lwip/port"/>
       <include_path path="lwip/src"/>
       <include_path path="lwip/src/include"/>
@@ -101,6 +108,7 @@
       <files mask="aws_mqtt_config.h"/>
       <files mask="aws_pkcs11_config.h"/>
       <files mask="aws_secure_sockets_config.h"/>
+      <files mask="aws_shadow_config.h"/>
       <files mask="aws_wifi_config.h"/>
     </source>
     <source path="boards/frdmk66f/aws_examples/greengrass_discovery_enet/iar" target_path="src" type="linker" toolchain="iar">
@@ -131,7 +139,7 @@
     </source>
     <source path="boards/frdmk66f/aws_examples/greengrass_discovery_enet" target_path="source" type="src">
       <files mask="aws_greengrass_discovery_demo.c"/>
-      <files mask="main_enet.c"/>
+      <files mask="main.c"/>
     </source>
   </example>
 </ksdk:examples>

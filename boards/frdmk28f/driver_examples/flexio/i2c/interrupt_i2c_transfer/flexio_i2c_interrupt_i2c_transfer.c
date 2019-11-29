@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -55,14 +55,14 @@ static void i2c_slave_callback(I2C_Type *base, i2c_slave_transfer_t *xfer, void 
         /*  Transmit request */
         case kI2C_SlaveTransmitEvent:
             /*  Update information for transmit process */
-            xfer->data = g_slave_buff;
+            xfer->data     = g_slave_buff;
             xfer->dataSize = I2C_DATA_LENGTH;
             break;
 
         /*  Receive request */
         case kI2C_SlaveReceiveEvent:
             /*  Update information for received process */
-            xfer->data = g_slave_buff;
+            xfer->data     = g_slave_buff;
             xfer->dataSize = I2C_DATA_LENGTH;
             break;
 
@@ -108,8 +108,8 @@ int main(void)
     I2C_SlaveGetDefaultConfig(&slaveConfig);
 
     slaveConfig.addressingMode = kI2C_Address7bit;
-    slaveConfig.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;
-    slaveConfig.upperAddress = 0;
+    slaveConfig.slaveAddress   = I2C_MASTER_SLAVE_ADDR_7BIT;
+    slaveConfig.upperAddress   = 0;
 
     I2C_SlaveInit(BOARD_I2C_SLAVE_BASE, &slaveConfig, I2C_SLAVE_CLOCK_FREQUENCY);
 
@@ -143,13 +143,13 @@ int main(void)
     flexio_i2c_master_config_t masterConfig;
 
     /* Do hardware configuration. */
-    i2cDev.flexioBase = BOARD_FLEXIO_BASE;
-    i2cDev.SDAPinIndex = FLEXIO_I2C_SDA_PIN;
-    i2cDev.SCLPinIndex = FLEXIO_I2C_SCL_PIN;
+    i2cDev.flexioBase      = BOARD_FLEXIO_BASE;
+    i2cDev.SDAPinIndex     = FLEXIO_I2C_SDA_PIN;
+    i2cDev.SCLPinIndex     = FLEXIO_I2C_SCL_PIN;
     i2cDev.shifterIndex[0] = 0U;
     i2cDev.shifterIndex[1] = 1U;
-    i2cDev.timerIndex[0] = 0U;
-    i2cDev.timerIndex[1] = 1U;
+    i2cDev.timerIndex[0]   = 0U;
+    i2cDev.timerIndex[1]   = 1U;
 
     /*
      * masterConfig.enableMaster = true;
@@ -165,12 +165,12 @@ int main(void)
     memset(&g_m_handle, 0, sizeof(g_m_handle));
     memset(&masterXfer, 0, sizeof(masterXfer));
 
-    masterXfer.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;
-    masterXfer.direction = kFLEXIO_I2C_Write;
-    masterXfer.subaddress = 0;
+    masterXfer.slaveAddress   = I2C_MASTER_SLAVE_ADDR_7BIT;
+    masterXfer.direction      = kFLEXIO_I2C_Write;
+    masterXfer.subaddress     = 0;
     masterXfer.subaddressSize = 0;
-    masterXfer.data = g_master_buff;
-    masterXfer.dataSize = I2C_DATA_LENGTH;
+    masterXfer.data           = g_master_buff;
+    masterXfer.dataSize       = I2C_DATA_LENGTH;
 
     FLEXIO_I2C_MasterTransferCreateHandle(&i2cDev, &g_m_handle, NULL, NULL);
     FLEXIO_I2C_MasterTransferNonBlocking(&i2cDev, &g_m_handle, &masterXfer);
@@ -186,7 +186,7 @@ int main(void)
     {
         if (g_slave_buff[i] != g_master_buff[i])
         {
-            PRINTF("\r\nError occured in this transfer !\r\n");
+            PRINTF("\r\nError occurred in this transfer !\r\n");
             break;
         }
     }

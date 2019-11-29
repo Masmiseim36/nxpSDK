@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 , 2018 NXP
+ * Copyright 2016 , 2018 - 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -32,7 +32,7 @@
 usb_device_endpoint_struct_t g_UsbDeviceVideoControlEndpoints[USB_VIDEO_VIRTUAL_CAMERA_CONTROL_ENDPOINT_COUNT] = {
     {
         USB_VIDEO_VIRTUAL_CAMERA_CONTROL_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
-        USB_ENDPOINT_INTERRUPT, FS_INTERRUPT_IN_PACKET_SIZE,
+        USB_ENDPOINT_INTERRUPT, FS_INTERRUPT_IN_PACKET_SIZE,FS_INTERRUPT_IN_INTERVAL,
     },
 };
 
@@ -74,7 +74,7 @@ usb_device_interface_struct_t g_UsbDeviceVideoControlInterface[] = {{
 usb_device_endpoint_struct_t g_UsbDeviceVideoStreamEndpoints[USB_VIDEO_VIRTUAL_CAMERA_STREAM_ENDPOINT_COUNT] = {
     {
         USB_VIDEO_VIRTUAL_CAMERA_STREAM_ENDPOINT_IN | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
-        USB_ENDPOINT_ISOCHRONOUS, FS_STREAM_IN_PACKET_SIZE,
+        USB_ENDPOINT_ISOCHRONOUS, FS_STREAM_IN_PACKET_SIZE,FS_STREAM_IN_INTERVAL,
     },
 };
 
@@ -667,11 +667,17 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
     {
         g_UsbDeviceVideoControlEndpoints[0].maxPacketSize = HS_INTERRUPT_IN_PACKET_SIZE;
         g_UsbDeviceVideoStreamEndpoints[0].maxPacketSize = HS_STREAM_IN_PACKET_SIZE;
+        
+        g_UsbDeviceVideoControlEndpoints[0].interval = HS_INTERRUPT_IN_INTERVAL;
+        g_UsbDeviceVideoStreamEndpoints[0].interval = HS_STREAM_IN_INTERVAL;
     }
     else
     {
         g_UsbDeviceVideoControlEndpoints[0].maxPacketSize = FS_INTERRUPT_IN_PACKET_SIZE;
         g_UsbDeviceVideoStreamEndpoints[0].maxPacketSize = FS_STREAM_IN_PACKET_SIZE;
+        
+        g_UsbDeviceVideoControlEndpoints[0].interval = FS_INTERRUPT_IN_INTERVAL;
+        g_UsbDeviceVideoStreamEndpoints[0].interval = FS_STREAM_IN_INTERVAL;
     }
 
     return kStatus_USB_Success;

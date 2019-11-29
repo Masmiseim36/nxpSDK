@@ -20,7 +20,7 @@
 #define BOARD_TPM_IRQ_NUM TPM2_IRQn
 #define BOARD_TPM_HANDLER TPM2_IRQHandler
 /* Get source clock for TPM driver */
-#define TPM_SOURCE_CLOCK (CLOCK_GetFreq(kCLOCK_PllFllSelClk)/4)
+#define TPM_SOURCE_CLOCK (CLOCK_GetFreq(kCLOCK_PllFllSelClk) / 4)
 
 /*******************************************************************************
  * Prototypes
@@ -29,7 +29,7 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-volatile bool tpmIsrFlag = false;
+volatile bool tpmIsrFlag           = false;
 volatile uint32_t milisecondCounts = 0U;
 
 /*******************************************************************************
@@ -41,7 +41,7 @@ volatile uint32_t milisecondCounts = 0U;
 int main(void)
 {
     uint32_t cnt;
-    uint32_t loop = 2;
+    uint32_t loop       = 2;
     uint32_t secondLoop = 1000U;
     const char *signals = "-|";
     tpm_config_t tpmInfo;

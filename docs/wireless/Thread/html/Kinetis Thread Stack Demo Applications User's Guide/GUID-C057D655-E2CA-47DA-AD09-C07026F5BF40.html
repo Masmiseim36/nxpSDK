@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Running the scenario"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-408B8857-E203-4A9A-B484-95AD810FBD3A.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-C057D655-E2CA-47DA-AD09-C07026F5BF40"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Running the scenario</title>
+</head>
+<body id="GUID-C057D655-E2CA-47DA-AD09-C07026F5BF40">
+
+
+	<h1 class="title topictitle1">Running the scenario</h1>
+
+	<div class="body">
+		<ul class="ul" id="GUID-C057D655-E2CA-47DA-AD09-C07026F5BF40__UL_YM1_D23_3Z">
+			<li class="li">Deploy the application built using <strong class="ph b">border_router_freertos.eww </strong>workspace found at <strong class="ph b">boards\frdmk64f_frdmcr20a\wireless_examples\thread\border_router\freertos\iar\ </strong>into IAR EWARM</li>
+
+			<li class="li">In the <samp class="ph codeph">source\config.h</samp>, change the define from <samp class="ph codeph">BR_ROUTER_MODE</samp> to <samp class="ph codeph">BR_HOST_MODE</samp>.</li>
+
+		</ul>
+
+		<img class="image" id="GUID-C057D655-E2CA-47DA-AD09-C07026F5BF40__IMAGE_E5Z_H23_3Z" src="GUID-218A9412-8AC7-4E7C-A1CD-24EB980AC17A-high.jpg"/>
+		<div class="fig fignone" id="GUID-C057D655-E2CA-47DA-AD09-C07026F5BF40__FIG_NJ3_D23_3Z"><span class="figcap">Figure 1. Border Router ND Host Setting</span>
+			
+		</div>
+
+		<ul class="ul" id="GUID-C057D655-E2CA-47DA-AD09-C07026F5BF40__UL_QXY_423_3Z">
+			<li class="li">Deploy <strong class="ph b">Node B</strong>-<strong class="ph b">router_eligible_device_freertos</strong> application to a
+				different board (can be any of the supported development boards)</li>
+
+		</ul>
+
+		<p class="p"> Before powering on the boards and starting the Thread network connect the <strong class="ph b">Node A</strong> via Ethernet to the OpenWrt Router as in the image below</p>
+
+		<img class="image" src="GUID-340F71B7-2C49-4726-81F1-7121BDC7A5AB-high.jpg"/>
+		<div class="fig fignone" id="GUID-C057D655-E2CA-47DA-AD09-C07026F5BF40__FIG_C5V_523_3Z"><span class="figcap">Figure 2. Setup for FRDM-K64F Border Router Application Scenario</span>
+			
+		</div>
+
+		<ul class="ul">
+			<li class="li">At power up of the FRDM-K64F, the OpenWrt software automatically configures a ULA (Unique Local Address) IPv6 prefix distributed to other devices in the site local networks. This example shows how the site local prefix is distributed via the Border Router to devices in the Thread Network.</li>
+
+		</ul>
+
+		<p class="p"> </p>
+
+		<ul class="ul">
+			<li class="li">Check the OpenWrt Router provisions an ULA prefix to the home mesh network:</li>
+
+		</ul>
+
+		<img class="image" src="GUID-AD479F32-F775-49E7-B69B-6E42578FBF50-high.jpg"/>
+		<div class="fig fignone"><span class="figcap">Figure 3. OpenWrt LUCI Web Interface showing IPv6 ULA Prefix Provisioning</span>
+			
+		</div>
+
+		<ul class="ul">
+			<li class="li">In the image above, the fd8c:1f14:90ca::/48 prefix is being provisioned.</li>
+
+			<li class="li">On <strong class="ph b">Node A</strong>, also open a shell on the OpenSDA / OpenLink USB port, to create a new Thread network enter:</li>
+
+		</ul>
+
+		<p class="p"><strong class="ph b">$ thr create</strong></p>
+
+		<p class="p">Note the status messages in the shell indicating the network parameters. Note a Commissioner instance also starts on Node A</p>
+
+		<ul class="ul">
+			<li class="li">On <strong class="ph b">Node B</strong> shell initiate joining with the default PSKd (<strong class="ph b"><em class="ph i">THREAD</em></strong>):</li>
+
+		</ul>
+
+		<p class="p"><strong class="ph b">$ thr join</strong></p>
+
+		<p class="p">Note the status messages in the shell indicating the joining results. </p>
+
+		<ul class="ul">
+			<li class="li">On <strong class="ph b">Node A</strong>, enter the <strong class="ph b">ifconfig</strong> command to view IP address information<strong class="ph b">:</strong></li>
+
+		</ul>
+
+		<p class="p"><strong class="ph b">$ ifconfig</strong></p>
+
+		<p class="p">Note that the Ethernet interface has already been provisioned with the prefix fd8c:1f14:90ca to assign the Unique Local Address. Also note the device has been assigned an IPv4 address via DHCP. </p>
+
+		<p class="p"> </p>
+
+		<p class="p">Note that the 6LoWPAN interface has also been provisioned with a subprefix of fd8c:1f14:90ca to assign a Unique Local Address.</p>
+
+		<p class="p"> </p>
+
+		<ul class="ul">
+			<li class="li">On <strong class="ph b">Node B</strong>, enter the <strong class="ph b">ifconfig</strong> command to view IP address information<strong class="ph b">:</strong></li>
+
+		</ul>
+
+		<p class="p"><strong class="ph b">$ ifconfig</strong></p>
+
+		<p class="p"><strong class="ph b">Interface 1: 6LoWPAN </strong></p>
+
+		<p class="p"><strong class="ph b"> Link local address (LL64): fe80::1885:ba8e:d82a:6fad </strong></p>
+
+		<p class="p"><strong class="ph b"> Mesh local address (ML64): fd4f:12be:69d2::9c67:fec9:9306:4791 </strong></p>
+
+		<p class="p"><strong class="ph b"> Mesh local address (ML16): fd4f:12be:69d2::ff:fe00:400 </strong></p>
+
+		<p class="p"><strong class="ph b"> Unique local address: fd8c:1f14:90ca:0001:</strong><strong class="ph b">18ef:f459:d754:ae31</strong></p>
+
+		<p class="p"><strong class="ph b"> Link local all Thread Nodes(MCast): ff32:40:fd4f:12be:69d2::01</strong></p>
+
+		<p class="p"><strong class="ph b"> Realm local all Thread Nodes(MCast): ff33:40:fd4f:12be:69d2::01</strong></p>
+
+		<p class="p"><strong class="ph b"> Interface 0: Loopback</strong></p>
+
+		<p class="p"> </p>
+
+		<p class="p">Note that the 6LoWPAN interface on the Thread interfaced router has also been provisioned with a subprefix of fd8c:1f14:90ca to assign a Unique Local Address in the site local home network.</p>
+
+		<ul class="ul">
+			<li class="li">On a PC connected to the same LAN managed as the OpenWrt device open a command terminal prompt</li>
+
+			<li class="li">On the PC, note a routing entry may need to be explicitly added to the host OS routing table.</li>
+
+		</ul>
+
+		<p class="p"> </p>
+
+		<ol class="ol">
+			<li class="li">Under Windows OS, assuming the Thread-only device has address fd8c:1f14:90ca:1::1 and the OpenWrt router address is fd8c:1f14:90ca::1</li>
+
+		</ol>
+
+		<p class="p"> </p>
+
+		<p class="p">C:\&gt; route ADD fd8c:1f14:90ca:1::1/128 fd8c:1f14:90ca::1</p>
+
+		<p class="p"> OK! </p>
+
+		<p class="p"> </p>
+
+		<p class="p">C:\&gt;ping fd8c:1f14:90ca:0001: 18ef:f459:d754:ae31 </p>
+
+		<p class="p">Pinging fd8c:1f14:90ca:0001: 18ef:f459:d754:ae31 with 32 bytes of data:</p>
+
+		<p class="p">Reply from fd8c:1f14:90ca:0001: 18ef:f459:d754:ae31 : time=932ms </p>
+
+		<p class="p">Reply from fd8c:1f14:90ca:0001: 18ef:f459:d754:ae31 : time=24ms </p>
+
+		<p class="p">Reply from fd8c:1f14:90ca:0001: 18ef:f459:d754:ae31 : time=22ms </p>
+
+		<p class="p">Reply from fd8c:1f14:90ca:0001: 18ef:f459:d754:ae31 : time=11ms </p>
+
+		<p class="p"> </p>
+
+		<ul class="ul">
+			<li class="li">Under OS X, assuming the Thread-only device has addres fd8c:1f14:90ca:1::1 and the OpenWrt router address is fd8c:1f14:90ca::1</li>
+
+		</ul>
+
+		<p class="p"> </p>
+
+		<p class="p">$ sudo route -n add –inet6 fd8c:1f14:90ca:1::1/128 fd8c:1f14:90ca::1</p>
+
+		<p class="p">add host fd8c:1f14:90ca:0001: 18ef:f459:d754:ae31 gateway fd8c:1f14:90ca::1</p>
+
+		<p class="p"> </p>
+
+		<p class="p">$ ping6 fd8c:1f14:90ca:1::1</p>
+
+		<p class="p">PING6(56=40+8+8 bytes) fd8c:1f14:90ca::387b:5427:33fa:b8f5 --&gt; fd8c:1f14:90ca:0001: 18ef:f459:d754:ae31</p>
+
+		<p class="p">16 bytes from fd8c:1f14:90ca:0001: 18ef:f459:d754:ae31 , icmp_seq=0 hlim=254 time=1021.479ms</p>
+
+		<p class="p">16 bytes from fd8c:1f14:90ca:0001: 18ef:f459:d754:ae31 , icmp_seq=1 hlim=254 time=45.268ms</p>
+
+		<p class="p"> </p>
+
+	</div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-408B8857-E203-4A9A-B484-95AD810FBD3A.html">External routing via Ethernet on FRDM-K64F – ND host mode and OpenWrt</a></div>
+</div>
+</div>
+
+</body>
+</html>

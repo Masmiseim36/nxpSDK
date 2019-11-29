@@ -325,7 +325,7 @@
           <state>$PROJ_DIR$/../../src/uart</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MKW41Z4/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MKW41Z4</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Common</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.8/Common</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MKW41Z4/utilities</state>
         </option>
         <option>
@@ -1300,7 +1300,7 @@
           <state>$PROJ_DIR$/../../src/uart</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MKW41Z4/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MKW41Z4</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Common</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.8/Common</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MKW41Z4/utilities</state>
         </option>
         <option>
@@ -2063,7 +2063,7 @@
     <group>
       <name>Common</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Common/EmbeddedTypes.h</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.8/Common/EmbeddedTypes.h</name>
       </file>
     </group>
   </group>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Thread Integration with Linux OS Host on Serial (UART) Tunnel Interface"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-6F852477-6BB3-4D85-B5D9-3DD470CE8EA7.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-C3CFCF65-5085-4A79-8E7E-0F048AE29059.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-EBC9AC32-0879-4E33-84F6-046C0D83A260.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="6"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-63987A0A-9DBD-4AB7-A046-6AE38C019A75"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Thread Integration with Linux OS Host on Serial (UART) Tunnel Interface</title>
+</head>
+<body id="GUID-63987A0A-9DBD-4AB7-A046-6AE38C019A75">
+
+
+  <h1 class="title topictitle1">Thread Integration with Linux OS Host on Serial (UART) Tunnel Interface</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <div class="p">The Kinetis Thread stack implements a serial Tunnel media interface which can be
+      used to exchange FSCI encapsulated IPv6 packets with a host system. First, ensure that the
+      macro SERIAL_TUN_IF is enabled in the project
+      file:middleware\wireless\nwk_ip_&lt;ver&gt;\examples\[multicore]\host_controlled_device\config\config.h.
+      For multi-core platforms the symbol must be enabled on all
+      cores.<pre class="pre codeblock">#define SERIAL_TUN_IF                     1</pre>
+ and
+      then select the appropriate Neighbor Discovery (ND) setting for your setup <span class="ph">in app_serial_tun_h</span>: ND host (default)
+      or ND router <span class="ph">or disabled</span>:
+      <pre class="pre codeblock">#define BR_ROUTER_MODE      0
+#define BR_HOST_MODE        1</pre>
+
+    </div>
+
+    <p class="p">Previous versions of the Thread stack permitted to disable ND completely on the
+      serial tunnel media interface, with communication being network layer only (layer-3 TUN mode).
+      The current version of the Thread stack disables this mode to promote link layer communication
+      (layer-2 TAP mode) between the Thread border router and external networks. If needed, one may
+      modify the firmware to use TUN mode instead of TAP mode by stripping out the Ethernet header
+      from network frames handled in functions IP_SerialTunRecv and IP_SerialTunSend6. In addition,
+      the media interface must be configured statically with IPv6 addresses and routes. Previous
+      versions of the Thread stack used prefix fd01::/64 for communicating to external networks,
+      with address fd01::1 configured for the interface itself. Host artifacts for firmware in TUN
+      mode applying this static configuration are described in Chapter 6.2 Userspace module in TUN mode. </p>
+
+    <p class="p">To provide connectivity to the host, there are 2 components needed: the TUN/TAP
+      kernel module, which allows the operating system to create virtual interfaces and a program
+      that knows to encapsulate/decapsulate IP packets to/from FSCI/THCI.</p>
+
+    <div class="fig fignone"><span class="figcap">Figure 1. Host-to-serial and Thread-device-to-host</span>
+      
+      <img class="image" src="GUID-58F02A65-BBF4-45E9-B531-8DA689C1E47B-high.png"/>
+    </div>
+
+  </div>
+
+<div class="related-links">
+<ul class="ullinks">
+<li class="link ulchildlink"><strong><a href="GUID-6F852477-6BB3-4D85-B5D9-3DD470CE8EA7.html">TUN/TAP</a></strong><br/>
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-C3CFCF65-5085-4A79-8E7E-0F048AE29059.html">Userspace module in TUN mode</a></strong><br/>
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-EBC9AC32-0879-4E33-84F6-046C0D83A260.html">Userspace module in TAP mode and global addressing scheme</a></strong><br/>
+</li>
+</ul>
+</div>
+
+</body>
+</html>

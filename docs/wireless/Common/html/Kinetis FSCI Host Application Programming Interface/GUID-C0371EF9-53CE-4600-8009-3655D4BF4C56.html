@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Operations"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-E48AB458-9A0D-4186-BD5E-708F96401B4D.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="6"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-C0371EF9-53CE-4600-8009-3655D4BF4C56"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Operations</title>
+</head>
+<body id="GUID-C0371EF9-53CE-4600-8009-3655D4BF4C56">
+
+
+  <h1 class="title topictitle1">Operations</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <div class="p">An operation consists in sending a request and obtaining the events via observers,
+      automatically.<pre class="pre codeblock">request = SocketCreateRequest(
+SocketDomain=SocketCreateRequestSocketDomain.AF_INET6,
+SocketType=SocketCreateRequestSocketType.Datagram,
+SocketProtocol=SocketCreateRequestSocketProtocol.UDP
+)
+operation = SocketCreateOperation('/dev/ttyACM0', request)
+operation.begin()
+</pre>
+</div>
+
+    <p class="p">This sends the request and prints the SocketCreateConfirm to the console. Adding a custom
+      callback is easy:</p>
+
+    <div class="p">
+      <pre class="pre codeblock">operation = SocketCreateRequest('/dev/ttyACM0', request, [callback])</pre>
+
+    </div>
+
+    <p class="p">The third argument (callbacks) when defining an operation is expected to be a list. The
+      reason is that a single request can trigger multiple events, let's assume a confirmation and
+      an indication. When it is known that two or more events should occur (inspect self.observers
+      of each class from operations.py for the specific events that are to occur), multiple
+      callbacks <strong class="ph b">must</strong> be added. If one event is not to be processed via a callback,
+        <em class="ph i">None</em> must be added, and the event gets printed to console. The order in which
+      callbacks are entered is important, that is the first callback is executed by the first
+      observer, and so on.</p>
+
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-E48AB458-9A0D-4186-BD5E-708F96401B4D.html">Development</a></div>
+</div>
+</div>
+
+</body>
+</html>

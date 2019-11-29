@@ -1,36 +1,8 @@
 /*
-* The Clear BSD License
 * Copyright 2016-2017 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 */
 
 /*!=============================================================================
@@ -136,7 +108,7 @@ void APP_vProcessRxData ( void )
     uint8    u8RxByte = 0;
 
 #if !gFsciIncluded_c
-    if (APP_GetByteFromSerial(&u8RxByte))
+    while (APP_GetByteFromSerial(&u8RxByte))
 #endif
     {
         APP_vProcessIncomingSerialCommands (u8RxByte);
@@ -836,28 +808,42 @@ PUBLIC void APP_vHandleStackEvents ( ZPS_tsAfEvent*    psStackEvent )
 
             if ( psStackEvent->eType !=  ZPS_EVENT_NONE )
             {
-                if ( psStackEvent->eType ==  ZPS_EVENT_NWK_NEW_NODE_HAS_JOINED )
+                switch(psStackEvent->eType)
                 {
-                    vLog_Printf ( TRACE_APP,LOG_DEBUG, "\nNode joined %04x",
-                                                       psStackEvent->uEvent.sNwkJoinIndicationEvent.u16NwkAddr );               
-                    s_sLedState.u32LedToggleTime =  ZTIMER_TIME_MSEC ( 200 );
-                    u8JoinedDevice =  0;
-                }
+                    case ZPS_EVENT_NWK_NEW_NODE_HAS_JOINED:
+                        vLog_Printf ( TRACE_APP,LOG_DEBUG, "\nNode joined %04x",
+                                                           psStackEvent->uEvent.sNwkJoinIndicationEvent.u16NwkAddr );
+                        s_sLedState.u32LedToggleTime =  ZTIMER_TIME_MSEC ( 200 );
+                        u8JoinedDevice =  0;
+            	        break;
 
-                 if (psStackEvent->eType == ZPS_EVENT_NWK_LEAVE_INDICATION)
-                 {
-                    /* report to host */
-                     ZNC_BUF_U64_UPD ( &au8LinkTxBuffer [ 0 ] ,
-                                       psStackEvent->uEvent.sNwkLeaveIndicationEvent.u64ExtAddr,
-                                       u16Length );
-                     ZNC_BUF_U8_UPD  ( &au8LinkTxBuffer [ u16Length ] ,
-                                       psStackEvent->uEvent.sNwkLeaveIndicationEvent.u8Rejoin,
-                                       u16Length );
+                    case ZPS_EVENT_NWK_LEAVE_INDICATION:
+                        /* report to host */
+                        ZNC_BUF_U64_UPD ( &au8LinkTxBuffer [ 0 ] ,
+                                          psStackEvent->uEvent.sNwkLeaveIndicationEvent.u64ExtAddr,
+                                          u16Length );
+                        ZNC_BUF_U8_UPD  ( &au8LinkTxBuffer [ u16Length ] ,
+                                          psStackEvent->uEvent.sNwkLeaveIndicationEvent.u8Rejoin,
+                                          u16Length );
 
-                     vSL_WriteMessage ( E_SL_MSG_LEAVE_INDICATION,
-                                        u16Length,
-                                        au8LinkTxBuffer );
-                }
+                        vSL_WriteMessage ( E_SL_MSG_LEAVE_INDICATION,
+                                           u16Length,
+                                           au8LinkTxBuffer );
+                        break;
+
+                    case ZPS_EVENT_NWK_LEAVE_CONFIRM:
+                        if ((psStackEvent->uEvent.sNwkLeaveConfirmEvent.eStatus == ZPS_E_SUCCESS) &&
+                            (psStackEvent->uEvent.sNwkLeaveConfirmEvent.u64ExtAddr == 0UL) &&
+                            (psStackEvent->uEvent.sNwkLeaveConfirmEvent.bRejoin == FALSE))
+                        {
+                            APP_vFactoryResetRecords();
+                            NVIC_SystemReset();
+                        }
+                        break;
+
+                    default:
+                    	break;
+            	}
             }
             break;
         default:

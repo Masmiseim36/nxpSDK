@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Steps to announce and send unicast messages to a data sink"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-1C9662A4-B1AE-4FFD-9AD3-606D7E0DD104.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-DA064182-94CE-4CFB-89AE-C6CA3ADF5946"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Steps to announce and send unicast messages to a data sink</title>
+</head>
+<body id="GUID-DA064182-94CE-4CFB-89AE-C6CA3ADF5946">
+
+
+    <h1 class="title topictitle1">Steps to announce and send unicast messages to a data sink</h1>
+
+    <div class="body">
+        <p class="p">Note: the images used in the detailed steps assume using <span class="ph">FRDM-KW24D512</span> platform for Node A and Node B. </p>
+
+        <p class="p">To <strong class="ph b">announce a node as a Data Sink </strong>using a board button switch action
+            take the following steps:</p>
+
+        <ul class="ul" id="GUID-DA064182-94CE-4CFB-89AE-C6CA3ADF5946__UL_UYG_2HF_3Z">
+            <li class="li">Data sink announcements work only if devices are already joined to the
+                network. All following steps assume the steps of joining Node B and Node C to the
+                network created by Node A have been performed as shown in section <strong class="ph b">Steps to Create
+                    a Network and Joining a New Device. </strong>Node A, Node B, and Node C should be
+                Active Routers.</li>
+
+        </ul>
+
+        <img class="image" id="GUID-DA064182-94CE-4CFB-89AE-C6CA3ADF5946__IMAGE_LSB_JHF_3Z" src="GUID-733A17BA-4270-40BB-AC33-4D380379F635-high.jpg"/>
+        
+        <ul class="ul" id="GUID-DA064182-94CE-4CFB-89AE-C6CA3ADF5946__UL_VDP_KHF_3Z">
+            <li class="li">Check that a data sink is not active and LED control messages are
+                multicast:</li>
+
+            <li class="li">On <strong class="ph b">Node A: press button switch for LED ON </strong>(SW3 for FRDM-KW24D512) </li>
+
+            <li class="li">On <strong class="ph b">Node B and C</strong>: note that the LED turns on (the RGB LED D17
+                turns on FRDM-KW24D512)</li>
+
+            <li class="li">On <strong class="ph b">Node B: Short press button switch to Create Data Sink </strong>(SW1 for
+                FRDM-KW24D512)</li>
+
+            <li class="li">On <strong class="ph b">Node A: press button switch for LED OFF </strong>(SW4 for
+                FRDM-KW24D512) </li>
+
+            <li class="li">On <strong class="ph b">Node B</strong>: note LED has gone off </li>
+
+        </ul>
+
+        <p class="p">On <strong class="ph b">Node C</strong>: note LED has NOT gone off</p>
+
+        <p class="p">A Data Sink has been created with Node B as a
+            concentrator. Node C and Node A no longer receive LED control messages from other
+            devices which are now unicast to Node B</p>
+
+        <ul class="ul" id="GUID-DA064182-94CE-4CFB-89AE-C6CA3ADF5946__UL_BFP_KHF_3Z">
+            <li class="li">On <strong class="ph b">Node C</strong>: check that the LED ON and LED OFF buttons only control
+                Node B LED, but not Node A</li>
+
+            <li class="li">On <strong class="ph b">Node B</strong>: <strong class="ph b">Long press (press and HOLD 2-3 seconds) switch
+                    button to Release Data Sink </strong>(SW1 for FRDM-KW24D512) </li>
+
+            <li class="li">On <strong class="ph b">Node A </strong>and <strong class="ph b">Node C: </strong>check that the LED ON and LED OFF
+                buttons now have reverted back to multicast behavior controlling all other
+                nodes.</li>
+
+        </ul>
+
+        
+        
+        
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-1C9662A4-B1AE-4FFD-9AD3-606D7E0DD104.html">Announcing a data sink and sending unicast LED control CoAP messages</a></div>
+</div>
+</div>
+
+</body>
+</html>

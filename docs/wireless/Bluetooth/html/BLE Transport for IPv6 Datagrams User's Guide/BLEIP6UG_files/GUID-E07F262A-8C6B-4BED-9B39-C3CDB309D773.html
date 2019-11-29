@@ -44,6 +44,7 @@
 
     mSsRx.sin6_family = AF_INET6;
     mSsRx.sin6_port = UDP_PORT;
+    mSsRx.sin6_scope_id = gIpIfUndef_c;
     IP_AddrCopy(&amp;mSsRx.sin6_addr, &amp;in6addr_any);
 
     /* Create socket */

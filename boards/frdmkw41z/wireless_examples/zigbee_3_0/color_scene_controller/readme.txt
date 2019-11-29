@@ -1,11 +1,13 @@
 Overview
 ========
-
+This application represents the "Color Scene Controller" Zigbee 3.0 demo application.
+For usability, this controller device must be paired with lighting device types, in order for the cluster client on the controller to access/control attributes of the cluster server on the lighting device type. 
+For more information please refer to the "AN12064-MKW41Z-AN-ZigBee-3-0-Controller-and-Switch.pdf" document.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.80.4
-
+- IAR Embedded Workbench v8.32.1
+- MCUXpresso IDE v10.2.1
 
 Hardware requirements
 =====================
@@ -25,3 +27,4 @@ Prepare the Demo
 
 Running the demo
 ================
+Follow the instructions from the "AN12064-MKW41Z-AN-ZigBee-3-0-Controller-and-Switch.pdf" document.

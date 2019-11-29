@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Factory default state"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-038996D7-6665-4E84-A42F-2C4089AD996B.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="4"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-42A2B50E-7521-4839-A71D-1B73A8DCC6B0"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Factory default state</title>
+</head>
+<body id="GUID-42A2B50E-7521-4839-A71D-1B73A8DCC6B0">
+
+
+    <h1 class="title topictitle1">Factory default state</h1>
+
+    <div class="body">
+        <p class="p"/>
+
+        <p class="p">The first time an application runs after its firmware had been deployed to a
+            device is in a factory default idle state where it is not connected to any network. For
+            the examples deployed on standard development boards, this is indicated by RGB LED
+            flashing blue and red LED flashing also.</p>
+
+        <p class="p">From the Thread network perspective, when initially in Factory Default state or if reset
+            to this state, the node radio is off and the device is off any Thread network.</p>
+
+        <p class="p">In order to bring a Factory Default state device onto an active Thread network,
+            applications can opt for one of the following:</p>
+
+        <ul class="ul" id="GUID-42A2B50E-7521-4839-A71D-1B73A8DCC6B0__UL_XH2_5KN_HZ">
+            <li class="li">If the application has been configured at compile time to include
+                routing capability, the application can opt to <strong class="ph b">create a new Thread network</strong>
+                entity and the current node can act as its initial Leader router. In order to create
+                a new Thread network, the application must call <strong class="ph b">THR_NwkCreate</strong> API. This API
+                along with the rest of network state commands are defined in API interface header <strong class="ph b">\middleware\wireless\nwk_ip_1.2.8\core\interface\thread\ thread_network.h</strong>.The application can also opt to establish the configuration
+                setting for the network either at compile time, or dynamically.</li>
+
+            <li class="li">Otherwise, the application can choose to scan for networks to join
+                created by other nodes using the <strong class="ph b">THR_NwkJoin</strong> API. If joining a network
+                instead of creating one, the application can set certain parameters, including
+                whether the security credentials of the network are obtained by the DTLS in-band
+                commissioning or whether the credentials are configured statically for testing or
+                having been obtained out-of-band. <strong class="ph b">THR_NwkJoin </strong>triggers commissioning or
+                attached depending on the value of the iscommissioned attribute. It can be set to 0
+                (pre-commissioned, commissioned out-of-band, the node only attaches to a scanned
+                network) or 1 (not pre-commissioned, the node perform in-band commissioning using
+                DTLS).</li>
+
+        </ul>
+
+        <p class="p">Before joining, applications can also opt to set parameters dynamically by
+            means of the THR_SetAttr API and do standalone scanning for networks using the
+            THR_NwkScanWithBeacon or THR_NwkDiscoveryReq API.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-038996D7-6665-4E84-A42F-2C4089AD996B.html">Thread Network APIs</a></div>
+</div>
+</div>
+
+</body>
+</html>

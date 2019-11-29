@@ -1,11 +1,13 @@
 Overview
 ========
-
+This application represents the "Coordinator" Zigbee 3.0 demo application.
+The Coordinator is responsible for initially forming the network and then, via the Trust Centre functionality, managing which other devices are allowed to join the network and distributing security materials to those that are allowed to join.
+For more information please refer to the "AN12061-MKW41Z-AN-ZigBee-3-0-Base-Device.pdf" document.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.80.4
-
+- IAR Embedded Workbench v8.32.1
+- MCUXpresso IDE v10.2.1
 
 Hardware requirements
 =====================
@@ -25,3 +27,4 @@ Prepare the Demo
 
 Running the demo
 ================
+Follow the instructions from the "AN12061-MKW41Z-AN-ZigBee-3-0-Base-Device.pdf" document.

@@ -1,36 +1,8 @@
 /*
-* The Clear BSD License
 * Copyright 2016-2017 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 */
 
  /*!=============================================================================
@@ -188,6 +160,7 @@ typedef enum
     E_SL_MSG_MOVE_STEP                                         =   0x0082,
     E_SL_MSG_MOVE_STOP_MOVE                                    =   0x0083,
     E_SL_MSG_MOVE_STOP_ONOFF                                   =   0x0084,
+    E_SL_MSG_MOVE_TO_CLOSEST_FREQ                              =   0x0085,
 
     /* Scenes Cluster */
     E_SL_MSG_VIEW_SCENE                                        =   0x00A0,
@@ -215,7 +188,7 @@ typedef enum
     E_SL_MSG_MOVE_TO_COLOUR                                    =   0x00B7,
     E_SL_MSG_MOVE_COLOUR                                       =   0x00B8,
     E_SL_MSG_STEP_COLOUR                                       =   0x00B9,
-
+    
     /* ZLL Commands */
     /* Touchlink */
     E_SL_MSG_INITIATE_TOUCHLINK                                =   0x00D0,
@@ -266,6 +239,7 @@ typedef enum
     E_SL_MSG_READ_REPORT_CONFIG_RESPONSE                        =  0x8122,
     E_SL_MSG_ATTRIBUTE_DISCOVERY_REQUEST                        =  0x0140,
     E_SL_MSG_ATTRIBUTE_DISCOVERY_RESPONSE                       =  0x8140,
+    E_SL_MSG_ATTRIBUTE_DISCOVERY_INDIVIDUAL_RESPONSE            =  0x8139,
     E_SL_MSG_ATTRIBUTE_EXT_DISCOVERY_REQUEST                    =  0x0141,
     E_SL_MSG_ATTRIBUTE_EXT_DISCOVERY_RESPONSE                   =  0x8141,
     E_SL_MSG_COMMAND_RECEIVED_DISCOVERY_REQUEST                 =  0x0150,
@@ -312,6 +286,10 @@ typedef enum
     E_SL_MSG_AHI_DIO_READ_INPUT                                 = 0x0803,
     E_SL_MSG_AHI_DIO_READ_INPUT_RSP                             = 0x8803,
     E_SL_MSG_AHI_SET_TX_POWER                                   = 0x0806,
+
+    /* Diagnostics Cluster */
+    E_SL_MSG_DIAGNOSTICS_REQUEST                                = 0x0099,
+    E_SL_MSG_DIAGNOSTICS_RESPONSE                               = 0x8099,
 } teSL_MsgType;
 typedef enum
 {

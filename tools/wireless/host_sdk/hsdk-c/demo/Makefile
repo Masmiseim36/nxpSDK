@@ -17,46 +17,46 @@ all: clean HeartRateSensor ThreadLeader ZigBeeCoordinator
 HeartRateSensor.o: HeartRateSensor.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-cmd_ble_1.2.6.o: ../src/cmd_ble_1.2.6.c
+cmd_ble_1.2.8.o: ../src/cmd_ble_1.2.8.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-evt_ble_1.2.6.o: ../src/evt_ble_1.2.6.c
+evt_ble_1.2.8.o: ../src/evt_ble_1.2.8.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-evt_printer_ble_1.2.6.o: ../src/evt_printer_ble_1.2.6.c
+evt_printer_ble_1.2.8.o: ../src/evt_printer_ble_1.2.8.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-HeartRateSensor: HeartRateSensor.o cmd_ble_1.2.6.o evt_ble_1.2.6.o evt_printer_ble_1.2.6.o
+HeartRateSensor: HeartRateSensor.o cmd_ble_1.2.8.o evt_ble_1.2.8.o evt_printer_ble_1.2.8.o
 	gcc -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 ThreadLeader.o: ThreadLeader.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-cmd_threadip_1.2.6.o: ../src/cmd_threadip_1.2.6.c
+cmd_threadip_1.2.8.o: ../src/cmd_threadip_1.2.8.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-evt_threadip_1.2.6.o: ../src/evt_threadip_1.2.6.c
+evt_threadip_1.2.8.o: ../src/evt_threadip_1.2.8.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-evt_printer_threadip_1.2.6.o: ../src/evt_printer_threadip_1.2.6.c
+evt_printer_threadip_1.2.8.o: ../src/evt_printer_threadip_1.2.8.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-ThreadLeader: ThreadLeader.o cmd_threadip_1.2.6.o evt_threadip_1.2.6.o evt_printer_threadip_1.2.6.o
+ThreadLeader: ThreadLeader.o cmd_threadip_1.2.8.o evt_threadip_1.2.8.o evt_printer_threadip_1.2.8.o
 	gcc -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 ZigBeeCoordinator.o: ZigBeeCoordinator.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-cmd_zigbee3_0_6.0.7.o: ../src/cmd_zigbee3_0_6.0.7.c
+cmd_zigbee3_0_6.0.9.o: ../src/cmd_zigbee3_0_6.0.9.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-evt_zigbee3_0_6.0.7.o: ../src/evt_zigbee3_0_6.0.7.c
+evt_zigbee3_0_6.0.9.o: ../src/evt_zigbee3_0_6.0.9.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-evt_printer_zigbee3_0_6.0.7.o: ../src/evt_printer_zigbee3_0_6.0.7.c
+evt_printer_zigbee3_0_6.0.9.o: ../src/evt_printer_zigbee3_0_6.0.9.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-ZigBeeCoordinator: ZigBeeCoordinator.o cmd_zigbee3_0_6.0.7.o evt_zigbee3_0_6.0.7.o evt_printer_zigbee3_0_6.0.7.o
+ZigBeeCoordinator: ZigBeeCoordinator.o cmd_zigbee3_0_6.0.9.o evt_zigbee3_0_6.0.9.o evt_printer_zigbee3_0_6.0.9.o
 	gcc -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 clean:

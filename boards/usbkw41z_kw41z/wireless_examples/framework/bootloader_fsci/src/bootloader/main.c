@@ -1,40 +1,12 @@
-/*!
-* The Clear BSD License
+/*! *********************************************************************************
 * Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2017 NXP
+* Copyright 2016-2018 NXP
 * All rights reserved.
 *
 * \file
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-* 
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-* 
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-* 
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-* 
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+* SPDX-License-Identifier: BSD-3-Clause
+********************************************************************************** */
 
 
 /*! *********************************************************************************
@@ -115,7 +87,7 @@ const FlashConfig_t gFlashConfig __attribute__ ((section(".cfmconfig"))) =
 };
 
 
-/* Bootloader Flasg */
+/* Bootloader Flags */
 #if gFsciIncluded_c
 #if defined(__IAR_SYSTEMS_ICC__)
 #pragma location = "BootFlags"
@@ -199,6 +171,45 @@ void Boot_MemCpy (void* pDst, void* pSrc, uint32_t cBytes)
 }
 
 /*! *********************************************************************************
+* \brief  This function compares two buffers.
+*
+* \param[in]  pData1  First buffer to compare.
+*
+* \param[in]  pData2  Second buffer to compare.
+*
+* \param[in]  cBytes Number of bytes to compare.
+*
+* \return  This function return TRUE if the buffers are equal and FALSE otherwise.
+*
+* \post
+*
+* \remarks
+*
+********************************************************************************** */
+bool_t Boot_MemCmp (const void* pData1,    /* IN: First memory block to compare */
+                    const void* pData2,    /* IN: Second memory block to compare */
+                    uint32_t cBytes  /* IN: Number of bytes to compare. */
+                   )
+{
+    bool_t status = TRUE;
+
+    while (cBytes)
+    {
+        if ( *((uint8_t *)pData1) != *((uint8_t *)pData2))
+        {
+            status = FALSE;
+            break;
+        }
+
+        pData2 = (uint8_t* )pData2+1;
+        pData1 = (uint8_t* )pData1+1;
+        cBytes--;
+    }
+
+    return status;
+}
+
+/*! *********************************************************************************
 * \brief   The function resets the MCU
 *
 ********************************************************************************** */
@@ -260,7 +271,10 @@ int main(int argc, char **argv)
     volatile uint32_t mDebounceShiftReg = gDebounceShiftRegInitVal_c;
     uint32_t mDebounceCnt = 0;
 #endif
-  
+
+    /* pointer to user application start address */
+    uint32_t const *pUserAppEntryData = (uint32_t*)gUserFlashStart_d;
+
     /* Disable interrupt by default */
     __asm("     CPSID   i       ");
 
@@ -276,14 +290,14 @@ int main(int argc, char **argv)
     SIM->COPC = SIM_COPC_COPT(0);
 #endif
 
-    
+
 #if gFsciIncluded_c
     BOOT_PIN_ENABLE_SIM_SCG_REG |= BOOT_PIN_ENABLE_SIM_SCG_MASK;
-    BOOT_PIN_ENABLE_PORT_BASE->PCR[BOOT_PIN_ENABLE_NUM] = PORT_PCR_MUX(1) | PORT_PCR_PS_MASK | PORT_PCR_PE_MASK;    
+    BOOT_PIN_ENABLE_PORT_BASE->PCR[BOOT_PIN_ENABLE_NUM] = PORT_PCR_MUX(1) | PORT_PCR_PS_MASK | PORT_PCR_PE_MASK;
 
     /* Debounce the switch pin */
-    do 
-    {      
+    do
+    {
       mDebounceShiftReg |= (((BOOT_PIN_ENABLE_GPIO_BASE->PDIR & (1 << BOOT_PIN_ENABLE_NUM))>>BOOT_PIN_ENABLE_NUM) & 0x1);
       if((mDebounceShiftReg == 0xFFFFFFFF) || (mDebounceShiftReg == 0)) // pin stable values
       {
@@ -291,7 +305,7 @@ int main(int argc, char **argv)
       }
       mDebounceShiftReg <<= 1;
     } while (mDebounceCnt++ <= gDebounceTimeout_c);
-           
+
     if( (mDebounceShiftReg == 0) ||  /* GPIO trigger */
         (gBootFlags.newImageFlag != gBootFlagInvalid_d) ||        /* Flag set by Application */
         (*((uint32_t*)gUserFlashStart_d) < KINETIS_RAM_START) ||  /* Invalid Application */
@@ -306,9 +320,17 @@ int main(int argc, char **argv)
     Boot_CheckOtapFlags();
 #endif
 
-    /* Set the start address of the interrupt vector*/
-    SCB->VTOR = gUserFlashStart_d;
-    JumpToApplication(gUserFlashStart_d);
+    if(*pUserAppEntryData == (uint32_t)gBootInvalidAddress_c)
+    {
+      /* invalid application, loop forever */
+      while(1) {;};
+    }
+
+    /* Set the start address of the interrupt vector */
+    SCB->VTOR = (uint32_t)pUserAppEntryData;
+
+    /* Jump to user application */
+    JumpToApplication((uint32_t)pUserAppEntryData);
 
     return 0;
 }
@@ -427,7 +449,7 @@ void BOOT_ClockInit(void)
     SIM->CLKDIV1 = 0x00010000U;
     /* Set LPUART clock */
     SIM->SOPT2 |= SIM_SOPT2_LPUART0SRC(2);
-    
+
 #elif defined(FRDM_K64F)
     /************************
     * Transition: FEI->FBE

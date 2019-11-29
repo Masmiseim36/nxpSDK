@@ -1,36 +1,8 @@
 '''
-* The Clear BSD License
 * Copyright 2017-2018 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 '''
 
 class GenericEnum(object):
@@ -47,8 +19,7 @@ class SetDeviceTypeDeviceType(GenericEnum):
 
     Coordinator = 0x00
     Router = 0x01
-    LegacyRouter = 0x02
-
+    EndDevice = 0x02
 
 class BindDestAddressingMode(GenericEnum):
 
@@ -162,6 +133,26 @@ class OnOffTimedSendOnOff(GenericEnum):
     Off = 0x00
     On = 0x01
 
+class DiagnosticRequestAddressMode(GenericEnum):
+
+    # Short Address Mode
+    TargetShort = 0x02
+    # IEEE Address Mode
+    TargetIEEE = 0x03
+    # Broadcast Address Mode
+    TargetBroadcast = 0x04
+
+class DiagnosticRequestCommandID(GenericEnum):
+
+    # Delay Request
+    DelayRequest = 0x00
+    # Delay Request
+    DelayResults = 0x01
+
+class DiagnosticResponseStatus(GenericEnum):
+
+    # Delay Response
+    DelayResponse = 0x01
 
 class LockUnlockDoorLockUnlock(GenericEnum):
 
@@ -304,6 +295,69 @@ class LoadRecordResponseStatus(GenericEnum):
     NoRecordFound = 0x00
     RecordRecovered = 0x01
 
+class RouterDiscoveryConfirmStatus(GenericEnum):
+
+    # Route Discovery success.
+    Success = 0x00
+    # Route Discovery failed.
+    Failed = 0xD0
+
+class RouterDiscoveryConfirmNwkStatus(GenericEnum):
+
+    # Route Discovery success.
+    SUCCESS = 0x00
+    # Counter Error
+    COUNTER_ERROR = 0xDB
+    # Improper Key Type
+    IMPROPER_KEY_TYPE = 0xDC
+    # Improper Security Level
+    IMPROPER_SECURITY_LEVEL = 0xDD
+    # Unsupported legacy
+    UNSUPPORTED_LEGACY = 0xDE
+    # Beacon loss
+    BEACON_LOSS = 0xE0
+    # Channel access failure
+    CHANNEL_ACCESS_FAILURE = 0xE1
+    # Denied
+    DENIED = 0xE2
+    # Disable TRX failure
+    DISABLE_TRX_FAILURE = 0xE3
+    # Failed security check
+    FAILED_SECURITY_CHECK = 0xE4
+    # Frame too long
+    FRAME_TOO_LONG = 0xE5
+    # Invalid GTS
+    INVALID_GTS = 0xE6
+    # Invalid handle
+    INVALID_HANDLE = 0xE7
+    # Invalid parameter
+    INVALID_PARAMETER = 0xE8
+    # No ACK
+    NO_ACK = 0xE9
+    # No beacon
+    NO_BEACON = 0xEA
+    # No data
+    NO_DATA = 0xEB
+    # No short address
+    NO_SHORT_ADDRESS = 0xEC
+    # Out of CAP
+    OUT_OF_CAP = 0xED
+    # Pan ID conflict
+    PAN_ID_CONFLICT = 0xEE
+    # Realignment
+    REALIGNMENT = 0xEF
+    # Transaction expired
+    TRANSACTION_EXPIRED = 0xF0
+    # Transaction overflow
+    TRANSACTION_OVERFLOW = 0xF1
+    # TX active
+    TX_ACTIVE = 0xF2
+    # Unavailable key
+    UNAVAILABLE_KEY = 0xF3
+    # Unsupported attribute
+    UNSUPPORTED_ATTRIBUTE = 0xF4
+    # Scan in progress
+    SCAN_IN_PROGRESS = 0xF5
 
 class APSDataConfirmFailDestAddressingMode(GenericEnum):
 

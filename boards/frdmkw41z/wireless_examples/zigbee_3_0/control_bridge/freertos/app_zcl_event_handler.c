@@ -1,36 +1,8 @@
 /*
-* The Clear BSD License
 * Copyright 2016-2017 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 */
 
 /*!=============================================================================
@@ -68,6 +40,10 @@
 
 #ifdef STACK_MEASURE
 #include "StackMeasure.h"
+#endif
+
+#ifdef CLD_DIAGNOSTICS
+#include "Diagnostics.h"
 #endif
 
 #ifdef DEBUG_ZCL
@@ -539,9 +515,9 @@ PRIVATE void APP_ZCL_cbEndpointCallback ( tsZCL_CallBackEvent*    psEvent )
         }
         break;
 
-        case E_ZCL_CBET_DISCOVER_INDIVIDUAL_ATTRIBUTE_RESPONSE:
+        case E_ZCL_CBET_DISCOVER_ATTRIBUTES_RESPONSE:
         {
-            vLog_Printf ( TRACE_ZCL, LOG_DEBUG, " (E_ZCL_CBET_DISCOVER_INDIVIDUAL_ATTRIBUTE_RESPONSE)" );
+            vLog_Printf ( TRACE_ZCL, LOG_DEBUG, " (E_ZCL_CBET_DISCOVER_ATTRIBUTES_RESPONSE)" );
             ZNC_BUF_U8_UPD   ( &au8LinkTxBuffer [0],         psEvent->uMessage.sAttributeDiscoveryResponse.bDiscoveryComplete,    u16Length );
             ZNC_BUF_U8_UPD   ( &au8LinkTxBuffer [u16Length], psEvent->uMessage.sAttributeDiscoveryResponse.eAttributeDataType,    u16Length );
             ZNC_BUF_U16_UPD  ( &au8LinkTxBuffer [u16Length], psEvent->uMessage.sAttributeDiscoveryResponse.u16AttributeEnum,      u16Length );
@@ -551,6 +527,20 @@ PRIVATE void APP_ZCL_cbEndpointCallback ( tsZCL_CallBackEvent*    psEvent )
                                au8LinkTxBuffer );
         }
         break;
+        
+        case E_ZCL_CBET_DISCOVER_INDIVIDUAL_ATTRIBUTE_RESPONSE:
+        {
+            vLog_Printf ( TRACE_ZCL, LOG_DEBUG, " (E_ZCL_CBET_DISCOVER_INDIVIDUAL_ATTRIBUTE_RESPONSE)" );
+            ZNC_BUF_U8_UPD   ( &au8LinkTxBuffer [0],         psEvent->uMessage.sAttributeDiscoveryResponse.bDiscoveryComplete,    u16Length );
+            ZNC_BUF_U8_UPD   ( &au8LinkTxBuffer [u16Length], psEvent->uMessage.sAttributeDiscoveryResponse.eAttributeDataType,    u16Length );
+            ZNC_BUF_U16_UPD  ( &au8LinkTxBuffer [u16Length], psEvent->uMessage.sAttributeDiscoveryResponse.u16AttributeEnum,      u16Length );
+
+            vSL_WriteMessage ( E_SL_MSG_ATTRIBUTE_DISCOVERY_INDIVIDUAL_RESPONSE,
+                               u16Length,
+                               au8LinkTxBuffer );
+        }
+        break;
+
 
          case E_ZCL_CBET_DISCOVER_INDIVIDUAL_ATTRIBUTE_EXTENDED_RESPONSE:
         {
@@ -1048,6 +1038,35 @@ PRIVATE void APP_ZCL_cbEndpointCallback ( tsZCL_CallBackEvent*    psEvent )
                                    au8LinkTxBuffer );
             }
             break;
+#if defined CLD_DIAGNOSTICS
+            case GENERAL_CLUSTER_ID_DIAGNOSTICS:
+            {
+                tsCLD_DiagnosticsCallBackMessage *psCallBackMessage =  ( tsCLD_DiagnosticsCallBackMessage* ) psEvent->uMessage.sClusterCustomMessage.pvCustomData;
+
+                if(psCallBackMessage->u8CommandId == E_CLD_DIAGNOSTICS_CMD_DELAY_RESPONSE)
+                {
+                    uint8 i =  0;
+
+                    ZNC_BUF_U8_UPD  ( &au8LinkTxBuffer [u16Length],    psCallBackMessage->u8CommandId,           u16Length );
+                    ZNC_BUF_U32_UPD ( &au8LinkTxBuffer [u16Length],    psCallBackMessage->u32RequestLatency,     u16Length );
+                    ZNC_BUF_U32_UPD ( &au8LinkTxBuffer [u16Length],    psCallBackMessage->u32ResponseLatency,    u16Length );
+                    ZNC_BUF_U32_UPD ( &au8LinkTxBuffer [u16Length],    psCallBackMessage->u32Offset,             u16Length );
+                    ZNC_BUF_U8_UPD  ( &au8LinkTxBuffer [u16Length],    psCallBackMessage->sequenceNumber,        u16Length );
+                    ZNC_BUF_U8_UPD  ( &au8LinkTxBuffer [u16Length],    psCallBackMessage->payloadSize,           u16Length );
+                    
+                    while ( i <  psCallBackMessage->payloadSize )
+                    {
+                        ZNC_BUF_U8_UPD  ( &au8LinkTxBuffer [u16Length],    psCallBackMessage->payload [ i ],    u16Length );
+                        i++;
+                    }
+                }
+                
+                vSL_WriteMessage ( E_SL_MSG_DIAGNOSTICS_RESPONSE,
+                   u16Length,
+                   au8LinkTxBuffer );
+            }
+            break;
+#endif
             default:
                 break;
         }// CUSTOM CLUSTER SWITCH STATEMENT
@@ -1132,6 +1151,15 @@ void vAPP_ZCL_DeviceSpecific_Init ( void )
     FLib_MemCpy ( sControlBridge.sBasicServerCluster.au8ModelIdentifier, "ZLL-ControlBridge", CLD_BAS_MODEL_ID_SIZE );
     FLib_MemCpy ( sControlBridge.sBasicServerCluster.au8DateCode, "20121212", CLD_BAS_DATE_SIZE );
     FLib_MemCpy ( sControlBridge.sBasicServerCluster.au8SWBuildID, "2000-0001", CLD_BAS_SW_BUILD_SIZE );
+    #ifdef CLD_BAS_ATTR_MANUFACTURER_VERSION_DETAILS
+    FLib_MemCpy(sControlBridge.sBasicServerCluster.au8ManufacturerVersionDetails, "Zigbee_Version_3.0", CLD_BAS_MANUFACTURER_VERSION_SIZE);
+    #endif
+    #ifdef CLD_BAS_ATTR_SERIAL_NUMBER
+    FLib_MemCpy(sControlBridge.sBasicServerCluster.au8SerialNumber, "1234", CLD_BAS_SERIAL_NUMBER_SIZE);
+    #endif
+    #ifdef CLD_BAS_ATTR_PRODUCT_LABEL
+    FLib_MemCpy(sControlBridge.sBasicServerCluster.au8ProductLabel, "Kinetis_KW41Z", CLD_BAS_PRODUCT_LABEL_SIZE);
+    #endif
 }
 
 /****************************************************************************
@@ -1208,6 +1236,7 @@ PUBLIC uint16 APP_u16GetAttributeActualSize ( uint32    u32Type,
         case E_ZCL_BACNET_OID:
         case E_ZCL_INT24:
         case E_ZCL_FLOAT_SINGLE:
+        case E_ZCL_BMAP32:
            u16Size = sizeof(uint32);
         break;
 

@@ -1,36 +1,8 @@
 '''
-* The Clear BSD License
 * Copyright 2017-2018 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 '''
 
 from com.nxp.wireless_connectivity.commands.fsci_frame_description import FsciFrameDescription
@@ -67,6 +39,8 @@ class Spec(object):
         self.UserDescriptorSetFrame = self.InitUserDescriptorSet()
         self.UserDescriptorRequestFrame = self.InitUserDescriptorRequest()
         self.SetPollIntervalRequestFrame = self.InitSetPollIntervalRequest()
+        self.AddInOutClustersRequestFrame = self.InitAddInOutClustersRequest()
+        self.FindAndBindRequestFrame = self.InitFindAndBindRequest()
         self.ComplexDescriptorRequestFrame = self.InitComplexDescriptorRequest()
         self.ManagementLeaveRequestFrame = self.InitManagementLeaveRequest()
         self.PermitJoiningRequestFrame = self.InitPermitJoiningRequest()
@@ -92,9 +66,12 @@ class Spec(object):
         self.MoveToLevelWithWithoutOnOffFrame = self.InitMoveToLevelWithWithoutOnOff()
         self.MoveStepFrame = self.InitMoveStep()
         self.MoveStopWithOnOffFrame = self.InitMoveStopWithOnOff()
+        self.MoveToClosestFrequencyFrame = self.InitMoveToClosestFrequency()
         self.OnOffWithEffectsSendFrame = self.InitOnOffWithEffectsSend()
         self.OnOffWithNoEffectsFrame = self.InitOnOffWithNoEffects()
         self.OnOffTimedSendFrame = self.InitOnOffTimedSend()
+        self.DiagnosticRequestFrame = self.InitDiagnosticRequest()
+        self.DiagnosticResponseFrame = self.InitDiagnosticResponse()
         self.ViewSceneFrame = self.InitViewScene()
         self.AddSceneFrame = self.InitAddScene()
         self.RemoveSceneFrame = self.InitRemoveScene()
@@ -433,6 +410,28 @@ class Spec(object):
         Interval = FsciParameter("Interval", 4)
         cmdParams.append(Interval)
         return FsciFrameDescription(0x37, 0x2D, cmdParams)
+
+    def InitAddInOutClustersRequest(self):
+        cmdParams = []
+        EndPoint = FsciParameter("EndPoint", 1)
+        cmdParams.append(EndPoint)
+        InClusterCount = FsciParameter("InClusterCount", 1)
+        cmdParams.append(InClusterCount)
+        OutClusterCount = FsciParameter("OutClusterCount", 1)
+        cmdParams.append(OutClusterCount)
+        InputClustersList = FsciParameter("InputClustersList", 2, InClusterCount)
+        cmdParams.append(InputClustersList)
+        OutputClustersList = FsciParameter("OutputClustersList", 2, OutClusterCount)
+        cmdParams.append(OutputClustersList)
+        return FsciFrameDescription(0x37, 0x2E, cmdParams)
+
+    def InitFindAndBindRequest(self):
+        cmdParams = []
+        Initiator = FsciParameter("Initiator", 1)
+        cmdParams.append(Initiator)
+        EndPoint = FsciParameter("EndPoint", 1)
+        cmdParams.append(EndPoint)
+        return FsciFrameDescription(0x37, 0x2F, cmdParams)
 
     def InitComplexDescriptorRequest(self):
         cmdParams = []
@@ -814,6 +813,20 @@ class Spec(object):
         cmdParams.append(DestinationEndPoint)
         return FsciFrameDescription(0x37, 0x84, cmdParams)
 
+    def InitMoveToClosestFrequency(self):
+        cmdParams = []
+        AddressMode = FsciParameter("AddressMode", 1)
+        cmdParams.append(AddressMode)
+        TargetShortAddress = FsciParameter("TargetShortAddress", 2)
+        cmdParams.append(TargetShortAddress)
+        SourceEndPoint = FsciParameter("SourceEndPoint", 1)
+        cmdParams.append(SourceEndPoint)
+        DestinationEndPoint = FsciParameter("DestinationEndPoint", 1)
+        cmdParams.append(DestinationEndPoint)
+        Frequency = FsciParameter("Frequency", 2)
+        cmdParams.append(Frequency)
+        return FsciFrameDescription(0x37, 0x85, cmdParams)
+
     def InitOnOffWithEffectsSend(self):
         cmdParams = []
         AddressMode = FsciParameter("AddressMode", 1)
@@ -861,6 +874,72 @@ class Spec(object):
         OffTimeInSecconds = FsciParameter("OffTimeInSecconds", 2)
         cmdParams.append(OffTimeInSecconds)
         return FsciFrameDescription(0x37, 0x93, cmdParams)
+
+    def InitDiagnosticRequest(self):
+        cmdParams = []
+        AddressMode = FsciParameter("AddressMode", 1)
+        cmdParams.append(AddressMode)
+        TargetAddressValuedict = {}
+        currentList = []
+        TargetShortTargetShortAddress = FsciParameter("TargetShortTargetShortAddress", 2)
+        currentList.append(TargetShortTargetShortAddress)
+        TargetAddressValuedict[0x02] = currentList
+        currentList = []
+        TargetIEEETargetIEEEAddress = FsciParameter("TargetIEEETargetIEEEAddress", 8)
+        currentList.append(TargetIEEETargetIEEEAddress)
+        TargetAddressValuedict[0x03] = currentList
+        currentList = []
+        TargetBroadcastTargetBroadcastAddress = FsciParameter("TargetBroadcastTargetBroadcastAddress", 2)
+        currentList.append(TargetBroadcastTargetBroadcastAddress)
+        TargetAddressValuedict[0x04] = currentList
+        TargetAddressValue = FsciParameter("TargetAddressValue", 1, AddressMode, TargetAddressValuedict)
+        cmdParams.append(TargetAddressValue)
+        SourceEndPoint = FsciParameter("SourceEndPoint", 1)
+        cmdParams.append(SourceEndPoint)
+        DestinationEndPoint = FsciParameter("DestinationEndPoint", 1)
+        cmdParams.append(DestinationEndPoint)
+        CommandID = FsciParameter("CommandID", 1)
+        cmdParams.append(CommandID)
+        AttributeValuedict = {}
+        currentList = []
+        DelayRequestSequenceNumber = FsciParameter("DelayRequestSequenceNumber", 1)
+        currentList.append(DelayRequestSequenceNumber)
+        DelayRequestPayloadSize = FsciParameter("DelayRequestPayloadSize", 1)
+        currentList.append(DelayRequestPayloadSize)
+        DelayRequestPayload = FsciParameter("DelayRequestPayload", 1, DelayRequestPayloadSize)
+        currentList.append(DelayRequestPayload)
+        AttributeValuedict[0x00] = currentList
+        currentList = []
+        AttributeValueDelayResults = FsciParameter("AttributeValueDelayResults", 1)
+        currentList.append(AttributeValueDelayResults)
+        AttributeValuedict[0x01] = currentList
+        AttributeValue = FsciParameter("AttributeValue", 1, CommandID, AttributeValuedict)
+        cmdParams.append(AttributeValue)
+        return FsciFrameDescription(0x37, 0x99, cmdParams)
+
+    def InitDiagnosticResponse(self):
+        cmdParams = []
+        SeqNum = FsciParameter("SeqNum", 1)
+        cmdParams.append(SeqNum)
+        srcEndpoint = FsciParameter("srcEndpoint", 1)
+        cmdParams.append(srcEndpoint)
+        ClusterId = FsciParameter("ClusterId", 2)
+        cmdParams.append(ClusterId)
+        Status = FsciParameter("Status", 1)
+        cmdParams.append(Status)
+        RequestLatency = FsciParameter("RequestLatency", 4)
+        cmdParams.append(RequestLatency)
+        ResponseLatency = FsciParameter("ResponseLatency", 4)
+        cmdParams.append(ResponseLatency)
+        Offset = FsciParameter("Offset", 4)
+        cmdParams.append(Offset)
+        SequenceNumber = FsciParameter("SequenceNumber", 1)
+        cmdParams.append(SequenceNumber)
+        PayloadSize = FsciParameter("PayloadSize", 1)
+        cmdParams.append(PayloadSize)
+        Payload = FsciParameter("Payload", 1, PayloadSize)
+        cmdParams.append(Payload)
+        return FsciFrameDescription(0xB7, 0x99, cmdParams)
 
     def InitViewScene(self):
         cmdParams = []
@@ -962,6 +1041,8 @@ class Spec(object):
         cmdParams.append(GroupID)
         SceneID = FsciParameter("SceneID", 1)
         cmdParams.append(SceneID)
+        TransitionTime = FsciParameter("TransitionTime", 2)
+        cmdParams.append(TransitionTime)
         return FsciFrameDescription(0x37, 0xA5, cmdParams)
 
     def InitSceneMembershipRequest(self):
@@ -977,6 +1058,7 @@ class Spec(object):
         GroupID = FsciParameter("GroupID", 2)
         cmdParams.append(GroupID)
         return FsciFrameDescription(0x37, 0xA6, cmdParams)
+
 
     def InitAddEnhancedScene(self):
         cmdParams = []
@@ -1043,7 +1125,6 @@ class Spec(object):
         ToSceneID = FsciParameter("ToSceneID", 1)
         cmdParams.append(ToSceneID)
         return FsciFrameDescription(0x37, 0xA9, cmdParams)
-
     def InitMoveToHue(self):
         cmdParams = []
         AddressMode = FsciParameter("AddressMode", 1)
@@ -1198,6 +1279,7 @@ class Spec(object):
         cmdParams.append(ColorY)
         return FsciFrameDescription(0x37, 0xB8, cmdParams)
 
+  
     def InitEnhancedMoveToHue(self):
         cmdParams = []
         AddressMode = FsciParameter("AddressMode", 1)

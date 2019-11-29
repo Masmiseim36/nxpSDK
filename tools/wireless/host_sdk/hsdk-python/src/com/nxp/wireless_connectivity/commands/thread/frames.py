@@ -1,37 +1,9 @@
 '''
-* The Clear BSD License
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
+* Copyright 2016-2019 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 '''
 
 from com.nxp.wireless_connectivity.commands.thread.enums import *  # @UnusedWildImport
@@ -149,7 +121,7 @@ class THR_JoinRequest(object):
 
     def __init__(self, InstanceID=bytearray(1), discoveryMethod=THR_JoinRequestdiscoveryMethod.gUseThreadDiscovery_c):
         '''
-        @param InstanceID: thread instance id
+        @param InstanceID: Thread instance ID
         @param discoveryMethod: discovery method
         '''
         self.InstanceID = InstanceID
@@ -165,7 +137,7 @@ class THR_CpuResetRequest(object):
 
     def __init__(self, TimeoutMs=bytearray(4)):
         '''
-        @param TimeoutMs: The time in milliseconds after the device will reset.
+        @param TimeoutMs: The time in milliseconds after which the device will reset.
         '''
         self.TimeoutMs = TimeoutMs
 
@@ -313,7 +285,7 @@ class THR_NwkDiscoveryRequest(object):
 
     def __init__(self, InstanceID=bytearray(1)):
         '''
-        @param InstanceID: thread instance id
+        @param InstanceID: Thread instance ID
         '''
         self.InstanceID = InstanceID
 
@@ -322,7 +294,7 @@ class THR_NwkDiscoveryStopRequest(object):
 
     def __init__(self, InstanceID=bytearray(1)):
         '''
-        @param InstanceID: thread instance id
+        @param InstanceID: Thread instance ID
         '''
         self.InstanceID = InstanceID
 
@@ -331,7 +303,16 @@ class THR_SearchNwkWithAnounceRequest(object):
 
     def __init__(self, InstanceID=bytearray(1)):
         '''
-        @param InstanceID: thread instance id
+        @param InstanceID: Thread instance ID
+        '''
+        self.InstanceID = InstanceID
+
+
+class THR_GetDeviceInfoRequest(object):
+
+    def __init__(self, InstanceID=bytearray(1)):
+        '''
+        @param InstanceID: Thread instance ID
         '''
         self.InstanceID = InstanceID
 
@@ -343,6 +324,15 @@ class THR_ChildUpdateToParentRequest(object):
         @param InstanceID: InstanceID
         '''
         self.InstanceID = InstanceID
+
+
+class THR_SetParentPriorityRequest(object):
+
+    def __init__(self, Priority=THR_SetParentPriorityRequestPriority.MediumPriority):
+        '''
+        @param Priority: Parent Priority
+        '''
+        self.Priority = Priority
 
 
 class THR_SetManualSlaacIIDRequest(object):
@@ -378,6 +368,19 @@ class THR_SetThresholdRequest(object):
         self.Value = Value
 
 
+class THR_SetThreshold32Request(object):
+
+    def __init__(self, InstanceId=bytearray(1), ThresholdType=THR_SetThreshold32RequestThresholdType.ContextReuseDelay, Value=bytearray(4)):
+        '''
+        @param InstanceId: Thread instance Id
+        @param ThresholdType: Threshold type
+        @param Value: Value
+        '''
+        self.InstanceId = InstanceId
+        self.ThresholdType = ThresholdType
+        self.Value = Value
+
+
 class THR_SetNwkIdTimeoutRequest(object):
 
     def __init__(self, TimeoutInSeconds=bytearray(4)):
@@ -385,6 +388,15 @@ class THR_SetNwkIdTimeoutRequest(object):
         @param TimeoutInSeconds: TimeoutInSeconds
         '''
         self.TimeoutInSeconds = TimeoutInSeconds
+
+
+class THR_SetRouterPromoteMaxJitterRequest(object):
+
+    def __init__(self, MaxJitterInSeconds=bytearray(4)):
+        '''
+        @param MaxJitterInSeconds: MaxJitterInSeconds
+        '''
+        self.MaxJitterInSeconds = MaxJitterInSeconds
 
 
 class THR_GetRoutingTableRequest(object):
@@ -818,6 +830,15 @@ class SocketGetOptionRequest(object):
         self.SocketOption = SocketOption
 
 
+class SocketCloseRequest(object):
+
+    def __init__(self, SocketIndex=bytearray(1)):
+        '''
+        @param SocketIndex: The socket index.
+        '''
+        self.SocketIndex = SocketIndex
+
+
 class MESHCOP_StartCommissionerRequest(object):
 
     def __init__(self, InstanceId=bytearray(1)):
@@ -1010,6 +1031,15 @@ class MESHCOP_MgmNwkFormRequest(object):
         self.PSKcSize = PSKcSize
         self.PSKc = PSKc
         self.Channel = Channel
+
+
+class MESHCOP_MgmNwkLeaveRequest(object):
+
+    def __init__(self, IPAddress=bytearray(16)):
+        '''
+        @param IPAddress: The IPv6 address of the device which will leave the network
+        '''
+        self.IPAddress = IPAddress
 
 
 class MESHCOP_MgmtCommissionerGetRequest(object):
@@ -1690,19 +1720,21 @@ class NWKU_IfconfigAllRequest(object):
 
 class NWKU_PingRequest(object):
 
-    def __init__(self, DestinationIpAddress=bytearray(16), SourceIpAddress=bytearray(16), Payloadlength=bytearray(2), Timeout=bytearray(2), Secured=bytearray(1)):
+    def __init__(self, DestinationIpAddress=bytearray(16), SourceIpAddress=bytearray(16), Payloadlength=bytearray(2), Timeout=bytearray(2), Secured=bytearray(1), HopLimit=bytearray(1)):
         '''
         @param DestinationIpAddress: Destination Ip Address
         @param SourceIpAddress: Source Ip Address
         @param Payloadlength: Payload Length
         @param Timeout: Timeout
         @param Secured: Set security for ping packets
+        @param HopLimit: Set hop limit for ping packets
         '''
         self.DestinationIpAddress = DestinationIpAddress
         self.SourceIpAddress = SourceIpAddress
         self.Payloadlength = Payloadlength
         self.Timeout = Timeout
         self.Secured = Secured
+        self.HopLimit = HopLimit
 
 
 class NWKU_EchoUDPRequest(object):
@@ -1796,15 +1828,73 @@ class NWKU_McastGroupShowRequest(object):
 
 class NWKU_McastGroupManageRequest(object):
 
-    def __init__(self, InterfaceId=bytearray(1), Action=NWKU_McastGroupManageRequestAction.JoinGroup, McastAddress=bytearray(16)):
+    def __init__(self, InterfaceId=bytearray(1), Action=NWKU_McastGroupManageRequestAction.JoinGroup, UseTimeout=bytearray(1), McastAddrCount=bytearray(1), Timeout=bytearray(4), DestIpAddress=bytearray(16), McastAddress=bytearray(16)):
         '''
         @param InterfaceId: Interface Id
         @param Action: Join or leave a multicast group
+        @param UseTimeout: If TRUE, Timeout value will be used
+        @param McastAddrCount: Multicast Address Count
+        @param Timeout: Multicast group lifetime in seconds
+        @param DestIpAddress: Destination Ip Address - leave it 0 for auto select
         @param McastAddress: Multicast group address
         '''
         self.InterfaceId = InterfaceId
         self.Action = Action
+        self.UseTimeout = UseTimeout
+        self.McastAddrCount = McastAddrCount
+        self.Timeout = Timeout
+        self.DestIpAddress = DestIpAddress
         self.McastAddress = McastAddress
+
+
+class NWKU_FirewallEnableRequest(object):
+
+    def __init__(self, Enable=bytearray(1)):
+        '''
+        @param Enable: Enable
+        '''
+        self.Enable = Enable
+
+
+class NWKU_FirewallTableShowRequest(object):
+
+    pass
+
+
+class NWKU_FirewallRuleRemoveRequest(object):
+
+    def __init__(self, RuleEntryNumber=bytearray(1)):
+        '''
+        @param RuleEntryNumber: RuleEntryNumber
+        '''
+        self.RuleEntryNumber = RuleEntryNumber
+
+
+class NWKU_FirewallRuleAddRequest(object):
+
+    def __init__(self, RuleEntryNumber=bytearray(1), SourcePrefix=bytearray(16), DestinationPrefix=bytearray(16), SourcePort=bytearray(2), DestinationPort=bytearray(2), SourcePrefixLen=bytearray(1), DestinationPrefixLen=bytearray(1), SecurityLevel=bytearray(1), InterfaceID=bytearray(1), Rule=NWKU_FirewallRuleAddRequestRule()):
+        '''
+        @param RuleEntryNumber: RuleEntryNumber
+        @param SourcePrefix: Source IPv6 address/prefix
+        @param DestinationPrefix: Destination IPv6 address/prefix
+        @param SourcePort: Source UDP port
+        @param DestinationPort: Destination UDP port
+        @param SourcePrefixLen: Length in bits of source prefix
+        @param DestinationPrefixLen: Length in bits of destination prefix
+        @param SecurityLevel: SecurityLevel
+        @param InterfaceID: IP InterfaceID
+        @param Rule: Rule can be accept or drop
+        '''
+        self.RuleEntryNumber = RuleEntryNumber
+        self.SourcePrefix = SourcePrefix
+        self.DestinationPrefix = DestinationPrefix
+        self.SourcePort = SourcePort
+        self.DestinationPort = DestinationPort
+        self.SourcePrefixLen = SourcePrefixLen
+        self.DestinationPrefixLen = DestinationPrefixLen
+        self.SecurityLevel = SecurityLevel
+        self.InterfaceID = InterfaceID
+        self.Rule = Rule
 
 
 class NWKU_RoutesShowRequest(object):
@@ -1891,6 +1981,11 @@ class DTLSSendRequest(object):
         self.Data = Data
 
 
+class FSCICPUResetRequest(object):
+
+    pass
+
+
 class FSCIGetUniqueIdRequest(object):
 
     pass
@@ -1951,7 +2046,7 @@ class Sniffer_DetectRequest(object):
     pass
 
 
-class FSCIEnterBootloaderRequest(object):
+class FSCIEnableMSDBootloaderRequest(object):
 
     pass
 
@@ -2090,6 +2185,15 @@ class SocketGetOptionConfirm(object):
         '''
         self.Status = Status
         self.OptionValue = OptionValue
+
+
+class SocketCloseConfirm(object):
+
+    def __init__(self, Status=SocketCloseConfirmStatus.OK):
+        '''
+        @param Status: Status
+        '''
+        self.Status = Status
 
 
 class MAC_MacFilteringAddEntryConfirm(object):
@@ -2462,6 +2566,15 @@ class THR_SetManualSlaacIIDConfirm(object):
         self.Status = Status
 
 
+class THR_SetParentPriorityConfirm(object):
+
+    def __init__(self, Status=THR_SetParentPriorityConfirmStatus.OK):
+        '''
+        @param Status: Status
+        '''
+        self.Status = Status
+
+
 class THR_SendProactiveAddrNotifConfirm(object):
 
     def __init__(self, Status=THR_SendProactiveAddrNotifConfirmStatus.Success):
@@ -2498,6 +2611,33 @@ class THR_SearchNwkWithAnounceConfirm(object):
         self.Status = Status
 
 
+class THR_GetDeviceInfoConfirm(object):
+
+    class NwkCapabilities(object):
+
+        def __init__(self, CanCreateNewNetwork=bytearray(1), CanBecomeActiveRouter=bytearray(1), IsPollingEndDevice=bytearray(1), IsFullThreadDevice=bytearray(1)):
+            self.CanCreateNewNetwork = CanCreateNewNetwork
+            self.CanBecomeActiveRouter = CanBecomeActiveRouter
+            self.IsPollingEndDevice = IsPollingEndDevice
+            self.IsFullThreadDevice = IsFullThreadDevice
+
+    class ExtendedNwkCapabilities(object):
+
+        def __init__(self, IsBrDev=bytearray(1), IsNdRouterBr=bytearray(1)):
+            self.IsBrDev = IsBrDev
+            self.IsNdRouterBr = IsNdRouterBr
+
+    def __init__(self, InstanceId=bytearray(1), NwkCapabilities=NwkCapabilities(1), ExtendedNwkCapabilities=ExtendedNwkCapabilities(1)):
+        '''
+        @param InstanceId: Instance Id
+        @param NwkCapabilities: Network Capabilities
+        @param ExtendedNwkCapabilities: Extended Network Capabilities
+        '''
+        self.InstanceId = InstanceId
+        self.NwkCapabilities = NwkCapabilities
+        self.ExtendedNwkCapabilities = ExtendedNwkCapabilities
+
+
 class THR_MgmtDiagnosticGetRspIndication(object):
 
     class TLV(object):
@@ -2507,25 +2647,27 @@ class THR_MgmtDiagnosticGetRspIndication(object):
             self.length = length
             self.value = value
 
-    def __init__(self, Status=THR_MgmtDiagnosticGetRspIndicationStatus.Success, CoapMsgId=bytearray(2), DataLen=bytearray(2), TLVs=[]):
+    def __init__(self, Status=THR_MgmtDiagnosticGetRspIndicationStatus.Success, CoapMsgId=bytearray(2), DataLen=bytearray(2), NoOfTLVs=bytearray(1), Payload=[]):
         '''
         @param Status: Status
         @param CoapMsgId: Coap over the air message id -  used for syncronization btw Req-Rsp
         @param DataLen: Data length
-        @param TLVs: List of TLV() objects
+        @param NoOfTLVs: Number of TLVs
+        @param Payload: Payload
         '''
         self.Status = Status
         self.CoapMsgId = CoapMsgId
         self.DataLen = DataLen
-        self.TLVs = TLVs
+        self.NoOfTLVs = NoOfTLVs
+        self.Payload = Payload
 
 
 class THR_DiagTestGetRspIndication(object):
 
     class Data(object):
 
-        def __init__(self, Flags=bytearray(1), RspLatency=bytearray(4), Offset=bytearray(4), SequenceNumber=bytearray(1), PayloadSize=bytearray(1), Payload=[]):
-            self.Flags = Flags
+        def __init__(self, ReqLatency=bytearray(4), RspLatency=bytearray(4), Offset=bytearray(4), SequenceNumber=bytearray(1), PayloadSize=bytearray(1), Payload=[]):
+            self.ReqLatency = ReqLatency
             self.RspLatency = RspLatency
             self.Offset = Offset
             self.SequenceNumber = SequenceNumber
@@ -2541,17 +2683,19 @@ class THR_DiagTestGetRspIndication(object):
             self.Offset = Offset
             self.SequenceNumber = SequenceNumber
 
-    def __init__(self, Status=THR_DiagTestGetRspIndicationStatus.Success, CoapMsgId=bytearray(2), DataLen=bytearray(2), Payload_TlvId=THR_DiagTestGetRspIndicationPayload_TlvId.ColdFactoryReset, Payload_TLVPayload=[]):
+    def __init__(self, Status=THR_DiagTestGetRspIndicationStatus.Success, CoapMsgId=bytearray(2), DataLen=bytearray(2), NoOfTLVs=bytearray(1), Payload_TlvId=THR_DiagTestGetRspIndicationPayload_TlvId.ColdFactoryReset, Payload_TLVPayload=[]):
         '''
         @param Status: Status
         @param CoapMsgId: Coap over the air message id -  used for syncronization btw Req-Rsp
         @param DataLen: Data length
+        @param NoOfTLVs: Number of TLVs
         @param Payload_TlvId: TLV identifier
         @param Payload_TLVPayload: TLV Payload
         '''
         self.Status = Status
         self.CoapMsgId = CoapMsgId
         self.DataLen = DataLen
+        self.NoOfTLVs = NoOfTLVs
         self.Payload_TlvId = Payload_TlvId
         self.Payload_TLVPayload = Payload_TLVPayload
 
@@ -2587,9 +2731,27 @@ class THR_SetNwkIdTimeoutConfirm(object):
         self.Status = Status
 
 
+class THR_SetRouterPromoteMaxJitterConfirm(object):
+
+    def __init__(self, Status=THR_SetRouterPromoteMaxJitterConfirmStatus.Success):
+        '''
+        @param Status: Status
+        '''
+        self.Status = Status
+
+
 class THR_SetThresholdConfirm(object):
 
     def __init__(self, Status=THR_SetThresholdConfirmStatus.Success):
+        '''
+        @param Status: Status
+        '''
+        self.Status = Status
+
+
+class THR_SetThreshold32Confirm(object):
+
+    def __init__(self, Status=THR_SetThreshold32ConfirmStatus.Success):
         '''
         @param Status: Status
         '''
@@ -3066,6 +3228,60 @@ class NWKU_McastGroupShowResponse(object):
         self.Addresses = Addresses
 
 
+class NWKU_FirewallEnableConfirm(object):
+
+    def __init__(self, Status=NWKU_FirewallEnableConfirmStatus.Success):
+        '''
+        @param Status: Status
+        '''
+        self.Status = Status
+
+
+class NWKU_FirewallRuleAddConfirm(object):
+
+    def __init__(self, Status=NWKU_FirewallRuleAddConfirmStatus.Success):
+        '''
+        @param Status: Status
+        '''
+        self.Status = Status
+
+
+class NWKU_FirewallRuleRemoveConfirm(object):
+
+    def __init__(self, Status=NWKU_FirewallRuleRemoveConfirmStatus.Success):
+        '''
+        @param Status: Status
+        '''
+        self.Status = Status
+
+
+class NWKU_FirewallTableShowResponse(object):
+
+    class Rule(object):
+
+        def __init__(self, RuleEntryNumber=bytearray(1), SourcePrefix=bytearray(16), DestinationPrefix=bytearray(16), SourcePort=bytearray(2), DestinationPort=bytearray(2), SourcePrefixLength=bytearray(1), DestinationPrefixLength=bytearray(1), SecurityLevel=bytearray(1), InterfaceID=bytearray(1), Rule=bytearray(1)):
+            self.RuleEntryNumber = RuleEntryNumber
+            # Unit length: 16 bytes
+            self.SourcePrefix = SourcePrefix
+            # Unit length: 16 bytes
+            self.DestinationPrefix = DestinationPrefix
+            self.SourcePort = SourcePort
+            self.DestinationPort = DestinationPort
+            self.SourcePrefixLength = SourcePrefixLength
+            self.DestinationPrefixLength = DestinationPrefixLength
+            self.SecurityLevel = SecurityLevel
+            self.InterfaceID = InterfaceID
+            self.Rule = Rule
+
+    def __init__(self, CountEntries=bytearray(1), Rule=[]):
+        '''
+        @param CountEntries: Number of IPv6 rules
+        @param Rule: FirewallRulesTable
+        '''
+        self.CountEntries = CountEntries
+        self.Rule = Rule
+
+
 class NWKU_RoutesManageConfirm(object):
 
     def __init__(self, Status=NWKU_RoutesManageConfirmStatus.Success):
@@ -3429,19 +3645,12 @@ class FSCIGetMcuIdConfirm(object):
 
 class FSCIGetSwVersionsConfirm(object):
 
-    class SwVersion(object):
-
-        def __init__(self, ModuleId=bytearray(1), VersionNumber=bytearray(3), BuildNumber=bytearray(2)):
-            self.ModuleId = ModuleId
-            self.VersionNumber = VersionNumber
-            self.BuildNumber = BuildNumber
-
-    def __init__(self, NumberOfEntries=bytearray(1), SwVersions=[]):
+    def __init__(self, listSize=bytearray(1), SwVersions=[]):
         '''
-        @param NumberOfEntries: Number of entries (one entry has 6 bytes)
+        @param listSize: Length of the Payload
         @param SwVersions: List of SW Module versions
         '''
-        self.NumberOfEntries = NumberOfEntries
+        self.listSize = listSize
         self.SwVersions = SwVersions
 
 
@@ -3519,8 +3728,8 @@ class AspGetPowerLevelConfirm(object):
 
 class DBGConfirm(object):
 
-    def __init__(self, text=bytearray()):
+    def __init__(self, Text=[]):
         '''
-        @param text: text
+        @param Text: Text
         '''
-        self.text = text
+        self.Text = Text

@@ -1,36 +1,8 @@
 /*
-* The Clear BSD License
 * Copyright 2016-2017 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 */
 
 /*!=================================================================================================
@@ -236,6 +208,46 @@ PUBLIC void vSaveReportableRecord(  uint16 u16ClusterID,
                         asSavedReports,
                         sizeof(asSavedReports));
 }
+/****************************************************************************
+ *
+ * NAME: vSendImmediateReport
+ *
+ * DESCRIPTION:
+ * Method to send a report to all bound nodes.
+ *
+ ****************************************************************************/
+PUBLIC void vSendImmediateReport(void)
+{
+    PDUM_thAPduInstance myPDUM_thAPduInstance;
+    tsZCL_Address sDestinationAddress;
+
+    DBG_vPrintf(TRACE_REPORT, "\nAPP Report: Sending Report");
+
+    /* get buffer to write the response in*/
+    myPDUM_thAPduInstance = hZCL_AllocateAPduInstance();
+    /* no buffers - return*/
+    if(myPDUM_thAPduInstance == PDUM_INVALID_HANDLE)
+    {
+        DBG_vPrintf(TRACE_REPORT, "\nAPP Report: PDUM_INVALID_HANDLE");
+    }
+
+    /* Set the address mode to send to all bound device and don't wait for an ACK*/
+    sDestinationAddress.eAddressMode = E_ZCL_AM_BOUND_NO_ACK;
+
+    /* Send the report with all attributes.*/
+    if (E_ZCL_SUCCESS != eZCL_ReportAllAttributes(&sDestinationAddress,
+                                                  MEASUREMENT_AND_SENSING_CLUSTER_ID_OCCUPANCY_SENSING,
+                                                  1,
+                                                  0,
+                                                  myPDUM_thAPduInstance))
+    {
+
+    	DBG_vPrintf(TRACE_REPORT, "\nAPP Report: Error Sending Report");
+    }
+
+    DBG_vPrintf(TRACE_REPORT, "\nAPP Report: Report Sent");
+}
+
 /****************************************************************************/
 /***        END OF FILE                                                   ***/
 /****************************************************************************/

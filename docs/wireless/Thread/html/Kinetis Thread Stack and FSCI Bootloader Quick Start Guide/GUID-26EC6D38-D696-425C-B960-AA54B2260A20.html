@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Entering FSCI bootloader mode"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-26EC6D38-D696-425C-B960-AA54B2260A20"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Entering FSCI bootloader mode</title>
+</head>
+<body id="GUID-26EC6D38-D696-425C-B960-AA54B2260A20">
+
+
+    <h1 class="title topictitle1">Entering FSCI bootloader mode</h1>
+
+    <div class="body">
+        <p class="p">After a valid application is programmed starting with the second flash sector, the
+            bootloader jumps to the application automatically and the bootloader mode must be
+            triggered specifically. </p>
+
+        <p class="p">To trigger bootloader mode, do the following:</p>
+
+        <ul class="ul" id="GUID-26EC6D38-D696-425C-B960-AA54B2260A20__UL_UMG_HP4_FZ">
+            <li class="li">FRDM-KW41Z: hold SW1(RST) and press SW4, then release SW1 first and SW4 second</li>
+
+            <li class="li">USB-KW41Z: hold SW2 (RST) and press SW1, then release SW2 first and SW1 second</li>
+
+            <li class="li">If THCI is active in the Thread firmware, send the command to enter
+                bootloader mode over the THCI/FSCI serial bus; this command has:<ul class="ul" id="GUID-26EC6D38-D696-425C-B960-AA54B2260A20__UL_ENG_HP4_FZ">
+                    <li class="li">THCI/FSCI OpCode Group: 0xA3</li>
+
+                    <li class="li">THCI/FSCI OpCode: 0xCF</li>
+
+                </ul>
+</li>
+
+        </ul>
+
+        <p class="p">When receiving the command, the device auto-resets and remains in bootloader mode.</p>
+
+    </div>
+
+
+</body>
+</html>

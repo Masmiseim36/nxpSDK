@@ -1,41 +1,12 @@
-/*!
-* The Clear BSD License
+/*! *********************************************************************************
 * Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2017 NXP
+* Copyright 2016-2018 NXP
 * All rights reserved.
 *
 * \file
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-* 
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-* 
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-* 
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-* 
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
-
+* SPDX-License-Identifier: BSD-3-Clause
+********************************************************************************** */
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -77,6 +48,8 @@ uint8_t Boot_InitExternalStorage(void);
 uint8_t Boot_ReadExternalStorage(uint16_t NoOfBytes, uint32_t Addr, uint8_t *outbuf);
 void Boot_LoadImage (void);
 
+/* External definitions */
+extern bool_t Boot_MemCmp(const void* pData1, const void* pData2, uint32_t cBytes);
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -93,7 +66,33 @@ void Boot_LoadImage (void);
 ********************************************************************************** */
 uint32_t Boot_GetInternalStorageStartAddr(void)
 {
-    return *((uint32_t*)(gBootProductInfoAddress_c + gInternalStorageStartAddressOffset_c));
+    uint8_t mDelimiter[] = {0xDE, 0xAD, 0xAC, 0xE5};
+    uint32_t addr = gBootInvalidAddress_c;
+
+    /* Check if the address of the internal storage from the boot flags is valid */
+    if ((gpBootInfo->u2.internalStorageStart > gUserFlashStart_d) &&
+        (gpBootInfo->u2.internalStorageStart < gMcuFlashSize_c))
+    {
+        addr = gpBootInfo->u2.internalStorageStart;
+    }
+    else
+    {
+        uint8_t *flash_addr = (uint8_t*)gUserFlashStart_d;
+
+        /* Search for the internal storage start marker */
+        while ((uint32_t)flash_addr < gMcuFlashSize_c)
+        {
+            if (Boot_MemCmp(mDelimiter, flash_addr, sizeof(mDelimiter)))
+            {
+                addr = (uint32_t)flash_addr + FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE;
+                break;
+            }
+
+            flash_addr += gFlashErasePage_c; /* Advance to next Sector */
+        }
+    }
+
+    return addr;
 }
 
 /*! *********************************************************************************
@@ -151,7 +150,7 @@ void Boot_LoadImage (void)
 #else
     uint8_t  buffer[gFlashErasePage_c];
 #endif
-    uint32_t remaingImgSize, len;
+    uint32_t i, remaingImgSize, len;
     uint32_t flashAddr      = gUserFlashStart_d;
     uint8_t  bitMask;
     uint8_t *pBitmap;
@@ -188,6 +187,21 @@ void Boot_LoadImage (void)
     pBitmap = &bitmapBuffer[len/8];
     bitMask = gBitMaskInit_c << (len%8);
 
+    /* Ignore sector bitmap representing the internal storage */
+    if (gBootInvalidAddress_c != gBootStorageStartAddress)
+    {
+        len = (gBootStorageStartAddress +
+               gBootData_ImageLength_Size_c +
+               gBootData_SectorsBitmap_Size_c +
+               remaingImgSize +
+               gFlashErasePage_c - 1) / gFlashErasePage_c;
+
+        for (i = gBootStorageStartAddress / gFlashErasePage_c; i < len; i++)
+        {
+            bitmapBuffer[i / 8U] &= ~(gBitMaskInit_c << (i % 8U));
+        }
+    }
+
     /* Start writing the image. Do not alter the last sector which contains HW specific data! */
     while (flashAddr < (gMcuFlashSize_c - gFlashErasePage_c))
     {
@@ -221,7 +235,7 @@ void Boot_LoadImage (void)
                 if( (flashAddr <= gBootImageFlagsAddress_c) && (flashAddr + len > gBootImageFlagsAddress_c) )
                 {
                     uint32_t i, offset = gBootImageFlagsAddress_c - flashAddr;
-                    
+
                     /* Program the Flash before boot flags */
                     if(FLASH_OK != FLASH_Boot_Program(flashAddr, (uint32_t)buffer, offset))
                     {
@@ -231,13 +245,10 @@ void Boot_LoadImage (void)
                     /* Keep the boot flags set  until the all image is downloaded */
                     for( i=0; i<gBootFlagSize_c; i++ )
                     {
-                        flags.newBootImageAvailable[i] = gBootValueForFALSE_c;
-                        flags.bootProcessCompleted[i] = gBootValueForTRUE_c;
+                        flags.u0.aNewBootImageAvailable[i] = gBootValueForFALSE_c;
+                        flags.u1.aBootProcessCompleted[i] = gBootValueForTRUE_c;
                     }
-//                    i = offset + 2 * gBootFlagSize_c;
-//                    flags.bootVersion[0] = buffer[i++];
-//                    flags.bootVersion[1] = buffer[i];
-//                    offset += gEepromAlignAddr_d(sizeof(bootInfo_t));
+
                     offset += (sizeof(bootInfo_t) + (FLASH_PGM_SIZE - 1)) & (~(FLASH_PGM_SIZE - 1));
 
                     /* Program the Flash after the boot flags*/
@@ -386,8 +397,11 @@ void Boot_LoadImage (void)
 #endif
 
 
-    /* Set the bBootProcessCompleted Flag */
-    if( FLASH_OK != FLASH_Boot_Program((uint32_t)gBootImageFlagsAddress_c, (uint32_t)&flags, sizeof(flags)) )
+    /* Set the bBootProcessCompleted Flag and the bootloader version */
+    Boot_MemCpy(flags.aBootVersion, (void *)mBootloaderInfo.versionNumber, 3);
+    flags.aBootVersion[3] = mBootloaderInfo.buildNumber;
+
+    if( FLASH_OK != FLASH_Boot_Program((uint32_t)gpBootInfo, (uint32_t)&flags, sizeof(flags)) )
         gHandleBootError_d();
 
     /* Reseting MCU */
@@ -401,12 +415,9 @@ void Boot_CheckOtapFlags(void)
     running the application in the internal Flash. Else, start the process of booting from
     external EEPROM */
     gpBootInfo = (bootInfo_t*)gBootImageFlagsAddress_c;
-    /*
-    if( (gpBootInfo->newBootImageAvailable == gBootValueForTRUE_c) &&
-        (gpBootInfo->bootProcessCompleted ==  gBootValueForFALSE_c) )
-    */
-    if ((gpBootInfo->newBootImageAvailable[0] != gBootValueForTRUE_c) &&
-        (gpBootInfo->bootProcessCompleted[0] ==  gBootValueForTRUE_c))
+
+    if ((gpBootInfo->u0.aNewBootImageAvailable[0] != gBootValueForTRUE_c) &&
+        (gpBootInfo->u1.aBootProcessCompleted[0] ==  gBootValueForTRUE_c))
     {
         return;
     }

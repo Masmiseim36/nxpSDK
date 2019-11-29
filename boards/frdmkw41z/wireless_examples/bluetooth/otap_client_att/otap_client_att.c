@@ -3,43 +3,15 @@
 * @{
 ********************************************************************************** */
 /*!
-* The Clear BSD License
 * Copyright (c) 2015, Freescale Semiconductor, Inc.
 * Copyright 2016-2017 NXP
 * All rights reserved.
 * 
-* \file
+* file
 *
 * This file is the source file for the BLE OTAP Client ATT application
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-* 
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-* 
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-* 
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-* 
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 */
 
 /************************************************************************************
@@ -212,7 +184,7 @@ static void BleApp_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent
 static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEvent_t* pConnectionEvent);
 static void BleApp_GattServerCallback (deviceId_t deviceId, gattServerEvent_t* pServerEvent);
 
-static void BleApp_Config();
+static void BleApp_Config(void);
 
 static void BleApp_AttMtuChanged (deviceId_t deviceId, uint16_t negotiatedMtu);
 static void BleApp_CccdWritten (deviceId_t deviceId, uint16_t handle, gattCccdFlags_t cccd);
@@ -466,8 +438,10 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
             LED_StopFlashingAllLeds();
             Led1On();        
             
+#if (cPWR_UsePowerDownMode)
             /* Device does not need to sleep until some information is exchanged with the peer. */
             PWR_DisallowDeviceToSleep();
+#endif
             
             OtapClient_HandleConnectionEvent (peerDeviceId);
 
@@ -996,11 +970,22 @@ static void OtapClient_HandleDataChunk (deviceId_t deviceId, uint16_t length, ui
                          * by trying to start the image upgrade procedure. */
                         if (currentImgElemRcvdLen == sizeof(subElementHeader_t))
                         {
-                            if (gOtaSucess_c != OTA_StartImage(subElemHdr.dataLen))
+                            otaResult_t otaStartImageResult = gOtaSucess_c;
+
+                            otaStartImageResult = OTA_StartImage(subElemHdr.dataLen);
+
+                            if (gOtaSucess_c != otaStartImageResult)
                             {
-                                /* The sub-element length is invalid, set an error status and reset
-                                 * the image file download process. */
-                                otapStatus = gOtapStatusImageSizeTooLarge_c;
+                                if (otaStartImageResult == gOtaImageTooLarge_c)
+                                {
+                                    /* The image is too large and does not fit into the non-volatile stoarge. */
+                                    otapStatus = gOtapStatusImageSizeTooLarge_c;
+                                }
+                                else
+                                {
+                                    /* There was ana error when trying to initiate the image stoarge in non-volatile memory */
+                                    otapStatus = gOtapStatusImageStorageError_c;
+                                }
                                 otapClientData.currentPos = 0;
                                 break;
                             }
@@ -1136,7 +1121,7 @@ static void OtapClient_HandleDataChunk (deviceId_t deviceId, uint16_t length, ui
                                                                 cmdIdToCmdLengthTable[gOtapCmdIdImageTransferComplete_c]);
                     if (gBleSuccess_c == bleResult)
                     {
-                        otapClientData.lastCmdSentToOtapServer = gOtapCmdIdErrorNotification_c;
+                        otapClientData.lastCmdSentToOtapServer = gOtapCmdIdImageTransferComplete_c;
                     }
                     else
                     {

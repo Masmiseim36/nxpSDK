@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Steps to connect the IoT Toolbox to the embedded hybrid application"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-0477FC32-79EF-413F-841A-6C22C7FA7492.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-60065033-675D-4332-8166-0B4D659379D4"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Steps to connect the IoT Toolbox to the embedded hybrid application</title>
+</head>
+<body id="GUID-60065033-675D-4332-8166-0B4D659379D4">
+
+
+    <h1 class="title topictitle1">Steps to connect the IoT Toolbox to the embedded hybrid application </h1>
+
+    <div class="body">
+        <ol class="ol"><li class="li">Build the <samp class="ph codeph">.srec</samp> or <samp class="ph codeph">.bin</samp> file for the <samp class="ph codeph">ble_thread_router_wireless_uart</samp> embedded project
+            corresponding to the hardware board, using IAR or MCUXpresso IDEs.</li>
+
+        <li class="li">Download the <samp class="ph codeph">ble_thread_router_wireless_uart</samp> image to the board using a Test Tool or a
+            similar flashing tool.</li>
+
+        <li class="li">Scan using the phone for an active Bluetooth LE connection and select the connection exposed by
+            the <samp class="ph codeph">ble_thread_router_wireless_uart</samp> embedded application.</li>
+
+        <li class="li">Connect the phone to the board.</li>
+
+        <li class="li">Execute the thread network management commands from the virtual shell HyperTerminal.</li>
+</ol>
+
+          <div class="fig fignone"><span class="figcap">Figure 1. Hybrid Thread/Bluetooth LE device shown in the Thread Shell Bluetooth LE scan interface (left)
+                    Executing Thread Network Management Commands (right)
+                </span>
+                <img class="image" src="GUID-8CEECF12-EDA5-4A9D-BA1E-1B74E9F4ECB1-high.jpg"/>
+            </div>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-0477FC32-79EF-413F-841A-6C22C7FA7492.html">Thread and Bluetooth LE Dual Mode Application</a></div>
+</div>
+</div>
+
+</body>
+</html>

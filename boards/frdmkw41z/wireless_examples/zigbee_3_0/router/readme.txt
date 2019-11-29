@@ -1,11 +1,13 @@
 Overview
 ========
-
+This application represents the "Router" Zigbee 3.0 demo application.
+The Router is capable of joining an existing network or, in the absence of a network, decide to form a distributed network itself for other nodes to join.
+For more information please refer to the "AN12061-MKW41Z-AN-ZigBee-3-0-Base-Device.pdf" document.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.80.4
-
+- IAR Embedded Workbench v8.32.1
+- MCUXpresso IDE v10.2.1
 
 Hardware requirements
 =====================
@@ -25,3 +27,4 @@ Prepare the Demo
 
 Running the demo
 ================
+Follow the instructions from the "AN12061-MKW41Z-AN-ZigBee-3-0-Base-Device.pdf" document.

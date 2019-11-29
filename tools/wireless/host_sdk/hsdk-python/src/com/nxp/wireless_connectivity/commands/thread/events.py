@@ -1,37 +1,9 @@
 '''
-* The Clear BSD License
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
+* Copyright 2016-2019 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 '''
 
 import copy
@@ -64,8 +36,7 @@ class FSCIACKObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.FSCIACKFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.FSCIACKFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = FSCIACK()
         frame.Status = FSCIACKStatus.getEnumString(packet.getParamValueAsNumber("Status"))
@@ -91,8 +62,7 @@ class SocketCreateConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SocketCreateConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.SocketCreateConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = SocketCreateConfirm()
         frame.SocketIndex = packet.getParamValueAsNumber("SocketIndex")
@@ -118,12 +88,10 @@ class SocketShutdownConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SocketShutdownConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.SocketShutdownConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = SocketShutdownConfirm()
-        frame.Status = SocketShutdownConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = SocketShutdownConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -146,8 +114,7 @@ class SocketBindConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SocketBindConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.SocketBindConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = SocketBindConfirm()
         frame.Status = SocketBindConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
@@ -173,8 +140,7 @@ class SocketSendConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SocketSendConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.SocketSendConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = SocketSendConfirm()
         frame.Status = SocketSendConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
@@ -200,12 +166,10 @@ class SocketSendToConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SocketSendToConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.SocketSendToConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = SocketSendToConfirm()
-        frame.Status = SocketSendToConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = SocketSendToConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -228,8 +192,7 @@ class SocketReceiveConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SocketReceiveConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.SocketReceiveConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = SocketReceiveConfirm()
         frame.Size = packet.getParamValueAsNumber("Size")
@@ -256,12 +219,10 @@ class SocketReceiveFromConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SocketReceiveFromConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.SocketReceiveFromConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = SocketReceiveFromConfirm()
-        frame.Status = SocketReceiveFromConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = SocketReceiveFromConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame.RemoteIpAddress = packet.getParamValueAsNumber("RemoteIpAddress")
         frame.RemotePort = packet.getParamValueAsNumber("RemotePort")
         frame.Size = packet.getParamValueAsNumber("Size")
@@ -288,12 +249,10 @@ class SocketConnectConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SocketConnectConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.SocketConnectConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = SocketConnectConfirm()
-        frame.Status = SocketConnectConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = SocketConnectConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -316,12 +275,10 @@ class SocketListenConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SocketListenConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.SocketListenConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = SocketListenConfirm()
-        frame.Status = SocketListenConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = SocketListenConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -344,12 +301,10 @@ class SocketAcceptConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SocketAcceptConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.SocketAcceptConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = SocketAcceptConfirm()
-        frame.Status = SocketAcceptConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = SocketAcceptConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame.ConnectedSocketIndex = packet.getParamValueAsNumber("ConnectedSocketIndex")
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
@@ -373,12 +328,10 @@ class SocketSetOptionConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SocketSetOptionConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.SocketSetOptionConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = SocketSetOptionConfirm()
-        frame.Status = SocketSetOptionConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = SocketSetOptionConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -401,13 +354,37 @@ class SocketGetOptionConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SocketGetOptionConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.SocketGetOptionConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = SocketGetOptionConfirm()
-        frame.Status = SocketGetOptionConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = SocketGetOptionConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame.OptionValue = packet.getParamValueAsNumber("OptionValue")
+        frame._DevicePort = self.deviceName
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class SocketCloseConfirmObserver(Observer):
+
+    opGroup = Spec.SocketCloseConfirmFrame.opGroup
+    opCode = Spec.SocketCloseConfirmFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.SocketCloseConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = SocketCloseConfirm()
+        frame.Status = SocketCloseConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -434,8 +411,7 @@ class MAC_MacFilteringAddEntryConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = MAC_MacFilteringAddEntryConfirm()
-        frame.Status = MAC_MacFilteringAddEntryConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = MAC_MacFilteringAddEntryConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -462,8 +438,7 @@ class MAC_MacFilteringRemoveEntryConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = MAC_MacFilteringRemoveEntryConfirm()
-        frame.Status = MAC_MacFilteringRemoveEntryConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = MAC_MacFilteringRemoveEntryConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -490,8 +465,7 @@ class MAC_MacFilteringEnableConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = MAC_MacFilteringEnableConfirm()
-        frame.Status = MAC_MacFilteringEnableConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = MAC_MacFilteringEnableConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -563,8 +537,7 @@ class THR_SetDeviceConfigConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_SetDeviceConfigConfirm()
-        frame.Status = THR_SetDeviceConfigConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_SetDeviceConfigConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -587,12 +560,10 @@ class THR_NwkScanConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.THR_NwkScanConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.THR_NwkScanConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_NwkScanConfirm()
-        frame.Status = THR_NwkScanConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_NwkScanConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -615,12 +586,10 @@ class THR_CreateNwkConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.THR_CreateNwkConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.THR_CreateNwkConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_CreateNwkConfirm()
-        frame.Status = THR_CreateNwkConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_CreateNwkConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -643,8 +612,7 @@ class THR_JoinConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.THR_JoinConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.THR_JoinConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_JoinConfirm()
         frame.Status = THR_JoinConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
@@ -670,12 +638,10 @@ class THR_FactoryResetConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.THR_FactoryResetConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.THR_FactoryResetConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_FactoryResetConfirm()
-        frame.Status = THR_FactoryResetConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_FactoryResetConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -698,12 +664,10 @@ class THR_CpuResetConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.THR_CpuResetConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.THR_CpuResetConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_CpuResetConfirm()
-        frame.Status = THR_CpuResetConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_CpuResetConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -726,12 +690,11 @@ class THR_CpuResetIndicationObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.THR_CpuResetIndicationFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.THR_CpuResetIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_CpuResetIndication()
-        frame.Status = THR_CpuResetIndicationStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_CpuResetIndicationStatus.getEnumString(packet.getParamValueAsNumber("Status"))
+
         curr = 1
 
         if frame.Status == 'ResetCpuPending':
@@ -777,12 +740,10 @@ class THR_DisconnectConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.THR_DisconnectConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.THR_DisconnectConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_DisconnectConfirm()
-        frame.Status = THR_DisconnectConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_DisconnectConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -805,8 +766,7 @@ class THR_AttachConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.THR_AttachConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.THR_AttachConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_AttachConfirm()
         frame.Status = THR_AttachConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
@@ -836,8 +796,7 @@ class THR_PromoteAsRouterConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_PromoteAsRouterConfirm()
-        frame.Status = THR_PromoteAsRouterConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_PromoteAsRouterConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -860,8 +819,7 @@ class THR_EventNwkScanConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.THR_EventNwkScanConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.THR_EventNwkScanConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_EventNwkScanConfirm()
         frame.InstanceId = packet.getParamValueAsNumber("InstanceId")
@@ -926,8 +884,7 @@ class THR_EventNwkJoinConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.THR_EventNwkJoinConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.THR_EventNwkJoinConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_EventNwkJoinConfirm()
         frame.InstanceId = packet.getParamValueAsNumber("InstanceId")
@@ -988,8 +945,7 @@ class THR_EventGeneralConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.THR_EventGeneralConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.THR_EventGeneralConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_EventGeneralConfirm()
         frame.InstanceId = packet.getParamValueAsNumber("InstanceId")
@@ -1083,8 +1039,7 @@ class THR_MgmtDiagnosticGetConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_MgmtDiagnosticGetConfirm()
-        frame.Status = THR_MgmtDiagnosticGetConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_MgmtDiagnosticGetConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame.CoapMsgId = packet.getParamValueAsNumber("CoapMsgId")
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
@@ -1108,12 +1063,10 @@ class THR_DiagTestGetConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.THR_DiagTestGetConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.THR_DiagTestGetConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_DiagTestGetConfirm()
-        frame.Status = THR_DiagTestGetConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_DiagTestGetConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame.CoapMsgId = packet.getParamValueAsNumber("CoapMsgId")
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
@@ -1141,8 +1094,7 @@ class THR_MgmtDiagnosticResetConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_MgmtDiagnosticResetConfirm()
-        frame.Status = THR_MgmtDiagnosticResetConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_MgmtDiagnosticResetConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame.CoapMsgId = packet.getParamValueAsNumber("CoapMsgId")
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
@@ -1197,8 +1149,7 @@ class THR_MgmtWriteMemoryConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_MgmtWriteMemoryConfirm()
-        frame.Status = THR_MgmtWriteMemoryConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_MgmtWriteMemoryConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -1225,8 +1176,34 @@ class THR_SetManualSlaacIIDConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_SetManualSlaacIIDConfirm()
-        frame.Status = THR_SetManualSlaacIIDConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_SetManualSlaacIIDConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
+        frame._DevicePort = self.deviceName
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class THR_SetParentPriorityConfirmObserver(Observer):
+
+    opGroup = Spec.THR_SetParentPriorityConfirmFrame.opGroup
+    opCode = Spec.THR_SetParentPriorityConfirmFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.THR_SetParentPriorityConfirmFrame.getFsciPacketFromByteArray(
+            data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = THR_SetParentPriorityConfirm()
+        frame.Status = THR_SetParentPriorityConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -1253,8 +1230,7 @@ class THR_SendProactiveAddrNotifConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_SendProactiveAddrNotifConfirm()
-        frame.Status = THR_SendProactiveAddrNotifConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_SendProactiveAddrNotifConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -1277,12 +1253,10 @@ class THR_NwkDiscoveryConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.THR_NwkDiscoveryConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.THR_NwkDiscoveryConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_NwkDiscoveryConfirm()
-        frame.Status = THR_NwkDiscoveryConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_NwkDiscoveryConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -1309,8 +1283,7 @@ class THR_NwkDiscoveryStopConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_NwkDiscoveryStopConfirm()
-        frame.Status = THR_NwkDiscoveryStopConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_NwkDiscoveryStopConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -1337,8 +1310,40 @@ class THR_SearchNwkWithAnounceConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_SearchNwkWithAnounceConfirm()
-        frame.Status = THR_SearchNwkWithAnounceConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_SearchNwkWithAnounceConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
+        frame._DevicePort = self.deviceName
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class THR_GetDeviceInfoConfirmObserver(Observer):
+
+    opGroup = Spec.THR_GetDeviceInfoConfirmFrame.opGroup
+    opCode = Spec.THR_GetDeviceInfoConfirmFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.THR_GetDeviceInfoConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = THR_GetDeviceInfoConfirm()
+        frame.InstanceId = packet.getParamValueAsNumber("InstanceId")
+        frame.NwkCapabilities.CanCreateNewNetwork = packet.getParamValueAsNumber("NwkCapabilitiesCanCreateNewNetwork")
+        frame.NwkCapabilities.CanBecomeActiveRouter = packet.getParamValueAsNumber(
+            "NwkCapabilitiesCanBecomeActiveRouter")
+        frame.NwkCapabilities.IsPollingEndDevice = packet.getParamValueAsNumber("NwkCapabilitiesIsPollingEndDevice")
+        frame.NwkCapabilities.IsFullThreadDevice = packet.getParamValueAsNumber("NwkCapabilitiesIsFullThreadDevice")
+        frame.ExtendedNwkCapabilities.IsBrDev = packet.getParamValueAsNumber("ExtendedNwkCapabilitiesIsBrDev")
+        frame.ExtendedNwkCapabilities.IsNdRouterBr = packet.getParamValueAsNumber("ExtendedNwkCapabilitiesIsNdRouterBr")
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -1370,9 +1375,11 @@ class THR_MgmtDiagnosticGetRspIndicationObserver(Observer):
         curr += 2
         frame.DataLen = list_to_int(data.contents[curr: curr + 2])
         curr += 2
+        frame.NoOfTLVs = list_to_int(data.contents[curr: curr + 1])
+        curr += 1
         frame.TLVs = []
 
-        while curr < frame.DataLen + 5:
+        while curr < frame.DataLen + 6:
             TLV = THR_MgmtDiagnosticGetRspIndication.TLV()
             TLV.type = THR_MgmtDiagnosticGetRspIndicationTlvId.getEnumString(data.contents[curr])
             curr += 1
@@ -1412,13 +1419,13 @@ class THR_DiagTestGetRspIndicationObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_DiagTestGetRspIndication()
-        frame.Status = THR_DiagTestGetRspIndicationStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_DiagTestGetRspIndicationStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame.CoapMsgId = packet.getParamValueAsNumber("CoapMsgId")
         frame.DataLen = packet.getParamValueAsNumber("DataLen")
+        frame.NoOfTLVs = packet.getParamValueAsNumber("NoOfTLVs")
         frame.Payload_TlvId = packet.getParamValueAsNumber("Payload_TlvId")
 
-        curr = 6
+        curr = 7
         if frame.Payload_TlvId == THR_DiagTestGetRspIndicationPayload_TlvId.Data:
             frame.Payload_TLVPayload = THR_DiagTestGetRspIndication.Data()
 
@@ -1496,8 +1503,7 @@ class THR_MgmtDiagnosticResetRspIndicationObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_MgmtDiagnosticResetRspIndication()
-        frame.Status = THR_MgmtDiagnosticResetRspIndicationStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_MgmtDiagnosticResetRspIndicationStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame.CoapMsgId = packet.getParamValueAsNumber("CoapMsgId")
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
@@ -1525,8 +1531,34 @@ class THR_SetNwkIdTimeoutConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_SetNwkIdTimeoutConfirm()
-        frame.Status = THR_SetNwkIdTimeoutConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_SetNwkIdTimeoutConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
+        frame._DevicePort = self.deviceName
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class THR_SetRouterPromoteMaxJitterConfirmObserver(Observer):
+
+    opGroup = Spec.THR_SetRouterPromoteMaxJitterConfirmFrame.opGroup
+    opCode = Spec.THR_SetRouterPromoteMaxJitterConfirmFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.THR_SetRouterPromoteMaxJitterConfirmFrame.getFsciPacketFromByteArray(
+            data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = THR_SetRouterPromoteMaxJitterConfirm()
+        frame.Status = THR_SetRouterPromoteMaxJitterConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -1549,12 +1581,36 @@ class THR_SetThresholdConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.THR_SetThresholdConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.THR_SetThresholdConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_SetThresholdConfirm()
-        frame.Status = THR_SetThresholdConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_SetThresholdConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
+        frame._DevicePort = self.deviceName
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class THR_SetThreshold32ConfirmObserver(Observer):
+
+    opGroup = Spec.THR_SetThreshold32ConfirmFrame.opGroup
+    opCode = Spec.THR_SetThreshold32ConfirmFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.THR_SetThreshold32ConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = THR_SetThreshold32Confirm()
+        frame.Status = THR_SetThreshold32ConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -1759,15 +1815,13 @@ class THR_GetAttrConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.THR_GetAttrConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.THR_GetAttrConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_GetAttrConfirm()
         frame.InstanceId = packet.getParamValueAsNumber("InstanceId")
         frame.AttributeId = packet.getParamValueAsNumber("AttributeId")
         frame.Index = packet.getParamValueAsNumber("Index")
-        frame.Status = THR_GetAttrConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_GetAttrConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame.AttrSize = packet.getParamValueAsNumber("AttrSize")
 
         if frame.AttrSize == 1:
@@ -1796,12 +1850,10 @@ class THR_SetAttrConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.THR_SetAttrConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.THR_SetAttrConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_SetAttrConfirm()
-        frame.Status = THR_SetAttrConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_SetAttrConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -1829,8 +1881,7 @@ class THR_GetThreadIpAddrConfirmObserver(Observer):
         # Create frame object
         frame = THR_GetThreadIpAddrConfirm()
         frame.InstanceId = packet.getParamValueAsNumber("InstanceId")
-        frame.Status = THR_GetThreadIpAddrConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_GetThreadIpAddrConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame.AddressType = packet.getParamValueAsNumber("AddressType")
         frame.NoOfIpAddr = packet.getParamValueAsNumber("NoOfIpAddr")
         frame.AddressList = packet.getParamValueAsList("AddressList")
@@ -1856,12 +1907,10 @@ class THR_GetParentConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.THR_GetParentConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.THR_GetParentConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_GetParentConfirm()
-        frame.Status = THR_GetParentConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_GetParentConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame.InstanceId = packet.getParamValueAsNumber("InstanceId")
         frame.ShortAddress = packet.getParamValueAsNumber("ShortAddress")
         frame.ExtendedAddress = packet.getParamValueAsNumber("ExtendedAddress")
@@ -1891,8 +1940,7 @@ class THR_ChildUpdateToParentConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_ChildUpdateToParentConfirm()
-        frame.Status = THR_ChildUpdateToParentConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_ChildUpdateToParentConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -1919,8 +1967,7 @@ class THR_LeaderRemoveRouterIdConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_LeaderRemoveRouterIdConfirm()
-        frame.Status = THR_LeaderRemoveRouterIdConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_LeaderRemoveRouterIdConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -1947,8 +1994,7 @@ class THR_GenerateAllKeysConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_GenerateAllKeysConfirm()
-        frame.Status = THR_GenerateAllKeysConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_GenerateAllKeysConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -1971,12 +2017,10 @@ class THR_SwitchKeyKeyConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.THR_SwitchKeyKeyConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.THR_SwitchKeyKeyConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_SwitchKeyKeyConfirm()
-        frame.Status = THR_SwitchKeyKeyConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_SwitchKeyKeyConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -2003,8 +2047,7 @@ class THR_BrPrefixAddEntryConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_BrPrefixAddEntryConfirm()
-        frame.Status = THR_BrPrefixAddEntryConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_BrPrefixAddEntryConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -2086,8 +2129,7 @@ class THR_BrPrefixRemoveEntryConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_BrPrefixRemoveEntryConfirm()
-        frame.Status = THR_BrPrefixRemoveEntryConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_BrPrefixRemoveEntryConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -2114,8 +2156,7 @@ class THR_BrServiceRemoveEntryConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_BrServiceRemoveEntryConfirm()
-        frame.Status = THR_BrServiceRemoveEntryConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_BrServiceRemoveEntryConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -2142,8 +2183,7 @@ class THR_BrServiceAddEntryConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_BrServiceAddEntryConfirm()
-        frame.Status = THR_BrServiceAddEntryConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_BrServiceAddEntryConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -2166,12 +2206,10 @@ class THR_BrPrefixSyncConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.THR_BrPrefixSyncConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.THR_BrPrefixSyncConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_BrPrefixSyncConfirm()
-        frame.Status = THR_BrPrefixSyncConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_BrPrefixSyncConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -2198,8 +2236,7 @@ class THR_BrPrefixRemoveAllConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_BrPrefixRemoveAllConfirm()
-        frame.Status = THR_BrPrefixRemoveAllConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_BrPrefixRemoveAllConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -2260,12 +2297,10 @@ class THR_IdentifyConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.THR_IdentifyConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.THR_IdentifyConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_IdentifyConfirm()
-        frame.Status = THR_IdentifyConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = THR_IdentifyConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -2288,12 +2323,10 @@ class NWKU_IfconfigBindConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.NWKU_IfconfigBindConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.NWKU_IfconfigBindConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = NWKU_IfconfigBindConfirm()
-        frame.Status = NWKU_IfconfigBindConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = NWKU_IfconfigBindConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -2361,8 +2394,7 @@ class NWKU_PingConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.NWKU_PingConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.NWKU_PingConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = NWKU_PingConfirm()
         frame.Status = NWKU_PingConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
@@ -2389,12 +2421,10 @@ class NWKU_EchoUDPConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.NWKU_EchoUDPConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.NWKU_EchoUDPConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = NWKU_EchoUDPConfirm()
-        frame.Status = NWKU_EchoUDPConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = NWKU_EchoUDPConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -2421,8 +2451,7 @@ class NWKU_CoapMsgReceivedIndicationObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = NWKU_CoapMsgReceivedIndication()
-        frame.Status = NWKU_CoapMsgReceivedIndicationStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = NWKU_CoapMsgReceivedIndicationStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame.RemoteIpAddress = packet.getParamValueAsList("RemoteIpAddress")
         frame.UDPPort = packet.getParamValueAsNumber("UDPPort")
         frame.RequestType = packet.getParamValueAsNumber("RequestType")
@@ -2480,12 +2509,10 @@ class NWKU_CoapRegisterConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.NWKU_CoapRegisterConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.NWKU_CoapRegisterConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = NWKU_CoapRegisterConfirm()
-        frame.Status = NWKU_CoapRegisterConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = NWKU_CoapRegisterConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -2512,8 +2539,7 @@ class NWKU_CoapCreateInstanceConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = NWKU_CoapCreateInstanceConfirm()
-        frame.Status = NWKU_CoapCreateInstanceConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = NWKU_CoapCreateInstanceConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -2536,12 +2562,10 @@ class NWKU_CoapSendConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.NWKU_CoapSendConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.NWKU_CoapSendConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = NWKU_CoapSendConfirm()
-        frame.Status = NWKU_CoapSendConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = NWKU_CoapSendConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -2568,8 +2592,7 @@ class NWKU_DnsSendRequestConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = NWKU_DnsSendRequestConfirm()
-        frame.Status = NWKU_DnsSendRequestConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = NWKU_DnsSendRequestConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -2596,8 +2619,7 @@ class NWKU_McastGroupManageConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = NWKU_McastGroupManageConfirm()
-        frame.Status = NWKU_McastGroupManageConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = NWKU_McastGroupManageConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -2636,6 +2658,138 @@ class NWKU_McastGroupShowResponseObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
+class NWKU_FirewallEnableConfirmObserver(Observer):
+
+    opGroup = Spec.NWKU_FirewallEnableConfirmFrame.opGroup
+    opCode = Spec.NWKU_FirewallEnableConfirmFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.NWKU_FirewallEnableConfirmFrame.getFsciPacketFromByteArray(
+            data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = NWKU_FirewallEnableConfirm()
+        frame.Status = NWKU_FirewallEnableConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
+        frame._DevicePort = self.deviceName
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class NWKU_FirewallRuleAddConfirmObserver(Observer):
+
+    opGroup = Spec.NWKU_FirewallRuleAddConfirmFrame.opGroup
+    opCode = Spec.NWKU_FirewallRuleAddConfirmFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.NWKU_FirewallRuleAddConfirmFrame.getFsciPacketFromByteArray(
+            data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = NWKU_FirewallRuleAddConfirm()
+        frame.Status = NWKU_FirewallRuleAddConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
+        frame._DevicePort = self.deviceName
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class NWKU_FirewallRuleRemoveConfirmObserver(Observer):
+
+    opGroup = Spec.NWKU_FirewallRuleRemoveConfirmFrame.opGroup
+    opCode = Spec.NWKU_FirewallRuleRemoveConfirmFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.NWKU_FirewallRuleRemoveConfirmFrame.getFsciPacketFromByteArray(
+            data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = NWKU_FirewallRuleRemoveConfirm()
+        frame.Status = NWKU_FirewallRuleRemoveConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
+        frame._DevicePort = self.deviceName
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class NWKU_FirewallTableShowResponseObserver(Observer):
+
+    opGroup = Spec.NWKU_FirewallTableShowResponseFrame.opGroup
+    opCode = Spec.NWKU_FirewallTableShowResponseFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        # Create frame object
+        frame = NWKU_FirewallTableShowResponse()
+        curr = 0
+        frame.CountEntries = data.contents[curr]
+        curr += 1
+        for _ in range(frame.CountEntries):
+            # Create sub-object container
+            Rule = NWKU_FirewallTableShowResponse.Rule()
+            Rule.RuleEntryNumber = data.contents[curr]
+            curr += 1
+            Rule.SourcePrefix = list_to_int(data.contents[curr:curr + 16])
+            curr += 16
+            Rule.DestinationPrefix = list_to_int(data.contents[curr:curr + 16])
+            curr += 16
+            Rule.SourcePort = list_to_int(data.contents[curr:curr + 2])
+            curr += 2
+            Rule.DestinationPort = list_to_int(data.contents[curr:curr + 2])
+            curr += 2
+            Rule.SourcePrefixLength = data.contents[curr]
+            curr += 1
+            Rule.DestinationPrefixLength = data.contents[curr]
+            curr += 1
+            Rule.SecurityLevel = data.contents[curr]
+            curr += 1
+            Rule.InterfaceID = data.contents[curr]
+            curr += 1
+            Rule.Rule = data.contents[curr]
+            curr += 1
+            # Add sub-object to list container.
+        frame._DevicePort = self.deviceName
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
 class NWKU_RoutesManageConfirmObserver(Observer):
 
     opGroup = Spec.NWKU_RoutesManageConfirmFrame.opGroup
@@ -2648,12 +2802,10 @@ class NWKU_RoutesManageConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.NWKU_RoutesManageConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.NWKU_RoutesManageConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = NWKU_RoutesManageConfirm()
-        frame.Status = NWKU_RoutesManageConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = NWKU_RoutesManageConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -2721,8 +2873,7 @@ class MESHCOP_StartCommissionerConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = MESHCOP_StartCommissionerConfirm()
-        frame.Status = MESHCOP_StartCommissionerConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = MESHCOP_StartCommissionerConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -2777,8 +2928,7 @@ class MESHCOP_StopCommissionerConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = MESHCOP_StopCommissionerConfirm()
-        frame.Status = MESHCOP_StopCommissionerConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = MESHCOP_StopCommissionerConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -2805,8 +2955,7 @@ class MESHCOP_AddExpectedJoinerConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = MESHCOP_AddExpectedJoinerConfirm()
-        frame.Status = MESHCOP_AddExpectedJoinerConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = MESHCOP_AddExpectedJoinerConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -2833,8 +2982,7 @@ class MESHCOP_GetExpectedJoinerConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = MESHCOP_GetExpectedJoinerConfirm()
-        frame.Status = MESHCOP_GetExpectedJoinerConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = MESHCOP_GetExpectedJoinerConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame.Selected = packet.getParamValueAsNumber("Selected")
         frame.PSKdSize = packet.getParamValueAsNumber("PSKdSize")
         frame.PSKd = packet.getParamValueAsNumber("PSKd")
@@ -2864,8 +3012,7 @@ class MESHCOP_RemoveExpectedJoinerConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = MESHCOP_RemoveExpectedJoinerConfirm()
-        frame.Status = MESHCOP_RemoveExpectedJoinerConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = MESHCOP_RemoveExpectedJoinerConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -2920,8 +3067,7 @@ class MESHCOP_SyncSteeringDataConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = MESHCOP_SyncSteeringDataConfirm()
-        frame.Status = MESHCOP_SyncSteeringDataConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = MESHCOP_SyncSteeringDataConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -2944,12 +3090,10 @@ class MESHCOP_MgmtSetConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.MESHCOP_MgmtSetConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.MESHCOP_MgmtSetConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = MESHCOP_MgmtSetConfirm()
-        frame.Status = MESHCOP_MgmtSetConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = MESHCOP_MgmtSetConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -2972,12 +3116,10 @@ class MESHCOP_MgmtGetConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.MESHCOP_MgmtGetConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.MESHCOP_MgmtGetConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = MESHCOP_MgmtGetConfirm()
-        frame.Status = MESHCOP_MgmtGetConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = MESHCOP_MgmtGetConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame.Type = packet.getParamValueAsNumber("Type")
         frame.Length = packet.getParamValueAsNumber("Length")
         frame.Value = packet.getParamValueAsNumber("Value")
@@ -3035,8 +3177,7 @@ class MESHCOP_MgmNwkFormConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = MESHCOP_MgmNwkFormConfirm()
-        frame.Status = MESHCOP_MgmNwkFormConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = MESHCOP_MgmNwkFormConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -3063,8 +3204,7 @@ class MESHCOP_MgmtCommissionerGetConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = MESHCOP_MgmtCommissionerGetConfirm()
-        frame.Status = MESHCOP_MgmtCommissionerGetConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = MESHCOP_MgmtCommissionerGetConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame.Length = packet.getParamValueAsNumber("Length")
         frame.TLVs = packet.getParamValueAsList("TLVs")
         frame._DevicePort = self.deviceName
@@ -3093,8 +3233,7 @@ class MESHCOP_MgmtActiveGetConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = MESHCOP_MgmtActiveGetConfirm()
-        frame.Status = MESHCOP_MgmtActiveGetConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = MESHCOP_MgmtActiveGetConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame.Length = packet.getParamValueAsNumber("Length")
         frame.TLVs = packet.getParamValueAsList("TLVs")
         frame._DevicePort = self.deviceName
@@ -3123,8 +3262,7 @@ class MESHCOP_MgmtPendingGetConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = MESHCOP_MgmtPendingGetConfirm()
-        frame.Status = MESHCOP_MgmtPendingGetConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = MESHCOP_MgmtPendingGetConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame.Length = packet.getParamValueAsNumber("Length")
         frame.TLVs = packet.getParamValueAsList("TLVs")
         frame._DevicePort = self.deviceName
@@ -3153,8 +3291,7 @@ class MESHCOP_MgmtCommissionerSetConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = MESHCOP_MgmtCommissionerSetConfirm()
-        frame.Status = MESHCOP_MgmtCommissionerSetConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = MESHCOP_MgmtCommissionerSetConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -3181,8 +3318,7 @@ class MESHCOP_MgmtActiveSetConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = MESHCOP_MgmtActiveSetConfirm()
-        frame.Status = MESHCOP_MgmtActiveSetConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = MESHCOP_MgmtActiveSetConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -3209,8 +3345,7 @@ class MESHCOP_MgmtPendingSetConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = MESHCOP_MgmtPendingSetConfirm()
-        frame.Status = MESHCOP_MgmtPendingSetConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = MESHCOP_MgmtPendingSetConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -3237,8 +3372,7 @@ class MESHCOP_MgmtSendPanIdQueryConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = MESHCOP_MgmtSendPanIdQueryConfirm()
-        frame.Status = MESHCOP_MgmtSendPanIdQueryConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = MESHCOP_MgmtSendPanIdQueryConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -3265,8 +3399,7 @@ class MESHCOP_MgmtPanIdConflictConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = MESHCOP_MgmtPanIdConflictConfirm()
-        frame.Status = MESHCOP_MgmtPanIdConflictConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = MESHCOP_MgmtPanIdConflictConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame.ScanChannelMask = packet.getParamValueAsNumber("ScanChannelMask")
         frame.PanId = packet.getParamValueAsNumber("PanId")
         frame._DevicePort = self.deviceName
@@ -3295,8 +3428,7 @@ class MESHCOP_MgmtSendEdScanConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = MESHCOP_MgmtSendEdScanConfirm()
-        frame.Status = MESHCOP_MgmtSendEdScanConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = MESHCOP_MgmtSendEdScanConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -3323,8 +3455,7 @@ class MESHCOP_MgmtEdReportConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = MESHCOP_MgmtEdReportConfirm()
-        frame.Status = MESHCOP_MgmtEdReportConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = MESHCOP_MgmtEdReportConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame.ScanChannelMask = packet.getParamValueAsNumber("ScanChannelMask")
         frame.Length = packet.getParamValueAsNumber("Length")
         frame.EnergyList = packet.getParamValueAsList("EnergyList")
@@ -3354,8 +3485,7 @@ class MESHCOP_MgmtSendAnnounceBeginConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = MESHCOP_MgmtSendAnnounceBeginConfirm()
-        frame.Status = MESHCOP_MgmtSendAnnounceBeginConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = MESHCOP_MgmtSendAnnounceBeginConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -3378,8 +3508,7 @@ class DTLSOpenConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.DTLSOpenConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.DTLSOpenConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = DTLSOpenConfirm()
         frame.ContextIndex = packet.getParamValueAsNumber("ContextIndex")
@@ -3405,8 +3534,7 @@ class DTLSCloseConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.DTLSCloseConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.DTLSCloseConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = DTLSCloseConfirm()
         frame.Status = DTLSCloseConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
@@ -3432,12 +3560,10 @@ class DTLSClosePeerConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.DTLSClosePeerConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.DTLSClosePeerConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = DTLSClosePeerConfirm()
-        frame.Status = DTLSClosePeerConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = DTLSClosePeerConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -3460,12 +3586,10 @@ class DTLSConnectConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.DTLSConnectConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.DTLSConnectConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = DTLSConnectConfirm()
-        frame.Status = DTLSConnectConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = DTLSConnectConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame.PeerIndex = packet.getParamValueAsNumber("PeerIndex")
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
@@ -3493,8 +3617,7 @@ class DTLSClientConnectedConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = DTLSClientConnectedConfirm()
-        frame.Status = DTLSClientConnectedConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = DTLSClientConnectedConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame.PeerIndex = packet.getParamValueAsNumber("PeerIndex")
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
@@ -3518,8 +3641,7 @@ class DTLSSendConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.DTLSSendConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.DTLSSendConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = DTLSSendConfirm()
         frame.Status = DTLSSendConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
@@ -3545,8 +3667,7 @@ class DTLSReceiveConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.DTLSReceiveConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.DTLSReceiveConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = DTLSReceiveConfirm()
         frame.PeerIndex = packet.getParamValueAsNumber("PeerIndex")
@@ -3574,8 +3695,7 @@ class FSCIGetUniqueIdConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.FSCIGetUniqueIdConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.FSCIGetUniqueIdConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = FSCIGetUniqueIdConfirm()
         frame.UniqueId = packet.getParamValueAsNumber("UniqueId")
@@ -3601,8 +3721,7 @@ class FSCIGetMcuIdConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.FSCIGetMcuIdConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.FSCIGetMcuIdConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = FSCIGetMcuIdConfirm()
         frame.McuId = packet.getParamValueAsNumber("McuId")
@@ -3628,32 +3747,12 @@ class FSCIGetSwVersionsConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.FSCIGetSwVersionsConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.FSCIGetSwVersionsConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = FSCIGetSwVersionsConfirm()
-        del frame.SwVersions[:]
-        frame.NumberOfEntries = packet.getParamValueAsNumber("NumberOfEntries")
-        curr = 1
-
+        frame.listSize = packet.getParamValueAsNumber("listSize")
         # support for USBKW41Z will be added later, for now return version 1.0.0
-        if frame.NumberOfEntries == 0:
-            frame.NumberOfEntries = 1
-            SwVersion = FSCIGetSwVersionsConfirm.SwVersion(
-                ModuleId='USBKW41Z', VersionNumber='1.0.0', BuildNumber='1.0')
-            frame.SwVersions.append(SwVersion)
-        else:
-            for _ in range(frame.NumberOfEntries):
-                SwVersion = FSCIGetSwVersionsConfirm.SwVersion()
-                SwVersion.ModuleId = Sniffer_DetectConfirmSnifferType.getEnumString(
-                    data.contents[curr])
-                curr += 1
-                SwVersion.VersionNumber = '.'.join(str(n) for n in data.contents[curr:curr + 3])
-                curr += 3
-                SwVersion.BuildNumber = '.'.join(str(n) for n in data.contents[curr:curr + 2])
-                curr += 2
-                frame.SwVersions.append(SwVersion)
-
+        frame.SwVersions = packet.getParamValueAsList("SwVersions")
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -3680,8 +3779,7 @@ class Sniffer_MacSetPIBAttributeConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = Sniffer_MacSetPIBAttributeConfirm()
-        frame.Status = Sniffer_MacSetPIBAttributeConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = Sniffer_MacSetPIBAttributeConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame.PIBAttribute = packet.getParamValueAsNumber("PIBAttribute")
         frame.DataLength = packet.getParamValueAsNumber("DataLength")
         frame.PIBAttributeValue = packet.getParamValueAsNumber("PIBAttributeValue")
@@ -3768,8 +3866,7 @@ class SerialTun_LinkIndicationConfirmObserver(Observer):
             data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = SerialTun_LinkIndicationConfirm()
-        frame.Status = SerialTun_LinkIndicationConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = SerialTun_LinkIndicationConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -3817,12 +3914,10 @@ class AspSetPowerLevelConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.AspSetPowerLevelConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.AspSetPowerLevelConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = AspSetPowerLevelConfirm()
-        frame.Status = AspSetPowerLevelConfirmStatus.getEnumString(
-            packet.getParamValueAsNumber("Status"))
+        frame.Status = AspSetPowerLevelConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -3845,8 +3940,7 @@ class AspGetPowerLevelConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.AspGetPowerLevelConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.AspGetPowerLevelConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = AspGetPowerLevelConfirm()
         frame.Value = packet.getParamValueAsNumber("Value")
@@ -3872,11 +3966,10 @@ class DBGConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.DBGConfirmFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
+        packet = Spec.DBGConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = DBGConfirm()
-        frame.text = packet.getParamValueAsNumber("text")
+        frame.Text = packet.getParamValueAsNumber("Text")
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 

@@ -1,37 +1,9 @@
 '''
-* The Clear BSD License
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
 * Copyright 2016-2018 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 '''
 
 import copy
@@ -50,6 +22,164 @@ from com.nxp.wireless_connectivity.hsdk.utils import Observer, overrides, print_
 fsciLibrary = LibraryLoader().CFsciLibrary
 fsciLibrary.DestroyFSCIFrame.argtypes = [c_void_p]
 Spec = _Spec()
+
+
+class SMPairingRequestReplyRequestObserver(Observer):
+
+    opGroup = Spec.SMPairingRequestReplyRequestFrame.opGroup
+    opCode = Spec.SMPairingRequestReplyRequestFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.SMPairingRequestReplyRequestFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = SMPairingRequestReplyRequest()
+        frame.DestinationDeviceId = packet.getParamValueAsNumber("DestinationDeviceId")
+        frame.SmPairingParams_IoCapabilities = packet.getParamValueAsNumber("SmPairingParams_IoCapabilities")
+        frame.SmPairingParams_OobDataFlag = packet.getParamValueAsNumber("SmPairingParams_OobDataFlag")
+        frame.SmPairingParams_AuthRequest.BondingFlags = packet.getParamValueAsNumber("SmPairingParams_AuthRequestBondingFlags")
+        frame.SmPairingParams_AuthRequest.Mitm = packet.getParamValueAsNumber("SmPairingParams_AuthRequestMitm")
+        frame.SmPairingParams_AuthRequest.sc = packet.getParamValueAsNumber("SmPairingParams_AuthRequestsc")
+        frame.SmPairingParams_AuthRequest.keypress = packet.getParamValueAsNumber("SmPairingParams_AuthRequestkeypress")
+        frame.SmPairingParams_MaxEncKeySize = packet.getParamValueAsNumber("SmPairingParams_MaxEncKeySize")
+        frame.SmPairingParams_InitatorKeyDistribution.EncKey = packet.getParamValueAsNumber("SmPairingParams_InitatorKeyDistributionEncKey")
+        frame.SmPairingParams_InitatorKeyDistribution.IdKey = packet.getParamValueAsNumber("SmPairingParams_InitatorKeyDistributionIdKey")
+        frame.SmPairingParams_InitatorKeyDistribution.Sign = packet.getParamValueAsNumber("SmPairingParams_InitatorKeyDistributionSign")
+        frame.SmPairingParams_InitatorKeyDistribution.LinkKey = packet.getParamValueAsNumber("SmPairingParams_InitatorKeyDistributionLinkKey")
+        frame.SmPairingParams_InitatorKeyDistribution.Reserved = packet.getParamValueAsNumber("SmPairingParams_InitatorKeyDistributionReserved")
+        frame.SmPairingParams_ResponderKeyDistribution.EncKey = packet.getParamValueAsNumber("SmPairingParams_ResponderKeyDistributionEncKey")
+        frame.SmPairingParams_ResponderKeyDistribution.IdKey = packet.getParamValueAsNumber("SmPairingParams_ResponderKeyDistributionIdKey")
+        frame.SmPairingParams_ResponderKeyDistribution.Sign = packet.getParamValueAsNumber("SmPairingParams_ResponderKeyDistributionSign")
+        frame.SmPairingParams_ResponderKeyDistribution.LinkKey = packet.getParamValueAsNumber("SmPairingParams_ResponderKeyDistributionLinkKey")
+        frame.SmPairingParams_ResponderKeyDistribution.Reserved = packet.getParamValueAsNumber("SmPairingParams_ResponderKeyDistributionReserved")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class SMPasskeyRequestReplyRequestObserver(Observer):
+
+    opGroup = Spec.SMPasskeyRequestReplyRequestFrame.opGroup
+    opCode = Spec.SMPasskeyRequestReplyRequestFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.SMPasskeyRequestReplyRequestFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = SMPasskeyRequestReplyRequest()
+        frame.DestinationDeviceId = packet.getParamValueAsNumber("DestinationDeviceId")
+        frame.SmPasskeyReqReplyParams_KeyType = packet.getParamValueAsNumber("SmPasskeyReqReplyParams_KeyType")
+        frame.SmPasskeyReqReplyParams_Key = packet.getParamValueAsNumber("SmPasskeyReqReplyParams_Key")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class SMPairingKeysetRequestReplyRequestObserver(Observer):
+
+    opGroup = Spec.SMPairingKeysetRequestReplyRequestFrame.opGroup
+    opCode = Spec.SMPairingKeysetRequestReplyRequestFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.SMPairingKeysetRequestReplyRequestFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = SMPairingKeysetRequestReplyRequest()
+        frame.DestinationDeviceId = packet.getParamValueAsNumber("DestinationDeviceId")
+        frame.PairingKeysetRequestReplyParams_KeyDistPayload.Ltk = packet.getParamValueAsList("PairingKeysetRequestReplyParams_KeyDistPayloadLtk")
+        frame.PairingKeysetRequestReplyParams_KeyDistPayload.Irk = packet.getParamValueAsList("PairingKeysetRequestReplyParams_KeyDistPayloadIrk")
+        frame.PairingKeysetRequestReplyParams_KeyDistPayload.Csrk = packet.getParamValueAsList("PairingKeysetRequestReplyParams_KeyDistPayloadCsrk")
+        frame.PairingKeysetRequestReplyParams_KeyDistPayload.Ediv = packet.getParamValueAsNumber("PairingKeysetRequestReplyParams_KeyDistPayloadEdiv")
+        frame.PairingKeysetRequestReplyParams_KeyDistPayload.Rand = packet.getParamValueAsList("PairingKeysetRequestReplyParams_KeyDistPayloadRand")
+        frame.PairingKeysetRequestReplyParams_KeyDistPayload.BDAddr = packet.getParamValueAsList("PairingKeysetRequestReplyParams_KeyDistPayloadBDAddr")
+        frame.PairingKeysetRequestReplyParams_KeyDistPayload.BDAddrType = packet.getParamValueAsNumber("PairingKeysetRequestReplyParams_KeyDistPayloadBDAddrType")
+        frame.PairingKeysetRequestReplyParams_SentKeys.EncKey = packet.getParamValueAsNumber("PairingKeysetRequestReplyParams_SentKeysEncKey")
+        frame.PairingKeysetRequestReplyParams_SentKeys.IdKey = packet.getParamValueAsNumber("PairingKeysetRequestReplyParams_SentKeysIdKey")
+        frame.PairingKeysetRequestReplyParams_SentKeys.Sign = packet.getParamValueAsNumber("PairingKeysetRequestReplyParams_SentKeysSign")
+        frame.PairingKeysetRequestReplyParams_SentKeys.LinkKey = packet.getParamValueAsNumber("PairingKeysetRequestReplyParams_SentKeysLinkKey")
+        frame.PairingKeysetRequestReplyParams_SentKeys.Reserved = packet.getParamValueAsNumber("PairingKeysetRequestReplyParams_SentKeysReserved")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class SMLlLtkRequestReplyRequestObserver(Observer):
+
+    opGroup = Spec.SMLlLtkRequestReplyRequestFrame.opGroup
+    opCode = Spec.SMLlLtkRequestReplyRequestFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.SMLlLtkRequestReplyRequestFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = SMLlLtkRequestReplyRequest()
+        frame.DestinationDeviceId = packet.getParamValueAsNumber("DestinationDeviceId")
+        frame.LlLtkRequestReplyParams_LongTermKey = packet.getParamValueAsList("LlLtkRequestReplyParams_LongTermKey")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class SMLeScOobDataRequestReplyRequestObserver(Observer):
+
+    opGroup = Spec.SMLeScOobDataRequestReplyRequestFrame.opGroup
+    opCode = Spec.SMLeScOobDataRequestReplyRequestFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.SMLeScOobDataRequestReplyRequestFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = SMLeScOobDataRequestReplyRequest()
+        frame.DestinationDeviceId = packet.getParamValueAsNumber("DestinationDeviceId")
+        frame.LeScOobDataParams_ = packet.getParamValueAsNumber("LeScOobDataParams_")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
 
 
 class FSCIAckIndicationObserver(Observer):
@@ -5296,7 +5426,7 @@ class GAPConnectionEventConnectedIndicationObserver(Observer):
         frame.ConnectionParameters_SupervisionTimeout = packet.getParamValueAsNumber("ConnectionParameters_SupervisionTimeout")
         frame.ConnectionParameters_MasterClockAccuracy = packet.getParamValueAsNumber("ConnectionParameters_MasterClockAccuracy")
         frame.PeerAddressType = packet.getParamValueAsNumber("PeerAddressType")
-        frame.PeerAddress = packet.getParamValueAsList("PeerAddress")
+        frame.PeerAddress = packet.getParamValueAsList("PeerAddress")[::-1]
         frame.peerRpaResolved = packet.getParamValueAsNumber("peerRpaResolved")
         frame.peerRpa = packet.getParamValueAsList("peerRpa")
         frame.localRpaUsed = packet.getParamValueAsNumber("localRpaUsed")

@@ -62,7 +62,6 @@
           <value>false</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
-          <value>DEBUG</value>
           <value>CPU_MKW41Z512VHT4</value>
           <value>gEepromType_d=gEepromDevice_AT45DB041E_c</value>
           <value>gUseOTAPBootloader_d=1</value>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Project launch files"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-4FD63E72-9F7D-4B7C-BDEA-6BA74397C616.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-268C6575-465B-4814-B60A-1C66DE12A939"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Project launch files</title>
+</head>
+<body id="GUID-268C6575-465B-4814-B60A-1C66DE12A939">
+
+
+    <h1 class="title topictitle1">Project launch files</h1>
+
+    <div class="body">
+        <p class="p">Each of the example demo projects provide a set of separate IAR EWARM launch files for
+            each of the supported Kinetis Thread development board and for each RTOS option. The
+            launch files consist in:</p>
+
+        <ul class="ul" id="GUID-268C6575-465B-4814-B60A-1C66DE12A939__UL_IPY_GZC_GZ">
+            <li class="li">&lt;*.eww&gt; workspace configuration file</li>
+
+            <li class="li">&lt;*.ewp&gt; project configuration file</li>
+
+            <li class="li">&lt;*.ewd&gt; debug configuration file</li>
+
+        </ul>
+
+        <p class="p">The launch files for each of the configurations are contained in the folder structure
+            starting at the boards subfolder in the root of the Kinetis Thread Stack
+            installation.</p>
+
+        <p class="p">For instance, to access the launch files for the <strong class="ph b">Thread Border Router
+            </strong>example to deploy on the <span class="ph"><strong class="ph b">USBKW41Z </strong></span>
+             development platform which uses
+                <strong class="ph b">FreeRTOS</strong>, navigate to the following subfolder:</p>
+
+        <p class="p">&lt;Connectivity_Software_Installation, for example, <span class="ph">C:\NXP\SDK_2.2_MKW41Z512xxx4&gt;</span></p>
+
+        <p class="p"><span class="ph">\boards\usbkw41z_kw41z\wireless_examples\<strong class="ph b">thread</strong>\<strong class="ph b">border_router</strong>\<strong class="ph b">freertos</strong>\<strong class="ph b">iar</strong></span></p>
+
+        <p class="p">Each configuration subfolder has the following generic structure:</p>
+
+        <p class="p">&lt;Connectivity_Software_Installation, for example, <span class="ph">C:\NXP\SDK_2.2_MKW41Z512xxx4&gt;</span>:</p>
+
+        <p class="p"><span class="ph">\boards\<strong class="ph b">&lt;board&gt;</strong>\wireless_examples\thread\ <strong class="ph b">&lt;example
+                    application&gt; </strong>\<strong class="ph b">&lt;RTOS&gt;</strong>\<strong class="ph b"> &lt;toolchain&gt;</strong></span></p>
+
+        <p class="p">Each configuration subfolder contains the set of workspace, project, and debug
+            configuration files, for instance:</p>
+
+        <ul class="ul" id="GUID-268C6575-465B-4814-B60A-1C66DE12A939__UL_NQY_GZC_GZ">
+            <li class="li">border_router.ewd</li>
+
+            <li class="li">border_router.ewp</li>
+
+            <li class="li">border_router.eww</li>
+
+        </ul>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-4FD63E72-9F7D-4B7C-BDEA-6BA74397C616.html">Deploying Applications with IAR EWARM</a></div>
+</div>
+</div>
+
+</body>
+</html>

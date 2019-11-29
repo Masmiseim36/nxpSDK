@@ -1,36 +1,8 @@
 /*
-* The Clear BSD License
 * Copyright 2016-2017 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 */
 
 /*!=================================================================================================
@@ -136,12 +108,13 @@ PUBLIC void APP_ZCL_vInitialise(void)
         DBG_vPrintf(TRACE_ZCL, "\r\nErr: eZLO_Initialise:%d", eZCL_Status);
     }
 
+#ifndef APP_ALLOW_ZPS_SUSPEND
     /* Start the tick timer */
     if(ZTIMER_eStart(u8TimerZCL, ZCL_TICK_TIME) != E_ZTIMER_OK)
     {
         DBG_vPrintf(TRACE_ZCL, "APP: Failed to Start Tick Timer\r\n");
     }
-
+#endif
     /* Register Base Device EndPoint */
     eZCL_Status =  eZHA_RegisterBaseDeviceEndPoint(COORDINATOR_APPLICATION_ENDPOINT,
                                                    &APP_ZCL_cbEndpointCallback,
@@ -501,6 +474,16 @@ PRIVATE void APP_vZCL_DeviceSpecific_Init(void)
     FLib_MemCpy(sBaseDevice.sBasicServerCluster.au8ModelIdentifier, "BDB-Coordinator", CLD_BAS_MODEL_ID_SIZE);
     FLib_MemCpy(sBaseDevice.sBasicServerCluster.au8DateCode, "20150212", CLD_BAS_DATE_SIZE);
     FLib_MemCpy(sBaseDevice.sBasicServerCluster.au8SWBuildID, "1000-0001", CLD_BAS_SW_BUILD_SIZE);
+    #ifdef CLD_BAS_ATTR_MANUFACTURER_VERSION_DETAILS
+    FLib_MemCpy(sBaseDevice.sBasicServerCluster.au8ManufacturerVersionDetails, "Zigbee_Version_3.0", CLD_BAS_MANUFACTURER_VERSION_SIZE);
+    #endif
+    #ifdef CLD_BAS_ATTR_SERIAL_NUMBER
+    FLib_MemCpy(sBaseDevice.sBasicServerCluster.au8SerialNumber, "1234", CLD_BAS_SERIAL_NUMBER_SIZE);
+    #endif
+    #ifdef CLD_BAS_ATTR_PRODUCT_LABEL
+    FLib_MemCpy(sBaseDevice.sBasicServerCluster.au8ProductLabel, "Kinetis_KW41Z", CLD_BAS_PRODUCT_LABEL_SIZE);
+    #endif
+    
 }
 
 /****************************************************************************
@@ -573,9 +556,7 @@ PRIVATE void vHandleIdentifyRequest(uint16 u16Duration)
 #ifndef CPU_MKW41Z512VHT4
         APP_vSetLed(LED1, ON);
 #else
-        Led2On();
-        Led3On();
-        Led4On();
+        Led1On();
 #endif
     }
 }
@@ -599,7 +580,9 @@ PUBLIC void APP_cbTimerId(void *pvParam)
 #ifndef CPU_MKW41Z512VHT4
         APP_vSetLed(LED1, OFF);
 #else
-        Led1Off();
+        Led2Off();
+        Led3Off();
+        Led4Off();
 #endif
     }
     else
@@ -609,11 +592,15 @@ PUBLIC void APP_cbTimerId(void *pvParam)
 #else
         if(sBaseDevice.sIdentifyServerCluster.u16IdentifyTime%2)
         {
-             Led1On();
+            Led2On();
+            Led3On();
+            Led4On();
         }
         else
         {
-            Led1Off();
+            Led2Off();
+            Led3Off();
+            Led4Off();
         }
 #endif
         ZTIMER_eStop(u8TimerId);

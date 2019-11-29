@@ -1,37 +1,9 @@
 /*
-* The Clear BSD License
 * Copyright (c) 2014-2015, Freescale Semiconductor, Inc.
 * Copyright 2016-2017 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-* 
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-* 
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-* 
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-* 
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 */
 
 GROUP (
@@ -43,35 +15,40 @@ GROUP (
 ENTRY(Reset_Handler)
 
 /* By default, the Bootloader is not used. */
-
-gUseBootloaderLink_d = 0;
-
+/*
+gUseBootloaderLink_d = DEFINED(gUseBootloaderLink_d) ? gUseBootloaderLink_d : 0;
+*/
 
 /* By default, the NVM is not used. */
-gUseNVMLink_d  = 1;
+gUseNVMLink_d  = DEFINED(gUseNVMLink_d) ? gUseNVMLink_d : 1;
 
 
-gNVMSectorCountLink_d = 32;
+gNVMSectorCountLink_d = DEFINED(gNVMSectorCountLink_d) ? gNVMSectorCountLink_d : 32;
 
-
+/*
 /* By default, the internal storage is not used. */
+/*
+gUseInternalStorageLink_d = DEFINED(gUseInternalStorageLink_d) ? gUseInternalStorageLink_d : 0;
+*/
 
-gUseInternalStorageLink_d = 0;
-
-
-__ram_vector_table__ = 1;
+__ram_vector_table__ = DEFINED(__ram_vector_table__) ? __ram_vector_table__ : 1;
 
 /*-Memory Limits-*/
-__region_ROM_start__  =  (0x00000000);
-__region_ROM_end__    =  (0x0007FFFF);
-__region_RAM_start__  =  (0x1FFF8000);
-__region_RAM_end__    =  (0x20017FFF);
+__region_ROM_start__   =  (0x00000000);
+__region_ROM_end__     =  (0x0007FFFF);
+/* Workaround for  SRAM boundary GCC placement issue,
+ not to place variables that are accessed by the code 
+ overlapping this boundary (forbidden by the Kinetis architecture) */
+__region_RAM1_start__  =  (0x1FFF8000);
+__region_RAM1_end__    =  (0x1FFFFFFF);
+__region_RAM2_start__  =  (0x20000000);
+__region_RAM2_end__    =  (0x20017FFF);
 
 
 __vector_table_size__ = (48*4);
-__ram_vector_table_size__ =  __vector_table_size__;
-_RAM_START_  = __region_RAM_start__;
-_RAM_END_    = __region_RAM_end__;
+__ram_vector_table_size__ = DEFINED(__ram_vector_table__) ? __vector_table_size__ : 0;
+_RAM_START_  = __region_RAM1_start__;
+_RAM_END_    = __region_RAM2_end__;
 
 
 m_bootloader_start  = (__region_ROM_start__);
@@ -81,7 +58,7 @@ m_interrupts_start   = (m_bootloader_end + 1);
 m_interrupts_end     = (m_interrupts_start + __vector_table_size__ - 1);
 
 m_bootFlags_start   = (m_interrupts_end + 1);
-m_bootFlags_end     = (m_bootFlags_start + 12);
+m_bootFlags_end     = (m_bootFlags_start + 16);
 
 __BootFlags_Start__ = m_bootFlags_start;
 
@@ -89,10 +66,10 @@ __BootFlags_Start__ = m_bootFlags_start;
 /* 2k flash sector size */
 m_sector_size =  ( 2 * 1024 );
 
-__size_cstack__ = 0x400;
+__size_cstack__ = DEFINED(__stack_size__) ? __stack_size__ : 512;
 
 
-__size_heap__ = 0x00;
+__size_heap__ = DEFINED(__heap_size__) ? __heap_size__ : 0;
 
 /*** FSL Product Info region ***/
 m_fsl_prodInfo_start = (__region_ROM_end__ - m_sector_size + 1);
@@ -102,7 +79,7 @@ FREESCALE_PROD_DATA_BASE_ADDR = m_fsl_prodInfo_start;
 
 /*** NVM Configuration ***/
 NV_STORAGE_SECTOR_SIZE     = m_sector_size;
-NV_STORAGE_MAX_SECTORS     = (gNVMSectorCountLink_d);     /* NV_STORAGE_MAX_SECTORS * NV_STORAGE_SECTOR_SIZE = total NV Storage space */
+NV_STORAGE_MAX_SECTORS     = gNVMSectorCountLink_d;     /* NV_STORAGE_MAX_SECTORS * NV_STORAGE_SECTOR_SIZE = total NV Storage space */
 NV_STORAGE_START_ADDRESS   = m_fsl_prodInfo_start - 1;
 NV_STORAGE_END_ADDRESS     = NV_STORAGE_START_ADDRESS - (NV_STORAGE_MAX_SECTORS * NV_STORAGE_SECTOR_SIZE) + 1;
 NV_STORAGE_SECTOR_SIZE_C   = (m_sector_size);
@@ -112,21 +89,22 @@ NV_STORAGE_END_ADDRESS_C   = (NV_STORAGE_START_ADDRESS_C - (NV_STORAGE_MAX_SECTO
 /* Define the limits of the memory regions*/
 m_text_start = (m_interrupts_start);
 m_text_end   = (NV_STORAGE_END_ADDRESS_C - 1);
-
-m_interrupts_ram_start = (__region_RAM_start__);
+m_interrupts_ram_start = (__region_RAM2_start__);
 m_interrupts_ram_end   = (m_interrupts_ram_start + __ram_vector_table_size__ - 1);
 
-__CSTACK_end__         = (__region_RAM_end__);
+__CSTACK_end__         = (__region_RAM2_end__);
 __CSTACK_start__       = (__CSTACK_end__ - __size_cstack__);
 __HEAP_end__           = (__CSTACK_start__ - 1);
 __HEAP_start__         = (__HEAP_end__ - __size_heap__ - 0x4);
 
 
-m_data_start           = (m_interrupts_ram_start);
-m_data_end             = (__HEAP_start__ - 1);
+m_data1_start           = (__region_RAM1_start__);
+m_data1_end             = (__region_RAM1_end__);
+m_data2_start           =  (m_interrupts_ram_start);
+m_data2_end             =  (__HEAP_start__ - 1);
 
 __RAM_VECTOR_TABLE_SIZE = __ram_vector_table_size__;
-__BOOT_STACK_ADDRESS = m_data_end - 0x0F;
+__BOOT_STACK_ADDRESS = m_data2_end - 0x0F;
 
 /* Specify the memory areas */
 MEMORY
@@ -137,7 +115,8 @@ MEMORY
         TEXT_region2                                    (RX) : ORIGIN = m_bootFlags_end + 1,            LENGTH = (m_text_end - m_bootFlags_end - 1)
         
         NVM_region           (RW) : ORIGIN = NV_STORAGE_END_ADDRESS_C,       LENGTH = (NV_STORAGE_START_ADDRESS_C - NV_STORAGE_END_ADDRESS_C)
-        DATA_region          (RW) : ORIGIN = m_data_start,                   LENGTH = (__region_RAM_end__ - __region_RAM_start__ + 1)
+        DATA1_region         (RW) : ORIGIN = m_data1_start, LENGTH = (m_data1_end - m_data1_start + 1)
+        DATA2_region         (RW) : ORIGIN = m_data2_start, LENGTH = (__region_RAM2_end__ - __region_RAM2_start__ + 1)
         PRODUCT_INFO_region  (RX) : ORIGIN = m_fsl_prodInfo_start, LENGTH = (m_fsl_prodInfo_end - m_fsl_prodInfo_start)
 }
 
@@ -279,7 +258,7 @@ SECTIONS
     KEEP(*(.mtb_buf)) /* need to KEEP Micro Trace Buffer as not referenced by application */
     . = ALIGN(8);
     _mtb_end = .;
-  } > DATA_region
+  } > DATA2_region
 
   .interrupts_ram :
   {
@@ -290,7 +269,7 @@ SECTIONS
     . += __ram_vector_table_size__;
     . = ALIGN(4);
     __interrupts_ram_end__ = .; /* Define a global symbol at data end */
-  } > DATA_region
+  } > DATA2_region
   __VECTOR_RAM = __VECTOR_RAM__;
   __RAM_VECTOR_TABLE_SIZE_BYTES = (__interrupts_ram_end__ - __interrupts_ram_start__);
   .data : AT(__DATA_ROM)
@@ -302,7 +281,7 @@ SECTIONS
     *(.data*)                /* .data* sections */
     KEEP(*(.jcr*))
     . = ALIGN(4);
-  } > DATA_region
+  } > DATA2_region
   
   .NVM_TABLE :
   {
@@ -311,7 +290,7 @@ SECTIONS
     KEEP(*(.NVM_TABLE));
     PROVIDE(__stop_NVM_TABLE = .);
     . = ALIGN(4);
-  } > DATA_region
+  } > DATA2_region
 
   __data_end__ = .;        /* define a global symbol at data end */
   __DATA_END = __DATA_ROM + (__data_end__ - __data_start__);
@@ -334,7 +313,7 @@ SECTIONS
     . = ALIGN(4);
     __bss_end__ = .;
     __END_BSS = .;
-  } > DATA_region
+  } > DATA2_region
 
   .heap :
   {
@@ -344,16 +323,16 @@ SECTIONS
     __HeapBase = .;
     . += __size_heap__;
     __HeapLimit = .;
-  } > DATA_region
+  } > DATA2_region
 
   .stack :
   {
     . = ALIGN(8);
     . += __size_cstack__;
-  } > DATA_region
+  } > DATA2_region
 
   /* Initializes stack on the end of block */
-  __StackTop   = ORIGIN(DATA_region) + LENGTH(DATA_region);
+  __StackTop   = ORIGIN(DATA2_region) + LENGTH(DATA2_region);
   __StackLimit = __StackTop - __size_cstack__;
   PROVIDE(__stack = __StackTop);
 

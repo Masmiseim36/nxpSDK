@@ -1,37 +1,9 @@
 '''
-* The Clear BSD License
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
+* Copyright 2016-2019 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 '''
 
 from com.nxp.wireless_connectivity.commands.fsci_frame_description import Protocol
@@ -360,6 +332,17 @@ def THR_SearchNwkWithAnounce(
     return THR_SearchNwkWithAnounceOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
+def THR_GetDeviceInfo(
+    device,
+    InstanceID=bytearray(1),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.Thread,
+    timeout=3
+):
+    request = Frames.THR_GetDeviceInfoRequest(InstanceID)
+    return THR_GetDeviceInfoOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
 def THR_ChildUpdateToParent(
     device,
     InstanceID=bytearray(1),
@@ -369,6 +352,17 @@ def THR_ChildUpdateToParent(
 ):
     request = Frames.THR_ChildUpdateToParentRequest(InstanceID)
     return THR_ChildUpdateToParentOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def THR_SetParentPriority(
+    device,
+    Priority=THR_SetParentPriorityRequestPriority.MediumPriority,
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.Thread,
+    timeout=3
+):
+    request = Frames.THR_SetParentPriorityRequest(Priority)
+    return THR_SetParentPriorityOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
 def THR_SetManualSlaacIID(
@@ -407,6 +401,17 @@ def THR_SetThreshold(
     request = Frames.THR_SetThresholdRequest(InstanceId, ThresholdType, Value)
     return THR_SetThresholdOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
+def THR_SetThreshold32(
+    device,
+    InstanceId=bytearray(1),
+    ThresholdType=THR_SetThreshold32RequestThresholdType.ContextReuseDelay,
+    Value=bytearray(4),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.Thread,
+    timeout=3
+):
+    request = Frames.THR_SetThreshold32Request(InstanceId, ThresholdType, Value)
+    return THR_SetThreshold32Operation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 def THR_SetNwkIdTimeout(
     device,
@@ -417,6 +422,17 @@ def THR_SetNwkIdTimeout(
 ):
     request = Frames.THR_SetNwkIdTimeoutRequest(TimeoutInSeconds)
     return THR_SetNwkIdTimeoutOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def THR_SetRouterPromoteMaxJitter(
+    device,
+    MaxJitterInSeconds=bytearray(4),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.Thread,
+    timeout=3
+):
+    request = Frames.THR_SetRouterPromoteMaxJitterRequest(MaxJitterInSeconds)
+    return THR_SetRouterPromoteMaxJitterOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
 def THR_GetRoutingTable(
@@ -868,6 +884,17 @@ def SocketGetOption(
     return SocketGetOptionOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
+def SocketClose(
+    device,
+    SocketIndex=bytearray(1),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.Thread,
+    timeout=3
+):
+    request = Frames.SocketCloseRequest(SocketIndex)
+    return SocketCloseOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
 def MESHCOP_StartCommissioner(
     device,
     InstanceId=bytearray(1),
@@ -1053,6 +1080,18 @@ def MESHCOP_MgmNwkForm(
     request = Frames.MESHCOP_MgmNwkFormRequest(
         IPAddress, NwkNameSize, NwkName, NetworkMasterKey, PSKcSize, PSKc, Channel)
     return MESHCOP_MgmNwkFormOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def MESHCOP_MgmNwkLeave(
+    device,
+    # Unit length: 16 bytes
+    IPAddress=bytearray(16),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.Thread,
+    timeout=3
+):
+    request = Frames.MESHCOP_MgmNwkLeaveRequest(IPAddress)
+    return MESHCOP_MgmNwkLeaveOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
 def MESHCOP_MgmtCommissionerGet(
@@ -1435,6 +1474,7 @@ def NWKU_Ping(
     Payloadlength=bytearray(2),
     Timeout=bytearray(2),
     Secured=True,
+    HopLimit=bytearray(1),
     ack_policy=FsciAckPolicy.GLOBAL,
     protocol=Protocol.Thread,
     timeout=3
@@ -1448,7 +1488,7 @@ def NWKU_Ping(
         SourceIpAddress = SourceIpAddress[::-1]
 
     request = Frames.NWKU_PingRequest(
-        DestinationIpAddress, SourceIpAddress, Payloadlength, Timeout, Secured)
+        DestinationIpAddress, SourceIpAddress, Payloadlength, Timeout, Secured, HopLimit)
     return NWKU_PingOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
@@ -1559,14 +1599,77 @@ def NWKU_McastGroupManage(
     device,
     InterfaceId=bytearray(1),
     Action=NWKU_McastGroupManageRequestAction.JoinGroup,
+    UseTimeout=False,
+    McastAddrCount=bytearray(1),
+    Timeout=bytearray(4),
+    # Unit length: 16 bytes
+    DestIpAddress=bytearray(16),
+    # Unit length: 16 bytes
+        # Array length depends on McastAddrCount. Mask: 0xFF. Shift: 0x00.
     # Unit length: 16 bytes
     McastAddress=bytearray(16),
     ack_policy=FsciAckPolicy.GLOBAL,
     protocol=Protocol.Thread,
     timeout=3
 ):
-    request = Frames.NWKU_McastGroupManageRequest(InterfaceId, Action, McastAddress)
+    request = Frames.NWKU_McastGroupManageRequest(
+        InterfaceId, Action, UseTimeout, McastAddrCount, Timeout, DestIpAddress, McastAddress)
     return NWKU_McastGroupManageOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def NWKU_FirewallEnable(
+    device,
+    Enable=False,
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.Thread,
+    timeout=3
+):
+    request = Frames.NWKU_FirewallEnableRequest(Enable)
+    return NWKU_FirewallEnableOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def NWKU_FirewallTableShow(
+    device,
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.Thread,
+    timeout=3
+):
+    request = Frames.NWKU_FirewallTableShowRequest()
+    return NWKU_FirewallTableShowOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def NWKU_FirewallRuleRemove(
+    device,
+    RuleEntryNumber=bytearray(1),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.Thread,
+    timeout=3
+):
+    request = Frames.NWKU_FirewallRuleRemoveRequest(RuleEntryNumber)
+    return NWKU_FirewallRuleRemoveOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def NWKU_FirewallRuleAdd(
+    device,
+    RuleEntryNumber=bytearray(1),
+    # Unit length: 16 bytes
+    SourcePrefix=bytearray(16),
+    # Unit length: 16 bytes
+    DestinationPrefix=bytearray(16),
+    SourcePort=bytearray(2),
+    DestinationPort=bytearray(2),
+    SourcePrefixLen=bytearray(1),
+    DestinationPrefixLen=bytearray(1),
+    SecurityLevel=bytearray(1),
+    InterfaceID=bytearray(1),
+    Rule=NWKU_FirewallRuleAddRequestRule(),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.Thread,
+    timeout=3
+):
+    request = Frames.NWKU_FirewallRuleAddRequest(RuleEntryNumber, SourcePrefix, DestinationPrefix, SourcePort,
+                                                 DestinationPort, SourcePrefixLen, DestinationPrefixLen, SecurityLevel, InterfaceID, Rule)
+    return NWKU_FirewallRuleAddOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
 def NWKU_RoutesShow(
@@ -1659,6 +1762,16 @@ def DTLSSend(
     return DTLSSendOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
+def FSCICPUReset(
+    device,
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.Thread,
+    timeout=3
+):
+    request = Frames.FSCICPUResetRequest()
+    return FSCICPUResetOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
 def FSCIGetUniqueId(
     device,
     ack_policy=FsciAckPolicy.GLOBAL,
@@ -1736,14 +1849,14 @@ def Sniffer_Detect(
     return Sniffer_DetectOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
-def FSCIEnterBootloader(
+def FSCIEnableMSDBootloader(
     device,
     ack_policy=FsciAckPolicy.GLOBAL,
     protocol=Protocol.Thread,
     timeout=3
 ):
-    request = Frames.FSCIEnterBootloaderRequest()
-    return FSCIEnterBootloaderOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+    request = Frames.FSCIEnableMSDBootloaderRequest()
+    return FSCIEnableMSDBootloaderOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
 def AspSetPowerLevel(

@@ -1,36 +1,8 @@
 '''
-* The Clear BSD License
 * Copyright 2017-2018 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 '''
 
 from com.nxp.wireless_connectivity.commands.zigbee.enums import *  # @UnusedWildImport
@@ -355,6 +327,34 @@ class SetPollIntervalRequest(object):
         @param Interval: Poll Interval in seconds
         '''
         self.Interval = Interval
+
+
+class AddInOutClustersRequest(object):
+
+    def __init__(self, EndPoint=bytearray(1), InClusterCount=bytearray(1), OutClusterCount=bytearray(1), InputClustersList=[], OutputClustersList=[]):
+        '''
+        @param EndPoint: EndPoint
+        @param InClusterCount: Number of input cluster ids to be added
+        @param OutClusterCount: Number of output cluster ids to be added
+        @param InputClustersList: List of input cluster ids
+        @param OutputClustersList: List of output cluster ids
+        '''
+        self.EndPoint = EndPoint
+        self.InClusterCount = InClusterCount
+        self.OutClusterCount = OutClusterCount
+        self.InputClustersList = InputClustersList
+        self.OutputClustersList = OutputClustersList
+
+
+class FindAndBindRequest(object):
+
+    def __init__(self, Initiator=bytearray(1), EndPoint=bytearray(1)):
+        '''
+        @param Initiator: Initiator
+        @param EndPoint: EndPoint
+        '''
+        self.Initiator = Initiator
+        self.EndPoint = EndPoint
 
 
 class ComplexDescriptorRequest(object):
@@ -811,6 +811,23 @@ class MoveStopWithOnOff(object):
         self.DestinationEndPoint = DestinationEndPoint
 
 
+class MoveToClosestFrequency(object):
+
+    def __init__(self, AddressMode=bytearray(1), TargetShortAddress=bytearray(2), SourceEndPoint=bytearray(1), DestinationEndPoint=bytearray(1), Frequency=bytearray(2)):
+        '''
+        @param AddressMode: AddressMode
+        @param TargetShortAddress: TargetShortAddress
+        @param SourceEndPoint: SourceEndPoint
+        @param DestinationEndPoint: DestinationEndPoint
+        @param Frequency: Frequency
+        '''
+        self.AddressMode = AddressMode
+        self.TargetShortAddress = TargetShortAddress
+        self.SourceEndPoint = SourceEndPoint
+        self.DestinationEndPoint = DestinationEndPoint
+        self.Frequency = Frequency
+
+
 class OnOffWithEffectsSend(object):
 
     def __init__(self, AddressMode=bytearray(1), TargetShortAddress=bytearray(2), SourceEndPoint=bytearray(1), DestinationEndPoint=bytearray(1), EffectID=bytearray(1), EffectGradient=bytearray(1)):
@@ -866,6 +883,75 @@ class OnOffTimedSend(object):
         self.OnOff = OnOff
         self.OnTimeInSecconds = OnTimeInSecconds
         self.OffTimeInSecconds = OffTimeInSecconds
+
+
+class DiagnosticRequest(object):
+
+    class TargetShort(object):
+
+        def __init__(self, TargetShortAddress=bytearray(2)):
+            self.TargetShortAddress = TargetShortAddress
+
+    class TargetIEEE(object):
+
+        def __init__(self, TargetIEEEAddress=bytearray(8)):
+            self.TargetIEEEAddress = TargetIEEEAddress
+
+    class TargetBroadcast(object):
+
+        def __init__(self, TargetBroadcastAddress=bytearray(2)):
+            self.TargetBroadcastAddress = TargetBroadcastAddress
+
+    class DelayRequest(object):
+
+        def __init__(self, SequenceNumber=bytearray(1), PayloadSize=bytearray(1), Payload=[]):
+            self.SequenceNumber = SequenceNumber
+            self.PayloadSize = PayloadSize
+            # Array length depends on PayloadSize.
+            self.Payload = Payload
+
+    def __init__(self, AddressMode=DiagnosticRequestAddressMode.TargetShort, TargetAddressValue=[], SourceEndPoint=bytearray(1), DestinationEndPoint=bytearray(1), CommandID=DiagnosticRequestCommandID.DelayRequest, AttributeValue=[]):
+        '''
+        @param AddressMode: Address Mode
+        @param TargetAddressValue: Target Address Value
+        @param SourceEndPoint: SourceEndPoint
+        @param DestinationEndPoint: DestinationEndPoint
+        @param CommandID: CommandID
+        @param AttributeValue: Attribute Value
+        '''
+        self.AddressMode = AddressMode
+        self.TargetAddressValue = TargetAddressValue
+        self.SourceEndPoint = SourceEndPoint
+        self.DestinationEndPoint = DestinationEndPoint
+        self.CommandID = CommandID
+        self.AttributeValue = AttributeValue
+
+
+class DiagnosticResponse(object):
+
+    def __init__(self, SeqNum=bytearray(1), srcEndpoint=bytearray(1), ClusterId=bytearray(2), Status=DiagnosticResponseStatus.DelayResponse, RequestLatency=bytearray(4), ResponseLatency=bytearray(4), Offset=bytearray(4), SequenceNumber=bytearray(1), PayloadSize=bytearray(1), Payload=[]):
+        '''
+        @param SeqNum: SeqNum
+        @param srcEndpoint: srcEndpoint
+        @param ClusterId: ClusterId
+        @param Status: Status
+        @param RequestLatency: Request Latency
+        @param ResponseLatency: Response Latency
+        @param Offset: Offset
+        @param SequenceNumber: Sequence Number
+        @param PayloadSize: Payload Size
+        @param Payload: OTA received payload
+        '''
+        self.SeqNum = SeqNum
+        self.srcEndpoint = srcEndpoint
+        self.ClusterId = ClusterId
+        self.Status = Status
+        self.RequestLatency = RequestLatency
+        self.ResponseLatency = ResponseLatency
+        self.Offset = Offset
+        self.SequenceNumber = SequenceNumber
+        self.PayloadSize = PayloadSize
+        self.Payload = Payload
 
 
 class ViewScene(object):
@@ -971,7 +1057,7 @@ class StoreScene(object):
 
 class RecallScene(object):
 
-    def __init__(self, AddressMode=bytearray(1), TargetShortAddress=bytearray(2), SourceEndPoint=bytearray(1), DestinationEndPoint=bytearray(1), GroupID=bytearray(2), SceneID=bytearray(1)):
+    def __init__(self, AddressMode=bytearray(1), TargetShortAddress=bytearray(2), SourceEndPoint=bytearray(1), DestinationEndPoint=bytearray(1), GroupID=bytearray(2), SceneID=bytearray(1), TransitionTime=bytearray(2)):
         '''
         @param AddressMode: AddressMode
         @param TargetShortAddress: TargetShortAddress
@@ -979,6 +1065,7 @@ class RecallScene(object):
         @param DestinationEndPoint: DestinationEndPoint
         @param GroupID: GroupID
         @param SceneID: SceneID
+        @param TransitionTime: TransitionTime
         '''
         self.AddressMode = AddressMode
         self.TargetShortAddress = TargetShortAddress
@@ -986,6 +1073,7 @@ class RecallScene(object):
         self.DestinationEndPoint = DestinationEndPoint
         self.GroupID = GroupID
         self.SceneID = SceneID
+        self.TransitionTime = TransitionTime
 
 
 class SceneMembershipRequest(object):
@@ -1078,8 +1166,6 @@ class CopyScene(object):
         self.FromSceneID = FromSceneID
         self.ToGroupID = ToGroupID
         self.ToSceneID = ToSceneID
-
-
 class MoveToHue(object):
 
     def __init__(self, AddressMode=bytearray(1), TargetShortAddress=bytearray(2), SourceEndPoint=bytearray(1), DestinationEndPoint=bytearray(1), Hue=bytearray(1), Direction=bytearray(1), TransitionTime=bytearray(2)):
@@ -1259,6 +1345,7 @@ class MoveColour(object):
         self.DestinationEndPoint = DestinationEndPoint
         self.ColorX = ColorX
         self.ColorY = ColorY
+
 
 
 class EnhancedMoveToHue(object):
@@ -1550,7 +1637,7 @@ class Status(object):
 
 class LogMessage(object):
 
-    def __init__(self, LogLevel=LogMessageLogLevel.Emergency, LogMessage=[]):
+    def __init__(self, LogLevel=LogMessageLogLevel.Emergency, LogMessage=bytearray(1)):
         '''
         @param LogLevel: Use the Linux / Unix log levels
         @param LogMessage: LogMessage
@@ -1729,7 +1816,7 @@ class NetworkAddressResponse(object):
 
 class IEEEAddressResponse(object):
 
-    def __init__(self, SequenceNumber=bytearray(1), Status=bytearray(1), IEEEAddress=bytearray(8), shortAddress=bytearray(2), NumberOfAssociatedDevices=bytearray(1), StartIndex=bytearray(1), DeviceList=[]):
+    def __init__(self, SequenceNumber=bytearray(1), Status=bytearray(1), IEEEAddress=bytearray(8), shortAddress=bytearray(2), NumberOfAssociatedDevices=bytearray(1), StartIndex=bytearray(1), DeviceList=bytearray(2)):
         '''
         @param SequenceNumber: SequenceNumber
         @param Status: Status

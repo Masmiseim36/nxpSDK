@@ -82,7 +82,7 @@ else
 		LIBLFLAGS=-shared -Wl,-soname,
 		EXTENSION=.so
 		VERSION=.1
-		FULL_VERSION=.1.8.2
+		FULL_VERSION=.1.8.2.5
 	endif
 	LL=$(CC)
 endif

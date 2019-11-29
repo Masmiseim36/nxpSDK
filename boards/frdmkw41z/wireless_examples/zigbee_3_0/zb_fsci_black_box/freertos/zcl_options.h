@@ -1,36 +1,8 @@
 /*
-* The Clear BSD License
 * Copyright 2016-2017 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 */
   
 
@@ -136,7 +108,9 @@
 #define SM_CLIENT
 
 #define CLD_DIAGNOSTICS
+//#define DIAGNOSTICS_PTP
 #define DIAGNOSTICS_CLIENT
+//#define DIAGNOSTICS_SERVER
 #define CLD_DIAGNOSTICS_ATTR_ID_AVERAGE_MAC_RETRY_PER_APS_MESSAGE_SENT
 #define CLD_DIAGNOSTICS_ATTR_ID_LAST_MESSAGE_LQI
 #define CLD_DIAGNOSTICS_ATTR_ID_LAST_MESSAGE_RSSI
@@ -185,6 +159,10 @@
 #define CLD_BAS_ATTR_SW_BUILD_ID
 #define CLD_BAS_ATTR_CONFIG_MODEL_IDENTIFIER
 
+// #define CLD_BAS_ATTR_MANUFACTURER_VERSION_DETAILS
+// #define CLD_BAS_ATTR_SERIAL_NUMBER
+// #define CLD_BAS_ATTR_PRODUCT_LABEL
+
 #define CLD_BAS_APP_VERSION             (1)
 #define CLD_BAS_STACK_VERSION           (1)
 #define CLD_BAS_HARDWARE_VERSION        (1)
@@ -194,6 +172,9 @@
 #define CLD_BAS_POWER_SOURCE            E_CLD_BAS_PS_BATTERY
 #define CLD_BAS_SW_BUILD_SIZE           (9)
 #define CLD_BAS_CONFIG_MODEL_ID_SIZE    CLD_BAS_MODEL_ID_SIZE
+#define CLD_BAS_MANUFACTURER_VERSION_SIZE  (18)
+#define CLD_BAS_SERIAL_NUMBER_SIZE  (4)
+#define CLD_BAS_PRODUCT_LABEL_SIZE  (13)
 
 /****************************************************************************/
 /*             Colour Control Cluster - Optional Attributes                 */

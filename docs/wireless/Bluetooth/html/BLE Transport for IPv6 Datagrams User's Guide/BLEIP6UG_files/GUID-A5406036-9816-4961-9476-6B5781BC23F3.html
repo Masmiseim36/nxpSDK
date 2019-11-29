@@ -18,31 +18,20 @@
 <body id="GUID-A5406036-9816-4961-9476-6B5781BC23F3">
 
 
-    <h1 class="title topictitle1">General considerations</h1>
+	<h1 class="title topictitle1">General considerations</h1>
 
-    <div class="body">
-        <p class="p">The IPV6 Router behaves as a GAP central node. It enters GAP Limited
-            Discovery Procedure and searches for IPV6 nodes to connect with. When the IPV6 Router
-            connects, it initiates a LE Credit Based Connection request. </p>
+	<div class="body">
+		<p class="p">The IPV6 Router behaves as a GAP central node. It enters GAP Limited Discovery Procedure and searches for IPV6 nodes to connect with. When the IPV6 Router connects, it initiates a LE Credit Based Connection request. </p>
 
-        <p class="p">The IPV6 Node behaves as a GAP peripheral node. It enters GAP General
-            Discoverable Mode and waits for a GAP central node to connect. When the IPv6 Router
-            connects, it initiates a LE Credit Based Connection request. </p>
+		<p class="p">The IPV6 Node behaves as a GAP peripheral node. It enters GAP General Discoverable Mode and waits for a GAP central node to connect. When the IPv6 Router connects, it initiates a LE Credit Based Connection request. </p>
 
-        <p class="p">When the credit based connection is set, the user can send data through the
-            credit based channel from each device. When the device knows that the peer is out of
-            credit, it automatically requests new credit from the application. The application then
-            sends new credits to the peer. The examples use pairing with bonding by default. When
-            connected with the IPv6 Node application, the IPv6 Router sends the 999999 passcode to
-            the host stack by default.</p>
+		<p class="p">When the credit based connection is set, the user can send data through the credit based channel from each device. When the device knows that the peer is out of credit, it automatically requests new credit from the application. The application then sends new credits to the peer. The examples use pairing with bonding by default. When connected with the IPv6 Node application, the IPv6 Router sends the 999999 passcode to the host stack by default.</p>
 
-        <p class="p">The setup requires minumim of two FRDM-KW41Z platforms, one for the IPv6 Node
-            and the other for the IPv6 Router. Optionally, a third board could be used for a second
-            IPv6 Node connected to the IPv6 Router.</p>
+		<p class="p">The setup requires minumim of two FRDM-KW41Z or QN9080CDK platforms, one for the IPv6 Node and the other for the IPv6 Router. Optionally, a third board could be used for a second IPv6 Node connected to the IPv6 Router.</p>
 
-        <p class="p">Open serial port terminals and connect them to the boards, in the same manner as described in Bluetooth Low Energy Demo Applications User’s Guide. The start screen is displayed after the board is reset. At first, all LEDs are flashing on both devices.</p>
+		<p class="p">Open serial port terminals and connect them to the boards, in the same manner as described in Bluetooth Low Energy Demo Applications User’s Guide. The start screen is displayed after the board is reset. At first, all LEDs are flashing on both devices.</p>
 
-    </div>
+	</div>
 
 <div class="related-links">
 <div class="familylinks">

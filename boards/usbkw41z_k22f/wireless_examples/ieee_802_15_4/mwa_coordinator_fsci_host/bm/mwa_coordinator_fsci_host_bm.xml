@@ -197,13 +197,13 @@
     <source path="middleware/usb_1.6.3/osa" target_path="osa" type="src">
       <files mask="usb_osa_bm.c"/>
     </source>
-    <source path="middleware/wireless/framework_5.3.6/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/framework_5.3.8/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_crypto_m4.a"/>
     </source>
     <source path="devices/MK22F51212/iar" target_path="startup" type="src" toolchain="iar">
       <files mask="startup_MK22F51212.s"/>
     </source>
-    <source path="middleware/wireless/framework_5.3.6/SecLib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/framework_5.3.8/SecLib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_crypto_m4.a"/>
     </source>
   </example>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Example Applications"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="4"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-9167CB2E-4DEB-4ACD-A88F-B8AADD94A80B"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Example Applications</title>
+</head>
+<body id="GUID-9167CB2E-4DEB-4ACD-A88F-B8AADD94A80B">
+
+
+    <h1 class="title topictitle1">Example Applications</h1>
+
+    <div class="body">
+        <p class="p">The Thread stack is provided along with IAR® Embedded Workbench and MCUXpresso example applications, which are useful starting points for application developers before they modify and enhance. The example application are templates for the main categories of Thread devices:</p>
+
+        <p class="p"/>
+
+        <ul class="ul" id="GUID-9167CB2E-4DEB-4ACD-A88F-B8AADD94A80B__UL_RDF_ZFL_HZ">
+            <li class="li"><strong class="ph b">Router Eligible Device</strong> – a standalone Thread wireless node which has mesh routing
+                capabilities and also can act as a Parent, forwarding, buffering data and
+                accomplishing network management functionality on behalf of attached child End
+                Devices</li>
+
+            <li class="li"><strong class="ph b">End Device</strong> – a standalone Thread wireless node which is always powered on with radio
+                receiving, however may not have on-board resources to buffer and forward routed data
+                in the wireless mesh or by acting as a Parent</li>
+
+            <li class="li"><strong class="ph b">Low Power End Device</strong> – is an application template similar to the
+                End Device with the distinguishing characteristic that the device is preconfigured
+                to have both the microcontroller in low power state and the radio turned off for
+                most of the device life cycle; the device “wakes up” periodically at a few seconds
+                interval and actively polls its Parent Router for data addressed to it or optionally
+                initiates sending data to the network by means of the Parent Router</li>
+
+            <li class="li"><strong class="ph b">Border Router</strong> – when deployed, the IP stack is enabled to forward messages
+                between the Thread IEEE® 802.15.4/6LoWPAN wireless mesh interface to the auxiliary
+                interface, over the Thread network border; messages can thus reach upstream
+                infrastructure, such as a standard home Local Area Network (LAN) or the Internet and
+                cloud servers</li>
+
+            <li class="li"><strong class="ph b">Host Controlled Device</strong> – an application implementing an expansive full
+                featured, Router capable configuration of the stack in conjunction with activating a
+                UART/SPI/USB peripheral which carries over the Thread Host Control Interface (THCI)
+                protocol frames in order to facilitate scenarios where the Thread stack
+                microcontroller is driven by a host application processor or a tool</li>
+
+        </ul>
+
+        <p class="p">The application share a similar high-level toolchain project structure being
+            differentiated by the starting point application file and stack and system
+            configuration.</p>
+
+        <p class="p">For more details on the example applications, see the <em class="ph i">Kinetis Thread Stack Demo
+                Applications User’s Guide</em> (document KTSDAUG).</p>
+
+        <p class="p"> </p>
+
+        
+    </div>
+
+
+</body>
+</html>

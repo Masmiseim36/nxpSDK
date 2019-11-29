@@ -2,39 +2,11 @@
  * \file Framer.c
  * This is a source file for the Framer module.
  *
- * The Clear BSD License
  * Copyright 2013-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted (subject to the limitations in the
- * disclaimer below) provided that the following conditions are met:
- *
- * * Redistributions of source code must retain the above copyright
- *   notice, this list of conditions and the following disclaimer.
- *
- * * Redistributions in binary form must reproduce the above copyright
- *   notice, this list of conditions and the following disclaimer in the
- *   documentation and/or other materials provided with the distribution.
- *
- * * Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from
- *   this software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
- * GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
- * HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
- * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
- * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
- * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /************************************************************************************
@@ -125,7 +97,6 @@ uint8_t *ReadDataUntilByte(MessageQueue *queue, uint16_t *cbSize, uint8_t startB
 
     while (!IsEmpty(queue, 1)) {
         pRawFrame = (RawFrame *)MessageQueueGet(queue);
-        HSDKAcquireExplicitlySemaphore(queue->sAnnounceData);
 
         while ((pRawFrame->iCrtIndex < pRawFrame->cbTotalSize) && (pRawFrame->aRawData[pRawFrame->iCrtIndex] != startByte)) {
             aResult[cbProcessed] = pRawFrame->aRawData[pRawFrame->iCrtIndex];
@@ -156,7 +127,6 @@ uint8_t *ReadDataUntilByte(MessageQueue *queue, uint16_t *cbSize, uint8_t startB
             DestroyRawFrame(pRawFrame);
         } else {
             PushFront(queue, pRawFrame);
-            HSDKReleaseSemaphore(queue->sAnnounceData);
             break;
         }
     }
@@ -181,7 +151,6 @@ uint8_t ReadSingleByte(MessageQueue *queue)
         return 0; // TODO
     }
 
-    HSDKAcquireExplicitlySemaphore(queue->sAnnounceData);
     uint8_t single = pRawFrame->aRawData[pRawFrame->iCrtIndex];
     pRawFrame->iCrtIndex++;
 
@@ -189,9 +158,6 @@ uint8_t ReadSingleByte(MessageQueue *queue)
         DestroyRawFrame(pRawFrame);
     } else {
         PushFront(queue, pRawFrame);
-#ifdef _WIN32
-        HSDKReleaseSemaphore(queue->sAnnounceData);
-#endif
     }
 
     return single;
@@ -226,8 +192,6 @@ uint8_t *ReadMultiByte(MessageQueue *queue, uint32_t cbDemanded)
             return aResult;
         }
 
-        HSDKAcquireExplicitlySemaphore(queue->sAnnounceData);
-
         if (pRawFrame->cbTotalSize - pRawFrame->iCrtIndex <= cbDemanded - cbProcessed) {
             memcpy(aResult + cbProcessed, pRawFrame->aRawData + pRawFrame->iCrtIndex, pRawFrame->cbTotalSize - pRawFrame->iCrtIndex);
             cbProcessed += (pRawFrame->cbTotalSize - pRawFrame->iCrtIndex);
@@ -237,9 +201,6 @@ uint8_t *ReadMultiByte(MessageQueue *queue, uint32_t cbDemanded)
             pRawFrame->iCrtIndex += (cbDemanded - cbProcessed);
             cbProcessed = cbDemanded;
             PushFront(queue, pRawFrame);
-#ifdef _WIN32
-            HSDKReleaseSemaphore(queue->sAnnounceData);
-#endif
         }
     }
 
@@ -275,7 +236,6 @@ int SendBytes(Framer *framer, uint8_t *packet, uint32_t size)
 {
     return WritePhysicalDevice(framer->physicalLayer, packet, size);
 }
-
 
 static void SendFsciAck(Framer *framer, FSCIFrame *frame)
 {
@@ -515,32 +475,8 @@ static void *FramerThreadRoutine(void *lpParam)
                 return NULL;
 
             case 1:
-#ifdef _WIN32
-                cbCrtAvailable = MessageQueueGetContentSize(framer->queue);
-                HSDKReleaseSemaphore(framer->queue->sAnnounceData);
-                cbSaved = cbCrtAvailable;
-                status = framer->StateMachineDispatch(framer, &response, &cbCrtAvailable);
-                MessageQueueDecrementSize(framer->queue, cbSaved - cbCrtAvailable);
-
-                if (response) {
-                    if (status == INSUFFICIENT_DATA) {
-                        break;
-                    } else if (status == INVALID_CRC) {
-                        logMessage(HSDK_WARNING, "[Framer]FramerThreadRoutine", "Invalid CRC detected - frame dismissed.", HSDKThreadId());
-                    } else {
-                        SendFsciAck(framer, (FSCIFrame *)response);
-                        NotifyOnEvent(framer->evtManager, response);
-                        response = NULL;
-                    }
-                } else if (status == INSUFFICIENT_DATA) {
-                    HSDKWaitEvent(framer->queue->sAnnounceData, 1);
-                    break;
-                }
-
-#elif defined(__linux__) || defined(__APPLE__)
-
                 /* poll waked up on sAnnounceData, so we clear the event immediately */
-                HSDKResetEvent(framer->queue->sAnnounceData);
+                HSDKResetEvent(eventArray[1]);
 
                 cbCrtAvailable = MessageQueueGetContentSize(framer->queue);
 
@@ -553,23 +489,21 @@ static void *FramerThreadRoutine(void *lpParam)
                 MessageQueueDecrementSize(framer->queue, cbSaved - cbCrtAvailable);
 
                 if (response) {
-                    if (status == INSUFFICIENT_DATA) {
-                        break;
-                    } else if (status == INVALID_CRC) {
+                    if (status == INVALID_CRC) {
                         logMessage(HSDK_WARNING, "[Framer]FramerThreadRoutine", "Invalid CRC detected - frame dismissed.", HSDKThreadId());
-                    } else {
+                    } else if (status == VALID_FRAME) {
                         SendFsciAck(framer, (FSCIFrame *)response);
                         NotifyOnEvent(framer->evtManager, response);
                         response = NULL;
+                    } else {
+                        /* No action taken for JUNK_DATA, INSUFFICIENT_DATA or SUFFICIENT_DATA */
                     }
                 }
 
-                // keep the loop going if there's data left to process
+                /* keep the loop going if there's data left to process */
                 if (cbCrtAvailable > 0) {
-                    HSDKSignalEvent(framer->queue->sAnnounceData);
+                    HSDKSignalEvent(eventArray[1]);
                 }
-
-#endif
 
                 if (framer->currentState == framer->SMFinalState()) {
                     framer->currentState = framer->SMStartState();
@@ -585,7 +519,7 @@ static void FramerCallback(void *callee, void *object)
     Framer *framer = (Framer *)callee;
     RawFrame *frame = (RawFrame *)object;
     MessageQueuePutWithSize(framer->queue, frame, frame->cbTotalSize);
-    HSDKReleaseSemaphore(framer->queue->sAnnounceData);
+    HSDKSignalEvent(framer->queue->sAnnounceData);
 }
 
 static void AttachToConcreteImplementation(Framer *framer, FramerProtocol protocol)

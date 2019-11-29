@@ -120,7 +120,9 @@
 #endif
 #define configUSE_TICK_HOOK                     0
 #define configCHECK_FOR_STACK_OVERFLOW          0
+#ifndef configUSE_MALLOC_FAILED_HOOK
 #define configUSE_MALLOC_FAILED_HOOK            0
+#endif
 #define configUSE_DAEMON_TASK_STARTUP_HOOK      0
 
 /* Run time and task stats gathering related definitions. */
@@ -175,12 +177,12 @@ standard names. */
 /* __BVIC_PRIO_BITS will be specified when CMSIS is being used. */
 #define configPRIO_BITS __NVIC_PRIO_BITS
 #else
-#define configPRIO_BITS 4 /* 15 priority levels */
+#define configPRIO_BITS 2 /* 3 priority levels */
 #endif
 
 /* The lowest interrupt priority that can be used in a call to a "set priority"
 function. */
-#define configLIBRARY_LOWEST_INTERRUPT_PRIORITY 0xf
+#define configLIBRARY_LOWEST_INTERRUPT_PRIORITY 0x3
 
 /* The highest interrupt priority that can be used by any interrupt service
 routine that makes calls to interrupt safe FreeRTOS API functions.  DO NOT CALL

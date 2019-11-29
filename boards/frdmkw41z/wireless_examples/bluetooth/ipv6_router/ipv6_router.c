@@ -3,43 +3,15 @@
 * @{
 ********************************************************************************** */
 /*!
-* The Clear BSD License
 * Copyright (c) 2015, Freescale Semiconductor, Inc.
 * Copyright 2016-2017 NXP
 * All rights reserved.
-* 
+*
 * \file
 *
 * This file is the source file for the IPv6 Router application
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-* 
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-* 
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-* 
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-* 
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 */
 
 /************************************************************************************
@@ -216,11 +188,15 @@ static const bleAbsRequests_t bleAbsReq =
     .GetPeerBleAddress = BleApp_GetPeerBleAddress
 };
 
+/*! The default block size used in block-wise transfer
+    Possible values are 16, 32, 64, 128, 256, 512, 1024 */
+const uint32_t gCoapBlockSize = 64;
 /************************************************************************************
 *************************************************************************************
 * Public functions
 *************************************************************************************
 ************************************************************************************/
+extern void ResetMCU(void);
 
 /*! *********************************************************************************
 * \brief    Initializes application specific functionality before the BLE stack init.
@@ -245,6 +221,7 @@ void BleApp_Init(void)
 ********************************************************************************** */
 void BleApp_Start(void)
 {
+    (void)gCoapBlockSize;
     if (!mScanningOn)
     {
     	shell_write("\r\nScanning...\r\n");
@@ -363,6 +340,23 @@ bleAbsRequests_t* BleApp_RegisterBleCallbacks(instanceId_t instanceId)
     mSixLoBleInstanceId = instanceId;
     L2ca_RegisterLeCbCallbacks(BleApp_IpspDataCallback, BleApp_IpspControlCallback); 
     return (void *)&bleAbsReq;
+}
+
+/*!*************************************************************************************************
+\fn     void APP_CriticalExitCb(uint32_t location, uint32_t param)
+\brief  If the stack is in a deadlock situation, it calls APP_CriticalExitCb.
+
+\param  [in]  location  Address where the Panic occurred
+\param  [in]  param     Parameter with extra debug information
+***************************************************************************************************/
+void APP_CriticalExitCb
+(
+    uint32_t location,
+    uint32_t param
+)
+{
+   panic(0, location, param, 0);
+   ResetMCU();
 }
 
 /************************************************************************************

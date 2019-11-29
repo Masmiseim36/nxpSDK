@@ -1,11 +1,15 @@
 /*
-*****************************************************************************
+/*
+** ###################################################################
+**     Copyright (c) 2016-2018 NXP Semiconductors, Inc.
+**     All rights reserved.
 **
-**  File        : K21DN512M5_flash.ld
+**     SPDX-License-Identifier: BSD-3-Clause
 **
-**  Default linker command file for Flash targets
+**     http:                 www.nxp.com
+**     mail:                 support@nxp.com
 **
-*****************************************************************************
+** ###################################################################
 */
 /* Entry Point */
 ENTRY(__thumb_startup)

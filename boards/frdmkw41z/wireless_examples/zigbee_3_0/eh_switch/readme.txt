@@ -1,11 +1,16 @@
 Overview
 ========
-
+This application represents the "Energy Harvesting Switch" Zigbee 3.0 demo application.
+The EH-Switch is an End Node outfitted with the ZigBee Green Power cluster. 
+The purpose of this cluster is to minimise the power demands of a network node in order to support :
+	- Nodes that are completely self-powered through energy harvesting
+ 	- Battery-powered nodes that require ultra-long battery life
+For more information please refer to the "ZigBee Green Power User Guide.pdf" document.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.80.4
-
+- IAR Embedded Workbench v8.32.1
+- MCUXpresso IDE v10.2.1
 
 Hardware requirements
 =====================
@@ -25,3 +30,4 @@ Prepare the Demo
 
 Running the demo
 ================
+Follow the instructions from the "ZigBee Green Power User Guide.pdf" document.

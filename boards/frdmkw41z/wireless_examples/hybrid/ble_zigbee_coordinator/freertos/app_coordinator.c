@@ -1,36 +1,8 @@
 /*
-* The Clear BSD License
 * Copyright 2016-2017 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 */
 
 /*!=============================================================================
@@ -68,6 +40,7 @@
 #include "app_cfg.h"
 #include "OnOff.h"
 #include "RNG_Interface.h"
+#include "bdb_nf.h"
 #ifdef JN517x
 #include "AHI_ModuleConfiguration.h"
 #endif
@@ -171,7 +144,7 @@ PUBLIC void APP_vInitialiseCoordinator(void)
     
     if(eNodeState != E_RUNNING)
     {
-      ZPS_vNwkNibSetPanId (ZPS_pvAplZdoGetNwkHandle(), (uint16) RND_u32GetRand ( 1, 0xfff0 ) );
+      BDB_vNfSetPanID((uint16) RND_u32GetRand ( 1, 0xfff0 ));
     }
 
     APP_ZCL_vInitialise();
@@ -199,8 +172,52 @@ PUBLIC void APP_vInitialiseCoordinator(void)
     DBG_vPrintf(TRACE_APP, "Recovered Application State %d On Network %d\r\n",
             eNodeState, sBDB.sAttrib.bbdbNodeIsOnANetwork);
 }
+#ifdef APP_ALLOW_ZPS_SUSPEND
+/****************************************************************************
+ *
+ * NAME: APP_vZpsStop
+ *
+ * DESCRIPTION:
+ * Stop the Zigbee stack.
+ *
+ * RETURNS:
+ * void
+ *
+ ****************************************************************************/
+PUBLIC void APP_vZpsStop(void)
+{
+    /* In case Find&Bind is in progress stop it. */
+    BDB_vFbExitAsInitiator();
+    /* Stop all timers */
+    ZTIMER_vStopAllTimers();
+    /* Reset ZPS and turn rxOnWhenIdle off */
+    zps_vDefaultStack(ZPS_pvAplZdoGetAplHandle());
+    ZPS_vMacPibSetRxOnWhenIdle(FALSE, FALSE);
+}
 
-
+/****************************************************************************
+ *
+ * NAME: APP_vZpsStart
+ *
+ * DESCRIPTION:
+ * Restore the Zigbee stack functionality.
+ *
+ * RETURNS:
+ * void
+ *
+ ****************************************************************************/
+PUBLIC void APP_vZpsStart(void)
+{
+    ZPS_eAplAfInit();
+    BDB_vStart();
+    ZPS_vMacPibSetRxOnWhenIdle(TRUE, FALSE);
+    /*
+    Start the ZCL timer. The ZCL timer is stopped when Zigbee is not
+    running to allow the device to enter low power mode.
+    */
+    (void)ZTIMER_eStart(u8TimerZCL, 100);
+}
+#endif
 /****************************************************************************
  *
  * NAME: APP_vBdbCallback
@@ -372,6 +389,14 @@ PUBLIC void APP_taskCoordinator(void)
                     /* Create Network */
                     if (FALSE == sBDB.sAttrib.bbdbNodeIsOnANetwork)
                     {
+#ifdef APP_ALLOW_ZPS_SUSPEND
+                        /* Turn rx on. */
+                        ZPS_vMacPibSetRxOnWhenIdle(TRUE, FALSE);
+
+                        /* Start the ZCL timer. The ZCL timer is stopped when Zigbee is not
+                        running to allow the device to enter low power mode. */
+                        (void)ZTIMER_eStart(u8TimerZCL, 100);
+#endif
                         eStatus = BDB_eNfStartNwkFormation();
                         DBG_vPrintf(TRACE_APP_EVENT, "APP-EVT: Request Nwk Formation %02x\r\n", eStatus);
                     }
@@ -407,8 +432,9 @@ PUBLIC void APP_taskCoordinator(void)
         }
 
     }
-
+#if !cPWR_UsePowerDownMode 
     APP_vSetLedState(TRUE == sBDB.sAttrib.bbdbNodeIsOnANetwork);
+#endif
 }
 
 

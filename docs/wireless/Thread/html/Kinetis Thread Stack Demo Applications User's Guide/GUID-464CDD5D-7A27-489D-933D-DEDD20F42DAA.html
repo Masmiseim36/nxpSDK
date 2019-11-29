@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Running the scenario"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-0D247590-8DD5-41E6-95B2-9FE16165A1D9.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-464CDD5D-7A27-489D-933D-DEDD20F42DAA"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Running the scenario</title>
+</head>
+<body id="GUID-464CDD5D-7A27-489D-933D-DEDD20F42DAA">
+
+
+    <h1 class="title topictitle1">Running the scenario</h1>
+
+    <div class="body">
+        <p class="p">Please read <a class="xref" href="RUNNING%20THE%20SCENARIO%2010=GUID-C057D655-E2CA-47DA-AD09-C07026F5BF40=1=EN-US=.html#GUID-C057D655-E2CA-47DA-AD09-C07026F5BF40">section 11.4.3</a> that describes the same scenario based on a FRDM-K64F border
+            router. The setup remains the same, except for the following: </p>
+
+        <ul class="ul"><li class="li">Under source\config.h, change the define from BR_ROUTER_MODE=1 to
+                BR_HOST_MODE=1.</li>
+
+        <li class="li">The OpenWrt router must have USB tethering support (<a class="xref" href="https://wiki.openwrt.org/doc/howto/usb.tethering" target="_blank">https://wiki.openwrt.org/doc/howto/usb.tethering</a>)</li>
+ 
+           </ul>
+
+        <p class="p"># opkg update </p>
+
+        <p class="p"># opkg install kmod-usb-net kmod-usb-net-rndis kmod-usb-net-cdc-ether
+            usbutils udev </p>
+
+        <ul class="ul"><li class="li">After the RNDIS-enabled board is plugged to the router,
+            issue `dmesg` and identify the newly created network interface (e.g. eth3). </li>
+
+        <li class="li">This interface (e.g. eth3) must be bridged with the other LAN interfaces to receive
+            management traffic. </li>
+</ul>
+
+        <p class="p">The following advisory commands are needed on the OpenWrt router: </p>
+
+        <p class="p"> # ip link set dev eth3 up </p>
+
+        <p class="p"># brctl addif br-lan eth3 </p>
+
+        <p class="p"># /etc/init.d/odhcpd restart</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-0D247590-8DD5-41E6-95B2-9FE16165A1D9.html">External routing via RNDIS-enabled board host mode and OpenWrt</a></div>
+</div>
+</div>
+
+</body>
+</html>

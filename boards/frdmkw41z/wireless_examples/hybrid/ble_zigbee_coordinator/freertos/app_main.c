@@ -1,36 +1,8 @@
 /*
-* The Clear BSD License
 * Copyright 2016-2017 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 */
 
 /*!=============================================================================
@@ -164,6 +136,7 @@ static void BleApp_ReceivedUartStream(uint8_t *pStream, uint16_t streamLength);
 static void BleApp_SendUartStream(deviceId_t deviceId, uint8_t *pRecvStream, uint16_t streamSize);
 static void BleApp_GenerateAndSetRandomAddress(void);
 
+static void App_Idle(void);
 /****************************************************************************/
 /***        Exported Variables                                            ***/
 /****************************************************************************/
@@ -269,7 +242,10 @@ void main_task (uint32_t parameter)
 
          /* Wdog/Cop Setup */
         APP_vSetUpWdog();
-        
+#if (cPWR_UsePowerDownMode)
+        PWR_Init();
+        PWR_DisallowDeviceToSleep();
+#endif   
         /* Initialize ble and peripheral drivers specific to the ble application */
         BleApp_Init();
 
@@ -277,6 +253,10 @@ void main_task (uint32_t parameter)
         vAppMain();
 #ifdef APP_NTAG_I2C_PLUS
         APP_NTAG_RegisterCallback(vAPP_NTAG_Callback);
+#endif
+#ifdef APP_ALLOW_ZPS_SUSPEND
+        /* Turn rx off until the device tries to join/form a network. */
+        ZPS_vMacPibSetRxOnWhenIdle(FALSE, FALSE);
 #endif
     }
 
@@ -302,9 +282,7 @@ void main_task (uint32_t parameter)
          /* Kick the watchdog */
         COP_Refresh(SIM);
 
-#if gNvStorageIncluded_d
-        NvIdle();
-#endif
+        App_Idle();
 
         if(!gUseRtos_c)
         {
@@ -545,6 +523,11 @@ void BleApp_Start (gapRole_t mGapRole)
         default:
             break;
     }
+    
+#if (cPWR_UsePowerDownMode)    
+    PWR_ChangeDeepSleepMode(1); /* MCU=LLS3, LL=DSM, wakeup on GPIO/LL */
+#endif  
+
 }
 
 #if !gUseHciTransportDownward_d
@@ -595,6 +578,9 @@ static void BleApp_Config()
     {
         panic(0, 0, 0, 0);
     }
+#if (cPWR_UsePowerDownMode)   
+    PWR_AllowDeviceToSleep();
+#endif
 }
 
 /*! *********************************************************************************
@@ -773,6 +759,11 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
             }
 #endif /* gAppUsePairing_d */            
             BleApp_StateMachineHandler(mPeerInformation.deviceId, mAppEvt_PeerConnected_c);
+#if (cPWR_UsePowerDownMode)
+            PWR_ChangeDeepSleepMode(1);
+            PWR_AllowDeviceToSleep();    
+#endif
+
         }
             break;
 
@@ -1075,8 +1066,8 @@ uint32_t Serial_CustomSendData(uint8_t *pData, uint32_t size)
             uint16_t tempSize = 0;
             if(mOnBleDataBufferIndex + size < mAppUartBufferSize)
             {
-                TMR_StartLowPowerTimer(mUartStreamFlushTimerId,
-                                       gTmrLowPowerSingleShotMillisTimer_c,
+                TMR_StartTimer(mUartStreamFlushTimerId,
+                                       gTmrSingleShotTimer_c,
                                        mAppUartFlushIntervalInMs_c,
                                        UartStreamFlushTimerCallback, NULL);
                 FLib_MemCpy(&mpSendOnBleDataBuffer[mOnBleDataBufferIndex],pData,size);
@@ -1191,6 +1182,43 @@ static void BleApp_GenerateAndSetRandomAddress(void)
     {
         panic(0,0,0,0);
     }
+}
+
+static void App_Idle(void)
+{
+#if (cPWR_UsePowerDownMode)
+    PWRLib_WakeupReason_t wakeupReason;
+#endif
+    
+#if gNvStorageIncluded_d
+        NvIdle();
+#endif
+    
+#if (cPWR_UsePowerDownMode)
+    if( PWR_CheckIfDeviceCanGoToSleep() )
+    {
+        /* Enter Low Power */
+        wakeupReason = PWR_EnterLowPower();
+#if gFSCI_IncludeLpmCommands_c
+        /* Send Wake Up indication to FSCI */
+        FSCI_SendWakeUpIndication();
+#endif
+
+#if gKBD_KeysCount_c > 0      
+        /* Woke up on Keyboard Press */
+        if(wakeupReason.Bits.FromKeyBoard)
+        {
+            KBD_SwitchPressedOnWakeUp();
+            //PWR_DisallowDeviceToSleep();
+        }
+#endif   
+    }
+    else
+    {
+        /* Enter MCU Sleep */
+        PWR_EnterSleep(); 
+    }
+#endif /* cPWR_UsePowerDownMode */
 }
 
 /****************************************************************************/

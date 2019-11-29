@@ -320,3 +320,44 @@ C bindings
 Python bindings
     - Update Python bindings for the KW41Z Maintenance Release 1
     - Remove warnings throughout the Python scripts and bindings
+
+1.8.2.1
+================================================================================
+C bindings
+    - Update C bindings for ZigBee and Thread
+
+Python bindings
+    - Update Python bindings for ZigBee and Thread
+
+1.8.2.2
+================================================================================
+C bindings
+    - Update C bindings for ZigBee
+
+Python bindings
+    - Update Python bindings for ZigBee
+1.8.2.3
+================================================================================
+C bindings
+    - Update C bindings for ZigBee
+    - Update C bindings for Thread
+
+Python bindings
+    - Update Python bindings for ZigBee
+    - Update Python bindings for Thread
+1.8.2.4
+================================================================================
+C bindings
+    - Update C bindings for ZigBee
+    - Update C bindings for Thread
+
+Python bindings
+    - Update Python bindings for ZigBee
+    - Update Python bindings for Thread
+1.8.2.5
+================================================================================
+C bindings
+    - Update C bindings for Thread
+
+Python bindings
+    - Update Python bindings for Thread

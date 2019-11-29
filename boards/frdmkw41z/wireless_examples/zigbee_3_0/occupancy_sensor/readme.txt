@@ -1,11 +1,13 @@
 Overview
 ========
-
+This application represents the "Occupancy Sensor" Zigbee 3.0 demo application.
+The Occupancy Sensor can be used to simulate "occupied" and "unoccupied" states. Binding to this device will enable a control application, like Control Bridge, to receive reports when the value of the sensor changes.
+For more information please refer to the "AN12066-MKW41Z-AN-ZigBee-3-0-Sensors.pdf" document.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.80.4
-
+- IAR Embedded Workbench v8.32.1
+- MCUXpresso IDE v10.2.1
 
 Hardware requirements
 =====================
@@ -23,5 +25,7 @@ Prepare the Demo
 2.  Download the program to the target board.
 3.  Press the reset button, then any other switch button on your board to begin running the demo.
 
+
 Running the demo
 ================
+Follow the instructions from the "AN12064-MKW41Z-AN-ZigBee-3-0-Sensors.pdf" document.

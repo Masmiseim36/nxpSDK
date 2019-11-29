@@ -1,10 +1,13 @@
 Overview
 ========
-
+This application represents the "Color Temperature Light" Zigbee 3.0 demo application.
+The Color Temperature Light is a lighting device that can be switched on or off and the brightness of the light output varied. The color of the light can also be adjusted via the color temperature commands. The device can be controlled by a bound controller device such as a color scene controller.
+For more information please refer to the "AN12065-MKW41Z-AN-ZigBee-3-0-Light-Bulbs.pdf" document.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.80.4
+- IAR Embedded Workbench v8.32.1
+- MCUXpresso IDE v10.2.1
 
 
 Hardware requirements
@@ -25,3 +28,4 @@ Prepare the Demo
 
 Running the demo
 ================
+Follow the instructions from the "AN12065-MKW41Z-AN-ZigBee-3-0-Light-Bulbs.pdf" document.

@@ -1,37 +1,9 @@
 '''
-* The Clear BSD License
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
+* Copyright 2016-2019 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 '''
 
 
@@ -48,9 +20,10 @@ class GenericEnum(object):
 class MAC_MacFilteringEnableRequestMacFiltering(GenericEnum):
 
     Disable = 0x00
-    EnableDefaultPolicyReject = 0x01
-    EnableDefaultPolicyAccept = 0x02
-
+    # Enable - Default Policy: Reject
+    EnableReject = 0x01
+    # Enable - Default Policy: Accept
+    EnableAccept = 0x02
 
 class THR_NwkScanRequestScanType(GenericEnum):
 
@@ -121,7 +94,8 @@ class THR_MgmtDiagnosticGetRequestTlvId(GenericEnum):
     Fsl_StackVersion_c = 0xA6
     # Attribute, software version
     Fsl_SoftwareVersion_c = 0xA7
-
+    # IEEE Address
+    IeeeAddress = 0xA8
 
 class THR_DiagTestGetRequestTlvId(GenericEnum):
 
@@ -133,7 +107,6 @@ class THR_DiagTestGetRequestTlvId(GenericEnum):
     Data = 0xB2
     # Large Network Results
     Results = 0xB3
-
 
 class THR_MgmtDiagnosticResetRequestTlvId(GenericEnum):
 
@@ -153,7 +126,7 @@ class THR_MgmtDiagnosticResetRequestTlvId(GenericEnum):
     LeaderData = 0x06
     # Network Data
     NwkData = 0x07
-    # List of all Ipv6 addresses registered by the device
+    # List of all IPv6 addresses registered by the device
     Ip6AddrList = 0x08
     # Mac Counters
     MacCounters = 0x09
@@ -182,6 +155,16 @@ class THR_MgmtDiagnosticResetRequestTlvId(GenericEnum):
     # Attribute, software version
     Fsl_SoftwareVersion_c = 0xA7
 
+class THR_SetParentPriorityRequestPriority(GenericEnum):
+
+    # Default Priority
+    MediumPriority = 0x00
+    # High Priority
+    HighPriority = 0x01
+    # Low Priority
+    LowPriority = 0x03
+    # Reset to dynamically compute the parent priority.
+    Reset = 0xFF
 
 class THR_SetThresholdRequestThresholdType(GenericEnum):
 
@@ -196,6 +179,9 @@ class THR_SetThresholdRequestThresholdType(GenericEnum):
     MinDowngradeNeighbors = 0x02
     # The maximum number of Routers that a Thread Network may contain
     MaxAllowedRouters = 0x03
+
+class THR_SetThreshold32RequestThresholdType(GenericEnum):
+
     # The maximum time a context can be used for decompression after the Prefix has been removed.
     ContextReuseDelay = 0x04
 
@@ -591,7 +577,7 @@ class SocketSetOptionRequestSocketOption(GenericEnum):
     IP_MULTICAST_TTL = 0x0021
     IP_ADD_MEMBERSHIP = 0x0023
     IP_DROP_MEMBERSHIP = 0x0024
-
+    SO_SOCKETBLOCK = 0x1003
 
 class SocketGetOptionRequestSocketLevel(GenericEnum):
 
@@ -605,7 +591,7 @@ class SocketGetOptionRequestSocketOption(GenericEnum):
 
     SO_TYPE = 0x0000
     SO_RCVBUF = 0x1002
-
+    SO_SOCKETBLOCK = 0x1003
 
 class MESHCOP_AddExpectedJoinerRequestEuiType(GenericEnum):
 
@@ -789,6 +775,13 @@ class NWKU_McastGroupManageRequestAction(GenericEnum):
 
     JoinGroup = 0x01
     LeaveGroup = 0x02
+    Commissioner = 0x03
+
+
+class NWKU_FirewallRuleAddRequestRule(GenericEnum):
+
+    Drop = 0x00
+    Accept = 0x01
 
 
 class NWKU_RoutesManageRequestAction(GenericEnum):
@@ -822,7 +815,7 @@ class FSCIACKStatus(GenericEnum):
 class SocketShutdownConfirmStatus(GenericEnum):
 
     OK = 0x00
-    ERROR = 0xFF
+    ERRORSocketisnoTCP = 0xFF
 
 
 class SocketBindConfirmStatus(GenericEnum):
@@ -874,6 +867,12 @@ class SocketSetOptionConfirmStatus(GenericEnum):
 
 
 class SocketGetOptionConfirmStatus(GenericEnum):
+
+    OK = 0x00
+    ERROR = 0xFF
+
+
+class SocketCloseConfirmStatus(GenericEnum):
 
     OK = 0x00
     ERROR = 0xFF
@@ -975,6 +974,8 @@ class THR_AttachConfirmStatus(GenericEnum):
 class THR_PromoteAsRouterConfirmStatus(GenericEnum):
 
     OK = 0x00
+    InvalidInstance = 0x02
+    NotPermitted = 0x04
 
 
 class THR_EventNwkScanConfirmEventStatus(GenericEnum):
@@ -1036,6 +1037,10 @@ class THR_EventGeneralConfirmEventStatus(GenericEnum):
     DisallowDeviceToSleep = 0x0015
     ChildIdAssigned = 0x0016
     DeviceIsMinimalEndDevice = 0x0017
+    ChildRemoved = 0x0018
+    AllChildrenRemoved = 0x0019
+    RouterRemoved = 0x001A
+    RoutingUpdates = 0x001B
 
 
 class THR_EventNwkCommissioningIndicationEventStatus(GenericEnum):
@@ -1159,6 +1164,11 @@ class THR_SetManualSlaacIIDConfirmStatus(GenericEnum):
 
     OK = 0x00
 
+class THR_SetParentPriorityConfirmStatus(GenericEnum):
+
+    OK = 0x00
+    Error = 0xFF
+
 
 class THR_SendProactiveAddrNotifConfirmStatus(GenericEnum):
 
@@ -1193,7 +1203,6 @@ class THR_MgmtDiagnosticGetRspIndicationStatus(GenericEnum):
 
     Success = 0x00
     FailedNotsupported = 0x01
-
 
 class THR_MgmtDiagnosticGetRspIndicationTlvId(GenericEnum):
 
@@ -1241,7 +1250,8 @@ class THR_MgmtDiagnosticGetRspIndicationTlvId(GenericEnum):
     Fsl_StackVersion_c = 0xA6
     # Attribute, software version
     Fsl_SoftwareVersion_c = 0xA7
-
+    # IEEE Address
+    IeeeAddress = 0xA8
 
 class Fsl_Mac6lowPanNvmDataCountNvmDataSetId(GenericEnum):
 
@@ -1300,11 +1310,21 @@ class THR_SetNwkIdTimeoutConfirmStatus(GenericEnum):
     Notpermitted = 0x04
 
 
+class THR_SetRouterPromoteMaxJitterConfirmStatus(GenericEnum):
+
+    Success = 0x00
+    Notpermitted = 0x04
+
+
 class THR_SetThresholdConfirmStatus(GenericEnum):
 
     Success = 0x00
     InvalidParameter = 0x03
 
+class THR_SetThreshold32ConfirmStatus(GenericEnum):
+
+    Success = 0x00
+    InvalidParameter = 0x03
 
 class THR_GetNeighborInfoConfirmStatus(GenericEnum):
 
@@ -1661,6 +1681,24 @@ class NWKU_DnsSendRequestConfirmStatus(GenericEnum):
 
 
 class NWKU_McastGroupManageConfirmStatus(GenericEnum):
+
+    Success = 0x00
+    Failed = 0x01
+
+
+class NWKU_FirewallEnableConfirmStatus(GenericEnum):
+
+    Success = 0x00
+    Failed = 0x01
+
+
+class NWKU_FirewallRuleAddConfirmStatus(GenericEnum):
+
+    Success = 0x00
+    Failed = 0x01
+
+
+class NWKU_FirewallRuleRemoveConfirmStatus(GenericEnum):
 
     Success = 0x00
     Failed = 0x01

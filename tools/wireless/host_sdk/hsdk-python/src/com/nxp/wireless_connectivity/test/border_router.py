@@ -1,43 +1,16 @@
 #!/usr/bin/env python
 '''
-* The Clear BSD License
 * Copyright 2015 Freescale Semiconductor, Inc.
 * Copyright 2016-2017 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 '''
 
-from com.nxp.wireless_connectivity.commands.thread.sync_requests import *
+from com.nxp.wireless_connectivity.commands.thread.sync_requests import *  # @UnusedWildImport
 from com.nxp.wireless_connectivity.hsdk.CUartLibrary import Baudrate
 from com.nxp.wireless_connectivity.hsdk.framing.fsci_framer import FsciFramer
+from com.nxp.wireless_connectivity.commands.comm import Comm
 
 from pprint import pprint
 from Queue import Empty
@@ -94,6 +67,21 @@ def reset(*devices):
     for device in devices:
         confirm = THR_FactoryReset(device)
         assert confirm.Status == 'Success'
+
+
+def cb_diag_get_rsp(_, indication):
+    for tlv in indication.TLVs:
+        if tlv.type == 'Ip6AddrList':
+            print tlv.type, '->',
+            for i in range(0, len(tlv.raw_value), 16):
+                rawstr = ''.join('%02x' % x for x in tlv.raw_value[i:i+16])
+                ip6str = ':'.join(rawstr[j:j+4]
+                                  for j in range(0, len(rawstr), 4))
+                print ip6str,
+            print
+        else:
+            print tlv.type, '->', tlv.value
+
 
 if __name__ == '__main__':
 
@@ -185,5 +173,26 @@ if __name__ == '__main__':
     response = NWKU_IfconfigAll(joiner)
     for interface in response.InterfaceList:
         pprint(interface.__dict__)
+
+    # get joiner Link_Local_64 address
+    response = THR_GetThreadIpAddr(
+        joiner,
+        InstanceId=0,
+        AddressType=THR_GetThreadIpAddrRequestAddressType.Link_Local_64
+    )
+    try:
+        print 'LL64 -> %x' % list_to_int(response.AddressList, False)
+    except ValueError:
+        print 'LL64 -> None'
+
+    if(response.AddressList is not None):
+        # add THR_MgmtDiagnosticGetRspIndicationObserver
+        # and send THR_MgmtDiagnosticGet to get SourceAddr, Ip6AddrList and LinkQuality
+        comm = Comm(leader, ack_policy=FsciAckPolicy.GLOBAL,
+                    protocol=Protocol.Thread, baudrate=Baudrate.BR115200)
+        comm.fsciFramer.addObserver(THR_MgmtDiagnosticGetRspIndicationObserver(
+            'THR_MgmtDiagnosticGetRspIndication'), cb_diag_get_rsp)
+        response = THR_MgmtDiagnosticGet(leader, 0, response.AddressList, 3, TlvIds=[
+                                         THR_MgmtDiagnosticGetRequestTlvId.SourceAddr, THR_MgmtDiagnosticGetRequestTlvId.Ip6AddrList, THR_MgmtDiagnosticGetRequestTlvId.LinkQuality])
 
     remove_router_id(leader, joiner)

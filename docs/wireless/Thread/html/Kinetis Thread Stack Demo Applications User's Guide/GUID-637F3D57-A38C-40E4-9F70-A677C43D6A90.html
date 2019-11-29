@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Running the scenario"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-A335866D-F5F8-412C-B0E8-23E10AAC8B10.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-637F3D57-A38C-40E4-9F70-A677C43D6A90"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Running the scenario</title>
+</head>
+<body id="GUID-637F3D57-A38C-40E4-9F70-A677C43D6A90">
+
+
+	<h1 class="title topictitle1">Running the scenario</h1>
+
+	<div class="body">
+		<ul class="ul" id="GUID-637F3D57-A38C-40E4-9F70-A677C43D6A90__UL_P11_1LF_3Z">
+			<li class="li">On all nodes, factory reset the devices device using the shell by entering:</li>
+
+		</ul>
+
+		<p class="p"><strong class="ph b">$ factoryreset</strong></p>
+
+		<ul class="ul" id="GUID-637F3D57-A38C-40E4-9F70-A677C43D6A90__UL_KC1_1LF_3Z">
+			<li class="li">On <strong class="ph b">Node A</strong> shell, to create a new Thread network enter:</li>
+
+		</ul>
+
+		<p class="p"><strong class="ph b">$ thr create</strong></p>
+
+		<p class="p">Note the status messages in the shell indicating the network parameters. Note a Local Commissioner instance also starts on Node A</p>
+
+		<ul class="ul" id="GUID-637F3D57-A38C-40E4-9F70-A677C43D6A90__UL_F21_1LF_3Z">
+			<li class="li">On <strong class="ph b">Node A</strong> shell, check the current joiner table:</li>
+
+		</ul>
+
+		<p class="p"><strong class="ph b">$</strong><strong class="ph b">thr joiner view</strong></p>
+
+		<p class="p">Index EUI PSK </p>
+
+		<p class="p">0 0xFFFFFFFFFFFFFFFF THREAD</p>
+
+		<p class="p">Note the “catch-all” device password (accepting devices for any EUI64 address if using the PSK value above)</p>
+
+		<ul class="ul" id="GUID-637F3D57-A38C-40E4-9F70-A677C43D6A90__UL_ZF1_1LF_3Z">
+			<li class="li">On <strong class="ph b">Node A</strong> shell, clear the catch-all entry:</li>
+
+		</ul>
+
+		<p class="p"><strong class="ph b">$</strong><strong class="ph b">thr joiner removeall</strong></p>
+
+		<ul class="ul" id="GUID-637F3D57-A38C-40E4-9F70-A677C43D6A90__UL_UH1_1LF_3Z">
+			<li class="li">On <strong class="ph b">Node B</strong> shell, set a unique device passphrase (PSKd), for instance:</li>
+
+		</ul>
+
+		<p class="p"><strong class="ph b">$ thr set pskd NodeB</strong></p>
+
+		<ul class="ul" id="GUID-637F3D57-A38C-40E4-9F70-A677C43D6A90__UL_PJ1_1LF_3Z">
+			<li class="li">On <strong class="ph b">Node B</strong> shell, get the device EUI64 (note actual value will be different than listed below):</li>
+
+		</ul>
+
+		<p class="p"><strong class="ph b">$ thr get eui </strong></p>
+
+		<p class="p">eui: 0x00049F0E45810021</p>
+
+		<ul class="ul" id="GUID-637F3D57-A38C-40E4-9F70-A677C43D6A90__UL_KL1_1LF_3Z">
+			<li class="li">On <strong class="ph b">Node C</strong> shell, set a unique device passphrase (PSKd), for instance:</li>
+
+		</ul>
+
+		<p class="p"><strong class="ph b">$ thr set pskd NodeC</strong></p>
+
+		<ul class="ul" id="GUID-637F3D57-A38C-40E4-9F70-A677C43D6A90__UL_FN1_1LF_3Z">
+			<li class="li">On <strong class="ph b">Node C</strong> shell, get the device EUI64 (note actual value will be different than listed below):</li>
+
+		</ul>
+
+		<p class="p"><strong class="ph b">$ thr get eui </strong></p>
+
+		<p class="p">eui: 0x00049F0EFD610030</p>
+
+		<ul class="ul" id="GUID-637F3D57-A38C-40E4-9F70-A677C43D6A90__UL_Z41_1LF_3Z">
+			<li class="li">On Node A shell, add Node B as joiner expected specifically:</li>
+
+		</ul>
+
+		<p class="p"><strong class="ph b">$ thr joiner add NodeB 0x00049F0E45810021</strong></p>
+
+		<ul class="ul" id="GUID-637F3D57-A38C-40E4-9F70-A677C43D6A90__UL_KR1_1LF_3Z">
+			<li class="li">On Node A shell, add Node C as joiner expected specifically:</li>
+
+		</ul>
+
+		<p class="p"><strong class="ph b">$ thr joiner add NodeC 0x00049F0EFD610030</strong></p>
+
+		<ul class="ul" id="GUID-637F3D57-A38C-40E4-9F70-A677C43D6A90__UL_FT1_1LF_3Z">
+			<li class="li">On Node A, check the expected joiner table:</li>
+
+		</ul>
+
+		<p class="p"><strong class="ph b">$ thr joiner view </strong></p>
+
+		<p class="p">Index EUI PSK </p>
+
+		<ol class="ol" id="GUID-637F3D57-A38C-40E4-9F70-A677C43D6A90__OL_Z51_1LF_3Z">
+			<li class="li"><strong class="ph b">0x00049F0E45810021 </strong>NodeB </li>
+
+			<li class="li"><strong class="ph b">0x00049F0EFD610030 </strong>NodeC </li>
+
+			<li class="li">On Node A, sync the steering data from the Commissioner layer to the network:</li>
+
+		</ol>
+
+		<p class="p"><strong class="ph b">$ thr sync steering</strong></p>
+
+		<ul class="ul" id="GUID-637F3D57-A38C-40E4-9F70-A677C43D6A90__UL_UW1_1LF_3Z">
+			<li class="li">On Node B shell initiate joining:</li>
+
+		</ul>
+
+		<p class="p"><strong class="ph b">$ thr join </strong></p>
+
+		<p class="p">Note the status messages in the shell indicating the device is commissioning and joining the network. </p>
+
+		<ul class="ul" id="GUID-637F3D57-A38C-40E4-9F70-A677C43D6A90__UL_PY1_1LF_3Z">
+			<li class="li">On Node C shell initiate joining:</li>
+
+		</ul>
+
+		<p class="p"><strong class="ph b">$ thr join </strong></p>
+
+		<p class="p">Note the status messages in the shell indicating the device is commissioning and joining the network. </p>
+
+	</div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-A335866D-F5F8-412C-B0E8-23E10AAC8B10.html">Steering and commissioning multiple devices</a></div>
+</div>
+</div>
+
+</body>
+</html>

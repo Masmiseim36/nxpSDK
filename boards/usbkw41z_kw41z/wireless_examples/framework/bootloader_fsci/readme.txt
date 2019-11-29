@@ -1,6 +1,6 @@
 Overview
 ========
-This application it's a serial Bootloader which uses FSCI commands over UART or SPI to load a nea application image into the MCU's Flash.
+This application is a serial Bootloader which uses FSCI commands over UART or SPI to load a new application image into the MCU's Flash.
 
 Toolchain supported
 ===================

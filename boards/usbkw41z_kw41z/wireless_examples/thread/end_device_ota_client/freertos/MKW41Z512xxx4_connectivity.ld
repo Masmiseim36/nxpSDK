@@ -1,37 +1,9 @@
 /*
-* The Clear BSD License
 * Copyright (c) 2014-2015, Freescale Semiconductor, Inc.
 * Copyright 2016-2017 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-* 
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-* 
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-* 
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-* 
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 */
 
 /* Entry Point */
@@ -60,12 +32,13 @@ __ram_vector_table__ = DEFINED(__ram_vector_table__) ? __ram_vector_table__ : 1;
 __region_ROM_start__   =  (0x00000000);
 __region_ROM_end__     =  (0x0007FFFF);
 /* Workaround for  SRAM boundary GCC placement issue,
- not to place variables that are accessed by the code 
+ not to place variables that are accessed by the code
  overlapping this boundary (forbidden by the Kinetis architecture) */
 __region_RAM1_start__  =  (0x1FFF8000);
 __region_RAM1_end__    =  (0x1FFFFFFF);
 __region_RAM2_start__  =  (0x20000000);
 __region_RAM2_end__    =  (0x20017FFF);
+
 
 __vector_table_size__ = (48*4);
 __ram_vector_table_size__ = DEFINED(__ram_vector_table__) ? __vector_table_size__ : 0;
@@ -74,14 +47,14 @@ _RAM_END_    = __region_RAM2_end__;
 
 
 
-m_bootloader_start  =  (__region_ROM_start__);
-m_bootloader_end    =  (((__region_ROM_end__ + 1) / 32) - 1);
+m_bootloader_start  = (__region_ROM_start__);
+m_bootloader_end    = (((__region_ROM_end__ + 1) / 32) - 1);
 
-m_interrupts_start  =  (m_bootloader_end + 1);
-m_interrupts_end    =  (m_interrupts_start + __vector_table_size__ - 1);
+m_interrupts_start  = (m_bootloader_end + 1);
+m_interrupts_end    = (m_interrupts_start + __vector_table_size__ - 1);
 
-m_bootFlags_start   =  (m_interrupts_end + 1);
-m_bootFlags_end     =  (m_bootFlags_start + 7);
+m_bootFlags_start   = (m_interrupts_end + 1);
+m_bootFlags_end     = (m_bootFlags_start + 16);
 
 __BootFlags_Start__ = m_bootFlags_start;
 
@@ -137,7 +110,6 @@ __CSTACK_start__       = (__CSTACK_end__ - __size_cstack__);
 __HEAP_end__           = (__CSTACK_start__ - 1);
 __HEAP_start__         = (__HEAP_end__ - __size_heap__ - 0x4);
 
-
 m_data1_start           = (__region_RAM1_start__);
 m_data1_end             = (__region_RAM1_end__);
 m_data2_start           =  (m_interrupts_ram_start);
@@ -146,17 +118,14 @@ m_data2_end             =  (__HEAP_start__ - 1);
 __RAM_VECTOR_TABLE_SIZE = __ram_vector_table_size__;
 __BOOT_STACK_ADDRESS = m_data2_end - 0x0F;
 
-
 /* Specify the memory areas */
 MEMORY
 {
-        
+
         Bootloader_region                               (RW) : ORIGIN = m_bootloader_start,             LENGTH = (m_bootloader_end - m_bootloader_start)
         TEXT_region1                                    (RX) : ORIGIN = m_text_start,                   LENGTH = (m_bootFlags_start - m_text_start)
         BootFlags_region                                (RX) : ORIGIN = m_bootFlags_start,              LENGTH = (m_bootFlags_end - m_bootFlags_start)
-        TEXT_region2                                    (RX) : ORIGIN = m_bootFlags_end + 1,              LENGTH = (m_text_end - m_bootFlags_end - 1)
-      
-
+        TEXT_region2                                    (RX) : ORIGIN = m_bootFlags_end + 1,            LENGTH = (m_text_end - m_bootFlags_end - 1)
 
 
         InternalStorage      (RW) : ORIGIN = INT_STORAGE_END_C,              LENGTH = (INT_STORAGE_START_C - INT_STORAGE_END_C)
@@ -193,12 +162,13 @@ SECTIONS
   } > PRODUCT_INFO_region
 
 
-  .BootloaderFlags :
-  {
-    . = ALIGN(4);
-    KEEP(*(.BootloaderFlags));
-    . = ALIGN(4);
-  } > BootFlags_region
+        .BootloaderFlags :
+        {
+            . = ALIGN(4);
+            KEEP(*(.BootloaderFlags));
+            . = ALIGN(4);
+        } > BootFlags_region
+
 
   /* The program code and other data goes into internal flash */
   .text :

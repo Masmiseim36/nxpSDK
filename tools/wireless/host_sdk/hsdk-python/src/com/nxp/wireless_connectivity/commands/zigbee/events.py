@@ -1,36 +1,8 @@
 '''
-* The Clear BSD License
 * Copyright 2017-2018 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 '''
 
 from ctypes import cast, c_uint8, c_void_p, POINTER
@@ -897,6 +869,36 @@ class MoveStopWithOnOffObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
+class MoveToClosestFrequencyObserver(Observer):
+
+    opGroup = Spec.MoveToClosestFrequencyFrame.opGroup
+    opCode = Spec.MoveToClosestFrequencyFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.MoveToClosestFrequencyFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = MoveToClosestFrequency()
+        frame.AddressMode = packet.getParamValueAsNumber("AddressMode")
+        frame.TargetShortAddress = packet.getParamValueAsNumber("TargetShortAddress")
+        frame.SourceEndPoint = packet.getParamValueAsNumber("SourceEndPoint")
+        frame.DestinationEndPoint = packet.getParamValueAsNumber("DestinationEndPoint")
+        frame.Frequency = packet.getParamValueAsNumber("Frequency")
+        frame._DevicePort = self.deviceName
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
 class OnOffWithEffectsSendObserver(Observer):
 
     opGroup = Spec.OnOffWithEffectsSendFrame.opGroup
@@ -980,6 +982,41 @@ class OnOffTimedSendObserver(Observer):
         frame.OnOff = packet.getParamValueAsNumber("OnOff")
         frame.OnTimeInSecconds = packet.getParamValueAsNumber("OnTimeInSecconds")
         frame.OffTimeInSecconds = packet.getParamValueAsNumber("OffTimeInSecconds")
+        frame._DevicePort = self.deviceName
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class DiagnosticResponseObserver(Observer):
+
+    opGroup = Spec.DiagnosticResponseFrame.opGroup
+    opCode = Spec.DiagnosticResponseFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.DiagnosticResponseFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = DiagnosticResponse()
+        frame.SeqNum = packet.getParamValueAsNumber("SeqNum")
+        frame.srcEndpoint = packet.getParamValueAsNumber("srcEndpoint")
+        frame.ClusterId = packet.getParamValueAsNumber("ClusterId")
+        frame.Status = DiagnosticResponseStatus.getEnumString(packet.getParamValueAsNumber("Status"))
+        frame.RequestLatency = packet.getParamValueAsNumber("RequestLatency")
+        frame.ResponseLatency = packet.getParamValueAsNumber("ResponseLatency")
+        frame.Offset = packet.getParamValueAsNumber("Offset")
+        frame.SequenceNumber = packet.getParamValueAsNumber("SequenceNumber")
+        frame.PayloadSize = packet.getParamValueAsNumber("PayloadSize")
+        frame.Payload = packet.getParamValueAsList("Payload")
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -1169,6 +1206,7 @@ class RecallSceneObserver(Observer):
         frame.DestinationEndPoint = packet.getParamValueAsNumber("DestinationEndPoint")
         frame.GroupID = packet.getParamValueAsNumber("GroupID")
         frame.SceneID = packet.getParamValueAsNumber("SceneID")
+        frame.TransitionTime = packet.getParamValueAsNumber("TransitionTime")
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -1279,7 +1317,6 @@ class CopySceneObserver(Observer):
         else:
             print_event(self.deviceName, frame)
         fsciLibrary.DestroyFSCIFrame(event)
-
 
 class MoveToHueObserver(Observer):
 
@@ -1563,6 +1600,11 @@ class MoveColourObserver(Observer):
         else:
             print_event(self.deviceName, frame)
         fsciLibrary.DestroyFSCIFrame(event)
+
+
+
+
+
 
 
 class EnhancedMoveToHueObserver(Observer):
@@ -1900,7 +1942,6 @@ class TouchLinkFactoryResetTargetObserver(Observer):
         else:
             print_event(self.deviceName, frame)
         fsciLibrary.DestroyFSCIFrame(event)
-
 
 class LockUnlockDoorObserver(Observer):
 

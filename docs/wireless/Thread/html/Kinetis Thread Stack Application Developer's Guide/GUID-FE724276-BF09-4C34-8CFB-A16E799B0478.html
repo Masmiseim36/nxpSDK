@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="The PSKd device password"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-B8F6243B-C0B6-4C62-88E3-4742E0F3E10E.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="4"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-FE724276-BF09-4C34-8CFB-A16E799B0478"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>The PSKd device password</title>
+</head>
+<body id="GUID-FE724276-BF09-4C34-8CFB-A16E799B0478">
+
+
+    <h1 class="title topictitle1">The PSKd device password</h1>
+
+    <div class="body">
+        <p class="p">In Thread, the PSKd is a per-device unique passphrase or serial number/identifier. It is
+            used as a shared secret password in the DTLS EC-JPAKE based key-exchange which happens
+            between a Joiner device and the commissioner. The PSKd is usually meant to be displayed
+            on the device product label as an alphanumerical string or a QR code. The main role of
+            the PSKd is to ensure that only the rightful user with physical access to the device can
+            initiate commissioning it onto the network. As a unique per-device secret shared between
+            the Joiner and the Commissioner, the PSKd also ensures the cryptographic seed for the
+            EC-JPAKE key exchange.</p>
+
+        <p class="p">Similar to the EUI64, the PSKd is also usually entered on the commissioner by having user
+            either typing the string in or by reading the value from a QR code or NFC tag by the
+            commissioner smart device application.</p>
+
+        <p class="p">By default the example applications have the PSKd set to ‘THREAD’ as shown below. The
+            PSKd must be encoded in base32-thread (0-9, A-Y excluding I, O, Q and Z). The numerical
+            value in the definition indicates the length of the alphanumerical PSKd string which
+            follows. The default value is to be used for development only. Production devices should
+            always be provisioned with a per-device unique PSKd:</p>
+
+        <div class="p"><pre class="pre codeblock">#define THR_PSK_D                                  {6, "THREAD"}</pre>
+</div>
+
+        <p class="p">To set the PSKd to a different value at runtime, the application can set the matching attribute. Strings must have the minimum length 6 and the maximum length 32 bytes. For example, to set to string value A1B2C3.</p>
+
+        <div class="p"><pre class="pre codeblock">instanceId_t thrInstId = 0;
+uint32_t aIndex = 0;
+
+thrOctet32_t newPskd = {6, “A1B2C3”};
+THR_SetAttr(0, gNwkAttrId_PSKd_c, aIndex, sizeof(newPSKd), &amp;newPSKd);
+</pre>
+</div>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-B8F6243B-C0B6-4C62-88E3-4742E0F3E10E.html">Joining a network with in-band commissioning</a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -40,6 +40,7 @@
     <definition extID="middleware.wireless.nwk_ip.app_config.MKW41Z4"/>
     <definition extID="middleware.wireless.nwk_ip.app_ota_common.MKW41Z4"/>
     <definition extID="middleware.wireless.nwk_ip.base.MKW41Z4"/>
+    <definition extID="middleware.wireless.nwk_ip.core.source.MKW41Z4"/>
     <definition extID="middleware.wireless.nwk_ip.interface.MKW41Z4"/>
     <definition extID="middleware.wireless.xcvr_kw41z.MKW41Z4"/>
     <definition extID="platform.devices.MKW41Z4_CMSIS.MKW41Z4"/>
@@ -65,7 +66,7 @@
     <definition extID="mcuxpresso"/>
     <definition extID="iar"/>
   </externalDefinitions>
-  <example id="frdmkw41z_wireless_examples_thread_reed_ota_client_freertos" name="freertos" category="wireless_examples/thread/reed_ota_client" dependency="middleware.freertos.heap_4.MKW41Z4 middleware.wireless.framework.osa_freertos.MKW41Z4 middleware.freertos.MKW41Z4 middleware.wireless.ieee_802_15_4.mac.source.MKW41Z4 middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.framework.flash.external.MKW41Z4 middleware.wireless.framework.gpio_adapter.MKW41Z4 middleware.wireless.framework.keyboard.MKW41Z4 middleware.wireless.framework.led.MKW41Z4 middleware.wireless.framework.reset.MKW41Z4 middleware.wireless.framework.smgr.spi_adapter.MKW41Z4 middleware.wireless.framework.smgr.uart_adapter.MKW41Z4 middleware.wireless.framework.smgr.i2c_adapter.MKW41Z4 middleware.wireless.framework.flash.internal.MKW41Z4 middleware.wireless.framework.common.MKW41Z4 middleware.wireless.framework.mem_manager.MKW41Z4 middleware.wireless.framework.messaging.MKW41Z4 middleware.wireless.framework.panic.MKW41Z4 middleware.wireless.framework.rng.MKW41Z4 middleware.wireless.framework.smgr.MKW41Z4 middleware.wireless.framework.tmr.MKW41Z4 middleware.wireless.framework.sec_lib.MKW41Z4 middleware.framework.generic_lists.MKW41Z4 middleware.wireless.framework.function_lib.MKW41Z4 middleware.wireless.framework.module_info.MKW41Z4 middleware.wireless.framework.coexistence.MKW41Z4 middleware.wireless.framework.shell.MKW41Z4 middleware.wireless.framework.nvm.MKW41Z4 middleware.wireless.framework.fsci.MKW41Z4 middleware.wireless.framework.lpm_MKW41Z.MKW41Z4 middleware.wireless.framework.ota.MKW41Z4 middleware.wireless.nwk_ip.interface.MKW41Z4 middleware.wireless.nwk_ip.base.MKW41Z4 middleware.wireless.nwk_ip.app_config.MKW41Z4 middleware.wireless.nwk_ip.app_common.MKW41Z4 middleware.wireless.nwk_ip.app_ota_common.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.trng.MKW41Z4 platform.drivers.flash.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.drivers.gpio.MKW41Z4 platform.drivers.port.MKW41Z4 platform.drivers.tpm.MKW41Z4 platform.drivers.dspi.MKW41Z4 platform.drivers.i2c.MKW41Z4 platform.drivers.lptmr.MKW41Z4 platform.drivers.rtc.MKW41Z4 platform.drivers.llwu.MKW41Z4 platform.drivers.ltc.MKW41Z4 platform.drivers.pmc.MKW41Z4 platform.drivers.adc16.MKW41Z4 middleware.wireless.framework.dcdc.MKW41Z4 platform.drivers.tsi_v4.MKW41Z4 middleware.wireless.xcvr_kw41z.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.source_kw41z.MKW41Z4 platform.drivers.smc.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.utilities.debug_console.MKW41Z4" toolchain="iar mcuxpresso">
+  <example id="frdmkw41z_wireless_examples_thread_reed_ota_client_freertos" name="freertos" category="wireless_examples/thread/reed_ota_client" dependency="middleware.freertos.heap_4.MKW41Z4 middleware.wireless.framework.osa_freertos.MKW41Z4 middleware.freertos.MKW41Z4 middleware.wireless.ieee_802_15_4.mac.source.MKW41Z4 middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.framework.flash.external.MKW41Z4 middleware.wireless.framework.gpio_adapter.MKW41Z4 middleware.wireless.framework.keyboard.MKW41Z4 middleware.wireless.framework.led.MKW41Z4 middleware.wireless.framework.reset.MKW41Z4 middleware.wireless.framework.smgr.spi_adapter.MKW41Z4 middleware.wireless.framework.smgr.uart_adapter.MKW41Z4 middleware.wireless.framework.smgr.i2c_adapter.MKW41Z4 middleware.wireless.framework.flash.internal.MKW41Z4 middleware.wireless.framework.common.MKW41Z4 middleware.wireless.framework.mem_manager.MKW41Z4 middleware.wireless.framework.messaging.MKW41Z4 middleware.wireless.framework.panic.MKW41Z4 middleware.wireless.framework.rng.MKW41Z4 middleware.wireless.framework.smgr.MKW41Z4 middleware.wireless.framework.tmr.MKW41Z4 middleware.wireless.framework.sec_lib.MKW41Z4 middleware.framework.generic_lists.MKW41Z4 middleware.wireless.framework.function_lib.MKW41Z4 middleware.wireless.framework.module_info.MKW41Z4 middleware.wireless.framework.coexistence.MKW41Z4 middleware.wireless.framework.shell.MKW41Z4 middleware.wireless.framework.nvm.MKW41Z4 middleware.wireless.framework.fsci.MKW41Z4 middleware.wireless.framework.lpm_MKW41Z.MKW41Z4 middleware.wireless.framework.ota.MKW41Z4 middleware.wireless.nwk_ip.interface.MKW41Z4 middleware.wireless.nwk_ip.base.MKW41Z4 middleware.wireless.nwk_ip.core.source.MKW41Z4 middleware.wireless.nwk_ip.app_config.MKW41Z4 middleware.wireless.nwk_ip.app_common.MKW41Z4 middleware.wireless.nwk_ip.app_ota_common.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.trng.MKW41Z4 platform.drivers.flash.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.drivers.gpio.MKW41Z4 platform.drivers.port.MKW41Z4 platform.drivers.tpm.MKW41Z4 platform.drivers.dspi.MKW41Z4 platform.drivers.i2c.MKW41Z4 platform.drivers.lptmr.MKW41Z4 platform.drivers.rtc.MKW41Z4 platform.drivers.llwu.MKW41Z4 platform.drivers.ltc.MKW41Z4 platform.drivers.pmc.MKW41Z4 platform.drivers.adc16.MKW41Z4 middleware.wireless.framework.dcdc.MKW41Z4 platform.drivers.tsi_v4.MKW41Z4 middleware.wireless.xcvr_kw41z.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.source_kw41z.MKW41Z4 platform.drivers.smc.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.utilities.debug_console.MKW41Z4" toolchain="iar mcuxpresso">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -92,6 +93,12 @@
         <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
           <value>gnu.c.debugging.level.default</value>
         </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.general</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.general</value>
+        </option>
         <option id="gnu.c.compiler.option.warnings.nowarn" type="boolean">
           <value>false</value>
         </option>
@@ -108,7 +115,7 @@
           <value>false</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
-          <value>DEBUG</value>
+          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
           <value>CPU_MKW41Z512VHT4</value>
           <value>FSL_RTOS_FREE_RTOS</value>
           <value>FRDM_KW41Z</value>
@@ -177,34 +184,34 @@
     <source path="devices/MKW41Z4/gcc" target_path="startup" type="src" toolchain="mcuxpresso">
       <files mask="startup_MKW41Z4.S"/>
     </source>
-    <source path="middleware/wireless/nwk_ip_1.2.6/examples/reed_ota_client/config" target_path="source" type="c_include">
+    <source path="middleware/wireless/nwk_ip_1.2.8/examples/reed_ota_client/config" target_path="source" type="c_include">
       <files mask="config.h"/>
     </source>
-    <source path="middleware/wireless/nwk_ip_1.2.6/examples/reed_ota_client/src" target_path="source" type="c_include">
-      <files mask="router_eligible_device_app_ota_client.h"/>
+    <source path="middleware/wireless/nwk_ip_1.2.8/examples/reed_ota_client/src" target_path="source" type="c_include">
+      <files mask="reed_ota_client_app.h"/>
     </source>
-    <source path="middleware/wireless/nwk_ip_1.2.6/examples/reed_ota_client/src" target_path="source" type="src">
-      <files mask="router_eligible_device_app_ota_client.c"/>
+    <source path="middleware/wireless/nwk_ip_1.2.8/examples/reed_ota_client/src" target_path="source" type="src">
+      <files mask="reed_ota_client_app.c"/>
     </source>
-    <source path="middleware/wireless/framework_5.3.6/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/framework_5.3.8/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_crypto_m0.a"/>
     </source>
-    <source path="middleware/wireless/ieee_802_15_4_5.3.6/mac/lib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/ieee_802_15_4_5.3.8/mac/lib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib802.15.4_mac_thr_cm0.a"/>
     </source>
-    <source path="middleware/wireless/nwk_ip_1.2.6/core/lib/thread" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/nwk_ip_1.2.8/core/lib/thread" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_thread_cm0.a"/>
     </source>
     <source path="devices/MKW41Z4/iar" target_path="startup" type="src" toolchain="iar">
       <files mask="startup_MKW41Z4.s"/>
     </source>
-    <source path="middleware/wireless/framework_5.3.6/SecLib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/framework_5.3.8/SecLib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_crypto_m0.a"/>
     </source>
-    <source path="middleware/wireless/ieee_802_15_4_5.3.6/mac/lib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/ieee_802_15_4_5.3.8/mac/lib" type="lib" method="copy" toolchain="iar">
       <files mask="lib802.15.4_mac_thr_cm0.a"/>
     </source>
-    <source path="middleware/wireless/nwk_ip_1.2.6/core/lib/thread" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/nwk_ip_1.2.8/core/lib/thread" type="lib" method="copy" toolchain="iar">
       <files mask="lib_thread_cm0.a"/>
     </source>
   </example>

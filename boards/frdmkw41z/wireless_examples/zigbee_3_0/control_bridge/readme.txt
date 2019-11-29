@@ -1,11 +1,13 @@
 Overview
 ========
-
+This application represents the "Control Bridge" Zigbee 3.0 demo application.
+Control Bridge provides the means of controlling ZigBee devices using a Graphical User Interface (GUI), which simulates a host, to operate the ZigBee network.
+For more information please refer to the "AN12063-MKW41Z-AN-ZigBee-3-0-Control-Bridge.pdf" document.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.80.4
-
+- IAR Embedded Workbench v8.32.1
+- MCUXpresso IDE v10.2.1
 
 Hardware requirements
 =====================
@@ -25,3 +27,4 @@ Prepare the Demo
 
 Running the demo
 ================
+Follow the instructions from the "AN12063-MKW41Z-AN-ZigBee-3-0-Control-Bridge.pdf" document.

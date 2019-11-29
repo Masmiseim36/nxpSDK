@@ -1,36 +1,8 @@
 /*
-* The Clear BSD License
 * Copyright 2016-2017 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 */
 
 #ifndef _ZIGBEE_BDB_COORDINATOR_H_
@@ -72,6 +44,8 @@ CONFIG APPLICATION
               _block_size_  260     _number_of_blocks_  6   _pool_id_(0)  _eol_  \
               _block_size_  512     _number_of_blocks_  2   _pool_id_(0)  _eol_
 
+
+//#define APP_ALLOW_ZPS_SUSPEND
 /*! *********************************************************************************
  * 	BLE Stack Configuration
  ********************************************************************************** */
@@ -141,8 +115,53 @@ CONFIG APPLICATION
 *       CONFIG FRAMEWORK
 *
 ************************************************************************************/
+#define gUsePanic_c 1
+                  
 #define APP_SERIAL_INTERFACE_TYPE (gSerialMgrCustom_c)
 #define gSerialMgrUseCustomInterface_c      (1)
+#define gSerialMgrRxBufSize_c               (64)
+
+#ifdef APP_ALLOW_ZPS_SUSPEND
+#define gKBD_TsiElectdCount_c   0
+#define gKBD_KeysCount_c        2
+
+/* Enable/Disable Low Power Timer */
+#define gTMR_EnableLowPowerTimers       1
+                  
+#define cPWR_CheckLowPowerTimers         TRUE
+
+/* Enable/Disable PowerDown functionality in PwrLib */
+#define cPWR_UsePowerDownMode           1
+
+/* Enable/Disable BLE Link Layer DSM */
+#define cPWR_BLE_LL_Enable              1
+
+/* Default Deep Sleep Mode*/
+#define cPWR_DeepSleepMode              3
+
+/* Enable/Disable MCU Sleep During BLE Events */
+#define cMCU_SleepDuringBleEvents       1
+           
+/* Default deep sleep duration in ms */ 
+#define cPWR_DeepSleepDurationMs        30000
+
+/* Number of slots(625us) before the wake up instant before which the hardware needs to exit from deep sleep mode. */           
+#define cPWR_BLE_LL_OffsetToWakeupInstant 3
+
+/* Enables / Disables the DCDC platform component */
+#define gDCDC_Enabled_d                 1          
+
+/* Default DCDC Mode used by the application */           
+#define APP_DCDC_MODE                   gDCDC_Mode_Buck_c
+
+/* Default DCDC Battery Level Monitor interval */
+#define APP_DCDC_VBAT_MONITOR_INTERVAL  600000
+                  
+#define cPWR_EnableDeepSleepMode_1             1
+#define cPWR_EnableDeepSleepMode_3             1
+#define cPWR_EnableDeepSleepMode_6             1
+
+#endif /* APP_ALLOW_ZPS_SUSPEND */
 
 /************************************************************************************
 *

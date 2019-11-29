@@ -1,42 +1,14 @@
-/*!
-* The Clear BSD License
+/*! *********************************************************************************
 * Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2017 NXP
+* Copyright 2016-2018 NXP
 * All rights reserved.
 *
 * \file
 *
 * Bootloader interface file
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-* 
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-* 
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-* 
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-* 
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+* SPDX-License-Identifier: BSD-3-Clause
+********************************************************************************** */
 
 #ifndef __MAIN_H__
 #define __MAIN_H__
@@ -52,12 +24,12 @@
 
 #if defined(FRDM_KW24)
   #include "frdmkw24_cfg.h"
-  
+
 #elif defined(TWR_KW24D512)
-  #include "twrkw24d512_cfg.h" 
+  #include "twrkw24d512_cfg.h"
 
 #elif defined(MCU_MK21DX256)
-  #include "MK21D256_cfg.h" 
+  #include "MK21D256_cfg.h"
 
 #elif defined(FRDM_KL46Z)
   #include "frdmkl46z_cfg.h"
@@ -143,7 +115,7 @@
 #define gFlashBackDoorKey2_d 0xFFFFFFFF
 #endif
 
-#ifndef gFlashConfigOptions_d 
+#ifndef gFlashConfigOptions_d
 #define gFlashConfigOptions_d  0xFFFFFFFE
 #endif
 
@@ -162,7 +134,7 @@
 /* Init value for the mask used to look through each byte in the bitmap that
 indicates which Flash sectors are write protected and should not be updated */
 #define gBitMaskInit_c (0x01)
-        
+
 #define NoOfElements(x) (sizeof(x)/sizeof(x[0]))
 
 
@@ -188,9 +160,11 @@ typedef union _FlashConfig_t
 typedef void (*vector_entry)(void);
 typedef void pointer(void);
 
+#if gFsciIncluded_c
 typedef struct bootFlags_tag{
     uint64_t newImageFlag;
 }bootFlags_t;
+#endif
 
 
 /******************************************************************************
@@ -198,7 +172,9 @@ typedef struct bootFlags_tag{
  * Public memory declarations
  *******************************************************************************
  ******************************************************************************/
+#if gFsciIncluded_c
 extern volatile const bootFlags_t gBootFlags;
+#endif
 
 #if defined(__IAR_SYSTEMS_ICC__)
     extern uint32_t __BOOT_STACK_ADDRESS[];

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Running the scenario"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-132EEB27-71ED-4150-8D80-2B13D293B4CF.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-3D13246A-18E5-4FDD-8E9A-7E163339A890"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Running the scenario</title>
+</head>
+<body id="GUID-3D13246A-18E5-4FDD-8E9A-7E163339A890">
+
+
+	<h1 class="title topictitle1">Running the scenario</h1>
+
+	<div class="body">
+		<p class="p"><strong class="ph b">Note</strong>: the images used in the detailed steps assume using a <span class="ph">FRDM-KW24D512 </span>platform for Node A and Node B. </p>
+
+		<p class="p">To <strong class="ph b">join a Thread network</strong> with a user initiated button switch
+			action:</p>
+
+		<ul class="ul" id="GUID-3D13246A-18E5-4FDD-8E9A-7E163339A890__UL_CFQ_GS2_3Z">
+			<li class="li">Generally before joining the device, users must ensure there is an
+				existing Thread network in range having with the following pre-conditions:<ul class="ul" id="GUID-3D13246A-18E5-4FDD-8E9A-7E163339A890__UL_SFQ_GS2_3Z">
+					<li class="li">There is at least 1 (one) <strong class="ph b">Active Router</strong> in the network
+						allowing new devices to join</li>
+
+					<li class="li">There is an active <strong class="ph b">Commissioner</strong> for the network
+						permitting joining from devices provisioned with device password (PSKd)
+								<strong class="ph b"><em class="ph i">THREAD</em></strong> and any EUI64 device address</li>
+
+				</ul>
+</li>
+
+			<li class="li"><strong class="ph b">Creating a new network using</strong>
+				<strong class="ph b">Node A</strong> and having the default settings of the Router Eligible Device
+				application ensures the conditions above are met: Node A fulfills both the <strong class="ph b">Active
+					Router</strong> and <strong class="ph b">Commissioner</strong> roles</li>
+
+		</ul>
+
+		<p class="p">On <strong class="ph b">Node A </strong>and <strong class="ph b">Node B</strong>: ensure nodes are in <strong class="ph b">Factory
+				Default</strong> state (LEDs blink)</p>
+
+		<img class="image" id="GUID-3D13246A-18E5-4FDD-8E9A-7E163339A890__IMAGE_UKH_4S2_3Z" src="GUID-7B682A93-3428-4BD2-8B9D-00D2CADA0455-high.jpg"/>
+		
+		<p class="p">On <strong class="ph b">Node A</strong>: as shown in section <strong class="ph b">Steps to Create a New Thread
+				Network</strong> short press any board button switch <strong class="ph b">2 (two)times</strong></p>
+
+		<ul class="ul" id="GUID-3D13246A-18E5-4FDD-8E9A-7E163339A890__UL_BMK_QS2_3Z">
+			<li class="li">On <strong class="ph b">Node A</strong>: verify network creation succeeds as shown in section
+					<strong class="ph b">Verifying Network Creation and Leader Role</strong></li>
+
+		</ul>
+
+		<img class="image" id="GUID-3D13246A-18E5-4FDD-8E9A-7E163339A890__IMAGE_D2X_DFF_3Z" src="GUID-38B1B07E-7DE6-433C-A9E1-A622C0C989D5-high.jpg"/>
+		
+		<ul class="ul" id="GUID-3D13246A-18E5-4FDD-8E9A-7E163339A890__UL_M1Y_RDF_3Z">
+			<li class="li">On <strong class="ph b">Node B</strong>: <strong class="ph b">Short press any board button switch 1 (one) time
+				</strong>– any button switch initiates the action to discover and join an existing
+				network</li>
+
+		</ul>
+
+		<img class="image" id="GUID-3D13246A-18E5-4FDD-8E9A-7E163339A890__IMAGE_ILD_LFF_3Z" src="GUID-8763EA88-4D75-44C3-B6EF-F18EC9E82FC2-high.jpg"/>
+		
+		<p class="p">On <strong class="ph b">Node B</strong>: as the user initiates joining, the board LED state cycles
+			to display ongoing progress for several seconds as Node B discovers networks in range,
+			negotiates security with the Commissioner and the device attaches to the network after
+			having received its credentials after successful commissioning</p>
+
+		<img class="image" src="GUID-3010A47F-1CB1-4747-B6C7-14C21A910183-high.jpg"/>
+		
+		<ul class="ul" id="GUID-3D13246A-18E5-4FDD-8E9A-7E163339A890__UL_GP4_MFF_3Z">
+			<li class="li">On <strong class="ph b">Node B</strong>: after a few seconds, if attaching to the network
+				succeeds, LEDs turn off.</li>
+
+		</ul>
+
+		<img class="image" src="GUID-F000567E-36B7-4793-BC16-6745E14131E3-high.jpg"/>
+		
+		<ul class="ul">
+			<li class="li">On <strong class="ph b">Node B</strong>: if the initial discovery and joining attempt to an
+				existing network does NOT succeed, the node retries joining indefinitely (shown by
+				LED cycle) until a network becomes open for joining or the user resets the node</li>
+
+		</ul>
+
+		<img class="image" src="GUID-82835112-58A3-4570-A1AE-D2412E48984E-high.jpg"/>
+		
+	</div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-132EEB27-71ED-4150-8D80-2B13D293B4CF.html">Joining an end device or low-power end device to an existing network</a></div>
+</div>
+</div>
+
+</body>
+</html>

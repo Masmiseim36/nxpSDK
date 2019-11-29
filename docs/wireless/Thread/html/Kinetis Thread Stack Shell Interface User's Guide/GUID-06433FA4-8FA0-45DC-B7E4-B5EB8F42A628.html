@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Generic Commands"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-06433FA4-8FA0-45DC-B7E4-B5EB8F42A628"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Generic Commands</title>
+</head>
+<body id="GUID-06433FA4-8FA0-45DC-B7E4-B5EB8F42A628">
+
+
+  <h1 class="title topictitle1">Generic Commands</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">The source file for the Shell interface is <samp class="ph codeph">shell_ip.c</samp>.
+      User can edit this file to change the behavior of the interface by adding code according to
+      their application. </p>
+
+    <p class="p">The basic Thread application usually uses one
+      communication interface. Some applications like the border router and the hybrid Bluetooth LE Thread
+      applications can have two or more interfaces. These interfaces have a unique ID associated,
+      that can be found in <samp class="ph codeph">network_utils.h</samp>, as the <samp class="ph codeph">ipIfUniqueId_t</samp> enumeration. </p>
+
+    <pre class="pre codeblock">
+      /*! Unique interface ID enumeration*/
+      typedef enum
+      {
+          gIpIfSlp0_c = 0x00,                /*!&lt;SLWP0 interface */
+          gIpIfSlp1_c,                       /*!&lt;SLWP1 interface */
+          gIpIfEth0_c,                       /*!&lt;ETH0 interface */
+          gIpIfEth1_c,                       /*!&lt;ETH1 interface */
+          gIpIfWiFi0_c,                      /*!&lt;WiFi0 interface */
+          gIpIfWiFi1_c,                      /*!&lt;WiFi1 interface */
+          gIpIfUsbRndis_c,                   /*!&lt;RNDIS interface */
+          gIpIfSerialTun_c,                  /*!&lt;Serial TUN interface */
+          gIpIfBle0_c,                       /*!&lt;BLE0 interface */
+          gIpIfBle1_c,                       /*!&lt;BLE1 interface */
+          gIpIfLoopback_c,                   /*!&lt;Loopback interface */
+          gIpIfUndef_c = THR_ALL_FFs8,       /*!&lt;Undefined interface */
+      }ipIfUniqueId_t;
+       </pre>
+
+    <p class="p">These unique IDs can be associated to strings
+      representing the desired names to be shown in the Shell interface. This can be configured in
+      the <samp class="ph codeph">shell_ip</samp> source file.</p>
+
+    <div class="p">
+      <pre class="pre codeblock">
+/* Interface table. User is advised to add the name of the interface according to the existing interface */
+  const aShellThrInterface_t mThrInterfaces[] =
+  {
+    {(uint8_t*)"6LoWPAN",      gIpIfSlp0_c},
+    {(uint8_t*)"eth",          gIpIfEth0_c},
+    {(uint8_t*)"serialtun",    gIpIfSerialTun_c},
+    {(uint8_t*)"usbEnet",      gIpIfUsbRndis_c},
+    {(uint8_t*)"6LoBLE",       gIpIfBle0_c},
+    {(uint8_t*)"Loopback",     gIpIfLoopback_c},
+   };
+</pre>
+
+    </div>
+
+   <p class="p">The available commands are explained below with examples.</p>
+
+    <p class="p"><samp class="ph codeph">help</samp> - Command used for displaying available helping text.</p>
+
+    <div class="p">
+      <pre class="pre codeblock">      $ help help
+      help - print brief description of all commands
+      help &lt;command&gt; - print detailed usage of 'command'
+
+      $ help ifconfig
+      ifconfig - IP Stack interfaces configuration
+      ifconfig - displays all interfaces and addresses configured on the device
+      ifconfig &lt;interface ID&gt; ip &lt;IP address&gt;</pre>
+
+    </div>
+
+    <p class="p"><samp class="ph codeph">version</samp> – Displays the version for the registered stack components</p>
+
+    <p class="p"><samp class="ph codeph">history</samp> – Displays the last four commands issued in the shell interface</p>
+
+    <div class="p"><samp class="ph codeph">ifconfig</samp> - Displays and updates address configuration for IP interfaces.
+      <pre class="pre codeblock">$ help ifconfig
+ifconfig - IP Stack interfaces configuration
+   ifconfig displays all interfaces and addresses configured on the device
+   ifconfig &lt;interface ID&gt; ip &lt;IP address&gt;</pre>
+</div>
+ 
+    <div class="p"><samp class="ph codeph">ifconfig</samp> - Displays all addresses configured on each interface available on the device. The output for a device with a single
+      interface is shown in the image below. 
+      <pre class="pre codeblock">$ ifconfig
+Interface 1: 6LoWPAN
+Link local address (LL64): fe80::c980:6982:b03f:161b
+Mesh local address (ML64): fd05:3d45:6a97:18a4:dcd7:8247:c937:8333
+Mesh local address (ML16): fd05:3d45:6a97:18a4::ff:fe00:0
+Realm local all Thread Nodes(MCast): ff33:40:fd05:3d45:6a97:18a4::1
+Interface 0: Loopback
+</pre>
+</div>
+
+    
+    <div class="p"><samp class="ph codeph"><strong class="ph b">ifconfig &lt;interface ID&gt; ip &lt;IP address&gt;</strong></samp> - Adds a new IPv6 address on the specified
+      interface.<pre class="pre codeblock">$ ifconfig 0 ip 2001::1
+interface configured
+</pre>
+</div>
+ 
+    
+    <div class="note note"><span class="notetitle">Note:</span> Users can check if the IP address assignment was correctly performed by typing the command <samp class="ph codeph">ifconfig</samp> and observing that the address has been added to the list.</div>
+
+    <p class="p"><samp class="ph codeph">route</samp> – This command is used to configure a static IPv6 route for a destination network. </p>
+
+    <p class="p">
+      
+    </p>
+
+    <p class="p"><samp class="ph codeph">route add -p &lt;dest ipv6 addr&gt; -h &lt;next hop IPv6
+      addr&gt; -I &lt;next hop interface&gt; -len &lt;prefix length&gt; -m &lt;route
+      metric&gt;</samp> - This command lets the user add a static IPv6 route. Argument -p
+      &lt;dest ipv6 addr&gt; is for setting the destination network prefix, while -h &lt;next hop
+      IPv6 addr&gt; can be used to specify the next hop address. The prefix’s length is specified by
+      argument -len &lt;prefix length&gt; and the interface for the destination network is specified
+      by the -I &lt;next hop interface&gt; argument. This route can have a specified route metric,
+      by using the argument -m <em class="ph i">&lt;route metric&gt;</em>.</p>
+
+    <div class="p">
+      <pre class="pre codeblock">
+    $ route add -p fd7c:30de:39ca:ba36:: -h fd7c:30de:39ca:ba36::ff:fe00:4400 -I 6LoWPAN -len 64 -m 5
+    Success!
+  </pre>
+
+    </div>
+
+    <p class="p"><samp class="ph codeph">route remove -p &lt;dest ipv6 address&gt; -h &lt;next
+      hop&gt;</samp> - This command removes the specified entry from the IPv6 static routes
+      table. Network address can be specified by -p &lt;dest ipv6 address&gt; argument and the -h
+      &lt;next hop&gt; argument lets the user specify the hop address</p>
+
+    <div class="p">
+      <pre class="pre codeblock">
+    $ route remove -p fd7c:30de:39ca:ba36:: -h fd7c:30de:39ca:ba36::ff:fe00:4400
+    Success!
+</pre>
+
+    </div>
+
+    <p class="p"><samp class="ph codeph">route print</samp> – This command prints the available static routes.</p>
+
+    <div class="p">
+      <pre class="pre codeblock">
+$ route print
+Destination                                   Next Hop                                      NextHopIf PrefixLen Metric
+fd7c:30de:39ca:ba36::                         fd7c:30de:39ca:ba36::ff:fe00:4400             6LoWPAN     64        35
+fd7c:30de:39ca:ba36::                         ::                                            6LoWPAN     64        34
+    </pre>
+
+    </div>
+
+    <p class="p"><samp class="ph codeph">firewall</samp> – This command is used to manage IP firewall
+      rules. The firewall is useful to manage connections at the IP layer, allowing or denying
+      packets according to specified rules.</p>
+
+    <div class="p">
+      <pre class="pre codeblock">
+    $ help firewall
+   firewall - Manage IP Firewall rules
+   firewall enable
+   firewall disable
+   firewall add -dst &lt;IPv6Addr&gt; -src &lt;IPv6Addr&gt; -srcport &lt;UDPPort&gt; -dstport &lt;UDPPort&gt; -lendst &lt;bitsLen&gt; -lensrc &lt;bitsLen&gt; -sec &lt;secLevel&gt; -I &lt;IP Interface&gt;
+   firewall remove &lt;ruleNb&gt;
+   firewall show
+   Valid interfaces: 6LoWPAN, eth, serialtun, usbEnet
+  </pre>
+
+    </div>
+
+    <p class="p"><samp class="ph codeph">firewall enable</samp> – This command enables the IPv6 Firewall.</p>
+
+    
+    <p class="p"><samp class="ph codeph">firewall disable</samp> – This command disables the IPv6 Firewall.</p>
+
+    
+    <p class="p"><samp class="ph codeph">firewall add -dst &lt;IPv6Addr&gt; -src &lt;IPv6Addr&gt;
+      -srcport &lt;UDPPort&gt; -dstport &lt;UDPPort&gt; -lendst &lt;bitsLen&gt; -lensrc
+      &lt;bitsLen&gt; -sec &lt;secLevel&gt; -I &lt;IP Interface&gt;</samp> - Adding a rule in
+      the firewall is done by using firewall add command. Through -dst &lt;IPv6Addr&gt; and -src
+      &lt;IPv6Addr&gt;, user can specify the source and destination addresses or network prefixes to
+      be used as a firewall rule. Arguments -lendst &lt;bitsLen&gt; and -lensrc &lt;bitsLen&gt; can
+      be used to set the number of bits in the entered prefixes. UDP source and destination ports
+      can be set by -srcport &lt;UDPPort&gt; and -dstport &lt;UDPPort&gt;. -sec &lt;secLevel&gt; can
+      be used to add a security level based rule for the IP packets. -I &lt;IP Interface&gt; is used
+      to specify the interface on which the firewall rule applies. Security levels for Thread
+      networks are 0 (unsecured) and 5 (secured). User must always input a valid IP address or
+      prefix, even when entering a rule that is not based on IP addresses or prefixes. In this case,
+      the user can use -dst :: -src ::. </p>
+
+    <div class="p">
+      <pre class="pre codeblock">
+      $ firewall add -dst fd4d:d79b:650b:d941::ff:fe00:0 -src :: -portsrc 80
+      Success!
+      $ firewall add -dst :: -src :: -portsrc 8080 -portdst 1234
+      Success!
+    </pre>
+
+    </div>
+
+    <p class="p"><em class="ph i">firewall remove &lt;ruleNb&gt;</em> - To remove a firewall rule,
+      user can input this command, replacing the &lt;ruleNb&gt; with the appropriate number of the
+      rule shown by issuing command firewall show.</p>
+
+    <div class="p">
+      <pre class="pre codeblock">
+    $ firewall remove 4
+    Success!
+  </pre>
+
+    </div>
+
+    <p class="p"><samp class="ph codeph">firewall show</samp> – This is the command that the user can use
+      to see the firewall rules that have been previously set.</p>
+
+    <div class="p">
+      <pre class="pre codeblock">
+      $ firewall show
+      ruleNb src     dst    srcPort dstPort lenSrc lenDst secLevel ifId
+      0       ::      ::      0       49153   0       0       0       6LoWPAN
+      1       ::      ::      0       1026    0       0       0       Loopback
+      2       ::      ::      0       49192   0       0       0       Loopback
+      3       ::      ::      0       49192   0       0       0       6LoWPAN
+      4       ::      fd4d:d79b:650b:d941::ff:fe00:0  80      0       0       0       0       6LoWPAN
+      5       ::      ::      8080    1234    0       0       0       6LoWPAN
+    </pre>
+
+    </div>
+
+    <p class="p"/>
+
+    <div class="p"><samp class="ph codeph">mcastgroup</samp> - Set of commands for IP multicast group
+      management.<pre class="pre codeblock">$ help mcastgroup
+mcastgroup - Multicast groups management
+   mcastgroup show - displays all joined multicast groups
+   mcastgroup add &lt;IP group address&gt; &lt;interface id&gt;- joins to a new multicast group
+   mcastgroup leave &lt;IP group address&gt; &lt;interface id&gt;- leaves a multicast group
+Warning! Do not remove addresses that may affect stack's behaviour!
+</pre>
+</div>
+ 
+    
+    <div class="p"><samp class="ph codeph">mcastgroup show</samp> - Displays all the group addresses that the device is
+      currently part of, on each IP
+      interface.<pre class="pre codeblock">$ mcastgroup show
+
+Interface 0:
+Multicast Group: ff02::1
+Multicast Group: ff03::1
+Multicast Group: ff32:40:fd6e:8865:56d8::1
+Multicast Group: ff33:40:fd6e:8865:56d8::1
+Multicast Group: ff02::2
+Multicast Group: ff03::2
+Multicast Group: ff03::1:3
+</pre>
+</div>
+ 
+    
+    <div class="p"><samp class="ph codeph">mcastgroup add</samp> - Joins a new multicast
+      group.<pre class="pre codeblock">$ mcastgroup add ff05::3 0
+ Success!
+</pre>
+</div>
+ 
+    
+    <p class="p"><samp class="ph codeph">mcastgroup leave</samp> - Leaves a multicast group.</p>
+ 
+    <div class="note note"><span class="notetitle">Note:</span> Do not leave the multicast groups that might affect stack’s behavior!</div>
+
+    
+    <p class="p"><samp class="ph codeph">ping</samp> - Sends an ICMP Echo Request to the specified address.</p>
+
+<pre class="pre codeblock">$ help ping<span class="ph">
+ ping - IP Stack ping IPv4/IPv6 addresses</span><span class="ph">
+ ping &lt;ip address&gt; -I</span> &lt;interface&gt; -i &lt;timeout&gt; -c &lt;count&gt; -h &lt;hoplimit&gt; -s &lt;size&gt; -t &lt;continuous ping&gt; -S &lt;source IP address&gt;
+   Valid interfaces: 6LoWPAN, eth, serialtun, usbEnet</pre>
+
+    
+   <pre class="pre codeblock">$ ping fe80::166e:a00:0:01 
+Pinging fe80::166e:a00:0:01 with 32 bytes of data
+Reply from fe80::166e:a00:0:01: bytes=32 time=21ms
+</pre>
+
+    <p class="p"><samp class="ph codeph">reboot</samp> - Resets the MCU.</p>
+
+    <p class="p"><samp class="ph codeph">factoryreset</samp> - Reverts all changes to attributes to factory settings.</p>
+
+    <p class="p"><samp class="ph codeph">identify</samp> - Blinks an LED on the device in order to correlate the shell terminal with the physical board. The LED blinks until user sends Ctrl+C to stop.</p>
+ 
+    <div class="p">
+      <samp class="ph codeph">getnodesip</samp> - This command is used to retrieve IPv6 addresses from all Thread
+      devices in the network. To enable this command, set <samp class="ph codeph">GETIPv6ADDRESSES_APP</samp> to
+        <strong class="ph b">1</strong> in the <samp class="ph codeph">config.h</samp> file.
+      <pre class="pre codeblock">      $getnodesip
+      $
+      Received IP Addresses from node:
+      fe80::fc1c:899:9d70:4a36
+      fd08:74e6:b5f7:f91a:191:add9:241:6e3c
+      fd08:74e6:b5f7:f91a::ff:fe00:400</pre>
+
+    </div>
+
+  </div>
+
+
+</body>
+</html>

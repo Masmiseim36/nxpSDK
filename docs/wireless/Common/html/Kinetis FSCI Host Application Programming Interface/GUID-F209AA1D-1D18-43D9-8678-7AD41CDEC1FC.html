@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Thread network start with custom parameters use case"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-3A7289DF-649E-4813-9A78-BC02A9101323.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="6"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-F209AA1D-1D18-43D9-8678-7AD41CDEC1FC"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Thread network start with custom parameters use case</title>
+</head>
+<body id="GUID-F209AA1D-1D18-43D9-8678-7AD41CDEC1FC">
+
+
+  <h1 class="title topictitle1">Thread network start with custom parameters use case</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">The next example walks through a standard scenario, where a user configures a Thread device with various parameters (channel, extended address, and so on), and starts the Thread stack and creates the Thread network.</p>
+
+    <p class="p">This chapter describes all Python classes involved in the process. The entire example may be found in Appendix A, along with other examples handling sockets and using ‘ifconfig all’ for retrieving the IPv6 addresses of a node interfaces.</p>
+
+    <p class="p">First, users must connect to the physical board using serial bus port. It is assumed that the device OS path is known and hardcoded in the script or found through device discovery. Alternatively, it might be received as a command line argument.</p>
+
+    
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-F209AA1D-1D18-43D9-8678-7AD41CDEC1FC__GUID-F552FBE2-7E57-453E-B807-F0F176688656" class="table" frame="border" border="1" rules="all">
+    <thead class="thead" align="left">
+        <tr class="row">
+          <th class="entry" align="center" valign="top" id="d5829e43">Hardcoded in the script</th>
+
+          <th class="entry" align="center" valign="top" id="d5829e46">Found through device discovery</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody class="tbody">
+        <tr class="row">
+          <td class="entry" align="center" valign="top" headers="d5829e43 d5829e46 "><samp class="ph codeph">device = ‘/dev/ttyACM0’</samp></td>
+
+          <td class="entry" align="center" valign="top" headers="d5829e43 d5829e46 ">
+            <pre class="pre codeblock">device_manager = DeviceManager()
+device_manager.initDeviceList()
+# Operates on the first discovered device
+device = device_manager.getDevices()[0].name
+</pre>
+
+          </td>
+
+        </tr>
+</tbody>
+</table>
+</div>
+
+    <p class="p">Next, Thread parameters can be set. The <samp class="ph codeph">THR_SetAttrRequest</samp> Thread command
+      maps the following Python object:</p>
+
+    <pre class="pre codeblock">class THR_SetAttrRequest(object):
+
+    '''
+    Sets the value of a Thread attribute.
+    '''
+
+    def __init__(self, InstanceId=bytearray(1), AttributeId=bytearray(1), Index=bytearray(1), AttrSize=bytearray(1), AttributeValue=[]):        
+    '''
+    @param InstanceId:	1    		The instance of the Thread stack.
+    @param AttributeId:	1    		The ID of the attribute.
+    @param Index:		1    		The index of the attribute, usually 0, except for tables.
+    @param AttrSize:	1    		The size of the attribute.
+    @param AttributeValue:	AttrSize    	The value of the attribute.
+    '''
+    self.InstanceId = InstanceId
+    self.AttributeId = AttributeId
+    self.Index = Index
+    self.AttrSize = AttrSize
+    # Array length depends on AttributeSize.
+    self.AttributeValue = AttributeValue
+</pre>
+
+    <p class="p">A Thread frame maps on a simple Python object with just an initializer. The initializer, by
+      default, maps each parameter to a <samp class="ph codeph">bytearray</samp> of its length. This is both
+      advisory if one class does not have documentation, the user knows the expected size and for
+      error proofing, if the user does not fill in a field, it is zero-filled at the specified size
+      and does not cause errrors when sending the package on the serial interface. When defining
+      such an object, the parameters may take simple integer, boolean or even list values instead of
+      byte arrays (the values are automatically converted to bytes when transmitted on the wire).
+      The following example presents the setting of the IEEE 802.15.4 channel attribute. The request
+      is defined as follows:</p>
+
+    <pre class="pre codeblock">request = THR_SetAttrRequest(
+    InstanceId=0,
+    AttributeId=THR_SetAttrRequestAttributeId.Channel,
+    Index=0,
+    AttrSize=1,
+    AttributeValue=26
+)
+</pre>
+
+    <p class="p">After defining the request, one can send it and check that it has been processed by the
+      Thread stack. For the latter, the confirmation message <samp class="ph codeph">THR_SetAttrConfirm</samp> may
+      be used.</p>
+
+    <pre class="pre codeblock">class THR_SetAttrConfirm(object):
+
+    '''
+    Confirmation of the set attribute request.
+    '''
+
+    def __init__(self, Status=THR_SetAttrConfirmStatus.Success):
+        '''
+        @param Status: 1    Permitted values defined in THR_SetAttrConfirmStatus. 
+        '''
+        self.Status = Status
+</pre>
+
+    <p class="p">where the <samp class="ph codeph">THR_SetAttrConfirmStatus</samp> is a simple enum:</p>
+
+    <pre class="pre codeblock">class THR_SetAttrConfirmStatus(GenericEnum):
+    Success = 0x00
+    Invalidinstance = 0x02
+    Invalidparameter = 0x03
+    Notpermitted = 0x04
+    UnsupportedAttribute = 0x07
+    EmptyEntry = 0x08
+    InvalidValue = 0x09
+</pre>
+
+    <p class="p">Users should begin an operation that sends the request, adds an observer for the event and a
+      callback that checks if the status is set to <em class="ph i">OK</em>. The operation is defined as
+      follows:</p>
+
+    <pre class="pre codeblock">class THR_SetAttrOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.THR_SetAttrRequestFrame
+        self.observers = [THR_SetAttrConfirmObserver(
+            THR_SetAttrConfirm), ]
+        super(THR_SetAttrOperation, self).subscribeToEvents()
+</pre>
+
+   <p class="p">This operation inherits the FsciOperation class which handles all the backend operations.
+        <samp class="ph codeph">FsciOperation</samp> has the following initializer:</p>
+
+    <pre class="pre codeblock">def __init__(self, deviceName, request=None, callbacks=[], protocol=Protocol.Thread, baudrate=Baudrate.BR115200, sync_request=False)</pre>
+
+    <p class="p">The <samp class="ph codeph">THR_SetAttrOperation</samp>introduces another two concepts: a Spec object and
+      an Observer one. The Spec object specifies the order, size and any other dependencies of the
+      parameters of the request. In this example, <samp class="ph codeph">Spec.THR_SetAttrRequestFrame</samp> is
+      initialized by this method:</p>
+
+    <pre class="pre codeblock">    def InitTHR_SetAttrRequest(self):
+        cmdParams = []
+        InstanceId = FsciParameter("InstanceId", 1)
+        cmdParams.append(InstanceId)
+        AttributeId = FsciParameter("AttributeId", 1)
+        cmdParams.append(AttributeId)
+        Index = FsciParameter("Index", 1)
+        cmdParams.append(Index)
+        AttrSize = FsciParameter("AttrSize", 1)
+        cmdParams.append(AttrSize)
+        AttributeValue = FsciParameter("AttributeValue", 1, AttrSize)
+        cmdParams.append(AttributeValue)
+        return FsciFrameDescription(0xCE, 0x18, cmdParams)
+</pre>
+
+    <p class="p">0xCE and 0x18 represent the values of OPGROUP and OPCODE for this specific request. This
+      method creates a list of parameters, each parameter being defined by a name and a size. The
+      parameter order is ensured by the list type of <span class="keyword cmdname">cmdParams</span> ; the order is
+      important for creating the effective raw packet that is transmitted on the physical medium</p>
+
+    <p class="p">Returning to the Operation, <samp class="ph codeph">THR_SetAttrOperation</samp> (which is the operation
+      observer object) is the entity responsible for reconstructing an object from the byte array
+      event received. It is defined as:</p>
+
+    <pre class="pre codeblock">class THR_SetAttrConfirmObserver(Observer):
+
+    opGroup = Spec.THR_SetAttrConfirmFrame.opGroup
+    opCode = Spec.THR_SetAttrConfirmFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.THR_SetAttrConfirmFrame.getFsciPacketFromByteArray(
+            data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = THR_SetAttrConfirm()
+        frame.Status = THR_SetAttrConfirmStatus.getEnumString(
+            packet.getParamValueAsNumber("Status"))
+        event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(frame)
+        else:
+            print_event(frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+</pre>
+
+    <p class="p">Among some ctypes operations to handle pointers, the bolded lines provide the essential functionality. A confirm frame is defined and its status field populated with the received value. Afterwards, depending on whether a callback has been added, the data is printed or handled in the callback. The callback, for demonstration purposes, is a simple function that checks whether the Status is 0x00 – OK.</p>
+
+    <pre class="pre codeblock">def callback(confirm):
+    # Print the string description of Status. Useful for debugging.
+    print 'Status is ' + confirm.Status
+    assert confirm.Status == ‘OK’, 'Something went wrong!'
+</pre>
+
+    <p class="p">Returning to the main script which sets the IEEE 802.15.4 channel and then starts the
+      network:</p>
+
+    <pre class="pre codeblock">[imports]
+
+def callback(confirm):
+    assert confirm.Status == ‘OK’, 'Something went wrong!'
+
+if __name__ == '__main__':
+device = ‘/dev/ttyACM0’
+# Configure the MAC channel
+request = THR_SetAttrRequest(
+    		InstanceId=0,
+    		AttributeId=THR_SetAttrRequestAttributeId.Channel,
+    		Index=0,
+    		AttrSize=1,
+    		AttributeValue=26
+)
+THR_SetAttrOperation(device, request, [callback]).begin()
+# Start the network
+request = THR_CreateNwkRequest(InstanceId=0)
+THR_CreateNwk(device, request).begin()
+time.sleep(0.1) # so the program won’t exit before the callbacks get executed
+</pre>
+
+    <p class="p">For the network create command, a callback is not added and, eventually, the event data is
+      printed to the console.</p>
+
+    <p class="p">The purpose of this example was to show all internals involved in the process of sending and
+      receiving data from a Thread device. However, using the Synchronous Requests module, the code
+      size can be reduced:</p>
+
+    <pre class="pre codeblock">if __name__ == '__main__':
+device = ‘/dev/ttyACM0’
+# Configure the MAC channel and start the Thread stack
+confirm = THR_SetAttr(
+	device=device,
+    		InstanceId=0,
+    		AttributeId=THR_SetAttrRequestAttributeId.Channel,
+    		Index=0,
+    		AttrSize=1,
+    		AttributeValue=26
+)
+	assert confirm.Status == ‘Success’
+# Start the network
+confirm = THR_CreateNwk(device, InstanceID=0)
+assert confirm.Status == ‘OK’
+</pre>
+
+    <p class="p">Synchronous requests eliminate the need for custom callbacks to be added, and with a single line of code, the user can define, send the request, and obtain the event.</p>
+
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-3A7289DF-649E-4813-9A78-BC02A9101323.html">Host API Python Bindings</a></div>
+</div>
+</div>
+
+</body>
+</html>

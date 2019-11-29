@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Directory tree"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-57F155C5-08F3-4DA9-803E-4ACF1013796F.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="6"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-FD6C7E83-A989-4040-B627-7E2E593E6C7C"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Directory tree</title>
+</head>
+<body id="GUID-FD6C7E83-A989-4040-B627-7E2E593E6C7C">
+
+
+  <h1 class="title topictitle1">Directory tree</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <pre class="pre codeblock">├── demo                      A set of programs to demonstrate functionality.
+│   ├── GetKinetisDevices.c  Outputs all Kinetis devices available on serial to the console.
+│   ├── Makefile
+│   ├── make_tun.sh 	   Script for automating the creation of a TUN/TAP interface on Linux.
+│   ├── PCAPTest.c 	    Sends THCI frames over Ethernet by leveraging the RNDIS driver.
+│   ├── SPITest.c 	     Sends THCI frames over SPI bus.
+│   └── Thread_KW_Tun.c	IP Tunnel functionality interfacing the Linux and Thread IP stacks.
+├── include		      All the headers used are present in this folder.
+│   ├── physical             Headers specific to the physical serial bus or PCAP interface used by the NXP device.
+│   │   ├── PhysicalDevice.h
+│   │   ├── PCAP
+│   │   │   └── PCAPDevice.h
+│   │   ├── SPI
+│   │   │   ├── SPIConfiguration.h     Handles SPI slave bus configuration(max speed Hz, bits per word).
+│   │   │   └── SPIDevice.h            Encapsulates an OS SPI device node into a well-defined structure.
+│   │   └── UART
+│   │       ├── UARTConfiguration.h    Handles serial port configuration (baudrate, parity).
+│   │       ├── UARTDevice.h	     Encapsulates an OS UART device node into a well-defined structure.
+│   │       └── UARTDiscovery.h        Handles the discovery of UART connected devices.
+│   ├── protocol                        Headers specific to the transmission of frames.
+│   │   ├── Framer.h                   A state machine implementation for sending/receiving frames.
+│   │   └── FSCI                       Headers specific to the FSCI protocol.
+│   │       ├── FSCIFrame.h
+│   │       └── FSCIFramer.h
+│   └── sys                       General purpose headers for interaction with the OS, message queues and more.
+│       ├── EventManager.h        Handles event registering, notifying and callback submission.
+│       ├── hsdk                  Macros for error reporting.
+│       ├── h                     Logger implementation for debugging.
+│       ├── hsdkOSCommon.h	 Interaction with OS specifics.
+│       ├── MessageQueue.h	 A standard message queue implementation (linked list).
+│       ├── RawFrame.h 	    Describes the format of a frame, independent of the protocol.
+│       └── utils.h		  Various functions to manipulate structures and byte arrays.
+├── ConnectivityLibrary.sln       Microsoft Visual Studio 2013 solution file.
+├── Makefile
+├── physical   		Implementation of the physical UART/SPI serial bus or PCAP interface module.
+│   ├── PCAP
+│   │   └── PCAPDevice.c
+│   ├── PhysicalDevice.c
+│   ├── SPI
+│   │   ├── SPIConfiguration.c
+│   │   └── SPIDevice.c
+│   └── UART
+│       ├── UARTConfiguration.c
+│       ├── UARTDevice.c
+│       └── UARTDiscovery.c
+├── protocol       	    Implementation of the protocol module relating to FSCI.
+│   ├── Framer.c
+│   └── FSCI
+│       ├── FSCIFrame.c
+│       └── FSCIFramer.c
+├── README.md
+├── res
+│   ├── 77-mm-usb-device-blacklist.rules      Udev rules for disabling ModemManager.
+│   └── hsdk.conf                             Configuration file to control FSCI-ACKs.  
+└── sys     				         Implementation of the system/OS portable base module.
+    ├── EventManager.c
+    ├── hsdkEvent.c
+    ├── hsdkFile.c
+    ├── hsdkLock.c
+    ├── hsdkLogger.c
+    ├── hsdkSemaphore.c
+    ├── hsdkThread.c
+    ├── MessageQueue.c
+    ├── RawFrame.c
+    └── utils.c</pre>
+
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-57F155C5-08F3-4DA9-803E-4ACF1013796F.html">Host Software Overview</a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -9,39 +9,14 @@
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
 **
-**     The Clear BSD License
-**     Copyright (c) 2015, Freescale Semiconductor, Inc.
-**     Copyright 2016-2017 NXP
+**     Copyright (c) 2015 Freescale Semiconductor, Inc.
+**     Copyright 2016 - 2017 NXP
 **     All rights reserved.
-*
-**     Redistribution and use in source and binary forms, with or without
-**     modification, are permitted (subject to the limitations in the
-**     disclaimer below) provided that the following conditions are met:
-**     
-**     * Redistributions of source code must retain the above copyright
-**       notice, this list of conditions and the following disclaimer.
-**     
-**     * Redistributions in binary form must reproduce the above copyright
-**       notice, this list of conditions and the following disclaimer in the
-**       documentation and/or other materials provided with the distribution.
-**     
-**     * Neither the name of the copyright holder nor the names of its
-**       contributors may be used to endorse or promote products derived from
-**       this software without specific prior written permission.
-**     
-**     NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-**     GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-**     HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-**     WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-**     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-**     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-**     LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-**     CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-**     SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-**     BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-**     WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-**     OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-**     IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+**
+**     SPDX-License-Identifier: BSD-3-Clause
+**
+**     http:                 www.freescale.com
+**     mail:                 support@freescale.com
 **
 ** ###################################################################
 */
@@ -100,7 +75,7 @@ if (!isdefinedsymbol(__ram_vector_table__))
 
 
 /*-Memory Limits-*/
-define symbol __region_ROM_start__   = 0x00000000 ;
+define symbol __region_ROM_start__   = 0x00000000;
 define symbol __region_ROM_end__     = 0x0007FFFF;
 define symbol __region_RAM_start__   = 0x1FFF8000;
 define symbol __region_RAM_end__     = 0x20017FFF;
@@ -128,7 +103,8 @@ if (gUseBootloaderLink_d)
   define symbol m_interrupts_end         = m_interrupts_start + __vector_table_size__ - 1;
 
   define symbol m_bootFlags_start        = m_interrupts_end + 1;
-  define symbol m_bootFlags_end          = m_bootFlags_start + 7;
+  define symbol m_bootFlags_lenght       = 0x10;
+  define symbol m_bootFlags_end          = m_bootFlags_start + m_bootFlags_lenght;
 
   define exported symbol __BootFlags_Start__ = m_bootFlags_start;
 }
@@ -176,7 +152,7 @@ if( gUseNVMLink_d )
   define exported symbol NV_STORAGE_END_ADDRESS = NV_STORAGE_START_ADDRESS - (NV_STORAGE_MAX_SECTORS * NV_STORAGE_SECTOR_SIZE) + 1;
 }
 
-if (gUseInternalStorageLink_d) 
+if (gUseInternalStorageLink_d)
 {
   if( gUseNVMLink_d )
   {
@@ -186,14 +162,22 @@ if (gUseInternalStorageLink_d)
   {
     define exported symbol INT_STORAGE_START = m_fsl_prodInfo_start - 1;
   }
-  define exported symbol INT_STORAGE_SIZE  = m_sector_size * ( ((INT_STORAGE_START + 1 - __region_ROM_start__)/2)/m_sector_size +1);
+  define exported symbol INT_STORAGE_SIZE  = m_sector_size * ( ((INT_STORAGE_START + 1 - m_interrupts_start)/2)/m_sector_size +1);
   define exported symbol INT_STORAGE_END   = INT_STORAGE_START - INT_STORAGE_SIZE + 1;
   define exported symbol INT_STORAGE_SECTOR_SIZE = m_sector_size;
 }
 
 
 /* Define the limits of the memory regions*/
-define symbol m_text_start             = m_interrupts_start;
+if (gUseBootloaderLink_d) 
+{
+define symbol m_text_start             = m_bootFlags_end + 1;
+}
+else
+{
+define symbol m_text_start             = m_interrupts_end + 1;
+}
+
 if( gUseInternalStorageLink_d )
 {
   define symbol m_text_end               = INT_STORAGE_END;
@@ -231,8 +215,7 @@ if (gUseBootloaderLink_d)
 {
   define region Bootloader_region = mem:[from m_bootloader_start  to  m_bootloader_end];
   define region BootFlags_region  = mem:[from m_bootFlags_start   to  m_bootFlags_end];
-  define region TEXT_region       = mem:[from m_text_start to m_bootFlags_start-1] |
-                                    mem:[from m_bootFlags_end+1 to m_text_end];
+  define region TEXT_region       = mem:[from m_text_start to m_text_end];
 }
 else
 {
@@ -251,8 +234,8 @@ if(gUseNVMLink_d) {
   define region sNVM_region         = mem:[from  NV_STORAGE_END_ADDRESS to NV_VIRTUAL_PAGE_BOUND];
   if(gEraseNVMLink_d)
   {
-	 place in fNVM_region              {readonly section fEraseNVM };
-	 place in sNVM_region              {readonly section sEraseNVM };
+    place in fNVM_region              {readonly section fEraseNVM };
+    place in sNVM_region              {readonly section sEraseNVM };
   } 
 }
 
@@ -276,7 +259,7 @@ place in HEAP_region                        { block HEAP };
 place in CSTACK_region                      { block CSTACK };
 
 
-if (gUseBootloaderLink_d) 
+if (gUseBootloaderLink_d)
 {
   place at address mem: m_bootloader_start  { section .bootloader };
   place at address mem: m_bootFlags_start   { readonly section BootloaderFlags };

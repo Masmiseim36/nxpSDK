@@ -1,36 +1,8 @@
 /*
-* The Clear BSD License
 * Copyright 2016-2017 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 */
 
 #include <jendefs.h>
@@ -42,11 +14,17 @@
 #include "zps_apl.h"
 #include "zps_apl_aib.h"
 #include "bdb_api.h"
+#include "bdb_nf.h"
 #include "Identify.h"
 #include "OnOff.h"
 #include "ZTimer.h"
 #include "app_zps_cfg.h"
+#include "bdb_nf.h"
 
+#ifdef APP_ALLOW_ZPS_SUSPEND
+#include "app_coordinator.h"
+#include "app_main.h"
+#endif
 /************************************************************************************
 *************************************************************************************
 * Private prototypes
@@ -68,7 +46,10 @@ static int8_t SHELL_EpidReq(uint8_t argc, char *argv[]);
 static int8_t SHELL_ShortAddrReq(uint8_t argc, char *argv[]);
 static int8_t SHELL_ExtendedAddrReq(uint8_t argc, char *argv[]);
 static int8_t SHELL_PrintAPSTableReq(uint8_t argc, char *argv[]);
-
+#ifdef APP_ALLOW_ZPS_SUSPEND
+static int8_t SHELL_ZpsStop(uint8_t argc, char *argv[]);
+static int8_t SHELL_ZpsStart(uint8_t argc, char *argv[]);
+#endif
 #ifndef ZBPRO_DEVICE_TYPE_ZED
 static int8_t SHELL_FormReq(uint8_t argc, char *argv[]);
 #endif
@@ -308,6 +289,29 @@ const cmd_tbl_t gZigBee_commands[] =
         ,NULL
 #endif /* SHELL_USE_AUTO_COMPLETE */
     },
+#ifdef APP_ALLOW_ZPS_SUSPEND
+    {
+        "ztop", 1, 0, SHELL_ZpsStop
+#if SHELL_USE_HELP
+        ,"Stop Zigbee functionality",
+        "ztop"
+#endif /* SHELL_USE_HELP */
+#if SHELL_USE_AUTO_COMPLETE
+        ,NULL
+#endif /* SHELL_USE_AUTO_COMPLETE */
+    },
+    
+    {
+        "ztart", 1, 0, SHELL_ZpsStart
+#if SHELL_USE_HELP
+        ,"Resume Zigbee functionality",
+        "ztart"
+#endif /* SHELL_USE_HELP */
+#if SHELL_USE_AUTO_COMPLETE
+        ,NULL
+#endif /* SHELL_USE_AUTO_COMPLETE */
+    },
+#endif
 };
 
 /************************************************************************************
@@ -409,6 +413,13 @@ static int8_t SHELL_FormReq(uint8_t argc, char *argv[])
     /* Create Network */
     if (FALSE == sBDB.sAttrib.bbdbNodeIsOnANetwork)
     {
+#ifdef APP_ALLOW_ZPS_SUSPEND
+        /* Turn rx on. */
+        ZPS_vMacPibSetRxOnWhenIdle(TRUE, FALSE);
+        /* Start the ZCL timer. The ZCL timer is stopped when Zigbee is not
+        running to allow the device to enter low power mode. */
+        (void)ZTIMER_eStart(u8TimerZCL, 100);
+#endif
         eStatus = BDB_eNfStartNwkFormation();
         APP_vPrintf("Nwk Formation %02x\r\n", eStatus);
         if (eStatus != 0 && eStatus != 7)
@@ -733,16 +744,30 @@ static int8_t SHELL_ChannelReq(uint8_t argc, char *argv[])
 static int8_t SHELL_PanIdReq(uint8_t argc, char *argv[])
 {
     uint16_t value;
-    
+    int8_t status = CMD_RET_SUCCESS;
+
     if (argc == 2)
     {
         value = (uint16_t)hex_str_to_uint(argv[1]);
-        ZPS_vNwkNibSetPanId(ZPS_pvAplZdoGetNwkHandle(), value);
+        
+        if (value != 0xFFFF)
+        {
+            BDB_vNfSetPanID(value);
+        }
+        else
+        {
+            APP_vPrintf("Invalid PAN ID value\r\n");
+            status = CMD_RET_FAILURE;
+        }
     }
-    
-    value = ZPS_u16NwkNibGetMacPanId(ZPS_pvAplZdoGetNwkHandle());
-    APP_vPrintf(" > 0x%lx\r\n", value);
-    return CMD_RET_SUCCESS;
+
+    if (status == CMD_RET_SUCCESS)
+    {
+        value = ZPS_u16NwkNibGetMacPanId(ZPS_pvAplZdoGetNwkHandle());
+        APP_vPrintf(" > 0x%lx\r\n", value);
+    }
+
+    return status;
 }
 
 /*!*************************************************************************************************
@@ -781,7 +806,7 @@ static int8_t SHELL_ShortAddrReq(uint8_t argc, char *argv[])
     if (argc == 2)
     {
         value = (uint16_t)hex_str_to_uint(argv[1]);
-        ZPS_vNwkNibSetNwkAddr(ZPS_pvAplZdoGetNwkHandle(), value);
+        BDB_vNfSetNwkAddress(value);
     }
     
     value = ZPS_u16NwkNibGetNwkAddr(ZPS_pvAplZdoGetNwkHandle());
@@ -807,6 +832,40 @@ static int8_t SHELL_ExtendedAddrReq(uint8_t argc, char *argv[])
     APP_vPrintf(" > 0x%llx\r\n", value);
     return CMD_RET_SUCCESS;
 }
+#ifdef APP_ALLOW_ZPS_SUSPEND
+/*!*************************************************************************************************
+\private
+\fn     static int8_t SHELL_ZpsStop(uint8_t argc, char *argv[])
+\brief  Stop the Zigbee stack.
+
+\param  [in]    argc      Number of arguments the command was called with
+\param  [in]    argv      Pointer to a list of pointers to the arguments
+
+\return         int8_t    Status of the command
+***************************************************************************************************/
+static int8_t SHELL_ZpsStop(uint8_t argc, char *argv[])
+{
+    APP_vZpsStop();
+    
+    return CMD_RET_SUCCESS;
+}
+
+/*!*************************************************************************************************
+\private
+\fn     static int8_t SHELL_ZpsStart(uint8_t argc, char *argv[])
+\brief  Restore the Zigbee stack functionality.
+
+\param  [in]    argc      Number of arguments the command was called with
+\param  [in]    argv      Pointer to a list of pointers to the arguments
+
+\return         int8_t    Status of the command
+***************************************************************************************************/
+static int8_t SHELL_ZpsStart(uint8_t argc, char *argv[])
+{
+    APP_vZpsStart();
+    return CMD_RET_SUCCESS;
+}
+#endif
 
 /*!*************************************************************************************************
 \private

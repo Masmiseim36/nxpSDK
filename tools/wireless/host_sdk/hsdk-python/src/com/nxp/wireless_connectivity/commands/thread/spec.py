@@ -1,37 +1,9 @@
 '''
-* The Clear BSD License
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
+* Copyright 2016-2019 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 '''
 
 from com.nxp.wireless_connectivity.commands.fsci_frame_description import FsciFrameDescription
@@ -64,11 +36,15 @@ class Spec(object):
         self.THR_NwkDiscoveryRequestFrame = self.InitTHR_NwkDiscoveryRequest()
         self.THR_NwkDiscoveryStopRequestFrame = self.InitTHR_NwkDiscoveryStopRequest()
         self.THR_SearchNwkWithAnounceRequestFrame = self.InitTHR_SearchNwkWithAnounceRequest()
+        self.THR_GetDeviceInfoRequestFrame = self.InitTHR_GetDeviceInfoRequest()
         self.THR_ChildUpdateToParentRequestFrame = self.InitTHR_ChildUpdateToParentRequest()
+        self.THR_SetParentPriorityRequestFrame = self.InitTHR_SetParentPriorityRequest()
         self.THR_SetManualSlaacIIDRequestFrame = self.InitTHR_SetManualSlaacIIDRequest()
         self.THR_SendProactiveAddrNotifRequestFrame = self.InitTHR_SendProactiveAddrNotifRequest()
         self.THR_SetThresholdRequestFrame = self.InitTHR_SetThresholdRequest()
+        self.THR_SetThreshold32RequestFrame = self.InitTHR_SetThreshold32Request()
         self.THR_SetNwkIdTimeoutRequestFrame = self.InitTHR_SetNwkIdTimeoutRequest()
+        self.THR_SetRouterPromoteMaxJitterRequestFrame = self.InitTHR_SetRouterPromoteMaxJitterRequest()
         self.THR_GetRoutingTableRequestFrame = self.InitTHR_GetRoutingTableRequest()
         self.THR_GetNeighborTableRequestFrame = self.InitTHR_GetNeighborTableRequest()
         self.THR_GetNeighborInfoRequestFrame = self.InitTHR_GetNeighborInfoRequest()
@@ -101,6 +77,7 @@ class Spec(object):
         self.SocketAcceptRequestFrame = self.InitSocketAcceptRequest()
         self.SocketSetOptionRequestFrame = self.InitSocketSetOptionRequest()
         self.SocketGetOptionRequestFrame = self.InitSocketGetOptionRequest()
+        self.SocketCloseRequestFrame = self.InitSocketCloseRequest()
         self.MESHCOP_StartCommissionerRequestFrame = self.InitMESHCOP_StartCommissionerRequest()
         self.MESHCOP_StartNativeCommissionerRequestFrame = self.InitMESHCOP_StartNativeCommissionerRequest()
         self.MESHCOP_StopCommissionerRequestFrame = self.InitMESHCOP_StopCommissionerRequest()
@@ -113,6 +90,7 @@ class Spec(object):
         self.MESHCOP_MgmtGetRequestFrame = self.InitMESHCOP_MgmtGetRequest()
         self.MESHCOP_SetCommissionerCredentialRequestFrame = self.InitMESHCOP_SetCommissionerCredentialRequest()
         self.MESHCOP_MgmNwkFormRequestFrame = self.InitMESHCOP_MgmNwkFormRequest()
+        self.MESHCOP_MgmNwkLeaveRequestFrame = self.InitMESHCOP_MgmNwkLeaveRequest()
         self.MESHCOP_MgmtCommissionerGetRequestFrame = self.InitMESHCOP_MgmtCommissionerGetRequest()
         self.MESHCOP_MgmtActiveGetRequestFrame = self.InitMESHCOP_MgmtActiveGetRequest()
         self.MESHCOP_MgmtPendingGetRequestFrame = self.InitMESHCOP_MgmtPendingGetRequest()
@@ -133,6 +111,10 @@ class Spec(object):
         self.NWKU_DnsSendRequestRequestFrame = self.InitNWKU_DnsSendRequestRequest()
         self.NWKU_McastGroupShowRequestFrame = self.InitNWKU_McastGroupShowRequest()
         self.NWKU_McastGroupManageRequestFrame = self.InitNWKU_McastGroupManageRequest()
+        self.NWKU_FirewallEnableRequestFrame = self.InitNWKU_FirewallEnableRequest()
+        self.NWKU_FirewallTableShowRequestFrame = self.InitNWKU_FirewallTableShowRequest()
+        self.NWKU_FirewallRuleRemoveRequestFrame = self.InitNWKU_FirewallRuleRemoveRequest()
+        self.NWKU_FirewallRuleAddRequestFrame = self.InitNWKU_FirewallRuleAddRequest()
         self.NWKU_RoutesShowRequestFrame = self.InitNWKU_RoutesShowRequest()
         self.NWKU_RoutesManageRequestFrame = self.InitNWKU_RoutesManageRequest()
         self.DTLSOpenRequestFrame = self.InitDTLSOpenRequest()
@@ -140,6 +122,7 @@ class Spec(object):
         self.DTLSClosePeerRequestFrame = self.InitDTLSClosePeerRequest()
         self.DTLSConnectRequestFrame = self.InitDTLSConnectRequest()
         self.DTLSSendRequestFrame = self.InitDTLSSendRequest()
+        self.FSCICPUResetRequestFrame = self.InitFSCICPUResetRequest()
         self.FSCIGetUniqueIdRequestFrame = self.InitFSCIGetUniqueIdRequest()
         self.FSCIGetMcuIdRequestFrame = self.InitFSCIGetMcuIdRequest()
         self.FSCIGetSwVersionsRequestFrame = self.InitFSCIGetSwVersionsRequest()
@@ -148,7 +131,7 @@ class Spec(object):
         self.Sniffer_MacSetPIBAttributeRequestFrame = self.InitSniffer_MacSetPIBAttributeRequest()
         self.Sniffer_DetectRequestFrame = self.InitSniffer_DetectRequest()
         self.FSCIACKFrame = self.InitFSCIACK()
-        self.FSCIEnterBootloaderRequestFrame = self.InitFSCIEnterBootloaderRequest()
+        self.FSCIEnableMSDBootloaderRequestFrame = self.InitFSCIEnableMSDBootloaderRequest()
         self.AspSetPowerLevelRequestFrame = self.InitAspSetPowerLevelRequest()
         self.AspGetPowerLevelRequestFrame = self.InitAspGetPowerLevelRequest()
         self.SocketCreateConfirmFrame = self.InitSocketCreateConfirm()
@@ -163,6 +146,7 @@ class Spec(object):
         self.SocketAcceptConfirmFrame = self.InitSocketAcceptConfirm()
         self.SocketSetOptionConfirmFrame = self.InitSocketSetOptionConfirm()
         self.SocketGetOptionConfirmFrame = self.InitSocketGetOptionConfirm()
+        self.SocketCloseConfirmFrame = self.InitSocketCloseConfirm()
         self.MAC_MacFilteringAddEntryConfirmFrame = self.InitMAC_MacFilteringAddEntryConfirm()
         self.MAC_MacFilteringRemoveEntryConfirmFrame = self.InitMAC_MacFilteringRemoveEntryConfirm()
         self.MAC_MacFilteringEnableConfirmFrame = self.InitMAC_MacFilteringEnableConfirm()
@@ -190,16 +174,20 @@ class Spec(object):
         self.THR_MgmtReadMemoryConfirmFrame = self.InitTHR_MgmtReadMemoryConfirm()
         self.THR_MgmtWriteMemoryConfirmFrame = self.InitTHR_MgmtWriteMemoryConfirm()
         self.THR_SetManualSlaacIIDConfirmFrame = self.InitTHR_SetManualSlaacIIDConfirm()
+        self.THR_SetParentPriorityConfirmFrame = self.InitTHR_SetParentPriorityConfirm()
         self.THR_SendProactiveAddrNotifConfirmFrame = self.InitTHR_SendProactiveAddrNotifConfirm()
         self.THR_NwkDiscoveryConfirmFrame = self.InitTHR_NwkDiscoveryConfirm()
         self.THR_NwkDiscoveryStopConfirmFrame = self.InitTHR_NwkDiscoveryStopConfirm()
         self.THR_SearchNwkWithAnounceConfirmFrame = self.InitTHR_SearchNwkWithAnounceConfirm()
+        self.THR_GetDeviceInfoConfirmFrame = self.InitTHR_GetDeviceInfoConfirm()
         self.THR_MgmtDiagnosticGetRspIndicationFrame = self.InitTHR_MgmtDiagnosticGetRspIndication()
         self.THR_DiagTestGetRspIndicationFrame = self.InitTHR_DiagTestGetRspIndication()
         self.THR_MgmtDiagnosticDiagTestEventIndicationFrame = self.InitTHR_MgmtDiagnosticDiagTestEventIndication()
         self.THR_MgmtDiagnosticResetRspIndicationFrame = self.InitTHR_MgmtDiagnosticResetRspIndication()
         self.THR_SetNwkIdTimeoutConfirmFrame = self.InitTHR_SetNwkIdTimeoutConfirm()
+        self.THR_SetRouterPromoteMaxJitterConfirmFrame = self.InitTHR_SetRouterPromoteMaxJitterConfirm()
         self.THR_SetThresholdConfirmFrame = self.InitTHR_SetThresholdConfirm()
+        self.THR_SetThreshold32ConfirmFrame = self.InitTHR_SetThreshold32Confirm()
         self.THR_GetNeighborInfoConfirmFrame = self.InitTHR_GetNeighborInfoConfirm()
         self.THR_GetChildrenTableConfirmFrame = self.InitTHR_GetChildrenTableConfirm()
         self.THR_GetNeighborTableConfirmFrame = self.InitTHR_GetNeighborTableConfirm()
@@ -233,6 +221,10 @@ class Spec(object):
         self.NWKU_DnsSendRequestConfirmFrame = self.InitNWKU_DnsSendRequestConfirm()
         self.NWKU_McastGroupManageConfirmFrame = self.InitNWKU_McastGroupManageConfirm()
         self.NWKU_McastGroupShowResponseFrame = self.InitNWKU_McastGroupShowResponse()
+        self.NWKU_FirewallEnableConfirmFrame = self.InitNWKU_FirewallEnableConfirm()
+        self.NWKU_FirewallRuleAddConfirmFrame = self.InitNWKU_FirewallRuleAddConfirm()
+        self.NWKU_FirewallRuleRemoveConfirmFrame = self.InitNWKU_FirewallRuleRemoveConfirm()
+        self.NWKU_FirewallTableShowResponseFrame = self.InitNWKU_FirewallTableShowResponse()
         self.NWKU_RoutesManageConfirmFrame = self.InitNWKU_RoutesManageConfirm()
         self.NWKU_RoutesShowResponseFrame = self.InitNWKU_RoutesShowResponse()
         self.MESHCOP_StartCommissionerConfirmFrame = self.InitMESHCOP_StartCommissionerConfirm()
@@ -452,11 +444,23 @@ class Spec(object):
         cmdParams.append(InstanceID)
         return FsciFrameDescription(0xCE, 0xC2, cmdParams)
 
+    def InitTHR_GetDeviceInfoRequest(self):
+        cmdParams = []
+        InstanceID = FsciParameter("InstanceID", 1)
+        cmdParams.append(InstanceID)
+        return FsciFrameDescription(0xCE, 0xC3, cmdParams)
+
     def InitTHR_ChildUpdateToParentRequest(self):
         cmdParams = []
         InstanceID = FsciParameter("InstanceID", 1)
         cmdParams.append(InstanceID)
         return FsciFrameDescription(0xCE, 0x2F, cmdParams)
+
+    def InitTHR_SetParentPriorityRequest(self):
+        cmdParams = []
+        Priority = FsciParameter("Priority", 1)
+        cmdParams.append(Priority)
+        return FsciFrameDescription(0xCE, 0xC4, cmdParams)
 
     def InitTHR_SetManualSlaacIIDRequest(self):
         cmdParams = []
@@ -482,11 +486,27 @@ class Spec(object):
         cmdParams.append(Value)
         return FsciFrameDescription(0xCE, 0x20, cmdParams)
 
+    def InitTHR_SetThreshold32Request(self):
+        cmdParams = []
+        InstanceId = FsciParameter("InstanceId", 1)
+        cmdParams.append(InstanceId)
+        ThresholdType = FsciParameter("ThresholdType", 1)
+        cmdParams.append(ThresholdType)
+        Value = FsciParameter("Value", 4)
+        cmdParams.append(Value)
+        return FsciFrameDescription(0xCE, 0xE0, cmdParams)
+
     def InitTHR_SetNwkIdTimeoutRequest(self):
         cmdParams = []
         TimeoutInSeconds = FsciParameter("TimeoutInSeconds", 4)
         cmdParams.append(TimeoutInSeconds)
         return FsciFrameDescription(0xCE, 0x2E, cmdParams)
+
+    def InitTHR_SetRouterPromoteMaxJitterRequest(self):
+        cmdParams = []
+        MaxJitterInSeconds = FsciParameter("MaxJitterInSeconds", 4)
+        cmdParams.append(MaxJitterInSeconds)
+        return FsciFrameDescription(0xCE, 0x81, cmdParams)
 
     def InitTHR_GetRoutingTableRequest(self):
         cmdParams = []
@@ -800,6 +820,12 @@ class Spec(object):
         cmdParams.append(SocketOption)
         return FsciFrameDescription(0xCE, 0x0B, cmdParams)
 
+    def InitSocketCloseRequest(self):
+        cmdParams = []
+        SocketIndex = FsciParameter("SocketIndex", 1)
+        cmdParams.append(SocketIndex)
+        return FsciFrameDescription(0xCE, 0x0F, cmdParams)
+
     def InitMESHCOP_StartCommissionerRequest(self):
         cmdParams = []
         InstanceId = FsciParameter("InstanceId", 1)
@@ -964,6 +990,12 @@ class Spec(object):
         cmdParams.append(Channel)
         return FsciFrameDescription(0xCE, 0x47, cmdParams)
 
+    def InitMESHCOP_MgmNwkLeaveRequest(self):
+        cmdParams = []
+        IPAddress = FsciParameter("IPAddress", 16)
+        cmdParams.append(IPAddress)
+        return FsciFrameDescription(0xCE, 0x4A, cmdParams)
+
     def InitMESHCOP_MgmtCommissionerGetRequest(self):
         cmdParams = []
         # not generated, pickle() is used instead; see frames.py
@@ -1062,6 +1094,8 @@ class Spec(object):
         cmdParams.append(Timeout)
         Secured = FsciParameter("Secured", 1)
         cmdParams.append(Secured)
+        HopLimit = FsciParameter("HopLimit", 1)
+        cmdParams.append(HopLimit)
         return FsciFrameDescription(0xCE, 0x0E, cmdParams)
 
     def InitNWKU_EchoUDPRequest(self):
@@ -1140,9 +1174,57 @@ class Spec(object):
         cmdParams.append(InterfaceId)
         Action = FsciParameter("Action", 1)
         cmdParams.append(Action)
-        McastAddress = FsciParameter("McastAddress", 16)
+        UseTimeout = FsciParameter("UseTimeout", 1)
+        cmdParams.append(UseTimeout)
+        McastAddrCount = FsciParameter("McastAddrCount", 1)
+        cmdParams.append(McastAddrCount)
+        Timeout = FsciParameter("Timeout", 4)
+        cmdParams.append(Timeout)
+        DestIpAddress = FsciParameter("DestIpAddress", 16)
+        cmdParams.append(DestIpAddress)
+        McastAddress = FsciParameter("McastAddress", 16, McastAddrCount)
         cmdParams.append(McastAddress)
         return FsciFrameDescription(0xCE, 0x71, cmdParams)
+
+    def InitNWKU_FirewallEnableRequest(self):
+        cmdParams = []
+        Enable = FsciParameter("Enable", 1)
+        cmdParams.append(Enable)
+        return FsciFrameDescription(0xCE, 0x77, cmdParams)
+
+    def InitNWKU_FirewallTableShowRequest(self):
+        cmdParams = []
+        return FsciFrameDescription(0xCE, 0x7A, cmdParams)
+
+    def InitNWKU_FirewallRuleRemoveRequest(self):
+        cmdParams = []
+        RuleEntryNumber = FsciParameter("RuleEntryNumber", 1)
+        cmdParams.append(RuleEntryNumber)
+        return FsciFrameDescription(0xCE, 0x79, cmdParams)
+
+    def InitNWKU_FirewallRuleAddRequest(self):
+        cmdParams = []
+        RuleEntryNumber = FsciParameter("RuleEntryNumber", 1)
+        cmdParams.append(RuleEntryNumber)
+        SourcePrefix = FsciParameter("SourcePrefix", 16)
+        cmdParams.append(SourcePrefix)
+        DestinationPrefix = FsciParameter("DestinationPrefix", 16)
+        cmdParams.append(DestinationPrefix)
+        SourcePort = FsciParameter("SourcePort", 2)
+        cmdParams.append(SourcePort)
+        DestinationPort = FsciParameter("DestinationPort", 2)
+        cmdParams.append(DestinationPort)
+        SourcePrefixLen = FsciParameter("SourcePrefixLen", 1)
+        cmdParams.append(SourcePrefixLen)
+        DestinationPrefixLen = FsciParameter("DestinationPrefixLen", 1)
+        cmdParams.append(DestinationPrefixLen)
+        SecurityLevel = FsciParameter("SecurityLevel", 1)
+        cmdParams.append(SecurityLevel)
+        InterfaceID = FsciParameter("InterfaceID", 1)
+        cmdParams.append(InterfaceID)
+        Rule = FsciParameter("Rule", 1)
+        cmdParams.append(Rule)
+        return FsciFrameDescription(0xCE, 0x78, cmdParams)
 
     def InitNWKU_RoutesShowRequest(self):
         cmdParams = []
@@ -1211,6 +1293,10 @@ class Spec(object):
         cmdParams.append(Data)
         return FsciFrameDescription(0xCE, 0x35, cmdParams)
 
+    def InitFSCICPUResetRequest(self):
+        cmdParams = []
+        return FsciFrameDescription(0xA3, 0x08, cmdParams)
+
     def InitFSCIGetUniqueIdRequest(self):
         cmdParams = []
         return FsciFrameDescription(0xA3, 0xB0, cmdParams)
@@ -1255,7 +1341,7 @@ class Spec(object):
         cmdParams.append(Status)
         return FsciFrameDescription(0xA4, 0xFD, cmdParams)
 
-    def InitFSCIEnterBootloaderRequest(self):
+    def InitFSCIEnableMSDBootloaderRequest(self):
         cmdParams = []
         return FsciFrameDescription(0xA3, 0xCF, cmdParams)
 
@@ -1354,6 +1440,12 @@ class Spec(object):
         OptionValue = FsciParameter("OptionValue", 4)
         cmdParams.append(OptionValue)
         return FsciFrameDescription(0xCF, 0x0B, cmdParams)
+
+    def InitSocketCloseConfirm(self):
+        cmdParams = []
+        Status = FsciParameter("Status", 1)
+        cmdParams.append(Status)
+        return FsciFrameDescription(0xCF, 0x0F, cmdParams)
 
     def InitMAC_MacFilteringAddEntryConfirm(self):
         cmdParams = []
@@ -1481,8 +1573,7 @@ class Spec(object):
         currentList = []
         EnergyDetectEnergyDetectEntries = FsciParameter("EnergyDetectEnergyDetectEntries", 1)
         currentList.append(EnergyDetectEnergyDetectEntries)
-        EnergyDetectEnergyDetectList = FsciParameter(
-            "EnergyDetectEnergyDetectList", 1, EnergyDetectEnergyDetectEntries)
+        EnergyDetectEnergyDetectList = FsciParameter("EnergyDetectEnergyDetectList", 1, EnergyDetectEnergyDetectEntries)
         currentList.append(EnergyDetectEnergyDetectList)
         Datadict[0x01] = currentList
         currentList = []
@@ -1498,14 +1589,12 @@ class Spec(object):
         currentList.append(NwkDiscoveryListReserved)
         Datadict[0x02] = currentList
         currentList = []
-        EnergyDetectAndActiveScanEnergyDetectEntries = FsciParameter(
-            "EnergyDetectAndActiveScanEnergyDetectEntries", 1)
+        EnergyDetectAndActiveScanEnergyDetectEntries = FsciParameter("EnergyDetectAndActiveScanEnergyDetectEntries", 1)
         currentList.append(EnergyDetectAndActiveScanEnergyDetectEntries)
         EnergyDetectAndActiveScanEnergyDetectList = FsciParameter(
             "EnergyDetectAndActiveScanEnergyDetectList", 1, EnergyDetectEnergyDetectEntries)
         currentList.append(EnergyDetectAndActiveScanEnergyDetectList)
-        EnergyDetectAndActiveScanNwkDiscoveryEntries = FsciParameter(
-            "EnergyDetectAndActiveScanNwkDiscoveryEntries", 1)
+        EnergyDetectAndActiveScanNwkDiscoveryEntries = FsciParameter("EnergyDetectAndActiveScanNwkDiscoveryEntries", 1)
         currentList.append(EnergyDetectAndActiveScanNwkDiscoveryEntries)
         NwkDiscoveryListNumOfRcvdBeacons = FsciParameter("NwkDiscoveryListNumOfRcvdBeacons", 2)
         currentList.append(NwkDiscoveryListNumOfRcvdBeacons)
@@ -1632,6 +1721,12 @@ class Spec(object):
         cmdParams.append(Status)
         return FsciFrameDescription(0xCF, 0x75, cmdParams)
 
+    def InitTHR_SetParentPriorityConfirm(self):
+        cmdParams = []
+        Status = FsciParameter("Status", 1)
+        cmdParams.append(Status)
+        return FsciFrameDescription(0xCF, 0xC4, cmdParams)
+
     def InitTHR_SendProactiveAddrNotifConfirm(self):
         cmdParams = []
         Status = FsciParameter("Status", 1)
@@ -1656,6 +1751,16 @@ class Spec(object):
         cmdParams.append(Status)
         return FsciFrameDescription(0xCF, 0xC2, cmdParams)
 
+    def InitTHR_GetDeviceInfoConfirm(self):
+        cmdParams = []
+        InstanceId = FsciParameter("InstanceId", 1)
+        cmdParams.append(InstanceId)
+        NwkCapabilities = FsciParameter("NwkCapabilities", 1)
+        cmdParams.append(NwkCapabilities)
+        ExtendedNwkCapabilities = FsciParameter("ExtendedNwkCapabilities", 1)
+        cmdParams.append(ExtendedNwkCapabilities)
+        return FsciFrameDescription(0xCF, 0xC3, cmdParams)
+
     def InitTHR_MgmtDiagnosticGetRspIndication(self):
         cmdParams = []
         # not generated, cursor based approach in observer; see events.py
@@ -1669,6 +1774,8 @@ class Spec(object):
         cmdParams.append(CoapMsgId)
         DataLen = FsciParameter("DataLen", 2)
         cmdParams.append(DataLen)
+        NoOfTLVs = FsciParameter("NoOfTLVs", 1)
+        cmdParams.append(NoOfTLVs)
         Payload_TlvId = FsciParameter("Payload_TlvId", 1)
         cmdParams.append(Payload_TlvId)
         Payload_TLVPayloaddict = {}
@@ -1704,8 +1811,7 @@ class Spec(object):
         ResultsSequenceNumber = FsciParameter("ResultsSequenceNumber", 1)
         currentList.append(ResultsSequenceNumber)
         Payload_TLVPayloaddict[0xB3] = currentList
-        Payload_TLVPayload = FsciParameter(
-            "Payload_TLVPayload", 1, Payload_TlvId, Payload_TLVPayloaddict)
+        Payload_TLVPayload = FsciParameter("Payload_TLVPayload", 1, Payload_TlvId, Payload_TLVPayloaddict)
         cmdParams.append(Payload_TLVPayload)
         return FsciFrameDescription(0xCF, 0x68, cmdParams)
 
@@ -1731,11 +1837,23 @@ class Spec(object):
         cmdParams.append(Status)
         return FsciFrameDescription(0xCF, 0x2E, cmdParams)
 
+    def InitTHR_SetRouterPromoteMaxJitterConfirm(self):
+        cmdParams = []
+        Status = FsciParameter("Status", 1)
+        cmdParams.append(Status)
+        return FsciFrameDescription(0xCF, 0x81, cmdParams)
+
     def InitTHR_SetThresholdConfirm(self):
         cmdParams = []
         Status = FsciParameter("Status", 1)
         cmdParams.append(Status)
         return FsciFrameDescription(0xCF, 0x20, cmdParams)
+
+    def InitTHR_SetThreshold32Confirm(self):
+        cmdParams = []
+        Status = FsciParameter("Status", 1)
+        cmdParams.append(Status)
+        return FsciFrameDescription(0xCF, 0xE0, cmdParams)
 
     def InitTHR_GetNeighborInfoConfirm(self):
         cmdParams = []
@@ -1982,6 +2100,29 @@ class Spec(object):
         Addresses = FsciParameter("Addresses", 16, CountIpAddresses)
         cmdParams.append(Addresses)
         return FsciFrameDescription(0xCF, 0x72, cmdParams)
+
+    def InitNWKU_FirewallEnableConfirm(self):
+        cmdParams = []
+        Status = FsciParameter("Status", 1)
+        cmdParams.append(Status)
+        return FsciFrameDescription(0xCF, 0x77, cmdParams)
+
+    def InitNWKU_FirewallRuleAddConfirm(self):
+        cmdParams = []
+        Status = FsciParameter("Status", 1)
+        cmdParams.append(Status)
+        return FsciFrameDescription(0xCF, 0x78, cmdParams)
+
+    def InitNWKU_FirewallRuleRemoveConfirm(self):
+        cmdParams = []
+        Status = FsciParameter("Status", 1)
+        cmdParams.append(Status)
+        return FsciFrameDescription(0xCF, 0x79, cmdParams)
+
+    def InitNWKU_FirewallTableShowResponse(self):
+        cmdParams = []
+        # not generated, cursor based approach in observer; see events.py
+        return FsciFrameDescription(0xCF, 0x7A, cmdParams)
 
     def InitNWKU_RoutesManageConfirm(self):
         cmdParams = []
@@ -2291,7 +2432,7 @@ class Spec(object):
 
     def InitFSCIGetSwVersionsConfirm(self):
         cmdParams = []
-        listSize = FsciParameter("NumberOfEntries", 1)
+        listSize = FsciParameter("listSize", 1)
         cmdParams.append(listSize)
         SwVersions = FsciParameter("SwVersions", 6, listSize)
         cmdParams.append(SwVersions)
@@ -2353,6 +2494,6 @@ class Spec(object):
 
     def InitDBGConfirm(self):
         cmdParams = []
-        text = FsciParameter("text", 1)
-        cmdParams.append(text)
+        Text = FsciParameter("Text", 1)
+        cmdParams.append(Text)
         return FsciFrameDescription(0xCF, 0x89, cmdParams)

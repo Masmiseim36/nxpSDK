@@ -21,33 +21,38 @@
     <h1 class="title topictitle1">Sockets</h1>
 
     <div class="body">
-        <p class="p">The shell commands available for the socket demo application are displayed after typing help socket in console:</p>
+        <p class="p">The shell commands available for the socket demo application are displayed
+            after typing help socket in console:</p>
 
-        
-       <pre class="pre codeblock">
-           BLE IPv6 Node&gt;help socket
-socket - IP Stack BSD Sockets commands
-   socket open &lt;protocol&gt; &lt;remote ip addr&gt; &lt;remote port&gt;
-   socket send &lt;socket id&gt; &lt;payload&gt;
-   socket close &lt;socket id&gt;
+        <pre class="pre codeblock">        BLE IPv6 Node&gt;help socket
+socket open &lt;protocol&gt; &lt;local ip addr&gt; &lt;local port&gt; - Local address can be 0::0 and local port 0 for automatic selection 
+socket send &lt;socket id&gt; &lt;payload&gt; 
+socket close &lt;socket id&gt; 
+socket connect &lt;socket id&gt; &lt;remote ip addr&gt; &lt;remote port&gt;
            </pre>
 
-        <p class="p">These commands are valid for opening a socket as a client. In this example, at the Ipv6 Node, an UDP socket is opened and connected to the remote address 2001:db8::204:9fff:fe00:c, port 1234. Port 1234 is created by default on both devices:</p>
+        <p class="p">These commands are valid for opening a socket as a client. Socket open
+            command opens a socket and binds it to local address and local port. Usually local
+            address is the unspecified address 0::0 so that the stack selects a source address
+            according to destination address. In this example, at the Ipv6 Node, an UDP socket is
+            opened and connected to the remote address 2001:db8::204:9fff:fe00:c, port 1234.</p>
 
-        <pre class="pre codeblock">
-            BLE IPv6 Node&gt;socket open udp 2001:db8::204:9fff:fe00:c 1234 6
+        <pre class="pre codeblock">            BLE IPv6 Node&gt;socket open udp 0::0 1234
 Opening Socket... OK
 Socket id is: 0
-            </pre>
+BLE IPv6 Node&gt;socket connect 0 2001:db8::204:9fff:fe00:c 1234            </pre>
 
-        <p class="p">To send data, enter the socket id and the data value:</p>
+        <p class="p"> Socket is configured with remote peer information. Call the same socket open
+            command on the BLE IPv6 Router also. To send data, enter the socket id and the data
+            value. The socket must be connected by calling socket connect command first.</p>
 
         <pre class="pre codeblock">
             BLE IPv6 Node&gt;socket send 0 HelloWorld!
 Socket Data Sent
             </pre>
 
-        <p class="p">On the IPv6 Router, the console outputs the string received on the socket:</p>
+        <p class="p">On the IPv6 Router, the console outputs the string received on the
+            socket:</p>
 
         <pre class="pre codeblock">
             HelloWorld! From IPv6 Address: 2001:db8::204:9fff:fe00:b
@@ -59,6 +64,8 @@ Socket Data Sent
             BLE IPv6 Node&gt;socket close 0
 Socket 0 was closed
             </pre>
+
+        <p class="p">After closing the socket on the node, the  same command is called on the router.</p>
 
     </div>
 

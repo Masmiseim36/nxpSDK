@@ -1,37 +1,9 @@
 '''
-* The Clear BSD License
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
+* Copyright 2016-2019 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 '''
 
 from com.nxp.wireless_connectivity.commands.fsci_frame_description import FsciAckPolicy
@@ -43,8 +15,7 @@ class MAC_MacFilteringAddEntryOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.MAC_MacFilteringAddEntryRequestFrame
-        self.observers = [MAC_MacFilteringAddEntryConfirmObserver(
-            'MAC_MacFilteringAddEntryConfirm'), ]
+        self.observers = [MAC_MacFilteringAddEntryConfirmObserver('MAC_MacFilteringAddEntryConfirm'), ]
         super(MAC_MacFilteringAddEntryOperation, self).subscribeToEvents()
 
 
@@ -52,8 +23,7 @@ class MAC_MacFilteringRemoveEntryOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.MAC_MacFilteringRemoveEntryRequestFrame
-        self.observers = [MAC_MacFilteringRemoveEntryConfirmObserver(
-            'MAC_MacFilteringRemoveEntryConfirm'), ]
+        self.observers = [MAC_MacFilteringRemoveEntryConfirmObserver('MAC_MacFilteringRemoveEntryConfirm'), ]
         super(MAC_MacFilteringRemoveEntryOperation, self).subscribeToEvents()
 
 
@@ -69,8 +39,7 @@ class MAC_MacFilteringGetTableOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.MAC_MacFilteringGetTableRequestFrame
-        self.observers = [MAC_MacFilteringGetTableConfirmObserver(
-            'MAC_MacFilteringGetTableConfirm'), ]
+        self.observers = [MAC_MacFilteringGetTableConfirmObserver('MAC_MacFilteringGetTableConfirm'), ]
         super(MAC_MacFilteringGetTableOperation, self).subscribeToEvents()
 
 
@@ -118,7 +87,8 @@ class THR_CpuResetOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.THR_CpuResetRequestFrame
-        self.observers = [THR_CpuResetConfirmObserver('THR_CpuResetConfirm'), ]
+        self.observers = [THR_CpuResetConfirmObserver(
+            'THR_CpuResetConfirm'), THR_CpuResetIndicationObserver('THR_CpuResetIndication'), ]
         super(THR_CpuResetOperation, self).subscribeToEvents()
 
 
@@ -166,7 +136,7 @@ class THR_DiagTestGetOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.THR_DiagTestGetRequestFrame
-        self.observers = [THR_DiagTestGetRspIndicationObserver('THR_DiagTestGetRspIndication'), ]
+        self.observers = [THR_DiagTestGetRspIndicationObserver('THR_DiagTestGetRspIndication'), THR_DiagTestGetConfirmObserver('THR_DiagTestGetConfirm'),]
         super(THR_DiagTestGetOperation, self).subscribeToEvents()
 
 
@@ -174,8 +144,7 @@ class THR_MgmtDiagnosticResetOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.THR_MgmtDiagnosticResetRequestFrame
-        self.observers = [THR_MgmtDiagnosticResetConfirmObserver(
-            'THR_MgmtDiagnosticResetConfirm'), ]
+        self.observers = [THR_MgmtDiagnosticResetConfirmObserver('THR_MgmtDiagnosticResetConfirm'), ]
         super(THR_MgmtDiagnosticResetOperation, self).subscribeToEvents()
 
 
@@ -215,19 +184,29 @@ class THR_SearchNwkWithAnounceOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.THR_SearchNwkWithAnounceRequestFrame
-        self.observers = [THR_SearchNwkWithAnounceConfirmObserver(
-            'THR_SearchNwkWithAnounceConfirm'), ]
+        self.observers = [THR_SearchNwkWithAnounceConfirmObserver('THR_SearchNwkWithAnounceConfirm'), ]
         super(THR_SearchNwkWithAnounceOperation, self).subscribeToEvents()
 
+class THR_GetDeviceInfoOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.THR_GetDeviceInfoRequestFrame
+        self.observers = [THR_GetDeviceInfoConfirmObserver('THR_GetDeviceInfoConfirm'), ]
+        super(THR_GetDeviceInfoOperation, self).subscribeToEvents()
 
 class THR_ChildUpdateToParentOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.THR_ChildUpdateToParentRequestFrame
-        self.observers = [THR_ChildUpdateToParentConfirmObserver(
-            'THR_ChildUpdateToParentConfirm'), ]
+        self.observers = [THR_ChildUpdateToParentConfirmObserver('THR_ChildUpdateToParentConfirm'), ]
         super(THR_ChildUpdateToParentOperation, self).subscribeToEvents()
 
+class THR_SetParentPriorityOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.THR_SetParentPriorityRequestFrame
+        self.observers = [THR_SetParentPriorityConfirmObserver('THR_SetParentPriorityConfirm'), ]
+        super(THR_SetParentPriorityOperation, self).subscribeToEvents()
 
 class THR_SetManualSlaacIIDOperation(FsciOperation):
 
@@ -241,8 +220,7 @@ class THR_SendProactiveAddrNotifOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.THR_SendProactiveAddrNotifRequestFrame
-        self.observers = [THR_SendProactiveAddrNotifConfirmObserver(
-            'THR_SendProactiveAddrNotifConfirm'), ]
+        self.observers = [THR_SendProactiveAddrNotifConfirmObserver('THR_SendProactiveAddrNotifConfirm'), ]
         super(THR_SendProactiveAddrNotifOperation, self).subscribeToEvents()
 
 
@@ -253,6 +231,12 @@ class THR_SetThresholdOperation(FsciOperation):
         self.observers = [THR_SetThresholdConfirmObserver('THR_SetThresholdConfirm'), ]
         super(THR_SetThresholdOperation, self).subscribeToEvents()
 
+class THR_SetThreshold32Operation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.THR_SetThreshold32RequestFrame
+        self.observers = [THR_SetThreshold32ConfirmObserver('THR_SetThreshold32Confirm'), ]
+        super(THR_SetThreshold32Operation, self).subscribeToEvents()
 
 class THR_SetNwkIdTimeoutOperation(FsciOperation):
 
@@ -261,6 +245,12 @@ class THR_SetNwkIdTimeoutOperation(FsciOperation):
         self.observers = [THR_SetNwkIdTimeoutConfirmObserver('THR_SetNwkIdTimeoutConfirm'), ]
         super(THR_SetNwkIdTimeoutOperation, self).subscribeToEvents()
 
+class THR_SetRouterPromoteMaxJitterOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.THR_SetRouterPromoteMaxJitterRequestFrame
+        self.observers = [THR_SetRouterPromoteMaxJitterConfirmObserver('THR_SetRouterPromoteMaxJitterConfirm'), ]
+        super(THR_SetRouterPromoteMaxJitterOperation, self).subscribeToEvents()
 
 class THR_GetRoutingTableOperation(FsciOperation):
 
@@ -314,8 +304,7 @@ class THR_LeaderRemoveRouterIdOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.THR_LeaderRemoveRouterIdRequestFrame
-        self.observers = [THR_LeaderRemoveRouterIdConfirmObserver(
-            'THR_LeaderRemoveRouterIdConfirm'), ]
+        self.observers = [THR_LeaderRemoveRouterIdConfirmObserver('THR_LeaderRemoveRouterIdConfirm'), ]
         super(THR_LeaderRemoveRouterIdOperation, self).subscribeToEvents()
 
 
@@ -355,8 +344,7 @@ class THR_BrPrefixRemoveEntryOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.THR_BrPrefixRemoveEntryRequestFrame
-        self.observers = [THR_BrPrefixRemoveEntryConfirmObserver(
-            'THR_BrPrefixRemoveEntryConfirm'), ]
+        self.observers = [THR_BrPrefixRemoveEntryConfirmObserver('THR_BrPrefixRemoveEntryConfirm'), ]
         super(THR_BrPrefixRemoveEntryOperation, self).subscribeToEvents()
 
 
@@ -364,8 +352,7 @@ class THR_BrServiceRemoveEntryOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.THR_BrServiceRemoveEntryRequestFrame
-        self.observers = [THR_BrServiceRemoveEntryConfirmObserver(
-            'THR_BrServiceRemoveEntryConfirm'), ]
+        self.observers = [THR_BrServiceRemoveEntryConfirmObserver('THR_BrServiceRemoveEntryConfirm'), ]
         super(THR_BrServiceRemoveEntryOperation, self).subscribeToEvents()
 
 
@@ -520,13 +507,18 @@ class SocketGetOptionOperation(FsciOperation):
         self.observers = [SocketGetOptionConfirmObserver('SocketGetOptionConfirm'), ]
         super(SocketGetOptionOperation, self).subscribeToEvents()
 
+class SocketCloseOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.SocketCloseRequestFrame
+        self.observers = [SocketCloseConfirmObserver('SocketCloseConfirm'), ]
+        super(SocketCloseOperation, self).subscribeToEvents()
 
 class MESHCOP_StartCommissionerOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.MESHCOP_StartCommissionerRequestFrame
-        self.observers = [MESHCOP_StartCommissionerConfirmObserver(
-            'MESHCOP_StartCommissionerConfirm'), ]
+        self.observers = [MESHCOP_StartCommissionerConfirmObserver('MESHCOP_StartCommissionerConfirm'), ]
         super(MESHCOP_StartCommissionerOperation, self).subscribeToEvents()
 
 
@@ -534,8 +526,7 @@ class MESHCOP_StartNativeCommissionerOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.MESHCOP_StartNativeCommissionerRequestFrame
-        self.observers = [MESHCOP_StartNativeCommissionerConfirmObserver(
-            'MESHCOP_StartNativeCommissionerConfirm'), ]
+        self.observers = [MESHCOP_StartNativeCommissionerConfirmObserver('MESHCOP_StartNativeCommissionerConfirm'), ]
         super(MESHCOP_StartNativeCommissionerOperation, self).subscribeToEvents()
 
 
@@ -543,8 +534,7 @@ class MESHCOP_StopCommissionerOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.MESHCOP_StopCommissionerRequestFrame
-        self.observers = [MESHCOP_StopCommissionerConfirmObserver(
-            'MESHCOP_StopCommissionerConfirm'), ]
+        self.observers = [MESHCOP_StopCommissionerConfirmObserver('MESHCOP_StopCommissionerConfirm'), ]
         super(MESHCOP_StopCommissionerOperation, self).subscribeToEvents()
 
 
@@ -552,8 +542,7 @@ class MESHCOP_AddExpectedJoinerOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.MESHCOP_AddExpectedJoinerRequestFrame
-        self.observers = [MESHCOP_AddExpectedJoinerConfirmObserver(
-            'MESHCOP_AddExpectedJoinerConfirm'), ]
+        self.observers = [MESHCOP_AddExpectedJoinerConfirmObserver('MESHCOP_AddExpectedJoinerConfirm'), ]
         super(MESHCOP_AddExpectedJoinerOperation, self).subscribeToEvents()
 
 
@@ -561,8 +550,7 @@ class MESHCOP_GetExpectedJoinerOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.MESHCOP_GetExpectedJoinerRequestFrame
-        self.observers = [MESHCOP_GetExpectedJoinerConfirmObserver(
-            'MESHCOP_GetExpectedJoinerConfirm'), ]
+        self.observers = [MESHCOP_GetExpectedJoinerConfirmObserver('MESHCOP_GetExpectedJoinerConfirm'), ]
         super(MESHCOP_GetExpectedJoinerOperation, self).subscribeToEvents()
 
 
@@ -570,8 +558,7 @@ class MESHCOP_RemoveExpectedJoinerOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.MESHCOP_RemoveExpectedJoinerRequestFrame
-        self.observers = [MESHCOP_RemoveExpectedJoinerConfirmObserver(
-            'MESHCOP_RemoveExpectedJoinerConfirm'), ]
+        self.observers = [MESHCOP_RemoveExpectedJoinerConfirmObserver('MESHCOP_RemoveExpectedJoinerConfirm'), ]
         super(MESHCOP_RemoveExpectedJoinerOperation, self).subscribeToEvents()
 
 
@@ -579,8 +566,7 @@ class MESHCOP_RemoveAllExpectedJoinersOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.MESHCOP_RemoveAllExpectedJoinersRequestFrame
-        self.observers = [MESHCOP_RemoveAllExpectedJoinersConfirmObserver(
-            'MESHCOP_RemoveAllExpectedJoinersConfirm'), ]
+        self.observers = [MESHCOP_RemoveAllExpectedJoinersConfirmObserver('MESHCOP_RemoveAllExpectedJoinersConfirm'), ]
         super(MESHCOP_RemoveAllExpectedJoinersOperation, self).subscribeToEvents()
 
 
@@ -588,8 +574,7 @@ class MESHCOP_SyncSteeringDataOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.MESHCOP_SyncSteeringDataRequestFrame
-        self.observers = [MESHCOP_SyncSteeringDataConfirmObserver(
-            'MESHCOP_SyncSteeringDataConfirm'), ]
+        self.observers = [MESHCOP_SyncSteeringDataConfirmObserver('MESHCOP_SyncSteeringDataConfirm'), ]
         super(MESHCOP_SyncSteeringDataOperation, self).subscribeToEvents()
 
 
@@ -625,13 +610,18 @@ class MESHCOP_MgmNwkFormOperation(FsciOperation):
         self.observers = [MESHCOP_MgmNwkFormConfirmObserver('MESHCOP_MgmNwkFormConfirm'), ]
         super(MESHCOP_MgmNwkFormOperation, self).subscribeToEvents()
 
+class MESHCOP_MgmNwkLeaveOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.MESHCOP_MgmNwkLeaveRequestFrame
+        self.observers = []
+        super(MESHCOP_MgmNwkLeaveOperation, self).subscribeToEvents()
 
 class MESHCOP_MgmtCommissionerGetOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.MESHCOP_MgmtCommissionerGetRequestFrame
-        self.observers = [MESHCOP_MgmtCommissionerGetConfirmObserver(
-            'MESHCOP_MgmtCommissionerGetConfirm'), ]
+        self.observers = [MESHCOP_MgmtCommissionerGetConfirmObserver('MESHCOP_MgmtCommissionerGetConfirm'), ]
         super(MESHCOP_MgmtCommissionerGetOperation, self).subscribeToEvents()
 
 
@@ -655,8 +645,7 @@ class MESHCOP_MgmtCommissionerSetOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.MESHCOP_MgmtCommissionerSetRequestFrame
-        self.observers = [MESHCOP_MgmtCommissionerSetConfirmObserver(
-            'MESHCOP_MgmtCommissionerSetConfirm'), ]
+        self.observers = [MESHCOP_MgmtCommissionerSetConfirmObserver('MESHCOP_MgmtCommissionerSetConfirm'), ]
         super(MESHCOP_MgmtCommissionerSetOperation, self).subscribeToEvents()
 
 
@@ -680,8 +669,7 @@ class MESHCOP_MgmtSendPanIdQueryOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.MESHCOP_MgmtSendPanIdQueryRequestFrame
-        self.observers = [MESHCOP_MgmtSendPanIdQueryConfirmObserver(
-            'MESHCOP_MgmtSendPanIdQueryConfirm'), ]
+        self.observers = [MESHCOP_MgmtSendPanIdQueryConfirmObserver('MESHCOP_MgmtSendPanIdQueryConfirm'), ]
         super(MESHCOP_MgmtSendPanIdQueryOperation, self).subscribeToEvents()
 
 
@@ -697,8 +685,7 @@ class MESHCOP_MgmtSendAnnounceBeginOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.MESHCOP_MgmtSendAnnounceBeginRequestFrame
-        self.observers = [MESHCOP_MgmtSendAnnounceBeginConfirmObserver(
-            'MESHCOP_MgmtSendAnnounceBeginConfirm'), ]
+        self.observers = [MESHCOP_MgmtSendAnnounceBeginConfirmObserver('MESHCOP_MgmtSendAnnounceBeginConfirm'), ]
         super(MESHCOP_MgmtSendAnnounceBeginOperation, self).subscribeToEvents()
 
 
@@ -746,8 +733,7 @@ class NWKU_CoapCreateInstanceOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.NWKU_CoapCreateInstanceRequestFrame
-        self.observers = [NWKU_CoapCreateInstanceConfirmObserver(
-            'NWKU_CoapCreateInstanceConfirm'), ]
+        self.observers = [NWKU_CoapCreateInstanceConfirmObserver('NWKU_CoapCreateInstanceConfirm'), ]
         super(NWKU_CoapCreateInstanceOperation, self).subscribeToEvents()
 
 
@@ -790,6 +776,33 @@ class NWKU_McastGroupManageOperation(FsciOperation):
         self.observers = [NWKU_McastGroupManageConfirmObserver('NWKU_McastGroupManageConfirm'), ]
         super(NWKU_McastGroupManageOperation, self).subscribeToEvents()
 
+class NWKU_FirewallEnableOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.NWKU_FirewallEnableRequestFrame
+        self.observers = [NWKU_FirewallEnableConfirmObserver('NWKU_FirewallEnableConfirm'), ]
+        super(NWKU_FirewallEnableOperation, self).subscribeToEvents()
+
+class NWKU_FirewallTableShowOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.NWKU_FirewallTableShowRequestFrame
+        self.observers = [NWKU_FirewallTableShowResponseObserver('NWKU_FirewallTableShowResponse'), ]
+        super(NWKU_FirewallTableShowOperation, self).subscribeToEvents()
+
+class NWKU_FirewallRuleRemoveOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.NWKU_FirewallRuleRemoveRequestFrame
+        self.observers = [NWKU_FirewallRuleRemoveConfirmObserver('NWKU_FirewallRuleRemoveConfirm'), ]
+        super(NWKU_FirewallRuleRemoveOperation, self).subscribeToEvents()
+
+class NWKU_FirewallRuleAddOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.NWKU_FirewallRuleAddRequestFrame
+        self.observers = [NWKU_FirewallRuleAddConfirmObserver('NWKU_FirewallRuleAddConfirm'), ]
+        super(NWKU_FirewallRuleAddOperation, self).subscribeToEvents()
 
 class NWKU_RoutesShowOperation(FsciOperation):
 
@@ -846,6 +859,12 @@ class DTLSSendOperation(FsciOperation):
         self.observers = [DTLSSendConfirmObserver('DTLSSendConfirm'), ]
         super(DTLSSendOperation, self).subscribeToEvents()
 
+class FSCICPUResetOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.FSCICPUResetRequestFrame
+        self.observers = []
+        super(FSCICPUResetOperation, self).subscribeToEvents()
 
 class FSCIGetUniqueIdOperation(FsciOperation):
 
@@ -875,8 +894,7 @@ class SerialTun_LinkIndicationOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.SerialTun_LinkIndicationRequestFrame
-        self.observers = [SerialTun_LinkIndicationConfirmObserver(
-            'SerialTun_LinkIndicationConfirm'), ]
+        self.observers = [SerialTun_LinkIndicationConfirmObserver('SerialTun_LinkIndicationConfirm'), ]
         super(SerialTun_LinkIndicationOperation, self).subscribeToEvents()
 
 
@@ -892,8 +910,7 @@ class Sniffer_MacSetPIBAttributeOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.Sniffer_MacSetPIBAttributeRequestFrame
-        self.observers = [Sniffer_MacSetPIBAttributeConfirmObserver(
-            'Sniffer_MacSetPIBAttributeConfirm'), ]
+        self.observers = [Sniffer_MacSetPIBAttributeConfirmObserver('Sniffer_MacSetPIBAttributeConfirm'), ]
         super(Sniffer_MacSetPIBAttributeOperation, self).subscribeToEvents()
 
 
@@ -906,12 +923,12 @@ class Sniffer_DetectOperation(FsciOperation):
         super(Sniffer_DetectOperation, self).subscribeToEvents()
 
 
-class FSCIEnterBootloaderOperation(FsciOperation):
+class FSCIEnableMSDBootloaderOperation(FsciOperation):
 
     def subscribeToEvents(self):
-        self.spec = Spec.FSCIEnterBootloaderRequestFrame
+        self.spec = Spec.FSCIEnableMSDBootloaderRequestFrame
         self.observers = []
-        super(FSCIEnterBootloaderOperation, self).subscribeToEvents()
+        super(FSCIEnableMSDBootloaderOperation, self).subscribeToEvents()
 
 
 class AspSetPowerLevelOperation(FsciOperation):
@@ -958,8 +975,7 @@ class THR_EventNwkJoinSelectParentsOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = None
-        self.observers = [THR_EventNwkJoinSelectParentsConfirmObserver(
-            'THR_EventNwkJoinSelectParentsConfirm'), ]
+        self.observers = [THR_EventNwkJoinSelectParentsConfirmObserver('THR_EventNwkJoinSelectParentsConfirm'), ]
         super(THR_EventNwkJoinSelectParentsOperation, self).subscribeToEvents()
 
 
@@ -975,8 +991,7 @@ class THR_EventNwkCommissioningOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = None
-        self.observers = [THR_EventNwkCommissioningIndicationObserver(
-            'THR_EventNwkCommissioningIndication'), ]
+        self.observers = [THR_EventNwkCommissioningIndicationObserver('THR_EventNwkCommissioningIndication'), ]
         super(THR_EventNwkCommissioningOperation, self).subscribeToEvents()
 
 
@@ -984,8 +999,7 @@ class THR_CommissioningDiagnosticOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = None
-        self.observers = [THR_CommissioningDiagnosticIndicationObserver(
-            'THR_CommissioningDiagnosticIndication'), ]
+        self.observers = [THR_CommissioningDiagnosticIndicationObserver('THR_CommissioningDiagnosticIndication'), ]
         super(THR_CommissioningDiagnosticOperation, self).subscribeToEvents()
 
 
@@ -993,8 +1007,7 @@ class THR_MgmtDiagnosticGetRspOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = None
-        self.observers = [THR_MgmtDiagnosticGetRspIndicationObserver(
-            'THR_MgmtDiagnosticGetRspIndication'), ]
+        self.observers = [THR_MgmtDiagnosticGetRspIndicationObserver('THR_MgmtDiagnosticGetRspIndication'), ]
         super(THR_MgmtDiagnosticGetRspOperation, self).subscribeToEvents()
 
 
@@ -1019,8 +1032,7 @@ class THR_MgmtDiagnosticResetRspOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = None
-        self.observers = [THR_MgmtDiagnosticResetRspIndicationObserver(
-            'THR_MgmtDiagnosticResetRspIndication'), ]
+        self.observers = [THR_MgmtDiagnosticResetRspIndicationObserver('THR_MgmtDiagnosticResetRspIndication'), ]
         super(THR_MgmtDiagnosticResetRspOperation, self).subscribeToEvents()
 
 
@@ -1036,8 +1048,7 @@ class NWKU_CoapMsgReceivedOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = None
-        self.observers = [NWKU_CoapMsgReceivedIndicationObserver(
-            'NWKU_CoapMsgReceivedIndication'), ]
+        self.observers = [NWKU_CoapMsgReceivedIndicationObserver('NWKU_CoapMsgReceivedIndication'), ]
         super(NWKU_CoapMsgReceivedOperation, self).subscribeToEvents()
 
 
@@ -1045,8 +1056,7 @@ class NWKU_DnsResponseReceivedOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = None
-        self.observers = [NWKU_DnsResponseReceivedIndicationObserver(
-            'NWKU_DnsResponseReceivedIndication'), ]
+        self.observers = [NWKU_DnsResponseReceivedIndicationObserver('NWKU_DnsResponseReceivedIndication'), ]
         super(NWKU_DnsResponseReceivedOperation, self).subscribeToEvents()
 
 
@@ -1054,8 +1064,7 @@ class MESHCOP_MgmtPanIdConflictOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = None
-        self.observers = [MESHCOP_MgmtPanIdConflictConfirmObserver(
-            'MESHCOP_MgmtPanIdConflictConfirm'), ]
+        self.observers = [MESHCOP_MgmtPanIdConflictConfirmObserver('MESHCOP_MgmtPanIdConflictConfirm'), ]
         super(MESHCOP_MgmtPanIdConflictOperation, self).subscribeToEvents()
 
 
@@ -1095,8 +1104,7 @@ class SerialTun_IPPacketReceivedOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = None
-        self.observers = [SerialTun_IPPacketReceivedConfirmObserver(
-            'SerialTun_IPPacketReceivedConfirm'), ]
+        self.observers = [SerialTun_IPPacketReceivedConfirmObserver('SerialTun_IPPacketReceivedConfirm'), ]
         super(SerialTun_IPPacketReceivedOperation, self).subscribeToEvents()
 
 

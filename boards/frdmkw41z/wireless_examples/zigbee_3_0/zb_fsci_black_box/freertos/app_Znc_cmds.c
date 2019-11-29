@@ -1,36 +1,8 @@
 /*
-* The Clear BSD License
 * Copyright 2016-2017 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 */
 
 /*!=============================================================================
@@ -234,6 +206,11 @@ PRIVATE ZPS_teStatus APP_eSetUserDescriptorReq( uint16    u16Addr,
 PRIVATE ZPS_teStatus APP_eZdpUserDescReq( uint16    u16Addr,
                                           uint16    u16AddrOfInt,
                                           uint8*    pu8Seq );
+
+PRIVATE void APP_vUpdateReportableChange( tuZCL_AttributeReportable *puAttributeReportable,
+                                          teZCL_ZCLAttributeType    eAttributeDataType,
+                                          uint8                     *pu8Buffer,
+                                          uint16                    *pu16Offset );
 /****************************************************************************/
 /***    Exported Variables                        ***/
 /****************************************************************************/
@@ -624,7 +601,11 @@ PUBLIC void APP_vProcessIncomingSerialCommands ( uint8    u8RxByte )
                         ZPS_tsNwkNib *psNib    =  ZPS_psAplZdoGetNib ( );
                         
                         u32OldFrameCtr    =  psNib->sTbl.u32OutFC;
-                        APP_vFactoryResetRecords ( );
+                        if (ZPS_E_SUCCESS !=  ZPS_eAplZdoLeaveNetwork(0, FALSE,FALSE))
+                        {
+                        	APP_vFactoryResetRecords ( );
+                        	ResetMCU();
+                        }
                     }
                 }
                 break;
@@ -795,7 +776,7 @@ PUBLIC void APP_vProcessIncomingSerialCommands ( uint8    u8RxByte )
                     u32ChannelMask      =  ZNC_RTN_U32 ( au8LinkRxBuffer, 2 );
                     u8ScanDuration      =  au8LinkRxBuffer[6];
                     u8ScanCount         =  au8LinkRxBuffer[7];
-                    u16NwkManagerAddr   =  ZNC_RTN_U16 ( au8LinkRxBuffer, 8);
+                    u16NwkManagerAddr   =  ZNC_RTN_U16 ( au8LinkRxBuffer, 9);
                     
                     u8Status        =  APP_eZdpMgmtNetworkUpdateReq ( u16TargetAddress,
                                                                      u32ChannelMask,
@@ -1195,6 +1176,7 @@ PUBLIC void APP_vProcessIncomingSerialCommands ( uint8    u8RxByte )
                     
                     sRequest.u16GroupId    =  ZNC_RTN_U16 ( au8LinkRxBuffer, 5 );
                     sRequest.u8SceneId     =  au8LinkRxBuffer[7];
+                    sRequest.u16TransitionTime = ZNC_RTN_U16 ( au8LinkRxBuffer, 8 );
                     u8Status    =  eCLD_ScenesCommandRecallSceneRequestSend ( au8LinkRxBuffer [ 3 ],
                                                                              au8LinkRxBuffer [ 4 ],
                                                                              &sAddress,
@@ -1321,7 +1303,36 @@ PUBLIC void APP_vProcessIncomingSerialCommands ( uint8    u8RxByte )
                                                                         &sRequest );
                 }
                 break;
-                
+
+            case (E_SL_MSG_DIAGNOSTICS_REQUEST):
+                {
+                    tsCLD_Diagnostics_CommandPayload sRequest = {0};
+                    uint8 idx = 0;
+
+                    if(sAddress.eAddressMode == E_ZCL_AM_IEEE)
+                    {
+                        FLib_MemCpyReverseOrder(&sAddress.uAddress.u64DestinationAddress, (void *)&au8LinkRxBuffer[ 1 ], 8);
+                        idx = 6;
+                    }
+
+                    sRequest.cmdId = au8LinkRxBuffer [ 5 + idx ];
+                    sRequest.sequenceNumber = au8LinkRxBuffer [ 6 + idx ];
+                    sRequest.payloadSize = au8LinkRxBuffer [ 7 + idx ];
+                    sRequest.payload = NULL;
+
+                    if(sRequest.payloadSize != 0)
+                    {
+                        sRequest.payload = (zuint8 *)&au8LinkRxBuffer [ 8 + idx ];
+                    }
+
+                    u8Status = eCLD_DiagnosticsCommandSend(au8LinkRxBuffer [ 3 + idx ],
+                                                           au8LinkRxBuffer [ 4 + idx ],
+                                                           &sAddress,
+                                                           &u8SeqNum,
+                                                           &sRequest);
+                }
+                break;
+
                 /* colour cluster commands */
                 
             case (E_SL_MSG_MOVE_HUE):
@@ -1703,7 +1714,20 @@ PUBLIC void APP_vProcessIncomingSerialCommands ( uint8    u8RxByte )
                                                                         &sPayload );
                 }
                 break;
+#ifdef CLD_LEVELCONTROL_ATTR_CURRENT_FREQUENCY
+            case (E_SL_MSG_MOVE_TO_CLOSEST_FREQ):
+              {
+                tsCLD_LevelControl_MoveToClosestFreqCommandPayload    sPayload;
                 
+                sPayload.u16Frequency        =  ZNC_RTN_U16 ( au8LinkRxBuffer, 5 );
+                u8Status = eCLD_LevelControlCommandMoveToClosestFreqCommandSend ( au8LinkRxBuffer [ 3 ],
+                                                                    au8LinkRxBuffer [ 4 ],
+                                                                    &sAddress,
+                                                                    &u8SeqNum,
+                                                                    &sPayload );
+              }
+              break;
+#endif 
                 /* Identify commands*/
                 
             case (E_SL_MSG_IDENTIFY_SEND):
@@ -1807,7 +1831,7 @@ PUBLIC void APP_vProcessIncomingSerialCommands ( uint8    u8RxByte )
                     uint16                                         u16ManId;
                     tsZCL_AttributeReportingConfigurationRecord    asAttribReportConfigRecord[10];
                     int                                            i;
-                    uint8                                          u8Offset = 12;
+                    uint16                                         u16Offset = 12;
                     
                     u16ClusterId      =  ZNC_RTN_U16 ( au8LinkRxBuffer, 5 );
                     u16ManId          =  ZNC_RTN_U16 ( au8LinkRxBuffer, 9 );
@@ -1815,24 +1839,30 @@ PUBLIC void APP_vProcessIncomingSerialCommands ( uint8    u8RxByte )
                     
                     for (i = 0; i < au8LinkRxBuffer[11]; i++)
                     {
-                        if (i < 10)
+                        if (i < 10 &&
+                            ( u16Offset < (MAX_PACKET_SIZE - 18) ))
                         {
                             /* Destination structure is not packed so we have to manually load rather than just copy */
-                            asAttribReportConfigRecord [ i ].u8DirectionIsReceived          =  au8LinkRxBuffer [ u8Offset++ ];
-                            asAttribReportConfigRecord [ i ].eAttributeDataType             =  au8LinkRxBuffer [ u8Offset++ ];
+
+                            asAttribReportConfigRecord [ i ].u8DirectionIsReceived          =  au8LinkRxBuffer [ u16Offset++ ];
+                            asAttribReportConfigRecord [ i ].eAttributeDataType             =  au8LinkRxBuffer [ u16Offset++ ];
                             asAttribReportConfigRecord [ i ].u16AttributeEnum               =  ZNC_RTN_U16_OFFSET ( au8LinkRxBuffer,
-                                                                                                                   u8Offset,
-                                                                                                                   u8Offset );
+                                                                                                                   u16Offset,
+                                                                                                                   u16Offset );
                             asAttribReportConfigRecord [ i ].u16MinimumReportingInterval    =  ZNC_RTN_U16_OFFSET ( au8LinkRxBuffer,
-                                                                                                                   u8Offset,
-                                                                                                                   u8Offset );
+                                                                                                                   u16Offset,
+                                                                                                                   u16Offset );
                             asAttribReportConfigRecord [ i ].u16MaximumReportingInterval    =  ZNC_RTN_U16_OFFSET ( au8LinkRxBuffer,
-                                                                                                                   u8Offset,
-                                                                                                                   u8Offset );
+                                                                                                                   u16Offset,
+                                                                                                                   u16Offset );
                             asAttribReportConfigRecord [ i ].u16TimeoutPeriodField          =  ZNC_RTN_U16_OFFSET ( au8LinkRxBuffer,
-                                                                                                                   u8Offset,
-                                                                                                                   u8Offset );
-                            asAttribReportConfigRecord[i].uAttributeReportableChange.zuint8ReportableChange = au8LinkRxBuffer [u8Offset++ ];
+                                                                                                                   u16Offset,
+                                                                                                                   u16Offset );
+                            APP_vUpdateReportableChange( &asAttribReportConfigRecord[i].uAttributeReportableChange,
+                                                         asAttribReportConfigRecord [ i ].eAttributeDataType,
+                                                         au8LinkRxBuffer,
+                                                         &u16Offset);
+
                         }
                     }
                     
@@ -3339,7 +3369,7 @@ PUBLIC void APP_vSendJoinedFormEventToHost ( uint8    u8FormJoin,
     u16NwkAddr  =  ZPS_u16NwkNibGetNwkAddr ( ZPS_pvAplZdoGetNwkHandle ( ) );
     u64IeeeAddr =  ZPS_u64NwkNibGetExtAddr ( ZPS_pvAplZdoGetNwkHandle ( ) );
 
-    eAppApiPlmeGet ( PHY_PIB_ATTR_CURRENT_CHANNEL, &u32Channel );
+    ZPS_eMacPlmeGet ( PHY_PIB_ATTR_CURRENT_CHANNEL, &u32Channel );
 
     *pu8BufferCpy = u8FormJoin;
 
@@ -3398,7 +3428,7 @@ PUBLIC void APP_vFactoryResetRecords( void)
     ZPS_vDefaultStack ( );
     (void)ZPS_eAplAibSetApsUseExtendedPanId(ZPS_APS_AIB_INIT_USE_EXTENDED_PANID);
     vZpsGlobalsInit();
-    //BDB_vSetKeys ( );
+    ZPS_vSetKeys();
 
     /* clear out the application */
     sZllState.eState           = FACTORY_NEW;
@@ -3850,7 +3880,58 @@ PUBLIC void vHandleIdentifyRequest(uint16 u16Duration)
 {
     APP_vIdentifyEffect ( &u16Duration );
 }
+/****************************************************************************
+ **
+ ** NAME:       APP_vUpdateReportableChange
+ **
+ **
+ ****************************************************************************/
+PRIVATE void APP_vUpdateReportableChange( tuZCL_AttributeReportable *puAttributeReportable,
+                                          teZCL_ZCLAttributeType    eAttributeDataType,
+                                          uint8                     *pu8Buffer,
+                                          uint16                    *pu16Offset )
+{
 
+    if( eAttributeDataType >= E_ZCL_UINT8 &&
+        eAttributeDataType <= E_ZCL_INT64 )
+    {
+        switch ( eAttributeDataType )
+        {
+        case E_ZCL_UINT8:
+        case E_ZCL_INT8:
+            puAttributeReportable->zuint8ReportableChange = pu8Buffer[(*pu16Offset)++];
+            break;
+        case E_ZCL_UINT16:
+        case E_ZCL_INT16:
+            puAttributeReportable->zuint16ReportableChange =  ZNC_RTN_U16_OFFSET ( pu8Buffer, *pu16Offset,  *pu16Offset );
+            break;
+        case E_ZCL_UINT24:
+        case E_ZCL_INT24:
+        case E_ZCL_UINT32:
+        case E_ZCL_INT32:
+            puAttributeReportable->zuint32ReportableChange =  ZNC_RTN_U32_OFFSET ( pu8Buffer, *pu16Offset,  *pu16Offset );
+            break;
+        case E_ZCL_UINT40:
+        case E_ZCL_INT40:
+        case E_ZCL_UINT48:
+        case E_ZCL_INT48:
+        case E_ZCL_UINT56:
+        case E_ZCL_INT56:
+        case E_ZCL_UINT64:
+        case E_ZCL_INT64:
+            puAttributeReportable->zuint64ReportableChange =  ZNC_RTN_U64_OFFSET ( pu8Buffer, *pu16Offset,  *pu16Offset );
+            break;
+        default:
+            break;
+        }
+    }
+    else
+    {
+        /* WARNING : We should not be sent anything from the higher layer as there should be no reportable change field
+         * If we do get something for this record it's an error and the rest of the records will be all wrong.
+         *  */
+    }
+}
 
 /***    END OF FILE                           ***/
 /****************************************************************************/

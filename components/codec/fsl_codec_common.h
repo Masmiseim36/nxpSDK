@@ -15,8 +15,8 @@
  ******************************************************************************/
 /*! @name Driver version */
 /*@{*/
-/*! @brief CLOCK driver version 2.1.1. */
-#define FSL_CODEC_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
+/*! @brief CLOCK driver version 2.1.0. */
+#define FSL_CODEC_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
 /*@}*/
 
 /*! @brief CODEC handle buffer size */

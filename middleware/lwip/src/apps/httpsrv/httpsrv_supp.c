@@ -261,7 +261,6 @@ HTTPSRV_STRUCT *httpsrv_create_server(HTTPSRV_PARAM_STRUCT *params)
 
 EXIT:
     httpsrv_destroy_server(server);
-    httpsrv_mem_free(server);
     return (NULL);
 }
 
@@ -1608,7 +1607,7 @@ void httpsrv_url_decode(char *url)
 
     while (*src != '\0')
     {
-        if ((*src == '%') && (isxdigit((unsigned char)*(src + 1))) && (isxdigit((unsigned char)*(src + 2))))
+        if ((*src == '%') && (isxdigit((int)*(src + 1))) && (isxdigit((int)*(src + 2))))
         {
             *src = *(src + 1);
             *(src + 1) = *(src + 2);

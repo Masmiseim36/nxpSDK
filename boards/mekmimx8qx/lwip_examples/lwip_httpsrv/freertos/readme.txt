@@ -1,0 +1,80 @@
+Overview
+========
+
+The lwip_httpsrv demo application demonstrates an HTTPServer on the lwIP TCP/IP stack with bare metal SDK or FreeRTOS.
+The user uses an Internet browser to send a request for connection. The board acts as an HTTP server and sends a Web
+page back to the PC.
+
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- GCC ARM Embedded  7.3.1
+
+Hardware requirements
+=====================
+- Micro USB cable
+- MIMX8QX MEK board
+- J-Link Debug Probe
+- 12V power supply
+- Network cable RJ45 standard
+- Personal Computer
+
+Board settings
+==============
+No special setting needed.
+
+#### Please note this application can't support running with Linux BSP! ####
+This example aims to show the basic usage of the IP's function, some of the used Pads/Resources are also used by Cortex-A core.
+
+Prepare the Demo
+================
+1.  Connect 12V power supply and J-Link Debug Probe to the board, switch SW3 to power on the board.
+2.  Connect a micro USB cable between the host PC and the J11 USB port on the cpu board.
+3.  Open a serial terminal with the following settings:
+    - 115200 baud rate
+    - 8 data bits
+    - No parity
+    - One stop bit
+    - No flow control
+4.  Insert the Ethernet Cable into the target board's RJ45 port and connect it to your PC network adapter.
+5.  Download the program to the target board.
+6.  Configure the host PC IP address to 192.168.0.100.
+7.  Launch the debugger in your IDE to begin running the example.
+
+Running the demo
+================
+1.  When the demo runs successfully, the terminal will display the following:
+        ************************************************
+         HTTP Server example
+        ************************************************
+         IPv4 Address     : 192.168.0.102
+         IPv4 Subnet mask : 255.255.255.0
+         IPv4 Gateway     : 192.168.0.100
+        ************************************************
+2.  On the browser address bar, type 192.168.0.102(IP address of the board).
+    The browser should show a web page.
+
+Modifying content of static web pages
+To modify content available through the web server you must complete following steps:
+  1. Modify, add or delete files in folder "middleware\lwip\src\apps\httpsrv\mkfs\web_pages".
+  2. Run the script file "middleware\lwip\src\apps\httpsrv\mkfs\mkfs.pl <directory name>" to generate new "httpsrv_fs_data.c".
+     For example:
+        C:\sdk\middleware\lwip\src\apps\httpsrv\mkfs> mkfs.pl webpage
+        Processing file webpage/auth.html
+        Processing file webpage/cgi.html
+        Processing file webpage/favicon.ico
+        Processing file webpage/help.html
+        Processing file webpage/httpsrv.css
+        Processing file webpage/index.html
+        Processing file webpage/NXP_logo.png
+        Processing file webpage/poll.html
+        Processing file webpage/request.js
+        Processing file webpage/ssi.shtml
+        Processing file webpage/welcome.html
+        Done.
+  3. Overwrite the middleware\lwip\src\apps\httpsrv\httpsrv_fs_data.c file by the new generated middleware\lwip\src\apps\httpsrv\mkfs\httpsrv_fs_data.c file.
+  4. Re-compile the HTTP server application example and download it to your board. 
+Customization options
+=====================
+

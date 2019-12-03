@@ -314,8 +314,7 @@ ping_recv(void *arg, struct raw_pcb *pcb, struct pbuf *p, const ip_addr_t *addr)
       return 1; /* eat the packet */
     }
     /* not eaten, restore original packet */
-    /* Changed to the "_force" version because of LPC zerocopy pbufs */
-    pbuf_add_header_force(p, PBUF_IP_HLEN);
+    pbuf_add_header(p, PBUF_IP_HLEN);
   }
 
   return 0; /* don't eat the packet */

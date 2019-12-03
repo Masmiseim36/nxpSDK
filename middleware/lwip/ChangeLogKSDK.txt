@@ -4,10 +4,6 @@
 @section lwip lwIP for MCUXpresso SDK
   The current version of lwIP is based on lwIP 2.1.2 and lwIP-contrib 2.1.0.
 
-  - 2.1.2_rev2
-    - Bug fixes:
-	  - Fixed lwiperf_abort() in lwiperf.c to correctly close connections and free resources
-
   - 2.1.2_rev1
     - New features:
       - Ported lwIP 2.1.2 (2018-11-22, SHA-1: 159e31b689577dbf69cf0683bbaffbd71fa5ee10) to KSDK 2.0.0.

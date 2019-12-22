@@ -108,17 +108,19 @@ typedef void* hal_timer_handle_t;
  * @note This API should be called at the beginning of the application using the timer adapter.
  * For Initializes timer adapter,
  *  @code
- *     uint8_t halTimerHandle[HAL_TIMER_HANDLE_SIZE];
+ *   uint32_t halTimerHandleBuffer[((HAL_TIMER_HANDLE_SIZE + sizeof(uint32_t) - 1) / sizeof(uitn32_t))];
+ *   hal_timer_handle_t halTimerHandle = (hal_timer_handle_t)&halTimerHandleBuffer[0];
  *   hal_timer_config_t halTimerConfig;
  *   halTimerConfig.timeout = 1000;
  *   halTimerConfig.srcClock_Hz = BOARD_GetTimeSrcClock();
  *   halTimerConfig.instance = 0;
- *   HAL_TimerInit((hal_timer_handle_t)&halTimerHandle, &halTimerConfig);
+ *   HAL_TimerInit(halTimerHandle, &halTimerConfig);
  *  @endcode
  *
- * @param halTimerHandle     HAL timer adapter handle, the handle buffer with size #HAL_TIMER_HANDLE_SIZE should
- *                           be allocated at upper level
- * @param halTimerConfig     A pointer to the HAL timer configuration structure
+ * @param halTimerHandle HAL timer adapter handle, the handle buffer with size #HAL_TIMER_HANDLE_SIZE
+ * should be allocated at upper level.
+ * The handle should be 4 byte aligned, because unaligned access does not support on some devices.
+ * @param halTimerConfig A pointer to the HAL timer configuration structure
  * @retval kStatus_HAL_TimerSuccess The timer adapter module initialization succeed.
  * @retval kStatus_HAL_TimerOutOfRanger The timer adapter instance out of ranger.
  */

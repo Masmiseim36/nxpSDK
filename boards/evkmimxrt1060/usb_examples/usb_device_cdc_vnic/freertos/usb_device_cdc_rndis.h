@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -563,7 +563,8 @@ typedef struct _usb_device_cdc_rndis_struct
     uint32_t numFramesTxOneCollision;     /*!< The number of the frames sent that has one collision. */
     uint32_t numFramesTxManyCollision;    /*!< The number of the frames sent that has many collision. */
     uint8_t rndisDeviceState;             /*!< The RNDIS device state. */
-    usb_osa_mutex_handle statusMutex;     /*!< The mutex to guarantee the consistent access to the device state. */
+    osa_mutex_handle_t statusMutex;/*!< The mutex to guarantee the consistent access to the device state. */
+    uint32_t mutexBuffer[(OSA_MUTEX_HANDLE_SIZE + 3)/4];
     /*! The callback function provided by application for the RNDIS request. */
     usb_status_t (*rndisCallback)(class_handle_t handle, uint32_t event, void *param);
 } usb_device_cdc_rndis_struct_t;

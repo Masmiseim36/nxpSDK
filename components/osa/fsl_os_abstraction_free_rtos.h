@@ -73,11 +73,6 @@ MISRAC_ENABLE
 /*******************************************************************************
  * Declarations
  ******************************************************************************/
-/*! @brief Definition to determine whether enable TASK module. */
-#ifndef FSL_OSA_FREERTOS_TASK_ENABLE
-#define FSL_OSA_FREERTOS_TASK_ENABLE 1U
-#endif
-
 /*! @brief Type for a task handler, returned by the OSA_TaskCreate function. */
 typedef TaskHandle_t task_handler_t;
 

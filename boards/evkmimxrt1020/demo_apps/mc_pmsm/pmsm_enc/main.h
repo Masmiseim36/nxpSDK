@@ -17,15 +17,14 @@
 #include "fsl_lpuart.h"
 #include "m1_sm_snsless_enc.h"
 
+#include "freemaster_serial_lpuart.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /*! @brief The UART to use for FreeMASTER communication */
-#define BOARD_FMSTR_LPUART (1) 
 #define BOARD_FMSTR_UART_PORT LPUART1
-#define BOARD_FMSTR_UART_BAUDRATE 115200U
-#define BOARD_FMSTR_UART_TYPE BOARD_FMSTR_LPUART 
-#define BOARD_FMSTR_USE_TSA (1)   
+#define BOARD_FMSTR_UART_BAUDRATE 19200U
 
 #define BOARD_USER_BUTTON_PRIORITY 4
 

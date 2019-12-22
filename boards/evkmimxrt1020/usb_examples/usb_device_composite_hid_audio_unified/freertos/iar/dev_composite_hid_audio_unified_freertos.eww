@@ -5,6 +5,14 @@
       <name>all</name>
       <member>
         <project>dev_composite_hid_audio_unified_freertos</project>
+        <configuration>flexspi_nor_sdram_debug</configuration>
+      </member>
+      <member>
+        <project>dev_composite_hid_audio_unified_freertos</project>
+        <configuration>flexspi_nor_sdram_release</configuration>
+      </member>
+      <member>
+        <project>dev_composite_hid_audio_unified_freertos</project>
         <configuration>sdram_debug</configuration>
       </member>
       <member>
@@ -19,13 +27,19 @@
         <project>dev_composite_hid_audio_unified_freertos</project>
         <configuration>release</configuration>
       </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flexspi_nor_sdram_debug</name>
       <member>
         <project>dev_composite_hid_audio_unified_freertos</project>
-        <configuration>flexspi_nor_debug</configuration>
+        <configuration>flexspi_nor_sdram_debug</configuration>
       </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flexspi_nor_sdram_release</name>
       <member>
         <project>dev_composite_hid_audio_unified_freertos</project>
-        <configuration>flexspi_nor_release</configuration>
+        <configuration>flexspi_nor_sdram_release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
@@ -54,20 +68,6 @@
       <member>
         <project>dev_composite_hid_audio_unified_freertos</project>
         <configuration>release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>flexspi_nor_debug</name>
-      <member>
-        <project>dev_composite_hid_audio_unified_freertos</project>
-        <configuration>flexspi_nor_debug</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>flexspi_nor_release</name>
-      <member>
-        <project>dev_composite_hid_audio_unified_freertos</project>
-        <configuration>flexspi_nor_release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

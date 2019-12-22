@@ -209,6 +209,19 @@
 #define BOARD_CAMERA_I2C_CLOCK_FREQ \
     (CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8 / (BOARD_CAMERA_I2C_CLOCK_SOURCE_DIVIDER + 1U))
 
+#define BOARD_CAMERA_I2C_SCL_GPIO GPIO1
+#define BOARD_CAMERA_I2C_SCL_PIN 16
+#define BOARD_CAMERA_I2C_SDA_GPIO GPIO1
+#define BOARD_CAMERA_I2C_SDA_PIN 17
+#define BOARD_CAMERA_PWDN_GPIO GPIO1
+#define BOARD_CAMERA_PWDN_PIN 4
+
+/* @Brief Board Bluetooth HCI UART configuration */
+#define BOARD_BT_UART_BASEADDR LPUART3
+#define BOARD_BT_UART_CLK_FREQ BOARD_DebugConsoleSrcFreq()
+#define BOARD_BT_UART_IRQ LPUART3_IRQn
+#define BOARD_BT_UART_IRQ_HANDLER LPUART3_IRQHandler
+
 #if defined(__cplusplus)
 extern "C" {
 #endif /* __cplusplus */

@@ -19,7 +19,9 @@
 #include "dfu_app.h"
 
 #include "dfu.h"
+#ifndef __DSC__
 #include "fsl_gpio.h"
+#endif
 #include "fsl_device_registers.h"
 #include "clock_config.h"
 #include "board.h"
@@ -311,16 +313,17 @@ int main(void)
 void main(void)
 #endif
 {
+	
     BOARD_ConfigMPU();
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
-
+    
     USB_DeviceApplicationInit();
     while (1U)
     {
 #if USB_DEVICE_CONFIG_USE_TASK
-        USB_DeviceTaskFn(g_UsbDeviceHidGeneric.deviceHandle);
+        USB_DeviceTaskFn(g_UsbDeviceDfu.deviceHandle);
 #endif
         USB_DeviceDfuTask();
     }

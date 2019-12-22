@@ -39,7 +39,7 @@ static uint8_t s_hyperflash_read_buffer[FLASH_PAGE_SIZE];
  * Code
  ******************************************************************************/
 flexspi_device_config_t deviceconfig = {
-    .flexspiRootClk       = 42000000, /* 42MHZ SPI serial clock */
+    .flexspiRootClk       = 83000000, /* 83MHZ SPI serial clock */
     .isSck2Enabled        = false,
     .flashSize            = FLASH_SIZE,
     .CSIntervalUnit       = kFLEXSPI_CsIntervalUnit1SckCycle,
@@ -197,7 +197,6 @@ int main(void)
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
-    SCB_DisableDCache();
 
     PRINTF("FLEXSPI hyperflash example started!\r\n");
 
@@ -237,6 +236,9 @@ int main(void)
     }
 
     memset(s_hyperflash_program_buffer, 0xFF, sizeof(s_hyperflash_program_buffer));
+
+    DCACHE_InvalidateByRange(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE, FLASH_PAGE_SIZE);
+
     memcpy(s_hyperflash_read_buffer, (void *)(FlexSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE),
            sizeof(s_hyperflash_read_buffer));
 
@@ -263,7 +265,7 @@ int main(void)
         return -1;
     }
 
-    DCACHE_CleanInvalidateByRange(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE, FLASH_PAGE_SIZE);
+    DCACHE_InvalidateByRange(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE, FLASH_PAGE_SIZE);
 
     memcpy(s_hyperflash_read_buffer, (void *)(FlexSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE),
            sizeof(s_hyperflash_read_buffer));

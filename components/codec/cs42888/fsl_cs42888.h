@@ -25,6 +25,11 @@
 #define FSL_CS42888_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
 /*@}*/
 
+/*! @brief CS42888 handle size */
+#ifndef CS42888_I2C_HANDLER_SIZE
+#define CS42888_I2C_HANDLER_SIZE CODEC_I2C_MASTER_HANDLER_SIZE
+#endif
+
 /*! @brief Define the register address of CS42888. */
 #define CS42888_ID 0x01
 #define CS42888_POWER_CONTROL 0x02
@@ -175,8 +180,8 @@ typedef struct cs42888_config
 /*! @brief cs42888 handler */
 typedef struct _cs42888_handle
 {
-    cs42888_config_t *config; /*!< cs42888 config pointer */
-    void *i2cHandle;          /*!< i2c handle pointer */
+    cs42888_config_t *config;                    /*!< cs42888 config pointer */
+    uint8_t i2cHandle[CS42888_I2C_HANDLER_SIZE]; /*!< i2c handle pointer */
 } cs42888_handle_t;
 
 /*******************************************************************************

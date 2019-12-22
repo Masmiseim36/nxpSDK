@@ -31,17 +31,18 @@
 
 #include "pin_mux.h"
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 /* Composite device structure. */
 usb_device_composite_struct_t g_composite;
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_SetupOutBuffer[8];
 
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 void BOARD_InitHardware(void);
 void USB_DeviceClockInit(void);
 void USB_DeviceIsrEnable(void);
@@ -49,8 +50,8 @@ void USB_DeviceIsrEnable(void);
 void USB_DeviceTaskFn(void *deviceHandle);
 #endif
 /*******************************************************************************
-* Code
-******************************************************************************/
+ * Code
+ ******************************************************************************/
 
 void USB_OTG1_IRQHandler(void)
 {
@@ -113,14 +114,14 @@ void USB_DeviceTaskFn(void *deviceHandle)
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
     usb_status_t error = kStatus_USB_Error;
-    uint8_t *temp8 = (uint8_t *)param;
+    uint8_t *temp8     = (uint8_t *)param;
 
     switch (event)
     {
         case kUSB_DeviceEventBusReset:
         {
             USB_DeviceControlPipeInit(handle);
-            g_composite.attach = 0;
+            g_composite.attach               = 0;
             g_composite.currentConfiguration = 0;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
@@ -135,7 +136,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         case kUSB_DeviceEventSetConfiguration:
             if (0U == (*temp8))
             {
-                g_composite.attach = 0U;
+                g_composite.attach               = 0U;
                 g_composite.currentConfiguration = 0U;
             }
             else if (USB_COMPOSITE_CONFIGURE_INDEX == (*temp8))
@@ -143,7 +144,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 g_composite.attach = 1;
                 USB_DeviceCdcVcomSetConfigure(handle, *temp8);
                 g_composite.currentConfiguration = *temp8;
-                error = kStatus_USB_Success;
+                error                            = kStatus_USB_Success;
             }
             else
             {
@@ -247,7 +248,7 @@ usb_status_t USB_DeviceConfigureRemoteWakeup(usb_device_handle handle, uint8_t e
 usb_status_t USB_DeviceConfigureEndpointStatus(usb_device_handle handle, uint8_t ep, uint8_t status)
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
-    error = USB_DeviceCdcVcomConfigureEndpointStatus(handle, ep, status);
+    error              = USB_DeviceCdcVcomConfigureEndpointStatus(handle, ep, status);
 
     return error;
 }
@@ -269,12 +270,11 @@ usb_status_t USB_DeviceGetClassReceiveBuffer(usb_device_handle handle,
                                              uint32_t *length,
                                              uint8_t **buffer)
 {
-    static uint8_t setupOut[8];
-    if ((NULL == buffer) || ((*length) > sizeof(setupOut)))
+    if ((NULL == buffer) || ((*length) > sizeof(s_SetupOutBuffer)))
     {
         return kStatus_USB_InvalidRequest;
     }
-    *buffer = setupOut;
+    *buffer = s_SetupOutBuffer;
     return kStatus_USB_Success;
 }
 
@@ -298,7 +298,6 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
     return USB_DeviceCdcVcomClassRequest(handle, setup, length, buffer);
 }
 
-
 /*!
  * @brief Application initialization function.
  *
@@ -314,8 +313,8 @@ void APPInit(void)
     SYSMPU_Enable(SYSMPU, 0);
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-    g_composite.speed = USB_SPEED_FULL;
-    g_composite.attach = 0;
+    g_composite.speed        = USB_SPEED_FULL;
+    g_composite.attach       = 0;
     g_composite.deviceHandle = NULL;
 
     if (kStatus_USB_Success != USB_DeviceInit(CONTROLLER_ID, USB_DeviceCallback, &g_composite.deviceHandle))

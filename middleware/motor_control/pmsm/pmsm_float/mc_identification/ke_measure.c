@@ -38,7 +38,7 @@ void MID_getKe(mid_get_ke_t* sKeMeasFcn)
         GDFLIB_FilterMAInit_FLT(0.0, &sKeMeasFcn->sEdMA32Filter);
         sKeMeasFcn->sEqMA32Filter.fltLambda         = 1.0/10.0;
         GDFLIB_FilterMAInit_FLT(0.0, &sKeMeasFcn->sEqMA32Filter);
-        sKeMeasFcn->sFreqIntegrator.a32Gain         = ACC32(1 * sKeMeasFcn->fltFreqMax / 10000 * 2);
+        sKeMeasFcn->sFreqIntegrator.a32Gain         = ACC32(1.0 * sKeMeasFcn->fltFreqMax / 10000.0 * 2.0);
         GFLIB_IntegratorInit_F16(0, &sKeMeasFcn->sFreqIntegrator);
         GFLIB_RampInit_FLT(0.0, &sKeMeasFcn->sFreqElRampParam);
     }

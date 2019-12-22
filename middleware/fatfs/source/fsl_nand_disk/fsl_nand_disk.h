@@ -10,6 +10,7 @@
 #define _FSL_NAND_DISK_H_
 
 #include <stdint.h>
+#include "ff.h"
 #include "diskio.h"
 #include "map.h"
 

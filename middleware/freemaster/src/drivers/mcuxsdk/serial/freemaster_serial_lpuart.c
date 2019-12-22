@@ -25,7 +25,7 @@
 /* Numeric identifier to help pre-processor to identify whether our driver is used or not. */
 #define FMSTR_SERIAL_MCUX_LPUART_ID 1
 
-#if (FMSTR_MK_IDSTR(FMSTR_SERIAL_DRV) == FMSTR_SERIAL_MCUX_LPUART_ID) 
+#if (FMSTR_MK_IDSTR(FMSTR_SERIAL_DRV) == FMSTR_SERIAL_MCUX_LPUART_ID)
 
 #include "freemaster_serial_lpuart.h"
 
@@ -36,6 +36,10 @@
 
 #include "freemaster_protocol.h"
 #include "freemaster_serial.h"
+
+/******************************************************************************
+* Adapter configuration
+******************************************************************************/
 
 /***********************************
 *  local variables
@@ -57,6 +61,7 @@ static FMSTR_BOOL _FMSTR_SerialLpuartInit(void);
 static void _FMSTR_SerialLpuartEnableTransmit(FMSTR_BOOL enable);
 static void _FMSTR_SerialLpuartEnableReceive(FMSTR_BOOL enable);
 static void _FMSTR_SerialLpuartEnableTransmitInterrupt(FMSTR_BOOL enable);
+static void _FMSTR_SerialLpuartEnableTransmitCompleteInterrupt(FMSTR_BOOL enable);
 static void _FMSTR_SerialLpuartEnableReceiveInterrupt(FMSTR_BOOL enable);
 static FMSTR_BOOL _FMSTR_SerialLpuartIsTransmitRegEmpty(void);
 static FMSTR_BOOL _FMSTR_SerialLpuartIsReceiveRegFull(void);
@@ -71,17 +76,18 @@ static void _FMSTR_SerialLpuartFlush(void);
 /* Interface of this serial UART driver */
 const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_MCUX_LPUART =
 {
-    .Init                       = _FMSTR_SerialLpuartInit,
-    .EnableTransmit             = _FMSTR_SerialLpuartEnableTransmit,
-    .EnableReceive              = _FMSTR_SerialLpuartEnableReceive,
-    .EnableTransmitInterrupt    = _FMSTR_SerialLpuartEnableTransmitInterrupt,
-    .EnableReceiveInterrupt     = _FMSTR_SerialLpuartEnableReceiveInterrupt,
-    .IsTransmitRegEmpty         = _FMSTR_SerialLpuartIsTransmitRegEmpty,
-    .IsReceiveRegFull           = _FMSTR_SerialLpuartIsReceiveRegFull,
-    .IsTransmitterActive        = _FMSTR_SerialLpuartIsTransmitterActive,
-    .PutChar                    = _FMSTR_SerialLpuartPutChar,
-    .GetChar                    = _FMSTR_SerialLpuartGetChar,
-    .Flush                      = _FMSTR_SerialLpuartFlush,
+    .Init                           = _FMSTR_SerialLpuartInit,
+    .EnableTransmit                 = _FMSTR_SerialLpuartEnableTransmit,
+    .EnableReceive                  = _FMSTR_SerialLpuartEnableReceive,
+    .EnableTransmitInterrupt        = _FMSTR_SerialLpuartEnableTransmitInterrupt,
+    .EnableTransmitCompleteInterrupt= _FMSTR_SerialLpuartEnableTransmitCompleteInterrupt,
+    .EnableReceiveInterrupt         = _FMSTR_SerialLpuartEnableReceiveInterrupt,
+    .IsTransmitRegEmpty             = _FMSTR_SerialLpuartIsTransmitRegEmpty,
+    .IsReceiveRegFull               = _FMSTR_SerialLpuartIsReceiveRegFull,
+    .IsTransmitterActive            = _FMSTR_SerialLpuartIsTransmitterActive,
+    .PutChar                        = _FMSTR_SerialLpuartPutChar,
+    .GetChar                        = _FMSTR_SerialLpuartGetChar,
+    .Flush                          = _FMSTR_SerialLpuartFlush,
 
 };
 
@@ -92,9 +98,17 @@ const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_MCUX_LPUART =
 ******************************************************************************/
 static FMSTR_BOOL _FMSTR_SerialLpuartInit(void)
 {
-    /* valid runtime module address must be assigned */
+    /* Valid runtime module address must be assigned */
     if(!fmstr_serialBaseAddr)
         return FMSTR_FALSE;
+
+
+#if FMSTR_SERIAL_SINGLEWIRE
+    /* Enable single wire mode and force TX and RX to be enabled all the time. */
+    fmstr_serialBaseAddr->CTRL |= LPUART_CTRL_LOOPS_MASK | LPUART_CTRL_RSRC_MASK;
+    LPUART_EnableTx(fmstr_serialBaseAddr, 1);
+    LPUART_EnableRx(fmstr_serialBaseAddr, 1);
+#endif
 
     return FMSTR_TRUE;
 }
@@ -107,7 +121,17 @@ static FMSTR_BOOL _FMSTR_SerialLpuartInit(void)
 
 static void _FMSTR_SerialLpuartEnableTransmit(FMSTR_BOOL enable)
 {
+#if FMSTR_SERIAL_SINGLEWIRE
+    /* In single-wire mode, the Transmitter is never physically disabled since it was
+       enabled in the Init() call. The TX pin direction is being changed only. */
+    if(enable)
+        fmstr_serialBaseAddr->CTRL |= LPUART_CTRL_TXDIR_MASK;
+    else
+        fmstr_serialBaseAddr->CTRL &= ~LPUART_CTRL_TXDIR_MASK;
+#else
+    /* In normal mode (or "external" single-wire mode) the Transmitter is controlled. */
     LPUART_EnableTx(fmstr_serialBaseAddr, enable);
+#endif
 }
 
 /**************************************************************************//*!
@@ -118,7 +142,14 @@ static void _FMSTR_SerialLpuartEnableTransmit(FMSTR_BOOL enable)
 
 static void _FMSTR_SerialLpuartEnableReceive(FMSTR_BOOL enable)
 {
+#if FMSTR_SERIAL_SINGLEWIRE
+    /* In single-wire mode, the Receiver is never physically disabled since it was
+       enabled in the Init() call. The TX pin direction is being changed only. */
+    FMSTR_UNUSED(enable);
+#else
+    /* In normal mode (or "external" single-wire mode) the Receiver is controlled. */
     LPUART_EnableRx(fmstr_serialBaseAddr, enable);
+#endif
 }
 
 /**************************************************************************//*!
@@ -133,7 +164,20 @@ static void _FMSTR_SerialLpuartEnableTransmitInterrupt(FMSTR_BOOL enable)
         LPUART_EnableInterrupts(fmstr_serialBaseAddr, kLPUART_TxDataRegEmptyInterruptEnable);
     else
         LPUART_DisableInterrupts(fmstr_serialBaseAddr, kLPUART_TxDataRegEmptyInterruptEnable);
+}
 
+/**************************************************************************//*!
+*
+* @brief    Enable/Disable interrupt from transmit complete event
+*
+******************************************************************************/
+
+static void _FMSTR_SerialLpuartEnableTransmitCompleteInterrupt(FMSTR_BOOL enable)
+{
+    if(enable)
+        LPUART_EnableInterrupts(fmstr_serialBaseAddr, kLPUART_TransmissionCompleteInterruptEnable);
+    else
+        LPUART_DisableInterrupts(fmstr_serialBaseAddr, kLPUART_TransmissionCompleteInterruptEnable);
 }
 
 /**************************************************************************//*!
@@ -186,7 +230,7 @@ static FMSTR_BOOL _FMSTR_SerialLpuartIsTransmitterActive(void)
 {
     uint32_t sr = LPUART_GetStatusFlags(fmstr_serialBaseAddr);
 
-    return (sr & kLPUART_TransmissionCompleteFlag);
+    return !(sr & kLPUART_TransmissionCompleteFlag);
 }
 
 /**************************************************************************//*!

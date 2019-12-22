@@ -42,12 +42,14 @@ extern void USB_DeviceClockInit(void);
 extern void USB_DeviceIsrEnable(void);
 #if USB_DEVICE_CONFIG_USE_TASK
 extern void USB_DeviceTaskFn(void *deviceHandle);
+void Device_AppTaskFunction(void);
+
 #endif
 extern void USB_DeviceIsrDisable(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-
+extern volatile uint32_t g_deviceMode;
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_MouseBuffer[USB_HID_MOUSE_REPORT_LENGTH];
 extern usb_device_class_struct_t g_UsbDeviceHidMouseConfig;
 usb_hid_mouse_struct_t g_UsbDeviceHidMouse;
@@ -311,6 +313,23 @@ void USB_DeviceKhciIsr(void)
     USB_DeviceKhciIsrFunction(g_UsbDeviceHidMouse.deviceHandle);
 #endif /* USB_DEVICE_CONFIG_KHCI */
 }
+/*!
+ * @brief device mouse freertos task function.
+ *
+ * @param param   the host mouse instance pointer.
+ */
+#if USB_DEVICE_CONFIG_USE_TASK
+void Device_AppTask(void *param)
+{
+    while (1)
+    {
+        if (g_deviceMode == 1)
+        {
+            Device_AppTaskFunction();
+        }
+    }
+}
+#endif
 
 /*!
  * @brief USB device ehci isr function.
@@ -362,10 +381,20 @@ void Device_AppInit(void)
     USB_DeviceIsrEnable();
     /* Start USB device HID mouse */
     USB_DeviceRun(g_UsbDeviceHidMouse.deviceHandle);
+
+#if USB_DEVICE_CONFIG_USE_TASK
+    if (xTaskCreate(Device_AppTask, "usb device task", 2000L / sizeof(portSTACK_TYPE), NULL, 4, &g_UsbDeviceHidMouse.deviceAppTaskHandle) != pdPASS)
+    {
+        usb_echo("create usb device task error\r\n");
+    }
+#endif
 }
 
 void Device_AppDeinit(void)
 {
+#if USB_DEVICE_CONFIG_USE_TASK
+    vTaskDelete(g_UsbDeviceHidMouse.deviceAppTaskHandle);
+#endif
     USB_DeviceIsrDisable();
     if (kStatus_USB_Success != USB_DeviceClassDeinit(CONTROLLER_ID))
     {
@@ -374,9 +403,9 @@ void Device_AppDeinit(void)
     }
 }
 
+#if USB_DEVICE_CONFIG_USE_TASK
 void Device_AppTaskFunction(void)
 {
-#if USB_DEVICE_CONFIG_USE_TASK
     USB_DeviceTaskFn(g_UsbDeviceHidMouse.deviceHandle);
-#endif
 }
+#endif

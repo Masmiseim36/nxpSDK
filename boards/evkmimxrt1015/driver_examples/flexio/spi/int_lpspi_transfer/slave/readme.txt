@@ -8,16 +8,13 @@ In this example, a flexio simulated slave connect to a lpspi master.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso  10.3.1
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
-﻿Hardware requirements
-======================
-- Mini/micro USB cable
-- EVK-MIMXRT1015 board
-- Personal Computer
+Hardware requirements
+=====================
 
 Board settings
 ==============

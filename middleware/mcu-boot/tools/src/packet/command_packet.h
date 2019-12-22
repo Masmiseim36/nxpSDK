@@ -83,8 +83,8 @@ enum _command_tags
     kCommandTag_GenerateKeyBlob = 0x13,
     kCommandTag_GenerateKeyBlobResponse = 0xb3,
     /*0x14, not used*/
-    kCommandTag_KeyProvisoning = 0x15,
-    kCommandTag_KeyProvisonResponse = 0xb5,
+    kCommandTag_KeyProvisioning = 0x15,
+    kCommandTag_KeyProvisioningResponse = 0xb5,
 
     kCommandTag_ConfigureI2c = 0xc1, //! Reserved command tag for Bus Pal
     kCommandTag_ConfigureSpi = 0xc2, //! Reserved command tag for Bus Pal
@@ -93,7 +93,7 @@ enum _command_tags
     kFirstCommandTag = kCommandTag_FlashEraseAll,
 
     //! Maximum linearly incrementing command tag value, excluding the response commands and bus pal commands.
-    kLastCommandTag = kCommandTag_KeyProvisoning,
+    kLastCommandTag = kCommandTag_KeyProvisioning,
 
     kResponseCommandHighNibbleMask =
         0xa0 //!< Mask for the high nibble of a command tag that identifies it as a response command.

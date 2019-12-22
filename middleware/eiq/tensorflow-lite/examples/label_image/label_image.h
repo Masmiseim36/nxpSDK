@@ -13,8 +13,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-#ifndef TENSORFLOW_CONTRIB_LITE_EXAMPLES_LABEL_IMAGE_LABEL_IMAGE_H_
-#define TENSORFLOW_CONTRIB_LITE_EXAMPLES_LABEL_IMAGE_LABEL_IMAGE_H_
+/* File modified by NXP. Changes are described in file
+   /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes" */
+
+#ifndef TENSORFLOW_LITE_EXAMPLE_LABEL_IMAGE_H_
+#define TENSORFLOW_LITE_EXAMPLE_LABEL_IMAGE_H_
 
 #include <string.h>
 
@@ -24,14 +27,12 @@ namespace label_image {
 struct Settings {
   bool verbose = false;
   bool input_floating = false;
-  bool profiling = false;
-  int loop_count = 1;
-  float input_mean = 127.5f;
+  float input_mean = 0.0f;
   float input_std = 127.5f;
-  int number_of_results = 5;
+  int number_of_results = 1;
 };
 
 }  // namespace label_image
 }  // namespace tflite
 
-#endif  // TENSORFLOW_CONTRIB_LITE_EXAMPLES_LABEL_IMAGE_LABEL_IMAGE_H_
+#endif  // TENSORFLOW_LITE_EXAMPLE_LABEL_IMAGE_H_

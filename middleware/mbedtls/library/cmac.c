@@ -594,6 +594,7 @@ static const unsigned char aes_192_expected_result[NB_CMAC_TESTS_PER_KEY][MBEDTL
 #endif /* MBEDTLS_AES_ALT_NO_192 */
 
 /* CMAC-AES256 Test Data */
+#if defined(MBEDTLS_CIPHER_CMAC_ALT)
 static const unsigned char aes_256_key[32] = {
     0x60, 0x3d, 0xeb, 0x10,     0x15, 0xca, 0x71, 0xbe,
     0x2b, 0x73, 0xae, 0xf0,     0x85, 0x7d, 0x77, 0x81,
@@ -634,9 +635,10 @@ static const unsigned char aes_256_expected_result[NB_CMAC_TESTS_PER_KEY][MBEDTL
         0x69, 0x6a, 0x2c, 0x05,     0x6c, 0x31, 0x54, 0x10
     }
 };
+#endif /* MBEDTLS_CIPHER_CMAC_ALT */
 #endif /* MBEDTLS_AES_C */
 
-#if defined(MBEDTLS_DES_C)
+#if defined(MBEDTLS_DES_C) && defined(MBEDTLS_CIPHER_CMAC_ALT)
 /* Truncation point of message for 3DES CMAC tests  */
 static const unsigned int des3_message_lengths[NB_CMAC_TESTS_PER_KEY] = {
     0,
@@ -721,7 +723,7 @@ static const unsigned char des3_3key_expected_result[NB_CMAC_TESTS_PER_KEY][MBED
     }
 };
 
-#endif /* MBEDTLS_DES_C */
+#endif /* MBEDTLS_DES_C && MBEDTLS_CIPHER_CMAC_ALT*/
 
 #if defined(MBEDTLS_AES_C)
 /* AES AES-CMAC-PRF-128 Test Data */
@@ -1077,7 +1079,7 @@ int mbedtls_cmac_self_test( int verbose )
 #endif /* MBEDTLS_AES_C */
 
     if( verbose != 0 )
-        mbedtls_printf( "\n\r" );
+        mbedtls_printf( "\n" );
 
     return( 0 );
 }

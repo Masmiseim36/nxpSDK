@@ -1,0 +1,25 @@
+/*!
+@page middleware_log Middleware Change Log
+
+@section cmsis_nn eIQ CMSIS-NN library
+  Current version is 1.1.0
+  
+  - 1.0.0
+    - Initial version of the eIQ CMSIS-NN library based on CMSIS-NN version 1.0.0
+      available at https://github.com/ARM-software/CMSIS_5 as a part of CMSIS version 5.4.0.
+    - Supported evaluation boards: evkmimxrt1060, evkbimxrt1050
+    - Initial examples:
+      - cmsis_nn_cifar10            - CIFAR-10 image recognition example.
+      - cmsis_nn_lite_kws           - Keyword spotting example.
+
+  - 1.1.0
+    - Updated eIQ CMSIS-NN library to version based on CMSIS-NN version 1.2.0 available
+      at https://github.com/ARM-software/CMSIS_5 as a part of CMSIS version 5.6.0.
+    - Supported evaluation boards: evkmimxrt1060, evkbimxrt1050
+    - Modified examples:
+      - cmsis_nn_cifar10            - Added camera and LCD support.
+                                    - Real time camera image inference.
+      - cmsis_nn_kws                - Added microphone and headphone support.
+                                    - Real time audio inference.
+
+*/

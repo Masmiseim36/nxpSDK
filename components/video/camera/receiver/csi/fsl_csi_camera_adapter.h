@@ -10,6 +10,17 @@
 #define _FSL_CSI_CAMERA_ADAPTER_H_
 
 #include "fsl_common.h"
+#include "fsl_csi.h"
+
+/*
+ * Change log:
+ *
+ *   1.0.1
+ *     - Add data bus width to csi_resource_t.
+ *
+ *   1.0.0
+ *     - Initial version
+ */
 
 /*******************************************************************************
  * Definitions
@@ -29,7 +40,8 @@ typedef struct _csi_private_data
  */
 typedef struct _csi_resource
 {
-    CSI_Type *csiBase; /*!< CSI register base. */
+    CSI_Type *csiBase;      /*!< CSI register base. */
+    csi_data_bus_t dataBus; /*!< Data bus width. */
 } csi_resource_t;
 
 /*! @brief CSI camera receiver operations structure. */

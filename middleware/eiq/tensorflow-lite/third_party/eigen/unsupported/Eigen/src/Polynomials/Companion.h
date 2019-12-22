@@ -75,8 +75,7 @@ class companion
     void setPolynomial( const VectorType& poly )
     {
       const Index deg = poly.size()-1;
-      m_monic = Scalar(-1)/poly[deg] * poly.head(deg);
-      //m_bl_diag.setIdentity( deg-1 );
+      m_monic = -poly.head(deg)/poly[deg];
       m_bl_diag.setOnes(deg-1);
     }
 
@@ -89,13 +88,13 @@ class companion
     {
       const Index deg   = m_monic.size();
       const Index deg_1 = deg-1;
-      DenseCompanionMatrixType companion(deg,deg);
-      companion <<
+      DenseCompanionMatrixType companMat(deg,deg);
+      companMat <<
         ( LeftBlock(deg,deg_1)
           << LeftBlockFirstRow::Zero(1,deg_1),
           BottomLeftBlock::Identity(deg-1,deg-1)*m_bl_diag.asDiagonal() ).finished()
         , m_monic;
-      return companion;
+      return companMat;
     }
 
 

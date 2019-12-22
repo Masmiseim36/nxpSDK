@@ -25,7 +25,7 @@
 /* Numeric identifier to help pre-processor to identify whether our driver is used or not. */
 #define FMSTR_SERIAL_MCUX_MINIUSART_ID 1
 
-#if (FMSTR_MK_IDSTR(FMSTR_SERIAL_DRV) == FMSTR_SERIAL_MCUX_MINIUSART_ID) 
+#if (FMSTR_MK_IDSTR(FMSTR_SERIAL_DRV) == FMSTR_SERIAL_MCUX_MINIUSART_ID)
 
 #include "freemaster_serial_miniusart.h"
 
@@ -36,6 +36,13 @@
 
 #include "freemaster_protocol.h"
 #include "freemaster_serial.h"
+
+/******************************************************************************
+* Adapter configuration
+******************************************************************************/
+#if FMSTR_SERIAL_SINGLEWIRE
+    #error The MINISUART driver does not support single wire configuration of UART communication.
+#endif
 
 /***********************************
 *  local variables
@@ -57,6 +64,7 @@ static FMSTR_BOOL _FMSTR_SerialMiniUsartInit(void);
 static void _FMSTR_SerialMiniUsartEnableTransmit(FMSTR_BOOL enable);
 static void _FMSTR_SerialMiniUsartEnableReceive(FMSTR_BOOL enable);
 static void _FMSTR_SerialMiniUsartEnableTransmitInterrupt(FMSTR_BOOL enable);
+static void _FMSTR_SerialMiniUsartEnableTransmitCompleteInterrupt(FMSTR_BOOL enable);
 static void _FMSTR_SerialMiniUsartEnableReceiveInterrupt(FMSTR_BOOL enable);
 static FMSTR_BOOL _FMSTR_SerialMiniUsartIsTransmitRegEmpty(void);
 static FMSTR_BOOL _FMSTR_SerialMiniUsartIsReceiveRegFull(void);
@@ -71,17 +79,18 @@ static void _FMSTR_SerialMiniUsartFlush(void);
 /* Interface of this serial UART driver */
 const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_MCUX_MINIUSART =
 {
-    .Init                       = _FMSTR_SerialMiniUsartInit,
-    .EnableTransmit             = _FMSTR_SerialMiniUsartEnableTransmit,
-    .EnableReceive              = _FMSTR_SerialMiniUsartEnableReceive,
-    .EnableTransmitInterrupt    = _FMSTR_SerialMiniUsartEnableTransmitInterrupt,
-    .EnableReceiveInterrupt     = _FMSTR_SerialMiniUsartEnableReceiveInterrupt,
-    .IsTransmitRegEmpty         = _FMSTR_SerialMiniUsartIsTransmitRegEmpty,
-    .IsReceiveRegFull           = _FMSTR_SerialMiniUsartIsReceiveRegFull,
-    .IsTransmitterActive        = _FMSTR_SerialMiniUsartIsTransmitterActive,
-    .PutChar                    = _FMSTR_SerialMiniUsartPutChar,
-    .GetChar                    = _FMSTR_SerialMiniUsartGetChar,
-    .Flush                      = _FMSTR_SerialMiniUsartFlush,
+    .Init                           = _FMSTR_SerialMiniUsartInit,
+    .EnableTransmit                 = _FMSTR_SerialMiniUsartEnableTransmit,
+    .EnableReceive                  = _FMSTR_SerialMiniUsartEnableReceive,
+    .EnableTransmitInterrupt        = _FMSTR_SerialMiniUsartEnableTransmitInterrupt,
+    .EnableTransmitCompleteInterrupt= _FMSTR_SerialMiniUsartEnableTransmitCompleteInterrupt,
+    .EnableReceiveInterrupt         = _FMSTR_SerialMiniUsartEnableReceiveInterrupt,
+    .IsTransmitRegEmpty             = _FMSTR_SerialMiniUsartIsTransmitRegEmpty,
+    .IsReceiveRegFull               = _FMSTR_SerialMiniUsartIsReceiveRegFull,
+    .IsTransmitterActive            = _FMSTR_SerialMiniUsartIsTransmitterActive,
+    .PutChar                        = _FMSTR_SerialMiniUsartPutChar,
+    .GetChar                        = _FMSTR_SerialMiniUsartGetChar,
+    .Flush                          = _FMSTR_SerialMiniUsartFlush,
 
 };
 
@@ -133,7 +142,22 @@ static void _FMSTR_SerialMiniUsartEnableTransmitInterrupt(FMSTR_BOOL enable)
         USART_EnableInterrupts(fmstr_serialBaseAddr, kUSART_TxReadyInterruptEnable);
     else
         USART_DisableInterrupts(fmstr_serialBaseAddr, kUSART_TxReadyInterruptEnable);
+}
 
+/**************************************************************************//*!
+*
+* @brief    Enable/Disable interrupt from transmit complete event
+*
+******************************************************************************/
+
+static void _FMSTR_SerialMiniUsartEnableTransmitCompleteInterrupt(FMSTR_BOOL enable)
+{
+#if defined(FSL_FEATURE_USART_HAS_INTENSET_TXIDLEEN) && FSL_FEATURE_USART_HAS_INTENSET_TXIDLEEN
+    if(enable)
+        USART_EnableInterrupts(fmstr_serialBaseAddr, kUSART_TxIdleInterruptEnable);
+    else
+        USART_DisableInterrupts(fmstr_serialBaseAddr, kUSART_TxIdleInterruptEnable);
+#endif
 }
 
 /**************************************************************************//*!

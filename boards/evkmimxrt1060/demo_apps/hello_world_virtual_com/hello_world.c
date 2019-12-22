@@ -123,7 +123,7 @@ int main(void)
     /* Init board hardware. */
     BOARD_ConfigMPU();
     BOARD_ConfigUSBMPU();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     USB_DeviceClockInit();
     DbgConsole_Init((uint8_t)CONTROLLER_ID, (uint32_t)NULL, kSerialPort_UsbCdc, (uint32_t)NULL);
 

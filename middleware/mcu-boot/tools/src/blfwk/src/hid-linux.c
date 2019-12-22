@@ -54,6 +54,11 @@
 #define HIDIOCGFEATURE(len) _IOC(_IOC_WRITE | _IOC_READ, 'H', 0x07, len)
 #endif
 
+/* Definitions from linux/include/linux/usb.h. Timeouts, in milliseconds,
+   used for sending receiving control messages. */
+#define USB_CTRL_GET_TIMEOUT  5000
+#define USB_CTRL_SET_TIMEOUT  5000
+
 /* USB HID device property names */
 const char *device_string_names[] = {
     "manufacturer", "product", "serial",
@@ -683,13 +688,58 @@ hid_device *HID_API_EXPORT hid_open_path(const char *path)
     }
 }
 
-int HID_API_EXPORT hid_write(hid_device *dev, const unsigned char *data, size_t length)
+int HID_API_EXPORT hid_write_timeout(hid_device *dev, const unsigned char *data, size_t length, int milliseconds)
 {
     int bytes_written;
 
-    bytes_written = write(dev->device_handle, data, length);
+    /*
+     * Note:
+     * 1. Blocking Write for USB is not real blocking. There is a build-in timeout in Linux, which
+     *    is defined by USB_CTRL_SET_TIMEOUT in linux/include/linux/usb.h
+     * 2. Do not use poll()/ppoll() for timeout control. POLLOUT wouldn't be triggered by HIDRAW.
+     */
+    if (milliseconds >= 0)
+    {
+        while (milliseconds >= 0)
+        {
+            printf("usb hid write, time left = %d\n", milliseconds);
+            bytes_written = write(dev->device_handle, data, length);
+            milliseconds -= USB_CTRL_SET_TIMEOUT;
+            if ((bytes_written < 0) && (errno == ETIMEDOUT) && (milliseconds > 0))
+            {
+                // timeout for current write, but still some time left.
+                continue;
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+    else
+    {
+        printf("Infinite blocking");
+        // Infinite blocking
+        while (1)
+        {
+            bytes_written = write(dev->device_handle, data, length);
+            if ((bytes_written < 0) && (errno == ETIMEDOUT))
+            {
+                continue;
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
 
     return bytes_written;
+}
+
+int HID_API_EXPORT hid_write(hid_device *dev, const unsigned char *data, size_t length)
+{
+    return hid_write_timeout(dev, data, length, (dev->blocking) ? -1 : 0);
 }
 
 int HID_API_EXPORT hid_read_timeout(hid_device *dev, unsigned char *data, size_t length, int milliseconds)

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 -2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -55,13 +55,13 @@ typedef enum _transfer_status
 typedef enum _khci_intr_type
 {
     kIntr_UsbRst = 0x01,
-    kIntr_Error = 0x02,
+    kIntr_Error  = 0x02,
     kIntr_SofTok = 0x04,
     kIntr_TokDne = 0x08,
-    kIntr_Sleep = 0x10,
+    kIntr_Sleep  = 0x10,
     kIntr_Resume = 0x20,
     kIntr_Attach = 0x40,
-    kIntr_Stall = 0x80,
+    kIntr_Stall  = 0x80,
 } khci_intr_type_t;
 
 typedef enum _tr_type
@@ -111,7 +111,7 @@ typedef enum bus_suspend_request_state
 #endif
 
 /* Defines the USB KHCI time out value from USB specification */
-#define USB_TIMEOUT_NODATA (500)
+#define USB_TIMEOUT_NODATA (5000)
 #define USB_TIMEOUT_TOHOST (5000)
 #define USB_TIMEOUT_TODEVICE (5000)
 #define USB_TIMEOUT_OTHER (10000)
@@ -145,8 +145,8 @@ typedef enum bus_suspend_request_state
 #define USB_KHCI_BD_STALL 0x04u
 #define USB_KHCI_BD_PID(n) ((n & 0x0fu) << 2)
 
-#define USB_HostKhciLock() USB_OsaMutexLock(usbHostPointer->khciMutex)
-#define USB_HostKhciUnlock() USB_OsaMutexUnlock(usbHostPointer->khciMutex)
+#define USB_HostKhciLock() OSA_MutexLock(usbHostPointer->khciMutex, USB_OSA_WAIT_TIMEOUT)
+#define USB_HostKhciUnlock() OSA_MutexUnlock(usbHostPointer->khciMutex)
 
 typedef struct _khci_xfer_sts
 {
@@ -166,10 +166,10 @@ typedef struct _khci_xfer_sts
  */
 
 /*! @brief  The value programmed into the threshold register must reserve enough time to ensure the worst case
-   transaction completes. In general, the worst case transaction is an IN token followed by a data packet from the target
-   followed by the response from the host. The actual time required is a function of the maximum packet size on the bus. Set the
-   KHCICFG_THSLD_DELAY to 0x65 to meet the worst case.*/
-   
+   transaction completes. In general, the worst case transaction is an IN token followed by a data packet from the
+   target followed by the response from the host. The actual time required is a function of the maximum packet size on
+   the bus. Set the KHCICFG_THSLD_DELAY to 0x65 to meet the worst case.*/
+
 #define KHCICFG_THSLD_DELAY 0x65
 
 /*! @brief KHCI controller driver instance structure */
@@ -178,8 +178,10 @@ typedef struct _usb_khci_host_state_struct
     volatile USB_Type *usbRegBase;              /*!< The base address of the register */
     void *hostHandle;                           /*!< Related host handle*/
     usb_host_pipe_t *pipeDescriptorBasePointer; /*!< Pipe descriptor bas pointer*/
-    usb_osa_event_handle khciEventPointer;      /*!< KHCI event*/
-    usb_osa_mutex_handle khciMutex;             /*!< KHCI mutex*/
+    osa_event_handle_t khciEventPointer;
+    uint32_t taskEventHandleBuffer[(OSA_EVENT_HANDLE_SIZE + 3)/4];      /*!< KHCI task event handle buffer*/
+    osa_mutex_handle_t khciMutex;             /*!< KHCI mutex*/
+    uint32_t mutexBuffer[(OSA_MUTEX_HANDLE_SIZE + 3)/4]; /*!< The mutex buffer. */
     usb_host_transfer_t
         *periodicListPointer; /*!< KHCI periodic list pointer, which link is an interrupt and an ISO transfer request*/
     usb_host_transfer_t *asyncListPointer; /*!< KHCI async list pointer, which link controls and bulk transfer request*/

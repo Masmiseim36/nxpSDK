@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016 - 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,9 +14,9 @@
  ******************************************************************************/
 
 /*! @brief USB host lock */
-#define USB_HostLock() USB_OsaMutexLock(hostInstance->hostMutex)
+#define USB_HostLock() OSA_MutexLock(hostInstance->hostMutex, USB_OSA_WAIT_TIMEOUT)
 /*! @brief USB host unlock */
-#define USB_HostUnlock() USB_OsaMutexUnlock(hostInstance->hostMutex)
+#define USB_HostUnlock() OSA_MutexUnlock(hostInstance->hostMutex)
 
 /*!
  * @addtogroup usb_host_controller_driver
@@ -34,6 +34,7 @@ typedef enum _usb_host_controller_control
     kUSB_HostPortAttachDisable,            /*!< Disable the port attach event */
     kUSB_HostPortAttachEnable,             /*!< Enable the port attach event */
     kUSB_HostL1Config,                     /*!< L1 suspend Bus control code */
+    kUSB_HostSetChargerType,               /*!< set charger type */
 } usb_host_controller_control_t;
 
 /*! @brief USB host controller bus control code */
@@ -88,7 +89,8 @@ typedef struct _usb_host_instance
 {
     void *controllerHandle;                                          /*!< The low level controller handle*/
     host_callback_t deviceCallback;                                  /*!< Device attach/detach callback*/
-    usb_osa_mutex_handle hostMutex;                                  /*!< Host layer mutex*/
+    osa_mutex_handle_t hostMutex;                              /*!< Host layer mutex*/
+    uint32_t mutexBuffer[(OSA_MUTEX_HANDLE_SIZE + 3)/4];             /*!< Host layer mutex*/
     usb_host_transfer_t transferList[USB_HOST_CONFIG_MAX_TRANSFERS]; /*!< Transfer resource*/
     usb_host_transfer_t *transferHead;                               /*!< Idle transfer head*/
     const usb_host_controller_interface_t *controllerTable;          /*!< KHCI/EHCI interface*/

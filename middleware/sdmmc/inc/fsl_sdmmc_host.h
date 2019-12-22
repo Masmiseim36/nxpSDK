@@ -27,6 +27,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+/*! @brief Middleware adapter version. */
+#define FSL_SDMMC_HOST_ADAPTER_VERSION (MAKE_VERSION(2U, 2U, 14U)) /*2.2.14*/
 
 /* Common definition for support and not support macro */
 #define SDMMCHOST_NOT_SUPPORT 0U /*!< use this define to indicate the host not support feature*/
@@ -142,6 +144,7 @@
 #define SDMMCHOST_RESET_TUNING(base, timeout)
 #define SDMMCHOST_CHECK_TUNING_ERROR(base) (0U)
 #define SDMMCHOST_ADJUST_TUNING_DELAY(base, delay)
+#define SDMMCHOST_MAX_TUNING_DELAY_CELL (0U)
 #define SDMMCHOST_AUTO_STANDARD_RETUNING_TIMER(base)
 #define SDMMCHOST_TRANSFER_DATA_ERROR kStatus_SDHC_TransferDataFailed
 #define SDMMCHOST_TRANSFER_CMD_ERROR kStatus_SDHC_SendCommandFailed
@@ -311,6 +314,7 @@ enum _host_capability
 #define SDMMCHOST_CHECK_TUNING_ERROR(base) (0U)
 #define SDMMCHOST_ADJUST_TUNING_DELAY(base, delay)
 #define SDMMCHOST_AUTO_STANDARD_RETUNING_TIMER(base)
+#define SDMMCHOST_MAX_TUNING_DELAY_CELL (0U)
 
 #define SDMMCHOST_ENABLE_HS400_MODE(base, flag)
 #define SDMMCHOST_RESET_STROBE_DLL(base)
@@ -415,6 +419,9 @@ enum _host_capability
 #define kSDMMCHOST_DATABUSWIDTH4BIT kUSDHC_DataBusWidth4Bit /*!< 4-bit mode */
 #define kSDMMCHOST_DATABUSWIDTH8BIT kUSDHC_DataBusWidth8Bit /*!< 8-bit mode */
 
+#if defined BOARD_SDMMC_NEED_MANUAL_TUNING
+#define SDMMC_ENABLE_SOFTWARE_TUNING
+#endif
 #define SDMMCHOST_STANDARD_TUNING_START (10U) /*!< standard tuning start point */
 #define SDMMCHOST_TUINIG_STEP (2U)            /*!< standard tuning step */
 #define SDMMCHOST_RETUNING_TIMER_COUNT (0U)   /*!< Re-tuning timer */
@@ -453,8 +460,15 @@ enum _host_capability
 #define SDMMCHOST_SEND_CARD_ACTIVE(base, timeout) (USDHC_SetCardActive(base, timeout))
 #define SDMMCHOST_SWITCH_VOLTAGE180V(base, enable18v) (UDSHC_SelectVoltage(base, enable18v))
 #define SDMMCHOST_SWITCH_VOLTAGE120V(base, enable12v)
+#if ((defined(FSL_FEATURE_USDHC_HAS_SDR50_MODE) && (FSL_FEATURE_USDHC_HAS_SDR50_MODE)) || \
+     (defined(FSL_FEATURE_USDHC_HAS_HS400_MODE) && (FSL_FEATURE_USDHC_HAS_HS400_MODE)) || \
+     (defined(FSL_FEATURE_USDHC_HAS_SDR104_MODE) && (FSL_FEATURE_USDHC_HAS_SDR104_MODE)))
 #define SDMMCHOST_CONFIG_SD_IO(speed, strength) BOARD_SD_Pin_Config(speed, strength)
 #define SDMMCHOST_CONFIG_MMC_IO(speed, strength) BOARD_MMC_Pin_Config(speed, strength)
+#else
+#define SDMMCHOST_CONFIG_SD_IO(speed, strength)
+#define SDMMCHOST_CONFIG_MMC_IO(speed, strength)
+#endif
 #define SDMMCHOST_SWITCH_VCC_TO_180V()
 #define SDMMCHOST_SWITCH_VCC_TO_330V()
 
@@ -465,6 +479,7 @@ enum _host_capability
 #define SDMMCHOST_EXECUTE_STANDARD_TUNING_ENABLE(base, flag)
 #define SDMMCHOST_CHECK_TUNING_ERROR(base) (0U)
 #define SDMMCHOST_ADJUST_TUNING_DELAY(base, delay)
+#define SDMMCHOST_AUTO_TUNING_ENABLE(base, flag)
 #else
 #define SDMMCHOST_EXECUTE_STANDARD_TUNING_ENABLE(base, flag) \
     (USDHC_EnableStandardTuning(base, SDMMCHOST_STANDARD_TUNING_START, SDMMCHOST_TUINIG_STEP, flag))
@@ -476,7 +491,7 @@ enum _host_capability
 #define SDMMCHOST_AUTO_TUNING_ENABLE(base, flag) (USDHC_EnableAutoTuning(base, flag))
 #define SDMMCHOST_CHECK_TUNING_ERROR(base) (USDHC_CheckTuningError(base))
 #endif
-
+#define SDMMCHOST_MAX_TUNING_DELAY_CELL (128U)
 #define SDMMCHOST_AUTO_TUNING_CONFIG(base) (USDHC_EnableAutoTuningForCmdAndData(base))
 #define SDMMCHOST_RESET_TUNING(base, timeout)                                                      \
     {                                                                                              \
@@ -770,6 +785,15 @@ void SDMMCHOST_PowerOnCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr
  * @param milliseconds delay counter.
  */
 void SDMMCHOST_Delay(uint32_t milliseconds);
+
+/*!
+ * @brief SDMMC host receive tuning block.
+ * @param base host base address.
+ * @param tuningCmd, tuning cmd.
+ * @param revBuf buffer to receive data.
+ * @param size data size to receive.
+ */
+status_t SDMMCHOST_ReceiveTuningBlock(SDMMCHOST_TYPE *base, uint32_t tuningCmd, uint32_t *revBuf, uint32_t size);
 
 /* @} */
 

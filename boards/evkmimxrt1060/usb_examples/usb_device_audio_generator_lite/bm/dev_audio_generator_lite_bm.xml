@@ -4,15 +4,18 @@
     <definition extID="com.nxp.mcuxpresso"/>
     <definition extID="component.lists.MIMXRT1062"/>
     <definition extID="component.lpuart_adapter.MIMXRT1062"/>
+    <definition extID="component.osa.MIMXRT1062"/>
     <definition extID="component.serial_manager.MIMXRT1062"/>
     <definition extID="component.serial_manager_uart.MIMXRT1062"/>
     <definition extID="device.MIMXRT1062_CMSIS.MIMXRT1062"/>
     <definition extID="device.MIMXRT1062_startup.MIMXRT1062"/>
     <definition extID="middleware.baremetal.MIMXRT1062"/>
+    <definition extID="middleware.usb.device.MIMXRT1062"/>
     <definition extID="middleware.usb.device_controller_ehci.MIMXRT1062"/>
     <definition extID="middleware.usb.phy.MIMXRT1062"/>
     <definition extID="platform.Include_common.MIMXRT1062"/>
     <definition extID="platform.Include_core_cm7.MIMXRT1062"/>
+    <definition extID="platform.Include_dsp.MIMXRT1062"/>
     <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1062"/>
     <definition extID="platform.drivers.clock.MIMXRT1062"/>
     <definition extID="platform.drivers.common.MIMXRT1062"/>
@@ -20,8 +23,10 @@
     <definition extID="platform.drivers.iomuxc.MIMXRT1062"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1062"/>
     <definition extID="platform.drivers.xip_board.MIMXRT1062"/>
+    <definition extID="platform.drivers.xip_board_dcd.MIMXRT1062"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1062"/>
     <definition extID="platform.utilities.assert.MIMXRT1062"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1062"/>
     <definition extID="utility.debug_console.MIMXRT1062"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -30,7 +35,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1060_dev_audio_generator_lite_bm" name="dev_audio_generator_lite_bm" category="usb_examples" dependency="middleware.usb.device_controller_ehci.MIMXRT1062 middleware.usb.phy.MIMXRT1062 platform.drivers.cache_armv7_m7.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.xip_board.MIMXRT1062 utility.debug_console.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 component.lists.MIMXRT1062 platform.Include_core_cm7.MIMXRT1062 platform.Include_common.MIMXRT1062 middleware.baremetal.MIMXRT1062">
+  <example id="evkmimxrt1060_dev_audio_generator_lite_bm" name="dev_audio_generator_lite_bm" category="usb_examples" dependency="middleware.usb.device_controller_ehci.MIMXRT1062 middleware.usb.phy.MIMXRT1062 platform.drivers.cache_armv7_m7.MIMXRT1062 middleware.usb.device.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.xip_board.MIMXRT1062 platform.drivers.xip_board_dcd.MIMXRT1062 utility.debug_console.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager.MIMXRT1062 component.lists.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 component.osa.MIMXRT1062 platform.Include_core_cm7.MIMXRT1062 platform.Include_common.MIMXRT1062 platform.Include_dsp.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062 middleware.baremetal.MIMXRT1062">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -39,7 +44,8 @@
       <memoryBlock addr="20000000" size="00020000" access="RW" type="RAM" id="SRAM_DTC_evkmimxrt1060" name="SRAM_DTC"/>
       <memoryBlock addr="00000000" size="00020000" access="RW" type="RAM" id="SRAM_ITC_evkmimxrt1060" name="SRAM_ITC"/>
       <memoryBlock addr="20200000" size="000C0000" access="RW" type="RAM" id="SRAM_OC_evkmimxrt1060" name="SRAM_OC"/>
-      <memoryBlock addr="80000000" size="02000000" access="RW" type="RAM" id="BOARD_SDRAM_evkmimxrt1060" name="BOARD_SDRAM"/>
+      <memoryBlock addr="80000000" size="01E00000" access="RW" type="RAM" id="BOARD_SDRAM_evkmimxrt1060" name="BOARD_SDRAM"/>
+      <memoryBlock addr="81E00000" size="00200000" access="RW" type="RAM" id="NCACHE_REGION_evkmimxrt1060" name="NCACHE_REGION"/>
     </memory>
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
@@ -59,6 +65,9 @@
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>USB_STACK_BM</value>
+          <value>FSL_OSA_BM_TASK_ENABLE=0</value>
+          <value>FSL_OSA_BM_TIMER_CONFIG=0</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -75,6 +84,10 @@
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
           <value>&amp;Heap:Default;Default;0x2000&amp;Stack:Default;Default;0x2000</value>
         </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=SRAM_DTC;type=.data</value>
+          <value>isd=*(NonCacheable);region=SRAM_DTC;type=.bss</value>
+        </option>
       </toolchainSetting>
     </toolchainSettings>
     <debug_configurations>
@@ -88,20 +101,20 @@
         </drivers>
       </debug_configuration>
     </debug_configurations>
-    <source path="boards/evkmimxrt1060/usb_examples/usb_device_audio_generator_lite/bm/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/evkmimxrt1060/usb_examples/usb_device_audio_generator_lite/bm/armgcc" target_path="MIMXRT1062/gcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1062xxxxx_ram.ld"/>
     </source>
-    <source path="boards/evkmimxrt1060/usb_examples/usb_device_audio_generator_lite/bm/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/evkmimxrt1060/usb_examples/usb_device_audio_generator_lite/bm/iar" target_path="MIMXRT1062/iar" type="linker" toolchain="iar">
       <files mask="MIMXRT1062xxxxx_ram.icf"/>
     </source>
-    <source path="boards/evkmimxrt1060/usb_examples/usb_device_audio_generator_lite/bm/iar" target_path="src" type="other" toolchain="iar">
+    <source path="boards/evkmimxrt1060/usb_examples/usb_device_audio_generator_lite/bm/iar" target_path="evkmimxrt1060" type="other" toolchain="iar">
       <files mask="evkmimxrt1060.mac"/>
     </source>
-    <source path="boards/evkmimxrt1060/usb_examples/usb_device_audio_generator_lite/bm/mdk" target_path="src" type="configuration" toolchain="mdk">
-      <files mask="evkmimxrt1060_ram.ini"/>
-    </source>
-    <source path="boards/evkmimxrt1060/usb_examples/usb_device_audio_generator_lite/bm/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/evkmimxrt1060/usb_examples/usb_device_audio_generator_lite/bm/mdk" target_path="MIMXRT1062/arm" type="linker" toolchain="mdk">
       <files mask="MIMXRT1062xxxxx_ram.scf"/>
+    </source>
+    <source path="boards/evkmimxrt1060/usb_examples/usb_device_audio_generator_lite/bm/mdk" target_path="evkmimxrt1060" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt1060_ram.ini"/>
     </source>
     <source path="boards/evkmimxrt1060/usb_examples/usb_device_audio_generator_lite/bm" target_path="board" type="c_include">
       <files mask="board.h"/>
@@ -115,6 +128,12 @@
     </source>
     <source path="boards/evkmimxrt1060/usb_examples/usb_device_audio_generator_lite/bm" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
       <files mask="readme.txt"/>
+    </source>
+    <source path="boards/evkmimxrt1060/usb_examples/usb_device_audio_generator_lite/bm" target_path="evkmimxrt1060/usb_examples/usb_device_audio_generator_lite/bm" type="binary" exclude="true">
+      <files mask="dev_audio_generator_lite_bm.bin"/>
+    </source>
+    <source path="boards/evkmimxrt1060/usb_examples/usb_device_audio_generator_lite/bm" target_path="evkmimxrt1060/usb_examples/usb_device_audio_generator_lite/bm" type="doc" exclude="true">
+      <files mask="readme.pdf"/>
     </source>
     <source path="boards/evkmimxrt1060/usb_examples/usb_device_audio_generator_lite/bm" target_path="source" type="c_include">
       <files mask="audio_generator.h"/>
@@ -130,12 +149,6 @@
       <files mask="usb_device_audio.c"/>
       <files mask="usb_device_ch9.c"/>
       <files mask="usb_device_descriptor.c"/>
-    </source>
-    <source path="boards/evkmimxrt1060/usb_examples/usb_device_audio_generator_lite/bm" target_path="src" type="binary" exclude="true">
-      <files mask="dev_audio_generator_lite_bm.bin"/>
-    </source>
-    <source path="boards/evkmimxrt1060/usb_examples/usb_device_audio_generator_lite/bm" target_path="src" type="doc" exclude="true">
-      <files mask="readme.pdf"/>
     </source>
   </example>
 </ksdk:examples>

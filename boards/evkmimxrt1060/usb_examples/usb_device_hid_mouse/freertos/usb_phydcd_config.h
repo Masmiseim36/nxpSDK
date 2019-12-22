@@ -11,7 +11,7 @@
 
 /*${macro:start}*/
 /* USB DCD config*/
- 
+
 /*reserved for future use*/
 
 /*${macro:end}*/

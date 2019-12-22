@@ -6,15 +6,16 @@
 **                          MIMXRT1021DAG5A
 **
 **     Compiler:            GNU C Compiler
-**     Reference manual:    IMXRT1020RM Rev. 1RC, 05/2018
+**     Reference manual:    IMXRT1020RM Rev.1, 12/2018 | IMXRT1020SRM Rev.3
 **     Version:             rev. 0.1, 2017-06-06
-**     Build:               b180801
+**     Build:               b190730
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2018 NXP
+**     Copyright 2016-2019 NXP
+**     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
 **
@@ -44,6 +45,9 @@ MEMORY
 /* Define output sections */
 SECTIONS
 {
+  __NCACHE_REGION_START = ORIGIN(m_data);
+  __NCACHE_REGION_SIZE  = LENGTH(m_data);
+
   .flash_config :
   {
     . = ALIGN(4);
@@ -222,21 +226,21 @@ SECTIONS
     . += HEAP_SIZE;
     __HeapLimit = .;
     __heap_limit = .; /* Add for _sbrk */
-  } > m_data
+  } > m_data2
 
   .stack :
   {
     . = ALIGN(8);
     . += STACK_SIZE;
-  } > m_data
+  } > m_data2
 
   /* Initializes stack on the end of block */
-  __StackTop   = ORIGIN(m_data) + LENGTH(m_data);
+  __StackTop   = ORIGIN(m_data2) + LENGTH(m_data2);
   __StackLimit = __StackTop - STACK_SIZE;
   PROVIDE(__stack = __StackTop);
 
   .ARM.attributes 0 : { *(.ARM.attributes) }
 
-  ASSERT(__StackLimit >= __HeapLimit, "region m_data overflowed with stack and heap")
+  ASSERT(__StackLimit >= __HeapLimit, "region m_data2 overflowed with stack and heap")
 }
 

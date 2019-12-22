@@ -7,10 +7,10 @@ The SAI Demo application demonstrates complicated digital audio playback and rec
 
 Toolchain supported
 ===================
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso  10.3.1
-- IAR embedded Workbench  8.32.3
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.40.2
 
 Hardware requirements
 =====================
@@ -25,7 +25,7 @@ No special settings are required.
 
 Prepare the Demo
 ================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
+1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
 2.  Open a serial terminal with the following settings:
     - 115200 baud rate
     - 8 data bits
@@ -41,7 +41,7 @@ Running the demo
 This following section shows how to run the demo:
 Notice, on EVK-MIMXRT1015 board, the audio record source is from two microphones. The left channel is from
 the headphone microphone, the right channel from the main microphone on board. It is OK for you to choose one
-of them or both. 
+of them or both.
 As the headphone microphone may have headphone standard differernt issue, you can just use main microphone
 on board as input source.
 
@@ -51,7 +51,7 @@ SAI Demo started!
 Please choose the option :
 1. Record and playback at same time
 2. Playback sine wave
-5. Quit
+3. Quit
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Known issue:

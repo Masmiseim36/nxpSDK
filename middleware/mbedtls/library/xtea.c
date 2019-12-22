@@ -253,18 +253,18 @@ int mbedtls_xtea_self_test( int verbose )
         if( memcmp( buf, xtea_test_ct[i], 8 ) != 0 )
         {
             if( verbose != 0 )
-                mbedtls_printf( "failed\n\r" );
+                mbedtls_printf( "failed\n" );
 
             ret = 1;
             goto exit;
         }
 
         if( verbose != 0 )
-            mbedtls_printf( "passed\n\r" );
+            mbedtls_printf( "passed\n" );
     }
 
     if( verbose != 0 )
-        mbedtls_printf( "\n\r" );
+        mbedtls_printf( "\n" );
 
 exit:
     mbedtls_xtea_free( &ctx );

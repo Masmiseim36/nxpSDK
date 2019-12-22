@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2018  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V5.48 - Graphical user interface for embedded applications **
+** emWin V5.50 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2019-09-02
+SUA period:               2011-08-19 - 2020-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUI_ConfDefaults.h
@@ -51,8 +51,8 @@ Attention : Do not modify this file ! If you do, you will not
 
 #include "GUIConf.h"
 
-#ifndef   GUI_USE_MIXCOLORS
-  #define GUI_USE_MIXCOLORS 1
+#ifndef   GUI_SUPPORT_BIDI
+  #define GUI_SUPPORT_BIDI 0
 #endif
 
 #ifndef   GUI_USE_BIDI2
@@ -74,6 +74,10 @@ Attention : Do not modify this file ! If you do, you will not
 #endif
 #ifndef LCD_XMAG
   #define LCD_XMAG 1
+#endif
+
+#ifndef   GUI_SIM_SUPPORT_EMBOS
+  #define GUI_SIM_SUPPORT_EMBOS 1
 #endif
 
 /**********************************************************************

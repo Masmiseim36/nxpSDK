@@ -26,7 +26,7 @@
 /* Numeric identifier to help pre-processor to identify whether our driver is used or not. */
 #define FMSTR_SERIAL_MCUX_USB_ID 1
 
-#if (FMSTR_MK_IDSTR(FMSTR_SERIAL_DRV) == FMSTR_SERIAL_MCUX_USB_ID) 
+#if (FMSTR_MK_IDSTR(FMSTR_SERIAL_DRV) == FMSTR_SERIAL_MCUX_USB_ID)
 
 #include "freemaster_serial_usb.h"
 
@@ -45,6 +45,17 @@
 
 /* Make the buffers size by USB bulk endpoint size */
 #define FMSTR_USB_BUFFER_SIZE USB_DATA_BUFF_SIZE
+
+/******************************************************************************
+* Adapter configuration
+******************************************************************************/
+#if defined(FMSTR_SHORT_INTR) && FMSTR_SHORT_INTR
+    #error The USB/CDC driver does not support short interrupt.
+#endif
+
+#if FMSTR_SERIAL_SINGLEWIRE
+    #error The USB/CDC driver does not support single wire configuration of UART communication.
+#endif
 
 /******************************************************************************
 * Local functions

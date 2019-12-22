@@ -1269,7 +1269,7 @@ void HW_EnableDisableSPIIRQ(void *pCxt, boolean Enable, boolean FromIrq)
     if (false == FromIrq)
     {
         IRQEN_ACCESS_ACQUIRE(pCxt);
-        OSA_EnterCritical(kCriticalDisableInt);
+        a_enter_critical(kCriticalDisableInt);
     }
 
     do
@@ -1294,7 +1294,7 @@ void HW_EnableDisableSPIIRQ(void *pCxt, boolean Enable, boolean FromIrq)
 
     if (false == FromIrq)
     {
-        OSA_ExitCritical(kCriticalDisableInt);
+        a_exit_critical(kCriticalDisableInt);
         IRQEN_ACCESS_RELEASE(pCxt);
     }
 }

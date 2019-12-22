@@ -23,7 +23,7 @@ extern void uart_pinmux_config(uint32_t instance, pinmux_type_t pinmux);
 
 //! @brief Peripheral array for MIMXRT1051.
 const peripheral_descriptor_t g_peripherals[] = {
-#if BL_CONFIG_LPUART_1
+#if BL_CONFIG_LPUART_1 && BL_CONFIG_LPUART
     // LPUART1
     {.typeMask = kPeripheralType_UART,
      .instance = 1,

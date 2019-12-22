@@ -32,10 +32,20 @@
  ******************************************************************************/
 void DEMO_WDOG_IRQHandler(void)
 {
-    WDOG_Refresh(DEMO_WDOG_BASE);
     WDOG_ClearInterruptStatus(DEMO_WDOG_BASE, kWDOG_InterruptFlag);
-    /*User code. */
-    PRINTF(" \r\nWDOG has be refreshed!");
+    /* User code. User can do urgent case before timeout reset.
+     * IE. user can backup the ram data or ram log to flash.
+     * the period is set by config.interruptTimeValue, user need to
+     * check the period between interrupt and timeout.
+     */
+}
+
+void delay(uint32_t u32Timeout)
+{
+    while (u32Timeout-- > 0U)
+    {
+        __NOP();
+    }
 }
 
 /*!
@@ -95,9 +105,14 @@ int main(void)
          * wdogConfig->interruptTimeValue = 0x04u;
          */
         WDOG_GetDefaultConfig(&config);
-        config.timeoutValue = 0xFU; /* Timeout value is 2.5 sec. */
+        config.timeoutValue = 0xFU; /* Timeout value is (0xF + 1)/2 = 8 sec. */
         WDOG_Init(DEMO_WDOG_BASE, &config);
         PRINTF("--- wdog Init done---\r\n");
+
+        /* without feed watch dog, wait until timeout. */
+        while (1)
+        {
+        }
     }
 
     /* If system reset from WDOG timeout, testing the refresh function using interrupt. */
@@ -117,9 +132,9 @@ int main(void)
          * wdogConfig->interruptTimeValue = 0x04u;
          */
         WDOG_GetDefaultConfig(&config);
-        config.timeoutValue       = 0xFU; /* Timeout value is 8 sec. */
+        config.timeoutValue       = 0xFU; /* Timeout value is (0xF+1)/2 = 8 sec. */
         config.enableInterrupt    = true;
-        config.interruptTimeValue = 0x4U; /* Interrupt occurred 2 sec before WDOG timeout. */
+        config.interruptTimeValue = 0x4U; /* Interrupt occurred (0x4)/2 = 2 sec before WDOG timeout. */
         WDOG_Init(DEMO_WDOG_BASE, &config);
 
         PRINTF("--- wdog Init done---\r\n");
@@ -130,5 +145,11 @@ int main(void)
 
     while (1)
     {
+        /* User can feed WDG in their main thread. */
+        WDOG_Refresh(DEMO_WDOG_BASE);
+        PRINTF(" \r\nWDOG has be refreshed!");
+
+        /* Delay. */
+        delay(SystemCoreClock);
     }
 }

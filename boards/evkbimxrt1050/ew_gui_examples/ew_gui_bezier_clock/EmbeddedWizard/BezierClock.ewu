@@ -1,0 +1,3671 @@
+$version 6.60
+
+// This is a GUI component.
+$rect <20,290,220,330>
+$output false
+class TimePicker : Templates::PickerControl
+{
+  $rect <250,420,450,460>
+  inherited property Bounds = <0,0,172,150>;
+
+  $rect <480,300,680,340>
+  inherited method UpdateLayout()
+  {
+    ListHour.ItemHeight = (int32)(aSize.y / 3);
+    ListMinute.ItemHeight = (int32)(aSize.y / 3);
+    ListSecond.ItemHeight = (int32)(aSize.y / 3);
+
+    ListHour.ScrollOffset = (int32)(aSize.y / 3);
+    ListMinute.ScrollOffset = (int32)(aSize.y / 3);
+    ListSecond.ScrollOffset = (int32)(aSize.y / 3);
+
+    TouchHandlerHour.SnapNext = point(0, (int32)(aSize.y / 3));
+    TouchHandlerMinute.SnapNext = point(0, (int32)(aSize.y / 3));
+    TouchHandlerSecond.SnapNext = point(0, (int32)(aSize.y / 3));
+  }
+
+  $rect <480,340,680,380>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    // Determine the new state of the time picker widget.
+    //
+    // isEnabled  --> the time picker can react to user inputs.
+    // isSelected --> the time picker can receive keyboard events.
+    // isSliding  --> the user interacts with the time picker.
+    //
+    var bool isEnabled  = aState.contains( Core::ViewState[ Enabled  ]);
+    var bool isSelected = aState.contains( Core::ViewState[ Selected ]);
+    var bool isSliding  = TouchHandlerHour.Sliding   ||
+                          TouchHandlerMinute.Sliding ||
+                          TouchHandlerSecond.Sliding;
+
+    /*
+
+      TO DO:
+
+      Depending on your time picker design, you have surely added some new
+      views  to your time picker. In the below code you should update the
+      properties of these views. For example, when your picker has an image
+      which you want to show only while the user is changing the time, than
+      following can be done:
+
+        theImage.Visible = isSliding;
+
+      Depending on the state of the time picker, you can alternate any property
+      of your views. You can change their visibility, colors, opacity, bitmaps
+      shown in image views, fonts used to render text, the position and the
+      size the view, ...
+
+
+      HINT:
+
+      Instead of instantly alternate the views properties you can here also
+      start effects to do this with an animation. Important: To decide when
+      to start an effect you should compare the current state of the picker
+      (e.g. 'isSliding') with its preceding state (e.g. variable 'sliding').
+
+      Assuming you have already added to your time picker component a new
+      effect member, named it 'slidingEffect' and configured it to animate
+      e.g. the opacity of an image within the time picker. Then following is
+      sufficient to trigger the animation:
+
+        if ( isSliding && !sliding )
+        {
+          pressedEffect.Reversed = false;
+          pressedEffect.Enabled  = true;
+        }
+        else if ( !isSliding && sliding )
+        {
+          pressedEffect.Reversed = true;
+          pressedEffect.Enabled  = true;
+        }
+
+    */
+
+    if ( isSliding )
+    {
+      Line6.Color = ColorLineSliding;
+      Line1.Color = ColorLineSliding;
+      Line2.Color = ColorLineSliding;
+      Line3.Color = ColorLineSliding;
+      Line4.Color = ColorLineSliding;
+      Line5.Color = ColorLineSliding;
+    }
+    else
+    {
+      Line6.Color = ColorLineNotSliding;
+      Line1.Color = ColorLineNotSliding;
+      Line2.Color = ColorLineNotSliding;
+      Line3.Color = ColorLineNotSliding;
+      Line4.Color = ColorLineNotSliding;
+      Line5.Color = ColorLineNotSliding;
+    }
+
+    // Remember the current state. Next time when the UpdateViewState() is called
+    // you can compare the 'old' state with the 'new' state and perform more
+    // sophisticated update, e.g. you can start an animation effect for the
+    // sliding <<-->> not sliding transition.
+    enabled  = isEnabled;
+    selected = isSelected;
+    sliding  = isSliding;
+  }
+
+  // State Management
+  note group Note3
+  {
+    attr Bounds = <470,260,690,510>;
+  }
+
+  // Touch screen events
+  note group Note2
+  {
+    attr Bounds = <240,260,460,390>;
+  }
+
+  // List Management
+  note group Note1
+  {
+    attr Bounds = <10,260,230,430>;
+  }
+
+  // This variable stores the current state of the time picker.
+  $rect <480,460,680,500>
+  var bool sliding;
+
+  // This variable stores the current state of the time picker.
+  $rect <480,420,680,460>
+  var bool selected;
+
+  // This variable stores the current state of the time picker.
+  $rect <480,380,680,420>
+  var bool enabled;
+
+  // This method is called when one of the Slide Touch Handler (TouchHandlerHour, \
+  // TouchHandlerMinute or TouchHandlerSecond) has finished the slide animation. \
+  // Thereupon the owner of the time picker is notified, that the time has been changed.
+  $rect <250,340,450,380>
+  slot onEndSlide
+  {
+    // The user has finished the interaction with the time picker. Request the
+    // UpdateViewState() method to be called in order to eventually refresh
+    // the time picker appearance.
+    InvalidateViewState();
+
+    // Notify the owner of the time picker, that the user has selected another time.
+    // Do this however only after the last list has finished the slide animation.
+    if ( !TouchHandlerHour.Sliding && !TouchHandlerMinute.Sliding && !TouchHandlerSecond.Sliding )
+      postsignal OnChange;
+  }
+
+  // This method is called when one of the Slide Touch Handler (TouchHandlerHour, \
+  // TouchHandlerMinute or TouchHandlerSecond) has begun the slide animation.
+  $rect <250,300,450,340>
+  slot onStartSlide
+  {
+    // The user has begun an interaction with the time picker. Request the
+    // UpdateViewState() method to be called in order to eventually refresh
+    // the time picker appearance.
+    InvalidateViewState();
+  }
+
+  // This method is called by 'ListSecond' vertical list every time the list loads \
+  // or updates an item.
+  $rect <20,380,220,420>
+  slot OnLoadSecondItem
+  {
+    // Get the number of the item to load. The list component takes care of the
+    // creation of the corresponding item view. Just access it ...
+    var int32       itemNo   = ListSecond.Item;
+    var Views::Text itemView = (Views::Text)ListSecond.View;
+
+    // The implementation of this slot method does not match the item class
+    // specified in the associated list component. Or the slot method is not
+    // called in context of the OnLoadItem list operation.
+    if ( itemView == null )
+      return;
+
+    /*
+
+      TO DO:
+
+      Depending on your time picker design, you will need to adapt the following
+      initialization. You can change the font, color, the alignment of the text
+      within the area, etc.
+
+    */
+
+    // Configure the item view ...
+    itemView.String    = string( itemNo, 2 );
+    itemView.Font      = BezierClock::FontXXL;
+    itemView.Color     = #FFFFFFFF;
+    itemView.Alignment = Views::TextAlignment[ AlignHorzCenter, AlignVertCenter ];
+    itemView.ScrollOffset = <0,-3>;
+
+    // Ensure that the item has correct size. The position of the item will be
+    // managed by the list component.
+    itemView.Bounds.size = point( ListSecond.Bounds.w, ListSecond.ItemHeight );
+  }
+
+  // This method is called by 'ListMinute' vertical list every time the list loads \
+  // or updates an item.
+  $rect <20,340,220,380>
+  slot OnLoadMinuteItem
+  {
+    // Get the number of the item to load. The list component takes care of the
+    // creation of the corresponding item view. Just access it ...
+    var int32       itemNo   = ListMinute.Item;
+    var Views::Text itemView = (Views::Text)ListMinute.View;
+
+    // The implementation of this slot method does not match the item class
+    // specified in the associated list component. Or the slot method is not
+    // called in context of the OnLoadItem list operation.
+    if ( itemView == null )
+      return;
+
+    /*
+
+      TO DO:
+
+      Depending on your time picker design, you will need to adapt the following
+      initialization. You can change the font, color, the alignment of the text
+      within the area, etc.
+
+    */
+
+    // Configure the item view ...
+    itemView.String    = string( itemNo, 2 );
+    itemView.Font      = BezierClock::FontXXL;
+    itemView.Color     = #FFFFFFFF;
+    itemView.Alignment = Views::TextAlignment[ AlignHorzCenter, AlignVertCenter ];
+    itemView.ScrollOffset = <0,-3>;
+
+    // Ensure that the item has correct size. The position of the item will be
+    // managed by the list component.
+    itemView.Bounds.size = point( ListMinute.Bounds.w, ListMinute.ItemHeight );
+  }
+
+  // This method is called by 'ListHour' vertical list every time the list loads \
+  // or updates an item.
+  $rect <20,300,220,340>
+  slot OnLoadHourItem
+  {
+    // Get the number of the item to load. The list component takes care of the
+    // creation of the corresponding item view. Just access it ...
+    var int32       itemNo   = ListHour.Item;
+    var Views::Text itemView = (Views::Text)ListHour.View;
+
+    // The implementation of this slot method does not match the item class
+    // specified in the associated list component. Or the slot method is not
+    // called in context of the OnLoadItem list operation.
+    if ( itemView == null )
+      return;
+
+    /*
+
+      TO DO:
+
+      Depending on your time picker design, you will need to adapt the following
+      initialization. You can change the font, color, the alignment of the text
+      within the area, etc.
+
+    */
+
+    // Configure the item view ...
+    itemView.String    = string( itemNo, 2 );
+    itemView.Font      = BezierClock::FontXXL;
+    itemView.Color     = #FFFFFFFF;
+    itemView.Alignment = Views::TextAlignment[ AlignHorzCenter, AlignVertCenter ];
+    itemView.ScrollOffset = <0,-3>;
+
+    // Ensure that the item has correct size. The position of the item will be
+    // managed by the list component.
+    itemView.Bounds.size = point( ListHour.Bounds.w, ListHour.ItemHeight );
+  }
+
+  $rect <830,90,1030,130>
+  onget Second
+  {
+    // From the actual scroll offset calculate the number of the corresponding
+    // list item.
+    return (( -ListSecond.ScrollOffset / ListSecond.ItemHeight ) + 1 ) % 60;
+  }
+
+  $rect <830,50,1030,90>
+  onset Second
+  {
+    // Limit the assigned value to the valid range 0 .. 59
+    if ( value < 0  ) value = 0;
+    if ( value > 59 ) value = 59;
+
+    // Adjust the scroll position of the corresponding list.
+    ListSecond.ScrollOffset = ( value - 1 ) * -ListSecond.ItemHeight;
+  }
+
+  $rect <630,90,830,130>
+  onget Minute
+  {
+    // From the actual scroll offset calculate the number of the corresponding
+    // list item.
+    return (( -ListMinute.ScrollOffset / ListMinute.ItemHeight ) + 1 ) % 60;
+  }
+
+  $rect <630,50,830,90>
+  onset Minute
+  {
+    // Limit the assigned value to the valid range 0 .. 59
+    if ( value < 0  ) value = 0;
+    if ( value > 59 ) value = 59;
+
+    // Adjust the scroll position of the corresponding list.
+    ListMinute.ScrollOffset = ( value - 1 ) * -ListMinute.ItemHeight;
+  }
+
+  $rect <430,90,630,130>
+  onget Hour
+  {
+    // From the actual scroll offset calculate the number of the corresponding
+    // list item.
+    return (( -ListHour.ScrollOffset / ListHour.ItemHeight ) + 1 ) % 24;
+  }
+
+  $rect <430,50,630,90>
+  onset Hour
+  {
+    // Limit the assigned value to the valid range 0 .. 23
+    if ( value < 0  ) value = 0;
+    if ( value > 23 ) value = 23;
+
+    // Adjust the scroll position of the corresponding list.
+    ListHour.ScrollOffset = ( value - 1 ) * -ListHour.ItemHeight;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SlideTouchHandler TouchHandlerSecond
+  {
+    preset Bounds = <119,0,162,150>;
+    preset OnEnd = onEndSlide;
+    preset OnStart = onStartSlide;
+    preset SnapNext = <0,80>;
+    preset Friction = 0.2;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SlideTouchHandler TouchHandlerMinute
+  {
+    preset Bounds = <65,0,107,150>;
+    preset OnEnd = onEndSlide;
+    preset OnStart = onStartSlide;
+    preset SnapNext = <0,80>;
+    preset Friction = 0.2;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SlideTouchHandler TouchHandlerHour
+  {
+    preset Bounds = <10,0,53,150>;
+    preset OnEnd = onEndSlide;
+    preset OnStart = onStartSlide;
+    preset SnapNext = <0,80>;
+    preset Friction = 0.2;
+  }
+
+  $rect <20,20,160,60>
+  object Core::VerticalList ListSecond
+  {
+    preset Bounds = <119,0,162,150>;
+    preset OnUpdate = onSecondUpdate;
+    preset OnLoadItem = OnLoadSecondItem;
+    preset Endless = true;
+    preset SlideHandler = TouchHandlerSecond;
+    preset ScrollOffset = 80;
+    preset ItemHeight = 80;
+    preset NoOfItems = 60;
+  }
+
+  $rect <20,20,160,60>
+  object Core::VerticalList ListMinute
+  {
+    preset Bounds = <65,0,107,150>;
+    preset OnUpdate = onMinuteUpdate;
+    preset OnLoadItem = OnLoadMinuteItem;
+    preset Endless = true;
+    preset SlideHandler = TouchHandlerMinute;
+    preset ScrollOffset = 80;
+    preset ItemHeight = 80;
+    preset NoOfItems = 60;
+  }
+
+  $rect <20,20,160,60>
+  object Core::VerticalList ListHour
+  {
+    preset Bounds = <10,0,53,150>;
+    preset OnUpdate = onHourUpdate;
+    preset OnLoadItem = OnLoadHourItem;
+    preset Endless = true;
+    preset SlideHandler = TouchHandlerHour;
+    preset ScrollOffset = 80;
+    preset ItemHeight = 80;
+    preset NoOfItems = 24;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Separator2
+  {
+    preset Bounds = <102,57,122,89>;
+    preset String = ":";
+    preset Font = BezierClock::FontXXL;
+    preset Color = #FFFFFFFF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Separator1
+  {
+    preset Bounds = <47,57,67,89>;
+    preset String = ":";
+    preset Font = BezierClock::FontXXL;
+    preset Color = #FFFFFFFF;
+  }
+
+  // The property 'OnChange' can refer to a slot method, which will receive a signal \
+  // each time the user select another time. Thereupon the method's logic will be \
+  // executed. In the associated slot method you can evaluate the time picker properties \
+  // @Hour, @Minute and @Second.
+  $rect <430,150,630,190>
+  property slot OnChange = null;
+
+  // The property 'Second' stores the number of seconds after the minute. The value \
+  // is valid in range 0 .. 59.
+  $rect <830,10,1030,50>
+  property int32 Second = 0;
+
+  // The property 'Minute' stores the number of minutes after the hour. The value \
+  // is valid in range 0 .. 59.
+  $rect <630,10,830,50>
+  property int32 Minute = 0;
+
+  // The property 'Hour' stores the number of hours since midnight. The value is \
+  // valid in range 0 .. 23.
+  $rect <430,10,630,50>
+  property int32 Hour = 0;
+
+  $rect <940,300,1140,340>
+  slot onHourUpdate
+  {
+    var Core::View view = ListHour.first;
+    while( view != null )
+    {
+      var Views::Text item = (Views::Text)view;
+      if ( item != null )
+      {
+        item.Color = ColorUnselected;
+      }
+
+      view = view.next;
+    }
+
+    var Views::Text selectedHour = (Views::Text)ListHour.GetViewForItem( ListHour.GetItemAtPosition( ListHour.Bounds.center ) );
+    if ( selectedHour != null )
+    {
+      selectedHour.Color = ColorSelected;
+    }
+  }
+
+  $rect <940,340,1140,380>
+  slot onMinuteUpdate
+  {
+    var Core::View view = ListMinute.first;
+    while( view != null )
+    {
+      var Views::Text item = (Views::Text)view;
+      if ( item != null )
+      {
+        item.Color = ColorUnselected;
+      }
+
+      view = view.next;
+    }
+
+    var Views::Text selectedMinute = (Views::Text)ListMinute.GetViewForItem( ListMinute.GetItemAtPosition( ListMinute.Bounds.center ) );
+    if ( selectedMinute != null )
+    {
+      selectedMinute.Color = ColorSelected;
+    }
+  }
+
+  $rect <940,380,1140,420>
+  slot onSecondUpdate
+  {
+    var Core::View view = ListSecond.first;
+    while( view != null )
+    {
+      var Views::Text item = (Views::Text)view;
+      if ( item != null )
+      {
+        item.Color = ColorUnselected;
+      }
+
+      view = view.next;
+    }
+
+    var Views::Text selectedSecond = (Views::Text)ListSecond.GetViewForItem( ListSecond.GetItemAtPosition( ListSecond.Bounds.center ) );
+    if ( selectedSecond != null )
+    {
+      selectedSecond.Color = ColorSelected;
+    }
+  }
+
+  $rect <710,300,910,340>
+  var color ColorSelected = #FFFFFFFF;
+
+  $rect <710,340,910,380>
+  var color ColorUnselected = #FFFFFF44;
+
+  $rect <710,380,910,420>
+  var color ColorLineSliding = #C1C1C1FF;
+
+  $rect <710,420,910,460>
+  var color ColorLineNotSliding = #E1E1E1FF;
+
+  $rect <20,20,160,60>
+  object Views::Line Line1
+  {
+    preset Point2 = <53,99>;
+    preset Point1 = <10,99>;
+    preset Width = 3;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line Line2
+  {
+    preset Point2 = <52,51>;
+    preset Point1 = <9,51>;
+    preset Width = 3;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line Line3
+  {
+    preset Point2 = <107,51>;
+    preset Point1 = <65,51>;
+    preset Width = 3;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line Line4
+  {
+    preset Point2 = <107,99>;
+    preset Point1 = <65,99>;
+    preset Width = 3;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line Line5
+  {
+    preset Point2 = <162,99>;
+    preset Point1 = <119,99>;
+    preset Width = 3;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line Line6
+  {
+    preset Point2 = <162,51>;
+    preset Point1 = <119,51>;
+    preset Width = 3;
+  }
+
+  // Colors
+  note group Note
+  {
+    attr Bounds = <700,260,920,470>;
+  }
+
+  // Appearance
+  note group Note4
+  {
+    attr Bounds = <930,260,1150,470>;
+  }
+
+  // How to create components from templates?
+  // 
+  // https://doc.embedded-wizard.de/creating-components-from-templates
+  note legend Note5
+  {
+    attr Bounds = <10,530,490,610>;
+  }
+}
+
+$rect <20,100,220,140>
+$output false
+class ClockScreen : Core::Group
+{
+  $rect <0,290,200,330>
+  inherited property Bounds = <0,0,480,272>;
+
+  $rect <0,330,200,370>
+  inherited method Init()
+  {
+    // Just at the moment when this component is ceated trigger the first update for the displayed time
+    postsignal firstUpdate;
+
+  }
+
+  // The ClockScreen component implements a digital clock by using the animated bezier \
+  // digits.
+  note legend Note
+  {
+    attr Bounds = <0,420,390,560>;
+  }
+
+  $rect <400,520,600,560>
+  slot onShowTimer
+  {
+    if ( !IsDialog( false ))
+      return;
+
+    // Leave this dialog and show another one
+    Owner.SwitchToDialog( new BezierClock::TimerScreen, Effects::SlideLeftCentered, Effects::SlideRightCentered, null, null, Effects::SlideLeftCentered, null, null, null, null, false );
+
+    // Showing the 'Timer' dialog should cause the background in the application being shifted a little bit
+    ((BezierClock::BezierClock)Owner).Background.ShiftLeft();
+  }
+
+  $rect <400,480,600,520>
+  slot onShowSettings
+  {
+    // Leave this dialog and show another one
+    if ( IsDialog( false ))
+      Owner.SwitchToDialog( new BezierClock::SettingsScreen, Effects::SlideUpCentered, Effects::SlideDownCentered, null, null, Effects::SlideUpCentered, null, null, null, null, false );
+  }
+
+  $rect <400,440,600,480>
+  slot onShowStyle
+  {
+    // Leave this dialog and show another one
+    if ( IsDialog( false ))
+      Owner.SwitchToDialog( new BezierClock::StyleScreen, Effects::SlideDownCentered, Effects::SlideUpCentered, null, null, Effects::SlideDownCentered, null, null, null, null, false );
+  }
+
+  $rect <400,370,600,410>
+  slot updateCurrentTime
+  {
+    // Get the current time
+    var Core::Time currentTime = Time.CurrentTime;
+
+    Digit0.Value = currentTime.Hour / 10;
+    Digit1.Value = currentTime.Hour % 10;
+
+    Digit2.Value = currentTime.Minute / 10;
+    Digit3.Value = currentTime.Minute % 10;
+
+    Digit4.Value = currentTime.Second / 10;
+    Digit5.Value = currentTime.Second % 10;
+
+    Date.String = currentTime.getDayOfWeekName( currentTime.DayOfWeek, true ) + ", "
+                  + currentTime.getMonthName( currentTime.Month, false ) + " " + string(currentTime.Day, 2);
+  }
+
+  $rect <200,370,400,410>
+  slot frequentUpdate
+  {
+    var int32 timing = 700;
+    Digit0.AnimationDuration = timing;
+    Digit1.AnimationDuration = timing;
+    Digit2.AnimationDuration = timing;
+    Digit3.AnimationDuration = timing;
+    Digit4.AnimationDuration = timing;
+    Digit5.AnimationDuration = timing;
+
+    signal updateCurrentTime;
+
+
+  }
+
+  $rect <0,370,200,410>
+  slot firstUpdate
+  {
+    var int32 timing = 2000;
+    Digit0.AnimationDuration = timing;
+    Digit1.AnimationDuration = timing;
+    Digit2.AnimationDuration = timing;
+    Digit3.AnimationDuration = timing;
+    Digit4.AnimationDuration = timing;
+    Digit5.AnimationDuration = timing;
+
+    signal updateCurrentTime;
+
+    Timer.OnTrigger = frequentUpdate;
+
+  }
+
+  $rect <200,290,400,330>
+  object Core::Timer Timer
+  {
+    preset OnTrigger = firstUpdate;
+    preset Begin = 2000;
+    preset Enabled = true;
+  }
+
+  $rect <200,330,400,370>
+  object Core::Time Time;
+
+  $rect <400,290,600,330>
+  object Graphics::ArcPath DotPath
+  {
+    preset NoOfEdges = 20;
+    preset EndAngle = 360.0;
+    preset Radius = 6.1;
+    preset Style = Graphics::ArcStyle.Pie;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler TouchHandlerDown
+  {
+    preset Point4 = <60,215>;
+    preset Point3 = <419,215>;
+    preset Point2 = <419,271>;
+    preset Point1 = <60,271>;
+    preset OnPress = onShowSettings;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler TouchHandlerRight
+  {
+    preset Point4 = <419,0>;
+    preset Point3 = <479,0>;
+    preset Point2 = <479,271>;
+    preset Point1 = <419,271>;
+    preset OnPress = onShowTimer;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler TouchHandlerUp
+  {
+    preset Point4 = <60,0>;
+    preset Point3 = <419,0>;
+    preset Point2 = <419,56>;
+    preset Point1 = <60,56>;
+    preset OnPress = onShowStyle;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Date
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <0,172,480,226>;
+    preset String = "Text";
+    preset Font = BezierClock::FontXXL;
+  }
+
+  $rect <20,20,160,60>
+  object Views::FillPath Dot1
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <188,148,218,178>;
+    preset Color = #FFFFFFDD;
+    preset Offset = <15,15>;
+    preset Path = DotPath;
+  }
+
+  $rect <20,20,160,60>
+  object Views::FillPath Dot2
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <188,112,218,142>;
+    preset Color = #FFFFFFDD;
+    preset Offset = <15,15>;
+    preset Path = DotPath;
+  }
+
+  $rect <20,20,160,60>
+  object BezierClock::Digit Digit0
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <47,53,119,176>;
+    preset StrokeWidth = 6.1;
+    preset Edges = 60;
+    preset Helpers = false;
+  }
+
+  $rect <20,20,160,60>
+  object BezierClock::Digit Digit1
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <119,53,191,176>;
+    preset Edges = 60;
+    preset StrokeWidth = 6.1;
+    preset Helpers = false;
+  }
+
+  $rect <20,20,160,60>
+  object BezierClock::Digit Digit2
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <215,53,287,176>;
+    preset Edges = 60;
+    preset StrokeWidth = 6.1;
+    preset Helpers = false;
+  }
+
+  $rect <20,20,160,60>
+  object BezierClock::Digit Digit3
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <287,53,359,176>;
+    preset Edges = 60;
+    preset StrokeWidth = 6.1;
+    preset Helpers = false;
+  }
+
+  $rect <20,20,160,60>
+  object BezierClock::Digit Digit4
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <361,118,393,172>;
+    preset Edges = 50;
+    preset Color = #FFFFFFDD;
+    preset StrokeWidth = 2.3;
+    preset Helpers = false;
+  }
+
+  $rect <20,20,160,60>
+  object BezierClock::Digit Digit5
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <399,118,431,172>;
+    preset Edges = 50;
+    preset Color = #FFFFFFDD;
+    preset StrokeWidth = 2.3;
+    preset Helpers = false;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image ImageUp
+  {
+    preset Bounds = <0,0,480,20>;
+    preset FrameNumber = 1;
+    preset Bitmap = Resources::NavigationIconsMedium;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image ImageDown
+  {
+    preset Bounds = <0,250,480,272>;
+    preset FrameNumber = 0;
+    preset Bitmap = Resources::NavigationIconsMedium;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image ImageRight
+  {
+    preset Bounds = <460,0,480,272>;
+    preset FrameNumber = 2;
+    preset Bitmap = Resources::NavigationIconsMedium;
+  }
+}
+
+// This is the root component of the entire GUI application.
+$rect <20,60,220,100>
+$output false
+class BezierClock : Core::Group
+{
+  $rect <10,300,210,340>
+  inherited property Bounds = <0,0,480,272>;
+
+  $rect <10,340,210,380>
+  inherited method Init()
+  {
+    // Just at the initialization time of the application present the first (main) dialog
+    PresentDialog( new BezierClock::ClockScreen, null, null, null, null, null, null, null, null, false );
+
+    // ... and trigger the background to update its style accoding to setting retrived from the device
+    postsignal onUpdateBackground;
+  }
+
+  // This slot method is executed when the associated property observer 'PropertyObserver' \
+  // is notified.
+  $rect <440,300,640,340>
+  slot onUpdateBackground
+  {
+    // Update the appearance of the background according to actual setting stored in the device
+    Background.CurrentBackground = BezierClock::Device.CurrentBackground;
+  }
+
+  $rect <230,300,430,340>
+  object Core::PropertyObserver PropertyObserver
+  {
+    preset OnEvent = onUpdateBackground;
+    preset Outlet = ^BezierClock::Device.CurrentBackground;
+  }
+
+  $rect <20,20,160,60>
+  object BezierClock::Background Background
+  {
+    preset Bounds = <0,0,480,272>;
+  }
+
+  // Slot method to trigger the next phase of the auto demo.
+  $rect <230,350,430,390>
+  slot AutoDemoSlot
+  {
+    sender; /* the method is called from the sender object */
+
+    switch ( AutoState )
+    {
+      case 2:
+        SwitchToDialog( new BezierClock::StyleScreen, Effects::SlideDownCentered, Effects::SlideUpCentered, null, null, Effects::SlideDownCentered, null, null, null, null, false );
+      case 3:
+        if ( BezierClock::Device.CurrentBackground == 2 ) BezierClock::Device.CurrentBackground = 1; else BezierClock::Device.CurrentBackground = 2;
+      case 4:
+        SwitchToDialog( new BezierClock::ClockScreen, Effects::SlideUpCentered, null, null, null, null, null, null, null, null, false );
+      case 6:
+      {
+        SwitchToDialog( new BezierClock::TimerScreen, Effects::SlideLeftCentered, Effects::SlideRightCentered, null, null, Effects::SlideLeftCentered, null, null, null, null, false );
+        Background.ShiftLeft();
+      }
+      case 7:
+      {
+        SwitchToDialog( new BezierClock::ClockScreen, Effects::SlideRightCentered, null, null, null, null, null, null, null, null, false );
+        Background.ShiftRight();
+      }
+      case 8:
+        SwitchToDialog( new BezierClock::SettingsScreen, Effects::SlideUpCentered, Effects::SlideDownCentered, null, null, Effects::SlideUpCentered, null, null, null, null, false );
+      case 9:
+        SwitchToDialog( new BezierClock::ClockScreen, Effects::SlideDownCentered, null, null, null, null, null, null, null, null, false );
+      default:
+       ;
+    }
+
+    AutoState = AutoState + 1;
+    if ( AutoState > 9 )
+      AutoState = 0;
+  }
+
+  // Variable to store the current phase of the auto demo.
+  $rect <440,350,640,390>
+  var int32 AutoState = 0;
+
+  // Timer object to drive the auto demo mode.
+  $rect <230,390,430,430>
+  object Core::Timer AutoDemoTimer
+  {
+    preset OnTrigger = AutoDemoSlot;
+    preset Period = 2000;
+    preset Begin = 0;
+  }
+}
+
+$rect <20,140,220,180>
+$output false
+class SettingsScreen : Core::Group
+{
+  $rect <0,300,190,340>
+  inherited property Bounds = <0,0,480,272>;
+
+  $rect <0,340,190,380>
+  inherited method UpdateViewState()
+  {
+    super( aState );
+
+    var Core::Time currentTime = Time.CurrentTime;
+
+    DatePicker.Year  = currentTime.Year;
+    DatePicker.Month = currentTime.Month;
+    DatePicker.Day   = currentTime.Day;
+
+    TimePicker.Hour   = currentTime.Hour;
+    TimePicker.Minute = currentTime.Minute;
+    TimePicker.Second = currentTime.Second;
+  }
+
+  // The SettingsScreen component combines a date picker and a time picker to change \
+  // the system date and time.
+  // If supported by the underlying system, the RTC / system clock is updated.
+  note legend Note
+  {
+    attr Bounds = <0,390,590,480>;
+  }
+
+  $rect <190,340,390,380>
+  slot onConfirm
+  {
+    if ( !IsDialog( false ))
+      return;
+
+    Time.Year   = DatePicker.Year;
+    Time.Month  = DatePicker.Month;
+    Time.Day    = DatePicker.Day;
+    Time.Hour   = TimePicker.Hour;
+    Time.Minute = TimePicker.Minute;
+    Time.Second = TimePicker.Second;
+
+    // Update the device clock to the selected value
+    BezierClock::Device.SetTime( Time.Time );
+
+    // ... and leave this dialog and show another one
+    Owner.SwitchToDialog( new BezierClock::ClockScreen, Effects::SlideDownCentered, null, null, null, null, null, null, null, null, false );
+  }
+
+  $rect <190,300,390,340>
+  slot onCancel
+  {
+    // Leave this dialog and show another one
+    if ( IsDialog( false ))
+      Owner.SwitchToDialog( new BezierClock::ClockScreen, Effects::SlideDownCentered, null, null, null, null, null, null, null, null, false );
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::PushButton PushButtonConfirm
+  {
+    preset Bounds = <348,200,468,250>;
+    preset OnActivate = onConfirm;
+    preset Label = "Confirm";
+    preset Appearance = PushButtonConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::PushButton PushButtonCancel
+  {
+    preset Bounds = <12,200,132,250>;
+    preset OnActivate = onCancel;
+    preset Label = "Cancel";
+    preset Appearance = PushButtonConfig;
+  }
+
+  $rect <20,20,160,60>
+  object BezierClock::TimePicker TimePicker
+  {
+    preset Bounds = <289,39,461,189>;
+  }
+
+  $rect <20,20,160,60>
+  object BezierClock::DatePicker DatePicker
+  {
+    preset Bounds = <19,39,279,189>;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler UpTouchHandler
+  {
+    preset Point4 = <60,0>;
+    preset Point3 = <420,0>;
+    preset Point2 = <420,36>;
+    preset Point1 = <60,36>;
+    preset OnPress = onCancel;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image ImageUp
+  {
+    preset Bounds = <0,0,480,18>;
+    preset FrameNumber = 1;
+    preset Bitmap = Resources::NavigationIconsMedium;
+  }
+
+  $rect <390,300,590,340>
+  object WidgetSet::PushButtonConfig PushButtonConfig
+  {
+    preset LabelColorActive = #C1C1C1FF;
+    preset LabelColorFocused = #D1D1D1FF;
+    preset LabelColorDisabled = #BEBEBE73;
+    preset LabelColorDefault = #FFFFFFFF;
+    preset LabelFont = BezierClock::FontL;
+  }
+
+  $rect <390,340,590,380>
+  object Core::Time Time;
+}
+
+// This is a GUI component.
+$rect <20,330,220,370>
+$output false
+class DatePicker : Templates::PickerControl
+{
+  $rect <250,420,450,460>
+  inherited property Bounds = <0,0,260,150>;
+
+  $rect <480,290,680,330>
+  inherited method UpdateLayout()
+  {
+    ListDay.ItemHeight = (int32)(aSize.y / 3);
+    ListMonth.ItemHeight = (int32)(aSize.y / 3);
+    ListYear.ItemHeight = (int32)(aSize.y / 3);
+
+    ListDay.ScrollOffset = (int32)(aSize.y / 3);
+    ListMonth.ScrollOffset = (int32)(aSize.y / 3);
+    ListYear.ScrollOffset = (int32)(aSize.y / 3);
+
+    TouchHandlerDay.SnapNext = point(0, (int32)(aSize.y / 3));
+    TouchHandlerMonth.SnapNext = point(0, (int32)(aSize.y / 3));
+    TouchHandlerYear.SnapNext = point(0, (int32)(aSize.y / 3));
+  }
+
+  $rect <480,330,680,370>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    // Determine the new state of the date picker widget.
+    //
+    // isEnabled  --> the date picker can react to user inputs.
+    // isSelected --> the date picker can receive keyboard events.
+    // isSliding  --> the user interacts with the date picker.
+    //
+    var bool isEnabled  = aState.contains( Core::ViewState[ Enabled  ]);
+    var bool isSelected = aState.contains( Core::ViewState[ Selected ]);
+    var bool isSliding  = TouchHandlerDay.Sliding   ||
+                          TouchHandlerMonth.Sliding ||
+                          TouchHandlerYear.Sliding;
+
+    /*
+
+      TO DO:
+
+      Depending on your date picker design, you have surely added some new
+      views  to your date picker. In the below code you should update the
+      properties of these views. For example, when your picker has an image
+      which you want to show only while the user is changing the date, than
+      following can be done:
+
+        theImage.Visible = isSliding;
+
+      Depending on the state of the date picker, you can alternate any property
+      of your views. You can change their visibility, colors, opacity, bitmaps
+      shown in image views, fonts used to render text, the position and the
+      size the view, ...
+
+
+      HINT:
+
+      Instead of instantly alternate the views properties you can here also
+      start effects to do this with an animation. Important: To decide when
+      to start an effect you should compare the current state of the picker
+      (e.g. 'isSliding') with its preceding state (e.g. variable 'sliding').
+
+      Assuming you have already added to your date picker component a new
+      effect member, named it 'slidingEffect' and configured it to animate
+      e.g. the opacity of an image within the date picker. Then following is
+      sufficient to trigger the animation:
+
+        if ( isSliding && !sliding )
+        {
+          pressedEffect.Reversed = false;
+          pressedEffect.Enabled  = true;
+        }
+        else if ( !isSliding && sliding )
+        {
+          pressedEffect.Reversed = true;
+          pressedEffect.Enabled  = true;
+        }
+
+    */
+
+    if ( isSliding )
+    {
+      Line.Color = ColorLineSliding;
+      Line1.Color = ColorLineSliding;
+      Line2.Color = ColorLineSliding;
+      Line3.Color = ColorLineSliding;
+      Line4.Color = ColorLineSliding;
+      Line5.Color = ColorLineSliding;
+    }
+    else
+    {
+      Line.Color = ColorLineNotSliding;
+      Line1.Color = ColorLineNotSliding;
+      Line2.Color = ColorLineNotSliding;
+      Line3.Color = ColorLineNotSliding;
+      Line4.Color = ColorLineNotSliding;
+      Line5.Color = ColorLineNotSliding;
+    }
+
+    // Remember the current state. Next date when the UpdateViewState() is called
+    // you can compare the 'old' state with the 'new' state and perform more
+    // sophisticated update, e.g. you can start an animation effect for the
+    // sliding <<-->> not sliding transition.
+    enabled  = isEnabled;
+    selected = isSelected;
+    sliding  = isSliding;
+  }
+
+  // Utility Functionality
+  note group Note4
+  {
+    attr Bounds = <10,440,230,530>;
+  }
+
+  // State Management
+  note group Note3
+  {
+    attr Bounds = <470,260,690,500>;
+  }
+
+  // Touch screen events
+  note group Note2
+  {
+    attr Bounds = <240,260,460,390>;
+  }
+
+  // List Management
+  note group Note1
+  {
+    attr Bounds = <10,260,230,430>;
+  }
+
+  // This variable stores the current state of the date picker.
+  $rect <480,450,680,490>
+  var bool sliding;
+
+  // This variable stores the current state of the date picker.
+  $rect <480,410,680,450>
+  var bool selected;
+
+  // This variable stores the current state of the date picker.
+  $rect <480,370,680,410>
+  var bool enabled;
+
+  // This method is called when one of the Slide Touch Handler (TouchHandlerDay, \
+  // TouchHandlerMonth or TouchHandlerYear) has finished the slide animation. Thereupon \
+  // the owner of the date picker is notified, that the date has been changed.
+  $rect <250,340,450,380>
+  slot onEndSlide
+  {
+    // The user has finished the interaction with the date picker. Request the
+    // UpdateViewState() method to be called in order to eventually refresh
+    // the date picker appearance.
+    InvalidateViewState();
+
+    // The last list has finished the slide animation. Adjust the day and notify the owner
+    // about the made selection
+    if ( !TouchHandlerDay.Sliding && !TouchHandlerMonth.Sliding && !TouchHandlerYear.Sliding )
+    {
+      // Changing the month may affect the actually selected day.
+      var int32 daysInMonth = getDaysInMonth( Month, Year );
+      var int32 day         = Day;
+
+      // Ensure the list displays the right number of days
+      ListDay.NoOfItems = daysInMonth;
+
+      // Adjust the day if necessary
+      if ( day > daysInMonth )
+        Day = daysInMonth;
+
+      // Notify the owner of the date picker, that the user has selected another date.
+      postsignal OnChange;
+    }
+  }
+
+  // This method is called when one of the Slide Touch Handler (TouchHandlerDay, \
+  // TouchHandlerMonth or TouchHandlerYear) has begun the slide animation.
+  $rect <250,300,450,340>
+  slot onStartSlide
+  {
+    // The user has begun an interaction with the date picker. Request the
+    // UpdateViewState() method to be called in order to eventually refresh
+    // the date picker appearance.
+    InvalidateViewState();
+  }
+
+  // This method is called by 'ListYear' vertical list every time the list loads \
+  // or updates an item.
+  $rect <20,380,220,420>
+  slot OnLoadYearItem
+  {
+    // Get the number of the item to load. The list component takes care of the
+    // creation of the corresponding item view. Just access it ...
+    var int32       itemNo   = ListYear.Item;
+    var Views::Text itemView = (Views::Text)ListYear.View;
+
+    // The implementation of this slot method does not match the item class
+    // specified in the associated list component. Or the slot method is not
+    // called in context of the OnLoadItem list operation.
+    if ( itemView == null )
+      return;
+
+    /*
+
+      TO DO:
+
+      Depending on your date picker design, you will need to adapt the following
+      initialization. You can change the font, color, the alignment of the text
+      within the area, etc.
+
+    */
+
+    // Configure the item view ...
+    itemView.String    = string( itemNo + 2000, 4 );
+    itemView.Font      = BezierClock::FontXXL;
+    itemView.Color     = #FFFFFFFF;
+    itemView.Alignment = Views::TextAlignment[ AlignHorzCenter, AlignVertCenter ];
+    itemView.ScrollOffset = <0,-3>;
+
+    // Ensure that the item has correct size. The position of the item will be
+    // managed by the list component.
+    itemView.Bounds.size = point( ListYear.Bounds.w, ListYear.ItemHeight );
+  }
+
+  // This method is called by 'ListMonth' vertical list every time the list loads \
+  // or updates an item.
+  $rect <20,340,220,380>
+  slot OnLoadMonthItem
+  {
+    // Get the number of the item to load. The list component takes care of the
+    // creation of the corresponding item view. Just access it ...
+    var int32       itemNo   = ListMonth.Item;
+    var Views::Text itemView = (Views::Text)ListMonth.View;
+
+    // The implementation of this slot method does not match the item class
+    // specified in the associated list component. Or the slot method is not
+    // called in context of the OnLoadItem list operation.
+    if ( itemView == null )
+      return;
+
+    /*
+
+      TO DO:
+
+      Depending on your date picker design, you will need to adapt the following
+      initialization. You can change the font, color, the alignment of the text
+      within the area, etc.
+
+    */
+
+    // Select the text to display in the 'Month' list
+    switch ( itemNo )
+    {
+      case 1  : itemView.String = Resources::FebruaryAbbr;
+      case 2  : itemView.String = Resources::MarchAbbr;
+      case 3  : itemView.String = Resources::AprilAbbr;
+      case 4  : itemView.String = Resources::MayAbbr;
+      case 5  : itemView.String = Resources::JuneAbbr;
+      case 6  : itemView.String = Resources::JulyAbbr;
+      case 7  : itemView.String = Resources::AugustAbbr;
+      case 8  : itemView.String = Resources::SeptemberAbbr;
+      case 9  : itemView.String = Resources::OctoberAbbr;
+      case 10 : itemView.String = Resources::NovemberAbbr;
+      case 11 : itemView.String = Resources::DecemberAbbr;
+      default : itemView.String = Resources::JanuaryAbbr;
+    }
+
+    // Configure the item view ...
+    itemView.Font      = BezierClock::FontXXL;
+    itemView.Color     = #FFFFFFFF;
+    itemView.Alignment = Views::TextAlignment[ AlignHorzCenter, AlignVertCenter ];
+    itemView.ScrollOffset = <0,-3>;
+
+    // Ensure that the item has correct size. The position of the item will be
+    // managed by the list component.
+    itemView.Bounds.size = point( ListMonth.Bounds.w, ListMonth.ItemHeight );
+  }
+
+  // This method is called by 'ListDay' vertical list every time the list loads or \
+  // updates an item.
+  $rect <20,300,220,340>
+  slot OnLoadDayItem
+  {
+    // Get the number of the item to load. The list component takes care of the
+    // creation of the corresponding item view. Just access it ...
+    var int32       itemNo   = ListDay.Item;
+    var Views::Text itemView = (Views::Text)ListDay.View;
+
+    // The implementation of this slot method does not match the item class
+    // specified in the associated list component. Or the slot method is not
+    // called in context of the OnLoadItem list operation.
+    if ( itemView == null )
+      return;
+
+    /*
+
+      TO DO:
+
+      Depending on your date picker design, you will need to adapt the following
+      initialization. You can change the font, color, the alignment of the text
+      within the area, etc.
+
+    */
+
+    // Configure the item view ...
+    itemView.String    = string( itemNo + 1, 2 );
+    itemView.Font      = BezierClock::FontXXL;
+    itemView.Color     = #FFFFFFFF;
+    itemView.Alignment = Views::TextAlignment[ AlignHorzCenter, AlignVertCenter ];
+    itemView.ScrollOffset = <0,-3>;
+
+    // Ensure that the item has correct size. The position of the item will be
+    // managed by the list component.
+    itemView.Bounds.size = point( ListDay.Bounds.w, ListDay.ItemHeight );
+  }
+
+  $rect <930,90,1130,130>
+  onget Year
+  {
+    // From the actual scroll offset calculate the number of the corresponding
+    // list item.
+    return 2000 + (( -ListYear.ScrollOffset / ListYear.ItemHeight ) + 1 ) % ListYear.NoOfItems;
+
+  }
+
+  $rect <930,50,1130,90>
+  onset Year
+  {
+    // Limit the assigned value to the valid range.
+    if ( value < 2000 ) value = 2000;
+    if ( value > 2036 ) value = 2036;
+
+    // Adjust the scroll position of the corresponding list.
+    ListYear.ScrollOffset = ( value - 2000 - 1 ) * -ListYear.ItemHeight;
+
+    // Changing the year may affect the actually selected day (February
+    // and the leap year).
+    var int32 daysInMonth = getDaysInMonth( Month, value );
+
+    // Ensure the list displays the right number of days
+    ListDay.NoOfItems = daysInMonth;
+
+    // Adjust the day if necessary
+    if ( Day > daysInMonth )
+      Day = daysInMonth;
+  }
+
+  $rect <730,90,930,130>
+  onget Month
+  {
+    // From the actual scroll offset calculate the number of the corresponding
+    // list item.
+    return 1 + (( -ListMonth.ScrollOffset / ListMonth.ItemHeight ) + 1 ) % 12;
+  }
+
+  $rect <730,50,930,90>
+  onset Month
+  {
+    // Limit the assigned value to the valid range 1 .. 12
+    if ( value < 1  ) value = 1;
+    if ( value > 12 ) value = 12;
+
+    // Adjust the scroll position of the corresponding list.
+    ListMonth.ScrollOffset = ( value - 2 ) * -ListMonth.ItemHeight;
+
+    // Changing the month may affect the actually selected day.
+    var int32 daysInMonth = getDaysInMonth( value, Year );
+
+    // Ensure the list displays the right number of days
+    ListDay.NoOfItems = daysInMonth;
+
+    // Adjust the day if necessary
+    if ( Day > daysInMonth )
+      Day = daysInMonth;
+
+  }
+
+  $rect <530,90,730,130>
+  onget Day
+  {
+    // From the actual scroll offset calculate the number of the corresponding
+    // list item.
+    return 1 + (( -ListDay.ScrollOffset / ListDay.ItemHeight ) + 1 ) % ListDay.NoOfItems;
+  }
+
+  $rect <530,50,730,90>
+  onset Day
+  {
+    // How many days are in the actually selected month?
+    var int32 daysInMonth = getDaysInMonth( Month, Year );
+
+    // Limit the assigned value to the valid range 1 .. { 28, 29, 30, 31 }
+    if ( value < 1           ) value = 1;
+    if ( value > daysInMonth ) value = daysInMonth;
+
+    // Adjust the scroll position of the corresponding list.
+    ListDay.ScrollOffset = ( value - 2 ) * -ListDay.ItemHeight;
+  }
+
+  // This function returns the number of days in the month and year specified in \
+  // the method parameters aMonth and aYear. The function takes care of the February \
+  // and its dependency of the leap year.
+  $rect <20,480,220,520>
+  method int32 getDaysInMonth( arg int32 aMonth, arg int32 aYear )
+  {
+    // The number of days in February depends on the leap year.
+    if ( aMonth == 2 )
+      if ((( aYear % 4 ) == 0 ) && ((( aYear % 100 ) != 0 ) || (( aYear % 400 ) == 0 )))
+        return 29;
+      else
+        return 28;
+
+    // A month with 30 days?
+    else if (( aMonth == 4 ) || ( aMonth == 6 ) || ( aMonth == 9 ) || ( aMonth == 11 ))
+      return 30;
+
+    // Every other month has 31 days.
+    else
+      return 31;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SlideTouchHandler TouchHandlerYear
+  {
+    preset Bounds = <160,0,250,150>;
+    preset OnEnd = onEndSlide;
+    preset OnStart = onStartSlide;
+    preset SnapNext = <0,80>;
+    preset Friction = 0.2;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SlideTouchHandler TouchHandlerMonth
+  {
+    preset Bounds = <79,0,149,150>;
+    preset OnEnd = onEndSlide;
+    preset OnStart = onStartSlide;
+    preset SnapNext = <0,80>;
+    preset Friction = 0.2;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SlideTouchHandler TouchHandlerDay
+  {
+    preset Bounds = <10,0,67,150>;
+    preset OnEnd = onEndSlide;
+    preset OnStart = onStartSlide;
+    preset SnapNext = <0,80>;
+    preset Friction = 0.2;
+  }
+
+  $rect <20,20,160,60>
+  object Core::VerticalList ListYear
+  {
+    preset Bounds = <160,0,250,150>;
+    preset OnUpdate = onYearUpdate;
+    preset OnLoadItem = OnLoadYearItem;
+    preset Endless = true;
+    preset SlideHandler = TouchHandlerYear;
+    preset ScrollOffset = 80;
+    preset ItemHeight = 80;
+    preset NoOfItems = 37;
+  }
+
+  $rect <20,20,160,60>
+  object Core::VerticalList ListMonth
+  {
+    preset Bounds = <79,0,149,150>;
+    preset OnUpdate = onMonthUpdate;
+    preset OnLoadItem = OnLoadMonthItem;
+    preset Endless = true;
+    preset SlideHandler = TouchHandlerMonth;
+    preset ScrollOffset = 80;
+    preset ItemHeight = 80;
+    preset NoOfItems = 12;
+  }
+
+  $rect <20,20,160,60>
+  object Core::VerticalList ListDay
+  {
+    preset Bounds = <10,0,67,150>;
+    preset OnUpdate = onDayUpdate;
+    preset OnLoadItem = OnLoadDayItem;
+    preset Endless = true;
+    preset SlideHandler = TouchHandlerDay;
+    preset ScrollOffset = 80;
+    preset ItemHeight = 80;
+    preset NoOfItems = 31;
+  }
+
+  // The property 'OnChange' can refer to a slot method, which will receive a signal \
+  // each time the user select another date. Thereupon the method's logic will be \
+  // executed. In the associated slot method you can evaluate the date picker properties \
+  // @Day, @Month and @Year.
+  $rect <530,150,730,190>
+  property slot OnChange = null;
+
+  // The property 'Year' stores the year. The value is valid in range 2000 .. 2100.
+  $rect <930,10,1130,50>
+  property int32 Year = 1900;
+
+  // The property 'Month' store the month of the year. The valid value lies in the \
+  // range 1 .. 12.
+  $rect <730,10,930,50>
+  property int32 Month = 1;
+
+  // The property 'Day' stores the day of the month. The valid value lies in range \
+  // 1 .. 31 depending on the actually selected month.
+  $rect <530,10,730,50>
+  property int32 Day = 0;
+
+  $rect <710,300,910,340>
+  slot onDayUpdate
+  {
+    var Core::View view = ListDay.first;
+    while( view != null )
+    {
+      var Views::Text item = (Views::Text)view;
+      if ( item != null )
+      {
+        item.Color = ColorUnselected;
+      }
+
+      view = view.next;
+    }
+
+    var Views::Text selectedDay = (Views::Text)ListDay.GetViewForItem( ListDay.GetItemAtPosition( ListDay.Bounds.center ) );
+    if ( selectedDay != null )
+    {
+      selectedDay.Color = ColorSelected;
+    }
+  }
+
+  $rect <710,340,910,380>
+  slot onMonthUpdate
+  {
+    var Core::View view = ListMonth.first;
+    while( view != null )
+    {
+      var Views::Text item = (Views::Text)view;
+      if ( item != null )
+      {
+        item.Color = ColorUnselected;
+      }
+
+      view = view.next;
+    }
+
+    var Views::Text selectedMonth = (Views::Text)ListMonth.GetViewForItem( ListMonth.GetItemAtPosition( ListMonth.Bounds.center ) );
+    if ( selectedMonth != null )
+    {
+      selectedMonth.Color = ColorSelected;
+    }
+  }
+
+  $rect <710,380,910,420>
+  slot onYearUpdate
+  {
+    var Core::View view = ListYear.first;
+    while( view != null )
+    {
+      var Views::Text item = (Views::Text)view;
+      if ( item != null )
+      {
+        item.Color = ColorUnselected;
+      }
+
+      view = view.next;
+    }
+
+    var Views::Text selectedYear = (Views::Text)ListYear.GetViewForItem( ListYear.GetItemAtPosition( ListYear.Bounds.center ) );
+    if ( selectedYear != null )
+    {
+      selectedYear.Color = ColorSelected;
+    }
+  }
+
+  $rect <940,300,1140,340>
+  var color ColorSelected = #FFFFFFFF;
+
+  $rect <940,340,1140,380>
+  var color ColorUnselected = #FFFFFF44;
+
+  $rect <20,20,160,60>
+  object Views::Line Line
+  {
+    preset Point2 = <67,51>;
+    preset Point1 = <10,51>;
+    preset Width = 3;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line Line1
+  {
+    preset Point2 = <67,99>;
+    preset Point1 = <10,99>;
+    preset Width = 3;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line Line2
+  {
+    preset Point2 = <149,99>;
+    preset Point1 = <79,99>;
+    preset Width = 3;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line Line3
+  {
+    preset Point2 = <149,51>;
+    preset Point1 = <79,51>;
+    preset Width = 3;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line Line4
+  {
+    preset Point2 = <249,51>;
+    preset Point1 = <160,51>;
+    preset Width = 3;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line Line5
+  {
+    preset Point2 = <249,99>;
+    preset Point1 = <160,99>;
+    preset Width = 3;
+  }
+
+  $rect <940,380,1140,420>
+  var color ColorLineSliding = #C1C1C1FF;
+
+  $rect <940,420,1140,460>
+  var color ColorLineNotSliding = #E1E1E1FF;
+
+  // Colors
+  note group Note
+  {
+    attr Bounds = <700,260,920,470>;
+  }
+
+  // Appearance
+  note group Note5
+  {
+    attr Bounds = <930,260,1150,470>;
+  }
+
+  // How to create components from templates?
+  // 
+  // https://doc.embedded-wizard.de/creating-components-from-templates
+  note legend Note6
+  {
+    attr Bounds = <10,540,490,620>;
+  }
+}
+
+$rect <20,250,220,290>
+$output false
+class Digit : Core::Group
+{
+  $rect <290,40,490,80>
+  inherited property Bounds = <0,0,180,250>;
+
+  $rect <290,120,490,160>
+  inherited method drawContent()
+  {
+    super( aCanvas, aClip, aOffset, aOpacity, aBlend );
+
+    if ( Helpers )
+    {
+      var color c1 = #0000FFFF;
+      var int32 i = 0;
+      while ( i < Points.size )
+      {
+        drawPoint( aCanvas, aClip, aOffset, aOpacity, aBlend, Points[i] );
+
+        if ( i > 0 )
+          aCanvas.DrawLine( aClip, aOffset + Points[i-1], aOffset + Points[i], c1, c1, aBlend );
+
+        i = i + 1;
+      }
+    }
+
+  }
+
+  $rect <290,80,490,120>
+  inherited method UpdateLayout()
+  {
+    StrokePath.Bounds.size = aSize;
+    postsignal updatePoints;
+    postsignal updatePath;
+  }
+
+  $rect <290,0,490,40>
+  inherited method Init()
+  {
+    $if $composer
+    oldDigit = 1;
+    $endif
+
+    /* testing
+    Value = 8;
+    oldDigit = 7;
+    FloatEffect.Value = 1.0;
+    */
+
+    postsignal updatePath;
+  }
+
+  $rect <0,330,200,370>
+  property int32 Value = 0;
+
+  $rect <0,370,200,410>
+  onset Value
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Value == value )
+      return;
+
+    // Remember the property's old digit state.
+    oldDigit = pure Value % 10;
+
+    // Remember the property's new value.
+    pure Value = value;
+
+    signal FloatEffect.StartEffect;
+  }
+
+  $rect <690,0,890,40>
+  array point Points[ 13 ];
+
+  $rect <200,330,400,370>
+  property int32 Edges = 100;
+
+  $rect <200,370,400,410>
+  onset Edges
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Edges == value )
+      return;
+
+    // Remember the property's new value.
+    pure Edges = value;
+
+    // TO DO:
+    //
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <400,330,600,370>
+  property color Color = #FFFFFFFF;
+
+  $rect <400,370,600,410>
+  onset Color
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Color == value )
+      return;
+
+    // Remember the property's new value.
+    pure Color = value;
+
+    StrokePath.Color = value;
+  }
+
+  $rect <600,330,800,370>
+  property float StrokeWidth = 14.0;
+
+  $rect <600,370,800,410>
+  onset StrokeWidth
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure StrokeWidth == value )
+      return;
+
+    // Remember the property's new value.
+    pure StrokeWidth = value;
+
+    StrokePath.Width = value;
+  }
+
+  $rect <290,160,490,200>
+  method void drawPoint( arg Graphics::Canvas aCanvas, arg rect aClip, arg point aOffset, arg int32 aOpacity, arg bool aBlend, arg point aPoint )
+  {
+    var color pc = #FF0000AA;  // point color
+    var color lc = #FF606088;  // line color
+    var point p1;
+    var point p2;
+
+    // The alpha blending of the line depends on the blending mode of its owners
+    aBlend   = aBlend && viewState.contains( Core::ViewState[ AlphaBlended ]);
+    aOpacity = aOpacity + 1;
+
+    // Modulate the line colors by its owner's opacity
+    if ( aOpacity < 256 )
+    {
+      pc.alpha = uint8(( aOpacity * pc.alpha ) >> 8 );
+      lc.alpha = uint8(( aOpacity * lc.alpha ) >> 8 );
+    }
+
+    // Drawing a cross for each point
+    p1 = aPoint + aOffset - <10,0>;
+    p2 = aPoint + aOffset + <10,0>;
+    aCanvas.DrawLine( aClip, p1, p2, pc, pc, aBlend );
+
+    p1 = aPoint + aOffset - <0,10>;
+    p2 = aPoint + aOffset + <0,10>;
+    aCanvas.DrawLine( aClip, p1, p2, pc, pc, aBlend );
+
+  }
+
+  $rect <800,330,1000,370>
+  property bool Helpers = true;
+
+  $rect <800,370,1000,410>
+  onset Helpers
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Helpers == value )
+      return;
+
+    // Remember the property's new value.
+    pure Helpers = value;
+
+    InvalidateArea( Bounds );
+  }
+
+  $rect <690,40,890,80>
+  array point Points0[ 13 ];
+
+  $rect <690,80,890,120>
+  array point Points1[ 13 ];
+
+  $rect <690,120,890,160>
+  array point Points2[ 13 ];
+
+  $rect <690,160,890,200>
+  array point Points3[ 13 ];
+
+  $rect <690,200,890,240>
+  array point Points4[ 13 ];
+
+  $rect <890,40,1090,80>
+  array point Points5[ 13 ];
+
+  $rect <890,80,1090,120>
+  array point Points6[ 13 ];
+
+  $rect <890,120,1090,160>
+  array point Points7[ 13 ];
+
+  $rect <890,160,1090,200>
+  array point Points8[ 13 ];
+
+  $rect <890,200,1090,240>
+  array point Points9[ 13 ];
+
+  $rect <490,80,690,120>
+  slot updatePoints
+  {
+    var point size = Bounds.size;
+
+    // digit 0
+    var int32 hx = size.x / 2;  // half of x
+    var int32 hy = size.y / 2;  // half of y
+    var int32 bx = size.x / 10; // border x
+    var int32 by = size.y / 12; // border y
+    Points0[0] = point( bx, hy );
+    Points0[1] = point( bx, size.y / 4 );
+    Points0[2] = point( size.x / 4, by );
+    Points0[3] = point( hx, by );
+    Points0[4] = point( size.x -  size.x / 4, by );
+    Points0[5] = point( size.x - bx, size.y / 4 );
+    Points0[6] = point( size.x - bx, hy );
+    Points0[7] = point( size.x - bx, size.y - size.y / 4 );
+    Points0[8] = point( size.x - size.x / 4, size.y - by );
+    Points0[9] = point( hx, size.y - by );
+    Points0[10] = point( size.x / 4, size.y - by );
+    Points0[11] = point( bx, size.y - size.y / 4 );
+    Points0[12] = point( bx, hy-1 );
+
+    // digit 1
+    Points1[0] = point( size.x / 6, size.y * 3/10 );
+    Points1[1] = point( size.x * 16/60, size.y * 14/60 );
+    Points1[2] = point( size.x * 22/60, size.y * 10/60 );
+    Points1[3] = point( hx, by );
+    Points1[4] = point( hx, size.y * 4/12 );
+    Points1[5] = point( hx, size.y * 8/12 );
+    Points1[6] = point( hx, size.y * 11/12 );
+    Points1[7] = point( hx, size.y * 11/12 );
+    Points1[8] = point( size.x * 4/6, size.y * 11/12 );
+    Points1[9] = point( size.x * 5/6, size.y * 11/12 );
+    Points1[10] = point( size.x * 4/6, size.y * 11/12 );
+    Points1[11] = point( size.x * 2/6, size.y * 11/12 );
+    Points1[12] = point( size.x / 6, size.y * 11/12 );
+
+    // digit 2
+    Points2[0] = point( size.x / 6, size.y * 3/10 );
+    Points2[1] = point( size.x / 6, 0 );
+    Points2[2] = point( size.x * 5/6, 0 );
+    Points2[3] = point( size.x * 5/6, size.y * 3/10 );
+    Points2[4] = point( size.x * 5/6, size.y * 7/16 );
+    Points2[5] = point( size.x * 39/60, size.y * 5/9 );
+    Points2[6] = point( size.x * 33/60, size.y * 5/8 );
+    Points2[7] = point( size.x * 22/60, size.y * 45/60 );
+    Points2[8] = point( size.x * 19/60, size.y * 47/60 );
+    Points2[9] = point( size.x / 8, size.y * 11/12 );
+    Points2[10] = point( size.x * 3/8, size.y * 11/12 );
+    Points2[11] = point( size.x * 5/8, size.y * 11/12 );
+    Points2[12] = point( size.x * 7/8, size.y * 11/12 );
+
+    // digit 3
+    Points3[0] = point( size.x / 6, size.y * 3/10 );
+    Points3[1] = point( size.x / 5, 0 );
+    Points3[2] = point( size.x - size.x / 7, 0 );
+    Points3[3] = point( size.x - size.x / 6, size.y * 3/10 );
+    Points3[4] = point( size.x - size.x / 5, size.y * 3/7 );
+    Points3[5] = point( size.x * 4/6, hy );
+    Points3[6] = point( size.x * 9/20, hy );
+    Points3[7] = point( size.x * 7/10, hy );
+    Points3[8] = point( size.x - size.x * 4/30, size.y - size.y * 3/7 );
+    Points3[9] = point( size.x - size.x * 3/20, size.y - size.y * 3/10 );
+    Points3[10] = point( size.x - size.x * 3/20, size.y );
+    Points3[11] = point( size.x / 6, size.y );
+    Points3[12] = point( size.x * 3/20, size.y - size.y * 3/10 );
+
+    // digit 4
+    Points4[0] = point( size.x * 4/6, size.y * 19/20 );
+    Points4[1] = point( size.x * 4/6, size.y * 17/20 );
+    Points4[2] = point( size.x * 4/6, size.y * 16/20 );
+    Points4[3] = point( size.x * 4/6, size.y * 10/20 );
+    Points4[4] = point( size.x * 4/6, size.y * 7/20 );
+    Points4[5] = point( size.x * 4/6, size.y * 1/20 );
+    Points4[6] = point( size.x * 4/6, size.y * 1/20 );
+    Points4[7] = point( size.x * 23/60, size.y * 20/60 );
+    Points4[8] = point( size.x * 13/60, size.y * 30/60 );
+    Points4[9] = point( size.x / 16, size.y * 6/9 );
+    Points4[10] = point( size.x * 2/6, size.y * 6/9 );
+    Points4[11] = point( size.x * 4/6, size.y * 6/9 );
+    Points4[12] = point( size.x * 15/16, size.y * 6/9 );
+
+    // digit 5
+    Points5[0] = point( size.x * 3/20, size.y * 13/15 );
+    Points5[1] = point( size.x * 5/10, size.y * 59/60 );
+    Points5[2] = point( size.x * 5/6, size.y * 14/16 );
+    Points5[3] = point( size.x * 51/60, size.y * 10/15 );
+    Points5[4] = point( size.x * 17/20, size.y * 14/30 );
+    Points5[5] = point( size.x * 6/10, size.y * 6/16 );
+    Points5[6] = point( size.x * 3/13, size.y * 7/16 );
+    Points5[7] = point( size.x * 15/60, size.y * 5/16 );
+    Points5[8] = point( size.x * 16/60, size.y * 7/30 );
+    Points5[9] = point( size.x * 3/10, size.y / 12 );
+    Points5[10] = point( size.x * 5/10, size.y / 12 );
+    Points5[11] = point( size.x * 7/10, size.y / 12 );
+    Points5[12] = point( size.x * 5/6, size.y / 12 );
+
+    // digit 6
+    Points6[0] = point( size.x * 10/60, size.y * 18/30 );
+    Points6[1] = point( size.x * 5/60, size.y * 24/30 );
+    Points6[2] = point( size.x * 9/30, size.y * 29/30 );
+    Points6[3] = point( size.x * 18/30, size.y * 55/60 );
+    Points6[4] = point( size.x * 54/60, size.y * 51/60 );
+    Points6[5] = point( size.x * 55/60, size.y * 35/60 );
+    Points6[6] = point( size.x * 43/60, size.y * 29/60 );
+    Points6[7] = point( size.x * 6/11, size.y * 8/20 );
+    Points6[8] = point( size.x * 3/11, size.y * 9/20 );
+    Points6[9] = point( size.x * 5/30, size.y * 12/20 );
+    Points6[10] = point( size.x * 5/30, size.y * 10/20 );
+    Points6[11] = point( size.x * 26/60, size.y * 16/60 );
+    Points6[12] = point( size.x * 20/30, size.y / 15 );
+
+    // digit 7
+    Points7[0] = point( size.x * 17/60, size.y * 28/30 );
+    Points7[1] = point( size.x * 23/60, size.y * 24/30 );
+    Points7[2] = point( size.x * 29/60, size.y * 20/30 );
+    Points7[3] = point( size.x * 18/30, size.y / 2 );
+    Points7[4] = point( size.x * 40/60, size.y * 12/30 );
+    Points7[5] = point( size.x * 47/60, size.y * 7/30 );
+    Points7[6] = point( size.x * 53/60, size.y / 12 );
+    Points7[7] = point( size.x * 14/20, size.y / 12 );
+    Points7[8] = point( size.x * 13/20, size.y / 12 );;
+    Points7[9] = point( size.x * 6/20, size.y / 12 );;
+    Points7[10] = point( size.x * 5/20, size.y / 12 );
+    Points7[11] = point( size.x * 5/20, size.y / 12 );
+    Points7[12] = point( size.x * 2/20, size.y / 12 );
+
+    // digit 8
+    Points8[0] = point( size.x * 59/120, size.y * 55/60 );
+    Points8[1] = point( size.x * 19/20, size.y * 55/60 );
+    Points8[2] = point( size.x * 19/20, size.y * 1/2 );
+    Points8[3] = point( size.x * 59/120, size.y * 1/2 );
+    Points8[4] = point( size.x * 28/30, size.y * 1/2 );
+    Points8[5] = point( size.x * 28/30, size.y * 5/60 );
+    Points8[6] = point( size.x * 4/8, size.y * 5/60 );
+    Points8[7] = point( size.x * 2/30, size.y * 5/60 );
+    Points8[8] = point( size.x * 2/30, size.y * 1/2 );
+    Points8[9] = point( size.x * 61/120, size.y * 1/2 );
+    Points8[10] = point( size.x * 1/20, size.y * 30/60 );
+    Points8[11] = point( size.x * 1/20, size.y * 55/60 );
+    Points8[12] = point( size.x * 61/120, size.y * 55/60 );
+
+
+    // digit 9
+    Points9[0] = point( size.x * 22/60, size.y * 56/60 );
+    Points9[1] = point( size.x * 38/60, size.y * 40/60 );
+    Points9[2] = point( size.x * 48/60, size.y * 30/60 );
+    Points9[3] = point( size.x * 49/60, size.y * 25/60 );
+    Points9[4] = point( size.x * 55/60, size.y * 15/60 );
+    Points9[5] = point( size.x * 45/60, size.y * 5/60 );
+    Points9[6] = point( size.x * 30/60, size.y * 5/60 );
+    Points9[7] = point( size.x * 18/60, size.y * 5/60 );
+    Points9[8] = point( size.x * 11/60, size.y * 12/60 );
+    Points9[9] = point( size.x * 10/60, size.y * 18/60 );
+    Points9[10] = point( size.x * 7/60, size.y * 36/60 );
+    Points9[11] = point( size.x * 42/60, size.y * 38/60 );
+    Points9[12] = point( size.x * 49/60, size.y * 25/60 );
+  }
+
+  $rect <490,120,690,160>
+  var int32 oldDigit = 0;
+
+  $rect <1000,330,1200,370>
+  property int32 AnimationDuration = 700;
+
+  $rect <1000,370,1200,410>
+  onset AnimationDuration
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure AnimationDuration == value )
+      return;
+
+    // Remember the property's new value.
+    pure AnimationDuration = value;
+
+    FloatEffect.CycleDuration = value;
+  }
+
+  $rect <290,200,490,240>
+  object Effects::FloatEffect FloatEffect
+  {
+    preset OnAnimate = updatePath;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 700;
+    preset Enabled = true;
+  }
+
+  $rect <490,40,690,80>
+  slot updatePath
+  {
+    // check the digit to render
+    var int32 digit = Value % 10;
+    var float f = FloatEffect.Value;
+    var float fn = 1.0 - FloatEffect.Value;
+    var float x1 = 0.0;
+    var float x2 = 0.0;
+    var float y1 = 0.0;
+    var float y2 = 0.0;
+    var int32 i = 0;
+
+    while ( i < Points.size )
+    {
+      switch ( oldDigit )
+      {
+        case 0: { x1 = (float)Points0[i].x * fn; y1 = (float)Points0[i].y * fn; }
+        case 1: { x1 = (float)Points1[i].x * fn; y1 = (float)Points1[i].y * fn; }
+        case 2: { x1 = (float)Points2[i].x * fn; y1 = (float)Points2[i].y * fn; }
+        case 3: { x1 = (float)Points3[i].x * fn; y1 = (float)Points3[i].y * fn; }
+        case 4: { x1 = (float)Points4[i].x * fn; y1 = (float)Points4[i].y * fn; }
+        case 5: { x1 = (float)Points5[i].x * fn; y1 = (float)Points5[i].y * fn; }
+        case 6: { x1 = (float)Points6[i].x * fn; y1 = (float)Points6[i].y * fn; }
+        case 7: { x1 = (float)Points7[i].x * fn; y1 = (float)Points7[i].y * fn; }
+        case 8: { x1 = (float)Points8[i].x * fn; y1 = (float)Points8[i].y * fn; }
+        case 9: { x1 = (float)Points9[i].x * fn; y1 = (float)Points9[i].y * fn; }
+        default: { x1 = (float)(Bounds.w/2) * fn; y1 = (float)(Bounds.h/2) * fn; }
+      }
+
+      switch ( digit )
+      {
+        case 0: { x2 = (float)Points0[i].x * f; y2 = (float)Points0[i].y * f; }
+        case 1: { x2 = (float)Points1[i].x * f; y2 = (float)Points1[i].y * f; }
+        case 2: { x2 = (float)Points2[i].x * f; y2 = (float)Points2[i].y * f; }
+        case 3: { x2 = (float)Points3[i].x * f; y2 = (float)Points3[i].y * f; }
+        case 4: { x2 = (float)Points4[i].x * f; y2 = (float)Points4[i].y * f; }
+        case 5: { x2 = (float)Points5[i].x * f; y2 = (float)Points5[i].y * f; }
+        case 6: { x2 = (float)Points6[i].x * f; y2 = (float)Points6[i].y * f; }
+        case 7: { x2 = (float)Points7[i].x * f; y2 = (float)Points7[i].y * f; }
+        case 8: { x2 = (float)Points8[i].x * f; y2 = (float)Points8[i].y * f; }
+        case 9: { x2 = (float)Points9[i].x * f; y2 = (float)Points9[i].y * f; }
+        default: ;
+      }
+
+      Points[i] = point( (int32)(x1 + x2), (int32)(y1 + y2) );
+
+      i = i + 1;
+    }
+
+    Path.InitSubPath( 0, Edges );
+    Path.Begin( 0, Points[0].x, Points[0].y );
+    Path.AddBezier3( 0, Points[1].x, Points[1].y, Points[2].x, Points[2].y, Points[3].x, Points[3].y, Edges/4 );
+    Path.AddBezier3( 0, Points[4].x, Points[4].y, Points[5].x, Points[5].y, Points[6].x, Points[6].y, Edges/4 );
+    Path.AddBezier3( 0, Points[7].x, Points[7].y, Points[8].x, Points[8].y, Points[9].x, Points[9].y, Edges/4 );
+    Path.AddBezier3( 0, Points[10].x, Points[10].y, Points[11].x, Points[11].y, Points[12].x, Points[12].y, Edges/4 );
+
+
+  }
+
+  $rect <490,0,690,40>
+  object Graphics::Path Path;
+
+  $rect <20,20,160,60>
+  object Views::StrokePath StrokePath
+  {
+    preset Width = 14.0;
+    preset Path = Path;
+  }
+
+  // How to use vector graphics?
+  // 
+  // https://doc.embedded-wizard.de/stroked-path-view
+  // https://doc.embedded-wizard.de/path-data
+  note legend Note8
+  {
+    attr Bounds = <10,420,410,520>;
+  }
+}
+
+$rect <230,250,430,290>
+$output false
+class Bubble : Core::Group
+{
+  $rect <190,0,390,40>
+  inherited property Bounds = <0,0,160,160>;
+
+  $rect <190,40,390,80>
+  inherited method UpdateLayout()
+  {
+    /* don't forget to make the super call */
+    super( aSize );
+
+    /* then make own layout */
+    ArcPath.RadiusX = aSize.x * 10 / 23;
+    ArcPath.RadiusY = aSize.y * 10 / 23;
+
+    FillPath.Bounds.size = aSize;
+    FillPath.Offset.x = aSize.x / 2;
+    FillPath.Offset.y = aSize.y / 2;
+
+    FillPath1.Bounds.size = aSize;
+    FillPath1.Offset.x = aSize.x * 10 / 19;
+    FillPath1.Offset.y = aSize.y * 10 / 19;
+
+    FillPath2.Bounds.size = aSize;
+    FillPath2.Offset.x = aSize.x * 10 / 18;
+    FillPath2.Offset.y = aSize.y * 10 / 21;
+
+  }
+
+  $rect <390,0,590,40>
+  inherited property Buffered = true;
+
+  $rect <390,40,590,80>
+  object Graphics::ArcPath ArcPath
+  {
+    preset EndAngle = 360.0;
+    preset Radius = 90.0;
+    preset Style = Graphics::ArcStyle.Pie;
+  }
+
+  $rect <20,20,160,60>
+  object Views::FillPath FillPath
+  {
+    preset Bounds = <0,0,190,160>;
+    preset Color = #FFFFFF22;
+    preset Path = ArcPath;
+  }
+
+  $rect <20,20,160,60>
+  object Views::FillPath FillPath1
+  {
+    preset Bounds = <0,0,190,160>;
+    preset Color = #FFFFFF22;
+    preset Path = ArcPath;
+  }
+
+  $rect <20,20,160,60>
+  object Views::FillPath FillPath2
+  {
+    preset Bounds = <0,0,190,160>;
+    preset Color = #FFFFFF22;
+    preset Path = ArcPath;
+  }
+
+  // Color of the bubble
+  $rect <0,180,200,220>
+  property color Color = #FFFFFF99;
+
+  $rect <0,220,200,260>
+  onset Color
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Color == value )
+      return;
+
+    // Remember the property's new value.
+    pure Color = value;
+
+    var color c = value;
+    c.alpha = (uint8)(value.alpha / 3);
+    FillPath.Color = c;
+    FillPath1.Color = c;
+    FillPath2.Color = c;
+
+  }
+
+  // This component creates a bubble bitmap out of three arcs (vector graphics).
+  // The component is set to buffered in order to avoid that the arcs are drawn permanently \
+  // when the bubble component is drawn.
+  note legend Note
+  {
+    attr Bounds = <220,90,590,230>;
+  }
+
+  // How to use vector graphics?
+  // 
+  // https://doc.embedded-wizard.de/filled-path-view
+  // https://doc.embedded-wizard.de/arc-path-data
+  note legend Note8
+  {
+    attr Bounds = <220,240,590,340>;
+  }
+}
+
+$rect <230,290,430,330>
+$output false
+class Background : Core::Group
+{
+  $rect <0,290,200,330>
+  inherited property Bounds = <0,0,480,272>;
+
+  $rect <210,290,410,330>
+  inherited method UpdateLayout()
+  {
+    /* first make the default layour arrangement */
+    super( aSize );
+
+    /* then ensure that the bubble is circular */
+    var int32 s = Bounds.h / 4;
+    Bubble.Bounds.size = point( s, s );
+  }
+
+  $rect <210,330,410,370>
+  inherited method UpdateViewState()
+  {
+    super( aState );
+
+    /* no bubble for the dark background */
+    Bubble.Visible = ( CurrentBackground > 0 );
+
+    /* release the bitmap and re-assign it after the next update */
+    Background.Bitmap = null;
+    idlesignal setBitmap;
+
+  }
+
+  $rect <420,290,620,330>
+  object Effects::FloatEffect BubbleEffect1
+  {
+    preset OnAnimate = onAnimate;
+    preset Symmetric = true;
+    preset Timing = Effects::Timing.EaseIn_EaseOut;
+    preset CycleDuration = 18000;
+    preset Enabled = true;
+  }
+
+  $rect <420,330,620,370>
+  object Effects::FloatEffect BubbleEffect2
+  {
+    preset OnAnimate = onAnimate;
+    preset Symmetric = true;
+    preset Timing = Effects::Timing.EaseIn_EaseOut;
+    preset CycleDuration = 40000;
+    preset Enabled = true;
+    preset Value1 = -1.0;
+  }
+
+  $rect <420,370,620,410>
+  slot onAnimate
+  {
+    /* calculate the bubble position based on the combination of two effects */
+    var float rangeX = (float)Bubble.Bounds.w;
+    var float rangeY = (float)Bubble.Bounds.h;
+    var point start = point( Bounds.w / 3, Bounds.h / 2 ) + Background.ScrollOffset;
+
+    Bubble.Bounds.origin.x = start.x + (int32)(BubbleEffect1.Value * rangeX + BubbleEffect2.Value * rangeX);
+    Bubble.Bounds.origin.y = start.y + (int32)(BubbleEffect1.Value * rangeY - BubbleEffect2.Value * rangeY);
+
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,480,272>;
+    preset Color = #000000FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image Background
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,480,272>;
+    preset Alignment = Views::ImageAlignment[AlignHorzLeft, AlignVertCenter];
+    preset Bitmap = BezierClock::Dark;
+  }
+
+  $rect <20,20,160,60>
+  object BezierClock::Bubble Bubble
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <190,270,310,390>;
+  }
+
+  $rect <210,370,410,410>
+  slot setBitmap
+  {
+    /* assign the bitmap according current selection  */
+    if ( CurrentBackground == 1 )
+      Background.Bitmap = BezierClock::Orange;
+    else if ( CurrentBackground == 2 )
+      Background.Bitmap = BezierClock::Blue;
+    else
+      Background.Bitmap = BezierClock::Dark;
+
+
+  }
+
+  // The property 'CurrentBackground' stores the momentary bitmap selection of the \
+  // background component.
+  $rect <530,20,730,60>
+  property int32 CurrentBackground = 0;
+
+  $rect <530,60,730,100>
+  onset CurrentBackground
+  {
+    /* limit the given value to the allowed */
+    if ( value < 0 )
+      value = 0;
+    if ( value > 2 )
+      value = 2;
+
+    /* check if the given value differs from the current value */
+    if ( pure CurrentBackground == value )
+      return;
+
+    /* store the new value */
+    pure CurrentBackground = value;
+
+    notifyobservers ^CurrentBackground;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // Method to shift the background image to the left
+  $rect <630,290,830,330>
+  method void ShiftLeft()
+  {
+    /* make a parallaxe effect by shifting the background image to the left */
+    ShiftEffect.Value1 = Background.ScrollOffset;
+    ShiftEffect.Value2 = point( Bounds.w - Background.Bitmap.FrameSize.x, 0);
+    postsignal ShiftEffect.StartEffect;
+
+  }
+
+  $rect <630,370,830,410>
+  object Effects::PointEffect ShiftEffect
+  {
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 500;
+    preset Outlet = ^Background.ScrollOffset;
+  }
+
+  // Method to shift the background image to the right
+  $rect <630,330,830,370>
+  method void ShiftRight()
+  {
+    /* make a parallaxe effect by shifting the background image to the right */
+    ShiftEffect.Value1 = Background.ScrollOffset;
+    ShiftEffect.Value2 = <0,0>;
+    postsignal ShiftEffect.StartEffect;
+
+  }
+
+  // This is the background component of the example. It is responsible to arrange \
+  // and load a background image according to the 'CurrentBackground' selection.
+  // 
+  // The background component shows an animated bubble that moves smooth over the \
+  // background image.
+  // 
+  // In order to support some parallaxe effect when the foreground of the application \
+  // is shifted, the background content can be shifted as well by using the methods \
+  // 'ShiftLeft' and 'ShiftRight'.
+  note legend Note1
+  {
+    attr Bounds = <10,430,820,590>;
+  }
+}
+
+$rect <230,100,430,140>
+$output false
+class TimerScreen : Core::Group
+{
+  $rect <10,300,210,340>
+  inherited property Bounds = <0,0,480,272>;
+
+  $rect <10,420,210,460>
+  inherited method UpdateViewState()
+  {
+    super( aState );
+
+    // Change the colors based on the current state.
+    var color c = #FFFFFFFF;
+    if ( !Active && TimerCurrent > 0 )
+      c = #FFFFFF99;
+
+    Digit0.Color = c;
+    Digit1.Color = c;
+    Digit2.Color = c;
+    Digit3.Color = c;
+    Digit4.Color = c;
+    Digit5.Color = c;
+    Dot1.Color = c;
+    Dot2.Color = c;
+  }
+
+  // The TimerScreen implements a count-down timer: The user can set a desired time \
+  // by a simple rotation gesture and then press the play button to start the count-down \
+  // timer.
+  // The time is shown by using the animated bezier digits.
+  note legend Note
+  {
+    attr Bounds = <240,390,810,480>;
+  }
+
+  $rect <10,480,210,520>
+  slot onDismiss
+  {
+    if ( !IsDialog( false ))
+      return;
+
+    // Leave this dialog and show another one
+    Owner.SwitchToDialog( new BezierClock::ClockScreen, Effects::SlideRightCentered, null, null, null, null, null, null, null, null, false );
+
+    // Changing to the 'Clock' dialog should cause the background in the application being shifted a little bit
+    ((BezierClock::BezierClock)Owner).Background.ShiftRight();
+  }
+
+  $rect <10,380,210,420>
+  object Effects::Int32Effect Int32Effect
+  {
+    preset NoOfCycles = 1;
+    preset CycleDuration = 100;
+    preset Value2 = 0;
+    preset Outlet = ^TimerCurrent;
+  }
+
+  $rect <440,340,640,380>
+  onset Active
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Active == value )
+      return;
+
+    // Remember the property's new value.
+    pure Active = value;
+
+    if ( value )
+    {
+      Int32Effect.Value1 = TimerCurrent;
+      Int32Effect.CycleDuration = TimerCurrent * 10;
+      Int32Effect.Enabled = TimerCurrent > 0;
+    }
+    else
+      Int32Effect.Enabled = false;
+
+    InvalidateViewState();
+  }
+
+  $rect <240,340,440,380>
+  onset TimerCurrent
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure TimerCurrent == value )
+      return;
+
+    // Remember the property's new value.
+    pure TimerCurrent = value;
+
+    // Calculate the digit values.
+    var int32 minutes = pure TimerCurrent / 6000;
+    var int32 seconds = pure TimerCurrent / 100 % 60;
+    var int32 tenths = pure TimerCurrent;
+
+    Digit0.Value = minutes / 10;
+    Digit1.Value = minutes % 10;
+
+    Digit2.Value = seconds / 10;
+    Digit3.Value = seconds % 10;
+
+    Digit4.Value = tenths / 10;
+    Digit5.Value = tenths % 10;
+
+    // Notify the attached observers.
+    notifyobservers ^TimerCurrent;
+
+    // And finally refresh the view.
+    InvalidateViewState();
+  }
+
+  $rect <10,340,210,380>
+  object Graphics::ArcPath DotPath
+  {
+    preset NoOfEdges = 20;
+    preset EndAngle = 360.0;
+    preset Radius = 6.1;
+    preset Style = Graphics::ArcStyle.Pie;
+  }
+
+  $rect <20,20,160,60>
+  object Views::FillPath Dot1
+  {
+    preset Bounds = <225,144,255,174>;
+    preset Color = #FFFFFFDD;
+    preset Offset = <15,15>;
+    preset Path = DotPath;
+  }
+
+  $rect <20,20,160,60>
+  object Views::FillPath Dot2
+  {
+    preset Bounds = <225,116,255,146>;
+    preset Color = #FFFFFFDD;
+    preset Offset = <15,15>;
+    preset Path = DotPath;
+  }
+
+  $rect <20,20,160,60>
+  object BezierClock::Digit Digit0
+  {
+    preset Bounds = <133,99,177,169>;
+    preset Value = 0;
+    preset Edges = 60;
+    preset StrokeWidth = 6.1;
+    preset Helpers = false;
+    preset AnimationDuration = 700;
+  }
+
+  $rect <20,20,160,60>
+  object BezierClock::Digit Digit1
+  {
+    preset Bounds = <182,99,226,169>;
+    preset Value = 0;
+    preset Edges = 60;
+    preset StrokeWidth = 6.1;
+    preset Helpers = false;
+    preset AnimationDuration = 700;
+  }
+
+  $rect <20,20,160,60>
+  object BezierClock::Digit Digit2
+  {
+    preset Bounds = <254,99,298,169>;
+    preset Value = 0;
+    preset Edges = 60;
+    preset StrokeWidth = 6.1;
+    preset Helpers = false;
+    preset AnimationDuration = 700;
+  }
+
+  $rect <20,20,160,60>
+  object BezierClock::Digit Digit3
+  {
+    preset Bounds = <302,99,346,169>;
+    preset Value = 0;
+    preset Edges = 60;
+    preset StrokeWidth = 6.1;
+    preset Helpers = false;
+    preset AnimationDuration = 700;
+  }
+
+  $rect <20,20,160,60>
+  object BezierClock::Digit Digit4
+  {
+    preset Bounds = <215,172,238,206>;
+    preset Value = 0;
+    preset Edges = 40;
+    preset StrokeWidth = 2.3;
+    preset Helpers = false;
+    preset AnimationDuration = 10;
+  }
+
+  $rect <20,20,160,60>
+  object BezierClock::Digit Digit5
+  {
+    preset Bounds = <240,172,265,206>;
+    preset Value = 0;
+    preset Edges = 40;
+    preset StrokeWidth = 2.3;
+    preset Helpers = false;
+    preset AnimationDuration = 10;
+  }
+
+  $rect <20,20,160,60>
+  object BezierClock::TimerWheel RotaryKnob
+  {
+    preset Bounds = <112,8,368,264>;
+    preset Outlet = ^TimerCurrent;
+    preset MaxValue = 600;
+    preset OutletFactor = 100;
+    preset OutletActive = ^Active;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler TouchHandlerLeft
+  {
+    preset Point4 = <0,0>;
+    preset Point3 = <60,0>;
+    preset Point2 = <60,270>;
+    preset Point1 = <0,270>;
+    preset OnPress = onDismiss;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image ImageLeft
+  {
+    preset Bounds = <0,0,20,270>;
+    preset FrameNumber = 3;
+    preset Bitmap = Resources::NavigationIconsMedium;
+  }
+
+  $rect <440,300,640,340>
+  property bool Active = false;
+
+  // The property 'TimerCurrent' defines the currently active timer value and can \
+  // be assigned to the timer wheel's outlet.
+  $rect <240,300,440,340>
+  property int32 TimerCurrent = 0;
+}
+
+// This class implements a 'rotary knob' widget. The user can touch the knob and \
+// rotate it causing the widget's value to be changed accordingly. The current value \
+// of the widget is represented by the property @CurrentValue. The valid range for \
+// this value is determined by the properties @MinValue and @MaxValue.
+// While the user is dragging the knob, the widget sends signals to the slot method \
+// stored in the property @OnChange. When the user terminates the interaction, a \
+// signal is sent to the slot method stored in @OnApply.
+// Alternatively the property @Outlet can refer to any other 'int32' property the \
+// widget should remain synchronized with. When the user drags the knob, the affected \
+// property is automatically updated to reflect the widget's current value. On the \
+// other hand, when the referred property is modified by another one, the widget \
+// is automatically notified to remain in sync with the property.
+// This approach follows the Controller-View programming paradigm. Here the rotary \
+// knob represents the 'View' and the property referred via 'Outlet' can be seen \
+// as a part of the 'Controller'.
+$rect <230,330,430,370>
+$output false
+class TimerWheel : Templates::RotaryKnob
+{
+  $rect <480,370,680,410>
+  inherited property Bounds = <0,0,200,200>;
+
+  $rect <250,270,450,310>
+  inherited method UpdateLayout()
+  {
+    // Update the size of the wheel view and it's path radius
+    // Note: There are four wheel areas used to limit the update areas during rendering.
+    var float wheelWidth = aSize.x / 30;
+    Wheel0.Bounds = rect( aSize.x / 2, 0, aSize.x, aSize.y / 2 );
+    Wheel0.Offset = point( 0, aSize.y / 2 );
+    Wheel0.Width = wheelWidth;
+    WheelPath0.RadiusX = (aSize.x - (int32)(wheelWidth + 3.0)) / 2;
+    WheelPath0.RadiusY = (aSize.y - (int32)(wheelWidth + 3.0)) / 2;
+
+    Wheel1.Bounds = rect( aSize.x / 2, aSize.y / 2, aSize.x, aSize.y );
+    Wheel1.Offset = point( 0, 0 );
+    Wheel1.Width = wheelWidth;
+    WheelPath1.RadiusX = WheelPath0.RadiusX;
+    WheelPath1.RadiusY = WheelPath0.RadiusY;
+
+    Wheel2.Bounds = rect( 0, aSize.y / 2, aSize.x / 2, aSize.y );
+    Wheel2.Offset = point( aSize.x / 2, 0 );
+    Wheel2.Width = wheelWidth;
+    WheelPath2.RadiusX = WheelPath0.RadiusX;
+    WheelPath2.RadiusY = WheelPath0.RadiusY;
+
+    Wheel3.Bounds = rect( 0, 0, aSize.x / 2, aSize.y / 2 );
+    Wheel3.Offset = point( aSize.x / 2, aSize.y / 2 );
+    Wheel3.Width = wheelWidth;
+    WheelPath3.RadiusX = WheelPath0.RadiusX;
+    WheelPath3.RadiusY = WheelPath0.RadiusY;
+
+    WheelBackground.Bounds.size = aSize;
+    WheelBackground.Offset = point( aSize.x / 2, aSize.y / 2 );
+    WheelBackgroundPath.RadiusX = WheelPath0.RadiusX - Wheel0.Width/1.8;
+    WheelBackgroundPath.RadiusY = WheelPath0.RadiusY - Wheel0.Width/1.8;
+
+    // Update the size of the button
+    Button.Bounds = rect( aSize.x / 5, aSize.y / 5, aSize.x * 4/5, aSize.y * 4/5 );
+
+    TouchHandler.Bounds.size = aSize;
+
+    postsignal updateButton;
+  }
+
+  $rect <250,310,450,350>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    // Determine the new state of the rotary knob widget.
+    //
+    // isEnabled  --> the widget can react to user inputs.
+    // isSelected --> the widget can receive keyboard events.
+    // isRotating --> the user is currently touching the widget.
+    //
+    var bool isEnabled  = aState.contains( Core::ViewState[ Enabled  ]);
+    var bool isSelected = aState.contains( Core::ViewState[ Selected ]);
+    var bool isRotating = TouchHandler.Down && !buttonTouched;
+
+    if ( !isEnabled )
+    {
+      Wheel0.Color      = #CCCCCCCC;
+      Button.Color     = #CCCCCC00;
+    }
+
+    else if ( isRotating )
+    {
+      Wheel0.Color      = #FFFFFFFF;
+      Button.Color     = #FFFFFF00;
+    }
+
+    else if ( isSelected )
+    {
+      Wheel0.Color      = #FFFFFFCC;
+      Button.Color     = #FFFFFFBB;
+    }
+
+    // Enabled but not rotating nor selected.
+    else
+    {
+      Wheel0.Color      = #FFFFFFFF;
+      if ( Active )
+        Button.Color     = #FFFFFF33;
+      else if ( CurrentValue >  0 )
+        Button.Color     = #FFFFFFFF;
+      else
+        Button.Color     = #FFFFFF00;
+    }
+
+    Wheel1.Color = Wheel0.Color;
+    Wheel2.Color = Wheel0.Color;
+    Wheel3.Color = Wheel0.Color;
+    WheelBackground.Color = Wheel0.Color;
+
+
+    // The following variables determine the lower and the upper end of the
+    // rotation area and are expressed in degree.
+    var float minAngle         = 0.0;
+    var float maxAngle         = 360.0;
+    var float newRotationAngle = minAngle;
+
+    // Convert the widget's current value to a rotation angle within the range
+    // specified by minAngle .. maxAngle.
+    if ( MaxValue != MinValue )
+      newRotationAngle = ( float( CurrentValue - MinValue ) * ( maxAngle - minAngle )) /
+                           float( MaxValue - MinValue ) + minAngle;
+
+    // Let the wheel appear at the calculated position with the calculated
+    // rotation angle.
+    WheelPath0.StartAngle = -90.0;
+    WheelPath1.StartAngle = 0.0;
+    WheelPath2.StartAngle = 90.0;
+    WheelPath3.StartAngle = 180.0;
+
+    if ( newRotationAngle <= 90.0 )
+    {
+      WheelPath0.EndAngle = newRotationAngle - 90.0;
+      WheelPath1.EndAngle = 0.0;
+      WheelPath2.EndAngle = 90.0;
+      WheelPath3.EndAngle = 180.0;
+    }
+    else if ( newRotationAngle <= 180.0 )
+    {
+      WheelPath0.EndAngle = 90.1;
+      WheelPath1.StartAngle = -0.1;
+      WheelPath1.EndAngle = newRotationAngle - 90.0;
+      WheelPath2.EndAngle = 90.0;
+      WheelPath3.EndAngle = 180.0;
+    }
+    else if ( newRotationAngle <= 270.0 )
+    {
+      WheelPath0.EndAngle = 90.1;
+      WheelPath1.StartAngle = -0.1;
+      WheelPath1.EndAngle = 180.0;
+      WheelPath2.EndAngle = newRotationAngle - 90.0;
+      WheelPath3.EndAngle = 180.0;
+    }
+    else
+    {
+      WheelPath0.EndAngle = 90.1;
+      WheelPath1.StartAngle = -0.1;
+      WheelPath1.EndAngle = 180.1;
+      WheelPath2.EndAngle = 270.1;
+      WheelPath3.EndAngle = newRotationAngle - 89.9;
+    }
+
+    // Remember the current state. Next time when the UpdateViewState() is called
+    // you can compare the 'old' state with the 'new' state and perform more
+    // sophisticated update, e.g. you can start an animation effect for the
+    // rotating <<-->> not rotating transition.
+    enabled  = isEnabled;
+    selected = isSelected;
+    rotating = isRotating;
+  }
+
+  // State management
+  note group Note4
+  {
+    attr Bounds = <240,230,460,480>;
+  }
+
+  // Controller events
+  note group Note3
+  {
+    attr Bounds = <470,230,690,360>;
+  }
+
+  // Touch screen events
+  note group Note1
+  {
+    attr Bounds = <10,230,230,480>;
+  }
+
+  // This variable stores the current state of the widget.
+  $rect <250,430,450,470>
+  var bool rotating;
+
+  // This variable stores the current state of the widget.
+  $rect <250,390,450,430>
+  var bool selected;
+
+  // This variable stores the current state of the widget.
+  $rect <250,350,450,390>
+  var bool enabled;
+
+  // This internal variable stores the widget's value at the moment when the user \
+  // begun to rotate the knob. It is used to calculate the new value from the knob \
+  // rotation.
+  $rect <20,390,220,430>
+  var int32 touchStartValue;
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @Outlet has been changed by another widget or by the application logic. In \
+  // response to this notification, the widget will update itself.
+  $rect <480,270,680,310>
+  slot onOutlet
+  {
+    // Read the current value of the associated property and update accordingly
+    // the state of the widget.
+    if ( Outlet != null )
+      CurrentValue = Outlet^ / OutletFactor;
+
+  }
+
+  // This internal slot method is called when the user drags the finger while pressing \
+  // the widget. The method calculates from the made displacement the rotation angle \
+  // and thus the alternation of the widget's value and updates the widget accordingly.
+  $rect <20,350,220,390>
+  slot onRotateTouch
+  {
+    if ( buttonTouched || Active )
+     return;
+
+    var int32 minAngle = 0;
+    var int32 maxAngle = 360;
+    var int32 oldValue = CurrentValue;
+    var int32 newValue = oldValue;
+
+    // Calculate from the rotation the alternation of the widget's value.
+    // Knowing the value at the beginning of the rotation interaction ->
+    // get the new value.
+    newValue = ( -TouchHandler.Relative * ( MaxValue - MinValue )) /
+               ( maxAngle - minAngle ) + touchStartValue;
+
+    // The knob has reached the start/end position -> adjust the reference value accordingly allowing
+    // the user to control the widget conveniently
+    if (( newValue > MaxValue ) && ( MaxValue > MinValue )) touchStartValue = touchStartValue - ( newValue - MaxValue );
+    if (( newValue > MinValue ) && ( MinValue > MaxValue )) touchStartValue = touchStartValue - ( newValue - MinValue );
+    if (( newValue < MinValue ) && ( MaxValue > MinValue )) touchStartValue = touchStartValue - ( newValue - MinValue );
+    if (( newValue < MaxValue ) && ( MinValue > MaxValue )) touchStartValue = touchStartValue - ( newValue - MaxValue );
+
+    // Store the calculated value
+    CurrentValue = newValue;
+
+    // The rotation was too small to change the widget's value or the knob
+    // has already reached the min/max position.
+    if ( oldValue == CurrentValue )
+      return;
+
+    // Notify the owner of the widget that the value has been changed.
+    postsignal OnChange;
+
+    // If a property is associated to the widget, update it accordingly and
+    // notify other widgets also associated to this property.
+    if ( Outlet != null )
+    {
+      Outlet^ = CurrentValue * OutletFactor;
+      notifyobservers Outlet;
+    }
+  }
+
+  // This internal slot method is called when the user releases the screen after \
+  // touching and evtl. rotating the knob --> when the interaction ends.
+  $rect <20,310,220,350>
+  slot onReleaseTouch
+  {
+    // When the touch interaction ends, the appearance of the widget may change.
+    // Request the UpdateViewState() method to be called in order to refresh the
+    // widget's appearance.
+    InvalidateViewState();
+
+    // Did the user really changed the widget's value? If yes, notify the owner.
+    if ( CurrentValue != touchStartValue )
+      postsignal OnApply;
+
+    // If the button area was touched, also notify the active state.
+    if ( buttonTouched )
+    {
+      if ( OutletActive != null )
+        OutletActive^ = Active;
+    }
+
+  }
+
+  // This internal slot method is called when the user touches the widget's area \
+  // --> when the rotation interaction begins.
+  $rect <20,270,220,310>
+  slot onPressTouch
+  {
+    // Touching the widget may affect its appearance to change. Request the
+    // UpdateViewState() method to be called in order to refresh the widget's
+    // appearance.
+    InvalidateViewState();
+
+    // Check if the user touched within the button area and handle the
+    // button actions.
+    buttonTouched = TouchHandler.HittingPos == Button.Bounds;
+    if ( buttonTouched )
+    {
+      if ( Active )
+        Active = false;
+      else
+        if ( CurrentValue > 0 )
+          Active = true;
+    }
+
+    // Remember which was the widget's value at the beginning of the wheel drag
+    // operation. It is used in the slot method 'onRotateTouch' to calculate the
+    // value from the rotation the user made on the screen.
+    touchStartValue = CurrentValue;
+  }
+
+  $rect <430,140,630,180>
+  onset Outlet
+  {
+    // Check if the new outlet differs from the currently used outlet
+    if ( pure Outlet == value )
+      return;
+
+    // Detach from the previous outlet
+    if ( pure Outlet != null )
+      detachobserver onOutlet, pure Outlet;
+
+    // Store the new outlet ...
+    pure Outlet = value;
+
+    // ... and attach to the new one
+    if ( value != null )
+      attachobserver onOutlet, value;
+
+    // Finally, retrieve the current state of the property associated via 'Outlet'.
+    if ( value != null )
+      postsignal onOutlet;
+  }
+
+  $rect <630,50,830,90>
+  onset MaxValue
+  {
+    // Check if the given value differs from the current value
+    if ( pure MaxValue == value )
+      return;
+
+    // Store the new value ...
+    pure MaxValue = value;
+
+    // ... and finally, force an update
+    InvalidateViewState();
+  }
+
+  $rect <430,50,630,90>
+  onset MinValue
+  {
+    // Check if the given value differs from the current value
+    if ( pure MinValue == value )
+      return;
+
+    // Store the new value ...
+    pure MinValue = value;
+
+    // ... and finally, force an update
+    InvalidateViewState();
+  }
+
+  $rect <230,90,430,130>
+  onget CurrentValue
+  {
+    // Get the internally stored value of the property 'CurrentValue'.
+    var int32 value = pure CurrentValue;
+
+    // When reading the property 'CurrentValue' limit the result to the
+    // range specified by the properties 'MinValue' and 'MaxValue'.
+    // Note, the range can be 'inverted'.
+    if ( MinValue > MaxValue )
+    {
+      if ( value < MaxValue ) value = MaxValue;
+      if ( value > MinValue ) value = MinValue;
+    }
+    else
+    {
+      if ( value < MinValue ) value = MinValue;
+      if ( value > MaxValue ) value = MaxValue;
+    }
+
+    return value;
+  }
+
+  $rect <230,50,430,90>
+  onset CurrentValue
+  {
+    // Check if the given value differs from the current value.
+    if ( pure CurrentValue == value )
+      return;
+
+    // Store the new value ...
+    pure CurrentValue = value;
+
+    // ... and finally, force an update.
+    InvalidateViewState();
+  }
+
+  // The property 'OnApply' can refer to a slot method, which will receive a signal \
+  // when the user has released the widget after rotating the knob. Thereupon the \
+  // method's logic will be executed. In the associated slot method you can evaluate \
+  // the widget's current value @CurrentValue.
+  $rect <480,450,680,490>
+  property slot OnApply = null;
+
+  // The property 'OnChange' can refer to a slot method, which will receive a signal \
+  // each time the user rotates the knob. Thereupon the method's logic will be executed. \
+  // In the associated slot method you can evaluate the widget's current value @CurrentValue.
+  $rect <480,410,680,450>
+  property slot OnChange = null;
+
+  // The property 'Outlet' can refer to any other 'int32' property the widget should \
+  // remain synchronized with. When the user rotates the knob, the affected property \
+  // is automatically updated to reflect the widget's current value. On the other \
+  // hand, when the referred property is modified by another one, the widget is automatically \
+  // notified to remain in sync with the property.
+  // This approach follows the Controller-View programming paradigm. Here the rotary \
+  // knob represents the 'View' and the property referred via 'Outlet' can be seen \
+  // as a part of the 'Controller'.
+  $rect <430,100,630,140>
+  property ^int32 Outlet = null;
+
+  // The property 'MaxValue' defines the possible @CurrentValue at the upper end \
+  // of the rotation range.
+  $rect <630,10,830,50>
+  property int32 MaxValue = 360;
+
+  // The property 'MinValue' defines the possible @CurrentValue at the lower end \
+  // of the rotation range.
+  $rect <430,10,630,50>
+  property int32 MinValue = 0;
+
+  // The property 'CurrentValue' stores the momentary value of the rotary knob. The \
+  // value is limited automatically to the range between @MinValue and @MaxValue.
+  $rect <230,10,430,50>
+  property int32 CurrentValue = 300;
+
+  $rect <630,140,830,180>
+  onset OutletFactor
+  {
+    // Check if the given value differs from the current value
+    if ( pure OutletFactor == value )
+      return;
+
+    // Take care on limits
+    if ( value == 0 )
+      value = 1;
+
+    // Store the new value ...
+    pure OutletFactor = value;
+
+    // ... and finally, force an update
+    InvalidateViewState();
+  }
+
+  // The property 'OutletFator' defines the factor between the rotation value in \
+  // degrees and is connected to an outlet.
+  $rect <630,100,830,140>
+  property int32 OutletFactor = 1;
+
+  $rect <20,430,220,470>
+  var bool buttonTouched = false;
+
+  $rect <710,520,910,560>
+  slot updateButton
+  {
+    if ( Active )
+    {
+      // Prepare pause icon
+      ButtonPath.SetMaxNoOfSubPaths( 2 );
+      ButtonPath.InitSubPath( 0, 4 );
+      ButtonPath.Begin( 0, Button.Bounds.w * 2/10, Button.Bounds.h * 1/10 );
+      ButtonPath.AddLine( 0, Button.Bounds.w * 4/10, Button.Bounds.h * 1/10 );
+      ButtonPath.AddLine( 0, Button.Bounds.w * 4/10, Button.Bounds.h * 9/10 );
+      ButtonPath.AddLine( 0, Button.Bounds.w * 2/10, Button.Bounds.h * 9/10 );
+      ButtonPath.Close( 0 );
+      ButtonPath.InitSubPath( 1, 4 );
+      ButtonPath.Begin( 1, Button.Bounds.w * 6/10, Button.Bounds.h * 1/10 );
+      ButtonPath.AddLine( 1, Button.Bounds.w * 8/10, Button.Bounds.h * 1/10 );
+      ButtonPath.AddLine( 1, Button.Bounds.w * 8/10, Button.Bounds.h * 9/10 );
+      ButtonPath.AddLine( 1, Button.Bounds.w * 6/10, Button.Bounds.h * 9/10 );
+      ButtonPath.Close( 1 );
+    }
+    else
+    {
+      // Prepare play icon
+      ButtonPath.SetMaxNoOfSubPaths( 2 );
+      ButtonPath.InitSubPath( 0, 3 );
+      ButtonPath.Begin( 0, Button.Bounds.w * 3/10, Button.Bounds.h * 2/10 );
+      ButtonPath.AddLine( 0, Button.Bounds.w * 17/20, Button.Bounds.h * 5/10 );
+      ButtonPath.AddLine( 0, Button.Bounds.w * 3/10, Button.Bounds.h * 8/10 );
+      ButtonPath.Close( 0 );
+      ButtonPath.InitSubPath( 1, 0 );
+    }
+  }
+
+  $rect <830,140,1030,180>
+  onset OutletActive
+  {
+    // Check if the new outlet differs from the currently used outlet
+    if ( pure OutletActive == value )
+      return;
+
+    // Detach from the previous outlet
+    if ( pure OutletActive != null )
+      detachobserver onOutletActive, pure OutletActive;
+
+    // Store the new outlet ...
+    pure OutletActive = value;
+
+    // ... and attach to the new one
+    if ( value != null )
+      attachobserver onOutletActive, value;
+
+    // Finally, retrieve the current state of the property associated via 'Outlet'.
+    if ( value != null )
+      postsignal onOutletActive;
+  }
+
+  // The property 'OutletActive' connects the active state of the wheel with an outlet.
+  $rect <830,100,1030,140>
+  property ^bool OutletActive = null;
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @Outlet has been changed by another widget or by the application logic. In \
+  // response to this notification, the widget will update itself.
+  $rect <480,310,680,350>
+  slot onOutletActive
+  {
+    // Read the current value of the associated property and update accordingly
+    // the state of the widget.
+    if ( OutletActive != null )
+      Active = OutletActive^;
+
+  }
+
+  // The property 'Active' defines activated state of the wheel.
+  $rect <840,10,1040,50>
+  property bool Active = false;
+
+  $rect <840,50,1040,90>
+  onset Active
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Active == value )
+      return;
+
+    // Remember the property's new value.
+    pure Active = value;
+
+    // Update the button
+    postsignal updateButton;
+
+    // ... and finally, force an update.
+    InvalidateViewState();
+  }
+
+  // Path data
+  note group Note5
+  {
+    attr Bounds = <700,230,920,570>;
+  }
+
+  $rect <710,430,910,470>
+  object Graphics::ArcPath WheelBackgroundPath
+  {
+    preset EndAngle = 360.0;
+    preset Style = Graphics::ArcStyle.Arc;
+  }
+
+  $rect <710,270,910,310>
+  object Graphics::ArcPath WheelPath0
+  {
+    preset EndAngle = 90.0;
+    preset Style = Graphics::ArcStyle.Arc;
+  }
+
+  $rect <710,310,910,350>
+  object Graphics::ArcPath WheelPath1
+  {
+    preset EndAngle = 90.0;
+    preset Style = Graphics::ArcStyle.Arc;
+  }
+
+  $rect <710,350,910,390>
+  object Graphics::ArcPath WheelPath2
+  {
+    preset EndAngle = 90.0;
+    preset Style = Graphics::ArcStyle.Arc;
+  }
+
+  $rect <710,390,910,430>
+  object Graphics::ArcPath WheelPath3
+  {
+    preset EndAngle = 90.0;
+    preset Style = Graphics::ArcStyle.Arc;
+  }
+
+  $rect <710,470,910,510>
+  object Graphics::Path ButtonPath;
+
+  $rect <20,20,160,60>
+  object Views::StrokePath WheelBackground
+  {
+    preset Bounds = <0,0,200,200>;
+    preset Width = 3.0;
+    preset Path = WheelBackgroundPath;
+  }
+
+  $rect <20,20,160,60>
+  object Views::StrokePath Wheel0
+  {
+    preset Bounds = <0,0,200,200>;
+    preset Path = WheelPath0;
+  }
+
+  $rect <20,20,160,60>
+  object Views::StrokePath Wheel1
+  {
+    preset Bounds = <0,0,200,200>;
+    preset Path = WheelPath1;
+  }
+
+  $rect <20,20,160,60>
+  object Views::StrokePath Wheel2
+  {
+    preset Bounds = <0,0,200,200>;
+    preset Path = WheelPath2;
+  }
+
+  $rect <20,20,160,60>
+  object Views::StrokePath Wheel3
+  {
+    preset Bounds = <0,0,200,200>;
+    preset Path = WheelPath3;
+  }
+
+  $rect <20,20,160,60>
+  object Views::StrokePath Button
+  {
+    preset Bounds = <0,0,200,200>;
+    preset JoinPoints = Graphics::PathJoin.Miter;
+    preset Width = 15.0;
+    preset Path = ButtonPath;
+  }
+
+  $rect <20,20,160,60>
+  object Core::RotateTouchHandler TouchHandler
+  {
+    preset Bounds = <0,0,200,200>;
+    preset OnRotate = onRotateTouch;
+    preset OnEnd = onReleaseTouch;
+    preset OnStart = onPressTouch;
+  }
+}
+
+$rect <230,140,430,180>
+$output false
+class StyleScreen : Core::Group
+{
+  $rect <10,300,210,340>
+  inherited property Bounds = <0,0,480,272>;
+
+  $rect <230,300,430,340>
+  slot onDismiss
+  {
+    // Leave this dialog and show another one
+    if ( IsDialog( false ))
+      Owner.SwitchToDialog( new BezierClock::ClockScreen, Effects::SlideUpCentered, null, null, null, null, null, null, null, null, false );
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler DownTouchHandler
+  {
+    preset Point4 = <60,224>;
+    preset Point3 = <420,224>;
+    preset Point2 = <420,270>;
+    preset Point1 = <60,270>;
+    preset OnPress = onDismiss;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image ImageDown
+  {
+    preset Bounds = <0,250,480,272>;
+    preset FrameNumber = 0;
+    preset Bitmap = Resources::NavigationIconsMedium;
+  }
+
+  $rect <10,340,210,380>
+  object WidgetSet::RadioButtonConfig RadioButtonConfig
+  {
+    preset FaceLayout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset FaceOnActive = Resources::WhiteBitmap;
+    preset FaceOnFocused = Resources::WhiteBitmap;
+    preset FaceOnDefault = Resources::WhiteBitmap;
+    preset FaceOffTintActive = #404040FF;
+    preset FaceOffTintFocused = #404040FF;
+    preset FaceOffTintDisabled = #404040FF;
+    preset FaceOffTintDefault = #404040FF;
+    preset FaceOffActive = Resources::WhiteBitmap;
+    preset FaceOffFocused = Resources::WhiteBitmap;
+    preset FaceOffDefault = Resources::WhiteBitmap;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::RadioButton RadioButtonDark
+  {
+    preset Bounds = <20,90,150,160>;
+    preset Outlet = ^BezierClock::Device.CurrentBackground;
+    preset Selected = true;
+    preset IconFrame = 0;
+    preset Icon = BezierClock::BackgroundPreview;
+    preset Appearance = RadioButtonConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::RadioButton RadioButtonOrange
+  {
+    preset Bounds = <175,90,305,160>;
+    preset OutletSelector = 1;
+    preset Outlet = ^BezierClock::Device.CurrentBackground;
+    preset IconFrame = 1;
+    preset Icon = BezierClock::BackgroundPreview;
+    preset Appearance = RadioButtonConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::RadioButton RadioButtonBlue
+  {
+    preset Bounds = <330,90,460,160>;
+    preset OutletSelector = 2;
+    preset Outlet = ^BezierClock::Device.CurrentBackground;
+    preset IconFrame = 2;
+    preset Icon = BezierClock::BackgroundPreview;
+    preset Appearance = RadioButtonConfig;
+  }
+}
+
+// Widgets
+note group Note1
+{
+  attr Bounds = <0,210,450,390>;
+}
+
+// Screens
+note group Note2
+{
+  attr Bounds = <0,10,450,200>;
+}
+
+// Font resource used per default by 'Text' and 'Attributed Text' views to ensure \
+// that new views don't remain empty on the screen.
+$rect <480,180,680,220>
+$output false
+resource Resources::Font FontL
+{
+  attr fontname FontName = Roboto Light;
+  attr fontheight Height = 24;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0x7F;
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = true;
+  attr fontitalic Italic = false;
+}
+
+// Font resource used per default by 'Text' and 'Attributed Text' views to ensure \
+// that new views don't remain empty on the screen.
+$rect <680,180,880,220>
+$output false
+resource Resources::Font FontXXL
+{
+  attr fontname FontName = Roboto Light;
+  attr fontheight Height = 40;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0x7F;
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+// This is an inline code block.
+$rect <480,290,680,330>
+inline Inline
+{
+  $if !$prototyper && $platform != *.WebGL.*
+  /* include the device driver header file to get access for the device class */
+  // #include "DeviceDriver.h"
+  $endif
+
+}
+
+// This class implements the interface between the GUI application and the device.
+$rect <480,330,680,370>
+$output false
+class DeviceClass
+{
+  // This method implements a device command that calls the underlying device driver \
+  // to change the RTC.
+  $rect <20,190,220,230>
+  method void SetTime( arg uint32 aTime )
+  {
+    // For target code generation you will use your specific device API
+    // to perform the command in the device.
+    $if !$prototyper && $platform != *.WebGL.*
+
+      native ( aTime )
+      {
+        /* the following command needs to be adapted to your specific RTC */
+        extern void DeviceDriver_SetTime( unsigned long aTime );
+        DeviceDriver_SetTime( aTime );
+      }
+
+    $else
+
+      // The following code is used during prototyping only. No device specific API is used during prototyping.
+      aTime;
+
+    $endif
+  }
+
+  $rect <20,60,220,100>
+  property int32 CurrentBackground = 1;
+
+  $rect <220,60,440,100>
+  onset CurrentBackground
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure CurrentBackground == value )
+      return;
+
+    // Remember the property's new value.
+    pure CurrentBackground = value;
+
+    notifyobservers ^CurrentBackground;
+  }
+
+  // State properties which can be shared with a middleware
+  note group Note
+  {
+    attr Bounds = <0,10,620,130>;
+  }
+
+  // Methods to update the RTC of the hardware
+  note group Note1
+  {
+    attr Bounds = <0,140,620,260>;
+  }
+
+  // How to integrate your UI application with a real device?
+  // 
+  // https://doc.embedded-wizard.de/integrating-with-the-device
+  // https://doc.embedded-wizard.de/device-class-and-device-driver
+  note legend Note5
+  {
+    attr Bounds = <0,270,620,360>;
+  }
+}
+
+// This object represents an instance of the device interface implemented in the \
+// class BezierClock::DeviceClass.
+$rect <680,330,880,370>
+autoobject BezierClock::DeviceClass Device;
+
+// Device Interface Classes
+note group Note
+{
+  attr Bounds = <460,250,900,390>;
+}
+
+$rect <480,50,680,90>
+$output false
+resource Resources::Bitmap BackgroundPreview
+{
+  attr bitmapfile FileName = .\Res\BackgroundPreview.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize = <120,60>;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = RGB565;
+}
+
+$rect <680,130,880,170>
+$output false
+resource Resources::Bitmap Blue
+{
+  attr bitmapfile FileName = .\Res\Blue.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = RGB565;
+}
+
+$rect <680,50,880,90>
+$output false
+resource Resources::Bitmap Dark
+{
+  attr bitmapfile FileName = .\Res\Dark.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = RGB565;
+}
+
+$rect <680,90,880,130>
+$output false
+resource Resources::Bitmap Orange
+{
+  attr bitmapfile FileName = .\Res\Orange.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = RGB565;
+}
+
+// Resources
+note group Note3
+{
+  attr Bounds = <460,10,900,240>;
+}

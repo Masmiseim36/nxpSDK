@@ -3,11 +3,17 @@
 
 #include <stdlib.h>
 #include <stdint.h>
+#include <inttypes.h>
+/* Adaptation for armgcc */
+#if defined(__GNUC__) && !defined(__ARMCC_VERSION)
+#define __STRINGIFY(a) #a
+#define PRId64      __STRINGIFY(lld)
+#define PRIu64      __STRINGIFY(llu)
+#endif
 #include <stddef.h>
 #include <string.h>
 #include <stdio.h>
-#include <inttypes.h>
-#include "azure_c_shared_utility/optimize_size.h"
+#include "azure_macro_utils/macro_utils.h"
 #include "azure_c_shared_utility/gballoc.h"
 #include "azure_c_shared_utility/xlogging.h"
 #include "azure_c_shared_utility/uuid.h"
@@ -39,7 +45,7 @@ static int string_concat(char** string, const char* to_concat)
     if (new_string == NULL)
     {
         LogError("Cannot allocate memory for the new string");
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {

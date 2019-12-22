@@ -28,7 +28,7 @@ extern uint32_t             g_ui32NumberOfCycles;
 extern uint32_t             g_ui32MaxNumberOfCycles;
 
 /* Application and board ID  */
-extern app_ver_t               g_sAppIdFM;
+extern app_ver_t            g_sAppIdFM;
 
 extern bool_t               g_bM1SwitchAppOnOff;
 extern mcdef_pmsm_t         g_sM1Drive;
@@ -51,140 +51,136 @@ FMSTR_TSA_TABLE_BEGIN(gsM1Drive_table)
     FMSTR_TSA_RW_VAR(g_sM1Drive.bFaultClearMan,   FMSTR_TSA_UINT16)         /* Fault Clear */
     FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultIdCaptured,   FMSTR_TSA_UINT16)       /* Captured Fault */
     FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultIdPending,   FMSTR_TSA_UINT16)        /* Pending Fault */
-    #if (DEMO == 0) // Add variables used in non-demo project
     FMSTR_TSA_RW_VAR(g_sM1Drive.eControl,   FMSTR_TSA_UINT16)               /* MCAT Control */
     FMSTR_TSA_RW_VAR(g_sM1Drive.ui16SlowCtrlLoopFreq,   FMSTR_TSA_UINT16)   /* Slow Control Loop Frequency */
     FMSTR_TSA_RW_VAR(g_sM1Drive.ui16FastCtrlLoopFreq,   FMSTR_TSA_UINT16)   /* Fast Control Loop Frequency */
-    #endif
 
-        /* gsM1Drive.sSpeed structure definition */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.f16SpeedFilt,   FMSTR_TSA_FRAC16)    /* Speed filtered */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.f16Speed,   FMSTR_TSA_FRAC16)        /* Speed Estimated */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.f16SpeedRamp,   FMSTR_TSA_FRAC16)    /* Speed Ramp */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.f16SpeedCmd,   FMSTR_TSA_FRAC16)     /* Speed Required */
 
-            /* sSpeed.sSpeedFilter.sSpeedFilter definitions */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.sSpeedFilter.sFltCoeff.f32A1,   FMSTR_TSA_FRAC32)        /* Speed Filter A1 */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.sSpeedFilter.sFltCoeff.f32B0,   FMSTR_TSA_FRAC32)        /* Speed Filter B0 */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.sSpeedFilter.sFltCoeff.f32B1,   FMSTR_TSA_FRAC32)        /* Speed Filter B1 */
+    /* gsM1Drive.sSpeed structure definition */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.f16SpeedFilt,   FMSTR_TSA_FRAC16)    /* Speed filtered */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.f16Speed,   FMSTR_TSA_FRAC16)        /* Speed Estimated */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.f16SpeedRamp,   FMSTR_TSA_FRAC16)    /* Speed Ramp */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.f16SpeedCmd,   FMSTR_TSA_FRAC16)     /* Speed Required */
 
-            /* sSpeed.sSpeedFilter.sSpeedRampParams definitions */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.sSpeedRampParams.f32RampDown,   FMSTR_TSA_FRAC32)        /* Speed Ramp Down */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.sSpeedRampParams.f32RampUp,   FMSTR_TSA_FRAC32)          /* Speed Ramp Up */
+    /* sSpeed.sSpeedFilter.sSpeedFilter definitions */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.sSpeedFilter.sFltCoeff.f32A1,   FMSTR_TSA_FRAC32)        /* Speed Filter A1 */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.sSpeedFilter.sFltCoeff.f32B0,   FMSTR_TSA_FRAC32)        /* Speed Filter B0 */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.sSpeedFilter.sFltCoeff.f32B1,   FMSTR_TSA_FRAC32)        /* Speed Filter B1 */
 
-            /* sSpeed.sSpeedFilter.sSpeedRampParams definitions */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.sSpeedPiParams.a32IGain,   FMSTR_TSA_UFRAC_UQ(16, 15))       /* Speed Loop Ki Gain */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.sSpeedPiParams.a32PGain,   FMSTR_TSA_UFRAC_UQ(16, 15))       /* Speed Loop Kp Gain */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.sSpeedPiParams.f16UpperLim,   FMSTR_TSA_FRAC16)              /* Speed Loop Limit High */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.sSpeedPiParams.f16LowerLim,   FMSTR_TSA_FRAC16)              /* Speed Loop Limit Low */
+    /* sSpeed.sSpeedFilter.sSpeedRampParams definitions */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.sSpeedRampParams.f32RampDown,   FMSTR_TSA_FRAC32)        /* Speed Ramp Down */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.sSpeedRampParams.f32RampUp,   FMSTR_TSA_FRAC32)          /* Speed Ramp Up */
 
-        /* sSpeed.sAlignment definitions */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sAlignment.ui16Time,   FMSTR_TSA_UINT16)        /* Alignment Duration */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sAlignment.f16UdReq,   FMSTR_TSA_FRAC16)        /* Alignment Voltage */
+    /* sSpeed.sSpeedFilter.sSpeedRampParams definitions */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.sSpeedPiParams.a32IGain,   FMSTR_TSA_UFRAC_UQ(16, 15))       /* Speed Loop Ki Gain */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.sSpeedPiParams.a32PGain,   FMSTR_TSA_UFRAC_UQ(16, 15))       /* Speed Loop Kp Gain */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.sSpeedPiParams.f16UpperLim,   FMSTR_TSA_FRAC16)              /* Speed Loop Limit High */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.sSpeedPiParams.f16LowerLim,   FMSTR_TSA_FRAC16)              /* Speed Loop Limit Low */
 
-        /* gsM1Drive.sFocPMSM structure definition */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.f16DutyCycleLimit,  FMSTR_TSA_FRAC16)      /* Current Loop Limit */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.f16UDcBus,   FMSTR_TSA_FRAC16)             /* DCB Voltage */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.f16UDcBusFilt,   FMSTR_TSA_SINT16)         /* DCB Voltage Filtered */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.f16PosElExt,   FMSTR_TSA_FRAC16)           /* Posirtion External */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.f16PosEl,   FMSTR_TSA_FRAC16)              /* Position Electrical */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.f16PosElEst,   FMSTR_TSA_FRAC16)           /* Position Estimated */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.ui16SectorSVM,   FMSTR_TSA_UINT16)         /* SVM Sector */
+    /* sSpeed.sAlignment definitions */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sAlignment.ui16Time,   FMSTR_TSA_UINT16)        /* Alignment Duration */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sAlignment.f16UdReq,   FMSTR_TSA_FRAC16)        /* Alignment Voltage */
 
-            /* sFocPMSM.sIAlBe definitions */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIAlBe.f16Alpha,   FMSTR_TSA_FRAC16)       /* I alpha */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIAlBe.f16Beta,   FMSTR_TSA_FRAC16)        /* I beta */
+    /* gsM1Drive.sFocPMSM structure definition */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.f16DutyCycleLimit,  FMSTR_TSA_FRAC16)      /* Current Loop Limit */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.f16UDcBus,   FMSTR_TSA_FRAC16)             /* DCB Voltage */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.f16UDcBusFilt,   FMSTR_TSA_SINT16)         /* DCB Voltage Filtered */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.f16PosElExt,   FMSTR_TSA_FRAC16)           /* Posirtion External */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.f16PosEl,   FMSTR_TSA_FRAC16)              /* Position Electrical */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.f16PosElEst,   FMSTR_TSA_FRAC16)           /* Position Estimated */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.ui16SectorSVM,   FMSTR_TSA_UINT16)         /* SVM Sector */
 
-            /* sFocPMSM.sIDQ definitions */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIDQ.f16D,   FMSTR_TSA_FRAC16)     /* Id */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIDQ.f16Q,   FMSTR_TSA_FRAC16)     /* Iq */
+    /* sFocPMSM.sIAlBe definitions */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIAlBe.f16Alpha,   FMSTR_TSA_FRAC16)       /* I alpha */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIAlBe.f16Beta,   FMSTR_TSA_FRAC16)        /* I beta */
 
-            /* sFocPMSM.sIDQReq definitions */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIDQReq.f16D,   FMSTR_TSA_FRAC16)      /* Id req */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIDQReq.f16Q,   FMSTR_TSA_FRAC16)      /* Iq req */
+    /* sFocPMSM.sIDQ definitions */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIDQ.f16D,   FMSTR_TSA_FRAC16)     /* Id */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIDQ.f16Q,   FMSTR_TSA_FRAC16)     /* Iq */
 
-            /* sFocPMSM.sIDQReq definitions */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sUDQReq.f16D,   FMSTR_TSA_FRAC16)      /* Ud req */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sUDQReq.f16Q,   FMSTR_TSA_FRAC16)      /* Uq req */
+    /* sFocPMSM.sIDQReq definitions */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIDQReq.f16D,   FMSTR_TSA_FRAC16)      /* Id req */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIDQReq.f16Q,   FMSTR_TSA_FRAC16)      /* Iq req */
 
-            /* sFocPMSM.sIdPiParams definitions */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIdPiParams.a32IGain,   FMSTR_TSA_UFRAC_UQ(16, 15))        /* Id Ki Gain */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIdPiParams.a32PGain,   FMSTR_TSA_UFRAC_UQ(16, 15))        /* Id Kp Gain */
+    /* sFocPMSM.sIDQReq definitions */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sUDQReq.f16D,   FMSTR_TSA_FRAC16)      /* Ud req */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sUDQReq.f16Q,   FMSTR_TSA_FRAC16)      /* Uq req */
 
-            /* sFocPMSM.sBemfObsrv definitions */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sBemfObsrv.a32EGain,   FMSTR_TSA_UFRAC_UQ(16, 15))         /* Obsrv E gain */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sBemfObsrv.a32IGain,   FMSTR_TSA_UFRAC_UQ(16, 15))         /* Obsrv I gain */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sBemfObsrv.sCtrl.a32IGain,   FMSTR_TSA_UFRAC_UQ(16, 15))   /* Obsrv Ki gain */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sBemfObsrv.sCtrl.a32PGain,   FMSTR_TSA_UFRAC_UQ(16, 15))   /* Obsrv Kp gain */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sBemfObsrv.a32UGain,   FMSTR_TSA_UFRAC_UQ(16, 15))         /* Obsrv U gain */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sBemfObsrv.a32WIGain,   FMSTR_TSA_UFRAC_UQ(16, 15))        /* Obsrv WI gain */
+    /* sFocPMSM.sIdPiParams definitions */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIdPiParams.a32IGain,   FMSTR_TSA_UFRAC_UQ(16, 15))        /* Id Ki Gain */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIdPiParams.a32PGain,   FMSTR_TSA_UFRAC_UQ(16, 15))        /* Id Kp Gain */
 
-            /* sFocPMSM.sTo definitions */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sTo.f16IGain,   FMSTR_TSA_FRAC16)          /* Obsrv To Ki gain */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sTo.i16IGainSh,   FMSTR_TSA_SINT16)        /* Obsrv To Ki shift */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sTo.f16PGain,   FMSTR_TSA_FRAC16)          /* Obsrv To Kp gain */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sTo.i16PGainSh,   FMSTR_TSA_SINT16)        /* Obsrv To Kp shift */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sTo.f16ThGain ,   FMSTR_TSA_FRAC16)        /* Obsrv To Theta gain */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sTo.i16ThGainSh ,   FMSTR_TSA_SINT16)      /* Obsrv To Theta shift */
+    /* sFocPMSM.sBemfObsrv definitions */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sBemfObsrv.a32EGain,   FMSTR_TSA_UFRAC_UQ(16, 15))         /* Obsrv E gain */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sBemfObsrv.a32IGain,   FMSTR_TSA_UFRAC_UQ(16, 15))         /* Obsrv I gain */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sBemfObsrv.sCtrl.a32IGain,   FMSTR_TSA_UFRAC_UQ(16, 15))   /* Obsrv Ki gain */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sBemfObsrv.sCtrl.a32PGain,   FMSTR_TSA_UFRAC_UQ(16, 15))   /* Obsrv Kp gain */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sBemfObsrv.a32UGain,   FMSTR_TSA_UFRAC_UQ(16, 15))         /* Obsrv U gain */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sBemfObsrv.a32WIGain,   FMSTR_TSA_UFRAC_UQ(16, 15))        /* Obsrv WI gain */
 
-            /* sFocPMSM.sIqPiParams definitions */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIqPiParams.a32IGain,   FMSTR_TSA_UFRAC_UQ(16, 15))        /* Iq Ki Gain */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIqPiParams.a32PGain,   FMSTR_TSA_UFRAC_UQ(16, 15))        /* Iq Kp Gain */
+    /* sFocPMSM.sTo definitions */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sTo.f16IGain,   FMSTR_TSA_FRAC16)          /* Obsrv To Ki gain */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sTo.i16IGainSh,   FMSTR_TSA_SINT16)        /* Obsrv To Ki shift */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sTo.f16PGain,   FMSTR_TSA_FRAC16)          /* Obsrv To Kp gain */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sTo.i16PGainSh,   FMSTR_TSA_SINT16)        /* Obsrv To Kp shift */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sTo.f16ThGain ,   FMSTR_TSA_FRAC16)        /* Obsrv To Theta gain */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sTo.i16ThGainSh ,   FMSTR_TSA_SINT16)      /* Obsrv To Theta shift */
 
-            /* sFocPMSM.sIABC definitions */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIABC.f16A,   FMSTR_TSA_FRAC16)        /* Phase Current A */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIABC.f16B,   FMSTR_TSA_FRAC16)        /* Phase Current B */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIABC.f16C,   FMSTR_TSA_FRAC16)        /* Phase Current C */
+    /* sFocPMSM.sIqPiParams definitions */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIqPiParams.a32IGain,   FMSTR_TSA_UFRAC_UQ(16, 15))        /* Iq Ki Gain */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIqPiParams.a32PGain,   FMSTR_TSA_UFRAC_UQ(16, 15))        /* Iq Kp Gain */
 
-        /* sFaultThresholds definitions */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultThresholds.f16UqBemf,   FMSTR_TSA_FRAC16)         /* Fault Threshold BemfBlocked */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultThresholds.f16UDcBusOver,   FMSTR_TSA_FRAC16)     /* Fault Threshold DcBusOver */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultThresholds.f16UDcBusTrip,   FMSTR_TSA_FRAC16)     /* Fault Threshold DcBusTrip */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultThresholds.f16UDcBusUnder,   FMSTR_TSA_FRAC16)    /* Fault Threshold DcBusUnder */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultThresholds.f16SpeedMin,   FMSTR_TSA_FRAC16)       /* Fault Threshold SpeedMin */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultThresholds.f16SpeedNom,   FMSTR_TSA_FRAC16)       /* Fault Threshold SpeedNom */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultThresholds.f16SpeedOver,   FMSTR_TSA_FRAC16)      /* Fault Threshold SpeedOver */
+    /* sFocPMSM.sIABC definitions */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIABC.f16A,   FMSTR_TSA_FRAC16)        /* Phase Current A */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIABC.f16B,   FMSTR_TSA_FRAC16)        /* Phase Current B */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.sIABC.f16C,   FMSTR_TSA_FRAC16)        /* Phase Current C */
 
-        /* sStartUp definitions */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sStartUp.f16CoeffMerging,   FMSTR_TSA_FRAC16)       /* Merging Coefficient */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sStartUp.f16RatioMerging,   FMSTR_TSA_FRAC16)       /* Merging Ratio */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sStartUp.f16SpeedCatchUp,   FMSTR_TSA_FRAC16)       /* Merging Speed Catch Up */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sStartUp.f16PosGen,   FMSTR_TSA_FRAC16)             /* Position Open Loop */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sStartUp.f16SpeedCatchUp,   FMSTR_TSA_FRAC16)       /* Speed Merging Catch Up  */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sStartUp.f16SpeedRampOpenLoop,   FMSTR_TSA_FRAC16)  /* Speed Ramp Open Loop  */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sStartUp.f16CurrentStartup,   FMSTR_TSA_FRAC16)     /* Startup Current  */
+    /* sFaultThresholds definitions */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultThresholds.f16UqBemf,   FMSTR_TSA_FRAC16)         /* Fault Threshold BemfBlocked */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultThresholds.f16UDcBusOver,   FMSTR_TSA_FRAC16)     /* Fault Threshold DcBusOver */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultThresholds.f16UDcBusTrip,   FMSTR_TSA_FRAC16)     /* Fault Threshold DcBusTrip */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultThresholds.f16UDcBusUnder,   FMSTR_TSA_FRAC16)    /* Fault Threshold DcBusUnder */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultThresholds.f16SpeedMin,   FMSTR_TSA_FRAC16)       /* Fault Threshold SpeedMin */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultThresholds.f16SpeedNom,   FMSTR_TSA_FRAC16)       /* Fault Threshold SpeedNom */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultThresholds.f16SpeedOver,   FMSTR_TSA_FRAC16)      /* Fault Threshold SpeedOver */
 
-            /* sStartUp.sSpeedRampOpenLoopParams definitions */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sStartUp.sSpeedRampOpenLoopParams.f32RampDown,   FMSTR_TSA_FRAC32)      /* Startup Ramp Dec */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sStartUp.sSpeedRampOpenLoopParams.f32RampUp,   FMSTR_TSA_FRAC32)        /* Startup Ramp Inc */
+    /* sStartUp definitions */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sStartUp.f16CoeffMerging,   FMSTR_TSA_FRAC16)       /* Merging Coefficient */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sStartUp.f16RatioMerging,   FMSTR_TSA_FRAC16)       /* Merging Ratio */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sStartUp.f16SpeedCatchUp,   FMSTR_TSA_FRAC16)       /* Merging Speed Catch Up */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sStartUp.f16PosGen,   FMSTR_TSA_FRAC16)             /* Position Open Loop */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sStartUp.f16SpeedCatchUp,   FMSTR_TSA_FRAC16)       /* Speed Merging Catch Up  */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sStartUp.f16SpeedRampOpenLoop,   FMSTR_TSA_FRAC16)  /* Speed Ramp Open Loop  */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sStartUp.f16CurrentStartup,   FMSTR_TSA_FRAC16)     /* Startup Current  */
 
-#if !defined(DEMO) /* usable if DEMO mode is not used */
-        /* sScalarCtrl definitions */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sScalarCtrl.f16PosElScalar,   FMSTR_TSA_FRAC16)     /* Position Electrical Scalar */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sScalarCtrl.f16FreqRamp,   FMSTR_TSA_FRAC16)        /* Scalar Frequency Ramp */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sScalarCtrl.f16FreqCmd,   FMSTR_TSA_FRAC16)         /* Scalar speed */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sScalarCtrl.f16VHzGain,   FMSTR_TSA_FRAC16)         /* VHz Factor Gain */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sScalarCtrl.f16VHzGainShift,   FMSTR_TSA_FRAC16)    /* VHz Factor Gain Shift */
+    /* sStartUp.sSpeedRampOpenLoopParams definitions */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sStartUp.sSpeedRampOpenLoopParams.f32RampDown,   FMSTR_TSA_FRAC32)      /* Startup Ramp Dec */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sStartUp.sSpeedRampOpenLoopParams.f32RampUp,   FMSTR_TSA_FRAC32)        /* Startup Ramp Inc */
 
-            /* sScalarCtrl.sFreqRampParams definitions */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sScalarCtrl.sFreqRampParams.f32RampDown,   FMSTR_TSA_FRAC32)    /* Scalar Ramp Down */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sScalarCtrl.sFreqRampParams.f32RampUp,   FMSTR_TSA_FRAC32)      /* Scalar Ramp Up */
+    /* sScalarCtrl definitions */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sScalarCtrl.f16PosElScalar,   FMSTR_TSA_FRAC16)     /* Position Electrical Scalar */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sScalarCtrl.f16FreqRamp,   FMSTR_TSA_FRAC16)        /* Scalar Frequency Ramp */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sScalarCtrl.f16FreqCmd,   FMSTR_TSA_FRAC16)         /* Scalar speed */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sScalarCtrl.f16VHzGain,   FMSTR_TSA_FRAC16)         /* VHz Factor Gain */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sScalarCtrl.f16VHzGainShift,   FMSTR_TSA_FRAC16)    /* VHz Factor Gain Shift */
 
-            /* sScalarCtrl.sUDQReq definitions */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sScalarCtrl.sUDQReq.f16Q,   FMSTR_TSA_FRAC16)       /* Scalar volt */
+    /* sScalarCtrl.sFreqRampParams definitions */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sScalarCtrl.sFreqRampParams.f32RampDown,   FMSTR_TSA_FRAC32)    /* Scalar Ramp Down */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sScalarCtrl.sFreqRampParams.f32RampUp,   FMSTR_TSA_FRAC32)      /* Scalar Ramp Up */
 
-        /* sMCATctrl definitions */
-        FMSTR_TSA_RW_VAR(g_sM1Drive.sMCATctrl.ui16PospeSensor,   FMSTR_TSA_UINT16)      /* MCAT POSPE Sensor */
+    /* sScalarCtrl.sUDQReq definitions */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sScalarCtrl.sUDQReq.f16Q,   FMSTR_TSA_FRAC16)       /* Scalar volt */
 
-            /* sMCATctrl.sIDQReqMCAT definitions */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sMCATctrl.sIDQReqMCAT.f16D,   FMSTR_TSA_FRAC16)     /* MCAT Id Required */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sMCATctrl.sIDQReqMCAT.f16Q,   FMSTR_TSA_FRAC16)     /* MCAT Iq Required */
+    /* sMCATctrl definitions */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sMCATctrl.ui16PospeSensor,   FMSTR_TSA_UINT16)      /* MCAT POSPE Sensor */
 
-            /* sMCATctrl.sUDQReqMCAT definitions */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sMCATctrl.sUDQReqMCAT.f16D,   FMSTR_TSA_FRAC16)     /* MCAT Ud Required */
-            FMSTR_TSA_RW_VAR(g_sM1Drive.sMCATctrl.sUDQReqMCAT.f16Q,   FMSTR_TSA_FRAC16)     /* MCAT Uq Required */
-#endif
+    /* sMCATctrl.sIDQReqMCAT definitions */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sMCATctrl.sIDQReqMCAT.f16D,   FMSTR_TSA_FRAC16)     /* MCAT Id Required */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sMCATctrl.sIDQReqMCAT.f16Q,   FMSTR_TSA_FRAC16)     /* MCAT Iq Required */
 
+    /* sMCATctrl.sUDQReqMCAT definitions */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sMCATctrl.sUDQReqMCAT.f16D,   FMSTR_TSA_FRAC16)     /* MCAT Ud Required */
+    FMSTR_TSA_RW_VAR(g_sM1Drive.sMCATctrl.sUDQReqMCAT.f16Q,   FMSTR_TSA_FRAC16)     /* MCAT Uq Required */
 
 FMSTR_TSA_TABLE_END()
 
@@ -195,7 +191,6 @@ FMSTR_TSA_TABLE_END()
  *
  * @return None
  */
-#if !defined(DEMO)
 FMSTR_TSA_TABLE_BEGIN(sMID_table)
 
     /* sMIDAlignment structure definition */
@@ -211,8 +206,8 @@ FMSTR_TSA_TABLE_BEGIN(sMID_table)
     FMSTR_TSA_RW_VAR(sMIDKe.i16ShiftKeMax,   FMSTR_TSA_SINT16)      /* MID Ke ShiftKeMax */
     FMSTR_TSA_RW_VAR(sMIDKe.f16SpeedElReq,   FMSTR_TSA_FRAC16)      /* MID Ke SpeedElReq */
 
-        /* sMIDKe.sSpeedIntegrator definitions */
-        FMSTR_TSA_RW_VAR(sMIDKe.sSpeedIntegrator.a32Gain,   FMSTR_TSA_FRAC_Q(16, 15))       /* MID Ke SpeedIntegrator.f16C1 */
+    /* sMIDKe.sSpeedIntegrator definitions */
+    FMSTR_TSA_RW_VAR(sMIDKe.sSpeedIntegrator.a32Gain,   FMSTR_TSA_FRAC_Q(16, 15))       /* MID Ke SpeedIntegrator.f16C1 */
 
     /* sMIDLs structure definition */
     FMSTR_TSA_RW_VAR(sMIDLs.ui16Active,   FMSTR_TSA_UINT16)             /* MID Ke Active */
@@ -258,7 +253,6 @@ FMSTR_TSA_TABLE_BEGIN(sMID_table)
     FMSTR_TSA_RW_MEM(sMIDPwrStgChar.f16UdErrorLookUp, FMSTR_TSA_FRAC16, &sMIDPwrStgChar.f16UdErrorLookUp[0], (65 << 1)) /* MID Ud Error Lookup */
 
 FMSTR_TSA_TABLE_END()
-#endif
 
 /*!
  * @brief Global table with global variables used in TSA
@@ -283,7 +277,7 @@ FMSTR_TSA_TABLE_BEGIN(global_table)
     FMSTR_TSA_RW_VAR(s_fltM1speedScale, FMSTR_TSA_FLOAT)            /* FMSTR_M1_speedScale */
     FMSTR_TSA_RW_VAR(s_fltM1voltageScale, FMSTR_TSA_FLOAT)          /* FMSTR_M1_voltageScale */
 
-#if !defined(DEMO) /* usable if DEMO mode is not used */
+
     FMSTR_TSA_RW_VAR(s_eM1StateRun, FMSTR_TSA_UINT16)               /* State Run */
 
     /* global freemaster float variables */
@@ -306,7 +300,6 @@ FMSTR_TSA_TABLE_BEGIN(global_table)
     /* MID variables */
     FMSTR_TSA_RW_VAR(ui16PolePairs, FMSTR_TSA_UINT16)               /* MID PolePairs */
     FMSTR_TSA_RW_VAR(g_sMIDCtrl.eState, FMSTR_TSA_UINT16)           /* MID State */
-#endif
 
 FMSTR_TSA_TABLE_END()
 
@@ -333,18 +326,11 @@ FMSTR_TSA_TABLE_END()
  *
  * @return None
  */
-#if defined(DEMO)   /* If demo mode is selected */
-FMSTR_TSA_TABLE_LIST_BEGIN()
-    FMSTR_TSA_TABLE(gsM1Drive_table)
-    FMSTR_TSA_TABLE(global_table)
-    FMSTR_TSA_TABLE(sAppIdFM_table)
-FMSTR_TSA_TABLE_LIST_END()
-#else               /* If demo mode is NOT selected */
 FMSTR_TSA_TABLE_LIST_BEGIN()
     FMSTR_TSA_TABLE(gsM1Drive_table)
     FMSTR_TSA_TABLE(sMID_table)
     FMSTR_TSA_TABLE(global_table)
     FMSTR_TSA_TABLE(sAppIdFM_table)
 FMSTR_TSA_TABLE_LIST_END()
-#endif
+
 

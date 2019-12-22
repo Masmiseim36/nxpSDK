@@ -186,6 +186,8 @@
           <state>BL_TARGET_RAM</state>
           <state>MIMXRT1015</state>
           <state>USB_STACK_BM</state>
+          <state>FLEXSPI_ENABLE_OCTAL_FLASH_SUPPORT=0</state>
+          <state>FLEXSPI_ENABLE_NO_CMD_MODE_SUPPORT=0</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -262,7 +264,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -332,10 +334,14 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/usb/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -501,6 +507,7 @@
         </option>
         <option>
           <name>ADefines</name>
+          <state>NDEBUG</state>
         </option>
         <option>
           <name>AList</name>
@@ -783,6 +790,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
+          <state> --redirect __aeabi_idiv=__iar_small___aeabi_idiv </state>
+          <state> --redirect __aeabi_idivmod=__iar_small___aeabi_idivmod </state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -980,19 +989,19 @@
   <group>
     <name>device</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/system_MIMXRT1015.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/MIMXRT1015.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/startup/system_MIMXRT1015.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/MIMXRT1015_features.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/fsl_device_registers.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/MIMXRT1015.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/system_MIMXRT1015.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/MIMXRT1015_features.h</name>
+      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/startup/system_MIMXRT1015.c</name>
     </file>
   </group>
   <group>
@@ -1017,31 +1026,31 @@
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bm_usb/bootloader_hid_report_ids.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bm_usb/fat_directory_entry.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bm_usb/composite.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bm_usb/composite.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bm_usb/composite.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bm_usb/hid_bootloader.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bm_usb/fat_directory_entry.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bm_usb/hid_bootloader.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bm_usb/msc_disk.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bm_usb/hid_bootloader.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bm_usb/msc_disk.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bm_usb/usb_descriptor.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bm_usb/msc_disk.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bm_usb/usb_descriptor.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bm_usb/usb_descriptor.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/usb_device_config.h</name>
@@ -1060,7 +1069,25 @@
     <group>
       <name>bootloader</name>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_app_crc_check.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_command.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_context.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_irq_common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_peripheral.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_peripheral_interface.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_shutdown_cleanup.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_user_entry.h</name>
@@ -1071,25 +1098,13 @@
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bootloader.h</name>
       </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_command.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_context.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_peripheral.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_shutdown_cleanup.h</name>
-      </file>
       <group>
         <name>src</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_user_entry.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_app_crc_check.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_main.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_command.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_context.c</name>
@@ -1098,28 +1113,19 @@
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_exception_handler.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_tree_root.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_command.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_shutdown_cleanup.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_app_crc_check.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_main.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_misc.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/lpuart_peripheral_interface.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_shutdown_cleanup.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/usb_hid_msc_peripheral_interface.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_tree_root.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_nor_encrypt_bee.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_user_entry.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_keyblob.c</name>
@@ -1127,18 +1133,21 @@
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_keyblob_dcp.c</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_nor_encrypt_bee.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/lpuart_peripheral_interface.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/usb_hid_msc_peripheral_interface.c</name>
+        </file>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_irq_common.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_app_crc_check.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_keyblob.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_nor_encrypt.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_keyblob.h</name>
       </file>
     </group>
     <group>
@@ -1173,28 +1182,31 @@
       <group>
         <name>src</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/sram_init.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/memory.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/device_memory.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/device_memory.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/device_memory.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/normal_memory.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/memory.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/normal_memory.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.s</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/normal_memory.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.s</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/sram_init.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/sram_init_MIMXRT1015.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/flexspi_nor_memory.c</name>
@@ -1207,9 +1219,6 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/spi_nor_eeprom_memory.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/sram_init_MIMXRT1015.c</name>
         </file>
       </group>
     </group>
@@ -1243,10 +1252,10 @@
     <group>
       <name>sbloader</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/sbloader/sbloader.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/sbloader/sb_file_format.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/sbloader/sb_file_format.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/sbloader/sbloader.h</name>
       </file>
       <group>
         <name>src</name>
@@ -1258,16 +1267,16 @@
     <group>
       <name>utilities</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/fsl_rtos_abstraction.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/fsl_assert.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/vector_table_info.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/fsl_rtos_abstraction.h</name>
       </file>
       <group>
         <name>src</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/src/debug_util.c</name>
+        </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/src/fsl_assert.c</name>
         </file>
@@ -1275,18 +1284,21 @@
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/src/fsl_rtos_abstraction.c</name>
         </file>
       </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/vector_table_info.h</name>
+      </file>
     </group>
     <group>
       <name>drivers</name>
       <group>
-        <name>port</name>
+        <name>dcp</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/port/fsl_port.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/dcp/fsl_dcp.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/dcp/fsl_dcp.h</name>
         </file>
       </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/smc/smc.h</name>
-      </file>
       <group>
         <name>igpio</name>
         <file>
@@ -1306,14 +1318,14 @@
         </file>
       </group>
       <group>
-        <name>dcp</name>
+        <name>port</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/dcp/fsl_dcp.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/dcp/fsl_dcp.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/port/fsl_port.h</name>
         </file>
       </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/smc/smc.h</name>
+      </file>
       <group>
         <name>trng</name>
         <file>
@@ -1348,21 +1360,30 @@
         </file>
       </group>
       <group>
-        <name>flexspi_nor</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/flexspi_nor/flexspi_nor_flash.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/flexspi_nor/flexspi_nor_flash.h</name>
-        </file>
-      </group>
-      <group>
         <name>flexspi_nand</name>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/flexspi_nand/flexspi_nand_flash.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/flexspi_nand/flexspi_nand_flash.h</name>
+        </file>
+      </group>
+      <group>
+        <name>ocotp</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/ocotp/fsl_ocotp.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/ocotp/fsl_ocotp.h</name>
+        </file>
+      </group>
+      <group>
+        <name>flexspi_nor</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/flexspi_nor/flexspi_nor_flash.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/flexspi_nor/flexspi_nor_flash.h</name>
         </file>
       </group>
       <group>
@@ -1383,45 +1404,21 @@
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/serial_nor_eeprom/serial_nor_eeprom.h</name>
         </file>
       </group>
-      <group>
-        <name>ocotp</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/ocotp/fsl_ocotp.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/ocotp/fsl_ocotp.h</name>
-        </file>
-      </group>
     </group>
   </group>
   <group>
-    <name>drivers</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/drivers/fsl_common.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/drivers/fsl_clock.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/drivers/fsl_clock.c</name>
-    </file>
-  </group>
-  <group>
     <name>MIMXRT1015</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/drivers/fsl_iomuxc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/bl_lpuart_irq_config_MIMXRT1015.c</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/bootloader_config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/clock_config_MIMXRT1015.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/hardware_init_MIMXRT1015.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/memory_map_MIMXRT1015.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/external_memory_property_map_MIMXRT1015.c</name>
@@ -1433,6 +1430,15 @@
       <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/flexspi_nor_config_MIMXRT1015.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/fusemap.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/hardware_init_MIMXRT1015.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/memory_map_MIMXRT1015.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/peripherals_MIMXRT1015.c</name>
     </file>
     <file>
@@ -1442,16 +1448,7 @@
       <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/target_config.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/fusemap.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/common/src/pinmux_utility_imxrt_series.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/bl_lpuart_irq_config_MIMXRT1015.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1015/drivers/fsl_iomuxc.h</name>
     </file>
   </group>
   <group>
@@ -1545,15 +1542,96 @@
     </group>
   </group>
   <group>
-    <name>osa</name>
+    <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../middleware/usb/osa/usb_osa.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm7.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../middleware/usb/osa/usb_osa_bm.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../middleware/usb/osa/usb_osa_bm.c</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_const_structs.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
+    </file>
+  </group>
+  <group>
+    <name>component</name>
+    <group>
+      <name>osa</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>drivers</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers/fsl_clock.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers/fsl_clock.h</name>
     </file>
   </group>
 </project>

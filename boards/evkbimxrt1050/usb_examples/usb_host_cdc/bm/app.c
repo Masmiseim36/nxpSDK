@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2017,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -12,7 +12,6 @@
 #include "usb_host_cdc.h"
 #include "board.h"
 #include "fsl_debug_console.h"
-#include "usb_serial_port.h"
 #include "host_cdc.h"
 #include "fsl_common.h"
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
@@ -20,7 +19,7 @@
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 #include "app.h"
 #include "board.h"
-
+#include "serial_manager.h"
 #if ((!USB_HOST_CONFIG_KHCI) && (!USB_HOST_CONFIG_EHCI) && (!USB_HOST_CONFIG_OHCI) && (!USB_HOST_CONFIG_IP3516HS))
 #error Please enable USB_HOST_CONFIG_KHCI, USB_HOST_CONFIG_EHCI, USB_HOST_CONFIG_OHCI, or USB_HOST_CONFIG_IP3516HS in file usb_host_config.
 #endif
@@ -32,25 +31,29 @@
  * Definitions
  ******************************************************************************/
 /*******************************************************************************
-  * Prototypes
-  ******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 extern void USB_HostClockInit(void);
 extern void USB_HostIsrEnable(void);
 extern void USB_HostTaskFn(void *param);
 void BOARD_InitHardware(void);
-extern void UART_UserCallback(void *handle, status_t status, void *param);
-extern void USB_UartIRQHandler(usb_serial_port_handle_t *handle);
+extern void UART_UserRxCallback(void *callbackParam, serial_manager_callback_message_t *message,
+                        serial_manager_status_t status);
+extern void UART_UserTxCallback(void *callbackParam, serial_manager_callback_message_t *message,
+                        serial_manager_status_t status);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 
 usb_host_handle g_hostHandle;
 volatile uint8_t g_AttachFlag;
-
-usb_serial_port_handle_t g_UartHandle;
+USB_RAM_ADDRESS_ALIGNMENT(4) static uint8_t s_serialWriteHandleBuffer[SERIAL_MANAGER_WRITE_HANDLE_SIZE];
+USB_RAM_ADDRESS_ALIGNMENT(4) static uint8_t s_serialReadHandleBuffer[SERIAL_MANAGER_READ_HANDLE_SIZE];
+serial_write_handle_t g_UartTxHandle;
+serial_write_handle_t g_UartRxHandle;
 
 extern char usbRecvUart[USB_HOST_CDC_UART_RX_MAX_LEN];
-usb_serial_port_xfer_t g_xfer;
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -130,7 +133,7 @@ usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
     usb_status_t status;
     status = kStatus_USB_Success;
 
-    switch (event_code)
+    switch (event_code & 0x0000FFFFU)
     {
         case kUSB_HostEventAttach:
             status = USB_HostCdcEvent(deviceHandle, configurationHandle, event_code);
@@ -147,6 +150,10 @@ usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
             status = USB_HostCdcEvent(deviceHandle, configurationHandle, event_code);
             break;
 
+        case kUSB_HostEventEnumerationFail:
+            usb_echo("enumeration failed\r\n");
+            break;
+
         default:
             break;
     }
@@ -158,23 +165,20 @@ usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
  */
 void APP_init(void)
 {
-    usb_serial_port_config_t uartConfiguration;
-    usb_serial_port_callback_struct_t callback;
-    usb_status_t status = kStatus_USB_Success;
 
-    g_xfer.buffer = (uint8_t *)&usbRecvUart[0];
-    g_xfer.size = USB_HOST_CDC_UART_RX_MAX_LEN;
-    uartConfiguration.baudRate_Bps = BOARD_DEBUG_UART_BAUDRATE;
-    uartConfiguration.isMsb = 0U;
-    uartConfiguration.enableTx = true;
-    uartConfiguration.enableRx = true;
-    callback.callbackFunction = UART_UserCallback;
-    callback.callbackParam = NULL;
-    USB_SerialPortInit(BOARD_DEBUG_UART_INSTANCE, &uartConfiguration, &callback, BOARD_DEBUG_UART_CLK_FREQ,
-                       &g_UartHandle);
+    status_t status = (status_t)kStatus_SerialManager_Error;
+    g_UartTxHandle = (serial_write_handle_t)&s_serialWriteHandleBuffer[0];
+    g_UartRxHandle = (serial_read_handle_t)&s_serialReadHandleBuffer[0];
+    status = (status_t)SerialManager_OpenWriteHandle(g_serialHandle, g_UartTxHandle);
+    assert(kStatus_SerialManager_Success == status);
+    (void)SerialManager_InstallTxCallback(g_UartTxHandle, UART_UserTxCallback, &g_UartTxHandle);
+     
+    status = (status_t)SerialManager_OpenReadHandle(g_serialHandle, g_UartRxHandle);
+    assert(kStatus_SerialManager_Success == status);
+    (void)SerialManager_InstallRxCallback(g_UartRxHandle, UART_UserRxCallback, &g_UartRxHandle);
 
-    USB_SerialPortRecv(&g_UartHandle, &g_xfer, NULL);
-
+    SerialManager_ReadNonBlocking(g_UartRxHandle, (uint8_t *)&usbRecvUart[0], USB_HOST_CDC_UART_RX_MAX_LEN);
+    
     g_AttachFlag = 0;
 
     USB_HostCdcInitBuffer();

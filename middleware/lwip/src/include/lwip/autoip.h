@@ -72,6 +72,8 @@ struct autoip
   u8_t lastconflict;
   /** total number of probed/used Link Local IP-Addresses */
   u8_t tried_llipaddr;
+  /** indicates if this struct memory was allocated and should be freed */
+  u8_t is_allocated;
 };
 
 

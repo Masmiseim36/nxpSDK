@@ -1,4 +1,4 @@
-	/*
+/*
  * Copyright 2018-2019 NXP
  * All rights reserved.
  *
@@ -18,7 +18,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 
 /* Upper bound and lower bound angle values */
 #define ANGLE_UPPER_BOUND 85U
@@ -78,18 +77,18 @@ int main(void)
     fxos_data_t sensorData   = {0};
     fxos_config_t config     = {0};
     status_t result;
-    uint8_t sensorRange          = 0;
-    uint8_t dataScale            = 0;
-    int16_t xData                = 0;
-    int16_t yData                = 0;
-    uint8_t i                    = 0;
-    uint8_t array_addr_size      = 0;
-    uint32_t j                   = 0;
+    uint8_t sensorRange     = 0;
+    uint8_t dataScale       = 0;
+    int16_t xData           = 0;
+    int16_t yData           = 0;
+    uint8_t i               = 0;
+    uint8_t array_addr_size = 0;
+    uint32_t j              = 0;
 
     /* Board pin, clock, debug console init */
     BOARD_ConfigMPU();
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     BOARD_I2C_ConfigurePins();
     BOARD_InitDebugConsole();
     BOARD_InitPeripherals();

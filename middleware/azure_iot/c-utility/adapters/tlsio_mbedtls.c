@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
 #include "fsl_debug_console.h"
@@ -18,7 +19,9 @@
 #include "mbedtls/error.h"
 #include "mbedtls/certs.h"
 #include "mbedtls/entropy_poll.h"
+#include "mbedtls/pk.h"
 
+#include "azure_c_shared_utility/gballoc.h"
 #include "azure_c_shared_utility/optimize_size.h"
 #include "azure_c_shared_utility/tlsio.h"
 #include "azure_c_shared_utility/tlsio_mbedtls.h"
@@ -94,6 +97,10 @@ typedef struct TLS_IO_INSTANCE_TAG
     char *hostname;
     mbedtls_x509_crt owncert;
     mbedtls_pk_context pKey;
+
+    char* x509_certificate;
+    char* x509_private_key;
+
     int tls_status;
 } TLS_IO_INSTANCE;
 
@@ -250,7 +257,7 @@ static void on_underlying_io_close_complete_during_close(void *context)
 {
     if (context == NULL)
     {
-        LogError("Invalid context NULL value passed");
+        LogError("NULL value passed in context");
     }
     else
     {
@@ -342,7 +349,6 @@ static int on_io_recv(void *context, unsigned char *buf, size_t sz)
             result = MBEDTLS_ERR_SSL_WANT_READ;
         }
     }
-
     return result;
 }
 
@@ -390,6 +396,7 @@ static void mbedtls_uninit(TLS_IO_INSTANCE *tls_io_instance)
     if (tls_io_instance->tls_status != TLS_STATE_NOT_INITIALIZED)
     {
         // mbedTLS cleanup...
+        mbedtls_ssl_close_notify(&tls_io_instance->ssl);
         mbedtls_ssl_free(&tls_io_instance->ssl);
         mbedtls_ssl_config_free(&tls_io_instance->config);
         mbedtls_x509_crt_free(&tls_io_instance->trusted_certificates_parsed);
@@ -398,50 +405,50 @@ static void mbedtls_uninit(TLS_IO_INSTANCE *tls_io_instance)
 
         tls_io_instance->tls_status = TLS_STATE_NOT_INITIALIZED;
     }
+    else
+    {
+        LogError("Uninitialzing when not previously initialized");
+    }
 }
 
-// Initialize mbedTLS
 static void mbedtls_init(TLS_IO_INSTANCE *tls_io_instance)
 {
-    if (tls_io_instance->tls_status == TLS_STATE_INITIALIZED)
+    const char* pers = "azure_iot_client";
+    if (tls_io_instance->tls_status != TLS_STATE_INITIALIZED)
     {
-        // Already initialized
-        return;
+        if (tls_io_instance->tls_status == TLS_STATE_CLOSING)
+        {
+            // The underlying connection has been closed, so here un-initialize first
+            mbedtls_uninit(tls_io_instance);
+        }
+
+        // mbedTLS initialize...
+        mbedtls_x509_crt_init(&tls_io_instance->trusted_certificates_parsed);
+
+        mbedtls_entropy_init(&tls_io_instance->entropy);
+        // Add a weak entropy source here,avoid some platform doesn't have strong / hardware entropy
+        mbedtls_entropy_add_source(&tls_io_instance->entropy, tlsio_entropy_poll, NULL, MBEDTLS_ENTROPY_MAX_GATHER, MBEDTLS_ENTROPY_SOURCE_WEAK);
+
+        mbedtls_ctr_drbg_init(&tls_io_instance->ctr_drbg);
+        mbedtls_ctr_drbg_seed(&tls_io_instance->ctr_drbg, mbedtls_entropy_func, &tls_io_instance->entropy, (const unsigned char *)pers, strlen(pers));
+
+        mbedtls_ssl_config_init(&tls_io_instance->config);
+        mbedtls_ssl_config_defaults(&tls_io_instance->config, MBEDTLS_SSL_IS_CLIENT, MBEDTLS_SSL_TRANSPORT_STREAM, MBEDTLS_SSL_PRESET_DEFAULT);
+        mbedtls_ssl_conf_rng(&tls_io_instance->config, mbedtls_ctr_drbg_random, &tls_io_instance->ctr_drbg);
+        mbedtls_ssl_conf_authmode(&tls_io_instance->config, MBEDTLS_SSL_VERIFY_REQUIRED);
+        mbedtls_ssl_conf_min_version(&tls_io_instance->config, MBEDTLS_SSL_MAJOR_VERSION_3, MBEDTLS_SSL_MINOR_VERSION_3); // v1.2
+
+        mbedtls_ssl_init(&tls_io_instance->ssl);
+        mbedtls_ssl_set_bio(&tls_io_instance->ssl, tls_io_instance, on_io_send, on_io_recv, NULL);
+        mbedtls_ssl_set_hostname(&tls_io_instance->ssl, tls_io_instance->hostname);
+
+        mbedtls_ssl_session_init(&tls_io_instance->ssn);
+
+        mbedtls_ssl_set_session(&tls_io_instance->ssl, &tls_io_instance->ssn);
+        mbedtls_ssl_setup(&tls_io_instance->ssl, &tls_io_instance->config);
+
+        tls_io_instance->tls_status = TLS_STATE_INITIALIZED;
     }
-    else if (tls_io_instance->tls_status == TLS_STATE_CLOSING)
-    {
-        // The underlying connection has been closed, so here un-initialize first
-        mbedtls_uninit(tls_io_instance);
-    }
-
-    const char *pers = "azure_iot_client";
-
-    // mbedTLS initialize...
-    mbedtls_x509_crt_init(&tls_io_instance->trusted_certificates_parsed);
-
-    mbedtls_entropy_init(&tls_io_instance->entropy);
-    // Add a weak entropy source here,avoid some platform doesn't have strong / hardware entropy
-    mbedtls_entropy_add_source(&tls_io_instance->entropy, tlsio_entropy_poll, NULL, MBEDTLS_ENTROPY_MAX_GATHER, MBEDTLS_ENTROPY_SOURCE_WEAK);
-
-    mbedtls_ctr_drbg_init(&tls_io_instance->ctr_drbg);
-    mbedtls_ctr_drbg_seed(&tls_io_instance->ctr_drbg, mbedtls_entropy_func, &tls_io_instance->entropy, (const unsigned char *)pers, strlen(pers));
-
-    mbedtls_ssl_config_init(&tls_io_instance->config);
-    mbedtls_ssl_config_defaults(&tls_io_instance->config, MBEDTLS_SSL_IS_CLIENT, MBEDTLS_SSL_TRANSPORT_STREAM, MBEDTLS_SSL_PRESET_DEFAULT);
-    mbedtls_ssl_conf_rng(&tls_io_instance->config, mbedtls_ctr_drbg_random, &tls_io_instance->ctr_drbg);
-    mbedtls_ssl_conf_authmode(&tls_io_instance->config, MBEDTLS_SSL_VERIFY_REQUIRED);
-    mbedtls_ssl_conf_min_version(&tls_io_instance->config, MBEDTLS_SSL_MAJOR_VERSION_3, MBEDTLS_SSL_MINOR_VERSION_3); // v1.2
-
-    mbedtls_ssl_init(&tls_io_instance->ssl);
-    mbedtls_ssl_set_bio(&tls_io_instance->ssl, tls_io_instance, on_io_send, on_io_recv, NULL);
-    mbedtls_ssl_set_hostname(&tls_io_instance->ssl, tls_io_instance->hostname);
-
-    mbedtls_ssl_session_init(&tls_io_instance->ssn);
-
-    mbedtls_ssl_set_session(&tls_io_instance->ssl, &tls_io_instance->ssn);
-    mbedtls_ssl_setup(&tls_io_instance->ssl, &tls_io_instance->config);
-
-    tls_io_instance->tls_status = TLS_STATE_INITIALIZED;
 }
 
 CONCRETE_IO_HANDLE tlsio_mbedtls_create(void *io_create_parameters)
@@ -486,35 +493,33 @@ CONCRETE_IO_HANDLE tlsio_mbedtls_create(void *io_create_parameters)
             }
             else
             {
-
-                result->hostname = strdup(tls_io_config->hostname);
-                if (result->hostname == NULL)
+                if (mallocAndStrcpy_s((char **)&result->hostname, tls_io_config->hostname) != 0)
                 {
+                    free(result);
+                    result = NULL;
+                    LogError("Failure allocating hostname.");
+                }
+                else if ((result->socket_io = xio_create(underlying_io_interface, io_interface_parameters)) == NULL)
+                {
+                    LogError("socket xio create failed");
+                    free(result->hostname);
                     free(result);
                     result = NULL;
                 }
                 else
                 {
-                    result->socket_io = xio_create(underlying_io_interface, io_interface_parameters);
-                    if (result->socket_io == NULL)
-                    {
-                        LogError("socket xio create failed");
-                        free(result->hostname);
-                        free(result);
-                        result = NULL;
-                    }
-                    else
-                    {
-                        result->tls_status = TLS_STATE_NOT_INITIALIZED;
-                        mbedtls_init(result);
+                    result->tls_status = TLS_STATE_NOT_INITIALIZED;
+                    mbedtls_init((void*)result);
 
-                        result->tlsio_state = TLSIO_STATE_NOT_OPEN;
-                    }
+                    result->tlsio_state = TLSIO_STATE_NOT_OPEN;
                 }
             }
         }
+        else
+        {
+            LogError("Failure allocating TLS object");
+        }
     }
-
     return result;
 }
 
@@ -526,11 +531,14 @@ void tlsio_mbedtls_destroy(CONCRETE_IO_HANDLE tls_io)
 
         mbedtls_uninit(tls_io_instance);
 
+        xio_close(tls_io_instance->socket_io, NULL, NULL);
+
         if (tls_io_instance->socket_io_read_bytes != NULL)
         {
             free(tls_io_instance->socket_io_read_bytes);
             tls_io_instance->socket_io_read_bytes = NULL;
         }
+        xio_destroy(tls_io_instance->socket_io);
         if (tls_io_instance->hostname != NULL)
         {
             free(tls_io_instance->hostname);
@@ -541,9 +549,16 @@ void tlsio_mbedtls_destroy(CONCRETE_IO_HANDLE tls_io)
             free(tls_io_instance->trusted_certificates);
             tls_io_instance->trusted_certificates = NULL;
         }
-
-        xio_destroy(tls_io_instance->socket_io);
-
+        if (tls_io_instance->x509_certificate != NULL)
+        {
+            free(tls_io_instance->x509_certificate);
+            tls_io_instance->x509_certificate = NULL;
+        }
+        if (tls_io_instance->x509_private_key != NULL)
+        {
+            free(tls_io_instance->x509_private_key);
+            tls_io_instance->x509_private_key = NULL;
+        }
         free(tls_io);
     }
 }
@@ -554,8 +569,8 @@ int tlsio_mbedtls_open(CONCRETE_IO_HANDLE tls_io, ON_IO_OPEN_COMPLETE on_io_open
 
     if (tls_io == NULL)
     {
-        LogError("NULL tls_io");
-        result = __FAILURE__;
+        LogError("Invalid parameter specified tls_io: NULL");
+        result = MU_FAILURE;
     }
     else
     {
@@ -563,8 +578,8 @@ int tlsio_mbedtls_open(CONCRETE_IO_HANDLE tls_io, ON_IO_OPEN_COMPLETE on_io_open
 
         if (tls_io_instance->tlsio_state != TLSIO_STATE_NOT_OPEN)
         {
-            LogError("IO should not be open: %d\n", tls_io_instance->tlsio_state);
-            result = __FAILURE__;
+            LogError("IO should not be open: %d", tls_io_instance->tlsio_state);
+            result = MU_FAILURE;
         }
         else
         {
@@ -587,7 +602,7 @@ int tlsio_mbedtls_open(CONCRETE_IO_HANDLE tls_io, ON_IO_OPEN_COMPLETE on_io_open
 
                 LogError("Underlying IO open failed");
                 tls_io_instance->tlsio_state = TLSIO_STATE_NOT_OPEN;
-                result = __FAILURE__;
+                result = MU_FAILURE;
             }
         }
     }
@@ -600,7 +615,8 @@ int tlsio_mbedtls_close(CONCRETE_IO_HANDLE tls_io, ON_IO_CLOSE_COMPLETE on_io_cl
 
     if (tls_io == NULL)
     {
-        result = __FAILURE__;
+        LogError("Invalid parameter specified tls_io: NULL");
+        result = MU_FAILURE;
     }
     else
     {
@@ -609,17 +625,18 @@ int tlsio_mbedtls_close(CONCRETE_IO_HANDLE tls_io, ON_IO_CLOSE_COMPLETE on_io_cl
         if ((tls_io_instance->tlsio_state == TLSIO_STATE_NOT_OPEN) ||
             (tls_io_instance->tlsio_state == TLSIO_STATE_CLOSING))
         {
-            result = __FAILURE__;
+            LogError("IO should not be closed: %d", tls_io_instance->tlsio_state);
+            result = MU_FAILURE;
         }
         else
         {
             tls_io_instance->tlsio_state = TLSIO_STATE_CLOSING;
             tls_io_instance->on_io_close_complete = on_io_close_complete;
             tls_io_instance->on_io_close_complete_context = callback_context;
-            if (xio_close(tls_io_instance->socket_io,
-                          on_underlying_io_close_complete_during_close, tls_io_instance) != 0)
+            if (xio_close(tls_io_instance->socket_io, on_underlying_io_close_complete_during_close, tls_io_instance) != 0)
             {
-                result = __FAILURE__;
+                LogError("xio_close failed");
+                result = MU_FAILURE;
             }
             else
             {
@@ -644,14 +661,16 @@ int tlsio_mbedtls_send(CONCRETE_IO_HANDLE tls_io, const void *buffer, size_t siz
 
     if (tls_io == NULL || (buffer == NULL) || (size == 0))
     {
-        result = __FAILURE__;
+        LogError("Invalid parameter specified tls_io: %p, buffer: %p, size: %ul", tls_io, buffer, (unsigned int)size);
+        result = MU_FAILURE;
     }
     else
     {
         TLS_IO_INSTANCE *tls_io_instance = (TLS_IO_INSTANCE *)tls_io;
         if (tls_io_instance->tlsio_state != TLSIO_STATE_OPEN)
         {
-            result = __FAILURE__;
+            LogError("Invalid state specified %d", tls_io_instance->tlsio_state);
+            result = MU_FAILURE;
         }
         else
         {
@@ -660,7 +679,8 @@ int tlsio_mbedtls_send(CONCRETE_IO_HANDLE tls_io, const void *buffer, size_t siz
             int res = mbedtls_ssl_write(&tls_io_instance->ssl, buffer, size);
             if (res != (int)size)
             {
-                result = __FAILURE__;
+                LogError("Unexpected data size returned from  mbedtls_ssl_write %d/%d", res, (int)size);
+                result = MU_FAILURE;
             }
             else
             {
@@ -668,7 +688,6 @@ int tlsio_mbedtls_send(CONCRETE_IO_HANDLE tls_io, const void *buffer, size_t siz
             }
         }
     }
-
     return result;
 }
 
@@ -712,6 +731,54 @@ static void *tlsio_mbedtls_CloneOption(const char *name, const void *value)
                 /*return as is*/
             }
         }
+        else if (strcmp(name, SU_OPTION_X509_CERT) == 0)
+        {
+            if (mallocAndStrcpy_s((char**)&result, value) != 0)
+            {
+                LogError("unable to mallocAndStrcpy_s x509certificate value");
+                result = NULL;
+            }
+            else
+            {
+                /*return as is*/
+            }
+        }
+        else if (strcmp(name, SU_OPTION_X509_PRIVATE_KEY) == 0)
+        {
+            if (mallocAndStrcpy_s((char**)&result, value) != 0)
+            {
+                LogError("unable to mallocAndStrcpy_s x509privatekey value");
+                result = NULL;
+            }
+            else
+            {
+                /*return as is*/
+            }
+        }
+        else if (strcmp(name, OPTION_X509_ECC_CERT) == 0)
+        {
+            if (mallocAndStrcpy_s((char**)&result, value) != 0)
+            {
+                LogError("unable to mallocAndStrcpy_s x509EccCertificate value");
+                result = NULL;
+            }
+            else
+            {
+                /*return as is*/
+            }
+        }
+        else if (strcmp(name, OPTION_X509_ECC_KEY) == 0)
+        {
+            if (mallocAndStrcpy_s((char**)&result, value) != 0)
+            {
+                LogError("unable to mallocAndStrcpy_s x509EccKey value");
+                result = NULL;
+            }
+            else
+            {
+                /*return as is*/
+            }
+        }
         else
         {
             LogError("not handled option : %s", name);
@@ -731,9 +798,15 @@ static void tlsio_mbedtls_DestroyOption(const char *name, const void *value)
     }
     else
     {
-        if (strcmp(name, OPTION_TRUSTED_CERT) == 0)
+        if (
+            (strcmp(name, OPTION_TRUSTED_CERT) == 0) ||
+            (strcmp(name, SU_OPTION_X509_CERT) == 0) ||
+            (strcmp(name, SU_OPTION_X509_PRIVATE_KEY) == 0) ||
+            (strcmp(name, OPTION_X509_ECC_CERT) == 0) ||
+            (strcmp(name, OPTION_X509_ECC_KEY) == 0)
+            )
         {
-            free((void *)value);
+            free((void*)value);
         }
         else if (strcmp(name, OPTION_UNDERLYING_IO_OPTIONS) == 0)
         {
@@ -752,7 +825,7 @@ int tlsio_mbedtls_setoption(CONCRETE_IO_HANDLE tls_io, const char *optionName, c
 
     if (tls_io == NULL || optionName == NULL)
     {
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {
@@ -769,7 +842,7 @@ int tlsio_mbedtls_setoption(CONCRETE_IO_HANDLE tls_io, const char *optionName, c
             if (mallocAndStrcpy_s(&tls_io_instance->trusted_certificates, (const char *)value) != 0)
             {
                 LogError("unable to mallocAndStrcpy_s");
-                result = __FAILURE__;
+                result = MU_FAILURE;
             }
             else
             {
@@ -777,7 +850,9 @@ int tlsio_mbedtls_setoption(CONCRETE_IO_HANDLE tls_io, const char *optionName, c
                 if (parse_result != 0)
                 {
                     LogInfo("Malformed pem certificate");
-                    result = __FAILURE__;
+                    free(tls_io_instance->trusted_certificates);
+                    tls_io_instance->trusted_certificates = NULL;
+                    result = MU_FAILURE;
                 }
                 else
                 {
@@ -787,33 +862,80 @@ int tlsio_mbedtls_setoption(CONCRETE_IO_HANDLE tls_io, const char *optionName, c
         }
         else if (strcmp(SU_OPTION_X509_CERT, optionName) == 0 || strcmp(OPTION_X509_ECC_CERT, optionName) == 0)
         {
-            if (mbedtls_x509_crt_parse(&tls_io_instance->owncert, (const unsigned char *)value, (int)(strlen(value) + 1)) != 0)
+            char* temp_cert;
+            if (mallocAndStrcpy_s(&temp_cert, (const char *)value) != 0)
             {
-                result = __FAILURE__;
+                LogError("unable to mallocAndStrcpy_s on certificate");
+                result = MU_FAILURE;
             }
-            else if (tls_io_instance->pKey.pk_info != NULL)
+            else if (mbedtls_x509_crt_parse(&tls_io_instance->owncert, (const unsigned char *)temp_cert, (int)(strlen(temp_cert) + 1)) != 0)
             {
-                if (mbedtls_ssl_conf_own_cert(&tls_io_instance->config, &tls_io_instance->owncert, &tls_io_instance->pKey) != 0)
+                LogError("failure parsing certificate");
+                free(temp_cert);
+                result = MU_FAILURE;
+            }
+            else if (tls_io_instance->pKey.pk_info != NULL && mbedtls_ssl_conf_own_cert(&tls_io_instance->config, &tls_io_instance->owncert, &tls_io_instance->pKey) != 0)
+            {
+                LogError("failure calling mbedtls_ssl_conf_own_cert");
+                free(temp_cert);
+                result = MU_FAILURE;
+            }
+            else
+            {
+                if (tls_io_instance->x509_certificate != NULL)
                 {
-                    result = __FAILURE__;
+                    // Free the memory if it has been previously allocated
+                    free(tls_io_instance->x509_certificate);
                 }
+                tls_io_instance->x509_certificate = temp_cert;
+                result = 0;
             }
         }
         else if (strcmp(SU_OPTION_X509_PRIVATE_KEY, optionName) == 0 || strcmp(OPTION_X509_ECC_KEY, optionName) == 0)
         {
-            if (mbedtls_pk_parse_key(&tls_io_instance->pKey, (const unsigned char *)value, (int)(strlen(value) + 1), NULL, 0) != 0)
+            char* temp_key;
+
+            if (mallocAndStrcpy_s(&temp_key, (const char *)value) != 0)
             {
-                result = __FAILURE__;
+                LogError("unable to mallocAndStrcpy_s on private key");
+                result = MU_FAILURE;
             }
-            else if (tls_io_instance->owncert.version > 0)
+            else if (mbedtls_pk_parse_key(&tls_io_instance->pKey, (const unsigned char *)temp_key, (int)(strlen(temp_key) + 1), NULL, 0) != 0)
             {
-                if (mbedtls_ssl_conf_own_cert(&tls_io_instance->config, &tls_io_instance->owncert, &tls_io_instance->pKey))
+                LogError("failure calling mbedtls_pk_parse_key");
+                free(temp_key);
+                result = MU_FAILURE;
+            }
+            else if (tls_io_instance->owncert.version > 0 && mbedtls_ssl_conf_own_cert(&tls_io_instance->config, &tls_io_instance->owncert, &tls_io_instance->pKey))
+            {
+                LogError("failure calling mbedtls_ssl_conf_own_cert");
+                free(temp_key);
+                result = MU_FAILURE;
+            }
+            else
+            {
+                if (tls_io_instance->x509_private_key != NULL)
                 {
-                    result = __FAILURE__;
+                    // Free the memory if it has been previously allocated
+                    free(tls_io_instance->x509_private_key);
                 }
+                tls_io_instance->x509_private_key = temp_key;
+                result = 0;
             }
         }
         else if (strcmp(optionName, OPTION_UNDERLYING_IO_OPTIONS) == 0)
+        {
+            if (OptionHandler_FeedOptions((OPTIONHANDLER_HANDLE)value, (void*)tls_io_instance->socket_io) != OPTIONHANDLER_OK)
+            {
+                LogError("failed feeding options to underlying I/O instance");
+                result = MU_FAILURE;
+            }
+            else
+            {
+                result = 0;
+            }
+        }
+        else
         {
             // tls_io_instance->socket_io is never NULL
             result = xio_setoption(tls_io_instance->socket_io, optionName, value);
@@ -857,6 +979,22 @@ OPTIONHANDLER_HANDLE tlsio_mbedtls_retrieveoptions(CONCRETE_IO_HANDLE handle)
                      OptionHandler_AddOption(result, OPTION_TRUSTED_CERT, tls_io_instance->trusted_certificates) != OPTIONHANDLER_OK)
             {
                 LogError("unable to save TrustedCerts option");
+                OptionHandler_Destroy(result);
+                result = NULL;
+            }
+            else if (tls_io_instance->x509_certificate != NULL &&
+                    OptionHandler_AddOption(result, SU_OPTION_X509_CERT, tls_io_instance->x509_certificate) != OPTIONHANDLER_OK)
+            {
+                LogError("unable to save x509certificate option");
+                OptionHandler_Destroy(result);
+                result = NULL;
+            }
+            else if (
+                tls_io_instance->x509_private_key != NULL &&
+                (OptionHandler_AddOption(result, SU_OPTION_X509_PRIVATE_KEY, tls_io_instance->x509_private_key) != OPTIONHANDLER_OK)
+                )
+            {
+                LogError("unable to save x509privatekey option");
                 OptionHandler_Destroy(result);
                 result = NULL;
             }

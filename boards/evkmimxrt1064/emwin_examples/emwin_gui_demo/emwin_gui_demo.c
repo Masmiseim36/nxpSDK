@@ -73,6 +73,7 @@ void BOARD_InitLcd(void)
     gpio_pin_config_t config = {
         kGPIO_DigitalOutput,
         0,
+        kGPIO_NoIntmode,
     };
 
     /* Reset the LCD. */
@@ -379,20 +380,19 @@ int main(void)
     PROGBAR_SetSkinFlexProps(&pProps, 0);
 
     WM_SetDesktopColor(GUI_WHITE);
-    WM_Exec();
+
+    GUI_MULTIBUF_Begin();
+    GUI_Exec();
+    GUI_MULTIBUF_End();
 
     while (1)
     {
         /* Poll touch controller for update */
         if (BOARD_Touch_Poll())
         {
-#ifdef GUI_BUFFERS
             GUI_MULTIBUF_Begin();
-#endif
             GUI_Exec();
-#ifdef GUI_BUFFERS
             GUI_MULTIBUF_End();
-#endif
         }
     }
 }

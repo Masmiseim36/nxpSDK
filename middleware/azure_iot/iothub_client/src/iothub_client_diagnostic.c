@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <inttypes.h>
 #include <math.h>
-#include "azure_c_shared_utility/optimize_size.h"
+#include "azure_macro_utils/macro_utils.h"
 #include "azure_c_shared_utility/gballoc.h"
 #include "azure_c_shared_utility/xlogging.h"
 #include "azure_c_shared_utility/agenttime.h"
@@ -161,7 +161,7 @@ int IoTHubClient_Diagnostic_AddIfNecessary(IOTHUB_DIAGNOSTIC_SETTING_DATA* diagS
     /* Codes_SRS_IOTHUB_DIAGNOSTIC_13_001: [ IoTHubClient_Diagnostic_AddIfNecessary should return nonezero if diagSetting or messageHandle is NULL. ]*/
     if (diagSetting == NULL || messageHandle == NULL)
     {
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     /* Codes_SRS_IOTHUB_DIAGNOSTIC_13_003: [ If diagSamplingPercentage is equal to 0, message number should not be increased and no diagnostic properties added ]*/
     else if (should_add_diagnostic_info(diagSetting))
@@ -172,14 +172,14 @@ int IoTHubClient_Diagnostic_AddIfNecessary(IOTHUB_DIAGNOSTIC_SETTING_DATA* diagS
         IOTHUB_MESSAGE_DIAGNOSTIC_PROPERTY_DATA* diagnosticData;
         if ((diagnosticData = prepare_message_diagnostic_data()) == NULL)
         {
-            result = __FAILURE__;
+            result = MU_FAILURE;
         }
         else
         {
             if (IoTHubMessage_SetDiagnosticPropertyData(messageHandle, diagnosticData) != IOTHUB_MESSAGE_OK)
             {
                 /* Codes_SRS_IOTHUB_DIAGNOSTIC_13_002: [ IoTHubClient_Diagnostic_AddIfNecessary should return nonezero if failing to add diagnostic property. ]*/
-                result = __FAILURE__;
+                result = MU_FAILURE;
             }
             else
             {

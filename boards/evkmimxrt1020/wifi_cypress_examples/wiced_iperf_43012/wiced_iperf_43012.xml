@@ -8,19 +8,21 @@
     <definition extID="component.serial_manager_uart.MIMXRT1021"/>
     <definition extID="device.MIMXRT1021_CMSIS.MIMXRT1021"/>
     <definition extID="device.MIMXRT1021_startup.MIMXRT1021"/>
-    <definition extID="middleware.amazon_freertos.freertos.MIMXRT1021"/>
-    <definition extID="middleware.amazon_freertos.freertos.heap_4.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos-kernel.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos-kernel.extension.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos-kernel.heap_4.MIMXRT1021"/>
+    <definition extID="middleware.lwip.MIMXRT1021"/>
+    <definition extID="middleware.lwip.apps.lwiperf.MIMXRT1021"/>
     <definition extID="middleware.sdmmc.common.MIMXRT1021"/>
     <definition extID="middleware.sdmmc.sdio.MIMXRT1021"/>
     <definition extID="middleware.sdmmc.usdhcadaptor.freertos.MIMXRT1021"/>
-    <definition extID="middleware.tcpip.lwip.MIMXRT1021"/>
-    <definition extID="middleware.tcpip.lwip.apps.lwiperf.MIMXRT1021"/>
     <definition extID="middleware.wifi_wiced.43012.MIMXRT1021"/>
     <definition extID="middleware.wifi_wiced.CYW943012CREF.MIMXRT1021"/>
     <definition extID="middleware.wifi_wiced.app.MIMXRT1021"/>
     <definition extID="middleware.wifi_wiced.common.MIMXRT1021"/>
     <definition extID="platform.Include_common.MIMXRT1021"/>
     <definition extID="platform.Include_core_cm7.MIMXRT1021"/>
+    <definition extID="platform.Include_dsp.MIMXRT1021"/>
     <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1021"/>
     <definition extID="platform.drivers.clock.MIMXRT1021"/>
     <definition extID="platform.drivers.common.MIMXRT1021"/>
@@ -29,8 +31,10 @@
     <definition extID="platform.drivers.lpuart.MIMXRT1021"/>
     <definition extID="platform.drivers.usdhc.MIMXRT1021"/>
     <definition extID="platform.drivers.xip_board.MIMXRT1021"/>
+    <definition extID="platform.drivers.xip_board_dcd.MIMXRT1021"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1021"/>
     <definition extID="platform.utilities.assert.MIMXRT1021"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1021"/>
     <definition extID="utility.debug_console.MIMXRT1021"/>
     <definition extID="iar"/>
     <definition extID="armgcc"/>
@@ -39,16 +43,15 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1020_wiced_iperf_43012" name="wiced_iperf_43012" category="wifi_examples" dependency="platform.drivers.cache_armv7_m7.MIMXRT1021 platform.drivers.clock.MIMXRT1021 middleware.amazon_freertos.freertos.heap_4.MIMXRT1021 middleware.tcpip.lwip.MIMXRT1021 middleware.tcpip.lwip.apps.lwiperf.MIMXRT1021 platform.drivers.usdhc.MIMXRT1021 middleware.sdmmc.sdio.MIMXRT1021 middleware.sdmmc.usdhcadaptor.freertos.MIMXRT1021 middleware.wifi_wiced.CYW943012CREF.MIMXRT1021 middleware.wifi_wiced.app.MIMXRT1021 platform.drivers.common.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 utility.debug_console.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.serial_manager.MIMXRT1021 component.serial_manager_uart.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 component.lists.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 platform.utilities.assert.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.xip_board.MIMXRT1021 platform.Include_core_cm7.MIMXRT1021 platform.Include_common.MIMXRT1021 middleware.amazon_freertos.freertos.MIMXRT1021 middleware.sdmmc.common.MIMXRT1021 middleware.wifi_wiced.43012.MIMXRT1021 middleware.wifi_wiced.common.MIMXRT1021">
+  <example id="evkmimxrt1020_wiced_iperf_43012" name="wiced_iperf_43012" category="wifi_examples" dependency="platform.drivers.cache_armv7_m7.MIMXRT1021 platform.drivers.clock.MIMXRT1021 middleware.amazon_freertos-kernel.heap_4.MIMXRT1021 middleware.lwip.MIMXRT1021 middleware.wifi_wiced.CYW943012CREF.MIMXRT1021 middleware.lwip.apps.lwiperf.MIMXRT1021 platform.drivers.usdhc.MIMXRT1021 middleware.sdmmc.sdio.MIMXRT1021 middleware.sdmmc.usdhcadaptor.freertos.MIMXRT1021 middleware.wifi_wiced.app.MIMXRT1021 platform.drivers.common.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 utility.debug_console.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.serial_manager.MIMXRT1021 component.lists.MIMXRT1021 component.serial_manager_uart.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 platform.utilities.assert.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.xip_board.MIMXRT1021 platform.drivers.xip_board_dcd.MIMXRT1021 platform.Include_core_cm7.MIMXRT1021 platform.Include_common.MIMXRT1021 platform.Include_dsp.MIMXRT1021 middleware.amazon_freertos-kernel.MIMXRT1021 middleware.amazon_freertos-kernel.extension.MIMXRT1021 middleware.wifi_wiced.43012.MIMXRT1021 middleware.wifi_wiced.common.MIMXRT1021 middleware.sdmmc.common.MIMXRT1021 platform.utilities.misc_utilities.MIMXRT1021">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
     <memory>
       <memoryBlock addr="60000000" size="00800000" access="RO" type="ExtFlash" id="BOARD_FLASH_evkmimxrt1020" name="BOARD_FLASH"/>
       <memoryBlock addr="20200000" size="00020000" access="RW" type="RAM" id="SRAM_OC_evkmimxrt1020" name="SRAM_OC"/>
-      <memoryBlock addr="20000000" size="00010000" access="RW" type="RAM" id="SRAM_DTC_evkmimxrt1020" name="SRAM_DTC"/>
       <memoryBlock addr="00000000" size="00010000" access="RW" type="RAM" id="SRAM_ITC_evkmimxrt1020" name="SRAM_ITC"/>
-      <memoryBlock addr="80000000" size="02000000" access="RW" type="RAM" id="BOARD_SDRAM_evkmimxrt1020" name="BOARD_SDRAM"/>
+      <memoryBlock addr="20000000" size="00010000" access="RW" type="RAM" id="NCACHE_REGION_evkmimxrt1020" name="NCACHE_REGION"/>
     </memory>
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
@@ -70,8 +73,10 @@
           <value>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</value>
           <value>PRINTF_ADVANCED_ENABLE=1</value>
           <value>LWIP_NETIF_API=1</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>FSL_RTOS_FREE_RTOS</value>
           <value>WIFI_WICED</value>
+          <value>SDK_DEBUGCONSOLE_UART</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -85,15 +90,12 @@
         <option id="gnu.c.link.option.nostdlibs" type="boolean">
           <value>true</value>
         </option>
-        <option id="gnu.c.link.option.other" type="stringList">
-          <value>--defsym=__ram_vector_table__=1</value>
-        </option>
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
-          <value>&amp;Heap:Default;Default;0x1000&amp;Stack:Default;Default;0x1000</value>
+          <value>&amp;Heap:NCACHE_REGION;Start;0x600&amp;Stack:NCACHE_REGION;End;0x400</value>
         </option>
         <option id="com.crt.advproject.link.memory.sections" type="stringList">
-          <value>isd=*(NonCacheable.init);region=SRAM_DTC;type=.data</value>
-          <value>isd=*(NonCacheable);region=SRAM_DTC;type=.bss</value>
+          <value>isd=*(NonCacheable.init);region=NCACHE_REGION;type=.data</value>
+          <value>isd=*(NonCacheable);region=NCACHE_REGION;type=.bss</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>

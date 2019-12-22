@@ -16,10 +16,10 @@ the adc's performance.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
-- MCUXpresso  11.0.0
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -48,7 +48,7 @@ Running the demo
 These instructions are displayed/shown on the terminal window:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ADC polling Example.
-ADC_DoAntoCalibration() Done.
+ADC_DoAutoCalibration() Done.
 ADC Full Range: XXXX
 Press any key to get user channel's ADC value.
 ADC Value: 951

@@ -17,11 +17,11 @@
 #include "internal/iothub_client_retry_control.h"
 #include "internal/iothubtransport_amqp_messenger.h"
 
-DEFINE_ENUM_STRINGS(AMQP_MESSENGER_SEND_STATUS, AMQP_MESSENGER_SEND_STATUS_VALUES);
-DEFINE_ENUM_STRINGS(AMQP_MESSENGER_SEND_RESULT, AMQP_MESSENGER_SEND_RESULT_VALUES);
-DEFINE_ENUM_STRINGS(AMQP_MESSENGER_REASON, AMQP_MESSENGER_REASON_VALUES);
-DEFINE_ENUM_STRINGS(AMQP_MESSENGER_DISPOSITION_RESULT, AMQP_MESSENGER_DISPOSITION_RESULT_VALUES);
-DEFINE_ENUM_STRINGS(AMQP_MESSENGER_STATE, AMQP_MESSENGER_STATE_VALUES);
+MU_DEFINE_ENUM_STRINGS(AMQP_MESSENGER_SEND_STATUS, AMQP_MESSENGER_SEND_STATUS_VALUES);
+MU_DEFINE_ENUM_STRINGS(AMQP_MESSENGER_SEND_RESULT, AMQP_MESSENGER_SEND_RESULT_VALUES);
+MU_DEFINE_ENUM_STRINGS(AMQP_MESSENGER_REASON, AMQP_MESSENGER_REASON_VALUES);
+MU_DEFINE_ENUM_STRINGS(AMQP_MESSENGER_DISPOSITION_RESULT, AMQP_MESSENGER_DISPOSITION_RESULT_VALUES);
+MU_DEFINE_ENUM_STRINGS(AMQP_MESSENGER_STATE, AMQP_MESSENGER_STATE_VALUES);
 
 
 #define RESULT_OK 0
@@ -114,14 +114,14 @@ static bool is_valid_configuration(const AMQP_MESSENGER_CONFIG* config)
         LogError("Invalid configuration (NULL)");
         result = false;
     }
-    else if (config->client_version == NULL ||
+    else if (config->prod_info_cb == NULL ||
         config->device_id == NULL ||
         config->iothub_host_fqdn == NULL ||
         config->receive_link.source_suffix == NULL ||
         config->send_link.target_suffix == NULL)
     {
-        LogError("Invalid configuration (client_version=%p, device_id=%p, iothub_host_fqdn=%p, receive_link (source_suffix=%p), send_link (target_suffix=%p))",
-            config->client_version, config->device_id, config->iothub_host_fqdn,
+        LogError("Invalid configuration (prod_info_cb=%p, device_id=%p, iothub_host_fqdn=%p, receive_link (source_suffix=%p), send_link (target_suffix=%p))",
+            (void*)config->prod_info_cb, config->device_id, config->iothub_host_fqdn,
             config->receive_link.source_suffix, config->send_link.target_suffix);
         result = false;
     }
@@ -158,11 +158,6 @@ static void destroy_configuration(AMQP_MESSENGER_CONFIG* config)
 {
     if (config != NULL)
     {
-        if (config->client_version != NULL)
-        {
-            free((void*)config->client_version);
-        }
-
         if (config->device_id != NULL)
         {
             free((void*)config->device_id);
@@ -193,21 +188,21 @@ static int clone_link_configuration(role link_role, AMQP_MESSENGER_LINK_CONFIG* 
         mallocAndStrcpy_s(&dst_config->target_suffix, src_config->target_suffix) != 0)
     {
         LogError("Failed copying send_link_target_suffix");
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else if (link_role == role_receiver &&
         mallocAndStrcpy_s(&dst_config->source_suffix, src_config->source_suffix) != 0)
     {
         LogError("Failed copying receive_link_source_suffix");
         destroy_link_configuration(dst_config);
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else if (src_config->attach_properties != NULL &&
         (dst_config->attach_properties = Map_Clone(src_config->attach_properties)) == NULL)
     {
         LogError("Failed copying link attach properties");
         destroy_link_configuration(dst_config);
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {
@@ -232,13 +227,7 @@ static AMQP_MESSENGER_CONFIG* clone_configuration(const AMQP_MESSENGER_CONFIG* c
     {
         memset(result, 0, sizeof(AMQP_MESSENGER_CONFIG));
 
-        if (mallocAndStrcpy_s(&result->client_version, config->client_version) != 0)
-        {
-            LogError("Failed copying device_id");
-            destroy_configuration(result);
-            result = NULL;
-        }
-        else if (mallocAndStrcpy_s(&result->device_id, config->device_id) != 0)
+        if (mallocAndStrcpy_s(&result->device_id, config->device_id) != 0)
         {
             LogError("Failed copying device_id");
             destroy_configuration(result);
@@ -270,6 +259,8 @@ static AMQP_MESSENGER_CONFIG* clone_configuration(const AMQP_MESSENGER_CONFIG* c
         }
         else
         {
+            result->prod_info_cb = config->prod_info_cb;
+            result->prod_info_ctx = config->prod_info_ctx;
             result->on_state_changed_callback = config->on_state_changed_callback;
             result->on_state_changed_context = config->on_state_changed_context;
             result->on_subscription_changed_callback = config->on_subscription_changed_callback;
@@ -398,7 +389,7 @@ static int add_link_attach_properties(LINK_HANDLE link, MAP_HANDLE user_defined_
     if ((attach_properties = amqpvalue_create_map()) == NULL)
     {
         LogError("Failed to create the map for attach properties.");
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {
@@ -409,7 +400,7 @@ static int add_link_attach_properties(LINK_HANDLE link, MAP_HANDLE user_defined_
         if (Map_GetInternals(user_defined_properties, &keys, &values, &count) != MAP_OK)
         {
             LogError("failed getting user defined properties details.");
-            result = __FAILURE__;
+            result = MU_FAILURE;
         }
         else
         {
@@ -424,21 +415,21 @@ static int add_link_attach_properties(LINK_HANDLE link, MAP_HANDLE user_defined_
                 if ((key = amqpvalue_create_symbol(keys[i])) == NULL)
                 {
                     LogError("Failed creating AMQP_VALUE For key %s.", keys[i]);
-                    result = __FAILURE__;
+                    result = MU_FAILURE;
                 }
                 else
                 {
                     if ((value = amqpvalue_create_string(values[i])) == NULL)
                     {
                         LogError("Failed creating AMQP_VALUE For key %s value", keys[i]);
-                        result = __FAILURE__;
+                        result = MU_FAILURE;
                     }
                     else
                     {
                         if (amqpvalue_set_map_value(attach_properties, key, value) != 0)
                         {
                             LogError("Failed adding property %s to map", keys[i]);
-                            result = __FAILURE__;
+                            result = MU_FAILURE;
                         }
 
                         amqpvalue_destroy(value);
@@ -453,7 +444,7 @@ static int add_link_attach_properties(LINK_HANDLE link, MAP_HANDLE user_defined_
                 if (link_set_attach_properties(link, attach_properties) != 0)
                 {
                     LogError("Failed attaching properties to link");
-                    result = __FAILURE__;
+                    result = MU_FAILURE;
                 }
                 else
                 {
@@ -511,14 +502,14 @@ static int create_link_terminus(role link_role, STRING_HANDLE link_name, STRING_
     if (source_name == NULL || target_name == NULL)
     {
         LogError("Failed creating link source and/or target name (source=%p, target=%p)", source_name, target_name);
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {
         if ((*source = messaging_create_source(source_name)) == NULL)
         {
             LogError("Failed creating link source");
-            result = __FAILURE__;
+            result = MU_FAILURE;
         }
         else
         {
@@ -527,7 +518,7 @@ static int create_link_terminus(role link_role, STRING_HANDLE link_name, STRING_
                 LogError("Failed creating link target");
                 amqpvalue_destroy(*source);
                 *source = NULL;
-                result = __FAILURE__;
+                result = MU_FAILURE;
             }
             else
             {
@@ -662,7 +653,7 @@ static int create_message_sender(AMQP_MESSENGER_INSTANCE* instance)
         instance->session_handle, &instance->config->send_link, instance->config->iothub_host_fqdn, instance->config->device_id, instance->config->module_id)) == NULL)
     {
         LogError("Failed creating the message sender link");
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_084: [`instance->message_sender` shall be created using messagesender_create(), passing the `instance->sender_link` and `on_message_sender_state_changed_callback`]
     else if ((instance->message_sender = messagesender_create(instance->sender_link, on_message_sender_state_changed_callback, (void*)instance)) == NULL)
@@ -670,7 +661,7 @@ static int create_message_sender(AMQP_MESSENGER_INSTANCE* instance)
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_085: [If messagesender_create() fails, amqp_messenger_do_work() shall fail and return]
         LogError("Failed creating the message sender (messagesender_create failed)");
         destroy_message_sender(instance);
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {
@@ -680,7 +671,7 @@ static int create_message_sender(AMQP_MESSENGER_INSTANCE* instance)
             // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_087: [If messagesender_open() fails, amqp_messenger_do_work() shall fail and return]
             LogError("Failed opening the AMQP message sender.");
             destroy_message_sender(instance);
-            result = __FAILURE__;
+            result = MU_FAILURE;
         }
         else
         {
@@ -866,7 +857,7 @@ static int create_message_receiver(AMQP_MESSENGER_INSTANCE* instance)
         instance->session_handle, &instance->config->receive_link, instance->config->iothub_host_fqdn, instance->config->device_id, instance->config->module_id)) == NULL)
     {
         LogError("Failed creating the message receiver link");
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_101: [`instance->message_receiver` shall be created using messagereceiver_create(), passing the `instance->receiver_link` and `on_message_receiver_state_changed_callback`]
     else if ((instance->message_receiver = messagereceiver_create(instance->receiver_link, on_message_receiver_state_changed_callback, (void*)instance)) == NULL)
@@ -874,7 +865,7 @@ static int create_message_receiver(AMQP_MESSENGER_INSTANCE* instance)
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_102: [If messagereceiver_create() fails, amqp_messenger_do_work() shall fail and return]
         LogError("Failed creating the message receiver (messagereceiver_create failed)");
         destroy_message_receiver(instance);
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_103: [`instance->message_receiver` shall be opened using messagereceiver_open() passing `on_message_received_internal_callback`]
     else if (messagereceiver_open(instance->message_receiver, on_message_received_internal_callback, (void*)instance) != RESULT_OK)
@@ -882,7 +873,7 @@ static int create_message_receiver(AMQP_MESSENGER_INSTANCE* instance)
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_104: [If messagereceiver_open() fails, amqp_messenger_do_work() shall fail and return]
         LogError("Failed opening the AMQP message receiver.");
         destroy_message_receiver(instance);
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {
@@ -1067,7 +1058,7 @@ int amqp_messenger_subscribe_for_messages(AMQP_MESSENGER_HANDLE messenger_handle
     if (messenger_handle == NULL || on_message_received_callback == NULL || context == NULL)
     {
         LogError("Invalid argument (messenger_handle=%p, on_message_received_callback=%p, context=%p)", messenger_handle, (void*)on_message_received_callback, context);
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {
@@ -1094,7 +1085,7 @@ int amqp_messenger_unsubscribe_for_messages(AMQP_MESSENGER_HANDLE messenger_hand
     if (messenger_handle == NULL)
     {
         LogError("Invalid argument (messenger_handle is NULL)");
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {
@@ -1121,13 +1112,13 @@ int amqp_messenger_send_message_disposition(AMQP_MESSENGER_HANDLE messenger_hand
     if (messenger_handle == NULL || disposition_info == NULL)
     {
         LogError("Invalid argument (messenger_handle=%p, disposition_info=%p)", messenger_handle, disposition_info);
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_044: [If `disposition_info->source` is NULL, amqp_messenger_send_message_disposition() shall fail and return non-zero value]
     else if (disposition_info->source == NULL)
     {
         LogError("Failed sending message disposition (disposition_info->source is NULL)");
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {
@@ -1137,7 +1128,7 @@ int amqp_messenger_send_message_disposition(AMQP_MESSENGER_HANDLE messenger_hand
         {
             // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_045: [If `messenger_handle->message_receiver` is NULL, amqp_messenger_send_message_disposition() shall fail and return non-zero value]
             LogError("Failed sending message disposition (message_receiver is not created; check if it is subscribed)");
-            result = __FAILURE__;
+            result = MU_FAILURE;
         }
         else
         {
@@ -1147,7 +1138,7 @@ int amqp_messenger_send_message_disposition(AMQP_MESSENGER_HANDLE messenger_hand
             if ((uamqp_disposition_result = create_uamqp_disposition_result_from(disposition_result)) == NULL)
             {
                 LogError("Failed sending message disposition (disposition result %d is not supported)", disposition_result);
-                result = __FAILURE__;
+                result = MU_FAILURE;
             }
             else
             {
@@ -1156,7 +1147,7 @@ int amqp_messenger_send_message_disposition(AMQP_MESSENGER_HANDLE messenger_hand
                 {
                     // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_048: [If `messagereceiver_send_message_disposition()` fails, amqp_messenger_send_message_disposition() shall fail and return non-zero value]
                     LogError("Failed sending message disposition (messagereceiver_send_message_disposition failed)");
-                    result = __FAILURE__;
+                    result = MU_FAILURE;
                 }
                 else
                 {
@@ -1183,7 +1174,7 @@ int amqp_messenger_send_async(AMQP_MESSENGER_HANDLE messenger_handle, MESSAGE_HA
     {
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_010: [If `messenger_handle`, `message` or `on_event_send_complete_callback` are NULL, amqp_messenger_send_async() shall fail and return a non-zero value]
         LogError("Invalid argument (messenger_handle=%p, message=%p, on_user_defined_send_complete_callback=%p)", messenger_handle, message, (void*)on_user_defined_send_complete_callback);
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {
@@ -1194,7 +1185,7 @@ int amqp_messenger_send_async(AMQP_MESSENGER_HANDLE messenger_handle, MESSAGE_HA
         {
             // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_012: [If message_clone() fails, amqp_messenger_send_async() shall fail and return a non-zero value]
             LogError("Failed cloning AMQP message");
-            result = __FAILURE__;
+            result = MU_FAILURE;
         }
         else
         {
@@ -1207,7 +1198,7 @@ int amqp_messenger_send_async(AMQP_MESSENGER_HANDLE messenger_handle, MESSAGE_HA
                 // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_014: [If malloc() fails, amqp_messenger_send_async() shall fail and return a non-zero value]
                 LogError("Failed creating context for sending message");
                 message_destroy(cloned_message);
-                result = __FAILURE__;
+                result = MU_FAILURE;
             }
             else
             {
@@ -1225,7 +1216,7 @@ int amqp_messenger_send_async(AMQP_MESSENGER_HANDLE messenger_handle, MESSAGE_HA
                     // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_018: [If any failure occurs, amqp_messenger_send_async() shall free any memory it has allocated]
                     destroy_message_send_context(message_context);
                     message_destroy(cloned_message);
-                    result = __FAILURE__;
+                    result = MU_FAILURE;
                 }
                 else
                 {
@@ -1247,7 +1238,7 @@ int amqp_messenger_get_send_status(AMQP_MESSENGER_HANDLE messenger_handle, AMQP_
     if (messenger_handle == NULL || send_status == NULL)
     {
         LogError("Invalid argument (messenger_handle=%p, send_status=%p)", messenger_handle, send_status);
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {
@@ -1259,7 +1250,7 @@ int amqp_messenger_get_send_status(AMQP_MESSENGER_HANDLE messenger_handle, AMQP_
         {
             // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_031: [If message_queue_is_empty() fails, amqp_messenger_get_send_status() shall fail and return a non-zero value]
             LogError("Failed verifying if send queue is empty");
-            result = __FAILURE__;
+            result = MU_FAILURE;
         }
         else
         {
@@ -1282,7 +1273,7 @@ int amqp_messenger_start(AMQP_MESSENGER_HANDLE messenger_handle, SESSION_HANDLE 
     if (messenger_handle == NULL || session_handle == NULL)
     {
         LogError("Invalid argument (session_handle is NULL)");
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {
@@ -1291,7 +1282,7 @@ int amqp_messenger_start(AMQP_MESSENGER_HANDLE messenger_handle, SESSION_HANDLE 
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_052: [If `instance->state` is not AMQP_MESSENGER_STATE_STOPPED, amqp_messenger_start() shall fail and return non-zero value]
         if (instance->state != AMQP_MESSENGER_STATE_STOPPED)
         {
-            result = __FAILURE__;
+            result = MU_FAILURE;
             LogError("amqp_messenger_start failed (current state is %d; expected AMQP_MESSENGER_STATE_STOPPED)", instance->state);
         }
         else
@@ -1317,7 +1308,7 @@ int amqp_messenger_stop(AMQP_MESSENGER_HANDLE messenger_handle)
     // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_056: [If `messenger_handle` is NULL, amqp_messenger_stop() shall fail and return non-zero value]
     if (messenger_handle == NULL)
     {
-        result = __FAILURE__;
+        result = MU_FAILURE;
         LogError("Invalid argument (messenger_handle is NULL)");
     }
     else
@@ -1327,7 +1318,7 @@ int amqp_messenger_stop(AMQP_MESSENGER_HANDLE messenger_handle)
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_057: [If `instance->state` is AMQP_MESSENGER_STATE_STOPPED, amqp_messenger_stop() shall fail and return non-zero value]
         if (instance->state == AMQP_MESSENGER_STATE_STOPPED)
         {
-            result = __FAILURE__;
+            result = MU_FAILURE;
             LogError("amqp_messenger_stop failed (messenger is already stopped)");
         }
         else
@@ -1346,7 +1337,7 @@ int amqp_messenger_stop(AMQP_MESSENGER_HANDLE messenger_handle)
 
                 // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_061: [If message_queue_move_all_back_to_pending() fails, amqp_messenger_stop() shall change the messenger state to AMQP_MESSENGER_STATE_ERROR and return a non-zero value]
                 update_messenger_state(instance, AMQP_MESSENGER_STATE_ERROR);
-                result = __FAILURE__;
+                result = MU_FAILURE;
             }
             else
             {
@@ -1618,7 +1609,7 @@ int amqp_messenger_set_option(AMQP_MESSENGER_HANDLE messenger_handle, const char
     {
         LogError("Invalid argument (messenger_handle=%p, name=%p, value=%p)",
             messenger_handle, name, value);
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {
@@ -1631,7 +1622,7 @@ int amqp_messenger_set_option(AMQP_MESSENGER_HANDLE messenger_handle, const char
             {
                 // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_129: [If message_queue_set_max_message_enqueued_time_secs() fails, amqp_messenger_set_option() shall fail and return a non-zero value]
                 LogError("Failed setting option %s", AMQP_MESSENGER_OPTION_EVENT_SEND_TIMEOUT_SECS);
-                result = __FAILURE__;
+                result = MU_FAILURE;
             }
             else
             {
@@ -1643,7 +1634,7 @@ int amqp_messenger_set_option(AMQP_MESSENGER_HANDLE messenger_handle, const char
         {
             // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_130: [If `name` does not match any supported option, amqp_messenger_set_option() shall fail and return a non-zero value]
             LogError("Invalid argument (option '%s' is not valid)", name);
-            result = __FAILURE__;
+            result = MU_FAILURE;
         }
     }
 

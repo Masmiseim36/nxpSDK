@@ -6,15 +6,15 @@
 **                          MIMXRT1021DAG5A
 **
 **     Compiler:            GNU C Compiler
-**     Reference manual:    IMXRT1020RM Rev. C, 02/2018
+**     Reference manual:    IMXRT1020RM Rev.1, 12/2018 | IMXRT1020SRM Rev.3
 **     Version:             rev. 0.1, 2017-06-06
-**     Build:               b180316
+**     Build:               b190730
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2018 NXP
+**     Copyright 2016-2019 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -45,6 +45,9 @@ MEMORY
 /* Define output sections */
 SECTIONS
 {
+  __NCACHE_REGION_START = ORIGIN(m_data2);
+  __NCACHE_REGION_SIZE  = 0;
+
   .flash_config :
   {
     . = ALIGN(4);
@@ -84,11 +87,13 @@ SECTIONS
         /* Exclude flash and frequently executed functions from XIP */
         */flexspi_nor_flash_ops.c.obj
         */fsl_flexspi.c.obj
+        */fsl_clock.c.obj
     ) .text)                 /* .text sections (code) */
     *(EXCLUDE_FILE(
         /* Exclude flash and frequently executed functions from XIP */
         */flexspi_nor_flash_ops.c.obj
         */fsl_flexspi.c.obj
+        */fsl_clock.c.obj
     ) .text*)                /* .text* sections (code) */
     *(.rodata)               /* .rodata sections (constants, strings, etc.) */
     *(.rodata*)              /* .rodata* sections (constants, strings, etc.) */
@@ -182,6 +187,7 @@ SECTIONS
     /* Explicit placement of flash and frequently executed functions in RAM */
     */flexspi_nor_flash_ops.c.obj
     */fsl_flexspi.c.obj
+    */fsl_clock.c.obj
     *(.data)                 /* .data sections */
     *(.data*)                /* .data* sections */
     KEEP(*(.jcr*))

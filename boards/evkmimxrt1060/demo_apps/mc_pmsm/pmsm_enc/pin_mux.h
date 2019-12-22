@@ -97,6 +97,13 @@ void BOARD_InitPWM(void);
  */
 void BOARD_Misc(void);
 
+
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void BOARD_InitCMP(void);
+
 #if defined(__cplusplus)
 }
 #endif

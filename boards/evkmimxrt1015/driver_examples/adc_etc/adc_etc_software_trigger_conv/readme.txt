@@ -8,10 +8,10 @@ then the ADC_ETC ISR would be executed.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso  10.3.1
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -40,20 +40,20 @@ Running the demo
 The log below shows the output of the hello world demo in the terminal window:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ADC_ETC_Software_Trigger_Conv Example Start!
-ADC_DoAntoCalibration() Done.
+ADC_DoAutoCalibration() Done.
 ADC Full Range: XXXX
 Press any key to get user channel's ADC value.
-ADC conversion vaule is 16
+ADC conversion value is 16
 Press any key to get user channel's ADC value.
-ADC conversion vaule is 20
+ADC conversion value is 20
 Press any key to get user channel's ADC value.
-ADC conversion vaule is 35
+ADC conversion value is 35
 Press any key to get user channel's ADC value.
-ADC conversion vaule is 43
+ADC conversion value is 43
 Press any key to get user channel's ADC value.
-ADC conversion vaule is 4
+ADC conversion value is 4
 Press any key to get user channel's ADC value.
-ADC conversion vaule is 28
+ADC conversion value is 28
 Press any key to get user channel's ADC value.
 ...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

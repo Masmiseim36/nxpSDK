@@ -80,7 +80,7 @@ static void LPUART_ReadNonBlocking(LPUART_Type *base, uint8_t *data, size_t leng
  * Variables
  ******************************************************************************/
 /* Array of LPUART handle. */
-static lpuart_handle_t *s_lpuartHandle[FSL_FEATURE_SOC_LPUART_COUNT];
+static lpuart_handle_t *s_lpuartHandle[FSL_FEATURE_SOC_LPUART_COUNT + 1];
 /* Array of LPUART peripheral base address. */
 static LPUART_Type *const s_lpuartBases[] = LPUART_BASE_PTRS;
 /* Array of LPUART IRQ number. */

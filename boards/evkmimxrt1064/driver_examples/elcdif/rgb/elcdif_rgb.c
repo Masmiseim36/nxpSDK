@@ -1,5 +1,5 @@
 /*
- * Copyright  2017 NXP
+ * Copyright  2017-2019 NXP
  * All rights reserved.
  *
  *
@@ -80,6 +80,7 @@ void BOARD_InitLcd(void)
     gpio_pin_config_t config = {
         kGPIO_DigitalOutput,
         0,
+        kGPIO_NoIntmode,
     };
 
     /* Reset the LCD. */
@@ -171,6 +172,9 @@ void APP_ELCDIF_Init(void)
         .dataBus       = APP_LCDIF_DATA_BUS,
     };
 
+#if (defined(APP_ELCDIF_HAS_DISPLAY_INTERFACE) && APP_ELCDIF_HAS_DISPLAY_INTERFACE)
+    BOARD_InitDisplayInterface();
+#endif
     ELCDIF_RgbModeInit(APP_ELCDIF, &config);
 }
 

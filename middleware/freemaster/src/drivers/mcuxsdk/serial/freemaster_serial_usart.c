@@ -25,7 +25,7 @@
 /* Numeric identifier to help pre-processor to identify whether our driver is used or not. */
 #define FMSTR_SERIAL_MCUX_USART_ID 1
 
-#if (FMSTR_MK_IDSTR(FMSTR_SERIAL_DRV) == FMSTR_SERIAL_MCUX_USART_ID) 
+#if (FMSTR_MK_IDSTR(FMSTR_SERIAL_DRV) == FMSTR_SERIAL_MCUX_USART_ID)
 
 #include "freemaster_serial_usart.h"
 
@@ -36,6 +36,13 @@
 
 #include "freemaster_protocol.h"
 #include "freemaster_serial.h"
+
+/******************************************************************************
+* Adapter configuration
+******************************************************************************/
+#if FMSTR_SERIAL_SINGLEWIRE
+    #error The SUART driver does not support single wire configuration of UART communication.
+#endif
 
 /***********************************
 *  local variables
@@ -57,6 +64,7 @@ static FMSTR_BOOL _FMSTR_SerialUsartInit(void);
 static void _FMSTR_SerialUsartEnableTransmit(FMSTR_BOOL enable);
 static void _FMSTR_SerialUsartEnableReceive(FMSTR_BOOL enable);
 static void _FMSTR_SerialUsartEnableTransmitInterrupt(FMSTR_BOOL enable);
+static void _FMSTR_SerialUsartEnableTransmitCompleteInterrupt(FMSTR_BOOL enable);
 static void _FMSTR_SerialUsartEnableReceiveInterrupt(FMSTR_BOOL enable);
 static FMSTR_BOOL _FMSTR_SerialUsartIsTransmitRegEmpty(void);
 static FMSTR_BOOL _FMSTR_SerialUsartIsReceiveRegFull(void);
@@ -71,17 +79,18 @@ static void _FMSTR_SerialUsartFlush(void);
 /* Interface of this serial UART driver */
 const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_MCUX_USART =
 {
-    .Init                       = _FMSTR_SerialUsartInit,
-    .EnableTransmit             = _FMSTR_SerialUsartEnableTransmit,
-    .EnableReceive              = _FMSTR_SerialUsartEnableReceive,
-    .EnableTransmitInterrupt    = _FMSTR_SerialUsartEnableTransmitInterrupt,
-    .EnableReceiveInterrupt     = _FMSTR_SerialUsartEnableReceiveInterrupt,
-    .IsTransmitRegEmpty         = _FMSTR_SerialUsartIsTransmitRegEmpty,
-    .IsReceiveRegFull           = _FMSTR_SerialUsartIsReceiveRegFull,
-    .IsTransmitterActive        = _FMSTR_SerialUsartIsTransmitterActive,
-    .PutChar                    = _FMSTR_SerialUsartPutChar,
-    .GetChar                    = _FMSTR_SerialUsartGetChar,
-    .Flush                      = _FMSTR_SerialUsartFlush,
+    .Init                           = _FMSTR_SerialUsartInit,
+    .EnableTransmit                 = _FMSTR_SerialUsartEnableTransmit,
+    .EnableReceive                  = _FMSTR_SerialUsartEnableReceive,
+    .EnableTransmitInterrupt        = _FMSTR_SerialUsartEnableTransmitInterrupt,
+    .EnableTransmitCompleteInterrupt= _FMSTR_SerialUsartEnableTransmitCompleteInterrupt,
+    .EnableReceiveInterrupt         = _FMSTR_SerialUsartEnableReceiveInterrupt,
+    .IsTransmitRegEmpty             = _FMSTR_SerialUsartIsTransmitRegEmpty,
+    .IsReceiveRegFull               = _FMSTR_SerialUsartIsReceiveRegFull,
+    .IsTransmitterActive            = _FMSTR_SerialUsartIsTransmitterActive,
+    .PutChar                        = _FMSTR_SerialUsartPutChar,
+    .GetChar                        = _FMSTR_SerialUsartGetChar,
+    .Flush                          = _FMSTR_SerialUsartFlush,
 
 };
 
@@ -133,8 +142,20 @@ static void _FMSTR_SerialUsartEnableTransmitInterrupt(FMSTR_BOOL enable)
         USART_EnableInterrupts(fmstr_serialBaseAddr, kUSART_TxLevelInterruptEnable);
     else
         USART_DisableInterrupts(fmstr_serialBaseAddr, kUSART_TxLevelInterruptEnable);
-
 }
+
+/**************************************************************************//*!
+*
+* @brief    Enable/Disable interrupt from transmit complete event
+*
+******************************************************************************/
+
+static void _FMSTR_SerialUsartEnableTransmitCompleteInterrupt(FMSTR_BOOL enable)
+{
+    /* The UASRT peripheral has common interrupt enable for both events */
+    _FMSTR_SerialUsartEnableTransmitInterrupt(enable);
+}
+
 
 /**************************************************************************//*!
 *

@@ -21,6 +21,21 @@
 /*! @brief Definition of button handle size as HAL_GPIO_HANDLE_SIZE + button dedicated size. */
 #define BUTTON_HANDLE_SIZE (16U + 24U)
 
+/*! @brief The handle of button */
+typedef void *button_handle_t;
+
+#define BUTTON_HANDLE_DEFINE(name, count) uint32_t g_buttonHandle##name[count][((BUTTON_HANDLE_SIZE - 1U) >> 2U) + 1U];
+/*!                                                                      \
+ * @brief Gets the button buffer pointer                                 \
+ *                                                                       \
+ * This macro is used to get the button buffer pointer. The macro should \
+ * not be used before the macro BUTTON_HANDLE_DEFINE is used.            \
+ *                                                                       \
+ * @param name The button name string of the buffer.                     \
+ *  @param index The button count.                                       \
+ */
+#define BUTTON_HANDLE_GET(name, index) ((button_handle_t)&g_buttonHandle##name[index][0])
+
 /*! @brief Definition of button timer interval,unit is ms. */
 #define BUTTON_TIMER_INTERVAL (25U)
 
@@ -44,9 +59,6 @@
 
 /*! @brief Definition of button event. */
 #define BUTTON_EVENT_BUTTON (1U)
-
-/*! @brief The handle of button */
-typedef void *button_handle_t;
 
 /*! @brief The status type of button */
 typedef enum _button_status
@@ -118,8 +130,8 @@ extern "C" {
  *
  * Example below shows how to use this API to configure the button.
  *  @code
- *   uint8_t s_buttonHandleBuffer[BUTTON_HANDLE_SIZE];
- *   button_handle_t s_buttonHandle = &s_buttonHandleBuffer[0];
+ *   uint32_t s_buttonHandleBuffer[((BUTTON_HANDLE_SIZE + sizeof(uint32_t) - 1) / sizeof(uitn32_t))];
+ *   button_handle_t s_buttonHandle = (button_handle_t)&s_buttonHandleBuffer[0];
  *   button_config_t buttonConfig;
  *   buttonConfig.gpio.port = 0;
  *   buttonConfig.gpio.pin = 1;
@@ -128,6 +140,7 @@ extern "C" {
  *  @endcode
  *
  * @param buttonHandle Pointer to point to a memory space of size #BUTTON_HANDLE_SIZE allocated by the caller.
+ * The handle should be 4 byte aligned, because unaligned access does not support on some devices.
  * @param buttonConfig Pointer to user-defined configuration structure.
  * @return Indicates whether initialization was successful or not.
  * @retval kStatus_BUTTON_Error An error occurred.

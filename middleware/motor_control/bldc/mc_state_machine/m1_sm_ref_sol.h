@@ -11,6 +11,7 @@
 #include "m1_bldc_appconfig.h"
 #include "state_machine.h"
 #include "bldc_control.h"
+#include "main.h"
 
 /* library headers */
 #include "gmclib.h"

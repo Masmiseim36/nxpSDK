@@ -34,7 +34,7 @@ char *keyMap[EXAMPLE_KPP_MATRX_NUM][EXAMPLE_KPP_MATRX_NUM] = {
 kpp_config_t kppConfig;
 uint8_t read_keys[KPP_KEYPAD_COLUMNNUM_MAX] = {0};
 extern char *keyMap[EXAMPLE_KPP_MATRX_NUM][EXAMPLE_KPP_MATRX_NUM];
-volatile bool g_keypress = false;
+volatile bool g_keypress   = false;
 volatile bool g_keyrelease = false;
 /*******************************************************************************
  * Code
@@ -55,13 +55,13 @@ void KPP_IRQHandler(void)
         KPP_EnableInterrupts(EXAMPLE_KPP, kKPP_keyDepressInterrupt);
         g_keypress = true;
     }
-	else if (status & kKPP_keyReleaseInterrupt)
+    else if (status & kKPP_keyReleaseInterrupt)
     {
         /* Disable interrupts. */
         KPP_DisableInterrupts(EXAMPLE_KPP, kKPP_keyReleaseInterrupt);
         /* Clear status. */
-        KPP_ClearStatusFlag(EXAMPLE_KPP,kKPP_keyReleaseInterrupt);
-        KPP_SetSynchronizeChain(EXAMPLE_KPP,kKPP_SetKeyReleasesSyncChain);
+        KPP_ClearStatusFlag(EXAMPLE_KPP, kKPP_keyReleaseInterrupt);
+        KPP_SetSynchronizeChain(EXAMPLE_KPP, kKPP_SetKeyReleasesSyncChain);
         g_keyrelease = true;
     }
     /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
@@ -74,9 +74,9 @@ void KPP_IRQHandler(void)
 int main(void)
 {
     kpp_config_t kppConfig;
-    uint8_t rowOld   = 0xFF;
-    uint8_t colOld   = 0xFF;
-    uint32_t index   = 0;
+    uint8_t rowOld = 0xFF;
+    uint8_t colOld = 0xFF;
+    uint32_t index = 0;
 
     BOARD_ConfigMPU();
     BOARD_InitPins();
@@ -106,8 +106,8 @@ int main(void)
                         {
                             if (((rowOld != row) || (colOld != col)) && g_keypress)
                             {
-                                rowOld      = row;
-                                colOld      = col;
+                                rowOld = row;
+                                colOld = col;
                                 PRINTF("\r\n Key %s was pressed.\r\n", keyMap[rowOld][colOld]);
                             }
                             else
@@ -115,7 +115,7 @@ int main(void)
                                 index++;
                                 if (index > EXAMPLE_KPP_KEYPRESS_LONG_NUM)
                                 {
-									index = 0;
+                                    index = 0;
                                     PRINTF("\r\n This was a long press.\r\n");
                                 }
                             }
@@ -126,12 +126,12 @@ int main(void)
             KPP_EnableInterrupts(EXAMPLE_KPP, kKPP_keyReleaseInterrupt);
             g_keypress = false;
         }
-		else if(g_keyrelease)
-		{
-			rowOld = 0xFF;
-			colOld = 0xFF;
-			index = 0;
-			g_keyrelease = false;
-		}
+        else if (g_keyrelease)
+        {
+            rowOld       = 0xFF;
+            colOld       = 0xFF;
+            index        = 0;
+            g_keyrelease = false;
+        }
     }
 }

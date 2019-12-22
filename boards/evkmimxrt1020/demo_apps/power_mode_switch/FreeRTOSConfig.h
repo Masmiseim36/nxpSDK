@@ -123,6 +123,23 @@
 #define INCLUDE_xTaskGetHandle                  0
 #define INCLUDE_xTaskResumeFromISR              1
 
+#ifndef __IASMARM__
+
+  void vPortPRE_SLEEP_PROCESSING( unsigned long xExpectedIdleTime );
+  void vPortPOST_SLEEP_PROCESSING( unsigned long xExpectedIdleTime );
+  #define configPRE_SLEEP_PROCESSING( xExpectedIdleTime )      vPortPRE_SLEEP_PROCESSING( xExpectedIdleTime );
+  #define configPOST_SLEEP_PROCESSING( xExpectedIdleTime )     vPortPOST_SLEEP_PROCESSING( xExpectedIdleTime );
+
+#endif /* __IASMARM__ */
+
+
+
+#if defined(__ICCARM__)||defined(__CC_ARM)||defined(__GNUC__)
+    /* Clock manager provides in this variable system core clock frequency */
+    #include <stdint.h>
+    extern uint32_t SystemCoreClock;
+#endif
+
 /* Interrupt nesting behaviour configuration. Cortex-M specific. */
 #ifdef __NVIC_PRIO_BITS
 /* __BVIC_PRIO_BITS will be specified when CMSIS is being used. */
@@ -147,15 +164,6 @@ to all Cortex-M ports, and do not rely on any particular library functions. */
 /* !!!! configMAX_SYSCALL_INTERRUPT_PRIORITY must not be set to zero !!!!
 See http://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html. */
 #define configMAX_SYSCALL_INTERRUPT_PRIORITY (configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY << (8 - configPRIO_BITS))
-
-#ifndef __IASMARM__
-
-  void vPortPRE_SLEEP_PROCESSING( unsigned long xExpectedIdleTime );
-  void vPortPOST_SLEEP_PROCESSING( unsigned long xExpectedIdleTime );
-  #define configPRE_SLEEP_PROCESSING( xExpectedIdleTime )      vPortPRE_SLEEP_PROCESSING( xExpectedIdleTime );
-  #define configPOST_SLEEP_PROCESSING( xExpectedIdleTime )     vPortPOST_SLEEP_PROCESSING( xExpectedIdleTime );
-
-#endif /* __IASMARM__ */
 
 /* Definitions that map the FreeRTOS port interrupt handlers to their CMSIS
 standard names. */

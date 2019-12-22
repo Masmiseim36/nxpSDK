@@ -1,3 +1,20 @@
+// COPY/REUSE POLICY
+// =================
+// Permission is hereby granted to freely copy and redistribute this
+// software, provided that the author is clearly credited in all copies
+// and derivations. Neither the names of the authors nor that of their
+// employers may be used to endorse or promote products derived from this
+// software without specific written permission.
+//
+//
+// DISCLAIMER
+// ==========
+// This software is provided ``As Is'' and without any express or implied
+// warranties.  Neither the authors nor any of their employers (including
+// any of their subsidiaries and subdivisions) are responsible for maintaining
+// or supporting this software or for any consequences resulting from the
+// use of this software, no matter how awful, even if they arise from flaws
+// in the software.
 // ****************************************************************************
 // ^FILE: options.h - option parsing classes
 //
@@ -21,6 +38,9 @@
 //	  04/30/06  Chris Reed
 //    - Updated to modern C++ and STL
 //    - Converted comments to doxygen style
+//	  
+//	  09/25/18  Lukas Zajac
+//    - Added MISSINGARG option
 // ^^**************************************************************************
 
 #ifndef _options_h
@@ -347,7 +367,7 @@ class Options
 {
 private:
     unsigned explicit_end : 1; //!< were we terminated because of "--"?
-    unsigned optctrls : 7;     //!< control settings (a set of OptCtrl masks)
+    unsigned optctrls : 8;     //!< control settings (a set of OptCtrl masks)
     const char *const *optvec; //!< vector of option-specifications (last=NULL)
     const char *nextchar;      //!< next option-character to process
     const char *listopt;       //!< last list-option we matched
@@ -379,7 +399,7 @@ public:
                            //!< "guess" by seeing if it will match any known
                            //!< long (short) option. Setting this mask prevents
                            //!< this "guessing" from occurring.
-        PARSE_POS = 0x40   //!< By default, Options will not present positional
+        PARSE_POS = 0x40,  //!< By default, Options will not present positional
                            //!< command-line arguments to the user and will
                            //!< instead stop parsing when the first positonal
                            //!< argument has been encountered. If this flag
@@ -387,6 +407,14 @@ public:
                            //!< arguments to the user with a return code of
                            //!< POSITIONAL; ENDOPTS will be returned only
                            //!< when the end of the argument list is reached.
+		MISSINGARG = 0x80  //!< When the required argument is missing, then 
+						   //!< in case of the non quiet mode is printed message
+						   //!< informing user about it and in code have to be
+						   //!< checked if argument is null and other handling.
+						   //!< To avoid this handling for each option with
+						   //!< required argument, the returned option will be
+						   //!< set to '-' and proccesing can go to wrong option
+						   //!< handling in main loop.
     };
 
     //! Error return values for operator()

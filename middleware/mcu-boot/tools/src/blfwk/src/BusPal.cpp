@@ -34,6 +34,7 @@ enum
     kBitBang_RawWire = 0x05,      //!< Enter binary raw-wire mode, responds "RAW1"
     kBitBang_Jtag = 0x06,         //!< Enter OpenOCD JTAG mode
     kBitBang_CanMode = 0x07,      //!< Enter binary CAN mode, responds "CAN1"
+    kBitBang_SaiMode = 0x08,      //!< Enter binary SAI mode, responds "SAI1"
     kBitBang_HardReset = 0x0f,    //!< Reset Bus Pal
     kBitBang_SelfTest = 0x10,     //!< Bus Pal self-tests
     kBitBang_SetupPwm = 0x12,     //!< Setup pulse-width modulation (requires 5 byte setup)
@@ -79,6 +80,23 @@ enum
     kSpiConfigShift_Direction = 0,
     kSpiConfigShift_Phase = 1,
     kSpiConfigShift_Polarity = 2
+};
+
+//! @brief Sai/I2s mode commands.
+enum
+{
+    kSai_Exit = 0x00,         //!< 00000000 - Exit to bit bang mode
+    kSai_Version = 0x01,      //!< 00000001 - Enter raw SAI mode, display version string
+    kSai_SetSpeed = 0x60,     //!< 01100000 - SAI speed
+    kSai_ConfigSai = 0x80,    //!< 100xxxyy - SAI config, xxx=protocol, yy=stereo
+    kSai_WriteThenRead = 0x04 //!< 00000100 - Write then read extended command
+};
+
+//! @brief Sai configuration shifts for the mask
+enum
+{
+    kSaiConfigShift_Stereo = 0,
+    kSaiConfigShift_Protocol = 2
 };
 
 //! @brief Can mode commands.
@@ -155,6 +173,19 @@ struct I2cWriteThenReadCommand
     uint16_t numBytesToRead;
 };
 
+struct SaiSetSpeedCommand
+{
+    uint8_t command;
+    uint32_t speed;
+};
+
+struct SaiWriteThenReadCommand
+{
+    uint8_t command;
+    uint16_t numBytesToWrite;
+    uint16_t numBytesToRead;
+};
+
 struct GpioConfigCommand
 {
     uint8_t command;
@@ -214,6 +245,7 @@ const char k_responseSpiMode[] = "SPI1";
 const char k_responseCanMode[] = "CAN1";
 const char k_responseI2cMode[] = "I2C1";
 const char k_responseUartMode[] = "ART1";
+const char k_responseSaiMode[] = "SAI1";
 
 //@}
 
@@ -256,6 +288,7 @@ BusPal::BusPal(int fileDescriptor)
     , m_spiWriteByteCount(0)
     , m_canFirstReadDelay(100)
     , m_canWriteByteCount(0)
+    , m_saiWriteByteCount(0)
 {
 }
 
@@ -341,6 +374,19 @@ bool BusPal::parse(const string_vector_t &params, BusPal::BusPalConfigData &conf
             {
                 config.canRxid = strtoul(params[3].c_str(), NULL, 16) & 0x7ff;
             }
+        }
+    }
+    else if (!params[0].compare(0, 3, "sai"))
+    {
+        config.function = BusPal::kBusPalFunction_SAI;
+
+        if ((params.size() > 1))
+        {
+            int32_t saiSpeed = atoi(params[1].c_str());
+            if (saiSpeed <= 0)
+                return false;
+
+            config.saiSpeedHz = saiSpeed;
         }
     }
     else if (!params[0].compare(0, 4, "gpio"))
@@ -469,6 +515,18 @@ bool BusPal::enterI2cMode()
     if (retVal)
     {
         m_mode = kBusPalModeI2c;
+    }
+
+    return retVal;
+}
+
+bool BusPal::enterSaiMode()
+{
+    bool retVal = writeCommand(kBitBang_SaiMode, k_responseSaiMode);
+
+    if (retVal)
+    {
+        m_mode = kBusPalModeSai;
     }
 
     return retVal;
@@ -684,6 +742,40 @@ bool BusPal::setI2cSpeed(uint32_t speed)
 
     return true;
 }
+
+// See See bus_pal.h for documentation on this method.
+bool BusPal::setSaiConfig(sai_protocol_t protocol, sai_mono_stereo_t stereo)
+{
+    uint8_t mask = protocol << kSaiConfigShift_Protocol;
+    mask |= stereo << kSaiConfigShift_Stereo;
+
+    uint8_t rc = writeCommand(kSai_ConfigSai | mask);
+
+    if (rc != kResponseOk)
+    {
+        Log::error("Error: bad response from Set Sai Config\n");
+        return false;
+    }
+
+    return true;
+}
+
+// See See bus_pal.h for documentation on this method.
+bool BusPal::setSaiSpeed(unsigned int speed)
+{
+    SaiSetSpeedCommand command = { kSai_SetSpeed, speed };
+
+    uint8_t respData = writeCommand(reinterpret_cast<uint8_t *>(&command), sizeof(command));
+
+    if (respData != kResponseOk)
+    {
+        Log::error("Error: bad response to Sai Set Speed, response byte = 0x%x\n", respData);
+        return false;
+    }
+
+    return true;
+}
+
 // See See bus_pal.h for documentation on this method.
 bool BusPal::rawConfigurePins(uint8_t port, uint8_t pin, uint8_t muxVal)
 {
@@ -743,6 +835,8 @@ bool BusPal::write(const uint8_t *data, size_t byteCount)
             return writeI2c(data, byteCount);
         case kBusPalModeCan:
             return writeCan(data, byteCount);
+        case kBusPalModeSai:
+            return writeSai(data, byteCount);
         default:
             return false;
     }
@@ -778,6 +872,8 @@ int BusPal::read(uint8_t *data, size_t byteCount)
 
             return bytesRead;
         }
+        case kBusPalModeSai:
+            return readSai(data, byteCount);
         default:
             return false;
     }
@@ -1055,6 +1151,99 @@ int BusPal::readI2c(uint8_t *data, size_t byteCount)
     if (respData[0] != kResponseOk)
     {
         Log::error("Error: bad response to i2c read, response byte 0 = 0x%x\n", respData[0]);
+        return 0;
+    }
+
+    int remainingBytes = byteCount;
+    uint8_t *buffer = data;
+
+    while (remainingBytes > 0)
+    {
+        actualBytes = buspal_serial_read(buffer, remainingBytes);
+        if (actualBytes > 0)
+        {
+            remainingBytes -= actualBytes;
+            buffer += actualBytes;
+        }
+        else
+        {
+            // If no bytes received, it is a timeout error.
+            return 0;
+        }
+    }
+
+    return byteCount;
+}
+
+// See See bus_pal.h for documentation on this method.
+bool BusPal::writeSai(const uint8_t *data, size_t byteCount)
+{
+    assert(data);
+
+    SaiWriteThenReadCommand command;
+    command.command = kSai_WriteThenRead;
+    command.numBytesToWrite = std::min<int>(byteCount, kBulkTransferMax);
+    command.numBytesToRead = 0;
+
+    m_saiWriteByteCount += byteCount;
+
+    int actualBytes = buspal_serial_write(reinterpret_cast<uint8_t *>(&command), sizeof(command), true);
+    if (actualBytes != sizeof(command))
+    {
+        Log::error("Error: Bus Pal sai write command failed\n");
+        return false;
+    }
+
+    actualBytes = buspal_serial_write(const_cast<uint8_t *>(data), byteCount);
+    if (actualBytes != byteCount)
+    {
+        Log::error("Error: Bus Pal sai write command failed\n");
+        return false;
+    }
+
+    uint8_t *respData = 0;
+
+    while (respData == NULL)
+    {
+        respData = response(1);
+    }
+
+    if (respData[0] != kResponseOk)
+    {
+        Log::error("Error: bad response to sai write, response byte = 0x%x\n", respData[0]);
+        return false;
+    }
+
+    return true;
+}
+
+// See See bus_pal.h for documentation on this method.
+int BusPal::readSai(uint8_t *data, size_t byteCount)
+{
+    assert(data);
+
+    SaiWriteThenReadCommand command;
+    command.command = kSai_WriteThenRead;
+    command.numBytesToWrite = 0;
+    command.numBytesToRead = std::min<int>(byteCount, kBulkTransferMax);
+
+    int actualBytes = buspal_serial_write(reinterpret_cast<uint8_t *>(&command), sizeof(command), true);
+    if (actualBytes != sizeof(command))
+    {
+        Log::error("Error: Bus Pal read sai command failed\n");
+        return 0;
+    }
+
+    uint8_t *respData = 0;
+
+    while (respData == NULL)
+    {
+        respData = response(1);
+    }
+
+    if (respData[0] != kResponseOk)
+    {
+        Log::error("Error: bad response to sai read, response byte 0 = 0x%x\n", respData[0]);
         return 0;
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright  2017 NXP
+ * Copyright  2017-2019 NXP
  * All rights reserved.
  *
  *
@@ -9,7 +9,7 @@
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_pxp.h"
-#include "fsl_elcdif.h"
+#include "display_support.h"
 
 #include "pin_mux.h"
 #include "fsl_gpio.h"
@@ -17,34 +17,13 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_ELCDIF LCDIF
 #define APP_PXP PXP
 
-#define APP_IMG_HEIGHT 272
-#define APP_IMG_WIDTH 480
-#define APP_HSW 41
-#define APP_HFP 4
-#define APP_HBP 8
-#define APP_VSW 10
-#define APP_VFP 4
-#define APP_VBP 2
-#define APP_POL_FLAGS \
-    (kELCDIF_DataEnableActiveHigh | kELCDIF_VsyncActiveLow | kELCDIF_HsyncActiveLow | kELCDIF_DriveDataOnRisingClkEdge)
+/* Use RGB565 or XRGB8888 */
+#define USE_RGB565 0
 
-/* Display. */
-#define LCD_DISP_GPIO GPIO1
-#define LCD_DISP_GPIO_PIN 2
-/* Back light. */
-#define LCD_BL_GPIO GPIO2
-#define LCD_BL_GPIO_PIN 31
-
-#define APP_LCDIF_DATA_BUS kELCDIF_DataBus16Bit
-
-/*
- * Frame buffer data alignment.
- * The PXP input buffer, output buffer, and LCDIF frame buffer address 64B align.
- */
-#define FRAME_BUFFER_ALIGN 64
+#define APP_IMG_WIDTH DEMO_PANEL_WIDTH
+#define APP_IMG_HEIGHT DEMO_PANEL_HEIGHT
 
 /* PS input buffer is square. */
 #if APP_IMG_WIDTH > APP_IMG_HEIGHT
@@ -58,11 +37,32 @@
 #define APP_PS_LRC_X ((APP_IMG_WIDTH / 2) + (APP_PS_SIZE / 2) - 1U)
 #define APP_PS_LRC_Y ((APP_IMG_HEIGHT / 2) + (APP_PS_SIZE / 2) - 1U)
 
-#define APP_BPP 4U           /* Use 24-bit RGB888 format. */
-#define APP_FRAME_PER_PIC 60 /* Keep every picture 80 frames. */
+#if USE_RGB565
 
-#ifndef APP_LCDIF_DATA_BUS
-#define APP_LCDIF_DATA_BUS kELCDIF_DataBus24Bit
+typedef uint16_t pixel_t;
+#define APP_BPP 2U /* Use 16-bit RGB565 format. */
+#define APP_RED 0xF100U
+#define APP_GREEN 0x07E0U
+#define APP_BLUE 0x001FU
+#define APP_WHITE 0xFFFFU
+#define APP_PXP_PS_FORMAT kPXP_PsPixelFormatRGB565
+#define APP_PXP_AS_FORMAT kPXP_AsPixelFormatRGB565
+#define APP_PXP_OUT_FORMAT kPXP_OutputPixelFormatRGB565
+#define APP_DC_FORMAT kVIDEO_PixelFormatRGB565
+
+#else
+
+typedef uint32_t pixel_t;
+#define APP_BPP 4U /* Use 32-bit XRGB888 format. */
+#define APP_RED 0x00FF0000U
+#define APP_GREEN 0x0000FF00U
+#define APP_BLUE 0x000000FFU
+#define APP_WHITE 0xFFFFFFU
+#define APP_PXP_PS_FORMAT kPXP_PsPixelFormatRGB888
+#define APP_PXP_AS_FORMAT kPXP_AsPixelFormatRGB888
+#define APP_PXP_OUT_FORMAT kPXP_OutputPixelFormatRGB888
+#define APP_DC_FORMAT kVIDEO_PixelFormatXRGB8888
+
 #endif
 
 typedef struct _pxp_command
@@ -137,90 +137,37 @@ static void APP_InitLcdif(void);
 static void APP_InitPxp(void);
 static void APP_InitPxpCommand(void);
 static void APP_RotateCmdQueue(void);
+static void APP_BufferSwitchOffCallback(void *param, void *switchOffBuffer);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 
-AT_NONCACHEABLE_SECTION_ALIGN(static uint32_t s_psBufferLcd[2][APP_IMG_HEIGHT][APP_IMG_WIDTH], FRAME_BUFFER_ALIGN);
-AT_NONCACHEABLE_SECTION_ALIGN(static uint32_t s_psBufferPxp[APP_PS_SIZE][APP_PS_SIZE], FRAME_BUFFER_ALIGN);
+AT_NONCACHEABLE_SECTION_ALIGN(static pixel_t s_BufferLcd[2][APP_IMG_HEIGHT][APP_IMG_WIDTH], FRAME_BUFFER_ALIGN);
+AT_NONCACHEABLE_SECTION_ALIGN(static pixel_t s_psBufferPxp[APP_PS_SIZE][APP_PS_SIZE], FRAME_BUFFER_ALIGN);
 AT_NONCACHEABLE_SECTION_ALIGN(static pxp_command_t pxpCommand, 4); /* 32-bit align. */
+
+static uint8_t curLcdBufferIdx = 0;
+
+/*
+ * When new frame buffer sent to display, it might not be shown immediately.
+ * Application could use callback to get new frame shown notification, at the
+ * same time, when this flag is set, application could write to the older
+ * frame buffer.
+ */
+static volatile bool s_newFrameShown = false;
+static dc_fb_info_t fbInfo;
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-/* Initialize the LCD_DISP. */
-void BOARD_InitLcd(void)
-{
-    volatile uint32_t i = 0x100U;
-
-    gpio_pin_config_t config = {
-        kGPIO_DigitalOutput,
-        0,
-    };
-
-    /* Reset the LCD. */
-    GPIO_PinInit(LCD_DISP_GPIO, LCD_DISP_GPIO_PIN, &config);
-
-    GPIO_WritePinOutput(LCD_DISP_GPIO, LCD_DISP_GPIO_PIN, 0);
-
-    while (i--)
-    {
-    }
-
-    GPIO_WritePinOutput(LCD_DISP_GPIO, LCD_DISP_GPIO_PIN, 1);
-
-    /* Backlight. */
-    config.outputLogic = 1;
-    GPIO_PinInit(LCD_BL_GPIO, LCD_BL_GPIO_PIN, &config);
-}
-
-void BOARD_InitLcdifPixelClock(void)
-{
-    /*
-     * The desired output frame rate is 60Hz. So the pixel clock frequency is:
-     * (480 + 41 + 4 + 18) * (272 + 10 + 4 + 2) * 60 = 9.2M.
-     * Here set the LCDIF pixel clock to 9.3M.
-     */
-
-    /*
-     * Initialize the Video PLL.
-     * Video PLL output clock is OSC24M * (loopDivider + (denominator / numerator)) / postDivider = 93MHz.
-     */
-    clock_video_pll_config_t config = {
-        .loopDivider = 31,
-        .postDivider = 8,
-        .numerator   = 0,
-        .denominator = 0,
-    };
-
-    CLOCK_InitVideoPll(&config);
-
-    /*
-     * 000 derive clock from PLL2
-     * 001 derive clock from PLL3 PFD3
-     * 010 derive clock from PLL5
-     * 011 derive clock from PLL2 PFD0
-     * 100 derive clock from PLL2 PFD1
-     * 101 derive clock from PLL3 PFD1
-     */
-    CLOCK_SetMux(kCLOCK_LcdifPreMux, 2);
-
-    CLOCK_SetDiv(kCLOCK_LcdifPreDiv, 4);
-
-    CLOCK_SetDiv(kCLOCK_LcdifDiv, 1);
-}
-
 
 int main(void)
 {
     BOARD_ConfigMPU();
     BOARD_InitPins();
     BOARD_BootClockRUN();
-    BOARD_InitLcdifPixelClock();
     BOARD_InitDebugConsole();
-    BOARD_InitLcd();
 
     PRINTF("\r\nPXP command queue example start...\r\n");
 
@@ -238,24 +185,42 @@ int main(void)
 
 static void APP_InitLcdif(void)
 {
-    const elcdif_rgb_mode_config_t config = {
-        .panelWidth    = APP_IMG_WIDTH,
-        .panelHeight   = APP_IMG_HEIGHT,
-        .hsw           = APP_HSW,
-        .hfp           = APP_HFP,
-        .hbp           = APP_HBP,
-        .vsw           = APP_VSW,
-        .vfp           = APP_VFP,
-        .vbp           = APP_VBP,
-        .polarityFlags = APP_POL_FLAGS,
-        .bufferAddr    = (uint32_t)s_psBufferLcd[0],
-        .pixelFormat   = kELCDIF_PixelFormatXRGB8888,
-        .dataBus       = APP_LCDIF_DATA_BUS,
-    };
+    status_t status;
 
-    ELCDIF_RgbModeInit(APP_ELCDIF, &config);
+    BOARD_PrepareDisplayController();
 
-    ELCDIF_RgbModeStart(APP_ELCDIF);
+    status = g_dc.ops->init(&g_dc);
+    if (kStatus_Success != status)
+    {
+        PRINTF("Display initialization failed\r\n");
+        assert(0);
+    }
+
+    g_dc.ops->getLayerDefaultConfig(&g_dc, 0, &fbInfo);
+    fbInfo.pixelFormat = APP_DC_FORMAT;
+    fbInfo.width       = APP_IMG_WIDTH;
+    fbInfo.height      = APP_IMG_HEIGHT;
+    fbInfo.strideBytes = APP_IMG_WIDTH * APP_BPP;
+    g_dc.ops->setLayerConfig(&g_dc, 0, &fbInfo);
+
+    g_dc.ops->setCallback(&g_dc, 0, APP_BufferSwitchOffCallback, NULL);
+
+    s_newFrameShown = false;
+    g_dc.ops->setFrameBuffer(&g_dc, 0, (void *)s_BufferLcd[curLcdBufferIdx]);
+
+    /* For the DBI interface display, application must wait for the first
+     * frame buffer sent to the panel.
+     */
+    if ((g_dc.ops->getProperty(&g_dc) & kDC_FB_ReserveFrameBuffer) == 0)
+    {
+        while (s_newFrameShown == false)
+        {
+        }
+    }
+
+    s_newFrameShown = true;
+
+    g_dc.ops->enableLayer(&g_dc, 0);
 }
 
 static void APP_InitPxp(void)
@@ -265,8 +230,7 @@ static void APP_InitPxp(void)
 
 static void APP_RotateCmdQueue(void)
 {
-    uint8_t i, j;
-    uint8_t curLcdBufferIdx = 1U;
+    uint8_t i;
 
     static const pxp_rotate_degree_t degrees[] = {
         kPXP_Rotate0,
@@ -279,9 +243,20 @@ static void APP_RotateCmdQueue(void)
     {
         for (i = 0; i < ARRAY_SIZE(degrees); i++)
         {
+            /*
+             * Wait for the new set frame buffer active, so that the older frame
+             * buffer is inactive, then PXP could output to the older frame buffer.
+             */
+            while (s_newFrameShown == false)
+            {
+            }
+
+            /* Switch to the other LCD buffer. */
+            curLcdBufferIdx ^= 1U;
+
             /* Prepare next buffer for LCD. */
             pxpCommand.CTRL    = (pxpCommand.CTRL & ~PXP_CTRL_ROTATE_MASK) | PXP_CTRL_ROTATE(degrees[i]);
-            pxpCommand.OUT_BUF = (uint32_t)s_psBufferLcd[curLcdBufferIdx];
+            pxpCommand.OUT_BUF = (uint32_t)s_BufferLcd[curLcdBufferIdx];
             __DSB();
 
             while (PXP_IsNextCommandPending(APP_PXP))
@@ -297,19 +272,11 @@ static void APP_RotateCmdQueue(void)
             PXP_ClearStatusFlags(APP_PXP, kPXP_CompleteFlag);
 
             /* Now new frame is ready, pass it to LCDIF. */
-            ELCDIF_SetNextBufferAddr(APP_ELCDIF, (uint32_t)s_psBufferLcd[curLcdBufferIdx]);
+            s_newFrameShown = false;
+            g_dc.ops->setFrameBuffer(&g_dc, 0, (void *)s_BufferLcd[curLcdBufferIdx]);
 
             /* Show the active frame buffer for a while. */
-            for (j = 0; j < APP_FRAME_PER_PIC; j++)
-            {
-                ELCDIF_ClearInterruptStatus(APP_ELCDIF, kELCDIF_CurFrameDone);
-                while (!(kELCDIF_CurFrameDone & ELCDIF_GetInterruptStatus(APP_ELCDIF)))
-                {
-                }
-            }
-
-            /* Switch to the other LCD buffer. */
-            curLcdBufferIdx ^= 1U;
+            SDK_DelayAtLeastUs(1 * 1000 * 1000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
         }
     }
 }
@@ -339,12 +306,12 @@ static void APP_InitInputBuffer(void)
     {
         for (j = 0; j < (APP_PS_SIZE / 2); j++)
         {
-            s_psBufferPxp[i][j] = 0xFFU;
+            s_psBufferPxp[i][j] = APP_BLUE;
         }
 
         for (; j < APP_PS_SIZE; j++)
         {
-            s_psBufferPxp[i][j] = 0xFF0000U;
+            s_psBufferPxp[i][j] = APP_RED;
         }
     }
 
@@ -352,45 +319,45 @@ static void APP_InitInputBuffer(void)
     {
         for (j = 0; j < APP_PS_SIZE; j++)
         {
-            s_psBufferPxp[i][j] = 0xFF00U;
+            s_psBufferPxp[i][j] = APP_GREEN;
         }
     }
 
-    memset(s_psBufferLcd, 0x0U, sizeof(s_psBufferLcd));
+    memset(s_BufferLcd, 0x0U, sizeof(s_BufferLcd));
 }
 
 static void APP_InitPxpCommand(void)
 {
     pxpCommand.CTRL       = PXP_CTRL_ROT_POS(1) | PXP_CTRL_ENABLE_MASK;
-    pxpCommand.STAT       = 0x00000000;                                       /* STAT, don't care */
-    pxpCommand.OUT_CTRL   = PXP_PS_CTRL_FORMAT(kPXP_OutputPixelFormatRGB888); /* OUT_CTRL */
-    pxpCommand.OUT_BUF    = (uint32_t)s_psBufferLcd[0];                       /* OUT_BUF */
-    pxpCommand.OUT_BUF2   = 0x00000000;                                       /* OUT_BUF2 */
-    pxpCommand.OUT_PITCH  = APP_BPP * APP_IMG_WIDTH;                          /* OUT_PITCH */
+    pxpCommand.STAT       = 0x00000000;                              /* STAT, don't care */
+    pxpCommand.OUT_CTRL   = PXP_OUT_CTRL_FORMAT(APP_PXP_OUT_FORMAT); /* OUT_CTRL */
+    pxpCommand.OUT_BUF    = (uint32_t)s_BufferLcd[0];                /* OUT_BUF */
+    pxpCommand.OUT_BUF2   = 0x00000000;                              /* OUT_BUF2 */
+    pxpCommand.OUT_PITCH  = APP_BPP * APP_IMG_WIDTH;                 /* OUT_PITCH */
     pxpCommand.OUT_LRC    = PXP_OUT_LRC_Y(APP_IMG_HEIGHT - 1U) | PXP_OUT_LRC_X(APP_IMG_WIDTH - 1U); /* OUT_LRC */
     pxpCommand.OUT_PS_ULC = PXP_OUT_PS_ULC_Y(APP_PS_ULC_Y) | PXP_OUT_PS_ULC_X(APP_PS_ULC_X);        /* OUT_PS_ULC */
     pxpCommand.OUT_PS_LRC = PXP_OUT_PS_LRC_Y(APP_PS_LRC_Y) | PXP_OUT_PS_LRC_X(APP_PS_LRC_X);        /* OUT_PS_LRC */
     /* Disable AS. */
-    pxpCommand.OUT_AS_ULC    = 0x3FFF3FFF;                 /* OUT_AS_ULC */
-    pxpCommand.OUT_AS_LRC    = 0x00000000;                 /* OUT_AS_LRC */
-    pxpCommand.PS_CTRL       = 0x00000004;                 /* PS_CTRL */
-    pxpCommand.PS_BUF        = (uint32_t)s_psBufferPxp;    /* PS_BUF */
-    pxpCommand.PS_UBUF       = 0x00000000;                 /* PS_UBUF */
-    pxpCommand.PS_VBUF       = 0x00000000;                 /* PS_VBUF */
-    pxpCommand.PS_PITCH      = APP_BPP * APP_PS_SIZE;      /* PS_PITCH */
-    pxpCommand.PS_BACHGROUND = 0x00000000;                 /* PS_BACHGROUND */
-    pxpCommand.PS_SCALE      = 0x10001000;                 /* PS_SCALE */
-    pxpCommand.PS_OFFSET     = 0x00000000;                 /* PS_OFFSET */
-    pxpCommand.PS_CLRKEYLOW  = 0x00FFFFFF;                 /* PS_CLRKEYLOW */
-    pxpCommand.PS_CLRKEYHIGH = 0x00000000;                 /* PS_CLRKEYHIGH */
-    pxpCommand.AS_CTRL       = 0x00000000;                 /* AS_CTRL */
-    pxpCommand.AS_BUF        = 0x00000000;                 /* AS_BUF */
-    pxpCommand.AS_PITCH      = 0x00000000;                 /* AS_PITCH */
-    pxpCommand.AS_CLRKEYLOW  = 0x00FFFFFF;                 /* AS_CLRKEYLOW */
-    pxpCommand.AS_CLRKEYHIGH = 0x00000000;                 /* AS_CLRKEYHIGH */
-    pxpCommand.CSC1_COEF0    = PXP_CSC1_COEF0_BYPASS_MASK; /* CSC1_COEF0, don't care. */
-    pxpCommand.CSC1_COEF1    = 0x00000000;                 /* CSC1_COEF1, don't care. */
-    pxpCommand.CSC1_COEF2    = 0x00000000;                 /* CSC1_COEF2, don't care. */
+    pxpCommand.OUT_AS_ULC    = 0x3FFF3FFF;                            /* OUT_AS_ULC */
+    pxpCommand.OUT_AS_LRC    = 0x00000000;                            /* OUT_AS_LRC */
+    pxpCommand.PS_CTRL       = PXP_PS_CTRL_FORMAT(APP_PXP_PS_FORMAT); /* PS_CTRL */
+    pxpCommand.PS_BUF        = (uint32_t)s_psBufferPxp;               /* PS_BUF */
+    pxpCommand.PS_UBUF       = 0x00000000;                            /* PS_UBUF */
+    pxpCommand.PS_VBUF       = 0x00000000;                            /* PS_VBUF */
+    pxpCommand.PS_PITCH      = APP_BPP * APP_PS_SIZE;                 /* PS_PITCH */
+    pxpCommand.PS_BACHGROUND = 0x00000000;                            /* PS_BACHGROUND */
+    pxpCommand.PS_SCALE      = 0x10001000;                            /* PS_SCALE */
+    pxpCommand.PS_OFFSET     = 0x00000000;                            /* PS_OFFSET */
+    pxpCommand.PS_CLRKEYLOW  = 0x00FFFFFF;                            /* PS_CLRKEYLOW */
+    pxpCommand.PS_CLRKEYHIGH = 0x00000000;                            /* PS_CLRKEYHIGH */
+    pxpCommand.AS_CTRL       = 0x00000000;                            /* AS_CTRL */
+    pxpCommand.AS_BUF        = 0x00000000;                            /* AS_BUF */
+    pxpCommand.AS_PITCH      = 0x00000000;                            /* AS_PITCH */
+    pxpCommand.AS_CLRKEYLOW  = 0x00FFFFFF;                            /* AS_CLRKEYLOW */
+    pxpCommand.AS_CLRKEYHIGH = 0x00000000;                            /* AS_CLRKEYHIGH */
+    pxpCommand.CSC1_COEF0    = PXP_CSC1_COEF0_BYPASS_MASK;            /* CSC1_COEF0, don't care. */
+    pxpCommand.CSC1_COEF1    = 0x00000000;                            /* CSC1_COEF1, don't care. */
+    pxpCommand.CSC1_COEF2    = 0x00000000;                            /* CSC1_COEF2, don't care. */
 #if !(defined(FSL_FEATURE_PXP_HAS_NO_CSC2) && FSL_FEATURE_PXP_HAS_NO_CSC2)
     pxpCommand.CSC2_CTRL  = PXP_CSC2_CTRL_BYPASS_MASK; /* CSC2_CTRL */
     pxpCommand.CSC2_COEF0 = 0x00000000;                /* CSC2_COEF0, don't care. */
@@ -418,4 +385,9 @@ static void APP_InitPxpCommand(void)
     pxpCommand.HIST16_PARAM3 = 0x0F0E0D0C; /* HIST16_PARAM3 */
     pxpCommand.POWER         = 0x00000000; /* POWER */
     pxpCommand.NEXT          = 0x00000000; /* NEXT, don't care */
+}
+
+static void APP_BufferSwitchOffCallback(void *param, void *switchOffBuffer)
+{
+    s_newFrameShown = true;
 }

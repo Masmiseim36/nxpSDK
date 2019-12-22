@@ -1,20 +1,22 @@
 /*
 ** ###################################################################
-**     Processors:          MIMXRT1052CVL5A
-**                          MIMXRT1052DVL6A
+**     Processors:          MIMXRT1052CVJ5B
+**                          MIMXRT1052CVL5B
+**                          MIMXRT1052DVJ6B
+**                          MIMXRT1052DVL6B
 **
 **     Compiler:            GNU C Compiler
-**     Reference manual:    IMXRT1050RM Rev.C, 08/2017
-**     Version:             rev. 0.1, 2017-01-10
-**     Build:               b170914
+**     Reference manual:    IMXRT1050RM Rev.2.1, 12/2018 | IMXRT1050SRM Rev.2
+**     Version:             rev. 1.0, 2018-09-21
+**     Build:               b190730
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2017 NXP
+**     Copyright 2016-2019 NXP
 **     All rights reserved.
-**     
+**
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -41,6 +43,9 @@ MEMORY
 /* Define output sections */
 SECTIONS
 {
+  __NCACHE_REGION_START = ORIGIN(m_ncache);
+  __NCACHE_REGION_SIZE  = LENGTH(m_ncache);
+
   /* The startup code goes first into internal RAM */
   .interrupts :
   {

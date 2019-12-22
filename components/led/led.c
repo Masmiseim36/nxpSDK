@@ -25,11 +25,12 @@
 /* LED control type enumeration */
 typedef enum _led_control_type
 {
-    kLED_TurnOff = 0x01U,    /*!< Turn Off */
-    kLED_TurnOn,             /*!< Turn On */
-    kLED_Flash,              /*!< Flash */
+    kLED_TurnOffOn = 0x01U, /*!< Turn Off or on*/
+    kLED_Flash,             /*!< Flash */
+#if (defined(LED_COLOR_WHEEL_ENABLEMENT) && (LED_COLOR_WHEEL_ENABLEMENT > 0U))
     kLED_TricolorCycleFlash, /*!< Tricolor Cycle Flash */
     kLED_CycleFlash,         /*!< Cycle Flash */
+#endif                       /* (defined(LED_COLOR_WHEEL_ENABLEMENT) && (LED_COLOR_WHEEL_ENABLEMENT > 0U)) */
     kLED_Dimming,            /*!< Dimming */
 } led_control_type_t;
 
@@ -93,7 +94,9 @@ typedef struct _led_state
     struct
     {
         uint16_t controlType : 4U;
+#if (defined(LED_COLOR_WHEEL_ENABLEMENT) && (LED_COLOR_WHEEL_ENABLEMENT > 0U))
         uint16_t flashCount : 3U;
+#endif
         uint16_t : 1U;
         uint16_t flashDuty : 7U;
         uint16_t : 1U;
@@ -130,7 +133,7 @@ static led_status_t LED_SetStatus(led_state_t *ledState, led_color_t color, uint
     ledState->expiryPeriodCount = s_ledList.periodCount + threshold;
     ledRgbPin                   = (led_pin_t *)ledState->pins;
 
-    if (kLED_TypeRgb == ledRgbPin->config.type)
+    if ((uint16_t)kLED_TypeRgb == ledRgbPin->config.type)
     {
         count = sizeof(led_config_t) / sizeof(led_pin_config_t);
     }
@@ -152,9 +155,9 @@ static led_status_t LED_SetStatus(led_state_t *ledState, led_color_t color, uint
 #endif
         {
             if (kStatus_HAL_GpioSuccess !=
-                (int8_t)HAL_GpioSetOutput(ledState->gpioHandle[i], (colorSet != 0U) ?
-                                                                       (1U - ledRgbPin[i].gpio.pinStateDefault) :
-                                                                       ledRgbPin[i].gpio.pinStateDefault))
+                HAL_GpioSetOutput(ledState->gpioHandle[i], (colorSet != 0U) ?
+                                                               (1U - (uint8_t)ledRgbPin[i].gpio.pinStateDefault) :
+                                                               (uint8_t)ledRgbPin[i].gpio.pinStateDefault))
             {
                 status = kStatus_LED_Error;
             }
@@ -176,18 +179,20 @@ static void LED_TimerEvent(void *param)
 
     s_ledList.periodCount += LED_TIMER_INTERVAL;
 
-    while (ledState != NULL)
+    while (NULL != ledState)
     {
         if (s_ledList.periodCount >= ledState->expiryPeriodCount)
         {
             switch (ledState->controlType)
             {
-                case (uint16_t)kLED_Flash:              /*!< Flash */
+                case (uint16_t)kLED_Flash: /*!< Flash */
+#if (defined(LED_COLOR_WHEEL_ENABLEMENT) && (LED_COLOR_WHEEL_ENABLEMENT > 0U))
                 case (uint16_t)kLED_TricolorCycleFlash: /*!< Tricolor Cycle Flash */
                 case (uint16_t)kLED_CycleFlash:         /*!< Cycle Flash */
+#endif /* (defined(LED_COLOR_WHEEL_ENABLEMENT) && (LED_COLOR_WHEEL_ENABLEMENT > 0U)) */
                     if (LED_FLASH_CYCLE_FOREVER != ledState->flashCycle)
                     {
-                        if ((ledState->flashCycle != 0U))
+                        if ((0U != ledState->flashCycle))
                         {
                             if (((led_color_t)kLED_Black == ledState->currentColor) || (100U == ledState->flashDuty))
                             {
@@ -195,7 +200,7 @@ static void LED_TimerEvent(void *param)
                             }
                         }
                     }
-                    if (ledState->flashCycle != 0U)
+                    if (0U != ledState->flashCycle)
                     {
                         if ((100U > ledState->flashDuty))
                         {
@@ -210,6 +215,7 @@ static void LED_TimerEvent(void *param)
                         }
                         else
                         {
+#if (defined(LED_COLOR_WHEEL_ENABLEMENT) && (LED_COLOR_WHEEL_ENABLEMENT > 0U))
                             ledState->flashCount++;
                             if ((uint16_t)kLED_TricolorCycleFlash == ledState->controlType)
                             {
@@ -222,15 +228,15 @@ static void LED_TimerEvent(void *param)
                                 {
                                     (ledState->flashCount)++;
                                 }
-                                if (((ledState->flashCount) & 0x04U) != 0U)
+                                if (0U != ((ledState->flashCount) & 0x04U))
                                 {
                                     color = (led_color_t)0xFF0000;
                                 }
-                                if (((ledState->flashCount) & 0x02U) != 0U)
+                                if (0U != ((ledState->flashCount) & 0x02U))
                                 {
                                     color |= (led_color_t)0xFF00;
                                 }
-                                if (((ledState->flashCount) & 0x01U) != 0U)
+                                if (0U != ((ledState->flashCount) & 0x01U))
                                 {
                                     color |= (led_color_t)0xFF;
                                 }
@@ -240,6 +246,7 @@ static void LED_TimerEvent(void *param)
                             {
                                 /*Misra Rule 15.7*/
                             }
+#endif /* (defined(LED_COLOR_WHEEL_ENABLEMENT) && (LED_COLOR_WHEEL_ENABLEMENT > 0U)) */
                             threshold = (uint32_t)ledState->flashPeriod * (uint32_t)(ledState->flashDuty) / 100U;
                         }
 
@@ -377,7 +384,7 @@ led_status_t LED_Init(led_handle_t ledHandle, led_config_t *ledConfig)
 #endif
     for (i = 0; i < (int)count; i++)
     {
-        ledState->pins[i].config.type = ledConfig->type;
+        ledState->pins[i].config.type = (uint16_t)ledConfig->type;
 #if (defined(LED_DIMMING_ENABLEMENT) && (LED_DIMMING_ENABLEMENT > 0U))
         if (ledRgbConfigPin[i].dimmingEnable)
         {
@@ -403,6 +410,7 @@ led_status_t LED_Init(led_handle_t ledHandle, led_config_t *ledConfig)
             ledState->pins[i].gpio.pinStateDefault = ledRgbConfigPin[i].gpio.pinStateDefault;
             controlPin.port                        = ledRgbConfigPin[i].gpio.port;
             controlPin.pin                         = ledRgbConfigPin[i].gpio.pin;
+            controlPin.level                       = ledRgbConfigPin[i].gpio.pinStateDefault;
             if (kStatus_HAL_GpioSuccess != HAL_GpioInit((hal_gpio_handle_t)ledState->gpioHandle[i], &controlPin))
             {
                 return kStatus_LED_Error;
@@ -410,12 +418,7 @@ led_status_t LED_Init(led_handle_t ledHandle, led_config_t *ledConfig)
         }
     }
 
-    if (kStatus_LED_Success != LED_TurnOnOff(ledState, 0))
-    {
-        return kStatus_LED_Error;
-    }
-
-    return kStatus_LED_Success;
+    return LED_TurnOnOff(ledState, 0);
 }
 
 led_status_t LED_Deinit(led_handle_t ledHandle)
@@ -470,7 +473,7 @@ led_status_t LED_Deinit(led_handle_t ledHandle)
         {
             (void)HAL_GpioDeinit(ledState->gpioHandle[i]);
         }
-        if ((kLED_TypeRgb != ledState->pins[i].config.type))
+        if (((uint16_t)kLED_TypeRgb != ledState->pins[i].config.type))
         {
             break;
         }
@@ -486,21 +489,10 @@ led_status_t LED_TurnOnOff(led_handle_t ledHandle, uint8_t turnOnOff)
 
     assert(ledHandle);
 
-    ledState = (led_state_t *)ledHandle;
-    LED_ENTER_CRITICAL();
-    if (turnOnOff != 0U)
-    {
-        ledState->controlType  = (uint16_t)kLED_TurnOn;
-        ledState->currentColor = ledState->settingColor;
-    }
-    else
-    {
-        ledState->controlType  = (uint16_t)kLED_TurnOff;
-        ledState->currentColor = (led_color_t)kLED_Black;
-    }
-    LED_EXIT_CRITICAL();
-
-    status = LED_SetStatus(ledState, ledState->currentColor, 0);
+    ledState               = (led_state_t *)ledHandle;
+    ledState->controlType  = (uint16_t)kLED_TurnOffOn;
+    ledState->currentColor = turnOnOff ? ledState->settingColor : (led_color_t)kLED_Black;
+    status                 = LED_SetStatus(ledState, ledState->currentColor, 0);
     return status;
 }
 
@@ -512,7 +504,7 @@ led_status_t LED_SetColor(led_handle_t ledHandle, led_color_t ledRgbColor)
 
     ledState = (led_state_t *)ledHandle;
 
-    if ((kLED_TypeRgb != ledState->pins[0].config.type))
+    if (((uint16_t)kLED_TypeRgb != ledState->pins[0].config.type))
     {
         return kStatus_LED_Error;
     }
@@ -533,32 +525,32 @@ led_status_t LED_Flash(led_handle_t ledHandle, led_flash_config_t *ledFlash)
     assert(ledFlash->duty <= 100);
 
     ledState = (led_state_t *)ledHandle;
-    LED_ENTER_CRITICAL();
 
-    if (kLED_FlashOneColor == ledFlash->flashType)
-    {
-        ledState->controlType = (uint16_t)kLED_Flash;
-    }
-    else
-    {
-        if ((kLED_TypeRgb != ledState->pins[0].config.type))
-        {
-            LED_EXIT_CRITICAL();
-            return kStatus_LED_Error;
-        }
-        ledState->controlType = (uint16_t)kLED_CycleFlash;
-    }
     ledState->flashPeriod = ledFlash->period;
     ledState->flashDuty   = ledFlash->duty;
 
     ledState->currentColor = ledState->settingColor;
     ledState->flashCycle   = ledFlash->times;
     ledState->nextColor    = (led_color_t)kLED_Black;
-    LED_EXIT_CRITICAL();
+
+#if (defined(LED_COLOR_WHEEL_ENABLEMENT) && (LED_COLOR_WHEEL_ENABLEMENT > 0U))
+    if (kLED_FlashOneColor == ledFlash->flashType)
+    {
+        ledState->controlType = (uint16_t)kLED_Flash;
+    }
+    else
+    {
+        if (((uint16_t)kLED_TypeRgb != ledState->pins[0].config.type))
+        {
+            return kStatus_LED_Error;
+        }
+        ledState->controlType = (uint16_t)kLED_CycleFlash;
+    }
+#else
+    ledState->controlType = (uint16_t)kLED_Flash;
+#endif /* (defined(LED_COLOR_WHEEL_ENABLEMENT) && (LED_COLOR_WHEEL_ENABLEMENT > 0U)) */
     status = LED_SetStatus(ledState, ledState->currentColor,
                            ((uint32_t)ledState->flashPeriod * (uint32_t)ledState->flashDuty) / 100U);
-    (void)status;
-
     return status;
 }
 

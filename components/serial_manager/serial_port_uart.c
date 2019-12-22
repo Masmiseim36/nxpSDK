@@ -108,7 +108,7 @@ static void Serial_UartCallback(hal_uart_handle_t handle, hal_uart_status_t stat
     }
     else if ((hal_uart_status_t)kStatus_HAL_UartTxIdle == status)
     {
-        if (serialUartHandle->tx.busy != 0U)
+        if (0U != serialUartHandle->tx.busy)
         {
             serialUartHandle->tx.busy = 0U;
             if ((NULL != serialUartHandle->tx.callback))
@@ -170,7 +170,7 @@ serial_manager_status_t Serial_UartInit(serial_handle_t serialHandle, void *seri
         return kStatus_SerialManager_Error;
     }
 
-    if (uartConfig->enableRx != 0U)
+    if (0U != uartConfig->enableRx)
     {
         serialUartHandle->rx.busy = 1U;
 #if (defined(HAL_UART_TRANSFER_MODE) && (HAL_UART_TRANSFER_MODE > 0U))
@@ -233,7 +233,7 @@ serial_manager_status_t Serial_UartWrite(serial_handle_t serialHandle, uint8_t *
 
     serialUartHandle = (serial_uart_state_t *)serialHandle;
 
-    if (serialUartHandle->tx.busy != 0U)
+    if (0U != serialUartHandle->tx.busy)
     {
         return kStatus_SerialManager_Busy;
     }
@@ -312,7 +312,7 @@ serial_manager_status_t Serial_UartCancelWrite(serial_handle_t serialHandle)
 #else
     (void)HAL_UartAbortSend(((hal_uart_handle_t)&serialUartHandle->usartHandleBuffer[0]));
 #endif
-    if (isBusy != 0U)
+    if (0U != isBusy)
     {
         if ((NULL != serialUartHandle->tx.callback))
         {
@@ -367,5 +367,37 @@ void Serial_UartIsrFunction(serial_handle_t serialHandle)
     HAL_UartIsrFunction(((hal_uart_handle_t)&serialUartHandle->usartHandleBuffer[0]));
 }
 #endif
+
+serial_manager_status_t Serial_UartEnterLowpower(serial_handle_t serialHandle)
+{
+    serial_uart_state_t *serialUartHandle;
+
+    assert(serialHandle);
+
+    serialUartHandle = (serial_uart_state_t *)serialHandle;
+
+    if (kStatus_HAL_UartSuccess != HAL_UartEnterLowpower(((hal_uart_handle_t)&serialUartHandle->usartHandleBuffer[0])))
+    {
+        return kStatus_SerialManager_Error;
+    }
+
+    return kStatus_SerialManager_Success;
+}
+
+serial_manager_status_t Serial_UartExitLowpower(serial_handle_t serialHandle)
+{
+    serial_uart_state_t *serialUartHandle;
+
+    assert(serialHandle);
+
+    serialUartHandle = (serial_uart_state_t *)serialHandle;
+
+    if (kStatus_HAL_UartSuccess != HAL_UartExitLowpower(((hal_uart_handle_t)&serialUartHandle->usartHandleBuffer[0])))
+    {
+        return kStatus_SerialManager_Error;
+    }
+
+    return kStatus_SerialManager_Success;
+}
 
 #endif

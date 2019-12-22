@@ -146,7 +146,7 @@ usb_device_interfaces_struct_t g_UsbDeviceAudioInterfaces[USB_AUDIO_SPEAKER_INTE
         USB_AUDIO_PROTOCOL,                /* Audio protocol code */
         USB_AUDIO_CONTROL_INTERFACE_INDEX, /* The interface number of the Audio control */
         g_UsbDeviceAudioControInterface,   /* The handle of Audio control */
-        sizeof(g_UsbDeviceAudioControInterface) / sizeof(usb_device_interfaces_struct_t),
+        sizeof(g_UsbDeviceAudioControInterface) / sizeof(usb_device_interface_struct_t),
     },
     {
         USB_AUDIO_CLASS,                  /* Audio class code */
@@ -154,7 +154,7 @@ usb_device_interfaces_struct_t g_UsbDeviceAudioInterfaces[USB_AUDIO_SPEAKER_INTE
         USB_AUDIO_PROTOCOL,               /* Audio protocol code */
         USB_AUDIO_STREAM_INTERFACE_INDEX, /* The interface number of the Audio control */
         g_UsbDeviceAudioStreamInterface,  /* The handle of Audio stream */
-        sizeof(g_UsbDeviceAudioStreamInterface) / sizeof(usb_device_interfaces_struct_t),
+        sizeof(g_UsbDeviceAudioStreamInterface) / sizeof(usb_device_interface_struct_t),
     }
 
 };

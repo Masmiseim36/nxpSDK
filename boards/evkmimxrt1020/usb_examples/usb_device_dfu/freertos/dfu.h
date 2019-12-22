@@ -85,7 +85,7 @@ typedef struct _usb_dfu_status_struct
 /*! @brief DFU device definition. */
 typedef struct _usb_dfu_struct
 {
-    usb_dfu_status_struct_t dfuStatus;
+    usb_dfu_status_struct_t *dfuStatus;
     uint32_t dfuFirmwareBlockLength;
     uint32_t dfuIsTheFirstBlock;
     uint32_t dfuCRC;
@@ -116,13 +116,6 @@ typedef enum _usb_device_dfu_state_event
     kUSB_DeviceDfuEventPollTimeout,
 } usb_device_dfu_state_event_t;
 
-/* Disable interrupt to enter critical section. */
-#define USB_DEVICE_DFU_ENTER_CRITICAL() \
-    USB_OSA_SR_ALLOC();                 \
-    USB_OSA_ENTER_CRITICAL()
-
-/* Enable interrupt to exit critical section. */
-#define USB_DEVICE_DFU_EXIT_CRITICAL() USB_OSA_EXIT_CRITICAL()
 
 /* Define DFU event struct */
 typedef struct _usb_device_dfu_event_struct
@@ -139,7 +132,8 @@ typedef struct _dfu_queue
     uint32_t tail;
     uint32_t maxSize;
     uint32_t curSize;
-    usb_osa_mutex_handle mutex;
+    osa_mutex_handle_t mutex;
+    uint32_t mutexBuffer[(OSA_MUTEX_HANDLE_SIZE + 3)/4]; /*!< The mutex buffer. */
     usb_device_dfu_event_struct_t qArray[DFU_EVENT_QUEUE_MAX];
 } dfu_queue_t;
 

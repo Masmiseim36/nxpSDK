@@ -1,4 +1,4 @@
-eIQ TensorFlow Lite library 1.0
+eIQ TensorFlow Lite library 1.1.0
 
 Content
 -------
@@ -18,7 +18,7 @@ inference. Models trained by TensorFlow can be converted into a compressed
 FlatBuffers format with the TensorFlow Lite Converter (available in
 the TensorFlow distributions). Converted .tflite files can be then downloaded
 into an embedded device. The eIQ TensorFlow Lite library is based on
-TensorFlow Lite 1.11.0 and is therefore fully compatible. 
+TensorFlow Lite 1.14.0 and is therefore fully compatible. 
 Note: TensorFlow Lite supports only a subset of operators available in
       TensorFlow. The conversion tool reports any unsupported operators during
       the conversion.
@@ -68,29 +68,40 @@ MCUXpresso IDE, IAR Embedded Workbench, Keil MDK, GNU ARM Embedded Toolchain
 
 6. Release notes
 ----------------
-The library is based on TensorFlow Lite version 1.11.0 available
-at https://github.com/tensorflow/tensorflow/tree/r1.11/tensorflow/contrib/lite.
+The library is based on TensorFlow Lite version 1.14.0 available
+at https://github.com/tensorflow/tensorflow/tree/r1.14/tensorflow/lite.
 Main modifications introduced to the original library source code:
   * Removed files not containing the TensorFlow Lite library source codes or
     not needed for building the TensorFlow Lite library
   * Replaced multi-threaded execution with single threaded on MCUs
   * Fixed source code to build with MCUXpresso SDK supported toolchains
   * Added third party library source codes
-    * Eigen (https://bitbucket.org/eigen/eigen/commits/fd6845384b866b28d336f43ffa70b982f9f3056e)
+    * Eigen (https://bitbucket.org/eigen/eigen/commits/a0d250e79c79)
       * Removed files not needed for compiling the TensorFlow Lite library
       * Added support for the IAR Embedded Workbench compiler
-    * Farmhash (https://github.com/google/farmhash/commit/816a4ae622e964763ca0862d9dbd19324a1eaf45)
-      * Removed files not needed for compiling the TensorFlow Lite library
-    * FFT2D (http://www.kurims.kyoto-u.ac.jp/~ooura/fft2d.tgz)
-      * Removed files not needed for compiling the TensorFlow Lite library
-    * FlatBuffers (https://github.com/google/flatbuffers/archive/v1.8.0.zip)
+    * Farmhash (http://mirror.tensorflow.org/github.com/google/farmhash/archive/816a4ae622e964763ca0862d9dbd19324a1eaf45.tar.gz)
       * Removed files not needed for compiling the TensorFlow Lite library
       * Added support for the IAR Embedded Workbench compiler
-    * Gemmlowp (https://github.com/google/gemmlowp/commit/38ebac7b059e84692f53e5938f97a9943c120d98)
+    * FFT2D (http://mirror.tensorflow.org/www.kurims.kyoto-u.ac.jp/~ooura/fft.tgz)
+      * Removed files not needed for compiling the TensorFlow Lite library
+    * FlatBuffers (http://mirror.tensorflow.org/github.com/google/flatbuffers/archive/v1.11.0.tar.gz)
+      * Removed files not needed for compiling the TensorFlow Lite library
+      * Added support for the IAR Embedded Workbench compiler
+    * Gemmlowp (https://github.com/google/gemmlowp/commit/12fed0cd7cfcd9e169bf1925bc3a7a58725fdcc3)
       * Removed files not needed for compiling the TensorFlow Lite library
       * Added support for the IAR Embedded Workbench compiler
       * Added support for single threaded execution on MCUs
   * Added build projects for MCUXpresso SDK supported toolchains
+  * Modified examples
+      * cifar10 (https://github.com/tensorflow/tensorflow/tree/r0.7/tensorflow/models/image/cifar10/commit/7760ce5)
+        * Added MCUXpresso SDK support
+        * Added camera and LCD support
+      * kws (https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/speech_commands/commit/7144571, https://github.com/ARM-software/ML-KWS-for-MCU/tree/master/Deployment/commit/8151349)
+        * Added MCUXpresso SDK support
+        * Added microphone and headphone support
+      * label_image (https://github.com/tensorflow/tensorflow/tree/master/tensorflow/lite/examples/label_image/commit/1f40e57)
+        * Added MCUXpresso SDK support
+        * Added camera and LCD support
 
 7. Limitations
 --------------

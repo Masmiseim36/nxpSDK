@@ -6,6 +6,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "fsl_common.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_pxp.h"
@@ -57,7 +58,33 @@
 #define APP_PS_LRC_X ((APP_IMG_WIDTH / 2) + (APP_PS_SIZE / 2) - 1U)
 #define APP_PS_LRC_Y ((APP_IMG_HEIGHT / 2) + (APP_PS_SIZE / 2) - 1U)
 
-#define APP_BPP 4U /* Use 24-bit RGB888 format. */
+#if (defined(USE_RGB565) && USE_RGB565)
+
+typedef uint16_t pixel_t;
+#define APP_BPP 2U /* Use 16-bit RGB565 format. */
+#define APP_RED 0xF100U
+#define APP_GREEN 0x07E0U
+#define APP_BLUE 0x001FU
+#define APP_PXP_PS_FORMAT kPXP_PsPixelFormatRGB565
+#define APP_PXP_AS_FORMAT kPXP_AsPixelFormatRGB565
+#define APP_PXP_OUT_FORMAT kPXP_OutputPixelFormatRGB565
+#define APP_DC_FORMAT kVIDEO_PixelFormatRGB565
+#define APP_LCDIF_FORMAT kELCDIF_PixelFormatRGB565
+
+#else
+
+typedef uint32_t pixel_t;
+#define APP_BPP 4U /* Use 32-bit XRGB888 format. */
+#define APP_RED 0x00FF0000U
+#define APP_GREEN 0x0000FF00U
+#define APP_BLUE 0x000000FFU
+#define APP_PXP_PS_FORMAT kPXP_PsPixelFormatRGB888
+#define APP_PXP_AS_FORMAT kPXP_AsPixelFormatRGB888
+#define APP_PXP_OUT_FORMAT kPXP_OutputPixelFormatRGB888
+#define APP_DC_FORMAT kVIDEO_PixelFormatXRGB8888
+#define APP_LCDIF_FORMAT kELCDIF_PixelFormatXRGB8888
+
+#endif
 
 #ifndef APP_LCDIF_DATA_BUS
 #define APP_LCDIF_DATA_BUS kELCDIF_DataBus24Bit
@@ -78,9 +105,9 @@ static void APP_HandShake(void);
  * In this example, the PXP block size is 8*8, so the buffer for hand shake
  * should be 16 lines.
  */
-AT_NONCACHEABLE_SECTION_ALIGN(static uint32_t s_HandShakeBuffer[8 * 2][APP_IMG_WIDTH], FRAME_BUFFER_ALIGN);
-AT_NONCACHEABLE_SECTION_ALIGN(static uint32_t s_psBufferPxp[APP_PS_HEIGHT][APP_PS_WIDTH], FRAME_BUFFER_ALIGN);
-AT_NONCACHEABLE_SECTION_ALIGN(static uint32_t s_asBufferPxp[APP_AS_HEIGHT][APP_AS_WIDTH], FRAME_BUFFER_ALIGN);
+AT_NONCACHEABLE_SECTION_ALIGN(static pixel_t s_HandShakeBuffer[8 * 2][APP_IMG_WIDTH], FRAME_BUFFER_ALIGN);
+AT_NONCACHEABLE_SECTION_ALIGN(static pixel_t s_psBufferPxp[APP_PS_HEIGHT][APP_PS_WIDTH], FRAME_BUFFER_ALIGN);
+AT_NONCACHEABLE_SECTION_ALIGN(static pixel_t s_asBufferPxp[APP_AS_HEIGHT][APP_AS_WIDTH], FRAME_BUFFER_ALIGN);
 
 /*******************************************************************************
  * Code
@@ -94,6 +121,7 @@ void BOARD_InitLcd(void)
     gpio_pin_config_t config = {
         kGPIO_DigitalOutput,
         0,
+        kGPIO_NoIntmode,
     };
 
     /* Reset the LCD. */
@@ -183,9 +211,13 @@ static void APP_InitLcdif(void)
         .vbp           = APP_VBP,
         .polarityFlags = APP_POL_FLAGS,
         .bufferAddr    = (uint32_t)s_HandShakeBuffer,
-        .pixelFormat   = kELCDIF_PixelFormatXRGB8888,
+        .pixelFormat   = APP_LCDIF_FORMAT,
         .dataBus       = APP_LCDIF_DATA_BUS,
     };
+
+#if (defined(APP_ELCDIF_HAS_DISPLAY_INTERFACE) && APP_ELCDIF_HAS_DISPLAY_INTERFACE)
+    BOARD_InitDisplayInterface();
+#endif
 
     ELCDIF_RgbModeInit(APP_ELCDIF, &config);
 
@@ -200,7 +232,7 @@ static void APP_InitPxp(void)
 
     /* PS configure. */
     const pxp_ps_buffer_config_t psBufferConfig = {
-        .pixelFormat = kPXP_PsPixelFormatRGB888,
+        .pixelFormat = APP_PXP_PS_FORMAT,
         .swapByte    = false,
         .bufferAddr  = (uint32_t)s_psBufferPxp,
         .bufferAddrU = 0U,
@@ -214,7 +246,7 @@ static void APP_InitPxp(void)
 
     /* AS config. */
     const pxp_as_buffer_config_t asBufferConfig = {
-        .pixelFormat = kPXP_AsPixelFormatRGB888,
+        .pixelFormat = APP_PXP_AS_FORMAT,
         .bufferAddr  = (uint32_t)s_asBufferPxp,
         .pitchBytes  = APP_AS_WIDTH * APP_BPP,
     };
@@ -229,7 +261,7 @@ static void APP_InitPxp(void)
 
     /* Output config. */
     const pxp_output_buffer_config_t outputBufferConfig = {
-        .pixelFormat    = kPXP_OutputPixelFormatRGB888,
+        .pixelFormat    = APP_PXP_OUT_FORMAT,
         .interlacedMode = kPXP_OutputProgressive,
         .buffer0Addr    = (uint32_t)s_HandShakeBuffer,
         .buffer1Addr    = 0U,
@@ -338,7 +370,7 @@ static void APP_InitInputBuffer(void)
     {
         for (j = 0; j < APP_PS_WIDTH; j++)
         {
-            s_psBufferPxp[i][j] = 0xFFU;
+            s_psBufferPxp[i][j] = APP_BLUE;
         }
     }
 
@@ -346,7 +378,7 @@ static void APP_InitInputBuffer(void)
     {
         for (j = 0; j < APP_PS_WIDTH; j++)
         {
-            s_asBufferPxp[i][j] = 0xFF0000U;
+            s_asBufferPxp[i][j] = APP_RED;
         }
     }
 

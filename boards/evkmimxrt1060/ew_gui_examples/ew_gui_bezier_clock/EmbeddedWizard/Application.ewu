@@ -1,0 +1,27 @@
+$version 6.60
+
+// This is the root component of the entire GUI application.
+$rect <20,50,220,90>
+$output false
+class Application : Core::Root
+{
+  $rect <820,60,1020,100>
+  inherited property Bounds = <0,0,480,272>;
+
+  $rect <820,10,1020,50>
+  inherited method Init()
+  {
+    /* just adjust the applications bounds... */
+    Bounds.size = $ScreenSize;
+    BezierClock.Bounds.size = $ScreenSize;;
+  }
+
+  $rect <20,50,220,90>
+  object BezierClock::BezierClock BezierClock;
+}
+
+// Application class of the example
+note group Note4
+{
+  attr Bounds = <0,10,640,110>;
+}

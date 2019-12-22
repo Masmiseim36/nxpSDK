@@ -56,7 +56,7 @@ SDK_ALIGN(uint8_t g_txDataBuff[ENET_TXBD_NUM][SDK_SIZEALIGN(ENET_TXBUFF_SIZE, AP
           APP_ENET_BUFF_ALIGNMENT);
 
 enet_handle_t g_handle;
-uint8_t g_frame[ENET_DATA_LENGTH + 14];
+uint8_t g_frame[ENET_DATA_LENGTH];
 uint32_t g_testTxNum = 0;
 
 /*! @brief The MAC address for ENET device. */

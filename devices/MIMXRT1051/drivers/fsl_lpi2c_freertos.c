@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -115,7 +115,7 @@ status_t LPI2C_RTOS_Transfer(lpi2c_rtos_handle_t *handle, lpi2c_master_transfer_
     }
 
     /* Wait for transfer to finish */
-    xSemaphoreTake(handle->semaphore, portMAX_DELAY);
+    (void)xSemaphoreTake(handle->semaphore, portMAX_DELAY);
 
     /* Unlock resource mutex */
     xSemaphoreGive(handle->mutex);

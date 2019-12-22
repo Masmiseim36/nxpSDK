@@ -44,6 +44,11 @@
 #define EXAMPLE_CLOCK_NAME kCLOCK_CoreSysClk
 
 
+#ifndef EXAMPLE_NETIF_INIT_FN
+/*! @brief Network interface initialization function. */
+#define EXAMPLE_NETIF_INIT_FN ethernetif0_init
+#endif /* EXAMPLE_NETIF_INIT_FN */
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -71,35 +76,49 @@ void delay(void)
 }
 
 
+void *pvPortCalloc(size_t num, size_t size)
+{
+    void *ptr;
+    int allocSize = num * size;
+
+    ptr = pvPortMalloc(allocSize);
+    if (ptr != NULL)
+    {
+        memset(ptr, 0, allocSize);
+    }
+
+    return ptr;
+}
+
 /*!
  * @brief The main function containing client thread.
  */
 static void httpsclient_task(void *arg)
 {
-    static struct netif fsl_netif0;
-    ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
-    ethernetif_config_t fsl_enet_config0 = {
+    static struct netif netif;
+    ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
+    ethernetif_config_t enet_config = {
         .phyAddress = EXAMPLE_PHY_ADDRESS,
         .clockName  = EXAMPLE_CLOCK_NAME,
         .macAddress = configMAC_ADDR,
     };
 
-    IP4_ADDR(&fsl_netif0_ipaddr, 0, 0, 0, 0);
-    IP4_ADDR(&fsl_netif0_netmask, 0, 0, 0, 0);
-    IP4_ADDR(&fsl_netif0_gw, 0, 0, 0, 0);
+    IP4_ADDR(&netif_ipaddr, 0, 0, 0, 0);
+    IP4_ADDR(&netif_netmask, 0, 0, 0, 0);
+    IP4_ADDR(&netif_gw, 0, 0, 0, 0);
 
     tcpip_init(NULL, NULL);
 
-    netifapi_netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0,
-                       ethernetif0_init, tcpip_input);
-    netifapi_netif_set_default(&fsl_netif0);
-    netifapi_netif_set_up(&fsl_netif0);
+    netifapi_netif_add(&netif, &netif_ipaddr, &netif_netmask, &netif_gw, &enet_config, EXAMPLE_NETIF_INIT_FN,
+                       tcpip_input);
+    netifapi_netif_set_default(&netif);
+    netifapi_netif_set_up(&netif);
 
     PRINTF("Getting IP address from DHCP ...\n");
-    netifapi_dhcp_start(&fsl_netif0);
+    netifapi_dhcp_start(&netif);
 
     struct dhcp *dhcp;
-    dhcp = netif_dhcp_data(&fsl_netif0);
+    dhcp = netif_dhcp_data(&netif);
 
     while (dhcp->state != DHCP_STATE_BOUND)
     {
@@ -108,9 +127,8 @@ static void httpsclient_task(void *arg)
 
     if (dhcp->state == DHCP_STATE_BOUND)
     {
-        PRINTF("\r\n IPv4 Address     : %u.%u.%u.%u\r\n", ((u8_t *)&fsl_netif0.ip_addr.addr)[0],
-               ((u8_t *)&fsl_netif0.ip_addr.addr)[1], ((u8_t *)&fsl_netif0.ip_addr.addr)[2],
-               ((u8_t *)&fsl_netif0.ip_addr.addr)[3]);
+        PRINTF("\r\n IPv4 Address     : %u.%u.%u.%u\r\n", ((u8_t *)&netif.ip_addr.addr)[0],
+               ((u8_t *)&netif.ip_addr.addr)[1], ((u8_t *)&netif.ip_addr.addr)[2], ((u8_t *)&netif.ip_addr.addr)[3]);
     }
     PRINTF("DHCP OK");
 

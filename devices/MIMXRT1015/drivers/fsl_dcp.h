@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017-2019 NXP
  * All rights reserved.
  *
  *
@@ -27,18 +27,29 @@ enum _dcp_status
  */
 /*! @name Driver version */
 /*@{*/
-/*! @brief DCP driver version. Version 2.1.0.
+/*! @brief DCP driver version. Version 2.1.3.
  *
- * Current version: 2.1.0
+ * Current version: 2.1.3
  *
  * Change log:
- * - Version 2.1.0
+ *
+ * - Version 2.1.3
+ *  - Bug Fix
+ *   - MISRA C-2012 issue fixed: rule 10.1, 10.3, 10.4, 11.9, 14.4, 16.4 and 17.7.
+ *
+ * - Version 2.1.2
+ *   - Fix sign-compare warning in dcp_reverse_and_copy.
+ *
+ * - Version 2.1.1
+ *   - Add DCP status clearing when channel operation is complete
+ *
+ * - 2.1.0
  *   - Add byte/word swap feature for key, input and output data
  *
  * - Version 2.0.0
  *   - Initial version
  */
-#define FSL_DCP_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
+#define FSL_DCP_DRIVER_VERSION (MAKE_VERSION(2, 1, 3))
 /*@}*/
 
 /*! @brief DCP channel enable.
@@ -184,7 +195,7 @@ typedef enum _dcp_hash_algo_t
 } dcp_hash_algo_t;
 
 /*! @brief DCP HASH Context size. */
-#define DCP_SHA_BLOCK_SIZE 128                 /*!< internal buffer block size  */
+#define DCP_SHA_BLOCK_SIZE 128U                /*!< internal buffer block size  */
 #define DCP_HASH_BLOCK_SIZE DCP_SHA_BLOCK_SIZE /*!< DCP hash block size  */
 
 /*! @brief DCP HASH Context size. */

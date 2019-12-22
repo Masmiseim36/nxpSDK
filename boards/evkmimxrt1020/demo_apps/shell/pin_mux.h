@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 NXP
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -45,17 +45,17 @@ extern "C" {
 void BOARD_InitBootPins(void);
 
 /* GPIO_AD_B0_07 (number 101), UART1_RXD/J17[4] */
-#define BOARD_INITPINS_UART1_RXD_PERIPHERAL                              LPUART1   /*!< Device name: LPUART1 */
-#define BOARD_INITPINS_UART1_RXD_SIGNAL                                       RX   /*!< LPUART1 signal: RX */
+#define BOARD_UART1_RXD_PERIPHERAL                                       LPUART1   /*!< Device name: LPUART1 */
+#define BOARD_UART1_RXD_SIGNAL                                                RX   /*!< LPUART1 signal: RX */
 
 /* GPIO_AD_B0_06 (number 105), UART1_TXD/J17[6] */
-#define BOARD_INITPINS_UART1_TXD_PERIPHERAL                              LPUART1   /*!< Device name: LPUART1 */
-#define BOARD_INITPINS_UART1_TXD_SIGNAL                                       TX   /*!< LPUART1 signal: TX */
+#define BOARD_UART1_TXD_PERIPHERAL                                       LPUART1   /*!< Device name: LPUART1 */
+#define BOARD_UART1_TXD_SIGNAL                                                TX   /*!< LPUART1 signal: TX */
 
 /* GPIO_AD_B0_05 (number 106), JTAG_nTRST/J16[3]/USER_LED/J17[5] */
-#define BOARD_INITPINS_USER_LED_GPIO                                       GPIO1   /*!< GPIO device name: GPIO1 */
-#define BOARD_INITPINS_USER_LED_PORT                                       GPIO1   /*!< PORT device name: GPIO1 */
-#define BOARD_INITPINS_USER_LED_PIN                                           5U   /*!< GPIO1 pin index: 5 */
+#define BOARD_USER_LED_GPIO                                                GPIO1   /*!< GPIO device name: GPIO1 */
+#define BOARD_USER_LED_PORT                                                GPIO1   /*!< PORT device name: GPIO1 */
+#define BOARD_USER_LED_PIN                                                    5U   /*!< GPIO1 pin index: 5 */
 
 
 /*!

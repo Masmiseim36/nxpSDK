@@ -1,10 +1,9 @@
 /*
- * Copyright 2019-2019 NXP
+ * Copyright 2018-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
 /*
  * How to setup clock using clock driver functions:
  *
@@ -22,11 +21,11 @@
 
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Clocks v5.0
+product: Clocks v7.0
 processor: MIMXRT1062xxxxA
 package_id: MIMXRT1062DVL6A
 mcu_data: ksdk2_0
-processor_version: 0.0.0
+processor_version: 0.7.1
 board: MIMXRT1060-EVK
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 
@@ -77,7 +76,7 @@ outputs:
 - {id: GPT1_ipg_clk_highfreq.outFreq, value: 75 MHz}
 - {id: GPT2_ipg_clk_highfreq.outFreq, value: 75 MHz}
 - {id: IPG_CLK_ROOT.outFreq, value: 150 MHz}
-- {id: LCDIF_CLK_ROOT.outFreq, value: 67.5/7 MHz}
+- {id: LCDIF_CLK_ROOT.outFreq, value: 67.5 MHz}
 - {id: LPI2C_CLK_ROOT.outFreq, value: 60 MHz}
 - {id: LPSPI_CLK_ROOT.outFreq, value: 105.6 MHz}
 - {id: LVDS1_CLK.outFreq, value: 1.2 GHz}
@@ -115,6 +114,7 @@ settings:
 - {id: CCM_ANALOG.PLL1_PREDIV.scale, value: '1', locked: true}
 - {id: CCM_ANALOG.PLL1_VDIV.scale, value: '50', locked: true}
 - {id: CCM_ANALOG.PLL2.denom, value: '1', locked: true}
+- {id: CCM_ANALOG.PLL2.div, value: '22'}
 - {id: CCM_ANALOG.PLL2.num, value: '0', locked: true}
 - {id: CCM_ANALOG.PLL2_BYPASS.sel, value: CCM_ANALOG.PLL2_OUT_CLK}
 - {id: CCM_ANALOG.PLL2_PFD0_BYPASS.sel, value: CCM_ANALOG.PLL2_PFD0}
@@ -131,10 +131,14 @@ settings:
 - {id: CCM_ANALOG.PLL4.denom, value: '50'}
 - {id: CCM_ANALOG.PLL4.div, value: '47'}
 - {id: CCM_ANALOG.PLL5.denom, value: '1'}
-- {id: CCM_ANALOG.PLL5.div, value: '40'}
+- {id: CCM_ANALOG.PLL5.div, value: '31', locked: true}
 - {id: CCM_ANALOG.PLL5.num, value: '0'}
+- {id: CCM_ANALOG.PLL5_BYPASS.sel, value: CCM_ANALOG.PLL5_POST_DIV}
+- {id: CCM_ANALOG.PLL5_POST_DIV.scale, value: '2'}
+- {id: CCM_ANALOG.VIDEO_DIV.scale, value: '4'}
 - {id: CCM_ANALOG_PLL_ENET_POWERDOWN_CFG, value: 'Yes'}
 - {id: CCM_ANALOG_PLL_USB1_POWER_CFG, value: 'Yes'}
+- {id: CCM_ANALOG_PLL_VIDEO_POWERDOWN_CFG, value: 'No'}
 sources:
 - {id: XTALOSC24M.OSC.outFreq, value: 24 MHz, enabled: true}
 - {id: XTALOSC24M.RTC_OSC.outFreq, value: 32.768 kHz, enabled: true}
@@ -156,6 +160,15 @@ const clock_sys_pll_config_t sysPllConfig_BOARD_BootClockRUN = {
 const clock_usb_pll_config_t usb1PllConfig_BOARD_BootClockRUN = {
     .loopDivider = 0, /* PLL loop divider, Fout = Fin * 20 */
     .src         = 0, /* Bypass clock source, 0 - OSC 24M, 1 - CLK1_P and CLK1_N */
+};
+const clock_video_pll_config_t videoPllConfig_BOARD_BootClockRUN = {
+    .loopDivider = 31, /* PLL loop divider, Fout = Fin * ( loopDivider + numerator / denominator ) */
+    .postDivider = 8,  /* Divider after PLL */
+    .numerator =
+        0, /* 30 bit numerator of fractional loop divider, Fout = Fin * ( loopDivider + numerator / denominator ) */
+    .denominator =
+        1, /* 30 bit denominator of fractional loop divider, Fout = Fin * ( loopDivider + numerator / denominator ) */
+    .src = 0, /* Bypass clock source, 0 - OSC 24M, 1 - CLK1_P and CLK1_N */
 };
 /*******************************************************************************
  * Code for BOARD_BootClockRUN configuration
@@ -371,6 +384,9 @@ void BOARD_BootClockRUN(void)
      * unchanged. Note: If another clock source is selected for SEMC, user may want to avoid changing that clock as
      * well.*/
 #ifndef SKIP_SYSCLK_INIT
+#if defined(XIP_BOOT_HEADER_DCD_ENABLE) && (XIP_BOOT_HEADER_DCD_ENABLE == 1)
+    #warning "SKIP_SYSCLK_INIT should be defined to keep system pll (selected to be SEMC source clock in SDK projects) unchanged."
+#endif
     /* Init System PLL. */
     CLOCK_InitSysPll(&sysPllConfig_BOARD_BootClockRUN);
     /* Init System pfd0. */
@@ -409,14 +425,26 @@ void BOARD_BootClockRUN(void)
     CCM_ANALOG->MISC2 &= ~CCM_ANALOG_MISC2_AUDIO_DIV_MSB_MASK;
     /* Enable Audio PLL output. */
     CCM_ANALOG->PLL_AUDIO |= CCM_ANALOG_PLL_AUDIO_ENABLE_MASK;
-    /* DeInit Video PLL. */
-    CLOCK_DeinitVideoPll();
-    /* Bypass Video PLL. */
-    CCM_ANALOG->PLL_VIDEO |= CCM_ANALOG_PLL_VIDEO_BYPASS_MASK;
-    /* Set divider for Video PLL. */
-    CCM_ANALOG->MISC2 = (CCM_ANALOG->MISC2 & (~CCM_ANALOG_MISC2_VIDEO_DIV_MASK)) | CCM_ANALOG_MISC2_VIDEO_DIV(0);
-    /* Enable Video PLL output. */
-    CCM_ANALOG->PLL_VIDEO |= CCM_ANALOG_PLL_VIDEO_ENABLE_MASK;
+    /* Init Video PLL. */
+    uint32_t pllVideo;
+    /* Disable Video PLL output before initial Video PLL. */
+    CCM_ANALOG->PLL_VIDEO &= ~CCM_ANALOG_PLL_VIDEO_ENABLE_MASK;
+    /* Bypass PLL first */
+    CCM_ANALOG->PLL_VIDEO = (CCM_ANALOG->PLL_VIDEO & (~CCM_ANALOG_PLL_VIDEO_BYPASS_CLK_SRC_MASK)) |
+                            CCM_ANALOG_PLL_VIDEO_BYPASS_MASK | CCM_ANALOG_PLL_VIDEO_BYPASS_CLK_SRC(0);
+    CCM_ANALOG->PLL_VIDEO_NUM   = CCM_ANALOG_PLL_VIDEO_NUM_A(0);
+    CCM_ANALOG->PLL_VIDEO_DENOM = CCM_ANALOG_PLL_VIDEO_DENOM_B(1);
+    pllVideo =
+        (CCM_ANALOG->PLL_VIDEO & (~(CCM_ANALOG_PLL_VIDEO_DIV_SELECT_MASK | CCM_ANALOG_PLL_VIDEO_POWERDOWN_MASK))) |
+        CCM_ANALOG_PLL_VIDEO_ENABLE_MASK | CCM_ANALOG_PLL_VIDEO_DIV_SELECT(31);
+    pllVideo |= CCM_ANALOG_PLL_VIDEO_POST_DIV_SELECT(1);
+    CCM_ANALOG->MISC2     = (CCM_ANALOG->MISC2 & (~CCM_ANALOG_MISC2_VIDEO_DIV_MASK)) | CCM_ANALOG_MISC2_VIDEO_DIV(3);
+    CCM_ANALOG->PLL_VIDEO = pllVideo;
+    while ((CCM_ANALOG->PLL_VIDEO & CCM_ANALOG_PLL_VIDEO_LOCK_MASK) == 0)
+    {
+    }
+    /* Disable bypass for Video PLL. */
+    CLOCK_SetPllBypass(CCM_ANALOG, kCLOCK_PllVideo, 0);
     /* DeInit Enet PLL. */
     CLOCK_DeinitEnetPll();
     /* Bypass Enet PLL. */

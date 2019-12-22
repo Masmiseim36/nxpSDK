@@ -89,5 +89,3 @@ void DNN::run_nn(q7_t* in_data, q7_t* out_data)
   // IP4 
   arm_fully_connected_q7(ip3_out, ip4_wt, IP3_OUT_DIM, OUT_DIM, 0, 6, ip4_bias, out_data, vec_buffer);
 }
-
-

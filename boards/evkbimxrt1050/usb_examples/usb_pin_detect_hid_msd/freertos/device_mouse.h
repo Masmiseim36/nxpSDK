@@ -25,6 +25,9 @@ typedef struct _usb_hid_mouse_struct
 {
     usb_device_handle deviceHandle;
     class_handle_t hidHandle;
+#if USB_DEVICE_CONFIG_USE_TASK
+    TaskHandle_t deviceAppTaskHandle;
+#endif
     uint8_t *buffer;
     uint8_t currentConfiguration;
     uint8_t currentInterfaceAlternateSetting[USB_HID_MOUSE_INTERFACE_COUNT];

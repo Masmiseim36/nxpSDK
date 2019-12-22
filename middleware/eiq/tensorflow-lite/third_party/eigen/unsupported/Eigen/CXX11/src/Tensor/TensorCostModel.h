@@ -177,7 +177,8 @@ class TensorCostModel {
     double threads = (cost - kStartupCycles) / kPerThreadCycles + 0.9;
     // Make sure we don't invoke undefined behavior when we convert to an int.
     threads = numext::mini<double>(threads, GenericNumTraits<int>::highest());
-    return numext::mini(max_threads, numext::maxi<int>(1, threads));
+    return numext::mini(max_threads,
+                        numext::maxi<int>(1, static_cast<int>(threads)));
   }
 
   // taskSize assesses parallel task size.
@@ -188,7 +189,6 @@ class TensorCostModel {
     return totalCost(output_size, cost_per_coeff) / kTaskSize;
   }
 
- private:
   static EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE double totalCost(
       double output_size, const TensorOpCost& cost_per_coeff) {
     // Cost of memory fetches from L2 cache. 64 is typical cache line size.

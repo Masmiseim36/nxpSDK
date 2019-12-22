@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2013 Freescale Semiconductor, Inc.
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -41,7 +42,7 @@
 void init_data_bss(void)
 {
 /* Addresses for VECTOR_TABLE and VECTOR_RAM come from the linker file */
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
     extern uint32_t Image$$VECTOR_ROM$$Base[];
     extern uint32_t Image$$VECTOR_RAM$$Base[];
     extern uint32_t Image$$RW_m_data$$Base[];
@@ -63,7 +64,7 @@ void init_data_bss(void)
     SCB->VTOR = (uint32_t)__VECTOR_TABLE;
 #endif
 
-#if !defined(__CC_ARM)
+#if !defined(__CC_ARM) && (!defined(__ARMCC_VERSION))
 
     /* Declare pointers for various data sections. These pointers
      * are initialized using values pulled in from the linker file */
@@ -72,7 +73,7 @@ void init_data_bss(void)
     uint32_t n;
 
 // Get the addresses for the .data section (initialized data section)
-#if defined(__GNUC__)
+#if defined(__GNUC__) && (!defined(__ARMCC_VERSION))
     extern uint32_t __DATA_ROM[];
     extern uint32_t __DATA_RAM[];
     extern char __DATA_END[];
@@ -98,7 +99,7 @@ void init_data_bss(void)
     }
 
 // Get the addresses for the .bss section (zero-initialized data)
-#if defined(__GNUC__)
+#if defined(__GNUC__) && (!defined(__ARMCC_VERSION))
     extern char __START_BSS[];
     extern char __END_BSS[];
     bss_start = (uint8_t *)__START_BSS;
@@ -136,7 +137,7 @@ void init_data_bss(void)
 #if (defined(__ICCARM__))
     uint8_t *usbGlobal_start = __section_begin("USBGlobal");
     uint8_t *usbGlobal_end = __section_end("USBGlobal");
-#elif(defined(__GNUC__))
+#elif(defined(__GNUC__)) && (!defined(__ARMCC_VERSION))
     extern uint8_t __START_USBGLOBAL[];
     extern uint8_t __END_USBGLOBAL[];
     uint8_t *usbGlobal_start = (uint8_t *)__START_USBGLOBAL;
@@ -158,7 +159,7 @@ void init_data_bss(void)
  * the function prototype for any routines you need to execute from RAM instead
  * of ROM. ex: __ramfunc void foo(void);
  */
-#if (defined(__ICCARM__))
+#if (defined(__ICCARM__)) 
     uint8_t *code_relocate_ram = __section_begin("CodeRelocateRam");
     uint8_t *code_relocate = __section_begin("CodeRelocate");
     uint8_t *code_relocate_end = __section_end("CodeRelocate");

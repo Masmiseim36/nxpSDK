@@ -2,23 +2,34 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.codec_i2c.MIMXRT1052"/>
     <definition extID="component.lists.MIMXRT1052"/>
+    <definition extID="component.lpi2c_adapter.MIMXRT1052"/>
     <definition extID="component.lpuart_adapter.MIMXRT1052"/>
     <definition extID="component.serial_manager.MIMXRT1052"/>
     <definition extID="component.serial_manager_uart.MIMXRT1052"/>
+    <definition extID="component.wm8960_adapter.MIMXRT1052"/>
     <definition extID="device.MIMXRT1052_CMSIS.MIMXRT1052"/>
     <definition extID="device.MIMXRT1052_startup.MIMXRT1052"/>
+    <definition extID="driver.codec.MIMXRT1052"/>
+    <definition extID="driver.wm8960.MIMXRT1052"/>
     <definition extID="middleware.eiq.tensorflow_lite.binary.MIMXRT1052"/>
+    <definition extID="platform.CMSIS_DSP_Lib.arm_cortexM7lfdp_math.MIMXRT1052"/>
     <definition extID="platform.Include_common.MIMXRT1052"/>
     <definition extID="platform.Include_core_cm7.MIMXRT1052"/>
+    <definition extID="platform.Include_dsp.MIMXRT1052"/>
     <definition extID="platform.drivers.clock.MIMXRT1052"/>
     <definition extID="platform.drivers.common.MIMXRT1052"/>
     <definition extID="platform.drivers.igpio.MIMXRT1052"/>
     <definition extID="platform.drivers.iomuxc.MIMXRT1052"/>
+    <definition extID="platform.drivers.lpi2c.MIMXRT1052"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1052"/>
+    <definition extID="platform.drivers.sai.MIMXRT1052"/>
     <definition extID="platform.drivers.xip_board.MIMXRT1052"/>
+    <definition extID="platform.drivers.xip_board_dcd.MIMXRT1052"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1052"/>
     <definition extID="platform.utilities.assert.MIMXRT1052"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1052"/>
     <definition extID="utility.debug_console.MIMXRT1052"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -29,14 +40,14 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_tensorflow_lite_kws" name="tensorflow_lite_kws" category="eiq_examples" dependency="middleware.eiq.tensorflow_lite.binary.MIMXRT1052 component.lists.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 platform.utilities.assert.MIMXRT1052 utility.debug_console.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052">
+  <example id="evkbimxrt1050_tensorflow_lite_kws" name="tensorflow_lite_kws" category="eiq_examples" dependency="driver.wm8960.MIMXRT1052 driver.codec.MIMXRT1052 component.wm8960_adapter.MIMXRT1052 component.lpi2c_adapter.MIMXRT1052 platform.drivers.sai.MIMXRT1052 middleware.eiq.tensorflow_lite.binary.MIMXRT1052 component.lists.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 platform.drivers.common.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.drivers.lpi2c.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 platform.drivers.xip_board_dcd.MIMXRT1052 platform.utilities.assert.MIMXRT1052 utility.debug_console.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_dsp.MIMXRT1052 component.codec_i2c.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052 platform.CMSIS_DSP_Lib.arm_cortexM7lfdp_math.MIMXRT1052">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.ccnature"/>
     </projects>
     <memory>
       <memoryBlock addr="60000000" size="04000000" access="RO" type="ExtFlash" id="BOARD_FLASH_evkbimxrt1050" name="BOARD_FLASH"/>
       <memoryBlock addr="80000000" size="01E00000" access="RW" type="RAM" id="BOARD_SDRAM_evkbimxrt1050" name="BOARD_SDRAM"/>
-      <memoryBlock addr="81E00000" size="00200000" access="RW" type="RAM" id="BOARD_SDRAM_NONCACHEABLE_evkbimxrt1050" name="BOARD_SDRAM_NONCACHEABLE"/>
+      <memoryBlock addr="81E00000" size="00200000" access="RW" type="RAM" id="NCACHE_REGION_evkbimxrt1050" name="NCACHE_REGION"/>
       <memoryBlock addr="20000000" size="00020000" access="RW" type="RAM" id="SRAM_DTC_evkbimxrt1050" name="SRAM_DTC"/>
       <memoryBlock addr="00000000" size="00020000" access="RW" type="RAM" id="SRAM_ITC_evkbimxrt1050" name="SRAM_ITC"/>
       <memoryBlock addr="20200000" size="000C0000" access="RW" type="RAM" id="SRAM_OC_evkbimxrt1050" name="SRAM_OC"/>
@@ -53,16 +64,21 @@
           <value>com.crt.advproject.gcc.fpu.fpv5dp.hard</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>XIP_BOOT_HEADER_DCD_ENABLE=1</value>
+          <value>SKIP_SYSCLK_INIT</value>
           <value>CPU_MIMXRT1052DVL6B</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
-          <value>XIP_BOOT_HEADER_DCD_ENABLE=1</value>
-          <value>SKIP_SYSCLK_INIT</value>
-          <value>SDK_DEBUGCONSOLE=0</value>
           <value>SDK_DEBUGCONSOLE_UART</value>
           <value>FLATBUFFERS_LITTLEENDIAN</value>
           <value>TFLITE_MCU</value>
+          <value>ARM_MATH_CM7</value>
+          <value>__FPU_PRESENT=1</value>
+          <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
+          <value>BOARD_USE_CODEC=1</value>
+          <value>CODEC_WM8960_ENABLE</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -77,11 +93,14 @@
           <value>com.crt.advproject.misc.dialect.gnupp11</value>
         </option>
         <option id="gnu.cpp.compiler.option.preprocessor.def" type="stringList">
-          <value>SDK_DEBUGCONSOLE=0</value>
           <value>SDK_DEBUGCONSOLE_UART</value>
           <value>FLATBUFFERS_LITTLEENDIAN</value>
           <value>TFLITE_MCU</value>
+          <value>ARM_MATH_CM7</value>
+          <value>__FPU_PRESENT=1</value>
           <value>CPU_MIMXRT1052DVL6B</value>
+          <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.cpp.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -97,10 +116,6 @@
         </option>
         <option id="com.crt.advproject.link.memory.heapAndStack.cpp" type="string">
           <value>&amp;Heap:BOARD_SDRAM;Post Data;0x800000&amp;Stack:SRAM_DTC;End;0x10000</value>
-        </option>
-        <option id="com.crt.advproject.link.memory.sections.cpp" type="stringList">
-          <value>isd=*(NonCacheable.init);region=BOARD_SDRAM_NONCACHEABLE;type=.data</value>
-          <value>isd=*(NonCacheable);region=BOARD_SDRAM_NONCACHEABLE;type=.bss</value>
         </option>
         <option id="com.crt.advproject.gcc.exe.release.option.optimization.level" type="enum">
           <value>gnu.c.optimization.level.most</value>
@@ -163,21 +178,28 @@
     <source path="boards/evkbimxrt1050/eiq_examples/tensorflow_lite_kws" target_path="doc" type="doc">
       <files mask="readme.txt"/>
     </source>
-    <source path="middleware/eiq/tensorflow-lite/examples/kws" target_path="doc" type="doc">
-      <files mask="yes.wav"/>
-    </source>
-    <source path="middleware/eiq/tensorflow-lite/examples/kws" target_path="source" type="c_include">
+    <source path="middleware/eiq/tensorflow-lite/examples/common/source" target_path="source" type="c_include">
       <files mask="get_top_n.h"/>
       <files mask="get_top_n_impl.h"/>
       <files mask="timer.h"/>
-      <files mask="tiny_conv_model_data.h"/>
-      <files mask="yes_features_data.h"/>
+    </source>
+    <source path="middleware/eiq/tensorflow-lite/examples/common/source" target_path="source" type="src">
+      <files mask="timer.c"/>
+    </source>
+    <source path="middleware/eiq/tensorflow-lite/examples/kws" target_path="doc" type="doc">
+      <files mask="off.wav"/>
+      <files mask="right.wav"/>
+    </source>
+    <source path="middleware/eiq/tensorflow-lite/examples/kws" target_path="source" type="c_include">
+      <files mask="commands.h"/>
+      <files mask="ds_cnn_s_model.h"/>
+      <files mask="kws_mfcc.h"/>
+      <files mask="mfcc.h"/>
     </source>
     <source path="middleware/eiq/tensorflow-lite/examples/kws" target_path="source" type="src">
       <files mask="kws.cpp"/>
-      <files mask="timer.c"/>
-      <files mask="tiny_conv_model_data.cpp"/>
-      <files mask="yes_features_data.cpp"/>
+      <files mask="kws_mfcc.cpp"/>
+      <files mask="mfcc.cpp"/>
     </source>
   </example>
 </ksdk:examples>

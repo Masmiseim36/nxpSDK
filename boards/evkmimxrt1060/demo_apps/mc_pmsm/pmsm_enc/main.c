@@ -88,9 +88,10 @@ int main(void)
     /* Enable interrupts */
     EnableGlobalIRQ(ui32PrimaskReg);
         
-    /* Main loop */
+    /* Infinite loop */
     while (1)
     {
+      /* FreeMASTER Polling function */
       FMSTR_Poll();      
     }
 }
@@ -116,7 +117,7 @@ void ADC1_IRQHandler(void)
     g_ui32MaxNumberOfCycles = g_ui32NumberOfCycles>g_ui32MaxNumberOfCycles ? g_ui32NumberOfCycles : g_ui32MaxNumberOfCycles;
     
     /* Call FreeMASTER recorder */
-    FMSTR_Recorder();
+    FMSTR_Recorder(0);
       
     /* Add empty instructions for correct interrupt flag clearing */
     M1_END_OF_ISR;
@@ -325,7 +326,6 @@ void DemoPositionStimulator(void)
     }
 }
 
-
 /*!
 *@brief      Initialization of the Clocks and Pins
 *
@@ -335,14 +335,12 @@ void DemoPositionStimulator(void)
 */
 void BOARD_Init(void)
 {
-  
     /* Init board hardware. */
     BOARD_InitBootPins();
     /* Initialize clock configuration */
     BOARD_InitBootClocks();
     /* Init GPIO pins */
     BOARD_InitGPIO();
-    
 }
 
 /*!
@@ -397,6 +395,16 @@ void BOARD_InitUART(uint32_t u32BaudRate)
     config.enableRx = true;
 
     LPUART_Init(BOARD_FMSTR_UART_PORT, &config, BOARD_DebugConsoleSrcFreq());
+    
+        /* Register communication module used by FreeMASTER driver. */
+    FMSTR_SerialSetBaseAddress(BOARD_FMSTR_UART_PORT);
+
+    #if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
+        /* Enable UART interrupts. */
+        EnableIRQ(BOARD_UART_IRQ);
+        EnableGlobalIRQ(0);
+    #endif
+
 }
 
 

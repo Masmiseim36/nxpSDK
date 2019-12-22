@@ -64,8 +64,8 @@
 static void txCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData);
 static void rxCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData);
 #if defined DEMO_SDCARD
-#include "diskio.h"
 #include "ff.h"
+#include "diskio.h"
 #include "fsl_sd.h"
 /*!
  * @brief wait card insert function.
@@ -149,8 +149,8 @@ sai_master_clock_t mclkConfig = {
 };
 #endif
 sai_transceiver_t config;
-uint8_t codecHandleBuffer[CODEC_HANDLE_SIZE] = {0U};
-codec_handle_t *codecHandle                  = (codec_handle_t *)codecHandleBuffer;
+codec_handle_t codecHandle;
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -305,7 +305,7 @@ int main(void)
 
     BOARD_ConfigMPU();
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     CLOCK_InitAudioPll(&audioPllConfig);
     BOARD_USDHCClockConfiguration();
     BOARD_InitDebugConsole();
@@ -371,7 +371,7 @@ int main(void)
 #endif
 
     /* Use default setting to init codec */
-    CODEC_Init(codecHandle, &boardCodecConfig);
+    CODEC_Init(&codecHandle, &boardCodecConfig);
 
     /* Enable interrupt to handle FIFO error */
     SAI_TxEnableInterrupts(DEMO_SAI, kSAI_FIFOErrorInterruptEnable);
@@ -414,7 +414,7 @@ int main(void)
             case '1':
 #if defined DIG_MIC
                 /* Set the audio input source to AUX */
-                DA7212_ChangeInput((da7212_handle_t *)((uint32_t) & (codecHandle->codecDevHandle)), kDA7212_Input_AUX);
+                DA7212_ChangeInput((da7212_handle_t *)((uint32_t)(codecHandle.codecDevHandle)), kDA7212_Input_AUX);
 #endif
                 RecordPlayback(DEMO_SAI, 30);
                 break;
@@ -429,8 +429,7 @@ int main(void)
 #if defined DIG_MIC
             case userItem - 1U + 48U:
                 /* Set the audio input source to DMIC */
-                DA7212_ChangeInput((da7212_handle_t *)((uint32_t) & (codecHandle->codecDevHandle)),
-                                   kDA7212_Input_MIC1_Dig);
+                DA7212_ChangeInput((da7212_handle_t *)((uint32_t)(codecHandle.codecDevHandle)), kDA7212_Input_MIC1_Dig);
                 RecordPlayback(DEMO_SAI, 30);
                 break;
 #endif
@@ -441,7 +440,7 @@ int main(void)
         userItem = 1U;
     }
 
-    CODEC_Deinit(codecHandle);
+    CODEC_Deinit(&codecHandle);
     PRINTF("\n\r SAI demo finished!\n\r ");
     while (1)
     {

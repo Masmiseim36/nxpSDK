@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 -2016, Freescale Semiconductor, Inc.
- * Copyright 2016, 2018 NXP
+ * Copyright 2016, 2018-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -39,7 +39,7 @@ audio_speraker_instance_t g_audio;
 USB_RAM_ADDRESS_ALIGNMENT(USB_CACHE_LINESIZE) uint8_t g_wavBuff[MAX_ISO_PACKET_SIZE];
 uint32_t g_packetSize;
 extern const unsigned char wav_data[];
-extern const uint16_t wav_size;
+extern const uint32_t wav_size;
 uint8_t g_hostCurVolume = 4U;
 uint16_t g_deviceVolumeStep;
 static uint8_t g_index = 0U;
@@ -207,9 +207,9 @@ void Audio_OutCallback(void *param, uint8_t *data, uint32_t dataLen, usb_status_
 /*!
  * @brief prepare usb transfer data.
  */
-static void USB_PrepareData(void)
+static void USB_AudioSpeakerGetBuffer(uint8_t *buffer, uint32_t size)
 {
-    uint32_t resolution_size = g_packetSize >> 5U;
+    uint32_t resolution_size = size >> 5U;
     static uint32_t audio_position = 0U;
 
     uint8_t k, j = 0U;
@@ -218,12 +218,12 @@ static void USB_PrepareData(void)
     {
         for (j = 0U; j < resolution_size; j++)
         {
-            g_wavBuff[g_index * g_packetSize + j * 32 + k] = wav_data[audio_position];
+            buffer[j * 32 + k] = wav_data[audio_position];
         }
         audio_position++;
     }
 
-    if (audio_position >= 65856U)
+    if (audio_position >= wav_size)
     {
         audio_position = 0U;
     }
@@ -243,7 +243,7 @@ void Audio_SendData(void)
     while (g_audio.bufCount < 3U)
 #endif
     {
-        USB_PrepareData();
+        USB_AudioSpeakerGetBuffer(&g_wavBuff[g_packetSize * g_index], g_audio.maxPacketSize);
         status = USB_HostAudioStreamSend(g_audio.classHandle, (unsigned char *)&g_wavBuff[g_packetSize * g_index],
                                          g_audio.maxPacketSize, Audio_OutCallback, &g_audio);
         if (status != kStatus_USB_Success)
@@ -480,7 +480,7 @@ void USB_AudioTask(void *arg)
             g_index = 0U;
             while (g_audio.bufCount < 3U)
             {
-                USB_PrepareData();
+                USB_AudioSpeakerGetBuffer(&g_wavBuff[g_packetSize * g_index], g_audio.maxPacketSize);
                 g_audio.runState = kUSB_HostAudioRunIdle;
                 if (USB_HostAudioStreamSend(g_audio.classHandle, (unsigned char *)&g_wavBuff[g_packetSize * g_index],
                                             g_audio.maxPacketSize, Audio_OutCallback, &g_audio) != kStatus_USB_Success)

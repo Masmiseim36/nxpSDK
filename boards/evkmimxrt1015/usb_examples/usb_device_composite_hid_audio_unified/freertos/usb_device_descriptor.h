@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2017,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,9 +9,12 @@
 #ifndef __USB_DEVICE_DESCRIPTOR_H__
 #define __USB_DEVICE_DESCRIPTOR_H__
 
+#include "usb_device_audio.h"
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
+/*! @brief Whether USB Audio use syn mode or not. */
+#define USB_DEVICE_AUDIO_USE_SYNC_MODE (0U)
 
 #define USB_DEVICE_SPECIFIC_BCD_VERSION (0x0200U)
 #define USB_DEVICE_DEMO_BCD_VERSION (0x0101U)
@@ -46,14 +49,25 @@
 #define USB_AUDIO_SPEAKER_STREAM_INTERFACE_INDEX (2)
 #define USB_HID_KEYBOARD_INTERFACE_INDEX (3)
 
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+#define USB_AUDIO_SPEAKER_STREAM_ENDPOINT_COUNT (1)
+#else
 #define USB_AUDIO_SPEAKER_STREAM_ENDPOINT_COUNT (2)
+#endif
 #define USB_AUDIO_CONTROL_ENDPOINT_COUNT (1)
 #define USB_AUDIO_RECORDER_STREAM_ENDPOINT_COUNT (1)
 #define USB_HID_KEYBOARD_ENDPOINT_COUNT (1)
 
 #define USB_AUDIO_SPEAKER_STREAM_ENDPOINT (2)
 #define USB_AUDIO_CONTROL_ENDPOINT (1)
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+#else
+/*If multiple data endpoints are to be serviced by the same feedback endpoint, the data endpoints must have ascending
+ordered–but not necessarily consecutive–endpoint numbers. The first data endpoint and the feedback endpoint must have
+the same endpoint number (and opposite direction). For more information, please refer to Universal Serial Bus
+Specification, Revision 2.0 chapter 9.6.6*/
 #define USB_AUDIO_SPEAKER_FEEDBACK_ENDPOINT (2)
+#endif
 #define USB_AUDIO_RECORDER_STREAM_ENDPOINT (3)
 #define USB_HID_KEYBOARD_ENDPOINT (4)
 
@@ -66,23 +80,49 @@
 #define USB_HID_KEYBOARD_INTERFACE_COUNT (1)
 
 /* Audio data format */
-#define AUDIO_FORMAT_CHANNELS (0x02)
-#define AUDIO_FORMAT_BITS (16)
-#define AUDIO_FORMAT_SIZE (0x02)
-
+#define AUDIO_OUT_FORMAT_CHANNELS (0x02)
+/*The number of effectively used bits from the available bits in an audio subframe, AUDIO_OUT_FORMAT_BITS
+ * <=AUDIO_OUT_FORMAT_SIZE*8*/
+#define AUDIO_OUT_FORMAT_BITS (16)
+#define AUDIO_OUT_FORMAT_SIZE (2)
+#define AUDIO_IN_FORMAT_CHANNELS (0x02)
+/*The number of effectively used bits from the available bits in an audio subframe, AUDIO_IN_FORMAT_BITS
+ * <=AUDIO_in_FORMAT_SIZE*8*/
+#define AUDIO_IN_FORMAT_BITS (16)
+#define AUDIO_IN_FORMAT_SIZE (2)
+#if (AUDIO_IN_FORMAT_BITS != AUDIO_OUT_FORMAT_BITS)
+/*defalut in sample rate and out sample rate are same, if the sample setting is different,please remove this error
+ manually, then check the AUDIO_FORMAT_BITS .*/
+#error This application default configuration requires AUDIO_IN_FORMAT_BITS equal to AUDIO_OUT_FORMAT_BITS.
+#endif
+#define AUDIO_FORMAT_BITS (AUDIO_OUT_FORMAT_BITS)
+#if (AUDIO_IN_FORMAT_CHANNELS != AUDIO_OUT_FORMAT_CHANNELS)
+/*defalut in channel and out channel are same, if the channel setting is different,please remove this error manually,
+ then check the AUDIO_FORMAT_CHANNELS .*/
+#error This application default configuration requires AUDIO_IN_FORMAT_CHANNELS equal to AUDIO_OUT_FORMAT_CHANNELS.
+#endif
+#define AUDIO_FORMAT_CHANNELS (AUDIO_OUT_FORMAT_CHANNELS)
 /* Packet size and interval. */
 #define HS_AUDIO_INTERRUPT_IN_PACKET_SIZE (8)
 #define FS_AUDIO_INTERRUPT_IN_PACKET_SIZE (8)
 #define HS_AUDIO_INTERRUPT_IN_INTERVAL (0x07U) /* 2^(7-1) = 8ms */
 #define FS_AUDIO_INTERRUPT_IN_INTERVAL (0x08U)
-#define HS_ISO_OUT_ENDP_PACKET_SIZE                    \
-    (AUDIO_SAMPLING_RATE_KHZ * AUDIO_FORMAT_CHANNELS * \
-     AUDIO_FORMAT_SIZE) /* This should be changed to 192 if sampling rate is 48k */
-#define FS_ISO_OUT_ENDP_PACKET_SIZE (AUDIO_SAMPLING_RATE_KHZ * AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE)
-#define HS_ISO_IN_ENDP_PACKET_SIZE (AUDIO_SAMPLING_RATE_KHZ * AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE)
-#define FS_ISO_IN_ENDP_PACKET_SIZE (AUDIO_SAMPLING_RATE_KHZ * AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE)
+#define HS_ISO_OUT_ENDP_PACKET_SIZE                            \
+    (AUDIO_OUT_SAMPLING_RATE_KHZ * AUDIO_OUT_FORMAT_CHANNELS * \
+     AUDIO_OUT_FORMAT_SIZE) /* This should be changed to 192 if sampling rate is 48k */
+#define FS_ISO_OUT_ENDP_PACKET_SIZE (AUDIO_OUT_SAMPLING_RATE_KHZ * AUDIO_OUT_FORMAT_CHANNELS * AUDIO_OUT_FORMAT_SIZE)
+#define HS_ISO_IN_ENDP_PACKET_SIZE (AUDIO_IN_SAMPLING_RATE_KHZ * AUDIO_IN_FORMAT_CHANNELS * AUDIO_IN_FORMAT_SIZE)
+#define FS_ISO_IN_ENDP_PACKET_SIZE (AUDIO_IN_SAMPLING_RATE_KHZ * AUDIO_IN_FORMAT_CHANNELS * AUDIO_IN_FORMAT_SIZE)
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+#else
+#if USBCFG_AUDIO_CLASS_2_0
+#define HS_ISO_FEEDBACK_ENDP_PACKET_SIZE (4)
+#define FS_ISO_FEEDBACK_ENDP_PACKET_SIZE (3)
+#else
 #define HS_ISO_FEEDBACK_ENDP_PACKET_SIZE (3)
 #define FS_ISO_FEEDBACK_ENDP_PACKET_SIZE (3)
+#endif
+#endif
 #define HS_ISO_OUT_ENDP_INTERVAL (0x04)
 #define HS_ISO_IN_ENDP_INTERVAL (0x04)
 #define FS_ISO_OUT_ENDP_INTERVAL (0x01)
@@ -127,8 +167,8 @@
 #define USB_HID_KEYBOARD_REPORT_LENGTH (0x01U)
 
 /*******************************************************************************
-* API
-******************************************************************************/
+ * API
+ ******************************************************************************/
 /*!
  * @brief USB device set speed function.
  *

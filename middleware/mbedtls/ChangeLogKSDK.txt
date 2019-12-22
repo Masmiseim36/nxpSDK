@@ -2,7 +2,20 @@
 @page middleware_log Middleware Change Log
  
 @section mbedtls mbedTLS for MCUXpresso SDK
-  The current version of mbedTLS is based on mbedTLS 2.13.1 released 2018-09-06
+  The current version of mbedTLS is based on mbedTLS 2.16.2 released 2019-06-11
+ - 2.16.2
+    - New features:
+      - Ported mbedTLS 2.16.2 to SDK.
+      
+ - 2.13.1_rev5
+    - Bug fixes:
+      - ecp_alt_ksdk.c fix CASPER port for ECJPAKE shortcut when points equal 1. This case is point addition and this shortcut
+        follows original mbedtls_ecp_muladd() implementation which is required for ecjpake_ecp_add3().
+
+ - 2.13.1_rev4
+    - New features:
+      - Added support for NIST P-384 elliptic curve with CASPER driver.
+
  - 2.13.1_rev3
     - Bug fixes:
       - Force align AES_CCM and AES_GCM self-test keys to fix unaligned key issue when using HW acceleration.

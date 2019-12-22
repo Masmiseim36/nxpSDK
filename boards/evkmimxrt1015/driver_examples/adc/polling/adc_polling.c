@@ -69,7 +69,7 @@ int main(void)
     /* Do auto hardware calibration. */
     if (kStatus_Success == ADC_DoAutoCalibration(DEMO_ADC_BASE))
     {
-        PRINTF("ADC_DoAntoCalibration() Done.\r\n");
+        PRINTF("ADC_DoAutoCalibration() Done.\r\n");
     }
     else
     {

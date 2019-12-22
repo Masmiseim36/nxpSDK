@@ -49,10 +49,10 @@
 /* Description of recorder instance buffer */
 typedef struct
 {
-    FMSTR_CHAR     *name;          /* String description of recorder sampling point etc. (e.g. "PWM Reload Interrupt", or "Timer interrupt"). */
-    FMSTR_ADDR      addr;           /* address of buffer for recorder instance */
-    FMSTR_SIZE      size;           /* size of buffer for recorder instance */
-    FMSTR_SIZE      basePeriod_ns;  /* Base speed of recorder sampling in nanoseconds. Client may request to sample at multiples of this value. */
+    FMSTR_CHAR *name;           /* String description of recorder sampling point etc. (e.g. "PWM Reload Interrupt", or "Timer interrupt"). */
+    FMSTR_ADDR  addr;           /* address of buffer for recorder instance */
+    FMSTR_SIZE  size;           /* size of buffer for recorder instance */
+    FMSTR_U32   basePeriod_ns;  /* Base speed of recorder sampling in nanoseconds. Client may request to sample at multiples of this value. */
 } FMSTR_REC_BUFF;
 
 /* Recorder description of one variable */

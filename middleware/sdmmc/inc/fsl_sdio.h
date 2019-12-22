@@ -19,7 +19,7 @@
  * Definitions
  ******************************************************************************/
 /*! @brief Middleware version. */
-#define FSL_SDIO_DRIVER_VERSION (MAKE_VERSION(2U, 2U, 11U)) /*2.2.11*/
+#define FSL_SDIO_DRIVER_VERSION (MAKE_VERSION(2U, 2U, 13U)) /*2.2.13*/
 
 /*!@brief sdio device support maximum IO number */
 #ifndef FSL_SDIO_MAX_IO_NUMS
@@ -79,8 +79,7 @@ struct _sdio_card
  * API
  ************************************************************************************************/
 #if defined(__cplusplus)
-extern "C"
-{
+extern "C" {
 #endif
 /*!
  * @name Initialization and deinitialization
@@ -270,9 +269,7 @@ status_t SDIO_ReadCIS(sdio_card_t *card, sdio_func_num_t func, const uint32_t *t
  * @param card detect configuration
  * @param waitCardStatus wait card detect status
  */
-status_t SDIO_WaitCardDetectStatus(SDMMCHOST_TYPE *hostBase,
-                                   const sdmmchost_detect_card_t *cd,
-                                   bool waitCardStatus);
+status_t SDIO_WaitCardDetectStatus(SDMMCHOST_TYPE *hostBase, const sdmmchost_detect_card_t *cd, bool waitCardStatus);
 
 /*!
  * @brief sdio card present check function.

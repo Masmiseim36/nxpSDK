@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016 - 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -507,9 +507,9 @@ typedef struct _usb_host_ip3516hs_td_struct
 #define USB_HOST_IP3516HS_CONTROL_PIPE_MAX_TRANSFER_LENGTH 64U
 
 /*! @brief USB host Ip3516Hs lock */
-#define USB_HostIp3516HsLock() USB_OsaMutexLock(usbHostState->mutex)
+#define USB_HostIp3516HsLock() OSA_MutexLock(usbHostState->mutex, USB_OSA_WAIT_TIMEOUT)
 /*! @brief USB host Ip3516Hs unlock */
-#define USB_HostIp3516HsUnlock() USB_OsaMutexUnlock(usbHostState->mutex)
+#define USB_HostIp3516HsUnlock() OSA_MutexUnlock(usbHostState->mutex)
 
 /*! @brief IP3516HS Host Controller Operational Registers */
 typedef struct _usb_host_ip3516hs_hcor_struct
@@ -579,6 +579,10 @@ typedef struct _usb_host_ip3516hs_state_struct
 {
     volatile usb_host_ip3516hs_register_struct_t *usbRegBase; /*!< The base address of the register */
     void *hostHandle;                                         /*!< Related host handle*/
+#if (defined(USB_HOST_CONFIG_BATTERY_CHARGER) && (USB_HOST_CONFIG_BATTERY_CHARGER > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+    void *dcdHandle; /*!< Dcd handle used to identify the device object belongs to */
+#endif
     usb_host_ip3516hs_port_state_struct_t *portState;
     usb_host_ip3516hs_pipe_struct_t *pipeList;
     usb_host_ip3516hs_pipe_struct_t *pipeListInUsing;
@@ -586,8 +590,10 @@ typedef struct _usb_host_ip3516hs_state_struct
 #if ((defined(USB_HOST_CONFIG_LOW_POWER_MODE)) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U))
     uint64_t matchTick;
 #endif
-    usb_osa_event_handle ip3516HsEvent; /*!< IP3516HS event*/
-    usb_osa_mutex_handle mutex;         /*!< Ip3516Hs layer mutex*/
+    osa_event_handle_t ip3516HsEvent; /*!< IP3516HS event*/
+    uint32_t taskEventHandleBuffer[(OSA_EVENT_HANDLE_SIZE + 3)/4];      /*!< task event handle buffer*/
+    osa_mutex_handle_t mutex;         /*!< Ip3516Hs layer mutex*/
+    uint32_t mutexBuffer[(OSA_MUTEX_HANDLE_SIZE + 3)/4];
     usb_host_ip3516hs_pipe_struct_t pipePool[USB_HOST_CONFIG_IP3516HS_MAX_PIPE];
     uint8_t controllerId;      /*!< Controller id */
     uint8_t portNumber;        /*!< Port count */
@@ -602,7 +608,11 @@ typedef struct _usb_host_ip3516hs_state_struct
     uint8_t hirdValue;
     uint8_t L1remoteWakeupEnable;
 #endif
-    bus_ip3516hs_suspend_request_state_t busSuspendStatus; /*!< Bus Suspend Status*/
+    uint8_t busSuspendStatus; /*!< Bus Suspend Status*/
+#endif
+#if (defined(USB_HOST_CONFIG_BATTERY_CHARGER) && (USB_HOST_CONFIG_BATTERY_CHARGER > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+    uint8_t chargerType;
 #endif
 } usb_host_ip3516hs_state_struct_t;
 

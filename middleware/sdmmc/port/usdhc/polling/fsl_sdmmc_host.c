@@ -78,8 +78,10 @@ static status_t SDMMCHOST_TransferFunction(SDMMCHOST_TYPE *base, SDMMCHOST_TRANS
     {
         memset(&dmaConfig, 0, sizeof(usdhc_adma_config_t));
         /* config adma */
-        dmaConfig.dmaMode        = USDHC_DMA_MODE;
-        dmaConfig.burstLen       = kUSDHC_EnBurstLenForINCR;
+        dmaConfig.dmaMode = USDHC_DMA_MODE;
+#if !(defined(FSL_FEATURE_USDHC_HAS_NO_RW_BURST_LEN) && FSL_FEATURE_USDHC_HAS_NO_RW_BURST_LEN)
+        dmaConfig.burstLen = kUSDHC_EnBurstLenForINCR;
+#endif
         dmaConfig.admaTable      = g_usdhcAdma2Table;
         dmaConfig.admaTableWords = USDHC_ADMA_TABLE_WORDS;
     }
@@ -252,8 +254,10 @@ status_t SDMMCHOST_Init(SDMMCHOST_CONFIG *host, void *userData)
     usdhcHost->config.endianMode          = USDHC_ENDIAN_MODE;
     usdhcHost->config.readWatermarkLevel  = USDHC_READ_WATERMARK_LEVEL;
     usdhcHost->config.writeWatermarkLevel = USDHC_WRITE_WATERMARK_LEVEL;
-    usdhcHost->config.readBurstLen        = USDHC_READ_BURST_LEN;
-    usdhcHost->config.writeBurstLen       = USDHC_WRITE_BURST_LEN;
+#if !(defined(FSL_FEATURE_USDHC_HAS_NO_RW_BURST_LEN) && FSL_FEATURE_USDHC_HAS_NO_RW_BURST_LEN)
+    usdhcHost->config.readBurstLen  = USDHC_READ_BURST_LEN;
+    usdhcHost->config.writeBurstLen = USDHC_WRITE_BURST_LEN;
+#endif
 
     USDHC_Init(usdhcHost->base, &(usdhcHost->config));
 
@@ -287,4 +291,55 @@ void SDMMCHOST_Deinit(void *host)
     SDMMCHOST_Reset(usdhcHost->base);
     USDHC_Deinit(usdhcHost->base);
     SDMMCHOST_CardDetectDeinit();
+}
+
+status_t SDMMCHOST_ReceiveTuningBlock(SDMMCHOST_TYPE *base, uint32_t tuningCmd, uint32_t *revBuf, uint32_t size)
+{
+    assert(revBuf != NULL);
+
+    usdhc_command_t command   = {0U};
+    uint32_t interruptStatus  = 0U;
+    uint32_t transferredWords = 0U;
+    uint32_t wordSize         = size / sizeof(uint32_t);
+
+    command.index        = tuningCmd;
+    command.argument     = 0U;
+    command.responseType = kCARD_ResponseTypeR1;
+    command.flags        = kUSDHC_DataPresentFlag;
+
+    /* disable DMA first */
+    USDHC_EnableInternalDMA(base, false);
+    /* set data configurations */
+    USDHC_SetDataConfig(base, kUSDHC_TransferDirectionReceive, 1U, size);
+    /* enable status */
+    USDHC_EnableInterruptStatus(base,
+                                kUSDHC_CommandCompleteFlag | kUSDHC_CommandErrorFlag | kUSDHC_BufferReadReadyFlag);
+    /* polling cmd done */
+    USDHC_SendCommand(base, &command);
+    while (!(interruptStatus & (kUSDHC_CommandCompleteFlag | kUSDHC_CommandErrorFlag)))
+    {
+        interruptStatus = USDHC_GetInterruptStatusFlags(base);
+    }
+    /* clear interrupt status */
+    USDHC_ClearInterruptStatusFlags(base, interruptStatus);
+    /* check command inhibit status flag */
+    if ((USDHC_GetPresentStatusFlags(base) & kUSDHC_CommandInhibitFlag) != 0U)
+    {
+        /* reset command line */
+        USDHC_Reset(base, kUSDHC_ResetCommand, 100U);
+    }
+
+    while (!(interruptStatus & kUSDHC_BufferReadReadyFlag))
+    {
+        interruptStatus = USDHC_GetInterruptStatusFlags(base);
+    }
+
+    while (transferredWords < wordSize)
+    {
+        revBuf[transferredWords++] = USDHC_ReadData(base);
+    }
+
+    USDHC_ClearInterruptStatusFlags(base, interruptStatus | kUSDHC_DataCompleteFlag | kUSDHC_DataErrorFlag);
+
+    return kStatus_Success;
 }

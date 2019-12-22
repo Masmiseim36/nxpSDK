@@ -21,7 +21,16 @@ namespace Eigen {
 template<typename T> struct MakePointer {
   typedef T* Type;
   typedef T& RefType;
+  typedef T ScalarType;
 };
+
+// The PointerType class is a container of the device specefic pointer
+// used for referring to a Pointer on TensorEvaluator class. While the TensorExpression
+// is a device-agnostic type and need MakePointer class for type conversion,
+// the TensorEvaluator calls can be specialized for a device, hence it is possible
+// to construct different types of temproray storage memory in TensorEvaluator
+// for different devices by specializing the following PointerType class.
+template<typename T, typename Device> struct PointerType : MakePointer<T>{};
 
 namespace internal{
 template<typename A, typename B> struct Pointer_type_promotion {
@@ -65,7 +74,7 @@ template<typename Op, typename Dims, typename XprType, template <class> class Ma
 template<typename XprType> class TensorIndexTupleOp;
 template<typename ReduceOp, typename Dims, typename XprType> class TensorTupleReducerOp;
 template<typename Axis, typename LeftXprType, typename RightXprType> class TensorConcatenationOp;
-template<typename Dimensions, typename LeftXprType, typename RightXprType> class TensorContractionOp;
+template<typename Dimensions, typename LeftXprType, typename RightXprType, typename OutputKernelType> class TensorContractionOp;
 template<typename TargetType, typename XprType> class TensorConversionOp;
 template<typename Dimensions, typename InputXprType, typename KernelXprType> class TensorConvolutionOp;
 template<typename FFT, typename XprType, int FFTDataType, int FFTDirection> class TensorFFTOp;
@@ -97,6 +106,8 @@ template<typename XprType> class TensorForcedEvalOp;
 template<typename ExpressionType, typename DeviceType> class TensorDevice;
 template<typename Derived, typename Device> struct TensorEvaluator;
 
+struct NoOpOutputKernel;
+
 struct DefaultDevice;
 struct ThreadPoolDevice;
 struct GpuDevice;
@@ -127,8 +138,18 @@ struct IsVectorizable<GpuDevice, Expression> {
                             TensorEvaluator<Expression, GpuDevice>::IsAligned;
 };
 
+template <typename Device, typename Expression>
+struct IsTileable {
+  // Check that block evaluation is supported and it's a preferred option (at
+  // least one sub-expression has much faster block evaluation, e.g.
+  // broadcasting).
+  static const bool value = TensorEvaluator<Expression, Device>::BlockAccess &&
+                            TensorEvaluator<Expression, Device>::PreferBlockAccess;
+};
+
 template <typename Expression, typename Device,
-          bool Vectorizable = IsVectorizable<Device, Expression>::value>
+          bool Vectorizable = IsVectorizable<Device, Expression>::value,
+          bool Tileable = IsTileable<Device, Expression>::value>
 class TensorExecutor;
 
 }  // end namespace internal

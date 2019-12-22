@@ -35,6 +35,8 @@ typedef struct _usb_host_msd_fatfs_instance
     usb_device_handle deviceHandle;             /*!< device handle */
     usb_host_class_handle classHandle;          /*!< class handle */
     usb_host_interface_handle interfaceHandle;  /*!< interface handle */
+    TaskHandle_t hostStackTaskHandle;
+    TaskHandle_t hostAppTaskHandle;
     uint8_t prevDeviceState;                    /*!< device attach/detach previous status */
     uint8_t deviceState;                        /*!< device attach/detach status */
     uint8_t runWaitState; /*!< application wait status, go to next run status when the wait status success */

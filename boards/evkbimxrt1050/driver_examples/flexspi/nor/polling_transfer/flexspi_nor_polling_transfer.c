@@ -135,7 +135,6 @@ int main(void)
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
-    SCB_DisableDCache();
 
     flexspi_nor_flash_init(EXAMPLE_FLEXSPI);
 
@@ -179,6 +178,9 @@ int main(void)
     }
 
     memset(s_nor_program_buffer, 0xFFU, sizeof(s_nor_program_buffer));
+
+    DCACHE_InvalidateByRange(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE, FLASH_PAGE_SIZE);
+
     memcpy(s_nor_read_buffer, (void *)(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE),
            sizeof(s_nor_read_buffer));
 
@@ -205,7 +207,7 @@ int main(void)
         return -1;
     }
 
-    DCACHE_CleanInvalidateByRange(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE, FLASH_PAGE_SIZE);
+    DCACHE_InvalidateByRange(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE, FLASH_PAGE_SIZE);
 
     memcpy(s_nor_read_buffer, (void *)(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE),
            sizeof(s_nor_read_buffer));

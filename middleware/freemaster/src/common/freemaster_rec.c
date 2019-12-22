@@ -52,6 +52,7 @@ struct FMSTR_REC_VAR_DATA_S;
 /* trigger threshold level (1,2,4 or 8 bytes) */
 typedef union
 {
+    FMSTR_U8  raw[8];
     FMSTR_U8  u8;
     FMSTR_S8  s8;
     FMSTR_U16 u16;
@@ -89,9 +90,9 @@ typedef FMSTR_BOOL (*FMSTR_PCOMPAREFUNC)(struct FMSTR_REC_VAR_DATA_S* varData);
 typedef struct FMSTR_REC_VAR_DATA_S
 {
     FMSTR_REC_VAR       cfg;                /* variable configuration */
-    FMSTR_REC_THRESHOLD thresholdVal;       /* variable trigger threshold value if used */
+    FMSTR_REC_THRESHOLD thresholdVal;       /* trigger threshold value if used */
     FMSTR_PCOMPAREFUNC  compareFunc;        /* pointer to trigger compare function if used */
-    FMSTR_BOOL          trgLastState;       /* Triggre last comparision state for edge detection if used */
+    FMSTR_BOOL          trgLastState;       /* last trigger comparison state for edge detection if used */
 } FMSTR_REC_VAR_DATA;
 
 /* runtime variables  */
@@ -273,11 +274,32 @@ FMSTR_BOOL FMSTR_RecorderCreate(FMSTR_INDEX recIndex, FMSTR_REC_BUFF* buffCfg)
 
 /**************************************************************************//*!
 *
+* @brief    API: Change the recorder time base information.
+*
+* @param    recIndex - index of recorder
+* @param    timeBase_ns - new time base to be assigned to recorder, in nanoseconds
+*
+******************************************************************************/
+
+FMSTR_BOOL FMSTR_RecorderSetTimeBase(FMSTR_INDEX recIndex, FMSTR_U32 timeBase_ns)
+{
+    FMSTR_REC_BUFF* recBuff;
+
+    FMSTR_ASSERT_RETURN(recIndex < FMSTR_USE_RECORDER, FMSTR_FALSE);
+
+    recBuff = _FMSTR_GetRecorderBufferByRecIx(recIndex);
+    FMSTR_ASSERT_RETURN(recBuff != NULL, FMSTR_FALSE);
+
+    recBuff->basePeriod_ns = timeBase_ns;
+    return FMSTR_TRUE;
+}
+
+/**************************************************************************//*!
+*
 * @brief    API: Set up the recorder configuration
 *
 * @param    recIndex - index of recorder
 * @param    recCfg - pointer to recorder configuration
-*
 *
 ******************************************************************************/
 
@@ -511,38 +533,48 @@ static FMSTR_BPTR _FMSTR_SetRecCmd_CFGVAR(FMSTR_BPTR msgBuffIO, FMSTR_SIZE opLen
         return msgBuffIO;
     }
 
+    /* Sanity check on variable size */
+    if(recVarCfg.size > sizeof(FMSTR_REC_THRESHOLD))
+    {
+        *retStatus = FMSTR_STC_INVSIZE;
+        return msgBuffIO;
+    }
+
     /* Variable threshold? */
     if(recVarCfg.triggerMode & FMSTR_REC_TRG_F_VARTHR)
     {
-        /* Yes, get the pointer to variable threshol variable */
+        /* Yes, get the pointer to variable threshold variable */
         msgBuffIO = FMSTR_AddressFromBuffer(&recVarCfg.trgAddr, msgBuffIO);
     }
     else
     {
+        /* Constant threshold. Get its address. */
+        FMSTR_U8* constThresholdPtr = recorder->varDescr[recVarIx].thresholdVal.raw;
+
         switch(recVarCfg.triggerMode & FMSTR_REC_TRG_TYPE_MASK)
         {
         case FMSTR_REC_TRG_TYPE_FLOAT:
             #if FMSTR_REC_FLOAT_TRIG
-                /* The Float is coded as a row of bytes in ULEB format (TODO: FMSTR_SIZE really?) */
-                msgBuffIO = FMSTR_SizeFromBuffer((FMSTR_SIZE*)&recorder->varDescr[recVarIx].thresholdVal, msgBuffIO);
-				break;
-			#else
+                /* The Float is coded as a raw bytes in ULEB format */
+                msgBuffIO = FMSTR_UlebDecode(msgBuffIO, constThresholdPtr, recVarCfg.size);
+                break;
+            #else
                 *retStatus = FMSTR_STC_FLOATDISABLED;
                 return msgBuffIO;
             #endif
 
-        case FMSTR_REC_TRG_TYPE_UINT:
-            msgBuffIO = FMSTR_UlebDecode64(msgBuffIO, &recorder->varDescr[recVarIx].thresholdVal.u64);
+        case FMSTR_REC_TRG_TYPE_SINT:
+            msgBuffIO = FMSTR_SlebDecode(msgBuffIO, constThresholdPtr, recVarCfg.size);
             break;
 
-        case FMSTR_REC_TRG_TYPE_SINT:
+        case FMSTR_REC_TRG_TYPE_UINT:
         default:
-            msgBuffIO = FMSTR_SlebDecode64(msgBuffIO, &recorder->varDescr[recVarIx].thresholdVal.s64);
+            msgBuffIO = FMSTR_UlebDecode(msgBuffIO, constThresholdPtr, recVarCfg.size);
             break;
         }
 
         /* Pointer to constant threshold value */
-        recVarCfg.trgAddr = (FMSTR_ADDR)&recorder->varDescr[recVarIx].thresholdVal;
+        recVarCfg.trgAddr = (FMSTR_ADDR)constThresholdPtr;
     }
 
     /* Secoded ULEBs should match the expected op_data length */
@@ -740,20 +772,20 @@ FMSTR_BPTR FMSTR_GetRecCmd(FMSTR_BPTR msgBuffIO, FMSTR_U8* retStatus)
             {
                 FMSTR_REC_BUFF* recorderBuff;
 
-                /* Get the recorder raw buffer where is also stored its name */
+                /* Get the recorder */
                 if((recorderBuff = _FMSTR_GetRecorderBufferByRecIx(recIndex)) == NULL)
                 {
                     responseCode = FMSTR_STC_INVBUFF;
                 }
                 else
                 {
-                    /* Put into output buffer the Raw Size of recorder buffer */
+                    /* Put Raw Size of recorder buffer */
                     response = FMSTR_SizeToBuffer(response, recorderBuff->size);
-                    /* Put into output buffer the base period of the recorder */
-                    response = FMSTR_SizeToBuffer(response, recorderBuff->basePeriod_ns);
-                    /* Put into output buffer the size of recorder structure */
+                    /* Put Base period of the recorder */
+                    response = FMSTR_ULebToBuffer(response, recorderBuff->basePeriod_ns);
+                    /* Put Size of recorder structure */
                     response = FMSTR_SizeToBuffer(response, sizeof(FMSTR_REC));
-                    /* Put into output buffer the size of recorder variable structure */
+                    /* Put Size of recorder variable structure */
                     response = FMSTR_SizeToBuffer(response, sizeof(FMSTR_REC_VAR_DATA));
                 }
 
@@ -1328,7 +1360,7 @@ void FMSTR_Recorder(FMSTR_INDEX recIndex)
 FMSTR_BOOL FMSTR_RecorderTrigger(FMSTR_INDEX recIndex)
 {
     FMSTR_UNUSED(recIndex);
-    
+
     return FMSTR_TRUE;
 }
 

@@ -17,7 +17,7 @@
     <dwHighDateTime>0</dwHighDateTime>
   </DaveTm>
   <Target>
-    <TargetName>cmsis_nn_cifar10 flexspi_nor_debug</TargetName>
+    <TargetName>cmsis_nn_cifar10 flexspi_nor_sdram_debug</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -106,7 +106,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1060_flexspi_nor.ini</tIfile>
+        <tIfile>evkmimxrt1060_flexspi_nor_sdram.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -168,7 +168,7 @@
     </TargetOption>
   </Target>
   <Target>
-    <TargetName>cmsis_nn_cifar10 flexspi_nor_release</TargetName>
+    <TargetName>cmsis_nn_cifar10 flexspi_nor_sdram_release</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -257,7 +257,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1060_flexspi_nor.ini</tIfile>
+        <tIfile>evkmimxrt1060_flexspi_nor_sdram.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>

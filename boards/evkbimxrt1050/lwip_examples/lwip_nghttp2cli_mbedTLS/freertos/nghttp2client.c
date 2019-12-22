@@ -25,6 +25,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define SERVER_VERIFICATION 0
 /* This is the value used for ssl read timeout */
 #define IOT_SSL_READ_TIMEOUT 10
 #define GET_REQUEST "GET"
@@ -399,8 +400,9 @@ static void *freertos_realloc(void *ptr, size_t size, void *mem_user_data)
 int tls_init(nghttp2_con_info_t *con)
 {
     int ret = 0;
+#if SERVER_VERIFICATION
     char vrfyBuf[512];
-    bool serverVerificationFlag = false;
+#endif
     const mbedtls_md_info_t *mdInfo;
     TLSDataParams *tlsDataParams = &con->tlsDataParams;
 
@@ -500,15 +502,12 @@ int tls_init(nghttp2_con_info_t *con)
         return SSL_CONNECTION_ERROR;
     }
 
-    if (serverVerificationFlag == true)
-    {
-        mbedtls_ssl_conf_authmode(&(tlsDataParams->conf), MBEDTLS_SSL_VERIFY_REQUIRED);
-    }
-    else
-    {
-        /* mbedtls_ssl_conf_authmode(&(tlsDataParams->conf), MBEDTLS_SSL_VERIFY_OPTIONAL); */
-        mbedtls_ssl_conf_authmode(&(tlsDataParams->conf), MBEDTLS_SSL_VERIFY_NONE);
-    }
+#if SERVER_VERIFICATION
+    mbedtls_ssl_conf_authmode(&(tlsDataParams->conf), MBEDTLS_SSL_VERIFY_REQUIRED);
+#else
+    /* mbedtls_ssl_conf_authmode(&(tlsDataParams->conf), MBEDTLS_SSL_VERIFY_OPTIONAL); */
+    mbedtls_ssl_conf_authmode(&(tlsDataParams->conf), MBEDTLS_SSL_VERIFY_NONE);
+#endif
 
     mbedtls_ssl_conf_verify(&(tlsDataParams->conf), _iot_tls_verify_cert, NULL);
 
@@ -560,26 +559,23 @@ int tls_init(nghttp2_con_info_t *con)
 
     PRINTF("  . Verifying peer X.509 certificate...\n");
 
-    if (serverVerificationFlag == true)
+#if SERVER_VERIFICATION
+    if ((tlsDataParams->flags = mbedtls_ssl_get_verify_result(&(tlsDataParams->ssl))) != 0)
     {
-        if ((tlsDataParams->flags = mbedtls_ssl_get_verify_result(&(tlsDataParams->ssl))) != 0)
-        {
-            PRINTF(" failed\n");
-            mbedtls_x509_crt_verify_info(vrfyBuf, sizeof(vrfyBuf), "  ! ", tlsDataParams->flags);
-            PRINTF("%s\n", vrfyBuf);
-            ret = SSL_CONNECTION_ERROR;
-        }
-        else
-        {
-            PRINTF(" ok\n");
-            ret = SUCCESS;
-        }
+        PRINTF(" failed\n");
+        mbedtls_x509_crt_verify_info(vrfyBuf, sizeof(vrfyBuf), "  ! ", tlsDataParams->flags);
+        PRINTF("%s\n", vrfyBuf);
+        ret = SSL_CONNECTION_ERROR;
     }
     else
     {
-        PRINTF(" Server Verification skipped\n");
+        PRINTF(" ok\n");
         ret = SUCCESS;
     }
+#else
+    PRINTF(" Server Verification skipped\n");
+    ret = SUCCESS;
+#endif
 
 #ifdef MBEDTLS_DEBUG_C
     if (mbedtls_ssl_get_peer_cert(&(tlsDataParams->ssl)) != NULL)
@@ -664,11 +660,16 @@ int nghttp2_init(nghttp2_user_session_t *userSession)
 
 int nghttp2_start(nghttp2_user_session_t *userSession)
 {
+    if (userSession == NULL)
+    {
+        return FAILURE;
+    }
+
     int ret                         = 0;
     nghttp2_session *nghttp2Session = userSession->nghttp2Session;
     TLSDataParams *tlsDataParams    = &userSession->con.tlsDataParams;
     unsigned char *buf              = freertos_alloc(MBEDTLS_SSL_MAX_CONTENT_LEN + 1, NULL);
-    if (userSession == NULL)
+    if (buf == NULL)
     {
         PRINTF("Memory alloc failed - buf\n");
         return FAILURE;

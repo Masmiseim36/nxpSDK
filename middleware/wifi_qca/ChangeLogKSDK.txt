@@ -1,0 +1,13 @@
+/*!
+@page middleware_log Middleware Change Log
+ 
+@section wifi_qca QCA WiFi
+  The current version is 2.0.0.
+
+  - 2.0.0
+    - Initial version.
+      - Added QCA WiFi, ported from SDK 1.3, synchronized with latest MQX Qualcomm v3.3.5.
+    - Known issues:
+      - Low power mode may not work, require further investigation.
+      - DHCP request requires some timeout to retrieve valid data.
+*/

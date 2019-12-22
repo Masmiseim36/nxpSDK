@@ -29,18 +29,10 @@
 #error Please include the freemaster.h master header file before the freemaster_serial_usb.h
 #endif
 
-/******************************************************************************
-* Adapter configuration
-******************************************************************************/
-#if defined(FMSTR_SHORT_INTR) && FMSTR_SHORT_INTR
-    #error The USB/CDC driver does not support short interrupt.
-#endif 
-
-
 #ifdef __cplusplus
   extern "C" {
 #endif
-      
+
 /******************************************************************************
 * Types definition
 ******************************************************************************/

@@ -89,7 +89,7 @@ static status_t CSI_ADAPTER_Init(camera_receiver_handle_t *handle,
     }
 
     csiConfig.linePitch_Bytes = config->frameBufferLinePitch_Bytes;
-    csiConfig.dataBus         = kCSI_DataBus8Bit;
+    csiConfig.dataBus         = resource->dataBus;
     csiConfig.useExtVsync     = true;
     csiConfig.height          = FSL_VIDEO_EXTRACT_HEIGHT(config->resolution);
     csiConfig.width           = FSL_VIDEO_EXTRACT_WIDTH(config->resolution);

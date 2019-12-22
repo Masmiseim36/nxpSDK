@@ -185,10 +185,13 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT1062DVL6A</state>
           <state>HIGH_SPEED_SDIO_CLOCK</state>
+          <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>LWIP_NETIF_API=1</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>
           <state>WIFI_WICED</state>
+          <state>SDK_DEBUGCONSOLE_UART</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -265,7 +268,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -317,22 +320,22 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../wiced_iperf</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private</state>
+          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/platforms/CYW943012CREF</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/port</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/platforms/CYW943012CREF</state>
           <state>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/app</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -340,15 +343,14 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/inc</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/src</state>
+          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/chips/43012</state>
           <state>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/network/LwIP/WWD</state>
@@ -366,6 +368,9 @@
           <state>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal</state>
           <state>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/bus_protocols/SDIO</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/inc</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/src</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -753,7 +758,6 @@
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=0x1000</state>
           <state>__heap_size__=0x1000</state>
-          <state>__ram_vector_table__=1</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -785,7 +789,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMXRT1062xxxxx_flexspi_nor.icf</state>
+          <state>$PROJ_DIR$/MIMXRT1062xxxxx_flexspi_nor_ocram_noncacheable.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -1207,10 +1211,13 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1062DVL6A</state>
           <state>HIGH_SPEED_SDIO_CLOCK</state>
+          <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>LWIP_NETIF_API=1</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>
           <state>WIFI_WICED</state>
+          <state>SDK_DEBUGCONSOLE_UART</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1287,7 +1294,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -1339,22 +1346,22 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../wiced_iperf</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private</state>
+          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/platforms/CYW943012CREF</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/port</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/platforms/CYW943012CREF</state>
           <state>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/app</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -1362,15 +1369,14 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/inc</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/src</state>
+          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/chips/43012</state>
           <state>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/network/LwIP/WWD</state>
@@ -1388,6 +1394,9 @@
           <state>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal</state>
           <state>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/bus_protocols/SDIO</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/inc</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/src</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1775,7 +1784,6 @@
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=0x1000</state>
           <state>__heap_size__=0x1000</state>
-          <state>__ram_vector_table__=1</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -1807,7 +1815,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMXRT1062xxxxx_flexspi_nor.icf</state>
+          <state>$PROJ_DIR$/MIMXRT1062xxxxx_flexspi_nor_ocram_noncacheable.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -2087,6 +2095,12 @@
   <group>
     <name>drivers</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_cache.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</name>
     </file>
     <file>
@@ -2123,96 +2137,108 @@
   <group>
     <name>amazon-freertos</name>
     <group>
-      <name>freertos</name>
+      <name>freertos_kernel</name>
       <group>
         <name>portable</name>
+        <group>
+          <name>MemMang</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url</name>
+          </file>
+        </group>
+        <group>
+          <name>IAR</name>
+          <group>
+            <name>ARM_CM4F</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM4F/port.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM4F/portasm.s</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM4F/portmacro.h</name>
+            </file>
+          </group>
+        </group>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/port.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/portasm.s</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/portmacro.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt</name>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/readme.txt</name>
         </file>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c</name>
+      </file>
+      <group>
+        <name>include</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/list.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/queue.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c</name>
-      </file>
-    </group>
-    <group>
-      <name>include</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/event_groups.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/message_buffer.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/mpu_prototypes.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/portable.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/threading_alt.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/queue.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/semphr.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/task.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/timers.h</name>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/timers.c</name>
       </file>
     </group>
   </group>
@@ -2925,7 +2951,352 @@
     </group>
   </group>
   <group>
+    <name>wiced</name>
+    <group>
+      <name>43xxx_Wi-Fi</name>
+      <group>
+        <name>platforms</name>
+        <group>
+          <name>CYW943012CREF</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/platforms/CYW943012CREF/wifi_nvram_image.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>app</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/app/dhcp_server.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/app/dhcp_server.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/app/test_apsta.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/app/test_scan.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/app/wlanif_add.c</name>
+        </file>
+      </group>
+      <group>
+        <name>WICED</name>
+        <group>
+          <name>WWD</name>
+          <group>
+            <name>internal</name>
+            <group>
+              <name>chips</name>
+              <group>
+                <name>43012</name>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/chips/43012/43012.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/chips/43012/43012_clm.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/chips/43012/43012_mfg.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/chips/43012/43012_mfg_clm.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/chips/43012/chip_constants.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/chips/43012/resources.c</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/chips/43012/resources.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/chips/43012/wwd_ap.c</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/chips/43012/wwd_chip_specific_functions.c</name>
+                </file>
+              </group>
+            </group>
+            <group>
+              <name>bus_protocols</name>
+              <group>
+                <name>SDIO</name>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/bus_protocols/SDIO/wwd_bus_protocol.c</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/bus_protocols/SDIO/wwd_bus_protocol.h</name>
+                </file>
+              </group>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/bus_protocols/wwd_bus_common.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/bus_protocols/wwd_bus_protocol_interface.h</name>
+              </file>
+            </group>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/tlv.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/tlv.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_ap.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_ap_common.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_ap_common.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_bcmendian.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_clm.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_clm.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_debug.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_eapol.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_internal.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_internal.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_logging.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_management.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_rtos_interface.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_sdpcm.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_sdpcm.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_thread.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_thread.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_thread_internal.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_thread_internal.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_wifi.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_wifi_chip_common.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_wifi_chip_common.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_wifi_sleep.c</name>
+            </file>
+          </group>
+          <group>
+            <name>include</name>
+            <group>
+              <name>RTOS</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/RTOS/wwd_rtos_interface.h</name>
+              </file>
+            </group>
+            <group>
+              <name>network</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/network/wwd_buffer_interface.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/network/wwd_network_constants.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/network/wwd_network_interface.h</name>
+              </file>
+            </group>
+            <group>
+              <name>platform</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/platform/wwd_bus_interface.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/platform/wwd_platform_interface.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/platform/wwd_resource_interface.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/platform/wwd_sdio_interface.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/platform/wwd_spi_interface.h</name>
+              </file>
+            </group>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/wwd_assert.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/wwd_constants.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/wwd_debug.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/wwd_eapol.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/wwd_events.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/wwd_management.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/wwd_poll.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/wwd_structures.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/wwd_wifi.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/wwd_wifi_sleep.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/wwd_wlioctl.h</name>
+            </file>
+          </group>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/wwd.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/wwd_wiced.h</name>
+          </file>
+        </group>
+        <group>
+          <name>RTOS</name>
+          <group>
+            <name>FreeRTOS</name>
+            <group>
+              <name>WWD</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/RTOS/FreeRTOS/WWD/wwd_FreeRTOS_systick.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/RTOS/FreeRTOS/WWD/wwd_rtos.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/RTOS/FreeRTOS/WWD/wwd_rtos.h</name>
+              </file>
+            </group>
+          </group>
+        </group>
+        <group>
+          <name>internal</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/internal/wifi.c</name>
+          </file>
+        </group>
+        <group>
+          <name>network</name>
+          <group>
+            <name>LwIP</name>
+            <group>
+              <name>WWD</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/network/LwIP/WWD/wwd_buffer.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/network/LwIP/WWD/wwd_buffer.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/network/LwIP/WWD/wwd_network.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/network/LwIP/WWD/wwd_network.h</name>
+              </file>
+            </group>
+          </group>
+        </group>
+        <group>
+          <name>platform</name>
+          <group>
+            <name>MCU</name>
+            <group>
+              <name>LPC</name>
+              <group>
+                <name>WWD</name>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/platform/MCU/LPC/WWD/wwd_SDIO.c</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/platform/MCU/LPC/WWD/wwd_platform.c</name>
+                </file>
+              </group>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/platform/MCU/LPC/platform_mcu_peripheral.h</name>
+              </file>
+            </group>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/platform/MCU/wwd_platform_common.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/platform/MCU/wwd_platform_separate_mcu.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/platform/MCU/wwd_resources.c</name>
+            </file>
+          </group>
+          <group>
+            <name>include</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/platform/include/platform_cache_def.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/platform/include/platform_peripheral.h</name>
+            </file>
+          </group>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/platform/platform_toolchain.h</name>
+          </file>
+        </group>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/generated_mac_address.txt</name>
+      </file>
+      <group>
+        <name>include</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/include/wiced_resource.h</name>
+        </file>
+      </group>
+    </group>
+  </group>
+  <group>
     <name>sdmmc</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/sdmmc/ChangeLogKSDK.txt</name>
+    </file>
     <group>
       <name>inc</name>
       <file>
@@ -2950,6 +3321,9 @@
         <name>$PROJ_DIR$/../../../../../middleware/sdmmc/src/fsl_sdmmc_common.c</name>
       </file>
     </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/sdmmc/ChangeLogKSDK.txt</name>
+    </file>
     <group>
       <name>port</name>
       <file>
@@ -2962,345 +3336,9 @@
         <name>$PROJ_DIR$/../../../../../middleware/sdmmc/port/usdhc/freertos/fsl_sdmmc_host.c</name>
       </file>
     </group>
-  </group>
-  <group>
-    <name>43xxx_wifi</name>
-    <group>
-      <name>platforms</name>
-      <group>
-        <name>CYW943012CREF</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/platforms/CYW943012CREF/wifi_nvram_image.h</name>
-        </file>
-      </group>
-    </group>
-    <group>
-      <name>app</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/app/dhcp_server.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/app/dhcp_server.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/app/test_apsta.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/app/test_scan.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/app/wlanif_add.c</name>
-      </file>
-    </group>
-    <group>
-      <name>WICED</name>
-      <group>
-        <name>WWD</name>
-        <group>
-          <name>internal</name>
-          <group>
-            <name>chips</name>
-            <group>
-              <name>43012</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/chips/43012/43012.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/chips/43012/43012_clm.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/chips/43012/43012_mfg.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/chips/43012/43012_mfg_clm.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/chips/43012/chip_constants.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/chips/43012/resources.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/chips/43012/resources.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/chips/43012/wwd_ap.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/chips/43012/wwd_chip_specific_functions.c</name>
-              </file>
-            </group>
-          </group>
-          <group>
-            <name>bus_protocols</name>
-            <group>
-              <name>SDIO</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/bus_protocols/SDIO/wwd_bus_protocol.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/bus_protocols/SDIO/wwd_bus_protocol.h</name>
-              </file>
-            </group>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/bus_protocols/wwd_bus_common.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/bus_protocols/wwd_bus_protocol_interface.h</name>
-            </file>
-          </group>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/tlv.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/tlv.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_ap.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_ap_common.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_ap_common.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_bcmendian.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_clm.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_clm.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_debug.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_eapol.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_internal.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_internal.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_logging.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_management.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_rtos_interface.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_sdpcm.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_sdpcm.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_thread.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_thread.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_thread_internal.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_thread_internal.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_wifi.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_wifi_chip_common.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_wifi_chip_common.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/wwd_wifi_sleep.c</name>
-          </file>
-        </group>
-        <group>
-          <name>include</name>
-          <group>
-            <name>RTOS</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/RTOS/wwd_rtos_interface.h</name>
-            </file>
-          </group>
-          <group>
-            <name>network</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/network/wwd_buffer_interface.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/network/wwd_network_constants.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/network/wwd_network_interface.h</name>
-            </file>
-          </group>
-          <group>
-            <name>platform</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/platform/wwd_bus_interface.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/platform/wwd_platform_interface.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/platform/wwd_resource_interface.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/platform/wwd_sdio_interface.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/platform/wwd_spi_interface.h</name>
-            </file>
-          </group>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/wwd_assert.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/wwd_constants.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/wwd_debug.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/wwd_eapol.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/wwd_events.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/wwd_management.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/wwd_poll.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/wwd_structures.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/wwd_wifi.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/wwd_wifi_sleep.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/include/wwd_wlioctl.h</name>
-          </file>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/wwd.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/wwd_wiced.h</name>
-        </file>
-      </group>
-      <group>
-        <name>RTOS</name>
-        <group>
-          <name>FreeRTOS</name>
-          <group>
-            <name>WWD</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/RTOS/FreeRTOS/WWD/wwd_FreeRTOS_systick.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/RTOS/FreeRTOS/WWD/wwd_rtos.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/RTOS/FreeRTOS/WWD/wwd_rtos.h</name>
-            </file>
-          </group>
-        </group>
-      </group>
-      <group>
-        <name>network</name>
-        <group>
-          <name>LwIP</name>
-          <group>
-            <name>WWD</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/network/LwIP/WWD/wwd_buffer.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/network/LwIP/WWD/wwd_buffer.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/network/LwIP/WWD/wwd_network.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/network/LwIP/WWD/wwd_network.h</name>
-            </file>
-          </group>
-        </group>
-      </group>
-      <group>
-        <name>platform</name>
-        <group>
-          <name>MCU</name>
-          <group>
-            <name>LPC</name>
-            <group>
-              <name>WWD</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/platform/MCU/LPC/WWD/wwd_SDIO.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/platform/MCU/LPC/WWD/wwd_platform.c</name>
-              </file>
-            </group>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/platform/MCU/LPC/platform_mcu_peripheral.h</name>
-            </file>
-          </group>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/platform/MCU/wwd_platform_common.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/platform/MCU/wwd_platform_separate_mcu.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/platform/MCU/wwd_resources.c</name>
-          </file>
-        </group>
-        <group>
-          <name>include</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/platform/include/platform_cache_def.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/platform/include/platform_peripheral.h</name>
-          </file>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/platform/platform_toolchain.h</name>
-        </file>
-      </group>
-    </group>
-    <group>
-      <name>internal</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/internal/wifi.c</name>
-      </file>
-    </group>
     <file>
-      <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/generated_mac_address.txt</name>
+      <name>$PROJ_DIR$/../../../../../middleware/sdmmc/ChangeLogKSDK.txt</name>
     </file>
-    <group>
-      <name>include</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wiced/43xxx_Wi-Fi/include/wiced_resource.h</name>
-      </file>
-    </group>
   </group>
   <group>
     <name>device</name>
@@ -3413,19 +3451,13 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm7.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_const_structs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
@@ -3440,6 +3472,9 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
     </file>
     <file>
@@ -3450,6 +3485,15 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_const_structs.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
     </file>
   </group>
 </project>

@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2018  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V5.48 - Graphical user interface for embedded applications **
+** emWin V5.50 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2019-09-02
+SUA period:               2011-08-19 - 2020-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUI_Private.h
@@ -195,6 +195,13 @@ typedef struct {
   GUI_HMEM               hUsage;
 } GUI_MEMDEV;
 
+typedef struct {
+  GUI_USAGE Public;
+  struct {
+    int BytesPerLine;
+  } Private;
+} GUI_USAGE_BM;
+
 #define      GUI_MEMDEV_LOCK_H(h) ((GUI_MEMDEV *)GUI_LOCK_H(h))
 
 void         GUI_MEMDEV__CopyFromLCD (GUI_MEMDEV_Handle hMem);
@@ -321,6 +328,9 @@ void GUI__DispLine         (const char * s, int Len, const GUI_RECT * pr);
 void GUI__AddSpaceHex      (U32 v, U8 Len, char ** ps);
 void GUI__CalcTextRect     (const char * pText, const GUI_RECT * pTextRectIn, GUI_RECT * pTextRectOut, int TextAlign);
 
+void GUI__DrawNonExistingCharacter(LCD_DRAWMODE DrawMode);
+int  GUI__GetNonExistingCharWidth (void);
+
 void GUI__ClearTextBackground(int xDist, int yDist);
 
 int  GUI__WrapGetNumCharsDisp       (const char * pText, int xSize, GUI_WRAPMODE WrapMode);
@@ -351,6 +361,13 @@ int  GUI__BIDI_IsNSM             (U16 Char);
 U16  GUI__BIDI_GetCursorCharacter(const char * s, int Index, int MaxNumChars, int * pIsRTL);
 int  GUI__BIDI_GetWordWrap       (const char * s, int xSize, int * pxDist);
 int  GUI__BIDI_GetCharWrap       (const char * s, int xSize);
+
+const char * GUI__NOBIDI_Log2VisBuffered   (const char * s, int * pMaxNumChars, int Mode);
+int          GUI__NOBIDI_GetCursorPosX     (const char * s, int MaxNumChars, int Index);
+int          GUI__NOBIDI_GetCursorPosChar  (const char * s, int MaxNumChars, int x);
+U16          GUI__NOBIDI_GetCursorCharacter(const char * s, int Index, int MaxNumChars, int * pIsRTL);
+int          GUI__NOBIDI_GetWordWrap       (const char * s, int xSize, int * pxDist);
+int          GUI__NOBIDI_GetCharWrap       (const char * s, int xSize);
 
 #if (GUI_USE_BIDI2)
 
@@ -421,7 +438,6 @@ U32 GUI__Read32(const U8 ** ppData);
 
 /* Virtual screen support */
 void GUI__GetOrg(int * px, int * py);
-void GUI__SetOrgHook(void(* pfHook)(int x, int y));
 
 /* Timer support */
 int              GUI_TIMER__IsActive       (void);
@@ -434,13 +450,6 @@ tLCDDEV_Index2Color * GUI_GetpfIndex2ColorEx(int LayerIndex);
 tLCDDEV_Color2Index * GUI_GetpfColor2IndexEx(int LayerIndex);
 
 int GUI_GetBitsPerPixelEx(int LayerIndex);
-
-LCD_PIXELINDEX * LCD_GetpPalConvTable        (const LCD_LOGPALETTE * pLogPal);
-LCD_PIXELINDEX * LCD_GetpPalConvTableUncached(const LCD_LOGPALETTE * pLogPal);
-LCD_PIXELINDEX * LCD_GetpPalConvTableBM      (const LCD_LOGPALETTE * pLogPal, const GUI_BITMAP * pBitmap, int LayerIndex);
-
-/* Setting a function for converting a color palette to an array of index values */
-void GUI_SetFuncGetpPalConvTable(LCD_PIXELINDEX * (* pFunc)(const LCD_LOGPALETTE * pLogPal, const GUI_BITMAP * pBitmap, int LayerIndex));
 
 /*********************************************************************
 *
@@ -496,7 +505,6 @@ void GL_DrawHLine        (int y0, int x0, int x1);
 void GL_DrawPolygon      (const GUI_POINT * pPoints, int NumPoints, int x0, int y0);
 void GL_DrawPoint        (int x,  int y);
 void GL_DrawLine1        (int x0, int y0, int x1, int y1);
-void GL_DrawLine1Ex      (int x0, int y0, int x1, int y1, unsigned * pPixelCnt);
 void GL_DrawLineRel      (int dx, int dy);
 void GL_DrawLineTo       (int x,  int y);
 void GL_DrawLineToEx     (int x,  int y, unsigned * pPixelCnt);

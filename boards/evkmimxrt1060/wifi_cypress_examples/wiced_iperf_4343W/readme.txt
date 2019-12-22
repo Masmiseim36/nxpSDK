@@ -1,6 +1,5 @@
 Overview
 ========
-
 This is the IPerf example to check your bandwidth using the network performance measurement IPerf application on a PC as a client or a server.
 IPv4 is implemented. The UDP implementation is based on lwIP community experimental patches, therefore some issues could be experienced.
 UDP sending rate is calculated from the system time, which has a resolution of 1 ms in lwIP. Therefore the actual sending rate could be
@@ -24,12 +23,15 @@ The demo is able to connect as a WiFi client to your local WiFi network or act a
 The connection parameteres are defined by macros WIFI_SSID, WIFI_PASSWORD and WIFI_SECURITY.
 Connection from a smartphone with Android OS was tested with 'Magic iPerf' application available in the Play store: https://play.google.com/store/apps/details?id=com.nextdoordeveloper.miperf.miperf
 
+By default the example connects to network SSID "nxp-iperf" with "NXP0123456789" key.
+
+
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- GCC ARM Embedded  8.2.1
-- MCUXpresso  11.0.0
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -38,17 +40,31 @@ Hardware requirements
 - Personal Computer
 - Murata 1DX or 1LV M.2 module
 - Murata uSD M.2 Adapter
+- 1 plug to receptable header cable
 
 Board settings
 ==============
 It is recommended to provide power directly to Murata uSD M.2 Adapter board using secondary Micro USB cable.
 Jumper J1 on the adapter board has to be set up accordingly to utilize external power.
+
+The following pins between the evkmimxrt1060 board and Murata uSD M.2 Adapter are connected using the plug to receptable cables:
+- evkmimxrt1060 board's connector J22, pin 3 to Murata uSD M.2 Adapter's connector J9, pin 3
 Prepare the Demo
 ================
+1.  Connect a micro USB cable between the PC host and the CMSIS DAP USB port on the board
+2.  Open a serial terminal with the following settings:
+    - 115200 baud rate
+    - 8 data bits
+    - No parity
+    - One stop bit
+    - No flow control
+3.  Connect the WiFi module to SD card slot.
+4.  Download the program to the target board.
+5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
+
 
 Running the demo
 ================
-
 1. Adjust the IPERF_SERVER_ADDRESS definition to the IP address where the JPerf PC application will be accessible and rebuild it.
 2. When the demo starts, a welcome message and a menu would appear on the terminal:
 
@@ -156,6 +172,7 @@ Enter mode number:
     If it is pressed when test is in progress, the running test will be aborted
     and the main menu will appear. If the test is already finished, the main menu
     will appear directly. From the main menu, new test can be run.
+
 Customization options
 =====================
 

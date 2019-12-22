@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2013-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,12 +8,12 @@
 #ifndef __BOOTLOADER_COMMON_H__
 #define __BOOTLOADER_COMMON_H__
 
-#include <stdio.h>
 #include <stdarg.h>
-#include <stdint.h>
 #include <stdbool.h>
-#include "fsl_common.h"
+#include <stdint.h>
+#include <stdio.h>
 #include "bootloader_config.h"
+#include "fsl_common.h"
 #include "target_config.h"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -71,31 +71,9 @@
 #define FOUR_CHAR_CODE(a, b, c, d) (((d) << 24) | ((c) << 16) | ((b) << 8) | ((a)))
 
 #if (defined(DEBUG) || defined(_DEBUG)) && !defined(DEBUG_PRINT_DISABLE)
-static inline void debug_printf(const char *format, ...);
-
-//! @brief Debug print utility.
-//!
-//! This print function will only output text when the @a DEBUG macro is defined.
-static inline void debug_printf(const char *format, ...)
-{
-    va_list args;
-    va_start(args, format);
-    vprintf(format, args);
-// Temporarily disable MISRA rule 14.2
-#if defined(__ICCARM__)
-#pragma diag_suppress = Pm049
-#endif
-    va_end(args);
-#if defined(__ICCARM__)
-#pragma diag_default = Pm049
-#endif
-}
-#else // (DEBUG || _DEBUG) && !DEBUG_PRINT_DISABLE
-// Empty macro to cause debug_printf() calls to disappear.
-#define debug_printf(x, ...) \
-    do                       \
-    {                        \
-    } while (false)
+extern  void debug_printf(const char *fmt, ...);
+#else
+#define debug_printf(...)
 #endif // (DEBUG || _DEBUG) && !DEBUG_PRINT_DISABLE
 
 //! @brief Callback function invoked for a pin change interrupt.
@@ -108,20 +86,20 @@ typedef void (*pin_irq_callback_t)(uint32_t instance);
 //! @ingroup bl_core
 enum _bl_status_groups
 {
-    kStatusGroup_Bootloader = 100,            //!< Bootloader status group number (100).
-    kStatusGroup_SBLoader = 101,              //!< SB loader status group number (101).
-    kStatusGroup_MemoryInterface = 102,       //!< Memory interface status group number (102).
-    kStatusGroup_PropertyStore = 103,         //!< Property store status group number (103).
-    kStatusGroup_AppCrcCheck = 104,           //!< Application crc check status group number (104).
-    kStatusGroup_Packetizer = 105,            //!< Packetizer status group number (105).
-    kStatusGroup_ReliableUpdate = 106,        //!< Reliable Update status groupt number (106).
+    kStatusGroup_Bootloader = 100,      //!< Bootloader status group number (100).
+    kStatusGroup_SBLoader = 101,        //!< SB loader status group number (101).
+    kStatusGroup_MemoryInterface = 102, //!< Memory interface status group number (102).
+    kStatusGroup_PropertyStore = 103,   //!< Property store status group number (103).
+    kStatusGroup_AppCrcCheck = 104,     //!< Application crc check status group number (104).
+    kStatusGroup_Packetizer = 105,      //!< Packetizer status group number (105).
+    kStatusGroup_ReliableUpdate = 106,  //!< Reliable Update status groupt number (106).
 
-    kStatusGroup_SerialNorEeprom = 107,       //!< Serial NOR/EEPROM status group number
-    kStatusGroup_FlexSPINAND = 200,           //!< FlexSPINAND status group number.
-    kStatusGroup_FLEXSPINOR = 201,            //!< FlexSPINOR status group number.
-    kStatusGroup_OCOTP = 202,                 //!< OCOTP status group number.
-    kStatusGroup_SemcNOR = 211,               //!< SEMC NOR status group number.
-    kStatusGroup_SemcNAND = 212,              //!< SEMC NAND status group number.
+    kStatusGroup_SerialNorEeprom = 107, //!< Serial NOR/EEPROM status group number
+    kStatusGroup_FlexSPINAND = 200,     //!< FlexSPINAND status group number.
+    kStatusGroup_FLEXSPINOR = 201,      //!< FlexSPINOR status group number.
+    kStatusGroup_OCOTP = 202,           //!< OCOTP status group number.
+    kStatusGroup_SemcNOR = 211,         //!< SEMC NOR status group number.
+    kStatusGroup_SemcNAND = 212,        //!< SEMC NAND status group number.
 };
 
 //! @brief Driver status group numbers.
@@ -140,8 +118,7 @@ enum _bl_driver_status_groups
 //! @brief Structure of version property.
 //!
 //! @ingroup bl_core
-typedef union StandardVersion
-{
+typedef union StandardVersion {
     struct
     {
         uint8_t bugfix; //!< bugfix version [7:0]

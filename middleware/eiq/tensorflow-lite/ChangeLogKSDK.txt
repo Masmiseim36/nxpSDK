@@ -1,0 +1,46 @@
+/*!
+@page middleware_log Middleware Change Log
+
+@section tensorflow_lite eIQ TensorFlow Lite library
+  Current version is 1.1.0
+  
+  - 1.0.0
+    - Initial version of the eIQ TensorFlow Lite library
+      based on TensorFlow Lite version 1.11.0 available 
+      at https://github.com/tensorflow/tensorflow/tree/r1.11/tensorflow/contrib/lite.
+    - Added third party library source codes:
+      - Eigen (https://bitbucket.org/eigen/eigen/commits/fd6845384b866b28d336f43ffa70b982f9f3056e)
+      - Farmhash (https://github.com/google/farmhash/commit/816a4ae622e964763ca0862d9dbd19324a1eaf45)
+      - FFT2D (http://www.kurims.kyoto-u.ac.jp/~ooura/fft2d.tgz)
+      - FlatBuffers (https://github.com/google/flatbuffers/archive/v1.8.0.zip)
+      - Gemmlowp (https://github.com/google/gemmlowp/commit/38ebac7b059e84692f53e5938f97a9943c120d98)
+    - Supported evaluation boards: evkmimxrt1060, evkbimxrt1050
+    - Added examples:
+      - tensorflow_lite_cifar10     - CIFAR-10 image recognition example
+      - tensorflow_lite_kws         - Keyword spotting example
+      - tensorflow_lite_label_image - Image recognition example
+      - tensorflow_lite_lib         - Library build project
+
+  - 1.1.0
+    - Updated eIQ TensorFlow Lite library to version based
+      on the TensorFlow Lite library version 1.14.0 available
+      at https://github.com/tensorflow/tensorflow/tree/r1.14/tensorflow/lite.
+    - Updated third party library source codes:
+      - Eigen (https://bitbucket.org/eigen/eigen/commits/a0d250e79c79)
+      - Farmhash (http://mirror.tensorflow.org/github.com/google/farmhash/archive/816a4ae622e964763ca0862d9dbd19324a1eaf45.tar.gz)
+      - FFT2D (http://mirror.tensorflow.org/www.kurims.kyoto-u.ac.jp/~ooura/fft.tgz)
+      - FlatBuffers (http://mirror.tensorflow.org/github.com/google/flatbuffers/archive/v1.11.0.tar.gz)
+      - Gemmlowp (https://github.com/google/gemmlowp/commit/12fed0cd7cfcd9e169bf1925bc3a7a58725fdcc3)
+    - Supported evaluation boards: evkmimxrt1060, evkbimxrt1050
+      (tensorflow_lite_adt example supported on the FRDM-STBC-AGM01 kit). 
+    - Modified examples:
+      - tensorflow_lite_cifar10     - Added camera and LCD support
+                                    - Real time camera image inference
+      - tensorflow_lite_kws         - Added microphone and headphone support
+                                    - Real time audio inference
+      - tensorflow_lite_label_image - Added camera and LCD support
+                                    - Real time camera image inference
+    - Added examples:
+      - tensorflow_lite_adt         - Anomaly detection example
+
+*/

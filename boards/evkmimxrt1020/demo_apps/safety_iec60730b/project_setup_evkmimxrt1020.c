@@ -1,32 +1,14 @@
-/*******************************************************************************
-*
-* Copyright 2013 - 2016, Freescale Semiconductor, Inc.
-* Copyright 2016-2019 NXP
-*
-* This software is owned or controlled by NXP and may only be used
-* strictly in accordance with the applicable license terms.  By expressly
-* accepting such terms or by downloading, installing, activating and/or
-* otherwise using the software, you are agreeing that you have read, and
-* that you agree to comply with and are bound by, such license terms.  If
-* you do not agree to be bound by the applicable license terms, then you
-* may not retain, install, activate or otherwise use the software.
-* 
-*
-*******************************************************************************/
+/*
+ * Copyright 2019 NXP.
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 #include "project_setup_evkmimxrt1020.h"
-
-/*******************************************************************************
- * Definitions
- ******************************************************************************/
-   
-/*******************************************************************************
- * Prototypes
- ******************************************************************************/
-
-/*******************************************************************************
- * Variables
- ******************************************************************************/
+#include "freemaster.h"
+#include "freemaster_serial.h"
+#include "freemaster_serial_lpuart.h"
 
 /*******************************************************************************
  * Code
@@ -42,25 +24,25 @@
 *
 * @return  None
 */
-void WatchdogEnable(RTWDOG_Type *WDOGx, unsigned long timeout)   
+void WatchdogEnable(RTWDOG_Type *WDOGx, uint32_t timeout)   
 {   
   uint32_t prescaler = 0;
   uint16_t window = 0;
 
   __asm("cpsid i");
     
-    WDOGx->CNT = RTWDOG_UPDATE_KEY; /* Unlock sequence */ 
-    WDOGx->TOVAL = (uint16_t)timeout; /* Set timeout */
+    RTWDOG->CNT = RTWDOG_UPDATE_KEY; /* Unlock sequence */ 
+    RTWDOG->TOVAL = (uint16_t)timeout; /* Set timeout */
     
     /* Enable rtwdog, LPO clock, interrupt disabled, update enabled, 32b refresh, window mode, prescaler 255 enabled/disabled */
-    WDOGx->CS = RTWDOG_CS_EN_MASK | RTWDOG_CS_CLK(1) | RTWDOG_CS_INT(0) | 
+    RTWDOG->CS = RTWDOG_CS_EN_MASK | RTWDOG_CS_CLK(1) | RTWDOG_CS_INT(0) | 
                  RTWDOG_CS_UPDATE(1) | RTWDOG_CS_CMD32EN_MASK |
                  (window == 0 ? RTWDOG_CS_WIN(0) : RTWDOG_CS_WIN(1)) |
                  (prescaler == 0 ? RTWDOG_CS_PRES(0) : RTWDOG_CS_PRES(1));
                  
     if (window > 0)
     {
-        WDOGx->WIN = (uint16_t)window;
+        RTWDOG->WIN = (uint16_t)window;
     }
 
     __asm("cpsie i");
@@ -194,6 +176,17 @@ void SystickInitialisation(uint32_t compare)
 }
 
 /*!
+ * @brief   Setup of Clock
+ *
+ * @return  None
+ */
+void ClockInit(void)
+{
+    /* SDK Initialization */
+    BOARD_BootClockRUN();
+}
+
+/*!
  * @brief   Setup of LPUART
  *       
  * @param   Uart_X  - peripheral base address
@@ -224,10 +217,21 @@ void SerialInit(LPUART_Type *Uart_X, uint32_t baudRate, uint32_t clockFreq)
     };
     
     LPUART_Init(Uart_X, &LPUART_1_config, clockFreq);
+
+    FMSTR_SerialSetBaseAddress(APPLICATION_SERIAL_BASE);
 }
 
 /*!
 * @brief  Sets port direction and mux
+*
+* @note   How to determine pin GPIOx + pin number from schematic? E.g. GPIO_AD_B1_07 from schematic could 
+*         be find in ref. manual in corresponding SW_MUX_CTL register (IOMUXC chapter)- GPIO1, 23. 
+*
+* @param  gpio   - definition from device header file, for example GPIO1_BASE for GPIO1
+*         pinNum - pin number
+*         pinDir - pin direction (0 = input, 1 = output)
+*
+* @return  None
 */
 void PortSetup(uint32_t gpio, uint8_t pinNum, uint8_t pinDir)
 {  
@@ -239,13 +243,58 @@ void PortSetup(uint32_t gpio, uint8_t pinNum, uint8_t pinDir)
 }
 
 /*!
+* @brief   Initialization of ADC0
+*
+*          
+*
+* @param   void
+*
+* @return  None
+*/
+void AdcInit(void)
+{
+    /* Enable clock to ADC module 1 */
+    CLOCK_EnableClock(kCLOCK_Adc1); 
+                     
+    /* Single-ended 12-bit conversion (MODE = 0x1) */
+    /* Set divide ratio to 2 (ADIV = 0x1) */
+    /* 4 samples averaged (AVGS = 0x0) */
+    /* IPG clock select (ADICLK = 0x0) */
+    /* Software trigger selected */
+    ADC1->CFG = ( ADC_CFG_ADICLK(0U) | ADC_CFG_MODE(2U) | ADC_CFG_ADIV(1U) | ADC_CFG_AVGS(0U) | ADC_CFG_ADTRG(0U) );
+
+    /* HW averaging disabled (AVGE = 0) */
+    /* One conversion or one set of conversion (ADCO = 0) */ 
+    ADC1->GC = (ADC_GC_AVGE(0U) | ADC_GC_ADCO(0U));
+    
+    /* Asynchronous clock output disabled */
+    ADC1->GC |= ADC_GC_ADACKEN(0U); 
+    
+    /* ------- ADC self calibration procedure start ----- */ 
+    /* Starting the calibration of ADC1 */
+    /* Clear the CALF and launch the calibration. */
+    ADC1->GS = ADC_GS_CALF_MASK; /* Clear the CALF. */
+    ADC1->GC |= ADC_GC_CAL_MASK; /* Launch the calibration. */
+      
+    /* Check the status of CALF bit in ADC_GS and the CAL bit in ADC_GC. */
+    while (0U != (ADC1->GC & ADC_GC_CAL_MASK))
+    {
+        /* Check the CALF when the calibration is active. */
+        if (0U != (ADC1->GS & ADC_GS_CALF_MASK))
+        {
+            break;
+        }
+    }
+}
+
+/*!
 * @brief  DCP module initialization (used in Flash test)       
 *
 * @param  pBuffer - pointer to context switching buffer
 *
 * @return None
 */
-void DCPInit(unsigned long *pui32Buffer)
+void DCPInit(uint32_t *buffer)
 {    
     /* Turn off the entire data cache */
     SCB_DisableDCache();
@@ -266,7 +315,7 @@ void DCPInit(unsigned long *pui32Buffer)
     DCP->CHANNELCTRL = DCP_CHANNELCTRL_ENABLE_CHANNEL(0xF);
     
     /* Store the CSB address into DCP->CONTEXT */
-    DCP->CONTEXT = (unsigned long)pui32Buffer;
+    DCP->CONTEXT = (uint32_t)buffer;
  }
 
 /*!
@@ -284,39 +333,84 @@ void MPUSetup(void)
     SCB_DisableICache();
     SCB_DisableDCache();
   
-/* Disable MPU */
+    /* Disable MPU */
     ARM_MPU_Disable();
 
-    /* Region 0 setting */
+#if WATCHDOG_ENABLED
+  Watchdog_refresh; /********************************************************/
+#endif
+    
+    /* MPU configure:
+     * Use ARM_MPU_RASR(DisableExec, AccessPermission, TypeExtField, IsShareable, IsCacheable, IsBufferable,
+     * SubRegionDisable, Size)
+     * API in mpu_armv7.h.
+     * param DisableExec       Instruction access (XN) disable bit,0=instruction fetches enabled, 1=instruction fetches
+     * disabled.
+     * param AccessPermission  Data access permissions, allows you to configure read/write access for User and
+     * Privileged mode.
+     *      Use MACROS defined in mpu_armv7.h:
+     * ARM_MPU_AP_NONE/ARM_MPU_AP_PRIV/ARM_MPU_AP_URO/ARM_MPU_AP_FULL/ARM_MPU_AP_PRO/ARM_MPU_AP_RO
+     * Combine TypeExtField/IsShareable/IsCacheable/IsBufferable to configure MPU memory access attributes.
+     *  TypeExtField  IsShareable  IsCacheable  IsBufferable   Memory Attribtue    Shareability        Cache
+     *     0             x           0           0             Strongly Ordered    shareable
+     *     0             x           0           1              Device             shareable
+     *     0             0           1           0              Normal             not shareable   Outer and inner write
+     * through no write allocate
+     *     0             0           1           1              Normal             not shareable   Outer and inner write
+     * back no write allocate
+     *     0             1           1           0              Normal             shareable       Outer and inner write
+     * through no write allocate
+     *     0             1           1           1              Normal             shareable       Outer and inner write
+     * back no write allocate
+     *     1             0           0           0              Normal             not shareable   outer and inner
+     * noncache
+     *     1             1           0           0              Normal             shareable       outer and inner
+     * noncache
+     *     1             0           1           1              Normal             not shareable   outer and inner write
+     * back write/read acllocate
+     *     1             1           1           1              Normal             shareable       outer and inner write
+     * back write/read acllocate
+     *     2             x           0           0              Device              not shareable
+     *  Above are normal use settings, if your want to see more details or want to config different inner/outter cache
+     * policy.
+     *  please refer to Table 4-55 /4-56 in arm cortex-M7 generic user guide <dui0646b_cortex_m7_dgug.pdf>
+     * param SubRegionDisable  Sub-region disable field. 0=sub-region is enabled, 1=sub-region is disabled.
+     * param Size              Region size of the region to be configured. use ARM_MPU_REGION_SIZE_xxx MACRO in
+     * mpu_armv7.h.
+     */
+
+    /* Region 0 setting: Memory with Device type, not shareable, non-cacheable. */
     MPU->RBAR = ARM_MPU_RBAR(0, 0xC0000000U);
     MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 2, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_512MB);
 
-    /* Region 1 setting */
+    /* Region 1 setting: Memory with Device type, not shareable,  non-cacheable. */
     MPU->RBAR = ARM_MPU_RBAR(1, 0x80000000U);
     MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 2, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_1GB);
 
 /* Region 2 setting */
 #if defined(XIP_EXTERNAL_FLASH) && (XIP_EXTERNAL_FLASH == 1)
+    /* Setting Memory with Normal type, not shareable, outer/inner write back. */
     MPU->RBAR = ARM_MPU_RBAR(2, 0x60000000U);
     MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_RO, 0, 0, 1, 1, 0, ARM_MPU_REGION_SIZE_8MB);
 #else
+    /* Setting Memory with Device type, not shareable, non-cacheable. */
     MPU->RBAR = ARM_MPU_RBAR(2, 0x60000000U);
     MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_RO, 2, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_8MB);
 #endif
 
-    /* Region 3 setting */
+    /* Region 3 setting: Memory with Device type, not shareable, non-cacheable. */
     MPU->RBAR = ARM_MPU_RBAR(3, 0x00000000U);
     MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 2, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_1GB);
 
-    /* Region 4 setting */
+    /* Region 4 setting: Memory with Normal type, not shareable, outer/inner write back */
     MPU->RBAR = ARM_MPU_RBAR(4, 0x00000000U);
     MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 1, 0, ARM_MPU_REGION_SIZE_64KB);
 
-    /* Region 5 setting */
+    /* Region 5 setting: Memory with Normal type, not shareable, outer/inner write back */
     MPU->RBAR = ARM_MPU_RBAR(5, 0x20000000U);
     MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 1, 0, ARM_MPU_REGION_SIZE_64KB);
 
-    /* Region 6 setting */
+    /* Region 6 setting: Memory with Normal type, not shareable, outer/inner write back */
     MPU->RBAR = ARM_MPU_RBAR(6, 0x20200000U);
     MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 1, 0, ARM_MPU_REGION_SIZE_128KB);
 
@@ -324,17 +418,18 @@ void MPUSetup(void)
  * this suggestion is referred from chapter 2.2.1 Memory regions,
  * types and attributes in Cortex-M7 Devices, Generic User Guide */
 #if defined(SDRAM_IS_SHAREABLE)
-    /* Region 7 setting, set whole SDRAM can be accessed by cache */
+    /* Region 7 setting: Memory with Normal type, shareable, outer/inner write back */
     MPU->RBAR = ARM_MPU_RBAR(7, 0x80000000U);
     MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 1, 1, 1, 0, ARM_MPU_REGION_SIZE_32MB);
 #else
-    /* Region 7 setting, set whole SDRAM can be accessed by cache */
+    /* Region 7 setting: Memory with Normal type, not shareable, outer/inner write back */
     MPU->RBAR = ARM_MPU_RBAR(7, 0x80000000U);
     MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 1, 0, ARM_MPU_REGION_SIZE_32MB);
 #endif
 
     /* Region 8 setting, set last 2MB of SDRAM can't be accessed by cache, glocal variables which are not expected to be
      * accessed by cache can be put here */
+    /* Memory with Normal type, not shareable, non-cacheable */
     MPU->RBAR = ARM_MPU_RBAR(8, 0x81E00000U);
     MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 1, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_2MB);
 

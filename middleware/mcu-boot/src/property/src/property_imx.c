@@ -1,21 +1,21 @@
 /*
- * Copyright 2016-2018 NXP.
+ * Copyright 2016-2019 NXP.
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include <string.h>
+#include "bootloader/bl_context.h"
+#include "bootloader/bl_peripheral.h"
+#include "bootloader/bl_version.h"
 #include "bootloader_common.h"
-#include "property/property.h"
+#include "fsl_device_registers.h"
 #include "memory/memory.h"
 #include "packet/command_packet.h"
 #include "packet/serial_packet.h"
-#include "bootloader/bl_peripheral.h"
-#include "bootloader/bl_context.h"
-#include "bootloader/bl_version.h"
+#include "property/property.h"
 #include "utilities/fsl_assert.h"
-#include <string.h>
-#include "fsl_device_registers.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Declarations
@@ -27,16 +27,20 @@
 #pragma section = "ApplicationRam"
 #define __RAM_START ((uint32_t)__section_begin("ApplicationRam"))
 #define __RAM_END ((uint32_t)__section_end("ApplicationRam") - 1)
+#ifndef __ROM_START
 #define __ROM_START ((uint32_t)__section_begin(".intvec"))
+#endif
 #define __ROM_END ((uint32_t)__section_end("ApplicationFlash"))
-#elif(defined(__CC_ARM)) // MDK
+#elif(defined(__CC_ARM)) || (__ARMCC_VERSION)// MDK
 extern uint32_t Image$$VECTOR_ROM$$Base[];
 extern uint32_t Image$$ER_m_text$$Limit[];
 extern char Image$$RW_m_data$$Base[];
 extern uint32_t Image$$ARM_LIB_STACK$$ZI$$Limit[];
 #define __RAM_START ((uint32_t)Image$$RW_m_data$$Base)
 #define __RAM_END ((uint32_t)Image$$ARM_LIB_STACK$$ZI$$Limit - 1)
+#ifndef __ROM_START
 #define __ROM_START ((uint32_t)Image$$VECTOR_ROM$$Base)
+#endif
 #define __ROM_END ((uint32_t)Image$$ER_m_text$$Limit)
 #elif(defined(__GNUC__)) // GCC
 extern uint32_t __DATA_RAM[];
@@ -45,7 +49,9 @@ extern char __DATA_END[];
 extern uint32_t __STACK_TOP[];
 #define __RAM_START ((uint32_t)__DATA_RAM)
 #define __RAM_END ((uint32_t)__STACK_TOP - 1)
+#ifndef __ROM_START
 #define __ROM_START ((uint32_t)__VECTOR_TABLE)
+#endif
 #define __ROM_END ((uint32_t)__DATA_END)
 #else
 #error Unknown toolchain!
@@ -62,6 +68,11 @@ enum
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
 ////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+// Prototypes
+////////////////////////////////////////////////////////////////////////////////
+extern status_t target_load_bootloader_config_area(bootloader_configuration_data_t *config);
 
 //! @brief Storage for property values.
 property_store_t g_propertyStore;
@@ -86,12 +97,21 @@ status_t bootloader_get_external_memory_properties(uint32_t memoryId, external_m
 // Code
 ////////////////////////////////////////////////////////////////////////////////
 
+__WEAK status_t target_load_bootloader_config_area(bootloader_configuration_data_t *config)
+{
+    return kStatus_Fail;
+}
+
 // See property.h for documentation on this function.
 status_t bootloader_property_load_user_config(void)
 {
     bootloader_configuration_data_t *config = &g_bootloaderContext.propertyInterface->store->configurationData;
 
-    memset(config, 0xff, sizeof(bootloader_configuration_data_t));
+    status_t status = target_load_bootloader_config_area(config);
+    if ((status != kStatus_Success) || (config->tag != kPropertyStoreTag))
+    {
+        memset(config, 0xff, sizeof(bootloader_configuration_data_t));
+    }
 
     // Update available peripherals based on specific chips
     update_available_peripherals();
@@ -102,6 +122,8 @@ status_t bootloader_property_load_user_config(void)
 // See property.h for documentation on this function.
 status_t bootloader_property_init(void)
 {
+    bootloader_property_load_user_config();
+
     property_store_t *propertyStore = g_bootloaderContext.propertyInterface->store;
 
     // Fill in default values.
@@ -272,6 +294,11 @@ status_t bootloader_property_get(uint8_t tag, uint32_t id, const void **value, u
             returnSize = sizeof(propertyStore->externalMemoryPropertyStore);
             returnValue = &propertyStore->externalMemoryPropertyStore;
             break;
+#if BL_FEATURE_RELIABLE_UPDATE
+        case kPropertyTag_ReliableUpdateStatus:
+            returnValue = &propertyStore->reliableUpdateStatus;
+            break;
+#endif // BL_FEATURE_RELIABLE_UPDATE
 
         default:
             return kStatus_UnknownProperty;
@@ -295,8 +322,13 @@ status_t bootloader_property_get(uint8_t tag, uint32_t id, const void **value, u
 // See property.h for documentation on this function.
 status_t bootloader_property_set_uint32(uint8_t tag, uint32_t value)
 {
+    status_t status = kStatus_Success;
+    property_store_t *propertyStore = g_bootloaderContext.propertyInterface->store;
     switch (tag)
     {
+        case kPropertyTag_VerifyWrites:
+            propertyStore->verifyWrites = (value > 0) ? true: false;
+            break;
         case kPropertyTag_BootloaderVersion:
         case kPropertyTag_AvailablePeripherals:
         case kPropertyTag_RAMStartAddress:
@@ -308,10 +340,14 @@ status_t bootloader_property_set_uint32(uint8_t tag, uint32_t value)
         case kPropertyTag_SystemDeviceId:
         case kPropertyTag_UniqueDeviceId:
         case kPropertyTag_TargetVersion:
-            return kStatus_ReadOnlyProperty;
+            status = kStatus_ReadOnlyProperty;
+            break;
         default:
-            return kStatus_UnknownProperty;
+            status = kStatus_UnknownProperty;
+            break;
     }
+
+    return status;
 }
 
 status_t bootloader_get_external_memory_properties(uint32_t memoryId, external_memory_property_store_t *store)

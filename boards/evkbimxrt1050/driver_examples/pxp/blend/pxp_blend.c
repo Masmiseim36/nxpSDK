@@ -1,5 +1,5 @@
 /*
- * Copyright  2017 NXP
+ * Copyright  2017-2019 NXP
  * All rights reserved.
  *
  *
@@ -9,7 +9,7 @@
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_pxp.h"
-#include "fsl_elcdif.h"
+#include "display_support.h"
 
 #include "pin_mux.h"
 #include "fsl_gpio.h"
@@ -17,36 +17,14 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_ELCDIF LCDIF
 #define APP_PXP PXP
 
-#define APP_IMG_HEIGHT 272
-#define APP_IMG_WIDTH 480
-#define APP_HSW 41
-#define APP_HFP 4
-#define APP_HBP 8
-#define APP_VSW 10
-#define APP_VFP 4
-#define APP_VBP 2
-#define APP_POL_FLAGS \
-    (kELCDIF_DataEnableActiveHigh | kELCDIF_VsyncActiveLow | kELCDIF_HsyncActiveLow | kELCDIF_DriveDataOnRisingClkEdge)
+/* Use RGB565 or XRGB8888 */
+#define USE_RGB565 0
 
-/* Display. */
-#define LCD_DISP_GPIO GPIO1
-#define LCD_DISP_GPIO_PIN 2
-/* Back light. */
-#define LCD_BL_GPIO GPIO2
-#define LCD_BL_GPIO_PIN 31
+#define APP_IMG_WIDTH DEMO_PANEL_WIDTH
+#define APP_IMG_HEIGHT DEMO_PANEL_HEIGHT
 
-#define APP_LCDIF_DATA_BUS kELCDIF_DataBus16Bit
-
-/*
- * Frame buffer data alignment.
- * The PXP input buffer, output buffer, and LCDIF frame buffer address 64B align.
- */
-#define FRAME_BUFFER_ALIGN 64
-
-/* PS input buffer is square. */
 #define APP_PS_WIDTH (APP_IMG_WIDTH / 2U)
 #define APP_PS_HEIGHT (APP_IMG_HEIGHT / 2U)
 #define APP_AS_WIDTH (APP_IMG_WIDTH / 2U)
@@ -57,10 +35,28 @@
 #define APP_PS_LRC_X ((APP_IMG_WIDTH / 2) + (APP_PS_SIZE / 2) - 1U)
 #define APP_PS_LRC_Y ((APP_IMG_HEIGHT / 2) + (APP_PS_SIZE / 2) - 1U)
 
-#define APP_BPP 4U /* Use 24-bit RGB888 format. */
+#if USE_RGB565
 
-#ifndef APP_LCDIF_DATA_BUS
-#define APP_LCDIF_DATA_BUS kELCDIF_DataBus24Bit
+typedef uint16_t pixel_t;
+#define APP_BPP 2U /* Use 16-bit RGB565 format. */
+#define APP_RED 0xF100U
+#define APP_BLUE 0x001FU
+#define APP_PXP_PS_FORMAT kPXP_PsPixelFormatRGB565
+#define APP_PXP_AS_FORMAT kPXP_AsPixelFormatRGB565
+#define APP_PXP_OUT_FORMAT kPXP_OutputPixelFormatRGB565
+#define APP_DC_FORMAT kVIDEO_PixelFormatRGB565
+
+#else
+
+typedef uint32_t pixel_t;
+#define APP_BPP 4U /* Use 32-bit XRGB888 format. */
+#define APP_RED 0x00FF0000U
+#define APP_BLUE 0x000000FFU
+#define APP_PXP_PS_FORMAT kPXP_PsPixelFormatRGB888
+#define APP_PXP_AS_FORMAT kPXP_AsPixelFormatRGB888
+#define APP_PXP_OUT_FORMAT kPXP_OutputPixelFormatRGB888
+#define APP_DC_FORMAT kVIDEO_PixelFormatXRGB8888
+
 #endif
 
 /*******************************************************************************
@@ -70,80 +66,40 @@ static void APP_InitInputBuffer(void);
 static void APP_InitLcdif(void);
 static void APP_InitPxp(void);
 static void APP_Blend(void);
+static void APP_BufferSwitchOffCallback(void *param, void *switchOffBuffer);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 
-AT_NONCACHEABLE_SECTION_ALIGN(static uint32_t s_BufferLcd[2][APP_IMG_HEIGHT][APP_IMG_WIDTH], FRAME_BUFFER_ALIGN);
-AT_NONCACHEABLE_SECTION_ALIGN(static uint32_t s_psBufferPxp[APP_PS_HEIGHT][APP_PS_WIDTH], FRAME_BUFFER_ALIGN);
-AT_NONCACHEABLE_SECTION_ALIGN(static uint32_t s_asBufferPxp[APP_AS_HEIGHT][APP_AS_WIDTH], FRAME_BUFFER_ALIGN);
+AT_NONCACHEABLE_SECTION_ALIGN(static pixel_t s_BufferLcd[2][APP_IMG_HEIGHT][APP_IMG_WIDTH], FRAME_BUFFER_ALIGN);
+AT_NONCACHEABLE_SECTION_ALIGN(static pixel_t s_psBufferPxp[APP_PS_HEIGHT][APP_PS_WIDTH], FRAME_BUFFER_ALIGN);
+AT_NONCACHEABLE_SECTION_ALIGN(static pixel_t s_asBufferPxp[APP_AS_HEIGHT][APP_AS_WIDTH], FRAME_BUFFER_ALIGN);
 
 /* PXP Output buffer config. */
 static pxp_output_buffer_config_t outputBufferConfig;
 
+static uint8_t curLcdBufferIdx = 0;
+
+/*
+ * When new frame buffer sent to display, it might not be shown immediately.
+ * Application could use callback to get new frame shown notification, at the
+ * same time, when this flag is set, application could write to the older
+ * frame buffer.
+ */
+static volatile bool s_newFrameShown = false;
+static dc_fb_info_t fbInfo;
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-/* Initialize the LCD_DISP. */
-void BOARD_InitLcd(void)
-{
-    gpio_pin_config_t config = {
-        kGPIO_DigitalOutput,
-        0,
-    };
-
-    /* Backlight. */
-    config.outputLogic = 1;
-    GPIO_PinInit(LCD_BL_GPIO, LCD_BL_GPIO_PIN, &config);
-}
-
-void BOARD_InitLcdifPixelClock(void)
-{
-    /*
-     * The desired output frame rate is 60Hz. So the pixel clock frequency is:
-     * (480 + 41 + 4 + 18) * (272 + 10 + 4 + 2) * 60 = 9.2M.
-     * Here set the LCDIF pixel clock to 9.3M.
-     */
-
-    /*
-     * Initialize the Video PLL.
-     * Video PLL output clock is OSC24M * (loopDivider + (denominator / numerator)) / postDivider = 93MHz.
-     */
-    clock_video_pll_config_t config = {
-        .loopDivider = 31,
-        .postDivider = 8,
-        .numerator   = 0,
-        .denominator = 0,
-    };
-
-    CLOCK_InitVideoPll(&config);
-
-    /*
-     * 000 derive clock from PLL2
-     * 001 derive clock from PLL3 PFD3
-     * 010 derive clock from PLL5
-     * 011 derive clock from PLL2 PFD0
-     * 100 derive clock from PLL2 PFD1
-     * 101 derive clock from PLL3 PFD1
-     */
-    CLOCK_SetMux(kCLOCK_LcdifPreMux, 2);
-
-    CLOCK_SetDiv(kCLOCK_LcdifPreDiv, 4);
-
-    CLOCK_SetDiv(kCLOCK_LcdifDiv, 1);
-}
-
 
 int main(void)
 {
     BOARD_ConfigMPU();
     BOARD_InitPins();
     BOARD_BootClockRUN();
-    BOARD_InitLcdifPixelClock();
     BOARD_InitDebugConsole();
-    BOARD_InitLcd();
 
     PRINTF("\r\nPXP Blend example start...\r\n");
 
@@ -159,24 +115,42 @@ int main(void)
 
 static void APP_InitLcdif(void)
 {
-    const elcdif_rgb_mode_config_t config = {
-        .panelWidth    = APP_IMG_WIDTH,
-        .panelHeight   = APP_IMG_HEIGHT,
-        .hsw           = APP_HSW,
-        .hfp           = APP_HFP,
-        .hbp           = APP_HBP,
-        .vsw           = APP_VSW,
-        .vfp           = APP_VFP,
-        .vbp           = APP_VBP,
-        .polarityFlags = APP_POL_FLAGS,
-        .bufferAddr    = (uint32_t)s_BufferLcd[0],
-        .pixelFormat   = kELCDIF_PixelFormatXRGB8888,
-        .dataBus       = APP_LCDIF_DATA_BUS,
-    };
+    status_t status;
 
-    ELCDIF_RgbModeInit(APP_ELCDIF, &config);
+    BOARD_PrepareDisplayController();
 
-    ELCDIF_RgbModeStart(APP_ELCDIF);
+    status = g_dc.ops->init(&g_dc);
+    if (kStatus_Success != status)
+    {
+        PRINTF("Display initialization failed\r\n");
+        assert(0);
+    }
+
+    g_dc.ops->getLayerDefaultConfig(&g_dc, 0, &fbInfo);
+    fbInfo.pixelFormat = APP_DC_FORMAT;
+    fbInfo.width       = APP_IMG_WIDTH;
+    fbInfo.height      = APP_IMG_HEIGHT;
+    fbInfo.strideBytes = APP_IMG_WIDTH * APP_BPP;
+    g_dc.ops->setLayerConfig(&g_dc, 0, &fbInfo);
+
+    g_dc.ops->setCallback(&g_dc, 0, APP_BufferSwitchOffCallback, NULL);
+
+    s_newFrameShown = false;
+    g_dc.ops->setFrameBuffer(&g_dc, 0, (void *)s_BufferLcd[curLcdBufferIdx]);
+
+    /* For the DBI interface display, application must wait for the first
+     * frame buffer sent to the panel.
+     */
+    if ((g_dc.ops->getProperty(&g_dc) & kDC_FB_ReserveFrameBuffer) == 0)
+    {
+        while (s_newFrameShown == false)
+        {
+        }
+    }
+
+    s_newFrameShown = true;
+
+    g_dc.ops->enableLayer(&g_dc, 0);
 }
 
 static void APP_InitPxp(void)
@@ -185,7 +159,7 @@ static void APP_InitPxp(void)
 
     /* PS configure. */
     const pxp_ps_buffer_config_t psBufferConfig = {
-        .pixelFormat = kPXP_PsPixelFormatRGB888,
+        .pixelFormat = APP_PXP_PS_FORMAT,
         .swapByte    = false,
         .bufferAddr  = (uint32_t)s_psBufferPxp,
         .bufferAddrU = 0U,
@@ -199,7 +173,7 @@ static void APP_InitPxp(void)
 
     /* AS config. */
     const pxp_as_buffer_config_t asBufferConfig = {
-        .pixelFormat = kPXP_AsPixelFormatRGB888,
+        .pixelFormat = APP_PXP_AS_FORMAT,
         .bufferAddr  = (uint32_t)s_asBufferPxp,
         .pitchBytes  = APP_AS_WIDTH * APP_BPP,
     };
@@ -213,7 +187,7 @@ static void APP_InitPxp(void)
     PXP_SetAlphaSurfaceBlendConfig(APP_PXP, &asBlendConfig);
 
     /* Output config. */
-    outputBufferConfig.pixelFormat    = kPXP_OutputPixelFormatARGB8888;
+    outputBufferConfig.pixelFormat    = APP_PXP_OUT_FORMAT;
     outputBufferConfig.interlacedMode = kPXP_OutputProgressive;
     outputBufferConfig.buffer0Addr    = (uint32_t)s_BufferLcd[0];
     outputBufferConfig.buffer1Addr    = 0U;
@@ -251,6 +225,17 @@ static void APP_Blend(void)
         PXP_SetProcessSurfacePosition(APP_PXP, psUlcX, psUlcY, psLrcX, psLrcY);
         PXP_SetAlphaSurfacePosition(APP_PXP, asUlcX, asUlcY, asLrcX, asLrcY);
 
+        /*
+         * Wait for the new set frame buffer active, so that the older frame
+         * buffer is inactive, then PXP could output to the older frame buffer.
+         */
+        while (s_newFrameShown == false)
+        {
+        }
+
+        /* Switch to the other LCD buffer. */
+        curLcdBufferIdx ^= 1U;
+
         outputBufferConfig.buffer0Addr = (uint32_t)s_BufferLcd[curLcdBufferIdx];
         PXP_SetOutputBufferConfig(APP_PXP, &outputBufferConfig);
 
@@ -264,20 +249,8 @@ static void APP_Blend(void)
 
         PXP_ClearStatusFlags(APP_PXP, kPXP_CompleteFlag);
 
-        /* Now new frame is ready, pass it to LCDIF. */
-        ELCDIF_SetNextBufferAddr(APP_ELCDIF, (uint32_t)s_BufferLcd[curLcdBufferIdx]);
-
-        /*
-         * The new frame is not loaded untill current frame display finished. So
-         * wait until current frame finished.
-         */
-        ELCDIF_ClearInterruptStatus(APP_ELCDIF, kELCDIF_CurFrameDone);
-        while (!(kELCDIF_CurFrameDone & ELCDIF_GetInterruptStatus(APP_ELCDIF)))
-        {
-        }
-
-        /* Switch to the other LCD buffer. */
-        curLcdBufferIdx ^= 1U;
+        s_newFrameShown = false;
+        g_dc.ops->setFrameBuffer(&g_dc, 0, (void *)s_BufferLcd[curLcdBufferIdx]);
 
         psLrcX += psIncX;
         psLrcY += psIncY;
@@ -336,7 +309,7 @@ static void APP_InitInputBuffer(void)
     {
         for (j = 0; j < APP_PS_WIDTH; j++)
         {
-            s_psBufferPxp[i][j] = 0xFFU;
+            s_psBufferPxp[i][j] = APP_BLUE;
         }
     }
 
@@ -344,9 +317,14 @@ static void APP_InitInputBuffer(void)
     {
         for (j = 0; j < APP_PS_WIDTH; j++)
         {
-            s_asBufferPxp[i][j] = 0xFF0000U;
+            s_asBufferPxp[i][j] = APP_RED;
         }
     }
 
     memset(s_BufferLcd, 0x0U, sizeof(s_BufferLcd));
+}
+
+static void APP_BufferSwitchOffCallback(void *param, void *switchOffBuffer)
+{
+    s_newFrameShown = true;
 }

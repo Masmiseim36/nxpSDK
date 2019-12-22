@@ -214,10 +214,14 @@ typedef struct _bootloaderContext
     ftfx_cache_config_t *allFlashCacheState;                   //!< FTFx cache driver state information
 #if BL_FEATURE_SUPPORT_DFLASH
     flexnvm_config_t *dFlashState;             //!< Kinetis DFlash driver instance.
-#endif     
+#endif
 #else
     flashiap_config_t *allFlashState;                //!< LPC Flash driver instance.
 #endif
+#endif
+
+#if BL_FEATURE_RELIABLE_UPDATE
+    uint32_t imageStart;
 #endif
     //@}
 } bootloader_context_t;

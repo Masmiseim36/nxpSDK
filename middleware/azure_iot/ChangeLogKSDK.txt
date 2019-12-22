@@ -1,7 +1,9 @@
 /**
 @page middleware_log Middleware Change Log
 @section Azure IOT C SDK for KSDK
-Current version is azure-iot-sdk-c 1.2.13_rev0.
+Current version is azure-iot-sdk-c 1.3.4_rev0.
+  - 1.3.4_rev0
+      - update version
   - 1.2.13_rev0
       - update version
       - add AMQP support

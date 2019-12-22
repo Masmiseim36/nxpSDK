@@ -13,6 +13,12 @@
  * @name Hardware instance define
  * @{
  */
+#ifdef USB_ISR_REDIRECT
+/*! The below 3 ISRS are renamed as there is alternate implementation in virtual_com.c */
+#define USB_OTG1_IRQHandler NOT_USED_HERE_1
+#define USB_OTG2_IRQHandler NOT_USED_HERE_2
+#define USB0_IRQHandler NOT_USED_HERE_3
+#endif
 
 /*! @brief KHCI instance count */
 #define USB_DEVICE_CONFIG_KHCI (0U)

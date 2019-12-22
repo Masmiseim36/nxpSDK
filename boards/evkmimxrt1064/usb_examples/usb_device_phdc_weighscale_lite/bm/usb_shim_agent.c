@@ -56,7 +56,7 @@ extern usb_shim_agent_struct_t g_shimAgent;
  *
  * @return A USB error code or kStatus_USB_Success.
  */
-usb_status_t USB_ShimAgentRecvComplete(uint32_t handle, void *param)
+usb_status_t USB_ShimAgentRecvComplete(void *handle, void *param)
 {
     usb_device_endpoint_callback_message_struct_t *message = (usb_device_endpoint_callback_message_struct_t *)param;
     if ((!message->length) || (USB_UNINITIALIZED_VAL_32 == message->length))
@@ -178,7 +178,7 @@ usb_status_t USB_ShimAgentRecvComplete(uint32_t handle, void *param)
  *
  * @return A USB error code or kStatus_USB_Success.
  */
-usb_status_t USB_ShimAgentSendComplete(uint32_t handle, uint32_t event, void *param)
+usb_status_t USB_ShimAgentSendComplete(void *handle, uint32_t event, void *param)
 {
     usb_device_endpoint_callback_message_struct_t *message = (usb_device_endpoint_callback_message_struct_t *)param;
     usb_shim_tx_data_struct_t *sentData = NULL;
@@ -221,7 +221,7 @@ usb_status_t USB_ShimAgentSendComplete(uint32_t handle, uint32_t event, void *pa
  *
  * @return A USB error code or kStatus_USB_Success.
  */
-usb_status_t USB_ShimAgentSendData(uint32_t handle, uint8_t qos, uint8_t *appBuffer, uint32_t size)
+usb_status_t USB_ShimAgentSendData(void *handle, uint8_t qos, uint8_t *appBuffer, uint32_t size)
 {
     usb_status_t status = kStatus_USB_Success;
     usb_shim_tx_data_struct_t *dataToSend = NULL;

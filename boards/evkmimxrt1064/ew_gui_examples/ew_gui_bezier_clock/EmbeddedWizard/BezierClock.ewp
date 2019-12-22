@@ -1,0 +1,125 @@
+$version 6.60
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,70,240,110>
+unit Core
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,110,240,150>
+unit Resources
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,150,240,190>
+unit Graphics
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,190,240,230>
+unit Effects
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,230,240,270>
+unit Views
+{
+  attr Directory = $Mosaic;
+}
+
+$rect <40,270,240,310>
+unit Templates
+{
+  attr Directory = $Mosaic;
+}
+
+$rect <40,310,240,350>
+unit WidgetSet
+{
+  attr Directory = $Mosaic\;
+}
+
+$rect <40,430,240,470>
+unit Application
+{
+  attr Directory = .\;
+}
+
+// This unit is intended to contain the application class and another GUI components.
+$rect <40,470,240,510>
+unit BezierClock
+{
+  attr Directory = .\;
+}
+
+// The 'default' Language. Each project has to contain at least one language brick \
+// called 'Default'
+$rect <290,190,490,230>
+language Default;
+
+// The sample application 'BezierClock' implements a fancy digital clock and timer \
+// application with animated digits. The application uses the Embedded Wizard vector \
+// graphics to render dynamically the different digits for clock and timer. The change \
+// from one digit to another is handled by moving the vector points to get a smooth \
+// transition animation.
+//
+// This demo application is implemented for a screen size of 480x272 pixel.
+//
+// You can double-click on the 'BezierClock' brick to open the unit within the Composer \
+// and to analyze the implementation.
+//
+// To start the application within the Prototyper, press 'Ctrl'+'F5'.
+note legend Note
+{
+  attr Bounds = <270,260,860,530>;
+}
+
+// Mosaic Framework
+note group Note1
+{
+  attr Bounds = <20,20,260,370>;
+}
+
+// Profile Configuration
+note group Note2
+{
+  attr Bounds = <270,20,510,130>;
+}
+
+// Languages
+note group Note3
+{
+  attr Bounds = <270,140,510,250>;
+}
+
+// Project Units
+note group Note6
+{
+  attr Bounds = <20,380,260,530>;
+}
+
+// This is a profile member for the project. This profile controls the code generation \
+// for the target system.
+$rect <290,70,490,110>
+profile iMX_RT : NXP.iMX_RT.RGB565
+{
+  attr ScreenOrientation = Normal;
+  attr ScreenSize = <480,272>;
+  attr Optimization = High;
+  attr ApplicationClass = Application::Application;
+  attr FormatOfBitmapResources = Compressed;
+  attr FormatOfStringConstants = Compressed;
+  attr OutputDirectory = ..\GeneratedCode;
+  attr CleanOutputDirectories = true;
+
+  $rect <10,10,154,50>
+  macro Author = "Dipl. Ing. Paul Banach and Dipl. Ing. Manfred Schweyer, Copyright (C) TARA Systems GmbH";
+}

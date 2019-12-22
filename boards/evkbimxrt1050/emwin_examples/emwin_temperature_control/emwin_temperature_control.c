@@ -224,6 +224,7 @@ void BOARD_InitLcd(void)
     gpio_pin_config_t config = {
         kGPIO_DigitalOutput,
         0,
+        kGPIO_NoIntmode,
     };
 
     /* Reset the LCD. */

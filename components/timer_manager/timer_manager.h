@@ -44,25 +44,37 @@
  * @brief   Configures the common task enable.If set to 1, then timer will use common task and consume less ram/flash
  * size.
  */
+#ifndef TM_COMMON_TASK_ENABLE
 #define TM_COMMON_TASK_ENABLE (1)
+#endif
 /*
  * @brief   Configures the timer task stack size.
  */
-
+#ifndef TM_TASK_STACK_SIZE
 #define TM_TASK_STACK_SIZE (600U)
+#endif
 
 /*
  * @brief   Configures the timer task priority.
  */
-
+#ifndef TM_TASK_PRIORITY
 #define TM_TASK_PRIORITY (4U)
+#endif
 
 /*
  * @brief   Enable/Disable Low Power Timer
  * VALID RANGE: TRUE/FALSE
  */
+#ifndef TM_ENABLE_LOW_POWER_TIMER
 #define TM_ENABLE_LOW_POWER_TIMER (1)
-
+#endif
+/*
+ * @brief   Enable/Disable TimeStamp
+ * VALID RANGE: TRUE/FALSE
+ */
+#ifndef TM_ENABLE_TIME_STAMP
+#define TM_ENABLE_TIME_STAMP (0)
+#endif
 /*****************************************************************************
 ******************************************************************************
 * Public type definitions
@@ -98,18 +110,37 @@ typedef struct _timer_config
                                value will cause initialization failure. */
 } timer_config_t;
 
-#define TIMER_HANDLE_SIZE (48U)
-
 /*
  * @brief   Timer handle
  */
 typedef void *timer_handle_t;
+
+#define TIMER_HANDLE_SIZE (48U)
+#define TIME_HANDLE_DEFINE(name) uint32_t g_timerHandle##name[(TIMER_HANDLE_SIZE + 3U) / 4U];
+/*!                                                                      \
+ * @brief Gets the timer buffer pointer                                 \
+ *                                                                       \
+ * This macro is used to get the memory buffer pointer. The macro should \
+ * not be used before the macro TIME_HANDLE_DEFINE is used.         \
+ *                                                                       \
+ * @param name The timer name string of the buffer.                     \
+ */
+#define TIMER_HANDLE_GET(name) ((timer_handle_t)&g_timerHandle##name[0])
 
 /*
  * @brief   Timer callback fiction
  */
 typedef void (*timer_callback_t)(void *param);
 
+/*
+ * \brief   Converts the macro argument from seconds to microseconds
+ */
+#define TmSecondsToMicroseconds(n) ((uint64_t)((n)*1000000UL))
+
+/*
+ * \brief   Converts the macro argument from microseconds to seconds
+ */
+#define TmMicrosecondsToSeconds(n) (((n) + 500000U) / 1000000U)
 /*****************************************************************************
 ******************************************************************************
 * Public memory declarations
@@ -165,6 +196,7 @@ void TM_EnterLowpower(void);
  * @brief Open a timer with user handle.
  *
  * @param timerHandle              Pointer to a memory space of size #TIMER_HANDLE_SIZE allocated by the caller.
+ * The handle should be 4 byte aligned, because unaligned access does not support on some devices.
  * @retval kStatus_TimerSuccess    Timer open succeed.
  * @retval kStatus_TimerError      An error occurred.
  */
@@ -293,6 +325,12 @@ void TM_SyncLpmTimers(uint32_t sleepDurationTmrUs);
  *
  */
 void TM_MakeTimerTaskReady(void);
+
+/*!
+ * @brief Get a time-stamp value
+ *
+ */
+uint64_t TM_GetTimestamp(void);
 
 #if defined(__cplusplus)
 }

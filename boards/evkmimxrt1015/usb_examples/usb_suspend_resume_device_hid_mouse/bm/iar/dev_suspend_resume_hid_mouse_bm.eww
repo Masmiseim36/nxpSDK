@@ -13,10 +13,6 @@
       </member>
       <member>
         <project>dev_suspend_resume_hid_mouse_bm</project>
-        <configuration>debug</configuration>
-      </member>
-      <member>
-        <project>dev_suspend_resume_hid_mouse_bm</project>
         <configuration>release</configuration>
       </member>
     </batchDefinition>
@@ -32,13 +28,6 @@
       <member>
         <project>dev_suspend_resume_hid_mouse_bm</project>
         <configuration>flexspi_nor_release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>debug</name>
-      <member>
-        <project>dev_suspend_resume_hid_mouse_bm</project>
-        <configuration>debug</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

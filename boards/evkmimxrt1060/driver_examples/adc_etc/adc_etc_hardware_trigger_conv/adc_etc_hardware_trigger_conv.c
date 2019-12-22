@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -112,6 +112,9 @@ int main(void)
     adcEtcTriggerChainConfig.ADCChannelSelect =
         DEMO_ADC_ETC_CHANNEL0; /* ADC_HC0 will be triggered to sample Corresponding channel. */
     adcEtcTriggerChainConfig.InterruptEnable = kADC_ETC_Done0InterruptEnable; /* Enable the Done0 interrupt. */
+#if defined(FSL_FEATURE_ADC_ETC_HAS_TRIGm_CHAIN_a_b_IEn_EN) && FSL_FEATURE_ADC_ETC_HAS_TRIGm_CHAIN_a_b_IEn_EN
+    adcEtcTriggerChainConfig.enableIrq = true; /* Enable the IRQ. */
+#endif                                         /* FSL_FEATURE_ADC_ETC_HAS_TRIGm_CHAIN_a_b_IEn_EN */
     ADC_ETC_SetTriggerChainConfig(DEMO_ADC_ETC_BASE, 0U, 0U,
                                   &adcEtcTriggerChainConfig); /* Configure the trigger0 chain0. */
     adcEtcTriggerChainConfig.ADCHCRegisterSelect = 1U
@@ -119,6 +122,9 @@ int main(void)
     adcEtcTriggerChainConfig.ADCChannelSelect =
         DEMO_ADC_ETC_CHANNEL1; /* ADC_HC1 will be triggered to sample Corresponding channel. */
     adcEtcTriggerChainConfig.InterruptEnable = kADC_ETC_Done1InterruptEnable; /* Enable the Done1 interrupt. */
+#if defined(FSL_FEATURE_ADC_ETC_HAS_TRIGm_CHAIN_a_b_IEn_EN) && FSL_FEATURE_ADC_ETC_HAS_TRIGm_CHAIN_a_b_IEn_EN
+    adcEtcTriggerChainConfig.enableIrq = true; /* Enable the IRQ. */
+#endif                                         /* FSL_FEATURE_ADC_ETC_HAS_TRIGm_CHAIN_a_b_IEn_EN */
     ADC_ETC_SetTriggerChainConfig(DEMO_ADC_ETC_BASE, 0U, 1U,
                                   &adcEtcTriggerChainConfig); /* Configure the trigger0 chain1. */
 
@@ -135,7 +141,7 @@ int main(void)
     while (1)
     {
         GETCHAR();
-        PRINTF("ADC conversion vaule is %d and %d\r\n", g_AdcConversionValue0, g_AdcConversionValue1);
+        PRINTF("ADC conversion value is %d and %d\r\n", g_AdcConversionValue0, g_AdcConversionValue1);
     }
 }
 
@@ -160,7 +166,7 @@ void ADC_Configuration(void)
     /* Do auto hardware calibration. */
     if (kStatus_Success == ADC_DoAutoCalibration(DEMO_ADC_BASE))
     {
-        PRINTF("ADC_DoAntoCalibration() Done.\r\n");
+        PRINTF("ADC_DoAutoCalibration() Done.\r\n");
     }
     else
     {

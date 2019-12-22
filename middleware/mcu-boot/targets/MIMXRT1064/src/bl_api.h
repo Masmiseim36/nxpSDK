@@ -164,6 +164,4 @@ typedef union
     uint32_t U;
 } run_bootloader_ctx_t;
 
-void bl_api_init(void);
-
 #endif //__BL_API_H__

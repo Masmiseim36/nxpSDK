@@ -52,6 +52,16 @@ void BOARD_InitBootPins(void);
  */
 void BOARD_InitPins(void);
 
+/* GPIO_AD_B1_11 (coord J13), SAI1_RX_BCLK/CSI_D6/J35[7]/J23[2] */
+#define BOARD_INITADC_CSI_D6_PERIPHERAL                                     ADC2   /*!< Device name: ADC2 */
+#define BOARD_INITADC_CSI_D6_SIGNAL                                           IN   /*!< ADC2 signal: IN */
+#define BOARD_INITADC_CSI_D6_CHANNEL                                          0U   /*!< ADC2 IN channel: 0 */
+
+/* GPIO_AD_B1_02 (coord L11), SPDIF_OUT/J22[7] */
+#define BOARD_INITADC_SPDIF_OUT_PERIPHERAL                                  ADC2   /*!< Device name: ADC2 */
+#define BOARD_INITADC_SPDIF_OUT_SIGNAL                                        IN   /*!< ADC2 signal: IN */
+#define BOARD_INITADC_SPDIF_OUT_CHANNEL                                       7U   /*!< ADC2 IN channel: 7 */
+
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
@@ -66,12 +76,50 @@ void BOARD_InitADC(void);
  */
 void BOARD_InitENC(void);
 
+/* GPIO_AD_B0_12 (coord K14), UART1_TXD */
+#define BOARD_INITLPUART_UART1_TXD_PERIPHERAL                            LPUART1   /*!< Device name: LPUART1 */
+#define BOARD_INITLPUART_UART1_TXD_SIGNAL                                     TX   /*!< LPUART1 signal: TX */
+
+/* GPIO_AD_B0_13 (coord L14), UART1_RXD */
+#define BOARD_INITLPUART_UART1_RXD_PERIPHERAL                            LPUART1   /*!< Device name: LPUART1 */
+#define BOARD_INITLPUART_UART1_RXD_SIGNAL                                     RX   /*!< LPUART1 signal: RX */
+
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  *
  */
 void BOARD_InitLPUART(void);
+
+/* GPIO_SD_B0_00 (coord J4), SD1_CMD/J24[6] */
+#define BOARD_INITPWM_SD1_CMD_PERIPHERAL                                    PWM1   /*!< Device name: PWM1 */
+#define BOARD_INITPWM_SD1_CMD_SIGNAL                                           A   /*!< PWM1 signal: A */
+#define BOARD_INITPWM_SD1_CMD_CHANNEL                                         0U   /*!< PWM1 A channel: 0 */
+
+/* GPIO_SD_B0_02 (coord J1), SD1_D0/J24[4]/SPI_MOSI/PWM */
+#define BOARD_INITPWM_SD1_D0_PERIPHERAL                                     PWM1   /*!< Device name: PWM1 */
+#define BOARD_INITPWM_SD1_D0_SIGNAL                                            A   /*!< PWM1 signal: A */
+#define BOARD_INITPWM_SD1_D0_CHANNEL                                          1U   /*!< PWM1 A channel: 1 */
+
+/* GPIO_AD_B0_10 (coord G13), JTAG_TDO/J21[13]/INT1_COMBO/ENET_INT/J22[6]/U32[11] */
+#define BOARD_INITPWM_INT1_COMBO_PERIPHERAL                                 PWM1   /*!< Device name: PWM1 */
+#define BOARD_INITPWM_INT1_COMBO_SIGNAL                                        A   /*!< PWM1 signal: A */
+#define BOARD_INITPWM_INT1_COMBO_CHANNEL                                      3U   /*!< PWM1 A channel: 3 */
+
+/* GPIO_SD_B0_01 (coord J3), SD1_CLK/J24[3] */
+#define BOARD_INITPWM_SD1_CLK_PERIPHERAL                                    PWM1   /*!< Device name: PWM1 */
+#define BOARD_INITPWM_SD1_CLK_SIGNAL                                           B   /*!< PWM1 signal: B */
+#define BOARD_INITPWM_SD1_CLK_CHANNEL                                         0U   /*!< PWM1 B channel: 0 */
+
+/* GPIO_SD_B0_03 (coord K1), SD1_D1/J24[5]/SPI_MISO */
+#define BOARD_INITPWM_SD1_D1_PERIPHERAL                                     PWM1   /*!< Device name: PWM1 */
+#define BOARD_INITPWM_SD1_D1_SIGNAL                                            B   /*!< PWM1 signal: B */
+#define BOARD_INITPWM_SD1_D1_CHANNEL                                          1U   /*!< PWM1 B channel: 1 */
+
+/* GPIO_AD_B0_11 (coord G10), JTAG_nTRST/J21[3]/INT2_COMBO/LCD_TOUCH_INT/J22[3]/U32[9] */
+#define BOARD_INITPWM_INT2_COMBO_PERIPHERAL                                 PWM1   /*!< Device name: PWM1 */
+#define BOARD_INITPWM_INT2_COMBO_SIGNAL                                        B   /*!< PWM1 signal: B */
+#define BOARD_INITPWM_INT2_COMBO_CHANNEL                                      3U   /*!< PWM1 B channel: 3 */
 
 
 /*!
@@ -80,12 +128,24 @@ void BOARD_InitLPUART(void);
  */
 void BOARD_InitPWM(void);
 
+/* WAKEUP (coord L6), USER_BUTTON */
+#define BOARD_MISC_SD_PWREN_GPIO                                           GPIO5   /*!< GPIO device name: GPIO5 */
+#define BOARD_MISC_SD_PWREN_PORT                                           GPIO5   /*!< PORT device name: GPIO5 */
+#define BOARD_MISC_SD_PWREN_PIN                                               0U   /*!< GPIO5 pin index: 0 */
+
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  *
  */
 void BOARD_Misc(void);
+
+
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void BOARD_InitCMP(void);
 
 #if defined(__cplusplus)
 }

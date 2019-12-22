@@ -5,9 +5,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-/* Automatically created from mobilenet_v1_0.25_128_quant.tflite using the command
-   (with additional modification for alignment specification):
-   xxd -i mobilenet_v1_0.25_128_quant.tflite > mobilenet_v1_0.25_128_quant_model.h */
+// This is a standard TensorFlow Lite mobilenet_v1_0.25_128_quant.tflite 
+// model file that has been converted into a C data array, so it can be easily
+// compiled into a binary for devices that don't have a file system. 
+// It was created using the command
+// (with additional modification for alignment specification):
+// xxd -i mobilenet_v1_0.25_128_quant.tflite > mobilenet_v1_0.25_128_quant_model.h
 
 #include <cmsis_compiler.h>
 

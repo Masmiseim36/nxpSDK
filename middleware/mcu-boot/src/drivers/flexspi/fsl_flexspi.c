@@ -1,6 +1,6 @@
 /*
  * Copyright 2014-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -10,6 +10,7 @@
 #include <assert.h>
 #include <stdbool.h>
 #include "fsl_device_registers.h"
+#include "bootloader/bootloader.h"
 #include "microseconds/microseconds.h"
 
 /*******************************************************************************
@@ -179,7 +180,7 @@ status_t flexspi_configure_dll(uint32_t instance, flexspi_mem_config_t *config)
         FLEXSPI_Type *base = flexspi_get_module_base(instance);
         bool isUnifiedConfig = true;
         uint32_t flexspiRootClk;
-        uint32_t flexspiDll[2];
+        uint32_t flexspiDll[2] = {FLEXSPI_DLLCR_DEFAULT, FLEXSPI_DLLCR_DEFAULT};
         uint32_t dllValue;
         uint32_t temp;
 
@@ -827,7 +828,7 @@ status_t flexspi_init(uint32_t instance, flexspi_mem_config_t *config)
                                          FLEXSPI_MCR0_AHBGRANTWAIT_MASK | FLEXSPI_MCR0_COMBINATIONEN_MASK |
                                          FLEXSPI_MCR0_ATDFEN_MASK | FLEXSPI_MCR0_ARDFEN_MASK);
 
-#if FLEXSPI_HAS_NO_CMD_MODE_SUPPORT
+#if FLEXSPI_ENABLE_NO_CMD_MODE_SUPPORT
         // If this condition meets, it means FlexSPI PORT B exists, the the 8 bit is supported by combining PORTA[3:0]
         // with PORTB[3:0]
         if ((sizeof(base->FLSHCR1) / sizeof(base->FLSHCR1[0])) > 2)
@@ -846,7 +847,7 @@ status_t flexspi_init(uint32_t instance, flexspi_mem_config_t *config)
         mcr0 |= FLEXSPI_MCR0_RXCLKSRC(config->readSampleClkSrc);
         base->MCR0 = mcr0;
 
-#if FLEXSPI_HAS_NO_CMD_MODE_SUPPORT
+#if FLEXSPI_ENABLE_NO_CMD_MODE_SUPPORT
         // Configure MCR1
         flexspi_config_mcr1(instance, config);
 #endif
@@ -854,7 +855,7 @@ status_t flexspi_init(uint32_t instance, flexspi_mem_config_t *config)
         // Configure MCR2
         base->MCR2 &= ~FLEXSPI_MCR2_SAMEDEVICEEN_MASK;
 
- #if FLEXSPI_HAS_NO_CMD_MODE_SUPPORT       
+ #if FLEXSPI_ENABLE_NO_CMD_MODE_SUPPORT
         // If this condition meets, it means FlexSPI PORT B exists, SCKB pads used as PORTB SCK with be used a inverted
         // SCK for PORTA
         // Enable differential clock as needed.
@@ -966,6 +967,7 @@ status_t flexspi_update_lut(uint32_t instance, uint32_t seqIndex, const uint32_t
     return status;
 }
 
+#if (!BL_FEATURE_HAS_FLEXSPI_NOR_ROMAPI) || (!ROM_API_HAS_FLEXSPI_XFER)
 status_t flexspi_command_xfer(uint32_t instance, flexspi_xfer_t *xfer)
 {
     status_t status = kStatus_InvalidArgument;
@@ -1171,6 +1173,7 @@ status_t flexspi_command_xfer(uint32_t instance, flexspi_xfer_t *xfer)
 
     return status;
 }
+#endif // #if (!BL_FEATURE_HAS_FLEXSPI_NOR_ROMAPI) || (!ROM_API_HAS_FLEXSPI_XFER)
 
 void flexspi_wait_idle(uint32_t instance)
 {
@@ -1190,6 +1193,8 @@ void flexspi_wait_idle(uint32_t instance)
     } while (0);
 }
 
+
+#if (!BL_FEATURE_HAS_FLEXSPI_NOR_ROMAPI) || (!ROM_API_HAS_FLEXSPI_CLEAR_CACHE)
 void flexspi_clear_cache(uint32_t instance)
 {
     do
@@ -1204,6 +1209,7 @@ void flexspi_clear_cache(uint32_t instance)
 
     } while (0);
 }
+#endif // #if (!BL_FEATURE_HAS_FLEXSPI_NOR_ROMAPI) || (!ROM_API_HAS_FLEXSPI_CLEAR_CACHE)
 
 #if FLEXSPI_FEATURE_HAS_PARALLEL_MODE
 static status_t flexspi_extract_parallel_data(uint32_t *dst0, uint32_t *dst1, uint32_t *src, uint32_t length)

@@ -1,4 +1,4 @@
-eIQ CMSIS-NN library 1.0
+eIQ CMSIS-NN library 1.1.0
 
 Content
 -------
@@ -48,11 +48,18 @@ MCUXpresso IDE, IAR Embedded Workbench, Keil MDK, GNU ARM Embedded Toolchain
 
 5. Release notes
 ----------------
-The library is based on CMSIS-NN version 1.0.0 available
-at https://github.com/ARM-software/CMSIS_5 as a part of CMSIS version 5.4.0.
+The library is based on CMSIS-NN version 1.2.0 available
+at https://github.com/ARM-software/CMSIS_5 as a part of CMSIS version 5.6.0.
 Main modifications introduced to the original library source code:
   * Removed NN test source codes
   * Removed Python scripts
   * Removed example code for GRU
   * Added KWS example based on code from https://github.com/ARM-software/ML-KWS-for-MCU
   * Added build projects for MCUXpresso SDK supported toolchains
+  * Modified examples
+      * cifar10 (https://github.com/ARM-software/ML-examples/commits/master/cmsisnn-cifar10/commit/28f6a27)
+        * Added MCUXpresso SDK support
+        * Added camera support
+      * kws (https://github.com/ARM-software/ML-KWS-for-MCU/tree/master/Deployment/commit/8151349)
+        * Added MCUXpresso SDK support
+        * Added microphone and headphone support

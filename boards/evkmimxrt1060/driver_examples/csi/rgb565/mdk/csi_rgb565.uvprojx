@@ -7,6 +7,7 @@
       <TargetName>csi_rgb565 sdram_debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>MIMXRT1062DVL6A</Device>
@@ -16,7 +17,6 @@
           <Cpu>CPUTYPE("Cortex-M7") FPU3(DFPU)</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0MIMXRT106x_HYPER_256KB_SEC -FS060000000 -FL04000000 -FP0($$Device:MIMXRT1062DVL6A$Flash\MIMXRT106x_HYPER_256KB_SEC.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>$$Device:MIMXRT1062DVL6A$Device\Include\fsl_device_registers.h</RegisterFile>
           <MemoryEnv/>
@@ -306,7 +306,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -315,10 +315,10 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
@@ -328,10 +328,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
-              <Define>SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1062DVL6A, SDK_I2C_BASED_COMPONENT_USED=1</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1062DVL6A, SDK_I2C_BASED_COMPONENT_USED=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../components/video/camera/device/sccb;../../../../../../components/video/camera/device/ov7725;../../../../../../components/video/camera/device/mt9m114;../../../../../../components/video/i2c;../../../../../../components/video/camera/receiver/csi;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../components/video/camera;../../../../../../components/video;../../../../../../components/video/camera/device;../../../../../../components/video/camera/receiver;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1062/drivers;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/xip;../../../../xip</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../components/video/camera/device/sccb;../../../../../../components/video/camera/device/ov7725;../../../../../../components/video/camera/device/mt9m114;../../../../../../components/video/i2c;../../../../../../components/video/camera/receiver/csi;../../../../../../components/video/display/dc/elcdif;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../components/video/camera;../../../../../../components/video;../../../../../../components/video/camera/device;../../../../../../components/video/camera/receiver;../../../../../../devices/MIMXRT1062/drivers;../../../../../../components/video/display/dc;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../xip;../../../../../../devices/MIMXRT1062/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -344,7 +344,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
@@ -394,6 +394,26 @@
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>display_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../display_support.h</FilePath>
+            </File>
+            <File>
+              <FileName>display_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../display_support.c</FilePath>
+            </File>
+            <File>
+              <FileName>camera_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../camera_support.h</FilePath>
+            </File>
+            <File>
+              <FileName>camera_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../camera_support.c</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -481,6 +501,16 @@
               <FilePath>../../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_dc_fb_elcdif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dc_fb_elcdif.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_camera.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/video/camera/fsl_camera.h</FilePath>
@@ -504,6 +534,11 @@
               <FileName>fsl_camera_receiver.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/video/camera/receiver/fsl_camera_receiver.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dc_fb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/video/display/dc/fsl_dc_fb.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -766,21 +801,6 @@
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
@@ -789,6 +809,11 @@
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
@@ -811,6 +836,11 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
+              <FileName>core_armv81mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
+            </File>
+            <File>
               <FileName>core_armv8mbl.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
@@ -830,6 +860,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -838,6 +883,7 @@
       <TargetName>csi_rgb565 flexspi_nor_sdram_debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>MIMXRT1062DVL6A</Device>
@@ -847,7 +893,6 @@
           <Cpu>CPUTYPE("Cortex-M7") FPU3(DFPU)</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0MIMXRT106x_HYPER_256KB_SEC -FS060000000 -FL04000000 -FP0($$Device:MIMXRT1062DVL6A$Flash\MIMXRT106x_HYPER_256KB_SEC.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>$$Device:MIMXRT1062DVL6A$Device\Include\fsl_device_registers.h</RegisterFile>
           <MemoryEnv/>
@@ -1137,7 +1182,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -1146,10 +1191,10 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
@@ -1159,10 +1204,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1062DVL6A, SDK_I2C_BASED_COMPONENT_USED=1</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1062DVL6A, SDK_I2C_BASED_COMPONENT_USED=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../components/video/camera/device/sccb;../../../../../../components/video/camera/device/ov7725;../../../../../../components/video/camera/device/mt9m114;../../../../../../components/video/i2c;../../../../../../components/video/camera/receiver/csi;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../components/video/camera;../../../../../../components/video;../../../../../../components/video/camera/device;../../../../../../components/video/camera/receiver;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1062/drivers;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/xip;../../../../xip</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../components/video/camera/device/sccb;../../../../../../components/video/camera/device/ov7725;../../../../../../components/video/camera/device/mt9m114;../../../../../../components/video/i2c;../../../../../../components/video/camera/receiver/csi;../../../../../../components/video/display/dc/elcdif;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../components/video/camera;../../../../../../components/video;../../../../../../components/video/camera/device;../../../../../../components/video/camera/receiver;../../../../../../devices/MIMXRT1062/drivers;../../../../../../components/video/display/dc;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../xip;../../../../../../devices/MIMXRT1062/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1175,7 +1220,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
@@ -1225,6 +1270,26 @@
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>display_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../display_support.h</FilePath>
+            </File>
+            <File>
+              <FileName>display_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../display_support.c</FilePath>
+            </File>
+            <File>
+              <FileName>camera_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../camera_support.h</FilePath>
+            </File>
+            <File>
+              <FileName>camera_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../camera_support.c</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -1312,6 +1377,16 @@
               <FilePath>../../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_dc_fb_elcdif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dc_fb_elcdif.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_camera.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/video/camera/fsl_camera.h</FilePath>
@@ -1335,6 +1410,11 @@
               <FileName>fsl_camera_receiver.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/video/camera/receiver/fsl_camera_receiver.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dc_fb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/video/display/dc/fsl_dc_fb.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1597,21 +1677,6 @@
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
@@ -1620,6 +1685,11 @@
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
@@ -1642,6 +1712,11 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
+              <FileName>core_armv81mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
+            </File>
+            <File>
               <FileName>core_armv8mbl.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
@@ -1661,6 +1736,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -1669,6 +1759,7 @@
       <TargetName>csi_rgb565 sdram_release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>MIMXRT1062DVL6A</Device>
@@ -1678,7 +1769,6 @@
           <Cpu>CPUTYPE("Cortex-M7") FPU3(DFPU)</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0MIMXRT106x_HYPER_256KB_SEC -FS060000000 -FL04000000 -FP0($$Device:MIMXRT1062DVL6A$Flash\MIMXRT106x_HYPER_256KB_SEC.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>$$Device:MIMXRT1062DVL6A$Device\Include\fsl_device_registers.h</RegisterFile>
           <MemoryEnv/>
@@ -1968,7 +2058,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>4</Optim>
+            <Optim>7</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -1977,10 +2067,10 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
@@ -1990,10 +2080,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
-              <Define>SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1062DVL6A, SDK_I2C_BASED_COMPONENT_USED=1</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1062DVL6A, SDK_I2C_BASED_COMPONENT_USED=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../components/video/camera/device/sccb;../../../../../../components/video/camera/device/ov7725;../../../../../../components/video/camera/device/mt9m114;../../../../../../components/video/i2c;../../../../../../components/video/camera/receiver/csi;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../components/video/camera;../../../../../../components/video;../../../../../../components/video/camera/device;../../../../../../components/video/camera/receiver;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1062/drivers;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/xip;../../../../xip</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../components/video/camera/device/sccb;../../../../../../components/video/camera/device/ov7725;../../../../../../components/video/camera/device/mt9m114;../../../../../../components/video/i2c;../../../../../../components/video/camera/receiver/csi;../../../../../../components/video/display/dc/elcdif;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../components/video/camera;../../../../../../components/video;../../../../../../components/video/camera/device;../../../../../../components/video/camera/receiver;../../../../../../devices/MIMXRT1062/drivers;../../../../../../components/video/display/dc;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../xip;../../../../../../devices/MIMXRT1062/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2006,7 +2096,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
@@ -2056,6 +2146,26 @@
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>display_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../display_support.h</FilePath>
+            </File>
+            <File>
+              <FileName>display_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../display_support.c</FilePath>
+            </File>
+            <File>
+              <FileName>camera_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../camera_support.h</FilePath>
+            </File>
+            <File>
+              <FileName>camera_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../camera_support.c</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -2143,6 +2253,16 @@
               <FilePath>../../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_dc_fb_elcdif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dc_fb_elcdif.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_camera.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/video/camera/fsl_camera.h</FilePath>
@@ -2166,6 +2286,11 @@
               <FileName>fsl_camera_receiver.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/video/camera/receiver/fsl_camera_receiver.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dc_fb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/video/display/dc/fsl_dc_fb.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2428,21 +2553,6 @@
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
@@ -2451,6 +2561,11 @@
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
@@ -2473,6 +2588,11 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
+              <FileName>core_armv81mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
+            </File>
+            <File>
               <FileName>core_armv8mbl.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
@@ -2492,6 +2612,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -2500,6 +2635,7 @@
       <TargetName>csi_rgb565 flexspi_nor_sdram_release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>MIMXRT1062DVL6A</Device>
@@ -2509,7 +2645,6 @@
           <Cpu>CPUTYPE("Cortex-M7") FPU3(DFPU)</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0MIMXRT106x_HYPER_256KB_SEC -FS060000000 -FL04000000 -FP0($$Device:MIMXRT1062DVL6A$Flash\MIMXRT106x_HYPER_256KB_SEC.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>$$Device:MIMXRT1062DVL6A$Device\Include\fsl_device_registers.h</RegisterFile>
           <MemoryEnv/>
@@ -2799,7 +2934,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>4</Optim>
+            <Optim>7</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -2808,10 +2943,10 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
@@ -2821,10 +2956,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1062DVL6A, SDK_I2C_BASED_COMPONENT_USED=1</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1062DVL6A, SDK_I2C_BASED_COMPONENT_USED=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../components/video/camera/device/sccb;../../../../../../components/video/camera/device/ov7725;../../../../../../components/video/camera/device/mt9m114;../../../../../../components/video/i2c;../../../../../../components/video/camera/receiver/csi;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../components/video/camera;../../../../../../components/video;../../../../../../components/video/camera/device;../../../../../../components/video/camera/receiver;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1062/drivers;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/xip;../../../../xip</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../components/video/camera/device/sccb;../../../../../../components/video/camera/device/ov7725;../../../../../../components/video/camera/device/mt9m114;../../../../../../components/video/i2c;../../../../../../components/video/camera/receiver/csi;../../../../../../components/video/display/dc/elcdif;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../components/video/camera;../../../../../../components/video;../../../../../../components/video/camera/device;../../../../../../components/video/camera/receiver;../../../../../../devices/MIMXRT1062/drivers;../../../../../../components/video/display/dc;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../xip;../../../../../../devices/MIMXRT1062/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2837,7 +2972,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
@@ -2887,6 +3022,26 @@
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>display_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../display_support.h</FilePath>
+            </File>
+            <File>
+              <FileName>display_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../display_support.c</FilePath>
+            </File>
+            <File>
+              <FileName>camera_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../camera_support.h</FilePath>
+            </File>
+            <File>
+              <FileName>camera_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../camera_support.c</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -2974,6 +3129,16 @@
               <FilePath>../../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_dc_fb_elcdif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dc_fb_elcdif.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_camera.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/video/camera/fsl_camera.h</FilePath>
@@ -2997,6 +3162,11 @@
               <FileName>fsl_camera_receiver.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/video/camera/receiver/fsl_camera_receiver.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dc_fb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/video/display/dc/fsl_dc_fb.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3259,21 +3429,6 @@
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
@@ -3282,6 +3437,11 @@
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
@@ -3304,6 +3464,11 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
+              <FileName>core_armv81mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
+            </File>
+            <File>
               <FileName>core_armv8mbl.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
@@ -3322,6 +3487,21 @@
               <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
           </Files>
         </Group>

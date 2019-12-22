@@ -2,7 +2,33 @@
 @page middleware_log Middleware Change Log
 
 @section lwip lwIP for MCUXpresso SDK
-  The current version of lwIP is based on lwIP 2.1.2 and lwIP-contrib 2.1.0.
+  The current version of lwIP is based on lwIP 2.1.3.dev and lwIP-contrib 2.1.0.
+
+  - 2.1.2_rev4
+    - New features:
+      - Ported lwIP 2.1.3.dev (2019-02-27, branch: STABLE-2_1_x, SHA-1: 1bb6e7f52de1cd86be0eed31e348431edc2cd01e) to KSDK 2.0.0.
+      - Updated sys_thread_new implementation and comment.
+      - Kinetis ENET adaptation layer - reading frames into a pbuf chain is conditionally compiled only when a single pbuf from pool
+        cannot hold maximum frame size (PBUF_POOL_BUFSIZE >= maximum frame size).
+        Avoiding this code also reduces stack size requirements by about 1.5 kilobytes.
+    - Bug fixes:
+      - Fixes in ethernetif_linkoutput() in enet_ethernetif_lpc.c:
+        - Removed access to possibly freed pbuf.
+        - Call pbuf_free() when transmit buffers not available.
+        - When copying pbuf chain, updating the number of necessary transmit buffers to wait for, which can be often smaller in the copy.
+      - When CGI script is reading POST data by chunks, the loop in httpsrv_read() may cause blocking in receive function waiting for more data at the end of the stream
+        - HTTPSRV_cgi_read() - added limiting of the last chunk length according to content length to avoid undesired blocking
+      - Applied AUTOIP patch https://savannah.nongnu.org/patch/?9847 - with modification to support multiple network interfaces.
+      - Fixed buffer overflow in httpsrv when application provided CGI script does not handle the whole content of POST request
+    - Removed LwipMibCompiler contrib application as it contained LGPL licensed files in SharpSnmpLib.
+
+  - 2.1.2_rev3
+    - New features:
+	  - lwiperf updated with UDP client/server support from the patch 9751 (https://savannah.nongnu.org/patch/?9751)
+
+  - 2.1.2_rev2
+    - Bug fixes:
+	  - Fixed lwiperf_abort() in lwiperf.c to correctly close connections and free resources
 
   - 2.1.2_rev1
     - New features:

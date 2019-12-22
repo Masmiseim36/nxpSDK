@@ -4,9 +4,9 @@
 **                          MIMXRT1015DAF5A
 **
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
-**     Reference manual:    IMXRT1015RM Rev.0, 12/2018
+**     Reference manual:    IMXRT1015RM Rev.0, 12/2018 | IMXRT1015SRM Rev.3
 **     Version:             rev. 1.0, 2019-01-18
-**     Build:               b190118
+**     Build:               b191015
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
@@ -23,13 +23,19 @@
 ** ###################################################################
 */
 
+define symbol __ram_vector_table_size__        =  isdefinedsymbol(__ram_vector_table__) ? 0x00000400 : 0;
+define symbol __ram_vector_table_offset__      =  isdefinedsymbol(__ram_vector_table__) ? 0x000003FF : 0;
+
 define symbol m_interrupts_start       = 0x60002000;
 define symbol m_interrupts_end         = 0x600023FF;
 
 define symbol m_text_start             = 0x60002400;
 define symbol m_text_end               = 0x60FFFFFF;
 
-define symbol m_data_start             = 0x20000000;
+define symbol m_interrupts_ram_start   = 0x20000000;
+define symbol m_interrupts_ram_end     = 0x20000000 + __ram_vector_table_offset__;
+
+define symbol m_data_start             = m_interrupts_ram_start + __ram_vector_table_size__;
 define symbol m_data_end               = 0x20007FFF;
 
 define symbol m_data2_start            = 0x20200000;
@@ -53,9 +59,12 @@ if (isdefinedsymbol(__heap_size__)) {
   define symbol __size_heap__          = 0x2000;
 }
 
-define exported symbol __VECTOR_TABLE  = m_interrupts_start;
-define exported symbol __VECTOR_RAM    = m_interrupts_start;
-define exported symbol __RAM_VECTOR_TABLE_SIZE = 0x0;
+define exported symbol __NCACHE_REGION_START   = m_data2_start;
+define exported symbol __NCACHE_REGION_SIZE    = 0x0;
+
+define exported symbol __VECTOR_TABLE          = m_interrupts_start;
+define exported symbol __VECTOR_RAM            = isdefinedsymbol(__ram_vector_table__) ? m_interrupts_ram_start : m_interrupts_start;
+define exported symbol __RAM_VECTOR_TABLE_SIZE = __ram_vector_table_size__;
 
 define memory mem with size = 4G;
 define region TEXT_region = mem:[from m_interrupts_start to m_interrupts_end]

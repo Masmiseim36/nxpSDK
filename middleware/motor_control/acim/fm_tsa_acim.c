@@ -236,6 +236,7 @@ FMSTR_TSA_TABLE_BEGIN(g_sMID_table)
     
         /* g_sMID.sPwrStgCh definitions */        
         FMSTR_TSA_RW_VAR(g_sMID.sPwrStgCh.fltICal, FMSTR_TSA_FLOAT) /* Calibration current */
+		FMSTR_TSA_RW_VAR(g_sMID.sPwrStgCh.fltIInc, FMSTR_TSA_FLOAT) /* Current increment */
         FMSTR_TSA_RW_MEM(g_sMID.sPwrStgCh.pfltUErrLUT, FMSTR_TSA_FRAC16, &g_sMID.sPwrStgCh.pfltUErrLUT[0], (65 << 1)) /* MID TransCharError */
         FMSTR_TSA_RW_VAR(g_sMID.sPwrStgCh.fltRs, FMSTR_TSA_FLOAT) /* Stator resistance */
         FMSTR_TSA_RW_VAR(g_sMID.sPwrStgCh.ui16NumOfChPnts, FMSTR_TSA_UINT16) /* Active time counter */

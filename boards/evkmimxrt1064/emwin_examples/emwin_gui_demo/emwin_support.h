@@ -51,7 +51,7 @@
 
 #define LCD_WIDTH 480
 #define LCD_HEIGHT 272
-#define LCD_BITS_PER_PIXEL 8
+#define LCD_BITS_PER_PIXEL 32
 #define LCD_BYTES_PER_PIXEL (LCD_BITS_PER_PIXEL / 8)
 
 /* Color depth dependent definitions */

@@ -50,7 +50,7 @@ void BOARD_InitNetwork(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-static struct netif fsl_netif0;
+static struct netif netif;
 
 /*******************************************************************************
  * Code
@@ -73,29 +73,28 @@ void delay(void)
 
 void BOARD_InitNetwork(void)
 {
-    ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
-    ethernetif_config_t fsl_enet_config0 = {
+    ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
+    ethernetif_config_t enet_config = {
         .phyAddress = EXAMPLE_PHY_ADDRESS,
         .clockName  = EXAMPLE_CLOCK_NAME,
         .macAddress = configMAC_ADDR,
     };
 
-    IP4_ADDR(&fsl_netif0_ipaddr, 0, 0, 0, 0);
-    IP4_ADDR(&fsl_netif0_netmask, 0, 0, 0, 0);
-    IP4_ADDR(&fsl_netif0_gw, 0, 0, 0, 0);
+    IP4_ADDR(&netif_ipaddr, 0, 0, 0, 0);
+    IP4_ADDR(&netif_netmask, 0, 0, 0, 0);
+    IP4_ADDR(&netif_gw, 0, 0, 0, 0);
 
     tcpip_init(NULL, NULL);
 
-    netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0, ethernetif0_init,
-              tcpip_input);
-    netif_set_default(&fsl_netif0);
-    netif_set_up(&fsl_netif0);
+    netif_add(&netif, &netif_ipaddr, &netif_netmask, &netif_gw, &enet_config, ethernetif0_init, tcpip_input);
+    netif_set_default(&netif);
+    netif_set_up(&netif);
 
     PRINTF("Getting IP address from DHCP ...\n");
-    dhcp_start(&fsl_netif0);
+    dhcp_start(&netif);
 
     struct dhcp *dhcp;
-    dhcp = (struct dhcp *)netif_get_client_data(&fsl_netif0, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP);
+    dhcp = (struct dhcp *)netif_get_client_data(&netif, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP);
 
     while (dhcp->state != DHCP_STATE_BOUND)
     {
@@ -104,9 +103,8 @@ void BOARD_InitNetwork(void)
 
     if (dhcp->state == DHCP_STATE_BOUND)
     {
-        PRINTF("\r\n IPv4 Address     : %u.%u.%u.%u\r\n", ((u8_t *)&fsl_netif0.ip_addr.addr)[0],
-               ((u8_t *)&fsl_netif0.ip_addr.addr)[1], ((u8_t *)&fsl_netif0.ip_addr.addr)[2],
-               ((u8_t *)&fsl_netif0.ip_addr.addr)[3]);
+        PRINTF("\r\n IPv4 Address     : %u.%u.%u.%u\r\n", ((u8_t *)&netif.ip_addr.addr)[0],
+               ((u8_t *)&netif.ip_addr.addr)[1], ((u8_t *)&netif.ip_addr.addr)[2], ((u8_t *)&netif.ip_addr.addr)[3]);
     }
     PRINTF("DHCP OK");
 }

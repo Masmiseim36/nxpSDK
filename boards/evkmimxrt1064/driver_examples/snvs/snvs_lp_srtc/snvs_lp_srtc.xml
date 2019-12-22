@@ -10,6 +10,7 @@
     <definition extID="device.MIMXRT1064_startup.MIMXRT1064"/>
     <definition extID="platform.Include_common.MIMXRT1064"/>
     <definition extID="platform.Include_core_cm7.MIMXRT1064"/>
+    <definition extID="platform.Include_dsp.MIMXRT1064"/>
     <definition extID="platform.drivers.clock.MIMXRT1064"/>
     <definition extID="platform.drivers.common.MIMXRT1064"/>
     <definition extID="platform.drivers.igpio.MIMXRT1064"/>
@@ -18,8 +19,10 @@
     <definition extID="platform.drivers.snvs_hp.MIMXRT1064"/>
     <definition extID="platform.drivers.snvs_lp.MIMXRT1064"/>
     <definition extID="platform.drivers.xip_board.MIMXRT1064"/>
+    <definition extID="platform.drivers.xip_board_dcd.MIMXRT1064"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1064"/>
     <definition extID="platform.utilities.assert.MIMXRT1064"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1064"/>
     <definition extID="utility.debug_console.MIMXRT1064"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -28,7 +31,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1064_snvs_lp_srtc" name="snvs_lp_srtc" category="driver_examples/snvs" dependency="platform.drivers.snvs_hp.MIMXRT1064 platform.drivers.snvs_lp.MIMXRT1064 platform.drivers.clock.MIMXRT1064 platform.drivers.common.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 utility.debug_console.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 component.serial_manager.MIMXRT1064 component.serial_manager_uart.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 component.lists.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 platform.utilities.assert.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.xip_board.MIMXRT1064 platform.Include_core_cm7.MIMXRT1064 platform.Include_common.MIMXRT1064">
+  <example id="evkmimxrt1064_snvs_lp_srtc" name="snvs_lp_srtc" category="driver_examples/snvs" dependency="platform.drivers.snvs_hp.MIMXRT1064 platform.drivers.snvs_lp.MIMXRT1064 platform.drivers.clock.MIMXRT1064 platform.drivers.common.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 utility.debug_console.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 component.serial_manager.MIMXRT1064 component.lists.MIMXRT1064 component.serial_manager_uart.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 platform.utilities.assert.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.xip_board.MIMXRT1064 platform.drivers.xip_board_dcd.MIMXRT1064 platform.Include_core_cm7.MIMXRT1064 platform.Include_common.MIMXRT1064 platform.Include_dsp.MIMXRT1064 platform.utilities.misc_utilities.MIMXRT1064">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -37,7 +40,8 @@
       <memoryBlock addr="20000000" size="00020000" access="RW" type="RAM" id="SRAM_DTC_MIMXRT1064xxxxA" name="SRAM_DTC"/>
       <memoryBlock addr="00000000" size="00020000" access="RW" type="RAM" id="SRAM_ITC_MIMXRT1064xxxxA" name="SRAM_ITC"/>
       <memoryBlock addr="20200000" size="000C0000" access="RW" type="RAM" id="SRAM_OC_MIMXRT1064xxxxA" name="SRAM_OC"/>
-      <memoryBlock addr="80000000" size="02000000" access="RW" type="RAM" id="BOARD_SDRAM_evkmimxrt1064" name="BOARD_SDRAM"/>
+      <memoryBlock addr="80000000" size="01E00000" access="RW" type="RAM" id="BOARD_SDRAM_evkmimxrt1064" name="BOARD_SDRAM"/>
+      <memoryBlock addr="81E00000" size="00200000" access="RW" type="RAM" id="NCACHE_REGION_evkmimxrt1064" name="NCACHE_REGION"/>
     </memory>
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
@@ -57,6 +61,7 @@
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>PRINTF_ADVANCED_ENABLE=1</value>
           <value>SCANF_ADVANCED_ENABLE=1</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -87,20 +92,20 @@
         </drivers>
       </debug_configuration>
     </debug_configurations>
-    <source path="boards/evkmimxrt1064/driver_examples/snvs/snvs_lp_srtc/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/evkmimxrt1064/driver_examples/snvs/snvs_lp_srtc/armgcc" target_path="MIMXRT1064/gcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1064xxxxx_ram.ld"/>
     </source>
-    <source path="boards/evkmimxrt1064/driver_examples/snvs/snvs_lp_srtc/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/evkmimxrt1064/driver_examples/snvs/snvs_lp_srtc/iar" target_path="MIMXRT1064/iar" type="linker" toolchain="iar">
       <files mask="MIMXRT1064xxxxx_ram.icf"/>
     </source>
-    <source path="boards/evkmimxrt1064/driver_examples/snvs/snvs_lp_srtc/iar" target_path="src" type="other" toolchain="iar">
+    <source path="boards/evkmimxrt1064/driver_examples/snvs/snvs_lp_srtc/iar" target_path="evkmimxrt1064" type="other" toolchain="iar">
       <files mask="evkmimxrt1064.mac"/>
     </source>
-    <source path="boards/evkmimxrt1064/driver_examples/snvs/snvs_lp_srtc/mdk" target_path="src" type="configuration" toolchain="mdk">
-      <files mask="evkmimxrt1064_ram.ini"/>
-    </source>
-    <source path="boards/evkmimxrt1064/driver_examples/snvs/snvs_lp_srtc/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/evkmimxrt1064/driver_examples/snvs/snvs_lp_srtc/mdk" target_path="MIMXRT1064/arm" type="linker" toolchain="mdk">
       <files mask="MIMXRT1064xxxxx_ram.scf"/>
+    </source>
+    <source path="boards/evkmimxrt1064/driver_examples/snvs/snvs_lp_srtc/mdk" target_path="evkmimxrt1064" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt1064_ram.ini"/>
     </source>
     <source path="boards/evkmimxrt1064/driver_examples/snvs/snvs_lp_srtc" target_path="board" type="c_include">
       <files mask="board.h"/>

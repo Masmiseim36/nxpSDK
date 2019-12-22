@@ -23,10 +23,10 @@
  * Definitions
  ******************************************************************************/
 #define USB_CDC_ACM_ENTER_CRITICAL() \
-    USB_OSA_SR_ALLOC();              \
-    USB_OSA_ENTER_CRITICAL()
+    OSA_SR_ALLOC();              \
+    OSA_ENTER_CRITICAL()
 
-#define USB_CDC_ACM_EXIT_CRITICAL() USB_OSA_EXIT_CRITICAL()
+#define USB_CDC_ACM_EXIT_CRITICAL() OSA_EXIT_CRITICAL()
 
 /*******************************************************************************
  * Variables
@@ -197,7 +197,9 @@ usb_status_t USB_DeviceCdcAcmEndpointsInit(usb_device_cdc_acm_struct_t *cdcAcmHa
     usb_device_interface_list_t *interfaceList;
     usb_device_interface_struct_t *interface = NULL;
     usb_status_t error                       = kStatus_USB_Error;
-
+    uint32_t count;
+    uint32_t index;
+    
     if (!cdcAcmHandle)
     {
         return error;
@@ -212,11 +214,11 @@ usb_status_t USB_DeviceCdcAcmEndpointsInit(usb_device_cdc_acm_struct_t *cdcAcmHa
 
     interfaceList = &cdcAcmHandle->configStruct->classInfomation->interfaceList[cdcAcmHandle->configuration - 1];
 
-    for (uint32_t count = 0; count < interfaceList->count; count++)
+    for (count = 0; count < interfaceList->count; count++)
     {
         if (USB_DEVICE_CONFIG_CDC_COMM_CLASS_CODE == interfaceList->interfaces[count].classCode)
         {
-            for (uint32_t index = 0; index < interfaceList->interfaces[count].count; index++)
+            for (index = 0; index < interfaceList->interfaces[count].count; index++)
             {
                 if (interfaceList->interfaces[count].interface[index].alternateSetting == cdcAcmHandle->alternate)
                 {
@@ -233,7 +235,7 @@ usb_status_t USB_DeviceCdcAcmEndpointsInit(usb_device_cdc_acm_struct_t *cdcAcmHa
         return error;
     }
     cdcAcmHandle->commInterfaceHandle = interface;
-    for (uint32_t count = 0; count < interface->endpointList.count; count++)
+    for (count = 0; count < interface->endpointList.count; count++)
     {
         usb_device_endpoint_init_struct_t epInitStruct;
         usb_device_endpoint_callback_struct_t epCallback;
@@ -258,13 +260,17 @@ usb_status_t USB_DeviceCdcAcmEndpointsInit(usb_device_cdc_acm_struct_t *cdcAcmHa
         epCallback.callbackParam = cdcAcmHandle;
 
         error = USB_DeviceInitEndpoint(cdcAcmHandle->handle, &epInitStruct, &epCallback);
+        if (kStatus_USB_Success != error)
+        {
+           return error;
+        }   
     }
 
-    for (uint32_t count = 0; count < interfaceList->count; count++)
+    for (count = 0; count < interfaceList->count; count++)
     {
         if (USB_DEVICE_CONFIG_CDC_DATA_CLASS_CODE == interfaceList->interfaces[count].classCode)
         {
-            for (uint32_t index = 0; index < interfaceList->interfaces[count].count; index++)
+            for (index = 0; index < interfaceList->interfaces[count].count; index++)
             {
                 if (interfaceList->interfaces[count].interface[index].alternateSetting == cdcAcmHandle->alternate)
                 {
@@ -278,7 +284,7 @@ usb_status_t USB_DeviceCdcAcmEndpointsInit(usb_device_cdc_acm_struct_t *cdcAcmHa
 
     cdcAcmHandle->dataInterfaceHandle = interface;
 
-    for (uint32_t count = 0; count < interface->endpointList.count; count++)
+    for (count = 0; count < interface->endpointList.count; count++)
     {
         usb_device_endpoint_init_struct_t epInitStruct;
         usb_device_endpoint_callback_struct_t epCallback;
@@ -331,17 +337,18 @@ usb_status_t USB_DeviceCdcAcmEndpointsInit(usb_device_cdc_acm_struct_t *cdcAcmHa
 usb_status_t USB_DeviceCdcAcmEndpointsDeinit(usb_device_cdc_acm_struct_t *cdcAcmHandle)
 {
     usb_status_t error = kStatus_USB_Error;
+    uint32_t count;
 
     if ((!cdcAcmHandle->commInterfaceHandle) || (!cdcAcmHandle->dataInterfaceHandle))
     {
         return error;
     }
-    for (uint32_t count = 0; count < cdcAcmHandle->commInterfaceHandle->endpointList.count; count++)
+    for (count = 0; count < cdcAcmHandle->commInterfaceHandle->endpointList.count; count++)
     {
         error = USB_DeviceDeinitEndpoint(
             cdcAcmHandle->handle, cdcAcmHandle->commInterfaceHandle->endpointList.endpoint[count].endpointAddress);
     }
-    for (uint32_t count = 0; count < cdcAcmHandle->dataInterfaceHandle->endpointList.count; count++)
+    for (count = 0; count < cdcAcmHandle->dataInterfaceHandle->endpointList.count; count++)
     {
         error = USB_DeviceDeinitEndpoint(
             cdcAcmHandle->handle, cdcAcmHandle->dataInterfaceHandle->endpointList.endpoint[count].endpointAddress);
@@ -369,6 +376,7 @@ usb_status_t USB_DeviceCdcAcmEvent(void *handle, uint32_t event, void *param)
     usb_device_cdc_acm_struct_t *cdcAcmHandle;
     usb_device_cdc_acm_request_param_struct_t reqParam;
     usb_status_t error = kStatus_USB_Error;
+    uint32_t count;
     uint16_t interfaceAlternate;
     uint8_t *temp8;
     uint8_t alternate;
@@ -442,7 +450,7 @@ usb_status_t USB_DeviceCdcAcmEvent(void *handle, uint32_t event, void *param)
                 break;
             }
             temp8 = ((uint8_t *)param);
-            for (uint32_t count = 0; count < cdcAcmHandle->commInterfaceHandle->endpointList.count; count++)
+            for (count = 0; count < cdcAcmHandle->commInterfaceHandle->endpointList.count; count++)
             {
                 if (*temp8 == cdcAcmHandle->commInterfaceHandle->endpointList.endpoint[count].endpointAddress)
                 {
@@ -450,7 +458,7 @@ usb_status_t USB_DeviceCdcAcmEvent(void *handle, uint32_t event, void *param)
                     error                               = USB_DeviceStallEndpoint(cdcAcmHandle->handle, *temp8);
                 }
             }
-            for (uint32_t count = 0; count < cdcAcmHandle->dataInterfaceHandle->endpointList.count; count++)
+            for (count = 0; count < cdcAcmHandle->dataInterfaceHandle->endpointList.count; count++)
             {
                 if (*temp8 == cdcAcmHandle->dataInterfaceHandle->endpointList.endpoint[count].endpointAddress)
                 {
@@ -474,7 +482,7 @@ usb_status_t USB_DeviceCdcAcmEvent(void *handle, uint32_t event, void *param)
                 break;
             }
             temp8 = ((uint8_t *)param);
-            for (uint32_t count = 0; count < cdcAcmHandle->commInterfaceHandle->endpointList.count; count++)
+            for (count = 0; count < cdcAcmHandle->commInterfaceHandle->endpointList.count; count++)
             {
                 if (*temp8 == cdcAcmHandle->commInterfaceHandle->endpointList.endpoint[count].endpointAddress)
                 {
@@ -506,7 +514,7 @@ usb_status_t USB_DeviceCdcAcmEvent(void *handle, uint32_t event, void *param)
                     }
                 }
             }
-            for (uint32_t count = 0; count < cdcAcmHandle->dataInterfaceHandle->endpointList.count; count++)
+            for (count = 0; count < cdcAcmHandle->dataInterfaceHandle->endpointList.count; count++)
             {
                 if (*temp8 == cdcAcmHandle->dataInterfaceHandle->endpointList.endpoint[count].endpointAddress)
                 {
@@ -692,19 +700,22 @@ usb_status_t USB_DeviceCdcAcmInit(uint8_t controllerId,
     cdcAcmHandle->configuration = 0;
     cdcAcmHandle->alternate     = 0xFF;
 
-    if (kStatus_USB_OSA_Success != USB_OsaMutexCreate(&(cdcAcmHandle->bulkIn.mutex)))
+    cdcAcmHandle->bulkIn.mutex = (osa_mutex_handle_t)&cdcAcmHandle->bulkIn.mutexBuffer[0];
+    if (KOSA_StatusSuccess != OSA_MutexCreate((cdcAcmHandle->bulkIn.mutex)))
     {
 #ifdef DEBUG
         usb_echo("mutex create error!");
 #endif
     }
-    if (kStatus_USB_OSA_Success != USB_OsaMutexCreate(&(cdcAcmHandle->bulkOut.mutex)))
+    cdcAcmHandle->bulkOut.mutex = (osa_mutex_handle_t)&cdcAcmHandle->bulkOut.mutexBuffer[0];
+    if (KOSA_StatusSuccess != OSA_MutexCreate((cdcAcmHandle->bulkOut.mutex)))
     {
 #ifdef DEBUG
         usb_echo("mutex create error!");
 #endif
     }
-    if (kStatus_USB_OSA_Success != USB_OsaMutexCreate(&(cdcAcmHandle->interruptIn.mutex)))
+    cdcAcmHandle->interruptIn.mutex = (osa_mutex_handle_t)&cdcAcmHandle->interruptIn.mutexBuffer[0];
+    if (KOSA_StatusSuccess != OSA_MutexCreate((cdcAcmHandle->interruptIn.mutex)))
     {
 #ifdef DEBUG
         usb_echo("mutex create error!");
@@ -734,19 +745,19 @@ usb_status_t USB_DeviceCdcAcmDeinit(class_handle_t handle)
     {
         return kStatus_USB_InvalidHandle;
     }
-    if (kStatus_USB_OSA_Success != USB_OsaMutexDestroy((cdcAcmHandle->bulkIn.mutex)))
+    if (KOSA_StatusSuccess != OSA_MutexDestroy((cdcAcmHandle->bulkIn.mutex)))
     {
 #ifdef DEBUG
         usb_echo("mutex destroy error!");
 #endif
     }
-    if (kStatus_USB_OSA_Success != USB_OsaMutexDestroy((cdcAcmHandle->bulkOut.mutex)))
+    if (KOSA_StatusSuccess != OSA_MutexDestroy((cdcAcmHandle->bulkOut.mutex)))
     {
 #ifdef DEBUG
         usb_echo("mutex destroy error!");
 #endif
     }
-    if (kStatus_USB_OSA_Success != USB_OsaMutexDestroy((cdcAcmHandle->interruptIn.mutex)))
+    if (KOSA_StatusSuccess != OSA_MutexDestroy((cdcAcmHandle->interruptIn.mutex)))
     {
 #ifdef DEBUG
         usb_echo("mutex destroy error!");

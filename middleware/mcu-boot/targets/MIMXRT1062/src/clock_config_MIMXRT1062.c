@@ -419,17 +419,11 @@ status_t flexspi_get_max_supported_freq(uint32_t instance, uint32_t *freq, uint3
             break;
         }
 
-        if (kFlexSpiClk_DDR == clkMode)
+        if ((kFlexSpiClk_DDR == clkMode) || (kFlexSpiClk_SDR == clkMode))
         {
             *freq = (166UL * 1000 * 1000);
+            status = kStatus_Success;
         }
-        else
-        {
-            *freq = (166UL * 1000 * 1000);
-        }
-
-        status = kStatus_Success;
-
     } while (0);
 
     return status;

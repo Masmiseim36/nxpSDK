@@ -30,7 +30,7 @@ void MID_getPp(mid_get_pp_t* sPpMeasFcn)
         sPpMeasFcn->ui16PpDetermined                = 0;
         sPpMeasFcn->sFreqElRampParam.fltRampUp      = sPpMeasFcn->fltFreqElReq / MID_SPEED_RAMP_TIME / 10000;
         sPpMeasFcn->sFreqElRampParam.fltRampDown    = sPpMeasFcn->fltFreqElReq / MID_SPEED_RAMP_TIME / 10000;
-        sPpMeasFcn->sFreqIntegrator.a32Gain         = ACC32(1 * sPpMeasFcn->fltFreqMax / 10000);
+        sPpMeasFcn->sFreqIntegrator.a32Gain         = ACC32(1.0 * sPpMeasFcn->fltFreqMax / 10000.0);
         sPpMeasFcn->sFreqIntegrator.f32IAccK_1      = FRAC32(0.0);
         GFLIB_IntegratorInit_F16(0, &sPpMeasFcn->sFreqIntegrator);
         GFLIB_RampInit_FLT(0, &sPpMeasFcn->sFreqElRampParam);

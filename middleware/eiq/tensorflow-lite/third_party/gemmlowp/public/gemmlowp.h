@@ -14,6 +14,9 @@
 
 // gemmlowp.h: the main public interface header of gemmlowp.
 
+// File modified by NXP. Changes are described in file
+// /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes"
+
 #ifndef GEMMLOWP_PUBLIC_GEMMLOWP_H_
 #define GEMMLOWP_PUBLIC_GEMMLOWP_H_
 #include "../internal/dispatch_gemm_shape.h"

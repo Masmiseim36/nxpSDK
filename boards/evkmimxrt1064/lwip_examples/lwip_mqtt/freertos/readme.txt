@@ -11,10 +11,10 @@ Meanwhile it continues to receive messages published to the subscribed topics fr
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
-- MCUXpresso  11.0.0
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -31,16 +31,20 @@ Prepare the Demo
 1.  Make sure the MQTT broker pointed to by EXAMPLE_MQTT_SERVER_HOST and EXAMPLE_MQTT_SERVER_PORT definitions
     is up and accessible on your network via unsecured socket. A public MQTT testing server can be used
     or you can install a broker locally and modify the definitions mentioned above.
-2.  Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.
-3.  Open a serial terminal on PC for OpenSDA serial(or USB to Serial) device with these settings:
+2.  Change MQTT client ID string in the EXAMPLE_MQTT_CLIENT_ID definition to something unique.
+    It is especially important when EXAMPLE_MQTT_SERVER_HOST points to a public broker or when you want
+    to connect multiple boards to a same broker. Connecting more boards with the same MQTT client ID
+    to the same broker may cause previously connected clients with the same ID to be disconnected.
+3.  Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.
+4.  Open a serial terminal on PC for OpenSDA serial(or USB to Serial) device with these settings:
     - 115200 baud rate
     - 8 data bits
     - No parity
     - One stop bit
     - No flow control
-4.  Insert the Ethernet Cable into the target board's RJ45 port and connect it to a router (or other DHCP server capable device).
-5.  Download the program to the target board.
-6.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
+5.  Insert the Ethernet Cable into the target board's RJ45 port and connect it to a router (or other DHCP server capable device).
+6.  Download the program to the target board.
+7.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
 Running the demo
 ================
@@ -57,8 +61,8 @@ IPv4 Address     : 192.168.0.102
 IPv4 Subnet mask : 255.255.255.0
 IPv4 Gateway     : 192.168.0.100
 
-Resolving "test.mosquitto.org"...
-Connecting to MQTT broker at 37.187.106.16...
+Resolving "broker.hivemq.com"...
+Connecting to MQTT broker at 18.185.216.165...
 MQTT client "lwip_client-123" connected.
 Subscribing to the topic "lwip_topic/#" with QoS 0...
 Subscribing to the topic "lwip_other/#" with QoS 1...

@@ -59,7 +59,7 @@
 #   define POSTWEAK_CODE
 #elif defined(__GNUC__)
 /* GCC */
-#   define PREPACK
+#	  define PREPACK
 #   define POSTPACK __attribute__ ((__packed__))
 #   define FIELD_PACKED
 #   define PREWEAK_CODE 
@@ -71,7 +71,7 @@
 #   define FIELD_PACKED
 #   define PREWEAK_CODE __weak
 #   define POSTWEAK_CODE
-#elif __ARMCC_VERSION
+#elif defined(__ARMCC_VERSION)
 /* KEIL compiler v6 */
 #   define PREPACK
 #   define POSTPACK __attribute__ ((__packed__))

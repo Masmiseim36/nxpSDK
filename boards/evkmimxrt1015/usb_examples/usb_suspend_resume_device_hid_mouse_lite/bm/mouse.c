@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2017, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -27,13 +27,11 @@
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-
 #include "usb_phy.h"
 #include <stdbool.h>
 #include "fsl_pit.h"
 #include "fsl_gpc.h"
-#include "usb_io.h"
-#include "usb_timer.h"
+#include "timer.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -70,8 +68,11 @@ void USB_WaitClockLocked(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+#define TIMER_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_OscClk)
 extern usb_hid_mouse_struct_t g_UsbDeviceHidMouse;
+uint32_t g_halTimerHandle[(HAL_TIMER_HANDLE_SIZE + 3) / 4];
 
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_SetupOutBuffer[8];
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_MouseBuffer[USB_HID_MOUSE_REPORT_LENGTH];
 usb_hid_mouse_struct_t g_UsbDeviceHidMouse;
 
@@ -100,7 +101,7 @@ void BOARD_USER_BUTTON_IRQ_HANDLER(void)
 void SW_IntControl(uint8_t enable)
 {
 }
-void SW_Callback(void)
+void SW_Callback(void *param)
 {
     g_UsbDeviceHidMouse.selfWakeup = 1U;
     SW_IntControl(0);
@@ -114,18 +115,31 @@ char *SW_GetName(void)
 {
     return BOARD_USER_BUTTON_NAME;
 }
-void HW_TimerCallback(void)
+void HW_TimerCallback(void *param)
 {
     g_UsbDeviceHidMouse.hwTick++;
     USB_DeviceUpdateHwTick(g_UsbDeviceHidMouse.deviceHandle, g_UsbDeviceHidMouse.hwTick);
 }
 void HW_TimerInit(void)
 {
-    USB_TimerInit(0, 1000U, CLOCK_GetFreq(kCLOCK_OscClk), HW_TimerCallback);
+    hal_timer_config_t halTimerConfig;
+    halTimerConfig.timeout            = 1000;
+    halTimerConfig.srcClock_Hz        = TIMER_SOURCE_CLOCK;
+    halTimerConfig.instance           = 0U;
+    hal_timer_handle_t halTimerHandle = &g_halTimerHandle[0];
+    HAL_TimerInit(halTimerHandle, &halTimerConfig);
+    HAL_TimerInstallCallback(halTimerHandle, HW_TimerCallback, NULL);
 }
 void HW_TimerControl(uint8_t enable)
 {
-    USB_TimerInt(0, enable);
+    if (enable)
+    {
+        HAL_TimerEnable(g_halTimerHandle);
+    }
+    else
+    {
+        HAL_TimerDisable(g_halTimerHandle);
+    }
 }
 void USB_LowpowerModeInit(void)
 {
@@ -290,7 +304,7 @@ static usb_status_t USB_DeviceHidInterruptIn(usb_device_handle deviceHandle,
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
     usb_status_t error = kStatus_USB_Success;
-    uint8_t *temp8 = (uint8_t *)param;
+    uint8_t *temp8     = (uint8_t *)param;
 
     switch (event)
     {
@@ -299,11 +313,11 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             /* USB bus reset signal detected */
             /* Initialize the control IN and OUT pipes */
             USB_DeviceControlPipeInit(g_UsbDeviceHidMouse.deviceHandle);
-            g_UsbDeviceHidMouse.attach = 0U;
+            g_UsbDeviceHidMouse.attach       = 0U;
             g_UsbDeviceHidMouse.remoteWakeup = 0U;
-            g_UsbDeviceHidMouse.suspend = kStatus_MouseIdle;
-            g_UsbDeviceHidMouse.isResume = 0U;
-            error = kStatus_USB_Success;
+            g_UsbDeviceHidMouse.suspend      = kStatus_MouseIdle;
+            g_UsbDeviceHidMouse.isResume     = 0U;
+            error                            = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -345,8 +359,8 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 usb_echo("USB device start suspend\r\n");
                 USB_ControllerSuspended();
                 g_UsbDeviceHidMouse.startTick = g_UsbDeviceHidMouse.hwTick;
-                g_UsbDeviceHidMouse.suspend = kStatus_MouseStartSuspend;
-                error = kStatus_USB_Success;
+                g_UsbDeviceHidMouse.suspend   = kStatus_MouseStartSuspend;
+                error                         = kStatus_USB_Success;
             }
         }
         break;
@@ -368,26 +382,28 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 usb_device_endpoint_init_struct_t epInitStruct;
                 usb_device_endpoint_callback_struct_t epCallback;
 
-                epCallback.callbackFn = USB_DeviceHidInterruptIn;
+                epCallback.callbackFn    = USB_DeviceHidInterruptIn;
                 epCallback.callbackParam = handle;
 
-                epInitStruct.zlt = 0U;
+                epInitStruct.zlt          = 0U;
                 epInitStruct.transferType = USB_ENDPOINT_INTERRUPT;
                 epInitStruct.endpointAddress =
                     USB_HID_MOUSE_ENDPOINT_IN | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
                 if (USB_SPEED_HIGH == g_UsbDeviceHidMouse.speed)
                 {
                     epInitStruct.maxPacketSize = HS_HID_MOUSE_INTERRUPT_IN_PACKET_SIZE;
+                    epInitStruct.interval      = HS_HID_MOUSE_INTERRUPT_IN_INTERVAL;
                 }
                 else
                 {
                     epInitStruct.maxPacketSize = FS_HID_MOUSE_INTERRUPT_IN_PACKET_SIZE;
+                    epInitStruct.interval      = FS_HID_MOUSE_INTERRUPT_IN_INTERVAL;
                 }
 
                 USB_DeviceInitEndpoint(g_UsbDeviceHidMouse.deviceHandle, &epInitStruct, &epCallback);
 
                 g_UsbDeviceHidMouse.attach = 1U;
-                error = USB_DeviceHidMouseAction(); /* run the cursor movement code */
+                error                      = USB_DeviceHidMouseAction(); /* run the cursor movement code */
             }
             break;
         default:
@@ -456,12 +472,11 @@ usb_status_t USB_DeviceGetClassReceiveBuffer(usb_device_handle handle,
                                              uint32_t *length,
                                              uint8_t **buffer)
 {
-    static uint8_t setupOut[8];
-    if ((NULL == buffer) || ((*length) > sizeof(setupOut)))
+    if ((NULL == buffer) || ((*length) > sizeof(s_SetupOutBuffer)))
     {
         return kStatus_USB_InvalidRequest;
     }
-    *buffer = setupOut;
+    *buffer = s_SetupOutBuffer;
     return kStatus_USB_Success;
 }
 
@@ -507,14 +522,14 @@ static void USB_DeviceApplicationInit(void)
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
     /* Set HID mouse default state */
-    g_UsbDeviceHidMouse.speed = USB_SPEED_FULL;
-    g_UsbDeviceHidMouse.attach = 0U;
+    g_UsbDeviceHidMouse.speed        = USB_SPEED_FULL;
+    g_UsbDeviceHidMouse.attach       = 0U;
     g_UsbDeviceHidMouse.deviceHandle = NULL;
-    g_UsbDeviceHidMouse.buffer = s_MouseBuffer;
+    g_UsbDeviceHidMouse.buffer       = s_MouseBuffer;
     g_UsbDeviceHidMouse.remoteWakeup = 0U;
-    g_UsbDeviceHidMouse.suspend = kStatus_MouseIdle;
-    g_UsbDeviceHidMouse.selfWakeup = 0U;
-    g_UsbDeviceHidMouse.isResume = 0U;
+    g_UsbDeviceHidMouse.suspend      = kStatus_MouseIdle;
+    g_UsbDeviceHidMouse.selfWakeup   = 0U;
+    g_UsbDeviceHidMouse.isResume     = 0U;
 
     /* Initialize the usb stack and class drivers */
     if (kStatus_USB_Success != USB_DeviceInit(CONTROLLER_ID, USB_DeviceCallback, &g_UsbDeviceHidMouse.deviceHandle))

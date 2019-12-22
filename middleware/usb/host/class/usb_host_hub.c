@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -174,7 +174,7 @@ usb_status_t USB_HostHubInit(usb_device_handle deviceHandle, usb_host_class_hand
 {
     /* malloc the hub instance */
     usb_host_hub_instance_t *hubInstance =
-        (usb_host_hub_instance_t *)USB_OsaMemoryAllocate(sizeof(usb_host_hub_instance_t));
+        (usb_host_hub_instance_t *)OSA_MemoryAllocate(sizeof(usb_host_hub_instance_t));
 
     uint32_t infoValue;
 
@@ -337,7 +337,7 @@ usb_status_t USB_HostHubDeinit(usb_device_handle deviceHandle, usb_host_class_ha
         SDK_Free(hubInstance->hubStatusBuffer);
         SDK_Free(hubInstance->hubBitmapBuffer);
 #endif
-        USB_OsaMemoryFree(hubInstance);
+        OSA_MemoryFree(hubInstance);
     }
     else
     {

@@ -36,7 +36,7 @@ void MID_getLs(mid_get_ls_t* sLsMeasFcn)
         sLsMeasFcn->fltUdAmplitude              = 0.0;
         sLsMeasFcn->fltLs                       = 0.0;
         sLsMeasFcn->fltFreqActual               = sLsMeasFcn->fltFreqStart;
-        sLsMeasFcn->sFreqIntegrator.a32Gain     = ACC32(1 * sLsMeasFcn->fltFreqMax / 10000 * 2);
+        sLsMeasFcn->sFreqIntegrator.a32Gain     = ACC32(1.0 * sLsMeasFcn->fltFreqMax / 10000.0 * 2.0);
         sLsMeasFcn->sFreqIntegrator.f32IAccK_1  = FRAC32(0.0);
         GFLIB_IntegratorInit_F16(0, &sLsMeasFcn->sFreqIntegrator);
     }

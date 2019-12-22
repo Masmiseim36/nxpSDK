@@ -30,7 +30,6 @@
 #endif
 
 #define USB_DEVICE_INTERRUPT_PRIORITY (3U)
-
 /* Currently configured line coding */
 #define LINE_CODING_SIZE (0x07)
 #define LINE_CODING_DTERATE (115200)

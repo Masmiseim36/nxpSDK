@@ -40,4 +40,3 @@ KWS_DS_CNN::~KWS_DS_CNN()
 {
   delete nn;
 }
-

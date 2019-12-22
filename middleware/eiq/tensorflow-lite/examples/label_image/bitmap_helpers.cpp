@@ -1,4 +1,5 @@
 /* Copyright 2017 The TensorFlow Authors. All Rights Reserved.
+   Copyright 2018-2019 NXP. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -12,6 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
+
+/* File modified by NXP. Changes are described in file
+   /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes" */
 
 #include <cstdint>
 #include <cstdio>
@@ -30,8 +34,8 @@ limitations under the License.
 namespace tflite {
 namespace label_image {
 
-uint8_t* decode_bmp(const uint8_t* input, int row_size, uint8_t* const output,
-                    int width, int height, int channels, bool top_down) {
+uint8_t* DecodeBmp(const uint8_t* input, int row_size, uint8_t* const output,
+                   int width, int height, int channels, bool top_down) {
   for (int i = 0; i < height; i++) {
     int src_pos;
     int dst_pos;
@@ -71,8 +75,8 @@ uint8_t* decode_bmp(const uint8_t* input, int row_size, uint8_t* const output,
   return output;
 }
 
-uint8_t* read_bmp(const char* input_bmp_data, size_t input_bmp_len, int* width, int* height,
-                  int* channels, Settings* s) {
+uint8_t* ReadBmp(const char* input_bmp_data, size_t input_bmp_len, int* width, int* height,
+                 int* channels, Settings* s) {
   const uint8_t* img_bytes = (const uint8_t*)input_bmp_data;
   const int32_t header_size =
       *(reinterpret_cast<const int32_t*>(img_bytes + 10));
@@ -96,8 +100,8 @@ uint8_t* read_bmp(const char* input_bmp_data, size_t input_bmp_len, int* width, 
   // Decode image, allocating tensor once the image size is known
   uint8_t* output = new uint8_t[abs(*height) * *width * *channels];
   const uint8_t* bmp_pixels = &img_bytes[header_size];
-  return decode_bmp(bmp_pixels, row_size, output, *width, abs(*height),
-                    *channels, top_down);
+  return DecodeBmp(bmp_pixels, row_size, output, *width, abs(*height),
+                   *channels, top_down);
 }
 
 }  // namespace label_image

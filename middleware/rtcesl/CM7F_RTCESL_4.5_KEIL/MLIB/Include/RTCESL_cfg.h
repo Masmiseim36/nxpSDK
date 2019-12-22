@@ -38,7 +38,7 @@ extern "C" {
     #define RTCESL_INLINE_OPTIM_RESTORE                             /* Restore original level - no value*/
 #elif defined(__GNUC__)                                             /* For GCC compiler */ 
     #define RTCESL_INLINE_OPTIM_SAVE                                /* Save original level - no value */
-    #define RTCESL_INLINE_OPTIM_SET __attribute__((optimize("O0"))) /* Set low level */
+    #define RTCESL_INLINE_OPTIM_SET //__attribute__((optimize("O0"))) /* Set low level */
     #define RTCESL_INLINE_OPTIM_RESTORE                             /* Restore original level - no value*/
 #else                                                               /* Other compiler used */
     #warning "Unsupported compiler/IDE used !"    

@@ -172,8 +172,10 @@ static status_t SDMMCHOST_TransferFunction(SDMMCHOST_TYPE *base, SDMMCHOST_TRANS
     {
         memset(&dmaConfig, 0, sizeof(usdhc_adma_config_t));
         /* config adma */
-        dmaConfig.dmaMode        = USDHC_DMA_MODE;
-        dmaConfig.burstLen       = kUSDHC_EnBurstLenForINCR;
+        dmaConfig.dmaMode = USDHC_DMA_MODE;
+#if !(defined(FSL_FEATURE_USDHC_HAS_NO_RW_BURST_LEN) && FSL_FEATURE_USDHC_HAS_NO_RW_BURST_LEN)
+        dmaConfig.burstLen = kUSDHC_EnBurstLenForINCR;
+#endif
         dmaConfig.admaTable      = g_usdhcAdma2Table;
         dmaConfig.admaTableWords = USDHC_ADMA_TABLE_WORDS;
     }
@@ -388,13 +390,16 @@ status_t SDMMCHOST_Init(SDMMCHOST_CONFIG *host, void *userData)
     usdhcHost->config.endianMode          = USDHC_ENDIAN_MODE;
     usdhcHost->config.readWatermarkLevel  = USDHC_READ_WATERMARK_LEVEL;
     usdhcHost->config.writeWatermarkLevel = USDHC_WRITE_WATERMARK_LEVEL;
-    usdhcHost->config.readBurstLen        = USDHC_READ_BURST_LEN;
-    usdhcHost->config.writeBurstLen       = USDHC_WRITE_BURST_LEN;
+#if !(defined(FSL_FEATURE_USDHC_HAS_NO_RW_BURST_LEN) && FSL_FEATURE_USDHC_HAS_NO_RW_BURST_LEN)
+    usdhcHost->config.readBurstLen  = USDHC_READ_BURST_LEN;
+    usdhcHost->config.writeBurstLen = USDHC_WRITE_BURST_LEN;
+#endif
 
     USDHC_Init(usdhcHost->base, &(usdhcHost->config));
 
     /* disable the card insert/remove interrupt, due to use GPIO interrupt detect card */
-    USDHC_DisableInterruptSignal(usdhcHost->base, kUSDHC_CardRemovalFlag | kUSDHC_CardInsertionFlag);
+    USDHC_DisableInterruptSignal(usdhcHost->base,
+                                 kUSDHC_CardRemovalFlag | kUSDHC_CardInsertionFlag | kUSDHC_TuningErrorFlag);
     /* create interrupt handler */
     USDHC_TransferCreateHandle(usdhcHost->base, &s_usdhcHandle, &callback, userData);
 
@@ -432,4 +437,56 @@ void SDMMCHOST_Deinit(void *host)
     USDHC_Deinit(usdhcHost->base);
     SDMMCEVENT_Delete(kSDMMCEVENT_TransferComplete);
     SDMMCHOST_CardDetectDeinit();
+}
+
+status_t SDMMCHOST_ReceiveTuningBlock(SDMMCHOST_TYPE *base, uint32_t tuningCmd, uint32_t *revBuf, uint32_t size)
+{
+    assert(revBuf != NULL);
+    status_t error = kStatus_Success;
+
+    usdhc_command_t command  = {0U};
+    usdhc_data_t data        = {0U};
+    usdhc_transfer_t content = {0U};
+
+    command.index        = tuningCmd;
+    command.argument     = 0U;
+    command.responseType = kCARD_ResponseTypeR1;
+    command.type         = kCARD_CommandTypeNormal;
+
+    data.blockSize         = size;
+    data.blockCount        = 1U;
+    data.rxData            = revBuf;
+    data.enableIgnoreError = true;
+
+    content.command = &command;
+    content.data    = &data;
+
+    do
+    {
+        error = USDHC_TransferNonBlocking(base, &s_usdhcHandle, NULL, &content);
+    } while (error == kStatus_USDHC_BusyTransferring);
+
+    if ((error != kStatus_Success) ||
+        (false == SDMMCEVENT_Wait(kSDMMCEVENT_TransferComplete, SDMMCHOST_TRANSFER_COMPLETE_TIMEOUT)) ||
+        (s_reTuningFlag) || (s_usdhcTransferStatus != kStatus_Success))
+    {
+        if (s_reTuningFlag || (error == kStatus_USDHC_ReTuningRequest))
+        {
+            if (s_reTuningFlag)
+            {
+                s_reTuningFlag = false;
+                error          = kStatus_USDHC_TuningError;
+            }
+        }
+        else
+        {
+            error = s_usdhcTransferStatus;
+            /* host error recovery */
+            SDMMCHOST_ErrorRecovery(base);
+        }
+    }
+
+    USDHC_Reset(base, kUSDHC_ResetAll, 100U);
+
+    return error;
 }

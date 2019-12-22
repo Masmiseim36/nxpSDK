@@ -1,7 +1,7 @@
 /*
  * Amazon FreeRTOS Shadow Demo V1.2.0
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2019 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -34,10 +34,10 @@
 #include "semphr.h"
 
 /* Logging includes. */
-#include "aws_logging_task.h"
+#include "iot_logging_task.h"
 
 /* MQTT include. */
-#include "aws_mqtt_agent.h"
+#include "iot_mqtt_agent.h"
 
 /* Required to get the broker address and port. */
 #include "aws_clientcredential.h"
@@ -46,6 +46,8 @@
 /* Required for shadow API's */
 #include "aws_shadow.h"
 #include "jsmn.h"
+
+#include "iot_init.h"
 
 #include "board.h"
 
@@ -71,7 +73,7 @@
  ******************************************************************************/
 /** stack size for task that handles shadow delta and updates
  */
-#define shadowDemoUPDATE_TASK_STACK_SIZE ((uint16_t)configMINIMAL_STACK_SIZE * (uint16_t)6)
+#define DEMO_REMOTE_CONTROL_TASK_STACK_SIZE ((uint16_t)configMINIMAL_STACK_SIZE * (uint16_t)20)
 
 typedef struct
 {
@@ -378,8 +380,9 @@ void processShadowDeltaJSON(char *json, uint32_t jsonLength)
     /* end position of "state" object in JSON */
     int stateTokenEnd = tokens[i].end;
 
-    char key[20] = {0};
-    int err      = 0;
+    char key[20]         = {0};
+    int err              = 0;
+    uint16_t parsedValue = 0;
 
     while (i < tokenCnt)
     {
@@ -394,13 +397,21 @@ void processShadowDeltaJSON(char *json, uint32_t jsonLength)
             if (strstr(key, "LEDstate"))
             {
                 /* found "LEDstate" keyword, parse value of next token */
-                err = parseUInt16Value(&parsedLedState, json, &tokens[i]);
+                err = parseUInt16Value(&parsedValue, json, &tokens[i]);
+                if (err == 0)
+                {
+                    parsedLedState = parsedValue;
+                }
             }
 #if defined(BOARD_ACCEL_FXOS) || defined(BOARD_ACCEL_MMA)
             else if (strstr(key, "accelUpdate"))
             {
                 /* found "updateAccel" keyword, parse value of next token */
-                err = parseUInt16Value(&parsedAccState, json, &tokens[i]);
+                err = parseUInt16Value(&parsedValue, json, &tokens[i]);
+                if (err == 0)
+                {
+                    parsedAccState = parsedValue;
+                }
             }
 #endif
             i++;
@@ -449,6 +460,13 @@ static ShadowReturnCode_t prvShadowClientCreateConnect(void)
 void prvShadowMainTask(void *pvParameters)
 {
     (void)pvParameters;
+
+    /* Initialize common libraries required by demo. */
+    if (IotSdk_Init() != true)
+    {
+        configPRINTF(("Failed to initialize the common library."));
+        vTaskDelete(NULL);
+    }
 
     jsonDeltaQueue = xQueueCreate(8, sizeof(jsonDelta_t));
     if (jsonDeltaQueue == NULL)
@@ -588,6 +606,6 @@ void prvShadowMainTask(void *pvParameters)
 
 void vStartLedDemoTask(void)
 {
-    (void)xTaskCreate(prvShadowMainTask, "AWS-RemoteCtrl", shadowDemoUPDATE_TASK_STACK_SIZE, NULL, tskIDLE_PRIORITY,
+    (void)xTaskCreate(prvShadowMainTask, "AWS-RemoteCtrl", DEMO_REMOTE_CONTROL_TASK_STACK_SIZE, NULL, tskIDLE_PRIORITY,
                       NULL);
 }

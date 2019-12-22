@@ -28,8 +28,8 @@ FRESULT test_contiguous_file (
             step = (fsz >= clsz) ? clsz : (DWORD)fsz;
             fr = f_lseek(fp, f_tell(fp) + step);    /* Advances file pointer a cluster */
             if (fr != FR_OK) return fr;
-            if (clst + 1 != fp->clust) break;       /* Is not the cluster next to previous one */
-            clst = fp->clust; fsz -= step;          /* Get current cluster */
+            if (clst + 1 != fp->clust) break;       /* Is not the cluster next to previous one? */
+            clst = fp->clust; fsz -= step;          /* Get current cluster for next test */
         }
         if (fsz == 0) *cont = 1;    /* All done without fail? */
     }

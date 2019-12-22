@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2017, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -53,6 +53,11 @@
 #define ILI9341_CMD_PRC 0xF7
 #define ILI9341_CMD_INVON 0x21
 #define ILI9341_CMD_INVOFF 0x20
+
+/* 120ms is necessary after reset, for loading ID bytes, VCOM setting,
+ * and other settings from NV memory to registers.
+ */
+#define ILI9341_RESET_CANCEL_MS 120U
 
 typedef void (*ili9341_send_byte_t)(uint8_t);
 void FT9341_Init(ili9341_send_byte_t _writeData, ili9341_send_byte_t _writeCommand);

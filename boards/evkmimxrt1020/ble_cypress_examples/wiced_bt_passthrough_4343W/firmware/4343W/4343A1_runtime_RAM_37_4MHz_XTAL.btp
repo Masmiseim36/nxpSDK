@@ -1,0 +1,50 @@
+DevicePreset "4343A1 Runtime RAM"
+{
+	ConfigFSOffset = 0
+	DLReadWriteMode = "Cortex M3 HCI"
+	DLWriteVerifyMode = "Write"
+	DLMaxWriteSize = 251
+	DLSectorEraseMode = "Written sectors only"
+	DLDTRReset = 0
+	DLPostResetDelay_ms = 100
+	DLAutobaud = 0
+	DLAutobaudRepeat = 1
+	DLAutobaudRepeatDelay_ms = 200
+	DLWaitForLaunchAnnounce = 0
+	DLConfigReprogramIF_PLL = 0
+	DLUsbBulkPipe = 0
+	DLMinidriver = 0
+	DLMinidriverPathUSB = "[MINIDRIVERS]\4335A0\usb.hex"
+	DLMinidriverPathNET = "[MINIDRIVERS]\2045\INVALID.hex"
+	DLMinidriverPathSDIO = "[MINIDRIVERS]\2045\INVALID.hex"
+	DLMinidriverPathUPRX = "[MINIDRIVERS]\2045\uart_legacy_ramcfg_only.hex"
+	DLMinidriverPathUART = "[MINIDRIVERS]\4349A0\uart.hex"
+	DLFirmware = 0
+	DLFirmwareTargeting = "Standard"
+	DLConfig = 1
+	DLConfigTargeting = "RAM runtime"
+	ConfigPath = "Y:\fw2_4343A1\fw2\build\tier2\Generic\UART\37_4MHz\fcbga_BU\bld\4343A0_Generic_UART_37_4MHz_fcbga_BU.cgs"
+	DLConfigFixedHeader = 1
+	DLConfigFixedHeaderFromBurnImage = 0
+	DLConfigOmitRF_PLL = 0
+	DLConfigIncludeChargerConfig = 0
+	DLConfigDFUKey = 4294967295
+	DLConfigCrystalFreqMHzX10000 = 374000
+	DLConfigOutputPowerAdjust = 40
+	DLConfigImpedanceMatchTuning = 31
+	DLConfigSerialControlBaudRate = 115200
+	DLConfigEEPROMAccessSpeed = 100
+	DLConfigVSOffset = 0
+	ConfigDSLocation = 132
+	DLConfigSSLocation = 2168848
+	DLConfigIncludeBTWSecurityKey = 0
+	DLConfigVSLocation = 0
+	DLConfigVSLength = 0
+	DLConfigRemoteDeviceCount = 0
+	DLConfigBD_ADDRBase = "4343A112****"
+	DLConfigFixedBD_ADDRFlag = "Can change"
+	OTAFWUAckAllRecords = 0
+	OTAFWUUpdateFirmware = 1
+	OTAFWUUpdateConfig = 1
+}
+

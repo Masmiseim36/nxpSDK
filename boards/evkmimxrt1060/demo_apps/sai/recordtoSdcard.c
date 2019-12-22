@@ -5,8 +5,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "diskio.h"
 #include "ff.h"
+#include "diskio.h"
 #include "fsl_sd.h"
 #include "sai.h"
 /*******************************************************************************

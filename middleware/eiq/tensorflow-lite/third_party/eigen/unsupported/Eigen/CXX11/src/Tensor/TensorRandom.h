@@ -7,6 +7,9 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+// File modified by NXP. Changes are described in file
+// /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes"
+
 #ifndef EIGEN_CXX11_TENSOR_TENSOR_RANDOM_H
 #define EIGEN_CXX11_TENSOR_TENSOR_RANDOM_H
 
@@ -16,10 +19,10 @@ namespace internal {
 namespace {
 
 EIGEN_DEVICE_FUNC uint64_t get_random_seed() {
-#ifdef EIGEN_CUDA_ARCH
+#if defined(EIGEN_GPU_COMPILE_PHASE)
   // We don't support 3d kernels since we currently only use 1 and
   // 2d kernels.
-  assert(threadIdx.z == 0);
+  gpu_assert(threadIdx.z == 0);
   return clock64() +
       blockIdx.x * blockDim.x + threadIdx.x +
       gridDim.x * blockDim.x * (blockIdx.y * blockDim.y + threadIdx.y);

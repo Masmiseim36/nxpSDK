@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 NXP
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -45,20 +45,20 @@ extern "C" {
 void BOARD_InitBootPins(void);
 
 /* GPIO_AD_B1_00 (coord J11), I2C1_SCL/CSI_I2C_SCL/J35[20]/J23[6]/U13[17]/U32[4] */
-#define BOARD_INITPINS_I2C1_SCL_PERIPHERAL                                LPI2C1   /*!< Device name: LPI2C1 */
-#define BOARD_INITPINS_I2C1_SCL_SIGNAL                                       SCL   /*!< LPI2C1 signal: SCL */
+#define BOARD_I2C1_SCL_PERIPHERAL                                         LPI2C1   /*!< Device name: LPI2C1 */
+#define BOARD_I2C1_SCL_SIGNAL                                                SCL   /*!< LPI2C1 signal: SCL */
 
 /* GPIO_AD_B1_01 (coord K11), I2C1_SDA/CSI_I2C_SDA/J35[22]/J23[5]/U13[18]/U32[6] */
-#define BOARD_INITPINS_I2C1_SDA_PERIPHERAL                                LPI2C1   /*!< Device name: LPI2C1 */
-#define BOARD_INITPINS_I2C1_SDA_SIGNAL                                       SDA   /*!< LPI2C1 signal: SDA */
+#define BOARD_I2C1_SDA_PERIPHERAL                                         LPI2C1   /*!< Device name: LPI2C1 */
+#define BOARD_I2C1_SDA_SIGNAL                                                SDA   /*!< LPI2C1 signal: SDA */
 
 /* GPIO_AD_B0_13 (coord L14), UART1_RXD */
-#define BOARD_INITPINS_UART1_RXD_PERIPHERAL                              LPUART1   /*!< Device name: LPUART1 */
-#define BOARD_INITPINS_UART1_RXD_SIGNAL                                       RX   /*!< LPUART1 signal: RX */
+#define BOARD_UART1_RXD_PERIPHERAL                                       LPUART1   /*!< Device name: LPUART1 */
+#define BOARD_UART1_RXD_SIGNAL                                                RX   /*!< LPUART1 signal: RX */
 
 /* GPIO_AD_B0_12 (coord K14), UART1_TXD */
-#define BOARD_INITPINS_UART1_TXD_PERIPHERAL                              LPUART1   /*!< Device name: LPUART1 */
-#define BOARD_INITPINS_UART1_TXD_SIGNAL                                       TX   /*!< LPUART1 signal: TX */
+#define BOARD_UART1_TXD_PERIPHERAL                                       LPUART1   /*!< Device name: LPUART1 */
+#define BOARD_UART1_TXD_SIGNAL                                                TX   /*!< LPUART1 signal: TX */
 
 
 /*!

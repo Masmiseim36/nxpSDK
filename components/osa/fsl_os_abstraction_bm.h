@@ -15,7 +15,6 @@
 /*******************************************************************************
  * Declarations
  ******************************************************************************/
-
 /*! @brief Bare Metal does not use timer. */
 #define FSL_OSA_BM_TIMER_NONE 0U
 
@@ -24,80 +23,14 @@
 
 /*! @brief Configure what timer is used in Bare Metal. */
 #ifndef FSL_OSA_BM_TIMER_CONFIG
-#define FSL_OSA_BM_TIMER_CONFIG FSL_OSA_BM_TIMER_SYSTICK
+#define FSL_OSA_BM_TIMER_CONFIG FSL_OSA_BM_TIMER_NONE
 #endif
-
-/*! @brief Type for an semaphore */
-typedef struct Semaphore
-{
-    uint32_t time_start;       /*!< The time to start timeout                        */
-    uint32_t timeout;          /*!< Timeout to wait in milliseconds                  */
-    volatile bool isWaiting;   /*!< Is any task waiting for a timeout on this object */
-    volatile uint8_t semCount; /*!< The count value of the object                    */
-
-} semaphore_t;
-
-/*! @brief Type for a mutex */
-typedef struct Mutex
-{
-    uint32_t time_start;     /*!< The time to start timeout                       */
-    uint32_t timeout;        /*!< Timeout to wait in milliseconds                 */
-    volatile bool isWaiting; /*!< Is any task waiting for a timeout on this mutex */
-    volatile bool isLocked;  /*!< Is the object locked or not                     */
-} mutex_t;
 
 /*! @brief Type for task parameter */
 typedef void *task_param_t;
-#define gIdleTaskPriority_c ((task_priority_t)0)
-#define gInvalidTaskPriority_c ((task_priority_t)-1)
 
-/*! @brief Type for a task handler, returned by the OSA_TaskCreate function */
-typedef void (*task_t)(task_param_t param);
-/*! @brief Task control block for bare metal. */
-typedef struct TaskControlBlock
-{
-    list_element_t link;
-    osa_task_ptr_t p_func;        /*!< Task's entry                           */
-    osa_task_priority_t priority; /*!< Task's priority                        */
-    osa_task_param_t param;       /*!< Task's parameter                       */
-    bool haveToRun;               /*!< Task was signaled                      */
-} task_control_block_t;
-
-/*! @brief Type for a task pointer */
-typedef task_control_block_t *task_handler_t;
-
-/*! @brief Type for a task stack */
-typedef uint32_t task_stack_t;
 /*! @brief Type for an event flags group, bit 32 is reserved */
 typedef uint32_t event_flags_t;
-
-/*! @brief Type for an event object */
-typedef struct Event
-{
-    uint32_t time_start;          /*!< The time to start timeout                        */
-    uint32_t timeout;             /*!< Timeout to wait in milliseconds                  */
-    volatile event_flags_t flags; /*!< The flags status                                 */
-    task_handler_t waitingTask;   /*!< Handler to the waiting task                      */
-    bool autoClear;               /*!< Auto clear or manual clear                       */
-    volatile bool isWaiting;      /*!< Is any task waiting for a timeout on this event  */
-} event_t;
-
-/*! @brief Type for a message queue */
-typedef struct MsgQueue
-{
-    volatile bool isWaiting;    /*!< Is any task waiting for a timeout    */
-    uint32_t time_start;        /*!< The time to start timeout            */
-    uint32_t timeout;           /*!< Timeout to wait in milliseconds      */
-    task_handler_t waitingTask; /*!< Handler to the waiting task          */
-    uint32_t *queueMem;         /*!< Points to the queue memory           */
-    uint16_t number;            /*!< The number of messages in the queue  */
-    uint16_t max;               /*!< The max number of queue messages     */
-    uint16_t head;              /*!< Index of the next message to be read */
-    uint16_t tail;              /*!< Index of the next place to write to  */
-} msg_queue_t;
-
-/*! @brief Type for a message queue handler */
-typedef msg_queue_t *msg_queue_handler_t;
 
 /*! @brief Constant to pass as timeout value in order to wait indefinitely. */
 #define OSA_WAIT_FOREVER 0xFFFFFFFFU

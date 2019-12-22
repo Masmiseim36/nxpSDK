@@ -14,6 +14,9 @@
 
 // dispatch_gemm_shape.h: dispatch GEMM calls according to their shape
 
+// File modified by NXP. Changes are described in file
+// /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes"
+
 #ifndef GEMMLOWP_INTERNAL_DISPATCH_GEMM_SHAPE_H_
 #define GEMMLOWP_INTERNAL_DISPATCH_GEMM_SHAPE_H_
 
@@ -85,6 +88,22 @@ struct TransposeImpl<OutputStageQuantizeDownInt32ToUint8ScalePC<Shape>> {
     dst.result_shift = src.result_shift;
     dst.result_offset = Transpose(src.result_offset);
     dst.result_mult_int = Transpose(src.result_mult_int);
+    return dst;
+  }
+};
+
+template <VectorShape Shape>
+struct TransposeImpl<OutputStageScaleInt32ByFixedPointAndExponentPC<Shape>> {
+  typedef OutputStageScaleInt32ByFixedPointAndExponentPC<Shape> SrcType;
+  static const VectorShape TransposedShape = TransposeVectorShape<Shape>::Value;
+  typedef OutputStageScaleInt32ByFixedPointAndExponentPC<TransposedShape>
+      DstType;
+  static DstType Run(const SrcType& src) {
+    DstType dst;
+    dst.result_fixedpoint_multiplier =
+        Transpose(src.result_fixedpoint_multiplier);
+    dst.result_exponent = Transpose(src.result_exponent);
+    dst.result_offset_after_shift = src.result_offset_after_shift;
     return dst;
   }
 };

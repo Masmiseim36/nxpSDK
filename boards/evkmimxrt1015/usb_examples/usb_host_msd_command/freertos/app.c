@@ -66,7 +66,10 @@ void BOARD_InitHardware(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-
+/* Allocate the memory for the heap. */
+#if defined(configAPPLICATION_ALLOCATED_HEAP) && (configAPPLICATION_ALLOCATED_HEAP)
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t ucHeap[configTOTAL_HEAP_SIZE];
+#endif
 /*! @brief USB host msd command instance global variable */
 extern usb_host_msd_command_instance_t g_MsdCommandInstance;
 usb_host_handle g_HostHandle;
@@ -124,7 +127,7 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
                                   uint32_t eventCode)
 {
     usb_status_t status = kStatus_USB_Success;
-    switch (eventCode)
+    switch (eventCode & 0x0000FFFFU)
     {
         case kUSB_HostEventAttach:
             status = USB_HostMsdEvent(deviceHandle, configurationHandle, eventCode);
@@ -140,6 +143,10 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
 
         case kUSB_HostEventDetach:
             status = USB_HostMsdEvent(deviceHandle, configurationHandle, eventCode);
+            break;
+
+        case kUSB_HostEventEnumerationFail:
+            usb_echo("enumeration failed\r\n");
             break;
 
         default:

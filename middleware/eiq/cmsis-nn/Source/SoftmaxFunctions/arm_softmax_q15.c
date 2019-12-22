@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+/* File modified by NXP. Assert check added. */
+
 /* ----------------------------------------------------------------------
  * Project:      CMSIS NN Library
  * Title:        arm_softmax_q15.c
@@ -31,7 +33,7 @@
 #include "arm_math.h"
 #include "arm_nnfunctions.h"
 
-#include <assert.h>
+#include <assert.h> /* Added by NXP */
 
 /**
  *  @ingroup groupNN
@@ -94,7 +96,7 @@ void arm_softmax_q15(const q15_t * vec_in, const uint16_t dim_vec, q15_t * p_out
         }
     }
 
-    assert(sum != 0);
+    assert(sum != 0); /* Added by NXP */
 
     /* This is effectively (0x1 << 32) / sum */
     int64_t div_base = 0x100000000LL;

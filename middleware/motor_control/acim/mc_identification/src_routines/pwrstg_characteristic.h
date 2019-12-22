@@ -9,8 +9,8 @@
 #define _PWRSTG_CHAR_H_
 
 #include "mid_def.h"
-#include "mlib_FP.h"
-#include "gflib_FP.h"
+#include "mlib_fp.h"
+#include "gflib_fp.h"
 
 /*******************************************************************************
  * API

@@ -4,9 +4,9 @@
 **                          MIMXRT1015DAF5A
 **
 **     Compiler:            GNU C Compiler
-**     Reference manual:    IMXRT1015RM Rev. C, 02/2018
-**     Version:             rev. 0.1, 2017-06-06
-**     Build:               b180316
+**     Reference manual:    IMXRT1015RM Rev.0, 12/2018 | IMXRT1015SRM Rev.3
+**     Version:             rev. 1.0, 2019-01-18
+**     Build:               b190730
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
@@ -43,6 +43,9 @@ MEMORY
 /* Define output sections */
 SECTIONS
 {
+  __NCACHE_REGION_START = ORIGIN(m_data2);
+  __NCACHE_REGION_SIZE  = 0;
+
   .flash_config :
   {
     . = ALIGN(4);

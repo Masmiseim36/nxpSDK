@@ -11,6 +11,9 @@
  * optimizations.  Most users will not need to touch this file.
  */
 
+#ifdef LIBJPEG_USER_CONFIG_FILE
+#include LIBJPEG_USER_CONFIG_FILE
+#endif
 
 /*
  * Define BITS_IN_JSAMPLE as either
@@ -394,6 +397,7 @@ typedef enum { FALSE = 0, TRUE = 1 } boolean;
  *    can't use color quantization if you change that value.
  */
 
+#if !(defined(LIBJPEG_USER_CONFIG_PIXEL_FORMAT) && LIBJPEG_USER_CONFIG_PIXEL_FORMAT)
 /*
  * Changed by NXP, the original setting is:
  * #define RGB_RED		0
@@ -404,6 +408,7 @@ typedef enum { FALSE = 0, TRUE = 1 } boolean;
 #define RGB_GREEN	1	/* Offset of Green */
 #define RGB_BLUE	0	/* Offset of Blue */
 #define RGB_PIXELSIZE	3	/* JSAMPLEs per RGB scanline element */
+#endif /* LIBJPEG_USER_CONFIG_PIXEL_FORMAT */
 
 
 /* Definitions for speed-related optimizations. */

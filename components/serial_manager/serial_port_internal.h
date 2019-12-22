@@ -39,7 +39,8 @@ serial_manager_status_t Serial_UartInstallRxCallback(serial_handle_t serialHandl
                                                      void *callbackParam);
 void Serial_UartIsrFunction(serial_handle_t serialHandle);
 #endif
-
+serial_manager_status_t Serial_UartEnterLowpower(serial_handle_t serialHandle);
+serial_manager_status_t Serial_UartExitLowpower(serial_handle_t serialHandle);
 #endif
 
 #if (defined(SERIAL_PORT_TYPE_USBCDC) && (SERIAL_PORT_TYPE_USBCDC > 0U))

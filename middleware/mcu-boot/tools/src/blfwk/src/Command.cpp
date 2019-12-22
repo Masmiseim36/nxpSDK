@@ -1,18 +1,18 @@
 /*
-* Copyright (c) 2013-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
-* All rights reserved.
-*
-* SPDX-License-Identifier: BSD-3-Clause
-*
-*/
+ * Copyright (c) 2013-2015 Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
+ */
 
 #include "blfwk/Command.h"
+#include "blfwk/EndianUtilities.h"
 #include "blfwk/Logging.h"
-#include "bootloader_common.h"
 #include "blfwk/json.h"
 #include "blfwk/utils.h"
-#include "blfwk/EndianUtilities.h"
+#include "bootloader_common.h"
 #ifdef LINUX
 #include <string.h>
 #endif
@@ -137,6 +137,7 @@ StatusMessageTableEntry blfwk::g_statusCodes[] = {
     { kStatus_Ping, "kStatus_Ping" },
     { kStatus_NoResponse, "No response packet from target device." },
     { kStatus_NoResponseExpected, "No response packet from target device was expected." },
+    { kStatus_CommandUnsupported, " Command is not supported\n" },
 
     // SB loader errors.
     { kStatusRomLdrSectionOverrun, "kStatusRomLdrSectionOverrun" },
@@ -229,6 +230,7 @@ StatusMessageTableEntry blfwk::g_statusCodes[] = {
     { 10606, "kStatus_ReliableUpdateBackupBootloaderNotReady" },
     { 10607, "kStatus_ReliableUpdateSwapIndicatorAddressInvalid" },
     { 10608, "kStatus_ReliableUpdateSwapSystemNotAvailable" },
+    { 10609, "kStatus_ReliableUpdateSwapTest" },
 
     // Serial NOR/EEPROM statuses.
     { 10700, "kStatus_SerialNorEepromAddressInvalid" },
@@ -383,6 +385,10 @@ Command *Command::create(const string_vector_t *argv)
     {
         cmd = new ReceiveSbFile(argv);
     }
+    else if (argv->at(0) == kCommand_LoadImage.name)
+    {
+        cmd = new LoadImage(argv);
+    }
     else if (argv->at(0) == kCommand_Execute.name)
     {
         cmd = new Execute(argv);
@@ -427,7 +433,7 @@ Command *Command::create(const string_vector_t *argv)
     {
         cmd = new ReliableUpdate(argv);
     }
-    else if (argv->at(0) == kCommand_KeyProvisoning.name)
+    else if (argv->at(0) == kCommand_KeyProvisioning.name)
     {
         cmd = new KeyProvisioning(argv);
     }
@@ -718,6 +724,12 @@ void blfwk::DataPacket::StdOutDataConsumer::processData(const uint8_t *data, uin
 //! See host_command.h for documentation on this function.
 uint8_t *blfwk::DataPacket::sendTo(Packetizer &device, uint32_t *bytesWritten, Progress *progress)
 {
+    return sendTo(device, bytesWritten, progress, true);
+}
+
+//! See host_command.h for documentation on this function.
+uint8_t *blfwk::DataPacket::sendTo(Packetizer &device, uint32_t *bytesWritten, Progress *progress, bool hasResponse)
+{
     *bytesWritten = 0;
 
     if (!m_dataProducer->hasMoreData())
@@ -764,14 +776,24 @@ uint8_t *blfwk::DataPacket::sendTo(Packetizer &device, uint32_t *bytesWritten, P
         }
     }
 
-    // Read final command status
-    uint8_t *responsePacket;
-    uint32_t responseLength;
-    if (device.readPacket(&responsePacket, &responseLength, kPacketType_Command) != kStatus_Success)
+    if (hasResponse)
+    {
+        // Read final command status
+        uint8_t *responsePacket;
+        uint32_t responseLength;
+        if (device.readPacket(&responsePacket, &responseLength, kPacketType_Command) != kStatus_Success)
+        {
+            return NULL;
+        }
+        else
+        {
+            return responsePacket;
+        }
+    }
+    else
     {
         return NULL;
     }
-    return responsePacket;
 }
 
 //! See host_command.h for documentation on this function.
@@ -1088,9 +1110,25 @@ bool GetProperty::processResponse(const get_property_response_packet_t *packet)
             }
             break;
         }
-        case kPropertyTag_CrcCheckStatus:
-            m_responseDetails =
-                format_string("CRC Check Status = %s", getStatusMessage(m_responseValues.at(1)).c_str());
+        case kPropertyTag_CheckStatus:
+            if (m_memoryIdorIndex == kCheckStatusId_CrcStatus)
+            {
+                m_responseDetails =
+                    format_string("CRC Check Status = %s", getStatusMessage(m_responseValues.at(1)).c_str());
+            }
+            else if (m_memoryIdorIndex == kCheckSattusId_LastError)
+            {
+                m_responseDetails = "Last Error Content =";
+                for (uint32_t i = 1; i < m_responseValues.size(); ++i)
+                {
+                    m_responseDetails.append(format_string(" 0x%08X", m_responseValues.at(i)));
+                }
+            }
+            else
+            {
+                m_responseDetails = "Unknown Check Status";
+            }
+
             break;
         case kPropertyTag_VerifyWrites:
             m_responseDetails = format_string("Verify Writes Flag = %s", m_responseValues.at(1) ? "ON" : "OFF");
@@ -1131,10 +1169,31 @@ bool GetProperty::processResponse(const get_property_response_packet_t *packet)
         case kPropertyTag_SystemDeviceId:
             m_responseDetails = format_string("System Device ID = 0x%08X", m_responseValues.at(1));
             break;
-        case kPropertyTag_FlashSecurityState:
-            m_responseDetails =
-                format_string("Flash Security State = %s", m_responseValues.at(1) ? "SECURE" : "UNSECURE");
-            break;
+        case kPropertyTag_SecurityState:
+        {
+            uint32_t securityState = m_responseValues.at(1);
+            const char *securityStateStr = "";
+            switch (securityState)
+            {
+                case kSecurityState_Legacy_Unsecure:
+                    securityStateStr = "UNSECURE";
+                    break;
+                case kSecurityState_Legacy_Secure:
+                    securityStateStr = "SECURE";
+                    break;
+                case kSecurityState_SKBOOT_Secure:
+                    securityStateStr = "SECURE";
+                    break;
+                case kSecurityState_SKBOOT_Unsecure:
+                    securityStateStr = "UNSECURE";
+                    break;
+                default:
+                    securityStateStr = "UNKNOWN";
+                    break;
+            }
+            m_responseDetails = format_string("Security State = %s", securityStateStr);
+        }
+        break;
         case kPropertyTag_UniqueDeviceId:
             m_responseDetails = "Unique Device ID =";
             for (uint32_t i = 1; i < m_responseValues.size(); ++i)
@@ -1230,13 +1289,38 @@ bool GetProperty::processResponse(const get_property_response_packet_t *packet)
                 format_string("Flash Page Size = %s", utils::scale_bytes(m_responseValues.at(1)).c_str());
             break;
         case kPropertyTag_IrqNotifierPin:
-            m_responseDetails = format_string("Irq pin value = %08x", m_responseValues.at(1));
-            break;
+        {
+            irq_notifier_pin_property_store_t newProperty;
+            newProperty.U = m_responseValues.at(1);
+            if (newProperty.B.enable)
+            {
+                m_responseDetails = format_string("Irq pin is enabled, using GPIO port[%d], pin[%d]",
+                                                  newProperty.B.port, newProperty.B.pin);
+            }
+            else
+            {
+                m_responseDetails = format_string("Irq pin is disabled");
+            }
+        }
+        break;
         case kPropertyTag_FfrKeystoreUpdateOpt:
-            m_responseDetails =
-                format_string("FFR KeyStore Update is %s", (m_responseValues.at(1) > 0) ? "enabled" : "disabled");
-            break;
-        case kPropertyTag_Reserved9:
+        {
+            string optString;
+            if (m_responseValues.at(1) == kFfrKeystoreUpdateOpt_KeyProvisioning)
+            {
+                optString = format_string("KeyProvisioning");
+            }
+            else if (m_responseValues.at(1) == kFfrKeystoreUpdateOpt_WriteMemory)
+            {
+                optString = format_string("WriteMemory");
+            }
+            else
+            {
+                optString = format_string("UnKnow Option");
+            }
+            m_responseDetails = format_string("FFR KeyStore Update is ") + optString;
+        }
+        break;
         case kPropertyTag_InvalidProperty:
         default:
             break;
@@ -1759,7 +1843,7 @@ void GenerateKeyBlob::sendTo(Packetizer &device)
         dataConsumer = &stdoutDataConsumer;
     }
 
-    m_count = 72;
+    m_count = 72; // Default is AES128bit`
     m_dataPhase = 1;
     // Send command packet.
     blfwk::CommandPacket cmdPacket1(kCommandTag_GenerateKeyBlob, kCommandFlag_None, 0, m_count, m_dataPhase);
@@ -1770,7 +1854,8 @@ void GenerateKeyBlob::sendTo(Packetizer &device)
     uint32_t byteCount = m_count;
     if (processResponse(packet))
     {
-        byteCount = packet->dataByteCount;
+        m_count = packet->dataByteCount;
+        byteCount = m_count;
 
         // Receive data packets.
         blfwk::DataPacket dataPacket(dataConsumer);
@@ -1943,6 +2028,65 @@ void ReceiveSbFile::sendTo(Packetizer &device)
     blfwk::DataPacket dataPacket(&dataProducer, packetSizeInBytes);
     processResponse(dataPacket.sendTo(device, &bytesWritten, m_progress));
     device.setAbortEnabled(false);
+
+    // Format the command transfer details.
+    m_responseDetails = format_string("Wrote %d of %d bytes.", bytesWritten, bytesToWrite);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// LoadImage command
+////////////////////////////////////////////////////////////////////////////////
+
+// See host_command.h for documentation of this method.
+bool LoadImage::init()
+{
+    if (getArgCount() != 2)
+    {
+        return false;
+    }
+    m_dataFile = getArg(1);
+    return true;
+}
+
+// See host_command.h for documentation of this method.
+void LoadImage::sendTo(Packetizer &device)
+{
+    DataPacket::FileDataProducer dataProducer;
+    if (!dataProducer.init(m_dataFile, 0))
+    {
+        return;
+    }
+
+    // Get target bootloader data packet size.
+    uint32_t packetSizeInBytes;
+    GetProperty getPacketSize(kProperty_MaxPacketSize, 0 /*Not used*/);
+    getPacketSize.sendTo(device);
+    uint32_t fw_status = getPacketSize.getResponseValues()->at(0);
+    if (fw_status != kStatus_Success)
+    {
+        // Failed to get data packet size.
+        Log::warning("Warning: Failed to get packet size. Using default size(%d)", kMinPacketBufferSize);
+        packetSizeInBytes = kMinPacketBufferSize; // No property. Use default packet size.
+    }
+    else
+    {
+        packetSizeInBytes = getPacketSize.getResponseValues()->at(1);
+        if (packetSizeInBytes > device.getMaxPacketSize())
+        {
+            Log::error("Error: Packet size(%d) is bigger than max supported size(%d).", packetSizeInBytes,
+                       kMaxHostPacketSize);
+            return;
+        }
+    }
+
+    // Send command packet.
+    uint32_t bytesToWrite = dataProducer.getDataSize();
+    uint32_t bytesWritten;
+
+    // Send data packets.
+    blfwk::DataPacket dataPacket(&dataProducer, packetSizeInBytes);
+
+    dataPacket.sendTo(device, &bytesWritten, m_progress, false);
 
     // Format the command transfer details.
     m_responseDetails = format_string("Wrote %d of %d bytes.", bytesWritten, bytesToWrite);
@@ -2614,19 +2758,20 @@ void KeyProvisioning::sendTo(Packetizer &device)
     {
         case kKeyProvisioning_Operation_Enroll:
         {
-            blfwk::CommandPacket cmdPacket(kCommandTag_KeyProvisoning, kCommandFlag_None, m_operation);
+            blfwk::CommandPacket cmdPacket(kCommandTag_KeyProvisioning, kCommandFlag_None, m_operation);
             processResponse(cmdPacket.sendCommandGetResponse(device));
             break;
         }
         case kKeyProvisioning_Operation_SetIntrinsicKey:
         {
-            blfwk::CommandPacket cmdPacket(kCommandTag_KeyProvisoning, kCommandFlag_None, m_operation, m_type, m_size);
+            blfwk::CommandPacket cmdPacket(kCommandTag_KeyProvisioning, kCommandFlag_None, m_operation, m_type, m_size);
             processResponse(cmdPacket.sendCommandGetResponse(device));
+            break;
         }
         case kKeyProvisioning_Operation_WriteNonVolatile:
         case kKeyProvisioning_Operation_ReadNonVolatile:
         {
-            blfwk::CommandPacket cmdPacket(kCommandTag_KeyProvisoning, kCommandFlag_None, m_operation, m_memoryId);
+            blfwk::CommandPacket cmdPacket(kCommandTag_KeyProvisioning, kCommandFlag_None, m_operation, m_memoryId);
             processResponse(cmdPacket.sendCommandGetResponse(device));
             break;
         }
@@ -2663,7 +2808,7 @@ void KeyProvisioning::sendCmdAndGetData(Packetizer &device)
     }
 
     // Send command packet.
-    blfwk::CommandPacket cmdPacket(kCommandTag_KeyProvisoning, kCommandFlag_None, m_operation);
+    blfwk::CommandPacket cmdPacket(kCommandTag_KeyProvisioning, kCommandFlag_None, m_operation);
     const uint8_t *responsePacket = cmdPacket.sendCommandGetResponse(device);
 
     const key_provisioning_response_packet_t *packet =
@@ -2736,7 +2881,7 @@ void KeyProvisioning::sendCmdAndData(Packetizer &device)
     // Send command packet.
     uint32_t bytesToWrite = dataProducer->getDataSize();
     uint32_t bytesWritten;
-    blfwk::CommandPacket cmdPacket(kCommandTag_KeyProvisoning, kCommandFlag_HasDataPhase, m_operation, m_type,
+    blfwk::CommandPacket cmdPacket(kCommandTag_KeyProvisioning, kCommandFlag_HasDataPhase, m_operation, m_type,
                                    bytesToWrite);
     const uint8_t *responsePacket = cmdPacket.sendCommandGetResponse(device);
 
@@ -2789,10 +2934,10 @@ bool KeyProvisioning::processResponse(const key_provisioning_response_packet_t *
         return processResponse((const uint8_t *)packet);
     }
 
-    if (packet->commandPacket.commandTag != kCommandTag_KeyProvisonResponse)
+    if (packet->commandPacket.commandTag != kCommandTag_KeyProvisioningResponse)
     {
-        Log::error("Error: expected kCommandTag_KeyProvisonResponse (0x%x), received 0x%x\n",
-                   kCommandTag_KeyProvisonResponse, packet->commandPacket.commandTag);
+        Log::error("Error: expected kCommandTag_KeyProvisioningResponse (0x%x), received 0x%x\n",
+                   kCommandTag_KeyProvisioningResponse, packet->commandPacket.commandTag);
         return false;
     }
     if (packet->status != kStatus_Success)

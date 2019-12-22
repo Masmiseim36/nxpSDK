@@ -28,10 +28,10 @@ if (wakenUp)
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
-- MCUXpresso  11.0.0
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -81,11 +81,12 @@ Note: Node B should start first.
 Node:A
 Press any key to trigger one-shot transmission
 
-Rx MB ID: 0x123, Rx MB data: 0x0
+Rx MB ID: 0x123, Rx MB data: 0x0, Time stamp: 24291
 Press any key to trigger the next transmission!
 
-Rx MB ID: 0x123, Rx MB data: 0x1
+Rx MB ID: 0x123, Rx MB data: 0x1, Time stamp: 59183
 Press any key to trigger the next transmission!
+~~~~~~~~~~~~~~~~~~~~~
 
 This message displays on the node B terminal:
 
@@ -102,10 +103,10 @@ Note: Node B should start first.
 Node:B
 Start to Wait data from Node A
 
-Rx MB ID: 0x321, Rx MB data: 0x0
+Rx MB ID: 0x321, Rx MB data: 0x0, Time stamp: 16425
 Wait Node A to trigger the next transmission!
 
-Rx MB ID: 0x321, Rx MB data: 0x1
+Rx MB ID: 0x321, Rx MB data: 0x1, Time stamp: 51370
 Wait Node A to trigger the next transmission!
 ~~~~~~~~~~~~~~~~~~~~~
 Customization options

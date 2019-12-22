@@ -3,7 +3,7 @@
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -118,6 +118,8 @@ typedef enum httpsrv_content_type
     HTTPSRV_CONTENT_TYPE_ZIP,
     HTTPSRV_CONTENT_TYPE_XML,
     HTTPSRV_CONTENT_TYPE_PDF,
+    HTTPSRV_CONTENT_TYPE_FORMURLENC,
+    HTTPSRV_CONTENT_TYPE_FORMDATA,
 } HTTPSRV_CONTENT_TYPE;
 
 /*

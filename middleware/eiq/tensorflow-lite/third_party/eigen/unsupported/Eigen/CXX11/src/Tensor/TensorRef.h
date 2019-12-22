@@ -136,6 +136,8 @@ template<typename PlainObjectType> class TensorRef : public TensorBase<TensorRef
     enum {
       IsAligned = false,
       PacketAccess = false,
+      BlockAccess = false,
+      PreferBlockAccess = false,
       Layout = PlainObjectType::Layout,
       CoordAccess = false,  // to be implemented
       RawAccess = false
@@ -364,6 +366,8 @@ struct TensorEvaluator<const TensorRef<Derived>, Device>
   enum {
     IsAligned = false,
     PacketAccess = false,
+    BlockAccess = false,
+    PreferBlockAccess = false,
     Layout = TensorRef<Derived>::Layout,
     CoordAccess = false,  // to be implemented
     RawAccess = false
@@ -411,6 +415,8 @@ struct TensorEvaluator<TensorRef<Derived>, Device> : public TensorEvaluator<cons
   enum {
     IsAligned = false,
     PacketAccess = false,
+    BlockAccess = false,
+    PreferBlockAccess = false,
     RawAccess = false
   };
 

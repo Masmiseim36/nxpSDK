@@ -2,15 +2,19 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
-    <definition extID="middleware.mcu-boot.CMSIS_cm7_headers.MIMXRT1052"/>
+    <definition extID="device.MIMXRT1052_CMSIS.MIMXRT1052"/>
     <definition extID="middleware.mcu-boot.MIMXRT1052_startup.MIMXRT1052"/>
     <definition extID="middleware.mcu-boot.milliseconds.MIMXRT1052"/>
     <definition extID="middleware.mcu-boot.src_startup.MIMXRT1052"/>
+    <definition extID="platform.Include_common.MIMXRT1052"/>
+    <definition extID="platform.Include_core_cm7.MIMXRT1052"/>
+    <definition extID="platform.Include_dsp.MIMXRT1052"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
+    <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_led_demo_evk_flexspi_nor" name="led_demo_evk_flexspi_nor" category="bootloader_examples/demo_apps" dependency="middleware.mcu-boot.MIMXRT1052_startup.MIMXRT1052 middleware.mcu-boot.CMSIS_cm7_headers.MIMXRT1052 middleware.mcu-boot.src_startup.MIMXRT1052 middleware.mcu-boot.milliseconds.MIMXRT1052">
+  <example id="evkbimxrt1050_led_demo_evk_flexspi_nor" name="led_demo_evk_flexspi_nor" category="bootloader_examples/demo_apps" dependency="device.MIMXRT1052_CMSIS.MIMXRT1052 middleware.mcu-boot.MIMXRT1052_startup.MIMXRT1052 middleware.mcu-boot.src_startup.MIMXRT1052 middleware.mcu-boot.milliseconds.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_dsp.MIMXRT1052">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -38,9 +42,9 @@
           <value>gnu.c.optimization.level.size</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
-          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
           <value>CPU_MIMXRT1052DVL6B</value>
           <value>CPU_IS_ARM_CORTEX_M7=1</value>
+          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
           <value>MIMXRT1052</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
@@ -81,6 +85,9 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <source path="boards/evkbimxrt1050/bootloader_examples/demo_apps/led_demo_evk_flexspi_nor/armgcc" target_path="middleware/mcu-boot" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT1052_application_0x60002000.ld"/>
+    </source>
     <source path="boards/evkbimxrt1050/bootloader_examples/demo_apps/led_demo_evk_flexspi_nor/iar" target_path="middleware/mcu-boot" type="linker" toolchain="iar">
       <files mask="MIMXRT1052_application_0x60002000.icf"/>
     </source>

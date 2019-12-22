@@ -89,8 +89,8 @@ static uint32_t _USB_HostKhciGetFrameCount(usb_host_controller_handle handle)
 static uint32_t _USB_HostKhciGetFrameCountSum(usb_khci_host_state_struct_t *usbHostPointer)
 {
     static uint32_t totalFrameNumber = 0U;
-    static uint16_t oldFrameNumber = 0U;
-    uint16_t frameNumber = 0xFFFFU;
+    static uint16_t oldFrameNumber   = 0U;
+    uint16_t frameNumber             = 0xFFFFU;
 
     frameNumber = _USB_HostKhciGetFrameCount((usb_host_controller_handle)usbHostPointer);
 
@@ -157,19 +157,19 @@ void USB_HostKhciIsrFunction(void *hostHandle)
 
         if (status & USB_ISTAT_SOFTOK_MASK)
         {
-            USB_OsaEventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_SOF_TOK);
+            OSA_EventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_SOF_TOK);
         }
 
         if (status & USB_ISTAT_ATTACH_MASK)
         {
             usbHostPointer->usbRegBase->INTEN &= (~USB_INTEN_ATTACHEN_MASK);
-            USB_OsaEventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_ATTACH);
+            OSA_EventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_ATTACH);
         }
 
         if (status & USB_ISTAT_TOKDNE_MASK)
         {
             /* atom transaction done - token done */
-            USB_OsaEventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_TOK_DONE);
+            OSA_EventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_TOK_DONE);
         }
 
         if (status & USB_ISTAT_USBRST_MASK)
@@ -177,7 +177,7 @@ void USB_HostKhciIsrFunction(void *hostHandle)
 #if ((defined(USB_HOST_CONFIG_LOW_POWER_MODE)) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U))
             usbHostPointer->usbRegBase->USBTRC0 &= ~USB_USBTRC0_USBRESMEN_MASK;
 #endif
-            USB_OsaEventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_RESET);
+            OSA_EventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_RESET);
         }
 
 #if ((defined(USB_HOST_CONFIG_LOW_POWER_MODE)) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U))
@@ -202,7 +202,7 @@ void USB_HostKhciIsrFunction(void *hostHandle)
 
                 usbHostPointer->matchTick = hostPointer->hwTick;
 
-                USB_OsaEventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_RESUME);
+                OSA_EventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_RESUME);
             }
         }
 #endif
@@ -226,7 +226,7 @@ static void _USB_HostKhciAttach(usb_khci_host_state_struct_t *usbHostPointer)
     uint8_t index = 0U;
 
     usbHostPointer->usbRegBase->CTL |= USB_CTL_ODDRST_MASK;
-    usbHostPointer->usbRegBase->CTL = USB_CTL_HOSTMODEEN_MASK;
+    usbHostPointer->usbRegBase->CTL  = USB_CTL_HOSTMODEEN_MASK;
     usbHostPointer->usbRegBase->ADDR = ((usbHostPointer->usbRegBase->ADDR & (~USB_ADDR_ADDR_MASK)) |
                                         ((((0U) << USB_ADDR_ADDR_SHIFT) & USB_ADDR_ADDR_MASK)));
     usbHostPointer->usbRegBase->ADDR &= (~USB_ADDR_LSEN_MASK);
@@ -275,7 +275,6 @@ static void _USB_HostKhciAttach(usb_khci_host_state_struct_t *usbHostPointer)
     {
     }
 
-
     usbHostPointer->usbRegBase->ISTAT = 0xffU;
     usbHostPointer->usbRegBase->INTEN &= (~(USB_INTEN_TOKDNEEN_MASK | USB_INTEN_USBRSTEN_MASK));
 
@@ -287,7 +286,7 @@ static void _USB_HostKhciAttach(usb_khci_host_state_struct_t *usbHostPointer)
         __ASM("nop");
     }
     usbHostPointer->usbRegBase->CTL &= (~USB_CTL_RESET_MASK);
-    
+
     usbHostPointer->usbRegBase->CTL |= USB_CTL_USBENSOFEN_MASK;
 #ifdef USBCFG_OTG
     _USB_HostKhciDelay(usbHostPointer, 30U);
@@ -297,7 +296,7 @@ static void _USB_HostKhciAttach(usb_khci_host_state_struct_t *usbHostPointer)
     usbHostPointer->usbRegBase->CONTROL &= ~USB_CONTROL_DPPULLUPNONOTG_MASK;
     usbHostPointer->usbRegBase->INTEN |= (USB_INTEN_TOKDNEEN_MASK | USB_INTEN_USBRSTEN_MASK);
     usbHostPointer->deviceAttached++;
-    USB_OsaEventClear(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_TOK_DONE);
+    OSA_EventClear(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_TOK_DONE);
     USB_HostAttachDevice(usbHostPointer->hostHandle, speed, 0U, 0U, 1, &deviceHandle);
 
     usbHostPointer->txBd = 0U;
@@ -349,7 +348,7 @@ static void _USB_HostKhciReset(usb_khci_host_state_struct_t *usbHostPointer)
     else
     {
         /* device was detached,, notify about detach */
-        USB_OsaEventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_DETACH);
+        OSA_EventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_DETACH);
     }
 }
 
@@ -385,7 +384,7 @@ static void _USB_HostKhciDetach(usb_khci_host_state_struct_t *usbHostPointer)
     usbHostPointer->rxBd = 0U;
 
     usbHostPointer->usbRegBase->ISTAT = 0xffU;
-    USB_OsaEventClear(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_MSG);
+    OSA_EventClear(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_MSG);
 }
 
 /*!
@@ -419,7 +418,7 @@ static void _USB_HostKhciGetRightTrRequest(usb_host_controller_handle handle, us
     if (usbHostPointer->periodicListAvtive)
     {
         prevTtransfer = tempTransfer = usbHostPointer->periodicListPointer;
-        frame_number = _USB_HostKhciGetFrameCount(usbHostPointer);
+        frame_number                 = _USB_HostKhciGetFrameCount(usbHostPointer);
         /* Will get the transfer if the pipe frame count and current frame count is equal */
         while (tempTransfer != NULL)
         {
@@ -443,24 +442,24 @@ static void _USB_HostKhciGetRightTrRequest(usb_host_controller_handle handle, us
                     while (tempTransfer != NULL)
                     {
                         prevTtransfer = tempTransfer;
-                        tempTransfer = tempTransfer->next;
+                        tempTransfer  = tempTransfer->next;
                     }
                     prevTtransfer->next = firstTransfer;
                     firstTransfer->next = NULL;
-                    USB_OsaEventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_MSG);
+                    OSA_EventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_MSG);
                 }
                 USB_HostKhciUnlock();
                 return;
             }
             prevTtransfer = tempTransfer;
-            tempTransfer = tempTransfer->next;
+            tempTransfer  = tempTransfer->next;
         }
     }
     /* will get the first transfer from active list if no active transfer in async list */
     if ((usbHostPointer->asyncListAvtive) && (NULL != usbHostPointer->asyncListPointer))
     {
         firstTransfer = tempTransfer = usbHostPointer->asyncListPointer;
-        *transfer = firstTransfer;
+        *transfer                    = firstTransfer;
 
         if (tempTransfer->next != NULL)
         {
@@ -475,7 +474,7 @@ static void _USB_HostKhciGetRightTrRequest(usb_host_controller_handle handle, us
         while (tempTransfer != NULL)
         {
             prevTtransfer = tempTransfer;
-            tempTransfer = tempTransfer->next;
+            tempTransfer  = tempTransfer->next;
         }
         prevTtransfer->next = firstTransfer;
         firstTransfer->next = NULL;
@@ -492,8 +491,8 @@ static void _USB_HostKhciGetRightTrRequest(usb_host_controller_handle handle, us
  */
 static void _USB_HostKhciUnlinkTrRequestFromList(usb_host_controller_handle handle, usb_host_transfer_t *transfer)
 {
-    usb_host_transfer_t *temptr = NULL;
-    usb_host_transfer_t *pretr = NULL;
+    usb_host_transfer_t *temptr                  = NULL;
+    usb_host_transfer_t *pretr                   = NULL;
     usb_khci_host_state_struct_t *usbHostPointer = (usb_khci_host_state_struct_t *)handle;
 
     if ((handle == NULL) || (transfer == NULL))
@@ -513,7 +512,7 @@ static void _USB_HostKhciUnlinkTrRequestFromList(usb_host_controller_handle hand
         {
             while (temptr != NULL)
             {
-                pretr = temptr;
+                pretr  = temptr;
                 temptr = temptr->next;
                 if (transfer == temptr)
                 {
@@ -538,7 +537,7 @@ static void _USB_HostKhciUnlinkTrRequestFromList(usb_host_controller_handle hand
         {
             while (temptr != NULL)
             {
-                pretr = temptr;
+                pretr  = temptr;
                 temptr = temptr->next;
                 if (transfer == temptr)
                 {
@@ -580,8 +579,8 @@ static usb_status_t _USB_HostKhciLinkTrRequestToList(usb_host_controller_handle 
         if (usbHostPointer->periodicListAvtive == 0U)
         {
             usbHostPointer->periodicListPointer = transfer;
-            transfer->next = NULL;
-            usbHostPointer->periodicListAvtive = 1U;
+            transfer->next                      = NULL;
+            usbHostPointer->periodicListAvtive  = 1U;
         }
         else
         {
@@ -591,7 +590,7 @@ static usb_status_t _USB_HostKhciLinkTrRequestToList(usb_host_controller_handle 
                 temptransfer = temptransfer->next;
             }
             temptransfer->next = transfer;
-            transfer->next = NULL;
+            transfer->next     = NULL;
         }
     }
     else if ((transfer->transferPipe->pipeType == USB_ENDPOINT_CONTROL) ||
@@ -600,8 +599,8 @@ static usb_status_t _USB_HostKhciLinkTrRequestToList(usb_host_controller_handle 
         if (usbHostPointer->asyncListAvtive == 0U)
         {
             usbHostPointer->asyncListPointer = transfer;
-            transfer->next = NULL;
-            usbHostPointer->asyncListAvtive = 1U;
+            transfer->next                   = NULL;
+            usbHostPointer->asyncListAvtive  = 1U;
         }
         else
         {
@@ -611,7 +610,7 @@ static usb_status_t _USB_HostKhciLinkTrRequestToList(usb_host_controller_handle 
                 temptransfer = temptransfer->next;
             }
             temptransfer->next = transfer;
-            transfer->next = NULL;
+            transfer->next     = NULL;
         }
     }
     else
@@ -633,7 +632,7 @@ static void _USB_HostKhciProcessTrCallback(usb_host_controller_handle controller
                                            usb_host_transfer_t *transfer,
                                            int32_t err)
 {
-    usb_status_t status = kStatus_USB_Success;
+    usb_status_t status          = kStatus_USB_Success;
     usb_host_pipe_t *pipePointer = NULL;
 
     if (err == USB_KHCI_ATOM_TR_STALL)
@@ -702,9 +701,9 @@ static int32_t _USB_HostKhciTransactionDone(usb_khci_host_state_struct_t *usbHos
 {
     uint32_t bd;
     uint8_t err;
-    int32_t transferResult = 0U;
-    uint32_t type = kTr_Unknown;
-    uint32_t *bdPointer = NULL;
+    int32_t transferResult           = 0U;
+    uint32_t type                    = kTr_Unknown;
+    uint32_t *bdPointer              = NULL;
     usb_host_pipe_t *pipeDescPointer = transfer->transferPipe;
 
     if (pipeDescPointer->pipeType == USB_ENDPOINT_CONTROL)
@@ -796,7 +795,7 @@ static int32_t _USB_HostKhciTransactionDone(usb_khci_host_state_struct_t *usbHos
         return -1;
     }
 
-    bd = *bdPointer;
+    bd  = *bdPointer;
     err = usbHostPointer->usbRegBase->ERRSTAT;
     if (err & (USB_ERRSTAT_PIDERR_MASK | USB_ERRSTAT_CRC5EOF_MASK | USB_ERRSTAT_CRC16_MASK | USB_ERRSTAT_DFN8_MASK |
                USB_ERRSTAT_DMAERR_MASK | USB_ERRSTAT_BTSERR_MASK))
@@ -855,10 +854,7 @@ static int32_t _USB_HostKhciTransactionDone(usb_khci_host_state_struct_t *usbHos
         usbHostPointer->sXferSts.isDmaAlign = 1U;
         if (transferResult > 0)
         {
-            for (int j = 0; j < transferResult; j++)
-            {
-                usbHostPointer->sXferSts.rxBufOrig[j] = usbHostPointer->sXferSts.rxBuf[j];
-            }
+            memcpy(usbHostPointer->sXferSts.rxBufOrig, usbHostPointer->sXferSts.rxBuf, transferResult);
         }
     }
     return transferResult;
@@ -883,14 +879,14 @@ static int32_t _USB_HostKhciAtomNonblockingTransaction(usb_khci_host_state_struc
                                                        uint32_t len)
 {
     uint32_t *bdPointer = NULL;
-    uint8_t *buf = bufPointer;
+    uint8_t *buf        = bufPointer;
     int32_t transferResult;
     uint32_t speed;
     uint32_t address;
     uint32_t level;
     uint8_t counter = 0U;
     uint32_t eventBit;
-    usb_osa_status_t osaStatus;
+    osa_status_t osaStatus;
     uint8_t epCtlVal;
 
     len = (len > pipeDescPointer->maxPacketSize) ? pipeDescPointer->maxPacketSize : len;
@@ -920,13 +916,13 @@ static int32_t _USB_HostKhciAtomNonblockingTransaction(usb_khci_host_state_struc
     usbHostPointer->usbRegBase->ENDPOINT[0U].ENDPT = epCtlVal;
 
     transferResult = 0U;
-    counter = 0U;
+    counter        = 0U;
     /* wait for USB controller is ready, and with timeout */
     while ((usbHostPointer->usbRegBase->CTL) & USB_CTL_TXSUSPENDTOKENBUSY_MASK)
     {
         _USB_HostKhciDelay(usbHostPointer, 1U);
-        osaStatus = USB_OsaEventWait(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_TOK_DONE, 0U, 1, &eventBit);
-        if (osaStatus == kStatus_USB_OSA_Success)
+        osaStatus = OSA_EventWait(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_TOK_DONE, 0U, 1, &eventBit);
+        if (osaStatus == KOSA_StatusSuccess)
         {
             transferResult = USB_KHCI_ATOM_TR_RESET;
             break;
@@ -962,9 +958,9 @@ static int32_t _USB_HostKhciAtomNonblockingTransaction(usb_khci_host_state_struc
             if ((usbHostPointer->khciSwapBufPointer != NULL) && (len <= USB_HOST_CONFIG_KHCI_DMA_ALIGN_BUFFER))
             {
                 buf = (uint8_t *)USB_MEM4_ALIGN((uint32_t)(usbHostPointer->khciSwapBufPointer + 4));
-                usbHostPointer->sXferSts.rxBuf = buf;
-                usbHostPointer->sXferSts.rxBufOrig = bufPointer;
-                usbHostPointer->sXferSts.rxLen = len;
+                usbHostPointer->sXferSts.rxBuf      = buf;
+                usbHostPointer->sXferSts.rxBufOrig  = bufPointer;
+                usbHostPointer->sXferSts.rxLen      = len;
                 usbHostPointer->sXferSts.isDmaAlign = 0U;
             }
         }
@@ -976,27 +972,30 @@ static int32_t _USB_HostKhciAtomNonblockingTransaction(usb_khci_host_state_struc
         switch (type)
         {
             case kTr_Ctrl:
-                bdPointer = (uint32_t *)USB_KHCI_BD_PTR(0U, 1, usbHostPointer->txBd);
+                bdPointer         = (uint32_t *)USB_KHCI_BD_PTR(0U, 1, usbHostPointer->txBd);
                 *(bdPointer + 1U) = USB_LONG_TO_LITTLE_ENDIAN((uint32_t)buf);
-                *bdPointer = USB_LONG_TO_LITTLE_ENDIAN(USB_KHCI_BD_BC(len) | USB_KHCI_BD_OWN);
+                *bdPointer        = USB_LONG_TO_LITTLE_ENDIAN(USB_KHCI_BD_BC(len) | USB_KHCI_BD_OWN);
+                __DSB(); /* make sure the bdt is updated before TOKEN update */
                 usbHostPointer->usbRegBase->TOKEN =
                     (USB_TOKEN_TOKENENDPT((uint8_t)pipeDescPointer->endpointAddress) | USB_TOKEN_TOKENPID(0xD));
                 usbHostPointer->txBd ^= 1U;
                 break;
             case kTr_In:
-                bdPointer = (uint32_t *)USB_KHCI_BD_PTR(0U, 0U, usbHostPointer->rxBd);
+                bdPointer         = (uint32_t *)USB_KHCI_BD_PTR(0U, 0U, usbHostPointer->rxBd);
                 *(bdPointer + 1U) = USB_LONG_TO_LITTLE_ENDIAN((uint32_t)buf);
-                *bdPointer = USB_LONG_TO_LITTLE_ENDIAN(USB_KHCI_BD_BC(len) | USB_KHCI_BD_OWN |
+                *bdPointer        = USB_LONG_TO_LITTLE_ENDIAN(USB_KHCI_BD_BC(len) | USB_KHCI_BD_OWN |
                                                        USB_KHCI_BD_DATA01(pipeDescPointer->nextdata01));
+                __DSB(); /* make sure the bdt is updated before TOKEN update */
                 usbHostPointer->usbRegBase->TOKEN =
                     (USB_TOKEN_TOKENENDPT((uint8_t)pipeDescPointer->endpointAddress) | USB_TOKEN_TOKENPID(0x9));
                 usbHostPointer->rxBd ^= 1U;
                 break;
             case kTr_Out:
-                bdPointer = (uint32_t *)USB_KHCI_BD_PTR(0U, 1, usbHostPointer->txBd);
+                bdPointer         = (uint32_t *)USB_KHCI_BD_PTR(0U, 1, usbHostPointer->txBd);
                 *(bdPointer + 1U) = USB_LONG_TO_LITTLE_ENDIAN((uint32_t)buf);
-                *bdPointer = USB_LONG_TO_LITTLE_ENDIAN(USB_KHCI_BD_BC(len) | USB_KHCI_BD_OWN |
+                *bdPointer        = USB_LONG_TO_LITTLE_ENDIAN(USB_KHCI_BD_BC(len) | USB_KHCI_BD_OWN |
                                                        USB_KHCI_BD_DATA01(pipeDescPointer->nextdata01));
+                __DSB(); /* make sure the bdt is updated before TOKEN update */
                 usbHostPointer->usbRegBase->TOKEN =
                     (USB_TOKEN_TOKENENDPT((uint8_t)pipeDescPointer->endpointAddress) | USB_TOKEN_TOKENPID(0x1));
                 usbHostPointer->txBd ^= 1U;
@@ -1046,7 +1045,7 @@ static khci_tr_state_t _USB_HostKhciStartTranfer(usb_host_controller_handle hand
             else
             {
                 transfer->transferPipe->nextdata01 = 1U;
-                transfer->setupStatus = kTransfer_Setup3;
+                transfer->setupStatus              = kTransfer_Setup3;
                 transferResult =
                     _USB_HostKhciAtomNonblockingTransaction(usbHostPointer, kTr_In, transfer->transferPipe, 0U, 0U);
             }
@@ -1163,19 +1162,19 @@ static khci_tr_state_t _USB_HostKhciFinishTranfer(usb_host_controller_handle han
             if (transfer->transferPipe->pipeType == USB_ENDPOINT_INTERRUPT)
             {
                 usbHostPointer->trState = kKhci_TrGetMsg;
-                USB_OsaEventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_MSG);
+                OSA_EventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_MSG);
             }
             else
             {
                 if ((_USB_HostKhciGetFrameCountSum(usbHostPointer) - transfer->union2.frame) > transfer->nakTimeout)
                 {
-                    usbHostPointer->trState = kKhci_TrTransmitDone;
+                    usbHostPointer->trState         = kKhci_TrTransmitDone;
                     transfer->union1.transferResult = USB_KHCI_ATOM_TR_BUS_TIMEOUT;
                 }
                 else
                 {
                     usbHostPointer->trState = kKhci_TrGetMsg;
-                    USB_OsaEventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_MSG);
+                    OSA_EventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_MSG);
                 }
             }
         }
@@ -1279,9 +1278,9 @@ static void _USB_HostKhciResume(usb_khci_host_state_struct_t *usbHostPointer)
 void _USB_HostKhciTransferStateMachine(usb_host_controller_handle controllerHandle, usb_host_transfer_t **ptransfer)
 {
     usb_khci_host_state_struct_t *usbHostPointer = (usb_khci_host_state_struct_t *)controllerHandle;
-    usb_host_transfer_t *transfer = *ptransfer;
-    usb_host_transfer_t *tempTransfer = NULL;
-    uint32_t eventBit = 0;
+    usb_host_transfer_t *transfer                = *ptransfer;
+    usb_host_transfer_t *tempTransfer            = NULL;
+    uint32_t eventBit                            = 0;
 
     switch (usbHostPointer->trState)
     {
@@ -1320,16 +1319,16 @@ void _USB_HostKhciTransferStateMachine(usb_host_controller_handle controllerHand
                 if (((usb_host_instance_t *)usbHostPointer->hostHandle)->suspendedDevice ==
                     transfer->transferPipe->deviceHandle)
                 {
-                    transfer->retry = RETRY_TIME;
+                    transfer->retry        = RETRY_TIME;
                     transfer->union2.frame = _USB_HostKhciGetFrameCountSum(usbHostPointer);
 
                     _USB_HostKhciLinkTrRequestToList(controllerHandle, transfer);
-                    USB_OsaEventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_MSG);
+                    OSA_EventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_MSG);
                 }
                 else
                 {
 #endif
-                    *ptransfer = transfer;
+                    *ptransfer              = transfer;
                     usbHostPointer->trState = _USB_HostKhciStartTranfer(controllerHandle, transfer);
                     usbHostPointer->trState = kKhci_TrTransmiting;
 #if ((defined(USB_HOST_CONFIG_LOW_POWER_MODE)) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U))
@@ -1352,8 +1351,9 @@ void _USB_HostKhciTransferStateMachine(usb_host_controller_handle controllerHand
 
                         _USB_HostKhciStartTranfer(controllerHandle, tempTransfer);
                         usbHostPointer->trState = kKhci_TrTransmiting;
-                        if (kStatus_USB_OSA_Success == USB_OsaEventWait(usbHostPointer->khciEventPointer,
-                                                                        USB_KHCI_EVENT_TOK_DONE, 0U, 0, &eventBit))
+                        if (KOSA_StatusSuccess == OSA_EventWait(usbHostPointer->khciEventPointer,
+                                                                USB_KHCI_EVENT_TOK_DONE, 0U, USB_OSA_WAIT_TIMEOUT,
+                                                                &eventBit))
                         {
                             if (eventBit & USB_KHCI_EVENT_TOK_DONE)
                             {
@@ -1396,7 +1396,7 @@ void _USB_HostKhciTransferStateMachine(usb_host_controller_handle controllerHand
                     {
                         /* clear current bdt status */
                         _USB_HostKhciTransactionDone(usbHostPointer, transfer);
-                        usbHostPointer->trState = kKhci_TrTransmitDone;
+                        usbHostPointer->trState         = kKhci_TrTransmitDone;
                         transfer->union1.transferResult = USB_KHCI_ATOM_TR_BUS_TIMEOUT;
                         return;
                     }
@@ -1412,7 +1412,7 @@ void _USB_HostKhciTransferStateMachine(usb_host_controller_handle controllerHand
                 usbHostPointer->trState = kKhci_TrGetMsg;
                 if ((usbHostPointer->asyncListAvtive == 1U) || (usbHostPointer->periodicListAvtive == 1U))
                 {
-                    USB_OsaEventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_MSG);
+                    OSA_EventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_MSG);
                 }
             }
             break;
@@ -1443,8 +1443,8 @@ void USB_HostKhciTaskFunction(void *hostHandle)
     }
 
     usbHostPointer = (usb_khci_host_state_struct_t *)(((usb_host_instance_t *)hostHandle)->controllerHandle);
-    if (USB_OsaEventWait(usbHostPointer->khciEventPointer, 0xff, 0U, 1U, &eventBit) ==
-        kStatus_USB_OSA_Success) /* wait all event */
+    if (OSA_EventWait(usbHostPointer->khciEventPointer, 0xff, 0U, 1U, &eventBit) ==
+        KOSA_StatusSuccess) /* wait all event */
     {
         if (eventBit & USB_KHCI_EVENT_ATTACH)
         {
@@ -1513,7 +1513,7 @@ usb_status_t USB_HostKhciCreate(uint8_t controllerId,
 {
     usb_khci_host_state_struct_t *usbHostPointer;
     usb_status_t status = kStatus_USB_Success;
-    usb_osa_status_t osaStatus;
+    osa_status_t osaStatus;
     uint32_t usb_base_addrs[] = USB_BASE_ADDRS;
 
     if (((controllerId - kUSB_ControllerKhci0) >= (uint8_t)USB_HOST_CONFIG_KHCI) ||
@@ -1522,7 +1522,7 @@ usb_status_t USB_HostKhciCreate(uint8_t controllerId,
         return kStatus_USB_ControllerNotFound;
     }
 
-    usbHostPointer = (usb_khci_host_state_struct_t *)USB_OsaMemoryAllocate(sizeof(usb_khci_host_state_struct_t));
+    usbHostPointer = (usb_khci_host_state_struct_t *)OSA_MemoryAllocate(sizeof(usb_khci_host_state_struct_t));
     if (NULL == usbHostPointer)
     {
         *controllerHandle = NULL;
@@ -1532,10 +1532,10 @@ usb_status_t USB_HostKhciCreate(uint8_t controllerId,
 
     /* Allocate the USB Host Pipe Descriptors */
     usbHostPointer->pipeDescriptorBasePointer = NULL;
-    usbHostPointer->hostHandle = hostHandle;
+    usbHostPointer->hostHandle                = hostHandle;
 
-    if (NULL == (usbHostPointer->khciSwapBufPointer =
-                     (uint8_t *)USB_OsaMemoryAllocate(USB_HOST_CONFIG_KHCI_DMA_ALIGN_BUFFER + 4)))
+    if (NULL ==
+        (usbHostPointer->khciSwapBufPointer = (uint8_t *)OSA_MemoryAllocate(USB_HOST_CONFIG_KHCI_DMA_ALIGN_BUFFER + 4)))
     {
 #ifdef HOST_ECHO
         usb_echo("usbHostPointer->khciSwapBufPointer- memory allocation failed");
@@ -1545,8 +1545,9 @@ usb_status_t USB_HostKhciCreate(uint8_t controllerId,
     }
 
     /* init khci mutext */
-    osaStatus = USB_OsaMutexCreate(&usbHostPointer->khciMutex);
-    if (osaStatus != kStatus_USB_OSA_Success)
+    usbHostPointer->khciMutex = (osa_mutex_handle_t)(&usbHostPointer->mutexBuffer[0]);
+    osaStatus                 = OSA_MutexCreate(usbHostPointer->khciMutex);
+    if (osaStatus != KOSA_StatusSuccess)
     {
 #ifdef HOST_ECHO
         usb_echo("khci mutex init fail\r\n");
@@ -1554,10 +1555,10 @@ usb_status_t USB_HostKhciCreate(uint8_t controllerId,
         USB_HostKhciDestory(usbHostPointer);
         return kStatus_USB_Error;
     }
-
-    USB_OsaEventCreate(&usbHostPointer->khciEventPointer, 1U);
-    if (usbHostPointer->khciEventPointer == NULL)
+    usbHostPointer->khciEventPointer = (osa_event_handle_t)&usbHostPointer->taskEventHandleBuffer[0];
+    if (KOSA_StatusSuccess != OSA_EventCreate(usbHostPointer->khciEventPointer, 1U))
     {
+        usbHostPointer->khciEventPointer = NULL;
 #ifdef HOST_ECHO
         usb_echo(" memalloc failed in usb_khci_init\n");
 #endif
@@ -1565,17 +1566,17 @@ usb_status_t USB_HostKhciCreate(uint8_t controllerId,
         return kStatus_USB_AllocFail;
     } /* Endif */
 
-    usbHostPointer->asyncListAvtive = 0U;
-    usbHostPointer->periodicListAvtive = 0U;
+    usbHostPointer->asyncListAvtive     = 0U;
+    usbHostPointer->periodicListAvtive  = 0U;
     usbHostPointer->periodicListPointer = NULL;
-    usbHostPointer->asyncListPointer = NULL;
+    usbHostPointer->asyncListPointer    = NULL;
     usbHostPointer->sXferSts.isDmaAlign = 0U;
 
     /* set internal register pull down */
     usbHostPointer->usbRegBase->CTL = USB_CTL_SE0_MASK;
 
     /* Reset USB CTRL register */
-    usbHostPointer->usbRegBase->CTL = 0UL;
+    usbHostPointer->usbRegBase->CTL   = 0UL;
     usbHostPointer->usbRegBase->ISTAT = 0xffU;
     /* Enable week pull-downs, useful for detecting detach (effectively bus discharge) */
     usbHostPointer->usbRegBase->USBCTRL |= USB_USBCTRL_PDE_MASK;
@@ -1588,8 +1589,8 @@ usb_status_t USB_HostKhciCreate(uint8_t controllerId,
     usbHostPointer->usbRegBase->BDTPAGE3 = (uint8_t)((uint32_t)USB_KHCI_BDT_BASE >> 24);
     /* Set SOF threshold */
     usbHostPointer->usbRegBase->SOFTHLD = 255;
-    usbHostPointer->usbRegBase->ERREN = 0x00U;
-    usbHostPointer->usbRegBase->CTL = USB_CTL_HOSTMODEEN_MASK;
+    usbHostPointer->usbRegBase->ERREN   = 0x00U;
+    usbHostPointer->usbRegBase->CTL     = USB_CTL_HOSTMODEEN_MASK;
     /* Wait for attach interrupt */
     usbHostPointer->usbRegBase->INTEN |= (USB_INTEN_ATTACHEN_MASK | USB_INTEN_SOFTOKEN_MASK);
 #if defined(FSL_FEATURE_USB_KHCI_DYNAMIC_SOF_THRESHOLD_COMPARE_ENABLED) && \
@@ -1627,20 +1628,20 @@ usb_status_t USB_HostKhciDestory(usb_host_controller_handle controllerHandle)
 
     if (NULL != usbHostPointer->khciEventPointer)
     {
-        USB_OsaEventDestroy(usbHostPointer->khciEventPointer);
+        OSA_EventDestroy(usbHostPointer->khciEventPointer);
     }
     if (NULL != usbHostPointer->khciMutex)
     {
-        USB_OsaMutexDestroy(usbHostPointer->khciMutex);
+        (void)OSA_MutexDestroy(usbHostPointer->khciMutex);
     }
 
     if (NULL != usbHostPointer->khciSwapBufPointer)
     {
-        USB_OsaMemoryFree(usbHostPointer->khciSwapBufPointer);
+        OSA_MemoryFree(usbHostPointer->khciSwapBufPointer);
         usbHostPointer->khciSwapBufPointer = NULL;
     }
 
-    USB_OsaMemoryFree(usbHostPointer);
+    OSA_MemoryFree(usbHostPointer);
     usbHostPointer = NULL;
 
     return kStatus_USB_Success;
@@ -1657,8 +1658,8 @@ usb_status_t USB_HostKhciDestory(usb_host_controller_handle controllerHandle)
  *
  * @retval kStatus_USB_Success           The host is initialized successfully.
  * @retval kStatus_USB_Error                there is no idle pipe.
-*
-*/
+ *
+ */
 usb_status_t USB_HostKhciOpenPipe(usb_host_controller_handle controllerHandle,
                                   usb_host_pipe_handle *pipeHandlePointer,
                                   usb_host_pipe_init_t *pipeInitPointer)
@@ -1668,12 +1669,12 @@ usb_status_t USB_HostKhciOpenPipe(usb_host_controller_handle controllerHandle,
     usb_host_pipe_t *prePipePointer;
     usb_host_pipe_t *tempPipePointer;
 
-    USB_OSA_SR_ALLOC();
-    USB_OSA_ENTER_CRITICAL();
-    pipePointer = (usb_host_pipe_t *)USB_OsaMemoryAllocate(sizeof(usb_host_pipe_t));
+    OSA_SR_ALLOC();
+    OSA_ENTER_CRITICAL();
+    pipePointer = (usb_host_pipe_t *)OSA_MemoryAllocate(sizeof(usb_host_pipe_t));
     if (pipePointer == NULL)
     {
-        USB_OsaMemoryFree(usbHostPointer);
+        OSA_MemoryFree(usbHostPointer);
         return kStatus_USB_AllocFail;
     }
     else
@@ -1687,26 +1688,26 @@ usb_status_t USB_HostKhciOpenPipe(usb_host_controller_handle controllerHandle,
             tempPipePointer = usbHostPointer->pipeDescriptorBasePointer;
             while (NULL != tempPipePointer)
             {
-                prePipePointer = tempPipePointer;
+                prePipePointer  = tempPipePointer;
                 tempPipePointer = tempPipePointer->next;
             }
             prePipePointer->next = pipePointer;
         }
         pipePointer->next = NULL;
     }
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
 
-    pipePointer->deviceHandle = pipeInitPointer->devInstance;
+    pipePointer->deviceHandle    = pipeInitPointer->devInstance;
     pipePointer->endpointAddress = pipeInitPointer->endpointAddress;
-    pipePointer->direction = pipeInitPointer->direction;
-    pipePointer->interval = pipeInitPointer->interval;
-    pipePointer->maxPacketSize = pipeInitPointer->maxPacketSize;
-    pipePointer->pipeType = pipeInitPointer->pipeType;
+    pipePointer->direction       = pipeInitPointer->direction;
+    pipePointer->interval        = pipeInitPointer->interval;
+    pipePointer->maxPacketSize   = pipeInitPointer->maxPacketSize;
+    pipePointer->pipeType        = pipeInitPointer->pipeType;
     pipePointer->numberPerUframe = pipeInitPointer->numberPerUframe;
-    pipePointer->nakCount = pipeInitPointer->nakCount;
-    pipePointer->nextdata01 = 0U;
-    pipePointer->open = (uint8_t)1U;
-    pipePointer->currentCount = 0xffffU;
+    pipePointer->nakCount        = pipeInitPointer->nakCount;
+    pipePointer->nextdata01      = 0U;
+    pipePointer->open            = (uint8_t)1U;
+    pipePointer->currentCount    = 0xffffU;
 
     if (pipePointer->pipeType == USB_ENDPOINT_ISOCHRONOUS)
     {
@@ -1734,22 +1735,22 @@ usb_status_t USB_HostKhciOpenPipe(usb_host_controller_handle controllerHandle,
 usb_status_t USB_HostKhciClosePipe(usb_host_controller_handle controllerHandle, usb_host_pipe_handle pipeHandle)
 {
     usb_khci_host_state_struct_t *usbHostPointer = (usb_khci_host_state_struct_t *)controllerHandle;
-    usb_host_pipe_t *pipePointer = (usb_host_pipe_t *)pipeHandle;
+    usb_host_pipe_t *pipePointer                 = (usb_host_pipe_t *)pipeHandle;
     usb_host_pipe_t *prePipePointer;
 
-    USB_OSA_SR_ALLOC();
-    USB_OSA_ENTER_CRITICAL();
+    OSA_SR_ALLOC();
+    OSA_ENTER_CRITICAL();
 
     if ((pipePointer != NULL) && (pipePointer->open == (uint8_t)1U))
     {
         if (pipeHandle == usbHostPointer->pipeDescriptorBasePointer)
         {
             usbHostPointer->pipeDescriptorBasePointer = usbHostPointer->pipeDescriptorBasePointer->next;
-            USB_OsaMemoryFree(pipeHandle);
+            OSA_MemoryFree(pipeHandle);
         }
         else
         {
-            pipePointer = usbHostPointer->pipeDescriptorBasePointer;
+            pipePointer    = usbHostPointer->pipeDescriptorBasePointer;
             prePipePointer = pipePointer;
             while (NULL != pipePointer)
             {
@@ -1758,13 +1759,13 @@ usb_status_t USB_HostKhciClosePipe(usb_host_controller_handle controllerHandle, 
                     prePipePointer->next = pipePointer->next;
                     if (NULL != pipePointer)
                     {
-                        USB_OsaMemoryFree(pipePointer);
+                        OSA_MemoryFree(pipePointer);
                         pipePointer = NULL;
                     }
                     break;
                 }
                 prePipePointer = pipePointer;
-                pipePointer = pipePointer->next;
+                pipePointer    = pipePointer->next;
             }
         }
     }
@@ -1774,7 +1775,7 @@ usb_status_t USB_HostKhciClosePipe(usb_host_controller_handle controllerHandle, 
         usb_echo("usb_khci_close_pipe invalid pipe \n");
 #endif
     }
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
 
     return kStatus_USB_Success;
 }
@@ -1796,13 +1797,13 @@ usb_status_t USB_HostKhciWritePipe(usb_host_controller_handle controllerHandle,
                                    usb_host_pipe_handle pipeHandle,
                                    usb_host_transfer_t *transfer)
 {
-    usb_status_t status = kStatus_USB_Success;
+    usb_status_t status                          = kStatus_USB_Success;
     usb_khci_host_state_struct_t *usbHostPointer = (usb_khci_host_state_struct_t *)controllerHandle;
 
     usb_host_pipe_t *pipePointer = (usb_host_pipe_t *)pipeHandle;
 
     transfer->transferPipe = pipePointer;
-    transfer->retry = RETRY_TIME;
+    transfer->retry        = RETRY_TIME;
 
     if (pipePointer->endpointAddress == 0U)
     {
@@ -1852,7 +1853,7 @@ usb_status_t USB_HostKhciWritePipe(usb_host_controller_handle controllerHandle,
 
     _USB_HostKhciLinkTrRequestToList(controllerHandle, transfer);
 
-    USB_OsaEventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_MSG);
+    OSA_EventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_MSG);
 
     return status;
 }
@@ -1874,9 +1875,9 @@ usb_status_t USB_HostKhciReadpipe(usb_host_controller_handle controllerHandle,
                                   usb_host_pipe_handle pipeHandle,
                                   usb_host_transfer_t *transfer)
 {
-    usb_status_t status = kStatus_USB_Success;
+    usb_status_t status                          = kStatus_USB_Success;
     usb_khci_host_state_struct_t *usbHostPointer = (usb_khci_host_state_struct_t *)controllerHandle;
-    usb_host_pipe_t *pipePointer = (usb_host_pipe_t *)pipeHandle;
+    usb_host_pipe_t *pipePointer                 = (usb_host_pipe_t *)pipeHandle;
 
     if ((transfer->transferLength & USB_MEM4_ALIGN_MASK) || ((uint32_t)transfer->transferBuffer & USB_MEM4_ALIGN_MASK))
     {
@@ -1890,7 +1891,7 @@ usb_status_t USB_HostKhciReadpipe(usb_host_controller_handle controllerHandle,
         }
     }
 
-    transfer->transferPipe = pipePointer;
+    transfer->transferPipe  = pipePointer;
     transfer->transferSofar = 0U;
     if (pipePointer->nakCount == 0U)
     {
@@ -1900,11 +1901,11 @@ usb_status_t USB_HostKhciReadpipe(usb_host_controller_handle controllerHandle,
     {
         transfer->nakTimeout = pipePointer->nakCount * NAK_RETRY_TIME;
     }
-    transfer->retry = RETRY_TIME;
+    transfer->retry        = RETRY_TIME;
     transfer->union2.frame = _USB_HostKhciGetFrameCountSum(usbHostPointer);
 
     _USB_HostKhciLinkTrRequestToList(controllerHandle, transfer);
-    USB_OsaEventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_MSG);
+    OSA_EventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_MSG);
 
     return status;
 }
@@ -1922,7 +1923,7 @@ static usb_status_t _USB_HostKhciCancelPipe(usb_host_controller_handle handle,
                                             usb_host_pipe_t *pipePointer,
                                             usb_host_transfer_t *trPointer)
 {
-    usb_host_transfer_t *temptr = NULL;
+    usb_host_transfer_t *temptr                  = NULL;
     usb_khci_host_state_struct_t *usbHostPointer = (usb_khci_host_state_struct_t *)handle;
 
     if ((pipePointer->pipeType == USB_ENDPOINT_ISOCHRONOUS) || (pipePointer->pipeType == USB_ENDPOINT_INTERRUPT))
@@ -1983,7 +1984,7 @@ static usb_status_t _USB_HostKhciBusControl(usb_host_controller_handle handle, u
     {
         usbHostPointer->deviceAttached = 0U;
 
-        usbHostPointer->usbRegBase->CTL = USB_CTL_HOSTMODEEN_MASK;
+        usbHostPointer->usbRegBase->CTL   = USB_CTL_HOSTMODEEN_MASK;
         usbHostPointer->usbRegBase->ISTAT = 0xffU;
         /* Now, enable only USB interrupt attach for host mode */
         usbHostPointer->usbRegBase->INTEN |= USB_INTEN_ATTACHEN_MASK;
@@ -2025,7 +2026,7 @@ static usb_status_t _USB_HostKhciBusControl(usb_host_controller_handle handle, u
 
         usbHostPointer->matchTick = hostPointer->hwTick;
 
-        USB_OsaEventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_RESUME);
+        OSA_EventSet(usbHostPointer->khciEventPointer, USB_KHCI_EVENT_RESUME);
     }
 #endif
     else
@@ -2060,7 +2061,7 @@ usb_status_t USB_HostKciIoctl(usb_host_controller_handle controllerHandle, uint3
     switch (ioctlEvent)
     {
         case kUSB_HostCancelTransfer:
-            param = (usb_host_cancel_param_t *)ioctlParam;
+            param  = (usb_host_cancel_param_t *)ioctlParam;
             status = _USB_HostKhciCancelPipe(controllerHandle, (usb_host_pipe_t *)param->pipeHandle, param->transfer);
             break;
 
@@ -2077,6 +2078,7 @@ usb_status_t USB_HostKciIoctl(usb_host_controller_handle controllerHandle, uint3
             break;
 
         default:
+            status = kStatus_USB_NotSupported;
             break;
     }
     return status;

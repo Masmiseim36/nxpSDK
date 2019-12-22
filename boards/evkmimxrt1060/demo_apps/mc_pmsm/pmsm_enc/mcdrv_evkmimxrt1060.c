@@ -70,6 +70,9 @@ void MCDRV_Init_M1(void)
 
     /* Qudrature decoder peripheral init */
     M1_MCDRV_QD_PERIPH_INIT();
+        
+    /* Comparator CMP2 */
+    M1_MCDRV_CMP2_INIT();
 }
 
 /*!
@@ -367,7 +370,7 @@ void M1_InitPWM(void)
     PWMBase->FCTRL = (PWMBase->FCTRL & ~PWM_FCTRL_FAUTO_MASK) | PWM_FCTRL_FAUTO(0x1);
 
     /* Clear fault flags */
-    PWMBase->FSTS = (PWMBase->FCTRL & ~PWM_FSTS_FFLAG_MASK) | PWM_FSTS_FFLAG(0xF);
+    PWMBase->FSTS = (PWMBase->FSTS & ~PWM_FSTS_FFLAG_MASK) | PWM_FSTS_FFLAG(0xF);
 
     /* PWMs are re-enabled at PWM full cycle */
     PWMBase->FSTS = (PWMBase->FSTS & ~PWM_FSTS_FFULL_MASK) | PWM_FSTS_FFULL(0x1);
@@ -515,4 +518,34 @@ void M1_InitQD(void)
     g_sM1Enc.bDirection = M1_POSPE_ENC_DIRECTION;
     g_sM1Enc.fltSpdEncMin = M1_POSPE_ENC_N_MIN;
     MCDRV_QdEncSetDirection(&g_sM1Enc);        
+}
+
+/*!
+@brief   void InitCMP2(void)
+          - Initialization of the comparator module for dc-bus over current
+            detection to generate PWM fault
+
+@param   void
+
+@return  none
+*/
+void InitCMP2(void)
+{
+    /* Enable clock for CMP module */
+    CLOCK_EnableClock(kCLOCK_Acmp2);
+
+    /* Filter - 4 consecutive samples must agree */
+    CMP2->CR0 = CMP_CR0_FILTER_CNT(4);
+
+    /* DAC output set to 3.197V ~ 7.73A (for 8.25A scale) */
+    /* Reference voltage will be VDD */
+    /* Enable DAC */
+    CMP2->DACCR = CMP_DACCR_VOSEL(60) | CMP_DACCR_VRSEL_MASK | CMP_DACCR_DACEN_MASK;
+
+    /* Plus is CMP2_IN3 ~ overcurrent pin */
+    /* Minus is CMP2_IN7 ~ 6bit reference */
+    CMP2->MUXCR = CMP_MUXCR_PSEL(3) | CMP_MUXCR_MSEL(7);
+
+    /* Enable analog comparator */
+    CMP2->CR1 = CMP_CR1_EN_MASK;
 }

@@ -146,6 +146,8 @@ SET(CMAKE_C_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_C_FLAGS_SDRAM_TXT_DEBUG} -DSKIP_SYSCL
 
 SET(CMAKE_C_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_C_FLAGS_SDRAM_TXT_DEBUG} -DCPU_MIMXRT1052DVL6B")
 
+SET(CMAKE_C_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_C_FLAGS_SDRAM_TXT_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
+
 SET(CMAKE_C_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_C_FLAGS_SDRAM_TXT_DEBUG} -g")
 
 SET(CMAKE_C_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_C_FLAGS_SDRAM_TXT_DEBUG} -O0")
@@ -183,6 +185,8 @@ SET(CMAKE_C_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_C_FLAGS_SDRAM_TXT_DEBUG} -std=gnu99")
 SET(CMAKE_C_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_C_FLAGS_SDRAM_TXT_RELEASE} -DSKIP_SYSCLK_INIT")
 
 SET(CMAKE_C_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_C_FLAGS_SDRAM_TXT_RELEASE} -DCPU_MIMXRT1052DVL6B")
+
+SET(CMAKE_C_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_C_FLAGS_SDRAM_TXT_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
 
 SET(CMAKE_C_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_C_FLAGS_SDRAM_TXT_RELEASE} -Os")
 
@@ -227,6 +231,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEB
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DDEBUG")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DCPU_MIMXRT1052DVL6B")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -g")
 
@@ -274,6 +280,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_R
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DCPU_MIMXRT1052DVL6B")
 
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
+
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -Os")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -mcpu=cortex-m7")
@@ -306,7 +314,79 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_R
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -std=gnu99")
 
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -g")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -O0")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -mcpu=cortex-m7")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -Wall")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -mfloat-abi=hard")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -mfpu=fpv5-d16")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -mthumb")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -MMD")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -MP")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -fno-common")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -ffunction-sections")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -fdata-sections")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -ffreestanding")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -fno-builtin")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -mapcs")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -fno-rtti")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -fno-exceptions")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -Os")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -mcpu=cortex-m7")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -Wall")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -mfloat-abi=hard")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -mfpu=fpv5-d16")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -mthumb")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -MMD")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -MP")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -fno-common")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -ffunction-sections")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -fdata-sections")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -ffreestanding")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -fno-builtin")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -mapcs")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -fno-rtti")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -fno-exceptions")
+
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DDEBUG")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -g")
 
@@ -344,6 +424,8 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DNDEBUG")
 
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
+
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -Os")
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -mcpu=cortex-m7")
@@ -375,72 +457,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDR
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -fno-rtti")
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -fno-exceptions")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -g")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -O0")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -Wall")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -mfpu=fpv5-d16")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -mthumb")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -MMD")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -MP")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -fno-common")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -ffunction-sections")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -fdata-sections")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -ffreestanding")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -fno-builtin")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -mapcs")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -fno-rtti")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_TXT_DEBUG} -fno-exceptions")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -Os")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -Wall")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -mfpu=fpv5-d16")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -mthumb")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -MMD")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -MP")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -fno-common")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -ffunction-sections")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -fdata-sections")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -ffreestanding")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -fno-builtin")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -mapcs")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -fno-rtti")
-
-SET(CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_TXT_RELEASE} -fno-exceptions")
 
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_TXT_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_TXT_DEBUG} -g")
 
@@ -656,6 +672,8 @@ include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1052/xip)
 
 include_directories(${ProjDirPath}/../../../../xip)
 
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1052/utilities)
+
 add_executable(flexram_ram_allocate.elf 
 "${ProjDirPath}/../flexram.c"
 "${ProjDirPath}/../pin_mux.c"
@@ -664,6 +682,8 @@ add_executable(flexram_ram_allocate.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers/fsl_flexram_allocate.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers/fsl_flexram_allocate.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers/fsl_flexram.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers/fsl_flexram.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers/fsl_clock.c"
@@ -673,8 +693,6 @@ add_executable(flexram_ram_allocate.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/MIMXRT1052.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/MIMXRT1052_features.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/fsl_device_registers.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1052/system_MIMXRT1052.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1052/system_MIMXRT1052.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h"
@@ -685,13 +703,15 @@ add_executable(flexram_ram_allocate.elf
 "${ProjDirPath}/../../../../../../components/serial_manager/serial_manager.c"
 "${ProjDirPath}/../../../../../../components/serial_manager/serial_manager.h"
 "${ProjDirPath}/../../../../../../components/serial_manager/serial_port_internal.h"
+"${ProjDirPath}/../../../../../../components/lists/generic_list.c"
+"${ProjDirPath}/../../../../../../components/lists/generic_list.h"
 "${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.c"
 "${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.h"
-"${ProjDirPath}/../../../../../../components/lists/generic_list.c"
-"${ProjDirPath}/../../../../../../components/lists/generic_list.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/gcc/startup_MIMXRT1052.S"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1052/system_MIMXRT1052.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1052/system_MIMXRT1052.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/utilities/fsl_assert.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c"
@@ -703,19 +723,22 @@ add_executable(flexram_ram_allocate.elf
 "${ProjDirPath}/../../../../xip/evkbimxrt1050_sdram_ini_dcd.c"
 "${ProjDirPath}/../../../../xip/evkbimxrt1050_sdram_ini_dcd.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/core_cm7.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_compiler.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv81mml.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1052/utilities/fsl_sbrk.c"
 )
 
 
@@ -761,4 +784,5 @@ target_link_libraries(flexram_ram_allocate.elf optimized gcc)
 target_link_libraries(flexram_ram_allocate.elf optimized nosys)
 
 TARGET_LINK_LIBRARIES(flexram_ram_allocate.elf -Wl,--end-group)
+
 

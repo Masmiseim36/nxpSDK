@@ -154,8 +154,6 @@ void USB_HostCdcRndisDataOutCallback(void *param, uint8_t *data, uint32_t dataLe
         }
     }
     rndisInstance->dataSend = 0U;
-
-
     return;
 }
 
@@ -450,16 +448,16 @@ void USB_HostCdcRndisControlCallback(void *param, uint8_t *data, uint32_t dataLe
         }
         else if (rndisInstance->previousRunState == kUSB_HostCdcRndisRunWaitGetMACAddressDone)
         {
-           rndisInstance->runState = kUSB_HostCdcRndisRunWaitSetMsg;
-           rndis_query_cmplt_struct_t * msg = (rndis_query_cmplt_struct_t *)data;
+            rndisInstance->runState = kUSB_HostCdcRndisRunWaitSetMsg;
+            rndis_query_cmplt_struct_t * msg = (rndis_query_cmplt_struct_t *)data;
 
-           netif->hwaddr_len = NETIF_MAX_HWADDR_LEN;
+            netif->hwaddr_len = NETIF_MAX_HWADDR_LEN;
 
-           memcpy(netif->hwaddr,(((uint8_t*)&msg->requestID + msg->informationBufferOffset)), NETIF_MAX_HWADDR_LEN);
+            memcpy(netif->hwaddr,(((uint8_t*)&msg->requestID + msg->informationBufferOffset)), NETIF_MAX_HWADDR_LEN);
         }
         else if (rndisInstance->previousRunState == kUSB_HostCdcRndisRunWaitSetMsgDone)
         {
-          rndisInstance->runState = kUSB_HostCdcRndisRunGetState;
+            rndisInstance->runState = kUSB_HostCdcRndisRunGetState;
         }
         rndisInstance->previousRunState = kUSB_HostCdcRndisRunIdle;
     }
@@ -558,17 +556,17 @@ void USB_HosCdcRndisTask(void *param)
             }
             else if (rndisInstance->interruptRunState == kUSB_HostCdcRndisRunInterruptRecvDone)
             {     
-              rndisInstance->interruptRunState = kUSB_HostCdcRndisRunIdle;
-              /*remember the previous set encapsulated command*/
-              rndisInstance->previousRunState = kUSB_HostCdcRndisRunWaitInitMsgDone;
-              rndisInstance->runWaitState = kUSB_HostCdcRndisRunWaitGetEncapsulatedCommand;
-              rndisInstance->runState = kUSB_HostCdcRndisRunIdle;
+                rndisInstance->interruptRunState = kUSB_HostCdcRndisRunIdle;
+                /*remember the previous set encapsulated command*/
+                rndisInstance->previousRunState = kUSB_HostCdcRndisRunWaitInitMsgDone;
+                rndisInstance->runWaitState = kUSB_HostCdcRndisRunWaitGetEncapsulatedCommand;
+                rndisInstance->runState = kUSB_HostCdcRndisRunIdle;
 
-              if(USB_HostCdcGetEncapsulatedResponse(rndisInstance->classHandle, rndisInstance->getMessage, 
+                if(USB_HostCdcGetEncapsulatedResponse(rndisInstance->classHandle, rndisInstance->getMessage, 
                                                                                 RNDIS_CONTROL_MESSAGE, USB_HostCdcRndisControlCallback, rndisInstance))
-              {
-                 usb_echo("Error in Init message\r\n");
-              }
+                {
+                   usb_echo("Error in Init message\r\n");
+                }
             }
             break;
         case kUSB_HostCdcRndisRunWaitMaxmumFrame:
@@ -579,7 +577,7 @@ void USB_HosCdcRndisTask(void *param)
             if(USB_HostRndisQueryMsg(rndisInstance->classHandle, OID_GEN_MAXIMUM_FRAME_SIZE, rndisInstance->sendMessage, 
                                                                                       RNDIS_CONTROL_MESSAGE, 0, 0, NULL, USB_HostCdcRndisControlCallback, rndisInstance))
             {
-                       usb_echo("Error in Init message\r\n");
+                usb_echo("Error in Init message\r\n");
             }
             break;
       
@@ -597,16 +595,16 @@ void USB_HosCdcRndisTask(void *param)
             }
             else if (rndisInstance->interruptRunState == kUSB_HostCdcRndisRunInterruptRecvDone)
             {
-            rndisInstance->interruptRunState = kUSB_HostCdcRndisRunIdle;
-            rndisInstance->previousRunState = kUSB_HostCdcRndisRunWaitMaxmumFrameDone;
-            rndisInstance->runWaitState = kUSB_HostCdcRndisRunWaitGetEncapsulatedCommand;
-            rndisInstance->runState = kUSB_HostCdcRndisRunIdle;
+                rndisInstance->interruptRunState = kUSB_HostCdcRndisRunIdle;
+                rndisInstance->previousRunState = kUSB_HostCdcRndisRunWaitMaxmumFrameDone;
+                rndisInstance->runWaitState = kUSB_HostCdcRndisRunWaitGetEncapsulatedCommand;
+                rndisInstance->runState = kUSB_HostCdcRndisRunIdle;
 
-            if(USB_HostCdcGetEncapsulatedResponse(rndisInstance->classHandle, rndisInstance->getMessage, 
-                                                                                      RNDIS_CONTROL_MESSAGE, USB_HostCdcRndisControlCallback, rndisInstance))
-            {
-                usb_echo("Error in Init message\r\n");
-            }
+                if(USB_HostCdcGetEncapsulatedResponse(rndisInstance->classHandle, rndisInstance->getMessage, 
+                                                                                          RNDIS_CONTROL_MESSAGE, USB_HostCdcRndisControlCallback, rndisInstance))
+                {
+                    usb_echo("Error in Init message\r\n");
+                }
             }
             break;
         case kUSB_HostCdcRndisRunWaitGetMACAddress:
@@ -630,7 +628,7 @@ void USB_HosCdcRndisTask(void *param)
                                            RNDIS_RESPONSE_AVAILABLE, USB_HostCdcRndisInterruptCallback,
                                            rndisInstance) != kStatus_USB_Success)
                 {
-                  usb_echo("Error in USB_HostCdcInterruptRecv: %x\r\n", status);
+                    usb_echo("Error in USB_HostCdcInterruptRecv: %x\r\n", status);
                 }
 
             }
@@ -645,7 +643,7 @@ void USB_HosCdcRndisTask(void *param)
                 if(USB_HostCdcGetEncapsulatedResponse(rndisInstance->classHandle, rndisInstance->getMessage, 
                                                                                           RNDIS_CONTROL_MESSAGE, USB_HostCdcRndisControlCallback, rndisInstance))
                 {
-                           usb_echo("Error in Init message\r\n");
+                    usb_echo("Error in Init message\r\n");
                 }
             }
             break;
@@ -657,7 +655,7 @@ void USB_HosCdcRndisTask(void *param)
             if(USB_HostRndisSetMsg(rndisInstance->classHandle, OID_GEN_CURRENT_PACKET_FILTER, rndisInstance->sendMessage, RNDIS_CONTROL_MESSAGE, 20U, (sizeof(filtertype)),&filtertype,
                                                                                           USB_HostCdcRndisControlCallback, rndisInstance))
             {
-                  usb_echo("Error in set message\r\n");
+                usb_echo("Error in set message\r\n");
             }
             break;
         case kUSB_HostCdcRndisRunWaitSetMsgDone:

@@ -2008,7 +2008,6 @@ status_t semc_nand_flash_page_program(semc_nand_config_t *config, uint32_t pageI
         uint8_t *writeSrc;
         bool isAllBlankPayload = false;
 
-        assert(!(config->bytesInPageDataArea / sizeof(s_nandReadbackBlockBuffer)));
         while (payloadedBytes < config->bytesInPageDataArea)
         {
             uint32_t writeBytes = 0;

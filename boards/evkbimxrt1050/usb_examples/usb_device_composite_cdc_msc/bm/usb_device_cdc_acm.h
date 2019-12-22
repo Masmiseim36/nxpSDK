@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -127,7 +127,8 @@ typedef struct _usb_device_cdc_acm_request_param_struct
 /*! @brief Definition of pipe structure. */
 typedef struct _usb_device_cdc_acm_pipe
 {
-    usb_osa_mutex_handle mutex; /*!< The mutex of the pipe. */
+    osa_mutex_handle_t mutex; /*!< The mutex of the pipe. */
+    uint32_t mutexBuffer[(OSA_MUTEX_HANDLE_SIZE + 3)/4];
     uint8_t *pipeDataBuffer;      /*!< pipe data buffer backup when stall */
     uint32_t pipeDataLen;         /*!< pipe data length backup when stall  */
     uint8_t pipeStall;            /*!< pipe is stall  */

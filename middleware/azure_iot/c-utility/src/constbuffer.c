@@ -3,18 +3,21 @@
 
 #include <stdlib.h>
 #include <stddef.h>
-#include "azure_c_shared_utility/macro_utils.h"
+#include <stdbool.h>
+#include "azure_macro_utils/macro_utils.h"
 #include "azure_c_shared_utility/gballoc.h"
-#include "azure_c_shared_utility/constbuffer.h"
 #include "azure_c_shared_utility/xlogging.h"
 #include "azure_c_shared_utility/refcount.h"
+
+#include "azure_c_shared_utility/constbuffer.h"
 
 #define CONSTBUFFER_TYPE_VALUES \
     CONSTBUFFER_TYPE_COPIED, \
     CONSTBUFFER_TYPE_MEMORY_MOVED, \
-    CONSTBUFFER_TYPE_WITH_CUSTOM_FREE
+    CONSTBUFFER_TYPE_WITH_CUSTOM_FREE, \
+    CONSTBUFFER_TYPE_FROM_OFFSET_AND_SIZE
 
-DEFINE_ENUM(CONSTBUFFER_TYPE, CONSTBUFFER_TYPE_VALUES)
+MU_DEFINE_ENUM(CONSTBUFFER_TYPE, CONSTBUFFER_TYPE_VALUES)
 
 typedef struct CONSTBUFFER_HANDLE_DATA_TAG
 {
@@ -23,6 +26,7 @@ typedef struct CONSTBUFFER_HANDLE_DATA_TAG
     CONSTBUFFER_TYPE buffer_type;
     CONSTBUFFER_CUSTOM_FREE_FUNC custom_free_func;
     void* custom_free_func_context;
+    CONSTBUFFER_HANDLE originalHandle; /*where the CONSTBUFFER_TYPE_FROM_OFFSET_AND_SIZE was build from*/
 } CONSTBUFFER_HANDLE_DATA;
 
 static CONSTBUFFER_HANDLE CONSTBUFFER_Create_Internal(const unsigned char* source, size_t size)
@@ -180,19 +184,66 @@ CONSTBUFFER_HANDLE CONSTBUFFER_CreateWithCustomFree(const unsigned char* source,
     return result;
 }
 
-CONSTBUFFER_HANDLE CONSTBUFFER_Clone(CONSTBUFFER_HANDLE constbufferHandle)
+CONSTBUFFER_HANDLE CONSTBUFFER_CreateFromOffsetAndSize(CONSTBUFFER_HANDLE handle, size_t offset, size_t size)
 {
-    if (constbufferHandle == NULL)
+    CONSTBUFFER_HANDLE result;
+
+    if (
+        /*Codes_SRS_CONSTBUFFER_02_025: [ If handle is NULL then CONSTBUFFER_CreateFromOffsetAndSize shall fail and return NULL. ]*/
+        (handle == NULL) ||
+        /*Codes_SRS_CONSTBUFFER_02_026: [ If offset is greater than or equal to handles's size then CONSTBUFFER_CreateFromOffsetAndSize shall fail and return NULL. ]*/
+        (offset >= handle->alias.size) ||
+        /*Codes_SRS_CONSTBUFFER_02_032: [ If there are any failures then CONSTBUFFER_CreateFromOffsetAndSize shall fail and return NULL. ]*/
+        (offset > SIZE_MAX - size) ||
+        /*Codes_SRS_CONSTBUFFER_02_027: [ If offset + size exceed handles's size then CONSTBUFFER_CreateFromOffsetAndSize shall fail and return NULL. ]*/
+        (offset + size > handle->alias.size)
+        )
     {
-        /*Codes_SRS_CONSTBUFFER_02_013: [If constbufferHandle is NULL then CONSTBUFFER_Clone shall fail and return NULL.]*/
-        LogError("invalid arg");
+        LogError("invalid arguments CONSTBUFFER_HANDLE handle=%p, size_t offset=%zu, size_t size=%zu",
+            handle, offset, size);
+        result = NULL;
     }
     else
     {
-        /*Codes_SRS_CONSTBUFFER_02_014: [Otherwise, CONSTBUFFER_Clone shall increment the reference count and return constbufferHandle.]*/
+        /*Codes_SRS_CONSTBUFFER_02_028: [ CONSTBUFFER_CreateFromOffsetAndSize shall allocate memory for a new CONSTBUFFER_HANDLE's content. ]*/
+        result = (CONSTBUFFER_HANDLE)malloc(sizeof(CONSTBUFFER_HANDLE_DATA));
+        if (result == NULL)
+        {
+            /*Codes_SRS_CONSTBUFFER_02_032: [ If there are any failures then CONSTBUFFER_CreateFromOffsetAndSize shall fail and return NULL. ]*/
+            LogError("failure in malloc(sizeof(CONSTBUFFER_HANDLE_DATA)=%zu)", sizeof(CONSTBUFFER_HANDLE_DATA));
+            /*return as is*/
+        }
+        else
+        {
+            result->buffer_type = CONSTBUFFER_TYPE_FROM_OFFSET_AND_SIZE;
+            result->alias.buffer = handle->alias.buffer+offset;
+            result->alias.size = size;
+
+            /*Codes_SRS_CONSTBUFFER_02_030: [ CONSTBUFFER_CreateFromOffsetAndSize shall increment the reference count of handle. ]*/
+            INC_REF_VAR(handle->count);
+            result->originalHandle = handle;
+
+            /*Codes_SRS_CONSTBUFFER_02_029: [ CONSTBUFFER_CreateFromOffsetAndSize shall set the ref count of the newly created CONSTBUFFER_HANDLE to the initial value. ]*/
+            INIT_REF_VAR(result->count);
+
+            /*Codes_SRS_CONSTBUFFER_02_031: [ CONSTBUFFER_CreateFromOffsetAndSize shall succeed and return a non-NULL value. ]*/
+        }
+    }
+    return result;
+}
+
+void CONSTBUFFER_IncRef(CONSTBUFFER_HANDLE constbufferHandle)
+{
+    if (constbufferHandle == NULL)
+    {
+        /*Codes_SRS_CONSTBUFFER_02_013: [If constbufferHandle is NULL then CONSTBUFFER_IncRef shall return.]*/
+        LogError("Invalid arguments: CONSTBUFFER_HANDLE constbufferHandle=%p", constbufferHandle);
+    }
+    else
+    {
+        /*Codes_SRS_CONSTBUFFER_02_014: [Otherwise, CONSTBUFFER_IncRef shall increment the reference count.]*/
         INC_REF_VAR(constbufferHandle->count);
     }
-    return constbufferHandle;
 }
 
 const CONSTBUFFER* CONSTBUFFER_GetContent(CONSTBUFFER_HANDLE constbufferHandle)
@@ -212,26 +263,89 @@ const CONSTBUFFER* CONSTBUFFER_GetContent(CONSTBUFFER_HANDLE constbufferHandle)
     return result;
 }
 
-void CONSTBUFFER_Destroy(CONSTBUFFER_HANDLE constbufferHandle)
+static void CONSTBUFFER_DecRef_internal(CONSTBUFFER_HANDLE constbufferHandle)
 {
-    /*Codes_SRS_CONSTBUFFER_02_015: [If constbufferHandle is NULL then CONSTBUFFER_Destroy shall do nothing.]*/
-    if (constbufferHandle != NULL)
+    /*Codes_SRS_CONSTBUFFER_02_016: [Otherwise, CONSTBUFFER_DecRef shall decrement the refcount on the constbufferHandle handle.]*/
+    if (DEC_REF_VAR(constbufferHandle->count) == DEC_RETURN_ZERO)
     {
-        /*Codes_SRS_CONSTBUFFER_02_016: [Otherwise, CONSTBUFFER_Destroy shall decrement the refcount on the constbufferHandle handle.]*/
-        if (DEC_REF_VAR(constbufferHandle->count) == DEC_RETURN_ZERO)
+        if (constbufferHandle->buffer_type == CONSTBUFFER_TYPE_MEMORY_MOVED)
         {
-            if (constbufferHandle->buffer_type == CONSTBUFFER_TYPE_MEMORY_MOVED)
-            {
-                free((void*)constbufferHandle->alias.buffer);
-            }
-            else if (constbufferHandle->buffer_type == CONSTBUFFER_TYPE_WITH_CUSTOM_FREE)
-            {
-                /* Codes_SRS_CONSTBUFFER_01_012: [ If the buffer was created by calling CONSTBUFFER_CreateWithCustomFree, the customFreeFunc function shall be called to free the memory, while passed customFreeFuncContext as argument. ]*/
-                constbufferHandle->custom_free_func(constbufferHandle->custom_free_func_context);
-            }
+            free((void*)constbufferHandle->alias.buffer);
+        }
+        else if (constbufferHandle->buffer_type == CONSTBUFFER_TYPE_WITH_CUSTOM_FREE)
+        {
+            /* Codes_SRS_CONSTBUFFER_01_012: [ If the buffer was created by calling CONSTBUFFER_CreateWithCustomFree, the customFreeFunc function shall be called to free the memory, while passed customFreeFuncContext as argument. ]*/
+            constbufferHandle->custom_free_func(constbufferHandle->custom_free_func_context);
+        }
+        /*Codes_SRS_CONSTBUFFER_02_024: [ If the constbufferHandle was created by calling CONSTBUFFER_CreateFromOffsetAndSize then CONSTBUFFER_DecRef shall decrement the ref count of the original handle passed to CONSTBUFFER_CreateFromOffsetAndSize. ]*/
+        else if (constbufferHandle->buffer_type == CONSTBUFFER_TYPE_FROM_OFFSET_AND_SIZE)
+        {
+            CONSTBUFFER_DecRef_internal(constbufferHandle->originalHandle);
+        }
 
-            /*Codes_SRS_CONSTBUFFER_02_017: [If the refcount reaches zero, then CONSTBUFFER_Destroy shall deallocate all resources used by the CONSTBUFFER_HANDLE.]*/
-            free(constbufferHandle);
+        /*Codes_SRS_CONSTBUFFER_02_017: [If the refcount reaches zero, then CONSTBUFFER_DecRef shall deallocate all resources used by the CONSTBUFFER_HANDLE.]*/
+        free(constbufferHandle);
+    }
+}
+
+void CONSTBUFFER_DecRef(CONSTBUFFER_HANDLE constbufferHandle)
+{
+    if (constbufferHandle == NULL)
+    {
+        /*Codes_SRS_CONSTBUFFER_02_015: [If constbufferHandle is NULL then CONSTBUFFER_DecRef shall do nothing.]*/
+        LogError("Invalid arguments: CONSTBUFFER_HANDLE constbufferHandle=%p", constbufferHandle);
+    }
+    else
+    {
+        CONSTBUFFER_DecRef_internal(constbufferHandle);
+    }
+}
+
+
+bool CONSTBUFFER_HANDLE_contain_same(CONSTBUFFER_HANDLE left, CONSTBUFFER_HANDLE right)
+{
+    bool result;
+    if (left == NULL)
+    {
+        if (right == NULL)
+        {
+            /*Codes_SRS_CONSTBUFFER_02_018: [ If left is NULL and right is NULL then CONSTBUFFER_HANDLE_contain_same shall return true. ]*/
+            result = true;
+        }
+        else
+        {
+            /*Codes_SRS_CONSTBUFFER_02_019: [ If left is NULL and right is not NULL then CONSTBUFFER_HANDLE_contain_same shall return false. ]*/
+            result = false;
         }
     }
+    else
+    {
+        if (right == NULL)
+        {
+            /*Codes_SRS_CONSTBUFFER_02_020: [ If left is not NULL and right is NULL then CONSTBUFFER_HANDLE_contain_same shall return false. ]*/
+            result = false;
+        }
+        else
+        {
+            if (left->alias.size != right->alias.size)
+            {
+                /*Codes_SRS_CONSTBUFFER_02_021: [ If left's size is different than right's size then CONSTBUFFER_HANDLE_contain_same shall return false. ]*/
+                result = false;
+            }
+            else
+            {
+                if (memcmp(left->alias.buffer, right->alias.buffer, left->alias.size) != 0)
+                {
+                    /*Codes_SRS_CONSTBUFFER_02_022: [ If left's buffer is contains different bytes than rights's buffer then CONSTBUFFER_HANDLE_contain_same shall return false. ]*/
+                    result = false;
+                }
+                else
+                {
+                    /*Codes_SRS_CONSTBUFFER_02_023: [ CONSTBUFFER_HANDLE_contain_same shall return true. ]*/
+                    result = true;
+                }
+            }
+        }
+    }
+    return result;
 }

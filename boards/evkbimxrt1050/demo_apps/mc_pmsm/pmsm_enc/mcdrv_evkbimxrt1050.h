@@ -47,7 +47,7 @@ typedef struct _clock_setup
 #define M1_PWM_FREQ (10000)         /* PWM frequency - 10kHz */
 #define M1_FOC_FREQ_VS_PWM_FREQ (1) /* FOC calculation is called every n-th PWM reload */
 #define M1_SPEED_LOOP_FREQ (1000)   /* Speed loop frequency */
-#define M1_PWM_DEADTIME (2270)      /* Output PWM deadtime value in nanoseconds */
+#define M1_PWM_DEADTIME (500)      /* Output PWM deadtime value in nanoseconds */
 
 #define M1_FAST_LOOP_TS ((float_t)1.0/(float_t)(M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ))
 #define M1_SLOW_LOOP_TS ((float_t)1.0/(float_t)(M1_SLOW_LOOP_FREQ))
@@ -139,6 +139,11 @@ typedef struct _clock_setup
 #define M1_MCDRV_QD_CLEAR(par) (MCDRV_QdEncClear(par))
     
 /******************************************************************************
+ * Define motor 1 CMP2 for overcurrent detection                               
+ ******************************************************************************/
+#define M1_MCDRV_CMP2_INIT() M1_InitCMP2()
+    
+/******************************************************************************
  * Global variable definitions
  ******************************************************************************/
 extern mcdrv_adc_t g_sM1AdcSensor;
@@ -162,6 +167,7 @@ void M1_InitPWM(void);
 void InitXBARA(void);
 void InitADC_ETC(void);
 void M1_InitQD(void);
+void M1_InitCMP2(void);
 
 #ifdef __cplusplus
 }

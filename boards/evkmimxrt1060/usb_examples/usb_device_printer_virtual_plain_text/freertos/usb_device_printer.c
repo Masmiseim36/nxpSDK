@@ -269,7 +269,7 @@ usb_status_t USB_DevicePrinterInit(uint8_t controllerId,
     usb_device_handle deviceHandle;
     usb_device_printer_struct_t *printerHandle;
     usb_status_t status = kStatus_USB_Error;
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
     /* get the controller's device handle */
     status = USB_DeviceClassGetDeviceHandle(controllerId, &deviceHandle);
@@ -283,10 +283,10 @@ usb_status_t USB_DevicePrinterInit(uint8_t controllerId,
     }
 
     /* Allocate a printer class handle. */
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     status = USB_DevicePrinterAllocateHandle(&printerHandle);
     printerHandle->deviceHandle = deviceHandle; /* this printer instance is used */
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
     if (status != kStatus_USB_Success)
     {
         return status;

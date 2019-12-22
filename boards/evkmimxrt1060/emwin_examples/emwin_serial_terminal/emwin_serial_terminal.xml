@@ -12,6 +12,7 @@
     <definition extID="middleware.emwin.MIMXRT1062"/>
     <definition extID="platform.Include_common.MIMXRT1062"/>
     <definition extID="platform.Include_core_cm7.MIMXRT1062"/>
+    <definition extID="platform.Include_dsp.MIMXRT1062"/>
     <definition extID="platform.drivers.clock.MIMXRT1062"/>
     <definition extID="platform.drivers.common.MIMXRT1062"/>
     <definition extID="platform.drivers.elcdif.MIMXRT1062"/>
@@ -21,8 +22,10 @@
     <definition extID="platform.drivers.lpuart.MIMXRT1062"/>
     <definition extID="platform.drivers.pxp.MIMXRT1062"/>
     <definition extID="platform.drivers.xip_board.MIMXRT1062"/>
+    <definition extID="platform.drivers.xip_board_dcd.MIMXRT1062"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1062"/>
     <definition extID="platform.utilities.assert.MIMXRT1062"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1062"/>
     <definition extID="utility.debug_console.MIMXRT1062"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -33,14 +36,14 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1060_emwin_serial_terminal" name="emwin_serial_terminal" category="emwin_examples" dependency="platform.drivers.elcdif.MIMXRT1062 platform.drivers.pxp.MIMXRT1062 platform.drivers.lpi2c.MIMXRT1062 driver.ft5406_rt.MIMXRT1062 middleware.emwin.MIMXRT1062 platform.drivers.common.MIMXRT1062 platform.drivers.clock.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 utility.debug_console.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 component.lists.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.xip_board.MIMXRT1062 platform.Include_core_cm7.MIMXRT1062 platform.Include_common.MIMXRT1062">
+  <example id="evkmimxrt1060_emwin_serial_terminal" name="emwin_serial_terminal" category="emwin_examples" dependency="platform.drivers.elcdif.MIMXRT1062 platform.drivers.pxp.MIMXRT1062 platform.drivers.lpi2c.MIMXRT1062 driver.ft5406_rt.MIMXRT1062 middleware.emwin.MIMXRT1062 platform.drivers.common.MIMXRT1062 platform.drivers.clock.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 utility.debug_console.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager.MIMXRT1062 component.lists.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.xip_board.MIMXRT1062 platform.drivers.xip_board_dcd.MIMXRT1062 platform.Include_core_cm7.MIMXRT1062 platform.Include_common.MIMXRT1062 platform.Include_dsp.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
     <memory>
       <memoryBlock addr="60000000" size="00800000" access="RO" type="ExtFlash" id="BOARD_FLASH_evkmimxrt1060" name="BOARD_FLASH"/>
       <memoryBlock addr="80000000" size="01E00000" access="RW" type="RAM" id="BOARD_SDRAM_evkmimxrt1060" name="BOARD_SDRAM"/>
-      <memoryBlock addr="81E00000" size="00200000" access="RW" type="RAM" id="BOARD_SDRAM_NONCACHEABLE_evkmimxrt1060" name="BOARD_SDRAM_NONCACHEABLE"/>
+      <memoryBlock addr="81E00000" size="00200000" access="RW" type="RAM" id="NCACHE_REGION_evkmimxrt1060" name="NCACHE_REGION"/>
       <memoryBlock addr="20000000" size="00020000" access="RW" type="RAM" id="SRAM_DTC_evkmimxrt1060" name="SRAM_DTC"/>
       <memoryBlock addr="00000000" size="00020000" access="RW" type="RAM" id="SRAM_ITC_evkmimxrt1060" name="SRAM_ITC"/>
       <memoryBlock addr="20200000" size="000C0000" access="RW" type="RAM" id="SRAM_OC_evkmimxrt1060" name="SRAM_OC"/>
@@ -63,6 +66,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -77,8 +81,8 @@
           <value>true</value>
         </option>
         <option id="com.crt.advproject.link.memory.sections" type="stringList">
-          <value>isd=*(NonCacheable.init);region=BOARD_SDRAM_NONCACHEABLE;type=.data</value>
-          <value>isd=*(NonCacheable);region=BOARD_SDRAM_NONCACHEABLE;type=.bss</value>
+          <value>isd=*(NonCacheable.init);region=NCACHE_REGION;type=.data</value>
+          <value>isd=*(NonCacheable);region=NCACHE_REGION;type=.bss</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>
@@ -111,10 +115,10 @@
         </drivers>
       </debug_configuration>
     </debug_configurations>
-    <source path="boards/evkmimxrt1060/emwin_examples/emwin_serial_terminal/iar" target_path="src" type="other" toolchain="iar">
+    <source path="boards/evkmimxrt1060/emwin_examples/emwin_serial_terminal/iar" target_path="evkmimxrt1060" type="other" toolchain="iar">
       <files mask="evkmimxrt1060.mac"/>
     </source>
-    <source path="boards/evkmimxrt1060/emwin_examples/emwin_serial_terminal/mdk" target_path="src" type="configuration" toolchain="mdk">
+    <source path="boards/evkmimxrt1060/emwin_examples/emwin_serial_terminal/mdk" target_path="evkmimxrt1060" type="configuration" toolchain="mdk">
       <files mask="evkmimxrt1060_ram.ini"/>
     </source>
     <source path="boards/evkmimxrt1060/emwin_examples/emwin_serial_terminal" target_path="board" type="c_include">
@@ -135,13 +139,13 @@
     <source path="boards/evkmimxrt1060/emwin_examples/emwin_serial_terminal" target_path="source" type="src">
       <files mask="emwin_serial_terminal.c"/>
     </source>
-    <source path="devices/MIMXRT1062/arm" target_path="src" type="linker" toolchain="mdk">
+    <source path="devices/MIMXRT1062/arm" target_path="MIMXRT1062/arm" type="linker" toolchain="mdk">
       <files mask="MIMXRT1062xxxxx_ram.scf"/>
     </source>
-    <source path="devices/MIMXRT1062/gcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="devices/MIMXRT1062/gcc" target_path="MIMXRT1062/gcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1062xxxxx_ram.ld"/>
     </source>
-    <source path="devices/MIMXRT1062/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="devices/MIMXRT1062/iar" target_path="MIMXRT1062/iar" type="linker" toolchain="iar">
       <files mask="MIMXRT1062xxxxx_ram.icf"/>
     </source>
   </example>

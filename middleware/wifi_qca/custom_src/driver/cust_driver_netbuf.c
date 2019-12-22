@@ -599,7 +599,7 @@ void a_netbuf_enqueue(A_NETBUF_QUEUE_T *q, void *pReq)
 {
     //    uint8_t   i;
 
-    OSA_EnterCritical(kCriticalDisableInt);
+    a_enter_critical(kCriticalDisableInt);
     if (q->head == NULL)
     {
         q->head = pReq;
@@ -614,7 +614,7 @@ void a_netbuf_enqueue(A_NETBUF_QUEUE_T *q, void *pReq)
     A_CLEAR_QUEUE_LINK(pReq);
     //((A_NETBUF*)pkt)->queueLink = NULL;
     q->count++;
-    OSA_ExitCritical(kCriticalDisableInt);
+    a_exit_critical(kCriticalDisableInt);
 }
 
 void a_netbuf_prequeue(A_NETBUF_QUEUE_T *q, void *pReq)
@@ -635,7 +635,7 @@ void *a_netbuf_dequeue(A_NETBUF_QUEUE_T *q)
 
     if (q->head == NULL)
         return (void *)NULL;
-    OSA_EnterCritical(kCriticalDisableInt);
+    a_enter_critical(kCriticalDisableInt);
     pReq = q->head;
 
     if (q->tail == q->head)
@@ -651,7 +651,7 @@ void *a_netbuf_dequeue(A_NETBUF_QUEUE_T *q)
     q->count--;
     A_CLEAR_QUEUE_LINK(pReq);
     // curr->queueLink = NULL;
-    OSA_ExitCritical(kCriticalDisableInt);
+    a_exit_critical(kCriticalDisableInt);
     return (void *)pReq;
 }
 

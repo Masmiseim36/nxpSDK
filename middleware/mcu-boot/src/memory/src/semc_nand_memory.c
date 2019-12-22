@@ -788,7 +788,7 @@ status_t semc_nand_mem_erase(uint32_t address, uint32_t length)
 //! @brief Erase all SEMC NAND memory
 status_t semc_nand_mem_erase_all(void)
 {
-    status_t status;
+    status_t status = kStatus_Fail;
     uint32_t startBlockIndex = 0;
     uint32_t totalBlocks = s_semcNandFcb.nandConfig.planesInDevice * s_semcNandFcb.nandConfig.blocksInPlane;
 

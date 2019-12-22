@@ -15,6 +15,11 @@
  * Definitions
  ******************************************************************************/
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "middleware.usb.host.fatfs_usb_stack"
+#endif
+
 /*!
  * @brief standard control transfer common code.
  *
@@ -140,8 +145,8 @@ usb_status_t USB_HostCh9RequestCommon(usb_host_device_instance_t *deviceInstance
 {
     /* initialize transfer */
     transfer->setupPacket->wLength = USB_SHORT_TO_LITTLE_ENDIAN(bufferLen);
-    transfer->transferBuffer = buffer;
-    transfer->transferLength = bufferLen;
+    transfer->transferBuffer       = buffer;
+    transfer->transferLength       = bufferLen;
 
     if (USB_HostSendSetup(deviceInstance->hostHandle, deviceInstance->controlPipe, transfer) !=
         kStatus_USB_Success) /* send setup transfer */
@@ -163,7 +168,7 @@ usb_status_t USB_HostStandardGetStatus(usb_host_device_instance_t *deviceInstanc
     uint8_t length;
 
     /* initialize transfer */
-    statusParam = (usb_host_get_status_param_t *)param;
+    statusParam                          = (usb_host_get_status_param_t *)param;
     transfer->setupPacket->bmRequestType = USB_REQUEST_TYPE_DIR_IN | USB_REQUEST_TYPE_TYPE_STANDARD;
     if (statusParam->requestType == kRequestDevice)
     {
@@ -220,7 +225,7 @@ usb_status_t USB_HostStandardSetAddress(usb_host_device_instance_t *deviceInstan
     uint8_t address;
 
     /* initialize transfer */
-    address = *(uint8_t *)param;
+    address                       = *(uint8_t *)param;
     transfer->setupPacket->wValue = USB_SHORT_TO_LITTLE_ENDIAN(address);
 
     return USB_HostCh9RequestCommon(deviceInstance, transfer, NULL, 0);
@@ -233,7 +238,7 @@ usb_status_t USB_HostStandardSetGetDescriptor(usb_host_device_instance_t *device
     usb_host_process_descriptor_param_t *descriptorParam;
 
     /* initialize transfer */
-    descriptorParam = (usb_host_process_descriptor_param_t *)param;
+    descriptorParam               = (usb_host_process_descriptor_param_t *)param;
     transfer->setupPacket->wValue = USB_SHORT_TO_LITTLE_ENDIAN(
         (uint16_t)((uint16_t)descriptorParam->descriptorType << 8) | descriptorParam->descriptorIndex);
     transfer->setupPacket->wIndex = USB_SHORT_TO_LITTLE_ENDIAN(descriptorParam->languageId);
@@ -292,7 +297,7 @@ usb_status_t USB_HostRequestControl(usb_device_handle deviceHandle,
                                     void *param)
 {
     usb_host_device_instance_t *deviceInstance = (usb_host_device_instance_t *)deviceHandle;
-    usb_status_t status = kStatus_USB_Error;
+    usb_status_t status                        = kStatus_USB_Error;
 
     if (deviceHandle == NULL)
     {
@@ -301,10 +306,10 @@ usb_status_t USB_HostRequestControl(usb_device_handle deviceHandle,
 
     /* reset transfer fields */
     transfer->setupPacket->bmRequestType = 0x00;
-    transfer->setupPacket->bRequest = usbRequest;
-    transfer->setupPacket->wIndex = 0;
-    transfer->setupPacket->wLength = 0;
-    transfer->setupPacket->wValue = 0;
+    transfer->setupPacket->bRequest      = usbRequest;
+    transfer->setupPacket->wIndex        = 0;
+    transfer->setupPacket->wLength       = 0;
+    transfer->setupPacket->wValue        = 0;
 
     switch (usbRequest)
     {

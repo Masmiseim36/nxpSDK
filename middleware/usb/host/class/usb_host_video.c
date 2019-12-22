@@ -770,7 +770,7 @@ usb_status_t USB_HosVideoStreamRecv(usb_host_class_handle classHandle,
 usb_status_t USB_HostVideoInit(usb_device_handle deviceHandle, usb_host_class_handle *classHandle)
 {
     usb_host_video_instance_struct_t *videoInstance =
-        (usb_host_video_instance_struct_t *)USB_OsaMemoryAllocate(sizeof(usb_host_video_instance_struct_t));
+        (usb_host_video_instance_struct_t *)OSA_MemoryAllocate(sizeof(usb_host_video_instance_struct_t));
     uint32_t info_value;
 
     if (videoInstance == NULL)
@@ -847,7 +847,7 @@ usb_status_t USB_HostVideoDeinit(usb_device_handle deviceHandle, usb_host_class_
                                             videoInstance->controlTransfer);
         }
         USB_HostCloseDeviceInterface(deviceHandle, videoInstance->controlIntfHandle);
-        USB_OsaMemoryFree(videoInstance);
+        OSA_MemoryFree(videoInstance);
     }
     else
     {
@@ -1058,7 +1058,6 @@ usb_status_t USB_HostVideoGetProbe(usb_host_class_handle classHandle,
  * @retval kStatus_USB_Success           Request successful.
  * @retval kStatus_USB_InvalidHandle     The classHandle is NULL pointer.
  * @retval kStatus_USB_InvalidParameter  The interface descriptor is NULL pointer.
- * @retval kStatus_USB_InvalidRequest    The request is invaild.
  */
 usb_status_t USB_HostVideoGetCommit(usb_host_class_handle classHandle,
                                     uint8_t brequest,
@@ -1077,11 +1076,6 @@ usb_status_t USB_HostVideoGetCommit(usb_host_class_handle classHandle,
     if (NULL == streamInterface->interfaceDesc)
     {
         return kStatus_USB_InvalidParameter;
-    }
-    if ((brequest == USB_HOST_VIDEO_GET_DEF) && (brequest == USB_HOST_VIDEO_GET_RES) &&
-        (brequest == USB_HOST_VIDEO_GET_MIN) && (brequest == USB_HOST_VIDEO_GET_MAX))
-    {
-        return kStatus_USB_InvalidRequest;
     }
     status = USB_HostVideoControl(
         classHandle, USB_REQUEST_TYPE_DIR_IN | USB_REQUEST_TYPE_TYPE_CLASS | USB_REQUEST_TYPE_RECIPIENT_INTERFACE,

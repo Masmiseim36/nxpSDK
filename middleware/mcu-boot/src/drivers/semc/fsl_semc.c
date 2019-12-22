@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -734,7 +734,7 @@ static status_t semc_config_nor_flash_control_registers(semc_mem_config_t *confi
                    SEMC_NORCR1_AS(config->norMemConfig.addressSetupTime) |
                    SEMC_NORCR1_CEH(config->norMemConfig.ceMinHoldTime) |
                    SEMC_NORCR1_CES(config->norMemConfig.ceSetupTime);
-#if defined(MIMXRT1064_SERIES)
+#if defined(MIMXRT1064_SERIES) || defined(MIMXRT1062_SERIES)
     base->NORCR2 = SEMC_NORCR2_CEITV(config->norMemConfig.ceMinIntervalTime) |
                    SEMC_NORCR2_RD(config->norMemConfig.syncReadCycleTime) |
                    SEMC_NORCR2_LC(config->norMemConfig.syncLatencyCount) |

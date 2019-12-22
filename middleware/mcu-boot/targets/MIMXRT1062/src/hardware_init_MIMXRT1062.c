@@ -1,11 +1,14 @@
 /*
-* Copyright 2017-2018 NXP
-* All rights reserved.
-*
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright 2017-2019 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 #include "bootloader/bl_context.h"
+#if BL_FEATURE_RELIABLE_UPDATE
+#include "bootloader/bl_reliable_update.h"
+#endif
 #include "bootloader_common.h"
 #include "fsl_device_registers.h"
 #include "lpuart/fsl_lpuart.h"
@@ -18,15 +21,15 @@
 #include "flexspi_nor/flexspi_nor_flash.h"
 #endif // #if BL_FEATURE_FLEXSPI_NOR_MODULE || BL_FEATURE_SPINAND_MODULE
 #if BL_FEATURE_SPI_NOR_EEPROM_MODULE
-#include "microseconds.h"
 #include "memory/src/spi_nor_eeprom_memory.h"
+#include "microseconds.h"
 #endif // BL_FEATURE_SPI_NOR_EEPROM_MODULE
 #if BL_FEATURE_SEMC_NAND_MODULE || BL_FEATURE_SEMC_NOR_MODULE
 #include "semc/fsl_semc.h"
 #endif // #if BL_FEATURE_SEMC_NAND_MODULE || BL_FEATURE_SEMC_NOR_MODULE
+#include "bl_api.h"
 #include "fusemap.h"
 #include "peripherals_pinmux.h"
-#include "bl_api.h"
 ////////////////////////////////////////////////////////////////////////////////
 /*******************************************************************************
  * Definitions
@@ -64,6 +67,180 @@ enum __flexspi2_select_input_idx
 };
 
 #define IOMUXC2 ((volatile IOMUXC2_Type *)(IOMUXC_BASE))
+
+/*************************************
+ *  IVT Data
+ *************************************/
+typedef struct _ivt_
+{
+    /** @ref hdr with tag #HAB_TAG_IVT, length and HAB version fields
+     *  (see @ref data)
+     */
+    uint32_t hdr;
+    /** Absolute address of the first instruction to execute from the
+     *  image
+     */
+    uint32_t entry;
+    /** Reserved in this version of HAB: should be NULL. */
+    uint32_t reserved1;
+    /** Absolute address of the image DCD: may be NULL. */
+    uint32_t dcd;
+    /** Absolute address of the Boot Data: may be NULL, but not interpreted
+     *  any further by HAB
+     */
+    uint32_t boot_data;
+    /** Absolute address of the IVT.*/
+    uint32_t self;
+    /** Absolute address of the image CSF.*/
+    uint32_t csf;
+    /** Reserved in this version of HAB: should be zero. */
+    uint32_t reserved2;
+} ivt;
+
+#define IVT_MAJOR_VERSION 0x4
+#define IVT_MAJOR_VERSION_SHIFT 0x4
+#define IVT_MAJOR_VERSION_MASK 0xF
+#define IVT_MINOR_VERSION 0x1
+#define IVT_MINOR_VERSION_SHIFT 0x0
+#define IVT_MINOR_VERSION_MASK 0xF
+
+#define IVT_VERSION(major, minor)                                    \
+    ((((major)&IVT_MAJOR_VERSION_MASK) << IVT_MAJOR_VERSION_SHIFT) | \
+     (((minor)&IVT_MINOR_VERSION_MASK) << IVT_MINOR_VERSION_SHIFT))
+
+/* IVT header */
+#define IVT_TAG_HEADER 0xD1 /**< Image Vector Table */
+#define IVT_SIZE 0x2000
+#define IVT_PAR IVT_VERSION(IVT_MAJOR_VERSION, IVT_MINOR_VERSION)
+#define IVT_HEADER (IVT_TAG_HEADER | (IVT_SIZE << 8) | (IVT_PAR << 24))
+
+/* Set resume entry */
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
+extern uint32_t __Vectors[];
+extern uint32_t Image$$RW_m_config_text$$Base[];
+#define IMAGE_ENTRY_ADDRESS ((uint32_t)__Vectors)
+#define FLASH_BASE ((uint32_t)Image$$RW_m_config_text$$Base)
+#elif defined(__ICCARM__)
+extern uint32_t __VECTOR_TABLE[];
+extern uint32_t m_boot_hdr_conf_start[];
+#define IMAGE_ENTRY_ADDRESS ((uint32_t)__VECTOR_TABLE)
+#define FLASH_BASE ((uint32_t)m_boot_hdr_conf_start)
+#elif defined(__GNUC__)
+extern uint32_t __VECTOR_TABLE[];
+extern uint32_t __FLASH_BASE[];
+#define IMAGE_ENTRY_ADDRESS ((uint32_t)__VECTOR_TABLE)
+#define FLASH_BASE ((uint32_t)__FLASH_BASE)
+#endif
+
+#define DCD_ADDRESS dcd_data
+#define BOOT_DATA_ADDRESS &boot_data
+#define CSF_ADDRESS 0
+#define IVT_RSVD (uint32_t)(0x00000000)
+
+/*************************************
+ *  Boot Data
+ *************************************/
+typedef struct _boot_data_
+{
+    uint32_t start;       /* boot start location */
+    uint32_t size;        /* size */
+    uint32_t plugin;      /* plugin flag - 1 if downloaded application is plugin */
+    uint32_t placeholder; /* placehoder to make even 0x10 size */
+} BOOT_DATA_T;
+
+#define FLASH_SIZE BL_FEATURE_FLASH_SIZE
+#define PLUGIN_FLAG (uint32_t)0
+
+/* External Variables */
+const BOOT_DATA_T boot_data;
+
+#if defined(XIP_BOOT_HEADER_ENABLE) && (XIP_BOOT_HEADER_ENABLE == 1)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION) || defined(__GNUC__)
+__attribute__((section(".boot_hdr.ivt")))
+#elif defined(__ICCARM__)
+#pragma location = ".boot_hdr.ivt"
+#endif
+/*************************************
+ *  IVT Data
+ *************************************/
+const ivt image_vector_table = {
+    IVT_HEADER,                    /* IVT Header */
+    IMAGE_ENTRY_ADDRESS,           /* Image Entry Function */
+    IVT_RSVD,                      /* Reserved = 0 */
+    (uint32_t)0,                   /* Address where DCD information is stored */
+    (uint32_t)BOOT_DATA_ADDRESS,   /* Address where BOOT Data Structure is stored */
+    (uint32_t)&image_vector_table, /* Pointer to IVT Self (absolute address */
+    (uint32_t)CSF_ADDRESS,         /* Address where CSF file is stored */
+    IVT_RSVD                       /* Reserved = 0 */
+};
+
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION) || defined(__GNUC__)
+__attribute__((section(".boot_hdr.boot_data")))
+#elif defined(__ICCARM__)
+#pragma location = ".boot_hdr.boot_data"
+#endif
+/*************************************
+ *  Boot Data
+ *************************************/
+const BOOT_DATA_T boot_data = {
+    FLASH_BASE,  /* boot start location */
+    FLASH_SIZE,  /* size */
+    PLUGIN_FLAG, /* Plugin flag*/
+    0xFFFFFFFF   /* empty - extra data word */
+};
+
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION) || defined(__GNUC__)
+__attribute__((section(".boot_hdr.conf")))
+#elif defined(__ICCARM__)
+#pragma location = ".boot_hdr.conf"
+#endif
+const flexspi_nor_config_t qspiflash_config = {
+    .memConfig =
+        {
+            .tag              = FLEXSPI_CFG_BLK_TAG,
+            .version          = FLEXSPI_CFG_BLK_VERSION,
+            .readSampleClkSrc = kFlexSPIReadSampleClk_LoopbackFromDqsPad,
+            .csHoldTime       = 3u,
+            .csSetupTime      = 3u,
+            // Enable DDR mode, Wordaddassable, Safe configuration, Differential clock
+            .sflashPadType = kSerialFlash_4Pads,
+            .serialClkFreq = kFlexSpiSerialClk_133MHz,
+            .sflashA1Size  = 8u * 1024u * 1024u,
+            .deviceType = kFlexSpiDeviceType_SerialNOR,
+            .controllerMiscOption = FLEXSPI_BITMASK(kFlexSpiMiscOffset_SafeConfigFreqEnable),
+            .lookupTable =
+                {
+                    // Read LUTs
+                    [4 * NOR_CMD_LUT_SEQ_IDX_READ] = FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0xEB, RADDR_SDR, FLEXSPI_4PAD, 0x18),
+                    [4 * NOR_CMD_LUT_SEQ_IDX_READ + 1] = FLEXSPI_LUT_SEQ(DUMMY_SDR, FLEXSPI_4PAD, 0x06, READ_SDR, FLEXSPI_4PAD, 0x04),
+
+                    // Read Status LUTs
+                    [4 * NOR_CMD_LUT_SEQ_IDX_READSTATUS] = FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x05, READ_SDR, FLEXSPI_1PAD, 0x04),
+
+                    // Write Enable LUTs
+                    [4 * NOR_CMD_LUT_SEQ_IDX_WRITEENABLE] = FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x06, STOP, FLEXSPI_1PAD, 0x00),
+
+                    // Erase Sector LUTs
+                    [4 * NOR_CMD_LUT_SEQ_IDX_ERASESECTOR] = FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x20, RADDR_SDR, FLEXSPI_1PAD, 0x18),
+
+                    // Page Program LUTs
+                    [4 * NOR_CMD_LUT_SEQ_IDX_PAGEPROGRAM] = FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x02, RADDR_SDR, FLEXSPI_1PAD, 0x18),
+                    [4 * NOR_CMD_LUT_SEQ_IDX_PAGEPROGRAM + 1] = FLEXSPI_LUT_SEQ(WRITE_SDR, FLEXSPI_1PAD, 0x04, STOP, FLEXSPI_1PAD, 0x00),
+
+                    // Chip Erase LUTs
+                    [4 * NOR_CMD_LUT_SEQ_IDX_CHIPERASE] = FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x60, STOP, FLEXSPI_1PAD, 0x00),
+
+                    // Block Erase LUTs
+                    [4 * NOR_CMD_LUT_SEQ_IDX_ERASEBLOCK] = FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0xD8, RADDR_SDR, FLEXSPI_1PAD, 0x18),
+                },
+        },
+    .pageSize           = 256u,
+    .sectorSize         = 4u * 1024u,
+    .blockSize          = 64u * 1024u,
+    .isUniformBlockSize = false,
+    .ipcmdSerialClkFreq = kFlexSpiSerialClk_30MHz,
+};
+#endif
 
 /*******************************************************************************
  * Prototypes
@@ -707,7 +884,28 @@ uint32_t read_autobaud_pin( uint32_t instance )
 */
 bool is_boot_pin_asserted(void)
 {
-    // Boot pin for Flash only target
+    CCM->CCGR1 |= CCM_CCGR1_CG15(3);
+
+    // Set the WAKEUP to GPIO_IO00
+    IOMUXC_SNVS->SW_MUX_CTL_PAD_WAKEUP = IOMUXC_SNVS_SW_MUX_CTL_PAD_WAKEUP_MUX_MODE(5);
+    // Enable the Pull-up resistor on the GPIO_IO00
+    IOMUXC_SNVS->SW_PAD_CTL_PAD_WAKEUP = IOMUXC_SNVS_SW_PAD_CTL_PAD_WAKEUP_PUE(1) |
+                                         IOMUXC_SNVS_SW_PAD_CTL_PAD_WAKEUP_PUS(3) |
+                                         IOMUXC_SNVS_SW_PAD_CTL_PAD_WAKEUP_PKE(1);
+    GPIO5->GDIR &= (1u << 0u); // Set GPIO_IO00 pin to input mode
+
+    uint32_t readCount = 0u;
+
+    // Determine whether the pin is pressed (active low)
+    for (uint32_t i = 0; i < 500; i++)
+    {
+        readCount += (GPIO5->DR & 1) ? 0 : 1;
+    }
+
+    if (readCount >= 250)
+    {
+        return true;
+    }
     return false;
 }
 
@@ -803,9 +1001,7 @@ void dummy_byte_callback(uint8_t byte)
     (void)byte;
 }
 
-void debug_init(void)
-{
-}
+void debug_init(void) {}
 
 #if __ICCARM__
 
@@ -816,20 +1012,31 @@ size_t __write(int handle, const unsigned char *buf, size_t size)
 
 #endif // __ICCARM__
 
-void update_available_peripherals()
-{
-}
+void update_available_peripherals() {}
 
 void init_hardware(void)
 {
-    bl_api_init();
-
     CLOCK_EnableClock(kCLOCK_UsbOh3);
 
     // Restore secondary image related settings
     IOMUXC_GPR->GPR30 = 0;
     IOMUXC_GPR->GPR31 = 0;
     IOMUXC_GPR->GPR32 = 0;
+
+#ifdef _DEBUG
+    IOMUXC->SW_MUX_CTL_PAD[kIOMUXC_SW_MUX_CTL_PAD_GPIO_AD_B0_12] = 2;
+    IOMUXC->SW_MUX_CTL_PAD[kIOMUXC_SW_MUX_CTL_PAD_GPIO_AD_B0_13] = 2;
+    IOMUXC->SW_PAD_CTL_PAD[kIOMUXC_SW_MUX_CTL_PAD_GPIO_AD_B0_12] = 0x10f1;
+    IOMUXC->SW_PAD_CTL_PAD[kIOMUXC_SW_MUX_CTL_PAD_GPIO_AD_B0_13] = 0x10f1;
+    lpuart_config_t lpuartConfig;
+    LPUART_GetDefaultConfig(&lpuartConfig);
+    lpuartConfig.baudRate_Bps = 115200;
+    lpuartConfig.enableRx = true;
+    lpuartConfig.enableTx = true;
+
+    LPUART_Init(DEBUG_UART, &lpuartConfig, 20000000u);
+
+#endif
 }
 
 void deinit_hardware(void)
@@ -940,6 +1147,389 @@ void normal_mem_init(void)
     g_memoryMap[2].startAddress = 0x20200000;
     g_memoryMap[2].endAddress = g_memoryMap[2].startAddress + ocramSize - 1;
 }
+
+status_t target_load_bootloader_config_area(bootloader_configuration_data_t *config)
+{
+    memcpy(config, (void *)kBootloaderConfigAreaAddress, sizeof(bootloader_configuration_data_t));
+
+    return kStatus_Success;
+}
+
+#if BL_FEATURE_RELIABLE_UPDATE
+typedef struct
+{
+    status_t (*erase)(uint32_t start, uint32_t lengthInbytes);
+    status_t (*program)(uint32_t start, uint8_t *src, uint32_t length);
+} flash_driver_interface_t;
+
+typedef struct
+{
+    uint32_t version;
+    status_t (*get_update_partition_info)(partition_t *partition);
+    status_t (*update_image_state)(uint32_t state);
+    status_t (*get_image_state)(uint32_t *state);
+    status_t (*update_image_state_user_api)(uint32_t state, flash_driver_interface_t *flashIf);
+    status_t (*update_partition_table_user_api)(partition_t *partition,
+                                                uint32_t entries,
+                                                flash_driver_interface_t *flashIf);
+    uint32_t magic_num;
+    status_t (*boot_image_check)(image_header_t *hdr, int32_t partition_id);
+} reliable_update_interface_t;
+
+status_t api_update_swap_meta(swap_meta_t *swap_meta)
+{
+    status_t status = kStatus_Fail;
+    swap_meta_t swap_metas[2];
+    for (uint32_t i = 0; i < 2; i++)
+    {
+        uint32_t meta_addr = BL_FEATURE_SWAP_META_START + i * BL_FEATURE_FLASH_SECTOR_SIZE;
+        memcpy((uint8_t *)&swap_metas[i], (void *)meta_addr, sizeof(swap_meta_t));
+    }
+
+    uint32_t update_idx = 0;
+    if ((kStatus_Success != swap_meta_check(&swap_metas[0])) && (kStatus_Success != swap_meta_check(&swap_metas[1])))
+    {
+        update_idx = 0;
+    }
+    else if ((kStatus_Success == swap_meta_check(&swap_metas[0])) &&
+             (kStatus_Success != swap_meta_check(&swap_metas[1])))
+    {
+        update_idx = 1;
+    }
+    else if ((kStatus_Success != swap_meta_check(&swap_metas[0])) &&
+             (kStatus_Success == swap_meta_check(&swap_metas[1])))
+    {
+        update_idx = 0;
+    }
+    else if ((kStatus_Success == swap_meta_check(&swap_metas[0])) &&
+             (kStatus_Success == swap_meta_check(&swap_metas[1])))
+    {
+        update_idx = (swap_metas[0].meta_version > swap_metas[1].meta_version) ? 1 : 0;
+    }
+
+    uint32_t meta_addr = BL_FEATURE_SWAP_META_START + update_idx * BL_FEATURE_FLASH_SECTOR_SIZE;
+
+    swap_meta->meta_version++;
+
+    flexspi_nor_config_t flashNorConfig;
+    memcpy(&flashNorConfig, (void *)BL_FLEXSPI_AMBA_BASE, sizeof(flashNorConfig));
+
+    uint32_t instance = BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE;
+    __disable_irq();
+    status = flexspi_nor_flash_init(instance, &flashNorConfig);
+    __enable_irq();
+    uint32_t programBuffer[128];
+    memset(programBuffer, 0xff, sizeof(programBuffer));
+
+    do
+    {
+        uint32_t erase_addr = meta_addr - BL_FLEXSPI_AMBA_BASE;
+        __disable_irq();
+        status = flexspi_nor_flash_erase(instance, &flashNorConfig, erase_addr, BL_FEATURE_FLASH_SECTOR_SIZE);
+        __enable_irq();
+        if (status != kStatus_Success)
+        {
+            break;
+        }
+
+        memcpy(programBuffer, swap_meta, sizeof(*swap_meta));
+        __disable_irq();
+        status = flexspi_nor_flash_page_program(instance, &flashNorConfig, erase_addr, programBuffer);
+        __enable_irq();
+        if (status != kStatus_Success)
+        {
+            break;
+        }
+
+    } while (0);
+
+    return status;
+}
+
+status_t app_api_update_swap_meta(swap_meta_t *swap_meta, flash_driver_interface_t *flashIf)
+{
+    status_t status = kStatus_Fail;
+    swap_meta_t swap_metas[2];
+    for (uint32_t i = 0; i < 2; i++)
+    {
+        uint32_t meta_addr = BL_FEATURE_SWAP_META_START + i * BL_FEATURE_FLASH_SECTOR_SIZE;
+        memcpy((uint8_t *)&swap_metas[i], (void *)meta_addr, sizeof(swap_meta_t));
+    }
+
+    uint32_t update_idx = 0;
+    if ((kStatus_Success != swap_meta_check(&swap_metas[0])) && (kStatus_Success != swap_meta_check(&swap_metas[1])))
+    {
+        update_idx = 0;
+    }
+    else if ((kStatus_Success == swap_meta_check(&swap_metas[0])) &&
+             (kStatus_Success != swap_meta_check(&swap_metas[1])))
+    {
+        update_idx = 1;
+    }
+    else if ((kStatus_Success != swap_meta_check(&swap_metas[0])) &&
+             (kStatus_Success == swap_meta_check(&swap_metas[1])))
+    {
+        update_idx = 0;
+    }
+    else if ((kStatus_Success == swap_meta_check(&swap_metas[0])) &&
+             (kStatus_Success == swap_meta_check(&swap_metas[1])))
+    {
+        update_idx = (swap_metas[0].meta_version > swap_metas[1].meta_version) ? 1 : 0;
+    }
+
+    uint32_t meta_addr = BL_FEATURE_SWAP_META_START + update_idx * BL_FEATURE_FLASH_SECTOR_SIZE;
+
+    swap_meta->meta_version++;
+    do
+    {
+        uint32_t erase_addr = meta_addr - BL_FLEXSPI_AMBA_BASE;
+        // Ensure that the program operation cannots be interrupted.
+        uint32_t regPrimask = 0U;
+        regPrimask = __get_PRIMASK();
+        __disable_irq();
+        status = flashIf->erase(erase_addr, BL_FEATURE_FLASH_SECTOR_SIZE);
+        __set_PRIMASK(regPrimask);
+        if (status != kStatus_Success)
+        {
+            break;
+        }
+        regPrimask = __get_PRIMASK();
+        __disable_irq();
+        status = flashIf->program(erase_addr, (uint8_t *)swap_meta, sizeof(*swap_meta));
+        __set_PRIMASK(regPrimask);
+        if (status != kStatus_Success)
+        {
+            break;
+        }
+
+    } while (0);
+
+    return status;
+}
+
+status_t app_api_update_boot_meta(bootloader_meta_t *boot_meta, flash_driver_interface_t *flashIf)
+{
+    status_t status = kStatus_Fail;
+    bootloader_meta_t boot_metas[2];
+    for (uint32_t i = 0; i < 2; i++)
+    {
+        uint32_t meta_addr = BL_FEATURE_BOOT_META_START + i * BL_FEATURE_FLASH_SECTOR_SIZE;
+        memcpy((uint8_t *)&boot_metas[i], (void *)meta_addr, sizeof(boot_metas[i]));
+    }
+
+    uint32_t update_idx = 0;
+    if ((kStatus_Success != boot_meta_check(&boot_metas[0])) && (kStatus_Success != boot_meta_check(&boot_metas[1])))
+    {
+        update_idx = 0;
+    }
+    else if ((kStatus_Success == boot_meta_check(&boot_metas[0])) &&
+             (kStatus_Success != boot_meta_check(&boot_metas[1])))
+    {
+        update_idx = 1;
+    }
+    else if ((kStatus_Success != boot_meta_check(&boot_metas[0])) &&
+             (kStatus_Success == boot_meta_check(&boot_metas[1])))
+    {
+        update_idx = 0;
+    }
+    else if ((kStatus_Success == boot_meta_check(&boot_metas[0])) &&
+             (kStatus_Success == boot_meta_check(&boot_metas[1])))
+    {
+        update_idx = (boot_metas[0].meta_version > boot_metas[1].meta_version) ? 1 : 0;
+    }
+
+    uint32_t meta_addr = BL_FEATURE_BOOT_META_START + update_idx * BL_FEATURE_FLASH_SECTOR_SIZE;
+
+    boot_metas->meta_version++;
+    do
+    {
+        uint32_t erase_addr = meta_addr - BL_FLEXSPI_AMBA_BASE;
+        // Ensure that the program operation cannots be interrupted.
+        uint32_t regPrimask = 0U;
+        regPrimask = __get_PRIMASK();
+        __disable_irq();
+        status = flashIf->erase(erase_addr, BL_FEATURE_FLASH_SECTOR_SIZE);
+        __set_PRIMASK(regPrimask);
+        if (status != kStatus_Success)
+        {
+            break;
+        }
+        regPrimask = __get_PRIMASK();
+        __disable_irq();
+        status = flashIf->program(erase_addr, (uint8_t *)boot_meta, sizeof(*boot_meta));
+        __set_PRIMASK(regPrimask);
+        if (status != kStatus_Success)
+        {
+            break;
+        }
+
+    } while (0);
+
+    return status;
+}
+
+status_t get_update_partition_info(partition_t *partition)
+{
+    bootloader_meta_t boot_meta;
+    status_t status = load_boot_meta(&boot_meta);
+    if (status != kStatus_Success)
+    {
+        return status;
+    }
+    memcpy(partition, &boot_meta.partition[kPartition_Secondary], sizeof(*partition));
+
+    return kStatus_Success;
+}
+
+status_t update_partition_table_user_api(partition_t *partition, uint32_t entries, flash_driver_interface_t *flashIf)
+{
+    bootloader_meta_t boot_meta;
+    bool has_boot_meta = false;
+
+    if ((flashIf == NULL) || (entries > ARRAY_SIZE(boot_meta.partition)))
+    {
+        return kStatus_InvalidArgument;
+    }
+
+    status_t status = load_boot_meta(&boot_meta);
+    if (status == kStatus_Success)
+    {
+        has_boot_meta = true;
+    }
+
+    if (!has_boot_meta)
+    {
+        memset(&boot_meta, 0, sizeof(boot_meta));
+        boot_meta.tag = BOOTLOADER_META_TAG;
+        boot_meta.features.enabledPeripherals = 0xffffffffu;
+        boot_meta.features.periphDetectTimeout = 0xffffffffu;
+        boot_meta.features.wdTimeout = 0xffffffffu;
+    }
+
+    boot_meta.patition_entries = entries;
+    memcpy(&boot_meta.partition, partition, entries * sizeof(*partition));
+    status = app_api_update_boot_meta(&boot_meta, flashIf);
+
+    return status;
+}
+
+status_t update_image_state(uint32_t state)
+{
+    swap_meta_t swap_meta;
+    status_t status = load_swap_meta(&swap_meta);
+    if (status != kStatus_Success)
+    {
+        return status;
+    }
+
+    if (state == kSwapType_ReadyForTest)
+    {
+        image_header_t boot_header;
+        get_image_header(kPartition_Secondary, &boot_header);
+        if (boot_image_check(&boot_header, kPartition_Secondary) == kStatus_Success)
+        {
+            swap_meta.swap_type = kSwapType_ReadyForTest;
+            swap_meta.copy_status = 0;
+            swap_meta.swap_progress.swap_offset = 0;
+            swap_meta.swap_progress.swap_status = kSwapStage_NotStarted;
+            swap_meta.image_info[1].size = boot_header.image_size + boot_header.header_size;
+            swap_meta.confirm_info = 0;
+            api_update_swap_meta(&swap_meta);
+            return kStatus_Success;
+        }
+        else
+        {
+            return kStatus_Fail;
+        }
+    }
+    else if (state == kSwapType_Permanent)
+    {
+        swap_meta.copy_status = 0;
+        swap_meta.swap_progress.swap_offset = 0;
+        swap_meta.swap_progress.swap_status = kSwapStage_NotStarted;
+        swap_meta.confirm_info = kImageConfirm_Okay;
+        swap_meta.swap_type = kSwapType_Permanent;
+        api_update_swap_meta(&swap_meta);
+        return kStatus_Success;
+    }
+    else
+    {
+        return kStatus_InvalidArgument;
+    }
+}
+
+status_t update_image_state_user_api(uint32_t state, flash_driver_interface_t *flashIf)
+{
+    swap_meta_t swap_meta;
+    status_t status = load_swap_meta(&swap_meta);
+    if (status != kStatus_Success)
+    {
+        return status;
+    }
+
+    if (state == kSwapType_ReadyForTest)
+    {
+        image_header_t boot_header;
+        get_image_header(kPartition_Secondary, &boot_header);
+        if (boot_image_check(&boot_header, kPartition_Secondary) == kStatus_Success)
+        {
+            swap_meta.swap_type = kSwapType_ReadyForTest;
+            swap_meta.copy_status = 0;
+            swap_meta.swap_progress.swap_offset = 0;
+            swap_meta.swap_progress.swap_status = kSwapStage_NotStarted;
+            swap_meta.image_info[1].size = boot_header.image_size + boot_header.header_size;
+            swap_meta.confirm_info = 0;
+            status = app_api_update_swap_meta(&swap_meta, flashIf);
+            return status;
+        }
+        else
+        {
+            return kStatus_Fail;
+        }
+    }
+    else if (state == kSwapType_Permanent)
+    {
+        swap_meta.copy_status = 0;
+        swap_meta.swap_progress.swap_offset = 0;
+        swap_meta.swap_progress.swap_status = kSwapStage_NotStarted;
+        swap_meta.confirm_info = kImageConfirm_Okay;
+        swap_meta.swap_type = kSwapType_Permanent;
+        status = app_api_update_swap_meta(&swap_meta, flashIf);
+        return status;
+    }
+    else
+    {
+        return kStatus_InvalidArgument;
+    }
+}
+
+status_t get_image_state(uint32_t *state)
+{
+    swap_meta_t swap_meta;
+    status_t status = load_swap_meta(&swap_meta);
+    if (status != kStatus_Success)
+    {
+        return status;
+    }
+    *state = swap_meta.swap_type;
+
+    return status;
+}
+
+__USED const reliable_update_interface_t g_reliableUpdateAPI = {
+    .version = MAKE_VERSION(1, 1, 0),
+    .magic_num = 0x900dbeef,
+    .get_update_partition_info = get_update_partition_info,
+    .update_image_state = update_image_state,
+    .get_image_state = get_image_state,
+    .update_image_state_user_api = update_image_state_user_api,
+    .update_partition_table_user_api = update_partition_table_user_api,
+    .boot_image_check = boot_image_check,
+
+};
+#else
+__USED const uint32_t g_reliableUpdateAPI = 0;
+#endif //#if BL_FEATURE_RELIABLE_UPDATE
 
 ////////////////////////////////////////////////////////////////////////////////
 // EOF

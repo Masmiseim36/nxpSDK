@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2019 NXP
  * All rights reserved.
  *
  *
@@ -11,67 +11,49 @@
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "lpm.h"
-
-#include "fsl_gpio.h"
-
-#include "pin_mux.h"
 #include "fsl_gpt.h"
 #include "fsl_lpuart.h"
-#include "fsl_iomuxc.h"
+#include "specific.h"
+#include "peripherals.h"
 
-#if (HAS_SEMC_MODULE)
-#include "fsl_semc.h"
-#endif
-
-#include "fsl_gpio.h"
+#include "pin_mux.h"
 #include "clock_config.h"
-#include "fsl_dcdc.h"
-#if (HAS_SEMC_MODULE)
-#endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_SDRAM0_BASE_ADDRESS 0x80000000U
+#define CPU_NAME "iMXRT1015"
+
+#define APP_WAKEUP_BUTTON_GPIO BOARD_USER_BUTTON_GPIO
+#define APP_WAKEUP_BUTTON_GPIO_PIN BOARD_USER_BUTTON_GPIO_PIN
+#define APP_WAKEUP_BUTTON_IRQ BOARD_USER_BUTTON_IRQ
+#define APP_WAKEUP_BUTTON_IRQ_HANDLER BOARD_USER_BUTTON_IRQ_HANDLER
+#define APP_WAKEUP_BUTTON_NAME BOARD_USER_BUTTON_NAME
+
+#define APP_WAKEUP_GPT_BASE DEMO_GPT_PERIPHERAL
+#define APP_WAKEUP_GPT_IRQn GPT2_IRQn
+#define APP_WAKEUP_GPT_IRQn_HANDLER GPT2_IRQHandler
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-#if defined(__GNUC__)
-void Board_CopyToRam();
-#endif
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 static uint8_t s_wakeupTimeout;            /* Wakeup timeout. (Unit: Second) */
 static app_wakeup_source_t s_wakeupSource; /* Wakeup source.                 */
-
 static lpm_power_mode_t s_targetPowerMode;
 static lpm_power_mode_t s_curRunMode = LPM_PowerModeOverRun;
-
-static const char *s_modeNames[] = {"Over RUN",    "Full Run",       "Low Speed Run", "Low Power Run",
-                                    "System Idle", "Low Power Idle", "Suspend",       "SNVS"};
-
-int32_t is_suspend_reset = 0;
+static const char *s_modeNames[]     = {"Over RUN",    "Full Run",       "Low Speed Run", "Low Power Run",
+                                    "System Idle", "Low Power Idle", "Suspend",
+#if (HAS_WAKEUP_PIN)
+                                    "SNVS"
+#endif
+};
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void BOARD_SetLPClockGate(void)
-{
-    CCM->CCGR0 = CCM_CCGR0_CG0(1) | CCM_CCGR0_CG1(1) | CCM_CCGR0_CG3(3) | CCM_CCGR0_CG11(1) | CCM_CCGR0_CG12(1);
-    CCM->CCGR1 = CCM_CCGR1_CG9(3) | CCM_CCGR1_CG10(1) | CCM_CCGR1_CG13(1) | CCM_CCGR1_CG14(1) | CCM_CCGR1_CG15(1);
-    CCM->CCGR2 = CCM_CCGR2_CG2(1) | CCM_CCGR2_CG8(1) | CCM_CCGR2_CG9(1) | CCM_CCGR2_CG10(1);
-    CCM->CCGR3 = CCM_CCGR3_CG2(1) | CCM_CCGR3_CG4(1) | CCM_CCGR3_CG9(1) | CCM_CCGR3_CG14(1) | CCM_CCGR3_CG15(1);
-
-    CCM->CCGR4 =
-        CCM_CCGR4_CG1(1) | CCM_CCGR4_CG2(1) | CCM_CCGR4_CG4(1) | CCM_CCGR4_CG5(1) | CCM_CCGR4_CG6(1) | CCM_CCGR4_CG7(1);
-    CCM->CCGR5 = CCM_CCGR5_CG0(1) | CCM_CCGR5_CG1(1) | CCM_CCGR5_CG4(1) | CCM_CCGR5_CG6(1) | CCM_CCGR5_CG12(1) |
-                 CCM_CCGR5_CG14(1) | CCM_CCGR5_CG15(1);
-    /* We can enable DCDC when need to config it and close it after configuration */
-    CCM->CCGR6 = CCM_CCGR6_CG3(1) | CCM_CCGR6_CG4(1) | CCM_CCGR6_CG5(1) | CCM_CCGR6_CG9(1) | CCM_CCGR6_CG10(1) |
-                 CCM_CCGR6_CG11(1);
-}
 
 void APP_WAKEUP_GPT_IRQn_HANDLER(void)
 {
@@ -89,48 +71,6 @@ void APP_WAKEUP_BUTTON_IRQ_HANDLER(void)
         GPIO_ClearPinsInterruptFlags(APP_WAKEUP_BUTTON_GPIO, 1U << APP_WAKEUP_BUTTON_GPIO_PIN);
         LPM_DisableWakeupSource(APP_WAKEUP_BUTTON_IRQ);
     }
-}
-
-void APP_PowerPreSwitchHook(lpm_power_mode_t targetMode)
-{
-    if (targetMode == LPM_PowerModeSuspend || targetMode == LPM_PowerModeSNVS)
-    {
-        /* Wait for debug console output finished. */
-        while (!(kLPUART_TransmissionCompleteFlag & LPUART_GetStatusFlags((LPUART_Type *)BOARD_DEBUG_UART_BASEADDR)))
-        {
-        }
-        DbgConsole_Deinit();
-
-        /*
-         * Set pin for current leakage.
-         * Debug console RX pin: Set to pinmux to GPIO input.
-         * Debug console TX pin: Don't need to change.
-         */
-        IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_13_GPIO1_IO13, 0);
-        IOMUXC_SetPinConfig(IOMUXC_GPIO_AD_B0_13_GPIO1_IO13, IOMUXC_SW_PAD_CTL_PAD_PKE_MASK |
-                                                                 IOMUXC_SW_PAD_CTL_PAD_PUS(2) |
-                                                                 IOMUXC_SW_PAD_CTL_PAD_PUE_MASK);
-    }
-}
-
-void APP_PowerPostSwitchHook(lpm_power_mode_t targetMode)
-{
-    if (targetMode == LPM_PowerModeSuspend)
-    {
-        /*
-         * Debug console RX pin is set to GPIO input, nee to re-configure pinmux.
-         * Debug console TX pin: Don't need to change.
-         */
-        IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_07_LPUART1_RX, 0);
-        IOMUXC_SetPinConfig(IOMUXC_GPIO_AD_B0_07_LPUART1_RX, IOMUXC_SW_PAD_CTL_PAD_SPEED(2));
-
-        BOARD_InitDebugConsole();
-    }
-}
-
-lpm_power_mode_t APP_GetLPMPowerMode(void)
-{
-    return s_targetPowerMode;
 }
 
 /*!
@@ -199,8 +139,16 @@ static app_wakeup_source_t APP_GetWakeupSource(lpm_power_mode_t targetMode)
 /* Get wakeup timeout and wakeup source. */
 static void APP_GetWakeupConfig(lpm_power_mode_t targetMode)
 {
-    /* Get wakeup source by user input. */
-    s_wakeupSource = APP_GetWakeupSource(targetMode);
+    if (targetMode == LPM_PowerModeSNVS)
+    {
+        /* In SNVS mode, only SNVS domain is powered, GPT could not work. */
+        s_wakeupSource = kAPP_WakeupSourcePin;
+    }
+    else
+    {
+        /* Get wakeup source by user input. */
+        s_wakeupSource = APP_GetWakeupSource(targetMode);
+    }
 
     if (kAPP_WakeupSourceGPT == s_wakeupSource)
     {
@@ -245,43 +193,21 @@ static void APP_SetWakeupConfig(lpm_power_mode_t targetMode)
         /* Enable GPC interrupt */
         LPM_EnableWakeupSource(APP_WAKEUP_BUTTON_IRQ);
     }
-    is_suspend_reset = 0;
 }
 
-static void APP_PrintRunFrequency(int32_t run_freq_only)
+lpm_power_mode_t APP_GetRunMode(void)
 {
-    PRINTF("\r\n");
-    PRINTF("***********************************************************\r\n");
-    PRINTF("CPU:             %d Hz\r\n", CLOCK_GetFreq(kCLOCK_CpuClk));
-    PRINTF("AHB:             %d Hz\r\n", CLOCK_GetFreq(kCLOCK_AhbClk));
-    PRINTF("SEMC:            %d Hz\r\n", CLOCK_GetFreq(kCLOCK_SemcClk));
-    PRINTF("IPG:             %d Hz\r\n", CLOCK_GetFreq(kCLOCK_IpgClk));
-    PRINTF("OSC:             %d Hz\r\n", CLOCK_GetFreq(kCLOCK_OscClk));
-    PRINTF("RTC:             %d Hz\r\n", CLOCK_GetFreq(kCLOCK_RtcClk));
-    if (!run_freq_only)
-    {
-        PRINTF("USB1PLL:         %d Hz\r\n", CLOCK_GetFreq(kCLOCK_Usb1PllClk));
-        PRINTF("USB1PLLPFD0:     %d Hz\r\n", CLOCK_GetFreq(kCLOCK_Usb1PllPfd0Clk));
-        PRINTF("USB1PLLPFD1:     %d Hz\r\n", CLOCK_GetFreq(kCLOCK_Usb1PllPfd1Clk));
-        PRINTF("USB1PLLPFD2:     %d Hz\r\n", CLOCK_GetFreq(kCLOCK_Usb1PllPfd2Clk));
-        PRINTF("USB1PLLPFD3:     %d Hz\r\n", CLOCK_GetFreq(kCLOCK_Usb1PllPfd3Clk));
-        PRINTF("SYSPLL:          %d Hz\r\n", CLOCK_GetFreq(kCLOCK_SysPllClk));
-        PRINTF("SYSPLLPFD0:      %d Hz\r\n", CLOCK_GetFreq(kCLOCK_SysPllPfd0Clk));
-        PRINTF("SYSPLLPFD1:      %d Hz\r\n", CLOCK_GetFreq(kCLOCK_SysPllPfd1Clk));
-        PRINTF("SYSPLLPFD2:      %d Hz\r\n", CLOCK_GetFreq(kCLOCK_SysPllPfd2Clk));
-        PRINTF("SYSPLLPFD3:      %d Hz\r\n", CLOCK_GetFreq(kCLOCK_SysPllPfd3Clk));
-        PRINTF("ENETPLL0:        %d Hz\r\n", CLOCK_GetFreq(kCLOCK_EnetPllClk));
-        PRINTF("ENETPLL1:        %d Hz\r\n", CLOCK_GetFreq(kCLOCK_EnetPll25MClk));
-        PRINTF("ENETPLL2:        %d Hz\r\n", CLOCK_GetFreq(kCLOCK_EnetPll500MClk));
-        PRINTF("AUDIOPLL:        %d Hz\r\n", CLOCK_GetFreq(kCLOCK_AudioPllClk));
-    }
-    PRINTF("***********************************************************\r\n");
-    PRINTF("\r\n");
+    return s_curRunMode;
+}
+
+void APP_SetRunMode(lpm_power_mode_t powerMode)
+{
+    s_curRunMode = powerMode;
 }
 
 static void APP_ShowPowerMode(lpm_power_mode_t powerMode)
 {
-    if (powerMode <= LPM_PowerModeEnd)
+    if (powerMode <= LPM_PowerModeRunEnd)
     {
         PRINTF("    Power mode: %s\r\n", s_modeNames[powerMode]);
         APP_PrintRunFrequency(1);
@@ -292,34 +218,168 @@ static void APP_ShowPowerMode(lpm_power_mode_t powerMode)
     }
 }
 
-/*!
- * @brief main switch.
+/*
+ * Check whether could switch to target power mode from current mode.
+ * Return true if could switch, return false if could not switch.
  */
-static void APP_PowerModeSwitch(void)
+bool APP_CheckPowerMode(lpm_power_mode_t originPowerMode, lpm_power_mode_t targetPowerMode)
+{
+    bool modeValid = true;
+
+    /* If current mode is Lowpower run mode, the target mode should not be system idle mode. */
+    if ((originPowerMode == LPM_PowerModeLowPowerRun) && (targetPowerMode == LPM_PowerModeSysIdle))
+    {
+        PRINTF("Low Power Run mode can't enter System Idle mode.\r\n");
+        modeValid = false;
+    }
+
+    /* Don't need to change power mode if current mode is already the target mode. */
+    if (originPowerMode == targetPowerMode)
+    {
+        PRINTF("Already in the target power mode.\r\n");
+        modeValid = false;
+    }
+
+    return modeValid;
+}
+
+void APP_PowerPreSwitchHook(lpm_power_mode_t targetMode)
+{
+    if (targetMode == LPM_PowerModeSNVS)
+    {
+        PRINTF("Now shutting down the system...\r\n");
+    }
+
+    if (targetMode > LPM_PowerModeRunEnd)
+    {
+        /* Wait for debug console output finished. */
+        while (!(kLPUART_TransmissionCompleteFlag & LPUART_GetStatusFlags((LPUART_Type *)BOARD_DEBUG_UART_BASEADDR)))
+        {
+        }
+        DbgConsole_Deinit();
+
+        /*
+         * Set pin for current leakage.
+         * Debug console RX pin: Set pinmux to GPIO input.
+         * Debug console TX pin: Don't need to change.
+         */
+        ConfigUartRxPinToGpio();
+    }
+}
+
+void APP_PowerPostSwitchHook(lpm_power_mode_t targetMode)
+{
+    if (targetMode > LPM_PowerModeRunEnd)
+    {
+        /*
+         * Debug console RX pin is set to GPIO input, need to re-configure pinmux.
+         * Debug console TX pin: Don't need to change.
+         */
+        ReConfigUartRxPin();
+        BOARD_InitDebugConsole();
+
+        /* recover to previous run mode */
+        switch (APP_GetRunMode())
+        {
+            case LPM_PowerModeOverRun:
+                LPM_OverDriveRun();
+                break;
+            case LPM_PowerModeFullRun:
+                LPM_FullSpeedRun();
+                break;
+            case LPM_PowerModeLowSpeedRun:
+                LPM_LowSpeedRun();
+                break;
+            case LPM_PowerModeLowPowerRun:
+                LPM_LowPowerRun();
+                break;
+            default:
+                break;
+        }
+    }
+    else
+    {
+        /* update current run mode */
+        APP_SetRunMode(targetMode);
+    }
+}
+
+void APP_PowerModeSwitch(lpm_power_mode_t targetPowerMode)
+{
+    switch (targetPowerMode)
+    {
+        case LPM_PowerModeOverRun:
+            LPM_OverDriveRun();
+            break;
+        case LPM_PowerModeFullRun:
+            LPM_FullSpeedRun();
+            break;
+        case LPM_PowerModeLowSpeedRun:
+            LPM_LowSpeedRun();
+            break;
+        case LPM_PowerModeLowPowerRun:
+            LPM_LowPowerRun();
+            break;
+        case LPM_PowerModeSysIdle:
+            LPM_PreEnterWaitMode();
+            LPM_EnterSystemIdle();
+            LPM_ExitSystemIdle();
+            LPM_PostExitWaitMode();
+            break;
+        case LPM_PowerModeLPIdle:
+            LPM_PreEnterWaitMode();
+            LPM_EnterLowPowerIdle();
+            LPM_ExitLowPowerIdle();
+            LPM_PostExitWaitMode();
+            break;
+        case LPM_PowerModeSuspend:
+            LPM_PreEnterStopMode();
+            LPM_EnterSuspend();
+            LPM_PostExitStopMode();
+            break;
+#if (HAS_WAKEUP_PIN)
+        case LPM_PowerModeSNVS:
+            LPM_EnterSNVS();
+            break;
+#endif
+        default:
+            assert(false);
+            break;
+    }
+}
+
+/*!
+ * @brief main demo function.
+ */
+int main(void)
 {
     uint8_t ch;
     uint32_t freq;
-    gpt_config_t gptConfig;
-    /* Define the init structure for the input switch pin */
-    gpio_pin_config_t swConfig = {
-        kGPIO_DigitalInput,
-        0,
-        kGPIO_IntRisingEdge,
-    };
+    bool needSetWakeup; /* Need to set wakeup. */
 
-    /* Init GPT for wakeup */
-    GPT_GetDefaultConfig(&gptConfig);
-    gptConfig.clockSource = kGPT_ClockSource_LowFreq; /* 32K RTC OSC */
-    // gptConfig.enableMode = false;                     /* Keep counter when stop */
-    gptConfig.enableMode      = true; /* Don't keep counter when stop */
-    gptConfig.enableRunInDoze = true;
-    /* Initialize GPT module */
-    GPT_Init(APP_WAKEUP_GPT_BASE, &gptConfig);
-    GPT_SetClockDivider(APP_WAKEUP_GPT_BASE, 1);
+    /* Init board hardware. */
+    BOARD_ConfigMPU();
+    BOARD_InitPins();
+    BOARD_InitBootClocks();
 
-    /* Init input switch GPIO. */
-    GPIO_PinInit(APP_WAKEUP_BUTTON_GPIO, APP_WAKEUP_BUTTON_GPIO_PIN, &swConfig);
-    GPIO_EnableInterrupts(APP_WAKEUP_BUTTON_GPIO, 1U << APP_WAKEUP_BUTTON_GPIO_PIN);
+    /* Configure UART divider to default */
+    CLOCK_SetMux(kCLOCK_UartMux, 1); /* Set UART source to OSC 24M */
+    CLOCK_SetDiv(kCLOCK_UartDiv, 0); /* Set UART divider to 1 */
+
+    BOARD_InitDebugConsole();
+    BOARD_InitBootPeripherals();
+
+    PRINTF("\r\nCPU wakeup source 0x%x...\r\n", SRC->SRSR);
+
+    PRINTF("\r\n***********************************************************\r\n");
+    PRINTF("\tPower Mode Switch Demo for %s\r\n", CPU_NAME);
+    PRINTF("***********************************************************\r\n");
+    APP_PrintRunFrequency(0);
+
+    LPM_Init();
+    /* Set power mode to over run after power on */
+    APP_SetRunMode(LPM_PowerModeOverRun);
+    LPM_OverDriveRun();
 
     while (1)
     {
@@ -331,32 +391,24 @@ static void APP_PowerModeSwitch(void)
         APP_ShowPowerMode(s_curRunMode);
 
         PRINTF("\r\nSelect the desired operation \n\r\n");
-        PRINTF("Press  %c for enter: Over RUN       - System Over Run mode (500MHz)\r\n",
+        PRINTF("Press  %c for enter: Over RUN       - System Over Run mode\r\n",
                (uint8_t)'A' + (uint8_t)LPM_PowerModeOverRun);
-        PRINTF("Press  %c for enter: Full RUN       - System Full Run mode (396MHz)\r\n",
+        PRINTF("Press  %c for enter: Full RUN       - System Full Run mode\r\n",
                (uint8_t)'A' + (uint8_t)LPM_PowerModeFullRun);
-        PRINTF("Press  %c for enter: Low Speed RUN  - System Low Speed Run mode (132MHz)\r\n",
+        PRINTF("Press  %c for enter: Low Speed RUN  - System Low Speed Run mode\r\n",
                (uint8_t)'A' + (uint8_t)LPM_PowerModeLowSpeedRun);
-        PRINTF("Press  %c for enter: Low Power RUN  - System Low Power Run mode (24MHz)\r\n",
+        PRINTF("Press  %c for enter: Low Power RUN  - System Low Power Run mode\r\n",
                (uint8_t)'A' + (uint8_t)LPM_PowerModeLowPowerRun);
         PRINTF("Press  %c for enter: System Idle    - System Wait mode\r\n",
                (uint8_t)'A' + (uint8_t)LPM_PowerModeSysIdle);
         PRINTF("Press  %c for enter: Low Power Idle - Low Power Idle mode\r\n",
                (uint8_t)'A' + (uint8_t)LPM_PowerModeLPIdle);
         PRINTF("Press  %c for enter: Suspend        - Suspend mode\r\n", (uint8_t)'A' + (uint8_t)LPM_PowerModeSuspend);
-
 #if (HAS_WAKEUP_PIN)
         PRINTF("Press  %c for enter: SNVS           - Shutdown the system\r\n",
                (uint8_t)'A' + (uint8_t)LPM_PowerModeSNVS);
 #endif
-
-        PRINTF("\r\nWaiting for power mode select..\r\n\r\n");
-
-        if (s_targetPowerMode == LPM_PowerModeLowPowerRun)
-        {
-            LPM_RestoreLowPowerRunPLLs();
-            PRINTF("\r\n ***** Enter low power run *****\r\n\r\n");
-        }
+        PRINTF("\r\nWaiting for power mode select...\r\n\r\n");
 
         /* Wait for user response */
         ch = GETCHAR();
@@ -368,146 +420,34 @@ static void APP_PowerModeSwitch(void)
 
         s_targetPowerMode = (lpm_power_mode_t)(ch - 'A');
 
-        if (s_targetPowerMode <= LPM_PowerModeSNVS)
+        if (s_targetPowerMode <= LPM_PowerModeEnd)
         {
-            if (!LPM_SetPowerMode(s_targetPowerMode))
+            /* If could not set the target power mode, loop continue. */
+            if (!APP_CheckPowerMode(s_curRunMode, s_targetPowerMode))
             {
-                PRINTF("Do not allow to enter mode %s\r\n", s_modeNames[s_targetPowerMode]);
+                continue;
+            }
+
+            /* If target mode is run mode, don't need to set wakeup source. */
+            if (s_targetPowerMode <= LPM_PowerModeLowPowerRun)
+            {
+                needSetWakeup = false;
             }
             else
             {
-                if (s_targetPowerMode <= LPM_PowerModeRunEnd)
-                {
-                    switch (s_targetPowerMode)
-                    {
-                        case LPM_PowerModeOverRun:
-                            LPM_SystemOverRun();
-                            break;
-                        case LPM_PowerModeFullRun:
-                            LPM_SystemFullRun();
-                            break;
-                        case LPM_PowerModeLowSpeedRun:
-                            LPM_SystemLowSpeedRun();
-                            break;
-                        case LPM_PowerModeLowPowerRun:
-                            LPM_SystemLowPowerRun();
-                            break;
-                        default:
-                            break;
-                    }
-                    s_curRunMode = s_targetPowerMode;
-                    continue;
-                }
-#if (HAS_WAKEUP_PIN)
-                else if (LPM_PowerModeSNVS == s_targetPowerMode)
-                {
-                    PRINTF("Now shutting down the system...\r\n");
-                    APP_PowerPreSwitchHook(s_targetPowerMode);
-                    CLOCK_EnableClock(kCLOCK_SnvsHp);
-                    SNVS->LPCR |= SNVS_LPCR_DP_EN_MASK;
-                    SNVS->LPCR |= SNVS_LPCR_TOP_MASK;
-                    while (1) /* Shutdown */
-                    {
-                    }
-                }
-#endif
-                else
-                {
-                    APP_GetWakeupConfig(s_targetPowerMode);
-                    APP_SetWakeupConfig(s_targetPowerMode);
-                    LPM_SetSleepPowerMode(s_targetPowerMode);
-                }
-                LPM_SetPowerMode(s_curRunMode);
-                s_targetPowerMode = s_curRunMode;
+                needSetWakeup = true;
             }
+
+            if (needSetWakeup)
+            {
+                APP_GetWakeupConfig(s_targetPowerMode);
+                APP_SetWakeupConfig(s_targetPowerMode);
+            }
+
+            APP_PowerPreSwitchHook(s_targetPowerMode);
+            APP_PowerModeSwitch(s_targetPowerMode);
+            APP_PowerPostSwitchHook(s_targetPowerMode);
         }
         PRINTF("\r\nNext loop\r\n");
-    }
-}
-
-/*!
- * @brief main demo function.
- */
-int main(void)
-{
-    if (PGC->CPU_SR & PGC_CPU_SR_PSR_MASK)
-    {
-        /* MPU config */
-        BOARD_ConfigMPU();
-
-        /* Boot ROM did initialize the XTAL, here we only sets external XTAL OSC freq */
-        CLOCK_SetXtalFreq(BOARD_XTAL0_CLK_HZ);
-        CLOCK_SetRtcXtalFreq(BOARD_XTAL32K_CLK_HZ);
-
-        /* Restore when wakeup from suspend reset */
-        LPM_SystemResumeDsm();
-
-        /* Recover handshaking */
-        IOMUXC_GPR->GPR4  = 0x00000000;
-        IOMUXC_GPR->GPR7  = 0x00000000;
-        IOMUXC_GPR->GPR8  = 0x00000000;
-        IOMUXC_GPR->GPR12 = 0x00000000;
-
-        CCM->CCR &= ~CCM_CCR_REG_BYPASS_COUNT_MASK;
-
-        /* Set the flag to mark system reeset from SUSPEND */
-        is_suspend_reset = 1;
-
-        EnableIRQ(APP_WAKEUP_BUTTON_IRQ);
-        EnableIRQ(APP_WAKEUP_GPT_IRQn);
-
-        APP_PowerPostSwitchHook(LPM_PowerModeSuspend);
-
-        PRINTF("\r\nWakeup from suspend reset!\r\n");
-        APP_PrintRunFrequency(0);
-
-        /* Recover to Over Run after suspend reset */
-        LPM_SystemOverRun();
-    }
-    else
-    {
-        /* Init board hardware. */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-
-    /* Configure UART divider to default */
-    CLOCK_SetMux(kCLOCK_UartMux, 1); /* Set UART source to OSC 24M */
-    CLOCK_SetDiv(kCLOCK_UartDiv, 0); /* Set UART divider to 1 */
-
-    /* Select OSC as PIT clock source */
-    CLOCK_SetMux(kCLOCK_PerclkMux, 1); /* Set PIT clock source to OSC 24M */
-    CLOCK_SetDiv(kCLOCK_PerclkDiv, 0); /* Set PIT clock divider to 1 */
-
-#ifndef XIP_EXTERNAL_FLASH
-    /* In low power, better to use core pll for flexspi
-       Use AXI clock for flexspi, AXI clock is from SEMC clock, 100MHz */
-    CLOCK_SetMux(kCLOCK_FlexspiMux, 0x0);
-    CLOCK_SetDiv(kCLOCK_FlexspiDiv, 0x0);
-
-    /* In low power, better to use core pll for semc */
-    CLOCK_SetMux(kCLOCK_SemcMux, 0x0); /* Use periph clock as semc clock source */
-    CLOCK_SetDiv(kCLOCK_SemcDiv, 0x4); /* Semc 100MHz */
-#endif
-
-    BOARD_InitDebugConsole();
-    }
-
-    PRINTF("\r\nCPU wakeup source 0x%x...\r\n", SRC->SRSR);
-
-    PRINTF("\r\n***********************************************************\r\n");
-    PRINTF("\tPower Mode Switch Demo for iMXRT10xx\r\n");
-    PRINTF("***********************************************************\r\n");
-    APP_PrintRunFrequency(0);
-
-    if (true != LPM_Init(s_curRunMode))
-    {
-        PRINTF("LPM Init Failed!\r\n");
-        return -1;
-    }
-
-    APP_PowerModeSwitch();
-    for (;;)
-    {
     }
 }

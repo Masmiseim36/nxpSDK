@@ -2,9 +2,10 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MIMXRT1052"/>
+    <definition extID="component.osa.MIMXRT1052"/>
+    <definition extID="device.MIMXRT1052_CMSIS.MIMXRT1052"/>
     <definition extID="middleware.baremetal.MIMXRT1052"/>
-    <definition extID="middleware.mcu-boot.CMSIS_cm7_headers.MIMXRT1052"/>
-    <definition extID="middleware.mcu-boot.MIMXRT1052_drivers.MIMXRT1052"/>
     <definition extID="middleware.mcu-boot.MIMXRT1052_sources.MIMXRT1052"/>
     <definition extID="middleware.mcu-boot.MIMXRT1052_startup.MIMXRT1052"/>
     <definition extID="middleware.mcu-boot.bootsources.MIMXRT1052"/>
@@ -17,15 +18,28 @@
     <definition extID="middleware.mcu-boot.drv_semc_nand.MIMXRT1052"/>
     <definition extID="middleware.mcu-boot.drv_semc_nor.MIMXRT1052"/>
     <definition extID="middleware.mcu-boot.drv_serial_nor_eeprom.MIMXRT1052"/>
+    <definition extID="middleware.mcu-boot.mem_flexspi_nor.MIMXRT1052"/>
+    <definition extID="middleware.mcu-boot.mem_sdmmc.MIMXRT1052"/>
+    <definition extID="middleware.mcu-boot.mem_semc_nand.MIMXRT1052"/>
+    <definition extID="middleware.mcu-boot.mem_semc_nor.MIMXRT1052"/>
+    <definition extID="middleware.mcu-boot.mem_spi_nand.MIMXRT1052"/>
+    <definition extID="middleware.mcu-boot.mem_spi_nor_eeprom.MIMXRT1052"/>
     <definition extID="middleware.mcu-boot.src_bm_usb.MIMXRT1052"/>
     <definition extID="middleware.mcu-boot.src_startup.MIMXRT1052"/>
+    <definition extID="middleware.usb.device.MIMXRT1052"/>
     <definition extID="middleware.usb.device_controller_ehci.MIMXRT1052"/>
     <definition extID="middleware.usb.phy.MIMXRT1052"/>
+    <definition extID="platform.Include_common.MIMXRT1052"/>
+    <definition extID="platform.Include_core_cm7.MIMXRT1052"/>
+    <definition extID="platform.Include_dsp.MIMXRT1052"/>
+    <definition extID="platform.drivers.clock.MIMXRT1052"/>
+    <definition extID="platform.drivers.common.MIMXRT1052"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
+    <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_flashloader" name="flashloader" category="bootloader_examples" dependency="middleware.mcu-boot.MIMXRT1052_startup.MIMXRT1052 middleware.mcu-boot.src_bm_usb.MIMXRT1052 middleware.mcu-boot.bootsources.MIMXRT1052 middleware.mcu-boot.bootsources_imxrt.MIMXRT1052 middleware.mcu-boot.MIMXRT1052_drivers.MIMXRT1052 middleware.mcu-boot.MIMXRT1052_sources.MIMXRT1052 middleware.usb.device_controller_ehci.MIMXRT1052 middleware.mcu-boot.CMSIS_cm7_headers.MIMXRT1052 middleware.mcu-boot.src_startup.MIMXRT1052 middleware.mcu-boot.drv_microseconds_pit.MIMXRT1052 middleware.mcu-boot.drv_flexspi_nor.MIMXRT1052 middleware.mcu-boot.drv_flexspi_nand.MIMXRT1052 middleware.mcu-boot.drv_semc_nor.MIMXRT1052 middleware.mcu-boot.drv_semc_nand.MIMXRT1052 middleware.mcu-boot.drv_sdmmc.MIMXRT1052 middleware.mcu-boot.drv_serial_nor_eeprom.MIMXRT1052 middleware.mcu-boot.drv_ocotp.MIMXRT1052 middleware.usb.phy.MIMXRT1052 middleware.baremetal.MIMXRT1052">
+  <example id="evkbimxrt1050_flashloader" name="flashloader" category="bootloader_examples" dependency="device.MIMXRT1052_CMSIS.MIMXRT1052 platform.drivers.clock.MIMXRT1052 middleware.mcu-boot.MIMXRT1052_startup.MIMXRT1052 middleware.mcu-boot.src_bm_usb.MIMXRT1052 middleware.mcu-boot.bootsources.MIMXRT1052 middleware.mcu-boot.bootsources_imxrt.MIMXRT1052 middleware.mcu-boot.MIMXRT1052_sources.MIMXRT1052 middleware.usb.device_controller_ehci.MIMXRT1052 middleware.usb.device.MIMXRT1052 middleware.mcu-boot.src_startup.MIMXRT1052 middleware.mcu-boot.drv_microseconds_pit.MIMXRT1052 middleware.mcu-boot.mem_flexspi_nor.MIMXRT1052 middleware.mcu-boot.drv_flexspi_nand.MIMXRT1052 middleware.mcu-boot.mem_spi_nand.MIMXRT1052 middleware.mcu-boot.mem_spi_nor_eeprom.MIMXRT1052 middleware.mcu-boot.mem_semc_nor.MIMXRT1052 middleware.mcu-boot.mem_semc_nand.MIMXRT1052 middleware.mcu-boot.mem_sdmmc.MIMXRT1052 middleware.mcu-boot.drv_ocotp.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_dsp.MIMXRT1052 platform.drivers.common.MIMXRT1052 middleware.usb.phy.MIMXRT1052 component.osa.MIMXRT1052 component.lists.MIMXRT1052 middleware.mcu-boot.drv_flexspi_nor.MIMXRT1052 middleware.mcu-boot.drv_serial_nor_eeprom.MIMXRT1052 middleware.mcu-boot.drv_semc_nor.MIMXRT1052 middleware.mcu-boot.drv_semc_nand.MIMXRT1052 middleware.mcu-boot.drv_sdmmc.MIMXRT1052 middleware.baremetal.MIMXRT1052">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -53,9 +67,9 @@
           <value>gnu.c.optimization.level.size</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
-          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
           <value>CPU_MIMXRT1052DVL6B</value>
           <value>CPU_IS_ARM_CORTEX_M7=1</value>
+          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
           <value>BL_TARGET_RAM</value>
           <value>MIMXRT1052</value>
           <value>USB_STACK_BM</value>
@@ -101,6 +115,9 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <source path="boards/evkbimxrt1050/bootloader_examples/flashloader/armgcc" target_path="middleware/mcu-boot" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT1052_ram_flashloader.ld"/>
+    </source>
     <source path="boards/evkbimxrt1050/bootloader_examples/flashloader/iar" target_path="middleware/mcu-boot" type="linker" toolchain="iar">
       <files mask="MIMXRT1052_ram_flashloader.icf"/>
     </source>

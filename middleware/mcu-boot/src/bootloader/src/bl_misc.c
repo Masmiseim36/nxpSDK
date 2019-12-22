@@ -82,15 +82,7 @@ static status_t get_otfad_key(otfad_kek_t *kek);
 bool qspi_need_configure(void)
 {
 #if BL_FEATURE_QSPI_MODULE
-#if defined(BL_TARGET_ROM)
-    // Get BOOTSRC_SEL from FOPT
-    uint8_t fopt = FTFx_FOPT;
-    uint8_t bootSrc = (uint8_t)((fopt & FTFx_FOPT_BOOTSRCSEL_MASK) >> FTFx_FOPT_BOOTSRCSEL_SHIFT);
-
-    return (bootSrc == kBootSource_QSPI);
-#else
     return true;
-#endif //#if defined(BL_TARGET_ROM)
 #else
     return false;
 #endif

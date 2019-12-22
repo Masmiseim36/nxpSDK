@@ -886,7 +886,7 @@ usb_status_t USB_HostMsdInit(usb_device_handle deviceHandle, usb_host_class_hand
 {
     uint32_t infoValue;
     usb_status_t status;
-    usb_host_msd_instance_t *msdInstance = (usb_host_msd_instance_t *)USB_OsaMemoryAllocate(
+    usb_host_msd_instance_t *msdInstance = (usb_host_msd_instance_t *)OSA_MemoryAllocate(
         sizeof(usb_host_msd_instance_t)); /* malloc msd class instance */
 
     if (msdInstance == NULL)
@@ -1049,7 +1049,7 @@ usb_status_t USB_HostMsdDeinit(usb_device_handle deviceHandle, usb_host_class_ha
         }
         USB_HostCloseDeviceInterface(deviceHandle,
                                      msdInstance->interfaceHandle); /* notify host driver the interface is closed */
-        USB_OsaMemoryFree(msdInstance);
+        OSA_MemoryFree(msdInstance);
     }
     else
     {

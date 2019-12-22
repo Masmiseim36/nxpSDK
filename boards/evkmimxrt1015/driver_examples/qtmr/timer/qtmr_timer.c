@@ -103,7 +103,7 @@ int main(void)
 
     for (i = 0; i < 10; i++)
     {
-        /* Check whether occur interupt */
+        /* Check whether compare interrupt occurs */
         while (!(qtmrIsrFlag))
         {
         }
@@ -141,14 +141,60 @@ int main(void)
 
     for (i = 0; i < 5; i++)
     {
-        /* Check whether occur interupt */
+        /* Check whether compare interrupt occurs*/
         while (!(qtmrIsrFlag))
         {
         }
         PRINTF("\r\n Timer interrupt has occurred !");
         qtmrIsrFlag = false;
     }
+
+    QTMR_Deinit(BOARD_QTMR_BASEADDR, BOARD_FIRST_QTMR_CHANNEL);
+    QTMR_Deinit(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL);
+
+    /* ERRATA050194: Overflow flag and related interrupt cannot be generated successfully in upward count mode.
+     * Workaround: using compare interrupt instead of overflow interrupt by setting compare value to 0xFFFF.
+     * The compare interrupt has the same timing effect as overflow interrupt in this way.
+     */
+    PRINTF("\r\n****Timer use-case, about 65.5s Over flow Test.****\n");
+
+    /* Init the first channel to use the IP Bus clock div by 128 */
+    qtmrConfig.primarySource = kQTMR_ClockDivide_128;
+    QTMR_Init(BOARD_QTMR_BASEADDR, BOARD_FIRST_QTMR_CHANNEL, &qtmrConfig);
+
+    /* Init the second channel to use output of the first channel as we are chaining the first channel and the second
+     * channel */
+    qtmrConfig.primarySource = QTMR_ClockCounterOutput;
+    QTMR_Init(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL, &qtmrConfig);
+
+    /* Set the first channel period to be 1 millisecond */
+    QTMR_SetTimerPeriod(BOARD_QTMR_BASEADDR, BOARD_FIRST_QTMR_CHANNEL, MSEC_TO_COUNT(1U, (QTMR_SOURCE_CLOCK / 128)));
+
+    /* Set the second channel count which increases every millisecond, set compare event for 65.5 second */
+    QTMR_SetTimerPeriod(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL, 0xFFFF);
+
+    /* Enable timer compare interrupt */
+    QTMR_EnableInterrupts(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL, kQTMR_CompareInterruptEnable);
+
+    /* Start the second channel in cascase mode, chained to the first channel as set earlier via the primary source
+     * selection */
+    QTMR_StartTimer(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL, kQTMR_CascadeCount);
+
+    /* Start the second channel to count on rising edge of the primary source clock */
+    QTMR_StartTimer(BOARD_QTMR_BASEADDR, BOARD_FIRST_QTMR_CHANNEL, kQTMR_PriSrcRiseEdge);
+
+    /* Check whether compare(overflow) interrupt occurs*/
+    while (!(qtmrIsrFlag))
+    {
+    }
+    PRINTF("\r\n Timer Overflow has occurred !");
+    qtmrIsrFlag = false;
+
+    QTMR_Deinit(BOARD_QTMR_BASEADDR, BOARD_FIRST_QTMR_CHANNEL);
+    QTMR_Deinit(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL);
+
     PRINTF("\r\n*********QUADTIMER EXAMPLE END.*********");
+
     while (1)
     {
     }

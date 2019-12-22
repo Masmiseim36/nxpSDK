@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,7 +8,6 @@
 #ifndef __FSL_LPUART_RTOS_H__
 #define __FSL_LPUART_RTOS_H__
 
-#include "FreeRTOSConfig.h"
 #include "fsl_lpuart.h"
 #include <FreeRTOS.h>
 #include <event_groups.h>
@@ -25,8 +24,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief LPUART freertos driver version 2.2.6. */
-#define FSL_LPUART_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 2, 6))
+/*! @brief LPUART FreeRTOS driver version 2.2.8. */
+#define FSL_LPUART_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 2, 8))
 /*@}*/
 
 /*! @brief LPUART RTOS configuration structure. */
@@ -39,6 +38,12 @@ typedef struct _lpuart_rtos_config
     lpuart_stop_bit_count_t stopbits; /*!< Number of stop bits to use */
     uint8_t *buffer;                  /*!< Buffer for background reception */
     uint32_t buffer_size;             /*!< Size of buffer for background reception */
+#if defined(FSL_FEATURE_LPUART_HAS_MODEM_SUPPORT) && FSL_FEATURE_LPUART_HAS_MODEM_SUPPORT
+    bool enableRxRTS;                         /*!< RX RTS enable */
+    bool enableTxCTS;                         /*!< TX CTS enable */
+    lpuart_transmit_cts_source_t txCtsSource; /*!< TX CTS source */
+    lpuart_transmit_cts_config_t txCtsConfig; /*!< TX CTS configure */
+#endif
 } lpuart_rtos_config_t;
 
 /*!

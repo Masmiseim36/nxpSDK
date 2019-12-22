@@ -206,6 +206,9 @@ void FMSTR_SetCanRespID(FMSTR_U32 canID)
 static void _FMSTR_Listen(void)
 {
     /* disable transmitter state machine */
+#if FMSTR_LONG_INTR || FMSTR_SHORT_INTR
+    FMSTR_CAN_DRV.EnableTxInterrupt(FMSTR_FALSE);
+#endif
     fmstr_wFlags.flg.bTxActive = 0U;
 
     /* wait for first frame */
@@ -591,18 +594,25 @@ void FMSTR_ProcessCanRx(void)
     FMSTR_SIZE8 len = FMSTR_CAN_DRV.GetRxFrameLen();
     if(len > 0)
     {
-        /* process the CAN frame */
+#if FMSTR_LONG_INTR || FMSTR_SHORT_INTR
+        /* In interrupt mode, we need to disable interrupt when frame was not handled. 
+         * This prevents servicing the interrupt again endlessly. */
+        FMSTR_BOOL processed = _FMSTR_RxCan(len);
+        FMSTR_CAN_DRV.EnableRxInterrupt(processed);
+#else
+        /* In polled mode, we just keep trying to process the frame. */
         _FMSTR_RxCan(len);
-
+#endif
+            
 #if FMSTR_LONG_INTR
-        /* handle completed frame now? (may be we're in the interrupt now). Otherwise wait to Poll */
+        /* Handle completed frame now? (may be we're in the interrupt now). Otherwise wait to Poll */
         if(fmstr_wFlags.flg.bRxFrameReady)
             _FMSTR_RxDone();
 #endif
     }
 #if FMSTR_DEBUG_TX
-    /* time to send another test frame? */
-    else if(fmstr_bDebugTx && fmstr_nDebugTxPollCount == 0)
+    /* Time to send another test frame? */
+    else if(fmstr_doDebugTx && fmstr_nDebugTxPollCount == 0)
     {
         /* yes, start sending it now */
         if(FMSTR_SendTestFrame(fmstr_pCommBuffer))
@@ -624,7 +634,7 @@ void FMSTR_ProcessCanRx(void)
 
 void FMSTR_ProcessCanTx(void)
 {
-    /* any TX buffer available? */
+    /* Any TX buffer available? */
     if(fmstr_wFlags.flg.bTxActive && FMSTR_CAN_DRV.PrepareTxFrame())
     {
 #if FMSTR_SHORT_INTR || FMSTR_LONG_INTR

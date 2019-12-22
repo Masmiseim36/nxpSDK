@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -85,14 +85,6 @@ void WDOG_EWM_IRQHandler(void)
 #endif
 }
 
-void delay(void)
-{
-    for (uint32_t i = 0; i < 0x7fffffU; i++)
-    {
-        __NOP();
-    }
-}
-
 /*!
  * @brief Main function
  */
@@ -129,6 +121,7 @@ int main(void)
     {
         /* Restart counter*/
         EWM_Refresh(base);
+
         /* Check for SW button push*/
         if (is_key_pressed())
         {
@@ -137,14 +130,16 @@ int main(void)
             {
             }
             PRINTF("\r\n EWM interrupt is occurred");
+            PRINTF("\r\n Press %s to expire EWM again", SW_NAME);
 
+            /*Wait for the key to release*/
+            while (is_key_pressed())
+            {
+            }
             /* Clear interrupt flag*/
             ewmIsrFlag = false;
-            PRINTF("\r\n Press %s to expire EWM again", SW_NAME);
             /*Restart counter and enable interrupt for next run*/
             EWM_Refresh(base);
-            /* Delay for a while in order to press button, interrrupt occurred only once*/
-            delay();
             /*Enable EWM interrupt*/
             EWM_EnableInterrupts(base, kEWM_InterruptEnable);
         }

@@ -138,6 +138,8 @@ DSTATUS sd_disk_initialize(uint8_t physicalDrive)
     {
         /* reset host */
         SD_HostReset(&(g_sd.host));
+        SD_PowerOffCard(g_sd.host.base, g_sd.usrParam.pwr);
+        SD_PowerOnCard(g_sd.host.base, g_sd.usrParam.pwr);
     }
     else
     {

@@ -1645,7 +1645,7 @@
     </debuggerPlugins>
   </configuration>
   <configuration>
-    <name>flexspi_nor_debug</name>
+    <name>flexspi_nor_sdram_debug</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -6574,7 +6574,7 @@
     </debuggerPlugins>
   </configuration>
   <configuration>
-    <name>flexspi_nor_release</name>
+    <name>flexspi_nor_sdram_release</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>

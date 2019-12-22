@@ -3,7 +3,7 @@
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -11,6 +11,7 @@
 #define _FSL_SD_DISK_H_
 
 #include <stdint.h>
+#include "ff.h"
 #include "diskio.h"
 #include "fsl_sd.h"
 

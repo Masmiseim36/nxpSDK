@@ -1,0 +1,7 @@
+/*!
+@page middleware_log Middleware Change Log
+
+@section crank Crank Storyboard Software
+  The currently supported version is 6.0
+
+*/

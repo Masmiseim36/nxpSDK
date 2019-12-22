@@ -18,7 +18,7 @@
     FRAC16(2.0 / 100.0) /* align current PI controller's low output limit - in percentage / 100 */
 #define M1_CURRENT_CONTROLLER_ALIGN_LIM_HIGH \
     FRAC16(90.0 / 100.0) /* align current PI controller's high output limit - in percentage / 100 */
-
+      
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -1193,9 +1193,14 @@ void M1_FaultDetection(void)
     MC_FAULT_CLEAR_ALL(g_sM1Drive.sFaultIdPending);
 
     /* Fault:   DC-bus over-current */
+#if (defined(HVP_BOARD))
+    if(MC_MCDRV_PWM3PH_FLT_GET(&g_sM1Pwm3ph))
+        MC_FAULT_SET(g_sM1Drive.sFaultIdPending, MC_FAULT_I_DCBUS_OVER);
+#else
     if (g_sM1Drive.sCtrlBLDC.f16IDcBus > g_sM1Drive.sFaultThresholds.f16IDcBusOver)
         MC_FAULT_SET(g_sM1Drive.sFaultIdPending, MC_FAULT_I_DCBUS_OVER);
-
+#endif
+    
     /* Fault:   DC-bus over-voltage */
     if (g_sM1Drive.sCtrlBLDC.f16UDcBus > g_sM1Drive.sFaultThresholds.f16UDcBusOver)
         MC_FAULT_SET(g_sM1Drive.sFaultIdPending, MC_FAULT_U_DCBUS_OVER);

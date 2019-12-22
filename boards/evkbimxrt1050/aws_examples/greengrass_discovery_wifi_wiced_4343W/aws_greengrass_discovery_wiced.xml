@@ -8,33 +8,39 @@
     <definition extID="component.serial_manager_uart.MIMXRT1052"/>
     <definition extID="device.MIMXRT1052_CMSIS.MIMXRT1052"/>
     <definition extID="device.MIMXRT1052_startup.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.bufferpool.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.crypto.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.demos.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.greengrass.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.mflash.rt1050.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.mqtt.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.pkcs11.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.secure_sockets.lwip.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.shadow.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.tls.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.utils.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.wifi_wiced.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos.freertos.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos.freertos.heap_4.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos.third_party.jsmn.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos.third_party.pkcs11.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.demos.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.demos_greengrass_discovery.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.platform.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.wifi.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.aws.greengrass.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.mflash.rt1050.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.wifi.wiced.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos-kernel.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos-kernel.extension.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos-kernel.heap_4.MIMXRT1052"/>
+    <definition extID="middleware.lwip.MIMXRT1052"/>
     <definition extID="middleware.mbedtls.MIMXRT1052"/>
     <definition extID="middleware.sdmmc.common.MIMXRT1052"/>
     <definition extID="middleware.sdmmc.sdio.MIMXRT1052"/>
     <definition extID="middleware.sdmmc.usdhcadaptor.freertos.MIMXRT1052"/>
-    <definition extID="middleware.tcpip.lwip.MIMXRT1052"/>
     <definition extID="middleware.wifi_wiced.4343W.MIMXRT1052"/>
     <definition extID="middleware.wifi_wiced.MURATA_TYPE1DX.MIMXRT1052"/>
     <definition extID="middleware.wifi_wiced.common.MIMXRT1052"/>
     <definition extID="platform.Include_common.MIMXRT1052"/>
     <definition extID="platform.Include_core_cm7.MIMXRT1052"/>
+    <definition extID="platform.Include_dsp.MIMXRT1052"/>
     <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1052"/>
     <definition extID="platform.drivers.clock.MIMXRT1052"/>
     <definition extID="platform.drivers.common.MIMXRT1052"/>
@@ -46,8 +52,10 @@
     <definition extID="platform.drivers.trng.MIMXRT1052"/>
     <definition extID="platform.drivers.usdhc.MIMXRT1052"/>
     <definition extID="platform.drivers.xip_board.MIMXRT1052"/>
+    <definition extID="platform.drivers.xip_board_dcd.MIMXRT1052"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1052"/>
     <definition extID="platform.utilities.assert.MIMXRT1052"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1052"/>
     <definition extID="utility.debug_console.MIMXRT1052"/>
     <definition extID="iar"/>
     <definition extID="armgcc"/>
@@ -56,7 +64,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_aws_greengrass_discovery_wiced" name="aws_greengrass_discovery_wiced" category="aws_examples" dependency="platform.drivers.trng.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 platform.drivers.flexspi.MIMXRT1052 middleware.amazon_freertos.aws_iot.mflash.rt1050.MIMXRT1052 middleware.amazon_freertos.aws_iot.greengrass.MIMXRT1052 middleware.amazon_freertos.aws_iot.wifi_wiced.MIMXRT1052 middleware.amazon_freertos.aws_iot.secure_sockets.lwip.MIMXRT1052 middleware.amazon_freertos.aws_iot.demos.MIMXRT1052 middleware.wifi_wiced.MURATA_TYPE1DX.MIMXRT1052 middleware.tcpip.lwip.MIMXRT1052 middleware.sdmmc.sdio.MIMXRT1052 middleware.sdmmc.usdhcadaptor.freertos.MIMXRT1052 platform.drivers.usdhc.MIMXRT1052 middleware.amazon_freertos.freertos.MIMXRT1052 middleware.amazon_freertos.freertos.heap_4.MIMXRT1052 middleware.amazon_freertos.aws_iot.MIMXRT1052 middleware.amazon_freertos.aws_iot.bufferpool.MIMXRT1052 middleware.amazon_freertos.aws_iot.crypto.MIMXRT1052 middleware.amazon_freertos.aws_iot.mqtt.MIMXRT1052 middleware.amazon_freertos.aws_iot.pkcs11.MIMXRT1052 middleware.amazon_freertos.aws_iot.shadow.MIMXRT1052 middleware.amazon_freertos.aws_iot.tls.MIMXRT1052 middleware.amazon_freertos.aws_iot.utils.MIMXRT1052 middleware.amazon_freertos.third_party.jsmn.MIMXRT1052 middleware.amazon_freertos.third_party.pkcs11.MIMXRT1052 middleware.mbedtls.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 component.lists.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 middleware.wifi_wiced.4343W.MIMXRT1052 middleware.wifi_wiced.common.MIMXRT1052 middleware.sdmmc.common.MIMXRT1052">
+  <example id="evkbimxrt1050_aws_greengrass_discovery_wiced" name="aws_greengrass_discovery_wiced" category="aws_examples" dependency="platform.drivers.trng.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 platform.drivers.flexspi.MIMXRT1052 middleware.amazon_freertos-aws_iot.vendor.nxp.mflash.rt1050.MIMXRT1052 middleware.amazon_freertos-aws_iot.vendor.nxp.wifi.wiced.MIMXRT1052 middleware.amazon_freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1052 middleware.amazon_freertos-aws_iot.demos.MIMXRT1052 middleware.amazon_freertos-aws_iot.demos_greengrass_discovery.MIMXRT1052 middleware.amazon_freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.aws.greengrass.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.abstractions.wifi.MIMXRT1052 middleware.lwip.MIMXRT1052 middleware.wifi_wiced.MURATA_TYPE1DX.MIMXRT1052 middleware.sdmmc.sdio.MIMXRT1052 middleware.sdmmc.usdhcadaptor.freertos.MIMXRT1052 platform.drivers.usdhc.MIMXRT1052 middleware.amazon_freertos-kernel.MIMXRT1052 middleware.amazon_freertos-kernel.heap_4.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.abstractions.platform.MIMXRT1052 middleware.amazon_freertos-aws_iot.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1052 middleware.amazon_freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT1052 middleware.mbedtls.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.lists.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 platform.drivers.xip_board_dcd.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_dsp.MIMXRT1052 middleware.wifi_wiced.4343W.MIMXRT1052 middleware.wifi_wiced.common.MIMXRT1052 middleware.amazon_freertos-kernel.extension.MIMXRT1052 middleware.sdmmc.common.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -65,7 +73,8 @@
       <memoryBlock addr="20000000" size="00020000" access="RW" type="RAM" id="SRAM_DTC_evkbimxrt1050" name="SRAM_DTC"/>
       <memoryBlock addr="00000000" size="00020000" access="RW" type="RAM" id="SRAM_ITC_evkbimxrt1050" name="SRAM_ITC"/>
       <memoryBlock addr="20200000" size="00040000" access="RW" type="RAM" id="SRAM_OC_evkbimxrt1050" name="SRAM_OC"/>
-      <memoryBlock addr="80000000" size="02000000" access="RW" type="RAM" id="BOARD_SDRAM_evkbimxrt1050" name="BOARD_SDRAM"/>
+      <memoryBlock addr="80000000" size="01E00000" access="RW" type="RAM" id="BOARD_SDRAM_evkbimxrt1050" name="BOARD_SDRAM"/>
+      <memoryBlock addr="81E00000" size="00200000" access="RW" type="RAM" id="NCACHE_REGION_evkbimxrt1050" name="NCACHE_REGION"/>
     </memory>
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
@@ -83,12 +92,14 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
-          <value>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</value>
+          <value>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=0</value>
           <value>HIGH_SPEED_SDIO_CLOCK</value>
           <value>USE_RTOS=1</value>
           <value>MBEDTLS_CONFIG_FILE='"aws_mbedtls_config.h"'</value>
           <value>FSL_RTOS_FREE_RTOS</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>WIFI_WICED</value>
+          <value>SDK_DEBUGCONSOLE_UART</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -123,6 +134,9 @@
       </debug_configuration>
     </debug_configurations>
     <include_paths>
+      <include_path path="amazon-freertos/libraries/abstractions/platform/freertos/include"/>
+      <include_path path="amazon-freertos/libraries/abstractions/platform/include"/>
+      <include_path path="amazon-freertos/libraries/c_sdk/standard/mqtt/src"/>
       <include_path path="lwip/port"/>
       <include_path path="lwip/src"/>
       <include_path path="lwip/src/include"/>
@@ -134,14 +148,19 @@
       <files mask="aws_bufferpool_config.h"/>
       <files mask="aws_demo_config.h"/>
       <files mask="aws_ggd_config.h"/>
-      <files mask="aws_mqtt_agent_config.h"/>
+      <files mask="aws_iot_network_config.h"/>
       <files mask="aws_mqtt_config.h"/>
-      <files mask="aws_pkcs11_config.h"/>
       <files mask="aws_secure_sockets_config.h"/>
       <files mask="aws_shadow_config.h"/>
       <files mask="aws_wifi_config.h"/>
+      <files mask="iot_config.h"/>
+      <files mask="iot_mqtt_agent_config.h"/>
+      <files mask="iot_pkcs11_config.h"/>
     </source>
-    <source path="boards/evkbimxrt1050/aws_examples/greengrass_discovery_wifi_wiced_4343W/iar" target_path="src" type="other" toolchain="iar">
+    <source path="boards/evkbimxrt1050/aws_examples/greengrass_discovery_wifi_wiced_4343W/config_files" target_path="source" type="c_include">
+      <files mask="aws_mbedtls_config.h"/>
+    </source>
+    <source path="boards/evkbimxrt1050/aws_examples/greengrass_discovery_wifi_wiced_4343W/iar" target_path="evkbimxrt1050" type="other" toolchain="iar">
       <files mask="evkbimxrt1050.mac"/>
     </source>
     <source path="boards/evkbimxrt1050/aws_examples/greengrass_discovery_wifi_wiced_4343W/linkscripts" target_path="linkscripts" type="src" toolchain="mcuxpresso">
@@ -163,12 +182,10 @@
       <files mask="readme.txt"/>
     </source>
     <source path="boards/evkbimxrt1050/aws_examples/greengrass_discovery_wifi_wiced_4343W" target_path="source" type="c_include">
-      <files mask="aws_mbedtls_config.h"/>
       <files mask="lwipopts.h"/>
     </source>
     <source path="boards/evkbimxrt1050/aws_examples/greengrass_discovery_wifi_wiced_4343W" target_path="source" type="src">
-      <files mask="aws_greengrass_discovery_demo.c"/>
-      <files mask="main.c"/>
+      <files mask="main_wifi.c"/>
     </source>
   </example>
 </ksdk:examples>

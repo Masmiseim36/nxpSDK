@@ -10,10 +10,10 @@
 #define _PMSM_CONTROL_H_
 
 #include "char_pwrstg.h"
-#include "gflib_FP.h"
-#include "gmclib_FP.h"
-#include "gdflib_FP.h"
-#include "amclib_FP.h"
+#include "gflib_fp.h"
+#include "gmclib_fp.h"
+#include "gdflib_fp.h"
+#include "amclib_fp.h"
 #include "mlib.h"
 #include "gflib.h"
 #include "amclib.h"

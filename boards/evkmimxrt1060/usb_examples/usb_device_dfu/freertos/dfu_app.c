@@ -32,7 +32,7 @@
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
 #include "dfu_timer.h"
-#include "usb_timer.h"
+#include "timer.h"
 #include "pin_mux.h"
 #include "usb_phy.h"
 /*******************************************************************************
@@ -54,6 +54,8 @@ static void USB_DeviceApplicationInit(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+#define TIMER_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_OscClk)
+uint32_t g_halTimerHandle[(HAL_TIMER_HANDLE_SIZE + 3) / 4];
 /* DFU demo configuration */
 extern usb_device_class_struct_t g_UsbDeviceDfuDemoConfig;
 extern uint8_t g_detachRequest;
@@ -79,18 +81,31 @@ usb_device_class_config_list_struct_t g_UsbDeviceDfuConfigList = {
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void HW_TimerCallback(void)
+void HW_TimerCallback(void *param)
 {
     DFU_TimerISR();
 }
 void DFU_TimerHWInit()
 {
-    USB_TimerInit(0, 1000U, CLOCK_GetFreq(kCLOCK_OscClk), HW_TimerCallback);
-    USB_TimerInt(0, 0);
+    hal_timer_config_t halTimerConfig;
+    halTimerConfig.timeout            = 1000;
+    halTimerConfig.srcClock_Hz        = TIMER_SOURCE_CLOCK;
+    halTimerConfig.instance           = 0U;
+    hal_timer_handle_t halTimerHandle = &g_halTimerHandle[0];
+    HAL_TimerInit(halTimerHandle, &halTimerConfig);
+    HAL_TimerInstallCallback(halTimerHandle, HW_TimerCallback, NULL);
+    HAL_TimerDisable(g_halTimerHandle);
 }
 void HW_TimerControl(uint8_t enable)
 {
-    USB_TimerInt(0, enable);
+    if (enable)
+    {
+        HAL_TimerEnable(g_halTimerHandle);
+    }
+    else
+    {
+        HAL_TimerDisable(g_halTimerHandle);
+    }
 }
 void USB_OTG1_IRQHandler(void)
 {

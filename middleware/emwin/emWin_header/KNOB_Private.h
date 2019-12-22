@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2018  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V5.48 - Graphical user interface for embedded applications **
+** emWin V5.50 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2019-09-02
+SUA period:               2011-08-19 - 2020-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : KNOB.h
@@ -45,8 +45,8 @@ Purpose     : KNOB include
 #ifndef KNOB_PRIVATE_H
 #define KNOB_PRIVATE_H
 
+#include "WM_Intern.h"
 #include "KNOB.h"
-#include "GUI_Private.h"
 
 #if (GUI_SUPPORT_MEMDEV && GUI_WINSUPPORT)
 
@@ -63,21 +63,28 @@ typedef struct {
   I32 Offset;        // the offset
   I32 MinRange;
   I32 MaxRange;
+  I32 MinVRange;
+  I32 MaxVRange;
   I32 TickSize;      // Minimum movement range in 1/10 of degree
   I32 KeyValue;      // Range of movement for one key push
+  U8  Invert;
 } KNOB_PROPS;
 
 typedef struct {
   WIDGET Widget;
+  WIDGET_DRAW_ITEM_FUNC * pfOwnerDraw;
+  void (* pfRotate)(GUI_MEMDEV_Handle hSrc, GUI_MEMDEV_Handle hDst, int dx, int dy, int a, int Mag);
   KNOB_PROPS Props;
   WM_HMEM hContext;
   I32 Angle;
   I32 Value;
   int xSize;
   int ySize;
+  I32 AngleRotate;
   GUI_MEMDEV_Handle hMemSrc;
   GUI_MEMDEV_Handle hMemDst;
   GUI_MEMDEV_Handle hMemBk;
+  I32               VRangeABS;
 } KNOB_OBJ;
 
 /*********************************************************************

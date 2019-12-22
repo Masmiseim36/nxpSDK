@@ -15,6 +15,9 @@
 // kernel_default.h: Chooses default GEMM and GEMV kernels for the
 // host platform.
 
+// File modified by NXP. Changes are described in file
+// /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes"
+
 #ifndef GEMMLOWP_INTERNAL_KERNEL_DEFAULT_H_
 #define GEMMLOWP_INTERNAL_KERNEL_DEFAULT_H_
 

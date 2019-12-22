@@ -1,18 +1,21 @@
 /*
 ** ###################################################################
-**     Processor:           MIMXRT1064DVL6A
+**     Processors:          MIMXRT1176AVM8A_cm7
+**                          MIMXRT1176CVM8A_cm7
+**                          MIMXRT1176DVMAA_cm7
+**
 **     Compiler:            GNU C Compiler
-**     Reference manual:    IMXRT1064RM Rev.C, 08/2017
-**     Version:             rev. 0.1, 2017-01-10
-**     Build:               b170912
+**     Reference manual:    IMXRT1170RM_initial_draft, 02/2018
+**     Version:             rev. 0.1, 2018-03-05
+**     Build:               b190730
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2017 NXP
+**     Copyright 2016-2019 NXP
 **     All rights reserved.
-**     
+**
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -24,8 +27,8 @@
 /* Entry Point */
 ENTRY(Reset_Handler)
 
-HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 100000;
-STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 1000;
+HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x200;
+STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x200;
 
 /* Specify the memory areas */
 MEMORY
@@ -39,6 +42,9 @@ MEMORY
 /* Define output sections */
 SECTIONS
 {
+  __NCACHE_REGION_START = ORIGIN(m_ncache);
+  __NCACHE_REGION_SIZE  = LENGTH(m_ncache);
+
   /* The startup code goes first into internal RAM */
   .interrupts :
   {

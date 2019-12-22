@@ -109,7 +109,7 @@
 /* ---------- Pbuf options ---------- */
 /* PBUF_POOL_SIZE: the number of buffers in the pbuf pool. */
 #ifndef PBUF_POOL_SIZE
-#define PBUF_POOL_SIZE 9
+#define PBUF_POOL_SIZE 35
 #endif
 
 /* PBUF_POOL_BUFSIZE: the size of each pbuf in the pbuf pool. */
@@ -154,7 +154,7 @@
 
 /* TCP receive window. */
 #ifndef TCP_WND
-#define TCP_WND (9 * TCP_MSS)
+#define TCP_WND (35 * TCP_MSS)
 #endif
 
 /* Enable backlog*/
@@ -248,7 +248,7 @@ Some MCU allow computing and verifying the IP, UDP, TCP and ICMP checksums by ha
  * sys_thread_new() when the thread is created.
  */
 #ifndef DEFAULT_THREAD_PRIO
-#define DEFAULT_THREAD_PRIO 8
+#define DEFAULT_THREAD_PRIO 3
 #endif
 
 /*
@@ -274,7 +274,7 @@ Some MCU allow computing and verifying the IP, UDP, TCP and ICMP checksums by ha
 
 #define TCPIP_MBOX_SIZE 32
 #define TCPIP_THREAD_STACKSIZE 1024
-#define TCPIP_THREAD_PRIO 3
+#define TCPIP_THREAD_PRIO 8
 
 /**
  * DEFAULT_RAW_RECVMBOX_SIZE: The mailbox size for the incoming packets on a

@@ -45,20 +45,8 @@
 #ifndef FMSTR_TSATBL_STRPTR
 #define FMSTR_TSATBL_STRPTR  const char*
 #endif
-#ifndef FMSTR_TSATBL_STRPTR_CAST
-#define FMSTR_TSATBL_STRPTR_CAST(x) ((FMSTR_TSATBL_STRPTR)(x))
-#endif
-#ifndef FMSTR_TSATBL_STRPTR_ENTRY
-#define FMSTR_TSATBL_STRPTR_ENTRY(x) {FMSTR_TSATBL_STRPTR_CAST(x)}
-#endif
 #ifndef FMSTR_TSATBL_VOIDPTR
 #define FMSTR_TSATBL_VOIDPTR volatile const void*
-#endif
-#ifndef FMSTR_TSATBL_VOIDPTR_CAST
-#define FMSTR_TSATBL_VOIDPTR_CAST(x) ((FMSTR_TSATBL_VOIDPTR)(x))
-#endif
-#ifndef FMSTR_TSATBL_VOIDPTR_ENTRY
-#define FMSTR_TSATBL_VOIDPTR_ENTRY(x) {FMSTR_TSATBL_VOIDPTR_CAST(x)}
 #endif
 
 #ifdef __cplusplus
@@ -74,29 +62,53 @@
 #if defined(__S12Z__)
 typedef struct
 {
-    FMSTR_DUMMY dummy0;
-    union { FMSTR_ADDR  p; FMSTR_ADDR n; } name;
-    FMSTR_DUMMY dummy1;
-    union { FMSTR_ADDR  p; FMSTR_ADDR n; } type;
-    FMSTR_DUMMY dummy2;
-    union { FMSTR_ADDR p; FMSTR_ADDR n; } addr;
-    FMSTR_DUMMY dummy3;
-    union { FMSTR_ADDR p; FMSTR_ADDR n; } info;
+	/* sizeof(FMSTR_ADDR) is 3 on S12Z platform. We need an extra byte to align to 4 bytes.
+	 * An extra byte is put in front of each entry as S12Z is a big-endian machine. */
+    FMSTR_U8 dummy0; 
+    union { FMSTR_TSATBL_STRPTR p; FMSTR_ADDR n; } name;
+    FMSTR_U8 dummy1;
+    union { FMSTR_TSATBL_STRPTR p; FMSTR_ADDR n; } type;
+    FMSTR_U8 dummy2;
+    union { FMSTR_TSATBL_VOIDPTR p; FMSTR_ADDR n; } addr;
+    FMSTR_U8 dummy3;
+    union { FMSTR_TSATBL_VOIDPTR p; FMSTR_ADDR n; } info;
 } FMSTR_TSA_ENTRY;
+
+/* dummy member initializers */
+#define FMSTR_TSATBL_FILL_PRE  0, 
+#define FMSTR_TSATBL_FILL_POST  
 #else
 typedef struct
 {
+	/* Generic table entry on little-endian systems */
     union { FMSTR_TSATBL_STRPTR  p; FMSTR_ADDR n; } name;
     union { FMSTR_TSATBL_STRPTR  p; FMSTR_ADDR n; } type;
     union { FMSTR_TSATBL_VOIDPTR p; FMSTR_ADDR n; } addr;
     union { FMSTR_TSATBL_VOIDPTR p; FMSTR_ADDR n; } info;
 } FMSTR_TSA_ENTRY;
+
+/* no dummy members */
+#define FMSTR_TSATBL_FILL_PRE  
+#define FMSTR_TSATBL_FILL_POST  
 #endif
 
 #ifdef __cplusplus
   }
 #endif
 
+#ifndef FMSTR_TSATBL_STRPTR_CAST
+#define FMSTR_TSATBL_STRPTR_CAST(x) ((FMSTR_TSATBL_STRPTR)(x))
+#endif
+#ifndef FMSTR_TSATBL_STRPTR_ENTRY
+#define FMSTR_TSATBL_STRPTR_ENTRY(x) FMSTR_TSATBL_FILL_PRE {FMSTR_TSATBL_STRPTR_CAST(x)} FMSTR_TSATBL_FILL_POST
+#endif
+#ifndef FMSTR_TSATBL_VOIDPTR_CAST
+#define FMSTR_TSATBL_VOIDPTR_CAST(x) ((FMSTR_TSATBL_VOIDPTR)(x))
+#endif
+#ifndef FMSTR_TSATBL_VOIDPTR_ENTRY
+#define FMSTR_TSATBL_VOIDPTR_ENTRY(x) FMSTR_TSATBL_FILL_PRE {FMSTR_TSATBL_VOIDPTR_CAST(x)} FMSTR_TSATBL_FILL_POST
+#endif
+  
 /* list of available types for TSA table definition */
 #define FMSTR_TSA_MEMBER_CFG(parenttype,name,type) \
     FMSTR_TSATBL_STRPTR_ENTRY(#name), FMSTR_TSATBL_STRPTR_ENTRY(type), FMSTR_TSATBL_VOIDPTR_ENTRY(&((parenttype*)0)->name), FMSTR_TSATBL_VOIDPTR_ENTRY(FMSTR_TSA_INFO1(((parenttype*)0)->name, FMSTR_TSA_INFO_NON_VAR)),

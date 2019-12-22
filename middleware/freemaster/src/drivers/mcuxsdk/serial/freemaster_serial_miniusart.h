@@ -32,14 +32,6 @@
 /* This low-level driver uses the MCUXpresso SDK peripheral structure types. */
 #include "fsl_device_registers.h"
 
-/******************************************************************************
-* Adapter configuration
-******************************************************************************/
-
-#if defined(FMSTR_SCI_TWOWIRE_ONLY) && !FMSTR_SCI_TWOWIRE_ONLY
-    #error The MINISUART driver does not support single wire configuration of UART communication.
-#endif
-
 #ifdef __cplusplus
   extern "C" {
 #endif

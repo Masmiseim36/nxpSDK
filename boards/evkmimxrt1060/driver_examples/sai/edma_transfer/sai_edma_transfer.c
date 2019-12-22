@@ -71,6 +71,12 @@
 #define DEMO_AUDIO_DATA_CHANNEL (2U)
 /* demo audio bitwidth */
 #define DEMO_AUDIO_BIT_WIDTH kSAI_WordWidth16bits
+#ifndef DEMO_SAI_TX_SYNC_MODE
+#define DEMO_SAI_TX_SYNC_MODE kSAI_ModeAsync
+#endif
+#ifndef DEMO_SAI_RX_SYNC_MODE
+#define DEMO_SAI_RX_SYNC_MODE kSAI_ModeSync
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -103,7 +109,7 @@ const clock_audio_pll_config_t audioPllConfig = {
     .denominator = 100, /* 30 bit denominator of fractional loop divider */
 };
 AT_NONCACHEABLE_SECTION_INIT(sai_edma_handle_t txHandle) = {0};
-edma_handle_t dmaHandle                                  = {0};
+edma_handle_t g_dmaHandle                                = {0};
 extern codec_config_t boardCodecConfig;
 AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t buffer[BUFFER_NUM * BUFFER_SIZE], 4);
 volatile bool isFinished      = false;
@@ -120,8 +126,7 @@ sai_master_clock_t mclkConfig = {
 #endif
 };
 #endif
-uint8_t codecHandleBuffer[CODEC_HANDLE_SIZE] = {0U};
-codec_handle_t *codecHandle                  = (codec_handle_t *)codecHandleBuffer;
+codec_handle_t codecHandle;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -194,7 +199,7 @@ int main(void)
      */
     EDMA_GetDefaultConfig(&dmaConfig);
     EDMA_Init(EXAMPLE_DMA, &dmaConfig);
-    EDMA_CreateHandle(&dmaHandle, EXAMPLE_DMA, EXAMPLE_CHANNEL);
+    EDMA_CreateHandle(&g_dmaHandle, EXAMPLE_DMA, EXAMPLE_CHANNEL);
 
 #if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
     DMAMUX_Init(DMAMUX0);
@@ -205,11 +210,19 @@ int main(void)
     /* SAI init */
     SAI_Init(DEMO_SAI);
 
-    SAI_TransferTxCreateHandleEDMA(DEMO_SAI, &txHandle, callback, NULL, &dmaHandle);
+    SAI_TransferTxCreateHandleEDMA(DEMO_SAI, &txHandle, callback, NULL, &g_dmaHandle);
 
     /* I2S mode configurations */
     SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, kSAI_Channel0Mask);
+    config.syncMode = DEMO_SAI_TX_SYNC_MODE;
     SAI_TransferTxSetConfigEDMA(DEMO_SAI, &txHandle, &config);
+
+#if DEMO_SAI_RX_SYNC_MODE == kSAI_ModeAsync
+    config.syncMode = DEMO_SAI_RX_SYNC_MODE;
+    SAI_RxSetConfig(DEMO_SAI, &config);
+    SAI_RxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
+                          DEMO_AUDIO_DATA_CHANNEL);
+#endif
 
     /* set bit clock divider */
     SAI_TxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
@@ -226,7 +239,7 @@ int main(void)
 #endif
 
     /* Use default setting to init codec */
-    CODEC_Init(codecHandle, &boardCodecConfig);
+    CODEC_Init(&codecHandle, &boardCodecConfig);
 
 /* If need to handle audio error, enable sai interrupt */
 #if defined(DEMO_SAI_IRQ)

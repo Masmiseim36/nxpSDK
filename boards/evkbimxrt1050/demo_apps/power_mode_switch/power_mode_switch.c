@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  *
@@ -19,6 +19,7 @@
 #include "fsl_gpt.h"
 #include "fsl_lpuart.h"
 #include "specific.h"
+#include "peripherals.h"
 
 #include "pin_mux.h"
 #include "clock_config.h"
@@ -33,7 +34,7 @@
 #define APP_WAKEUP_BUTTON_IRQ_HANDLER BOARD_USER_BUTTON_IRQ_HANDLER
 #define APP_WAKEUP_BUTTON_NAME BOARD_USER_BUTTON_NAME
 
-#define APP_WAKEUP_GPT_BASE GPT2
+#define APP_WAKEUP_GPT_BASE DEMO_GPT_PERIPHERAL
 #define APP_WAKEUP_GPT_IRQn GPT2_IRQn
 #define APP_WAKEUP_GPT_IRQn_HANDLER GPT2_IRQHandler
 
@@ -335,26 +336,6 @@ static void PowerModeSwitchTask(void *pvParameters)
 {
     uint8_t ch;
     uint32_t freq;
-    gpt_config_t gptConfig;
-    /* Define the init structure for the input switch pin */
-    gpio_pin_config_t swConfig = {
-        kGPIO_DigitalInput,
-        0,
-        kGPIO_IntRisingEdge,
-    };
-
-    /* Init GPT for wakeup as FreeRTOS tell us */
-    GPT_GetDefaultConfig(&gptConfig);
-    gptConfig.clockSource = kGPT_ClockSource_LowFreq; /* 32K RTC OSC */
-    // gptConfig.enableMode = false;                     /* Keep counter when stop */
-    gptConfig.enableMode      = true; /* Don't keep counter when stop */
-    gptConfig.enableRunInDoze = true;
-    /* Initialize GPT module */
-    GPT_Init(APP_WAKEUP_GPT_BASE, &gptConfig);
-    GPT_SetClockDivider(APP_WAKEUP_GPT_BASE, 1);
-
-    /* Init input switch GPIO. */
-    GPIO_PinInit(APP_WAKEUP_BUTTON_GPIO, APP_WAKEUP_BUTTON_GPIO_PIN, &swConfig);
 
     while (1)
     {
@@ -481,7 +462,7 @@ int main(void)
     /* Init board hardware. */
     BOARD_ConfigMPU();
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
 
     /* Configure UART divider to default */
     CLOCK_SetMux(kCLOCK_UartMux, 1); /* Set UART source to OSC 24M */
@@ -493,6 +474,7 @@ int main(void)
      * connected to LCD power switch circuit. So it needs to be configured as a low-level output GPIO to reduce the
      * current. */
     BOARD_Init_PMIC_STBY_REQ();
+    BOARD_InitBootPeripherals();
 
     PRINTF("\r\nCPU wakeup source 0x%x...\r\n", SRC->SRSR);
 

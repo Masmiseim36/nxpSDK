@@ -33,6 +33,9 @@
 //limitations under the License.
 //==============================================================================
 
+// File modified by NXP. Changes are described in file
+// /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes"
+
 #ifndef GEMMLOWP_INTERNAL_KERNEL_DSP_H_
 #define GEMMLOWP_INTERNAL_KERNEL_DSP_H_
 

@@ -251,14 +251,12 @@ status_t check_update_keyblob_info(void *config)
             // Check key blob address range
             if ((keyblob_size + keyblob_offset) > image_max_size)
             {
-                status = kStatusMemoryRangeInvalid;
                 break;
             }
 
             // Invalid key blob address, key blob must be page size aligned.
             if (keyblob_addr & (block_size - 1))
             {
-                status = kStatusMemoryAlignmentError;
                 break;
             }
 

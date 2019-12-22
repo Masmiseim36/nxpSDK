@@ -1,6 +1,6 @@
 /*
  * Copyright 2014-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -134,7 +134,7 @@
 
 #define BL_FEATURE_EXPAND_PACKET_SIZE (1)
 #define BL_EXPANDED_FRAMING_PACKET_SIZE (1024)
-// Make sure that BL_EXPANDED_USB_HID_PACKET_SIZE < 1020
+// Make sure that BL_EXPANDED_USB_HID_PACKET_SIZE < 1018
 #define BL_EXPANDED_USB_HID_PACKET_SIZE (1012)
 
 // Bootloader peripheral detection default timeout in milliseconds

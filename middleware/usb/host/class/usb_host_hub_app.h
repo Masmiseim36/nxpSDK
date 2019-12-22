@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -29,7 +29,8 @@ typedef struct _usb_host_hub_global
     usb_host_handle hostHandle;          /*!< This HUB list belong to this host*/
     usb_host_hub_instance_t *hubProcess; /*!< HUB in processing*/
     usb_host_hub_instance_t *hubList;    /*!< host's HUB list*/
-    usb_osa_mutex_handle hubMutex;       /*!< HUB mutex*/
+    osa_mutex_handle_t hubMutex;  /*!< HUB mutex*/
+    uint32_t mutexBuffer[(OSA_MUTEX_HANDLE_SIZE + 3)/4]; /*!< The mutex buffer. */
 } usb_host_hub_global_t;
 
 /*! @brief HUB application status */

@@ -546,7 +546,6 @@ typedef enum _rndis_state_enum
 /*! @brief Define structure for CDC RNDIS device. */
 typedef struct _usb_device_cdc_rndis_struct
 {
-    bool isBusy;
     uint8_t *rndisCommand;                /*!< The pointer to the buffer of the RNDIS request. */
     uint8_t *responseData;                /*!< The pointer to the buffer of the RNDIS response. */
     uint32_t rndisHostMaxTxSize;          /*!< The maximum transmit size in byte of the host. */
@@ -562,10 +561,12 @@ typedef struct _usb_device_cdc_rndis_struct
     uint32_t numRecvFramesAlignmentError; /*!< The number of the frames received that has alignment error. */
     uint32_t numFramesTxOneCollision;     /*!< The number of the frames sent that has one collision. */
     uint32_t numFramesTxManyCollision;    /*!< The number of the frames sent that has many collision. */
-    uint8_t rndisDeviceState;             /*!< The RNDIS device state. */
-    usb_osa_mutex_handle statusMutex;     /*!< The mutex to guarantee the consistent access to the device state. */
+    osa_mutex_handle_t statusMutex;     /*!< The mutex to guarantee the consistent access to the device state. */
+    uint32_t mutexBuffer[(OSA_MUTEX_HANDLE_SIZE + 3)/4]; /*!< The mutex buffer. */
     /*! The callback function provided by application for the RNDIS request. */
     usb_status_t (*rndisCallback)(struct _usb_device_cdc_rndis_struct *handle, uint32_t event, void *param);
+    bool isBusy;
+    uint8_t rndisDeviceState;             /*!< The RNDIS device state. */
 } usb_device_cdc_rndis_struct_t;
 
 /*! @brief Define structure for CDC RNDIS device. */

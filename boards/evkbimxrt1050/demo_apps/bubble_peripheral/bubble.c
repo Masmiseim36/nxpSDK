@@ -88,21 +88,20 @@ int main(void)
     fxos_data_t sensorData   = {0};
     fxos_config_t config     = {0};
     status_t result;
-    uint8_t sensorRange          = 0;
-    uint8_t dataScale            = 0;
-    int16_t xData                = 0;
-    int16_t yData                = 0;
-    uint8_t i                    = 0;
-    uint8_t array_addr_size      = 0;
+    uint8_t sensorRange     = 0;
+    uint8_t dataScale       = 0;
+    int16_t xData           = 0;
+    int16_t yData           = 0;
+    uint8_t i               = 0;
+    uint8_t array_addr_size = 0;
 
     /* Board pin, clock, debug console init */
     BOARD_ConfigMPU();
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     BOARD_I2C_ConfigurePins();
     BOARD_InitDebugConsole();
     BOARD_InitPeripherals();
-
 
     /* Configure the I2C function */
     config.I2C_SendFunc    = BOARD_Accel_I2C_Send;

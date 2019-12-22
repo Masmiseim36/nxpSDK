@@ -343,17 +343,17 @@ int mbedtls_md2_self_test( int verbose )
         }
 
         if( verbose != 0 )
-            mbedtls_printf( "passed\n\r" );
+            mbedtls_printf( "passed\n" );
     }
 
     if( verbose != 0 )
-        mbedtls_printf( "\n\r" );
+        mbedtls_printf( "\n" );
 
     return( 0 );
 
 fail:
     if( verbose != 0 )
-        mbedtls_printf( "failed\n\r" );
+        mbedtls_printf( "failed\n" );
 
     return( ret );
 }

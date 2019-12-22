@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -53,7 +53,7 @@ static usb_audio_request_t s_usbAudioEpRequests[NUMBER_OF_ENDPOINT_COMMANDS] = {
  */
 usb_status_t USB_HostAudioInit(usb_device_handle deviceHandle, usb_host_class_handle *classHandlePtr)
 {
-    audio_instance_t *audioPtr = (audio_instance_t *)USB_OsaMemoryAllocate(sizeof(audio_instance_t));
+    audio_instance_t *audioPtr = (audio_instance_t *)OSA_MemoryAllocate(sizeof(audio_instance_t));
     uint32_t info_value;
 
     if (audioPtr == NULL)
@@ -128,7 +128,7 @@ usb_status_t USB_HostAudioDeinit(usb_device_handle deviceHandle, usb_host_class_
             status = USB_HostCancelTransfer(audioPtr->hostHandle, audioPtr->controlPipe, audioPtr->controlTransfer);
         }
         USB_HostCloseDeviceInterface(deviceHandle, audioPtr->controlIntfHandle);
-        USB_OsaMemoryFree(audioPtr);
+        OSA_MemoryFree(audioPtr);
     }
     else
     {

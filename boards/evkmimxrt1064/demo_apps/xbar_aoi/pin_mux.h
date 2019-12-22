@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 NXP
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -45,17 +45,17 @@ extern "C" {
 void BOARD_InitBootPins(void);
 
 /* GPIO_AD_B1_01 (coord K11), I2C1_SDA/CSI_I2C_SDA/J35[22]/J23[5]/U13[18]/U32[6] */
-#define BOARD_INITPINS_CMP1_IN_0_PERIPHERAL                                 CMP1   /*!< Device name: CMP1 */
-#define BOARD_INITPINS_CMP1_IN_0_SIGNAL                                       IN   /*!< CMP1 signal: IN */
-#define BOARD_INITPINS_CMP1_IN_0_CHANNEL                                      0U   /*!< CMP1 IN channel: 0 */
+#define BOARD_CMP1_IN_0_PERIPHERAL                                          CMP1   /*!< Device name: CMP1 */
+#define BOARD_CMP1_IN_0_SIGNAL                                                IN   /*!< CMP1 signal: IN */
+#define BOARD_CMP1_IN_0_CHANNEL                                               0U   /*!< CMP1 IN channel: 0 */
 
 /* GPIO_AD_B0_13 (coord L14), UART1_RXD */
-#define BOARD_INITPINS_UART1_RXD_PERIPHERAL                              LPUART1   /*!< Device name: LPUART1 */
-#define BOARD_INITPINS_UART1_RXD_SIGNAL                                       RX   /*!< LPUART1 signal: RX */
+#define BOARD_UART1_RXD_PERIPHERAL                                       LPUART1   /*!< Device name: LPUART1 */
+#define BOARD_UART1_RXD_SIGNAL                                                RX   /*!< LPUART1 signal: RX */
 
 /* GPIO_AD_B0_12 (coord K14), UART1_TXD */
-#define BOARD_INITPINS_UART1_TXD_PERIPHERAL                              LPUART1   /*!< Device name: LPUART1 */
-#define BOARD_INITPINS_UART1_TXD_SIGNAL                                       TX   /*!< LPUART1 signal: TX */
+#define BOARD_UART1_TXD_PERIPHERAL                                       LPUART1   /*!< Device name: LPUART1 */
+#define BOARD_UART1_TXD_SIGNAL                                                TX   /*!< LPUART1 signal: TX */
 
 
 /*!

@@ -72,7 +72,7 @@ usb_device_interfaces_struct_t g_hid_generic_interfaces[USB_HID_GENERIC_INTERFAC
     USB_HID_GENERIC_PROTOCOL,        /* HID generic protocol code */
     USB_HID_GENERIC_INTERFACE_INDEX, /* The interface number of the HID generic */
     g_hid_generic_interface,         /* Interfaces handle */
-    sizeof(g_hid_generic_interface) / sizeof(usb_device_interfaces_struct_t),
+    sizeof(g_hid_generic_interface) / sizeof(usb_device_interface_struct_t),
 } };
 
 usb_device_interface_list_t g_hid_generic_interface_list[USB_CONFIGURE_COUNT] = {
@@ -110,7 +110,7 @@ usb_device_interface_struct_t g_msc_disk_interface[] = { {
 /* Define interfaces for MSC disk */
 usb_device_interfaces_struct_t g_msc_disk_interfaces[USB_MSC_INTERFACE_COUNT] = { {
     USB_MSC_CLASS, USB_MSC_SUBCLASS, USB_MSC_PROTOCOL, USB_MSC_INTERFACE_INDEX, g_msc_disk_interface,
-    sizeof(g_msc_disk_interface) / sizeof(usb_device_interfaces_struct_t),
+    sizeof(g_msc_disk_interface) / sizeof(usb_device_interface_struct_t),
 } };
 
 /* Define configurations for MSC disk */

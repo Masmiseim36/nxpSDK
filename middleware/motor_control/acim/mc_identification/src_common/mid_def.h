@@ -9,9 +9,9 @@
 #define _MID_DEF_H_
 
 #include "m1_acim_appconfig.h"
-#include "gflib_FP.h"
-#include "gmclib_FP.h"
-#include "mlib_FP.h"
+#include "gflib_fp.h"
+#include "gmclib_fp.h"
+#include "mlib_fp.h"
 #include "calc_power.h"
 
 #include "mcdrv.h"

@@ -36,14 +36,21 @@
 #ifndef MBEDTLS_ECP_ALT_H
 #define MBEDTLS_ECP_ALT_H
 
+/* clang-format off */
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #if defined(MBEDTLS_ECP_ALT)
-#if defined(TGT_A71CH)
+
+#if SSS_HAVE_ALT_SSS
+#include <fsl_sss_api.h>
+#endif
+#if SSS_HAVE_ALT_A71CH
 #include "HLSETypes.h"
 #endif
+
 /*
  * default mbed TLS elliptic curve arithmetic implementation
  *
@@ -103,9 +110,14 @@ typedef struct mbedtls_ecp_group
     mbedtls_ecp_point *T;       /*!< Pre-computed points for ecp_mul_comb(). */
     size_t T_size;              /*!< The number of pre-computed points. */
 
-#if defined(TGT_A71CH)
+#if SSS_HAVE_ALT_A71CH
     /** Reference to object mapped between HLSE Layer of A71CH Host library         */
     HLSE_OBJECT_HANDLE hlse_handle;
+#endif
+#if SSS_HAVE_ALT_SSS
+    /** Reference to object mapped between SSS Layer        */
+    sss_object_t* pSSSObject;
+    sss_key_store_t* hostKs;
 #endif
 }
 mbedtls_ecp_group;
@@ -168,10 +180,15 @@ mbedtls_ecp_group;
 
 /* \} name SECTION: Module settings */
 
+int ecp_add( const mbedtls_ecp_group *grp, mbedtls_ecp_point *R,
+             const mbedtls_ecp_point *P,
+             const mbedtls_ecp_point *Q );
+
 #endif /* MBEDTLS_ECP_ALT */
 
 #ifdef __cplusplus
 }
 #endif
 
+/* clang-format on */
 #endif /* ecp_alt.h */

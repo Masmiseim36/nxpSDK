@@ -259,7 +259,7 @@ void semc_iomux_config(semc_mem_config_t *config)
     uint32_t addrInputPadCtlValue = SEMC_SW_PAD_CTL_VAL;
     uint32_t rdyOutputPadCtlValue = SEMC_RDY_SW_PAD_CTL_VAL;
     uint32_t ctlInputPadCtlValue = SEMC_SW_PAD_CTL_VAL;
-    uint8_t cePortOutputSelection;
+    uint8_t cePortOutputSelection = config->nandMemConfig.cePortOutputSelection;
 
     // Pinmux configuration for SEMC DA[15:0] Port (NOR)
     // Pinmux configuration for SEMC D[15:0] Port (NAND)

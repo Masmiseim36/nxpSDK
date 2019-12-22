@@ -8,10 +8,10 @@ Example will first erase the sector and program a page into the flash, at last c
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso  10.3.1
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -60,13 +60,6 @@ Erase data - successfully.
 Program data - successfully.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-Note:
-It's suggested running this example with "debug"/"release" target, which places both code and data into TCM.
-For flexspi_nor targets, the image programed at the beginning of external flash will be destroyed since
-application will erase "EXAMPLE_SECTOR" which is set to "0" in this case.
-Workaround:Set "EXAMPLE_SECTOR" to "20".
 Customization options
 =====================
 

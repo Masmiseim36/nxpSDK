@@ -1,3 +1,6 @@
+// File modified by NXP. Changes are described in file
+// /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes"
+
 /*
 Fast Fourier/Cosine/Sine Transform
     dimension   :one

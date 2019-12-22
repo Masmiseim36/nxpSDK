@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,7 +8,6 @@
 #ifndef __FSL_LPUART_RTOS_H__
 #define __FSL_LPUART_RTOS_H__
 
-#include "FreeRTOSConfig.h"
 #include "fsl_lpuart.h"
 #include <FreeRTOS.h>
 #include <event_groups.h>
@@ -25,8 +24,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief LPUART freertos driver version 2.2.6. */
-#define FSL_LPUART_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 2, 6))
+/*! @brief LPUART FreeRTOS driver version 2.2.8. */
+#define FSL_LPUART_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 2, 8))
 /*@}*/
 
 /*! @brief LPUART RTOS configuration structure. */

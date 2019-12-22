@@ -14,11 +14,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v5.0
+product: Pins v7.0
 processor: MIMXRT1062xxxxA
 package_id: MIMXRT1062DVL6A
 mcu_data: ksdk2_0
-processor_version: 0.0.18
+processor_version: 0.2.0
 pin_labels:
 - {pin_num: F14, pin_signal: GPIO_AD_B0_09, label: UserLed, identifier: UserLed}
 - {pin_num: L6, pin_signal: WAKEUP, label: SW8, identifier: SW8}
@@ -44,6 +44,7 @@ void BOARD_InitBootPins(void) {
     BOARD_InitLPUART();
     BOARD_InitPWM();
     BOARD_Misc();
+    BOARD_InitCMP();
 }
 
 /*
@@ -175,6 +176,7 @@ BOARD_InitPWM:
   - {pin_num: J3, peripheral: PWM1, signal: 'B, 0', pin_signal: GPIO_SD_B0_01}
   - {pin_num: J1, peripheral: PWM1, signal: 'A, 1', pin_signal: GPIO_SD_B0_02}
   - {pin_num: K1, peripheral: PWM1, signal: 'B, 1', pin_signal: GPIO_SD_B0_03}
+  - {peripheral: PWM1, signal: 'FAULT, 0', pin_signal: ACMP2_OUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -186,6 +188,7 @@ BOARD_InitPWM:
  * END ****************************************************************************************************************/
 void BOARD_InitPWM(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03U */
+  CLOCK_EnableClock(kCLOCK_Xbar1);            /* xbar1 clock (xbar1_clk_enable): 0x03U */
 
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_B0_10_FLEXPWM1_PWMA03,   /* GPIO_AD_B0_10 is configured as FLEXPWM1_PWMA03 */
@@ -205,6 +208,7 @@ void BOARD_InitPWM(void) {
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_SD_B0_03_FLEXPWM1_PWMB01,   /* GPIO_SD_B0_03 is configured as FLEXPWM1_PWMB01 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+  XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputAcmp2Out, kXBARA1_OutputFlexpwm1Fault0); /* ACMP2_OUT output assigned to XBARA1_IN27 input is connected to XBARA1_OUT35 output assigned to FLEXPWM1_FAULT0 */
 }
 
 
@@ -255,6 +259,30 @@ void BOARD_Misc(void) {
     );
   IOMUXC_SetPinMux(
       IOMUXC_SNVS_WAKEUP_GPIO5_IO00,          /* WAKEUP is configured as GPIO5_IO00 */
+      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+}
+
+
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitCMP:
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: M12, peripheral: CMP2, signal: 'IN, 3', pin_signal: GPIO_AD_B1_03}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitCMP
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void BOARD_InitCMP(void) {
+  CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03U */
+
+  IOMUXC_SetPinMux(
+      IOMUXC_GPIO_AD_B1_03_GPIO1_IO19,        /* GPIO_AD_B1_03 is configured as GPIO1_IO19 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
 }
 

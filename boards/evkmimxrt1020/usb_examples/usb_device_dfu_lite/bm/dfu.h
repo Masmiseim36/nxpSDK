@@ -108,7 +108,7 @@ typedef struct _usb_dfu_status_struct
 /*! @brief DFU device definition. */
 typedef struct _usb_dfu_struct
 {
-    usb_dfu_status_struct_t dfuStatus;
+    usb_dfu_status_struct_t *dfuStatus;
     uint32_t dfuFirmwareBlockLength;
     uint32_t dfuIsTheFirstBlock;
     uint32_t dfuCRC;
@@ -154,7 +154,8 @@ typedef struct _dfu_queue
     uint32_t tail;
     uint32_t maxSize;
     uint32_t curSize;
-    usb_osa_mutex_handle mutex;
+    osa_mutex_handle_t mutex;
+    uint32_t mutexBuffer[(OSA_MUTEX_HANDLE_SIZE + 3)/4]; /*!< The mutex buffer. */
     usb_device_dfu_event_struct_t qArray[DFU_EVENT_QUEUE_MAX];
 } dfu_queue_t;
 

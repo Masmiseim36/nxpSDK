@@ -2,7 +2,6 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
-    <definition extID="RTE_Device.MIMXRT1062"/>
     <definition extID="component.lists.MIMXRT1062"/>
     <definition extID="component.lpuart_adapter.MIMXRT1062"/>
     <definition extID="component.serial_manager.MIMXRT1062"/>
@@ -19,6 +18,7 @@
     <definition extID="platform.CMSIS_Driver_Include.USART_CMSISInclude.MIMXRT1062"/>
     <definition extID="platform.Include_common.MIMXRT1062"/>
     <definition extID="platform.Include_core_cm7.MIMXRT1062"/>
+    <definition extID="platform.Include_dsp.MIMXRT1062"/>
     <definition extID="platform.drivers.clock.MIMXRT1062"/>
     <definition extID="platform.drivers.common.MIMXRT1062"/>
     <definition extID="platform.drivers.dmamux.MIMXRT1062"/>
@@ -35,8 +35,10 @@
     <definition extID="platform.drivers.lpuart_cmsis_edma.MIMXRT1062"/>
     <definition extID="platform.drivers.lpuart_edma.MIMXRT1062"/>
     <definition extID="platform.drivers.xip_board.MIMXRT1062"/>
+    <definition extID="platform.drivers.xip_board_dcd.MIMXRT1062"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1062"/>
     <definition extID="platform.utilities.assert.MIMXRT1062"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1062"/>
     <definition extID="utility.debug_console.MIMXRT1062"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -45,7 +47,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1060_agm01_fxos8700_fifo" name="fxos8700_fifo" category="issdk/sensors" dependency="platform.drivers.clock.MIMXRT1062 platform.drivers.edma.MIMXRT1062 platform.drivers.dmamux.MIMXRT1062 platform.drivers.lpi2c.MIMXRT1062 platform.drivers.lpi2c_edma.MIMXRT1062 platform.drivers.lpi2c_cmsis.MIMXRT1062 platform.drivers.lpspi.MIMXRT1062 platform.drivers.lpspi_edma.MIMXRT1062 platform.drivers.lpspi_cmsis.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 platform.drivers.lpuart_edma.MIMXRT1062 platform.drivers.lpuart_cmsis_edma.MIMXRT1062 middleware.issdk.drivers.systick_utils.evkmimxrt1060.MIMXRT1062 middleware.issdk.drivers.gpio_imx.MIMXRT1062 middleware.issdk.sensor.interface.common.MIMXRT1062 middleware.issdk.sensor.fxos8700.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 utility.debug_console.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 component.lists.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.xip_board.MIMXRT1062 platform.Include_core_cm7.MIMXRT1062 platform.Include_common.MIMXRT1062 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MIMXRT1062 platform.CMSIS_Driver_Include.Common_CMSISInclude.MIMXRT1062 RTE_Device.MIMXRT1062 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MIMXRT1062 platform.CMSIS_Driver_Include.USART_CMSISInclude.MIMXRT1062">
+  <example id="evkmimxrt1060_agm01_fxos8700_fifo" name="fxos8700_fifo" category="issdk/sensors" dependency="platform.drivers.clock.MIMXRT1062 platform.drivers.edma.MIMXRT1062 platform.drivers.dmamux.MIMXRT1062 platform.drivers.lpi2c.MIMXRT1062 platform.drivers.lpi2c_edma.MIMXRT1062 platform.drivers.lpi2c_cmsis.MIMXRT1062 platform.drivers.lpspi.MIMXRT1062 platform.drivers.lpspi_edma.MIMXRT1062 platform.drivers.lpspi_cmsis.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 platform.drivers.lpuart_edma.MIMXRT1062 platform.drivers.lpuart_cmsis_edma.MIMXRT1062 middleware.issdk.drivers.systick_utils.evkmimxrt1060.MIMXRT1062 middleware.issdk.drivers.gpio_imx.MIMXRT1062 middleware.issdk.sensor.interface.common.MIMXRT1062 middleware.issdk.sensor.fxos8700.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 utility.debug_console.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager.MIMXRT1062 component.lists.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.xip_board.MIMXRT1062 platform.drivers.xip_board_dcd.MIMXRT1062 platform.Include_core_cm7.MIMXRT1062 platform.Include_common.MIMXRT1062 platform.Include_dsp.MIMXRT1062 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MIMXRT1062 platform.CMSIS_Driver_Include.Common_CMSISInclude.MIMXRT1062 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MIMXRT1062 platform.CMSIS_Driver_Include.USART_CMSISInclude.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -72,6 +74,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -102,20 +105,20 @@
         </drivers>
       </debug_configuration>
     </debug_configurations>
-    <source path="boards/evkmimxrt1060_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/evkmimxrt1060_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo/armgcc" target_path="MIMXRT1062/gcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1062xxxxx_ram.ld"/>
     </source>
-    <source path="boards/evkmimxrt1060_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/evkmimxrt1060_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo/iar" target_path="MIMXRT1062/iar" type="linker" toolchain="iar">
       <files mask="MIMXRT1062xxxxx_ram.icf"/>
     </source>
-    <source path="boards/evkmimxrt1060_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo/iar" target_path="src" type="other" toolchain="iar">
+    <source path="boards/evkmimxrt1060_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo/iar" target_path="evkmimxrt1060" type="other" toolchain="iar">
       <files mask="evkmimxrt1060.mac"/>
     </source>
-    <source path="boards/evkmimxrt1060_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo/mdk" target_path="src" type="configuration" toolchain="mdk">
-      <files mask="evkmimxrt1060_ram.ini"/>
-    </source>
-    <source path="boards/evkmimxrt1060_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/evkmimxrt1060_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo/mdk" target_path="MIMXRT1062/arm" type="linker" toolchain="mdk">
       <files mask="MIMXRT1062xxxxx_ram.scf"/>
+    </source>
+    <source path="boards/evkmimxrt1060_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo/mdk" target_path="evkmimxrt1060" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt1060_ram.ini"/>
     </source>
     <source path="boards/evkmimxrt1060_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo" target_path="board" type="c_include">
       <files mask="board.h"/>

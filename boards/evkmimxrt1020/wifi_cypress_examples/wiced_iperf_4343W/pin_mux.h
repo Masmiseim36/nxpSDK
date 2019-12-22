@@ -44,10 +44,56 @@ extern "C" {
  */
 void BOARD_InitBootPins(void);
 
+/* GPIO_AD_B0_07 (number 101), UART1_RXD/J17[4] */
+#define BOARD_INITPINS_UART1_RXD_PERIPHERAL                              LPUART1   /*!< Device name: LPUART1 */
+#define BOARD_INITPINS_UART1_RXD_SIGNAL                                       RX   /*!< LPUART1 signal: RX */
+
+/* GPIO_AD_B0_06 (number 105), UART1_TXD/J17[6] */
+#define BOARD_INITPINS_UART1_TXD_PERIPHERAL                              LPUART1   /*!< Device name: LPUART1 */
+#define BOARD_INITPINS_UART1_TXD_SIGNAL                                       TX   /*!< LPUART1 signal: TX */
+
+/* GPIO_SD_B0_06 (number 41), SD_CD_SW/J15[9] */
+#define BOARD_INITPINS_SD_CD_SW_GPIO                                       GPIO3   /*!< GPIO device name: GPIO3 */
+#define BOARD_INITPINS_SD_CD_SW_PORT                                       GPIO3   /*!< PORT device name: GPIO3 */
+#define BOARD_INITPINS_SD_CD_SW_PIN                                          19U   /*!< GPIO3 pin index: 19 */
+
 /* GPIO_AD_B1_07 (number 83), SD0_VSELECT */
 #define BOARD_INITPINS_SD0_VSELECT_GPIO                                    GPIO1   /*!< GPIO device name: GPIO1 */
 #define BOARD_INITPINS_SD0_VSELECT_PORT                                    GPIO1   /*!< PORT device name: GPIO1 */
 #define BOARD_INITPINS_SD0_VSELECT_PIN                                       23U   /*!< GPIO1 pin index: 23 */
+
+/* GPIO_SD_B0_00 (number 48), SD1_D2/J15[1] */
+#define BOARD_INITPINS_SD1_D2_PERIPHERAL                                  USDHC1   /*!< Device name: USDHC1 */
+#define BOARD_INITPINS_SD1_D2_SIGNAL                                  usdhc_data   /*!< USDHC1 signal: usdhc_data */
+#define BOARD_INITPINS_SD1_D2_CHANNEL                                         2U   /*!< USDHC1 usdhc_data channel: 2 */
+
+/* GPIO_SD_B0_01 (number 47), SD1_D3/J15[2] */
+#define BOARD_INITPINS_SD1_D3_PERIPHERAL                                  USDHC1   /*!< Device name: USDHC1 */
+#define BOARD_INITPINS_SD1_D3_SIGNAL                                  usdhc_data   /*!< USDHC1 signal: usdhc_data */
+#define BOARD_INITPINS_SD1_D3_CHANNEL                                         3U   /*!< USDHC1 usdhc_data channel: 3 */
+
+/* GPIO_SD_B0_02 (number 46), SD1_CMD/J15[3] */
+#define BOARD_INITPINS_SD1_CMD_PERIPHERAL                                 USDHC1   /*!< Device name: USDHC1 */
+#define BOARD_INITPINS_SD1_CMD_SIGNAL                                  usdhc_cmd   /*!< USDHC1 signal: usdhc_cmd */
+
+/* GPIO_SD_B0_03 (number 45), SD1_CLK/J15[5] */
+#define BOARD_INITPINS_SD1_CLK_PERIPHERAL                                 USDHC1   /*!< Device name: USDHC1 */
+#define BOARD_INITPINS_SD1_CLK_SIGNAL                                  usdhc_clk   /*!< USDHC1 signal: usdhc_clk */
+
+/* GPIO_SD_B0_04 (number 43), SD1_D0/J15[7] */
+#define BOARD_INITPINS_SD1_D0_PERIPHERAL                                  USDHC1   /*!< Device name: USDHC1 */
+#define BOARD_INITPINS_SD1_D0_SIGNAL                                  usdhc_data   /*!< USDHC1 signal: usdhc_data */
+#define BOARD_INITPINS_SD1_D0_CHANNEL                                         0U   /*!< USDHC1 usdhc_data channel: 0 */
+
+/* GPIO_SD_B0_05 (number 42), SD1_D1/J15[8] */
+#define BOARD_INITPINS_SD1_D1_PERIPHERAL                                  USDHC1   /*!< Device name: USDHC1 */
+#define BOARD_INITPINS_SD1_D1_SIGNAL                                  usdhc_data   /*!< USDHC1 signal: usdhc_data */
+#define BOARD_INITPINS_SD1_D1_CHANNEL                                         1U   /*!< USDHC1 usdhc_data channel: 1 */
+
+/* GPIO_AD_B0_09 (number 99), WL_REG_ON */
+#define BOARD_INITPINS_WL_REG_ON_GPIO                                      GPIO1   /*!< GPIO device name: GPIO1 */
+#define BOARD_INITPINS_WL_REG_ON_PORT                                      GPIO1   /*!< PORT device name: GPIO1 */
+#define BOARD_INITPINS_WL_REG_ON_PIN                                          9U   /*!< GPIO1 pin index: 9 */
 
 
 /*!

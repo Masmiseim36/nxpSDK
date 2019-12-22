@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -735,7 +735,7 @@ usb_status_t USB_HostPhdcSetInterface(usb_host_class_handle classHandle,
 usb_status_t USB_HostPhdcInit(usb_host_handle deviceHandle, usb_host_class_handle *classHandle)
 {
     usb_host_phdc_instance_t *phdcInstance =
-        (usb_host_phdc_instance_t *)USB_OsaMemoryAllocate(sizeof(usb_host_phdc_instance_t));
+        (usb_host_phdc_instance_t *)OSA_MemoryAllocate(sizeof(usb_host_phdc_instance_t));
     uint32_t infoValue;
 
     if (NULL == phdcInstance)
@@ -827,7 +827,7 @@ usb_status_t USB_HostPhdcDeinit(usb_host_handle deviceHandle, usb_host_class_han
         /* Close device interface */
         USB_HostCloseDeviceInterface(deviceHandle, phdcInstance->interfaceHandle);
         /* Release PHDC instance */
-        USB_OsaMemoryFree(phdcInstance);
+        OSA_MemoryFree(phdcInstance);
     }
     else
     {

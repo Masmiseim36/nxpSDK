@@ -210,9 +210,9 @@ FMSTR_BPTR FMSTR_GetTsaInfo(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
     /*lint -e{506,774} constant value boolean */
     if((sizeof(void*)) == 2U)
         tblFlags |= FMSTR_TSA_INFO_ADRSIZE_16;
-    else if((sizeof(void*)) == 4U)
+    else if((sizeof(void*)) <= 4U)
         tblFlags |= FMSTR_TSA_INFO_ADRSIZE_32;
-    else if((sizeof(void*)) == 8U)
+    else if((sizeof(void*)) <= 8U)
         tblFlags |= FMSTR_TSA_INFO_ADRSIZE_64;
 
     /* flags */

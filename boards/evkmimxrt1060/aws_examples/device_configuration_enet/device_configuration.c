@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2019 NXP
  * All rights reserved.
  *
  *
@@ -11,7 +11,7 @@
 #include "FreeRTOS.h"
 #include "mflash_file.h"
 #include "fsl_debug_console.h"
-#include "aws_pkcs11_config.h"
+#include "iot_pkcs11_config.h"
 #include "sslsrv.h"
 #include "sslsrv_keys.h"
 #include "fnet_mdns.h"
@@ -412,6 +412,7 @@ response_t dev_cfg_process_cmd(request_cmd_t cmd, void *data, int data_len)
     return resp;
 }
 
+#ifdef DEMO_DEVICE_CONFIGURATION_WIFI
 int dev_cfg_get_wifi_params(WIFINetworkParams_t *network_params)
 {
     uint8_t *fileData = NULL;
@@ -461,3 +462,4 @@ int dev_cfg_get_wifi_params(WIFINetworkParams_t *network_params)
 
     return 0;
 }
+#endif

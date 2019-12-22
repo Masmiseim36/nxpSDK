@@ -7,10 +7,10 @@ panel, so part of the LCD panel might be blank.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
-- MCUXpresso  11.0.0
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -28,7 +28,7 @@ Board settings
 
 Prepare the Demo
 ================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
+1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
 2.  Open a serial terminal with the following settings:
     - 115200 baud rate
     - 8 data bits
@@ -38,8 +38,8 @@ Prepare the Demo
 4.  Download the program to the target board.
 5.  Launch the debugger in your IDE to begin running the demo.
 
-Note: If OV7725 is used, change the macro APP_CAMERA_TYPE to APP_CAMERA_OV7725 in
-csi_rgb565.c.
+Note: If OV7725 is used, change the macro DEMO_CAMERA to DEMO_CAMERA_OV7725 in
+camera_support.h
 
 Running the demo
 ================

@@ -9,28 +9,33 @@
     <definition extID="device.MIMXRT1021_CMSIS.MIMXRT1021"/>
     <definition extID="device.MIMXRT1021_startup.MIMXRT1021"/>
     <definition extID="driver.phyksz8081.MIMXRT1021"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.MIMXRT1021"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.bufferpool.MIMXRT1021"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.crypto.MIMXRT1021"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.demos.MIMXRT1021"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.greengrass.MIMXRT1021"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.mflash.rt1020.MIMXRT1021"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.mqtt.MIMXRT1021"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.pkcs11.MIMXRT1021"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.secure_sockets.lwip.MIMXRT1021"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.shadow.MIMXRT1021"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.tls.MIMXRT1021"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.utils.MIMXRT1021"/>
-    <definition extID="middleware.amazon_freertos.freertos.MIMXRT1021"/>
-    <definition extID="middleware.amazon_freertos.freertos.heap_4.MIMXRT1021"/>
-    <definition extID="middleware.amazon_freertos.third_party.jsmn.MIMXRT1021"/>
-    <definition extID="middleware.amazon_freertos.third_party.pkcs11.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.demos.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.demos_greengrass_discovery.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.platform.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.aws.greengrass.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.mflash.rt1020.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos-kernel.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos-kernel.extension.MIMXRT1021"/>
+    <definition extID="middleware.amazon_freertos-kernel.heap_4.MIMXRT1021"/>
+    <definition extID="middleware.lwip.MIMXRT1021"/>
+    <definition extID="middleware.lwip.enet_ethernetif.MIMXRT1021"/>
+    <definition extID="middleware.lwip.enet_ethernetif_kinetis.MIMXRT1021"/>
     <definition extID="middleware.mbedtls.MIMXRT1021"/>
-    <definition extID="middleware.tcpip.lwip.MIMXRT1021"/>
-    <definition extID="middleware.tcpip.lwip.enet_ethernetif.MIMXRT1021"/>
-    <definition extID="middleware.tcpip.lwip.enet_ethernetif_kinetis.MIMXRT1021"/>
     <definition extID="platform.Include_common.MIMXRT1021"/>
     <definition extID="platform.Include_core_cm7.MIMXRT1021"/>
+    <definition extID="platform.Include_dsp.MIMXRT1021"/>
     <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1021"/>
     <definition extID="platform.drivers.clock.MIMXRT1021"/>
     <definition extID="platform.drivers.common.MIMXRT1021"/>
@@ -42,8 +47,10 @@
     <definition extID="platform.drivers.lpuart.MIMXRT1021"/>
     <definition extID="platform.drivers.trng.MIMXRT1021"/>
     <definition extID="platform.drivers.xip_board.MIMXRT1021"/>
+    <definition extID="platform.drivers.xip_board_dcd.MIMXRT1021"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1021"/>
     <definition extID="platform.utilities.assert.MIMXRT1021"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1021"/>
     <definition extID="utility.debug_console.MIMXRT1021"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -54,14 +61,14 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1020_aws_greengrass_discovery_enet" name="aws_greengrass_discovery_enet" category="aws_examples" dependency="driver.phyksz8081.MIMXRT1021 platform.drivers.trng.MIMXRT1021 platform.drivers.dcp.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 platform.drivers.flexspi.MIMXRT1021 platform.drivers.enet.MIMXRT1021 middleware.tcpip.lwip.enet_ethernetif_kinetis.MIMXRT1021 middleware.amazon_freertos.aws_iot.mflash.rt1020.MIMXRT1021 middleware.amazon_freertos.aws_iot.secure_sockets.lwip.MIMXRT1021 middleware.amazon_freertos.aws_iot.greengrass.MIMXRT1021 middleware.amazon_freertos.aws_iot.demos.MIMXRT1021 middleware.amazon_freertos.freertos.MIMXRT1021 middleware.amazon_freertos.freertos.heap_4.MIMXRT1021 middleware.amazon_freertos.aws_iot.MIMXRT1021 middleware.amazon_freertos.aws_iot.bufferpool.MIMXRT1021 middleware.amazon_freertos.aws_iot.crypto.MIMXRT1021 middleware.amazon_freertos.aws_iot.mqtt.MIMXRT1021 middleware.amazon_freertos.aws_iot.pkcs11.MIMXRT1021 middleware.amazon_freertos.aws_iot.shadow.MIMXRT1021 middleware.amazon_freertos.aws_iot.tls.MIMXRT1021 middleware.amazon_freertos.aws_iot.utils.MIMXRT1021 middleware.amazon_freertos.third_party.jsmn.MIMXRT1021 middleware.amazon_freertos.third_party.pkcs11.MIMXRT1021 middleware.mbedtls.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.common.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 utility.debug_console.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.serial_manager.MIMXRT1021 component.serial_manager_uart.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 component.lists.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 platform.utilities.assert.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.xip_board.MIMXRT1021 platform.Include_core_cm7.MIMXRT1021 platform.Include_common.MIMXRT1021 middleware.tcpip.lwip.enet_ethernetif.MIMXRT1021 middleware.tcpip.lwip.MIMXRT1021">
+  <example id="evkmimxrt1020_aws_greengrass_discovery_enet" name="aws_greengrass_discovery_enet" category="aws_examples" dependency="driver.phyksz8081.MIMXRT1021 platform.drivers.trng.MIMXRT1021 platform.drivers.dcp.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 platform.drivers.flexspi.MIMXRT1021 middleware.lwip.MIMXRT1021 middleware.lwip.enet_ethernetif_kinetis.MIMXRT1021 middleware.amazon_freertos-aws_iot.vendor.nxp.mflash.rt1020.MIMXRT1021 middleware.amazon_freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1021 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.aws.greengrass.MIMXRT1021 middleware.amazon_freertos-aws_iot.demos.MIMXRT1021 middleware.amazon_freertos-aws_iot.demos_greengrass_discovery.MIMXRT1021 middleware.amazon_freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT1021 middleware.amazon_freertos-kernel.MIMXRT1021 middleware.amazon_freertos-kernel.heap_4.MIMXRT1021 middleware.amazon_freertos-aws_iot.libraries.abstractions.platform.MIMXRT1021 middleware.amazon_freertos-aws_iot.MIMXRT1021 middleware.amazon_freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1021 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1021 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT1021 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1021 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1021 middleware.amazon_freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT1021 middleware.amazon_freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1021 middleware.amazon_freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1021 middleware.amazon_freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT1021 middleware.mbedtls.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.common.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 utility.debug_console.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.serial_manager.MIMXRT1021 component.lists.MIMXRT1021 component.serial_manager_uart.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 platform.utilities.assert.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.xip_board.MIMXRT1021 platform.drivers.xip_board_dcd.MIMXRT1021 platform.drivers.enet.MIMXRT1021 platform.Include_core_cm7.MIMXRT1021 platform.Include_common.MIMXRT1021 platform.Include_dsp.MIMXRT1021 middleware.lwip.enet_ethernetif.MIMXRT1021 middleware.amazon_freertos-kernel.extension.MIMXRT1021 platform.utilities.misc_utilities.MIMXRT1021">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
     <memory>
       <memoryBlock addr="60000000" size="00800000" access="RO" type="ExtFlash" id="BOARD_FLASH_evkmimxrt1020" name="BOARD_FLASH"/>
       <memoryBlock addr="80000000" size="01E00000" access="RW" type="RAM" id="BOARD_SDRAM_evkmimxrt1020" name="BOARD_SDRAM"/>
-      <memoryBlock addr="81E00000" size="00200000" access="RW" type="RAM" id="BOARD_SDRAM_NONCACHEABLE_evkmimxrt1020" name="BOARD_SDRAM_NONCACHEABLE"/>
+      <memoryBlock addr="81E00000" size="00200000" access="RW" type="RAM" id="NCACHE_REGION_evkmimxrt1020" name="NCACHE_REGION"/>
       <memoryBlock addr="20000000" size="00010000" access="RW" type="RAM" id="SRAM_DTC_evkmimxrt1020" name="SRAM_DTC"/>
       <memoryBlock addr="00000000" size="00010000" access="RW" type="RAM" id="SRAM_ITC_evkmimxrt1020" name="SRAM_ITC"/>
       <memoryBlock addr="20200000" size="00020000" access="RW" type="RAM" id="SRAM_OC_evkmimxrt1020" name="SRAM_OC"/>
@@ -88,10 +95,11 @@
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</value>
-          <value>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</value>
+          <value>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=0</value>
           <value>USE_RTOS=1</value>
           <value>MBEDTLS_CONFIG_FILE='"aws_mbedtls_config.h"'</value>
           <value>FSL_RTOS_FREE_RTOS</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -109,8 +117,8 @@
           <value>&amp;Heap:Default;Default;0x200&amp;Stack:Default;Default;0x200</value>
         </option>
         <option id="com.crt.advproject.link.memory.sections" type="stringList">
-          <value>isd=*(NonCacheable.init);region=BOARD_SDRAM_NONCACHEABLE;type=.data</value>
-          <value>isd=*(NonCacheable);region=BOARD_SDRAM_NONCACHEABLE;type=.bss</value>
+          <value>isd=*(NonCacheable.init);region=NCACHE_REGION;type=.data</value>
+          <value>isd=*(NonCacheable);region=NCACHE_REGION;type=.bss</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>
@@ -144,33 +152,39 @@
       </debug_configuration>
     </debug_configurations>
     <include_paths>
+      <include_path path="amazon-freertos/libraries/abstractions/platform/freertos/include"/>
+      <include_path path="amazon-freertos/libraries/abstractions/platform/include"/>
+      <include_path path="amazon-freertos/libraries/c_sdk/standard/mqtt/src"/>
       <include_path path="lwip/port"/>
       <include_path path="lwip/src"/>
       <include_path path="lwip/src/include"/>
       <include_path path="mbedtls/include"/>
     </include_paths>
     <source path="boards/evkmimxrt1020/aws_examples/greengrass_discovery_enet/config_files" target_path="amazon-freertos/config_files" type="c_include">
+      <files mask="FreeRTOSConfig.h"/>
       <files mask="FreeRTOSIPConfig.h"/>
       <files mask="aws_bufferpool_config.h"/>
       <files mask="aws_demo_config.h"/>
       <files mask="aws_ggd_config.h"/>
-      <files mask="aws_mqtt_agent_config.h"/>
+      <files mask="aws_iot_network_config.h"/>
       <files mask="aws_mqtt_config.h"/>
-      <files mask="aws_pkcs11_config.h"/>
       <files mask="aws_secure_sockets_config.h"/>
       <files mask="aws_shadow_config.h"/>
       <files mask="aws_wifi_config.h"/>
+      <files mask="iot_config.h"/>
+      <files mask="iot_mqtt_agent_config.h"/>
+      <files mask="iot_pkcs11_config.h"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/greengrass_discovery_enet/config_files" target_path="source" type="c_include">
+      <files mask="aws_mbedtls_config.h"/>
     </source>
     <source path="boards/evkmimxrt1020/aws_examples/greengrass_discovery_enet/linkscripts" target_path="linkscripts" type="src" toolchain="mcuxpresso">
       <files mask="bss.ldt"/>
       <files mask="data.ldt"/>
       <files mask="main_text.ldt"/>
     </source>
-    <source path="boards/evkmimxrt1020/aws_examples/greengrass_discovery_enet/mdk" target_path="src" type="configuration" toolchain="mdk">
+    <source path="boards/evkmimxrt1020/aws_examples/greengrass_discovery_enet/mdk" target_path="evkmimxrt1020" type="configuration" toolchain="mdk">
       <files mask="evkmimxrt1020_ram.ini"/>
-    </source>
-    <source path="boards/evkmimxrt1020/aws_examples/greengrass_discovery_enet" target_path="amazon-freertos/config_files" type="c_include">
-      <files mask="FreeRTOSConfig.h"/>
     </source>
     <source path="boards/evkmimxrt1020/aws_examples/greengrass_discovery_enet" target_path="board" type="c_include">
       <files mask="board.h"/>
@@ -186,12 +200,10 @@
       <files mask="readme.txt"/>
     </source>
     <source path="boards/evkmimxrt1020/aws_examples/greengrass_discovery_enet" target_path="source" type="c_include">
-      <files mask="aws_mbedtls_config.h"/>
       <files mask="lwipopts.h"/>
     </source>
     <source path="boards/evkmimxrt1020/aws_examples/greengrass_discovery_enet" target_path="source" type="src">
-      <files mask="aws_greengrass_discovery_demo.c"/>
-      <files mask="main.c"/>
+      <files mask="main_enet.c"/>
     </source>
   </example>
 </ksdk:examples>

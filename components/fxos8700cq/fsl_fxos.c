@@ -178,7 +178,7 @@ status_t FXOS_ReadSensorData(fxos_handle_t *fxos_handle, fxos_data_t *sensorData
     uint8_t tmp_buff[6] = {0};
     uint8_t i           = 0;
 
-    if (!FXOS_ReadReg(fxos_handle, OUT_X_MSB_REG, tmp_buff, 6) == kStatus_Success)
+    if ((!FXOS_ReadReg(fxos_handle, OUT_X_MSB_REG, tmp_buff, 6)) == kStatus_Success)
     {
         status = kStatus_Fail;
     }
@@ -188,7 +188,7 @@ status_t FXOS_ReadSensorData(fxos_handle_t *fxos_handle, fxos_data_t *sensorData
         ((int8_t *)sensorData)[i] = tmp_buff[i];
     }
 
-    if (!FXOS_ReadReg(fxos_handle, M_OUT_X_MSB_REG, tmp_buff, 6) == kStatus_Success)
+    if ((!FXOS_ReadReg(fxos_handle, M_OUT_X_MSB_REG, tmp_buff, 6)) == kStatus_Success)
     {
         status = kStatus_Fail;
     }

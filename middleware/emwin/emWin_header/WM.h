@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2018  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V5.48 - Graphical user interface for embedded applications **
+** emWin V5.50 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2019-09-02
+SUA period:               2011-08-19 - 2020-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : WM.h
@@ -283,6 +283,8 @@ typedef struct {
 #define WM_USER_DATA                52      /* Send immediately after setting user data */
 #define WM_SET_CALLBACK             53      /* Send immediately after setting user data */
 
+#define WM_GET_VALUE                54      /* Return widget specific value */
+
 #define WM_GESTURE                  0x0119  /* Gesture message */
 
 #define WM_TIMER                    0x0113  /* Timer has expired              (Keep the same as WIN32) */
@@ -293,9 +295,9 @@ typedef struct {
 *
 *       Motion messages
 */
-#define WM_MOTION_INIT    0
-#define WM_MOTION_MOVE    1
-#define WM_MOTION_GETPOS  2
+#define WM_MOTION_INIT       0
+#define WM_MOTION_MOVE       1
+#define WM_MOTION_GETPOS     2
 #define WM_MOTION_GETCONTEXT 3
 
 /*********************************************************************
@@ -321,8 +323,9 @@ typedef struct {
 #define WM_NOTIFICATION_GOT_FOCUS           8
 #define WM_NOTIFICATION_LOST_FOCUS          9
 #define WM_NOTIFICATION_SCROLL_CHANGED     10
+#define WM_NOTIFICATION_MOTION_STOPPED     11
 
-#define WM_NOTIFICATION_WIDGET             11      /* Space for widget defined notifications */
+#define WM_NOTIFICATION_WIDGET             12      /* Space for widget defined notifications */
 #define WM_NOTIFICATION_USER               16      /* Space for  application (user) defined notifications */
 
 /*********************************************************************
@@ -351,7 +354,7 @@ typedef struct {
 * binary or operator.
 */
 #define WM_CF_HASTRANS         (1UL << 0)  /* Has transparency. Needs to be defined for windows which do not fill the entire
-                                          section of their (client) rectangle. */
+                                              section of their (client) rectangle. */
 #define WM_CF_HIDE             (0UL << 1)  /* Hide window after creation (default !) */
 #define WM_CF_SHOW             (1UL << 1)  /* Show window after creation */
 #define WM_CF_MEMDEV           (1UL << 2)  /* Use memory device for redraws */
@@ -387,7 +390,11 @@ typedef struct {
 
 #define WM_CF_ZOOM             (1UL << 20) /* Window can be scaled automatically by multi touch gesture input */
 
-#define WM_CF_MOTION_R         (1UL << 21) // Window can be rotated
+#define WM_CF_MOTION_R         (1UL << 21) /* Window can be rotated */
+
+#define WM_CF_UNTOUCHABLE      (1UL << 22) /* Window is not touchable */
+
+#define WM_CF_APPWIZARD        (1UL << 23) /* Marks the window as AppWizard object */
 
 /*********************************************************************
 *
@@ -489,6 +496,7 @@ void    WM_SetHasTrans               (WM_HWIN hWin);
 void    WM_SetId                     (WM_HWIN hObj, int Id);
 void    WM_SetStayOnTop              (WM_HWIN hWin, int OnOff);
 void    WM_SetTransState             (WM_HWIN hWin, unsigned State);
+int     WM_SetUntouchable            (WM_HWIN hWin, int OnOff);
 void    WM_ShowWindow                (WM_HWIN hWin);
 void    WM_ValidateRect              (WM_HWIN hWin, const GUI_RECT * pRect);
 void    WM_ValidateWindow            (WM_HWIN hWin);
@@ -679,9 +687,12 @@ extern T_WM_EXEC_GESTURE WM__pExecGestures;
 
 /* ... */
 int WM_OnKey(int Key, int Pressed);
-void WM_MakeModal(WM_HWIN hWin);
-int WM_SetModalLayer(int LayerIndex);
-int WM_GetModalLayer(void);
+
+/* Modal related functions */
+void    WM_MakeModal(WM_HWIN hWin);
+WM_HWIN WM_GetModalWindow(void);
+int     WM_SetModalLayer(int LayerIndex);
+int     WM_GetModalLayer(void);
 
 /*********************************************************************
 *

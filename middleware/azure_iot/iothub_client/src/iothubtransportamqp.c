@@ -167,7 +167,7 @@ static int IotHubTransportAMQP_Subscribe_InputQueue(IOTHUB_DEVICE_HANDLE handle)
     // Codes_SRS_IOTHUBTRANSPORTAMQP_31_021: [IoTHubTransportAMQP_Subscribe_InputQueue shall return a failure as input queues are not implemented for AMQP]
     (void)handle;
     LogError("AMQP does not support input queues");
-    return __FAILURE__;
+    return MU_FAILURE;
 }
 
 static void IotHubTransportAMQP_Unsubscribe_InputQueue(IOTHUB_DEVICE_HANDLE handle)
@@ -180,6 +180,11 @@ static void IotHubTransportAMQP_Unsubscribe_InputQueue(IOTHUB_DEVICE_HANDLE hand
 static int IoTHubTransportAMQP_SetCallbackContext(TRANSPORT_LL_HANDLE handle, void* ctx)
 {
     return IoTHubTransport_AMQP_SetCallbackContext(handle, ctx);
+}
+
+static int IoTHubTransportAMQP_GetSupportedPlatformInfo(TRANSPORT_LL_HANDLE handle, PLATFORM_INFO_OPTION* info)
+{
+    return IoTHubTransport_AMQP_Common_GetSupportedPlatformInfo(handle, info);
 }
 
 static TRANSPORT_PROVIDER thisTransportProvider =
@@ -205,7 +210,8 @@ static TRANSPORT_PROVIDER thisTransportProvider =
     IotHubTransportAMQP_Subscribe_InputQueue,       /*pfIoTHubTransport_Subscribe_InputQueue IoTHubTransport_Subscribe_InputQueue; */
     IotHubTransportAMQP_Unsubscribe_InputQueue,     /*pfIoTHubTransport_Unsubscribe_InputQueue IoTHubTransport_Unsubscribe_InputQueue; */
     IoTHubTransportAMQP_SetCallbackContext,         /*pfIoTHubTransport_SetTransportCallbacks IoTHubTransport_SetTransportCallbacks; */
-    IoTHubTransportAMQP_GetTwinAsync                /*pfIoTHubTransport_GetTwinAsync IoTHubTransport_GetTwinAsync;*/
+    IoTHubTransportAMQP_GetTwinAsync,               /*pfIoTHubTransport_GetTwinAsync IoTHubTransport_GetTwinAsync;*/
+    IoTHubTransportAMQP_GetSupportedPlatformInfo      /*pfIoTHubTransport_GetSupportedPlatformInfo IoTHubTransport_GetSupportedPlatformInfo;*/
 };
 
 /* Codes_SRS_IOTHUBTRANSPORTAMQP_09_019: [This function shall return a pointer to a structure of type TRANSPORT_PROVIDER having the following values for it's fields:
@@ -222,7 +228,8 @@ IoTHubTransport_Subscribe = IoTHubTransportAMQP_Subscribe
 IoTHubTransport_Unsubscribe = IoTHubTransportAMQP_Unsubscribe
 IoTHubTransport_DoWork = IoTHubTransportAMQP_DoWork
 IoTHubTransport_SetRetryPolicy = IoTHubTransportAMQP_SetRetryPolicy
-IoTHubTransport_SetOption = IoTHubTransportAMQP_SetOption]*/
+IoTHubTransport_SetOption = IoTHubTransportAMQP_SetOption
+IoTHubTransport_GetSupportedPlatformInfo = IoTHubTransportAMQP_GetSupportedPlatformInfo]*/
 extern const TRANSPORT_PROVIDER* AMQP_Protocol(void)
 {
     return &thisTransportProvider;

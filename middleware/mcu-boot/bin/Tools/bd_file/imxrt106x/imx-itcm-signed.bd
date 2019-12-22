@@ -76,14 +76,6 @@ section (SEC_CSF_AUTHENTICATE_DATA;
 {
 }
 
-section (SEC_SET_ENGINE;
-    SetEngine_HashAlgorithm = "sha256", // "sha1", "Sha256", "sha512" 
-    SetEngine_Engine = "DCP", // "ANY", "SAHARA", "RTIC", "DCP", "CAAM" and "SW" 
-    SetEngine_EngineConfiguration = "0") // "valid engine configuration values"
-{
-}
-
-
 section (SEC_UNLOCK;
     Unlock_Engine = "SNVS", // "SRTC", "CAAM", SNVS and OCOTP 
     Unlock_features = "ZMK WRITE" // "Refer to Table-24" 

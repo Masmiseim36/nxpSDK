@@ -197,27 +197,27 @@ void FMSTR_ProcessSerial(void)
 
         /* Flush data */
         if(endOfPacket)
+        {
             FMSTR_SERIAL_DRV.Flush();
+            _fmstr_wFlags.flg.bTxWaitTC = 1;
 
-        /* waiting for transmission complete flag? */
+#if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
+            /* Enable UART Transfer Complete interrupt in case of interrupt mode of communication. */
+            if(FMSTR_SERIAL_DRV.IsTransmitterActive())
+            {
+                /* Enable Trasmit complete interrupt */
+                FMSTR_SERIAL_DRV.EnableTransmitCompleteInterrupt(FMSTR_TRUE);
+            }
+#endif
+        }
+
+        /* when SCI TX buffering is enabled, we must first wait until all
+            characters are physically transmitted (before disabling transmitter) */
         if(_fmstr_wFlags.flg.bTxWaitTC && !FMSTR_SERIAL_DRV.IsTransmitterActive())
         {
             /* after TC, we can switch to listen mode safely */
             _FMSTR_Listen();
         }
-
-
-//TODO: solve single wire detection
-//#if !FMSTR_SCI_TWOWIRE_ONLY
-//        /* read-out and ignore any received character (loopback) */
-//        if(FMSTR_SERIAL_DRV.IsReceiveRegFull())
-//        {
-//            /*lint -esym(550, rxChar) */
-//            volatile FMSTR_U8 rxChar;
-//            rxChar = FMSTR_SERIAL_DRV.GetChar();
-//            FMSTR_UNUSED(rxChar);
-//        }
-//#endif
     }
     /* transmitter not active, able to receive */
     else
@@ -236,7 +236,7 @@ void FMSTR_ProcessSerial(void)
         }
 #if FMSTR_DEBUG_TX
         /* time to send another test frame? */
-        if(fmstr_bDebugTx && fmstr_nDebugTxPollCount == 0)
+        if(fmstr_doDebugTx && fmstr_nDebugTxPollCount == 0)
         {
             /* yes, start sending it now */
             if(FMSTR_SendTestFrame(&fmstr_pCommBuffer[2]))
@@ -264,16 +264,16 @@ static void _FMSTR_Listen(void)
     /* disable transmitter state machine */
     _fmstr_wFlags.flg.bTxActive = 0U;
     _fmstr_wFlags.flg.bTxWaitTC = 0U;
+
     /* disable transmitter, enable receiver (enables single-wire connection) */
-#if !FMSTR_SCI_TWOWIRE_ONLY
     FMSTR_SERIAL_DRV.EnableTransmit(FMSTR_FALSE);
     FMSTR_SERIAL_DRV.EnableReceive(FMSTR_TRUE);
-#endif
 
     /* disable transmit, enable receive interrupts */
 #if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
-    FMSTR_SERIAL_DRV.EnableTransmitInterrupt(FMSTR_FALSE);   /* disable SCI transmit interrupt */
-    FMSTR_SERIAL_DRV.EnableReceiveInterrupt(FMSTR_TRUE);   /* enable SCI receive interrupt */
+    FMSTR_SERIAL_DRV.EnableTransmitInterrupt(FMSTR_FALSE);   /* disable Serial transmit interrupt */
+    FMSTR_SERIAL_DRV.EnableTransmitCompleteInterrupt(FMSTR_FALSE);   /* disable Serial transmit complete interrupt */
+    FMSTR_SERIAL_DRV.EnableReceiveInterrupt(FMSTR_TRUE);   /* enable Serial receive interrupt */
 #endif /* FMSTR_SHORT_INTR || FMSTR_LONG_INTR */
 
 #if FMSTR_DEBUG_TX
@@ -362,10 +362,9 @@ static void _FMSTR_SerialSendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, 
     _fmstr_wFlags.flg.bTxLastCharSOB = 0U;
 
     /* disable receiver, enable transmitter (single-wire communication) */
-#if !FMSTR_SCI_TWOWIRE_ONLY
     FMSTR_SERIAL_DRV.EnableReceive(FMSTR_FALSE);
     FMSTR_SERIAL_DRV.EnableTransmit(FMSTR_TRUE);
-#endif
+
     /* kick on the SCI transmission (also clears TX Empty flag on some platforms) */
     (void)FMSTR_SERIAL_DRV.IsTransmitRegEmpty();
     FMSTR_SERIAL_DRV.PutChar(FMSTR_SOB);
@@ -407,31 +406,12 @@ static FMSTR_BOOL _FMSTR_Tx(FMSTR_BCHR* getTxChar)
                 return FMSTR_FALSE;
             }
         }
-        
+
         /* no, advance tx buffer pointer */
         fmstr_nTxTodo--;
         fmstr_pTxBuff = FMSTR_SkipInBuffer(fmstr_pTxBuff, 1U);
         return FMSTR_FALSE;
     }
-
-    /* when SCI TX buffering is enabled, we must first wait until all
-       characters are physically transmitted (before disabling transmitter) */
-
-    /* waiting for transmission complete flag? */
-    if(!FMSTR_SERIAL_DRV.IsTransmitterActive())
-    {
-        /* after TC, we can switch to listen mode safely */
-        _FMSTR_Listen();
-    }
-    else
-    {
-        _fmstr_wFlags.flg.bTxWaitTC = 1;
-    }
-    /* wait for SCI TC interrupt */
-// TODO What is this??
-    //    #if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
-//    FMSTR_SCI_ETCI();
-//    #endif
 
     return FMSTR_TRUE;
 }
@@ -526,7 +506,7 @@ static FMSTR_BOOL _FMSTR_Rx(FMSTR_BCHR rxChar)
                 /* command code comes first in the message */
                 /*lint -e{534} return value is not used */
                 pMessageIO = FMSTR_ValueFromBuffer8(&nCmd, pMessageIO);
-                /* lenght of command follows */
+                /* length of command follows */
                 /*lint -e{534} return value is not used */
                 pMessageIO = FMSTR_ValueFromBuffer8(&nSize, pMessageIO);
 
@@ -562,7 +542,7 @@ static FMSTR_BOOL _FMSTR_Rx(FMSTR_BCHR rxChar)
             }
         }
     }
-    
+
     return FMSTR_FALSE;
 }
 
@@ -585,10 +565,14 @@ static FMSTR_BOOL _FMSTR_SerialInit(void)
         return FMSTR_FALSE;
     if(!FMSTR_SERIAL_DRV.EnableReceive)
         return FMSTR_FALSE;
+#if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
     if(!FMSTR_SERIAL_DRV.EnableTransmitInterrupt)
+        return FMSTR_FALSE;
+    if(!FMSTR_SERIAL_DRV.EnableTransmitCompleteInterrupt)
         return FMSTR_FALSE;
     if(!FMSTR_SERIAL_DRV.EnableReceiveInterrupt)
         return FMSTR_FALSE;
+#endif
     if(!FMSTR_SERIAL_DRV.IsTransmitRegEmpty)
         return FMSTR_FALSE;
     if(!FMSTR_SERIAL_DRV.IsReceiveRegFull)
@@ -605,12 +589,9 @@ static FMSTR_BOOL _FMSTR_SerialInit(void)
     /* Call initialization of serial driver */
     FMSTR_SERIAL_DRV.Init();
 
-    /* Initialize SCI and JTAG interface */
-#if FMSTR_SCI_TWOWIRE_ONLY
-    /* to enable TX and RX together in FreeMASTER initialization */
+    /* Initialize Serial interface */
     FMSTR_SERIAL_DRV.EnableReceive(FMSTR_TRUE);   /* enable SCI receive interrupt */
     FMSTR_SERIAL_DRV.EnableTransmit(FMSTR_TRUE);   /* enable SCI transmit interrupt */
-#endif
 
 #if FMSTR_SHORT_INTR
     _FMSTR_RingBuffCreate(&fmstr_rxQueue, fmstr_rxBuff, FMSTR_COMM_RQUEUE_SIZE);

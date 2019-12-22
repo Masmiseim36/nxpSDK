@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016, 2018 NXP
+ * Copyright 2016 - 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -12,6 +12,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+#if (defined(USB_HOST_CONFIG_BATTERY_CHARGER) && (USB_HOST_CONFIG_BATTERY_CHARGER > 0U)) && \
+        (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+#define USB_HOST_APP_CHARGER_TYPE_SWITCH (1)
+#endif
 
 /*! @brief buffer for receiving report descriptor and data */
 #define HID_BUFFER_SIZE 200
@@ -47,6 +52,11 @@ typedef struct _usb_host_mouse_instance
     uint8_t runWaitState;   /*!< mouse application wait status, go to next run status when the wait status success */
     uint16_t maxPacketSize; /*!< Interrupt in max packet size */
     uint8_t *mouseBuffer;   /*!< use to receive report descriptor and data */
+#if (defined USB_HOST_APP_CHARGER_TYPE_SWITCH) && (USB_HOST_APP_CHARGER_TYPE_SWITCH)
+    volatile uint8_t switchChargerTypeTriggered;
+    uint8_t chargerType;
+    uint8_t vbusState;
+#endif
 } usb_host_mouse_instance_t;
 
 /*******************************************************************************

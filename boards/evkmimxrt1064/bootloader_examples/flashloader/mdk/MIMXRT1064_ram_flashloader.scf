@@ -1,4 +1,4 @@
-#! armcc -E
+#!armclang --target=arm-arm-none-eabi -mcpu=cortex-m7 -E -x c
 /*
 ** ###################################################################
 **     Processors:          MIMXRT1064CVJ5A
@@ -11,8 +11,8 @@
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
 **
-**     Copyright (c) 2015 Freescale Semiconductor, Inc.
-**     Copyright 2016-2018 NXP
+**     Copyright 2016 Freescale Semiconductor, Inc.
+**     Copyright 2016-2019 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -26,8 +26,10 @@
 #define m_interrupts_start             0x20002000
 #define m_interrupts_size              0x00000400
 
-#define m_text_start                   0x20002400
-#define m_text_size                    0x0001DBFF
+//#define m_text_start                   0x20002400
+//#define m_text_size                    0x0001DBFF
+#define m_text_start                   0x20002800
+#define m_text_size                    0x0001D7FF
 
 #define m_data_start                   0x20208000
 #define m_data_size                    0x00017FFF
@@ -61,7 +63,7 @@ LR_m_text m_text_start m_text_size {   ; load region size_region
 
 LR_m_interrupts m_interrupts_start m_interrupts_size {
   VECTOR_ROM m_interrupts_start m_interrupts_size { ; load address = execution address
-    * (RESET,+FIRST)
+    * (.isr_vector,+FIRST)
   }
 }
 

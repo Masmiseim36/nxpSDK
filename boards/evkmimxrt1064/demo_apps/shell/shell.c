@@ -138,7 +138,7 @@ int main(void)
 {
     BOARD_ConfigMPU();
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /* Enable clock gate for GPIO1 */

@@ -61,47 +61,6 @@ void APP_CacheConfig(bool enable)
     }
 }
 
-/* MPU configuration. */
-void APP_ConfigMPU(void)
-{
-    /* Disable I cache and D cache */
-    SCB_DisableICache();
-    SCB_DisableDCache();
-
-    /* Disable MPU */
-    ARM_MPU_Disable();
-
-    /* Region 0 setting */
-    MPU->RBAR = ARM_MPU_RBAR(0, 0xC0000000U);
-    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 2, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_512MB);
-
-    /* Region 1 setting */
-    MPU->RBAR = ARM_MPU_RBAR(1, 0x80000000U);
-    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 2, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_1GB);
-
-    /* Region 2 setting */
-    MPU->RBAR = ARM_MPU_RBAR(2, 0x60000000U);
-    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 2, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_512MB);
-
-    /* Region 3 setting */
-    MPU->RBAR = ARM_MPU_RBAR(3, 0x00000000U);
-    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 2, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_512MB);
-
-    /* Region 3 setting */
-    MPU->RBAR = ARM_MPU_RBAR(3, 0x20000000U);
-    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 2, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_1MB);
-
-    /* Region 3 setting */
-    MPU->RBAR = ARM_MPU_RBAR(4, 0x20200000U);
-    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 1, 0, ARM_MPU_REGION_SIZE_512KB);
-
-    /* Enable MPU */
-    ARM_MPU_Enable(MPU_CTRL_PRIVDEFENA_Msk);
-    /* Enable I cache and D cache */
-    SCB_EnableDCache();
-    SCB_EnableICache();
-}
-
 
 uint32_t APP_MemoryInit(void)
 {
@@ -152,7 +111,7 @@ int main(void)
     bool pushResult       = false;
     volatile uint32_t readDummy;
 
-    APP_ConfigMPU();
+    BOARD_ConfigMPU();
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();

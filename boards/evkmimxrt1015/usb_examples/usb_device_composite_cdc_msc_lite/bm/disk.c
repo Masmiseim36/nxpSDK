@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2017, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -523,6 +523,7 @@ usb_status_t USB_DeviceMscEndpointsInit(void)
     epCallback.callbackParam = (void *)mscHandle;
 
     epInitStruct.zlt = 0;
+    epInitStruct.interval = 0;
     epInitStruct.transferType = USB_ENDPOINT_BULK;
     epInitStruct.endpointAddress =
         USB_MSC_DISK_BULK_IN_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
@@ -542,6 +543,7 @@ usb_status_t USB_DeviceMscEndpointsInit(void)
     epCallback.callbackParam = (void *)mscHandle;
 
     epInitStruct.zlt = 0;
+    epInitStruct.interval = 0;
     epInitStruct.transferType = USB_ENDPOINT_BULK;
     epInitStruct.endpointAddress =
         USB_MSC_DISK_BULK_OUT_ENDPOINT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);

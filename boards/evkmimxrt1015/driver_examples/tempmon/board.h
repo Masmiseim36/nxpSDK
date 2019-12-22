@@ -39,10 +39,10 @@
 #define BOARD_ACCEL_I2C_CLOCK_FREQ (CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8 / (BOARD_ACCEL_I2C_CLOCK_SOURCE_DIVIDER + 1U))
 
 #define BOARD_CODEC_I2C_BASEADDR LPI2C1
+#define BOARD_CODEC_I2C_INSTANCE 1U
 #define BOARD_CODEC_I2C_CLOCK_SOURCE_SELECT (0U)
 #define BOARD_CODEC_I2C_CLOCK_SOURCE_DIVIDER (5U)
-#define BOARD_CODEC_I2C_CLOCK_FREQ \
-    ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (BOARD_CODEC_I2C_CLOCK_SOURCE_DIVIDER + 1U))
+#define BOARD_CODEC_I2C_CLOCK_FREQ (10000000U)
 
 /*! @brief The USER_LED used for board */
 #define LOGIC_LED_ON (0U)
@@ -90,7 +90,7 @@
 /*! @brief The WIFI-QCA shield pin. */
 #define BOARD_INITSILEX2401SHIELD_PWRON_GPIO GPIO2                    /*!< GPIO device name: GPIO */
 #define BOARD_INITSILEX2401SHIELD_PWRON_PORT 2U                       /*!< PORT device index: 2 */
-#define BOARD_INITSILEX2401SHIELD_PWRON_GPIO_PIN 7U                   /*!< PIO3 pin index: 7 */
+#define BOARD_INITSILEX2401SHIELD_PWRON_PIN 7U                        /*!< PIO3 pin index: 7 */
 #define BOARD_INITSILEX2401SHIELD_PWRON_PIN_NAME GPIO2_07             /*!< Pin name */
 #define BOARD_INITSILEX2401SHIELD_PWRON_LABEL "PWRON"                 /*!< Label */
 #define BOARD_INITSILEX2401SHIELD_PWRON_NAME "PWRON"                  /*!< Identifier name */
@@ -98,7 +98,7 @@
 
 #define BOARD_INITSILEX2401SHIELD_IRQ_GPIO GPIO2                   /*!< GPIO device name: GPIO */
 #define BOARD_INITSILEX2401SHIELD_IRQ_PORT 2U                      /*!< PORT device index: 2 */
-#define BOARD_INITSILEX2401SHIELD_IRQ_GPIO_PIN 6U                  /*!< PIO2 pin index: 6 */
+#define BOARD_INITSILEX2401SHIELD_IRQ_PIN 6U                       /*!< PIO2 pin index: 6 */
 #define BOARD_INITSILEX2401SHIELD_IRQ_PIN_NAME GPIO2_06            /*!< Pin name */
 #define BOARD_INITSILEX2401SHIELD_IRQ_LABEL "IRQ"                  /*!< Label */
 #define BOARD_INITSILEX2401SHIELD_IRQ_NAME "IRQ"                   /*!< Identifier name */

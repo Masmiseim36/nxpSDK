@@ -1,5 +1,5 @@
 /*
- * Copyright  2017 NXP
+ * Copyright  2017-2019 NXP
  * All rights reserved.
  *
  *
@@ -81,6 +81,7 @@ void BOARD_InitLcd(void)
     gpio_pin_config_t config = {
         kGPIO_DigitalOutput,
         0,
+        kGPIO_NoIntmode,
     };
 
     /* Backlight. */
@@ -162,6 +163,9 @@ void APP_ELCDIF_Init(void)
     };
 
     ELCDIF_RgbModeInit(APP_ELCDIF, &config);
+#if (defined(APP_ELCDIF_HAS_DISPLAY_INTERFACE) && APP_ELCDIF_HAS_DISPLAY_INTERFACE)
+    BOARD_InitDisplayInterface();
+#endif
 
     /* Load the LUT data. */
     ELCDIF_UpdateLut(APP_ELCDIF, kELCDIF_Lut0, 0, lutData[0], ELCDIF_LUT_ENTRY_NUM);

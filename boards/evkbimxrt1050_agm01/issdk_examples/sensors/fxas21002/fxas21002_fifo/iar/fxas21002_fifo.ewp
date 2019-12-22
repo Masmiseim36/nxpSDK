@@ -182,6 +182,7 @@
           <name>CCDefines</name>
           <state>DEBUG</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -258,7 +259,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -339,17 +340,18 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkbimxrt1050/xip</state>
+          <state>$PROJ_DIR$/../../../../../../evkbimxrt1050/xip</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/template</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1186,6 +1188,7 @@
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1262,7 +1265,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -1343,17 +1346,18 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkbimxrt1050/xip</state>
+          <state>$PROJ_DIR$/../../../../../../evkbimxrt1050/xip</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/template</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2189,6 +2193,7 @@
           <state>SKIP_SYSCLK_INIT</state>
           <state>DEBUG</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2265,7 +2270,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -2346,17 +2351,18 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkbimxrt1050/xip</state>
+          <state>$PROJ_DIR$/../../../../../../evkbimxrt1050/xip</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/template</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3191,6 +3197,7 @@
           <name>CCDefines</name>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3348,17 +3355,18 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkbimxrt1050/xip</state>
+          <state>$PROJ_DIR$/../../../../../../evkbimxrt1050/xip</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/template</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4195,6 +4203,7 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4271,7 +4280,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -4352,17 +4361,18 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkbimxrt1050/xip</state>
+          <state>$PROJ_DIR$/../../../../../../evkbimxrt1050/xip</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/template</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5198,6 +5208,7 @@
           <state>NDEBUG</state>
           <state>SKIP_SYSCLK_INIT</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5274,7 +5285,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -5355,17 +5366,18 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkbimxrt1050/xip</state>
+          <state>$PROJ_DIR$/../../../../../../evkbimxrt1050/xip</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/template</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -6054,9 +6066,6 @@
     <file>
       <name>$PROJ_DIR$/../clock_config.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/template/RTE_Device.h</name>
-    </file>
   </group>
   <group>
     <name>source</name>
@@ -6337,19 +6346,13 @@
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/core_cm7.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_common_tables.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_const_structs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_math.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_compiler.h</name>
@@ -6364,6 +6367,9 @@
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/core_armv81mml.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/core_armv8mbl.h</name>
     </file>
     <file>
@@ -6374,6 +6380,15 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/mpu_armv8.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_common_tables.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_const_structs.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_math.h</name>
     </file>
   </group>
   <group>

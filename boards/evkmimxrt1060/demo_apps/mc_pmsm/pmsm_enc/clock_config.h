@@ -1,10 +1,9 @@
 /*
- * Copyright 2019-2019 NXP
+ * Copyright 2018-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
 #ifndef _CLOCK_CONFIG_H_
 #define _CLOCK_CONFIG_H_
 
@@ -63,7 +62,7 @@ void BOARD_InitBootClocks(void);
 #define BOARD_BOOTCLOCKRUN_GPT1_IPG_CLK_HIGHFREQ 75000000UL
 #define BOARD_BOOTCLOCKRUN_GPT2_IPG_CLK_HIGHFREQ 75000000UL
 #define BOARD_BOOTCLOCKRUN_IPG_CLK_ROOT 150000000UL
-#define BOARD_BOOTCLOCKRUN_LCDIF_CLK_ROOT 9642857UL
+#define BOARD_BOOTCLOCKRUN_LCDIF_CLK_ROOT 67500000UL
 #define BOARD_BOOTCLOCKRUN_LPI2C_CLK_ROOT 60000000UL
 #define BOARD_BOOTCLOCKRUN_LPSPI_CLK_ROOT 105600000UL
 #define BOARD_BOOTCLOCKRUN_LVDS1_CLK 1200000000UL
@@ -101,6 +100,9 @@ extern const clock_usb_pll_config_t usb1PllConfig_BOARD_BootClockRUN;
 /*! @brief Sys PLL for BOARD_BootClockRUN configuration.
  */
 extern const clock_sys_pll_config_t sysPllConfig_BOARD_BootClockRUN;
+/*! @brief Video PLL set for BOARD_BootClockRUN configuration.
+ */
+extern const clock_video_pll_config_t videoPllConfig_BOARD_BootClockRUN;
 
 /*******************************************************************************
  * API for BOARD_BootClockRUN configuration

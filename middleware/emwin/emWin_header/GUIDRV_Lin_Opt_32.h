@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2018  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V5.48 - Graphical user interface for embedded applications **
+** emWin V5.50 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2019-09-02
+SUA period:               2011-08-19 - 2020-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUIDRV_Lin_Opt_32.h
@@ -69,7 +69,7 @@ static void _FillRectOpt32(GUI_DEVICE * pDevice, int x0, int y0, int x1, int y1)
   OffLine   = pContext->vxSizePhys;
   pDest     = NULL;
   if (GUI_pContext->DrawMode & LCD_DRAWMODE_XOR) {
-    IndexMask = pDevice->pColorConvAPI->pfGetIndexMask();
+    IndexMask = pDevice->pColorConvAPI->pfGetIndexMask() & 0x00FFFFFF;
     Off0      = XY2OFF32(pContext->vxSizePhys, x0, y0);
     if (RemPixels) {
       for (RemLines = NumLines; RemLines; RemLines--) {

@@ -14,7 +14,7 @@
  *********************/
 #define TERMINAL_ANIM_TIME   100 /*[ms]*/
 #define TERMINAL_NO_INPUT    0   /*Do not create Text area and Keyboard*/
-#define TERMINAL_WIDTH       (LV_HOR_RES / 2)
+#define TERMINAL_WIDTH       (LV_HOR_RES)
 #define TERMINAL_HEIGHT      (LV_VER_RES)
 #define TERMINAL_LOG_LENGTH  512        /*Characters*/
 

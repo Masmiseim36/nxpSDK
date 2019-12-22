@@ -23,7 +23,6 @@
 #include "freemaster_private.h"
 #include "freemaster_protocol.h"
 #include "freemaster_utils.h"
-#include "sha1.h"
 
 #if !(FMSTR_DISABLE)
 
@@ -55,12 +54,18 @@ FMSTR_BPTR _FMSTR_WriteMem(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
 FMSTR_BOOL fmstr_doDebugTx;
 #endif
 
+#if FMSTR_CFG_F1_RESTRICTED_ACCESS
+#define SHA1_BLOCK_SIZE 20
 /* Salt challenge value used between AUTH1 and AUTH2 steps of password authentication. */
 static FMSTR_U8 fmstr_authSalt[FMSTR_AUTHENT_PRTCL_SHA1_SALT_LEN];
-
-/* Currently granted access (one of FMSTR_RESTRICTED_ACCESS_xxx).
-   The value is evaluated only if FMSTR_CFG_F1_RESTRICTED_ACCESS > 0 */
+/* Currently granted access (one of FMSTR_RESTRICTED_ACCESS_xxx). */
 static FMSTR_U8 fmstr_grantedAccess;
+/* To save stack usage, we have the following SHA context variables static, although
+ * they could be local in Auth2 function. */
+static FMSTR_SHA1_CTX fmstr_sha1Ctx;
+static FMSTR_U8 fmstr_accessKey[SHA1_BLOCK_SIZE];
+static FMSTR_U8 fmstr_localKey[SHA1_BLOCK_SIZE];
+#endif /* FMSTR_CFG_F1_RESTRICTED_ACCESS */
 
 /**************************************************************************//*!
 *
@@ -109,9 +114,20 @@ FMSTR_BOOL FMSTR_Init(void)
     fmstr_doDebugTx = FMSTR_TRUE;
 #endif
 
+#if FMSTR_CFG_F1_RESTRICTED_ACCESS
     /* Initialize the access protection variables */
     FMSTR_MemSet(fmstr_authSalt, 0xaa, sizeof(fmstr_authSalt));
     fmstr_grantedAccess = FMSTR_RESTRICTED_ACCESS_NO;
+
+    /* set the access level to the highest "open" level (the one without a password) */
+    for(int access=FMSTR_RESTRICTED_ACCESS_R; access<=FMSTR_RESTRICTED_ACCESS_RWF; access++)
+    {
+        if(_FMSTR_GetAccessPassword(access))
+            break; /* this level (and all levels above) are protected by a password */
+        else
+            fmstr_grantedAccess = access; /* level not protected by a password is set by default */
+    }
+#endif
 
     return FMSTR_TRUE;
 }
@@ -129,6 +145,13 @@ FMSTR_BOOL FMSTR_Init(void)
 
 void FMSTR_Poll(void)
 {
+    /* Increase entropy in each poll round */
+#if FMSTR_CFG_F1_RESTRICTED_ACCESS
+    static FMSTR_U8 e = 0x7;
+    FMSTR_Randomize(e);
+    e += 13;
+#endif
+
     FMSTR_TRANSPORT.Poll();
 }
 
@@ -182,10 +205,12 @@ FMSTR_BOOL FMSTR_ProtocolDecoder(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR
             responseEnd = _FMSTR_ReadMem(msgBuffIO, &statusCode);
             break;
 
+#ifdef FMSTR_PLATFORM_BASE_ADDRESS
         /* read a block of memory with base address*/
         case FMSTR_CMD_READMEM_BA:
             responseEnd = _FMSTR_ReadMemBaseAddress(msgBuffIO, &statusCode);
             break;
+#endif
 
 #endif /* FMSTR_USE_READMEM */
 
@@ -286,7 +311,7 @@ FMSTR_BOOL FMSTR_ProtocolDecoder(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR
         FMSTR_SIZE respSize = (FMSTR_SIZE)(responseEnd - msgBuffIO);
 #if FMSTR_DEBUG_TX
         /* the first sane frame received from PC Host ends test frame sending */
-        fmstr_doDebugTx = 0;
+        fmstr_doDebugTx = FMSTR_FALSE;
 #endif
         FMSTR_SendResponse(msgBuffIO, respSize, statusCode);
         return FMSTR_TRUE;
@@ -398,9 +423,11 @@ FMSTR_BPTR _FMSTR_GetBoardConfig(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
     case 6: /* F1 */
         response = FMSTR_ValueToBuffer8(response, FMSTR_CFG_F1);
         break;
+#ifdef FMSTR_PLATFORM_BASE_ADDRESS
     case 7: /* BA */
         response = FMSTR_SizeToBuffer(response, FMSTR_PLATFORM_BASE_ADDRESS);
         break;
+#endif
     case 8: /* RC */
         response = FMSTR_ValueToBuffer8(response, FMSTR_USE_RECORDER);
         break;
@@ -466,6 +493,8 @@ FMSTR_CHAR* _FMSTR_GetAccessPassword(FMSTR_U8 requiredAccess)
 *
 ******************************************************************************/
 
+#if FMSTR_CFG_F1_RESTRICTED_ACCESS
+
 FMSTR_BPTR _FMSTR_AuthenticationStep1(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
 {
     FMSTR_BPTR response = msgBuffIO;
@@ -493,6 +522,7 @@ FMSTR_BPTR _FMSTR_AuthenticationStep1(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
     return FMSTR_CopyToBuffer(response, fmstr_authSalt, sizeof(fmstr_authSalt));
 }
 
+#endif /* FMSTR_CFG_F1_RESTRICTED_ACCESS */
 
 /**************************************************************************//*!
 *
@@ -506,21 +536,20 @@ FMSTR_BPTR _FMSTR_AuthenticationStep1(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
 *
 ******************************************************************************/
 
+#if FMSTR_CFG_F1_RESTRICTED_ACCESS
+
 FMSTR_BPTR _FMSTR_AuthenticationStep2(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
 {
     FMSTR_BPTR response = msgBuffIO;
     FMSTR_U8 reqAccess = 0;
     FMSTR_U8 access;
     FMSTR_CHAR* pass;
-    SHA1_CTX sha1Ctx;
-    FMSTR_U8 accessKey[SHA1_BLOCK_SIZE];
-    FMSTR_U8 localKey[SHA1_BLOCK_SIZE];
 
     /* Get the Required access from incomming buffer */
     msgBuffIO = FMSTR_ValueFromBuffer8(&reqAccess, msgBuffIO);
 
     /* Get access key provided by client */
-    /* msgBuffIO = */FMSTR_CopyFromBuffer(accessKey, msgBuffIO, sizeof(accessKey));
+    /* msgBuffIO = */FMSTR_CopyFromBuffer(fmstr_accessKey, msgBuffIO, sizeof(fmstr_accessKey));
 
     /* Evaluate all levels (from 3..1) */
     for(access=FMSTR_RESTRICTED_ACCESS_RWF; access>=FMSTR_RESTRICTED_ACCESS_R; access--)
@@ -530,24 +559,24 @@ FMSTR_BPTR _FMSTR_AuthenticationStep2(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
 
 #if FMSTR_USE_HASHED_PASSWORDS
         /* Password is already hashed */
-        FMSTR_MemCpyFrom(localKey, pass, sizeof(localKey));
+        FMSTR_MemCpyFrom(fmstr_localKey, pass, sizeof(fmstr_localKey));
 #else
         /* Password was provided as a string, compute SHA1 hash now */
-        FMSTR_MemSet(localKey, 0, sizeof(localKey));
-        sha1_init(&sha1Ctx);
-        sha1_update(&sha1Ctx, (FMSTR_U8*)pass, FMSTR_StrLen(pass));
-        sha1_final(&sha1Ctx, localKey);
+        FMSTR_MemSet(fmstr_localKey, 0, sizeof(fmstr_localKey));
+        FMSTR_Sha1Init(&fmstr_sha1Ctx);
+        FMSTR_Sha1Update(&fmstr_sha1Ctx, (FMSTR_U8*)pass, FMSTR_StrLen(pass));
+        FMSTR_Sha1Final(&fmstr_sha1Ctx, fmstr_localKey);
 #endif
 
         /* compute correct key as SHA1(salt + SHA1(password) + salt) */
-        sha1_init(&sha1Ctx);
-        sha1_update(&sha1Ctx, fmstr_authSalt, sizeof(fmstr_authSalt));
-        sha1_update(&sha1Ctx, localKey, sizeof(localKey));
-        sha1_update(&sha1Ctx, fmstr_authSalt, sizeof(fmstr_authSalt));
-        sha1_final(&sha1Ctx, localKey);
+        FMSTR_Sha1Init(&fmstr_sha1Ctx);
+        FMSTR_Sha1Update(&fmstr_sha1Ctx, fmstr_authSalt, sizeof(fmstr_authSalt));
+        FMSTR_Sha1Update(&fmstr_sha1Ctx, fmstr_localKey, sizeof(fmstr_localKey));
+        FMSTR_Sha1Update(&fmstr_sha1Ctx, fmstr_authSalt, sizeof(fmstr_authSalt));
+        FMSTR_Sha1Final(&fmstr_sha1Ctx, fmstr_localKey);
 
         /* is access key valid? (i.e. is client's password valid?) */
-        if(FMSTR_MemCmp(localKey, accessKey, sizeof(localKey)) == 0)
+        if(FMSTR_MemCmp(fmstr_localKey, fmstr_accessKey, sizeof(fmstr_localKey)) == 0)
             break;
     }
 
@@ -569,6 +598,8 @@ FMSTR_BPTR _FMSTR_AuthenticationStep2(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
 
     return response;
 }
+
+#endif /* FMSTR_CFG_F1_RESTRICTED_ACCESS */
 
 /**************************************************************************//*!
 *
@@ -633,6 +664,8 @@ FMSTR_BPTR _FMSTR_ReadMem(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
 *
 ******************************************************************************/
 
+#ifdef FMSTR_PLATFORM_BASE_ADDRESS
+
 FMSTR_BPTR _FMSTR_ReadMemBaseAddress(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
 {
     FMSTR_BPTR response = msgBuffIO;
@@ -648,7 +681,7 @@ FMSTR_BPTR _FMSTR_ReadMemBaseAddress(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
     }
 #endif
 
-    /* Get the Relative addess to base from incomming buffer */
+    /* Get the Relative address to base from incoming buffer */
     msgBuffIO = FMSTR_IndexFromBuffer(&index, msgBuffIO);
     /* Get the Size from incomming buffer */
     msgBuffIO = FMSTR_SizeFromBuffer(&size, msgBuffIO);
@@ -674,6 +707,7 @@ FMSTR_BPTR _FMSTR_ReadMemBaseAddress(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
     *retStatus = FMSTR_STS_OK;
     return FMSTR_CopyToBuffer(response, addr, size);
 }
+#endif /* FMSTR_PLATFORM_BASE_ADDRESS */
 
 /**************************************************************************//*!
 *

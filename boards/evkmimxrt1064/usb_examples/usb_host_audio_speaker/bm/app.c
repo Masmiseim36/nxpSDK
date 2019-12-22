@@ -123,7 +123,7 @@ usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
                            uint32_t eventCode)
 {
     usb_status_t status = kStatus_USB_Success;
-    switch (eventCode)
+    switch (eventCode & 0x0000FFFFU)
     {
         case kUSB_HostEventAttach:
             USB_HostKeypadEvent(deviceHandle, configurationHandle, eventCode);
@@ -142,6 +142,10 @@ usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
         case kUSB_HostEventDetach:
             USB_HostKeypadEvent(deviceHandle, configurationHandle, eventCode);
             status = USB_HostAudioEvent(deviceHandle, configurationHandle, eventCode);
+            break;
+
+        case kUSB_HostEventEnumerationFail:
+            usb_echo("enumeration failed\r\n");
             break;
 
         default:

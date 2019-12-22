@@ -34,12 +34,12 @@ static panic_data_t panic_data;
 #if defined(__IAR_SYSTEMS_ICC__)
 /* __get_LR() declaration not included to avoid issues with different versions of IAR compiler */
 #elif defined(__GNUC__)
-#define __get_LR __builtin_return_address(0)
+#define __get_LR() __builtin_return_address(0)
 #elif defined(__CC_ARM) || defined(__ARMCC_VERSION)
 #if (__ARMCC_VERSION >= 6010050)
-#define __get_LR __builtin_return_address(0)
+#define __get_LR() __builtin_return_address(0)
 #else
-#define __get_LR __return_address()
+#define __get_LR() __return_address()
 #endif
 #endif
 /*! *********************************************************************************
@@ -64,7 +64,7 @@ void panic(panic_id_t id, uint32_t location, uint32_t extra1, uint32_t extra2)
     panic_data.location      = location;
     panic_data.extra1        = extra1;
     panic_data.extra2        = extra2;
-    panic_data.linkRegister  = (uint32_t)((uint32_t *)__get_LR);
+    panic_data.linkRegister  = (uint32_t)((uint32_t *)__get_LR());
     panic_data.cpsr_contents = 0;
 #if (defined(PANIC_ENABLE_LOG) && (PANIC_ENABLE_LOG > 0U))
     (void)PRINTF("System Panic happen: \r\n");

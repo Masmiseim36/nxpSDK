@@ -65,6 +65,14 @@
  * Definitions
  ******************************************************************************/
 
+#define ETH_CRC_SIZE 4
+
+#if (PBUF_POOL_BUFSIZE >= (ENET_FRAME_MAX_FRAMELEN - ETH_CRC_SIZE))
+#define RX_FRAME_FITS_INTO_PBUF 1
+#else
+#define RX_FRAME_FITS_INTO_PBUF 0
+#endif /* (PBUF_POOL_BUFSIZE >= (ENET_FRAME_MAX_FRAMELEN - ETH_CRC_SIZE)) */
+
 /**
  * Helper struct to hold private data used to operate your ethernet interface.
  */
@@ -285,6 +293,11 @@ void ethernetif_enet_init(struct netif *netif, struct ethernetif *ethernetif,
     /* Initialize the ENET module.*/
     ENET_Init(ethernetif->base, &ethernetif->handle, &config, &buffCfg[0], netif->hwaddr, sysClock);
 
+#if RX_FRAME_FITS_INTO_PBUF
+    /* RX_FRAME_FITS_INTO_PBUF was set on assumption that ENET strips ethernet frame CRC, check it */
+    LWIP_ASSERT("ENET set to forward received CRC", (ethernetif->base->RCR & ENET_RCR_CRCFWD_MASK));
+#endif /* RX_FRAME_FITS_INTO_PBUF */
+
 #if USE_RTOS && defined(FSL_RTOS_FREE_RTOS)
     ENET_SetCallback(&ethernetif->handle, ethernet_callback, netif);
 #endif
@@ -350,7 +363,6 @@ struct pbuf *ethernetif_linkinput(struct netif *netif)
 {
     struct ethernetif *ethernetif = netif->state;
     struct pbuf *p = NULL;
-    struct pbuf *q;
     uint32_t len;
     status_t status;
 
@@ -375,16 +387,22 @@ struct pbuf *ethernetif_linkinput(struct netif *netif)
 #if ETH_PAD_SIZE
                 pbuf_header(p, -ETH_PAD_SIZE); /* drop the padding word */
 #endif
+
+#if RX_FRAME_FITS_INTO_PBUF
+                LWIP_ASSERT("Frame does not fit into a single pbuf", p->next == 0);
+                ENET_ReadFrame(ethernetif->base, &ethernetif->handle, p->payload, p->len);
+#else
                 if (p->next == 0) /* One-chain buffer.*/
                 {
-					ENET_ReadFrame(ethernetif->base, &ethernetif->handle, p->payload, p->len);
+                    ENET_ReadFrame(ethernetif->base, &ethernetif->handle, p->payload, p->len);
                 }
                 else    /* Multi-chain buffer.*/
                 {
                     uint8_t data_tmp[ENET_FRAME_MAX_FRAMELEN];
                     uint32_t data_tmp_len = 0;
+                    struct pbuf *q;
 
-					ENET_ReadFrame(ethernetif->base, &ethernetif->handle, data_tmp, p->tot_len);
+                    ENET_ReadFrame(ethernetif->base, &ethernetif->handle, data_tmp, p->tot_len);
 
                     /* We iterate over the pbuf chain until we have read the entire
                     * packet into the pbuf. */
@@ -397,6 +415,7 @@ struct pbuf *ethernetif_linkinput(struct netif *netif)
                         data_tmp_len += q->len;
                     }
                 }
+#endif /* RX_FRAME_FITS_INTO_PBUF */
 
                 MIB2_STATS_NETIF_ADD(netif, ifinoctets, p->tot_len);
                 if (((u8_t *)p->payload)[0] & 1)
@@ -418,7 +437,7 @@ struct pbuf *ethernetif_linkinput(struct netif *netif)
             else
             {
                 /* drop packet*/
-				ENET_ReadFrame(ethernetif->base, &ethernetif->handle, NULL, 0U);
+                ENET_ReadFrame(ethernetif->base, &ethernetif->handle, NULL, 0U);
 
                 LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_linkinput: Fail to allocate new memory space\n"));
 
@@ -439,7 +458,7 @@ struct pbuf *ethernetif_linkinput(struct netif *netif)
 #endif
 
                 /* Update the receive buffer. */
-				ENET_ReadFrame(ethernetif->base, &ethernetif->handle, NULL, 0U);
+                ENET_ReadFrame(ethernetif->base, &ethernetif->handle, NULL, 0U);
 
                 LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_linkinput: RxFrameError\n"));
 

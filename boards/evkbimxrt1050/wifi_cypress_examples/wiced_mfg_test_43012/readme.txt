@@ -17,9 +17,9 @@ More details about this Test Application can be found in WICED Studio from Cypre
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- GCC ARM Embedded  8.2.1
-- MCUXpresso  11.0.0
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -28,11 +28,15 @@ Hardware requirements
 - Personal Computer
 - Murata 1DX or 1LV M.2 module
 - Murata uSD M.2 Adapter
+- 1 plug to receptable header cable
 
 Board settings
 ==============
 It is recommended to provide power directly to Murata uSD M.2 Adapter board using secondary Micro USB cable.
 Jumper J1 on the adapter board has to be set up accordingly to utilize external power.
+
+The following pins between the evkbimxrt1050 board and Murata uSD M.2 Adapter are connected using the plug to receptable cables:
+- evkbimxrt1050 board's connector J22, pin 3 to Murata uSD M.2 Adapter's connector J9, pin 3
 
 Connect the board with PC by using USB/UART converter:
 - board uart RX (pin 1 on J22) - connect it to TX pin on converter
@@ -41,20 +45,17 @@ Connect the board with PC by using USB/UART converter:
 
 Prepare the Demo
 ================
+1.  Connect a USB cable between the PC host and the OpenSDA port on the target board.
+2.  Connect the WiFi module to SD card slot.
+3.  Download the program to the target board with the CMSIS-DAP or J-Link debugger.
+4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
+
 
 Running the demo
 ================
-1.  Connect a USB cable between the PC host and the OpenSDA port on the target board.
-    
-2.  Connect the WiFi module, details are in section: Board settings.
+1.  Open a command prompt and navigate to the middleware\wiced\43xxx_Wi-Fi\libraries\test\wl_tool\ direcotry.
 
-3.  Download the program to the target board with the CMSIS-DAP or J-Link debugger.
-
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-5.  Open a command prompt and navigate to the middleware\wiced\43xxx_Wi-Fi\libraries\test\wl_tool\ direcotry.
-
-6.  Enter the following command at the command prompt to verify that the application is working:
+2.  Enter the following command at the command prompt to verify that the application is working:
       wl<chip_name>.exe --serial 99 ver
       Where 99 corresponds to the COM port number of the DUT (COM port number of USB/UART converter, can be found in windows device manager)
 

@@ -24,7 +24,6 @@
  * Prototypes
  ******************************************************************************/
 
-
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -47,7 +46,6 @@ dfu_timer_object_t s_dfuTimerObjectArray[DFU_MAX_TIMER_OBJECTS];
  */
 void DFU_TimerInit(void)
 {
-
     /* Clear timer object array */
     (void)memset(s_dfuTimerObjectArray, 0U, sizeof(s_dfuTimerObjectArray));
     DFU_TimerHWInit();
@@ -89,7 +87,7 @@ uint8_t DFU_AddTimerQueue(dfu_timer_object_t *timerObject)
         if (isQueueFull)
         {
             /* Timer queue is full */
-           index = DFU_MAX_TIMER_OBJECTS;
+            index = DFU_MAX_TIMER_OBJECTS;
         }
         else
         {
@@ -111,6 +109,8 @@ uint8_t DFU_AddTimerQueue(dfu_timer_object_t *timerObject)
  */
 void DFU_RemoveTimerQueue(uint8_t timerId)
 {
+    uint8_t i;
+
     if (timerId < DFU_MAX_TIMER_OBJECTS)
     {
         /* Disable the  timer */
@@ -122,7 +122,7 @@ void DFU_RemoveTimerQueue(uint8_t timerId)
             s_dfuTimerObjectArray[timerId].timerCallback = NULL;
         }
         /* Queue empty checking */
-        for (uint8_t i = 0U; i < DFU_MAX_TIMER_OBJECTS; i++)
+        for (i = 0U; i < DFU_MAX_TIMER_OBJECTS; i++)
         {
             if (NULL != s_dfuTimerObjectArray[i].timerCallback)
             {
@@ -131,10 +131,8 @@ void DFU_RemoveTimerQueue(uint8_t timerId)
                 break;
             }
         }
-
     }
 }
-
 
 /*!
  * @brief timer interrupt service function.

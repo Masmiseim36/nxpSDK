@@ -64,10 +64,10 @@ typedef struct _spinand_mem_context
     uint32_t nandAddressType;
     uint32_t startBlockId;
     bool readwriteInProgress;
-    uint8_t readBuffer[kSpiNandMemory_MaxPageSize];
+    uint32_t readBuffer[kSpiNandMemory_MaxPageSize / sizeof(uint32_t)];
     bool isReadBufferValid;
     uint32_t readBufferPageAddr;
-    uint8_t writeBuffer[kSpiNandMemory_MaxPageSize];
+    uint8_t writeBuffer[kSpiNandMemory_MaxPageSize / sizeof(uint32_t)];
     bool isWriteBufferValid;
     uint32_t writeBufferOffset;
     uint32_t writeBufferPageAddr;
@@ -317,14 +317,14 @@ status_t check_update_keyblob_info(void *config)
             // Check key blob address range
             if ((keyblob_size + keyblob_offset) / page_size > image_max_page_size)
             {
-                status = kStatusMemoryRangeInvalid;
+                status = kStatus_InvalidArgument;
                 break;
             }
 
             // Invalid key blob address, key blob must be page size aligned.
             if (keyblob_addr & (page_size - 1))
             {
-                status = kStatusMemoryAlignmentError;
+                status = kStatus_InvalidArgument;
                 break;
             }
 
@@ -696,7 +696,8 @@ status_t spinand_mem_read(uint32_t address, uint32_t length, uint8_t *restrict b
             {
                 readLength = pageSize - columnAddr;
             }
-            memcpy(buffer, &s_spinandContext.readBuffer[columnAddr], readLength);
+            uint8_t *p_readBuffer_8 = (uint8_t *)s_spinandContext.readBuffer;
+            memcpy(buffer, &p_readBuffer_8[columnAddr], readLength);
             length -= readLength;
             buffer += readLength;
             columnAddr += readLength;
@@ -878,7 +879,8 @@ status_t spinand_mem_write(uint32_t address, uint32_t length, const uint8_t *buf
             {
                 writeLength = pageSize - columnAddr;
             }
-            memcpy(&s_spinandContext.writeBuffer[columnAddr], buffer, writeLength);
+            uint8_t *p_writeBuffer_8 = (uint8_t *)s_spinandContext.writeBuffer;
+            memcpy(&p_writeBuffer_8[columnAddr], buffer, writeLength);
             s_spinandContext.writeBufferOffset += writeLength;
             length -= writeLength;
             buffer += writeLength;
@@ -1112,7 +1114,8 @@ static status_t spinand_mem_load_buffer(uint32_t pageAddr)
     s_spinandContext.isReadBufferValid = false; // Mark read buffer invalid.
 
     // Read the page to read buffer.
-    status = spinand_memory_read(pageAddr, s_spinandFcb.config.pageDataSize, s_spinandContext.readBuffer);
+    status =
+        spinand_memory_read(pageAddr, s_spinandFcb.config.pageDataSize, (uint8_t *)&s_spinandContext.readBuffer[0]);
     if (status == kStatus_Success)
     {
         s_spinandContext.isReadBufferValid = true;
@@ -1210,7 +1213,8 @@ static status_t spinand_mem_block_backup(uint32_t srcPageAddr, uint32_t destBloc
     while (startPageAddr < endPageAddr)
     {
         // Read the page needs to backup.
-        status = spinand_memory_read(startPageAddr, s_spinandFcb.config.pageDataSize, s_spinandContext.readBuffer);
+        status = spinand_memory_read(startPageAddr, s_spinandFcb.config.pageDataSize,
+                                     (uint8_t *)&s_spinandContext.readBuffer[0]);
         if (status != kStatus_Success)
         {
             // Read failed, skip to next block to execute the backup progress.
@@ -1218,7 +1222,7 @@ static status_t spinand_mem_block_backup(uint32_t srcPageAddr, uint32_t destBloc
         }
         // Write the read page to the destination memory.
         status = spinand_memory_write_and_verify(destPageAddr, s_spinandFcb.config.pageDataSize,
-                                                 s_spinandContext.readBuffer);
+                                                 (uint8_t *)&s_spinandContext.readBuffer[0]);
         if (status != kStatus_Success)
         {
             // Write failed, then skip to next block to execute the backup progress.
@@ -1242,7 +1246,7 @@ static bool is_erased_memory(uint32_t pageAddr, uint32_t pageCount)
     while (pageCount)
     {
         // Read the page firstly.
-        status = spinand_memory_read(pageAddr++, pageSize, s_spinandContext.readBuffer);
+        status = spinand_memory_read(pageAddr++, pageSize, (uint8_t *)&s_spinandContext.readBuffer[0]);
         if (status != kStatus_Success)
         {
             // If read failed, return false.
@@ -1279,7 +1283,7 @@ static status_t spinand_mem_load_fcb(uint32_t searchCount, uint32_t searchStride
         // Currently, No DBBT is available. Just read it. CRC check will ensure it is correct.
         // Do not read it to s_spinandFcb directly, it will over-write s_spinandFcb.config
         // Which contains the default config.
-        status = spinand_memory_read(pageAddr, sizeof(spinand_fcb_t), s_spinandContext.readBuffer);
+        status = spinand_memory_read(pageAddr, sizeof(spinand_fcb_t), (uint8_t *)&s_spinandContext.readBuffer[0]);
         // Read failed, then skip to next position.
         if (status != kStatus_Success)
         {
@@ -1326,7 +1330,7 @@ status_t spinand_mem_update_fcb(spinand_fcb_t *config)
     bool fcb_match = true;
     for (i = 0, pageAddr = 0; i < searchCount; i++, pageAddr += searchStride)
     {
-        status = spinand_memory_read(pageAddr, sizeof(spinand_fcb_t), s_spinandContext.readBuffer);
+        status = spinand_memory_read(pageAddr, sizeof(spinand_fcb_t), (uint8_t *)&s_spinandContext.readBuffer[0]);
         if (status != kStatus_Success)
         {
             fcb_match = false;
@@ -1511,7 +1515,7 @@ static status_t spinand_memory_write_and_verify(uint32_t pageAddr, uint32_t leng
             return status;
         }
 
-        status = spinand_memory_read_page(pageAddr, size, s_spinandContext.readBuffer);
+        status = spinand_memory_read_page(pageAddr, size, (uint8_t *)&s_spinandContext.readBuffer[0]);
         if (status != kStatus_Success)
         {
             return status;

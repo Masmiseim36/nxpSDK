@@ -75,7 +75,7 @@ clock_t clock(void)
 }
 
 /* Adapter for NXP MCUXpresso and ARM GCC */
-#if defined(__GNUC__)
+#if defined(__GNUC__) && !defined(__ARMCC_VERSION)
 __attribute__(( weak )) int _gettimeofday (struct timeval *tv, void *tz)
 {
     tv->tv_sec=time_data;
@@ -92,22 +92,15 @@ time_t __time32 (time_t * p)
 }
 #endif
 
-/* Adapter for Keil MDK */
-#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
+/* Keil MDK */
+#if defined(__CC_ARM) /* Keil MDK V5 */
+/* Disable linking of semihosting functions from C library into application. */
 #pragma import(__use_no_semihosting_swi)
+#elif defined(__ARMCC_VERSION) /* Keil MDK V6 */
+__asm(".global __use_no_semihosting\n\t");
+#endif
 
-#if !defined(SDK_DEBUGCONSOLE_UART)
-void _sys_exit(int ret)
-{
-    while(1);
-}
-
-void _ttywrch(int c)
-{
-    putchar(c);
-}
-#endif /* SDK_DEBUGCONSOLE_UART */
-
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 time_t time(time_t *timer)
 {
     return time_data;

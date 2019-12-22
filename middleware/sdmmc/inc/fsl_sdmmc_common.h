@@ -23,7 +23,7 @@
  * Definitions
  ******************************************************************************/
 /*! @brief Middleware version. */
-#define FSL_SDMMC_DRIVER_VERSION (MAKE_VERSION(2U, 2U, 11U)) /*2.2.11*/
+#define FSL_SDMMC_DRIVER_VERSION (MAKE_VERSION(2U, 2U, 12U)) /*2.2.12*/
 
 /*! @brief Reverse byte sequence in uint32_t */
 #define SWAP_WORD_BYTE_SEQUENCE(x) (__REV(x))
@@ -39,8 +39,6 @@
 /*! @brief SDMMC global data buffer size, word unit*/
 #define SDMMC_GLOBAL_BUFFER_SIZE (128U)
 #endif
-/*! @brief SDMMC enable software tuning */
-#define SDMMC_ENABLE_SOFTWARE_TUNING (0U)
 /* Common definition for cache line size align */
 #if defined(FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL) && FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL
 #if defined(FSL_FEATURE_L1DCACHE_LINESIZE_BYTE)
@@ -237,6 +235,7 @@ status_t SDMMC_SwitchVoltage(SDMMCHOST_TYPE *base, SDMMCHOST_TRANSFER_FUNCTION t
 status_t SDMMC_SwitchToVoltage(SDMMCHOST_TYPE *base,
                                SDMMCHOST_TRANSFER_FUNCTION transfer,
                                sdmmchost_card_switch_voltage_t switchVoltageFunc);
+#ifndef SDMMC_ENABLE_SOFTWARE_TUNING
 /*!
  * @brief excute tuning
  *
@@ -249,6 +248,19 @@ status_t SDMMC_ExecuteTuning(SDMMCHOST_TYPE *base,
                              SDMMCHOST_TRANSFER_FUNCTION transfer,
                              uint32_t tuningCmd,
                              uint32_t blockSize);
+
+#else
+/*!
+ * @brief excute manual tuning
+ *
+ * @param base SDMMCHOST peripheral base address.
+ * @param transfer Host transfer function
+ * @param tuningCmd Tuning cmd
+ * @param blockSize Tuning block size
+ */
+status_t SDMMC_ExecuteManualTuning(SDMMCHOST_TYPE *base, uint32_t tuningCmd, uint32_t blockSize);
+#endif
+
 /* @} */
 
 #if defined(__cplusplus)

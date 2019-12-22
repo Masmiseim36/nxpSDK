@@ -3,6 +3,12 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
+#include <inttypes.h>
+#if defined(__GNUC__) && !defined(__ARMCC_VERSION)
+#define __STRINGIFY(a) #a
+#define PRId64      __STRINGIFY(lld)
+#define PRIu64      __STRINGIFY(llu)
+#endif
 #include "azure_c_shared_utility/optimize_size.h"
 #include "azure_c_shared_utility/crt_abstractions.h"
 #include "azure_c_shared_utility/gballoc.h"
@@ -18,7 +24,6 @@
 #include "internal/iothub_client_private.h"
 #include "iothub_client_version.h"
 #include "internal/iothubtransport_amqp_telemetry_messenger.h"
-#include <inttypes.h>
 
 #define RESULT_OK 0
 #define INDEFINITE_TIME ((time_t)(-1))
@@ -44,7 +49,9 @@ typedef struct TELEMETRY_MESSENGER_INSTANCE_TAG
 {
     STRING_HANDLE device_id;
     STRING_HANDLE module_id;
-    STRING_HANDLE product_info;
+    pfTransport_GetOption_Product_Info_Callback prod_info_cb;
+    void* prod_info_ctx;
+
     STRING_HANDLE iothub_host_fqdn;
     SINGLYLINKEDLIST_HANDLE waiting_to_send;   // List of MESSENGER_SEND_EVENT_CALLER_INFORMATION's
     SINGLYLINKEDLIST_HANDLE in_progress_list;  // List of MESSENGER_SEND_EVENT_TASK's
@@ -108,7 +115,7 @@ static int is_timeout_reached(time_t start_time, size_t timeout_in_secs, int *is
     if (start_time == INDEFINITE_TIME)
     {
         LogError("Failed to verify timeout (start_time is INDEFINITE)");
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {
@@ -117,7 +124,7 @@ static int is_timeout_reached(time_t start_time, size_t timeout_in_secs, int *is
         if ((current_time = get_time(NULL)) == INDEFINITE_TIME)
         {
             LogError("Failed to verify timeout (get_time failed)");
-            result = __FAILURE__;
+            result = MU_FAILURE;
         }
         else
         {
@@ -310,7 +317,7 @@ static void update_messenger_state(TELEMETRY_MESSENGER_INSTANCE* instance, TELEM
     }
 }
 
-static void attach_device_client_type_to_link(LINK_HANDLE link, STRING_HANDLE product_info)
+static void attach_device_client_type_to_link(LINK_HANDLE link, pfTransport_GetOption_Product_Info_Callback prod_info_cb, void* prod_info_ctx)
 {
     fields attach_properties;
     AMQP_VALUE device_client_type_key_name;
@@ -328,7 +335,7 @@ static void attach_device_client_type_to_link(LINK_HANDLE link, STRING_HANDLE pr
         }
         else
         {
-            if ((device_client_type_value = amqpvalue_create_string(STRING_c_str(product_info))) == NULL)
+            if ((device_client_type_value = amqpvalue_create_string(prod_info_cb(prod_info_ctx))) == NULL)
             {
                 LogError("Failed to create the key value for the device client type.");
             }
@@ -407,47 +414,47 @@ static int create_event_sender(TELEMETRY_MESSENGER_INSTANCE* instance)
     if ((devices_and_modules_path = create_devices_and_modules_path(instance->iothub_host_fqdn, instance->device_id, instance->module_id)) == NULL)
     {
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_034: [If `devices_and_modules_path` fails to be created, telemetry_messenger_do_work() shall fail and return]
-        result = __FAILURE__;
+        result = MU_FAILURE;
         LogError("Failed creating the message sender (failed creating the 'devices_and_modules_path')");
     }
     // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_035: [A variable, named `event_send_address`, shall be created concatenating "amqps://", `devices_and_modules_path` and "/messages/events"]
     else if ((event_send_address = create_event_send_address(devices_and_modules_path)) == NULL)
     {
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_036: [If `event_send_address` fails to be created, telemetry_messenger_do_work() shall fail and return]
-        result = __FAILURE__;
+        result = MU_FAILURE;
         LogError("Failed creating the message sender (failed creating the 'event_send_address')");
     }
     // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_037: [A `link_name` variable shall be created using an unique string label per AMQP session]
     else if ((link_name = create_link_name(MESSAGE_SENDER_LINK_NAME_PREFIX, STRING_c_str(instance->device_id))) == NULL)
     {
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_038: [If `link_name` fails to be created, telemetry_messenger_do_work() shall fail and return]
-        result = __FAILURE__;
+        result = MU_FAILURE;
         LogError("Failed creating the message sender (failed creating an unique link name)");
     }
     else if ((source_name = create_event_sender_source_name(link_name)) == NULL)
     {
-        result = __FAILURE__;
+        result = MU_FAILURE;
         LogError("Failed creating the message sender (failed creating an unique source name)");
     }
     // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_039: [A `source` variable shall be created with messaging_create_source() using an unique string label per AMQP session]
     else if ((source = messaging_create_source(STRING_c_str(source_name))) == NULL)
     {
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_040: [If `source` fails to be created, telemetry_messenger_do_work() shall fail and return]
-        result = __FAILURE__;
+        result = MU_FAILURE;
         LogError("Failed creating the message sender (messaging_create_source failed)");
     }
     // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_041: [A `target` variable shall be created with messaging_create_target() using `event_send_address`]
     else if ((target = messaging_create_target(STRING_c_str(event_send_address))) == NULL)
     {
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_042: [If `target` fails to be created, telemetry_messenger_do_work() shall fail and return]
-        result = __FAILURE__;
+        result = MU_FAILURE;
         LogError("Failed creating the message sender (messaging_create_target failed)");
     }
     // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_043: [`instance->sender_link` shall be set using link_create(), passing `instance->session_handle`, `link_name`, "role_sender", `source` and `target` as parameters]
     else if ((instance->sender_link = link_create(instance->session_handle, STRING_c_str(link_name), role_sender, source, target)) == NULL)
     {
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_044: [If link_create() fails, telemetry_messenger_do_work() shall fail and return]
-        result = __FAILURE__;
+        result = MU_FAILURE;
         LogError("Failed creating the message sender (link_create failed)");
     }
     else
@@ -461,7 +468,7 @@ static int create_event_sender(TELEMETRY_MESSENGER_INSTANCE* instance)
 
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_049: [`instance->sender_link` should have a property "com.microsoft:client-version" set as `CLIENT_DEVICE_TYPE_PREFIX/IOTHUB_SDK_VERSION`, using amqpvalue_set_map_value() and link_set_attach_properties()]
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_050: [If amqpvalue_set_map_value() or link_set_attach_properties() fail, the failure shall be ignored]
-        attach_device_client_type_to_link(instance->sender_link, instance->product_info);
+        attach_device_client_type_to_link(instance->sender_link, instance->prod_info_cb, instance->prod_info_ctx);
 
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_051: [`instance->message_sender` shall be created using messagesender_create(), passing the `instance->sender_link` and `on_event_sender_state_changed_callback`]
         if ((instance->message_sender = messagesender_create(instance->sender_link, on_event_sender_state_changed_callback, (void*)instance)) == NULL)
@@ -469,7 +476,7 @@ static int create_event_sender(TELEMETRY_MESSENGER_INSTANCE* instance)
             // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_052: [If messagesender_create() fails, telemetry_messenger_do_work() shall fail and return]
             LogError("Failed creating the message sender (messagesender_create failed)");
             destroy_event_sender(instance);
-            result = __FAILURE__;
+            result = MU_FAILURE;
         }
         else
         {
@@ -479,7 +486,7 @@ static int create_event_sender(TELEMETRY_MESSENGER_INSTANCE* instance)
                 // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_054: [If messagesender_open() fails, telemetry_messenger_do_work() shall fail and return]
                 LogError("Failed opening the AMQP message sender.");
                 destroy_event_sender(instance);
-                result = __FAILURE__;
+                result = MU_FAILURE;
             }
             else
             {
@@ -695,54 +702,54 @@ static int create_message_receiver(TELEMETRY_MESSENGER_INSTANCE* instance)
     if ((devices_and_modules_path = create_devices_and_modules_path(instance->iothub_host_fqdn, instance->device_id, instance->module_id)) == NULL)
     {
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_069: [If `devices_and_modules_path` fails to be created, telemetry_messenger_do_work() shall fail and return]
-        result = __FAILURE__;
+        result = MU_FAILURE;
         LogError("Failed creating the message receiver (failed creating the 'devices_and_modules_path')");
     }
     // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_070: [A variable, named `message_receive_address`, shall be created concatenating "amqps://", `devices_and_modules_path` and "/messages/devicebound"]
     else if ((message_receive_address = create_message_receive_address(devices_and_modules_path)) == NULL)
     {
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_071: [If `message_receive_address` fails to be created, telemetry_messenger_do_work() shall fail and return]
-        result = __FAILURE__;
+        result = MU_FAILURE;
         LogError("Failed creating the message receiver (failed creating the 'message_receive_address')");
     }
     // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_072: [A `link_name` variable shall be created using an unique string label per AMQP session]
     else if ((link_name = create_link_name(MESSAGE_RECEIVER_LINK_NAME_PREFIX, STRING_c_str(instance->device_id))) == NULL)
     {
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_073: [If `link_name` fails to be created, telemetry_messenger_do_work() shall fail and return]
-        result = __FAILURE__;
+        result = MU_FAILURE;
         LogError("Failed creating the message receiver (failed creating an unique link name)");
     }
     else if ((target_name = create_message_receiver_target_name(link_name)) == NULL)
     {
-        result = __FAILURE__;
+        result = MU_FAILURE;
         LogError("Failed creating the message receiver (failed creating an unique target name)");
     }
     // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_074: [A `target` variable shall be created with messaging_create_target() using an unique string label per AMQP session]
     else if ((target = messaging_create_target(STRING_c_str(target_name))) == NULL)
     {
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_075: [If `target` fails to be created, telemetry_messenger_do_work() shall fail and return]
-        result = __FAILURE__;
+        result = MU_FAILURE;
         LogError("Failed creating the message receiver (messaging_create_target failed)");
     }
     // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_076: [A `source` variable shall be created with messaging_create_source() using `message_receive_address`]
     else if ((source = messaging_create_source(STRING_c_str(message_receive_address))) == NULL)
     {
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_077: [If `source` fails to be created, telemetry_messenger_do_work() shall fail and return]
-        result = __FAILURE__;
+        result = MU_FAILURE;
         LogError("Failed creating the message receiver (messaging_create_source failed)");
     }
     // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_078: [`instance->receiver_link` shall be set using link_create(), passing `instance->session_handle`, `link_name`, "role_receiver", `source` and `target` as parameters]
     else if ((instance->receiver_link = link_create(instance->session_handle, STRING_c_str(link_name), role_receiver, source, target)) == NULL)
     {
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_079: [If link_create() fails, telemetry_messenger_do_work() shall fail and return]
-        result = __FAILURE__;
+        result = MU_FAILURE;
         LogError("Failed creating the message receiver (link_create failed)");
     }
     // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_080: [`instance->receiver_link` settle mode shall be set to "receiver_settle_mode_first" using link_set_rcv_settle_mode(), ]
     else if (link_set_rcv_settle_mode(instance->receiver_link, receiver_settle_mode_first) != RESULT_OK)
     {
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_081: [If link_set_rcv_settle_mode() fails, telemetry_messenger_do_work() shall fail and return]
-        result = __FAILURE__;
+        result = MU_FAILURE;
         LogError("Failed creating the message receiver (link_set_rcv_settle_mode failed)");
     }
     else
@@ -756,7 +763,7 @@ static int create_message_receiver(TELEMETRY_MESSENGER_INSTANCE* instance)
 
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_084: [`instance->receiver_link` should have a property "com.microsoft:client-version" set as `CLIENT_DEVICE_TYPE_PREFIX/IOTHUB_SDK_VERSION`, using amqpvalue_set_map_value() and link_set_attach_properties()]
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_085: [If amqpvalue_set_map_value() or link_set_attach_properties() fail, the failure shall be ignored]
-        attach_device_client_type_to_link(instance->receiver_link, instance->product_info);
+        attach_device_client_type_to_link(instance->receiver_link, instance->prod_info_cb, instance->prod_info_ctx);
 
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_086: [`instance->message_receiver` shall be created using messagereceiver_create(), passing the `instance->receiver_link` and `on_messagereceiver_state_changed_callback`]
         if ((instance->message_receiver = messagereceiver_create(instance->receiver_link, on_message_receiver_state_changed_callback, (void*)instance)) == NULL)
@@ -764,7 +771,7 @@ static int create_message_receiver(TELEMETRY_MESSENGER_INSTANCE* instance)
             // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_087: [If messagereceiver_create() fails, telemetry_messenger_do_work() shall fail and return]
             LogError("Failed creating the message receiver (messagereceiver_create failed)");
             destroy_message_receiver(instance);
-            result = __FAILURE__;
+            result = MU_FAILURE;
         }
         else
         {
@@ -774,7 +781,7 @@ static int create_message_receiver(TELEMETRY_MESSENGER_INSTANCE* instance)
                 // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_089: [If messagereceiver_open() fails, telemetry_messenger_do_work() shall fail and return]
                 LogError("Failed opening the AMQP message receiver.");
                 destroy_message_receiver(instance);
-                result = __FAILURE__;
+                result = MU_FAILURE;
             }
             else
             {
@@ -805,7 +812,7 @@ static int move_event_to_in_progress_list(MESSENGER_SEND_EVENT_TASK* task)
 
     if (singlylinkedlist_add(task->messenger->in_progress_list, (void*)task) == NULL)
     {
-        result = __FAILURE__;
+        result = MU_FAILURE;
         LogError("Failed moving event to in_progress list (singlylinkedlist_add failed)");
     }
     else
@@ -868,7 +875,7 @@ static int copy_events_to_list(SINGLYLINKEDLIST_HANDLE from_list, SINGLYLINKEDLI
         if (singlylinkedlist_add(to_list, task) == NULL)
         {
             LogError("Failed copying event to destination list (singlylinkedlist_add failed)");
-            result = __FAILURE__;
+            result = MU_FAILURE;
             break;
         }
         else
@@ -904,7 +911,7 @@ static int copy_events_from_in_progress_to_waiting_list(TELEMETRY_MESSENGER_INST
             if (singlylinkedlist_add(to_list, caller_information) == NULL)
             {
                 LogError("Failed copying event to destination list (singlylinkedlist_add failed)");
-                result = __FAILURE__;
+                result = MU_FAILURE;
                 break;
             }
 
@@ -942,7 +949,7 @@ static int move_events_to_wait_to_send_list(TELEMETRY_MESSENGER_INSTANCE* instan
         if ((new_wait_to_send_list = singlylinkedlist_create()) == NULL)
         {
             LogError("Failed moving events back to wait_to_send list (singlylinkedlist_create failed to create new wait_to_send_list)");
-            result = __FAILURE__;
+            result = MU_FAILURE;
         }
         else
         {
@@ -952,19 +959,19 @@ static int move_events_to_wait_to_send_list(TELEMETRY_MESSENGER_INSTANCE* instan
             {
                 LogError("Failed moving events back to wait_to_send list (failed adding in_progress_list items to new_wait_to_send_list)");
                 singlylinkedlist_destroy(new_wait_to_send_list);
-                result = __FAILURE__;
+                result = MU_FAILURE;
             }
             else if (copy_events_to_list(instance->waiting_to_send, new_wait_to_send_list) != RESULT_OK)
             {
                 LogError("Failed moving events back to wait_to_send list (failed adding wait_to_send items to new_wait_to_send_list)");
                 singlylinkedlist_destroy(new_wait_to_send_list);
-                result = __FAILURE__;
+                result = MU_FAILURE;
             }
             else if ((new_in_progress_list = singlylinkedlist_create()) == NULL)
             {
                 LogError("Failed moving events back to wait_to_send list (singlylinkedlist_create failed to create new in_progress_list)");
                 singlylinkedlist_destroy(new_wait_to_send_list);
-                result = __FAILURE__;
+                result = MU_FAILURE;
             }
             else
             {
@@ -1107,17 +1114,17 @@ static int create_send_pending_events_state(TELEMETRY_MESSENGER_INSTANCE* instan
     if ((send_pending_events_state->message_batch_container = message_create()) == NULL)
     {
         LogError("messageBatchContainer = message_create() failed");
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else if (message_set_message_format(send_pending_events_state->message_batch_container, AMQP_BATCHING_FORMAT_CODE) != 0)
     {
          LogError("Failed setting the message format to batching format");
-         result = __FAILURE__;
+         result = MU_FAILURE;
     }
     else if ((send_pending_events_state->task = create_task(instance)) == NULL)
     {
         LogError("create_task() failed");
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {
@@ -1140,7 +1147,7 @@ static int send_batched_message_and_reset_state(TELEMETRY_MESSENGER_INSTANCE* in
     if (messagesender_send_async(instance->message_sender, send_pending_events_state->message_batch_container, internal_on_event_send_complete_callback, send_pending_events_state->task, 0) == NULL)
     {
         LogError("messagesender_send failed");
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {
@@ -1162,13 +1169,13 @@ static int get_max_message_size_for_batching(TELEMETRY_MESSENGER_INSTANCE* insta
     if (link_get_peer_max_message_size(instance->sender_link, max_messagesize) != 0)
     {
         LogError("link_get_peer_max_message_size failed");
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     // Reserve AMQP_BATCHING_RESERVE_SIZE bytes for AMQP overhead of the "main" message itself.
     else if (*max_messagesize <= AMQP_BATCHING_RESERVE_SIZE)
     {
         LogError("link_get_peer_max_message_size (%" PRIu64 ") is less than the reserve size (%lu)", *max_messagesize, (unsigned long)AMQP_BATCHING_RESERVE_SIZE);
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {
@@ -1209,7 +1216,7 @@ static int send_pending_events(TELEMETRY_MESSENGER_INSTANCE* instance)
             LogError("get_max_message_size_for_batching failed");
             invoke_callback_on_error(caller_info, TELEMETRY_MESSENGER_EVENT_SEND_COMPLETE_RESULT_ERROR_FAIL_SENDING);
             free(caller_info);
-            result = __FAILURE__;
+            result = MU_FAILURE;
             break;
         }
         else if ((send_pending_events_state.task == 0) && (create_send_pending_events_state(instance, &send_pending_events_state) != 0))
@@ -1217,7 +1224,7 @@ static int send_pending_events(TELEMETRY_MESSENGER_INSTANCE* instance)
             LogError("create_send_pending_events_state failed");
             invoke_callback_on_error(caller_info, TELEMETRY_MESSENGER_EVENT_SEND_COMPLETE_RESULT_ERROR_FAIL_SENDING);
             free(caller_info);
-            result = __FAILURE__;
+            result = MU_FAILURE;
             break;
         }
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_31_200: [Retrieve an AMQP encoded representation of this message for later appending to main batched message.  On error, invoke callback but continue send loop; this is NOT a fatal error.]
@@ -1242,7 +1249,7 @@ static int send_pending_events(TELEMETRY_MESSENGER_INSTANCE* instance)
             LogError("singlylinkedlist_add failed");
             invoke_callback_on_error(caller_info, TELEMETRY_MESSENGER_EVENT_SEND_COMPLETE_RESULT_ERROR_FAIL_SENDING);
             free(caller_info);
-            result = __FAILURE__;
+            result = MU_FAILURE;
             break;
         }
 
@@ -1257,7 +1264,7 @@ static int send_pending_events(TELEMETRY_MESSENGER_INSTANCE* instance)
             if (send_batched_message_and_reset_state(instance, &send_pending_events_state) != RESULT_OK)
             {
                 LogError("send_batched_message_and_reset_state failed");
-                result = __FAILURE__;
+                result = MU_FAILURE;
                 break;
             }
 
@@ -1265,7 +1272,7 @@ static int send_pending_events(TELEMETRY_MESSENGER_INSTANCE* instance)
             if (create_send_pending_events_state(instance, &send_pending_events_state) != 0)
             {
                 LogError("create_send_pending_events_state failed, result");
-                result = __FAILURE__;
+                result = MU_FAILURE;
                 break;
             }
         }
@@ -1274,7 +1281,7 @@ static int send_pending_events(TELEMETRY_MESSENGER_INSTANCE* instance)
         if (message_add_body_amqp_data(send_pending_events_state.message_batch_container, body_binary_data) != 0)
         {
             LogError("message_add_body_amqp_data failed");
-            result = __FAILURE__;
+            result = MU_FAILURE;
             break;
         }
 
@@ -1286,7 +1293,7 @@ static int send_pending_events(TELEMETRY_MESSENGER_INSTANCE* instance)
         if (send_batched_message_and_reset_state(instance, &send_pending_events_state) != RESULT_OK)
         {
             LogError("send_batched_message_and_reset_state failed");
-            result = __FAILURE__;
+            result = MU_FAILURE;
         }
     }
 
@@ -1344,7 +1351,7 @@ static int process_event_send_timeouts(TELEMETRY_MESSENGER_INSTANCE* instance)
                 else
                 {
                     LogError("messenger failed to evaluate event send timeout of event %p", task);
-                    result = __FAILURE__;
+                    result = MU_FAILURE;
                 }
             }
 
@@ -1433,26 +1440,26 @@ int telemetry_messenger_subscribe_for_messages(TELEMETRY_MESSENGER_HANDLE messen
 {
     int result;
 
-    // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_016: [If `messenger_handle` is NULL, telemetry_messenger_subscribe_for_messages() shall fail and return __FAILURE__]
+    // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_016: [If `messenger_handle` is NULL, telemetry_messenger_subscribe_for_messages() shall fail and return MU_FAILURE]
     if (messenger_handle == NULL)
     {
-        result = __FAILURE__;
+        result = MU_FAILURE;
         LogError("telemetry_messenger_subscribe_for_messages failed (messenger_handle is NULL)");
     }
     else
     {
         TELEMETRY_MESSENGER_INSTANCE* instance = (TELEMETRY_MESSENGER_INSTANCE*)messenger_handle;
 
-        // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_017: [If `instance->receive_messages` is already true, telemetry_messenger_subscribe_for_messages() shall fail and return __FAILURE__]
+        // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_017: [If `instance->receive_messages` is already true, telemetry_messenger_subscribe_for_messages() shall fail and return MU_FAILURE]
         if (instance->receive_messages)
         {
-            result = __FAILURE__;
+            result = MU_FAILURE;
             LogError("telemetry_messenger_subscribe_for_messages failed (messenger already subscribed)");
         }
-        // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_018: [If `on_message_received_callback` is NULL, telemetry_messenger_subscribe_for_messages() shall fail and return __FAILURE__]
+        // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_018: [If `on_message_received_callback` is NULL, telemetry_messenger_subscribe_for_messages() shall fail and return MU_FAILURE]
         else if (on_message_received_callback == NULL)
         {
-            result = __FAILURE__;
+            result = MU_FAILURE;
             LogError("telemetry_messenger_subscribe_for_messages failed (on_message_received_callback is NULL)");
         }
         else
@@ -1478,20 +1485,20 @@ int telemetry_messenger_unsubscribe_for_messages(TELEMETRY_MESSENGER_HANDLE mess
 {
     int result;
 
-    // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_023: [If `messenger_handle` is NULL, telemetry_messenger_unsubscribe_for_messages() shall fail and return __FAILURE__]
+    // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_023: [If `messenger_handle` is NULL, telemetry_messenger_unsubscribe_for_messages() shall fail and return MU_FAILURE]
     if (messenger_handle == NULL)
     {
-        result = __FAILURE__;
+        result = MU_FAILURE;
         LogError("telemetry_messenger_unsubscribe_for_messages failed (messenger_handle is NULL)");
     }
     else
     {
         TELEMETRY_MESSENGER_INSTANCE* instance = (TELEMETRY_MESSENGER_INSTANCE*)messenger_handle;
 
-        // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_024: [If `instance->receive_messages` is already false, telemetry_messenger_unsubscribe_for_messages() shall fail and return __FAILURE__]
+        // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_024: [If `instance->receive_messages` is already false, telemetry_messenger_unsubscribe_for_messages() shall fail and return MU_FAILURE]
         if (instance->receive_messages == false)
         {
-            result = __FAILURE__;
+            result = MU_FAILURE;
             LogError("telemetry_messenger_unsubscribe_for_messages failed (messenger is not subscribed)");
         }
         else
@@ -1517,27 +1524,27 @@ int telemetry_messenger_send_message_disposition(TELEMETRY_MESSENGER_HANDLE mess
 {
     int result;
 
-    // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_179: [If `messenger_handle` or `disposition_info` are NULL, telemetry_messenger_send_message_disposition() shall fail and return __FAILURE__]
+    // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_179: [If `messenger_handle` or `disposition_info` are NULL, telemetry_messenger_send_message_disposition() shall fail and return MU_FAILURE]
     if (messenger_handle == NULL || disposition_info == NULL)
     {
         LogError("Failed sending message disposition (either messenger_handle (%p) or disposition_info (%p) are NULL)", messenger_handle, disposition_info);
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
-    // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_180: [If `disposition_info->source` is NULL, telemetry_messenger_send_message_disposition() shall fail and return __FAILURE__]
+    // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_180: [If `disposition_info->source` is NULL, telemetry_messenger_send_message_disposition() shall fail and return MU_FAILURE]
     else if (disposition_info->source == NULL)
     {
         LogError("Failed sending message disposition (disposition_info->source is NULL)");
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {
         TELEMETRY_MESSENGER_INSTANCE* messenger = (TELEMETRY_MESSENGER_INSTANCE*)messenger_handle;
 
-        // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_189: [If `messenger_handle->message_receiver` is NULL, telemetry_messenger_send_message_disposition() shall fail and return __FAILURE__]
+        // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_189: [If `messenger_handle->message_receiver` is NULL, telemetry_messenger_send_message_disposition() shall fail and return MU_FAILURE]
         if (messenger->message_receiver == NULL)
         {
             LogError("Failed sending message disposition (message_receiver is not created; check if it is subscribed)");
-            result = __FAILURE__;
+            result = MU_FAILURE;
         }
         else
         {
@@ -1547,16 +1554,16 @@ int telemetry_messenger_send_message_disposition(TELEMETRY_MESSENGER_HANDLE mess
             if ((uamqp_disposition_result = create_uamqp_disposition_result_from(disposition_result)) == NULL)
             {
                 LogError("Failed sending message disposition (disposition result %d is not supported)", disposition_result);
-                result = __FAILURE__;
+                result = MU_FAILURE;
             }
             else
             {
                 // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_182: [`messagereceiver_send_message_disposition()` shall be invoked passing `disposition_info->source`, `disposition_info->message_id` and the corresponding AMQP_VALUE disposition result]
                 if (messagereceiver_send_message_disposition(messenger->message_receiver, disposition_info->source, disposition_info->message_id, uamqp_disposition_result) != RESULT_OK)
                 {
-                    // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_183: [If `messagereceiver_send_message_disposition()` fails, telemetry_messenger_send_message_disposition() shall fail and return __FAILURE__]
+                    // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_183: [If `messagereceiver_send_message_disposition()` fails, telemetry_messenger_send_message_disposition() shall fail and return MU_FAILURE]
                     LogError("Failed sending message disposition (messagereceiver_send_message_disposition failed)");
-                    result = __FAILURE__;
+                    result = MU_FAILURE;
                 }
                 else
                 {
@@ -1581,19 +1588,19 @@ int telemetry_messenger_send_async(TELEMETRY_MESSENGER_HANDLE messenger_handle, 
     if (messenger_handle == NULL)
     {
         LogError("Failed sending event (messenger_handle is NULL)");
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_135: [If `message` is NULL, telemetry_messenger_send_async() shall fail and return a non-zero value]
     else if (message == NULL)
     {
         LogError("Failed sending event (message is NULL)");
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_136: [If `on_event_send_complete_callback` is NULL, telemetry_messenger_send_async() shall fail and return a non-zero value]
     else if (on_messenger_event_send_complete_callback == NULL)
     {
         LogError("Failed sending event (on_event_send_complete_callback is NULL)");
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {
@@ -1605,7 +1612,7 @@ int telemetry_messenger_send_async(TELEMETRY_MESSENGER_HANDLE messenger_handle, 
         {
             // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_138: [If malloc() fails, telemetry_messenger_send_async() shall fail and return a non-zero value]
             LogError("Failed sending event (failed to create struct for task; malloc failed)");
-            result = __FAILURE__;
+            result = MU_FAILURE;
         }
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_100: [`task` shall be added to `instance->waiting_to_send` using singlylinkedlist_add()]
         else if (singlylinkedlist_add(instance->waiting_to_send, caller_info) == NULL)
@@ -1613,7 +1620,7 @@ int telemetry_messenger_send_async(TELEMETRY_MESSENGER_HANDLE messenger_handle, 
             LogError("Failed sending event (singlylinkedlist_add failed)");
 
             // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_139: [If singlylinkedlist_add() fails, telemetry_messenger_send_async() shall fail and return a non-zero value]
-            result = __FAILURE__;
+            result = MU_FAILURE;
 
             // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_142: [If any failure occurs, telemetry_messenger_send_async() shall free any memory it has allocated]
             free(caller_info);
@@ -1641,13 +1648,13 @@ int telemetry_messenger_get_send_status(TELEMETRY_MESSENGER_HANDLE messenger_han
     if (messenger_handle == NULL)
     {
         LogError("telemetry_messenger_get_send_status failed (messenger_handle is NULL)");
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_145: [If `send_status` is NULL, telemetry_messenger_get_send_status() shall fail and return a non-zero value]
     else if (send_status == NULL)
     {
         LogError("telemetry_messenger_get_send_status failed (send_status is NULL)");
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {
@@ -1677,26 +1684,26 @@ int telemetry_messenger_start(TELEMETRY_MESSENGER_HANDLE messenger_handle, SESSI
 {
     int result;
 
-    // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_029: [If `messenger_handle` is NULL, telemetry_messenger_start() shall fail and return __FAILURE__]
+    // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_029: [If `messenger_handle` is NULL, telemetry_messenger_start() shall fail and return MU_FAILURE]
     if (messenger_handle == NULL)
     {
-        result = __FAILURE__;
+        result = MU_FAILURE;
         LogError("telemetry_messenger_start failed (messenger_handle is NULL)");
     }
-    // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_030: [If `session_handle` is NULL, telemetry_messenger_start() shall fail and return __FAILURE__]
+    // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_030: [If `session_handle` is NULL, telemetry_messenger_start() shall fail and return MU_FAILURE]
     else if (session_handle == NULL)
     {
-        result = __FAILURE__;
+        result = MU_FAILURE;
         LogError("telemetry_messenger_start failed (session_handle is NULL)");
     }
     else
     {
         TELEMETRY_MESSENGER_INSTANCE* instance = (TELEMETRY_MESSENGER_INSTANCE*)messenger_handle;
 
-        // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_031: [If `instance->state` is not TELEMETRY_MESSENGER_STATE_STOPPED, telemetry_messenger_start() shall fail and return __FAILURE__]
+        // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_031: [If `instance->state` is not TELEMETRY_MESSENGER_STATE_STOPPED, telemetry_messenger_start() shall fail and return MU_FAILURE]
         if (instance->state != TELEMETRY_MESSENGER_STATE_STOPPED)
         {
-            result = __FAILURE__;
+            result = MU_FAILURE;
             LogError("telemetry_messenger_start failed (current state is %d; expected TELEMETRY_MESSENGER_STATE_STOPPED)", instance->state);
         }
         else
@@ -1722,7 +1729,7 @@ int telemetry_messenger_stop(TELEMETRY_MESSENGER_HANDLE messenger_handle)
     // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_057: [If `messenger_handle` is NULL, telemetry_messenger_stop() shall fail and return a non-zero value]
     if (messenger_handle == NULL)
     {
-        result = __FAILURE__;
+        result = MU_FAILURE;
         LogError("telemetry_messenger_stop failed (messenger_handle is NULL)");
     }
     else
@@ -1732,7 +1739,7 @@ int telemetry_messenger_stop(TELEMETRY_MESSENGER_HANDLE messenger_handle)
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_058: [If `instance->state` is TELEMETRY_MESSENGER_STATE_STOPPED, telemetry_messenger_stop() shall fail and return a non-zero value]
         if (instance->state == TELEMETRY_MESSENGER_STATE_STOPPED)
         {
-            result = __FAILURE__;
+            result = MU_FAILURE;
             LogError("telemetry_messenger_stop failed (messenger is already stopped)");
         }
         else
@@ -1752,7 +1759,7 @@ int telemetry_messenger_stop(TELEMETRY_MESSENGER_HANDLE messenger_handle)
 
                 // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_163: [If not all items from `instance->in_progress_list` can be moved back to `instance->wait_to_send_list`, `instance->state` shall be set to TELEMETRY_MESSENGER_STATE_ERROR, and `instance->on_state_changed_callback` invoked]
                 update_messenger_state(instance, TELEMETRY_MESSENGER_STATE_ERROR);
-                result = __FAILURE__;
+                result = MU_FAILURE;
             }
             else
             {
@@ -1963,14 +1970,12 @@ void telemetry_messenger_destroy(TELEMETRY_MESSENGER_HANDLE messenger_handle)
 
         STRING_delete(instance->module_id);
 
-        STRING_delete(instance->product_info);
-
         // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_114: [telemetry_messenger_destroy() shall destroy `instance` with free()]
         (void)free(instance);
     }
 }
 
-TELEMETRY_MESSENGER_HANDLE telemetry_messenger_create(const TELEMETRY_MESSENGER_CONFIG* messenger_config, const char* product_info)
+TELEMETRY_MESSENGER_HANDLE telemetry_messenger_create(const TELEMETRY_MESSENGER_CONFIG* messenger_config, pfTransport_GetOption_Product_Info_Callback prod_info_cb, void* prod_info_ctx)
 {
     TELEMETRY_MESSENGER_HANDLE handle;
 
@@ -2028,11 +2033,6 @@ TELEMETRY_MESSENGER_HANDLE telemetry_messenger_create(const TELEMETRY_MESSENGER_
                 handle = NULL;
                 LogError("telemetry_messenger_create failed (module_id could not be copied; STRING_construct failed)");
             }
-            else if ((instance->product_info = STRING_construct(product_info)) == NULL)
-            {
-                handle = NULL;
-                LogError("telemetry_messenger_create failed (product_info could not be copied; STRING_construct failed)");
-            }
             // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_010: [telemetry_messenger_create() shall save a copy of `messenger_config->iothub_host_fqdn` into `instance->iothub_host_fqdn`]
             else if ((instance->iothub_host_fqdn = STRING_construct(messenger_config->iothub_host_fqdn)) == NULL)
             {
@@ -2062,6 +2062,9 @@ TELEMETRY_MESSENGER_HANDLE telemetry_messenger_create(const TELEMETRY_MESSENGER_
                 // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_014: [`messenger_config->on_state_changed_context` shall be saved into `instance->on_state_changed_context`]
                 instance->on_state_changed_context = messenger_config->on_state_changed_context;
 
+                instance->prod_info_cb = prod_info_cb;
+                instance->prod_info_ctx = prod_info_ctx;
+
                 // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_015: [If no failures occurr, telemetry_messenger_create() shall return a handle to `instance`]
                 handle = (TELEMETRY_MESSENGER_HANDLE)instance;
             }
@@ -2085,7 +2088,7 @@ int telemetry_messenger_set_option(TELEMETRY_MESSENGER_HANDLE messenger_handle, 
     {
         LogError("telemetry_messenger_set_option failed (one of the followin are NULL: messenger_handle=%p, name=%p, value=%p)",
             messenger_handle, name, value);
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {
@@ -2104,7 +2107,7 @@ int telemetry_messenger_set_option(TELEMETRY_MESSENGER_HANDLE messenger_handle, 
             {
                 // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_170: [If OptionHandler_FeedOptions fails, telemetry_messenger_set_option shall fail and return a non-zero value]
                 LogError("telemetry_messenger_set_option failed (OptionHandler_FeedOptions failed)");
-                result = __FAILURE__;
+                result = MU_FAILURE;
             }
             else
             {
@@ -2115,7 +2118,7 @@ int telemetry_messenger_set_option(TELEMETRY_MESSENGER_HANDLE messenger_handle, 
         {
             // Codes_SRS_IOTHUBTRANSPORT_AMQP_MESSENGER_09_171: [If name does not match any supported option, authentication_set_option shall fail and return a non-zero value]
             LogError("telemetry_messenger_set_option failed (option with name '%s' is not suppported)", name);
-            result = __FAILURE__;
+            result = MU_FAILURE;
         }
     }
 

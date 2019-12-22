@@ -681,7 +681,7 @@ int mbedtls_memory_buffer_alloc_self_test( int verbose )
     mbedtls_memory_buffer_alloc_free( );
 
     if( verbose != 0 )
-        mbedtls_printf( "passed\n\r" );
+        mbedtls_printf( "passed\n" );
 
     if( verbose != 0 )
         mbedtls_printf( "  MBA test #2 (buf not aligned): " );
@@ -707,7 +707,7 @@ int mbedtls_memory_buffer_alloc_self_test( int verbose )
     mbedtls_memory_buffer_alloc_free( );
 
     if( verbose != 0 )
-        mbedtls_printf( "passed\n\r" );
+        mbedtls_printf( "passed\n" );
 
     if( verbose != 0 )
         mbedtls_printf( "  MBA test #3 (full): " );
@@ -738,7 +738,7 @@ int mbedtls_memory_buffer_alloc_self_test( int verbose )
     mbedtls_memory_buffer_alloc_free( );
 
     if( verbose != 0 )
-        mbedtls_printf( "passed\n\r" );
+        mbedtls_printf( "passed\n" );
 
 cleanup:
     mbedtls_memory_buffer_alloc_free( );

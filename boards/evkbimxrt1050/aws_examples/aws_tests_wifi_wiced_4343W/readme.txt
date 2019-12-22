@@ -9,9 +9,9 @@ For more information see: <SDK_Install>/rtos/amazon-freertos/tests/Amazon FreeRT
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- GCC ARM Embedded  8.2.1
-- MCUXpresso  11.0.0
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -20,11 +20,12 @@ Hardware requirements
 - Personal Computer
 - Murata 1DX M.2 module
 - Murata uSD M.2 Adapter
+- 1 plug to receptable header cable
 
 Board settings
 ==============
-No special settings are required.
-
+The following pins between the evkbimxrt1050 board and Murata uSD M.2 Adapter are connected using the plug to receptable cables:
+- evkbimxrt1050 board's connector J22, pin 3 to Murata uSD M.2 Adapter's connector J9, pin 3
 Prepare the Demo
 ================
 

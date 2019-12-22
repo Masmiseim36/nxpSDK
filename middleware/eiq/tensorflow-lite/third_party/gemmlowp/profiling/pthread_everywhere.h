@@ -15,6 +15,9 @@
 // pthread_everywhere.h: Either includes <pthread.h> or implements a
 // subset of pthread functionality on top of C++11 <thread> for portability.
 
+// File modified by NXP. Changes are described in file
+// /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes"
+
 #ifndef GEMMLOWP_PROFILING_PTHREAD_EVERYWHERE_H_
 #define GEMMLOWP_PROFILING_PTHREAD_EVERYWHERE_H_
 
@@ -60,6 +63,9 @@ inline void pthread_cond_init(pthread_cond_t *cond, std::nullptr_t) {
   *cond = new std::condition_variable;
 }
 inline void pthread_cond_signal(pthread_cond_t *cond) { (*cond)->notify_one(); }
+inline void pthread_cond_broadcast(pthread_cond_t *cond) {
+  (*cond)->notify_all();
+}
 inline void pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex) {
   std::unique_lock<std::mutex> lock(**mutex, std::adopt_lock);
   (*cond)->wait(lock);

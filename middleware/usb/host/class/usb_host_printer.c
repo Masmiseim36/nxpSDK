@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -361,7 +361,7 @@ usb_status_t USB_HostPrinterInit(usb_device_handle deviceHandle, usb_host_class_
     uint32_t infoValue;
     /* malloc printer class instance */
     usb_host_printer_instance_t *printerInstance =
-        (usb_host_printer_instance_t *)USB_OsaMemoryAllocate(sizeof(usb_host_printer_instance_t));
+        (usb_host_printer_instance_t *)OSA_MemoryAllocate(sizeof(usb_host_printer_instance_t));
 
     if (printerInstance == NULL)
     {
@@ -524,7 +524,7 @@ usb_status_t USB_HostPrinterDeinit(usb_device_handle deviceHandle, usb_host_clas
         }
         USB_HostCloseDeviceInterface(deviceHandle,
                                      printerInstance->interfaceHandle); /* notify host driver the interface is closed */
-        USB_OsaMemoryFree(printerInstance);
+        OSA_MemoryFree(printerInstance);
     }
     else
     {

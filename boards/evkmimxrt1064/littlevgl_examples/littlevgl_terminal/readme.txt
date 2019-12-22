@@ -1,7 +1,7 @@
 Overview
 ========
 The example demonstrates how do use the LittlevGL terminal. In this example,
-the left half of the screen is used as terminal, when input from the debug
+the screen is used as terminal, when input from the debug
 terminal, the input characters are shown in the terminal in the screen. The
 input characters could be cleared by clicking the button "Clear".  When click
 the cross in the title, the terminal is closed, the input characters is not
@@ -9,10 +9,10 @@ shown anymore.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
-- MCUXpresso  11.0.0
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================

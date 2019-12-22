@@ -95,8 +95,9 @@ struct TensorEvaluator<const TensorScanOp<Op, ArgType>, Device> {
 
   enum {
     IsAligned = false,
-    PacketAccess = (internal::unpacket_traits<PacketReturnType>::size > 1),
+    PacketAccess = (PacketType<CoeffReturnType, Device>::size > 1),
     BlockAccess = false,
+    PreferBlockAccess = false,
     Layout = TensorEvaluator<ArgType, Device>::Layout,
     CoordAccess = false,
     RawAccess = true
@@ -123,7 +124,11 @@ struct TensorEvaluator<const TensorScanOp<Op, ArgType>, Device> {
         m_stride = m_stride * dims[i];
       }
     } else {
-      for (int i = NumDims - 1; i > op.axis(); --i) {
+      // dims can only be indexed through unsigned integers,
+      // so let's use an unsigned type to let the compiler knows.
+      // This prevents stupid warnings: ""'*((void*)(& evaluator)+64)[18446744073709551615]' may be used uninitialized in this function"
+      unsigned int axis = internal::convert_index<unsigned int>(op.axis());
+      for (unsigned int i = NumDims - 1; i > axis; --i) {
         m_stride = m_stride * dims[i];
       }
     }
@@ -242,7 +247,7 @@ struct ScanLauncher {
   }
 };
 
-#if defined(EIGEN_USE_GPU) && defined(EIGEN_CUDACC)
+#if defined(EIGEN_USE_GPU) && (defined(EIGEN_GPUCC))
 
 // GPU implementation of scan
 // TODO(ibab) This placeholder implementation performs multiple scans in
@@ -278,10 +283,11 @@ struct ScanLauncher<Self, Reducer, GpuDevice> {
      Index total_size = internal::array_prod(self.dimensions());
      Index num_blocks = (total_size / self.size() + 63) / 64;
      Index block_size = 64;
-     LAUNCH_CUDA_KERNEL((ScanKernel<Self, Reducer>), num_blocks, block_size, 0, self.device(), self, total_size, data);
+
+     LAUNCH_GPU_KERNEL((ScanKernel<Self, Reducer>), num_blocks, block_size, 0, self.device(), self, total_size, data);
   }
 };
-#endif  // EIGEN_USE_GPU && EIGEN_CUDACC
+#endif  // EIGEN_USE_GPU && (EIGEN_GPUCC)
 
 }  // end namespace Eigen
 

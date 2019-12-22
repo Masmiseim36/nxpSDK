@@ -47,10 +47,14 @@
 #endif
 #endif
 
+#ifndef HAL_UART_ADAPTER_LOWPOWER
+#define HAL_UART_ADAPTER_LOWPOWER (0U)
+#endif /* HAL_UART_ADAPTER_LOWPOWER */
+
 #if (defined(UART_ADAPTER_NON_BLOCKING_MODE) && (UART_ADAPTER_NON_BLOCKING_MODE > 0U))
-#define HAL_UART_HANDLE_SIZE (90U)
+#define HAL_UART_HANDLE_SIZE (90U + HAL_UART_ADAPTER_LOWPOWER * 16U)
 #else
-#define HAL_UART_HANDLE_SIZE (4U)
+#define HAL_UART_HANDLE_SIZE (4U + HAL_UART_ADAPTER_LOWPOWER * 16U)
 #endif
 
 /*! @brief Whether enable transactional function of the UART. (0 - disable, 1 - enable) */
@@ -134,8 +138,8 @@ extern "C" {
  * structure. The parameter handle is a pointer to point to a memory space of size #HAL_UART_HANDLE_SIZE allocated by
  * the caller. Example below shows how to use this API to configure the UART.
  *  @code
- *   uint8_t g_UartHandleBuffer[HAL_UART_HANDLE_SIZE];
- *   hal_uart_handle_t g_UartHandle = &g_UartHandleBuffer[0];
+ *   uint32_t g_UartHandleBuffer[((HAL_UART_HANDLE_SIZE + sizeof(uint32_t) - 1) / sizeof(uitn32_t))];
+ *   hal_uart_handle_t g_UartHandle = (hal_uart_handle_t)&g_UartHandleBuffer[0];
  *   hal_uart_config_t config;
  *   config.srcClock_Hz = 48000000;
  *   config.baudRate_Bps = 115200U;
@@ -148,6 +152,7 @@ extern "C" {
  *  @endcode
  *
  * @param handle Pointer to point to a memory space of size #HAL_UART_HANDLE_SIZE allocated by the caller.
+ * The handle should be 4 byte aligned, because unaligned access does not support on some devices.
  * @param config Pointer to user-defined configuration structure.
  * @retval kStatus_HAL_UartBaudrateNotSupport Baudrate is not support in current clock source.
  * @retval kStatus_HAL_UartSuccess UART initialization succeed
@@ -456,6 +461,28 @@ hal_uart_status_t HAL_UartAbortSend(hal_uart_handle_t handle);
 
 #endif
 #endif
+
+/*!
+ * @brief Prepares to enter low power consumption.
+ *
+ * This function is used to prepare to enter low power consumption.
+ *
+ * @param handle UART handle pointer.
+ * @retval kStatus_HAL_UartSuccess Successful operation.
+ * @retval kStatus_HAL_UartError An error occurred.
+ */
+hal_uart_status_t HAL_UartEnterLowpower(hal_uart_handle_t handle);
+
+/*!
+ * @brief Restores from low power consumption.
+ *
+ * This function is used to restore from low power consumption.
+ *
+ * @param handle UART handle pointer.
+ * @retval kStatus_HAL_UartSuccess Successful operation.
+ * @retval kStatus_HAL_UartError An error occurred.
+ */
+hal_uart_status_t HAL_UartExitLowpower(hal_uart_handle_t handle);
 
 #if (defined(UART_ADAPTER_NON_BLOCKING_MODE) && (UART_ADAPTER_NON_BLOCKING_MODE > 0U))
 /*!

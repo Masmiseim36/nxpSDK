@@ -136,16 +136,16 @@ USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static uint8_t
 static usb_status_t USB_DeviceClassAllocateHandle(uint8_t controllerId, usb_device_common_class_struct_t **handle)
 {
     uint32_t count;
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     /* Check the controller is initialized or not. */
     for (count = 0U; count < USB_DEVICE_CONFIG_NUM; count++)
     {
         if ((NULL != s_UsbDeviceCommonClassStruct[count].handle) &&
             (controllerId == s_UsbDeviceCommonClassStruct[count].controllerId))
         {
-            USB_OSA_EXIT_CRITICAL();
+            OSA_EXIT_CRITICAL();
             return kStatus_USB_Error;
         }
     }
@@ -157,12 +157,12 @@ static usb_status_t USB_DeviceClassAllocateHandle(uint8_t controllerId, usb_devi
             s_UsbDeviceCommonClassStruct[count].controllerId = controllerId;
             s_UsbDeviceCommonClassStruct[count].setupBuffer  = s_UsbDeviceSetupBuffer[count];
             *handle                                          = &s_UsbDeviceCommonClassStruct[count];
-            USB_OSA_EXIT_CRITICAL();
+            OSA_EXIT_CRITICAL();
             return kStatus_USB_Success;
         }
     }
 
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
     return kStatus_USB_Busy;
 }
 
@@ -179,9 +179,9 @@ static usb_status_t USB_DeviceClassAllocateHandle(uint8_t controllerId, usb_devi
 static usb_status_t USB_DeviceClassFreeHandle(uint8_t controllerId)
 {
     uint32_t count = 0U;
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     for (; count < USB_DEVICE_CONFIG_NUM; count++)
     {
         if ((NULL != s_UsbDeviceCommonClassStruct[count].handle) &&
@@ -190,11 +190,11 @@ static usb_status_t USB_DeviceClassFreeHandle(uint8_t controllerId)
             s_UsbDeviceCommonClassStruct[count].handle       = NULL;
             s_UsbDeviceCommonClassStruct[count].configList   = (usb_device_class_config_list_struct_t *)NULL;
             s_UsbDeviceCommonClassStruct[count].controllerId = 0U;
-            USB_OSA_EXIT_CRITICAL();
+            OSA_EXIT_CRITICAL();
             return kStatus_USB_Success;
         }
     }
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
 
     return kStatus_USB_InvalidParameter;
 }
@@ -215,20 +215,20 @@ static usb_status_t USB_DeviceClassGetHandleByControllerId(uint8_t controllerId,
                                                            usb_device_common_class_struct_t **handle)
 {
     uint32_t count = 0U;
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     for (; count < USB_DEVICE_CONFIG_NUM; count++)
     {
         if ((NULL != s_UsbDeviceCommonClassStruct[count].handle) &&
             (controllerId == s_UsbDeviceCommonClassStruct[count].controllerId))
         {
             *handle = &s_UsbDeviceCommonClassStruct[count];
-            USB_OSA_EXIT_CRITICAL();
+            OSA_EXIT_CRITICAL();
             return kStatus_USB_Success;
         }
     }
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
     return kStatus_USB_InvalidParameter;
 }
 
@@ -248,19 +248,19 @@ static usb_status_t USB_DeviceClassGetHandleByDeviceHandle(usb_device_handle dev
                                                            usb_device_common_class_struct_t **handle)
 {
     uint32_t count = 0U;
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     for (; count < USB_DEVICE_CONFIG_NUM; count++)
     {
         if (deviceHandle == s_UsbDeviceCommonClassStruct[count].handle)
         {
             *handle = &s_UsbDeviceCommonClassStruct[count];
-            USB_OSA_EXIT_CRITICAL();
+            OSA_EXIT_CRITICAL();
             return kStatus_USB_Success;
         }
     }
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
     return kStatus_USB_InvalidParameter;
 }
 
@@ -278,20 +278,20 @@ static usb_status_t USB_DeviceClassGetHandleByDeviceHandle(usb_device_handle dev
 usb_status_t USB_DeviceClassGetDeviceHandle(uint8_t controllerId, usb_device_handle *handle)
 {
     uint32_t count = 0U;
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     for (; count < USB_DEVICE_CONFIG_NUM; count++)
     {
         if ((NULL != s_UsbDeviceCommonClassStruct[count].handle) &&
             (controllerId == s_UsbDeviceCommonClassStruct[count].controllerId))
         {
             *handle = s_UsbDeviceCommonClassStruct[count].handle;
-            USB_OSA_EXIT_CRITICAL();
+            OSA_EXIT_CRITICAL();
             return kStatus_USB_Success;
         }
     }
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
     return kStatus_USB_InvalidParameter;
 }
 

@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2018  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V5.48 - Graphical user interface for embedded applications **
+** emWin V5.50 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2019-09-02
+SUA period:               2011-08-19 - 2020-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : SPINBOX.h
@@ -46,9 +46,8 @@ Purpose     : SPINBOX header file
 #define SPINBOX_H
 
 #include "WM.h"
-#include "DIALOG_Intern.h" // Required for Create indirect data structure
+#include "DIALOG_Type.h" // Required for Create indirect data structure
 #include "WIDGET.h"
-#include "GUI_Debug.h"
 #include "EDIT.h"
 
 #if GUI_WINSUPPORT
@@ -88,6 +87,13 @@ Purpose     : SPINBOX header file
 #define SPINBOX_CI_DISABLED          EDIT_CI_DISABLED
 #define SPINBOX_CI_ENABLED           EDIT_CI_ENABLED
 #define SPINBOX_CI_PRESSED           2
+
+/*********************************************************************
+*
+*       Timer indices
+*/
+#define SPINBOX_TI_TIMERSTART       0  // Timer for starting auto increment
+#define SPINBOX_TI_TIMERINC         1  // Timer for period between two increments
 
 /*********************************************************************
 *
@@ -149,6 +155,7 @@ GUI_COLOR        SPINBOX_GetButtonBkColor(SPINBOX_Handle hObj, unsigned int Inde
 EDIT_Handle      SPINBOX_GetEditHandle   (SPINBOX_Handle hObj);
 const GUI_FONT * SPINBOX_GetFont         (SPINBOX_Handle hObj);
 GUI_COLOR        SPINBOX_GetTextColor    (SPINBOX_Handle hObj, unsigned int Index);
+U32              SPINBOX_GetTimerPeriod  (SPINBOX_Handle hObj, U32 Index);
 int              SPINBOX_GetUserData     (SPINBOX_Handle hObj, void * pDest, int NumBytes);
 I32              SPINBOX_GetValue        (SPINBOX_Handle hObj);
 void             SPINBOX_SetBkColor      (SPINBOX_Handle hObj, unsigned int Index, GUI_COLOR Color);
@@ -160,6 +167,7 @@ void             SPINBOX_SetFont         (SPINBOX_Handle hObj, const GUI_FONT * 
 void             SPINBOX_SetRange        (SPINBOX_Handle hObj, I32 Min, I32 Max);
 U16              SPINBOX_SetStep         (SPINBOX_Handle hObj, U16 Step);
 void             SPINBOX_SetTextColor    (SPINBOX_Handle hObj, unsigned int Index, GUI_COLOR Color);
+void             SPINBOX_SetTimerPeriod  (SPINBOX_Handle hObj, U32 Index, U32 Period);
 int              SPINBOX_SetUserData     (SPINBOX_Handle hObj, const void * pSrc, int NumBytes);
 void             SPINBOX_SetValue        (SPINBOX_Handle hObj, I32 Value);
 

@@ -1,0 +1,5121 @@
+$version 6.60
+
+// Color constant according UI design.
+$rect <1090,70,1290,110>
+$output false
+const color CaptionColor = #00BCC8FF;
+
+// Color constant according UI design.
+$rect <1090,110,1290,150>
+$output false
+const color BackColor = #FFFFFF44;
+
+// Color constant according UI design.
+$rect <1090,150,1290,190>
+$output false
+const color SelectColor = #B8C8C5FF;
+
+// Color constant according UI design.
+$rect <1090,190,1290,230>
+$output false
+const color StartColor = #83C10CFF;
+
+// Color constant according UI design.
+$rect <1090,230,1290,270>
+$output false
+const color StopColor = #C10C4CFF;
+
+// This is an enumeration definition for indicating the current opeation mode of \
+// the cutter.
+$rect <240,70,440,110>
+$output false
+enum OperationMode
+{
+  $rect <10,10,210,50>
+  item Programming;
+
+  $rect <210,10,410,50>
+  item Running;
+
+  $rect <410,10,610,50>
+  item Exclusive;
+}
+
+// Base class of all paper cutter windows.
+$rect <40,190,240,230>
+$output false
+class Window : Core::Group
+{
+  $rect <10,220,190,260>
+  inherited property Bounds = <0,0,380,200>;
+
+  $rect <10,260,190,300>
+  inherited method UpdateLayout()
+  {
+    super( aSize );
+
+    /* arrange caption rect */
+    CaptionRect.Bounds = rect( 0, 0, aSize.x, Cutter::CaptionHeight );
+
+    /* arrange text on left side - but if window covers more than half screen, arrange it on right side... */
+    var int32 ident = Cutter::CaptionHeight / 2;
+    var int32 textW = ( Cutter::ScreenSize.x - 2 * Cutter::Border.x ) / 2;
+    if (( textW > aSize.x ) || ( aSize.y < Cutter::ScreenSize.y / 2 ))
+      CaptionText.Bounds = rect( ident, 0, aSize.x, Cutter::CaptionHeight );
+    else
+      CaptionText.Bounds = rect( aSize.x - textW - ident, 0, aSize.x, Cutter::CaptionHeight );
+
+  }
+
+  $rect <10,300,190,340>
+  inherited method UpdateViewState()
+  {
+    aState;
+
+    /* colorize background if currently selected */
+    if ( TouchHandler.Down && TouchHandler.Inside )
+      Background.Color = Cutter::SelectColor;
+    else
+      Background.Color = Cutter::BackColor;
+
+  }
+
+  // This is a generic touch handler.
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler TouchHandler
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Point4 = <0,200>;
+    preset Point3 = <380,200>;
+    preset Point2 = <380,0>;
+    preset Point1 = <0,0>;
+    preset OnLeave = enterLeaveSlot;
+    preset OnEnter = enterLeaveSlot;
+    preset OnRelease = pressReleaseSlot;
+    preset OnPress = pressReleaseSlot;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Background
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,380,200>;
+    preset Color = Cutter::BackColor;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle CaptionRect
+  {
+    preset Layout = Core::Layout[AlignToLeft, AlignToRight, AlignToTop, ResizeHorz];
+    preset Bounds = <0,0,300,40>;
+    preset Color = Cutter::CaptionColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text CaptionText
+  {
+    preset Bounds = <20,0,300,40>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Caption";
+    preset Font = Cutter::CaptionFont;
+  }
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <200,260,380,300>
+  slot enterLeaveSlot
+  {
+    InvalidateViewState();
+  }
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <200,300,380,340>
+  slot pressReleaseSlot
+  {
+    /* releasing the finger outside the button area is ignored */
+    if ( !TouchHandler.Down && TouchHandler.Inside )
+    {
+      /* inform the OnChange slot method */
+      signal OnChange;
+    }
+  }
+
+  // The property 'OnChange' can refer to a slot method, which will receive a signal \
+  // as soon the user has pressed the window. Thereupon the method's logic will be \
+  // executed.
+  $rect <380,300,560,340>
+  property slot OnChange = null;
+
+  // The function 'ChangeMode' is responsible to make the transission between the \
+  // different modes of the window and to start the corresponding animations.
+  $rect <410,10,590,50>
+  method void ChangeMode( arg Cutter::OperationMode aMode, arg rect aDestBounds )
+  {
+    Mode = aMode;
+
+    /* stop current rect effect */
+    RectEffect.Enabled = false;
+
+    /* use current bounds as start value */
+    RectEffect.Value1 = Bounds;
+
+    /* use given position as end value */
+    RectEffect.Value2 = aDestBounds;
+
+    /* start rect effect */
+    RectEffect.Enabled = true;
+
+    /* restart the fade effect timer */
+    FadeEffect.Enabled = false;
+    FadeEffect.Enabled = true;
+
+    /* enable touchhandler only for programming mode */
+    TouchHandler.Enabled = ( aMode == Cutter::OperationMode.Programming );
+
+
+
+
+
+
+  }
+
+  // This is a move and resize rectangle effect.
+  $rect <410,50,590,90>
+  object Effects::RectEffect RectEffect
+  {
+    preset NoOfCycles = 1;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset CycleDuration = Cutter::AnimationTime;
+    preset Outlet = ^Bounds;
+  }
+
+  // The variable 'Mode' stores the next acitve mode during animation - or the currently \
+  // active mode, if animation is finished.
+  $rect <590,10,770,50>
+  var Cutter::OperationMode Mode = Cutter::OperationMode.Programming;
+
+  // This is an int32 change effect.
+  $rect <410,100,590,140>
+  object Effects::Int32Effect FadeEffect
+  {
+    preset OnAnimate = onFade;
+    preset NoOfCycles = 1;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset CycleDuration = Cutter::AnimationTime;
+    preset Enabled = false;
+  }
+
+  // This is a slot method.
+  $rect <410,140,590,180>
+  slot onFade
+  {
+    sender; /* the method is called from the sender object */
+
+    FadeAnimation( Mode, FadeEffect.Value );
+
+  }
+
+  // Method for doing a fade animation within the derived window classes. The parameter \
+  // aValue runs from 0 to 255 during the animation.
+  $rect <590,140,770,180>
+  method void FadeAnimation( arg Cutter::OperationMode aMode, arg int32 aValue )
+  {
+    aMode;
+    aValue;
+
+  }
+
+  // Slot method to forward a signal from  an embedded Cancel button.
+  $rect <410,190,590,230>
+  slot onCancel
+  {
+    sender; /* the method is called from the sender object */
+    postsignal OnCancel;
+  }
+
+  // The property 'OnCancel' can refer to a slot method, which will receive a signal \
+  // as soon the user has pressed the cancel button. Thereupon the method's logic \
+  // will be executed.
+  $rect <590,190,770,230>
+  property slot OnCancel = null;
+
+  // Base class of all paper cutter windows.
+  //
+  // It contains a caption bar and a window area that will be filled by the derived \
+  // classes.
+  //
+  // The base window class contains the functionality to show the content in two \
+  // different types and to make a smooth fade animation between them: The derived \
+  // windows will show either a certain setting value of the paper cutter or they \
+  // will host a dialog to change a certain value.
+  note legend Note
+  {
+    attr Bounds = <10,370,550,530>;
+  }
+}
+
+// Constant to define the spacing between the windows.
+$rect <890,70,1090,110>
+$output false
+const point Spacing = <4,4>;
+
+// Constant to define the border around the screen.
+$rect <890,110,1090,150>
+$output false
+const point Border = <8,8>;
+
+// Constant to define the height of the caption area.
+$rect <890,150,1090,190>
+$output false
+const int32 CaptionHeight = 22;
+
+// This is a font resource.
+$rect <690,500,890,540>
+$output false
+resource Resources::Font CaptionFont
+{
+  attr fontname FontName = Roboto;
+  attr fontheight Height = 19;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0xFF;
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+// This is a font resource.
+$rect <690,580,890,620>
+$output false
+resource Resources::Font SmallDigitFont
+{
+  attr fontname FontName = Roboto Medium;
+  attr fontheight Height = 31;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = '0'-'9',',','.',':';
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+// This is a font resource.
+$rect <690,460,890,500>
+$output false
+resource Resources::Font DescrFont
+{
+  attr fontname FontName = Roboto Black;
+  attr fontheight Height = 14;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0xFF;
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+// Constant to define a common animation time for all item movements.
+$rect <690,70,890,110>
+$output false
+const int32 AnimationTime = 300;
+
+// Window class to host paper feed settings.
+$rect <240,190,440,230>
+$output false
+class FeedWindow : Cutter::Window
+{
+  $rect <0,220,140,260>
+  inherited property Bounds = <0,0,230,114>;
+
+  $rect <20,20,160,60>
+  inherited object CaptionRect
+  {
+    preset Bounds = <0,0,300,140>;
+  }
+
+  $rect <20,20,160,60>
+  inherited object CaptionText
+  {
+    preset String = "Feed";
+  }
+
+  $rect <410,10,610,50>
+  inherited method FadeAnimation()
+  {
+    /* fade out everything for exclusive mode... */
+    if ( aMode == Cutter::OperationMode.Exclusive )
+    {
+      /* create a dialog if necessary */
+      if ( dialog == null )
+      {
+        dialog = new Cutter::FeedDialog;
+        dialog.Bounds.origin = point( 0, Cutter::CaptionHeight );
+        Add( dialog, 0 );
+        dialog.OnCancel = onCancel;
+        dialog.PaperType = ^Cutter::Device.PaperType;
+      }
+      dialog.Opacity = aValue;
+
+      PaperFeed.Opacity = 0xFF - aValue;
+      Text.Opacity = 0xFF - aValue;
+    }
+    else
+    {
+        /* fade out and delete the dialog if necessary */
+      if ( dialog != null )
+      {
+        if ( aValue > dialog.Opacity )
+          dialog.Opacity = aValue;
+        if ( aValue < 10 )
+        {
+          Remove( dialog );
+          dialog = null;
+        }
+      }
+      if ( aValue > PaperFeed.Opacity )
+        PaperFeed.Opacity = aValue;
+      if ( aValue > Text.Opacity )
+        Text.Opacity = aValue;
+    }
+
+
+
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight];
+    preset Bounds = <110,80,230,114>;
+    preset WrapText = true;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "PINFEED\nPERFORATED";
+    preset Font = Cutter::DescrFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::PaperFeed PaperFeed
+  {
+    preset Layout = Core::Layout[AlignToLeft, AlignToRight, AlignToTop, ResizeHorz];
+    preset Bounds = <0,20,194,92>;
+    preset Type = 0;
+  }
+
+  // Data point property that refers to the value that should be displayed within \
+  // the window.
+  $rect <410,60,610,100>
+  property ^int32 PaperType = null;
+
+  $rect <410,100,610,140>
+  onset PaperType
+  {
+    /* check if something has changed */
+    if ( value == pure PaperType )
+      return;
+
+    /* detatch from previous data point */
+    if ( pure PaperType != null )
+      detachobserver onUpdate, pure PaperType;
+
+    /* store the new data point */
+    pure PaperType = value;
+
+    /* and attach to the new one */
+    if ( value != null )
+      attachobserver onUpdate, value;
+
+    /* finally, get the initial value */
+    postsignal onUpdate;
+  }
+
+  // Slot method to update the display value.
+  $rect <410,150,610,190>
+  slot onUpdate
+  {
+    sender; /* the method is called from the sender object */
+
+    /* create the new text to be displayed */
+    if ( PaperType != null )
+    {
+      PaperFeed.Type = ( PaperType^ );
+      switch ( PaperType^ )
+      {
+        case 0:
+           Text.String = "PINFEED\nPERFORATED";
+        case 1:
+           Text.String = "PINFEED\nNON-PERFORATED";
+        case 2:
+           Text.String = "PINLESS\nPERFORATED";
+        case 3:
+           Text.String = "PINLESS\nNON-PERFORATED";
+        default:
+          ;
+      }
+    }
+
+
+  }
+
+  // Variable to store the embedded  dialog when window is in exclusive mode.-
+  $rect <410,200,610,240>
+  var Cutter::FeedDialog dialog = null;
+
+  // Window class to host paper feed settings.
+  //
+  // The window is able to show two different types of content and to fade between \
+  // them:
+  // The feed window can show the current paper feed selection and it is able to \
+  // host the paper feed dialog 'Cutter::FeedDialog'.
+  note legend Note
+  {
+    attr Bounds = <0,250,610,360>;
+  }
+}
+
+// Color constant according UI design.
+$rect <1090,270,1290,310>
+$output false
+const color TextColor = #3B5E54FF;
+
+// This is a bitmap resource.
+$rect <1090,460,1290,500>
+$output false
+resource Resources::Bitmap PaperStripe
+{
+  attr bitmapfile FileName = .\Res\PaperFeed.png;
+  attr alphafile AlphaName;
+  attr framesize FrameSize = <201,42>;
+  attr framedelay FrameDelay;
+}
+
+// Window class to host paper format settings.
+$rect <240,270,440,310>
+$output false
+class FormatWindow : Cutter::Window
+{
+  $rect <0,140,140,180>
+  inherited property Bounds = <0,0,230,114>;
+
+  $rect <20,20,160,60>
+  inherited object CaptionRect
+  {
+    preset Bounds = <0,0,300,140>;
+  }
+
+  $rect <20,20,160,60>
+  inherited object CaptionText
+  {
+    preset String = "Output Format";
+  }
+
+  $rect <412,240,612,280>
+  inherited method FadeAnimation()
+  {
+    /* if window is going to programming mode, fade in the icon... */
+    if ( aMode == Cutter::OperationMode.Programming )
+    {
+      Icon.Opacity = aValue;
+    }
+    /* if window is going to running mode, fade out the icon... */
+    else if ( aMode == Cutter::OperationMode.Running )
+    {
+      Icon.Opacity = 0xFF - aValue;
+    }
+
+    /* fade out everything for exclusive mode... */
+    if ( aMode == Cutter::OperationMode.Exclusive )
+    {
+      /* create a dialog if necessary */
+      if ( dialog == null )
+      {
+        dialog = new Cutter::FormatDialog;
+        dialog.Bounds.origin = point( 0, Cutter::CaptionHeight );
+        Add( dialog, 0 );
+        dialog.OnCancel = onCancel;
+        dialog.PaperHeight = ^Cutter::Device.PaperHeight;
+        dialog.PaperWidth = ^Cutter::Device.PaperWidth;
+      }
+      dialog.Opacity = aValue;
+
+      TextWidth.Opacity = 0xFF - aValue;
+      TextHeight.Opacity = 0xFF - aValue;
+      TextW.Opacity = 0xFF - aValue;
+      TextH.Opacity = 0xFF - aValue;
+      Icon.Opacity = 0xFF - aValue;
+    }
+    else
+    {
+      /* fade out and delete the dialog if necessary */
+      if ( dialog != null )
+      {
+        if ( aValue > dialog.Opacity )
+          dialog.Opacity = aValue;
+        if ( aValue < 10 )
+        {
+          Remove( dialog );
+          dialog = null;
+        }
+      }
+      if ( aValue > TextWidth.Opacity )
+        TextWidth.Opacity = aValue;
+      if ( aValue > TextHeight.Opacity )
+        TextHeight.Opacity = aValue;
+      if ( aValue > TextW.Opacity )
+        TextW.Opacity = aValue;
+      if ( aValue > TextH.Opacity )
+        TextH.Opacity = aValue;
+    }
+
+
+
+  }
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image Icon
+  {
+    preset Bounds = <0,50,92,99>;
+    preset AutoSize = true;
+    preset Alignment = Views::ImageAlignment[AlignHorzCenter, AlignVertCenter];
+    preset Bitmap = Cutter::PaperFormat;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text TextW
+  {
+    preset Layout = Core::Layout[AlignToRight];
+    preset Bounds = <96,46,225,71>;
+    preset WrapText = false;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "WIDTH";
+    preset Font = Cutter::DescrFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text TextH
+  {
+    preset Layout = Core::Layout[AlignToRight];
+    preset Bounds = <96,76,225,102>;
+    preset WrapText = false;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "HEIGHT";
+    preset Font = Cutter::DescrFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text TextWidth
+  {
+    preset Layout = Core::Layout[AlignToRight];
+    preset Bounds = <139,30,230,76>;
+    preset WrapText = false;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "99,99";
+    preset Font = Cutter::SmallDigitFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text TextHeight
+  {
+    preset Layout = Core::Layout[AlignToRight];
+    preset Bounds = <139,60,230,108>;
+    preset WrapText = false;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "99,99";
+    preset Font = Cutter::SmallDigitFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // Data point property that refers to the value that should be displayed within \
+  // the window.
+  $rect <410,10,610,50>
+  property ^int32 PaperWidth = null;
+
+  $rect <410,50,610,90>
+  onset PaperWidth
+  {
+    /* check if something has changed */
+    if ( value == pure PaperWidth )
+      return;
+
+    /* detatch from previous data point */
+    if ( pure PaperWidth != null )
+      detachobserver onUpdate, pure PaperWidth;
+
+    /* store the new data point */
+    pure PaperWidth = value;
+
+    /* and attach to the new one */
+    if ( value != null )
+      attachobserver onUpdate, value;
+
+    /* finally, get the initial value */
+    postsignal onUpdate;
+  }
+
+  // Data point property that refers to the value that should be displayed within \
+  // the window.
+  $rect <410,100,610,140>
+  property ^int32 PaperHeight = null;
+
+  $rect <410,140,610,180>
+  onset PaperHeight
+  {
+    /* check if something has changed */
+    if ( value == pure PaperHeight )
+      return;
+
+    /* detatch from previous data point */
+    if ( pure PaperHeight != null )
+      detachobserver onUpdate, pure PaperHeight;
+
+    /* store the new data point */
+    pure PaperHeight = value;
+
+    /* and attach to the new one */
+    if ( value != null )
+      attachobserver onUpdate, value;
+
+    /* finally, get the initial value */
+    postsignal onUpdate;
+  }
+
+  // Slot method to update the display value.
+  $rect <410,190,610,230>
+  slot onUpdate
+  {
+    sender; /* the method is called from the sender object */
+
+    /* create the new text to be displayed */
+    if ( PaperWidth != null )
+      TextWidth.String = string( (PaperWidth^) / 10 ) + "," + string( (PaperWidth^) % 10 );
+
+    if ( PaperHeight != null )
+      TextHeight.String = string( (PaperHeight^) / 10 ) + "," + string( (PaperHeight^) % 10 );
+
+  }
+
+  // Variable to store the embedded  dialog when window is in exclusive mode.-
+  $rect <190,220,390,260>
+  var Cutter::FormatDialog dialog = null;
+
+  // Window class to host paper format settings.
+  //
+  // The window is able to show two different types of content and to fade between \
+  // them:
+  // The format window can show the current paper format selection and it is able \
+  // to host the paper format dialog 'Cutter::FormatDialog'.
+  note legend Note
+  {
+    attr Bounds = <0,290,610,400>;
+  }
+}
+
+// This is a bitmap resource.
+$rect <1090,500,1290,540>
+$output false
+resource Resources::Bitmap PaperFormat
+{
+  attr bitmapfile FileName = .\Res\PaperFormat.png;
+  attr alphafile AlphaName;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+// This is a bitmap resource.
+$rect <1090,540,1290,580>
+$output false
+resource Resources::Bitmap PaperBatch
+{
+  attr bitmapfile FileName = .\Res\PaperBatch.png;
+  attr alphafile AlphaName;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+// This is a bitmap resource.
+$rect <1090,580,1290,620>
+$output false
+resource Resources::Bitmap PaperSpeed
+{
+  attr bitmapfile FileName = .\Res\PaperSpeed.png;
+  attr alphafile AlphaName;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+// This is the main screen of the paper cutting machine. It arranges the different \
+// setting windows.
+$rect <40,70,240,110>
+$output false
+class Cutter : Core::Group
+{
+  $rect <530,10,730,50>
+  inherited property Bounds = <0,0,480,272>;
+
+  $rect <530,100,730,140>
+  inherited method UpdateLayout()
+  {
+    super( aSize );
+
+    /* make individual arrangement in order to supprt different application size */
+    Background.Bounds = rect( 0, 0, aSize.x, aSize.y );
+    MainButton.Bounds = rect( aSize.x - MainButton.Bounds.w, aSize.y - MainButton.Bounds.h, aSize.x, aSize.y );
+    StatusBar.Bounds = rect( 0, aSize.y - StatusBar.Bounds.h, StatusBar.Bounds.w, aSize.y );
+
+
+  }
+
+  $rect <530,50,730,90>
+  inherited method Init()
+  {
+    PaperRemaining = ^Cutter::Device.Remaining;
+
+    signal ProgrammingMode;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Background
+  {
+    preset Bounds = <0,0,100,100>;
+    preset Color = #757C62FF;
+  }
+
+  // The slot method 'RunningMode' puts all members of the cutter into running mode. \
+  // The running mode is active, when the user has pressed the start button.
+  $rect <530,160,730,200>
+  slot RunningMode
+  {
+    sender; /* the method is called from the sender object */
+
+    /* calculate the arrangement of all windows... */
+    var int32 x = Cutter::Border.x;
+    var int32 y = Cutter::Border.y;
+    var int32 w = ( Cutter::ScreenSize.x - 2 * Cutter::Border.x - 2 * Cutter::Spacing.x ) / 3;
+    var int32 h = ( Cutter::ScreenSize.y - Cutter::Border.x - Cutter::Spacing.y - Cutter::StatusHeight ) / 2;
+
+    /* first row of windows */
+    FeedWindow.ChangeMode( Cutter::OperationMode.Running, rect( x, y, x + w, y + h ));
+    x = x + w + Cutter::Spacing.x;
+    SpeedWindow.ChangeMode( Cutter::OperationMode.Running, rect( x, y, x + w + w + Cutter::Spacing.x, y + h ));
+
+    /* second row of windows */
+    x = Cutter::Border.x;
+    y = y + h + Cutter::Spacing.y;
+    FormatWindow.ChangeMode( Cutter::OperationMode.Running, rect( x, y, x + w, y + h ));
+    x = x + w + Cutter::Spacing.x;
+    BatchWindow.ChangeMode( Cutter::OperationMode.Running, rect( x, y, x + w, y + h ));
+    x = x + w + Cutter::Spacing.x;
+    RemainingWindow.ChangeMode( Cutter::OperationMode.Running, rect( x, y, x + w, y + h ));
+
+    /* change the current operation mode of the button */
+    MainButton.Mode = Cutter::ButtonMode.Stop;
+
+    /* start machine... */
+    Device.Running = true;
+
+
+  }
+
+  // The slot method 'ProgrammingMode' puts all members of the cutter into programming \
+  // mode. The programming mode is active, when the user has pressed the stop button.
+  $rect <530,200,730,240>
+  slot ProgrammingMode
+  {
+    sender; /* the method is called from the sender object */
+
+    /* calculate the arrangement of all windows... */
+    var int32 x = Cutter::Border.x;
+    var int32 y = Cutter::Border.y;
+    var int32 w = ( Cutter::ScreenSize.x - 2 * Cutter::Border.x - Cutter::Spacing.x ) / 2;
+    var int32 h = ( Cutter::ScreenSize.y - Cutter::Border.x - Cutter::Spacing.y - Cutter::StatusHeight ) / 2;
+
+    /* first row of windows */
+    FeedWindow.ChangeMode( Cutter::OperationMode.Programming, rect( x, y, x + w, y + h ));
+    x = x + w + Cutter::Spacing.x;
+    SpeedWindow.ChangeMode( Cutter::OperationMode.Programming, rect( x, y, x + w, y + h ));
+
+    /* second row of windows */
+    x = Cutter::Border.x;
+    y = y + h + Cutter::Spacing.y;
+    FormatWindow.ChangeMode( Cutter::OperationMode.Programming, rect( x, y, x + w, y + h ));
+    x = x + w + Cutter::Spacing.x;
+    BatchWindow.ChangeMode( Cutter::OperationMode.Programming, rect( x, y, x + w, y + h ));
+    RemainingWindow.ChangeMode( Cutter::OperationMode.Programming, rect( Cutter::ScreenSize.x, y, Cutter::ScreenSize.x + w, y + h ));
+
+    /* change the current operation mode of the button */
+    MainButton.Mode = Cutter::ButtonMode.Start;
+
+    /* stop machine... */
+    Device.Running = false;
+
+    /* hide paper cut window */
+    postsignal PaperCut.FadeOut;
+
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::FeedWindow FeedWindow
+  {
+    preset Bounds = <480,20,750,220>;
+    preset OnChange = ChangeFeed;
+    preset OnCancel = ProgrammingMode;
+    preset PaperType = ^Cutter::Device.PaperType;
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::FormatWindow FormatWindow
+  {
+    preset Bounds = <310,60,580,260>;
+    preset OnChange = ChangeFormat;
+    preset OnCancel = ProgrammingMode;
+    preset PaperWidth = ^Cutter::Device.PaperWidth;
+    preset PaperHeight = ^Cutter::Device.PaperHeight;
+  }
+
+  // Variable to access device class and to keep the simulated data in memory.
+  $rect <0,300,200,340>
+  var Cutter::DeviceClass Device = Cutter::Device;
+
+  $rect <20,20,160,60>
+  object Cutter::BatchWindow BatchWindow
+  {
+    preset Bounds = <210,120,470,320>;
+    preset OnChange = ChangeBatch;
+    preset OnCancel = ProgrammingMode;
+    preset PaperBatch = ^Cutter::Device.PaperBatch;
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::RemainingWindow RemainingWindow
+  {
+    preset Bounds = <260,190,560,390>;
+    preset OnCancel = ProgrammingMode;
+    preset PaperRemaining = ^Cutter::Device.Remaining;
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::SpeedWindow SpeedWindow
+  {
+    preset Bounds = <360,260,780,460>;
+    preset OnChange = ChangeSpeed;
+    preset OnCancel = ProgrammingMode;
+    preset PaperSpeed = ^Cutter::Device.PaperSpeed;
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::MainButton MainButton
+  {
+    preset OnStart = RunningMode;
+    preset OnStop = ProgrammingMode;
+    preset OnOk = ProgrammingMode;
+  }
+
+  // The slot method 'ChangeFormat' puts the format window into exclusive mode. This \
+  // exclusive mode is active, when the user has pressed the window area of the format \
+  // window.
+  $rect <530,280,730,320>
+  slot ChangeFormat
+  {
+    sender; /* the method is called from the sender object */
+
+    /* calculate the arrangement of all windows... */
+    var int32 x = Cutter::Border.x;
+    var int32 y = Cutter::Border.y;
+    var int32 w = Cutter::ScreenSize.x - 2 * Cutter::Border.x;
+    var int32 h = Cutter::ScreenSize.y - Cutter::Border.x - Cutter::StatusHeight;
+
+    FormatWindow.ChangeMode( Cutter::OperationMode.Exclusive, rect( x, y, x + w, y + h ));
+
+    /* calculate a shift vector for all other windows */
+    var int32 dx = Cutter::ScreenSize.x - FormatWindow.Bounds.x2;
+    var int32 dy = -FormatWindow.Bounds.y1;
+
+    /* move all other windows out of the screen */
+    FeedWindow.ChangeMode( Cutter::OperationMode.Programming,
+      rect( FeedWindow.Bounds.x1 + dx, FeedWindow.Bounds.y1 + dy, FeedWindow.Bounds.x2 + dx, FeedWindow.Bounds.y2 + dy ));
+    SpeedWindow.ChangeMode( Cutter::OperationMode.Programming,
+      rect( SpeedWindow.Bounds.x1 + dx, SpeedWindow.Bounds.y1 + dy, SpeedWindow.Bounds.x2 + dx, SpeedWindow.Bounds.y2 + dy ));
+    BatchWindow.ChangeMode( Cutter::OperationMode.Programming,
+      rect( BatchWindow.Bounds.x1 + dx, BatchWindow.Bounds.y1 + dy, BatchWindow.Bounds.x2 + dx, BatchWindow.Bounds.y2 + dy ));
+    RemainingWindow.ChangeMode( Cutter::OperationMode.Programming,
+      rect( Cutter::ScreenSize.x, RemainingWindow.Bounds.y1, Cutter::ScreenSize.x + RemainingWindow.Bounds.w, RemainingWindow.Bounds.y2 ));
+
+    /* change the current operation mode of the button */
+    MainButton.Mode = Cutter::ButtonMode.Ok;
+
+    /* stop machine... */
+    Device.Running = false;
+
+    /* show paper cut window */
+    PaperCut.Bounds.origin = point( Cutter::Border.x * 2, 0 );
+    postsignal PaperCut.FadeIn;
+
+
+  }
+
+  // The slot method 'ChangeFeed' puts the feed window into exclusive mode. This \
+  // exclusive mode is active, when the user has pressed the window area of the feed \
+  // window.
+  $rect <530,240,730,280>
+  slot ChangeFeed
+  {
+    sender; /* the method is called from the sender object */
+
+    /* calculate the arrangement of all windows... */
+    var int32 x = Cutter::Border.x;
+    var int32 y = Cutter::Border.y;
+    var int32 w = Cutter::ScreenSize.x - 2 * Cutter::Border.x;
+    var int32 h = Cutter::ScreenSize.y - Cutter::Border.x - Cutter::StatusHeight;
+
+    FeedWindow.ChangeMode( Cutter::OperationMode.Exclusive, rect( x, y, x + w, y + h ));
+
+    /* calculate a shift vector for all other windows */
+    var int32 dx = Cutter::ScreenSize.x - FeedWindow.Bounds.x2;
+    var int32 dy = Cutter::ScreenSize.y - FeedWindow.Bounds.y2;
+
+    /* move all other windows out of the screen */
+    FormatWindow.ChangeMode( Cutter::OperationMode.Programming,
+      rect( FormatWindow.Bounds.x1 + dx, FormatWindow.Bounds.y1 + dy, FormatWindow.Bounds.x2 + dx, FormatWindow.Bounds.y2 + dy ));
+    SpeedWindow.ChangeMode( Cutter::OperationMode.Programming,
+      rect( SpeedWindow.Bounds.x1 + dx, SpeedWindow.Bounds.y1 + dy, SpeedWindow.Bounds.x2 + dx, SpeedWindow.Bounds.y2 + dy ));
+    BatchWindow.ChangeMode( Cutter::OperationMode.Programming,
+      rect( BatchWindow.Bounds.x1 + dx, BatchWindow.Bounds.y1 + dy, BatchWindow.Bounds.x2 + dx, BatchWindow.Bounds.y2 + dy ));
+    RemainingWindow.ChangeMode( Cutter::OperationMode.Programming,
+      rect( Cutter::ScreenSize.x, RemainingWindow.Bounds.y1, Cutter::ScreenSize.x + RemainingWindow.Bounds.w, RemainingWindow.Bounds.y2 ));
+
+    /* change the current operation mode of the button */
+    MainButton.Mode = Cutter::ButtonMode.Ok;
+
+    /* stop machine... */
+    Device.Running = false;
+
+
+  }
+
+  // The slot method 'ChangeSpeed' puts the speed window into exclusive mode. This \
+  // exclusive mode is active, when the user has pressed the window area of the speed \
+  // window.
+  $rect <530,320,730,360>
+  slot ChangeSpeed
+  {
+    sender; /* the method is called from the sender object */
+
+    /* calculate the arrangement of all windows... */
+    var int32 x = Cutter::Border.x;
+    var int32 y = Cutter::Border.y;
+    var int32 w = Cutter::ScreenSize.x - 2 * Cutter::Border.x;
+    var int32 h = Cutter::ScreenSize.y - Cutter::Border.x - Cutter::StatusHeight;
+
+    SpeedWindow.ChangeMode( Cutter::OperationMode.Exclusive, rect( x, y, x + w, y + h ));
+
+    /* calculate a shift vector for all other windows */
+    var int32 dx = -SpeedWindow.Bounds.x1;
+    var int32 dy = Cutter::ScreenSize.y - SpeedWindow.Bounds.y2;
+
+    /* move all other windows out of the screen */
+    FeedWindow.ChangeMode( Cutter::OperationMode.Programming,
+      rect( FeedWindow.Bounds.x1 + dx, FeedWindow.Bounds.y1 + dy, FeedWindow.Bounds.x2 + dx, FeedWindow.Bounds.y2 + dy ));
+    FormatWindow.ChangeMode( Cutter::OperationMode.Programming,
+      rect( FormatWindow.Bounds.x1 + dx, FormatWindow.Bounds.y1 + dy, FormatWindow.Bounds.x2 + dx, FormatWindow.Bounds.y2 + dy ));
+    BatchWindow.ChangeMode( Cutter::OperationMode.Programming,
+      rect( BatchWindow.Bounds.x1 + dx, BatchWindow.Bounds.y1 + dy, BatchWindow.Bounds.x2 + dx, BatchWindow.Bounds.y2 + dy ));
+    RemainingWindow.ChangeMode( Cutter::OperationMode.Programming,
+      rect( Cutter::ScreenSize.x, RemainingWindow.Bounds.y1, Cutter::ScreenSize.x + RemainingWindow.Bounds.w, RemainingWindow.Bounds.y2 ));
+
+    /* change the current operation mode of the button */
+    MainButton.Mode = Cutter::ButtonMode.Ok;
+
+    /* stop machine... */
+    Device.Running = false;
+
+
+  }
+
+  // The slot method 'ChangeBatch' puts the batch window into exclusive mode. This \
+  // exclusive mode is active, when the user has pressed the window area of the batch \
+  // window.
+  $rect <530,360,730,400>
+  slot ChangeBatch
+  {
+    sender; /* the method is called from the sender object */
+
+    /* calculate the arrangement of all windows... */
+    var int32 x = Cutter::Border.x;
+    var int32 y = Cutter::Border.y;
+    var int32 w = Cutter::ScreenSize.x - 2 * Cutter::Border.x;
+    var int32 h = Cutter::ScreenSize.y - Cutter::Border.x - Cutter::StatusHeight;
+
+    BatchWindow.ChangeMode( Cutter::OperationMode.Exclusive, rect( x, y, x + w, y + h ));
+
+    /* calculate a shift vector for all other windows */
+    var int32 dx = -BatchWindow.Bounds.x1;
+    var int32 dy = -BatchWindow.Bounds.y1;
+
+    /* move all other windows out of the screen */
+    FeedWindow.ChangeMode( Cutter::OperationMode.Programming,
+      rect( FeedWindow.Bounds.x1 + dx, FeedWindow.Bounds.y1 + dy, FeedWindow.Bounds.x2 + dx, FeedWindow.Bounds.y2 + dy ));
+    FormatWindow.ChangeMode( Cutter::OperationMode.Programming,
+      rect( FormatWindow.Bounds.x1 + dx, FormatWindow.Bounds.y1 + dy, FormatWindow.Bounds.x2 + dx, FormatWindow.Bounds.y2 + dy ));
+    SpeedWindow.ChangeMode( Cutter::OperationMode.Programming,
+      rect( SpeedWindow.Bounds.x1 + dx, SpeedWindow.Bounds.y1 + dy, SpeedWindow.Bounds.x2 + dx, SpeedWindow.Bounds.y2 + dy ));
+    RemainingWindow.ChangeMode( Cutter::OperationMode.Programming,
+      rect( Cutter::ScreenSize.x, RemainingWindow.Bounds.y1, Cutter::ScreenSize.x + RemainingWindow.Bounds.w, RemainingWindow.Bounds.y2 ));
+
+    /* change the current operation mode of the button */
+    MainButton.Mode = Cutter::ButtonMode.Ok;
+
+    /* stop machine... */
+    Device.Running = false;
+
+
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::StatusBar StatusBar;
+
+  $rect <20,20,160,60>
+  object Cutter::PaperCut PaperCut
+  {
+    preset PaperWidth = ^Cutter::Device.PaperWidth;
+    preset PaperHeight = ^Cutter::Device.PaperHeight;
+  }
+
+  // Data point property that refers to the value that should be displayed within \
+  // the window.
+  $rect <200,300,400,340>
+  property ^int32 PaperRemaining = null;
+
+  $rect <200,340,400,380>
+  onset PaperRemaining
+  {
+    /* check if something has changed */
+    if ( value == pure PaperRemaining )
+      return;
+
+    /* detatch from previous data point */
+    if ( pure PaperRemaining != null )
+      detachobserver onUpdateRemaining, pure PaperRemaining;
+
+    /* store the new data point */
+    pure PaperRemaining = value;
+
+    /* and attach to the new one */
+    if ( value != null )
+      attachobserver onUpdateRemaining, value;
+
+    /* finally, get the initial value */
+    postsignal onUpdateRemaining;
+  }
+
+  // Slot method to update the display value.
+  $rect <200,380,400,420>
+  slot onUpdateRemaining
+  {
+    sender; /* the method is called from the sender object */
+
+    /* if last paper is cut, go to programming m */
+    if ( PaperRemaining != null )
+      if ( PaperRemaining^ == 0 )
+        postsignal ProgrammingMode;
+
+
+  }
+
+  // Slot method to trigger the next phase of the auto demo.
+  $rect <740,280,940,320>
+  slot AutoDemoSlot
+  {
+    sender; /* the method is called from the sender object */
+
+    switch ( AutoState )
+    {
+    //  case  0: postsignal ProgrammingMode;
+      case  1: postsignal ChangeFeed;
+      case  2: Device.PaperType = 1;
+      case  3: Device.PaperType = 2;
+      case  4: postsignal ProgrammingMode;
+      case  5: postsignal ChangeSpeed;
+      case  6: Device.PaperSpeed = 2400;
+      case  7: Device.PaperSpeed = 2700;
+      case  8: Device.PaperSpeed = 3000;
+      case  9: Device.PaperSpeed = 3300;
+      case 10: postsignal ProgrammingMode;
+      case 11: postsignal ChangeFormat;
+      case 12: Device.PaperHeight = 2500;
+      case 13: Device.PaperHeight = 2300;
+      case 14: Device.PaperHeight = 2100;
+      case 15: Device.PaperWidth  = 2000;
+      case 16: Device.PaperWidth  = 1640;
+      case 17: Device.PaperWidth  = 1480;
+      case 18: postsignal ProgrammingMode;
+      case 19: postsignal ChangeBatch;
+      case 20: Device.PaperBatch = 400;
+      case 21: Device.PaperBatch = 500;
+      case 22: Device.PaperBatch = 600;
+      case 23: postsignal ProgrammingMode;
+      case 24: postsignal RunningMode;
+      case 25: Device.PaperSpeed = 3200;
+      case 26: Device.PaperSpeed = 3100;
+      case 27: Device.PaperSpeed = 3000;
+      case 28: Device.PaperSpeed = 2900;
+      case 29: Device.PaperSpeed = 2800;
+      default:
+       ;
+    }
+
+    AutoState = AutoState + 1;
+    if ( AutoState > 29 )
+      AutoState = 0;
+  }
+
+  // Variable to store the current phase of the auto demo.
+  $rect <740,360,940,400>
+  var int32 AutoState = 0;
+
+  // This is the main screen of the paper cutting machine. It arranges the different \
+  // setting windows.
+  //
+  // The slot method 'RunningMode' puts all members of the cutter into running mode. \
+  // This mode is active, when the user has pressed the start button.
+  // The slot method 'ProgrammingMode' puts all members of the cutter into programming \
+  // mode. This programming mode is active, when the user has pressed the stop button.
+  // The slot methods 'ChangeFeed', 'ChangeFormat', 'ChangeSpeed' and 'ChangeBatch' \
+  // put the corresponding window into an exclusive mode. This exclusive mode is \
+  // active, when the user has pressed the window area. As a result, the corresponding \
+  // dialog will be shown, so that the user can change the settings.
+  //
+  // To run the application within the Prototyper, press 'F5'.
+  note legend Note1
+  {
+    attr Bounds = <10,430,1020,620>;
+  }
+
+  // Timer object to drive the auto demo mode.
+  $rect <740,320,940,360>
+  object Core::Timer AutoDemoTimer
+  {
+    preset OnTrigger = AutoDemoSlot;
+    preset Period = 1000;
+    preset Begin = 0;
+  }
+}
+
+// Constant to define the height of the status area.
+$rect <890,190,1090,230>
+$output false
+const int32 StatusHeight = 32;
+
+// Constant to define the size of the entire paper cutter application.
+$rect <890,230,1090,270>
+$output false
+const point ScreenSize = <480,272>;
+
+// Controller class, containing all data set values and all current values of the \
+// paper cutter.
+$rect <40,700,240,740>
+$output false
+class DeviceClass
+{
+  // Number of papers in batch.
+  $rect <10,10,210,50>
+  property int32 PaperBatch = 240;
+
+  $rect <10,50,210,90>
+  onset PaperBatch
+  {
+    // Implement here your ON SET business logic, the access to the hardware,
+    // or any desired code to execute, when the property is written at the
+    // runtime.
+
+    /* check limits of given value */
+    if ( value < 10 )
+      value = 10;
+    if ( value > 999 )
+      value = 999;
+
+    /* check for new value */
+    if ( value == pure PaperBatch )
+      return;
+
+    pure PaperBatch = value;
+
+    notifyobservers ^PaperBatch;
+  }
+
+  // Speed of cutting machine in papers per minutes.
+  $rect <220,10,420,50>
+  property int32 PaperSpeed = 2100;
+
+  $rect <220,50,420,90>
+  onset PaperSpeed
+  {
+    // Implement here your ON SET business logic, the access to the hardware,
+    // or any desired code to execute, when the property is written at the
+    // runtime.
+
+    /* check limits of given value */
+    if ( value < 600 )
+      value = 600;
+    if ( value > 3600 )
+      value = 3600;
+
+    /* check for new value */
+    if ( value == pure PaperSpeed )
+      return;
+
+    pure PaperSpeed = value;
+
+    notifyobservers ^PaperSpeed;
+  }
+
+  // Width of paper in 0.1 millimeter.
+  $rect <10,110,210,150>
+  property int32 PaperWidth = 2100;
+
+  $rect <10,150,210,190>
+  onset PaperWidth
+  {
+    // Implement here your ON SET business logic, the access to the hardware,
+    // or any desired code to execute, when the property is written at the
+    // runtime.
+
+    /* check limits of given value */
+    if ( value < 520 )
+      value = 520;
+    if ( value > 2970 )
+      value = 2970;
+
+    /* check for new value */
+    if ( value == pure PaperWidth )
+      return;
+
+    pure PaperWidth = value;
+
+    notifyobservers ^PaperWidth;
+  }
+
+  // Height of paper in 0.1 millimeter.
+  $rect <220,110,420,150>
+  property int32 PaperHeight = 2970;
+
+  $rect <220,150,420,190>
+  onset PaperHeight
+  {
+    // Implement here your ON SET business logic, the access to the hardware,
+    // or any desired code to execute, when the property is written at the
+    // runtime.
+
+    /* check limits of given value */
+    if ( value < 740 )
+      value = 740;
+    if ( value > 4200 )
+      value = 4200;
+
+    /* check for new value */
+    if ( value == pure PaperHeight )
+      return;
+
+    pure PaperHeight = value;
+
+    notifyobservers ^PaperHeight;
+  }
+
+  // Horizontal orientation.
+  $rect <430,110,630,150>
+  property bool Horizontal = false;
+
+  $rect <430,150,630,190>
+  onset Horizontal
+  {
+    // Implement here your ON SET business logic, the access to the hardware,
+    // or any desired code to execute, when the property is written at the
+    // runtime.
+
+    /* check for new value */
+    if ( value == pure Horizontal )
+      return;
+
+    pure Horizontal = value;
+
+    notifyobservers ^Horizontal;
+  }
+
+  // Flag to start/stop the climate cabinet.
+  $rect <10,210,210,250>
+  property bool Running = false;
+
+  $rect <10,250,210,290>
+  onset Running
+  {
+    // Implement here your ON SET business logic, the access to the hardware,
+    // or any desired code to execute, when the property is written at the
+    // runtime.
+
+    /* check for new value */
+    if ( value == pure Running )
+      return;
+
+    pure Running = value;
+
+    notifyobservers ^Running;
+
+    /* start animation for simulation */
+    if ( value )
+    {
+      Remaining = pure PaperBatch;
+      Timer.Enabled = true;
+    }
+    else
+      Timer.Enabled = false;
+
+  }
+
+  // Remaining papers to cut, when machine is running.
+  $rect <430,10,630,50>
+  property int32 Remaining = 500;
+
+  $rect <430,50,630,90>
+  onset Remaining
+  {
+    // Implement here your ON SET business logic, the access to the hardware,
+    // or any desired code to execute, when the property is written at the
+    // runtime.
+
+    /* check limits of given value */
+    if ( value < 0 )
+      value = 0;
+    if ( value > 1000 )
+      value = 1000;
+
+    /* check for new value */
+    if ( value == pure Remaining )
+      return;
+
+    pure Remaining = value;
+
+    notifyobservers ^Remaining;
+
+
+  }
+
+  // This is a timer object.
+  $rect <220,210,420,250>
+  object Core::Timer Timer
+  {
+    preset OnTrigger = Animate;
+    preset Period = 250;
+  }
+
+  // This is a slot method.
+  $rect <220,250,420,290>
+  slot Animate
+  {
+    sender; /* the method is called from the sender object */
+
+    Remaining = Remaining - 1;
+    if ( Remaining == 0 )
+      Running = false;
+
+  }
+
+  // Number of paper type.
+  $rect <430,210,630,250>
+  property int32 PaperType = 0;
+
+  $rect <430,250,630,290>
+  onset PaperType
+  {
+    // Implement here your ON SET business logic, the access to the hardware,
+    // or any desired code to execute, when the property is written at the
+    // runtime.
+
+    /* check limits of given value */
+    if ( value < 0 )
+      value = 0;
+    if ( value > 3 )
+      value = 3;
+
+    /* check for new value */
+    if ( value == pure PaperType )
+      return;
+
+    pure PaperType = value;
+
+    notifyobservers ^PaperType;
+  }
+
+  // This is the device class of the climate cabinet. It is the interface to the \
+  // "real" hardware.
+  //
+  // Within this demo application a timer triggered animation method makes a simple \
+  // simulation of paper cutter progress.
+  note legend Note
+  {
+    attr Bounds = <10,310,630,420>;
+  }
+
+  // How to integrate your UI application with a real device?
+  //
+  // https://doc.embedded-wizard.de/integrating-with-the-device
+  // https://doc.embedded-wizard.de/device-class-and-device-driver
+  note legend Note5
+  {
+    attr Bounds = <10,430,630,520>;
+  }
+}
+
+$rect <240,700,440,740>
+$output false
+autoobject Cutter::DeviceClass Device;
+
+// Window class to host paper batch settings.
+$rect <240,310,440,350>
+$output false
+class BatchWindow : Cutter::Window
+{
+  $rect <0,160,140,200>
+  inherited property Bounds = <0,0,230,114>;
+
+  $rect <20,20,160,60>
+  inherited object CaptionRect
+  {
+    preset Bounds = <0,0,300,140>;
+  }
+
+  $rect <20,20,160,60>
+  inherited object CaptionText
+  {
+    preset String = "Batch";
+  }
+
+  $rect <410,160,610,200>
+  inherited method FadeAnimation()
+  {
+    /* if window is going to programming mode , fade in the medium text ... */
+    if ( aMode == Cutter::OperationMode.Programming )
+    {
+      TextBatchLarge.Opacity = aValue;
+      TextBatchMedium.Opacity = 0xFF - aValue;
+    }
+    /* if window is going to running mode , fade in the large text ... */
+    else if ( aMode == Cutter::OperationMode.Running )
+    {
+      TextBatchLarge.Opacity = 0xFF - aValue;
+      TextBatchMedium.Opacity = aValue;
+    }
+
+    /* fade out everything for exclusive mode... */
+    if ( aMode == Cutter::OperationMode.Exclusive )
+    {
+      /* create a dialog if necessary */
+      if ( dialog == null )
+      {
+        dialog = new Cutter::BatchDialog;
+        dialog.Bounds.origin = point( 0, Cutter::CaptionHeight );
+        Add( dialog, 0 );
+        dialog.OnCancel = onCancel;
+        dialog.PaperBatch = ^Cutter::Device.PaperBatch;
+      }
+      dialog.Opacity = aValue;
+
+      TextBatchLarge.Opacity = 0xFF - aValue;
+      TextBatchMedium.Opacity = 0xFF - aValue;
+      Text.Opacity = 0xFF - aValue;
+      Icon.Opacity = 0xFF - aValue;
+    }
+    else
+    {
+        /* fade out and delete the dialog if necessary */
+      if ( dialog != null )
+      {
+        if ( aValue > dialog.Opacity )
+          dialog.Opacity = aValue;
+        if ( aValue < 10 )
+        {
+          Remove( dialog );
+          dialog = null;
+        }
+      }
+      if ( aValue > Text.Opacity )
+        Text.Opacity = aValue;
+      if ( aValue > Icon.Opacity )
+        Icon.Opacity = aValue;
+    }
+
+
+
+  }
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image Icon
+  {
+    preset Layout = Core::Layout[AlignToTop];
+    preset Bounds = <25,20,85,110>;
+    preset AutoSize = false;
+    preset Alignment = Views::ImageAlignment[AlignHorzLeft, AlignVertCenter];
+    preset Bitmap = Cutter::PaperBatch;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[AlignToTop, ResizeHorz];
+    preset Bounds = <103,80,224,98>;
+    preset WrapText = false;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertTop];
+    preset String = "PAPERS";
+    preset Font = Cutter::DescrFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text TextBatchLarge
+  {
+    preset Layout = Core::Layout[AlignToTop, ResizeHorz];
+    preset Bounds = <101,15,230,89>;
+    preset WrapText = false;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "999";
+    preset Font = Cutter::LargeDigitFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text TextBatchMedium
+  {
+    preset Layout = Core::Layout[AlignToTop, ResizeHorz];
+    preset Bounds = <101,25,196,80>;
+    preset WrapText = false;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "999";
+    preset Font = Cutter::MediumDigitFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // Data point property that refers to the value that should be displayed within \
+  // the window.
+  $rect <410,10,610,50>
+  property ^int32 PaperBatch = null;
+
+  $rect <410,50,610,90>
+  onset PaperBatch
+  {
+    /* check if something has changed */
+    if ( value == pure PaperBatch )
+      return;
+
+    /* detatch from previous data point */
+    if ( pure PaperBatch != null )
+      detachobserver onUpdate, pure PaperBatch;
+
+    /* store the new data point */
+    pure PaperBatch = value;
+
+    /* and attach to the new one */
+    if ( value != null )
+      attachobserver onUpdate, value;
+
+    /* finally, get the initial value */
+    postsignal onUpdate;
+  }
+
+  // Slot method to update the display value.
+  $rect <410,100,610,140>
+  slot onUpdate
+  {
+    sender; /* the method is called from the sender object */
+
+    /* create the new text to be displayed */
+    if ( PaperBatch != null )
+      TextBatchLarge.String = string( PaperBatch^ );
+    TextBatchMedium.String = TextBatchLarge.String;
+
+
+  }
+
+  // Variable to store the embedded  dialog when window is in exclusive mode.-
+  $rect <410,210,610,250>
+  var Cutter::BatchDialog dialog = null;
+
+  // Window class to host paper batch settings.
+  //
+  // The window is able to show two different types of content and to fade between \
+  // them:
+  // The batch window can show the current number of papers and it is able to host \
+  // the paper batch dialog 'Cutter::BatchDialog'.
+  note legend Note
+  {
+    attr Bounds = <0,260,610,370>;
+  }
+
+  $reorder onFade 1
+  $reorder Icon 1
+  $reorder Text 1
+  $reorder TextBatchLarge 1
+  $reorder TextBatchMedium 1
+}
+
+// This is a font resource.
+$rect <690,660,890,700>
+$output false
+resource Resources::Font LargeDigitFont
+{
+  attr fontname FontName = Roboto Medium;
+  attr fontheight Height = 62;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = '0'-'9',',','.',':';
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+// This is a font resource.
+$rect <690,620,890,660>
+$output false
+resource Resources::Font MediumDigitFont
+{
+  attr fontname FontName = Roboto Medium;
+  attr fontheight Height = 46;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = '0'-'9',',','.',':';
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+// Window class to show the remaining number of papers, while the paper cutting machine \
+// is running.
+$rect <240,350,440,390>
+$output false
+class RemainingWindow : Cutter::Window
+{
+  $rect <10,230,180,270>
+  inherited property Bounds = <0,0,230,114>;
+
+  $rect <20,20,160,60>
+  inherited object TouchHandler
+  {
+    preset Enabled = false;
+  }
+
+  $rect <20,20,160,60>
+  inherited object CaptionRect
+  {
+    preset Bounds = <0,0,300,140>;
+  }
+
+  $rect <20,20,160,60>
+  inherited object CaptionText
+  {
+    preset String = "Remaining";
+  }
+
+  $rect <410,150,590,190>
+  inherited method ChangeMode()
+  {
+    super( aMode, aDestBounds );
+
+    /* touchhandler is always disabled for remaining window */
+    TouchHandler.Enabled = false;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft];
+    preset Bounds = <20,80,61,94>;
+    preset AutoSize = true;
+    preset WrapText = false;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "PAPERS";
+    preset Font = Cutter::DescrFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text TextRemaining
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft];
+    preset Bounds = <20,20,101,82>;
+    preset AutoSize = true;
+    preset WrapText = false;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "999";
+    preset Font = Cutter::LargeDigitFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // Data point property that refers to the value that should be displayed within \
+  // the window.
+  $rect <410,10,590,50>
+  property ^int32 PaperRemaining = null;
+
+  $rect <410,50,590,90>
+  onset PaperRemaining
+  {
+    /* check if something has changed */
+    if ( value == pure PaperRemaining )
+      return;
+
+    /* detatch from previous data point */
+    if ( pure PaperRemaining != null )
+      detachobserver onUpdate, pure PaperRemaining;
+
+    /* store the new data point */
+    pure PaperRemaining = value;
+
+    /* and attach to the new one */
+    if ( value != null )
+      attachobserver onUpdate, value;
+
+    /* finally, get the initial value */
+    postsignal onUpdate;
+  }
+
+  // Slot method to update the display value.
+  $rect <410,100,590,140>
+  slot onUpdate
+  {
+    sender; /* the method is called from the sender object */
+
+    /* create the new text to be displayed */
+    if ( PaperRemaining != null )
+      TextRemaining.String = string( PaperRemaining^ );
+
+
+  }
+
+  // Window class to show the remaining number of papers, while the paper cutting \
+  // machine is running.
+  note legend Note
+  {
+    attr Bounds = <0,230,600,310>;
+  }
+}
+
+// Window class to host paper speed settings.
+$rect <240,230,440,270>
+$output false
+class SpeedWindow : Cutter::Window
+{
+  $rect <0,230,140,270>
+  inherited property Bounds = <0,0,308,114>;
+
+  $rect <20,20,160,60>
+  inherited object CaptionRect
+  {
+    preset Bounds = <0,0,300,140>;
+  }
+
+  $rect <20,20,160,60>
+  inherited object CaptionText
+  {
+    preset String = "Speed";
+  }
+
+  $rect <530,140,730,180>
+  inherited method FadeAnimation()
+  {
+    /* if window is going to programming mode, fade out the speed buttons... */
+    if ( aMode == Cutter::OperationMode.Programming )
+    {
+      SpeedButtonL.Opacity = 0xFF - aValue;
+      SpeedButtonR.Opacity = 0xFF - aValue;
+    }
+    /* if window is going to running mode, fade in the speed buttons... */
+    else if ( aMode == Cutter::OperationMode.Running )
+    {
+      SpeedButtonL.Opacity = aValue;
+      SpeedButtonR.Opacity = aValue;
+    }
+
+    /* fade out everything for exclusive mode... */
+    if ( aMode == Cutter::OperationMode.Exclusive )
+    {
+      /* create a dialog if necessary */
+      if ( dialog == null )
+      {
+        dialog = new Cutter::SpeedDialog;
+        dialog.Bounds.origin = point( 0, Cutter::CaptionHeight );
+        Add( dialog, 0 );
+        dialog.OnCancel = onCancel;
+        dialog.PaperSpeed = ^Cutter::Device.PaperSpeed;
+      }
+      dialog.Opacity = aValue;
+
+      SpeedButtonL.Opacity = 0xFF - aValue;
+      SpeedButtonR.Opacity = 0xFF - aValue;
+      TextSpeed.Opacity = 0xFF - aValue;
+      Text.Opacity = 0xFF - aValue;
+      Icon.Opacity = 0xFF - aValue;
+    }
+    else
+    {
+        /* fade out and delete the dialog if necessary */
+      if ( dialog != null )
+      {
+        if ( aValue > dialog.Opacity )
+          dialog.Opacity = aValue;
+        if ( aValue < 10 )
+        {
+          Remove( dialog );
+          dialog = null;
+        }
+      }
+      if ( aValue > TextSpeed.Opacity )
+        TextSpeed.Opacity = aValue;
+      if ( aValue > Text.Opacity )
+        Text.Opacity = aValue;
+      if ( aValue > Icon.Opacity )
+        Icon.Opacity = aValue;
+    }
+
+
+
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop];
+    preset Bounds = <140,85,221,99>;
+    preset AutoSize = true;
+    preset WrapText = false;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertTop];
+    preset String = "PAPERS / HOUR";
+    preset Font = Cutter::DescrFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image Icon
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop];
+    preset Bounds = <67,40,119,92>;
+    preset AutoSize = true;
+    preset Alignment = Views::ImageAlignment[AlignHorzCenter, AlignVertCenter];
+    preset Bitmap = Cutter::PaperSpeed;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text TextSpeed
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop];
+    preset Bounds = <140,25,248,87>;
+    preset AutoSize = true;
+    preset WrapText = false;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertBottom];
+    preset String = "2345";
+    preset Font = Cutter::LargeDigitFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // Data point property that refers to the value that should be displayed within \
+  // the window.
+  $rect <530,10,730,50>
+  property ^int32 PaperSpeed = null;
+
+  $rect <530,50,730,90>
+  onset PaperSpeed
+  {
+    /* check if something has changed */
+    if ( value == pure PaperSpeed )
+      return;
+
+    /* detatch from previous data point */
+    if ( pure PaperSpeed != null )
+      detachobserver onUpdate, pure PaperSpeed;
+
+    /* store the new data point */
+    pure PaperSpeed = value;
+
+    /* and attach to the new one */
+    if ( value != null )
+      attachobserver onUpdate, value;
+
+    /* finally, get the initial value */
+    postsignal onUpdate;
+  }
+
+  // Slot method to update the display value.
+  $rect <530,90,730,130>
+  slot onUpdate
+  {
+    sender; /* the method is called from the sender object */
+
+    /* create the new text to be displayed */
+    if ( PaperSpeed != null )
+      TextSpeed.String = string( PaperSpeed^ );
+
+
+
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::SpeedButton SpeedButtonL
+  {
+    preset Bounds = <2,24,42,111>;
+    preset OnChange = onDecrement;
+    preset IconIndex = 0;
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::SpeedButton SpeedButtonR
+  {
+    preset Bounds = <266,24,306,111>;
+    preset OnChange = onIncrement;
+    preset IconIndex = 1;
+  }
+
+  // Slot metod to change the paper speed, when user press arrow buttons.
+  $rect <530,180,730,220>
+  slot onIncrement
+  {
+    sender; /* the method is called from the sender object */
+
+    if ( PaperSpeed != null )
+      PaperSpeed^ = ((PaperSpeed^) / 10 ) * 10 + 10;
+
+  }
+
+  // Slot metod to change the paper speed, when user press arrow buttons.
+  $rect <530,220,730,260>
+  slot onDecrement
+  {
+    sender; /* the method is called from the sender object */
+
+    if ( PaperSpeed != null )
+      PaperSpeed^ = (((PaperSpeed^) + 9 ) / 10 ) * 10 - 10;
+
+  }
+
+  // Variable to store the embedded  dialog when window is in exclusive mode.-
+  $rect <310,220,510,260>
+  var Cutter::SpeedDialog dialog = null;
+
+  // Window class to host paper speed settings.
+  //
+  // The window is able to show two different types of content and to fade between \
+  // them:
+  // The speed window can show the current paper speed selection and it is able to \
+  // host the paper speed dialog 'Cutter::SpeedDialog'.
+  note legend Note
+  {
+    attr Bounds = <0,280,610,390>;
+  }
+
+  $reorder onFade 4
+  $reorder FadeAnimation 4
+  $reorder Text 4
+  $reorder Icon 4
+  $reorder TextSpeed 4
+}
+
+// The class 'MainButton' implements a simple push button to start, stop or confirm \
+// a certain action.
+$rect <40,470,240,510>
+$output false
+class MainButton : Core::Group
+{
+  $rect <0,180,200,220>
+  inherited property Bounds = <0,0,155,155>;
+
+  $rect <200,220,400,260>
+  inherited method UpdateLayout()
+  {
+    super( aSize );
+
+    /* make individual arrangement in order to supprt different application size */
+    var int32 dx = aSize.x / 8;
+    var int32 dy = aSize.y / 8;
+
+    Image.Bounds = rect( 0, 0, aSize.x, aSize.y );
+    Text.Bounds = rect( dx, dy, aSize.x, aSize.y );
+    TouchHandler.Point1 = point( dx, dy );
+    TouchHandler.Point2 = point( aSize.x, dy );
+    TouchHandler.Point3 = point( aSize.x, aSize.y );
+    TouchHandler.Point4 = point( dx, aSize.y );
+
+  }
+
+  $rect <200,180,400,220>
+  inherited method UpdateViewState()
+  {
+    aState;
+
+    switch ( pure Mode )
+    {
+      case Cutter::ButtonMode.Start:
+      {
+        Text.String = "Start";
+        Image.Color = Cutter::StartColor;
+      }
+      case Cutter::ButtonMode.Stop:
+      {
+        Text.String = "Stop";
+        Image.Color = Cutter::StopColor;
+      }
+      case Cutter::ButtonMode.Ok:
+      {
+        Text.String = "OK";
+        Image.Color = Cutter::StartColor;
+      }
+      default:
+        ;
+    }
+
+    /* colorize background if currently selected */
+    if ( TouchHandler.Down && TouchHandler.Inside )
+      Image.Color = Cutter::SelectColor;
+
+  }
+
+  $rect <0,220,200,260>
+  inherited method Init()
+  {
+    Bounds.size = Image.Bitmap.FrameSize;
+  }
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image Image
+  {
+    preset Bounds = <0,0,155,155>;
+    preset AutoSize = false;
+    preset Color = Cutter::StartColor;
+    preset Bitmap = Cutter::ButtonBig;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[AlignToLeft, AlignToTop];
+    preset Bounds = <15,15,155,155>;
+    preset String = "Start";
+    preset Font = Cutter::MainButtonFont;
+  }
+
+  // This is a property.
+  $rect <200,0,400,40>
+  property Cutter::ButtonMode Mode = Cutter::ButtonMode.Start;
+
+  $rect <200,40,400,80>
+  onset Mode
+  {
+    pure Mode = value;
+
+    InvalidateViewState();
+  }
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <200,90,400,130>
+  slot enterLeaveSlot
+  {
+    InvalidateViewState();
+  }
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <200,130,400,170>
+  slot pressReleaseSlot
+  {
+    /* releasing the finger outside the button area is ignored */
+    if ( !TouchHandler.Down && TouchHandler.Inside )
+    {
+      switch ( pure Mode )
+      {
+        /* inform the appropriate slot method */
+        case Cutter::ButtonMode.Start:
+          signal OnStart;
+        case Cutter::ButtonMode.Stop:
+          signal OnStop;
+        case Cutter::ButtonMode.Ok:
+          signal OnOk;
+        default:
+          ;
+      }
+    }
+  }
+
+  // The property 'OnStart' can refer to a slot method, which will receive a signal \
+  // as soon the user has pressed the button. Thereupon the method's logic will be \
+  // executed.
+  $rect <400,90,600,130>
+  property slot OnStart = null;
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler TouchHandler
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Point4 = <15,155>;
+    preset Point3 = <155,155>;
+    preset Point2 = <155,15>;
+    preset Point1 = <15,15>;
+    preset OnLeave = enterLeaveSlot;
+    preset OnEnter = enterLeaveSlot;
+    preset OnRelease = pressReleaseSlot;
+    preset OnPress = pressReleaseSlot;
+  }
+
+  // The property 'OnStop' can refer to a slot method, which will receive a signal \
+  // as soon the user has pressed the button. Thereupon the method's logic will be \
+  // executed.
+  $rect <400,130,600,170>
+  property slot OnStop = null;
+
+  // The property 'OnOk' can refer to a slot method, which will receive a signal \
+  // as soon the user has pressed the button. Thereupon the method's logic will be \
+  // executed.
+  $rect <400,170,600,210>
+  property slot OnOk = null;
+
+  // The class 'MainButton' implements a simple push button to start, stop or confirm \
+  // a certain action.
+  // The property 'Mode' determines the type of the button (Start / Stop / Ok).
+  // Each time the user has pressed the button a signal is sent to the corresponding \
+  // slot methods 'OnStart', 'OnStop' or 'OnOk'.
+  note legend Note
+  {
+    attr Bounds = <0,270,600,390>;
+  }
+}
+
+// This is a bitmap resource.
+$rect <1090,620,1290,660>
+$output false
+resource Resources::Bitmap ButtonBig
+{
+  attr bitmapfile FileName;
+  attr alphafile AlphaName = .\Res\MainButton.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+// This is a font resource.
+$rect <690,540,890,580>
+$output false
+resource Resources::Font MainButtonFont
+{
+  attr fontname FontName = Roboto;
+  attr fontheight Height = 33;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 'A'-'Z','a'-'z';
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+// This is an enumeration definition for indicating the current mode of the button.
+$rect <240,470,440,510>
+$output false
+enum ButtonMode
+{
+  $rect <10,10,150,50>
+  item Start;
+
+  $rect <160,10,300,50>
+  item Stop;
+
+  $rect <310,10,450,50>
+  item Ok;
+}
+
+// Status bar of the paper cutting machine, including a clock display.
+$rect <440,470,640,510>
+$output false
+class StatusBar : Core::Group
+{
+  $rect <10,120,210,160>
+  inherited property Bounds = <0,0,400,50>;
+
+  $rect <210,70,410,110>
+  inherited method UpdateLayout()
+  {
+    super( aSize );
+
+    /* make individual arrangement in order to supprt different application size */
+    var int32 dx = aSize.x / 2 + 8;
+    var int32 iconW = Icon1.Bitmap.FrameSize.x + 8;
+
+    TimeText.Bounds = rect( 0, 0, aSize.x / 2, aSize.y );
+    Icon1.Bounds = rect( dx, 0, dx + iconW, aSize.y );
+    Icon2.Bounds = rect( dx + iconW, 0, dx + iconW + iconW, aSize.y );
+
+
+  }
+
+  $rect <10,70,210,110>
+  inherited method Init()
+  {
+    Bounds.size = point( Cutter::ScreenSize.x / 3, Cutter::StatusHeight );
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text TimeText
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,133,50>;
+    preset Alignment = Views::TextAlignment[AlignHorzRight, AlignVertCenter];
+    preset String = "12:34";
+    preset Font = Cutter::SmallDigitFont;
+    preset Color = Cutter::SelectColor;
+  }
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image Icon1
+  {
+    preset Layout = Core::Layout[AlignToBottom, ResizeVert];
+    preset Bounds = <133,0,189,50>;
+    preset Color = Cutter::SelectColor;
+    preset Bitmap = Cutter::StatusIcons;
+  }
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image Icon2
+  {
+    preset Layout = Core::Layout[AlignToBottom, ResizeVert];
+    preset Bounds = <184,0,240,50>;
+    preset Color = Cutter::SelectColor;
+    preset FrameNumber = 1;
+    preset Bitmap = Cutter::StatusIcons;
+  }
+
+  // This is a timer object.
+  $rect <10,160,210,200>
+  object Core::Timer Timer
+  {
+    preset OnTrigger = ClockSlot;
+    preset Enabled = true;
+  }
+
+  // Slot method to update clock.
+  $rect <210,160,410,200>
+  slot ClockSlot
+  {
+    sender; /* the method is called from the sender object */
+
+    var Core::Time t = new Core::Time;
+    t = t.CurrentTime;
+
+    TimeText.String = string( t.Hour, 2 ) + ":" + string( t.Minute, 2 );
+
+  }
+
+  // Status bar of the paper cutting machine, including a clock display.
+  note legend Note
+  {
+    attr Bounds = <0,210,410,280>;
+  }
+}
+
+// This is a bitmap resource.
+$rect <1090,660,1290,700>
+$output false
+resource Resources::Bitmap StatusIcons
+{
+  attr bitmapfile FileName;
+  attr alphafile AlphaName = .\Res\StatusIcons.png;
+  attr framesize FrameSize = <22,22>;
+  attr framedelay FrameDelay;
+}
+
+// This is a bitmap resource.
+$rect <890,500,1090,540>
+$output false
+resource Resources::Bitmap Arrows
+{
+  attr bitmapfile FileName;
+  attr alphafile AlphaName = .\Res\Arrows.png;
+  attr framesize FrameSize = <15,25>;
+  attr framedelay FrameDelay;
+}
+
+// The class 'SpeedButton' implements a simple left/right button to increment/decrement \
+// a certain value.
+$rect <40,590,240,630>
+$output false
+class SpeedButton : Core::Group
+{
+  $rect <70,0,270,40>
+  inherited property Bounds = <0,0,50,160>;
+
+  $rect <70,140,270,180>
+  inherited onset Opacity
+  {
+    super( value );
+
+    /* enable/disable the touch handlers */
+    TouchHandler.Enabled = (Opacity > 0x80);
+
+  }
+
+  $rect <70,40,270,80>
+  inherited method UpdateViewState()
+  {
+    aState;
+
+    /* colorize background if currently selected */
+    if ( TouchHandler.Down && TouchHandler.Inside )
+      Background.Color = Cutter::SelectColor;
+    else
+      Background.Color = Cutter::BackColor;
+
+  }
+
+  // This is a generic touch handler.
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler TouchHandler
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Point4 = <0,160>;
+    preset Point3 = <50,160>;
+    preset Point2 = <50,0>;
+    preset Point1 = <0,0>;
+    preset OnLeave = leaveSlot;
+    preset OnEnter = enterSlot;
+    preset OnRelease = pressReleaseSlot;
+    preset OnPress = pressReleaseSlot;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Background
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,50,160>;
+    preset Color = Cutter::BackColor;
+  }
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image Image
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,50,160>;
+    preset Color = Cutter::TextColor;
+    preset Bitmap = Cutter::Arrows;
+  }
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <270,0,470,40>
+  slot enterSlot
+  {
+    InvalidateViewState();
+
+    RepetitionTimer.Enabled = true;
+
+  }
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <270,80,470,120>
+  slot pressReleaseSlot
+  {
+    /* releasing the finger outside the button area is ignored */
+    if ( !TouchHandler.Down && TouchHandler.Inside )
+    {
+      /* inform the OnChange slot method */
+      signal OnChange;
+    }
+  }
+
+  // The property 'OnChange' can refer to a slot method, which will receive a signal \
+  // as soon the user has pressed the button. Thereupon the method's logic will be \
+  // executed.
+  $rect <470,80,670,120>
+  property slot OnChange = null;
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <270,40,470,80>
+  slot leaveSlot
+  {
+    InvalidateViewState();
+
+    RepetitionTimer.Enabled = false;
+
+  }
+
+  // This is a timer object.
+  $rect <270,140,470,180>
+  object Core::Timer RepetitionTimer
+  {
+    preset OnTrigger = RepetitionSlot;
+    preset Period = 50;
+    preset Begin = 300;
+  }
+
+  // This is a slot method.
+  $rect <470,140,670,180>
+  slot RepetitionSlot
+  {
+    sender; /* the method is called from the sender object */
+
+    /* inform the OnChange slot method */
+    signal OnChange;
+
+  }
+
+  // Index (framenumber) of the buttons icon.
+  $rect <470,0,670,40>
+  property int32 IconIndex = 0;
+
+  $rect <470,40,670,80>
+  onset IconIndex
+  {
+    pure IconIndex = value;
+    Image.FrameNumber = value;
+  }
+
+  // The class 'SpeedButton' implements a simple left/right button to increment/decrement \
+  // a certain value.
+  //
+  // Each time the user has pressed the button a signal is sent to the slot method \
+  // 'OnChange'. Additionally, the button support a repetition in case the user presses \
+  // the button for a longer time.
+  note legend Note
+  {
+    attr Bounds = <0,200,670,300>;
+  }
+}
+
+// This is a bitmap resource.
+$rect <890,540,1090,580>
+$output false
+resource Resources::Bitmap Paper
+{
+  attr bitmapfile FileName = .\Res\Paper.png;
+  attr alphafile AlphaName;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+// The class 'PaperCut' implements a special widget to select the desired paper format \
+// of the paper cutting machine.
+$rect <440,510,640,550>
+$output false
+class PaperCut : Core::Group
+{
+  $rect <0,300,200,340>
+  inherited property Bounds = <0,0,195,270>;
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image Image
+  {
+    preset Bounds = <0,0,195,270>;
+    preset AutoSize = true;
+    preset Bitmap = Cutter::Paper;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle BorderBottom
+  {
+    preset Bounds = <0,257,195,260>;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle BorderTop
+  {
+    preset Bounds = <0,16,195,19>;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle BorderLeft
+  {
+    preset Bounds = <12,0,15,270>;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle BorderRight
+  {
+    preset Bounds = <180,0,183,270>;
+    preset Color = Cutter::TextColor;
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::VertSlider VertSlider
+  {
+    preset Bounds = <87,7,107,227>;
+    preset CurrentValue = 740;
+    preset MinValue = 740;
+    preset MaxValue = 4200;
+    preset Outlet = ^Cutter::Device.PaperHeight;
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::HorzSlider HorzSlider
+  {
+    preset Bounds = <102,121,192,141>;
+    preset CurrentValue = 2970;
+    preset MinValue = 520;
+    preset MaxValue = 2970;
+    preset Outlet = ^Cutter::Device.PaperWidth;
+  }
+
+  // Data point property that refers to the value that should be displayed within \
+  // the window.
+  $rect <370,10,570,50>
+  property ^int32 PaperWidth = null;
+
+  $rect <370,50,570,90>
+  onset PaperWidth
+  {
+    /* forward the interface to the embedded slider */
+    HorzSlider.Outlet = value;
+
+    /* check if something has changed */
+    if ( value == pure PaperWidth )
+      return;
+
+    /* detatch from previous data point */
+    if ( pure PaperWidth != null )
+      detachobserver onUpdate, pure PaperWidth;
+
+    /* store the new data point */
+    pure PaperWidth = value;
+
+    /* and attach to the new one */
+    if ( value != null )
+      attachobserver onUpdate, value;
+
+    /* finally, get the initial value */
+    postsignal onUpdate;
+  }
+
+  // Data point property that refers to the value that should be displayed within \
+  // the window.
+  $rect <370,100,570,140>
+  property ^int32 PaperHeight = null;
+
+  $rect <370,140,570,180>
+  onset PaperHeight
+  {
+    /* forward the interface to the embedded slider */
+    VertSlider.Outlet = value;
+
+    /* check if something has changed */
+    if ( value == pure PaperHeight )
+      return;
+
+    /* detatch from previous data point */
+    if ( pure PaperHeight != null )
+      detachobserver onUpdate, pure PaperHeight;
+
+    /* store the new data point */
+    pure PaperHeight = value;
+
+    /* and attach to the new one */
+    if ( value != null )
+      attachobserver onUpdate, value;
+
+    /* finally, get the initial value */
+    postsignal onUpdate;
+  }
+
+  // Slot method to update the display value.
+  $rect <370,190,570,230>
+  slot onUpdate
+  {
+    sender; /* the method is called from the sender object */
+
+    /* adjust left and right border according current paper width */
+    if ( PaperWidth != null )
+    {
+      /* right A3 line (297mm) is at x pos 180 - left A3 line is at x pos 12 */
+      /* ==> center is at 96 */
+      var int32 x = (PaperWidth^) / 20 * 168 / 297;
+      BorderLeft.Bounds.origin.x = 96 - x;
+      BorderRight.Bounds.origin.x = 96 + x;
+    }
+
+    /* adjust top border according current paper height */
+    if ( PaperHeight != null )
+    {
+      /* A3 line (420mm) is at y pos 16 - 0 line (0mm) is at y pos 257 */
+      var int32 y = 257 - (PaperHeight^) / 10 * 241 / 420;
+      BorderTop.Bounds.origin.y = y;
+    }
+
+  }
+
+  // This is an int32 change effect.
+  $rect <580,10,780,50>
+  object Effects::Int32Effect FadeEffect
+  {
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = Cutter::AnimationTime;
+    preset Outlet = ^Opacity;
+  }
+
+  // Slot method to start fade-in of component.
+  $rect <580,50,780,90>
+  slot FadeIn
+  {
+    sender; /* the method is called from the sender object */
+
+    FadeEffect.Enabled = false;
+    FadeEffect.Value2 = 0xFF;
+    HorzSlider.Enabled = true;
+    VertSlider.Enabled = true;
+    FadeEffect.Enabled = true;
+  }
+
+  // Slot method to start fade-out of component.
+  $rect <580,90,780,130>
+  slot FadeOut
+  {
+    sender; /* the method is called from the sender object */
+
+    /* check if there is something to do */
+    if ( Opacity == 0x00 )
+      return;
+
+    /* otherwise start fade out... */
+    FadeEffect.Enabled = false;
+    FadeEffect.Value2 = 0x00;
+    HorzSlider.Enabled = false;
+    VertSlider.Enabled = false;
+    FadeEffect.Enabled = true;
+  }
+
+  // The class 'PaperCut' implements a special widget to select the desired paper \
+  // format of the paper cutting machine.
+  //
+  // The widget contains a horizontal slider and a vertical slider to change the \
+  // width and the height of the paper.
+  note legend Note
+  {
+    attr Bounds = <0,490,560,610>;
+  }
+}
+
+// The class 'VertSlider' implements a vertical slider widget, that is used to change \
+// a value by moving a thumb.
+$rect <440,550,640,590>
+$output false
+class VertSlider : Core::Group
+{
+  $rect <0,220,200,260>
+  inherited method UpdateViewState()
+  {
+    var int32 pos = 0;
+
+    /* ensure that the current set value and the given minimum and maximum values are valid */
+    if (( MaxValue > MinValue ) && ( CurrentValue >= MinValue ) && ( CurrentValue <= MaxValue ))
+    {
+      /* calculate the center position of the thumb within the slider area */
+      pos = ( Bounds.h - Thumb.Bounds.h ) * ( CurrentValue - MinValue ) / ( MaxValue - MinValue );
+    }
+
+    /* calculate position of thumb */
+    Thumb.Bounds.origin.y = Bounds.h - pos - Thumb.Bounds.h;
+
+    /* calculate position of touch handler */
+    SimpleTouchHandler.Point1 = point( Thumb.Bounds.x1, Thumb.Bounds.y1 );
+    SimpleTouchHandler.Point2 = point( Thumb.Bounds.x2, Thumb.Bounds.y1 );
+    SimpleTouchHandler.Point3 = point( Thumb.Bounds.x2, Thumb.Bounds.y2 );
+    SimpleTouchHandler.Point4 = point( Thumb.Bounds.x1, Thumb.Bounds.y2 );
+
+    if ( aState.contains( Core::ViewState[ Enabled ]))
+    {
+      Thumb.Visible = true;
+
+      /* Highlight focused or currently touched widget */
+      if ( SimpleTouchHandler.Down )
+      {
+        Thumb.Color = Cutter::SelectColor;
+      }
+      else
+      {
+        Thumb.Color = Cutter::TextColor;
+      }
+    }
+
+    /* Widget is disabled */
+    else
+      Thumb.Visible = false;
+
+  }
+
+  $rect <0,180,200,220>
+  inherited property Bounds = <0,0,35,150>;
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image Thumb
+  {
+    preset Layout = Core::Layout[];
+    preset Bounds = <0,60,35,95>;
+    preset AutoSize = true;
+    preset Color = Cutter::TextColor;
+    preset Alignment = Views::ImageAlignment[AlignHorzCenter, AlignVertCenter];
+    preset Bitmap = Cutter::Thumb;
+  }
+
+  // This is a generic touch handler.
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler SimpleTouchHandler
+  {
+    preset Point4 = <0,95>;
+    preset Point3 = <35,95>;
+    preset Point2 = <35,60>;
+    preset Point1 = <0,60>;
+    preset OnDrag = onDragSlot;
+    preset OnRelease = onReleaseSlot;
+    preset OnPress = onPressSlot;
+  }
+
+  // This variable stores the Value at the beginning of the user interaction.
+  $rect <200,340,400,380>
+  var int32 startValue = 0;
+
+  // This is a slot method.
+  $rect <200,260,400,300>
+  slot onDragSlot
+  {
+    var int32 oldValue = CurrentValue;
+    var int32 ofs = SimpleTouchHandler.HittingPos.y - SimpleTouchHandler.CurrentPos.y;
+
+    /* ensure that the current set value and the given minimum and maximum values are valid */
+    if (( MaxValue > MinValue ) && ( CurrentValue >= MinValue ) && ( CurrentValue <= MaxValue ))
+    {
+      /* calculate the center position of the thumb within the slider area */
+      ofs = ofs * ( MaxValue - MinValue ) /  ( Bounds.h - Thumb.Bounds.h );
+    }
+    else
+      ofs = 0;
+
+    /* change the value */
+    CurrentValue = startValue + ofs;
+
+    /* inform others about the changed value */
+    if ( CurrentValue != oldValue )
+    {
+      /* update the attached outlet, if there is one... */
+      if (  Outlet != null )
+        Outlet^ = CurrentValue;
+
+      /* ... and inform other observers, that the outlet has changed its value */
+      notifyobservers Outlet;
+
+      /* inform the OnChange slot method */
+      idlesignal OnChange;
+    }
+
+  }
+
+  // The property 'CurrentValue' stores the momentary value of the widget. The value \
+  // is limited automatically to the range from @MinValue to @MaxValue.
+  $rect <200,0,400,40>
+  property int32 CurrentValue = 50;
+
+  $rect <200,40,400,80>
+  onset CurrentValue
+  {
+    /* limit the given value to the range between MinValue and MaxValue */
+    if ( value < MinValue )
+      value = MinValue;
+    if ( value > MaxValue )
+      value = MaxValue;
+
+    /* check if the given value differs from the current value */
+    if ( pure CurrentValue == value )
+      return;
+
+    /* store the new value */
+    pure CurrentValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // The property 'MinValue' defines the lower boundary of the widgets value range.
+  $rect <400,0,600,40>
+  property int32 MinValue = 0;
+
+  $rect <400,40,600,80>
+  onset MinValue
+  {
+    /* check if the given value differs from the current value */
+    if ( pure MinValue == value )
+      return;
+
+    /* store the new value */
+    pure MinValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // The property 'MaxValue' defines the upper boundary of the widgets value range.
+  $rect <600,0,800,40>
+  property int32 MaxValue = 100;
+
+  $rect <600,40,800,80>
+  onset MaxValue
+  {
+    /* check if the given value differs from the current value */
+    if ( pure MaxValue == value )
+      return;
+
+    /* store the new value */
+    pure MaxValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @Outlet has been changed by another widget or by the application logic. In \
+  // response to this notification, the widget will update itself.
+  $rect <200,180,400,220>
+  slot outletSlot
+  {
+    /* update the current state of the widget */
+    if ( Outlet != null )
+      CurrentValue = Outlet^;
+  }
+
+  $rect <200,130,400,170>
+  onset Outlet
+  {
+    /* check if the new outlet differs from the currently used outlet */
+    if ( pure Outlet == value )
+      return;
+
+    /* detach from the previous outlet */
+    detachobserver outletSlot, pure Outlet;
+
+    /* store the new outlet */
+    pure Outlet = value;
+
+    /* ... and attach to the new one */
+    attachobserver outletSlot, value;
+
+    /* finally, update the current state of the widget by posting a signal to the outlet slot */
+    if ( value != null )
+      postsignal outletSlot;
+  }
+
+  // The property 'Outlet' provides an interface for the Controller-View model. In \
+  // the Controller-View model, the widgets (views) and the application logic (controllers) \
+  // are always kept apart. An automatism behind this model ensures, that widgets \
+  // are notified automatically as soon as the affected controller has changed its \
+  // state. On the other hand, user interactions on a widget cause the affected controller \
+  // to execute the application logic. Usually, a controller is a simple Chora object \
+  // containg several properties and the implementation of onget/onset method.
+  // By assigning a property reference, Outlet establishes a connection between the \
+  // widget and the controller object, the affected property belongs to. After this, \
+  // the widget is able to read and modify the referred property in response to the \
+  // user interactions. It is also able to adapt the widget appearance, if the value \
+  // of the referred property has been modified by another widget or by the application \
+  // logic itself.
+  $rect <200,90,400,130>
+  property ^int32 Outlet = null;
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <200,220,400,260>
+  slot onPressSlot
+  {
+    /* The user interaction begins. Force the widget to highlight itself. */
+    InvalidateViewState();
+    startValue = CurrentValue;
+  }
+
+  // The property 'OnApply' can refer to a slot method, which will receive a signal \
+  // when the user has released the slider. Thereupon the method's logic will be \
+  // executed.
+  $rect <400,300,600,340>
+  property slot OnApply = null;
+
+  // The property 'OnChange' can refer to a slot method, which will receive a signal \
+  // each time the user has changed the value of the slider. Thereupon the method's \
+  // logic will be executed.
+  $rect <400,260,600,300>
+  property slot OnChange = null;
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <200,300,400,340>
+  slot onReleaseSlot
+  {
+    /* The user interaction terminates. Force the widget to de-highlight itself. */
+    InvalidateViewState();
+
+    /* inform about the new state */
+    postsignal OnApply;
+
+  }
+
+  // The class 'VertSlider' implements a vertical slider widget, that is used to \
+  // change a value by moving a thumb.
+  // The property 'CurrentValue' represents the momentary value of the widget and \
+  // corresponds to the position of the thumb. The supported value range of the slider \
+  // can be defined by setting the properties 'MinValue' and 'MaxValue'.
+  // A slider can be connected with an Int32 'Outlet' property to show the current \
+  // value of the property and to change it by moving the thumb.
+  // Additionally, a slider can trigger the slot methods 'OnChange' and 'OnApply' \
+  // as soon as the user has changed the thumb position or released the thumb.
+  note legend Note
+  {
+    attr Bounds = <10,390,800,560>;
+  }
+
+  $reorder UpdateViewState 44
+}
+
+// The class 'HorzSlider' implements a horizontal slider widget, that is used to \
+// change a value by moving a thumb.
+$rect <440,590,640,630>
+$output false
+class HorzSlider : Core::Group
+{
+  $rect <0,130,200,170>
+  inherited method UpdateViewState()
+  {
+    var int32 pos = 0;
+
+    /* ensure that the current set value and the given minimum and maximum values are valid */
+    if (( MaxValue > MinValue ) && ( CurrentValue >= MinValue ) && ( CurrentValue <= MaxValue ))
+    {
+      /* calculate the center position of the thumb within the slider area */
+      pos = ( Bounds.w - Thumb.Bounds.w ) * ( CurrentValue - MinValue ) / ( MaxValue - MinValue );
+    }
+
+    /* calculate position of thumb */
+    Thumb.Bounds.origin.x = pos;
+
+    /* calculate position of touch handler */
+    SimpleTouchHandler.Point1 = point( Thumb.Bounds.x1, Thumb.Bounds.y1 );
+    SimpleTouchHandler.Point2 = point( Thumb.Bounds.x2, Thumb.Bounds.y1 );
+    SimpleTouchHandler.Point3 = point( Thumb.Bounds.x2, Thumb.Bounds.y2 );
+    SimpleTouchHandler.Point4 = point( Thumb.Bounds.x1, Thumb.Bounds.y2 );
+
+    if ( aState.contains( Core::ViewState[ Enabled ]))
+    {
+      Thumb.Visible = true;
+
+      /* Highlight focused or currently touched widget */
+      if ( SimpleTouchHandler.Down )
+      {
+        Thumb.Color = Cutter::SelectColor;
+      }
+      else
+      {
+        Thumb.Color = Cutter::TextColor;
+      }
+    }
+
+    /* Widget is disabled */
+    else
+      Thumb.Visible = false;
+
+  }
+
+  $rect <0,90,200,130>
+  inherited property Bounds = <0,0,150,35>;
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image Thumb
+  {
+    preset Layout = Core::Layout[];
+    preset Bounds = <20,0,55,35>;
+    preset AutoSize = true;
+    preset Color = Cutter::TextColor;
+    preset Alignment = Views::ImageAlignment[AlignHorzCenter, AlignVertCenter];
+    preset Bitmap = Cutter::Thumb;
+  }
+
+  // The property 'CurrentValue' stores the momentary value of the widget. The value \
+  // is limited automatically to the range from @MinValue to @MaxValue.
+  $rect <200,0,400,40>
+  property int32 CurrentValue = 50;
+
+  $rect <200,40,400,80>
+  onset CurrentValue
+  {
+    /* limit the given value to the range between MinValue and MaxValue */
+    if ( value < MinValue )
+      value = MinValue;
+    if ( value > MaxValue )
+      value = MaxValue;
+
+    /* check if the given value differs from the current value */
+    if ( pure CurrentValue == value )
+      return;
+
+    /* store the new value */
+    pure CurrentValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // The property 'MinValue' defines the lower boundary of the widgets value range.
+  $rect <400,0,600,40>
+  property int32 MinValue = 0;
+
+  $rect <400,40,600,80>
+  onset MinValue
+  {
+    /* check if the given value differs from the current value */
+    if ( pure MinValue == value )
+      return;
+
+    /* store the new value */
+    pure MinValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // The property 'MaxValue' defines the upper boundary of the widgets value range.
+  $rect <600,0,800,40>
+  property int32 MaxValue = 100;
+
+  $rect <600,40,800,80>
+  onset MaxValue
+  {
+    /* check if the given value differs from the current value */
+    if ( pure MaxValue == value )
+      return;
+
+    /* store the new value */
+    pure MaxValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // This is a generic touch handler.
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler SimpleTouchHandler
+  {
+    preset Point4 = <30,50>;
+    preset Point3 = <90,50>;
+    preset Point2 = <90,0>;
+    preset Point1 = <30,0>;
+    preset OnDrag = onDragSlot;
+    preset OnRelease = onReleaseSlot;
+    preset OnPress = onPressSlot;
+  }
+
+  // This variable stores the Value at the beginning of the user interaction.
+  $rect <200,340,400,380>
+  var int32 startValue = 0;
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <200,220,400,260>
+  slot onPressSlot
+  {
+    /* The user interaction begins. Force the widget to highlight itself. */
+    InvalidateViewState();
+    startValue = CurrentValue;
+  }
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <200,260,400,300>
+  slot onDragSlot
+  {
+    var int32 oldValue = CurrentValue;
+    var int32 ofs = SimpleTouchHandler.CurrentPos.x - SimpleTouchHandler.HittingPos.x;
+
+    /* ensure that the current set value and the given minimum and maximum values are valid */
+    if (( MaxValue > MinValue ) && ( CurrentValue >= MinValue ) && ( CurrentValue <= MaxValue ))
+    {
+      /* calculate the center position of the thumb within the slider area */
+      ofs = ofs * ( MaxValue - MinValue ) /  ( Bounds.w -Thumb.Bounds.w );
+    }
+    else
+      ofs = 0;
+
+    /* change the value */
+    CurrentValue = startValue + ofs;
+
+    /* inform others about the changed value */
+    if ( CurrentValue != oldValue )
+    {
+      /* update the attached outlet, if there is one... */
+      if (  Outlet != null )
+        Outlet^ = CurrentValue;
+
+      /* ... and inform other observers, that the outlet has changed its value */
+      notifyobservers Outlet;
+
+      /* inform the OnChange slot method */
+      idlesignal OnChange;
+    }
+
+  }
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @Outlet has been changed by another widget or by the application logic. In \
+  // response to this notification, the widget will update itself.
+  $rect <200,180,400,220>
+  slot outletSlot
+  {
+    /* update the current state of the widget */
+    if ( Outlet != null )
+      CurrentValue = Outlet^;
+  }
+
+  $rect <200,130,400,170>
+  onset Outlet
+  {
+    /* check if the new outlet differs from the currently used outlet */
+    if ( pure Outlet == value )
+      return;
+
+    /* detach from the previous outlet */
+    detachobserver outletSlot, pure Outlet;
+
+    /* store the new outlet */
+    pure Outlet = value;
+
+    /* ... and attach to the new one */
+    attachobserver outletSlot, value;
+
+    /* finally, update the current state of the widget by posting a signal to the outlet slot */
+    if ( value != null )
+      postsignal outletSlot;
+  }
+
+  // The property 'Outlet' provides an interface for the Controller-View model. In \
+  // the Controller-View model, the widgets (views) and the application logic (controllers) \
+  // are always kept apart. An automatism behind this model ensures, that widgets \
+  // are notified automatically as soon as the affected controller has changed its \
+  // state. On the other hand, user interactions on a widget cause the affected controller \
+  // to execute the application logic. Usually, a controller is a simple Chora object \
+  // containg several properties and the implementation of onget/onset method.
+  // By assigning a property reference, Outlet establishes a connection between the \
+  // widget and the controller object, the affected property belongs to. After this, \
+  // the widget is able to read and modify the referred property in response to the \
+  // user interactions. It is also able to adapt the widget appearance, if the value \
+  // of the referred property has been modified by another widget or by the application \
+  // logic itself.
+  $rect <200,90,400,130>
+  property ^int32 Outlet = null;
+
+  // The property 'OnApply' can refer to a slot method, which will receive a signal \
+  // when the user has released the slider. Thereupon the method's logic will be \
+  // executed.
+  $rect <400,300,600,340>
+  property slot OnApply = null;
+
+  // The property 'OnChange' can refer to a slot method, which will receive a signal \
+  // each time the user has changed the value of the slider. Thereupon the method's \
+  // logic will be executed.
+  $rect <400,260,600,300>
+  property slot OnChange = null;
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <200,300,400,340>
+  slot onReleaseSlot
+  {
+    /* The user interaction terminates. Force the widget to de-highlight itself. */
+    InvalidateViewState();
+
+    /* inform about the new state */
+    postsignal OnApply;
+
+  }
+
+  // The class 'HorzSlider' implements a horizontal slider widget, that is used to \
+  // change a value by moving a thumb.
+  // The property 'CurrentValue' represents the momentary value of the widget and \
+  // corresponds to the position of the thumb. The supported value range of the slider \
+  // can be defined by setting the properties 'MinValue' and 'MaxValue'.
+  // A slider can be connected with an Int32 'Outlet' property to show the current \
+  // value of the property and to change it by moving the thumb.
+  // Additionally, a slider can trigger the slot methods 'OnChange' and 'OnApply' \
+  // as soon as the user has changed the thumb position or released the thumb.
+  note legend Note
+  {
+    attr Bounds = <10,390,800,550>;
+  }
+
+  $reorder UpdateViewState 44
+}
+
+// This is a bitmap resource.
+$rect <890,580,1090,620>
+$output false
+resource Resources::Bitmap Thumb
+{
+  attr bitmapfile FileName;
+  attr alphafile AlphaName = .\Res\Thumb.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+// Dialog class to define the paper format produced by the paper cutting machine.
+$rect <440,270,640,310>
+$output false
+class FormatDialog : Core::Group
+{
+  $rect <0,460,170,500>
+  inherited property Bounds = <0,0,770,370>;
+
+  $rect <0,410,180,450>
+  inherited method Init()
+  {
+    // TO DO: Write your code here ...
+    Bounds.size = point( Cutter::ScreenSize.x - 2 * Cutter::Border.x, Cutter::ScreenSize.y - Cutter::Border.y - Cutter::CaptionHeight - Cutter::StatusHeight );
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::Button ButtonA3
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <380,40,550,76>;
+    preset OnChange = selectA3;
+    preset Caption = "A3";
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text TextW
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <380,200,550,230>;
+    preset WrapText = false;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "WIDTH [mm]";
+    preset Font = Cutter::DescrFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text TextH
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <560,200,730,230>;
+    preset WrapText = false;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "HEIGHT [mm]";
+    preset Font = Cutter::DescrFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text TextWidth
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <380,225,550,295>;
+    preset WrapText = false;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "99,99";
+    preset Font = Cutter::MediumDigitFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text TextHeight
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <560,225,730,295>;
+    preset WrapText = false;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "99,99";
+    preset Font = Cutter::MediumDigitFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // Data point property that refers to the value that should be displayed within \
+  // the window.
+  $rect <790,30,970,70>
+  property ^int32 PaperWidth = null;
+
+  $rect <790,70,970,110>
+  onset PaperWidth
+  {
+    /* check if something has changed */
+    if ( value == pure PaperWidth )
+      return;
+
+    /* detatch from previous data point */
+    if ( pure PaperWidth != null )
+      detachobserver onUpdate, pure PaperWidth;
+
+    /* store the new data point */
+    pure PaperWidth = value;
+
+    /* and attach to the new one */
+    if ( value != null )
+      attachobserver onUpdate, value;
+
+    /* finally, get the initial value */
+    postsignal onUpdate;
+  }
+
+  // Data point property that refers to the value that should be displayed within \
+  // the window.
+  $rect <790,120,970,160>
+  property ^int32 PaperHeight = null;
+
+  $rect <790,160,970,200>
+  onset PaperHeight
+  {
+    /* check if something has changed */
+    if ( value == pure PaperHeight )
+      return;
+
+    /* detatch from previous data point */
+    if ( pure PaperHeight != null )
+      detachobserver onUpdate, pure PaperHeight;
+
+    /* store the new data point */
+    pure PaperHeight = value;
+
+    /* and attach to the new one */
+    if ( value != null )
+      attachobserver onUpdate, value;
+
+    /* finally, get the initial value */
+    postsignal onUpdate;
+  }
+
+  // Slot method to update the display value.
+  $rect <790,210,970,250>
+  slot onUpdate
+  {
+    sender; /* the method is called from the sender object */
+
+    /* create the new text to be displayed */
+    if ( PaperWidth != null )
+      TextWidth.String = string( (PaperWidth^) / 10 ) + "," + string( (PaperWidth^) % 10 );
+
+    if ( PaperHeight != null )
+      TextHeight.String = string( (PaperHeight^) / 10 ) + "," + string( (PaperHeight^) % 10 );
+
+    if (( PaperWidth != null ) && ( PaperHeight != null ))
+    {
+      var int32 w = PaperWidth^;
+      var int32 h = PaperHeight^;
+
+      ButtonA3.Active = (( w == 2970 ) && ( h == 4200 ));
+      ButtonA4.Active = (( w == 2100 ) && ( h == 2970 ));
+      ButtonA5.Active = (( w == 1480 ) && ( h == 2100 ));
+      ButtonA6.Active = (( w == 1050 ) && ( h == 1480 ));
+      ButtonA7.Active = (( w == 740 ) && ( h == 1050 ));
+      ButtonA8.Active = (( w == 520 ) && ( h == 740 ));
+    }
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::CancelButton CancelButton
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <463,317,770,362>;
+    preset OnChange = onCancel;
+  }
+
+  // Slot method to forward the cancel event.
+  $rect <790,320,970,360>
+  slot onCancel
+  {
+    sender; /* the method is called from the sender object */
+    postsignal OnCancel;
+  }
+
+  // The property 'OnCancel' can refer to a slot method, which will receive a signal \
+  // as soon the user has pressed the cancel button. Thereupon the method's logic \
+  // will be executed.
+  $rect <980,320,1160,360>
+  property slot OnCancel = null;
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text TextW0
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <380,10,720,40>;
+    preset WrapText = false;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "DIN PAPER FORMATS";
+    preset Font = Cutter::DescrFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::Button ButtonA4
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <560,40,730,76>;
+    preset OnChange = selectA4;
+    preset Caption = "A4";
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::Button ButtonA5
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <380,86,550,126>;
+    preset OnChange = selectA5;
+    preset Caption = "A5";
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::Button ButtonA6
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <560,86,730,126>;
+    preset OnChange = selectA6;
+    preset Caption = "A6";
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::Button ButtonA7
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <380,136,550,172>;
+    preset OnChange = selectA7;
+    preset Caption = "A7";
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::Button ButtonA8
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <560,136,730,172>;
+    preset OnChange = selectA8;
+    preset Caption = "A8";
+  }
+
+  // Slot method to set corresponding paper width and height.
+  $rect <980,30,1160,70>
+  slot selectA3
+  {
+    sender; /* the method is called from the sender object */
+
+    if ( PaperWidth != null )
+      PaperWidth^ = 2970;
+    if ( PaperHeight != null )
+      PaperHeight^ = 4200;
+  }
+
+  // Slot method to set corresponding paper width and height.
+  $rect <980,70,1160,110>
+  slot selectA4
+  {
+    sender; /* the method is called from the sender object */
+
+    if ( PaperWidth != null )
+      PaperWidth^ = 2100;
+    if ( PaperHeight != null )
+      PaperHeight^ = 2970;
+  }
+
+  // Slot method to set corresponding paper width and height.
+  $rect <980,110,1160,150>
+  slot selectA5
+  {
+    sender; /* the method is called from the sender object */
+
+    if ( PaperWidth != null )
+      PaperWidth^ = 1480;
+    if ( PaperHeight != null )
+      PaperHeight^ = 2100;
+  }
+
+  // Slot method to set corresponding paper width and height.
+  $rect <980,150,1160,190>
+  slot selectA6
+  {
+    sender; /* the method is called from the sender object */
+
+    if ( PaperWidth != null )
+      PaperWidth^ = 1050;
+    if ( PaperHeight != null )
+      PaperHeight^ = 1480;
+  }
+
+  // Slot method to set corresponding paper width and height.
+  $rect <980,190,1160,230>
+  slot selectA7
+  {
+    sender; /* the method is called from the sender object */
+
+    if ( PaperWidth != null )
+      PaperWidth^ = 740;
+    if ( PaperHeight != null )
+      PaperHeight^ = 1050;
+  }
+
+  // Slot method to set corresponding paper width and height.
+  $rect <980,230,1160,270>
+  slot selectA8
+  {
+    sender; /* the method is called from the sender object */
+
+    if ( PaperWidth != null )
+      PaperWidth^ = 520;
+    if ( PaperHeight != null )
+      PaperHeight^ = 740;
+  }
+
+  // Dialog class to define the paper format produced by the paper cutting machine.
+  note legend Note
+  {
+    attr Bounds = <220,410,770,470>;
+  }
+}
+
+// The class 'Button' implements a simple push button to start a certain action or \
+// to toggle a boolean state.
+$rect <40,510,240,550>
+$output false
+class Button : Core::Group
+{
+  $rect <0,90,200,130>
+  inherited property Bounds = <0,0,170,50>;
+
+  $rect <0,130,200,170>
+  inherited method UpdateViewState()
+  {
+    /* choose colors according current state of widget */
+    if ( aState.contains( Core::ViewState[ Enabled ]))
+    {
+      if ( TouchHandler.Down && TouchHandler.Inside )
+      {
+        Text.Color = Cutter::SelectColor;
+        Rectangle.Color = Cutter::SelectColor;
+        Border.Color = Cutter::ButtonBgColor;
+      }
+      else if ( Active )
+      {
+        Text.Color = Cutter::TextColor;
+        Rectangle.Color = Cutter::BackColor;
+        Border.Color = Cutter::ButtonBgColor;
+      }
+      else
+      {
+        Text.Color = Cutter::ButtonTextColor;
+        Rectangle.Color = Cutter::ButtonBgColor;
+        Border.Color = Cutter::ButtonBgColor;
+      }
+    }
+    else
+      {
+        Text.Color = Cutter::SelectColor;
+        Rectangle.Color = Cutter::BackColor;
+        Border.Color = Cutter::BackColor;
+      }
+
+  }
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <200,130,400,170>
+  slot enterLeaveSlot
+  {
+    InvalidateViewState();
+  }
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <200,170,400,210>
+  slot pressReleaseSlot
+  {
+    /* releasing the finger outside the button area is ignored */
+    if ( !TouchHandler.Down && TouchHandler.Inside )
+    {
+      /* inform the OnChange slot method */
+      idlesignal OnChange;
+    }
+  }
+
+  $rect <200,40,400,80>
+  onset Active
+  {
+    /* check if the given value differs from the current value */
+    if ( pure Active == value )
+      return;
+
+    /* store the new value */
+    pure Active = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // The property 'OnChange' can refer to a slot method, which will receive a signal \
+  // as soon the user has pressed the button. Thereupon the method's logic will be \
+  // executed.
+  $rect <400,170,600,210>
+  property slot OnChange = null;
+
+  // The property 'Active' stores the current state of the button. As long as the \
+  // property is 'false', the widget represents the status switched-off and should \
+  // appear released. As long as the property is 'true', the widget represents the \
+  // status switched-on and should appear pressed.
+  // Usually this property is used by bistable buttons only, which can toggle its \
+  // state. Whether the button is bistable or monostable is determined by the button's \
+  // property @ToggleSwitch.
+  $rect <200,0,400,40>
+  property bool Active = false;
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler TouchHandler
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Point4 = <0,50>;
+    preset Point3 = <170,50>;
+    preset Point2 = <170,0>;
+    preset Point1 = <0,0>;
+    preset OnLeave = enterLeaveSlot;
+    preset OnEnter = enterLeaveSlot;
+    preset OnRelease = pressReleaseSlot;
+    preset OnPress = pressReleaseSlot;
+  }
+
+  // The property 'Caption' contains the text of the button.
+  $rect <400,0,600,40>
+  property string Caption = "";
+
+  $rect <400,40,600,80>
+  onset Caption
+  {
+    pure Caption = value;
+    Text.String = value;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,170,50>;
+    preset Color = Cutter::ButtonBgColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,170,50>;
+    preset String = "Text";
+    preset Font = Cutter::ButtonFont;
+  }
+
+  // This is a border view.
+  $rect <20,20,160,60>
+  object Views::Border Border
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,170,50>;
+    preset Width = 3;
+    preset Color = Cutter::ButtonBgColor;
+  }
+
+  // The class 'Button' implements a simple push button to start a certain action \
+  // or to toggle a boolean state.
+  //
+  // The property 'Active' represents the momentary state of the widget.
+  // Each time the user has pressed the button a signal is sent to the slot method \
+  // 'OnChange'.
+  note legend Note
+  {
+    attr Bounds = <0,220,600,340>;
+  }
+}
+
+// Color constant according UI design.
+$rect <1090,310,1290,350>
+$output false
+const color ButtonBgColor = #3B5E54FF;
+
+// Color constant according UI design.
+$rect <1090,350,1290,390>
+$output false
+const color ButtonTextColor = #FFFFFFFF;
+
+// This is a font resource.
+$rect <690,700,890,740>
+$output false
+resource Resources::Font ButtonFont
+{
+  attr fontname FontName = Roboto Medium;
+  attr fontheight Height = 19;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 'A'-'Z','a'-'z','0'-'9';
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+// This is a bitmap resource.
+$rect <890,460,1090,500>
+$output false
+resource Resources::Bitmap BarRaster
+{
+  attr bitmapfile FileName;
+  attr alphafile AlphaName = .\Res\BarGraph.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+// The class 'BarGraph' implements a widget to show and to change a certain value \
+// as bar graph.
+$rect <240,590,440,630>
+$output false
+class BarGraph : Core::Group
+{
+  $rect <0,230,200,270>
+  inherited property Bounds = <0,0,698,118>;
+
+  $rect <0,270,200,310>
+  inherited method UpdateViewState()
+  {
+    aState;
+
+    var int32 pos = 0;
+
+    /* ensure that the current set value and the given minimum and maximum values are valid */
+    if (( MaxValue > MinValue ) && ( CurrentValue >= MinValue ) && ( CurrentValue <= MaxValue ))
+    {
+      /* calculate the center position of the thumb within the slider area */
+      pos = Bounds.w * ( CurrentValue - MinValue ) / ( MaxValue - MinValue );
+    }
+
+    /* set position of left and right part */
+    BarLeft.Bounds.x2 = pos;
+    BarRight.Bounds.x1 = pos;
+
+  }
+
+  $rect <0,180,200,220>
+  inherited method Init()
+  {
+    Bounds.size = BarLeft.Bitmap.FrameSize;
+    BarLeft.Bounds = rect( 0, 0, BarLeft.Bitmap.FrameSize.x, BarLeft.Bitmap.FrameSize.y );
+    BarRight.Bounds = BarLeft.Bounds;
+  }
+
+  // This is a generic touch handler.
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler SimpleTouchHandler
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Point4 = <0,118>;
+    preset Point3 = <698,118>;
+    preset Point2 = <698,0>;
+    preset Point1 = <0,0>;
+    preset OnDrag = onDragSlot;
+    preset OnRelease = onReleaseSlot;
+    preset OnPress = onDragSlot;
+  }
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image BarLeft
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft];
+    preset Bounds = <0,0,698,118>;
+    preset Alignment = Views::ImageAlignment[AlignHorzLeft, AlignVertBottom];
+    preset Bitmap = Cutter::BarRaster;
+  }
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image BarRight
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft];
+    preset Bounds = <0,0,698,118>;
+    preset Color = Cutter::SelectColor;
+    preset Alignment = Views::ImageAlignment[AlignHorzRight, AlignVertBottom];
+    preset Bitmap = Cutter::BarRaster;
+  }
+
+  // The property 'CurrentValue' stores the momentary value of the widget. The value \
+  // is limited automatically to the range from @MinValue to @MaxValue.
+  $rect <190,140,390,180>
+  property int32 CurrentValue = 50;
+
+  $rect <190,180,390,220>
+  onset CurrentValue
+  {
+    /* limit the given value to the range between MinValue and MaxValue */
+    if ( value < MinValue )
+      value = MinValue;
+    if ( value > MaxValue )
+      value = MaxValue;
+
+    /* check if the given value differs from the current value */
+    if ( pure CurrentValue == value )
+      return;
+
+    /* store the new value */
+    pure CurrentValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // The property 'MinValue' defines the lower boundary of the widgets value range.
+  $rect <390,140,590,180>
+  property int32 MinValue = 50;
+
+  $rect <390,180,590,220>
+  onset MinValue
+  {
+    /* check if the given value differs from the current value */
+    if ( pure MinValue == value )
+      return;
+
+    /* store the new value */
+    pure MinValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // The property 'MaxValue' defines the upper boundary of the widgets value range.
+  $rect <590,140,790,180>
+  property int32 MaxValue = 150;
+
+  $rect <590,180,790,220>
+  onset MaxValue
+  {
+    /* check if the given value differs from the current value */
+    if ( pure MaxValue == value )
+      return;
+
+    /* store the new value */
+    pure MaxValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <390,270,590,310>
+  slot onDragSlot
+  {
+    var int32 oldValue = CurrentValue;
+    var int32 ofs = SimpleTouchHandler.CurrentPos.x;
+
+    /* ensure that the current set value and the given minimum and maximum values are valid */
+    if (( MaxValue > MinValue ) && ( CurrentValue >= MinValue ) && ( CurrentValue <= MaxValue ))
+    {
+      ofs = ofs * 10 / Bounds.w + 1;
+      ofs = ofs * ( MaxValue - MinValue ) / 10 + MinValue;
+    }
+    else
+      ofs = 0;
+
+    /* make a fix raster of 10 */
+
+    /* change the value */
+    CurrentValue = ( ofs );
+
+    /* inform others about the changed value */
+    if ( CurrentValue != oldValue )
+    {
+      /* update the attached outlet, if there is one... */
+      if (  Outlet != null )
+        Outlet^ = CurrentValue;
+
+      /* ... and inform other observers, that the outlet has changed its value */
+      notifyobservers Outlet;
+
+      /* inform the OnChange slot method */
+      idlesignal OnChange;
+    }
+
+  }
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @Outlet has been changed by another widget or by the application logic. In \
+  // response to this notification, the widget will update itself.
+  $rect <190,310,390,350>
+  slot outletSlot
+  {
+    /* update the current state of the widget */
+    if ( Outlet != null )
+      CurrentValue = Outlet^;
+  }
+
+  $rect <190,270,390,310>
+  onset Outlet
+  {
+    /* check if the new outlet differs from the currently used outlet */
+    if ( pure Outlet == value )
+      return;
+
+    /* detach from the previous outlet */
+    detachobserver outletSlot, pure Outlet;
+
+    /* store the new outlet */
+    pure Outlet = value;
+
+    /* ... and attach to the new one */
+    attachobserver outletSlot, value;
+
+    /* finally, update the current state of the widget by posting a signal to the outlet slot */
+    if ( value != null )
+      postsignal outletSlot;
+  }
+
+  // The property 'Outlet' provides an interface for the Controller-View model. In \
+  // the Controller-View model, the widgets (views) and the application logic (controllers) \
+  // are always kept apart. An automatism behind this model ensures, that widgets \
+  // are notified automatically as soon as the affected controller has changed its \
+  // state. On the other hand, user interactions on a widget cause the affected controller \
+  // to execute the application logic. Usually, a controller is a simple Chora object \
+  // containg several properties and the implementation of onget/onset method.
+  // By assigning a property reference, Outlet establishes a connection between the \
+  // widget and the controller object, the affected property belongs to. After this, \
+  // the widget is able to read and modify the referred property in response to the \
+  // user interactions. It is also able to adapt the widget appearance, if the value \
+  // of the referred property has been modified by another widget or by the application \
+  // logic itself.
+  $rect <190,230,390,270>
+  property ^int32 Outlet = null;
+
+  // The property 'OnApply' can refer to a slot method, which will receive a signal \
+  // when the user has released the slider. Thereupon the method's logic will be \
+  // executed.
+  $rect <590,310,790,350>
+  property slot OnApply = null;
+
+  // The property 'OnChange' can refer to a slot method, which will receive a signal \
+  // each time the user has changed the value of the slider. Thereupon the method's \
+  // logic will be executed.
+  $rect <590,270,790,310>
+  property slot OnChange = null;
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <390,310,590,350>
+  slot onReleaseSlot
+  {
+    /* The user interaction terminates. Force the widget to de-highlight itself. */
+    InvalidateViewState();
+
+    /* inform about the new state */
+    postsignal OnApply;
+
+  }
+
+  // The class 'BarGraph' implements a widget to show and to change a certain value \
+  // as bar graph.
+  // The property 'CurrentValue' represents the momentary value of the widget and \
+  // corresponds to the highlighted part of the bar graph. The supported value range \
+  // of the bar graph can be defined by setting the properties 'MinValue' and 'MaxValue'.
+  // A bar graph can be connected with an Int32 'Outlet' property to show the current \
+  // value of the property and to change it by touching the bar graph.
+  // Additionally, the bar graphr can trigger the slot methods 'OnChange' and 'OnApply' \
+  // as soon as the user has changed the position or released the bar graph.
+  note legend Note
+  {
+    attr Bounds = <0,360,790,520>;
+  }
+}
+
+// Dialog class to define the speed of the paper cutting machine in papers per hour.
+$rect <440,230,640,270>
+$output false
+class SpeedDialog : Core::Group
+{
+  $rect <0,460,170,500>
+  inherited property Bounds = <0,0,770,370>;
+
+  $rect <0,410,180,450>
+  inherited method Init()
+  {
+    Bounds.size = point( Cutter::ScreenSize.x - 2 * Cutter::Border.x, Cutter::ScreenSize.y - Cutter::Border.y - Cutter::CaptionHeight - Cutter::StatusHeight );
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <310,90,460,120>;
+    preset WrapText = false;
+    preset Alignment = Views::TextAlignment[AlignHorzCenter, AlignVertCenter];
+    preset String = "PAPERS / HOUR";
+    preset Font = Cutter::DescrFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text TextSpeed
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <310,20,460,90>;
+    preset WrapText = false;
+    preset Alignment = Views::TextAlignment[AlignHorzCenter, AlignVertCenter];
+    preset String = "1234";
+    preset Font = Cutter::MediumDigitFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // Data point property that refers to the value that should be displayed within \
+  // the window.
+  $rect <790,30,970,70>
+  property ^int32 PaperSpeed = null;
+
+  $rect <790,70,970,110>
+  onset PaperSpeed
+  {
+    /* check if something has changed */
+    if ( value == pure PaperSpeed )
+      return;
+
+    /* detatch from previous data point */
+    if ( pure PaperSpeed != null )
+      detachobserver onUpdate, pure PaperSpeed;
+
+    /* store the new data point */
+    pure PaperSpeed = value;
+
+    /* and attach to the new one */
+    if ( value != null )
+      attachobserver onUpdate, value;
+
+    /* finally, get the initial value */
+    postsignal onUpdate;
+  }
+
+  // Slot method to update the display value.
+  $rect <790,210,970,250>
+  slot onUpdate
+  {
+    sender; /* the method is called from the sender object */
+
+    /* create the new text to be displayed */
+    if ( PaperSpeed != null )
+      TextSpeed.String = string((PaperSpeed^)) ;
+
+
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::BarGraph BarGraph
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <37,130,735,251>;
+    preset CurrentValue = 3000;
+    preset MinValue = 600;
+    preset MaxValue = 3600;
+    preset Outlet = ^Cutter::Device.PaperSpeed;
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::SpeedButton SpeedButtonL
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <250,29,310,89>;
+    preset OnChange = onDecrement;
+    preset IconIndex = 0;
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::SpeedButton SpeedButtonR
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <460,29,520,89>;
+    preset OnChange = onIncrement;
+    preset IconIndex = 1;
+  }
+
+  // Slot metod to change the paper speed, when user press arrow buttons.
+  $rect <790,120,970,160>
+  slot onIncrement
+  {
+    sender; /* the method is called from the sender object */
+
+    if ( PaperSpeed != null )
+      PaperSpeed^ = ((PaperSpeed^) / 10 ) * 10 + 10;
+
+  }
+
+  // Slot metod to change the paper speed, when user press arrow buttons.
+  $rect <790,160,970,200>
+  slot onDecrement
+  {
+    sender; /* the method is called from the sender object */
+
+    if ( PaperSpeed != null )
+      PaperSpeed^ = (((PaperSpeed^) + 9 ) / 10 ) * 10 - 10;
+
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::CancelButton CancelButton
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <463,317,770,362>;
+    preset OnChange = onCancel;
+  }
+
+  // Slot method to forward the cancel event.
+  $rect <790,320,970,360>
+  slot onCancel
+  {
+    sender; /* the method is called from the sender object */
+    postsignal OnCancel;
+  }
+
+  // The property 'OnCancel' can refer to a slot method, which will receive a signal \
+  // as soon the user has pressed the cancel button. Thereupon the method's logic \
+  // will be executed.
+  $rect <980,320,1160,360>
+  property slot OnCancel = null;
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text0
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <36,263,106,283>;
+    preset String = "900";
+    preset Font = Cutter::ButtonFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text1
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <106,263,176,283>;
+    preset String = "1200";
+    preset Font = Cutter::ButtonFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text2
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <176,263,246,283>;
+    preset String = "1500";
+    preset Font = Cutter::ButtonFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text3
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <246,263,316,283>;
+    preset String = "1800";
+    preset Font = Cutter::ButtonFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text4
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <316,263,386,283>;
+    preset String = "2100";
+    preset Font = Cutter::ButtonFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text5
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <386,263,456,283>;
+    preset String = "2400";
+    preset Font = Cutter::ButtonFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text6
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <456,263,526,283>;
+    preset String = "2700";
+    preset Font = Cutter::ButtonFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text7
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <526,263,596,283>;
+    preset String = "3000";
+    preset Font = Cutter::ButtonFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text8
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <596,263,666,283>;
+    preset String = "3300";
+    preset Font = Cutter::ButtonFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text9
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <666,263,736,283>;
+    preset String = "3600";
+    preset Font = Cutter::ButtonFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // Dialog class to define the speed of the paper cutting machine in papers per \
+  // hour.
+  note legend Note
+  {
+    attr Bounds = <220,410,770,470>;
+  }
+}
+
+// The class 'CancelButton' implements a simple push button to cancel a certain action.
+$rect <40,550,240,590>
+$output false
+class CancelButton : Core::Group
+{
+  $rect <0,70,200,110>
+  inherited property Bounds = <0,0,170,50>;
+
+  $rect <0,110,200,150>
+  inherited method UpdateViewState()
+  {
+    // From the current state derive the corresponding image
+    // frame
+    if ( aState.contains( Core::ViewState[ Enabled ]))
+    {
+      if ( TouchHandler.Down && TouchHandler.Inside )
+      {
+        Text.Color = Cutter::TextColor;
+        Rectangle.Color = Cutter::SelectColor;
+      }
+      else
+      {
+        Text.Color = Cutter::ButtonTextColor;
+        Rectangle.Color = Cutter::ButtonBgColor;
+      }
+    }
+    else
+      {
+        Text.Color = Cutter::SelectColor;
+        Rectangle.Color = Cutter::BackColor;
+      }
+
+  }
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <200,70,400,110>
+  slot enterLeaveSlot
+  {
+    InvalidateViewState();
+  }
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <200,110,400,150>
+  slot pressReleaseSlot
+  {
+    /* releasing the finger outside the button area is ignored */
+    if ( !TouchHandler.Down && TouchHandler.Inside )
+    {
+      /* inform the OnChange slot method */
+      idlesignal OnChange;
+
+    }
+  }
+
+  // The property 'OnChange' can refer to a slot method, which will receive a signal \
+  // as soon the user has pressed the button. Thereupon the method's logic will be \
+  // executed.
+  $rect <400,110,600,150>
+  property slot OnChange = null;
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler TouchHandler
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Point4 = <0,50>;
+    preset Point3 = <170,50>;
+    preset Point2 = <170,0>;
+    preset Point1 = <0,0>;
+    preset OnLeave = enterLeaveSlot;
+    preset OnEnter = enterLeaveSlot;
+    preset OnRelease = pressReleaseSlot;
+    preset OnPress = pressReleaseSlot;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,170,50>;
+    preset Color = Cutter::ButtonBgColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[AlignToLeft];
+    preset Bounds = <30,0,170,50>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Cancel";
+    preset Font = Cutter::ButtonFont;
+  }
+
+  // The class 'CancelButton' implements a simple push button to cancel a certain \
+  // action.
+  //
+  // Each time the user has pressed the button a signal is sent to the slot method \
+  // 'OnChange'.
+  note legend Note
+  {
+    attr Bounds = <0,160,600,240>;
+  }
+}
+
+// Dialog class to define the number of cutted papers.
+$rect <440,310,640,350>
+$output false
+class BatchDialog : Core::Group
+{
+  $rect <0,460,200,500>
+  inherited property Bounds = <0,0,770,370>;
+
+  $rect <0,410,200,450>
+  inherited method Init()
+  {
+    Bounds.size = point( Cutter::ScreenSize.x - 2 * Cutter::Border.x, Cutter::ScreenSize.y - Cutter::Border.y - Cutter::CaptionHeight - Cutter::StatusHeight );
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <310,90,460,120>;
+    preset WrapText = false;
+    preset Alignment = Views::TextAlignment[AlignHorzCenter, AlignVertCenter];
+    preset String = "PAPERS";
+    preset Font = Cutter::DescrFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text TextBatch
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <310,20,460,90>;
+    preset WrapText = false;
+    preset Alignment = Views::TextAlignment[AlignHorzCenter, AlignVertCenter];
+    preset String = "999";
+    preset Font = Cutter::MediumDigitFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // Data point property that refers to the value that should be displayed within \
+  // the window.
+  $rect <790,30,990,70>
+  property ^int32 PaperBatch = null;
+
+  $rect <790,70,990,110>
+  onset PaperBatch
+  {
+    /* check if something has changed */
+    if ( value == pure PaperBatch )
+      return;
+
+    /* detatch from previous data point */
+    if ( pure PaperBatch != null )
+      detachobserver onUpdate, pure PaperBatch;
+
+    /* store the new data point */
+    pure PaperBatch = value;
+
+    /* and attach to the new one */
+    if ( value != null )
+      attachobserver onUpdate, value;
+
+    /* finally, get the initial value */
+    postsignal onUpdate;
+  }
+
+  // Slot method to update the display value.
+  $rect <790,210,990,250>
+  slot onUpdate
+  {
+    sender; /* the method is called from the sender object */
+
+    /* create the new text to be displayed */
+    if ( PaperBatch != null )
+      TextBatch.String = string((PaperBatch^)) ;
+
+
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::BarGraph BarGraph
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <37,130,735,251>;
+    preset CurrentValue = 500;
+    preset MinValue = 0;
+    preset MaxValue = 1000;
+    preset Outlet = ^Cutter::Device.PaperBatch;
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::SpeedButton SpeedButtonL
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <250,29,310,89>;
+    preset OnChange = onDecrement;
+    preset IconIndex = 0;
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::SpeedButton SpeedButtonR
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <460,29,520,89>;
+    preset OnChange = onIncrement;
+    preset IconIndex = 1;
+  }
+
+  // Slot metod to change the paper speed, when user press arrow buttons.
+  $rect <790,120,990,160>
+  slot onIncrement
+  {
+    sender; /* the method is called from the sender object */
+
+    if ( PaperBatch != null )
+      PaperBatch^ = ((PaperBatch^) / 10 ) * 10 + 10;
+
+  }
+
+  // Slot metod to change the paper speed, when user press arrow buttons.
+  $rect <790,160,990,200>
+  slot onDecrement
+  {
+    sender; /* the method is called from the sender object */
+
+    if ( PaperBatch != null )
+      PaperBatch^ = (((PaperBatch^) + 9 ) / 10 ) * 10 - 10;
+
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::CancelButton CancelButton
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <463,317,770,362>;
+    preset OnChange = onCancel;
+  }
+
+  // Slot method to forward the cancel event.
+  $rect <790,280,990,320>
+  slot onCancel
+  {
+    sender; /* the method is called from the sender object */
+    postsignal OnCancel;
+  }
+
+  // The property 'OnCancel' can refer to a slot method, which will receive a signal \
+  // as soon the user has pressed the cancel button. Thereupon the method's logic \
+  // will be executed.
+  $rect <790,320,990,360>
+  property slot OnCancel = null;
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text0
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <36,263,106,283>;
+    preset String = "100";
+    preset Font = Cutter::ButtonFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text1
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <106,263,176,283>;
+    preset String = "200";
+    preset Font = Cutter::ButtonFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text2
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <176,263,246,283>;
+    preset String = "300";
+    preset Font = Cutter::ButtonFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text3
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <246,263,316,283>;
+    preset String = "400";
+    preset Font = Cutter::ButtonFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text4
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <316,263,386,283>;
+    preset String = "500";
+    preset Font = Cutter::ButtonFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text5
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <386,263,456,283>;
+    preset String = "600";
+    preset Font = Cutter::ButtonFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text6
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <456,263,526,283>;
+    preset String = "700";
+    preset Font = Cutter::ButtonFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text7
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <526,263,596,283>;
+    preset String = "800";
+    preset Font = Cutter::ButtonFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text8
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <596,263,666,283>;
+    preset String = "900";
+    preset Font = Cutter::ButtonFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text9
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <666,263,736,283>;
+    preset String = "1000";
+    preset Font = Cutter::ButtonFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  // Dialog class to define the number of papers processed by the paper cutting machine.
+  note legend Note
+  {
+    attr Bounds = <220,410,770,470>;
+  }
+}
+
+// The class 'PaperFeed' implements a resizeable paper feed illustration.
+$rect <240,510,440,550>
+$output false
+class PaperFeed : Core::Group
+{
+  $rect <0,100,180,140>
+  inherited property Bounds = <0,0,344,72>;
+
+  $rect <0,150,180,190>
+  inherited method UpdateLayout()
+  {
+    super( aSize );
+    StripeLeft.Visible = ( aSize.x <= StripeRight.Bitmap.FrameSize.x );
+
+  }
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image StripeRight
+  {
+    preset Layout = Core::Layout[AlignToLeft, AlignToRight, AlignToTop, ResizeHorz];
+    preset Bounds = <5,0,344,72>;
+    preset Alignment = Views::ImageAlignment[AlignHorzRight, AlignVertCenter];
+    preset Bitmap = Cutter::PaperStripe;
+  }
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image StripeLeft
+  {
+    preset Bounds = <0,0,5,72>;
+    preset Alignment = Views::ImageAlignment[AlignHorzLeft, AlignVertCenter];
+    preset Bitmap = Cutter::PaperStripe;
+  }
+
+  // The property 'Type' represents the paper type that should be shown.
+  $rect <190,100,370,140>
+  property int32 Type = 0;
+
+  $rect <190,150,370,190>
+  onset Type
+  {
+    /* check limits */
+    if ( Type < 0 )
+      Type = 0;
+    if ( Type > 3 )
+      Type = 3;
+
+    /* store value */
+    pure Type = value;
+
+    /* and assign it to the stripes */
+    StripeLeft.FrameNumber = value;
+    StripeRight.FrameNumber = value;
+  }
+
+  // The class 'PaperFeed' implements a resizeable paper feed illustration.
+  // The property 'Type' selects the paper feed.
+  note legend Note
+  {
+    attr Bounds = <0,200,470,280>;
+  }
+}
+
+// Dialog class to define the paper feed format of the paper cutting machine.
+$rect <440,190,640,230>
+$output false
+class FeedDialog : Core::Group
+{
+  $rect <0,460,170,500>
+  inherited property Bounds = <0,0,770,370>;
+
+  $rect <0,410,180,450>
+  inherited method Init()
+  {
+    Bounds.size = point( Cutter::ScreenSize.x - 2 * Cutter::Border.x, Cutter::ScreenSize.y - Cutter::Border.y - Cutter::CaptionHeight - Cutter::StatusHeight );
+  }
+
+  // Data point property that refers to the value that should be displayed within \
+  // the window.
+  $rect <790,30,970,70>
+  property ^int32 PaperType = null;
+
+  $rect <790,70,970,110>
+  onset PaperType
+  {
+    /* check if something has changed */
+    if ( value == pure PaperType )
+      return;
+
+    /* detatch from previous data point */
+    if ( pure PaperType != null )
+      detachobserver onUpdate, pure PaperType;
+
+    /* store the new data point */
+    pure PaperType = value;
+
+    /* and attach to the new one */
+    if ( value != null )
+      attachobserver onUpdate, value;
+
+    /* finally, get the initial value */
+    postsignal onUpdate;
+  }
+
+  // Slot method to update the display value.
+  $rect <790,210,970,250>
+  slot onUpdate
+  {
+    sender; /* the method is called from the sender object */
+
+    /* create the new text to be displayed */
+    if ( PaperType != null )
+    {
+      FeedButton0.Selected = ( PaperType^ == 0 );
+      FeedButton1.Selected = ( PaperType^ == 1 );
+      FeedButton2.Selected = ( PaperType^ == 2 );
+      FeedButton3.Selected = ( PaperType^ == 3 );
+    }
+
+
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::CancelButton CancelButton
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <463,317,770,362>;
+    preset OnChange = onCancel;
+  }
+
+  // Slot method to forward the cancel event.
+  $rect <790,320,970,360>
+  slot onCancel
+  {
+    sender; /* the method is called from the sender object */
+    postsignal OnCancel;
+  }
+
+  // The property 'OnCancel' can refer to a slot method, which will receive a signal \
+  // as soon the user has pressed the cancel button. Thereupon the method's logic \
+  // will be executed.
+  $rect <980,320,1160,360>
+  property slot OnCancel = null;
+
+  $rect <20,20,160,60>
+  object Cutter::FeedButton FeedButton0
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <60,10,380,150>;
+    preset OnChange = onSelect;
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::FeedButton FeedButton1
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <390,10,710,150>;
+    preset OnChange = onSelect;
+    preset Type = 1;
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::FeedButton FeedButton2
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <60,160,380,300>;
+    preset OnChange = onSelect;
+    preset Type = 2;
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::FeedButton FeedButton3
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <390,160,710,300>;
+    preset OnChange = onSelect;
+    preset Type = 3;
+  }
+
+  // This is a slot method.
+  $rect <790,130,970,170>
+  slot onSelect
+  {
+    var Cutter::FeedButton button = (Cutter::FeedButton)sender;
+
+    if (( button != null ) && ( PaperType != null ))
+      PaperType^ = button.Type;
+  }
+
+  // Dialog class to define the paper feed format of the paper cutting machine.
+  note legend Note
+  {
+    attr Bounds = <220,410,770,470>;
+  }
+}
+
+// The class 'FeedButton' implements a special type of push button that displays \
+// the current type of paper feed.
+$rect <240,550,440,590>
+$output false
+class FeedButton : Core::Group
+{
+  $rect <0,160,200,200>
+  inherited property Bounds = <0,0,320,140>;
+
+  $rect <0,200,200,240>
+  inherited method UpdateViewState()
+  {
+    aState;
+
+    if ( TouchHandler.Down && TouchHandler.Inside )
+    {
+      Text.Color = Cutter::ButtonTextColor;
+      Rectangle.Color = Cutter::SelectColor;
+    }
+    else
+    {
+      Text.Color = Cutter::ButtonTextColor;
+      Rectangle.Color = Cutter::BackColor;
+    }
+    if ( Selected )
+    {
+      Text.Color = Cutter::TextColor;
+      Rectangle.Color = Cutter::SelectColor;
+    }
+
+  }
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <200,160,400,200>
+  slot enterLeaveSlot
+  {
+    InvalidateViewState();
+  }
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <200,200,400,240>
+  slot pressReleaseSlot
+  {
+    /* releasing the finger outside the button area is ignored */
+    if ( !TouchHandler.Down && TouchHandler.Inside )
+    {
+      /* inform the OnChange slot method */
+      signal OnChange;
+
+    }
+  }
+
+  // The property 'OnChange' can refer to a slot method, which will receive a signal \
+  // as soon the user has pressed the button. Thereupon the method's logic will be \
+  // executed.
+  $rect <400,200,600,240>
+  property slot OnChange = null;
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler TouchHandler
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Point4 = <0,140>;
+    preset Point3 = <320,140>;
+    preset Point2 = <320,0>;
+    preset Point1 = <0,0>;
+    preset OnLeave = enterLeaveSlot;
+    preset OnEnter = enterLeaveSlot;
+    preset OnRelease = pressReleaseSlot;
+    preset OnPress = pressReleaseSlot;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Bounds = <0,0,320,140>;
+    preset Color = Cutter::BackColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <130,80,320,140>;
+    preset WrapText = true;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "PINFEED\nPERFORATED";
+    preset Font = Cutter::DescrFont;
+    preset Color = Cutter::TextColor;
+  }
+
+  $rect <20,20,160,60>
+  object Cutter::PaperFeed PaperFeed
+  {
+    preset Layout = Core::Layout[ResizeHorz];
+    preset Bounds = <10,10,290,82>;
+    preset Type = 0;
+  }
+
+  // The property 'Type' represents the paper type that should be shown.
+  $rect <350,10,550,50>
+  property int32 Type = 0;
+
+  $rect <350,60,550,100>
+  onset Type
+  {
+    /* check limits */
+    if ( Type < 0 )
+      Type = 0;
+    if ( Type > 3 )
+      Type = 3;
+
+    /* store value */
+    pure Type = value;
+
+
+    /* create the new text to be displayed */
+    PaperFeed.Type = value;
+    switch ( value )
+    {
+      case 0:
+         Text.String = "PINFEED\nPERFORATED";
+      case 1:
+         Text.String = "PINFEED\nNON-PERFORATED";
+      case 2:
+         Text.String = "PINLESS\nPERFORATED";
+      case 3:
+         Text.String = "PINLESS\nNON-PERFORATED";
+      default:
+        ;
+    }
+
+  }
+
+  // The property 'Selected' contains the selection state of the button.
+  $rect <550,10,750,50>
+  property bool Selected = false;
+
+  $rect <550,60,750,100>
+  onset Selected
+  {
+    pure Selected = value;
+    InvalidateViewState();
+  }
+
+  // The class 'FeedButton' implements a special type of push button that displays \
+  // the current type of paper feed.
+  // The property 'Type' selects the paper feed.
+  // Each time the user has pressed the button a signal is sent to the slot method \
+  // 'OnChange'.
+  note legend Note
+  {
+    attr Bounds = <0,260,600,380>;
+  }
+}
+
+// Device class
+note group Note3
+{
+  attr Bounds = <20,660,660,760>;
+}
+
+// Main class of paper cutting machine
+note group Note
+{
+  attr Bounds = <20,20,660,130>;
+}
+
+// Window and dialog classes
+note group Note1
+{
+  attr Bounds = <20,140,660,410>;
+}
+
+// Paper cutter widgets
+note group Note2
+{
+  attr Bounds = <20,420,660,650>;
+}
+
+// Layout and color constants
+note group Note4
+{
+  attr Bounds = <670,20,1310,410>;
+}
+
+// Resources
+note group Note5
+{
+  attr Bounds = <670,420,1310,760>;
+}
+
+// The sample application 'PaperCutter' implements the user interface of a paper \
+// cutting machine. The user can define the paper format, the paper feed, the number \
+// of papers and the speed of the cutting process.
+//
+// The different parameters are shown within separate small windows. As soon as the \
+// user touches on a window, the window is enhanced to host the corresponding settings \
+// dialog. Every transition between window and dialog appearance is done with several \
+// move and fade-in/fade-out animations.
+//
+// This demo application is implemented for a screen size of 480x272 pixel.
+note legend Note6
+{
+  attr Bounds = <20,770,660,970>;
+}
+
+// Graphical design of 'PaperCutter' by Coeno - http://www.coeno.com
+note legend Note7
+{
+  attr Bounds = <670,770,1160,840>;
+}

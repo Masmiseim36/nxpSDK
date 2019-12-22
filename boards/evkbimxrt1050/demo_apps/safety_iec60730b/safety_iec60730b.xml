@@ -2,15 +2,25 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MIMXRT1052"/>
+    <definition extID="component.lpuart_adapter.MIMXRT1052"/>
+    <definition extID="component.serial_manager.MIMXRT1052"/>
+    <definition extID="component.serial_manager_uart.MIMXRT1052"/>
     <definition extID="device.MIMXRT1052_CMSIS.MIMXRT1052"/>
+    <definition extID="middleware.fmstr.MIMXRT1052"/>
+    <definition extID="middleware.fmstr.platform_gen32le.MIMXRT1052"/>
     <definition extID="middleware.safety.MIMXRT1052"/>
     <definition extID="platform.Include_common.MIMXRT1052"/>
     <definition extID="platform.Include_core_cm7.MIMXRT1052"/>
+    <definition extID="platform.Include_dsp.MIMXRT1052"/>
     <definition extID="platform.drivers.clock.MIMXRT1052"/>
     <definition extID="platform.drivers.common.MIMXRT1052"/>
     <definition extID="platform.drivers.igpio.MIMXRT1052"/>
     <definition extID="platform.drivers.iomuxc.MIMXRT1052"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1052"/>
+    <definition extID="platform.utilities.assert.MIMXRT1052"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1052"/>
+    <definition extID="utility.debug_console.MIMXRT1052"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
@@ -19,7 +29,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_safety_iec60730b" name="safety_iec60730b" category="demo_apps" dependency="middleware.safety.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052">
+  <example id="evkbimxrt1050_safety_iec60730b" name="safety_iec60730b" category="demo_apps" dependency="middleware.safety.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 utility.debug_console.MIMXRT1052 middleware.fmstr.MIMXRT1052 middleware.fmstr.platform_gen32le.MIMXRT1052 component.serial_manager.MIMXRT1052 component.lists.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_dsp.MIMXRT1052">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -42,11 +52,12 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
-          <value>_DEBUG</value>
+          <value>XIP_BOOT_HEADER_DCD_ENABLE=1</value>
           <value>CPU_MIMXRT1052DVL6B</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -95,123 +106,80 @@
         </drivers>
       </debug_configuration>
     </debug_configurations>
-    <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b/iar/linker" target_path="linker" type="linker" toolchain="iar">
-      <files mask="imxrt1052_safety_common.icf"/>
-      <files mask="imxrt1052_safety_common_ram.icf"/>
+    <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b/GUI" target_path="GUI" type="other">
+      <files mask="safety_debug.pmp"/>
+      <files mask="safety_release.pmp"/>
     </source>
-    <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b/iar" target_path="src" type="other" toolchain="iar">
+    <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b/iar/linker" target_path="linker" type="linker" toolchain="iar">
+      <files mask="evkbimxrt1050_safety.icf"/>
+      <files mask="evkbimxrt1050_safety_ram.icf"/>
+    </source>
+    <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b/iar" target_path="evkbimxrt1050" type="other" toolchain="iar">
       <files mask="evkbimxrt1050.mac"/>
       <files mask="evkbimxrt1050_sdram_init.mac"/>
     </source>
     <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b/mcux/linker" target_path="linker" type="linker" toolchain="mcuxpresso">
-      <files mask="imxrt1050_safety_common.ld"/>
+      <files mask="evkbimxrt1050_safety_debug.ld"/>
+      <files mask="evkbimxrt1050_safety_library.ld"/>
+      <files mask="evkbimxrt1050_safety_memory.ld"/>
     </source>
-    <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b/mcux" target_path="src" type="script" toolchain="mcuxpresso">
+    <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b/mcux" target_path="linker" type="script" toolchain="mcuxpresso">
       <files mask="crc_mcux.bat"/>
     </source>
     <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b/mdk/linker" target_path="linker" type="c_include" toolchain="mdk">
       <files mask="linker_config.h"/>
     </source>
     <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b/mdk/linker" target_path="linker" type="other" toolchain="mdk">
-      <files mask="imxrt1052_safety_common.sct"/>
-      <files mask="imxrt1052_safety_common_ram.sct"/>
+      <files mask="evkbimxrt1050_safety.sct"/>
+      <files mask="evkbimxrt1050_safety_ram.sct"/>
     </source>
-    <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b/mdk" target_path="src" type="configuration" toolchain="mdk">
+    <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b/mdk" target_path="safety_iec60730b/boards/evkbimxrt1050/linker/mdk" type="configuration" toolchain="mdk">
       <files mask="debug.ini"/>
       <files mask="release.ini"/>
     </source>
-    <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b/mdk" target_path="src" type="script" exclude="true" toolchain="mdk">
+    <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b/mdk" target_path="safety_iec60730b/boards/evkbimxrt1050/linker/mdk" type="configuration" exclude="true" toolchain="mdk">
+      <files mask="debug.ini"/>
+      <files mask="release.ini"/>
+    </source>
+    <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b/mdk" target_path="safety_iec60730b/boards/evkbimxrt1050/linker/mdk" type="script" exclude="true" toolchain="mdk">
       <files mask="crc_keil.bat"/>
     </source>
     <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b" target_path="board" type="c_include">
+      <files mask="board.h"/>
       <files mask="clock_config.h"/>
-      <files mask="freemaster_cfg.h"/>
       <files mask="pin_mux.h"/>
     </source>
     <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b" target_path="board" type="src">
+      <files mask="board.c"/>
       <files mask="clock_config.c"/>
       <files mask="pin_mux.c"/>
-    </source>
-    <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b" target_path="cpu" type="c_include">
-      <files mask="safety_cm4_cm7_imxrt.h"/>
-    </source>
-    <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b" target_path="cpu" type="src">
-      <files mask="main.c"/>
-      <files mask="safety_cm4_cm7_imxrt.c"/>
     </source>
     <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b" target_path="doc" type="doc">
       <files mask="readme.txt"/>
     </source>
-    <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
-      <files mask="readme.txt"/>
-    </source>
-    <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b" target_path="src" type="c_include">
+    <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b" target_path="source" type="c_include">
+      <files mask="freemaster_cfg.h"/>
       <files mask="isr.h"/>
       <files mask="project_setup_evkbimxrt1050.h"/>
+      <files mask="safety_cm7_imxrt.h"/>
       <files mask="safety_config.h"/>
       <files mask="safety_test_items.h"/>
     </source>
-    <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b" target_path="src" type="src">
+    <source path="boards/evkbimxrt1050/demo_apps/safety_iec60730b" target_path="source" type="src">
+      <files mask="main_imxrt.c"/>
       <files mask="project_setup_evkbimxrt1050.c"/>
+      <files mask="safety_cm7_imxrt.c"/>
       <files mask="safety_test_items.c"/>
     </source>
-    <source path="devices/MIMXRT1052/arm" target_path="cpu" type="c_include" toolchain="mdk">
-      <files mask="vectors_mdk.h"/>
-    </source>
-    <source path="devices/MIMXRT1052/arm" target_path="cpu" type="src" toolchain="mdk">
-      <files mask="startup_mdk.c"/>
-      <files mask="vectors_mdk.c"/>
-    </source>
-    <source path="devices/MIMXRT1052/iar" target_path="cpu" type="c_include" toolchain="iar">
-      <files mask="vectors_iar.h"/>
-    </source>
-    <source path="devices/MIMXRT1052/iar" target_path="cpu" type="src" toolchain="iar">
-      <files mask="startup_iar.c"/>
-      <files mask="vectors_iar.c"/>
-    </source>
-    <source path="devices/MIMXRT1052/mcuxpresso" target_path="cpu" type="c_include" toolchain="mcuxpresso">
-      <files mask="vectors_mcux.h"/>
-    </source>
-    <source path="devices/MIMXRT1052/mcuxpresso" target_path="cpu" type="src" toolchain="mcuxpresso">
-      <files mask="startup_mcux.c"/>
-      <files mask="vectors_mcux.c"/>
-    </source>
-    <source path="devices/MIMXRT1052" target_path="cpu" type="src">
-      <files mask="start.c"/>
-    </source>
-    <source path="middleware/safety_iec60730b/example/cm4_cm7/src/project/evkbimxrt1050/xip" target_path="device" type="c_include">
+    <source path="middleware/safety_iec60730b/boards/evkbimxrt1050/xip" target_path="device" type="c_include">
       <files mask="evkbimxrt1050_flexspi_nor_config.h"/>
       <files mask="evkbimxrt1050_sdram_ini_dcd.h"/>
       <files mask="fsl_flexspi_nor_boot.h"/>
     </source>
-    <source path="middleware/safety_iec60730b/example/cm4_cm7/src/project/evkbimxrt1050/xip" target_path="device" type="src">
+    <source path="middleware/safety_iec60730b/boards/evkbimxrt1050/xip" target_path="device" type="src">
       <files mask="evkbimxrt1050_flexspi_nor_config.c"/>
       <files mask="evkbimxrt1050_sdram_ini_dcd.c"/>
       <files mask="fsl_flexspi_nor_boot.c"/>
-    </source>
-    <source path="middleware/safety_iec60730b/freemaster_drv" target_path="freemaster" type="c_include">
-      <files mask="freemaster.h"/>
-      <files mask="freemaster_Kxx.h"/>
-      <files mask="freemaster_defcfg.h"/>
-      <files mask="freemaster_private.h"/>
-      <files mask="freemaster_protocol.h"/>
-      <files mask="freemaster_rec.h"/>
-      <files mask="freemaster_tsa.h"/>
-    </source>
-    <source path="middleware/safety_iec60730b/freemaster_drv" target_path="freemaster" type="doc" exclude="true">
-      <files mask="FreeMASTER-SW-License.txt"/>
-    </source>
-    <source path="middleware/safety_iec60730b/freemaster_drv" target_path="freemaster" type="src">
-      <files mask="freemaster_Kxx.c"/>
-      <files mask="freemaster_appcmd.c"/>
-      <files mask="freemaster_bdm.c"/>
-      <files mask="freemaster_can.c"/>
-      <files mask="freemaster_protocol.c"/>
-      <files mask="freemaster_rec.c"/>
-      <files mask="freemaster_scope.c"/>
-      <files mask="freemaster_serial.c"/>
-      <files mask="freemaster_sfio.c"/>
-      <files mask="freemaster_tsa.c"/>
     </source>
   </example>
 </ksdk:examples>

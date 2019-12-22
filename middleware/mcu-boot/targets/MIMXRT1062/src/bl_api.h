@@ -151,6 +151,8 @@ enum
     kFlexSpiNorDriver_Version_1_5 = MAKE_VERSION(1, 5, 0),
 };
 
+
+
 typedef union
 {
     struct
@@ -163,7 +165,5 @@ typedef union
     } B;
     uint32_t U;
 } run_bootloader_ctx_t;
-
-void bl_api_init(void);
 
 #endif //__BL_API_H__

@@ -118,7 +118,7 @@ void uart_pinmux_config(uint32_t instance, pinmux_type_t pinmux)
 }
 
 //! @brief this is going to be used for autobaud IRQ handling for UART1
-#if BL_ENABLE_PINMUX_UART1
+#if BL_ENABLE_PINMUX_UART1 && BL_CONFIG_LPUART
 void UART1_RX_GPIO_IRQHandler(void)
 {
     uint32_t interrupt_flag = (1U << UART1_RX_GPIO_PIN_NUM);
@@ -133,7 +133,7 @@ void UART1_RX_GPIO_IRQHandler(void)
 
 void enable_autobaud_pin_irq(uint32_t instance, pin_irq_callback_t func)
 {
-#if BL_ENABLE_PINMUX_UART1
+#if BL_ENABLE_PINMUX_UART1 && BL_CONFIG_LPUART
     s_pin_irq_func[1] = func;
     // Only look for a falling edge for our interrupts
     GPIO_SetPinInterruptConfig(UART1_RX_GPIO_BASE, UART1_RX_GPIO_PIN_NUM, kGPIO_IntFallingEdge);
@@ -145,7 +145,7 @@ void enable_autobaud_pin_irq(uint32_t instance, pin_irq_callback_t func)
 
 void disable_autobaud_pin_irq(uint32_t instance)
 {
-#if BL_ENABLE_PINMUX_UART1
+#if BL_ENABLE_PINMUX_UART1 && BL_CONFIG_LPUART
     NVIC_DisableIRQ(UART1_RX_GPIO_IRQn);
     NVIC_SetPriority(UART1_RX_GPIO_IRQn, GPIO_IRQC_INTERRUPT_RESTORED_PRIORITY);
     GPIO_SetPinInterruptConfig(UART1_RX_GPIO_BASE, UART1_RX_GPIO_PIN_NUM, kGPIO_NoIntmode);

@@ -90,18 +90,46 @@ static void host_platform_wifi_pwr_pin_init(void)
     BOARD_USDHC_SDCARD_POWER_CONTROL_INIT();
 }
 
+static void host_platform_wl_reg_on_set_low(void)
+{
+    GPIO_PinWrite( BOARD_INITPINS_WL_REG_ON_GPIO, BOARD_INITPINS_WL_REG_ON_PIN, 0U );
+}
+
+static void host_platform_wl_reg_on_set_high(void)
+{
+    /*
+     * 1DX M.2 Module Datasheet and 1LV M.2 Module Datasheet (EA2-DS-1901):
+     * Signals WL_REG_ON or BT_REG_ON must be held low for at least 700 microseconds
+     * after supply voltage has reached specification level before pulled high.
+     * 2 clock cycles of the 32.678kHz clock must also have passed before any of the signals is pulled high.
+     * These clock cycles will typically occur during the 700 microseconds
+     * but if the clock signal has a long delay during power-up, the 700 microsecond period can be extended.
+     */
+    host_rtos_delay_milliseconds( (uint32_t) 1 );
+
+    GPIO_PinWrite( BOARD_INITPINS_WL_REG_ON_GPIO, BOARD_INITPINS_WL_REG_ON_PIN, 1U );
+}
+
 wwd_result_t host_platform_init( void )
 {
     wwd_result_t err = WWD_SUCCESS;
 
+    // Ensure WL_REG_ON is low
+    host_platform_wl_reg_on_set_low();
+    
     // Initialize GPIO pins for wifi power control
     host_platform_wifi_pwr_pin_init();
+
+    // Set WL_REG_ON high
+    host_platform_wl_reg_on_set_high();
+
     return err;
 }
 
 wwd_result_t host_platform_deinit(void)
 {
-    //ToDo
+    host_platform_wl_reg_on_set_low();
+
     return WWD_SUCCESS;
 }
 
@@ -110,11 +138,13 @@ void host_platform_reset_wifi( wiced_bool_t reset_asserted )
     if ( reset_asserted == WICED_TRUE )
     {
         BOARD_USDHC_SDCARD_POWER_CONTROL(0);
+        host_platform_wl_reg_on_set_low();
         host_rtos_delay_milliseconds( (uint32_t) 100 );
     }
     else
     {
         BOARD_USDHC_SDCARD_POWER_CONTROL(1);
+        host_platform_wl_reg_on_set_high();
         host_rtos_delay_milliseconds( (uint32_t) 100 );
     }
 }

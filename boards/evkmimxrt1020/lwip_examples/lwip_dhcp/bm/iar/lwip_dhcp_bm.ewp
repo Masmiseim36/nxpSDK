@@ -183,6 +183,7 @@
           <state>DEBUG</state>
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>CPU_MIMXRT1021DAG5A</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -259,7 +260,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -318,23 +319,25 @@
           <state>$PROJ_DIR$/../../../../../../components/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
+          <state>$PROJ_DIR$/../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -354,7 +357,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>0</state>
+          <state>2</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -363,7 +366,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>0</state>
+          <state>2</state>
         </option>
         <option>
           <name>CompilerMisraRules98</name>
@@ -719,7 +722,6 @@
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=0x1000</state>
           <state>__heap_size__=0x1000</state>
-          <state>__ram_vector_table__=1</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -1173,6 +1175,7 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>CPU_MIMXRT1021DAG5A</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1249,7 +1252,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -1308,23 +1311,25 @@
           <state>$PROJ_DIR$/../../../../../../components/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
+          <state>$PROJ_DIR$/../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1709,7 +1714,6 @@
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=0x1000</state>
           <state>__heap_size__=0x1000</state>
-          <state>__ram_vector_table__=1</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -2163,6 +2167,7 @@
           <state>DEBUG</state>
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>CPU_MIMXRT1021DAG5A</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2239,7 +2244,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -2298,23 +2303,25 @@
           <state>$PROJ_DIR$/../../../../../../components/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
+          <state>$PROJ_DIR$/../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2699,7 +2706,6 @@
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=0x1000</state>
           <state>__heap_size__=0x1000</state>
-          <state>__ram_vector_table__=1</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -3151,6 +3157,7 @@
           <state>NDEBUG</state>
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>CPU_MIMXRT1021DAG5A</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3286,23 +3293,25 @@
           <state>$PROJ_DIR$/../../../../../../components/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
+          <state>$PROJ_DIR$/../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3687,7 +3696,6 @@
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=0x1000</state>
           <state>__heap_size__=0x1000</state>
-          <state>__ram_vector_table__=1</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -4141,6 +4149,7 @@
           <state>NDEBUG</state>
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>CPU_MIMXRT1021DAG5A</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4217,7 +4226,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -4276,23 +4285,25 @@
           <state>$PROJ_DIR$/../../../../../../components/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
+          <state>$PROJ_DIR$/../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4677,7 +4688,6 @@
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=0x1000</state>
           <state>__heap_size__=0x1000</state>
-          <state>__ram_vector_table__=1</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -5131,6 +5141,7 @@
           <state>SKIP_SYSCLK_INIT</state>
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>CPU_MIMXRT1021DAG5A</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5207,7 +5218,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -5266,23 +5277,25 @@
           <state>$PROJ_DIR$/../../../../../../components/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
+          <state>$PROJ_DIR$/../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5667,7 +5680,6 @@
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=0x1000</state>
           <state>__heap_size__=0x1000</state>
-          <state>__ram_vector_table__=1</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -5994,12 +6006,6 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_clock.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_enet.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_enet.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_common.c</name>
     </file>
     <file>
@@ -6020,23 +6026,17 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_gpio.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_enet.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_enet.h</name>
+    </file>
   </group>
   <group>
     <name>lwip</name>
     <group>
       <name>port</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif_priv.h</name>
-      </file>
       <group>
         <name>arch</name>
         <file>
@@ -6051,6 +6051,18 @@
       </group>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif_priv.h</name>
       </file>
     </group>
     <group>
@@ -6837,19 +6849,13 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm7.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_const_structs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_math.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
@@ -6864,6 +6870,9 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv81mml.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mbl.h</name>
     </file>
     <file>
@@ -6874,6 +6883,15 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_const_structs.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_math.h</name>
     </file>
   </group>
 </project>

@@ -24,7 +24,9 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-
+static const codec_capability_t s_cs42888_capability = {
+    .codecPlayCapability = HAL_CS42888_PLAY_CAPABILITY,
+};
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -38,15 +40,14 @@
 status_t HAL_CODEC_Init(codec_handle_t *handle, void *config)
 {
     assert((config != NULL) && (handle != NULL));
-    assert(CODEC_HANDLE_SIZE >= (sizeof(codec_handle_t) + sizeof(cs42888_handle_t)) + HAL_I2C_MASTER_HANDLE_SIZE);
 
     codec_config_t *codecConfig = (codec_config_t *)config;
 
     cs42888_config_t *cs42888Config = (cs42888_config_t *)(codecConfig->codecDevConfig);
-    cs42888_handle_t *cs42888Handle = (cs42888_handle_t *)((uint32_t) & (handle->codecDevHandle));
+    cs42888_handle_t *cs42888Handle = (cs42888_handle_t *)((uint32_t)(handle->codecDevHandle));
 
     /* load codec capability */
-    handle->codecCapability.codecPlayCapability = HAL_CS42888_PLAY_CAPABILITY;
+    handle->codecCapability = &s_cs42888_capability;
     /* codec device initialization */
     return CS42888_Init(cs42888Handle, cs42888Config);
 }
@@ -61,7 +62,7 @@ status_t HAL_CODEC_Deinit(codec_handle_t *handle)
 {
     assert(handle != NULL);
 
-    return CS42888_Deinit((cs42888_handle_t *)((uint32_t) & (handle->codecDevHandle)));
+    return CS42888_Deinit((cs42888_handle_t *)((uint32_t)(handle->codecDevHandle)));
 }
 
 /*!
@@ -77,7 +78,7 @@ status_t HAL_CODEC_SetFormat(codec_handle_t *handle, uint32_t mclk, uint32_t sam
 {
     assert(handle != NULL);
 
-    return CS42888_ConfigDataFormat((cs42888_handle_t *)((uint32_t) & (handle->codecDevHandle)), mclk, sampleRate,
+    return CS42888_ConfigDataFormat((cs42888_handle_t *)((uint32_t)(handle->codecDevHandle)), mclk, sampleRate,
                                     bitWidth);
 }
 
@@ -102,7 +103,7 @@ status_t HAL_CODEC_SetVolume(codec_handle_t *handle, uint32_t playChannel, uint3
             continue;
         }
 
-        ret = CS42888_SetAOUTVolume((cs42888_handle_t *)((uint32_t) & (handle->codecDevHandle)), i + 1U, volume);
+        ret = CS42888_SetAOUTVolume((cs42888_handle_t *)((uint32_t)(handle->codecDevHandle)), i + 1U, volume);
         if (ret != kStatus_Success)
         {
             return ret;
@@ -133,7 +134,7 @@ status_t HAL_CODEC_SetMute(codec_handle_t *handle, uint32_t playChannel, bool is
             continue;
         }
 
-        ret = CS42888_SetChannelMute((cs42888_handle_t *)((uint32_t) & (handle->codecDevHandle)), i + 1U, isMute);
+        ret = CS42888_SetChannelMute((cs42888_handle_t *)((uint32_t)(handle->codecDevHandle)), i + 1U, isMute);
         if (ret != kStatus_Success)
         {
             return ret;

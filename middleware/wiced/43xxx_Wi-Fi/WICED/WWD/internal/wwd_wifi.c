@@ -5660,7 +5660,7 @@ wwd_result_t wwd_xtlv_get_set_data( wiced_bool_t set, uint16_t cmd_id, void* dat
 {
     bcm_iov_batch_buf_t* xtlv_iov_buf;
     uint8_t* piov_buffer;
-    bcm_iov_batch_subcmd_t* sub_cmd, *resp_cmd;
+    bcm_iov_batch_subcmd_t* sub_cmd, *resp_cmd = NULL;
     wiced_buffer_t buffer = NULL;
     wiced_buffer_t response;
 

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016 - 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -236,5 +236,12 @@
  *        - if greater than 0, host printer class driver is enable.
  */
 #define USB_HOST_CONFIG_PRINTER (1U)
+
+/*!
+ * @brief host charger detect enable or disable. It is only supported on RT600 currently.
+ *        - if 0, host charger detect is disable.
+ *        - if greater than 0, host charger detect is enable.
+ */
+#define USB_HOST_CONFIG_BATTERY_CHARGER (0U)
 
 #endif /* _USB_HOST_CONFIG_H_ */

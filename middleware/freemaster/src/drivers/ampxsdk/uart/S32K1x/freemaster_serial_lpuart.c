@@ -56,6 +56,7 @@ static FMSTR_BOOL _FMSTR_SerialLpuartInit(void);
 static void _FMSTR_SerialLpuartEnableTransmit(FMSTR_BOOL enable);
 static void _FMSTR_SerialLpuartEnableReceive(FMSTR_BOOL enable);
 static void _FMSTR_SerialLpuartEnableTransmitInterrupt(FMSTR_BOOL enable);
+static void _FMSTR_SerialLpuartEnableTransmitCompleteInterrupt(FMSTR_BOOL enable);
 static void _FMSTR_SerialLpuartEnableReceiveInterrupt(FMSTR_BOOL enable);
 static FMSTR_BOOL _FMSTR_SerialLpuartIsTransmitRegEmpty(void);
 static FMSTR_BOOL _FMSTR_SerialLpuartIsReceiveRegFull(void);
@@ -70,17 +71,18 @@ static void _FMSTR_SerialLpuartFlush(void);
 /* Interface of this serial UART driver */
 const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_S32K1x_LPUART =
 {
-    .Init                       = _FMSTR_SerialLpuartInit,
-    .EnableTransmit             = _FMSTR_SerialLpuartEnableTransmit,
-    .EnableReceive              = _FMSTR_SerialLpuartEnableReceive,
-    .EnableTransmitInterrupt    = _FMSTR_SerialLpuartEnableTransmitInterrupt,
-    .EnableReceiveInterrupt     = _FMSTR_SerialLpuartEnableReceiveInterrupt,
-    .IsTransmitRegEmpty         = _FMSTR_SerialLpuartIsTransmitRegEmpty,
-    .IsReceiveRegFull           = _FMSTR_SerialLpuartIsReceiveRegFull,
-    .IsTransmitterActive        = _FMSTR_SerialLpuartIsTransmitterActive,
-    .PutChar                    = _FMSTR_SerialLpuartPutChar,
-    .GetChar                    = _FMSTR_SerialLpuartGetChar,
-    .Flush                      = _FMSTR_SerialLpuartFlush,
+    .Init                           = _FMSTR_SerialLpuartInit,
+    .EnableTransmit                 = _FMSTR_SerialLpuartEnableTransmit,
+    .EnableReceive                  = _FMSTR_SerialLpuartEnableReceive,
+    .EnableTransmitInterrupt        = _FMSTR_SerialLpuartEnableTransmitInterrupt,
+    .EnableTransmitCompleteInterrupt= _FMSTR_SerialLpuartEnableTransmitCompleteInterrupt,
+    .EnableReceiveInterrupt         = _FMSTR_SerialLpuartEnableReceiveInterrupt,
+    .IsTransmitRegEmpty             = _FMSTR_SerialLpuartIsTransmitRegEmpty,
+    .IsReceiveRegFull               = _FMSTR_SerialLpuartIsReceiveRegFull,
+    .IsTransmitterActive            = _FMSTR_SerialLpuartIsTransmitterActive,
+    .PutChar                        = _FMSTR_SerialLpuartPutChar,
+    .GetChar                        = _FMSTR_SerialLpuartGetChar,
+    .Flush                          = _FMSTR_SerialLpuartFlush,
 
 };
 
@@ -129,9 +131,20 @@ static void _FMSTR_SerialLpuartEnableReceive(FMSTR_BOOL enable)
 static void _FMSTR_SerialLpuartEnableTransmitInterrupt(FMSTR_BOOL enable)
 {
     if(enable)
-    	LPUART_SetIntMode(fmstr_serialBaseAddr, LPUART_INT_TX_DATA_REG_EMPTY, 1);
+        LPUART_SetIntMode(fmstr_serialBaseAddr, LPUART_INT_TX_DATA_REG_EMPTY, 1);
     else
-    	LPUART_SetIntMode(fmstr_serialBaseAddr, LPUART_INT_TX_DATA_REG_EMPTY, 0);
+        LPUART_SetIntMode(fmstr_serialBaseAddr, LPUART_INT_TX_DATA_REG_EMPTY, 0);
+}
+
+/**************************************************************************//*!
+*
+* @brief    Enable/Disable interrupt from transmit complete event
+*
+******************************************************************************/
+
+static void _FMSTR_SerialLpuartEnableTransmitCompleteInterrupt(FMSTR_BOOL enable)
+{
+    #warning Needs to be implemented Enable for transmit complete event.
 }
 
 /**************************************************************************//*!

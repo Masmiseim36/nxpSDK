@@ -94,37 +94,32 @@ instance:
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 const lpi2c_master_config_t ACCEL_I2C_masterConfig = {
-  .enableMaster = true,
-  .enableDoze = true,
-  .debugEnable = false,
-  .ignoreAck = false,
-  .pinConfig = kLPI2C_2PinOpenDrain,
-  .baudRate_Hz = 100000,
-  .busIdleTimeout_ns = 0,
-  .pinLowTimeout_ns = 0,
-  .sdaGlitchFilterWidth_ns = 0,
-  .sclGlitchFilterWidth_ns = 0,
-  .hostRequest = {
-    .enable = false,
-    .source = kLPI2C_HostRequestExternalPin,
-    .polarity = kLPI2C_HostRequestPinActiveHigh
-  }
-};
-lpi2c_master_transfer_t ACCEL_I2C_masterTransfer = {
-  .flags = kLPI2C_TransferDefaultFlag,
-  .slaveAddress = 0,
-  .direction = kLPI2C_Write,
-  .subaddress = 0,
-  .subaddressSize = 1,
-  .data = ACCEL_I2C_masterBuffer,
-  .dataSize = 1
-};
+    .enableMaster            = true,
+    .enableDoze              = true,
+    .debugEnable             = false,
+    .ignoreAck               = false,
+    .pinConfig               = kLPI2C_2PinOpenDrain,
+    .baudRate_Hz             = 100000,
+    .busIdleTimeout_ns       = 0,
+    .pinLowTimeout_ns        = 0,
+    .sdaGlitchFilterWidth_ns = 0,
+    .sclGlitchFilterWidth_ns = 0,
+    .hostRequest             = {
+        .enable = false, .source = kLPI2C_HostRequestExternalPin, .polarity = kLPI2C_HostRequestPinActiveHigh}};
+lpi2c_master_transfer_t ACCEL_I2C_masterTransfer = {.flags          = kLPI2C_TransferDefaultFlag,
+                                                    .slaveAddress   = 0,
+                                                    .direction      = kLPI2C_Write,
+                                                    .subaddress     = 0,
+                                                    .subaddressSize = 1,
+                                                    .data           = ACCEL_I2C_masterBuffer,
+                                                    .dataSize       = 1};
 lpi2c_master_handle_t ACCEL_I2C_masterHandle;
 uint8_t ACCEL_I2C_masterBuffer[ACCEL_I2C_MASTER_BUFFER_SIZE];
 
-void ACCEL_I2C_init(void) {
-  LPI2C_MasterInit(ACCEL_I2C_PERIPHERAL, &ACCEL_I2C_masterConfig, ACCEL_I2C_CLOCK_FREQ);
-  LPI2C_MasterTransferCreateHandle(ACCEL_I2C_PERIPHERAL, &ACCEL_I2C_masterHandle, NULL, NULL);
+void ACCEL_I2C_init(void)
+{
+    LPI2C_MasterInit(ACCEL_I2C_PERIPHERAL, &ACCEL_I2C_masterConfig, ACCEL_I2C_CLOCK_FREQ);
+    LPI2C_MasterTransferCreateHandle(ACCEL_I2C_PERIPHERAL, &ACCEL_I2C_masterHandle, NULL, NULL);
 }
 
 /***********************************************************************************************************************
@@ -171,27 +166,27 @@ instance:
         - handler_custom_name: 'TIMER_IRQ_HANDLER'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
-const qtmr_config_t TIMER_Channel_0_config = {
-  .primarySource = kQTMR_ClockDivide_128,
-  .secondarySource = kQTMR_Counter0InputPin,
-  .enableMasterMode = false,
-  .enableExternalForce = false,
-  .faultFilterCount = 0,
-  .faultFilterPeriod = 0,
-  .debugMode = kQTMR_RunNormalInDebug
-};
+const qtmr_config_t TIMER_Channel_0_config = {.primarySource       = kQTMR_ClockDivide_128,
+                                              .secondarySource     = kQTMR_Counter0InputPin,
+                                              .enableMasterMode    = false,
+                                              .enableExternalForce = false,
+                                              .faultFilterCount    = 0,
+                                              .faultFilterPeriod   = 0,
+                                              .debugMode           = kQTMR_RunNormalInDebug};
 
-void TIMER_init(void) {
-  /* Quad timer channel Channel_0 peripheral initialization */
-  QTMR_Init(TIMER_PERIPHERAL, TIMER_CHANNEL_0_CHANNEL, &TIMER_Channel_0_config);
-  /* Setup the PWM mode of the timer channel */
-  QTMR_SetupPwm(TIMER_PERIPHERAL, TIMER_CHANNEL_0_CHANNEL, 50956UL, 50U, false, TIMER_CHANNEL_0_CLOCK_SOURCE);
-  /* Enable interrupt requests of the timer channel */
-  QTMR_EnableInterrupts(TIMER_PERIPHERAL, TIMER_CHANNEL_0_CHANNEL, kQTMR_Compare1InterruptEnable | kQTMR_Compare2InterruptEnable);
-  /* Enable interrupt TMR3_IRQn request in the NVIC */
-  EnableIRQ(TIMER_IRQN);
-  /* Start the timer - select the timer counting mode */
-  QTMR_StartTimer(TIMER_PERIPHERAL, TIMER_CHANNEL_0_CHANNEL, kQTMR_PriSrcRiseEdge);
+void TIMER_init(void)
+{
+    /* Quad timer channel Channel_0 peripheral initialization */
+    QTMR_Init(TIMER_PERIPHERAL, TIMER_CHANNEL_0_CHANNEL, &TIMER_Channel_0_config);
+    /* Setup the PWM mode of the timer channel */
+    QTMR_SetupPwm(TIMER_PERIPHERAL, TIMER_CHANNEL_0_CHANNEL, 50956UL, 50U, false, TIMER_CHANNEL_0_CLOCK_SOURCE);
+    /* Enable interrupt requests of the timer channel */
+    QTMR_EnableInterrupts(TIMER_PERIPHERAL, TIMER_CHANNEL_0_CHANNEL,
+                          kQTMR_Compare1InterruptEnable | kQTMR_Compare2InterruptEnable);
+    /* Enable interrupt TMR3_IRQn request in the NVIC */
+    EnableIRQ(TIMER_IRQN);
+    /* Start the timer - select the timer counting mode */
+    QTMR_StartTimer(TIMER_PERIPHERAL, TIMER_CHANNEL_0_CHANNEL, kQTMR_PriSrcRiseEdge);
 }
 
 /***********************************************************************************************************************
@@ -199,9 +194,9 @@ void TIMER_init(void) {
  **********************************************************************************************************************/
 void BOARD_InitPeripherals(void)
 {
-  /* Initialize components */
-  ACCEL_I2C_init();
-  TIMER_init();
+    /* Initialize components */
+    ACCEL_I2C_init();
+    TIMER_init();
 }
 
 /***********************************************************************************************************************
@@ -209,5 +204,5 @@ void BOARD_InitPeripherals(void)
  **********************************************************************************************************************/
 void BOARD_InitBootPeripherals(void)
 {
-  BOARD_InitPeripherals();
+    BOARD_InitPeripherals();
 }

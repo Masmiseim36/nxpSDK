@@ -190,9 +190,11 @@ template <>
 struct lgamma_impl<float> {
   EIGEN_DEVICE_FUNC
   static EIGEN_STRONG_INLINE float run(float x) {
-#if !defined(EIGEN_CUDA_ARCH) && (defined(_BSD_SOURCE) || defined(_SVID_SOURCE)) && !defined(__APPLE__)
+#if !defined(EIGEN_GPU_COMPILE_PHASE) && (defined(_BSD_SOURCE) || defined(_SVID_SOURCE)) && !defined(__APPLE__) 
     int dummy;
     return ::lgammaf_r(x, &dummy);
+#elif defined(EIGEN_USE_SYCL) && defined(__SYCL_DEVICE_ONLY__)
+    return cl::sycl::lgamma(x);
 #else
     return ::lgammaf(x);
 #endif
@@ -203,9 +205,11 @@ template <>
 struct lgamma_impl<double> {
   EIGEN_DEVICE_FUNC
   static EIGEN_STRONG_INLINE double run(double x) {
-#if !defined(EIGEN_CUDA_ARCH) && (defined(_BSD_SOURCE) || defined(_SVID_SOURCE)) && !defined(__APPLE__)
+#if !defined(EIGEN_GPU_COMPILE_PHASE) && (defined(_BSD_SOURCE) || defined(_SVID_SOURCE)) && !defined(__APPLE__) 
     int dummy;
     return ::lgamma_r(x, &dummy);
+#elif defined(EIGEN_USE_SYCL) && defined(__SYCL_DEVICE_ONLY__)
+    return cl::sycl::lgamma(x);
 #else
     return ::lgamma(x);
 #endif
@@ -423,13 +427,25 @@ struct erf_retval {
 template <>
 struct erf_impl<float> {
   EIGEN_DEVICE_FUNC
-  static EIGEN_STRONG_INLINE float run(float x) { return ::erff(x); }
+  static EIGEN_STRONG_INLINE float run(float x) {
+#if defined(EIGEN_USE_SYCL) && defined(__SYCL_DEVICE_ONLY__)
+    return cl::sycl::erf(x);
+#else
+    return ::erff(x);
+#endif
+  }
 };
 
 template <>
 struct erf_impl<double> {
   EIGEN_DEVICE_FUNC
-  static EIGEN_STRONG_INLINE double run(double x) { return ::erf(x); }
+  static EIGEN_STRONG_INLINE double run(double x) {
+#if defined(EIGEN_USE_SYCL) && defined(__SYCL_DEVICE_ONLY__)
+    return cl::sycl::erf(x);
+#else
+    return ::erf(x);
+#endif
+  }
 };
 #endif  // EIGEN_HAS_C99_MATH
 
@@ -456,13 +472,25 @@ struct erfc_retval {
 template <>
 struct erfc_impl<float> {
   EIGEN_DEVICE_FUNC
-  static EIGEN_STRONG_INLINE float run(const float x) { return ::erfcf(x); }
+  static EIGEN_STRONG_INLINE float run(const float x) {
+#if defined(EIGEN_USE_SYCL) && defined(__SYCL_DEVICE_ONLY__)
+    return cl::sycl::erfc(x);
+#else
+    return ::erfcf(x);
+#endif
+  }
 };
 
 template <>
 struct erfc_impl<double> {
   EIGEN_DEVICE_FUNC
-  static EIGEN_STRONG_INLINE double run(const double x) { return ::erfc(x); }
+  static EIGEN_STRONG_INLINE double run(const double x) {
+#if defined(EIGEN_USE_SYCL) && defined(__SYCL_DEVICE_ONLY__)
+    return cl::sycl::erfc(x);
+#else
+    return ::erfc(x);
+#endif
+  }
 };
 #endif  // EIGEN_HAS_C99_MATH
 
@@ -646,6 +674,7 @@ struct igammac_cf_impl {
       case DERIVATIVE:
         return ans * dax_da + dans_da * ax;
       case SAMPLE_DERIVATIVE:
+      default: // this is needed to suppress clang warning
         return -(dans_da + ans * dlogax_da) * x;
     }
   }
@@ -707,6 +736,7 @@ struct igamma_series_impl {
       case DERIVATIVE:
         return ans * dax_da + dans_da * ax;
       case SAMPLE_DERIVATIVE:
+      default: // this is needed to suppress clang warning
         return -(dans_da + ans * dlogax_da) * x / a;
     }
   }

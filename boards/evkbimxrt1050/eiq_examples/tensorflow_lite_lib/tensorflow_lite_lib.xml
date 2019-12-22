@@ -8,8 +8,9 @@
     <definition extID="middleware.eiq.tensorflow_lite.third_party.fft2d.MIMXRT1052"/>
     <definition extID="middleware.eiq.tensorflow_lite.third_party.flatbuffers.MIMXRT1052"/>
     <definition extID="middleware.eiq.tensorflow_lite.third_party.gemmlowp.MIMXRT1052"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1052"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_tensorflow_lite_lib" name="tensorflow_lite_lib" category="eiq_examples" dependency="middleware.eiq.tensorflow_lite.MIMXRT1052 middleware.eiq.tensorflow_lite.third_party.eigen.MIMXRT1052 middleware.eiq.tensorflow_lite.third_party.farmhash.MIMXRT1052 middleware.eiq.tensorflow_lite.third_party.fft2d.MIMXRT1052 middleware.eiq.tensorflow_lite.third_party.flatbuffers.MIMXRT1052 middleware.eiq.tensorflow_lite.third_party.gemmlowp.MIMXRT1052">
+  <example id="evkbimxrt1050_tensorflow_lite_lib" name="tensorflow_lite_lib" category="eiq_examples" dependency="middleware.eiq.tensorflow_lite.MIMXRT1052 middleware.eiq.tensorflow_lite.third_party.eigen.MIMXRT1052 middleware.eiq.tensorflow_lite.third_party.farmhash.MIMXRT1052 middleware.eiq.tensorflow_lite.third_party.fft2d.MIMXRT1052 middleware.eiq.tensorflow_lite.third_party.flatbuffers.MIMXRT1052 middleware.eiq.tensorflow_lite.third_party.gemmlowp.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052">
     <projects>
       <project type="com.crt.advproject.projecttype.lib" nature="org.eclipse.cdt.core.ccnature"/>
     </projects>
@@ -54,7 +55,7 @@
           <value>TFLITE_MCU</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-c  -fno-common  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+          <value>-Wno-unused-but-set-variable  -c  -fno-common  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
         </option>
         <option id="com.crt.advproject.cpp.fpu" type="enum">
           <value>com.crt.advproject.cpp.fpu.fpv5dp.hard</value>
@@ -76,12 +77,13 @@
           <value>-fno-common</value>
         </option>
         <option id="gnu.cpp.compiler.option.other.other" type="string">
-          <value>-fpermissive  -Wno-comment  -Wno-format  -Wno-parentheses  -Wno-sign-compare  -Wno-switch  -Wno-unused-local-typedefs  -Wno-unused-variable  -c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin  -fno-rtti  -fno-exceptions</value>
+          <value>-fpermissive  -Wno-comment  -Wno-format  -Wno-parentheses  -Wno-sign-compare  -Wno-switch  -Wno-unused-local-typedefs  -Wno-unused-variable  -Wno-unused-but-set-variable  -c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin  -fno-rtti  -fno-exceptions</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>
     <include_paths>
       <include_path path="tensorflow-lite"/>
+      <include_path path="tensorflow-lite/third_party/eigen"/>
       <include_path path="tensorflow-lite/third_party/farmhash"/>
       <include_path path="tensorflow-lite/third_party/flatbuffers"/>
       <include_path path="tensorflow-lite/third_party/flatbuffers/include"/>

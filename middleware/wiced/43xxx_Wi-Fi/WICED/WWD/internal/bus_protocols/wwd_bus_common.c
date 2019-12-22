@@ -397,6 +397,13 @@ static wwd_result_t download_resource( wwd_resource_t resource, uint32_t address
 
         host_platform_resource_read_indirect( resource, transfer_progress, packet + sizeof(wwd_buffer_header_t), buffer_size, &segment_size );
 
+        #ifdef WLAN_ARM_CR4
+            if ( ( resource == WWD_RESOURCE_WLAN_FIRMWARE ) && ( reset_instr == 0 ) )
+            {
+                reset_instr = *((uint32_t*)(packet + sizeof(wwd_buffer_header_t)));
+            }
+        #endif /* WLAN_ARM_CR4 */
+
         for ( ; segment_size != 0; segment_size -= transfer_size, packet += transfer_size, transfer_progress += transfer_size, address += transfer_size )
         {
             if ( resource_download_abort == WICED_TRUE )

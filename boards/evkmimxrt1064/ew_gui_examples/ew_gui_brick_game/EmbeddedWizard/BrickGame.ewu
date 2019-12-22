@@ -1,0 +1,1531 @@
+$version 6.60
+
+$rect <490,50,690,90>
+$output false
+resource Resources::Font DescrFont
+{
+  attr fontname FontName = Consolas;
+  attr fontheight Height = 16;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0xFF;
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+$rect <490,130,690,170>
+$output false
+resource Resources::Bitmap Bricks
+{
+  attr bitmapfile FileName = .\Res\Bricks.png;
+  attr alphafile AlphaName;
+  attr framesize FrameSize = <60,24>;
+  attr framedelay FrameDelay;
+}
+
+// Resources
+note group Note5
+{
+  attr Bounds = <470,10,710,350>;
+}
+
+// This is a class.
+$rect <40,130,240,170>
+$output false
+class BrickRow : Core::Group
+{
+  $rect <0,60,200,100>
+  inherited property Bounds = <0,0,480,24>;
+
+  // The method 'CheckCollision' checks for collisions of the given ball with a brick \
+  // of the row. In case of a collision, the direction of the ball will change, the \
+  // brick becomes invisble and the score is counted. The method returns the number \
+  // of remaining active bricks.
+  $rect <420,110,620,150>
+  method int32 CheckCollision( arg BrickGame::BallPosition aBall )
+  {
+    /* first check if the ball is touching the current row - otherwise nothing to do */
+    var rect overlapp = aBall.Bounds && Bounds;
+    if ( overlapp.isempty )
+      return noOfBricks;
+
+    /* iterate through all vies (bricks) */
+    var Core::View view = first;
+    while ( view != null )
+    {
+      var Views::Image image = (Views::Image)view;
+      if ( image != null && image.Visible )
+      {
+        var rect bounds = image.Bounds + Bounds.origin;
+         
+        /* build the intersection of the ball position and the brick position */
+        overlapp = aBall.Bounds && bounds;
+      
+        if ( !overlapp.isempty )
+        {
+          /* check for left / right side - otherwise top / bottom touched */
+          if ( overlapp.w < overlapp.h )
+          {
+            /* check if ball is already moving away */
+            if (( aBall.Bounds.x1 < bounds.x1 ) && ( aBall.SpeedX > 0.0 ))
+              aBall.SpeedX = -aBall.SpeedX;
+            if (( aBall.Bounds.x2 > bounds.x2 ) && ( aBall.SpeedX < 0.0 ))
+              aBall.SpeedX = -aBall.SpeedX;
+          }
+          else
+          {
+            /* check if ball is already moving away */
+            if (( aBall.Bounds.y1 < bounds.y1 ) && ( aBall.SpeedY > 0.0 ))
+              aBall.SpeedY = -aBall.SpeedY;
+            if (( aBall.Bounds.y2 > bounds.y2 ) && ( aBall.SpeedY < 0.0 ))
+              aBall.SpeedY = -aBall.SpeedY;
+          }
+
+          /* check for a massive brick - which will never dissapear */
+          if ( image.FrameNumber == 9 )
+            return noOfBricks;
+
+          /* chcek for a concrete brick - which will be destroyed in steps */
+          if ( image.FrameNumber == 7 )
+            image.FrameNumber = image.FrameNumber - 1;
+          else if ( image.FrameNumber == 6 )
+            image.FrameNumber = image.FrameNumber - 1;
+          else
+          {
+            /* update score counter */
+            BrickGame::Data.Score = BrickGame::Data.Score + image.FrameNumber + 1;
+          
+            /* remove the brick */
+            image.Visible = false;
+            noOfBricks = noOfBricks - 1;
+          }
+
+          return noOfBricks;
+        }
+      }
+      view = view.next;
+    }
+
+    return noOfBricks;
+
+  }
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image Image1
+  {
+    preset Bounds = <0,0,60,24>;
+    preset AutoSize = true;
+    preset FrameNumber = 0;
+    preset Bitmap = BrickGame::Bricks;
+  }
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image Image2
+  {
+    preset Bounds = <60,0,120,24>;
+    preset AutoSize = true;
+    preset FrameNumber = 0;
+    preset Bitmap = BrickGame::Bricks;
+  }
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image Image3
+  {
+    preset Bounds = <120,0,180,24>;
+    preset AutoSize = true;
+    preset FrameNumber = 0;
+    preset Bitmap = BrickGame::Bricks;
+  }
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image Image4
+  {
+    preset Bounds = <180,0,240,24>;
+    preset AutoSize = true;
+    preset FrameNumber = 0;
+    preset Bitmap = BrickGame::Bricks;
+  }
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image Image5
+  {
+    preset Bounds = <240,0,300,24>;
+    preset AutoSize = true;
+    preset FrameNumber = 0;
+    preset Bitmap = BrickGame::Bricks;
+  }
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image Image6
+  {
+    preset Bounds = <300,0,360,24>;
+    preset AutoSize = true;
+    preset FrameNumber = 0;
+    preset Bitmap = BrickGame::Bricks;
+  }
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image Image7
+  {
+    preset Bounds = <360,0,420,24>;
+    preset AutoSize = true;
+    preset FrameNumber = 0;
+    preset Bitmap = BrickGame::Bricks;
+  }
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image Image8
+  {
+    preset Bounds = <420,0,480,24>;
+    preset AutoSize = true;
+    preset FrameNumber = 0;
+    preset Bitmap = BrickGame::Bricks;
+  }
+
+  // The method 'PrepareBricks' initializes all bricks of the row. The given parameter \
+  // 'aType' determines the style of the bricks.
+  $rect <420,60,620,100>
+  method void PrepareBricks( arg BrickGame::RowType aType )
+  {
+    /* make a default initialization */
+    var bool visible = ( aType !=  BrickGame::RowType.Hidden );
+
+    Image1.Visible = visible;
+    Image2.Visible = visible;
+    Image3.Visible = visible;
+    Image4.Visible = visible;
+    Image5.Visible = visible;
+    Image6.Visible = visible;
+    Image7.Visible = visible;
+    Image8.Visible = visible;
+
+    /* select the bricks accordign given type */
+    switch ( aType )
+    {
+      case BrickGame::RowType.Gray:
+      {
+        Image1.FrameNumber = 0;
+        Image2.FrameNumber = 0;
+        Image3.FrameNumber = 0;
+        Image4.FrameNumber = 0;
+        Image5.FrameNumber = 0;
+        Image6.FrameNumber = 0;
+        Image7.FrameNumber = 0;
+        Image8.FrameNumber = 0;
+        noOfBricks = 8;
+      }
+
+      case BrickGame::RowType.Blue:
+      {
+        Image1.FrameNumber = 1;
+        Image2.FrameNumber = 1;
+        Image3.FrameNumber = 1;
+        Image4.FrameNumber = 1;
+        Image5.FrameNumber = 1;
+        Image6.FrameNumber = 1;
+        Image7.FrameNumber = 1;
+        Image8.FrameNumber = 1;
+        noOfBricks = 8;
+      }
+
+      case BrickGame::RowType.Green:
+      {
+        Image1.FrameNumber = 2;
+        Image2.FrameNumber = 2;
+        Image3.FrameNumber = 2;
+        Image4.FrameNumber = 2;
+        Image5.FrameNumber = 2;
+        Image6.FrameNumber = 2;
+        Image7.FrameNumber = 2;
+        Image8.FrameNumber = 2;
+        noOfBricks = 8;
+      }
+
+      case BrickGame::RowType.Yellow:
+      {
+        Image1.FrameNumber = 3;
+        Image2.FrameNumber = 3;
+        Image3.FrameNumber = 3;
+        Image4.FrameNumber = 3;
+        Image5.FrameNumber = 3;
+        Image6.FrameNumber = 3;
+        Image7.FrameNumber = 3;
+        Image8.FrameNumber = 3;
+        noOfBricks = 8;
+      }
+
+      case BrickGame::RowType.White:
+      {
+        Image1.FrameNumber = 4;
+        Image2.FrameNumber = 4;
+        Image3.FrameNumber = 4;
+        Image4.FrameNumber = 4;
+        Image5.FrameNumber = 4;
+        Image6.FrameNumber = 4;
+        Image7.FrameNumber = 4;
+        Image8.FrameNumber = 4;
+        noOfBricks = 8;
+      }
+
+      case BrickGame::RowType.Concrete:
+      {
+        Image1.FrameNumber = 7;
+        Image2.FrameNumber = 7;
+        Image3.FrameNumber = 7;
+        Image4.FrameNumber = 7;
+        Image5.FrameNumber = 7;
+        Image6.FrameNumber = 7;
+        Image7.FrameNumber = 7;
+        Image8.FrameNumber = 7;
+        noOfBricks = 8;
+      }
+
+      case BrickGame::RowType.EmWi:
+      {
+        Image1.FrameNumber = 8;
+        Image2.FrameNumber = 0;
+        Image3.FrameNumber = 8;
+        Image4.FrameNumber = 0;
+        Image5.FrameNumber = 0;
+        Image6.FrameNumber = 8;
+        Image7.FrameNumber = 0;
+        Image8.FrameNumber = 8;
+        noOfBricks = 8;
+      }
+
+      case BrickGame::RowType.TwoBlocks:
+      {
+        Image1.FrameNumber = 0;
+        Image2.FrameNumber = 9;
+        Image3.FrameNumber = 0;
+        Image4.FrameNumber = 0;
+        Image5.FrameNumber = 0;
+        Image6.FrameNumber = 0;
+        Image7.FrameNumber = 9;
+        Image8.FrameNumber = 0;
+        noOfBricks = 6;
+      }
+
+      case BrickGame::RowType.TwoDoors:
+      {
+        Image1.FrameNumber = 9;
+        Image2.FrameNumber = 0;
+        Image3.FrameNumber = 0;
+        Image4.FrameNumber = 9;
+        Image5.FrameNumber = 9;
+        Image6.FrameNumber = 0;
+        Image7.FrameNumber = 0;
+        Image8.FrameNumber = 9;
+        noOfBricks = 4;
+      }
+
+      case BrickGame::RowType.BlueGreen:
+      {
+        Image1.FrameNumber = 2;
+        Image2.FrameNumber = 1;
+        Image3.FrameNumber = 2;
+        Image4.FrameNumber = 1;
+        Image5.FrameNumber = 2;
+        Image6.FrameNumber = 1;
+        Image7.FrameNumber = 2;
+        Image8.FrameNumber = 1;
+        noOfBricks = 8;
+      }
+
+      case BrickGame::RowType.WhiteEmWi:
+      {
+        Image1.FrameNumber = 4;
+        Image2.FrameNumber = 8;
+        Image3.FrameNumber = 4;
+        Image4.FrameNumber = 8;
+        Image5.FrameNumber = 8;
+        Image6.FrameNumber = 4;
+        Image7.FrameNumber = 8;
+        Image8.FrameNumber = 4;
+        noOfBricks = 8;
+      }
+
+      case BrickGame::RowType.GreenBlue:
+      {
+        Image1.FrameNumber = 1;
+        Image2.FrameNumber = 2;
+        Image3.FrameNumber = 1;
+        Image4.FrameNumber = 2;
+        Image5.FrameNumber = 1;
+        Image6.FrameNumber = 2;
+        Image7.FrameNumber = 1;
+        Image8.FrameNumber = 2;
+        noOfBricks = 8;
+      }
+
+      case BrickGame::RowType.OneDoor:
+      {
+        Image1.FrameNumber = 9;
+        Image2.FrameNumber = 9;
+        Image3.FrameNumber = 9;
+        Image4.FrameNumber = 7;
+        Image5.FrameNumber = 7;
+        Image6.FrameNumber = 9;
+        Image7.FrameNumber = 9;
+        Image8.FrameNumber = 9;
+        noOfBricks = 2;
+      }
+
+      default:
+        noOfBricks = 0;
+    }
+  }
+
+  $rect <210,60,410,100>
+  var int32 noOfBricks = 8;
+
+  // The class 'BrickRow' is responsible to manage a single row of bricks within \
+  // the brick game.
+  // The method 'PrepareBricks' can be called to reload the row of bricks and to \
+  // initialize each brick according to the given type. The method 'CheckCollision' \
+  // is responsible to calculate the ball movement in case of any collision with \
+  // a brick, and to update all touched bricks. 
+  note legend Note
+  {
+    attr Bounds = <10,180,620,300>;
+  }
+}
+
+// This is a class.
+$rect <40,240,240,280>
+$output false
+class BallPosition
+{
+  // This is a property.
+  $rect <0,0,200,40>
+  property rect Bounds = <0,0,0,0>;
+
+  // This is a property.
+  $rect <0,40,200,80>
+  property float SpeedX = 0.0;
+
+  // This is a property.
+  $rect <0,80,200,120>
+  property float SpeedY = 0.0;
+}
+
+$rect <40,80,240,120>
+$output false
+class BrickGame : Core::Group
+{
+  $rect <510,20,710,60>
+  inherited property Bounds = <0,0,480,272>;
+
+  $rect <510,70,710,110>
+  inherited method UpdateViewState()
+  {
+    /* Always invoke the inherited method */
+    super( aState );
+
+    /* prepare first level */
+    postsignal PrepareLevel;
+
+    /* set the ball on top of the paddle */
+    Ball.Bounds.origin.x = Paddle.Bounds.center.x - Ball.Bounds.w/2;
+    Ball.Bounds.origin.y = Paddle.Bounds.y1 - Ball.Bounds.h;
+
+    /* and set up the movement of the ball */
+    BallPosition.SpeedX = 0.2;
+    BallPosition.SpeedY = -1.0;
+    AnimationTimer.Enabled = true;
+    lastTime = AnimationTimer.Time;
+
+    paddlePos = Paddle.Bounds.center.x;
+
+  }
+
+  // This is a slot method.
+  $rect <760,400,960,440>
+  slot onDragPaddle
+  {
+    /* deactivate auto demo if user want's to play... */
+    AutoDemoTimer.Enabled = false;
+
+    /* store the current touch position */
+    paddlePos = SimpleTouchHandler.CurrentPos.x;
+
+    /* limit it to the bounds area */
+    if ( paddlePos < 0 )
+      paddlePos = 0;
+    if ( paddlePos > Bounds.w )
+      paddlePos = Bounds.w;
+
+  }
+
+  // The slot method 'Animate' is timer driven and calculates the next position of \
+  // ball, paddle and background.
+  $rect <510,290,710,330>
+  slot Animate
+  {
+    var int32 deltaX;
+    var int32 deltaY;
+
+    /* get the time base for ball position calculation */
+    var uint32 deltaTime = AnimationTimer.Time - lastTime;
+    lastTime = AnimationTimer.Time;
+
+    if ( ballMove == true )
+    {
+      /* move the ball to the next position - if enabled */
+      deltaX = int32( math_round( (float)deltaTime * BallPosition.SpeedX * speedFactor ) );
+      deltaY = int32( math_round( (float)deltaTime * BallPosition.SpeedY * speedFactor ) );
+      Ball.Bounds.origin.x = Ball.Bounds.origin.x + deltaX;
+      Ball.Bounds.origin.y = Ball.Bounds.origin.y + deltaY;
+
+      BallPosition.Bounds = Ball.Bounds;
+      CheckCollision( BallPosition );
+    }
+    else
+    {
+      /* otherwise set the ball on top of the paddle */
+      Ball.Bounds.origin.x = Paddle.Bounds.center.x - Ball.Bounds.w / 2;
+      Ball.Bounds.origin.y = Paddle.Bounds.y1 - Ball.Bounds.h;
+      BallPosition.Bounds = Ball.Bounds;
+    }
+
+    /* move the paddle to the current position */
+    deltaX = ( Paddle.Bounds.center.x - paddlePos ) / 2;
+    Paddle.Bounds.origin.x = Paddle.Bounds.origin.x - deltaX;
+
+    $if $AnimateBackground
+      /* move the background image if necessary */
+      var int32 offset = ( Background.Bounds.w - Background.Bitmap.FrameSize.x ) * Paddle.Bounds.center.x / Bounds.w;
+      deltaX = ( Background.ScrollOffset.x - offset ) / 4;
+      Background.ScrollOffset.x = Background.ScrollOffset.x - deltaX;
+
+      /* move the landscape image if necessary */
+      offset = ( Landscape.Bounds.w - Landscape.Bitmap.FrameSize.x ) * Paddle.Bounds.center.x / Bounds.w;
+      deltaX = ( Landscape.ScrollOffset.x - offset ) / 4;
+      Landscape.ScrollOffset.x = Landscape.ScrollOffset.x - deltaX;
+    $endif
+
+  }
+
+  // The slot method 'PrepareLevel' is used to initialize all brick rows according \
+  // the reached game level.
+  $rect <510,140,710,180>
+  slot PrepareLevel
+  {
+    /* the following code configures the singel row according the current game level */
+    switch ( Data.Level % 10 )
+    {
+      case 1:
+      {
+        BrickRow1.PrepareBricks( BrickGame::RowType.Gray );
+        BrickRow2.PrepareBricks( BrickGame::RowType.Hidden );
+        BrickRow3.PrepareBricks( BrickGame::RowType.Blue );
+        BrickRow4.PrepareBricks( BrickGame::RowType.Hidden );
+        BrickRow5.PrepareBricks( BrickGame::RowType.Gray );
+      }
+
+      case 2:
+      {
+        BrickRow1.PrepareBricks( BrickGame::RowType.Gray );
+        BrickRow2.PrepareBricks( BrickGame::RowType.Blue );
+        BrickRow3.PrepareBricks( BrickGame::RowType.Green );
+        BrickRow4.PrepareBricks( BrickGame::RowType.Yellow );
+        BrickRow5.PrepareBricks( BrickGame::RowType.White );
+      }
+
+      case 3:
+      {
+        BrickRow1.PrepareBricks( BrickGame::RowType.EmWi );
+        BrickRow2.PrepareBricks( BrickGame::RowType.Hidden );
+        BrickRow3.PrepareBricks( BrickGame::RowType.Concrete );
+        BrickRow4.PrepareBricks( BrickGame::RowType.Blue );
+        BrickRow5.PrepareBricks( BrickGame::RowType.Hidden );
+      }
+
+      case 4:
+      {
+        BrickRow1.PrepareBricks( BrickGame::RowType.EmWi );
+        BrickRow2.PrepareBricks( BrickGame::RowType.Hidden );
+        BrickRow3.PrepareBricks( BrickGame::RowType.Concrete );
+        BrickRow4.PrepareBricks( BrickGame::RowType.Blue );
+        BrickRow5.PrepareBricks( BrickGame::RowType.TwoBlocks );
+      }
+
+      case 5:
+      {
+        BrickRow1.PrepareBricks( BrickGame::RowType.Gray );
+        BrickRow2.PrepareBricks( BrickGame::RowType.Hidden );
+        BrickRow3.PrepareBricks( BrickGame::RowType.TwoDoors );
+        BrickRow4.PrepareBricks( BrickGame::RowType.Hidden );
+        BrickRow5.PrepareBricks( BrickGame::RowType.TwoDoors );
+      }
+
+      case 6:
+      {
+        BrickRow1.PrepareBricks( BrickGame::RowType.EmWi );
+        BrickRow2.PrepareBricks( BrickGame::RowType.TwoBlocks );
+        BrickRow3.PrepareBricks( BrickGame::RowType.Yellow );
+        BrickRow4.PrepareBricks( BrickGame::RowType.Hidden );
+        BrickRow5.PrepareBricks( BrickGame::RowType.TwoDoors );
+      }
+
+      case 7:
+      {
+        BrickRow1.PrepareBricks( BrickGame::RowType.Concrete );
+        BrickRow2.PrepareBricks( BrickGame::RowType.Concrete );
+        BrickRow3.PrepareBricks( BrickGame::RowType.Hidden );
+        BrickRow4.PrepareBricks( BrickGame::RowType.TwoBlocks );
+        BrickRow5.PrepareBricks( BrickGame::RowType.TwoDoors );
+      }
+
+      case 8:
+      {
+        BrickRow1.PrepareBricks( BrickGame::RowType.WhiteEmWi );
+        BrickRow2.PrepareBricks( BrickGame::RowType.EmWi );
+        BrickRow3.PrepareBricks( BrickGame::RowType.WhiteEmWi);
+        BrickRow4.PrepareBricks( BrickGame::RowType.Hidden );
+        BrickRow5.PrepareBricks( BrickGame::RowType.TwoDoors );
+      }
+
+      case 9:
+      {
+        BrickRow1.PrepareBricks( BrickGame::RowType.BlueGreen);
+        BrickRow2.PrepareBricks( BrickGame::RowType.GreenBlue );
+        BrickRow3.PrepareBricks( BrickGame::RowType.BlueGreen);
+        BrickRow4.PrepareBricks( BrickGame::RowType.GreenBlue );
+        BrickRow5.PrepareBricks( BrickGame::RowType.OneDoor );
+      }
+
+      default:
+      {
+        BrickRow1.PrepareBricks( BrickGame::RowType.EmWi);
+        BrickRow2.PrepareBricks( BrickGame::RowType.TwoDoors );
+        BrickRow3.PrepareBricks( BrickGame::RowType.WhiteEmWi);
+        BrickRow4.PrepareBricks( BrickGame::RowType.Gray );
+        BrickRow5.PrepareBricks( BrickGame::RowType.OneDoor );
+      }
+    }
+  }
+
+  // Timer object to perform the ball movement.
+  $rect <510,250,710,290>
+  object Core::Timer AnimationTimer
+  {
+    preset OnTrigger = Animate;
+    preset Period = 15;
+  }
+
+  // The time in milliseconds when the timer is expired for the last time.
+  $rect <220,400,420,440>
+  var uint32 lastTime;
+
+  // The factor for the pixel speed to real speed.
+  $rect <10,400,210,440>
+  var float speedFactor = 0.15;
+
+  // The method 'CheckCollision' is responsible to detect any ball collision with \
+  // borders, paddle or other elements.
+  $rect <510,180,710,220>
+  method void CheckCollision( arg BrickGame::BallPosition aBall )
+  {
+    var int32 noOfBricks = 0;
+
+    /* first check for collisions with any bricks */
+    noOfBricks = noOfBricks + BrickRow1.CheckCollision( aBall );
+    noOfBricks = noOfBricks + BrickRow2.CheckCollision( aBall );
+    noOfBricks = noOfBricks + BrickRow3.CheckCollision( aBall );
+    noOfBricks = noOfBricks + BrickRow4.CheckCollision( aBall );
+    noOfBricks = noOfBricks + BrickRow5.CheckCollision( aBall );
+
+    /* check if level is completed */
+    if ( noOfBricks == 0 )
+    {
+      /* add 50 bonus points */
+      Data.Score = Data.Score + 50;
+
+      /* next level */
+      Data.Level = Data.Level + 1;
+      postsignal PrepareLevel;
+
+      /* increase speed ;-) */
+      if ( Data.Level < 25 )
+        speedFactor = speedFactor + 0.005;
+    }
+
+    /* hit left/right border */
+    if ( ( aBall.Bounds.x1 <= 0 && aBall.SpeedX < 0.0 ) || ( aBall.Bounds.x2 >= Bounds.w && aBall.SpeedX > 0.0 ) )
+      aBall.SpeedX = -aBall.SpeedX;
+
+    /* hit top border */
+    if ( aBall.Bounds.y1 <= 0 && aBall.SpeedY < 0.0 )
+      aBall.SpeedY = -aBall.SpeedY;
+
+
+    /* hit the paddle */
+    if ( aBall.Bounds.y2 > Paddle.Bounds.y1 && aBall.Bounds.y2 < Paddle.Bounds.y2 && aBall.SpeedY > 0.0 )
+    {
+
+      /* left corner corner of the paddle */
+      if ( aBall.Bounds.x1 < Paddle.Bounds.x1 && aBall.Bounds.x2 > Paddle.Bounds.x1 )
+      {
+        var int32 dx = aBall.Bounds.x2 - Paddle.Bounds.x1;
+        var int32 dy = aBall.Bounds.y2 - Paddle.Bounds.y1;
+        if ( math_pow(dx,2.0) + math_pow(dy,2.0) < math_pow(aBall.Bounds.w,2.0) && dy < Paddle.Bounds.h/2 )
+        {
+          aBall.SpeedY = -aBall.SpeedY;
+          aBall.SpeedX = aBall.SpeedX + (float)( aBall.Bounds.center.x - Paddle.Bounds.center.x ) / (float)(Paddle.Bounds.w);
+        }
+      }
+      /* right corner corner of the paddle */
+      if ( aBall.Bounds.x2 > Paddle.Bounds.x2 && aBall.Bounds.x1 < Paddle.Bounds.x2 )
+      {
+        var int32 dx = Paddle.Bounds.x2 - aBall.Bounds.x1;
+        var int32 dy = aBall.Bounds.y2 - Paddle.Bounds.y1;
+        if ( math_pow(dx,2.0) + math_pow(dy,2.0) < math_pow(aBall.Bounds.w,2.0) && dy < Paddle.Bounds.h/2 )
+        {
+          aBall.SpeedY = -aBall.SpeedY;
+          aBall.SpeedX = aBall.SpeedX + (float)( aBall.Bounds.center.x - Paddle.Bounds.center.x ) / (float)(Paddle.Bounds.w);
+        }
+      }
+      /* center of paddle */
+      else if ( aBall.Bounds.x1 > Paddle.Bounds.x1 && aBall.Bounds.x2 < Paddle.Bounds.x2 )  
+      {
+        aBall.SpeedY = -aBall.SpeedY;
+        aBall.SpeedX = aBall.SpeedX + (float)( aBall.Bounds.center.x - Paddle.Bounds.center.x ) / (float)(Paddle.Bounds.w);
+      }
+    }
+
+    /* ball is out :-( */
+    if ( aBall.Bounds.y1 >= Bounds.y2 )
+    {
+      ballMove = false;
+      
+      /* increase the ball lost counter */
+      Data.Lost = Data.Lost + 1;
+
+      /* decrease 100 points */
+      Data.Score = Data.Score - 100;
+    }
+  }
+
+  // Object containing the current position and speed vector of the ball.
+  $rect <10,360,210,400>
+  object BrickGame::BallPosition BallPosition;
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Bounds = <0,228,480,272>;
+    preset Color = #000000FF;
+  }
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image Background
+  {
+    preset Bounds = <0,0,480,228>;
+    preset Alignment = Views::ImageAlignment[AlignHorzLeft, AlignVertCenter];
+    preset Bitmap = BrickGame::Stars;
+    preset Visible = true;
+  }
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image Landscape
+  {
+    preset Bounds = <0,192,480,228>;
+    preset Alignment = Views::ImageAlignment[AlignHorzLeft, AlignVertTop];
+    preset Bitmap = BrickGame::Landscape;
+    preset Visible = true;
+  }
+
+  $rect <20,20,160,60>
+  object BrickGame::BrickRow BrickRow1
+  {
+    preset Bounds = <0,40,480,64>;
+  }
+
+  $rect <20,20,160,60>
+  object BrickGame::BrickRow BrickRow2
+  {
+    preset Bounds = <0,64,480,88>;
+  }
+
+  $rect <20,20,160,60>
+  object BrickGame::BrickRow BrickRow3
+  {
+    preset Bounds = <0,88,480,112>;
+  }
+
+  $rect <20,20,160,60>
+  object BrickGame::BrickRow BrickRow4
+  {
+    preset Bounds = <0,112,480,136>;
+  }
+
+  $rect <20,20,160,60>
+  object BrickGame::BrickRow BrickRow5
+  {
+    preset Bounds = <0,136,480,160>;
+  }
+
+  // This is a generic touch handler.
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler SimpleTouchHandler
+  {
+    preset Point4 = <0,200>;
+    preset Point3 = <480,200>;
+    preset Point2 = <480,272>;
+    preset Point1 = <0,272>;
+    preset OnDrag = onDragPaddle;
+    preset OnRelease = onStartBall;
+    preset OnPress = onDragPaddle;
+  }
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image Ball
+  {
+    preset Bounds = <120,220,144,244>;
+    preset Bitmap = BrickGame::Ball;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Image Paddle
+  {
+    preset Bounds = <200,230,290,254>;
+    preset AutoSize = true;
+    preset Bitmap = BrickGame::Paddle;
+  }
+
+  // Varaiable to keep the data object in the memory.
+  $rect <10,320,210,360>
+  var BrickGame::DataClass Data = BrickGame::Data;
+
+  $rect <760,60,960,100>
+  object Core::KeyPressHandler KeyLeftHandler
+  {
+    preset OnRelease = keyUpHandler;
+    preset OnPress = leftKeyDown;
+    preset Filter = Core::KeyCode.Left;
+  }
+
+  $rect <760,100,960,140>
+  slot leftKeyDown
+  {
+    /* deactivate auto demo if user want's to play... */
+    AutoDemoTimer.Enabled = false;
+
+    paddleDirection = -Bounds.w / 64;
+    signal updatePaddle;
+    PaddleTimer.Enabled = true;
+
+
+  }
+
+  $rect <960,60,1160,100>
+  object Core::KeyPressHandler KeyRightHandler
+  {
+    preset OnRelease = keyUpHandler;
+    preset OnPress = rightKeyDown;
+    preset Filter = Core::KeyCode.Right;
+  }
+
+  $rect <960,100,1160,140>
+  slot rightKeyDown
+  {
+    /* deactivate auto demo if user want's to play... */
+    AutoDemoTimer.Enabled = false;
+
+    paddleDirection = Bounds.w / 64;
+    signal updatePaddle;
+    PaddleTimer.Enabled = true;
+
+
+  }
+
+  $rect <760,140,960,180>
+  slot keyUpHandler
+  {
+    PaddleTimer.Enabled = false;
+  }
+
+  $rect <760,280,960,320>
+  object Core::KeyPressHandler KeySpaceHandler
+  {
+    preset OnPress = onStartBall;
+    preset Filter = Core::KeyCode.Space;
+  }
+
+  $rect <760,190,960,230>
+  object Core::Timer PaddleTimer
+  {
+    preset OnTrigger = updatePaddle;
+    preset Period = 15;
+  }
+
+  $rect <960,190,1160,230>
+  slot updatePaddle
+  {
+    if ((( paddlePos > 0 ) && ( paddleDirection < 0 )) || (( paddlePos < Bounds.w ) && ( paddleDirection > 0 )))
+      paddlePos = paddlePos + paddleDirection;
+    if ( paddlePos < 0 )
+      paddlePos = 0;
+    if ( paddlePos > Bounds.w )
+      paddlePos = Bounds.w;
+
+  }
+
+  $rect <760,230,960,270>
+  var int32 paddleDirection = 0;
+
+  // Slot method to start non-moving ball.
+  $rect <960,400,1160,440>
+  slot onStartBall
+  {
+    if ( ballMove == false )
+    {
+      /* limit horizontal speed to give player a chance... ;-) */
+      var float speedy = BallPosition.SpeedY;
+      if ( speedy < 0.0 )
+        speedy = -speedy;
+
+      if ( BallPosition.SpeedX < -speedy )
+        BallPosition.SpeedX = -speedy;
+
+      if ( BallPosition.SpeedX > speedy )
+        BallPosition.SpeedX = speedy;
+    }
+
+    /* start the ball movement... */
+    ballMove = true;
+
+  }
+
+  // Flag to indicate the current ball status (move / hold).
+  $rect <220,320,420,360>
+  var bool ballMove = true;
+
+  // Horizontal position of the paddle.
+  $rect <220,360,420,400>
+  var int32 paddlePos = 400;
+
+  $rect <20,20,160,60>
+  object BrickGame::LcdDisplay ScoreDisplay
+  {
+    preset Bounds = <200,5,340,30>;
+    preset NoOfDigits = 5;
+    preset Outlet = ^BrickGame::Data.Score;
+    preset TextColor = #CCCCCCFF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text ScoreDescr
+  {
+    preset Bounds = <145,4,195,24>;
+    preset Alignment = Views::TextAlignment[AlignHorzRight, AlignVertTop];
+    preset String = "Score:";
+    preset Font = BrickGame::DescrFont;
+    preset Color = #CCCCCCFF;
+  }
+
+  $rect <20,20,160,60>
+  object BrickGame::LcdDisplay LevelDisplay
+  {
+    preset Bounds = <60,5,120,30>;
+    preset NoOfDigits = 2;
+    preset Outlet = ^BrickGame::Data.Level;
+    preset TextColor = #CCCCCCFF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text LevelDescr
+  {
+    preset Bounds = <5,4,55,24>;
+    preset Alignment = Views::TextAlignment[AlignHorzRight, AlignVertTop];
+    preset String = "Level:";
+    preset Font = BrickGame::DescrFont;
+    preset Color = #CCCCCCFF;
+  }
+
+  $rect <20,20,160,60>
+  object BrickGame::LcdDisplay LostDisplay
+  {
+    preset Bounds = <370,5,430,30>;
+    preset NoOfDigits = 2;
+    preset Outlet = ^BrickGame::Data.Lost;
+    preset TextColor = #CCCCCCFF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text LostDescr
+  {
+    preset Bounds = <315,4,365,24>;
+    preset Alignment = Views::TextAlignment[AlignHorzRight, AlignVertTop];
+    preset String = "Lost:";
+    preset Font = BrickGame::DescrFont;
+    preset Color = #CCCCCCFF;
+  }
+
+  // Timer object to drive the auto demo mode.
+  $rect <510,360,710,400>
+  object Core::Timer AutoDemoTimer
+  {
+    preset OnTrigger = AutoDemoSlot;
+    preset Period = 10;
+    preset Begin = 0;
+    preset Enabled = true;
+  }
+
+  // Slot method to trigger the next phase of the auto demo.
+  $rect <510,400,710,440>
+  slot AutoDemoSlot
+  {
+    /* try to follow exactly the center of the ball... */
+    paddlePos = BallPosition.Bounds.center.x;
+
+    /* limit horizontal speed to give auto player a chance... ;-) */
+    var float speedy = BallPosition.SpeedY;
+    if ( speedy < 0.0 )
+      speedy = -speedy;
+
+    if ( BallPosition.SpeedX < -speedy )
+      BallPosition.SpeedX = -speedy;
+
+    if ( BallPosition.SpeedX > speedy )
+      BallPosition.SpeedX = speedy;
+
+    /* add some variation to avoid endless identical ball tracks... */
+    BallPosition.SpeedX = BallPosition.SpeedX + math_rand( -0.01, 0.01 );
+  }
+
+  // Keyboard handling
+  note group Note
+  {
+    attr Bounds = <740,10,1180,340>;
+  }
+
+  // This is the main screen of the brick game.
+  // 
+  // The game component arranges five rows of bricks, which are configured depending \
+  // on the current game level within the method 'PrepareLevel'. The position of \
+  // the ball is stored within the object 'BallPosition', which is used to calculate \
+  // the movement of the ball and to detect any collisions.
+  // The paddle in the lower part of the screen can be moved horizontally by the \
+  // user. The position of the paddle is controlled by touch events. Additionally, \
+  // the paddle can be moved by keyboard events (Left/Right).
+  // As soon as the paddle has moved, the landscape image and the background image \
+  // are shifted horizontally to create some visual effect of deepness (parallax \
+  // effect).
+  // 
+  // All movements of ball, paddle and background are calculated within the timer \
+  // driven slot method 'Animate'.
+  // 
+  // After start-up, the auto-demo is running until the user takes over the command...
+  note legend Note1
+  {
+    attr Bounds = <10,470,860,720>;
+  }
+
+  // Touch event handling
+  note group Note2
+  {
+    attr Bounds = <740,350,1180,460>;
+  }
+}
+
+$rect <490,170,690,210>
+$output false
+resource Resources::Bitmap Paddle
+{
+  attr bitmapfile FileName = .\Res\Paddle.png;
+  attr alphafile AlphaName;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+$rect <490,210,690,250>
+$output false
+resource Resources::Bitmap Ball
+{
+  attr bitmapfile FileName = .\Res\Ball.png;
+  attr alphafile AlphaName;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+$rect <40,290,240,330>
+$output false
+class DataClass : Templates::DeviceClass
+{
+  $rect <230,50,430,90>
+  onset Score
+  {
+    /* limit given value to allowed range */
+    if ( value < 0 )
+      value = 0;
+
+    // The property doesn't change -> nothing to do.
+    if ( pure Score == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure Score = value;
+
+    // Notify all associated property observers.
+    notifyobservers ^Score;
+  }
+
+  // The property 'Score' represents the current score (points) of the running game.
+  $rect <30,50,230,90>
+  property int32 Score = 0;
+
+  // Data storage class to keep global game values
+  note group Note1
+  {
+    attr Bounds = <10,10,450,210>;
+  }
+
+  // The property 'Lost' represents the number of ball losts of the running game.
+  $rect <30,100,230,140>
+  property int32 Lost = 0;
+
+  $rect <230,100,430,140>
+  onset Lost
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure Lost == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure Lost = value;
+
+    // Notify all associated property observers.
+    notifyobservers ^Lost;
+  }
+
+  // The property 'Level' represents the current game level.
+  $rect <30,150,230,190>
+  property int32 Level = 1;
+
+  $rect <230,150,430,190>
+  onset Level
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure Level == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure Level = value;
+
+    // Notify all associated property observers.
+    notifyobservers ^Level;
+  }
+}
+
+$rect <240,290,440,330>
+autoobject BrickGame::DataClass Data;
+
+$rect <240,130,440,170>
+$output false
+enum RowType
+{
+  $rect <10,10,210,50>
+  item Hidden;
+
+  $rect <220,10,420,50>
+  item Gray;
+
+  $rect <430,10,630,50>
+  item Blue;
+
+  $rect <10,60,210,100>
+  item Green;
+
+  $rect <220,60,420,100>
+  item Yellow;
+
+  $rect <430,60,630,100>
+  item White;
+
+  $rect <10,110,210,150>
+  item Concrete;
+
+  $rect <220,110,420,150>
+  item EmWi;
+
+  $rect <430,110,630,150>
+  item TwoBlocks;
+
+  $rect <10,160,210,200>
+  item TwoDoors;
+
+  $rect <220,160,420,200>
+  item BlueGreen;
+
+  $rect <430,160,630,200>
+  item WhiteEmWi;
+
+  $rect <220,210,420,250>
+  item GreenBlue;
+
+  $rect <10,210,210,250>
+  item OneDoor;
+
+  // The enum 'RowType' contains enum-items to define the characteristic of a brick \
+  // row. This makes it very easy to create different game levels just by reloading \
+  // each row with one of these types.
+  note legend Note
+  {
+    attr Bounds = <10,270,630,350>;
+  }
+}
+
+$rect <490,250,690,290>
+$output false
+resource Resources::Bitmap Landscape
+{
+  attr bitmapfile FileName = .\Res\Landscape.png;
+  attr alphafile AlphaName;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+$rect <490,290,690,330>
+$output false
+resource Resources::Bitmap Stars
+{
+  attr bitmapfile FileName = .\Res\Stars.png;
+  attr alphafile AlphaName;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+// The class 'LcdDisplay' implements a digital display for showing system values.
+$rect <240,80,440,120>
+$output false
+class LcdDisplay : Core::Group
+{
+  $rect <10,80,210,120>
+  inherited property Bounds = <0,0,100,30>;
+
+  $rect <10,130,210,170>
+  inherited method UpdateViewState()
+  {
+    aState;
+
+    var int32 x = 0;
+    var int32 val = CurrentValue;
+    var int32 delta = 2;
+
+    /* update all digits... */
+    Digit1.FrameNumber = val % 10;
+    Digit2.FrameNumber = ( val / 10 ) % 10;
+    Digit3.FrameNumber = ( val / 100 ) % 10;
+    Digit4.FrameNumber = ( val / 1000 ) % 10;
+    Digit5.FrameNumber = ( val / 10000 ) % 10;
+    Digit6.FrameNumber = ( val / (int32)100000 ) % 10;
+
+    /* negative values causes ----- */
+    if ( val < 0 )
+    {
+      Digit1.FrameNumber = 10;
+      Digit2.FrameNumber = 10;
+      Digit3.FrameNumber = 10;
+      Digit4.FrameNumber = 10;
+      Digit5.FrameNumber = 10;
+      Digit6.FrameNumber = 10;
+    }
+
+    /* arrange digit 6 */
+    if ( NoOfDigits > 5 )
+    {
+      Digit6.Visible = true;
+      Digit6.Bounds.origin.x = x;
+      x = x + Digit6.Bounds.w - delta;
+    }
+    else
+      Digit6.Visible = false;
+
+    /* arrange digit 5 */
+    if ( NoOfDigits > 4 )
+    {
+      Digit5.Visible = true;
+      Digit5.Bounds.origin.x = x;
+      x = x + Digit5.Bounds.w - delta;
+    }
+    else
+      Digit5.Visible = false;
+
+    /* arrange digit 4 */
+    if ( NoOfDigits > 3 )
+    {
+      Digit4.Visible = true;
+      Digit4.Bounds.origin.x = x;
+      x = x + Digit4.Bounds.w - delta;
+    }
+    else
+      Digit4.Visible = false;
+
+    /* arrange digit 3 */
+    if ( NoOfDigits > 2 )
+    {
+      Digit3.Visible = true;
+      Digit3.Bounds.origin.x = x;
+      x = x + Digit3.Bounds.w - delta;
+    }
+    else
+      Digit3.Visible = false;
+
+    /* arrange digit 2 */
+    if ( NoOfDigits > 1 )
+    {
+      Digit2.Visible = true;
+      Digit2.Bounds.origin.x = x;
+      x = x + Digit2.Bounds.w - delta;
+    }
+    else
+      Digit6.Visible = false;
+
+    /* digit 1 is always visible */
+    Digit1.Visible = true;
+    Digit1.Bounds.origin.x = x;
+    x = x + Digit1.Bounds.w - delta;
+
+
+  }
+
+  // This is an simple image view.
+  $rect <20,20,160,60>
+  object Views::Image Digit1
+  {
+    preset Bounds = <75,0,92,24>;
+    preset AutoSize = true;
+    preset Bitmap = BrickGame::LcdNumbers;
+  }
+
+  // This is an simple image view.
+  $rect <20,20,160,60>
+  object Views::Image Digit2
+  {
+    preset Bounds = <60,0,77,24>;
+    preset AutoSize = true;
+    preset FrameNumber = 0;
+    preset Bitmap = BrickGame::LcdNumbers;
+  }
+
+  // This is an simple image view.
+  $rect <20,20,160,60>
+  object Views::Image Digit3
+  {
+    preset Bounds = <45,0,62,24>;
+    preset AutoSize = true;
+    preset Bitmap = BrickGame::LcdNumbers;
+  }
+
+  // This is an simple image view.
+  $rect <20,20,160,60>
+  object Views::Image Digit4
+  {
+    preset Bounds = <30,0,47,24>;
+    preset AutoSize = true;
+    preset Bitmap = BrickGame::LcdNumbers;
+  }
+
+  // This is an simple image view.
+  $rect <20,20,160,60>
+  object Views::Image Digit5
+  {
+    preset Bounds = <15,0,32,24>;
+    preset AutoSize = true;
+    preset Bitmap = BrickGame::LcdNumbers;
+  }
+
+  // This is an simple image view.
+  $rect <20,20,160,60>
+  object Views::Image Digit6
+  {
+    preset Bounds = <0,0,17,24>;
+    preset AutoSize = true;
+    preset Bitmap = BrickGame::LcdNumbers;
+  }
+
+  // The property 'NoOfDigits' stores the number of digits that are shown by the \
+  // simulated LCD display.
+  $rect <510,0,710,40>
+  property int32 NoOfDigits = 6;
+
+  // The onset method of the property 'NoOfDigits' changes the number of currently \
+  // displayed digits and rearranges the LCD display accordingly.
+  $rect <510,40,710,80>
+  onset NoOfDigits
+  {
+    /* check if the given value differs from the current value */
+    if ( pure NoOfDigits == value )
+      return;
+
+    /* check limits of the given value */
+    if ( value < 1 )
+      value = 1;
+    if ( value > 6 )
+      value = 6;
+     
+    /* store the new value */
+    pure NoOfDigits = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // The property 'Value' contains the currently displayed value. If the value is \
+  // negative, all digits show a '-' sign. Please note, that the value is displayed \
+  // with the corresponding digits, independent from the position of the dot.
+  $rect <300,0,500,40>
+  property int32 CurrentValue = 0;
+
+  // The onset method of the property 'Value' changes the currently displayed value \
+  // of all digits.
+  $rect <300,40,500,80>
+  onset CurrentValue
+  {
+    /* check if the given value differs from the current value */
+    if ( pure CurrentValue == value )
+      return;
+
+    /* store the new 1value */ 
+    pure CurrentValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+
+  }
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @Outlet has been changed by another widget or by the application logic. In \
+  // response to this notification, the widget will update itself.
+  $rect <300,180,500,220>
+  slot outletSlot
+  {
+    /* update the current state of the widget */
+    if ( Outlet != null )
+      CurrentValue = Outlet^;
+  }
+
+  $rect <300,130,500,170>
+  onset Outlet
+  {
+    /* check if the new outlet differs from the currently used outlet */
+    if ( pure Outlet == value )
+      return;
+
+    /* detach from the previous outlet */
+    if ( pure Outlet != null )
+      detachobserver outletSlot, pure Outlet;
+
+    /* store the new outlet */
+    pure Outlet = value;
+
+    /* ... and attach to the new one */
+    if ( value != null )
+      attachobserver outletSlot, value;
+
+    /* finally, update the current state of the widget by posting a signal to the outlet slot */
+    if ( value != null )
+      postsignal outletSlot;
+  }
+
+  // The property 'Outlet' provides an interface for the Controller-View model. In \
+  // the Controller-View model, the widgets (views) and the application logic (controllers) \
+  // are always kept apart. An automatism behind this model ensures, that widgets \
+  // are notified automatically as soon as the affected controller has changed its \
+  // state. On the other hand, user interactions on a widget cause the affected controller \
+  // to execute the application logic. Usually, a controller is a simple Chora object \
+  // containg several properties and the implementation of onget/onset method.
+  // By assigning a property reference, Outlet establishes a connection between the \
+  // widget and the controller object, the affected property belongs to. After this, \
+  // the widget is able to read and modify the referred property in response to the \
+  // user interactions. It is also able to adapt the widget appearance, if the value \
+  // of the referred property has been modified by another widget or by the application \
+  // logic itself.
+  $rect <300,90,500,130>
+  property ^int32 Outlet = null;
+
+  // The class 'LcdDisplay' implements a widget to display values as numeric values \
+  // with a LCD style. 
+  // Each digit of the display is implemented as image - using a bitmap resource \
+  // that contains a stripe of all 10 numbers.
+  // The property 'CurrentValue' represents the momentary value of the widget. The \
+  // property 'TextColor' is used to define the color of the widget.
+  // The display can be connected with an int32 'Outlet' property to show the current \
+  // value of this property. 
+  note legend Note
+  {
+    attr Bounds = <0,230,700,370>;
+  }
+
+  // The property 'TextColor' defines the color of the widgets text members. The \
+  // property is used to assign a color independent from the current theme color.
+  $rect <510,90,710,130>
+  property color TextColor = #FFFFFFFF;
+
+  $rect <510,130,710,170>
+  onset TextColor
+  {
+    /* store the new value */
+    pure TextColor = value;
+
+    /* ...and colorize the affected members of the widget */
+    Digit1.Color = value;
+    Digit2.Color = value;
+    Digit3.Color = value;
+    Digit4.Color = value;
+    Digit5.Color = value;
+    Digit6.Color = value;
+
+  }
+}
+
+// Bitmap resource for displaying the numbers within a simulated LCD.
+$rect <490,90,690,130>
+$output false
+resource Resources::Bitmap LcdNumbers
+{
+  attr bitmapfile FileName;
+  attr alphafile AlphaName = .\Res\LcdNumbers.png;
+  attr framesize FrameSize = <17,24>;
+  attr framedelay FrameDelay;
+}
+
+// Data storage
+note group Note3
+{
+  attr Bounds = <20,200,460,350>;
+}
+
+// Brick game main screen,
+// brick row and counter widget
+note group Note
+{
+  attr Bounds = <20,10,460,190>;
+}
+
+// IMPORTANT NOTE:
+// 
+// This game example is ONLY for teaching and demonstration purposes and provided \
+// as sample code!
+// 
+// It is your responsibility to clarify the legal and IPR aspects if you intend to \
+// use the game or parts of it within your development, your project or any commercial \
+// product.
+note group Note4
+{
+  attr Bounds = <20,360,710,540>;
+}

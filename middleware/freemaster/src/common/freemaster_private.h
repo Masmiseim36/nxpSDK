@@ -129,6 +129,8 @@ FMSTR_BPTR FMSTR_SizeFromBuffer(FMSTR_SIZE* psize, FMSTR_BPTR src);
 FMSTR_BPTR FMSTR_SizeToBuffer(FMSTR_BPTR dest, FMSTR_SIZE size);
 FMSTR_BPTR FMSTR_IndexFromBuffer(FMSTR_INDEX* pindex, FMSTR_BPTR src);
 FMSTR_BPTR FMSTR_IndexToBuffer(FMSTR_BPTR dest, FMSTR_INDEX index);
+FMSTR_BPTR FMSTR_ULebToBuffer(FMSTR_BPTR dest, FMSTR_U32 num);
+FMSTR_BPTR FMSTR_ULebFromBuffer(FMSTR_U32* pnum, FMSTR_BPTR src);
 FMSTR_SIZE FMSTR_GetAlignmentCorrection(FMSTR_ADDR addr, FMSTR_SIZE size);
 
 #define FMSTR_GetS8(addr)  ( *(FMSTR_S8*)(addr) )
@@ -144,6 +146,23 @@ FMSTR_SIZE FMSTR_GetAlignmentCorrection(FMSTR_ADDR addr, FMSTR_SIZE size);
 #define FMSTR_GetFloat(addr) ( *(FMSTR_FLOAT*)(addr) )
 #define FMSTR_GetDouble(addr) ( *(FMSTR_DOUBLE*)(addr) )
 #endif
+
+/******************************************************************************
+* SHA calculation
+******************************************************************************/
+
+typedef struct
+{
+    FMSTR_U8 data[64];
+    FMSTR_U32 datalen;
+    FMSTR_U64 bitlen;
+    FMSTR_U32 state[5];
+    FMSTR_U32 k[4];
+} FMSTR_SHA1_CTX;
+
+void FMSTR_Sha1Init(FMSTR_SHA1_CTX *ctx);
+void FMSTR_Sha1Update(FMSTR_SHA1_CTX *ctx, const FMSTR_U8* data, size_t len);
+void FMSTR_Sha1Final(FMSTR_SHA1_CTX *ctx, FMSTR_U8* hash);
 
 #ifdef __cplusplus
   }
@@ -238,7 +257,13 @@ FMSTR_SIZE FMSTR_GetAlignmentCorrection(FMSTR_ADDR addr, FMSTR_SIZE size);
 #if FMSTR_DEBUG_TX
 /* When communication debugging mode is requested, this global variable is used to
    turn the debugging off once a valid connection is detected */
-extern FMSTR_BOOL fmstr_bDebugTx;
+extern FMSTR_BOOL fmstr_doDebugTx;
+#endif
+
+/* maximum data item width in bytes when performing optimized/aligned memory copy */
+#ifndef FMSTR_MEMCPY_MAX_SIZE
+	/* 32-bit transfers maximum by default */
+	#define FMSTR_MEMCPY_MAX_SIZE 4
 #endif
 
 #endif /* __FREEMASTER_PRIVATE_H */

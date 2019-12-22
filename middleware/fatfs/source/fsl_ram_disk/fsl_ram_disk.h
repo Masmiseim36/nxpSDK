@@ -3,13 +3,14 @@
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef __FSL_RAMDISK_H__
 #define __FSL_RAMDISK_H__
 
+#include "ff.h"
 #include "diskio.h"
 
 /*******************************************************************************

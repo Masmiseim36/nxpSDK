@@ -341,7 +341,7 @@ void main(void)
     while (1U)
     {
 #if USB_DEVICE_CONFIG_USE_TASK
-        USB_DeviceTaskFn(g_UsbDeviceHidGeneric.deviceHandle);
+        USB_DeviceTaskFn(g_UsbDeviceDfu.deviceHandle);
 #endif
         USB_DeviceDfuTask();
     }

@@ -14,11 +14,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v5.0
+product: Pins v7.0
 processor: MIMXRT1021xxxxx
 package_id: MIMXRT1021DAG5A
 mcu_data: ksdk2_0
-processor_version: 0.0.17
+processor_version: 0.2.0
 board: MIMXRT1020-EVK
 pin_labels:
 - {pin_num: '81', pin_signal: GPIO_AD_B1_09, label: 'UART_RX/J17[1]', identifier: Trigger}
@@ -42,6 +42,7 @@ void BOARD_InitBootPins(void) {
     BOARD_InitLPUART();
     BOARD_InitPWM();
     BOARD_Misc();
+    BOARD_InitCMP();
 }
 
 /*
@@ -115,6 +116,7 @@ BOARD_InitENC:
 /* FUNCTION ************************************************************************************************************
  *
  * Function Name : BOARD_InitENC
+ * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
 void BOARD_InitENC(void) {
@@ -179,6 +181,7 @@ BOARD_InitPWM:
 /* FUNCTION ************************************************************************************************************
  *
  * Function Name : BOARD_InitPWM
+ * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
 void BOARD_InitPWM(void) {
@@ -219,6 +222,7 @@ BOARD_Misc:
 /* FUNCTION ************************************************************************************************************
  *
  * Function Name : BOARD_Misc
+ * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
 void BOARD_Misc(void) {
@@ -233,6 +237,30 @@ void BOARD_Misc(void) {
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_SNVS_WAKEUP_GPIO5_IO00,          /* WAKEUP is configured as GPIO5_IO00 */
+      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+}
+
+
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitCMP:
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: '99', peripheral: CMP2, signal: 'IN, 4', pin_signal: GPIO_AD_B0_09}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitCMP
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void BOARD_InitCMP(void) {
+  CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03U */
+
+  IOMUXC_SetPinMux(
+      IOMUXC_GPIO_AD_B0_09_GPIO1_IO09,        /* GPIO_AD_B0_09 is configured as GPIO1_IO09 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
 }
 

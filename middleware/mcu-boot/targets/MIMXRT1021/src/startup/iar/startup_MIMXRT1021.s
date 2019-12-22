@@ -37,6 +37,7 @@
 
         EXTERN  __iar_program_start
         EXTERN  SystemInit
+        EXTERN  g_reliableUpdateAPI
         PUBLIC  __vector_table
         PUBLIC  __vector_table_0x1c
         PUBLIC  __Vectors
@@ -55,7 +56,7 @@ __vector_table
         DCD     BusFault_Handler                              ;Bus Fault Handler
         DCD     UsageFault_Handler                            ;Usage Fault Handler
 __vector_table_0x1c
-        DCD     0                                             ;Reserved
+        DCD     g_reliableUpdateAPI                           ;Bootloader API Entry root
         DCD     0                                             ;Reserved
         DCD     0                                             ;Reserved
         DCD     0                                             ;Reserved

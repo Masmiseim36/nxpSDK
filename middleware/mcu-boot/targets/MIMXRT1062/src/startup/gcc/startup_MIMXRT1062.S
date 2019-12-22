@@ -29,7 +29,7 @@ __isr_vector:
     .long   MemManage_Handler                               /* MPU Fault Handler*/
     .long   BusFault_Handler                                /* Bus Fault Handler*/
     .long   UsageFault_Handler                              /* Usage Fault Handler*/
-    .long   0                                               /* Reserved*/
+    .long   g_reliableUpdateAPI                             /* Bootloader API Tree root */
     .long   0                                               /* Reserved*/
     .long   0                                               /* Reserved*/
     .long   0                                               /* Reserved*/

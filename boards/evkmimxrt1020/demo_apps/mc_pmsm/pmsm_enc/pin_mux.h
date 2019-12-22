@@ -71,6 +71,7 @@ void BOARD_InitADC(void);
 
 
 /*!
+ * @brief Configures pin routing and optionally pin electrical features.
  *
  */
 void BOARD_InitENC(void);
@@ -118,6 +119,7 @@ void BOARD_InitLPUART(void);
 
 
 /*!
+ * @brief Configures pin routing and optionally pin electrical features.
  *
  */
 void BOARD_InitPWM(void);
@@ -129,9 +131,22 @@ void BOARD_InitPWM(void);
 
 
 /*!
+ * @brief Configures pin routing and optionally pin electrical features.
  *
  */
 void BOARD_Misc(void);
+
+/* GPIO_AD_B0_09 (number 99), ENET_RXD1/U11[15]/J17[3] */
+#define BOARD_INITCMP_ENET_RXD1_PERIPHERAL                                  CMP2   /*!< Device name: CMP2 */
+#define BOARD_INITCMP_ENET_RXD1_SIGNAL                                        IN   /*!< CMP2 signal: IN */
+#define BOARD_INITCMP_ENET_RXD1_CHANNEL                                       4U   /*!< CMP2 IN channel: 4 */
+
+
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void BOARD_InitCMP(void);
 
 #if defined(__cplusplus)
 }

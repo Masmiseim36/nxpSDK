@@ -1,0 +1,10 @@
+/**
+@page middleware_log Middleware Change Log
+
+@section LittlevGL LittlevGL for KSDK
+
+  - 5.3_rev1
+
+    - Integrate LittlevGL 5.3 to SDK.
+
+*/

@@ -2,6 +2,6 @@
 @page middleware_log Middleware Change Log
 
 @section emwin emWin library
-  The currently supported version is 5.48r.
+  The currently supported version is 5.50g
 
 */

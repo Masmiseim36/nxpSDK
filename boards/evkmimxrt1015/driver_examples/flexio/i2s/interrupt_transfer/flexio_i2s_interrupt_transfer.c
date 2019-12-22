@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,10 +9,13 @@
 #include "board.h"
 #include "fsl_flexio_i2s.h"
 #include "fsl_debug_console.h"
+#include "fsl_codec_common.h"
+
 #include "fsl_wm8960.h"
 #include "fsl_sai.h"
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "fsl_codec_adapter.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -55,8 +58,22 @@
 #define OVER_SAMPLE_RATE (384)
 #define BUFFER_SIZE (256)
 #define BUFFER_NUM (4)
-#define PLAY_COUNT (5000)
+#define PLAY_COUNT (5000 * 2U)
 #define ZERO_BUFFER_SIZE (BUFFER_SIZE * 2)
+/* demo audio sample rate */
+#define DEMO_AUDIO_SAMPLE_RATE (kFLEXIO_I2S_SampleRate16KHz)
+/* demo audio master clock */
+#if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) || \
+    (defined FSL_FEATURE_PCC_HAS_SAI_DIVIDER && FSL_FEATURE_PCC_HAS_SAI_DIVIDER)
+#define DEMO_AUDIO_MASTER_CLOCK OVER_SAMPLE_RATE *DEMO_AUDIO_SAMPLE_RATE
+#else
+#define DEMO_AUDIO_MASTER_CLOCK DEMO_SAI_CLK_FREQ
+#endif
+/* demo audio data channel */
+#define DEMO_AUDIO_DATA_CHANNEL (2U)
+/* demo audio bit width */
+#define DEMO_AUDIO_BIT_WIDTH (kFLEXIO_I2S_WordWidth32bits)
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -64,6 +81,17 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+wm8960_config_t wm8960Config = {
+    .i2cConfig = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE, .codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ},
+    .route     = kWM8960_RoutePlaybackandRecord,
+    .rightInputSource = kWM8960_InputDifferentialMicInput2,
+    .playSource       = kWM8960_PlaySourceDAC,
+    .slaveAddress     = WM8960_I2C_ADDR,
+    .bus              = kWM8960_BusI2S,
+    .format = {.mclk_HZ = 6144000U, .sampleRate = kWM8960_AudioSampleRate16KHz, .bitWidth = kWM8960_AudioBitWidth16bit},
+    .master_slave = false,
+};
+codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8960, .codecDevConfig = &wm8960Config};
 /* USB1 PLL configuration for RUN mode */
 const clock_audio_pll_config_t audioPllConfig = {
     .loopDivider = 32U,         /*!< PLL loop divider. Valid range for DIV_SELECT divider value: 27~54. */
@@ -77,7 +105,6 @@ static volatile bool isTxFinished = false;
 static volatile bool isRxFinished = false;
 AT_NONCACHEABLE_SECTION_ALIGN(uint8_t audioBuff[BUFFER_SIZE * BUFFER_NUM], 4);
 AT_NONCACHEABLE_SECTION_ALIGN_INIT(static uint8_t zeroBuff[ZERO_BUFFER_SIZE], 4) = {0};
-codec_handle_t codecHandle                                                       = {0};
 extern codec_config_t boardCodecConfig;
 static volatile uint32_t beginCount   = 0;
 static volatile uint32_t sendCount    = 0;
@@ -85,6 +112,21 @@ static volatile uint32_t receiveCount = 0;
 static volatile uint8_t emptyBlock    = 0;
 static volatile bool isZeroBuffer     = true;
 FLEXIO_I2S_Type base;
+#if defined(DEMO_CODEC_WM8960) || defined(DEMO_CODEC_DA7212)
+#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
+    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
+sai_master_clock_t mclkConfig = {
+#if defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)
+    .mclkOutputEnable = true,
+#if !(defined(FSL_FEATURE_SAI_HAS_NO_MCR_MICS) && (FSL_FEATURE_SAI_HAS_NO_MCR_MICS))
+    .mclkSource = kSAI_MclkSourceSysclk,
+#endif
+#endif
+};
+#endif
+#endif
+codec_handle_t codecHandle;
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -139,7 +181,6 @@ static void rxCallback(FLEXIO_I2S_Type *i2sBase, flexio_i2s_handle_t *handle, st
 int main(void)
 {
     flexio_i2s_config_t config;
-    uint32_t sourceClockHz = 0U, masterClockHz = 0U;
     flexio_i2s_format_t format;
     flexio_i2s_transfer_t txXfer, rxXfer;
     uint8_t txIndex = 0, rxIndex = 0;
@@ -166,7 +207,6 @@ int main(void)
     CLOCK_SetDiv(kCLOCK_Sai1Div, DEMO_SAI1_CLOCK_SOURCE_DIVIDER);
     /* Enable SAI1 MCLK output */
     BOARD_EnableSaiMclkOutput(true);
-    BOARD_Codec_I2C_Init();
     PRINTF("FLEXIO_I2S interrupt example started!\n\r");
 
     /* Set flexio i2s pin, shifter and timer */
@@ -181,38 +221,28 @@ int main(void)
     base.flexioBase     = DEMO_FLEXIO_BASE;
 
 #if defined(DEMO_CODEC_WM8960) || defined(DEMO_CODEC_DA7212)
-    /* Use SAI to do master clock */
-    sai_config_t saiConfig;
-    /*
-     * saiConfig.masterSlave = kSAI_Master;
-     * saiConfig.mclkSource = kSAI_MclkSourceSysclk;
-     * saiConfig.protocol = kSAI_BusLeftJustified;
-     * saiConfig.syncMode = kSAI_ModeAsync;
-     * saiConfig.mclkOutputEnable = true;
-     */
-    SAI_TxGetDefaultConfig(&saiConfig);
-    SAI_TxInit(DEMO_SAI, &saiConfig);
+    /* SAI init */
+    SAI_Init(DEMO_SAI);
 
-    /* Configure the audio format */
-    sai_transfer_format_t saiFormat = {0};
-    saiFormat.bitWidth              = kSAI_WordWidth16bits;
-    saiFormat.channel               = 0U;
-    saiFormat.sampleRate_Hz         = kSAI_SampleRate16KHz;
+    /* I2S mode configurations */
+    sai_transceiver_t saiConfig;
+    SAI_GetClassicI2SConfig(&saiConfig, (sai_word_width_t)DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, kSAI_Channel0Mask);
+    SAI_TxSetConfig(DEMO_SAI, &saiConfig);
+
+    /* set bit clock divider */
+    SAI_TxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
+                          DEMO_AUDIO_DATA_CHANNEL);
+
+    /* master clock configurations */
+#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
+    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
 #if defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER)
-    masterClockHz = OVER_SAMPLE_RATE * saiFormat.sampleRate_Hz;
-#else
-    masterClockHz = DEMO_SAI_CLK_FREQ;
+    mclkConfig.mclkHz          = DEMO_AUDIO_MASTER_CLOCK;
+    mclkConfig.mclkSourceClkHz = DEMO_SAI_CLK_FREQ;
+#endif
+    SAI_SetMasterClockConfig(DEMO_SAI, &mclkConfig);
 #endif
 
-#if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER)
-    format.masterClockHz = masterClockHz;
-#endif
-
-    saiFormat.protocol = saiConfig.protocol;
-    saiFormat.stereo   = kSAI_Stereo;
-
-    uint32_t masterClockSrc = DEMO_SAI_CLK_FREQ;
-    SAI_TxSetFormat(DEMO_SAI, &saiFormat, masterClockSrc, masterClockHz);
     SAI_TxEnable(DEMO_SAI, true);
 #endif
 
@@ -224,20 +254,18 @@ int main(void)
     FLEXIO_I2S_Init(&base, &config);
 
     /* Configure the audio format */
-    format.bitWidth      = kFLEXIO_I2S_WordWidth16bits;
-    format.sampleRate_Hz = kFLEXIO_I2S_SampleRate16KHz;
+    format.bitWidth      = DEMO_AUDIO_BIT_WIDTH;
+    format.sampleRate_Hz = DEMO_AUDIO_SAMPLE_RATE;
 
     /* Use default setting to init codec */
     CODEC_Init(&codecHandle, &boardCodecConfig);
-    CODEC_SetFormat(&codecHandle, format.sampleRate_Hz * OVER_SAMPLE_RATE, format.sampleRate_Hz, format.bitWidth);
 
     FLEXIO_I2S_TransferTxCreateHandle(&base, &txHandle, txCallback, NULL);
     FLEXIO_I2S_TransferRxCreateHandle(&base, &rxHandle, rxCallback, NULL);
-    sourceClockHz = DEMO_FLEXIO_CLK_FREQ;
 
     /* Set audio format for tx and rx */
-    FLEXIO_I2S_TransferSetFormat(&base, &txHandle, &format, sourceClockHz);
-    FLEXIO_I2S_TransferSetFormat(&base, &rxHandle, &format, sourceClockHz);
+    FLEXIO_I2S_TransferSetFormat(&base, &txHandle, &format, DEMO_FLEXIO_CLK_FREQ);
+    FLEXIO_I2S_TransferSetFormat(&base, &rxHandle, &format, DEMO_FLEXIO_CLK_FREQ);
 
     emptyBlock = BUFFER_NUM;
     beginCount = PLAY_COUNT;

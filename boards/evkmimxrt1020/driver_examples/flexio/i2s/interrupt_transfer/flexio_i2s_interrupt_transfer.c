@@ -125,8 +125,8 @@ sai_master_clock_t mclkConfig = {
 };
 #endif
 #endif
-uint8_t codecHandleBuffer[CODEC_HANDLE_SIZE] = {0U};
-codec_handle_t *codecHandle                  = (codec_handle_t *)codecHandleBuffer;
+codec_handle_t codecHandle;
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -258,7 +258,7 @@ int main(void)
     format.sampleRate_Hz = DEMO_AUDIO_SAMPLE_RATE;
 
     /* Use default setting to init codec */
-    CODEC_Init(codecHandle, &boardCodecConfig);
+    CODEC_Init(&codecHandle, &boardCodecConfig);
 
     FLEXIO_I2S_TransferTxCreateHandle(&base, &txHandle, txCallback, NULL);
     FLEXIO_I2S_TransferRxCreateHandle(&base, &rxHandle, rxCallback, NULL);

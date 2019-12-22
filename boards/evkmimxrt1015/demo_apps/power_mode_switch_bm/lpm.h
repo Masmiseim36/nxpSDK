@@ -9,77 +9,21 @@
 #ifndef _LPM_H_
 #define _LPM_H_
 
-#include "specific.h"
-#include "fsl_common.h"
-#include "fsl_clock.h"
-#include "fsl_device_registers.h"
 #include <stdint.h>
-#include <stdbool.h>
-#include <assert.h>
+#include "fsl_clock.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-extern void vPortGPTIsr(void);
-
-#define vPortGptIsr GPT1_IRQHandler
-
-#define CLOCK_SET_MUX(mux, value)                                                                        \
-    do                                                                                                   \
-    {                                                                                                    \
-        CCM_TUPLE_REG(CCM, mux) = (CCM_TUPLE_REG(CCM, mux) & (~CCM_TUPLE_MASK(mux))) |                   \
-                                  (((uint32_t)((value) << CCM_TUPLE_SHIFT(mux))) & CCM_TUPLE_MASK(mux)); \
-        while (CCM->CDHIPR != 0)                                                                         \
-        {                                                                                                \
-        }                                                                                                \
-    } while (0)
-
-#define CLOCK_SET_DIV(divider, value)                                                                                \
-    do                                                                                                               \
-    {                                                                                                                \
-        CCM_TUPLE_REG(CCM, divider) = (CCM_TUPLE_REG(CCM, divider) & (~CCM_TUPLE_MASK(divider))) |                   \
-                                      (((uint32_t)((value) << CCM_TUPLE_SHIFT(divider))) & CCM_TUPLE_MASK(divider)); \
-        while (CCM->CDHIPR != 0)                                                                                     \
-        {                                                                                                            \
-        }                                                                                                            \
-    } while (0)
-
 #define CLOCK_CCM_HANDSHAKE_WAIT() \
+                                   \
     do                             \
     {                              \
         while (CCM->CDHIPR != 0)   \
         {                          \
         }                          \
+                                   \
     } while (0)
-
-#define LPM_DELAY(value)                         \
-    do                                           \
-    {                                            \
-        for (uint32_t i = 0; i < 5 * value; i++) \
-        {                                        \
-            __NOP();                             \
-        }                                        \
-    } while (0)
-
-#if defined(XIP_EXTERNAL_FLASH)
-#define LPM_EnterCritical()                        \
-    do                                             \
-    {                                              \
-        __disable_irq();                           \
-        SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk; \
-    } while (0)
-
-#define LPM_ExitCritical()                        \
-    do                                            \
-    {                                             \
-        __enable_irq();                           \
-        SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk; \
-    } while (0)
-
-#else
-#define LPM_EnterCritical()
-#define LPM_ExitCritical()
-#endif
 
 /* Power mode definition of low power management.
  * Waken up duration Off > Dsm > Idle > Wait > Run.
@@ -123,8 +67,6 @@ typedef enum _lpm_power_mode
     LPM_PowerModeEnd = LPM_PowerModeSNVS
 } lpm_power_mode_t;
 
-typedef bool (*lpm_power_mode_callback_t)(lpm_power_mode_t curMode, lpm_power_mode_t newMode, void *data);
-
 /*******************************************************************************
  * API
  ******************************************************************************/
@@ -133,66 +75,27 @@ typedef bool (*lpm_power_mode_callback_t)(lpm_power_mode_t curMode, lpm_power_mo
 extern "C" {
 #endif /* __cplusplus*/
 
-AT_QUICKACCESS_SECTION_CODE(void LPM_SwitchBandgap(void));
-AT_QUICKACCESS_SECTION_CODE(void LPM_RestoreBandgap(void));
-AT_QUICKACCESS_SECTION_CODE(void LPM_SwitchToXtalOSC(void));
-AT_QUICKACCESS_SECTION_CODE(void LPM_SwitchToRcOSC(void));
-AT_QUICKACCESS_SECTION_CODE(void LPM_SwitchFlexspiClock(lpm_power_mode_t power_mode));
-AT_QUICKACCESS_SECTION_CODE(void LPM_RestoreFlexspiClock(void));
-
-/* Initialize the Low Power Management */
-bool LPM_Init(lpm_power_mode_t run_mode);
-
-/* Deinitialize the Low Power Management */
-void LPM_Deinit(void);
-
-/* Enable wakeup source in low power mode */
+AT_QUICKACCESS_SECTION_CODE(void CLOCK_SET_MUX(clock_mux_t mux, uint32_t value));
+AT_QUICKACCESS_SECTION_CODE(void CLOCK_SET_DIV(clock_div_t divider, uint32_t value));
+void ClockSelectXtalOsc(void);
+void ClockSelectRcOsc(void);
+void LPM_Init(void);
 void LPM_EnableWakeupSource(uint32_t irq);
-
-/* Disable wakeup source in low power mode */
 void LPM_DisableWakeupSource(uint32_t irq);
-
-/* Set power mode, all registered listeners will be notified.
- * Return true if all the registered listeners return true.
- */
-bool LPM_SetPowerMode(lpm_power_mode_t mode);
-
-/* LPM_SetPowerMode() won't switch system power status immediately,
- * instead, such operation is done by LPM_WaitForInterrupt().
- * It can be callled in idle task of FreeRTOS, or main loop in bare
- * metal application. The sleep depth of this API depends
- * on current power mode set by LPM_SetPowerMode().
- * The timeoutMilliSec means if no interrupt occurs before timeout, the
- * system will be waken up by systick. If timeout exceeds hardware timer
- * limitation, timeout will be reduced to maximum time of hardware.
- * timeoutMilliSec only works in FreeRTOS, in bare metal application,
- * it's just ignored.
- */
-void LPM_WaitForInterrupt(uint32_t timeoutMilliSec);
-
-/* Register power mode switch listener. When LPM_SetPowerMode()
- * is called, all the registered listeners will be invoked. The
- * listener returns true if it allows the power mode switch,
- * otherwise returns FALSE.
- */
-void LPM_RegisterPowerListener(lpm_power_mode_callback_t callback, void *data);
-
-/* Unregister power mode switch listener */
-void LPM_UnregisterPowerListener(lpm_power_mode_callback_t callback, void *data);
-
-void LPM_SystemRestoreDsm(void);
-void LPM_SystemRestoreIdle(void);
-void LPM_SystemResumeDsm(void);
-void LPM_RestoreLowPowerRunPLLs(void);
-
-void LPM_RestorePLLs(lpm_power_mode_t power_mode);
-void LPM_DisableAndSwitchPLLs(lpm_power_mode_t power_mode);
-void LPM_SetSleepPowerMode(lpm_power_mode_t power_mode);
-
-void LPM_SystemFullRun(void);
-void LPM_SystemOverRun(void);
-void LPM_SystemLowSpeedRun(void);
-void LPM_SystemLowPowerRun(void);
+void LPM_PreEnterWaitMode(void);
+void LPM_PostExitWaitMode(void);
+void LPM_PreEnterStopMode(void);
+void LPM_PostExitStopMode(void);
+void LPM_OverDriveRun(void);
+void LPM_FullSpeedRun(void);
+void LPM_LowSpeedRun(void);
+void LPM_LowPowerRun(void);
+void LPM_EnterSystemIdle(void);
+void LPM_ExitSystemIdle(void);
+void LPM_EnterLowPowerIdle(void);
+void LPM_ExitLowPowerIdle(void);
+void LPM_EnterSuspend(void);
+void LPM_EnterSNVS(void);
 
 #if defined(__cplusplus)
 }

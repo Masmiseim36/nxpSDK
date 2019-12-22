@@ -1,135 +1,114 @@
-/*******************************************************************************
-*
-* Copyright 2015 Freescale Semiconductor, Inc.
-*
-* This software is owned or controlled by Freescale Semiconductor.
-* Use of this software is governed by the Freescale License
-* distributed with this Material.
-* See the LICENSE file distributed for more details.
-*
-*
-****************************************************************************//*!
-*
-* @file     freemaster_cfg.h
-*
-* @brief    FreeMASTER Serial Communication Driver configuration file
-*
-******************************************************************************/
-#ifndef _FREEMASTER_CFG_H_
-#define _FREEMASTER_CFG_H_
+/*
+ * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
+ * Copyright 2018-2019 NXP
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
+ * FreeMASTER Communication Driver - User Configuration File
+ */
 
-/******************************************************************************
-* Select interrupt or poll-driven serial communication
-******************************************************************************/
+#ifndef __FREEMASTER_CFG_H
+#define __FREEMASTER_CFG_H
 
-#define FMSTR_LONG_INTR    0        // complete message processing in interrupt
-#define FMSTR_SHORT_INTR   0        // SCI FIFO-queuing done in interrupt
-#define FMSTR_POLL_DRIVEN  1        // no interrupt needed, polling only
+////////////////////////////////////////////////////////////////////////////////
+// Definitions
+////////////////////////////////////////////////////////////////////////////////
 
-/*****************************************************************************
-* Select communication interface (SCI or CAN)
-******************************************************************************/
+#define FMSTR_PLATFORM_CORTEX_M 1   /* Cortex-M platform (see freemaster.h for list of all supported platforms) */
 
-#define FMSTR_SCI_TWOWIRE_ONLY (1)
-
-#if (APPLICATION_UART_TYPE == UART_TYPE)
-    #define FMSTR_USE_SCI      (1)               /* to selecet SCI communication interface */
-    #define FMSTR_SCI_BASE 	   (APPLICATION_UART) /* SCI base for UART */
-#elif (APPLICATION_UART_TYPE == LPUART_TYPE)
-    #define FMSTR_USE_LPUART   (1)               /* to selecet LPUART communication interface */
-    #define FMSTR_SCI_BASE 	   ((FMSTR_ADDR)(LPUART_Type *)((uint32_t)APPLICATION_UART+16)) /* SCI base for LPUART */
-#else
-    #define FMSTR_USE_SCI      (0)
-    #define FMSTR_USE_LPUART   (0)
-#endif
-
-#define FMSTR_USE_FLEXCAN (0)
-#define FMSTR_USE_PDBDM   (0) /* 1 for packet driven */ 
-
-#else
-
-#define FMSTR_SCI_BASE APLICATION_UART//0x4006A000u //  aplication uart basUART0 base
-
-//JL comment
-//#define FMSTR_SCI_TWOWIRE_ONLY   1
-
-#define FMSTR_USE_SCI     1 //0       // To selecet SCI communication interface 
-#define FMSTR_USE_FLEXCAN 0       // To selecet FlexCAN communication interface
-#define FMSTR_USE_PDBDM   0 // 1 for packet driven
-
-/******************************************************************************
-
-* Input/output communication buffer size
-******************************************************************************/
-
-#define FMSTR_COMM_BUFFER_SIZE 0    // set to 0 for "automatic"
-
-/******************************************************************************
-* Receive FIFO queue size (use with FMSTR_SHORT_INTR only)
-******************************************************************************/
-
-//JL comment 32
-#define FMSTR_COMM_RQUEUE_SIZE 0   // set to 0 for "default"
-
-/*****************************************************************************
-* Support for Application Commands 
-******************************************************************************/
-
-#define FMSTR_USE_APPCMD       0    // enable/disable App.Commands support
-#define FMSTR_APPCMD_BUFF_SIZE 32   // App.Command data buffer size
-#define FMSTR_MAX_APPCMD_CALLS 4    // how many app.cmd callbacks? (0=disable)
-
-/*****************************************************************************
-* Oscilloscope support
-******************************************************************************/
-
-#define FMSTR_USE_SCOPE       1     // enable/disable scope support
-#define FMSTR_MAX_SCOPE_VARS  8     // max. number of scope variables (2..8)
-
-/*****************************************************************************
-* Recorder support
-******************************************************************************/
-
-#define FMSTR_USE_RECORDER    1     // enable/disable recorder support
-#define FMSTR_MAX_REC_VARS    8     // max. number of recorder variables (2..8)
-#define FMSTR_REC_OWNBUFF     0     // use user-allocated rec. buffer (1=yes)
-
-// built-in recorder buffer (use when FMSTR_REC_OWNBUFF is 0)
-#define FMSTR_REC_BUFF_SIZE   4096  // built-in buffer size
-
-// recorder time base, specifies how often the recorder is called in the user app.
-//#define FMSTR_REC_TIMEBASE    FMSTR_REC_BASE_MILLISEC(0) // 0 = "unknown"
-#define FMSTR_REC_TIMEBASE    FMSTR_REC_BASE_MICROSEC(50) // 0 = "unknown"
+//! Set the demo configuration
+#define FMSTR_DEMO_ENOUGH_ROM  1    /* Platform has enough ROM to show most of the FreeMASTER features */
+#define FMSTR_DEMO_LARGE_ROM   1    /* Platform has large ROM enough to store the extended data structures used in FreeMASTER demo */
+#define FMSTR_DEMO_SUPPORT_I64 1    /* support for long long type */
+#define FMSTR_DEMO_SUPPORT_FLT 1    /* support for float type */
+#define FMSTR_DEMO_SUPPORT_DBL 1    /* support for double type */
 
 
-/*****************************************************************************
-* Target-side address translation (TSA)
-******************************************************************************/
+//! Enable/Disable FreeMASTER functionalities
+#define FMSTR_DISABLE           0   //!< To disable all FreeMASTER functionalities
 
-#define FMSTR_USE_TSA         0     // enable TSA functionality
-//JL comment 0
-#define FMSTR_USE_TSA_SAFETY  1     // enable access to TSA variables only
-//JL comment 0
-#define FMSTR_USE_TSA_INROM   1     // TSA tables declared as const (put to ROM)
+//! Select interrupt or poll-driven serial communication
+#define FMSTR_LONG_INTR         0   //!< Complete message processing in interrupt
+#define FMSTR_SHORT_INTR        0   //!< Queuing done in interrupt
+#define FMSTR_POLL_DRIVEN       1   //!< No interrupt needed, polling only
 
-/*****************************************************************************
-* Enable/Disable read/write memory commands
-******************************************************************************/
+//! Select communication interface
 
-#define FMSTR_USE_READMEM      1    // enable read memory commands
-#define FMSTR_USE_WRITEMEM     1    // enable write memory commands
-#define FMSTR_USE_WRITEMEMMASK 1    // enable write memory bits commands
+//! List of implemented standard FreeMASTER transports and its drivers
+//!< FMSTR_SERIAL   -   Standard serial transport protocol (Used by various types of UART peripherals as USB CDC implementation)
+//!<    FMSTR_SERIAL_MCUX_UART   -   MCUXSDK driver for UART peripheral
+//!<    FMSTR_SERIAL_MCUX_LPUART -   MCUXSDK driver for LPUART peripheral
+//!<    FMSTR_SERIAL_MCUX_USART  -   MCUXSDK driver for USART peripheral
+//!<    FMSTR_SERIAL_MCUX_MINIUSART -MCUXSDK driver for MINIUSART peripheral
+//!<    FMSTR_SERIAL_MCUX_USB    -   MCUXSDK driver for USB peripheral with CDC class
+//!< FMSTR_CAN      -   Standard CAN transport protocol (Used by various types of CAN peripherals)
+//!<    FMSTR_CAN_MCUX_FLEXCAN   -   MCUXSDK driver for FlexCAN peripheral
+//!<    FMSTR_CAN_MCUX_MCAN      -   MCUXSDK driver for MCAN peripheral
+//!<    FMSTR_CAN_MCUX_MSCAN     -   MCUXSDK driver for msCAN peripheral
+//!< FMSTR_PDBDM    -   Packet Driven BDM (Background debug memory access using JTAG, SWD or BDM debug probes). This transport does not use low-level driver.
 
-/*****************************************************************************
-* Enable/Disable read/write variable commands (a bit faster than Read Mem)
-******************************************************************************/
+#define FMSTR_TRANSPORT         FMSTR_SERIAL    //!< Use serial transport layer */
+#define FMSTR_SERIAL_DRV        FMSTR_SERIAL_MCUX_LPUART //!< Use serial driver for LPUART */
 
-#define FMSTR_USE_READVAR      0    // enable read variable fast commands
-#define FMSTR_USE_WRITEVAR     0    // enable write variable fast commands
-#define FMSTR_USE_WRITEVARMASK 0    // enable write variable bits fast commands
+//! Define communication interface base address or leave undefined for runtime setting
+// #undef FMSTR_SERIAL_BASE   //!< Serial base will be assigned in runtime (when FMSTR_USE_UART)
+// #undef FMSTR_CAN_BASE   //!< CAN base will be assigned in runtime (when FMSTR_USE_FLEXCAN)
 
-//JL comment the whole line
-//#define FMSTR_BUFFER_ACCESS_BY_FUNCT 1
+//! FlexCAN-specific, communication message buffers
+#define FMSTR_FLEXCAN_TXMB      0
+#define FMSTR_FLEXCAN_RXMB      1
+
+//! Input/output communication buffer size
+#define FMSTR_COMM_BUFFER_SIZE  0   //!< Set to 0 for "automatic"
+
+//! Receive FIFO queue size (use with FMSTR_SHORT_INTR only)
+#define FMSTR_COMM_RQUEUE_SIZE  32  //!< Set to 0 for "default"
+
+//! Support for Application Commands
+#define FMSTR_USE_APPCMD        1  //!< Enable/disable App.Commands support
+#define FMSTR_APPCMD_BUFF_SIZE  32  //!< App.Command data buffer size
+#define FMSTR_MAX_APPCMD_CALLS  4   //!< How many app.cmd callbacks? (0=disable)
+
+//! Oscilloscope support
+#define FMSTR_USE_SCOPE         1   //!< Specify number of supported oscilloscopes
+#define FMSTR_MAX_SCOPE_VARS    8   //!< Specify maximum number of scope variables per one oscilloscope
+
+//! Recorder support
+#define FMSTR_USE_RECORDER      1   //!< Specify number of supported recorders
+
+//! Built-in recorder buffer
+#define FMSTR_REC_BUFF_SIZE     1024    //!< Built-in buffer size. Set to zero to disable using embedded buffer for recorder 0.
+
+//! Recorder time base, specifies how often the recorder is called in the user app.
+#define FMSTR_REC_TIMEBASE      FMSTR_REC_BASE_MILLISEC(0)  //!< 0 = "unknown"
+#define FMSTR_REC_FLOAT_TRIG    1   //!< Enable/disable floating point triggering
+
+//!< Target-side address translation (TSA)
+#define FMSTR_USE_TSA           0   //!< Enable TSA functionality
+#define FMSTR_USE_TSA_INROM     1   //!< TSA tables declared as const (put to ROM)
+#define FMSTR_USE_TSA_SAFETY    1   //!< Enable/Disable TSA memory protection
+#define FMSTR_USE_TSA_DYNAMIC   1   //!< Enable/Disable TSA entries to be added also in runtime
+
+//!< Pipes as data streaming over FreeMASTER protocol
+#define FMSTR_USE_PIPES         3   //!< Specify number of supported pipe objects
+
+//!< Enable/Disable read/write memory commands
+#define FMSTR_USE_READMEM       1   //!< Enable read memory commands
+#define FMSTR_USE_WRITEMEM      1   //!< Enable write memory commands
+#define FMSTR_USE_WRITEMEMMASK  1   //!< Enable write memory bits commands
+
+// Define password for access levels to protect them. AVOID SHORT PASSWORDS in production version.
+// Passwords should be at least 20 characters long to prevent dictionary attacks.
+// #define FMSTR_RESTRICTED_ACCESS_RWF_PASSWORD  "rwf"
+// #define FMSTR_RESTRICTED_ACCESS_RW_PASSWORD   "rw"
+// #define FMSTR_RESTRICTED_ACCESS_R_PASSWORD    "r"
+
+// Storing cleartext passwords in Flash memory is not safe, consider storing their SHA1 hash instead
+// Even with this option, the hash must be generated from reasonably complex password to prevent dictionary attack.
+#define FMSTR_USE_HASHED_PASSWORDS  0  //!< When non-zero, the passwords above are specified as a pointer to 20-byte SHA1 hash of password text
 
 #endif /* __FREEMASTER_CFG_H */
 
+////////////////////////////////////////////////////////////////////////////////
+// EOF
+////////////////////////////////////////////////////////////////////////////////

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2013-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -126,7 +126,7 @@ enum _secure_commands
                                   HAS_CMD(kCommandTag_Reset) | HAS_CMD(kCommandTag_SetProperty) |
                                   HAS_CMD(kCommandTag_FlashEraseAllUnsecure) | HAS_CMD(kCommandTag_ReceiveSbFile)
 #if BL_FEATURE_KEY_PROVISIONING
-                                  | HAS_CMD(kCommandTag_KeyProvisioning) 
+                                  | HAS_CMD(kCommandTag_KeyProvisioning)
 #endif // BL_FEATURE_KEY_PROVISIONING
                                   )
 };
@@ -247,7 +247,7 @@ command_interface_t g_commandInterface = { bootloader_command_init, bootloader_c
                                            (command_handler_entry_t *)&g_commandHandlerTable, &g_commandData };
 
 #if BL_FEATURE_EXPAND_PACKET_SIZE
-static uint8_t s_dataProducerPacket[kMaxBootloaderPacketSize];
+static uint32_t s_dataProducerPacket[kMaxBootloaderPacketSize / sizeof(uint32_t)];
 #endif // BL_FEATURE_EXPAND_PACKET_SIZE
 
 #if BL_FEATURE_KEY_PROVISIONING
@@ -450,7 +450,7 @@ void handle_reliable_update(uint8_t *packet, uint32_t packetLength)
 
     // A system reset is needed, For HW implementation swap command will only take
     //  effect after reset; For SW implementation, reset makes sure that behavior is consistent
-    if (status == kStatus_ReliableUpdateSuccess)
+    if (status == kStatus_ReliableUpdateSuccess || status == kStatus_ReliableUpdateSwapTest)
     {
         // Wait for the ack from the host to the generic response
         g_bootloaderContext.activePeripheral->packetInterface->finalize(g_bootloaderContext.activePeripheral);
@@ -483,12 +483,12 @@ void handle_flash_erase_all(uint8_t *packet, uint32_t packetLength)
 #if ((!BL_FEATURE_QSPI_MODULE) && (!BL_FEATURE_FAC_ERASE) && (!BL_FEATURE_EXPAND_MEMORY) && \
      (!BL_FEATURE_HAS_NO_INTERNAL_FLASH))
     status = flash_mem_erase_all();
-#if BL_FEATURE_SUPPORT_DFLASH 
+#if BL_FEATURE_SUPPORT_DFLASH
     if (g_bootloaderContext.dflashDriverInterface != NULL)
     {
-        status += flexNVM_mem_erase_all();   
+        status += flexNVM_mem_erase_all();
     }
-#endif // BL_FEATURE_SUPPORT_DFLASH    
+#endif // BL_FEATURE_SUPPORT_DFLASH
 #else
     switch (commandPacket->memoryId)
     {
@@ -496,12 +496,12 @@ void handle_flash_erase_all(uint8_t *packet, uint32_t packetLength)
 #if BL_FEATURE_FAC_ERASE
         case kMemoryInternal:
             status = flash_mem_erase_all(kFlashEraseAllOption_Blocks);
-#if BL_FEATURE_SUPPORT_DFLASH 
+#if BL_FEATURE_SUPPORT_DFLASH
             if (g_bootloaderContext.dflashDriverInterface != NULL)
             {
-                status += flexNVM_mem_erase_all();  
+                status += flexNVM_mem_erase_all();
             }
-#endif // BL_FEATURE_SUPPORT_DFLASH             
+#endif // BL_FEATURE_SUPPORT_DFLASH
             break;
         case kMemoryFlashExecuteOnly:
             status = flash_mem_erase_all(kFlashEraseAllOption_ExecuteOnlySegments);
@@ -509,12 +509,12 @@ void handle_flash_erase_all(uint8_t *packet, uint32_t packetLength)
 #else
         case kMemoryInternal:
             status = flash_mem_erase_all();
-#if BL_FEATURE_SUPPORT_DFLASH 
+#if BL_FEATURE_SUPPORT_DFLASH
             if (g_bootloaderContext.dflashDriverInterface != NULL)
             {
-                status += flexNVM_mem_erase_all();   
+                status += flexNVM_mem_erase_all();
             }
-#endif // BL_FEATURE_SUPPORT_DFLASH             
+#endif // BL_FEATURE_SUPPORT_DFLASH
             break;
 #endif // BL_FEATURE_FAC_ERASE
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
@@ -582,12 +582,12 @@ void handle_flash_erase_all_unsecure(uint8_t *packet, uint32_t packetLength)
 // Call flash erase all unsecure implementation.
 #if BL_FEATURE_ERASEALL_UNSECURE
     status = flash_mem_erase_all_unsecure();
-#if BL_FEATURE_SUPPORT_DFLASH 
+#if BL_FEATURE_SUPPORT_DFLASH
     if (g_bootloaderContext.dflashDriverInterface != NULL)
     {
-        status += flexNVM_mem_erase_all_unsecure();   
+        status += flexNVM_mem_erase_all_unsecure();
     }
-#endif // BL_FEATURE_SUPPORT_DFLASH     
+#endif // BL_FEATURE_SUPPORT_DFLASH
 #endif //BL_FEATURE_ERASEALL_UNSECURE
 
     send_generic_response(status, commandPacket->commandTag);
@@ -1038,7 +1038,7 @@ status_t handle_data_producer(bool *hasMoreData)
     // Initialize the data packet to send.
     uint32_t packetSize;
 #if BL_FEATURE_EXPAND_PACKET_SIZE
-    uint8_t *packet = s_dataProducerPacket;
+    uint8_t *packet = (uint8_t*)&s_dataProducerPacket;
     uint32_t packetBufferSize =
         g_bootloaderContext.activePeripheral->packetInterface->getMaxPacketSize(g_bootloaderContext.activePeripheral);
     packetSize = MIN(packetBufferSize, remaining);

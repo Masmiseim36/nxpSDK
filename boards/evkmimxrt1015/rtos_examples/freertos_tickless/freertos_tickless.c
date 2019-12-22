@@ -19,7 +19,7 @@
 #endif
 #include "pin_mux.h"
 #include "clock_config.h"
-#if configUSE_TICKLESS_IDLE
+#if configUSE_TICKLESS_IDLE == 2
 #include "fsl_gpt.h"
 #endif
 /*******************************************************************************
@@ -58,6 +58,7 @@ SemaphoreHandle_t xSWSemaphore = NULL;
  * Code
  ******************************************************************************/
 
+#if configUSE_TICKLESS_IDLE == 2
 /*!
  * @brief Interrupt service fuction of GPT timer.
  *
@@ -89,6 +90,7 @@ IRQn_Type vPortGetGptIrqn(void)
 {
     return GPT1_IRQn;
 }
+#endif
 /*!
  * @brief Main function
  */
@@ -104,7 +106,7 @@ int main(void)
 #endif
     };
 #endif
-#if configUSE_TICKLESS_IDLE
+#if configUSE_TICKLESS_IDLE == 2
     gpt_config_t gptConfig;
 #endif
     BOARD_ConfigMPU();
@@ -112,7 +114,7 @@ int main(void)
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
 
-#if configUSE_TICKLESS_IDLE
+#if configUSE_TICKLESS_IDLE == 2
     GPT_GetDefaultConfig(&gptConfig);
 
     /* Initialize GPT module */
@@ -169,6 +171,7 @@ int main(void)
         while (1)
             ;
     }
+    PRINTF("\r\nTick count :\r\n");
     /*Task Scheduler*/
     vTaskStartScheduler();
     for (;;)
@@ -178,7 +181,6 @@ int main(void)
 /* Tickless Task */
 static void Tickless_task(void *pvParameters)
 {
-    PRINTF("\r\nTick count :\r\n");
     for (;;)
     {
         PRINTF("%d\r\n", xTaskGetTickCount());
@@ -194,7 +196,7 @@ static void SW_task(void *pvParameters)
     {
         if (xSemaphoreTake(xSWSemaphore, portMAX_DELAY) == pdTRUE)
         {
-            PRINTF("CPU waked up by EXT interrupt\r\n");
+            PRINTF("CPU woken up by external interrupt\r\n");
         }
     }
 }

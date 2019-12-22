@@ -20,11 +20,11 @@
 #include "amclib.h"
 
 /* RTCESL float libraries */
-#include "mlib_FP.h"
-#include "gflib_FP.h"
-#include "gdflib_FP.h"
-#include "gmclib_FP.h"
-#include "amclib_FP.h"
+#include "mlib_fp.h"
+#include "gflib_fp.h"
+#include "gdflib_fp.h"
+#include "gmclib_fp.h"
+#include "amclib_fp.h"
 
 /*******************************************************************************
  * Definitions

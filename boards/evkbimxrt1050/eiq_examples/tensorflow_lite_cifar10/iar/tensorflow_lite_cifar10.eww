@@ -5,15 +5,8 @@
       <name>all</name>
       <member>
         <project>tensorflow_lite_cifar10</project>
-        <configuration>flexspi_nor_sdram_debug</configuration>
-      </member>
-      <member>
-        <project>tensorflow_lite_cifar10</project>
         <configuration>flexspi_nor_sdram_release</configuration>
       </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>flexspi_nor_sdram_debug</name>
       <member>
         <project>tensorflow_lite_cifar10</project>
         <configuration>flexspi_nor_sdram_debug</configuration>
@@ -24,6 +17,13 @@
       <member>
         <project>tensorflow_lite_cifar10</project>
         <configuration>flexspi_nor_sdram_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flexspi_nor_sdram_debug</name>
+      <member>
+        <project>tensorflow_lite_cifar10</project>
+        <configuration>flexspi_nor_sdram_debug</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

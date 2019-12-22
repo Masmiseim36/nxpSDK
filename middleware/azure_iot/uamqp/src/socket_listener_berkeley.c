@@ -9,7 +9,7 @@
 #include "lwip/errno.h"
 #include "azure_c_shared_utility/gballoc.h"
 #include "azure_uamqp_c/socket_listener.h"
-#include "azure_c_shared_utility/optimize_size.h"
+#include "azure_macro_utils/macro_utils.h"
 #include "azure_c_shared_utility/socketio.h"
 #include "lwip/sockets.h"
 
@@ -52,7 +52,7 @@ int socketlistener_start(SOCKET_LISTENER_HANDLE socket_listener, ON_SOCKET_ACCEP
     if (socket_listener == NULL)
     {
         LogError("NULL socket_listener");
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {
@@ -62,7 +62,7 @@ int socketlistener_start(SOCKET_LISTENER_HANDLE socket_listener, ON_SOCKET_ACCEP
         if (socket_listener_instance->socket == -1)
         {
             LogError("Creating socket failed");
-            result = __FAILURE__;
+            result = MU_FAILURE;
         }
         else
         {
@@ -82,14 +82,14 @@ int socketlistener_start(SOCKET_LISTENER_HANDLE socket_listener, ON_SOCKET_ACCEP
                 LogError("Failure: fcntl failure.");
                 close(socket_listener_instance->socket);
                 socket_listener_instance->socket = -1;
-                result = __FAILURE__;
+                result = MU_FAILURE;
             }
             else if (bind(socket_listener_instance->socket, (const struct sockaddr*)&sa, sizeof(sa)) == -1)
             {
                 LogError("bind socket failed");
                 (void)close(socket_listener_instance->socket);
                 socket_listener_instance->socket = -1;
-                result = __FAILURE__;
+                result = MU_FAILURE;
             }
             else
             {
@@ -98,7 +98,7 @@ int socketlistener_start(SOCKET_LISTENER_HANDLE socket_listener, ON_SOCKET_ACCEP
                     LogError("listen on socket failed");
                     (void)close(socket_listener_instance->socket);
                     socket_listener_instance->socket = -1;
-                    result = __FAILURE__;
+                    result = MU_FAILURE;
                 }
                 else
                 {
@@ -118,7 +118,7 @@ int socketlistener_stop(SOCKET_LISTENER_HANDLE socket_listener)
     if (socket_listener == NULL)
     {
         LogError("NULL socket_listener");
-        result = __FAILURE__;
+        result = MU_FAILURE;
     }
     else
     {

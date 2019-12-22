@@ -18,7 +18,17 @@
  * Definitions
  ******************************************************************************/
 /*! @brief Definition to determine whether enable dimming. */
+#ifndef LED_DIMMING_ENABLEMENT
 #define LED_DIMMING_ENABLEMENT (0U) /*!< Enable or disable the dimming feature */
+#endif
+
+/*! @brief Definition to determine whether enable color wheel. */
+#ifndef LED_COLOR_WHEEL_ENABLEMENT
+#define LED_COLOR_WHEEL_ENABLEMENT (0U) /*!< Enable or disable the color wheel feature */
+#endif
+
+/*! @brief The handle of LED */
+typedef void *led_handle_t;
 
 /*! @brief Definition of LED handle size. */
 #if (defined(LED_DIMMING_ENABLEMENT) && (LED_DIMMING_ENABLEMENT > 0U))
@@ -28,6 +38,17 @@
 /* HAL_GPIO_HANDLE_SIZE * 3 + LED dedicated size */
 #define LED_HANDLE_SIZE ((16U * 3U) + 36U)
 #endif
+
+#define LED_HANDLE_DEFINE(name) uint32_t g_ledHandle##name[((LED_HANDLE_SIZE - 1U) >> 2U) + 1U];
+/*!                                                                      \
+ * @brief Gets the memory buffer pointer                                 \
+ *                                                                       \
+ * This macro is used to get the memory buffer pointer. The macro should \
+ * not be used before the macro MEM_BLOCK_BUFFER_DEFINE is used.         \
+ *                                                                       \
+ * @param name The memory name string of the buffer.                     \
+ */
+#define LED_HANDLE(name) ((led_handle_t)&g_ledHandle##name[0])
 
 /*! @brief Definition of LED timer interval,unit is ms. */
 #define LED_TIMER_INTERVAL (100U)
@@ -41,9 +62,6 @@
 /*! @brief Definition of LED blip interval,unit is ms. */
 #define LED_BLIP_INTERVAL (250U)
 
-/*! @brief The handle of LED */
-typedef void *led_handle_t;
-
 /*! @brief The status type of LED */
 typedef enum _led_status
 {
@@ -56,7 +74,9 @@ typedef enum _led_status
 typedef enum _led_flash_type
 {
     kLED_FlashOneColor = 0x00U, /*!< Fast with one color */
-    kLED_FlashColorWheel,       /*!< Fast with color wheel */
+#if (defined(LED_COLOR_WHEEL_ENABLEMENT) && (LED_COLOR_WHEEL_ENABLEMENT > 0U))
+    kLED_FlashColorWheel, /*!< Fast with color wheel */
+#endif                    /* (defined(LED_COLOR_WHEEL_ENABLEMENT) && (LED_COLOR_WHEEL_ENABLEMENT > 0U)) */
 } led_flash_type_t;
 
 /*! @brief The color struct of LED */
@@ -163,8 +183,8 @@ extern "C" {
  * Example below shows how to use this API to configure the LED.
  * For monochrome LED,
  *  @code
- *   uint8_t s_ledMonochromeHandleBuffer[LED_HANDLE_SIZE];
- *   led_handle_t s_ledMonochromeHandle = &s_ledMonochromeHandleBuffer[0];
+ *   uint32_t s_ledMonochromeHandleBuffer[((LED_HANDLE_SIZE + sizeof(uint32_t) - 1) / sizeof(uitn32_t))];
+ *   led_handle_t s_ledMonochromeHandle = (led_handle_t)&s_ledMonochromeHandleBuffer[0];
  *   led_config_t ledMonochromeConfig;
  *   ledMonochromeConfig.type = kLED_TypeMonochrome;
  *   ledMonochromeConfig.ledMonochrome.monochromePin.dimmingEnable = 0;
@@ -175,8 +195,8 @@ extern "C" {
  *  @endcode
  * For rgb LED,
  *  @code
- *   uint8_t s_ledRgbHandleBuffer[LED_HANDLE_SIZE];
- *   led_handle_t s_ledRgbHandle = &s_ledRgbHandleBuffer[0];
+ *   uint32_t s_ledRgbHandleBuffer[((LED_HANDLE_SIZE + sizeof(uint32_t) - 1) / sizeof(uitn32_t))];
+ *   led_handle_t s_ledRgbHandle = (led_handle_t)&s_ledRgbHandleBuffer[0];
  *   led_config_t ledRgbConfig;
  *   ledRgbConfig.type = kLED_TypeRgb;
  *   ledRgbConfig.ledRgb.redPin.dimmingEnable = 0;
@@ -195,8 +215,8 @@ extern "C" {
  *  @endcode
  * For dimming monochrome LED,
  *  @code
- *   uint8_t s_ledMonochromeHandleBuffer[LED_HANDLE_SIZE];
- *   led_handle_t s_ledMonochromeHandle = &s_ledMonochromeHandleBuffer[0];
+ *   uint32_t s_ledMonochromeHandleBuffer[((LED_HANDLE_SIZE + sizeof(uint32_t) - 1) / sizeof(uitn32_t))];
+ *   led_handle_t s_ledMonochromeHandle = (led_handle_t)&s_ledMonochromeHandleBuffer[0];
  *   led_config_t ledMonochromeConfig;
  *   ledMonochromeConfig.type = kLED_TypeMonochrome;
  *   ledMonochromeConfig.ledMonochrome.monochromePin.dimmingEnable = 1;
@@ -208,6 +228,7 @@ extern "C" {
  *  @endcode
  *
  * @param ledHandle Pointer to point to a memory space of size #LED_HANDLE_SIZE allocated by the caller.
+ * The handle should be 4 byte aligned, because unaligned access does not support on some devices.
  * @param ledConfig Pointer to user-defined configuration structure.
  * @retval kStatus_LED_Error An error occurred.
  * @retval kStatus_LED_Success LED initialization succeed.

@@ -12,8 +12,8 @@
 #include "fsl_debug_console.h"
 #include "fsl_sai_edma.h"
 #include "fsl_sd.h"
-#include "diskio.h"
 #include "ff.h"
+#include "diskio.h"
 #include "ffconf.h"
 #include "fsl_cs42888.h"
 #include "fsl_sd_disk.h"
@@ -171,10 +171,10 @@ static uint32_t volatile s_emptyBlock = BUFFER_NUM;
 static FATFS s_fileSystem; /* File system object */
 static FIL s_fileObject;
 static FILINFO s_fileInfo;
-static volatile bool s_cardInserted          = false;
-static volatile bool s_saiTransferFinish     = false;
-uint8_t codecHandleBuffer[CODEC_HANDLE_SIZE] = {0U};
-codec_handle_t *codecHandle                  = (codec_handle_t *)codecHandleBuffer;
+static volatile bool s_cardInserted      = false;
+static volatile bool s_saiTransferFinish = false;
+codec_handle_t codecHandle;
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -188,6 +188,7 @@ static void BOARD_USDHCClockConfiguration(void)
     CLOCK_SetMux(kCLOCK_Usdhc1Mux, 1U);
 }
 
+/*${function:start}*/
 void BOARD_EnableSaiMclkOutput(bool enable)
 {
     if (enable)
@@ -504,7 +505,7 @@ static status_t DEMO_MountFileSystem(void)
 
 static void DEMO_InitCS42888(void)
 {
-    if (CODEC_Init(codecHandle, &boardCodecConfig) != kStatus_Success)
+    if (CODEC_Init(&codecHandle, &boardCodecConfig) != kStatus_Success)
     {
         PRINTF("CODEC_Init failed!\r\n");
     }

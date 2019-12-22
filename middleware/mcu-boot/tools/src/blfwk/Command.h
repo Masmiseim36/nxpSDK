@@ -60,9 +60,11 @@ const cmd_t kCommand_FlashProgramOnce(kCommandTag_FlashProgramOnce, 0x00002000, 
 const cmd_t kCommand_FlashReadOnce(kCommandTag_FlashReadOnce, 0x00004000, "flash-read-once");
 const cmd_t kCommand_FlashReadResource(kCommandTag_FlashReadResource, 0x00008000, "flash-read-resource");
 const cmd_t kCommand_ConfigureMemory(kCommandTag_ConfigureMemory, 0x00010000, "configure-memory");
-const cmd_t kCommand_ReliableUpdate(kCommandTag_ReliableUpdate, 0x00100000, "reliable-update");
-const cmd_t kCommand_GenerateKeyBlob(kCommandTag_GenerateKeyBlob, 0x00200000, "generate-key-blob");
-const cmd_t kCommand_KeyProvisoning(kCommandTag_KeyProvisoning, 0x00400000, "key-provisioning");
+const cmd_t kCommand_ReliableUpdate(kCommandTag_ReliableUpdate, 0x00020000, "reliable-update");
+const cmd_t kCommand_GenerateKeyBlob(kCommandTag_GenerateKeyBlob, 0x00040000, "generate-key-blob");
+const cmd_t kCommand_Reserved(0x00, 0x00080000, "reserved");
+const cmd_t kCommand_KeyProvisioning(kCommandTag_KeyProvisioning, 0x00100000, "key-provisioning");
+// Command for Bus Pal.
 const cmd_t kCommand_ConfigureI2c(kCommandTag_ConfigureI2c, 0x00020000, "i2c");
 const cmd_t kCommand_ConfigureSpi(kCommandTag_ConfigureSpi, 0x00040000, "spi");
 const cmd_t kCommand_ConfigureCan(kCommandTag_ConfigureCan, 0x00080000, "can");
@@ -73,10 +75,11 @@ const cmd_t kCommand_ListMemory(0x00, 0x00000000, "list-memory");
 // to avoid the confusion that efuse is not a part of internal flash.
 const cmd_t kCommand_EfuseProgramOnce(0x00, 0x00000000, "efuse-program-once");
 const cmd_t kCommand_EfuseReadOnce(0x00, 0x00000000, "efuse-read-once");
+// load-image doesn't sent any command, but data packet directly.
+const cmd_t kCommand_LoadImage(0x00, 0x00000000, "load-image");
 const cmd_t kCommand_ProgramAESKey(0x00, 0x00000000, "program-aeskey");
 
-
-const array<const cmd_t, 25> kCommands = { kCommand_FlashEraseAll,
+const array<const cmd_t, 26> kCommands = { kCommand_FlashEraseAll,
                                            kCommand_FlashEraseRegion,
                                            kCommand_ReadMemory,
                                            kCommand_WriteMemory,
@@ -95,11 +98,12 @@ const array<const cmd_t, 25> kCommands = { kCommand_FlashEraseAll,
                                            kCommand_ConfigureMemory,
                                            kCommand_ReliableUpdate,
                                            kCommand_GenerateKeyBlob,
-                                           kCommand_KeyProvisoning,
-                                           kCommand_FlashImage,
+                                           kCommand_Reserved,
+                                           kCommand_KeyProvisioning,
                                            kCommand_ConfigureI2c,
                                            kCommand_ConfigureSpi,
                                            kCommand_ConfigureCan,
+                                           kCommand_FlashImage,
                                            kCommand_ListMemory };
 //@}
 
@@ -126,8 +130,9 @@ const property_t kProperty_FlashSizeInBytes(kPropertyTag_FlashSizeInBytes, "flas
 const property_t kProperty_FlashSectorSize(kPropertyTag_FlashSectorSize, "flash-sector-size");
 const property_t kProperty_FlashBlockCount(kPropertyTag_FlashBlockCount, "flash-block-count");
 const property_t kProperty_AvailableCommands(kPropertyTag_AvailableCommands, "available-commands");
-const property_t kProperty_CrcCheckStatus(kPropertyTag_CrcCheckStatus, "crc-check-status");
+const property_t kProperty_CheckStatus(kPropertyTag_CheckStatus, "check-status");
 const property_t kProperty_Reserved9(kPropertyTag_Reserved9, "reserved");
+
 const property_t kProperty_VerifyWrites(kPropertyTag_VerifyWrites, "verify-writes");
 const property_t kProperty_MaxPacketSize(kPropertyTag_MaxPacketSize, "max-packet-size");
 const property_t kProperty_ReservedRegions(kPropertyTag_ReservedRegions, "reserved-regions");
@@ -135,7 +140,7 @@ const property_t kProperty_Reserved13(kPropertyTag_Reserved13, "reserved");
 const property_t kProperty_RAMStartAddress(kPropertyTag_RAMStartAddress, "ram-start-address");
 const property_t kProperty_RAMSizeInBytes(kPropertyTag_RAMSizeInBytes, "ram-size-in-bytes");
 const property_t kProperty_SystemDeviceId(kPropertyTag_SystemDeviceId, "system-device-id");
-const property_t kProperty_FlashSecurityState(kPropertyTag_FlashSecurityState, "flash-security-state");
+const property_t kProperty_FlashSecurityState(kPropertyTag_SecurityState, "security-state");
 const property_t kProperty_UniqueDeviceId(kPropertyTag_UniqueDeviceId, "unique-device-id");
 const property_t kProperty_FacSupport(kPropertyTag_FacSupport, "flash-fac-support");
 const property_t kProperty_FlashAccessSegmentSize(kPropertyTag_FlashAccessSegmentSize, "flash-access-segment-size");
@@ -156,7 +161,7 @@ const PropertyArray kProperties = { kProperty_ListProperties,         kProperty_
                                     kProperty_AvailablePeripherals,   kProperty_FlashStartAddress,
                                     kProperty_FlashSizeInBytes,       kProperty_FlashSectorSize,
                                     kProperty_FlashBlockCount,        kProperty_AvailableCommands,
-                                    kProperty_CrcCheckStatus,         kProperty_Reserved9,
+                                    kProperty_CheckStatus,			  kProperty_Reserved9,
                                     kProperty_VerifyWrites,           kProperty_MaxPacketSize,
                                     kProperty_ReservedRegions,        kProperty_Reserved13,
                                     kProperty_RAMStartAddress,        kProperty_RAMSizeInBytes,
@@ -740,6 +745,8 @@ public:
     //!
     //! Calls the data provide to get the data to send.
     uint8_t *sendTo(Packetizer &device, uint32_t *bytesWritten, Progress *progress);
+    //! Calls the data provide to get the data to send.
+    uint8_t *sendTo(Packetizer &device, uint32_t *bytesWritten, Progress *progress, bool hasResponse);
 
     //! @brief Receive data packet from device.
     //!
@@ -1231,6 +1238,44 @@ protected:
 };
 
 /*!
+ * @brief Represents the bootloader Load Image command.
+ */
+class LoadImage : public Command
+{
+public:
+    //! @brief Constructor that takes an argument vector.
+    LoadImage(const string_vector_t *argv)
+        : Command(argv)
+        , m_dataFile()
+    {
+    }
+
+    //! @brief Constructor that takes a filename argument.
+    LoadImage(const char *const filename)
+        : Command(kCommand_LoadImage.name)
+        , m_dataFile(filename)
+    {
+    }
+
+    //! @brief Initialize.
+    virtual bool init();
+
+    //! @brief Send command to packetizer.
+    virtual void sendTo(Packetizer &packetizer);
+
+protected:
+    //! @brief Check response packet.
+    virtual bool processResponse(const uint8_t *packet)
+    {
+        // No command and response for LoadImage
+        return true;
+    }
+
+protected:
+    std::string m_dataFile; //!< SB file path.
+};
+
+/*!
  * @brief Represents the bootloader Execute command.
  */
 class Execute : public Command
@@ -1573,7 +1618,7 @@ protected:
     virtual bool processResponse(const uint8_t *packet)
     {
         return Command::processResponse(reinterpret_cast<const generic_response_packet_t *>(packet),
-                                        kCommandTag_KeyProvisoning);
+                                        kCommandTag_KeyProvisioning);
     }
 
 protected:

@@ -15,6 +15,10 @@
         <project>power_mode_switch_bm</project>
         <configuration>release</configuration>
       </member>
+      <member>
+        <project>power_mode_switch_bm</project>
+        <configuration>debug</configuration>
+      </member>
     </batchDefinition>
     <batchDefinition>
       <name>flexspi_nor_debug</name>
@@ -35,6 +39,13 @@
       <member>
         <project>power_mode_switch_bm</project>
         <configuration>release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>debug</name>
+      <member>
+        <project>power_mode_switch_bm</project>
+        <configuration>debug</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

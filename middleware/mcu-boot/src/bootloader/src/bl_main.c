@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2013-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,12 +8,12 @@
 
 #define exit exit_default
 #include <stdbool.h>
-#include "utilities/fsl_assert.h"
 #include "bootloader/bl_context.h"
 #include "bootloader/bl_peripheral.h"
 #include "bootloader/bl_shutdown_cleanup.h"
-#include "bootloader_common.h"
 #include "bootloader/bootloader.h"
+#include "bootloader_common.h"
+#include "utilities/fsl_assert.h"
 #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 #if !BL_DEVICE_IS_LPC_SERIES
 #include "fsl_flash.h"
@@ -21,11 +21,11 @@
 #include "flashiap_wrapper/fsl_flashiap_wrapper.h"
 #endif
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-#include "smc.h"
 #include "microseconds.h"
 #include "property/property.h"
-#include "utilities/vector_table_info.h"
+#include "smc.h"
 #include "utilities/fsl_rtos_abstraction.h"
+#include "utilities/vector_table_info.h"
 #if BL_FEATURE_CRC_CHECK
 #include "bootloader/bl_app_crc_check.h"
 #endif
@@ -139,8 +139,17 @@ static void get_user_application_entry(uint32_t *appEntry, uint32_t *appStack)
         *appStack = 0;
     }
 #else
+#if BL_FEATURE_RELIABLE_UPDATE
+    if (g_bootloaderContext.imageStart != 0xffffffffu)
+    {
+          uint32_t *appVectorTable = (uint32_t*)g_bootloaderContext.imageStart;
+          *appEntry = appVectorTable[kInitialPC];
+          *appStack = appVectorTable[kInitialSP];
+    }
+#else
     *appEntry = APP_VECTOR_TABLE[kInitialPC];
     *appStack = APP_VECTOR_TABLE[kInitialSP];
+#endif // BL_FEATURE_RELIABLE_UPDATE
 #endif //  FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL
 #endif // BL_TARGET_RAM
 }
@@ -500,15 +509,15 @@ static void bootloader_flash_init(void)
 {
     g_bootloaderContext.flashDriverInterface->flash_init(g_bootloaderContext.allFlashState);
 #if !BL_DEVICE_IS_LPC_SERIES
-    FTFx_CACHE_Init(g_bootloaderContext.allFlashCacheState);
+    (void)FTFx_CACHE_Init(g_bootloaderContext.allFlashCacheState);
 #endif
 #if BL_FEATURE_SUPPORT_DFLASH
     check_available_dFlash();
     if (g_bootloaderContext.dflashDriverInterface != NULL)
     {
-        g_bootloaderContext.dflashDriverInterface->flash_init(g_bootloaderContext.dFlashState);
+        (void)g_bootloaderContext.dflashDriverInterface->flash_init(g_bootloaderContext.dFlashState);
     }
-#endif // BL_FEATURE_SUPPORT_DFLASH    
+#endif // BL_FEATURE_SUPPORT_DFLASH
 }
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 
@@ -533,9 +542,6 @@ static void bootloader_init(void)
     // Init flash driver.
     bootloader_flash_init();
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-
-    // Load the user configuration data so that we can configure the clocks
-    g_bootloaderContext.propertyInterface->load_user_config();
 
 // Init QSPI module if needed
 #if BL_FEATURE_QSPI_MODULE
@@ -645,7 +651,8 @@ void exit(int arg)
 {
 }
 
-#if defined(__CC_ARM)
+
+#if defined(__CC_ARM) || (__ARMCC_VERSION)
 #define ITM_Port8(n) (*((volatile unsigned char *)(0xE0000000 + 4 * n)))
 #define ITM_Port16(n) (*((volatile unsigned short *)(0xE0000000 + 4 * n)))
 #define ITM_Port32(n) (*((volatile unsigned long *)(0xE0000000 + 4 * n)))
@@ -653,10 +660,6 @@ void exit(int arg)
 #define DEMCR (*((volatile unsigned long *)(0xE000EDFC)))
 #define TRCENA 0x01000000
 
-struct __FILE
-{
-    int handle; /* Add whatever needed */
-};
 FILE __stdout;
 FILE __stdin;
 
@@ -664,8 +667,7 @@ int fputc(int ch, FILE *f)
 {
     if (DEMCR & TRCENA)
     {
-        while (ITM_Port32(0) == 0)
-            ;
+        while (ITM_Port32(0) == 0);
         ITM_Port8(0) = ch;
     }
     return (ch);

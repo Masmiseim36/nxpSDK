@@ -14,14 +14,17 @@
 
 // internal/platform.h: a place to put platform specific code
 
+// File modified by NXP. Changes are described in file
+// /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes"
+
 #ifndef GEMMLOWP_INTERNAL_PLATFORM_H_
 #define GEMMLOWP_INTERNAL_PLATFORM_H_
 
 #ifdef _WIN32
-#include <windows.h>
 #include <malloc.h>
+#include <windows.h>
 #else
-#include <cstdlib>
+#include <stdlib.h>
 #include <time.h>
 #if !defined __ICCARM__ && !defined __ARMCC_VERSION
 #include <unistd.h>
@@ -79,8 +82,8 @@ inline int GetHardwareConcurrency(int max_threads) {
 inline double real_time_in_seconds() {
   __int64 wintime;
   GetSystemTimeAsFileTime((FILETIME *)&wintime);
-  wintime -= 116444736000000000i64;  // 1jan1601 to 1jan1970
-  return wintime / 10000000i64 + wintime % 10000000i64 * 100 * 1e-9;
+  wintime -= 116444736000000000LL;  // 1jan1601 to 1jan1970
+  return wintime / 10000000LL + wintime % 10000000LL * 100 * 1e-9;
 }
 
 #else

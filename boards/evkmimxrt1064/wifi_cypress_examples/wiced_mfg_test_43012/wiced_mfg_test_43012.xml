@@ -8,12 +8,13 @@
     <definition extID="component.serial_manager_uart.MIMXRT1064"/>
     <definition extID="device.MIMXRT1064_CMSIS.MIMXRT1064"/>
     <definition extID="device.MIMXRT1064_startup.MIMXRT1064"/>
-    <definition extID="middleware.amazon_freertos.freertos.MIMXRT1064"/>
-    <definition extID="middleware.amazon_freertos.freertos.heap_4.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-kernel.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-kernel.extension.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-kernel.heap_4.MIMXRT1064"/>
+    <definition extID="middleware.lwip.MIMXRT1064"/>
     <definition extID="middleware.sdmmc.common.MIMXRT1064"/>
     <definition extID="middleware.sdmmc.sdio.MIMXRT1064"/>
     <definition extID="middleware.sdmmc.usdhcadaptor.freertos.MIMXRT1064"/>
-    <definition extID="middleware.tcpip.lwip.MIMXRT1064"/>
     <definition extID="middleware.wifi_wiced.43012.MIMXRT1064"/>
     <definition extID="middleware.wifi_wiced.CYW943012CREF.MIMXRT1064"/>
     <definition extID="middleware.wifi_wiced.app.MIMXRT1064"/>
@@ -21,6 +22,8 @@
     <definition extID="middleware.wifi_wiced.wl_tool.43012.MIMXRT1064"/>
     <definition extID="platform.Include_common.MIMXRT1064"/>
     <definition extID="platform.Include_core_cm7.MIMXRT1064"/>
+    <definition extID="platform.Include_dsp.MIMXRT1064"/>
+    <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1064"/>
     <definition extID="platform.drivers.clock.MIMXRT1064"/>
     <definition extID="platform.drivers.common.MIMXRT1064"/>
     <definition extID="platform.drivers.igpio.MIMXRT1064"/>
@@ -29,8 +32,10 @@
     <definition extID="platform.drivers.lpuart_freertos.MIMXRT1064"/>
     <definition extID="platform.drivers.usdhc.MIMXRT1064"/>
     <definition extID="platform.drivers.xip_board.MIMXRT1064"/>
+    <definition extID="platform.drivers.xip_board_dcd.MIMXRT1064"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1064"/>
     <definition extID="platform.utilities.assert.MIMXRT1064"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1064"/>
     <definition extID="utility.debug_console.MIMXRT1064"/>
     <definition extID="iar"/>
     <definition extID="armgcc"/>
@@ -39,7 +44,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1064_wiced_mfg_test_43012" name="wiced_mfg_test_43012" category="wifi_examples" dependency="platform.drivers.clock.MIMXRT1064 middleware.amazon_freertos.freertos.heap_4.MIMXRT1064 middleware.tcpip.lwip.MIMXRT1064 middleware.wifi_wiced.CYW943012CREF.MIMXRT1064 platform.drivers.usdhc.MIMXRT1064 middleware.sdmmc.sdio.MIMXRT1064 middleware.sdmmc.usdhcadaptor.freertos.MIMXRT1064 middleware.wifi_wiced.app.MIMXRT1064 middleware.wifi_wiced.wl_tool.43012.MIMXRT1064 platform.drivers.lpuart_freertos.MIMXRT1064 platform.drivers.common.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 utility.debug_console.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 component.serial_manager.MIMXRT1064 component.serial_manager_uart.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 component.lists.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 platform.utilities.assert.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.xip_board.MIMXRT1064 middleware.amazon_freertos.freertos.MIMXRT1064 middleware.wifi_wiced.43012.MIMXRT1064 middleware.wifi_wiced.common.MIMXRT1064 middleware.sdmmc.common.MIMXRT1064 platform.Include_core_cm7.MIMXRT1064 platform.Include_common.MIMXRT1064">
+  <example id="evkmimxrt1064_wiced_mfg_test_43012" name="wiced_mfg_test_43012" category="wifi_examples" dependency="platform.drivers.cache_armv7_m7.MIMXRT1064 platform.drivers.clock.MIMXRT1064 middleware.amazon_freertos-kernel.heap_4.MIMXRT1064 middleware.lwip.MIMXRT1064 middleware.wifi_wiced.CYW943012CREF.MIMXRT1064 platform.drivers.usdhc.MIMXRT1064 middleware.sdmmc.sdio.MIMXRT1064 middleware.sdmmc.usdhcadaptor.freertos.MIMXRT1064 middleware.wifi_wiced.app.MIMXRT1064 middleware.wifi_wiced.wl_tool.43012.MIMXRT1064 platform.drivers.lpuart_freertos.MIMXRT1064 platform.drivers.common.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 utility.debug_console.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 component.serial_manager.MIMXRT1064 component.lists.MIMXRT1064 component.serial_manager_uart.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 platform.utilities.assert.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.xip_board.MIMXRT1064 platform.drivers.xip_board_dcd.MIMXRT1064 platform.Include_core_cm7.MIMXRT1064 platform.Include_common.MIMXRT1064 platform.Include_dsp.MIMXRT1064 middleware.amazon_freertos-kernel.MIMXRT1064 middleware.amazon_freertos-kernel.extension.MIMXRT1064 middleware.wifi_wiced.43012.MIMXRT1064 middleware.wifi_wiced.common.MIMXRT1064 middleware.sdmmc.common.MIMXRT1064 platform.utilities.misc_utilities.MIMXRT1064">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -47,8 +52,9 @@
       <memoryBlock addr="70000000" size="00400000" access="RO" type="Flash" id="PROGRAM_FLASH_MIMXRT1064xxxxA" name="PROGRAM_FLASH"/>
       <memoryBlock addr="20000000" size="00020000" access="RW" type="RAM" id="SRAM_DTC_MIMXRT1064xxxxA" name="SRAM_DTC"/>
       <memoryBlock addr="00000000" size="00020000" access="RW" type="RAM" id="SRAM_ITC_MIMXRT1064xxxxA" name="SRAM_ITC"/>
-      <memoryBlock addr="20200000" size="000C0000" access="RW" type="RAM" id="SRAM_OC_MIMXRT1064xxxxA" name="SRAM_OC"/>
-      <memoryBlock addr="80000000" size="02000000" access="RW" type="RAM" id="BOARD_SDRAM_evkmimxrt1064" name="BOARD_SDRAM"/>
+      <memoryBlock addr="20200000" size="00080000" access="RW" type="RAM" id="NCACHE_REGION_evkmimxrt1064" name="NCACHE_REGION"/>
+      <memoryBlock addr="20280000" size="00040000" access="RW" type="RAM" id="SRAM_OC_MIMXRT1064xxxxA" name="SRAM_OC"/>
+      <memoryBlock addr="80000000" size="01E00000" access="RW" type="RAM" id="BOARD_SDRAM_evkmimxrt1064" name="BOARD_SDRAM"/>
     </memory>
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
@@ -67,6 +73,7 @@
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>HIGH_SPEED_SDIO_CLOCK</value>
+          <value>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</value>
           <value>PRINTF_ADVANCED_ENABLE=1</value>
           <value>TARGET_wiced</value>
           <value>RWL_SERIAL</value>
@@ -74,8 +81,10 @@
           <value>WICED_MFG_TEST_APP</value>
           <value>WICED_PAYLOAD_MTU=8320</value>
           <value>PBUF_POOL_BUFSIZE=8320</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>FSL_RTOS_FREE_RTOS</value>
           <value>WIFI_WICED</value>
+          <value>SDK_DEBUGCONSOLE_UART</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -92,6 +101,10 @@
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
           <value>&amp;Heap:Default;Default;0x2800&amp;Stack:Default;Default;0x1000</value>
         </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=NCACHE_REGION;type=.data</value>
+          <value>isd=*(NonCacheable);region=NCACHE_REGION;type=.bss</value>
+        </option>
       </toolchainSetting>
     </toolchainSettings>
     <debug_configurations>
@@ -106,12 +119,12 @@
       </debug_configuration>
     </debug_configurations>
     <include_paths>
-      <include_path path="43xxx_wifi/libraries/test/wl_tool/43012C0/common/include"/>
       <include_path path="lwip/port"/>
       <include_path path="lwip/src"/>
       <include_path path="lwip/src/include"/>
+      <include_path path="wiced/43xxx_Wi-Fi/libraries/test/wl_tool/43012C0/common/include"/>
     </include_paths>
-    <source path="boards/evkmimxrt1064/wifi_cypress_examples/wiced_mfg_test_43012/iar" target_path="src" type="other" toolchain="iar">
+    <source path="boards/evkmimxrt1064/wifi_cypress_examples/wiced_mfg_test_43012/iar" target_path="evkmimxrt1064" type="other" toolchain="iar">
       <files mask="evkmimxrt1064.mac"/>
     </source>
     <source path="boards/evkmimxrt1064/wifi_cypress_examples/wiced_mfg_test_43012" target_path="board" type="c_include">
@@ -134,15 +147,6 @@
     </source>
     <source path="boards/evkmimxrt1064/wifi_cypress_examples/wiced_mfg_test_43012" target_path="source" type="src">
       <files mask="mfg_test.c"/>
-    </source>
-    <source path="devices/MIMXRT1064/arm" target_path="src" type="linker" toolchain="mdk">
-      <files mask="MIMXRT1064xxxxx_ram.scf"/>
-    </source>
-    <source path="devices/MIMXRT1064/gcc" target_path="src" type="linker" toolchain="armgcc">
-      <files mask="MIMXRT1064xxxxx_ram.ld"/>
-    </source>
-    <source path="devices/MIMXRT1064/iar" target_path="src" type="linker" toolchain="iar">
-      <files mask="MIMXRT1064xxxxx_ram.icf"/>
     </source>
   </example>
 </ksdk:examples>

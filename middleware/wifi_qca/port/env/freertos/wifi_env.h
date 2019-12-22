@@ -122,7 +122,7 @@ A_STATUS a_event_set(event_t *pEvent, EventBits_t flagsToSet);
 A_STATUS a_event_wait(
     event_t *pEvent, EventBits_t flagsToWait, boolean waitAll, uint32_t timeout, EventBits_t *setFlags);
 uint32_t a_time_get_msec(void);
-void OSA_EnterCritical(osa_critical_section_mode_t mode);
-void OSA_ExitCritical(osa_critical_section_mode_t mode);
+void a_enter_critical(osa_critical_section_mode_t mode);
+void a_exit_critical(osa_critical_section_mode_t mode);
 
 #endif

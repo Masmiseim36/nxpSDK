@@ -29,13 +29,17 @@
 usb_device_endpoint_struct_t g_UsbDeviceMscEndpoints[USB_MSC_ENDPOINT_COUNT] = {
     /* msc bulk in endpoint */
     {
-        USB_MSC_BULK_IN_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT), USB_ENDPOINT_BULK,
-        FS_MSC_BULK_IN_PACKET_SIZE,0U,
+        USB_MSC_BULK_IN_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
+        USB_ENDPOINT_BULK,
+        FS_MSC_BULK_IN_PACKET_SIZE,
+        0U,
     },
     /* msc bulk out endpoint */
     {
-        USB_MSC_BULK_OUT_ENDPOINT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT), USB_ENDPOINT_BULK,
-        FS_MSC_BULK_OUT_PACKET_SIZE,0U,
+        USB_MSC_BULK_OUT_ENDPOINT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
+        USB_ENDPOINT_BULK,
+        FS_MSC_BULK_OUT_PACKET_SIZE,
+        0U,
     }};
 /* msc interface information */
 usb_device_interface_struct_t g_UsbDeviceMscInterface[] = {{
@@ -55,7 +59,7 @@ usb_device_interfaces_struct_t g_UsbDeviceMscInterfaces[USB_MSC_INTERFACE_COUNT]
         USB_MSC_PROTOCOL,        /*msc protocol code */
         USB_MSC_INTERFACE_INDEX, /* The interface number of the msc */
         g_UsbDeviceMscInterface, /* Interfaces handle */
-        sizeof(g_UsbDeviceMscInterface) / sizeof(usb_device_interfaces_struct_t),
+        sizeof(g_UsbDeviceMscInterface) / sizeof(usb_device_interface_struct_t),
     },
 };
 
@@ -85,8 +89,10 @@ uint8_t g_UsbDeviceDescriptor[] = {
     USB_DEVICE_PROTOCOL,                                 /* Protocol code (assigned by the USB-IF). */
     USB_CONTROL_MAX_PACKET_SIZE,                         /* Maximum packet size for endpoint zero
                                                             (only 8, 16, 32, or 64 are valid) */
-    0xC9U, 0x1FU,                                        /* Vendor ID (assigned by the USB-IF) */
-    0x93U, 0x00U,                                        /* Product ID (assigned by the manufacturer) */
+    0xC9U,
+    0x1FU, /* Vendor ID (assigned by the USB-IF) */
+    0x93U,
+    0x00U, /* Product ID (assigned by the manufacturer) */
     USB_SHORT_GET_LOW(USB_DEVICE_DEMO_BCD_VERSION),
     USB_SHORT_GET_HIGH(USB_DEVICE_DEMO_BCD_VERSION), /* Device release number in binary-coded decimal */
     0x01U,                                           /* Index of string descriptor describing manufacturer */
@@ -118,11 +124,11 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
  D4...0: Reserved (reset to zero)
 */
     USB_DEVICE_MAX_POWER,            /* Maximum power consumption of the USB
-                                     * device from the bus in this specific
-                                     * configuration when the device is fully
-                                     * operational. Expressed in 2 mA units
-                                     *  (i.e., 50 = 100 mA).
-                                     */
+                                      * device from the bus in this specific
+                                      * configuration when the device is fully
+                                      * operational. Expressed in 2 mA units
+                                      *  (i.e., 50 = 100 mA).
+                                      */
     USB_DESCRIPTOR_LENGTH_INTERFACE, /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_INTERFACE,   /* INTERFACE Descriptor Type */
     USB_MSC_INTERFACE_INDEX,         /* Number of this interface. */
@@ -176,7 +182,10 @@ uint8_t g_UsbDeviceQualifierDescriptor[] = {
 #endif
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 uint8_t g_UsbDeviceString0[] = {
-    2U + 2U, USB_DESCRIPTOR_TYPE_STRING, 0x09U, 0x04U,
+    2U + 2U,
+    USB_DESCRIPTOR_TYPE_STRING,
+    0x09U,
+    0x04U,
 };
 
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
@@ -269,11 +278,16 @@ uint8_t *g_UsbStringDescriptors[USB_DEVICE_STRING_COUNT + 1] = {
 };
 
 usb_language_t g_UsbLanguage[USB_DEVICE_LANGUAGE_COUNT] = {{
-    g_UsbStringDescriptors, g_UsbStringDescriptorSize, (uint16_t)0x0409U,
+    g_UsbStringDescriptors,
+    g_UsbStringDescriptorSize,
+    (uint16_t)0x0409U,
 }};
 
 usb_language_list_t g_UsbDeviceLanguageList = {
-    g_UsbDeviceString0, sizeof(g_UsbDeviceString0), g_UsbLanguage, USB_DEVICE_LANGUAGE_COUNT,
+    g_UsbDeviceString0,
+    sizeof(g_UsbDeviceString0),
+    g_UsbLanguage,
+    USB_DEVICE_LANGUAGE_COUNT,
 };
 /*******************************************************************************
  * Code
@@ -320,7 +334,7 @@ usb_status_t USB_DeviceGetStringDescriptor(usb_device_handle handle,
     }
     else
     {
-        uint8_t languageId = 0U;
+        uint8_t languageId    = 0U;
         uint8_t languageIndex = USB_DEVICE_STRING_COUNT;
 
         for (; languageId < USB_DEVICE_LANGUAGE_COUNT; languageId++)
@@ -346,11 +360,11 @@ usb_status_t USB_DeviceGetStringDescriptor(usb_device_handle handle,
 }
 
 /* Due to the difference of HS and FS descriptors, the device descriptors and configurations need to be updated to match
-* current speed.
-* As the default, the device descriptors and configurations are configured by using FS parameters for both EHCI and
-* KHCI.
-* When the EHCI is enabled, the application needs to call this function to update device by using current speed.
-* The updated information includes endpoint max packet size, endpoint interval, etc. */
+ * current speed.
+ * As the default, the device descriptors and configurations are configured by using FS parameters for both EHCI and
+ * KHCI.
+ * When the EHCI is enabled, the application needs to call this function to update device by using current speed.
+ * The updated information includes endpoint max packet size, endpoint interval, etc. */
 usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
 {
     usb_descriptor_union_t *descriptorHead;

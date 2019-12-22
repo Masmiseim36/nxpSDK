@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -11,8 +11,8 @@
 
 #include "virtual_nic.h"
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 /* USB header size of RNDIS packet in bytes. */
 #define RNDIS_USB_OVERHEAD_SIZE (44)
 /* Specifies the offset in bytes from the start of the DataOffset field of rndis_packet_msg_struct_t to the start of the
@@ -36,31 +36,26 @@ typedef struct _queue
     uint32_t tail;
     uint32_t maxSize;
     uint32_t curSize;
-    usb_osa_mutex_handle mutex;
+    osa_mutex_handle_t mutex;
+    uint32_t mutexBuffer[(OSA_MUTEX_HANDLE_SIZE + 3)/4];
     vnic_enet_transfer_t *qArray;
 } queue_t;
 
 /* Alloc variable for primask. */
-#define USB_DEVICE_VNIC_SR_ALLOC() \
-    \
-uint8_t sr = 0
+#define USB_DEVICE_VNIC_SR_ALLOC() uint8_t sr = 0
 
 /* Alloc variable for primask. */
 #define USB_DEVICE_VNIC_CRITICAL_ALLOC() USB_DEVICE_VNIC_SR_ALLOC()
 
 /* Eneter critical section. */
-#define USB_DEVICE_VNIC_ENTER_CRITICAL() \
-    \
-VNIC_EnetEnterCritical(&sr)
+#define USB_DEVICE_VNIC_ENTER_CRITICAL() VNIC_EnetEnterCritical(&sr)
 
 /* Exit critical section. */
-#define USB_DEVICE_VNIC_EXIT_CRITICAL() \
-    \
-VNIC_EnetExitCritical(sr)
+#define USB_DEVICE_VNIC_EXIT_CRITICAL() VNIC_EnetExitCritical(sr)
 
 /*******************************************************************************
-* API
-******************************************************************************/
+ * API
+ ******************************************************************************/
 extern volatile uint32_t g_vnicEnterCriticalCnt;
 /*!
  * @brief Disable interrupt to enter critical section.
@@ -114,11 +109,12 @@ static inline usb_status_t VNIC_EnetQueueInit(queue_t *q, uint32_t maxSize)
     usb_status_t error = kStatus_USB_Error;
     USB_DEVICE_VNIC_CRITICAL_ALLOC();
     USB_DEVICE_VNIC_ENTER_CRITICAL();
-    (q)->head = 0;
-    (q)->tail = 0;
+    (q)->head    = 0;
+    (q)->tail    = 0;
     (q)->maxSize = maxSize;
     (q)->curSize = 0;
-    if (kStatus_USB_OSA_Success != USB_OsaMutexCreate(&((q)->mutex)))
+    (q)->mutex   = (osa_mutex_handle_t)(&(q)->mutexBuffer[0]);
+    if (KOSA_StatusSuccess != OSA_MutexCreate(((q)->mutex)))
     {
         usb_echo("queue mutex create error!");
     }
@@ -185,11 +181,11 @@ static inline usb_status_t VNIC_EnetQueueDelete(queue_t *q)
     usb_status_t error = kStatus_USB_Error;
     USB_DEVICE_VNIC_CRITICAL_ALLOC();
     USB_DEVICE_VNIC_ENTER_CRITICAL();
-    (q)->head = 0;
-    (q)->tail = 0;
+    (q)->head    = 0;
+    (q)->tail    = 0;
     (q)->maxSize = 0;
     (q)->curSize = 0;
-    error = kStatus_USB_Success;
+    error        = kStatus_USB_Success;
     USB_DEVICE_VNIC_EXIT_CRITICAL();
     return error;
 }

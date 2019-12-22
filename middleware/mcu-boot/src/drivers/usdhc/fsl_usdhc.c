@@ -317,30 +317,26 @@ static status_t USDHC_SetTransferConfig(USDHC_Type *base, usdhc_command_t *comma
 
 static status_t USDHC_ReceiveCommandResponse(USDHC_Type *base, usdhc_command_t *command)
 {
-    uint32_t i;
+    assert(command != NULL);
+
+    uint32_t response0 = base->CMD_RSP0;
+    uint32_t response1 = base->CMD_RSP1;
+    uint32_t response2 = base->CMD_RSP2;
 
     if (command->responseType != kCARD_ResponseTypeNone)
     {
-        command->response[0U] = base->CMD_RSP0;
+        command->response[0U] = response0;
         if (command->responseType == kCARD_ResponseTypeR2)
         {
-            command->response[1U] = base->CMD_RSP1;
-            command->response[2U] = base->CMD_RSP2;
-            command->response[3U] = base->CMD_RSP3;
-
-            i = 4U;
             /* R3-R2-R1-R0(lowest 8 bit is invalid bit) has the same format as R2 format in SD specification document
             after removed internal CRC7 and end bit. */
-            do
-            {
-                command->response[i - 1U] <<= 8U;
-                if (i > 1U)
-                {
-                    command->response[i - 1U] |= ((command->response[i - 2U] & 0xFF000000U) >> 24U);
-                }
-            } while (i--);
+            command->response[0U] <<= 8U;
+            command->response[1U] = (response1 << 8U) | ((response0 & 0xFF000000U) >> 24U);
+            command->response[2U] = (response2 << 8U) | ((response1 & 0xFF000000U) >> 24U);
+            command->response[3U] = (base->CMD_RSP3 << 8U) | ((response2 & 0xFF000000U) >> 24U);
         }
     }
+
     /* check response error flag */
     if ((command->responseErrorFlags != 0U) &&
         ((command->responseType == kCARD_ResponseTypeR1) || (command->responseType == kCARD_ResponseTypeR1b) ||

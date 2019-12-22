@@ -4,6 +4,12 @@
 
 @section se_hostlib Secure Element hostlib for KSDK
 
+  - 2.11.0
+    - Added Support for SE050 and SSS API's
+    - For Detailed change log please download the Plug & Trust MW package from
+      https://www.nxp.com/products/:SE050?tab=Design_Tools_Tab
+      and refer to the Changes Present in the User guide.
+
   - 1.6.0
     - Host Library version goes from 01.40 to 01.41 (A71CH Host API has not been extended)
     - Conditional translation of i2c_Failed into i2c_NoAddrAck removed (this translation is no longer required as a NACK is no longer lumped into i2c_Failed by the I2C driver wrapper)
@@ -15,7 +21,7 @@
   - 1.5.0
     - Added i.MX RT1050 EVKB and LPC54018 IoT module projects
     - Added Watson IoT demo
-    - GP Storage Lookup table is no longer restricted to 5 objects, up to 254 objects can be stored (use HLSE_MAX_OBJECTS_IN_TABLE (>=8) to limit support and save memory) 
+    - GP Storage Lookup table is no longer restricted to 5 objects, up to 254 objects can be stored (use HLSE_MAX_OBJECTS_IN_TABLE (>=8) to limit support and save memory)
     - GP Storage Update Counter can be disabled by defining HLSE_DISABLE_UPDATE_COUNTER (not defined by default).
     - It’s possible to fetch the absolute storage offset of an object
     - Specific error code when attempting to update a locked Lookup table

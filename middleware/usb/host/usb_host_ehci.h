@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -104,8 +104,8 @@
 #define EHCI_TASK_EVENT_TIMER0 (0x10U)
 #define EHCI_TASK_EVENT_TIMER1 (0x20U)
 
-#define USB_HostEhciLock() USB_OsaMutexLock(ehciInstance->ehciMutex)
-#define USB_HostEhciUnlock() USB_OsaMutexUnlock(ehciInstance->ehciMutex)
+#define USB_HostEhciLock() OSA_MutexLock(ehciInstance->ehciMutex,USB_OSA_WAIT_TIMEOUT)
+#define USB_HostEhciUnlock() OSA_MutexUnlock(ehciInstance->ehciMutex)
 
 /*******************************************************************************
  * KHCI driver public structures, enumerations, macros, functions
@@ -301,8 +301,10 @@ typedef struct _usb_host_ehci_instance
     usb_host_ehci_pipe_t *ehciPipeIndexBase;   /*!< Pipe buffer's start pointer*/
     usb_host_ehci_pipe_t *ehciPipeList;        /*!< Idle pipe list pointer*/
     usb_host_ehci_pipe_t *ehciRunningPipeList; /*!< Running pipe list pointer*/
-    usb_osa_mutex_handle ehciMutex;            /*!< EHCI mutex*/
-    usb_osa_event_handle taskEventHandle;      /*!< EHCI task event*/
+    osa_mutex_handle_t ehciMutex;            /*!< EHCI mutex*/
+    uint32_t mutexBuffer[(OSA_MUTEX_HANDLE_SIZE + 3)/4]; /*!< The mutex buffer. */
+    osa_event_handle_t taskEventHandle;      /*!< EHCI task event*/
+    uint32_t taskEventHandleBuffer[(OSA_EVENT_HANDLE_SIZE + 3)/4];      /*!< EHCI task event handle buffer*/
 #if ((defined(USB_HOST_CONFIG_LOW_POWER_MODE)) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U))
     uint64_t matchTick;
     USBPHY_Type *registerPhyBase; /*!< The base address of the PHY register */

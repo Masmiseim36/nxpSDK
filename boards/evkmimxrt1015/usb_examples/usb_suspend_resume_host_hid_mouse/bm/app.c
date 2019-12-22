@@ -20,8 +20,6 @@
 #include "app.h"
 #include "board.h"
 
-#include "usb_io.h"
-#include "usb_timer.h"
 #include "fsl_debug_console.h"
 #if ((!USB_HOST_CONFIG_KHCI) && (!USB_HOST_CONFIG_EHCI) && (!USB_HOST_CONFIG_OHCI) && (!USB_HOST_CONFIG_IP3516HS))
 #error Please enable USB_HOST_CONFIG_KHCI, USB_HOST_CONFIG_EHCI, USB_HOST_CONFIG_OHCI, or USB_HOST_CONFIG_IP3516HS in file usb_host_config.
@@ -32,6 +30,7 @@
 #include <stdbool.h>
 #include "fsl_pit.h"
 #include "fsl_gpc.h"
+#include "timer.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -83,8 +82,10 @@ void USB_WaitClockLocked(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+#define TIMER_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_OscClk)
 extern usb_host_mouse_instance_t g_HostHidMouse;
 extern usb_host_handle g_HostHandle;
+uint32_t g_halTimerHandle[(HAL_TIMER_HANDLE_SIZE + 3) / 4];
 /*! @brief USB host mouse instance global variable */
 extern usb_host_mouse_instance_t g_HostHidMouse;
 usb_host_handle g_HostHandle;
@@ -111,7 +112,7 @@ void BOARD_USER_BUTTON_IRQ_HANDLER(void)
 void SW_IntControl(uint8_t enable)
 {
 }
-void SW_Callback(void)
+void SW_Callback(void *param)
 {
     g_HostHidMouse.selfWakeup = 1U;
     SW_IntControl(0);
@@ -125,18 +126,31 @@ char *SW_GetName(void)
 {
     return BOARD_USER_BUTTON_NAME;
 }
-void HW_TimerCallback(void)
+void HW_TimerCallback(void *param)
 {
     g_HostHidMouse.hwTick++;
     USB_HostUpdateHwTick(g_HostHandle, g_HostHidMouse.hwTick);
 }
 void HW_TimerInit(void)
 {
-    USB_TimerInit(0, 1000U, CLOCK_GetFreq(kCLOCK_OscClk), HW_TimerCallback);
+    hal_timer_config_t halTimerConfig;
+    halTimerConfig.timeout            = 1000;
+    halTimerConfig.srcClock_Hz        = TIMER_SOURCE_CLOCK;
+    halTimerConfig.instance           = 0U;
+    hal_timer_handle_t halTimerHandle = &g_halTimerHandle[0];
+    HAL_TimerInit(halTimerHandle, &halTimerConfig);
+    HAL_TimerInstallCallback(halTimerHandle, HW_TimerCallback, NULL);
 }
 void HW_TimerControl(uint8_t enable)
 {
-    USB_TimerInt(0, enable);
+    if (enable)
+    {
+        HAL_TimerEnable(g_halTimerHandle);
+    }
+    else
+    {
+        HAL_TimerDisable(g_halTimerHandle);
+    }
 }
 void USB_LowpowerModeInit(void)
 {
@@ -238,13 +252,13 @@ static void USB_HostRemoteWarkupCallback(void *param, usb_host_transfer_t *trans
         if (kStatus_SuspendWaitClearRemoteWakeup == g_HostHidMouse.suspendResumeState)
         {
             usb_echo("Remote wakeup feature cleared.\r\n");
-            g_HostHidMouse.isSetRemoteWakeup = 0U;
+            g_HostHidMouse.isSetRemoteWakeup  = 0U;
             g_HostHidMouse.suspendResumeState = kStatus_Suspending;
         }
         else if (kStatus_SuspendWaitSetRemoteWakeup == g_HostHidMouse.suspendResumeState)
         {
             usb_echo("Remote wakeup feature set.\r\n");
-            g_HostHidMouse.isSetRemoteWakeup = 1U;
+            g_HostHidMouse.isSetRemoteWakeup  = 1U;
             g_HostHidMouse.suspendResumeState = kStatus_Suspending;
         }
         else
@@ -286,14 +300,14 @@ usb_status_t USB_HostControlRemoteWakeup(usb_host_handle hostHandle,
     /* initialize transfer */
     transfer->transferBuffer = NULL;
     transfer->transferLength = 0;
-    transfer->callbackFn = callbackFn;
-    transfer->callbackParam = callbackParam;
+    transfer->callbackFn     = callbackFn;
+    transfer->callbackParam  = callbackParam;
     transfer->setupPacket->bmRequestType =
         USB_REQUEST_TYPE_RECIPIENT_DEVICE | USB_REQUEST_TYPE_DIR_OUT | USB_REQUEST_TYPE_TYPE_STANDARD;
     transfer->setupPacket->bRequest = (enable ? USB_REQUEST_STANDARD_SET_FEATURE : USB_REQUEST_STANDARD_CLEAR_FEATURE);
     transfer->setupPacket->wValue =
         USB_SHORT_TO_LITTLE_ENDIAN(USB_REQUEST_STANDARD_FEATURE_SELECTOR_DEVICE_REMOTE_WAKEUP);
-    transfer->setupPacket->wIndex = USB_SHORT_TO_LITTLE_ENDIAN(0x00U);
+    transfer->setupPacket->wIndex  = USB_SHORT_TO_LITTLE_ENDIAN(0x00U);
     transfer->setupPacket->wLength = USB_SHORT_TO_LITTLE_ENDIAN(0x00U);
 
     USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetDeviceControlPipe, &infoValue);
@@ -316,7 +330,7 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
 {
     usb_status_t status = kStatus_USB_Success;
 
-    switch (eventCode)
+    switch (eventCode & 0x0000FFFFU)
     {
         case kUSB_HostEventAttach:
             status = USB_HostHidMouseEvent(deviceHandle, configurationHandle, eventCode);
@@ -379,6 +393,10 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
             }
             g_HostHidMouse.suspendResumeState = kStatus_Idle;
             break;
+        case kUSB_HostEventEnumerationFail:
+            usb_echo("enumeration failed\r\n");
+            break;
+
         default:
             break;
     }
@@ -405,7 +423,6 @@ static void USB_HostApplicationInit(void)
 
     usb_echo("host init done\r\n");
 }
-
 
 void USB_PowerPreSwitchHook(void)
 {

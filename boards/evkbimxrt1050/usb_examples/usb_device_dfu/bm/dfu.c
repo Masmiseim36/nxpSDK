@@ -25,6 +25,11 @@
 #include "dfu_app.h"
 #include <stdio.h>
 #include <stdlib.h>
+#if defined(__DSC__)
+#include "hardware_init.h"
+#include "cpu.h"
+#include <string.h>
+#endif
 
 /*******************************************************************************
  * Definitions
@@ -67,10 +72,10 @@ const static dfu_state_func s_dfuStateFunc[11] = {
 
 /* Instance of a DFU demo structure. */
 static usb_dfu_struct_t s_UsbDeviceDfuDemo;
-/* Temp buffer is used to store DFU downloaded data */
+/* the buffer is used to store DFU downloaded data */
 /*USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t s_tempBuff[MAX_TRANSFER_SIZE];*/
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t dfuFirmwareBlock[MAX_TRANSFER_SIZE];
-
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) usb_dfu_status_struct_t dfuStatus;
 #if USB_DFU_BIT_CAN_UPLOAD
 #define UPLOAD_SIZE (2 * MAX_TRANSFER_SIZE + 2)
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t updateLoadData[UPLOAD_SIZE];
@@ -79,7 +84,7 @@ uint8_t g_detachRequest;
 /* DFU event queue. */
 static dfu_queue_t s_DfuEventQueue;
 /* Flag which indicates if it has sent a short frame in UPLOAD request. */
-static bool s_isShortFrame = false;
+static uint8_t s_isShortFrame = 0U;
 /* DFU CRC table list */
 static uint32_t s_dfuCRCTableList[256];
 
@@ -100,13 +105,18 @@ extern usb_device_dfu_app_struct_t g_UsbDeviceDfu;
 
 static void USB_DeviceDfuCreateCRCTableList(void)
 {
+    uint8_t i;
+    uint16_t index;
+    uint32_t topBit;
+    uint32_t crcElement;
     /* CRC32 - polynomial reserved */
     uint32_t polynomial = 0xEDB88320U;
-    for (uint16_t index = 0U; index < 256U; index++)
+
+    for (index = 0U; index < 256U; index++)
     {
-        uint32_t crcElement = index;
-        uint32_t topBit     = 0x00000001U;
-        for (uint8_t i = 0U; i < 8U; i++)
+        crcElement = index;
+        topBit     = 0x00000001U;
+        for (i = 0U; i < 8U; i++)
         {
             if (crcElement & topBit)
             {
@@ -132,7 +142,9 @@ static uint32_t USB_DeviceDfuCalculateCRC(uint32_t crc, uint8_t *data, uint32_t 
 {
     uint8_t crcIndex   = 0U;
     uint32_t crcReturn = crc;
-    for (uint32_t i = 0U; i < length; i++)
+    uint32_t i;
+
+    for (i = 0U; i < length; i++)
     {
         crcIndex  = (uint8_t)((crcReturn & 0x000000FFU) ^ data[i]);
         crcReturn = s_dfuCRCTableList[crcIndex] ^ (crcReturn >> 8U);
@@ -147,8 +159,12 @@ static uint32_t USB_DeviceDfuCalculateCRC(uint32_t crc, uint8_t *data, uint32_t 
  */
 static void USB_DfuEnterCritical(uint8_t *sr)
 {
+#if  defined(__DSC__)
+    DisableDscGlobalIRQ();
+#else
     *sr = DisableGlobalIRQ();
     __ASM("CPSID i");
+#endif
 }
 /*!
  * @brief host cdc exit critical.
@@ -158,7 +174,11 @@ static void USB_DfuEnterCritical(uint8_t *sr)
  */
 static void USB_DfuExitCritical(uint8_t sr)
 {
+#if  defined(__DSC__)
+    EnableDscGlobalIRQ();
+#else
     EnableGlobalIRQ(sr);
+#endif
 }
 /*!
  * @brief Initialize the queue.
@@ -174,7 +194,8 @@ static inline usb_status_t USB_DeviceDfuQueueInit(dfu_queue_t *q)
     (q)->tail    = 0;
     (q)->maxSize = DFU_EVENT_QUEUE_MAX;
     (q)->curSize = 0;
-    if (kStatus_USB_OSA_Success != USB_OsaMutexCreate(&((q)->mutex)))
+    (q)->mutex = (osa_mutex_handle_t)(&(q)->mutexBuffer[0]);
+    if (KOSA_StatusSuccess != OSA_MutexCreate(((q)->mutex)))
     {
         usb_echo("queue mutex create error!");
     }
@@ -292,7 +313,7 @@ static usb_status_t USB_DeviceDfuSetState(usb_dfu_state_struct_t state)
 {
     uint8_t usbOsaCurrentSr;
     USB_DfuEnterCritical(&usbOsaCurrentSr);
-    s_UsbDeviceDfuDemo.dfuStatus.bState = state;
+    s_UsbDeviceDfuDemo.dfuStatus->bState = state;
     USB_DfuExitCritical(usbOsaCurrentSr);
     return kStatus_USB_Success;
 }
@@ -306,7 +327,7 @@ static usb_status_t USB_DeviceDfuSetState(usb_dfu_state_struct_t state)
  */
 static usb_dfu_state_struct_t USB_DeviceDfuGetState(void)
 {
-    return (usb_dfu_state_struct_t)s_UsbDeviceDfuDemo.dfuStatus.bState;
+    return (usb_dfu_state_struct_t)s_UsbDeviceDfuDemo.dfuStatus->bState;
 }
 
 /*!
@@ -320,7 +341,7 @@ static usb_status_t USB_DeviceDfuSetStatus(uint32_t status)
 {
     uint8_t usbOsaCurrentSr;
     USB_DfuEnterCritical(&usbOsaCurrentSr);
-    s_UsbDeviceDfuDemo.dfuStatus.bStatus = status;
+    s_UsbDeviceDfuDemo.dfuStatus->bStatus = status;
     USB_DfuExitCritical(usbOsaCurrentSr);
     return kStatus_USB_Success;
 }
@@ -334,9 +355,9 @@ static usb_status_t USB_DeviceDfuSetStatus(uint32_t status)
  */
 static uint32_t USB_DeviceDfuGetStatus(void)
 {
-    return s_UsbDeviceDfuDemo.dfuStatus.bStatus;
+    return s_UsbDeviceDfuDemo.dfuStatus->bStatus;
 }
-#if USB_DFU_BIT_WILL_DETACH
+#if (USB_DFU_BIT_WILL_DETACH)
 #else
 /*!
  * @brief DFU detach timeout routine.
@@ -349,10 +370,10 @@ static void USB_DeviceDfuDetachTimeoutIsr(void)
 {
     usb_status_t error = kStatus_USB_Success;
     usb_device_dfu_event_struct_t event;
-    event.name    = kUSB_DeviceDfuEventDetachTimeout;
-    event.wValue  = 0;
+    event.name = kUSB_DeviceDfuEventDetachTimeout;
+    event.wValue = 0;
     event.wLength = 0;
-    error         = USB_DeviceDfuQueuePut(&s_DfuEventQueue, &event);
+    error = USB_DeviceDfuQueuePut(&s_DfuEventQueue, &event);
     if (kStatus_USB_Success != error)
     {
         /* The queue is full, set the status to error unknown */
@@ -501,11 +522,13 @@ static usb_status_t USB_DeviceDfuUpLoadReqest(uint32_t *length, uint8_t **data)
     usb_device_dfu_event_struct_t event;
     uint32_t status;
     uint32_t uploadLength;
+    uint32_t i;
+
     state = USB_DeviceDfuGetState();
     if (kState_DfuIdle == state)
     {
 #if USB_DFU_BIT_CAN_UPLOAD
-        s_isShortFrame = false;
+        s_isShortFrame = 0U;
 
         /* get firmware start address from USB_DFU_APP_ADDRESS address */
         s_UsbDeviceDfuDemo.dfuFirmwareAddress = (uint32_t)&updateLoadData[0];
@@ -521,11 +544,11 @@ static usb_status_t USB_DeviceDfuUpLoadReqest(uint32_t *length, uint8_t **data)
         else
         {
             usb_echo("\nUploading firmware ...\n");
-            s_UsbDeviceDfuDemo.dfuStatus.bState       = kState_DfuUpLoadIdle;
+            s_UsbDeviceDfuDemo.dfuStatus->bState      = kState_DfuUpLoadIdle;
             s_UsbDeviceDfuDemo.dfuCurrentUploadLenght = 0U;
 
             uploadLength = *((uint32_t *)length);
-            for (uint32_t i = 0; i < uploadLength; i++)
+            for (i = 0; i < uploadLength; i++)
             {
                 s_UsbDeviceDfuDemo.dfuFirmwareBlock[i] = (((uint8_t *)s_UsbDeviceDfuDemo.dfuFirmwareAddress))[i];
             }
@@ -543,7 +566,7 @@ static usb_status_t USB_DeviceDfuUpLoadReqest(uint32_t *length, uint8_t **data)
         if (s_UsbDeviceDfuDemo.dfuFirmwareSize - s_UsbDeviceDfuDemo.dfuCurrentUploadLenght >= *length)
         {
             uploadLength = *((uint32_t *)length);
-            for (uint32_t i = 0; i < uploadLength; i++)
+            for (i = 0; i < uploadLength; i++)
             {
                 s_UsbDeviceDfuDemo.dfuFirmwareBlock[i] =
                     (((uint8_t *)s_UsbDeviceDfuDemo.dfuFirmwareAddress) + s_UsbDeviceDfuDemo.dfuCurrentUploadLenght)[i];
@@ -556,14 +579,14 @@ static usb_status_t USB_DeviceDfuUpLoadReqest(uint32_t *length, uint8_t **data)
             usb_echo("\nUploading firmware completed.\n");
             uploadLength = *((uint32_t *)length);
             *length      = s_UsbDeviceDfuDemo.dfuFirmwareSize - s_UsbDeviceDfuDemo.dfuCurrentUploadLenght;
-            for (uint32_t i = 0; i < *length; i++)
+            for (i = 0; i < *length; i++)
             {
                 s_UsbDeviceDfuDemo.dfuFirmwareBlock[i] =
                     (((uint8_t *)s_UsbDeviceDfuDemo.dfuFirmwareAddress) + s_UsbDeviceDfuDemo.dfuCurrentUploadLenght)[i];
             }
             s_UsbDeviceDfuDemo.dfuCurrentUploadLenght += *length;
             *data          = s_UsbDeviceDfuDemo.dfuFirmwareBlock;
-            s_isShortFrame = true;
+            s_isShortFrame = 1U;
         }
     }
     else
@@ -614,7 +637,7 @@ static usb_status_t USB_DeviceDfuGetStatusReqest(uint8_t *length, uint8_t **data
     else
     {
         /* Device returns the status response */
-        *data   = (uint8_t *)&s_UsbDeviceDfuDemo.dfuStatus;
+        *data   = (uint8_t *)s_UsbDeviceDfuDemo.dfuStatus;
         *length = 6U;
     }
     status        = USB_DeviceDfuGetStatus();
@@ -706,7 +729,7 @@ static usb_status_t USB_DeviceDfuGetStateReqest(uint8_t *length, uint8_t **data)
     else
     {
         /* Device returns the state response */
-        *data   = (uint8_t *)&s_UsbDeviceDfuDemo.dfuStatus.bState;
+        *data   = (uint8_t *)&s_UsbDeviceDfuDemo.dfuStatus->bState;
         *length = 1U;
     }
     status        = USB_DeviceDfuGetStatus();
@@ -833,13 +856,25 @@ usb_status_t USB_DeviceDfuDemoCallback(class_handle_t handle, uint32_t event, vo
  */
 void USB_DeviceDfuSwitchMode(void)
 {
+#ifdef __DSC__
+    USB_DeviceClassDeinit(CONTROLLER_ID);
+    __DI();
+    SIM->PSWR3 = SIM_PSWR3_USB_OTG_MASK;
+    SIM->PSWR2 = SIM_PSWR2_PIT0_MASK;
+    SIM->PSWR3 = 0;
+    SIM->PSWR2 = 0;
+    address    = ((uint32_t)USB_DFU_APP_ADDRESS) >> 1U;
+    INTC->VBA  = (address >> 8U);
+    asm(move.l address, N);
+    asm(jmp(N));
+#else
     address = (uint32_t)(USB_DFU_APP_ADDRESS);
 
     static uint32_t newSP, newPC;
     USB_DeviceClassDeinit(CONTROLLER_ID);
     SCB->VTOR = address;
-    newSP     = ((uint32_t *)address)[0U];
-    newPC     = ((uint32_t *)address)[1U];
+    newSP = ((uint32_t *)address)[0U];
+    newPC = ((uint32_t *)address)[1U];
     __set_CONTROL(0x00000000U);
     /* load new value to stack pointer and program counter */
     __set_MSP(newSP);
@@ -850,6 +885,7 @@ void USB_DeviceDfuSwitchMode(void)
 #endif
     /* switch to application mode */
     switchToApplicationMode();
+#endif
 }
 /*!
  * @brief DFU USB bus reset function.
@@ -860,7 +896,7 @@ void USB_DeviceDfuSwitchMode(void)
  */
 void USB_DeviceDfuBusReset(void)
 {
-    switch (s_UsbDeviceDfuDemo.dfuStatus.bState)
+    switch (s_UsbDeviceDfuDemo.dfuStatus->bState)
     {
         case kState_AppIdle:
             /* Do nothing */
@@ -884,7 +920,7 @@ void USB_DeviceDfuBusReset(void)
         case kState_DfuError:
             if (s_UsbDeviceDfuDemo.dfuIsDownloadingFinished)
             {
-                s_UsbDeviceDfuDemo.dfuStatus.bState         = kState_AppIdle;
+                s_UsbDeviceDfuDemo.dfuStatus->bState        = kState_AppIdle;
                 s_UsbDeviceDfuDemo.dfuIsDownloadingFinished = 0U;
                 /* switch to APP mode */
                 /*NVIC_SystemReset();*/
@@ -895,7 +931,7 @@ void USB_DeviceDfuBusReset(void)
                 {
                     /* The firmware is downloading to the device but the bus reset occurs, change
                        the state to Error */
-                    s_UsbDeviceDfuDemo.dfuStatus.bState       = kState_DfuError;
+                    s_UsbDeviceDfuDemo.dfuStatus->bState      = kState_DfuError;
                     s_UsbDeviceDfuDemo.dfuFirmwareBlockStatus = USB_DFU_BLOCK_TRANSFER_UNDEFINED;
                 }
                 else
@@ -922,14 +958,15 @@ void USB_DeviceDfuDemoInit(void)
     /* memmory status */
     usb_memmory_status_t memmoryStatus = kStatus_USB_MemmoryErrorUnknown;
     /* Default DFU status */
-    s_UsbDeviceDfuDemo.dfuStatus.bStatus           = USB_DFU_STATUS_OK;
-    s_UsbDeviceDfuDemo.dfuStatus.bwPollTimeout[0U] = 0x4U;
-    s_UsbDeviceDfuDemo.dfuStatus.bwPollTimeout[1U] = 0U;
-    s_UsbDeviceDfuDemo.dfuStatus.bwPollTimeout[2U] = 0U;
+    s_UsbDeviceDfuDemo.dfuStatus                    = &dfuStatus;
+    s_UsbDeviceDfuDemo.dfuStatus->bStatus           = USB_DFU_STATUS_OK;
+    s_UsbDeviceDfuDemo.dfuStatus->bwPollTimeout[0U] = 0x4U;
+    s_UsbDeviceDfuDemo.dfuStatus->bwPollTimeout[1U] = 0U;
+    s_UsbDeviceDfuDemo.dfuStatus->bwPollTimeout[2U] = 0U;
 
     USB_DeviceDfuSetState(kState_DfuIdle);
 
-    s_UsbDeviceDfuDemo.dfuStatus.iString           = 0U;
+    s_UsbDeviceDfuDemo.dfuStatus->iString          = 0U;
     s_UsbDeviceDfuDemo.dfuFirmwareBlockStatus      = USB_DFU_BLOCK_TRANSFER_UNDEFINED;
     s_UsbDeviceDfuDemo.dfuManifestationPhaseStatus = USB_DFU_MANIFEST_UNDEFINED;
     s_UsbDeviceDfuDemo.dfuFirmwareAddress          = USB_DFU_APP_ADDRESS;
@@ -946,11 +983,11 @@ void USB_DeviceDfuDemoInit(void)
     memmoryStatus = USB_MemmoryInit();
     if (kStatus_USB_MemmoryErrorSecure == memmoryStatus)
     {
-        s_UsbDeviceDfuDemo.dfuStatus.bStatus = USB_DFU_STATUS_ERR_WRITE;
+        s_UsbDeviceDfuDemo.dfuStatus->bStatus = USB_DFU_STATUS_ERR_WRITE;
     }
     else if (kStatus_USB_MemmoryErrorUnknown == memmoryStatus)
     {
-        s_UsbDeviceDfuDemo.dfuStatus.bStatus = USB_DFU_STATUS_ERR_UNKNOWN;
+        s_UsbDeviceDfuDemo.dfuStatus->bStatus = USB_DFU_STATUS_ERR_UNKNOWN;
     }
     else
     {
@@ -973,19 +1010,29 @@ void USB_DeviceDfuDemoInit(void)
  *
  * @return None.
  */
+
 void USB_DeviceDfuManifest(void)
 {
+    uint32_t remainingLen;
+    uint8_t *startAddress;
+    uint32_t wLength;
+    uint32_t readLen;
+
     /*do some thing to manifest*/
     /* store the fimware block data */
     if (USB_DFU_MANIFEST_IN_PROGRESS == s_UsbDeviceDfuDemo.dfuManifestationPhaseStatus)
     {
-        crcValue              = 0;
-        uint32_t remainingLen = s_UsbDeviceDfuDemo.dfuFirmwareSize - 4;
-        uint8_t *startAddress = (uint8_t *)USB_DFU_APP_ADDRESS;
+        crcValue     = 0;
+        remainingLen = s_UsbDeviceDfuDemo.dfuFirmwareSize - 4;
+#if defined(__DSC__)
+        startAddress = (uint8_t *)(USB_DFU_APP_ADDRESS_DATA_MEMORY_MAP * 2);
+#else
+        startAddress = (uint8_t *)USB_DFU_APP_ADDRESS;
+#endif
 
         s_UsbDeviceDfuDemo.dfuCRC = 0xffffffff;
-        uint32_t wLength          = MAX_TRANSFER_SIZE;
-        uint32_t readLen          = 0;
+        wLength                   = MAX_TRANSFER_SIZE;
+        readLen                   = 0;
         if (remainingLen < MAX_TRANSFER_SIZE)
         {
             wLength = remainingLen;
@@ -1030,6 +1077,8 @@ void USB_DeviceDfuManifest(void)
 
 void USB_DeviceDfuDnload(void)
 {
+    uint8_t usbOsaCurrentSr;
+
     if (USB_DFU_BLOCK_TRANSFER_IN_PROGRESS == s_UsbDeviceDfuDemo.dfuFirmwareBlockStatus)
     {
         usb_memmory_status_t memmoryStatus = kStatus_USB_MemmoryErrorUnknown;
@@ -1046,15 +1095,15 @@ void USB_DeviceDfuDnload(void)
             USB_DfuExitCritical(usbOsaCurrentSr);
             if (kStatus_USB_MemmoryErrorErase == memmoryStatus)
             {
-                s_UsbDeviceDfuDemo.dfuStatus.bStatus = USB_DFU_STATUS_ERR_ERASE;
+                s_UsbDeviceDfuDemo.dfuStatus->bStatus = USB_DFU_STATUS_ERR_ERASE;
             }
             else if (kStatus_USB_MemmoryErrorEraseVerify == memmoryStatus)
             {
-                s_UsbDeviceDfuDemo.dfuStatus.bStatus = USB_DFU_STATUS_ERR_CHECK_ERASED;
+                s_UsbDeviceDfuDemo.dfuStatus->bStatus = USB_DFU_STATUS_ERR_CHECK_ERASED;
             }
             else if (kStatus_USB_MemmoryErrorUnknown == memmoryStatus)
             {
-                s_UsbDeviceDfuDemo.dfuStatus.bStatus = USB_DFU_STATUS_ERR_UNKNOWN;
+                s_UsbDeviceDfuDemo.dfuStatus->bStatus = USB_DFU_STATUS_ERR_UNKNOWN;
             }
             else
             {
@@ -1067,8 +1116,6 @@ void USB_DeviceDfuDnload(void)
             /* Update the firmware size */
             s_UsbDeviceDfuDemo.dfuFirmwareSize += s_UsbDeviceDfuDemo.dfuFirmwareBlockLength;
             /* firmware memmorying */
-
-            uint8_t usbOsaCurrentSr;
 
             USB_DfuEnterCritical(&usbOsaCurrentSr);
 
@@ -1114,6 +1161,7 @@ void USB_DeviceDfuDnload(void)
 static usb_status_t USB_DeviceStateAppIdle(usb_dfu_struct_t *dfu_dev, usb_device_dfu_event_struct_t *event)
 {
     usb_status_t error = kStatus_USB_Success;
+    int i;
 
     if (NULL != event)
     {
@@ -1125,9 +1173,13 @@ static usb_status_t USB_DeviceStateAppIdle(usb_dfu_struct_t *dfu_dev, usb_device
                 g_detachRequest = 1U;
                 /* Device generates a detach-attach sequence on the bus */
                 USB_DeviceStop(g_UsbDeviceDfu.deviceHandle);
-                for (int i = 0; i < 5000; i++)
+                for (i = 0; i < 5000; i++)
                 {
+#if defined(__DSC__)
+                    asm(NOP);
+#else
                     __ASM("nop");
+#endif
                 }
                 USB_DeviceRun(g_UsbDeviceDfu.deviceHandle);
 #else
@@ -1140,8 +1192,8 @@ static usb_status_t USB_DeviceStateAppIdle(usb_dfu_struct_t *dfu_dev, usb_device
                 else
                 {
                     dfu_timer_object_t dfuTimerObject;
-                    dfuTimerObject.timerCount     = event->wValue;
-                    dfuTimerObject.timerCallback  = (dfu_timer_callback)USB_DeviceDfuDetachTimeoutIsr;
+                    dfuTimerObject.timerCount = event->wValue;
+                    dfuTimerObject.timerCallback = (dfu_timer_callback)USB_DeviceDfuDetachTimeoutIsr;
                     s_UsbDeviceDfuDemo.dfuTimerId = DFU_AddTimerQueue(&dfuTimerObject);
                 }
 #endif
@@ -1232,9 +1284,9 @@ static usb_status_t USB_DeviceStateDfuIdle(usb_dfu_struct_t *dfu_dev, usb_device
                     s_UsbDeviceDfuDemo.dfuManifestationPhaseStatus = USB_DFU_MANIFEST_UNDEFINED;
                     /* this time (5000 ms) is used to erase all the APP code region */
                     /* and memmory the first firmware block data */
-                    s_UsbDeviceDfuDemo.dfuStatus.bwPollTimeout[0] = 2 & 0xFF;
-                    s_UsbDeviceDfuDemo.dfuStatus.bwPollTimeout[1] = (2 >> 8) & 0xFF;
-                    s_UsbDeviceDfuDemo.dfuStatus.bwPollTimeout[2] = (2 >> 16) & 0xFF;
+                    s_UsbDeviceDfuDemo.dfuStatus->bwPollTimeout[0] = 2 & 0xFF;
+                    s_UsbDeviceDfuDemo.dfuStatus->bwPollTimeout[1] = (2 >> 8) & 0xFF;
+                    s_UsbDeviceDfuDemo.dfuStatus->bwPollTimeout[2] = (2 >> 16) & 0xFF;
 
                     USB_DeviceDfuSetState(kState_DfuDnLoadSync);
                 }
@@ -1292,9 +1344,9 @@ static usb_status_t USB_DeviceStateDfuDnLoadSync(usb_dfu_struct_t *dfu_dev, usb_
                 if (USB_DFU_BLOCK_TRANSFER_IN_PROGRESS == s_UsbDeviceDfuDemo.dfuFirmwareBlockStatus)
                 {
                     dfuTimerObject.timerCount = (uint32_t)(
-                        (uint32_t)(0xFFFFFF & ((uint32_t)s_UsbDeviceDfuDemo.dfuStatus.bwPollTimeout[2] << 16U)) +
-                        (uint32_t)(0xFFFF & ((uint32_t)s_UsbDeviceDfuDemo.dfuStatus.bwPollTimeout[1] << 8U)) +
-                        (uint32_t)(0xFF & (uint32_t)s_UsbDeviceDfuDemo.dfuStatus.bwPollTimeout[0]));
+                        (uint32_t)(0xFFFFFF & ((uint32_t)s_UsbDeviceDfuDemo.dfuStatus->bwPollTimeout[2] << 16U)) +
+                        (uint32_t)(0xFFFF & ((uint32_t)s_UsbDeviceDfuDemo.dfuStatus->bwPollTimeout[1] << 8U)) +
+                        (uint32_t)(0xFF & (uint32_t)s_UsbDeviceDfuDemo.dfuStatus->bwPollTimeout[0]));
                     dfuTimerObject.timerCount = (dfuTimerObject.timerCount >> 1);
 
                     dfuTimerObject.timerCallback = (dfu_timer_callback)USB_DeviceDfuPollTimeoutIsr;
@@ -1389,9 +1441,9 @@ static usb_status_t USB_DeviceStateDfuDnLoadIdle(usb_dfu_struct_t *dfu_dev, usb_
                     /* update firmware block status */
                     s_UsbDeviceDfuDemo.dfuFirmwareBlockStatus = USB_DFU_BLOCK_TRANSFER_IN_PROGRESS;
                     /* update timeout value */
-                    s_UsbDeviceDfuDemo.dfuStatus.bwPollTimeout[0] = 0x2;
-                    s_UsbDeviceDfuDemo.dfuStatus.bwPollTimeout[1] = 0;
-                    s_UsbDeviceDfuDemo.dfuStatus.bwPollTimeout[2] = 0;
+                    s_UsbDeviceDfuDemo.dfuStatus->bwPollTimeout[0] = 0x2;
+                    s_UsbDeviceDfuDemo.dfuStatus->bwPollTimeout[1] = 0;
+                    s_UsbDeviceDfuDemo.dfuStatus->bwPollTimeout[2] = 0;
                     USB_DeviceDfuSetState(kState_DfuDnLoadSync);
                 }
                 else
@@ -1447,9 +1499,9 @@ static usb_status_t USB_DeviceStateDfuManifestSync(usb_dfu_struct_t *dfu_dev, us
                 {
                     USB_DeviceDfuSetState(kState_DfuManifest);
                     dfuTimerObject.timerCount = (uint32_t)(
-                        (uint32_t)(0xFFFFFF & ((uint32_t)s_UsbDeviceDfuDemo.dfuStatus.bwPollTimeout[2] << 16U)) +
-                        (uint32_t)(0xFFFF & ((uint32_t)s_UsbDeviceDfuDemo.dfuStatus.bwPollTimeout[1] << 8U)) +
-                        (uint32_t)(0xFF & (uint32_t)s_UsbDeviceDfuDemo.dfuStatus.bwPollTimeout[0]));
+                        (uint32_t)(0xFFFFFF & ((uint32_t)s_UsbDeviceDfuDemo.dfuStatus->bwPollTimeout[2] << 16U)) +
+                        (uint32_t)(0xFFFF & ((uint32_t)s_UsbDeviceDfuDemo.dfuStatus->bwPollTimeout[1] << 8U)) +
+                        (uint32_t)(0xFF & (uint32_t)s_UsbDeviceDfuDemo.dfuStatus->bwPollTimeout[0]));
                     dfuTimerObject.timerCount     = (dfuTimerObject.timerCount >> 1);
                     dfuTimerObject.timerCallback  = (dfu_timer_callback)USB_DeviceDfuPollTimeoutIsr;
                     s_UsbDeviceDfuDemo.dfuTimerId = DFU_AddTimerQueue(&dfuTimerObject);

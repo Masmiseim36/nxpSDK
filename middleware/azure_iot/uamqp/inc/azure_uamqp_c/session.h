@@ -27,8 +27,8 @@
 #include "azure_uamqp_c/amqp_definitions_transfer.h"
 
 
-#include "azure_c_shared_utility/umock_c_prod.h"
-#include "azure_c_shared_utility/macro_utils.h"
+#include "umock_c/umock_c_prod.h"
+#include "azure_macro_utils/macro_utils.h"
 
 
 #ifdef __cplusplus
@@ -48,19 +48,19 @@ typedef struct LINK_ENDPOINT_INSTANCE_TAG* LINK_ENDPOINT_HANDLE;
     SESSION_STATE_DISCARDING, \
     SESSION_STATE_ERROR
 
-DEFINE_ENUM(SESSION_STATE, SESSION_STATE_VALUES)
+MU_DEFINE_ENUM(SESSION_STATE, SESSION_STATE_VALUES)
 
 #define SESSION_SEND_TRANSFER_RESULT_VALUES \
     SESSION_SEND_TRANSFER_OK, \
     SESSION_SEND_TRANSFER_ERROR, \
     SESSION_SEND_TRANSFER_BUSY
 
-DEFINE_ENUM(SESSION_SEND_TRANSFER_RESULT, SESSION_SEND_TRANSFER_RESULT_VALUES)
+MU_DEFINE_ENUM(SESSION_SEND_TRANSFER_RESULT, SESSION_SEND_TRANSFER_RESULT_VALUES)
 
     typedef void(*LINK_ENDPOINT_FRAME_RECEIVED_CALLBACK)(void* context, AMQP_VALUE performative, uint32_t frame_payload_size, const unsigned char* payload_bytes);
     typedef void(*ON_SESSION_STATE_CHANGED)(void* context, SESSION_STATE new_session_state, SESSION_STATE previous_session_state);
     typedef void(*ON_SESSION_FLOW_ON)(void* context);
-    typedef bool(*ON_LINK_ATTACHED)(void* context, LINK_ENDPOINT_HANDLE new_link_endpoint, const char* name, role role, AMQP_VALUE source, AMQP_VALUE target);
+    typedef bool(*ON_LINK_ATTACHED)(void* context, LINK_ENDPOINT_HANDLE new_link_endpoint, const char* name, role role, AMQP_VALUE source, AMQP_VALUE target, fields properties);
 
     MOCKABLE_FUNCTION(, SESSION_HANDLE, session_create, CONNECTION_HANDLE, connection, ON_LINK_ATTACHED, on_link_attached, void*, callback_context);
     MOCKABLE_FUNCTION(, SESSION_HANDLE, session_create_from_endpoint, CONNECTION_HANDLE, connection, ENDPOINT_HANDLE, connection_endpoint, ON_LINK_ATTACHED, on_link_attached, void*, callback_context);

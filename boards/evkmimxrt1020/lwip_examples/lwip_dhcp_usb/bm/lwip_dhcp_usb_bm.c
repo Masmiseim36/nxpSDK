@@ -49,6 +49,11 @@
 #define USB_HOST_INTERRUPT_PRIORITY (3U)
 #endif
 
+#ifndef EXAMPLE_NETIF_INIT_FN
+/*! @brief Network interface initialization function. */
+#define EXAMPLE_NETIF_INIT_FN USB_EthernetIfInIt
+#endif /* EXAMPLE_NETIF_INIT_FN */
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -70,9 +75,9 @@ uint8_t website[40] = {
     'w', 'w', 'w', '.', 'n', 'x', 'p', '.', 'c', 'o', 'm',
 };
 
-struct netif fsl_netif0;
+struct netif netif;
 ethernetifConfig_t ethernetConfig;
-ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
+ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
 
 /*******************************************************************************
  * Code
@@ -153,7 +158,7 @@ static void print_dhcp_state(struct netif *netif)
         err_t err;
         dhcpReady = 0;
         PRINTF("\r\n  waiting for getting the IP Address....\r\n");
-        err = dns_gethostbyname((char *)&website[0], &addrBuffer, lwip_dns_dns_found, (void *)&fsl_netif0);
+        err = dns_gethostbyname((char *)&website[0], &addrBuffer, lwip_dns_dns_found, (void *)&netif);
         if (ERR_INPROGRESS == err)
         {
             /* PRINTF("\r\n error in dns get\r\n");*/
@@ -249,19 +254,18 @@ int main(void)
 
     time_init();
 
-    IP4_ADDR(&fsl_netif0_ipaddr, 0U, 0U, 0U, 0U);
-    IP4_ADDR(&fsl_netif0_netmask, 0U, 0U, 0U, 0U);
-    IP4_ADDR(&fsl_netif0_gw, 0U, 0U, 0U, 0U);
+    IP4_ADDR(&netif_ipaddr, 0U, 0U, 0U, 0U);
+    IP4_ADDR(&netif_netmask, 0U, 0U, 0U, 0U);
+    IP4_ADDR(&netif_gw, 0U, 0U, 0U, 0U);
     ethernetConfig.controllerId = CONTROLLER_ID;
     ethernetConfig.privateData  = NULL;
     lwip_init();
 
-    netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &ethernetConfig, USB_EthernetIfInIt,
-              ethernet_input);
-    netif_set_default(&fsl_netif0);
-    netif_set_up(&fsl_netif0);
+    netif_add(&netif, &netif_ipaddr, &netif_netmask, &netif_gw, &ethernetConfig, EXAMPLE_NETIF_INIT_FN, ethernet_input);
+    netif_set_default(&netif);
+    netif_set_up(&netif);
 
-    dhcp_start(&fsl_netif0);
+    dhcp_start(&netif);
 
     PRINTF("\r\n************************************************\r\n");
     PRINTF(" DHCP example\r\n");
@@ -270,13 +274,13 @@ int main(void)
     while (1)
     {
         /* Poll the driver, get any outstanding frames */
-        usb_ethernetif_input(&fsl_netif0);
+        usb_ethernetif_input(&netif);
 
         /* Handle all system timeouts for all core protocols */
         sys_check_timeouts();
 
         /* Print DHCP progress */
-        print_dhcp_state(&fsl_netif0);
+        print_dhcp_state(&netif);
     }
 }
 #endif

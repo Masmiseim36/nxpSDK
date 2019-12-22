@@ -1,0 +1,885 @@
+/*******************************************************************************
+*
+* E M B E D D E D   W I Z A R D   P R O J E C T
+*
+*                                                Copyright (c) TARA Systems GmbH
+*                                    written by Paul Banach and Manfred Schweyer
+*
+********************************************************************************
+*
+* This file was generated automatically by Embedded Wizard Studio.
+*
+* Please do not make any modifications of this file! The modifications are lost
+* when the file is generated again by Embedded Wizard Studio!
+*
+* The template of this heading text can be found in the file 'head.ewt' in the
+* directory 'Platforms' of your Embedded Wizard installation directory. If you
+* wish to adapt this text, please copy the template file 'head.ewt' into your
+* project directory and edit the copy only. Please avoid any modifications of
+* the original template file!
+*
+* Version  : 9.20
+* Profile  : iMX_RT
+* Platform : NXP.iMX_RT.RGB565
+*
+*******************************************************************************/
+
+#include "ewlocale.h"
+#include "_ResourcesBitmap.h"
+#include "_ResourcesFont.h"
+#include "Resources.h"
+
+/* Compressed strings for the language 'Default'. */
+static const unsigned int _StringsDefault0[] =
+{
+  0x00000058, /* ratio 95.45 % */
+  0xB8005500, 0x00000452, 0x00D0002A, 0x04000328, 0xE4003800, 0x70F37800, 0x74004461,
+  0x0869E400, 0x230004E0, 0x6800C317, 0x800A7163, 0x58F40034, 0xE510E8F4, 0x00528E1C,
+  0x80020C14, 0x0027C708, 0x0260009C, 0x17000B20, 0x0C1A8306, 0x00000008, 0x00000000
+};
+
+/* Constant values used in this 'C' module only. */
+static const XPoint _Const0000 = { 0, 0 };
+static const XStringRes _Const0001 = { _StringsDefault0, 0x0003 };
+
+/* Initializer for the class 'Resources::Bitmap' */
+void ResourcesBitmap__Init( ResourcesBitmap _this, XObject aLink, XHandle aArg )
+{
+  /* At first initialize the super class ... */
+  CoreResource__Init( &_this->_Super, aLink, aArg );
+
+  /* Setup the VMT pointer */
+  _this->_VMT = EW_CLASS( ResourcesBitmap );
+
+  /* ... and initialize objects, variables, properties, etc. */
+  _this->NoOfFrames = 1;
+
+  /* Call the user defined constructor */
+  ResourcesBitmap_Init( _this, aArg );
+}
+
+/* Re-Initializer for the class 'Resources::Bitmap' */
+void ResourcesBitmap__ReInit( ResourcesBitmap _this )
+{
+  /* At first re-initialize the super class ... */
+  CoreResource__ReInit( &_this->_Super );
+}
+
+/* Finalizer method for the class 'Resources::Bitmap' */
+void ResourcesBitmap__Done( ResourcesBitmap _this )
+{
+  /* Finalize this class */
+  _this->_VMT = EW_CLASS( ResourcesBitmap );
+
+  /* Call the user defined destructor of the class */
+  ResourcesBitmap_Done( _this );
+
+  /* Don't forget to deinitialize the super class ... */
+  CoreResource__Done( &_this->_Super );
+}
+
+/* 'C' function for method : 'Resources::Bitmap.Done()' */
+void ResourcesBitmap_Done( ResourcesBitmap _this )
+{
+  XHandle handle;
+
+  if ( _this->bitmap == 0 )
+    return;
+
+  handle = _this->bitmap;
+  EwFreeBitmap((XBitmap*)handle );
+  _this->bitmap = 0;
+  _this->FrameSize = _Const0000;
+  _this->FrameDelay = 0;
+  _this->NoOfFrames = 1;
+  _this->Animated = 0;
+}
+
+/* 'C' function for method : 'Resources::Bitmap.Init()' */
+void ResourcesBitmap_Init( ResourcesBitmap _this, XHandle aArg )
+{
+  XHandle handle;
+  XInt32 noOfFrames;
+  XPoint frameSize;
+  XInt32 frameDelay;
+
+  if ( aArg == 0 )
+    return;
+
+  handle = 0;
+  noOfFrames = 1;
+  frameSize = _Const0000;
+  frameDelay = 0;
+  {
+    /* aArg is a pointer to the memory where the bitmap resource is stored. */
+    XBitmap* bmp = EwLoadBitmap((const XBmpRes*)aArg );
+
+    /* After the bitmap has been loaded get the size of the bitmap and store it
+       in the following variables. */
+    if ( bmp )
+    {
+      noOfFrames = bmp->NoOfFrames;
+      frameSize  = bmp->FrameSize;
+      frameDelay = bmp->FrameDelay;
+    }
+
+    handle = (XHandle)(void*)bmp;
+  }
+  _this->bitmap = handle;
+  _this->NoOfFrames = noOfFrames;
+  _this->FrameSize = frameSize;
+  _this->FrameDelay = frameDelay;
+  _this->Animated = (XBool)((( _this->bitmap != 0 ) && ( _this->FrameDelay > 0 )) 
+  && ( _this->NoOfFrames > 1 ));
+}
+
+/* 'C' function for method : 'Resources::Bitmap.OnSetFrameSize()' */
+void ResourcesBitmap_OnSetFrameSize( ResourcesBitmap _this, XPoint value )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( _this );
+  EW_UNUSED_ARG( value );
+
+  {
+    EwThrow( EwLoadString( &_Const0001 ));
+    return;
+  }
+}
+
+/* Wrapper function for the virtual method : 'Resources::Bitmap.OnSetFrameSize()' */
+void ResourcesBitmap__OnSetFrameSize( void* _this, XPoint value )
+{
+  ((ResourcesBitmap)_this)->_VMT->OnSetFrameSize((ResourcesBitmap)_this, value );
+}
+
+/* 'C' function for method : 'Resources::Bitmap.Update()' */
+void ResourcesBitmap_Update( ResourcesBitmap _this )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( _this );
+}
+
+/* Wrapper function for the virtual method : 'Resources::Bitmap.Update()' */
+void ResourcesBitmap__Update( void* _this )
+{
+  ((ResourcesBitmap)_this)->_VMT->Update((ResourcesBitmap)_this );
+}
+
+/* Variants derived from the class : 'Resources::Bitmap' */
+EW_DEFINE_CLASS_VARIANTS( ResourcesBitmap )
+EW_END_OF_CLASS_VARIANTS( ResourcesBitmap )
+
+/* Virtual Method Table (VMT) for the class : 'Resources::Bitmap' */
+EW_DEFINE_CLASS( ResourcesBitmap, CoreResource, _None, _None, _None, _None, _None, 
+                 "Resources::Bitmap" )
+  ResourcesBitmap_OnSetFrameSize,
+  ResourcesBitmap_Update,
+EW_END_OF_CLASS( ResourcesBitmap )
+
+/* Initializer for the class 'Resources::Font' */
+void ResourcesFont__Init( ResourcesFont _this, XObject aLink, XHandle aArg )
+{
+  /* At first initialize the super class ... */
+  CoreResource__Init( &_this->_Super, aLink, aArg );
+
+  /* Setup the VMT pointer */
+  _this->_VMT = EW_CLASS( ResourcesFont );
+
+  /* Call the user defined constructor */
+  ResourcesFont_Init( _this, aArg );
+}
+
+/* Re-Initializer for the class 'Resources::Font' */
+void ResourcesFont__ReInit( ResourcesFont _this )
+{
+  /* At first re-initialize the super class ... */
+  CoreResource__ReInit( &_this->_Super );
+}
+
+/* Finalizer method for the class 'Resources::Font' */
+void ResourcesFont__Done( ResourcesFont _this )
+{
+  /* Finalize this class */
+  _this->_VMT = EW_CLASS( ResourcesFont );
+
+  /* Call the user defined destructor of the class */
+  ResourcesFont_Done( _this );
+
+  /* Don't forget to deinitialize the super class ... */
+  CoreResource__Done( &_this->_Super );
+}
+
+/* 'C' function for method : 'Resources::Font.Done()' */
+void ResourcesFont_Done( ResourcesFont _this )
+{
+  XHandle handle;
+
+  if ( _this->font == 0 )
+    return;
+
+  handle = _this->font;
+  EwFreeFont((XFont*)handle );
+  _this->font = 0;
+  _this->Ascent = 0;
+  _this->Descent = 0;
+  _this->Leading = 0;
+}
+
+/* 'C' function for method : 'Resources::Font.Init()' */
+void ResourcesFont_Init( ResourcesFont _this, XHandle aArg )
+{
+  XHandle handle;
+  XInt32 ascent;
+  XInt32 descent;
+  XInt32 leading;
+
+  if ( aArg == 0 )
+    return;
+
+  handle = 0;
+  ascent = 0;
+  descent = 0;
+  leading = 0;
+  {
+    /* aArg is a pointer to a memory where the font resource is stored. */
+    XFont* font = EwLoadFont((const XFntRes*)aArg );
+
+    /* After the font has been loaded query its ascent and descent. */
+    if ( font )
+    {
+      ascent  = font->Ascent;
+      descent = font->Descent;
+      leading = font->Leading;
+    }
+
+    handle = (XHandle)(void*)font;
+  }
+  _this->font = handle;
+  _this->Ascent = ascent;
+  _this->Descent = descent;
+  _this->Leading = leading;
+}
+
+/* 'C' function for method : 'Resources::Font.GetFlowTextAdvance()' */
+XInt32 ResourcesFont_GetFlowTextAdvance( ResourcesFont _this, XString aFlowString )
+{
+  XHandle handle;
+  XInt32 advance;
+
+  if ( _this->font == 0 )
+    return 0;
+
+  handle = _this->font;
+  advance = 0;
+  advance = EwGetFlowTextAdvance((XFont*)handle, aFlowString );
+  return advance;
+}
+
+/* 'C' function for method : 'Resources::Font.ParseFlowString()' */
+XString ResourcesFont_ParseFlowString( ResourcesFont _this, XString aString, XInt32 
+  aOffset, XInt32 aWidth, XInt32 aMaxNoOfRows, XHandle aBidi )
+{
+  XHandle handle;
+  XString result;
+
+  if ( aOffset < 0 )
+    aOffset = 0;
+
+  if (( _this->font == 0 ) || (( aOffset > 0 ) && ( aOffset >= EwGetStringLength( 
+      aString ))))
+    return 0;
+
+  handle = _this->font;
+  result = 0;
+  result = EwParseFlowString((XFont*)handle, aString + aOffset, aWidth, aMaxNoOfRows, aBidi );
+  return result;
+}
+
+/* The method GetTextAdvance() calculates the horizontal advance in pixel of a text 
+   row to print with this font. This value is calculated by the sum of advance values 
+   of all affected glyphs. The text is passed in the parameter aString. The parameter 
+   aOffset determines within aString the sign to start the calculation. If aOffset 
+   is zero, the calculation starts with the first sign. The parameter aCount determines 
+   the max. number of following sigs to calculate the advance value. If aCount is 
+   -1, all signs until the end of the string will be evaluated. */
+XInt32 ResourcesFont_GetTextAdvance( ResourcesFont _this, XString aString, XInt32 
+  aOffset, XInt32 aCount )
+{
+  XHandle handle;
+  XInt32 advance;
+
+  if ( aOffset < 0 )
+    aOffset = 0;
+
+  if (( _this->font == 0 ) || (( aOffset > 0 ) && ( aOffset >= EwGetStringLength( 
+      aString ))))
+    return 0;
+
+  handle = _this->font;
+  advance = 0;
+  advance = EwGetTextAdvance((XFont*)handle, aString + aOffset, aCount );
+  return advance;
+}
+
+/* Default onget method for the property 'Leading' */
+XInt32 ResourcesFont_OnGetLeading( ResourcesFont _this )
+{
+  return _this->Leading;
+}
+
+/* Wrapper function for the non virtual method : 'Resources::Font.OnGetLeading()' */
+XInt32 ResourcesFont__OnGetLeading( void* _this )
+{
+  return ResourcesFont_OnGetLeading((ResourcesFont)_this );
+}
+
+/* Default onget method for the property 'Descent' */
+XInt32 ResourcesFont_OnGetDescent( ResourcesFont _this )
+{
+  return _this->Descent;
+}
+
+/* Wrapper function for the non virtual method : 'Resources::Font.OnGetDescent()' */
+XInt32 ResourcesFont__OnGetDescent( void* _this )
+{
+  return ResourcesFont_OnGetDescent((ResourcesFont)_this );
+}
+
+/* Default onget method for the property 'Ascent' */
+XInt32 ResourcesFont_OnGetAscent( ResourcesFont _this )
+{
+  return _this->Ascent;
+}
+
+/* Wrapper function for the non virtual method : 'Resources::Font.OnGetAscent()' */
+XInt32 ResourcesFont__OnGetAscent( void* _this )
+{
+  return ResourcesFont_OnGetAscent((ResourcesFont)_this );
+}
+
+/* Variants derived from the class : 'Resources::Font' */
+EW_DEFINE_CLASS_VARIANTS( ResourcesFont )
+EW_END_OF_CLASS_VARIANTS( ResourcesFont )
+
+/* Virtual Method Table (VMT) for the class : 'Resources::Font' */
+EW_DEFINE_CLASS( ResourcesFont, CoreResource, _None, _None, _None, _None, _None, 
+                 "Resources::Font" )
+EW_END_OF_CLASS( ResourcesFont )
+
+/* The medium version of the default font resource. The resource is using 'Roboto' 
+   TrueType font with 24 pixel height. */
+EW_DEFINE_FONT_RES( ResourcesFontMedium, 19, 5, 0, 16, 0x0001, 0x00C0 )
+  EW_GLYPH( 0x0001, 1, -14, 7, 14, 9, 0x00000000 ),
+  EW_GLYPH( 0x0020, 0, 0, 0, 0, 5, 0x00000144 ),                /* ' ' */
+  EW_GLYPH( 0x0021, 1, -14, 3, 14, 5, 0x00000144 ),             /* '!' */
+  EW_GLYPH( 0x0022, 1, -15, 5, 5, 6, 0x000001A6 ),              /* '"' */
+  EW_GLYPH( 0x0023, 1, -14, 12, 14, 12, 0x000001EC ),           /* '#' */
+  EW_GLYPH( 0x0024, 1, -17, 10, 19, 11, 0x000003ED ),           /* '$' */
+  EW_GLYPH( 0x0025, 1, -14, 13, 14, 15, 0x00000651 ),           /* '%' */
+  EW_GLYPH( 0x0026, 1, -14, 12, 14, 12, 0x000008C9 ),           /* '&' */
+  EW_GLYPH( 0x0027, 1, -15, 2, 5, 3, 0x00000B06 ),              /* ''' */
+  EW_GLYPH( 0x0028, 1, -16, 6, 21, 7, 0x00000B1F ),             /* '(' */
+  EW_GLYPH( 0x0029, 0, -16, 6, 21, 7, 0x00000C77 ),             /* ')' */
+  EW_GLYPH( 0x002A, 0, -14, 9, 9, 9, 0x00000DCF ),              /* '*' */
+  EW_GLYPH( 0x002B, 0, -13, 11, 12, 11, 0x00000ECB ),           /* '+' */
+  EW_GLYPH( 0x002C, 0, -2, 3, 5, 4, 0x00000FB5 ),               /* ',' */
+  EW_GLYPH( 0x002D, 0, -7, 6, 2, 6, 0x00000FEC ),               /* '-' */
+  EW_GLYPH( 0x002E, 1, -2, 3, 2, 5, 0x00001010 ),               /* '.' */
+  EW_GLYPH( 0x002F, 0, -14, 8, 15, 8, 0x00001025 ),             /* '/' */
+  EW_GLYPH( 0x0030, 1, -14, 10, 14, 11, 0x00001140 ),           /* '0' */
+  EW_GLYPH( 0x0031, 1, -14, 7, 14, 11, 0x000012C7 ),            /* '1' */
+  EW_GLYPH( 0x0032, 0, -14, 11, 14, 11, 0x0000137F ),           /* '2' */
+  EW_GLYPH( 0x0033, 0, -14, 10, 14, 11, 0x00001553 ),           /* '3' */
+  EW_GLYPH( 0x0034, 0, -14, 11, 14, 11, 0x00001729 ),           /* '4' */
+  EW_GLYPH( 0x0035, 1, -14, 10, 14, 11, 0x00001880 ),           /* '5' */
+  EW_GLYPH( 0x0036, 1, -14, 10, 14, 11, 0x00001A41 ),           /* '6' */
+  EW_GLYPH( 0x0037, 0, -14, 11, 14, 11, 0x00001C10 ),           /* '7' */
+  EW_GLYPH( 0x0038, 1, -14, 10, 14, 11, 0x00001D8D ),           /* '8' */
+  EW_GLYPH( 0x0039, 1, -14, 9, 14, 11, 0x00001F7B ),            /* '9' */
+  EW_GLYPH( 0x003A, 1, -11, 3, 11, 5, 0x0000214E ),             /* ':' */
+  EW_GLYPH( 0x003B, 0, -11, 4, 14, 4, 0x00002199 ),             /* ';' */
+  EW_GLYPH( 0x003C, 0, -11, 9, 9, 10, 0x00002214 ),             /* '<' */
+  EW_GLYPH( 0x003D, 1, -9, 9, 6, 11, 0x00002339 ),              /* '=' */
+  EW_GLYPH( 0x003E, 1, -11, 9, 9, 10, 0x000023DE ),             /* '>' */
+  EW_GLYPH( 0x003F, 0, -14, 9, 14, 9, 0x00002515 ),             /* '?' */
+  EW_GLYPH( 0x0040, 1, -14, 17, 18, 18, 0x00002675 ),           /* '@' */
+  EW_GLYPH( 0x0041, 0, -14, 13, 14, 13, 0x00002A91 ),           /* 'A' */
+  EW_GLYPH( 0x0042, 1, -14, 11, 14, 12, 0x00002C7D ),           /* 'B' */
+  EW_GLYPH( 0x0043, 1, -14, 12, 14, 13, 0x00002E29 ),           /* 'C' */
+  EW_GLYPH( 0x0044, 1, -14, 11, 14, 13, 0x0000301F ),           /* 'D' */
+  EW_GLYPH( 0x0045, 1, -14, 10, 14, 11, 0x00003198 ),           /* 'E' */
+  EW_GLYPH( 0x0046, 1, -14, 10, 14, 11, 0x000032C9 ),           /* 'F' */
+  EW_GLYPH( 0x0047, 1, -14, 12, 14, 14, 0x000033D3 ),           /* 'G' */
+  EW_GLYPH( 0x0048, 1, -14, 12, 14, 14, 0x000035E3 ),           /* 'H' */
+  EW_GLYPH( 0x0049, 1, -14, 3, 14, 5, 0x000036E6 ),             /* 'I' */
+  EW_GLYPH( 0x004A, 0, -14, 10, 14, 11, 0x0000371D ),           /* 'J' */
+  EW_GLYPH( 0x004B, 1, -14, 12, 14, 13, 0x0000382D ),           /* 'K' */
+  EW_GLYPH( 0x004C, 1, -14, 10, 14, 11, 0x000039D8 ),           /* 'L' */
+  EW_GLYPH( 0x004D, 1, -14, 15, 14, 17, 0x00003A90 ),           /* 'M' */
+  EW_GLYPH( 0x004E, 1, -14, 12, 14, 14, 0x00003C96 ),           /* 'N' */
+  EW_GLYPH( 0x004F, 1, -14, 12, 14, 14, 0x00003DFC ),           /* 'O' */
+  EW_GLYPH( 0x0050, 1, -14, 12, 14, 13, 0x00004004 ),           /* 'P' */
+  EW_GLYPH( 0x0051, 1, -14, 12, 17, 14, 0x00004185 ),           /* 'Q' */
+  EW_GLYPH( 0x0052, 1, -14, 11, 14, 12, 0x000043F0 ),           /* 'R' */
+  EW_GLYPH( 0x0053, 0, -14, 12, 14, 12, 0x00004592 ),           /* 'S' */
+  EW_GLYPH( 0x0054, 0, -14, 12, 14, 12, 0x000047EF ),           /* 'T' */
+  EW_GLYPH( 0x0055, 1, -14, 11, 14, 13, 0x000048F2 ),           /* 'U' */
+  EW_GLYPH( 0x0056, 0, -14, 13, 14, 13, 0x00004A23 ),           /* 'V' */
+  EW_GLYPH( 0x0057, 0, -14, 18, 14, 18, 0x00004BF9 ),           /* 'W' */
+  EW_GLYPH( 0x0058, 0, -14, 12, 14, 13, 0x00004EB7 ),           /* 'X' */
+  EW_GLYPH( 0x0059, 0, -14, 12, 14, 12, 0x000050BD ),           /* 'Y' */
+  EW_GLYPH( 0x005A, 0, -14, 12, 14, 12, 0x00005235 ),           /* 'Z' */
+  EW_GLYPH( 0x005B, 1, -16, 5, 19, 5, 0x000053DD ),             /* '[' */
+  EW_GLYPH( 0x005C, 0, -14, 8, 15, 8, 0x00005466 ),             /* '\' */
+  EW_GLYPH( 0x005D, 0, -16, 4, 19, 5, 0x0000558E ),             /* ']' */
+  EW_GLYPH( 0x005E, 0, -14, 8, 7, 8, 0x00005602 ),              /* '^' */
+  EW_GLYPH( 0x005F, 0, 0, 9, 2, 9, 0x000056BA ),                /* '_' */
+  EW_GLYPH( 0x0060, 0, -15, 5, 3, 6, 0x000056F0 ),              /* '`' */
+  EW_GLYPH( 0x0061, 1, -11, 9, 11, 11, 0x00005728 ),            /* 'a' */
+  EW_GLYPH( 0x0062, 1, -15, 10, 15, 11, 0x00005895 ),           /* 'b' */
+  EW_GLYPH( 0x0063, 0, -11, 10, 11, 10, 0x00005A17 ),           /* 'c' */
+  EW_GLYPH( 0x0064, 0, -15, 10, 15, 11, 0x00005B90 ),           /* 'd' */
+  EW_GLYPH( 0x0065, 1, -11, 10, 11, 11, 0x00005D1B ),           /* 'e' */
+  EW_GLYPH( 0x0066, 0, -15, 7, 15, 7, 0x00005EAD ),             /* 'f' */
+  EW_GLYPH( 0x0067, 0, -11, 10, 15, 11, 0x00005F82 ),           /* 'g' */
+  EW_GLYPH( 0x0068, 1, -15, 9, 15, 11, 0x0000617B ),            /* 'h' */
+  EW_GLYPH( 0x0069, 1, -15, 3, 15, 5, 0x00006275 ),             /* 'i' */
+  EW_GLYPH( 0x006A, -1, -15, 5, 19, 5, 0x000062CF ),            /* 'j' */
+  EW_GLYPH( 0x006B, 1, -15, 10, 15, 10, 0x0000637E ),           /* 'k' */
+  EW_GLYPH( 0x006C, 1, -15, 3, 15, 5, 0x000064D8 ),             /* 'l' */
+  EW_GLYPH( 0x006D, 1, -11, 16, 11, 18, 0x00006512 ),           /* 'm' */
+  EW_GLYPH( 0x006E, 1, -11, 9, 11, 11, 0x000066A1 ),            /* 'n' */
+  EW_GLYPH( 0x006F, 0, -11, 11, 11, 11, 0x00006773 ),           /* 'o' */
+  EW_GLYPH( 0x0070, 1, -11, 10, 15, 11, 0x0000690E ),           /* 'p' */
+  EW_GLYPH( 0x0071, 0, -11, 10, 15, 11, 0x00006AAB ),           /* 'q' */
+  EW_GLYPH( 0x0072, 1, -11, 6, 11, 7, 0x00006C43 ),             /* 'r' */
+  EW_GLYPH( 0x0073, 0, -11, 10, 11, 10, 0x00006CC4 ),           /* 's' */
+  EW_GLYPH( 0x0074, 0, -14, 7, 14, 7, 0x00006E6E ),             /* 't' */
+  EW_GLYPH( 0x0075, 1, -11, 9, 11, 11, 0x00006F22 ),            /* 'u' */
+  EW_GLYPH( 0x0076, 0, -11, 10, 11, 10, 0x00006FEF ),           /* 'v' */
+  EW_GLYPH( 0x0077, 0, -11, 15, 11, 15, 0x0000713A ),           /* 'w' */
+  EW_GLYPH( 0x0078, 0, -11, 10, 11, 10, 0x00007336 ),           /* 'x' */
+  EW_GLYPH( 0x0079, 0, -11, 9, 15, 9, 0x000074AB ),             /* 'y' */
+  EW_GLYPH( 0x007A, 0, -11, 10, 11, 10, 0x00007643 ),           /* 'z' */
+  EW_GLYPH( 0x007B, 0, -16, 7, 20, 7, 0x00007770 ),             /* '{' */
+  EW_GLYPH( 0x007C, 1, -14, 3, 17, 5, 0x000078BA ),             /* '|' */
+  EW_GLYPH( 0x007D, 0, -16, 7, 20, 7, 0x000078F8 ),             /* '}' */
+  EW_GLYPH( 0x007E, 1, -8, 12, 4, 14, 0x00007A45 ),             /* '~' */
+  EW_GLYPH( 0x00A0, 0, 0, 0, 0, 5, 0x00007B01 ),
+  EW_GLYPH( 0x00A1, 1, -11, 3, 15, 5, 0x00007B01 ),
+  EW_GLYPH( 0x00A2, 1, -14, 9, 17, 11, 0x00007B6B ),
+  EW_GLYPH( 0x00A3, 1, -14, 11, 14, 12, 0x00007D24 ),
+  EW_GLYPH( 0x00A4, 0, -13, 14, 14, 14, 0x00007EB3 ),
+  EW_GLYPH( 0x00A5, 0, -14, 12, 14, 12, 0x0000812A ),
+  EW_GLYPH( 0x00A6, 1, -14, 3, 17, 5, 0x0000831B ),
+  EW_GLYPH( 0x00A7, 0, -14, 11, 19, 12, 0x00008375 ),
+  EW_GLYPH( 0x00A8, 1, -14, 7, 2, 8, 0x0000868F ),
+  EW_GLYPH( 0x00A9, 1, -14, 14, 14, 16, 0x000086B1 ),
+  EW_GLYPH( 0x00AA, 1, -14, 7, 7, 9, 0x000089A7 ),
+  EW_GLYPH( 0x00AB, 1, -9, 8, 8, 9, 0x00008A78 ),
+  EW_GLYPH( 0x00AC, 1, -8, 9, 4, 11, 0x00008B6A ),
+  EW_GLYPH( 0x00AD, 0, -7, 6, 2, 6, 0x00008BD2 ),
+  EW_GLYPH( 0x00AE, 1, -14, 14, 14, 16, 0x00008BF6 ),
+  EW_GLYPH( 0x00AF, 1, -14, 8, 1, 9, 0x00008EA0 ),
+  EW_GLYPH( 0x00B0, 1, -14, 6, 6, 7, 0x00008EC9 ),
+  EW_GLYPH( 0x00B1, 1, -12, 9, 12, 11, 0x00008F53 ),
+  EW_GLYPH( 0x00B2, 0, -14, 7, 8, 7, 0x00009045 ),
+  EW_GLYPH( 0x00B3, 0, -14, 7, 8, 7, 0x0000911B ),
+  EW_GLYPH( 0x00B4, 1, -15, 5, 3, 6, 0x0000920A ),
+  EW_GLYPH( 0x00B5, 1, -11, 9, 15, 11, 0x00009244 ),
+  EW_GLYPH( 0x00B6, 0, -14, 9, 14, 10, 0x0000934F ),
+  EW_GLYPH( 0x00B7, 1, -8, 3, 2, 5, 0x00009441 ),
+  EW_GLYPH( 0x00B8, 1, 0, 4, 4, 5, 0x00009457 ),
+  EW_GLYPH( 0x00B9, 1, -14, 4, 8, 7, 0x000094A4 ),
+  EW_GLYPH( 0x00BA, 1, -14, 7, 7, 9, 0x000094F8 ),
+  EW_GLYPH( 0x00BB, 0, -9, 10, 8, 9, 0x000095C9 ),
+  EW_GLYPH( 0x00BC, 1, -14, 13, 14, 15, 0x000096CF ),
+  EW_GLYPH( 0x00BD, 1, -14, 14, 14, 16, 0x000098D4 ),
+  EW_GLYPH( 0x00BE, 0, -14, 15, 14, 16, 0x00009B0B ),
+  EW_GLYPH( 0x00BF, 0, -11, 9, 15, 9, 0x00009DA9 ),
+  EW_GLYPH( 0x00C0, 0, -18, 13, 18, 13, 0x00009F14 ),
+  EW_GLYPH( 0x00C1, 0, -18, 13, 18, 13, 0x0000A16A ),
+  EW_GLYPH( 0x00C2, 0, -18, 13, 18, 13, 0x0000A3C0 ),
+  EW_GLYPH( 0x00C3, 0, -18, 13, 18, 13, 0x0000A639 ),
+  EW_GLYPH( 0x00C4, 0, -17, 13, 17, 13, 0x0000A8B2 ),
+  EW_GLYPH( 0x00C5, 0, -19, 13, 19, 13, 0x0000AAED ),
+  EW_GLYPH( 0x00C6, -1, -14, 20, 14, 19, 0x0000AD6E ),
+  EW_GLYPH( 0x00C7, 1, -14, 12, 18, 13, 0x0000B005 ),
+  EW_GLYPH( 0x00C8, 1, -18, 10, 18, 11, 0x0000B277 ),
+  EW_GLYPH( 0x00C9, 1, -18, 10, 18, 11, 0x0000B406 ),
+  EW_GLYPH( 0x00CA, 1, -18, 10, 18, 11, 0x0000B595 ),
+  EW_GLYPH( 0x00CB, 1, -17, 10, 17, 11, 0x0000B747 ),
+  EW_GLYPH( 0x00CC, -1, -18, 5, 18, 5, 0x0000B8BE ),
+  EW_GLYPH( 0x00CD, 1, -18, 6, 18, 5, 0x0000B95B ),
+  EW_GLYPH( 0x00CE, -1, -18, 7, 18, 5, 0x0000BA0A ),
+  EW_GLYPH( 0x00CF, 0, -17, 7, 17, 5, 0x0000BAEE ),
+  EW_GLYPH( 0x00D0, 0, -14, 13, 14, 13, 0x0000BB9A ),
+  EW_GLYPH( 0x00D1, 1, -18, 12, 18, 14, 0x0000BD66 ),
+  EW_GLYPH( 0x00D2, 1, -18, 12, 18, 14, 0x0000BF55 ),
+  EW_GLYPH( 0x00D3, 1, -18, 12, 18, 14, 0x0000C1C3 ),
+  EW_GLYPH( 0x00D4, 1, -18, 12, 18, 14, 0x0000C431 ),
+  EW_GLYPH( 0x00D5, 1, -18, 12, 18, 14, 0x0000C6C2 ),
+  EW_GLYPH( 0x00D6, 1, -17, 12, 17, 14, 0x0000C953 ),
+  EW_GLYPH( 0x00D7, 0, -11, 10, 9, 11, 0x0000CBA7 ),
+  EW_GLYPH( 0x00D8, 1, -15, 12, 16, 14, 0x0000CD00 ),
+  EW_GLYPH( 0x00D9, 1, -18, 11, 18, 13, 0x0000CF96 ),
+  EW_GLYPH( 0x00DA, 1, -18, 11, 18, 13, 0x0000D129 ),
+  EW_GLYPH( 0x00DB, 1, -18, 11, 18, 13, 0x0000D2BC ),
+  EW_GLYPH( 0x00DC, 1, -17, 11, 17, 13, 0x0000D472 ),
+  EW_GLYPH( 0x00DD, 0, -18, 12, 18, 12, 0x0000D5EC ),
+  EW_GLYPH( 0x00DE, 1, -14, 10, 14, 12, 0x0000D7CA ),
+  EW_GLYPH( 0x00DF, 1, -15, 11, 15, 12, 0x0000D922 ),
+  EW_GLYPH( 0x00E0, 1, -15, 9, 15, 11, 0x0000DAE5 ),
+  EW_GLYPH( 0x00E1, 1, -15, 9, 15, 11, 0x0000DCAC ),
+  EW_GLYPH( 0x00E2, 1, -16, 9, 16, 11, 0x0000DE73 ),
+  EW_GLYPH( 0x00E3, 1, -16, 9, 16, 11, 0x0000E066 ),
+  EW_GLYPH( 0x00E4, 1, -15, 9, 15, 11, 0x0000E259 ),
+  EW_GLYPH( 0x00E5, 1, -16, 9, 16, 11, 0x0000E412 ),
+  EW_GLYPH( 0x00E6, 0, -11, 17, 11, 17, 0x0000E600 ),
+  EW_GLYPH( 0x00E7, 0, -11, 10, 15, 10, 0x0000E8B4 ),
+  EW_GLYPH( 0x00E8, 1, -15, 10, 15, 11, 0x0000EA9C ),
+  EW_GLYPH( 0x00E9, 1, -15, 10, 15, 11, 0x0000EC8C ),
+  EW_GLYPH( 0x00EA, 1, -16, 10, 16, 11, 0x0000EE7C ),
+  EW_GLYPH( 0x00EB, 1, -15, 10, 15, 11, 0x0000F099 ),
+  EW_GLYPH( 0x00EC, -1, -15, 5, 15, 5, 0x0000F27B ),
+  EW_GLYPH( 0x00ED, 1, -15, 5, 15, 5, 0x0000F309 ),
+  EW_GLYPH( 0x00EE, -1, -16, 7, 16, 5, 0x0000F397 ),
+  EW_GLYPH( 0x00EF, -1, -15, 7, 15, 5, 0x0000F46D ),
+  EW_GLYPH( 0x00F0, 1, -15, 10, 15, 12, 0x0000F50B ),
+  EW_GLYPH( 0x00F1, 1, -16, 9, 16, 11, 0x0000F72B ),
+  EW_GLYPH( 0x00F2, 0, -15, 11, 15, 11, 0x0000F883 ),
+  EW_GLYPH( 0x00F3, 0, -15, 11, 15, 11, 0x0000FA80 ),
+  EW_GLYPH( 0x00F4, 0, -16, 11, 16, 11, 0x0000FC7D ),
+  EW_GLYPH( 0x00F5, 0, -16, 11, 16, 11, 0x0000FEA8 ),
+  EW_GLYPH( 0x00F6, 0, -15, 11, 15, 11, 0x000100D3 ),
+  EW_GLYPH( 0x00F7, 0, -12, 11, 10, 11, 0x000102C2 ),
+  EW_GLYPH( 0x00F8, 0, -12, 11, 14, 11, 0x000103B8 ),
+  EW_GLYPH( 0x00F9, 1, -15, 9, 15, 11, 0x000105D3 ),
+  EW_GLYPH( 0x00FA, 1, -15, 9, 15, 11, 0x000106FA ),
+  EW_GLYPH( 0x00FB, 1, -16, 9, 16, 11, 0x00010821 ),
+  EW_GLYPH( 0x00FC, 1, -15, 9, 15, 11, 0x00010974 ),
+  EW_GLYPH( 0x00FD, 0, -15, 9, 19, 9, 0x00010A8D ),
+  EW_GLYPH( 0x00FE, 1, -15, 10, 19, 12, 0x00010C7F ),
+  EW_GLYPH( 0x00FF, 0, -15, 9, 19, 9, 0x00010E33 ),
+
+  EW_FONT_PIXEL( ResourcesFontMedium, 0x00011017 )              /* ratio 68.52 % */
+    0xEF7BDEF7, 0xEF7BFF1D, 0xA4F0A7AE, 0x8F50F94C, 0xC2462067, 0xE6000FBC, 0xA246207D,
+    0x5320CF1E, 0x93C29E3E, 0xDDEF7FE3, 0x2005DCF5, 0x600C1058, 0xACE307DC, 0x1F73FBC5,
+    0x10E98301, 0x8FEF0182, 0x66D407F7, 0x4659906D, 0xDFEF7114, 0x11BEDBBE, 0xEF753EF7,
+    0x981BDCF3, 0x1E409983, 0x3C641FC6, 0xFEFFC4D2, 0xEFB7FBED, 0xB8D77FE3, 0x0FBDD577,
+    0xB02461F2, 0x9900F30E, 0x96180722, 0x00220134, 0xAC000376, 0xC0DFAE7F, 0x3FEA29D7,
+    0x9EFB93E4, 0x37E5AF19, 0x5C259BC4, 0xFCE557E8, 0x66E2CF15, 0xC897CEFD, 0x5D9E5BFF,
+    0x46777F30, 0x35BC42AB, 0x54103FA2, 0x93E6297C, 0xBFF3E6F1, 0x7B13F5E7, 0x24DFA886,
+    0x2BF7E3DE, 0xE7BC0320, 0x773F4034, 0x7CF0133F, 0xF89FCF91, 0x93B83905, 0xB839045F,
+    0x3C3F53D3, 0xE3B3E45F, 0x73F40BF7, 0xF57EB3F7, 0x7E9CF780, 0x1673BFAA, 0xE3AFDF88,
+    0x5F81F7EC, 0xBAE4753D, 0x2627EA78, 0x42FDF882, 0x3D4F044C, 0x52EB91D4, 0xFB38BE1F,
+    0x9EFB987D, 0x88779E06, 0xBDE381F5, 0x32C07CFF, 0xA5280565, 0xBE6F04D6, 0x106CDFBF,
+    0xC0DBD64F, 0xAC3E2ABB, 0xFDFECD61, 0xBCBB27C6, 0xE7DE7963, 0xE604432D, 0xE54B3B3B,
+    0x47C4421B, 0xBCF73CC7, 0xF630EF91, 0xEBECF14C, 0x4C485DC4, 0x0ADE0778, 0x7A293CE6,
+    0xF0FC660E, 0x0FE4648D, 0x2263818F, 0x1048240C, 0x63C2C712, 0xBE0FE460, 0x43F19891,
+    0xEB981AF4, 0xB98ADE24, 0x461779E0, 0x171CC0F7, 0x89E0F1DE, 0x3FC0F503, 0x1083D206,
+    0x10816058, 0x31FE0F48, 0x0E2A0F50, 0xEA7878EE, 0x783D7E32, 0x173C05DE, 0x8C4AD400,
+    0xEDFF78D7, 0xF9D72BBF, 0x4FFFEB0D, 0xAA06A786, 0x3C1F1BFB, 0x8FA81BD3, 0x600100FA,
+    0x0000059C, 0xBDC60000, 0xEF7BEB77, 0xF7B8C002, 0x5DEF7D6E, 0x00000000, 0xEFC0BB20,
+    0xDF91CCC2, 0x7BDEF5AC, 0x4CF3006F, 0x6099C401, 0x80ABE05A, 0x164E03CA, 0x9A607D44,
+    0x630157E0, 0x4165F01C, 0x98AC0FAC, 0xC6027BE0, 0x02CBE038, 0x2F9EFFF4, 0x9E295BF1,
+    0xFB1A9E1B, 0x5B5F279E, 0x4945F10F, 0x0130CF05, 0x00000002, 0x0A910098, 0xEF7F0CF1,
+    0xAA945F10, 0xBE54F7DC, 0xE78A56FC, 0x87FAC406, 0xE7A76EFA, 0xEE6264F7, 0x01DE793D,
+    0x00000000, 0x00000000, 0xF3DFFDE2, 0x299EE40D, 0x73A0FF9E, 0x789E7B9E, 0xFC437CA9,
+    0x842F7E2C, 0xBD3053C5, 0x8039EA80, 0xA8179EFA, 0xE301F9EF, 0xF8C07E7B, 0xFC603F3F,
+    0x46E01F9F, 0xBDEF7BDD, 0xDE20004B, 0x906FFF73, 0x3B9C867B, 0xCF73AE74, 0x1D1CD393,
+    0x0DEDFDA2, 0xF1BC600C, 0xE7BBDC61, 0xC3630037, 0x56BFF7B8, 0xB946F903, 0xAC63081B,
+    0x372C6F10, 0xA333DCFA, 0x9C84FD8D, 0xFF798137, 0xEF006C80, 0x02F59800, 0xDE0167B2,
+    0x1D6602F1, 0x801AF640, 0xA9E03477, 0x795EF7BC, 0xBAC0097F, 0xE57BDEF7, 0x000001FD,
+    0xEF7BDEEA, 0xB08024BD, 0x72F7BDEF, 0x00446024, 0xDDCF78E6, 0x8C339113, 0xFFBEF177,
+    0x4378DF7B, 0x28CE64CD, 0x1F799FC0, 0x9E0F4A48, 0xF73B2A37, 0x61BC5FBD, 0x5BEA25BD,
+    0x03BEEF90, 0x3C039EE6, 0x81DFFEAF, 0x184AFF8E, 0xCE500739, 0x38AFEE77, 0x7BF509FA,
+    0xDBDDFCA4, 0x4F58A71A, 0x5CFE048E, 0xA2B17F05, 0x1993D61F, 0x1DBDDF1D, 0x1157F32F,
+    0xDEE32FF5, 0xF7BDEF7B, 0xB8C4003E, 0xEF7BDEF7, 0xF1A80518, 0x007CDC02, 0x1D007EA3,
+    0x05EA3013, 0x518098E8, 0xBC6F0033, 0x00567C80, 0xCF900FDA, 0xDFFE8093, 0x4AF625F3,
+    0x8CF0DCF1, 0xF279EFB1, 0xFC43D7F5, 0x9E10170C, 0xAE7E21E8, 0x53DF72FC, 0x32E090FD,
+    0x33DFFADF, 0x4BE2FB57, 0x200535D1, 0x621BC562, 0x3CC74655, 0x7B96B4F7, 0x10FDA8A6,
+    0x45FFB9EF, 0x5FB219EC, 0x3BB9CF9D, 0x617E5567, 0x309CFF1C, 0x440989F2, 0x2FC617E5,
+    0xEEE73C75, 0x227EE427, 0xBF29BF9E, 0x80313E73, 0xBB3C43F6, 0xDF3DC19E, 0xF3E41FA8,
+    0x533CC2FD, 0x00027798, 0xCC14CF30, 0x9DE60933, 0x7E000000, 0xE4699817, 0x9802D667,
+    0x4DE7582F, 0xF78F4FA2, 0xF55DEF17, 0xC7394FFB, 0xC6B90AFE, 0xDF442BFF, 0x113DBF59,
+    0x1FDE3A7D, 0xD737FF58, 0x7BDEF7BD, 0xDEEB005F, 0x2FBDEF7B, 0xBDEF7580, 0xC017DEF7,
+    0x9EF9013B, 0xCF7DF80E, 0xF3C0EFBA, 0x7FB5CFFB, 0xEAB7D903, 0xF55BE8C3, 0xD73DBF99,
+    0xEF7E37FF, 0xE49BEEB3, 0xB5803A7B, 0xB792F9EF, 0xC4767887, 0x13CF7DCC, 0xB443BF53,
+    0x1D30AB13, 0xC40F1D10, 0xBE12FC7F, 0x9AA81EFC, 0xB036180F, 0xE600016E, 0xCC000079,
+    0xB7E7B9DF, 0x56FFEA00, 0xA053EA88, 0xBDF6B1BE, 0x206FB777, 0x607BB1BF, 0xED079BAC,
+    0xF3DDFCA6, 0xC8F19C46, 0x4BB94DE7, 0x7B6B92CC, 0xEF7AF262, 0xFF1F705F, 0x89CD6427,
+    0x292293C9, 0x9840D31F, 0x0A491387, 0xC04B8A66, 0x0D69EC49, 0xCCCF1E22, 0x7EDFD630,
+    0xBF77CFC2, 0x73FDFEC7, 0x8E8D78AA, 0x4F1ADFE8, 0xA6B519FD, 0xE7D2CE75, 0xDE37817C,
+    0x0563055F, 0xEFD47B90, 0x013BBBDC, 0xF14ADFB9, 0xBAC001EC, 0x07CF800B, 0x02C8E460,
+    0x01C4E2F8, 0x2AB27AC4, 0x89C71580, 0xA8F17C09, 0x0B18C0FC, 0xF9F80E4F, 0xE983E7E3,
+    0x16DDEF77, 0xE4C4009E, 0xEF7BDDF8, 0x8D64F9FD, 0x78C63502, 0xEFD7807C, 0xFBDEF7B9,
+    0x3E4006FF, 0xF7BE81FF, 0x880D159E, 0x003000F6, 0xF7D0F9F9, 0x0BD3FFDE, 0xF7D12FC0,
+    0x05E5FBDE, 0x000E5678, 0x78AE6016, 0x7DEF7BE8, 0xEA200DE3, 0xF7DE885B, 0x5EE426FC,
+    0xE1FBD443, 0x7F7BED64, 0x519E99E3, 0x3F5D41BF, 0x4E6305DB, 0x7F78078F, 0x80000042,
+    0x0F1E0010, 0x176CFEF0, 0x519E5CE4, 0x8F8EA0DF, 0xF7BECF93, 0xEE499E37, 0x8FBEA295,
+    0xCF7BDEE7, 0xBD44026F, 0xDEF7D03B, 0xA01F18DF, 0x5C015576, 0x004CA007, 0x000C0099,
+    0x02650019, 0xD9E20BB4, 0xDEFA1EA3, 0x01F18DF3, 0xCF0EEF51, 0x7BDEF7BD, 0x7D000BEF,
+    0xBEF7BDEF, 0x00000000, 0xF7BDEF7D, 0xDEFA0007, 0x000FEF7B, 0xDF400000, 0x3FBDEF7B,
+    0xEF7B9E00, 0x05DEF7BD, 0xBDEF7D00, 0x00002EF7, 0xF7BE8000, 0x4000BBDE, 0x5DEF7BDF,
+    0x00000000, 0x7A200000, 0xE417B3DF, 0xFE8C435E, 0x7BED64E1, 0x8CF6A8F7, 0x7F8C1BF1,
+    0xE20BDB4C, 0xA80B49FB, 0x000032C7, 0x637BDEF7, 0xC2860019, 0xF9F8B7BD, 0xFCA8C005,
+    0xDF135117, 0xCF7BBF18, 0xFB109F2F, 0xF7CF90AD, 0x9E02EE79, 0x000002FB, 0x00000000,
+    0xBDEF7D00, 0x00007EF7, 0xF7BDEF7D, 0x0000007E, 0x00000000, 0x002FB8C0, 0x00000000,
+    0x0005DCF0, 0x00000000, 0x00000000, 0x59E60020, 0xB78F17F0, 0x6633D398, 0x637DEEFC,
+    0x510F6F0E, 0x0BB9EBEF, 0xD600FDF4, 0x74F00FAA, 0x37E300FD, 0xC7FE403E, 0x9BAE2009,
+    0x93E7FDC0, 0x016BA980, 0x5D3D7FC6, 0xF97E17C0, 0x389C4025, 0x178F4600, 0x00F9AAC0,
+    0xCF97E2F8, 0x0000005D, 0x00000000, 0x00000000, 0x80000000, 0x7BDEF7BE, 0xBDCF0007,
+    0x0FEFB005, 0x44063007, 0x5409F005, 0x06AB104C, 0xC5607E6E, 0x165F1819, 0xC409F2FC,
+    0x0FCA838C, 0x13827A88, 0xA29AF013, 0xE318022A, 0xF800E333, 0x00B2F9F2, 0x00FCE8CC,
+    0x002632B0, 0xBAC02B3E, 0xC3EEB01F, 0x03780053, 0x801FC8C0, 0xF0029EB7, 0xF9001BC6,
+    0x1AC00FE6, 0xF138014F, 0x5F37C802, 0x0DCC6B00, 0xC80144E0, 0x806B0017, 0x4DF9EFB5,
+    0x510F7F88, 0xD65F0FEF, 0xD597F7BE, 0x506FC6AA, 0xBDFC663B, 0x2A546620, 0x00A72FE0,
+    0x530003A6, 0x0549D300, 0x0BDFE5FC, 0x8D554662, 0x31FEA0DF, 0xDF6A37C3, 0xC4D51BFB,
+    0xFDEA21EE, 0x7BDEF711, 0x3000EEEF, 0xBDD40ED6, 0x06CAEEF7, 0x0058BF18, 0x9E00113C,
+    0xA2F8C008, 0xBBDEF750, 0x5C806C9F, 0xDEF7513B, 0x0000EFFB, 0x00000000, 0xF3DF6B00,
+    0x87BB109B, 0x6F87F7A8, 0x37F7BED4, 0xFC6A35EA, 0x158FF506, 0x19882F3F, 0x76C0586B,
+    0x0B12C018, 0x9600CB00, 0x9DB01618, 0xB4C4179F, 0xA0DF8D46, 0x37C331FE, 0x1BFBDF6A,
+    0x87BB12F5, 0xBED60908, 0x27733CE7, 0x0019D7C0, 0xDEEB19D6, 0x4DFFEF7B, 0xE07B9C80,
+    0x9FFEF7BB, 0x72FC80B8, 0x0034C004, 0x2F8C01A6, 0xBDEEF82B, 0xA017C9FB, 0xF7BBE276,
+    0xE3A003E6, 0x53D4F007, 0x00BC6F00, 0xEE6366F9, 0xDF837773, 0xFF58C23B, 0xF7D8D560,
+    0xF1FC9FFE, 0xF2FC83D7, 0x3F782521, 0x27BF78BE, 0x8FFC87A8, 0x817B3BE7, 0xD1CCF7B1,
+    0xFDE304FF, 0x9E5F27EF, 0x8A8DF182, 0x11605EF8, 0xB906FE4F, 0xD46FC32A, 0xF1DFF7BE,
+    0x90ADFB12, 0xEF759773, 0x7BDEF7BD, 0x758002EF, 0xDEF2BDEF, 0x0000177B, 0x00000000,
+    0x00000000, 0x00000000, 0x77BC0000, 0x005F7180, 0x00000000, 0x00000000, 0xC0160000,
+    0x278941B1, 0x5EB10AD6, 0xF73EB65F, 0xFE69BC74, 0x6FCF109E, 0xBC05F79A, 0x8058CE77,
+    0x028ACB15, 0x073E1515, 0x0591871C, 0x3C5F0B2A, 0xC781E278, 0xD641F1C1, 0x04A9E213,
+    0x7F159627, 0x7FBF89E0, 0xAAAAC04C, 0xFD79F005, 0x16664601, 0xEA07CF80, 0xF07F3836,
+    0x305151DD, 0x18AC0722, 0x2145019E, 0x7B0A18B3, 0xB3658D8C, 0x1EAAA20D, 0x4D943DFC,
+    0x2A28EDF9, 0x8EC3C606, 0x1467F151, 0xA8AB0C54, 0xD5B0FE52, 0x1CCECB88, 0x14BFCA0A,
+    0x6018ED4B, 0x8C415DCC, 0xF2A01F3D, 0x1B9550D9, 0xFC1447F8, 0x07250142, 0xF881888C,
+    0xEDEF049F, 0xCC6178E8, 0x0F53CF6C, 0xFC5F8BDA, 0x8859ACC2, 0x06CE8E8E, 0x6F17E6B3,
+    0x53D46F00, 0xAE002080, 0xC6B026A7, 0xF203B2FC, 0xC1F1D6CD, 0xD54F2F1B, 0xF0A7ACC3,
+    0xE3B22FC6, 0xAFC6F907, 0xFB7D036F, 0x3310198D, 0xE868DE3A, 0x24AE5668, 0xF8E898D7,
+    0xD4F0D1D1, 0x40AA7CCC, 0xE30357EB, 0x400E6A79, 0x2348068B, 0x00000000, 0xBDC00000,
+    0xEF7BDEF7, 0xB82003FD, 0x6F7BDEF7, 0xAB558069, 0x80D5D500, 0xF803F378, 0xAE801BC6,
+    0xAACF00B7, 0x7E5FC805, 0xC009C700, 0x62007A3B, 0xF7BDEF7A, 0xE0003BDE, 0x6006F7BD,
+    0x000000DF, 0x00000000, 0x37D80000, 0x6605BCC0, 0x8055601C, 0xE318262F, 0x302CBE03,
+    0x02AB00E3, 0x18C1317C, 0x8165F01F, 0x6B107F15, 0x02C7F805, 0xDEFFDF95, 0x002FFC1F,
+    0x00000000, 0x0BFF0000, 0xC6306F60, 0x7C66F018, 0x0AE67A88, 0x4C5F7C66, 0x4FACCABE,
+    0xDD64E1E5, 0xF7BDEF7B, 0x3FF1005E, 0xF8C38E29, 0xDFFDE219, 0x33BC86F3, 0x467BFCC5,
+    0xD46A7BDF, 0x18E22FFA, 0xFBDFFDF2, 0xE8267B91, 0x3F7BFF58, 0x4D304E96, 0x7BDEB9AA,
+    0x86FA837F, 0x77FB7F5C, 0x00000001, 0xE73BF200, 0x113EE037, 0xFFCC4FF5, 0xBE344F3D,
+    0x02145F14, 0x0C30022A, 0xA80830C0, 0xBE21BE08, 0x9EFB3C28, 0x7EC47E27, 0xF2076A22,
+    0xE42F773B, 0x8FE8C27E, 0x7BB9E637, 0xDE35153C, 0xE3E66E30, 0x033FE307, 0xFC780040,
+    0x1A88D620, 0xCBD7C61D, 0x5DDCEB1B, 0xC27EE4B3, 0xB8805F78, 0x0000003F, 0xF9CEFC80,
+    0x227DC41E, 0x7CBF0F9E, 0xA0FFF7FE, 0x92F94BE2, 0x03083051, 0x63200610, 0x2FCAC0C1,
+    0xE7CE8BE4, 0xB883FFDC, 0xE1B3C44F, 0x25F3DDF9, 0xB9E257D6, 0x7BEC7B21, 0x673F5F3B,
+    0xF1E3C6B0, 0x91DEF7BF, 0xEE222002, 0x1BDEF7BD, 0x7C700A33, 0xD47DE30F, 0x3DDEEF8A,
+    0xA22AFE93, 0xDF7305BE, 0x0C3BCF3F, 0x3087BEAE, 0xF7396E79, 0x9CB73C01, 0x000000FB,
+    0x00000000, 0xBF39DF90, 0xFB89FFF1, 0xE93FD444, 0x3FFDFFAC, 0xF94BF158, 0x80C0F112,
+    0x91003004, 0xFC4F0305, 0xB378BE52, 0x20FFF7FE, 0x7F5113EE, 0x1F9CEFC8, 0x5C62BF21,
+    0xBDDFACDB, 0xFF54D47B, 0x79FE8C27, 0x0000006F, 0xB9F46000, 0x185670BB, 0x7BBF125F,
+    0x4B78789E, 0x120F0EBC, 0x00000000, 0x39E00000, 0x079E60CF, 0x00007DCF, 0x29E60000,
+    0x58053CC0, 0x000001F7, 0x00000000, 0x3EEB17F0, 0xC5FC84F1, 0x0000077B, 0xF1000000,
+    0x8FF8033F, 0x746F806F, 0x827A7E81, 0xE602D56F, 0x7FD00678, 0x8DF8A817, 0xB33CF017,
+    0x02FCBF00, 0xEB3E3788, 0x0000003E, 0xB73C0000, 0x53FF7FFA, 0x12F9CEFD, 0xBEF94ADF,
+    0x0E788ABF, 0x699EEFC6, 0xC73BB9D6, 0x8DE257E0, 0x4CF8C2F8, 0x48118C06, 0x00000000,
+    0x00000000, 0x00000000, 0xEE7D9BDE, 0xC6159C2E, 0x9EEFC497, 0x12DE1E27, 0x0483C3AF,
+    0x00000000, 0xFA200000, 0x881DFF7F, 0xFEB94AFF, 0xDFFA8F41, 0xE5668D7F, 0x972FE52F,
+    0x189E0511, 0x82E1701C, 0x540788C3, 0x297F2B0C, 0xA8F4597F, 0xF8D7FDFF, 0x7295FF11,
+    0xE4EFC3FD, 0x206FCE77, 0xFF5113F6, 0xFFBFF3C4, 0xF29BC68A, 0x15018517, 0x60061801,
+    0x08A80C18, 0x0A2FE53A, 0x8AFFBFF5, 0xD444F7C6, 0x39DF3C4E, 0x000004BF, 0xCEFC6000,
+    0xE57DC6F9, 0x3F9E22BF, 0xF7FE78DE, 0x4BF2A0FF, 0x0C1432F9, 0x600E0038, 0xE540C144,
+    0x8E8BC617, 0x20FDDCE7, 0x1F3C4577, 0xEF9CEFE4, 0x00000001, 0x4EF9F758, 0xF6044FD3,
+    0x1301E97D, 0x00000000, 0xF9CEFD40, 0x455FA83D, 0xF1B8B7D4, 0x2F17F7BB, 0xCFFB504B,
+    0xADF9DF17, 0x52BF9831, 0x3BF50B7D, 0x2AC4F97B, 0xF7845746, 0x888AC62D, 0xEEF77F37,
+    0xC2AFAC9C, 0x0BBF1B78, 0xCB77E000, 0x5BBF00BD, 0x000005EE, 0x30180000, 0x25BC1BEC,
+    0xEE206EFD, 0x0000000B, 0xA4000000, 0x61BC7244, 0xCE789E5C, 0x257E49DD, 0x2EE78F9E,
+    0xF89EB758, 0x1ACB2FC1, 0x6FE28E41, 0xFF2A3E51, 0x2AA073FC, 0x54F81EA2, 0x7BC8C1F9,
+    0xEAA78073, 0x1F117E01, 0xCC48C630, 0x0FB9E0FB, 0x1FCB3B9E, 0x32B6C6D7, 0x350B150B,
+    0xF1508D42, 0x6C5910C6, 0x4A2B9FE5, 0xEAFE3CD9, 0x28FF3F51, 0xEEDC8D54, 0x8F607AC8,
+    0x8CF2945F, 0x4459943F, 0xC4460ABD, 0x504C8EC5, 0x9E428F0A, 0xF227388D, 0x0E8E8B1D,
+    0x6631BC6B, 0x8EE8DC4D, 0xF59CC617, 0x04C4F826, 0x3C1788DE, 0x40D67CCF, 0x2E2FF674,
+    0x63BC5B3A, 0x2B0F59A9, 0x1037DCDF, 0x2C2CFF77, 0xBF8FE9BF, 0x53C15519, 0xF8A96FE1,
+    0x1FEFE2B3, 0x7A8AA88B, 0x0F2FD702, 0x8144F13C, 0x5DFC02A5, 0x780F1FE0, 0x3F73C156,
+    0x4BE3110D, 0xF7BDEF70, 0xB8200BDE, 0xF8FBDEF7, 0x8174F580, 0xF2059FA7, 0xD7103E37,
+    0x25F1BE01, 0xC40B7AE8, 0x7BDEF7D2, 0xDF900007, 0xB851D8C4, 0x828C497E, 0x58000034,
+    0x62C6E22E, 0xE305FA9C, 0xCDF21A3F, 0x0201D309, 0x24640100, 0x9DA127A8, 0x8E73DC81,
+    0x0000001B, 0xF3000000, 0x03D8A84B, 0xAA8869F9, 0x01006180, 0x8CC16380, 0xCEAF881B,
+    0x0671DE20, 0x2D703B2B, 0xC8480000, 0xC6156408, 0x76B3C6CD, 0x7FEEFE42, 0x4B71EFC1,
+    0x79561EF6, 0x631EEFB2, 0xE627CEDF, 0xBAA77632, 0xCF19339E, 0x25FE3079, 0x08309803,
+    0xC0918000, 0x60003FD8, 0xF837EB1D, 0xE7FA8A75, 0xB3DF6353, 0x443BAFA2, 0xBC072B4F,
+    0x2B00001F, 0xBAEB3C07, 0xA7EDF983, 0x8DF7BEC6, 0x6A295BF6, 0xBF58FA0F, 0xFF630004,
+    0xF9EFB580, 0x887AF80D, 0x13C60FFA, 0x34567BBF, 0x2BA2598F, 0x5EFC2E19, 0xFA7FF800,
+    0xF00017DE, 0x2FBDE6DF, 0x6002C000, 0xCBFE03FB, 0xEF7BDEEF, 0x0000001D, 0x77E78EF4,
+    0xFBF19ECE, 0x22AFDC61, 0x3D0B7BC6, 0xFDEEFC62, 0x318FC455, 0x7BF5176A, 0x81A7E1E2,
+    0x80311976, 0x300009CC, 0x93990062, 0x65DA069F, 0x7EA2ED64, 0xCCBF144F, 0x57F7BBF1,
+    0xF3CE7F19, 0xBC622AFF, 0x9F3C55FF, 0x9ECE77E7, 0x03FBCDBA, 0x51CE777E, 0x74D54603,
+    0x319AB85D, 0xE633C3C7, 0xD1D34740, 0x95AE6F10, 0xEF95806F, 0xF7BC163B, 0xF7B8C466,
+    0x7BDE0005, 0xBEF7BCAF, 0x795EF7BC, 0x80017DEF, 0xEF2BDEF7, 0x78002FBD, 0xE00000EF,
+    0x1DEF03BD, 0xE8800000, 0xC46EEF7D, 0x36B1835E, 0x77BED66F, 0xDF0CB18F, 0x485B1C60,
+    0xFF8EDDC8, 0xAA86303B, 0x0F7CFB98, 0xE227AABE, 0x53E476F9, 0x3BFCEFBF, 0xD72047C7,
+    0xE9F32B3F, 0xAE4E1101, 0x1BF9BE7D, 0x15BFF8D3, 0x31B35BCF, 0x2B2BE77F, 0x5F9E248D,
+    0x0BF633C7, 0x3AB23386, 0xB1BD76A9, 0xC6FEF7FE, 0x14CF6A98, 0xA7FDB7A3, 0xBD10024F,
+    0xC02BD9EF, 0xEE7BDD73, 0x77A785D9, 0xBE7BC60F, 0xE393BF12, 0xE317CE77, 0xF11ACD7B,
+    0x53E788AF, 0x15AEFE73, 0xF93DBDEF, 0x9C8973FF, 0x04CF3FAC, 0x9C897200, 0xFACF3FAC,
+    0x7BDE2B5D, 0xB3DFF27B, 0xE22BFC46, 0xF19CD4F9, 0xCEFC633B, 0x2F7C62F9, 0x307BFF4F,
+    0xE7857CFA, 0xBBDCF7BA, 0xFF7FF30B, 0xFBBF78CB, 0x52F631EB, 0xFEFFDFA6, 0x0F77EB99,
+    0x9F31963C, 0xCC1939FF, 0xC87FCC7F, 0xCE1DD1EE, 0xF1E79CF3, 0x0BE6FBE6, 0x9BEF9BC0,
+    0x9CF3CE2F, 0x47BB21E7, 0xBDEEFC77, 0x00FBDEF7, 0xEF7BDDF8, 0xF7BC006D, 0xA2001BDE,
+    0x057B3DF7, 0xCF7BAE78, 0xF4F0BB3D, 0xCF78C1EE, 0xF277E257, 0xE5F9EF7F, 0x1AEF5EF8,
+    0x9CD47510, 0x3BDF47F5, 0x89CEFF93, 0xCF3577BE, 0x13900802, 0xF1F3EF7D, 0xFE01DFAC,
+    0x359EFF83, 0xC6735040, 0x317FE4EF, 0x9E5EF8EF, 0xEF183DBE, 0x76CF0AF9, 0x1767B9EF,
+    0xBDEF7BFF, 0xE9D9F437, 0xFB8E3159, 0xB8123DDC, 0x9F23DDCF, 0xB8C2E315, 0x0000000F,
+    0xBEDDEF70, 0xEE00FF7B, 0xEF77DBBD, 0x8C00001F, 0xEF77E0FB, 0x05DEF7BD, 0xFFDFFCC0,
+    0xBF94DEA3, 0x50EDCF30, 0x066F8C6F, 0x74BDFFF3, 0xC5678B7F, 0xB005DEEF, 0xA8FFF7FE,
+    0xB3C5F94E, 0xC6215DEF, 0xEF07577B, 0x04723B7D, 0xF73ED4F1, 0x1A76678D, 0x13FBA85F,
+    0xDC567E6F, 0xDC40DEF0, 0x00000017, 0x00300000, 0x69BC0616, 0x77FE30BC, 0xFD53303F,
+    0xFBFFD0EB, 0x0005BF1B, 0xFDF20000, 0xB1877BDF, 0x401B8267, 0x2402400C, 0x1B800C40,
+    0x0267B180, 0x04EFFEF9, 0x00000000, 0xFE8279E6, 0xC7FABF0F, 0x7DF7E1B8, 0xCEFBF311,
+    0xB4E8C4FB, 0xE6000017, 0xF9A7FEFF, 0x7E77EDF6, 0x3FC678F5, 0x6B09CD60, 0x8CF1EBFE,
+    0xF6FB7CFF, 0x7E5EFD3B, 0xF47AF42F, 0x2FE6307A, 0x7A25FCC7, 0x000E3D1C, 0x38F471E8,
+    0x31CBF98C, 0x47AF497F, 0xDE7887AF, 0x337F600D, 0x339837C0, 0xF7E4ACC1, 0x00EE884E,
+    0x3004CFD0, 0xE7700356, 0x5603F3C8, 0xF7E037B4, 0x39ADB78F, 0xE4F3DF80, 0x7AA8167B,
+    0xFBC01E9D, 0xADEF1CE6, 0x017393FA, 0xBDE63F90, 0xCF1FEAB7, 0xDFD801BB, 0xCC06F80C,
+    0xE12B3099, 0x77444EF7, 0x04CFD000, 0xC006AC60, 0xEFFE639D, 0xBA2B01FF, 0xE0BF94DE,
+    0x9E66DFB7, 0xE7BF01DB, 0x6F8C6F51, 0xCC2F5506, 0x7DE2F7FF, 0x42DFDD13, 0xC56785CE,
+    0x7F25DEEF, 0xFEFB5000, 0x86F88017, 0xC0DF01EC, 0x6267EFBB, 0xDE6B1256, 0xEE8879EF,
+    0x9FA0CC00, 0xEEEB5C89, 0xA0D58D31, 0x774B77FF, 0xF93F3C8E, 0x4567ECA5, 0xFFCF037B,
+    0x6DBC57FE, 0x7BF001CD, 0x02CF7C9E, 0x0F4EBD54, 0x39CDF780, 0x87F55BDE, 0xF2000B9C,
+    0x56F7BCC7, 0x099CF1FD, 0x04CE7800, 0x03DF8C00, 0xFC40353C, 0x7F2F8162, 0x0FBD6F01,
+    0x2827398C, 0xEF18007F, 0x9DE53748, 0xFBFF519E, 0x67FC351F, 0xF883F5C8, 0xC710049F,
+    0x0CFC6001, 0x003D9E00, 0xF0017758, 0x1C8C00F9, 0x9C5F0059, 0x4F588038, 0xE2B00556,
+    0x2F813138, 0x181F951E, 0x01C9E163, 0x7CFC7F3F, 0xBDEEFD30, 0x8013C2DB, 0x7BBF1C98,
+    0x9F3FBDEF, 0xC6A051AC, 0xF00F8F18, 0x7F7501FA, 0x0FCDE200, 0x001B8AC0, 0xD6004EE6,
+    0x3E7C005D, 0x16472300, 0x0E2717C0, 0x5593D620, 0x4E38AC01, 0x478BE04C, 0x58C607E5,
+    0xCFC07278, 0x4C1F3F1F, 0xB6EF7BBF, 0x262004F0, 0x7BDEEFC7, 0x6B27CFEF, 0xC631A814,
+    0x7EBC03E3, 0xC00FDE60, 0x403EBB7C, 0xCDFAD7FC, 0x3DAFC401, 0xBBAC007B, 0x007CF800,
+    0x802C8E46, 0x401C4E2F, 0x02AB27AC, 0x989C7158, 0xCA8F17C0, 0xF0B18C0F, 0x3F9F80E4,
+    0x7E983E7E, 0xE16DDEF7, 0x8E4C4009, 0xDEF7BDDF, 0x28D64F9F, 0xC78C6350, 0x00FD7807,
+    0xE9F63004, 0xD6F02E78, 0x03F7FB39, 0xE7FF36BE, 0x01775801, 0x8C00F9F0, 0x5F00591C,
+    0x5880389C, 0xB005564F, 0x813138E2, 0x1F951E2F, 0xC9E16318, 0xFC7F3F01, 0xEEFD307C,
+    0x13C2DBBD, 0xBF1C9880, 0x3FBDEF7B, 0xA051AC9F, 0x0F8F18C6, 0xFF61FAF0, 0x000093E9,
+    0x24FA7FD8, 0x800BBAC0, 0xE46007CF, 0xE2F802C8, 0x7AC401C4, 0x15802AB2, 0x7C0989C7,
+    0xC0FCA8F1, 0x0E4F0B18, 0xE7E3F9F8, 0xEF77E983, 0x009E16DD, 0xDDF8E4C4, 0xF9FDEF7B,
+    0x35028D64, 0x807C78C6, 0xF7E20FD7, 0xFBBC00FF, 0x0000139F, 0x139FFBBC, 0x0FFF7E20,
+    0x00177580, 0xC8C00F9F, 0xC5F00591, 0xF5880389, 0x2B005564, 0xF813138E, 0x81F951E2,
+    0x1C9E1631, 0xCFC7F3F0, 0xDEEFD307, 0x013C2DBB, 0xBBF1C988, 0xF3FBDEF7, 0x6A051AC9,
+    0x00F8F18C, 0x7D801FAF, 0xDEF7BDEF, 0x46B003FB, 0x3BC40000, 0x7BDEF71E, 0x17E00FEF,
+    0xF5000097, 0x0000233C, 0x0001B46F, 0xE7137CAC, 0x902F7BDE, 0x000E2E6F, 0xBEC1A378,
+    0x9E0BDEF7, 0xDB7BDDF2, 0x0001A004, 0xBDEEB378, 0xC0067EF7, 0xDE01F198, 0xF7BDEF7B,
+    0x09807571, 0xCF7DE880, 0x35EE426F, 0x4E1FBD44, 0x37F7BED6, 0xF519E99E, 0xB3F5D41B,
+    0xF4E6305D, 0x27F78078, 0x08000004, 0x00F1E001, 0x4176CFEF, 0xF519E5CE, 0x38F8EA0D,
+    0x7F7BECF9, 0x5EE499E3, 0x20FBEA29, 0x3F46BFFA, 0x07FABF00, 0xE001B8C0, 0xF1017DF7,
+    0x71C4093F, 0x0067E300, 0xB9E03D9E, 0xEF7BDEF7, 0xEFA0017D, 0x17DEF7BD, 0xA0000000,
+    0xFEF7BDEF, 0x7BDF4000, 0x0001FDEF, 0x7BE80000, 0x07F7BDEF, 0x03FBA800, 0x580FCDE2,
+    0x3B980371, 0xEF7BDCF1, 0x00BEF7BD, 0x7BDEF7D0, 0x00000BEF, 0xDEF7D000, 0xA0007F7B,
+    0xFEF7BDEF, 0x00000000, 0xDEF7BDF4, 0xF30003FB, 0xBB7CC07E, 0x5AFF883E, 0xBF1039BF,
+    0x73C1ECF6, 0xDEF7BDEF, 0xDF4002FB, 0x2FBDEF7B, 0x40000000, 0xFDEF7BDF, 0xF7BE8001,
+    0x0003FBDE, 0xF7D00000, 0x0FEF7BDE, 0x3E9FF600, 0x9FF60009, 0xF7B9E93E, 0x7DEF7BDE,
+    0xBDEFA001, 0x0017DEF7, 0xEFA00000, 0x00FEF7BD, 0xEF7BDF40, 0x000001FD, 0xEF7BE800,
+    0x4007F7BD, 0xE38A4FFC, 0xCF067E30, 0x02FB8C1E, 0x00000000, 0xA0000000, 0xF3788FEE,
+    0xE60DC563, 0x017DC64E, 0x00000000, 0x00000000, 0x87EF3000, 0xE27D76F9, 0x8E6FD6BF,
+    0x0F67B5F8, 0x00017DC6, 0x00000000, 0x00000000, 0xD3FEC000, 0x4FFB0127, 0x0BEE349F,
+    0x00000000, 0x00000000, 0x88000000, 0xBBBDEF7B, 0xEEB18003, 0xDDEF7900, 0x3001FE33,
+    0x60068EDE, 0x454002C5, 0xFBDE47BE, 0xF0000862, 0x8BEF791E, 0x48A80021, 0x600B1D00,
+    0xF21A2B7C, 0xF89FBBDE, 0xDF462007, 0xB1804001, 0xC173C74F, 0xDFECE75B, 0xFE6D7C0F,
+    0x3F7583CF, 0xA787DD60, 0x8006F000, 0x6F003F91, 0x8DE0053D, 0xCDF20037, 0x9E35801F,
+    0x05E27002, 0x00BE6F90, 0xC01B98D6, 0x2F900289, 0xF880D600, 0xE388049F, 0x033F1800,
+    0xC007B3C0, 0x26FCF7DA, 0xA887BFC4, 0x6B2F87F7, 0x6ACBFBDF, 0xA837E355, 0x5EFE331D,
+    0x152A3310, 0x005397F0, 0x298001D3, 0x02A4E980, 0x05EFF2FE, 0xC6AAA331, 0x98FF506F,
+    0xEFB51BE1, 0x626A8DFD, 0xFEF510F7, 0x00FEEA00, 0x600FCDE2, 0xB9800DC5, 0x3DF6B013,
+    0xEFF109BF, 0xE1FDEA21, 0xFEF7DACB, 0xF8D55AB2, 0x8CC76A0D, 0x8CC417BF, 0xE5FC054A,
+    0x0074C014, 0x3A600A60, 0xFCBF80A9, 0xA8CC417B, 0xD41BF1AA, 0x46F8663F, 0xA37F7BED,
+    0x443DD89A, 0xDE603FBD, 0x5DBE600F, 0xB5FF101F, 0xF880737E, 0x600F67B5, 0x137E7BED,
+    0xD443DFE2, 0xB597C3FB, 0xB565FDEF, 0xD41BF1AA, 0x2F7F198E, 0x0A951988, 0x8029CBF8,
+    0x14C000E9, 0x015274C0, 0x82F7F97F, 0xE3555198, 0xCC7FA837, 0xF7DA8DF0, 0xB13546FE,
+    0x7F7A887B, 0xFB180400, 0xBC173C74, 0xFDFECE75, 0xFFE6D7C0, 0xF7DAC03C, 0xBFC426FC,
+    0x87F7A887, 0xFBDF6B2F, 0xE3556ACB, 0x331DA837, 0x33105EFE, 0x97F0152A, 0x01D30053,
+    0xE9802980, 0xF2FE02A4, 0xA33105EF, 0x506FC6AA, 0x1BE198FF, 0x8DFDEFB5, 0x10F7626A,
+    0xFEC0FEF5, 0x000127D3, 0x127D3FEC, 0x6FCF7DAC, 0x887BFC42, 0xB2F87F7A, 0xACBFBDF6,
+    0x837E3556, 0xEFE331DA, 0x52A33105, 0x05397F01, 0x98001D30, 0x2A4E9802, 0x5EFF2FE0,
+    0x6AAA3310, 0x8FF506FC, 0xFB51BE19, 0x26A8DFDE, 0xEF510F76, 0x7F21B30F, 0x389ABFE1,
+    0x6B57E3CF, 0x8AFC7FC5, 0xEF1EF55F, 0x267CAF03, 0x84CF91C4, 0xBC7BBC6F, 0x8CF55F93,
+    0x7FCB78FF, 0x3CFFE22D, 0xDCC28C00, 0x7F95ECE7, 0x8C4477EC, 0x31BE55DE, 0x9FFEF77E,
+    0x17F89F20, 0x8F93E563, 0x3DB3D037, 0x37D6A147, 0x3B78949D, 0x139E8252, 0x25F31A52,
+    0x37DD31E5, 0xDA71E729, 0xCE4F3E22, 0xCFF1975A, 0xDF61BD27, 0xB1F8C7BB, 0xF4611DF2,
+    0xEE77FE0E, 0xF102F773, 0xE388093F, 0x019F8C00, 0xEF01ECF0, 0x17DC601D, 0x00000000,
+    0x00000000, 0x05800000, 0xE2506C70, 0xAC42B589, 0xCFAD97D7, 0x9A6F1D3D, 0xF3C427BF,
+    0x1FDD409B, 0x00FCDE20, 0xE6006E2B, 0x00EF784E, 0x0000BEE3, 0x00000000, 0x00000000,
+    0x63802C00, 0xAC4F1283, 0xBEBD6215, 0xE9EE7D6C, 0x3DFCD378, 0x04DF9E21, 0xF9807EF3,
+    0xFE207D76, 0x80E6FD6B, 0x0F67B5F8, 0xB8C03BDE, 0x0000002F, 0x00000000, 0x00000000,
+    0xA0D8E00B, 0x856B13C4, 0x5B2FAF58, 0xDE3A7B9F, 0x884F7F34, 0xFFB137E7, 0xC00049F4,
+    0x7927D3FE, 0xBEE300EF, 0x00000000, 0x00000000, 0x2C000000, 0x12836380, 0x6215AC4F,
+    0x7D6CBEBD, 0xD378E9EE, 0x9E213DFC, 0xFDD404DF, 0x1F9BC401, 0x001B8AC0, 0x6DF42773,
+    0x31BF6FA0, 0xC7466203, 0xCD1D0D1B, 0x1AE495CA, 0x3A3F1D13, 0x999A9E1A, 0xFD68154F,
+    0x4F3C606A, 0xD16801CD, 0x00046900, 0x00000000, 0x00BB8C00, 0xDF400000, 0x6007777B,
+    0xF7D07FAC, 0x05E35DDE, 0x801E2FC6, 0x81230091, 0xEFA28BF1, 0x0346BBBD, 0xBE83FD63,
+    0x000EEEF7, 0xBDDCF788, 0xD1867FC0, 0xFFC6350B, 0xF6C3F17E, 0x8409E7A6, 0xBC016789,
+    0xD66202F1, 0x66200000, 0xD6BBC035, 0xE7BFA00F, 0x079E7803, 0x013D43C6, 0x8BFBDDF5,
+    0xD94CCF09, 0x824FFC4D, 0x7E300E38, 0x01ECF006, 0x79EFFEF1, 0x6299DE43, 0xEFA33DFE,
+    0xFD6A353D, 0xF90C7117, 0xC8FDEFFE, 0xAC74133D, 0x4B1FBDFF, 0xD5269827, 0xBFBDEF5C,
+    0xAE437D41, 0x7F750DBF, 0xC0FCDE20, 0xEE601B8A, 0xF7FF7884, 0x4CEF21BC, 0xD19EFF31,
+    0xB51A9EF7, 0x86388BFE, 0x7EF7FF7C, 0x3A099EE4, 0x8FDEFFD6, 0x934C13A5, 0xDEF7AE6A,
+    0x21BEA0DF, 0xBCC6DFD7, 0xD76F981F, 0xF5AFF887, 0xB5F8839B, 0xC4000F67, 0x0DE7BFFB,
+    0xF98A6779, 0xF7BE8CF7, 0x5FF5A8D4, 0xFBE431C4, 0xF723F7BF, 0xFEB1D04C, 0x9D2C7EF7,
+    0x73549A60, 0x06FEF7BD, 0xFEB90DF5, 0xFB182036, 0xB7973C74, 0x1FBFD9CE, 0xF3FF9B5F,
+    0xFFDE2000, 0x3BC86F3D, 0x67BFCC53, 0x46A7BDF4, 0x8E22FFAD, 0xBDFFDF21, 0x8267B91F,
+    0xF7BFF58E, 0xD304E963, 0xBDEB9AA4, 0x6FA837F7, 0xD9B7F5C8, 0x0024FA7F, 0x093E9FF6,
+    0x7BFFBC40, 0xA67790DE, 0xE8CF7F98, 0x5A8D4F7B, 0x431C45FF, 0x3F7BFFBE, 0x1D04CF72,
+    0xC7EF7FEB, 0x49A609D2, 0xEF7BD735, 0x90DF506F, 0xBF136FEB, 0xFDDE07FF, 0xDE0009CF,
+    0xF109CFFD, 0xEF107FFB, 0xE4379EFF, 0xDFE6299D, 0x53DEFA33, 0x117FD6A3, 0xFFEF90C7,
+    0x33DC8FDE, 0xDFFAC741, 0x8274B1FB, 0xF5CD5269, 0xD41BFBDE, 0xDBFAE437, 0xF773BF3C,
+    0xFCE77E34, 0x6157D606, 0x22BFDFBC, 0xF3FC5FEA, 0x67CEEF77, 0x69FDEEFC, 0x4A317FBE,
+    0x32473517, 0xFA77B9F7, 0x0977BDEE, 0x00008EFD, 0xEF7BBE33, 0xF7BDEFB4, 0x1EB191DE,
+    0x86A18050, 0x82BBCB58, 0xFB93C431, 0xB9F4B69E, 0x19BE1F77, 0x3FFEEE72, 0x7E45E721,
+    0xDC85EEE7, 0xF1FD184F, 0x8F773CC6, 0x1BC6A2A7, 0xFC7CCDC6, 0x0067FC60, 0x1F8F0008,
+    0xA3511AC4, 0x797AF8C3, 0x6BBB9D63, 0x184FDC96, 0x66FC8BEF, 0xEAFC09DE, 0x01B8C01F,
+    0x205F7DF8, 0x388127FE, 0x0CFC600E, 0xF007B3C0, 0x12F9EEFC, 0xDCF12BEB, 0xBDF63D90,
+    0x339FAF9D, 0xF8F1E358, 0x48EF7BDF, 0xF7111001, 0x8DEF7BDE, 0xBE380519, 0x6A3EF187,
+    0x9EEF77C5, 0x51157F49, 0x7F7502DF, 0x01F9BC40, 0x73006E2B, 0xEEFCF027, 0x2BEB12F9,
+    0x3D90DCF1, 0xAF9DBDF6, 0xE358339F, 0x7BDFF8F1, 0x100148EF, 0x7BDEF711, 0x05198DEF,
+    0xF187BE38, 0x77C56A3E, 0x7F499EEF, 0x82DF5115, 0xBE603F79, 0x7FC41F5D, 0x881CDFAD,
+    0x00F67B5F, 0x3DDF9E00, 0x257D625F, 0xC7B21B9E, 0xF5F3B7BE, 0x3C6B0673, 0xEF7BFF1E,
+    0x2200291D, 0xEF7BDEE2, 0x00A331BD, 0xDE30F7C7, 0xEEF8AD47, 0xAFE933DD, 0xEC5BEA22,
+    0x00127D3F, 0x127D3FEC, 0xF77E7800, 0x95F5897C, 0x1EC86E78, 0xD7CEDEFB, 0xF1AC19CF,
+    0xBDEFFC78, 0x8800A477, 0xBDEF7B88, 0x028CC6F7, 0x78C3DF1C, 0xBBE2B51F, 0xBFA4CF77,
+    0x896FA88A, 0x1C7149FF, 0xD9E0CFC6, 0x001F7583, 0x00000000, 0x89FDD400, 0x6E2B3F37,
+    0xF7593B98, 0x00000001, 0xE6000000, 0xAEDF30FD, 0xFAD7FC4F, 0xF6BF11CD, 0xDD6001EC,
+    0x00000007, 0x00000000, 0xE9FF6000, 0xA7FD8093, 0xF758024F, 0x00000001, 0x00000000,
+    0x0EFFE000, 0xF739C822, 0x7F24EF37, 0x77DE7AFF, 0x07E53D41, 0xD1EBF7F6, 0x139595F0,
+    0x9BF3DF73, 0xA21DFA51, 0xDF15C8CA, 0x1F71FBBD, 0x8AF187BF, 0x58E70163, 0x7BF1F250,
+    0xD93C6F98, 0xFAFBDDF1, 0xA88ABF58, 0x6304017F, 0xF2E78E9F, 0xF7FB39D6, 0x7FF36BE3,
+    0x9BDE001E, 0x9C2EEE7D, 0xC497C615, 0x1E279EEF, 0xC3AF12DE, 0x00000483, 0x00000000,
+    0x0127FE20, 0xF1801C71, 0x3D9E0033, 0xFDFFE880, 0x2BFE2077, 0x3D07FAE5, 0x35FF7FEA,
+    0x94BF959A, 0x14465CBF, 0xC0706278, 0x230E0B85, 0xAC31501E, 0x65FCA5FC, 0xF7FEA3D1,
+    0xFC47E35F, 0x0FF5CA57, 0x100FEEA0, 0x15807E6F, 0x27730037, 0xFFBFFD10, 0xA57FC40E,
+    0x47A0FF5C, 0x46BFEFFD, 0xF297F2B3, 0x0288CB97, 0xB80E0C4F, 0xC461C170, 0x95862A03,
+    0x2CBF94BF, 0xFEFFD47A, 0xFF88FC6B, 0x01FEB94A, 0xF300FDE6, 0xFC40FAED, 0x01CDFAD7,
+    0x1ECF6BF1, 0xFFE88000, 0xFE2077FD, 0x07FAE52B, 0xFF7FEA3D, 0xBF959A35, 0x465CBF94,
+    0x70627814, 0x0E0B85C0, 0x31501E23, 0xFCA5FCAC, 0xFEA3D165, 0x47E35FF7, 0xF5CA57FC,
+    0x6301000F, 0xC2E78E9F, 0xDFECE75B, 0xFF36BE0F, 0x440001E7, 0x03BFEFFF, 0xD7295FF1,
+    0xFF51E83F, 0xACD1AFFB, 0xE5FCA5FC, 0x13C0A232, 0x5C2E0383, 0x80F11870, 0x2FE5618A,
+    0x1E8B2FE5, 0x1AFFBFF5, 0x52BFE23F, 0xFF607FAE, 0x800093E9, 0x024FA7FD, 0xF7FFA200,
+    0xAFF881DF, 0xF41FEB94, 0xD7FDFFA8, 0x52FE5668, 0x511972FE, 0x01C189E0, 0x8C382E17,
+    0xB0C54078, 0x97F297F2, 0xDFFA8F45, 0xF11F8D7F, 0x3FD7295F, 0x70053AC0, 0x079F4005,
+    0xBDEEB000, 0xEF7BDEF7, 0xF7BAC000, 0xBDEF7BDE, 0x4EB00003, 0x80015C01, 0xBFFD0938,
+    0xB1257FFF, 0x82B1CA57, 0xAFBFF51E, 0x97F2B1FC, 0x88CB37BE, 0xC4F9AE62, 0xD76E88E0,
+    0x5C35E8E4, 0x6AD56231, 0xBF158F1E, 0x13E5F919, 0xFFF7587A, 0x32F88FE4, 0xDF81DAE5,
+    0x077FDFF9, 0xFF1001EC, 0x038E2093, 0x3C019F8C, 0x0377E07B, 0x00005F71, 0x00000000,
+    0xE3922520, 0xC4F2E30D, 0xF24EEE73, 0x407CF12B, 0x37881FDD, 0x06E2B03F, 0xBBF13B98,
+    0x002FB881, 0x00000000, 0xC9129000, 0x797186F1, 0x277739E2, 0x3E7895F9, 0xE607EF30,
+    0xFE21F5DB, 0x20E6FD6B, 0x03D9ED7E, 0xC40DDF80, 0x0000017D, 0x80000000, 0x378E4894,
+    0xCF13CB8C, 0xAFC93BB9, 0xFF61F3C4, 0xD80093E9, 0x0024FA7F, 0xFB881BBF, 0x00000002,
+    0x29000000, 0x186F1C91, 0x739E2797, 0x895F9277, 0xFDD403E7, 0x03F37881, 0xB9806E2B,
+    0x71037D93, 0xF2C2CFF7, 0x9BF8FE9B, 0x153C1551, 0x3F8A96FE, 0xB1FEFE2B, 0x27A8AA88,
+    0xC0F2FD70, 0x58144F13, 0x05DFC02A, 0x6780F1FE, 0xD3F73C15, 0x84BE3110, 0x00002EE7,
+    0xF5800000, 0x6F05FFBF, 0xDF05ECA7, 0xC1BC6FBD, 0x2C6730FB, 0x4B0076C0, 0x6C009600,
+    0xCE61F787, 0x7DEEF858, 0x4AE60DE3, 0xFEDC2EF9, 0x0004FFDF, 0xFF600000, 0xD80093E9,
+    0x8024FA7F, 0xF771037D, 0x9BF2C2CF, 0x519BF8FE, 0xFE153C15, 0x2B3F8A96, 0x88B1FEFE,
+    0x7027A8AA, 0x13C0F2FD, 0x2A58144F, 0xFE05DFC0, 0x156780F1, 0x10D3F73C, 0x0004BE31
+
+  EW_FONT_KERNING_CODES( ResourcesFontMedium )
+  EW_FONT_KERNING_VALUES( ResourcesFontMedium )
+EW_END_OF_FONT_RES( ResourcesFontMedium )
+
+/* Table with links to derived variants of the font resource : 'Resources::FontMedium' */
+EW_RES_WITHOUT_VARIANTS( ResourcesFontMedium )
+
+/* Embedded Wizard */

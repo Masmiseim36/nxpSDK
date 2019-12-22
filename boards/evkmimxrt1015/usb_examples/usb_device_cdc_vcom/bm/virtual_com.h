@@ -33,7 +33,6 @@
 #endif
 
 #define USB_DEVICE_INTERRUPT_PRIORITY (3U)
-
 /* Currently configured line coding */
 #define LINE_CODING_SIZE (0x07)
 #define LINE_CODING_DTERATE (115200)
@@ -70,7 +69,7 @@ typedef struct _usb_cdc_acm_info
 {
     uint8_t serialStateBuf[NOTIF_PACKET_SIZE + UART_BITMAP_SIZE]; /* Serial state buffer of the CDC device to notify the
                                                                      serial state to host. */
-    bool dtePresent;          /* A flag to indicate whether DTE is present.         */
+    uint8_t dtePresent;          /* A flag to indicate whether DTE is present.         */
     uint16_t breakDuration;   /* Length of time in milliseconds of the break signal */
     uint8_t dteStatus;        /* Status of data terminal equipment                  */
     uint8_t currentInterface; /* Current interface index.                           */

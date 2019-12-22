@@ -105,6 +105,7 @@ void BOARD_InitLcd(void)
     gpio_pin_config_t config = {
         kGPIO_DigitalOutput,
         0,
+        kGPIO_NoIntmode,
     };
 
     /* Backlight. */
@@ -204,7 +205,11 @@ static void i2c_release_bus_delay(void)
 void BOARD_I2C_ReleaseBus(void)
 {
     uint8_t i                          = 0;
-    const gpio_pin_config_t pin_config = {.direction = kGPIO_DigitalOutput, .outputLogic = 1};
+    const gpio_pin_config_t pin_config = {
+        .direction     = kGPIO_DigitalOutput,
+        .outputLogic   = 1,
+        .interruptMode = kGPIO_NoIntmode,
+    };
 
     CLOCK_EnableClock(kCLOCK_Iomuxc);
 
@@ -296,6 +301,7 @@ void BOARD_InitCameraResource(void)
     gpio_pin_config_t pinConfig = {
         kGPIO_DigitalOutput,
         1,
+        kGPIO_NoIntmode,
     };
 
     GPIO_PinInit(GPIO1, 4, &pinConfig);

@@ -10,6 +10,7 @@
     <definition extID="device.MIMXRT1015_startup.MIMXRT1015"/>
     <definition extID="platform.Include_common.MIMXRT1015"/>
     <definition extID="platform.Include_core_cm7.MIMXRT1015"/>
+    <definition extID="platform.Include_dsp.MIMXRT1015"/>
     <definition extID="platform.drivers.bee.MIMXRT1015"/>
     <definition extID="platform.drivers.clock.MIMXRT1015"/>
     <definition extID="platform.drivers.common.MIMXRT1015"/>
@@ -17,13 +18,14 @@
     <definition extID="platform.drivers.iomuxc.MIMXRT1015"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1015"/>
     <definition extID="platform.utilities.assert.MIMXRT1015"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1015"/>
     <definition extID="utility.debug_console.MIMXRT1015"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkmimxrt1015_bee" name="bee" category="driver_examples/bee" dependency="platform.drivers.bee.MIMXRT1015 platform.drivers.clock.MIMXRT1015 platform.drivers.common.MIMXRT1015 device.MIMXRT1015_CMSIS.MIMXRT1015 utility.debug_console.MIMXRT1015 component.lpuart_adapter.MIMXRT1015 component.serial_manager.MIMXRT1015 component.serial_manager_uart.MIMXRT1015 platform.drivers.lpuart.MIMXRT1015 component.lists.MIMXRT1015 device.MIMXRT1015_startup.MIMXRT1015 platform.drivers.iomuxc.MIMXRT1015 platform.utilities.assert.MIMXRT1015 platform.drivers.igpio.MIMXRT1015 platform.Include_core_cm7.MIMXRT1015 platform.Include_common.MIMXRT1015">
+  <example id="evkmimxrt1015_bee" name="bee" category="driver_examples/bee" dependency="platform.drivers.bee.MIMXRT1015 platform.drivers.clock.MIMXRT1015 platform.drivers.common.MIMXRT1015 device.MIMXRT1015_CMSIS.MIMXRT1015 utility.debug_console.MIMXRT1015 component.lpuart_adapter.MIMXRT1015 component.serial_manager.MIMXRT1015 component.lists.MIMXRT1015 component.serial_manager_uart.MIMXRT1015 platform.drivers.lpuart.MIMXRT1015 device.MIMXRT1015_startup.MIMXRT1015 platform.drivers.iomuxc.MIMXRT1015 platform.utilities.assert.MIMXRT1015 platform.drivers.igpio.MIMXRT1015 platform.Include_core_cm7.MIMXRT1015 platform.Include_common.MIMXRT1015 platform.Include_dsp.MIMXRT1015 platform.utilities.misc_utilities.MIMXRT1015">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -31,6 +33,7 @@
       <memoryBlock addr="20000000" size="00008000" access="RW" type="RAM" id="SRAM_DTC_evkmimxrt1015" name="SRAM_DTC"/>
       <memoryBlock addr="00000000" size="00008000" access="RW" type="RAM" id="SRAM_ITC_evkmimxrt1015" name="SRAM_ITC"/>
       <memoryBlock addr="20200000" size="00010000" access="RW" type="RAM" id="SRAM_OC_evkmimxrt1015" name="SRAM_OC"/>
+      <memoryBlock addr="20210000" size="00000000" access="RW" type="RAM" id="NCACHE_REGION_evkmimxrt1015" name="NCACHE_REGION"/>
     </memory>
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
@@ -44,6 +47,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>CPU_MIMXRT1015DAF5A</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>PRINTF_FLOAT_ENABLE=0</value>
@@ -69,17 +73,17 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/evkmimxrt1015/driver_examples/bee/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/evkmimxrt1015/driver_examples/bee/armgcc" target_path="MIMXRT1015/gcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1015xxxxx_ram.ld"/>
     </source>
-    <source path="boards/evkmimxrt1015/driver_examples/bee/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/evkmimxrt1015/driver_examples/bee/iar" target_path="MIMXRT1015/iar" type="linker" toolchain="iar">
       <files mask="MIMXRT1015xxxxx_ram.icf"/>
     </source>
-    <source path="boards/evkmimxrt1015/driver_examples/bee/mdk" target_path="src" type="configuration" toolchain="mdk">
-      <files mask="evkmimxrt1015_ram.ini"/>
-    </source>
-    <source path="boards/evkmimxrt1015/driver_examples/bee/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/evkmimxrt1015/driver_examples/bee/mdk" target_path="MIMXRT1015/arm" type="linker" toolchain="mdk">
       <files mask="MIMXRT1015xxxxx_ram.scf"/>
+    </source>
+    <source path="boards/evkmimxrt1015/driver_examples/bee/mdk" target_path="evkmimxrt1015" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt1015_ram.ini"/>
     </source>
     <source path="boards/evkmimxrt1015/driver_examples/bee" target_path="board" type="c_include">
       <files mask="board.h"/>

@@ -17,12 +17,12 @@ FreeMASTER Example Code                     Version: n/a
                                             Location: boards/*, src/support/mcuxsdk_usb/*
 
 
-SHA-1/SHA-256 crypto-algorithms library     Version: n/a
+SHA-1 crypto-algorithms library             Version: n/a
 written by Brad Conte, brad@bradconte.com   License: public domain
-                                            License text: https://github.com/B-Con/crypto-algorithms/blob/master/README.md
+updated by NXP                              License text: https://github.com/B-Con/crypto-algorithms/blob/master/README.md
                                             Original location: https://github.com/B-Con/crypto-algorithms
-                                            Format: unmodified source code
-                                            Location: src/support/sec_ca/src/*
+                                            Format: source code modified for FreeMASTER driver needs
+                                            Location: src/common/freemaster_sha.c
 
 
 bernii gauge.js component                   Used as minified version in demo project UI

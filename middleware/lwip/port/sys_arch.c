@@ -363,7 +363,7 @@ err_t xReturn = ERR_MEM;
     }
     else
     {
-        vSemaphoreCreateBinary( ( *pxSemaphore ) );
+        *pxSemaphore = xSemaphoreCreateBinary();
     }
 
     if( *pxSemaphore != NULL )
@@ -536,29 +536,32 @@ u32_t sys_now(void)
  * Routine:  sys_thread_new
  *---------------------------------------------------------------------------*
  * Description:
- *      Starts a new thread with priority "prio" that will begin its
- *      execution in the function "thread()". The "arg" argument will be
- *      passed as an argument to the thread() function. The id of the new
+ *      Starts a new thread with priority "iPriority" that will begin its
+ *      execution in the function "pxThread()". The "pvArg" argument will be
+ *      passed as an argument to the pxThread() function. The id of the new
  *      thread is returned. Both the id and the priority are system
  *      dependent.
  * Inputs:
- *      char *name              -- Name of thread
- *      void (* thread)(void *arg) -- Pointer to function to run.
- *      void *arg               -- Argument passed into function
- *      int stacksize           -- Required stack amount in bytes
- *      int prio                -- Thread priority
+ *      char *pcName            -- Name of thread
+ *      void (* pxThread)(void *pvParameters)  -- Pointer to function to run.
+ *      void *pvArg             -- Argument passed into function
+ *      int iStackSize          -- Required stack amount in words (not bytes!)
+ *      int iPriority           -- Thread priority
  * Outputs:
- *      sys_thread_t            -- Pointer to per-thread timeouts.
+ *      sys_thread_t            -- Pointer to the new thread's structure.
  *---------------------------------------------------------------------------*/
-sys_thread_t sys_thread_new( const char *pcName, void( *pxThread )( void *pvParameters ), void *pvArg, int iStackSize, int iPriority )
+sys_thread_t sys_thread_new(const char *pcName, void(*pxThread)(void *pvParameters), void *pvArg, int iStackSize, int iPriority)
 {
-TaskHandle_t xCreatedTask;
-portBASE_TYPE xResult;
-sys_thread_t xReturn;
+    TaskHandle_t xCreatedTask;
+    portBASE_TYPE xResult;
+    sys_thread_t xReturn;
 
-    xResult = xTaskCreate( pxThread, pcName, iStackSize, pvArg, iPriority, &xCreatedTask );
+    LWIP_ASSERT("invalid stacksize", iStackSize > 0);
 
-    if( xResult == pdPASS )
+    xResult = xTaskCreate(pxThread, pcName, (configSTACK_DEPTH_TYPE)iStackSize, pvArg, iPriority, &xCreatedTask);
+    LWIP_ASSERT("task creation failed", xResult == pdPASS);
+
+    if (xResult == pdPASS)
     {
         xReturn = xCreatedTask;
     }

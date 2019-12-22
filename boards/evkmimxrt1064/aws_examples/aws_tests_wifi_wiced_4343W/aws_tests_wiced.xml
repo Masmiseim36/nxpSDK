@@ -8,32 +8,38 @@
     <definition extID="component.serial_manager_uart.MIMXRT1064"/>
     <definition extID="device.MIMXRT1064_CMSIS.MIMXRT1064"/>
     <definition extID="device.MIMXRT1064_startup.MIMXRT1064"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.MIMXRT1064"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.bufferpool.MIMXRT1064"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.crypto.MIMXRT1064"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.mflash.rt1064.MIMXRT1064"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.mqtt.MIMXRT1064"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.pkcs11.MIMXRT1064"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.secure_sockets.lwip.MIMXRT1064"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.shadow.MIMXRT1064"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.tests.MIMXRT1064"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.tls.MIMXRT1064"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.utils.MIMXRT1064"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.wifi_wiced.MIMXRT1064"/>
-    <definition extID="middleware.amazon_freertos.freertos.MIMXRT1064"/>
-    <definition extID="middleware.amazon_freertos.freertos.heap_4.MIMXRT1064"/>
-    <definition extID="middleware.amazon_freertos.third_party.jsmn.MIMXRT1064"/>
-    <definition extID="middleware.amazon_freertos.third_party.pkcs11.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.platform.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.wifi.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.aws.greengrass.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.tests.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.mflash.rt1064.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.wifi.wiced.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-kernel.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-kernel.extension.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-kernel.heap_4.MIMXRT1064"/>
+    <definition extID="middleware.lwip.MIMXRT1064"/>
     <definition extID="middleware.mbedtls.MIMXRT1064"/>
     <definition extID="middleware.sdmmc.common.MIMXRT1064"/>
     <definition extID="middleware.sdmmc.sdio.MIMXRT1064"/>
     <definition extID="middleware.sdmmc.usdhcadaptor.freertos.MIMXRT1064"/>
-    <definition extID="middleware.tcpip.lwip.MIMXRT1064"/>
     <definition extID="middleware.wifi_wiced.4343W.MIMXRT1064"/>
     <definition extID="middleware.wifi_wiced.MURATA_TYPE1DX.MIMXRT1064"/>
     <definition extID="middleware.wifi_wiced.common.MIMXRT1064"/>
     <definition extID="platform.Include_common.MIMXRT1064"/>
     <definition extID="platform.Include_core_cm7.MIMXRT1064"/>
+    <definition extID="platform.Include_dsp.MIMXRT1064"/>
     <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1064"/>
     <definition extID="platform.drivers.clock.MIMXRT1064"/>
     <definition extID="platform.drivers.common.MIMXRT1064"/>
@@ -45,8 +51,10 @@
     <definition extID="platform.drivers.trng.MIMXRT1064"/>
     <definition extID="platform.drivers.usdhc.MIMXRT1064"/>
     <definition extID="platform.drivers.xip_board.MIMXRT1064"/>
+    <definition extID="platform.drivers.xip_board_dcd.MIMXRT1064"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1064"/>
     <definition extID="platform.utilities.assert.MIMXRT1064"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1064"/>
     <definition extID="utility.debug_console.MIMXRT1064"/>
     <definition extID="iar"/>
     <definition extID="armgcc"/>
@@ -55,7 +63,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1064_aws_tests_wiced" name="aws_tests_wiced" category="aws_examples" dependency="platform.drivers.trng.MIMXRT1064 platform.drivers.dcp.MIMXRT1064 platform.drivers.cache_armv7_m7.MIMXRT1064 platform.drivers.flexspi.MIMXRT1064 middleware.amazon_freertos.aws_iot.mflash.rt1064.MIMXRT1064 middleware.tcpip.lwip.MIMXRT1064 platform.drivers.usdhc.MIMXRT1064 middleware.sdmmc.sdio.MIMXRT1064 middleware.sdmmc.usdhcadaptor.freertos.MIMXRT1064 middleware.amazon_freertos.aws_iot.wifi_wiced.MIMXRT1064 middleware.amazon_freertos.aws_iot.tests.MIMXRT1064 middleware.amazon_freertos.aws_iot.secure_sockets.lwip.MIMXRT1064 middleware.wifi_wiced.MURATA_TYPE1DX.MIMXRT1064 middleware.amazon_freertos.freertos.MIMXRT1064 middleware.amazon_freertos.freertos.heap_4.MIMXRT1064 middleware.amazon_freertos.aws_iot.MIMXRT1064 middleware.amazon_freertos.aws_iot.bufferpool.MIMXRT1064 middleware.amazon_freertos.aws_iot.crypto.MIMXRT1064 middleware.amazon_freertos.aws_iot.mqtt.MIMXRT1064 middleware.amazon_freertos.aws_iot.pkcs11.MIMXRT1064 middleware.amazon_freertos.aws_iot.shadow.MIMXRT1064 middleware.amazon_freertos.aws_iot.tls.MIMXRT1064 middleware.amazon_freertos.aws_iot.utils.MIMXRT1064 middleware.amazon_freertos.third_party.jsmn.MIMXRT1064 middleware.amazon_freertos.third_party.pkcs11.MIMXRT1064 middleware.mbedtls.MIMXRT1064 platform.drivers.clock.MIMXRT1064 platform.drivers.common.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 utility.debug_console.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 component.serial_manager.MIMXRT1064 component.serial_manager_uart.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 component.lists.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 platform.utilities.assert.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.xip_board.MIMXRT1064 platform.Include_core_cm7.MIMXRT1064 platform.Include_common.MIMXRT1064 middleware.sdmmc.common.MIMXRT1064 middleware.wifi_wiced.4343W.MIMXRT1064 middleware.wifi_wiced.common.MIMXRT1064">
+  <example id="evkmimxrt1064_aws_tests_wiced" name="aws_tests_wiced" category="aws_examples" dependency="platform.drivers.trng.MIMXRT1064 platform.drivers.dcp.MIMXRT1064 platform.drivers.cache_armv7_m7.MIMXRT1064 platform.drivers.flexspi.MIMXRT1064 middleware.amazon_freertos-aws_iot.vendor.nxp.mflash.rt1064.MIMXRT1064 platform.drivers.usdhc.MIMXRT1064 middleware.sdmmc.sdio.MIMXRT1064 middleware.sdmmc.usdhcadaptor.freertos.MIMXRT1064 middleware.amazon_freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT1064 middleware.amazon_freertos-aws_iot.vendor.nxp.wifi.wiced.MIMXRT1064 middleware.amazon_freertos-aws_iot.tests.MIMXRT1064 middleware.amazon_freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1064 middleware.amazon_freertos-aws_iot.libraries.abstractions.wifi.MIMXRT1064 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.aws.greengrass.MIMXRT1064 middleware.lwip.MIMXRT1064 middleware.wifi_wiced.MURATA_TYPE1DX.MIMXRT1064 middleware.amazon_freertos-kernel.MIMXRT1064 middleware.amazon_freertos-kernel.heap_4.MIMXRT1064 middleware.amazon_freertos-aws_iot.libraries.abstractions.platform.MIMXRT1064 middleware.amazon_freertos-aws_iot.MIMXRT1064 middleware.amazon_freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1064 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1064 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT1064 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1064 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1064 middleware.amazon_freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT1064 middleware.amazon_freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1064 middleware.amazon_freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1064 middleware.amazon_freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT1064 middleware.mbedtls.MIMXRT1064 platform.drivers.clock.MIMXRT1064 platform.drivers.common.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 utility.debug_console.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 component.serial_manager.MIMXRT1064 component.lists.MIMXRT1064 component.serial_manager_uart.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 platform.utilities.assert.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.xip_board.MIMXRT1064 platform.drivers.xip_board_dcd.MIMXRT1064 platform.Include_core_cm7.MIMXRT1064 platform.Include_common.MIMXRT1064 platform.Include_dsp.MIMXRT1064 middleware.sdmmc.common.MIMXRT1064 middleware.wifi_wiced.4343W.MIMXRT1064 middleware.wifi_wiced.common.MIMXRT1064 middleware.amazon_freertos-kernel.extension.MIMXRT1064 platform.utilities.misc_utilities.MIMXRT1064">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -64,7 +72,8 @@
       <memoryBlock addr="20000000" size="00020000" access="RW" type="RAM" id="SRAM_DTC_MIMXRT1064xxxxA" name="SRAM_DTC"/>
       <memoryBlock addr="00000000" size="00020000" access="RW" type="RAM" id="SRAM_ITC_MIMXRT1064xxxxA" name="SRAM_ITC"/>
       <memoryBlock addr="20200000" size="000C0000" access="RW" type="RAM" id="SRAM_OC_MIMXRT1064xxxxA" name="SRAM_OC"/>
-      <memoryBlock addr="80000000" size="02000000" access="RW" type="RAM" id="BOARD_SDRAM_evkmimxrt1064" name="BOARD_SDRAM"/>
+      <memoryBlock addr="80000000" size="01E00000" access="RW" type="RAM" id="BOARD_SDRAM_evkmimxrt1064" name="BOARD_SDRAM"/>
+      <memoryBlock addr="81E00000" size="00200000" access="RW" type="RAM" id="NCACHE_REGION_evkmimxrt1064" name="NCACHE_REGION"/>
     </memory>
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
@@ -87,9 +96,11 @@
           <value>MBEDTLS_CONFIG_FILE='"aws_mbedtls_config.h"'</value>
           <value>UNITY_INCLUDE_CONFIG_H</value>
           <value>LWIP_NETIF_API=1</value>
-          <value>AMAZON_FREERTOS_ENABLE_UNIT_TESTS=1</value>
+          <value>AMAZON_FREERTOS_ENABLE_UNIT_TESTS</value>
           <value>FSL_RTOS_FREE_RTOS</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>WIFI_WICED</value>
+          <value>SDK_DEBUGCONSOLE_UART</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -124,6 +135,9 @@
       </debug_configuration>
     </debug_configurations>
     <include_paths>
+      <include_path path="amazon-freertos/libraries/abstractions/platform/freertos/include"/>
+      <include_path path="amazon-freertos/libraries/abstractions/platform/include"/>
+      <include_path path="amazon-freertos/libraries/c_sdk/standard/mqtt/src"/>
       <include_path path="lwip/port"/>
       <include_path path="lwip/src"/>
       <include_path path="lwip/src/include"/>
@@ -138,20 +152,21 @@
       <files mask="aws_bufferpool_config.h"/>
       <files mask="aws_ggd_config.h"/>
       <files mask="aws_mbedtls_config.h"/>
-      <files mask="aws_mqtt_agent_config.h"/>
       <files mask="aws_mqtt_config.h"/>
-      <files mask="aws_pkcs11_config.h"/>
       <files mask="aws_secure_sockets_config.h"/>
       <files mask="aws_shadow_config.h"/>
-      <files mask="aws_test_pkcs11_config.h"/>
       <files mask="aws_test_runner_config.h"/>
       <files mask="aws_test_tcp_config.h"/>
       <files mask="aws_test_wifi_config.h"/>
       <files mask="aws_wifi_config.h"/>
+      <files mask="iot_config.h"/>
+      <files mask="iot_mqtt_agent_config.h"/>
+      <files mask="iot_pkcs11_config.h"/>
+      <files mask="iot_test_pkcs11_config.h"/>
       <files mask="lwipopts.h"/>
       <files mask="unity_config.h"/>
     </source>
-    <source path="boards/evkmimxrt1064/aws_examples/aws_tests_wifi_wiced_4343W/iar" target_path="src" type="other" toolchain="iar">
+    <source path="boards/evkmimxrt1064/aws_examples/aws_tests_wifi_wiced_4343W/iar" target_path="evkmimxrt1064" type="other" toolchain="iar">
       <files mask="evkmimxrt1064.mac"/>
     </source>
     <source path="boards/evkmimxrt1064/aws_examples/aws_tests_wifi_wiced_4343W/linkscripts" target_path="linkscripts" type="src" toolchain="mcuxpresso">

@@ -85,7 +85,7 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
     uint8_t interfaceIndex = 0;
 #endif
     usb_status_t status = kStatus_USB_Success;
-    switch (eventCode)
+    switch (eventCode & 0x0000FFFFU)
     {
         case kUSB_HostEventAttach:
 #if ((defined USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
@@ -149,6 +149,10 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
 #else
             status = USB_HostMsdEvent(deviceHandle, configurationHandle, eventCode);
 #endif
+            break;
+
+        case kUSB_HostEventEnumerationFail:
+            usb_echo("enumeration failed\r\n");
             break;
 
         default:

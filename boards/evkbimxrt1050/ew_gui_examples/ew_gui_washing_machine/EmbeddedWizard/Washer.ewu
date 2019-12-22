@@ -1,0 +1,3537 @@
+$version 6.60
+
+// Controller class, containing all data set values and all current values of the \
+// washing machine.
+$rect <40,490,240,530>
+$output false
+class DeviceClass
+{
+  // Program number of the washing machine.
+  $rect <10,10,210,50>
+  property int32 ProgramNumber = 0;
+
+  $rect <10,50,210,90>
+  onset ProgramNumber
+  {
+    // Implement here your ON SET business logic, the access to the hardware,
+    // or any desired code to execute, when the property is written at the
+    // runtime.
+
+    /* check limits of given value */
+    if ( value < 0 )
+      value = 0;
+    if ( value >= WashingProgram.size )
+      value = WashingProgram.size - 1;
+
+    /* check for new value */
+    if ( value == pure ProgramNumber )
+      return;
+
+    pure ProgramNumber = value;
+
+    notifyobservers ^ProgramNumber;
+  }
+
+  // Temperature index of the washing program.
+  $rect <220,10,420,50>
+  property int32 TempNumber = 0;
+
+  $rect <220,50,420,90>
+  onset TempNumber
+  {
+    // Implement here your ON SET business logic, the access to the hardware,
+    // or any desired code to execute, when the property is written at the
+    // runtime.
+
+    /* check limits of given value */
+    if ( value < 0 )
+      value = 0;
+    if ( value >= WashingTemp.size )
+      value = WashingTemp.size - 1;
+
+    /* check for new value */
+    if ( value == pure TempNumber )
+      return;
+
+    pure TempNumber = value;
+
+    notifyobservers ^TempNumber;
+  }
+
+  // Selected additional option.
+  $rect <10,110,210,150>
+  property int32 OptionNumber = 0;
+
+  $rect <10,150,210,190>
+  onset OptionNumber
+  {
+    // Implement here your ON SET business logic, the access to the hardware,
+    // or any desired code to execute, when the property is written at the
+    // runtime.
+
+    /* check limits of given value */
+    if ( value < 0 )
+      value = 0;
+    if ( value >= Options.size )
+      value = Options.size - 1;
+
+    /* check for new value */
+    if ( value == pure OptionNumber )
+      return;
+
+    pure OptionNumber = value;
+
+    notifyobservers ^OptionNumber;
+  }
+
+  // Hour of end time.
+  $rect <220,110,420,150>
+  property int32 Hour = 0;
+
+  $rect <220,150,420,190>
+  onset Hour
+  {
+    // Implement here your ON SET business logic, the access to the hardware,
+    // or any desired code to execute, when the property is written at the
+    // runtime.
+
+    /* check limits of given value */
+    if ( value < 0 )
+      value = 0;
+    if ( value > 23 )
+      value = 23;
+
+    /* check for new value */
+    if ( value == pure Hour )
+      return;
+
+    pure Hour = value;
+
+    notifyobservers ^Hour;
+  }
+
+  // Minute of end time.
+  $rect <430,110,630,150>
+  property int32 Minute = 0;
+
+  $rect <430,150,630,190>
+  onset Minute
+  {
+    // Implement here your ON SET business logic, the access to the hardware,
+    // or any desired code to execute, when the property is written at the
+    // runtime.
+
+    /* check limits of given value */
+    if ( value < 0 )
+      value = 0;
+    if ( value > 59 )
+      value = 59;
+
+    /* check for new value */
+    if ( value == pure Minute )
+      return;
+
+    pure Minute = value;
+
+    notifyobservers ^Minute;
+  }
+
+  // Index of spin number, when machine is spinning
+  $rect <430,10,630,50>
+  property int32 SpinNumber = 0;
+
+  $rect <430,50,630,90>
+  onset SpinNumber
+  {
+    // Implement here your ON SET business logic, the access to the hardware,
+    // or any desired code to execute, when the property is written at the
+    // runtime.
+
+    /* check limits of given value */
+    if ( value < 0 )
+      value = 0;
+    if ( value >= SpinTurn.size )
+      value = SpinTurn.size - 1;
+
+
+    /* check for new value */
+    if ( value == pure SpinNumber )
+      return;
+
+    pure SpinNumber = value;
+
+    notifyobservers ^SpinNumber;
+
+
+  }
+
+  // Array of washing programs.
+  $rect <690,10,890,50>
+  array string WashingProgram[ 8 ] =
+  (
+    Default[0] = "Hot/Colored Wash";
+    Default[1] = "Easy Care";
+    Default[2] = "Delicates";
+    Default[3] = "Sportswear";
+    Default[4] = "Wool Handwash";
+    Default[5] = "Eco";
+    Default[6] = "Drain";
+    Default[7] = "Spin";
+  );
+
+  // Array of washing temperatures.
+  $rect <690,50,890,90>
+  array string WashingTemp[ 6 ] =
+  (
+    Default[0] = "cold";
+    Default[1] = "30°";
+    Default[2] = "40°";
+    Default[3] = "50°";
+    Default[4] = "60°";
+    Default[5] = "95°";
+  );
+
+  // Array of spin turns.
+  $rect <690,90,890,130>
+  array string SpinTurn[ 7 ] =
+  (
+    Default[0] = "none";
+    Default[1] = "short";
+    Default[2] = "400";
+    Default[3] = "800";
+    Default[4] = "1000";
+    Default[5] = "1200";
+    Default[6] = "1400";
+  );
+
+  // Array of spin turns.
+  $rect <690,130,890,170>
+  array string Options[ 6 ] =
+  (
+    Default[0] = "none";
+    Default[1] = "short";
+    Default[2] = "extra spinning";
+    Default[3] = "pre-^washing";
+    Default[4] = "extra rinsing";
+    Default[5] = "wrinkle resitance";
+  );
+
+  // How to integrate your UI application with a real device?
+  // 
+  // https://doc.embedded-wizard.de/integrating-with-the-device
+  // https://doc.embedded-wizard.de/device-class-and-device-driver
+  note legend Note5
+  {
+    attr Bounds = <10,220,650,310>;
+  }
+}
+
+// This is a GUI component.
+$rect <40,240,240,280>
+$output false
+class ProgList : Core::Group
+{
+  $rect <0,260,140,300>
+  inherited property Bounds = <0,0,126,240>;
+
+  // This is a slide gesture handler.
+  $rect <20,20,160,60>
+  object Core::SlideTouchHandler SlideTouchHandler
+  {
+    preset Bounds = <0,0,126,240>;
+    preset OnEnd = OnEnd;
+    preset OnStart = OnStart;
+    preset SnapNext = <0,96>;
+    preset Friction = 0.1;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler SimpleTouchHandler
+  {
+    preset Point4 = <0,240>;
+    preset Point3 = <126,240>;
+    preset Point2 = <126,0>;
+    preset Point1 = <0,0>;
+    preset OnDrag = OnDrag;
+    preset OnRelease = OnRelease;
+    preset OnPress = OnStart;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,72,126,168>;
+    preset Color = Washer::ButtonBgColor;
+  }
+
+  // This is a vertical list component.
+  $rect <20,20,160,60>
+  object Core::VerticalList BottomList
+  {
+    preset Bounds = <0,168,126,240>;
+    preset Opacity = 0;
+    preset OnLoadItem = OnLoadBottom;
+    preset ItemHeight = 24;
+    preset NoOfItems = Washer::Device.WashingProgram.size;
+    preset ItemClass = Washer::ProgItemS;
+  }
+
+  // This is a vertical list component.
+  $rect <20,20,160,60>
+  object Core::VerticalList MainList
+  {
+    preset Bounds = <0,72,126,168>;
+    preset OnUpdate = OnUpdate;
+    preset OnLoadItem = OnLoadMain;
+    preset SlideHandler = SlideTouchHandler;
+    preset ItemHeight = 96;
+    preset NoOfItems = Washer::Device.WashingProgram.size;
+    preset ItemClass = Washer::ProgItemL;
+  }
+
+  // This is a vertical list component.
+  $rect <20,20,160,60>
+  object Core::VerticalList TopList
+  {
+    preset Bounds = <0,0,126,72>;
+    preset Opacity = 0;
+    preset OnLoadItem = OnLoadTop;
+    preset ItemHeight = 24;
+    preset NoOfItems = Washer::Device.WashingProgram.size;
+    preset ItemClass = Washer::ProgItemS;
+  }
+
+  // Slot method to load content of main scroll list.
+  $rect <240,90,440,130>
+  slot OnLoadMain
+  {
+    sender; /* the method is called from the sender object */
+
+    /* access the item to load the content */
+    var Washer::ProgItemL itemView = (Washer::ProgItemL)MainList.View;
+    var int32             itemNo   = MainList.Item;
+    var string            caption  = "";
+
+    /* get caption from corresponding array within device class */
+    if (( itemNo >= 0 ) && ( itemNo < Washer::Device.WashingProgram.size ))
+      caption = Washer::Device.WashingProgram[ itemNo ];
+
+    /* load the item with the content */
+    itemView.Caption     = caption;
+    itemView.Bounds.size = point( MainList.Bounds.w, MainList.ItemHeight );
+  }
+
+  // Slot method to load content of upper scroll list.
+  $rect <240,0,440,40>
+  slot OnLoadTop
+  {
+    sender; /* the method is called from the sender object */
+
+    /* access the item to load the content */
+    var Washer::ProgItemS itemView = (Washer::ProgItemS)TopList.View;
+    var int32             itemNo   = TopList.Item;
+    var string            caption  = "";
+
+    /* get caption from corresponding array within device class */
+    if (( itemNo >= 0 ) && ( itemNo < Washer::Device.WashingProgram.size ))
+      caption = Washer::Device.WashingProgram[ itemNo ];
+
+    /* load the item with the content */
+    itemView.Caption     = caption;
+    itemView.Bounds.size = point( TopList.Bounds.w, TopList.ItemHeight );
+  }
+
+  // Slot method to synchronize the scrolling of the upper/lower list with the current \
+  // scroll position of the center list.
+  $rect <240,130,440,170>
+  slot OnUpdate
+  {
+    sender; /* the method is called from the sender object */
+
+    /* synchronize upper and lower list  */
+    TopList.ScrollOffset = MainList.ScrollOffset * TopList.ItemHeight / MainList.ItemHeight + TopList.Bounds.h;
+    BottomList.ScrollOffset = MainList.ScrollOffset * BottomList.ItemHeight / MainList.ItemHeight - BottomList.ItemHeight;
+
+
+
+  }
+
+  // Slot method to load content of lower scroll list.
+  $rect <240,180,440,220>
+  slot OnLoadBottom
+  {
+    sender; /* the method is called from the sender object */
+
+    /* access the item to load the content */
+    var Washer::ProgItemS itemView = (Washer::ProgItemS)BottomList.View;
+    var int32             itemNo   = BottomList.Item;
+    var string            caption  = "";
+
+    /* get caption from corresponding array within device class */
+    if (( itemNo >= 0 ) && ( itemNo < Washer::Device.WashingProgram.size ))
+      caption = Washer::Device.WashingProgram[ itemNo ];
+
+    /* load the item with the content */
+    itemView.Caption     = caption;
+    itemView.Bounds.size = point( BottomList.Bounds.w, BottomList.ItemHeight );
+  }
+
+  // Slot method to change the selection, when the item has reached its parking position.
+  $rect <440,130,640,170>
+  slot OnEnd
+  {
+    sender; /* the method is called from the sender object */
+
+    /* change the current program according user selection */
+    Washer::Device.ProgramNumber = -MainList.ScrollOffset / MainList.ItemHeight;
+
+    /* fade out upper/lower list */
+    FadeListOut.Value1 = TopList.Opacity;
+    FadeListOut.Enabled = true;
+
+    /* fade in the caption after sliding */
+    FadeCaption.Enabled = false;
+    FadeCaption.Value1 = Caption.Opacity;
+    FadeCaption.Value2 = 0xFF;
+    FadeCaption.Enabled = true;
+
+    SimpleTouchHandler.Enabled = true;
+
+  }
+
+  // Slot method to make the upper/lower list visible.
+  $rect <440,90,640,130>
+  slot OnStart
+  {
+    sender; /* the method is called from the sender object */
+
+    /* fade in the upper/lower list if not fully opaque */
+    if (( TopList.Opacity != 0xFF ) && !FadeListIn.Enabled )
+    {
+      FadeListIn.Value1 = TopList.Opacity;
+      FadeListIn.Enabled = true;
+    }
+    FadeListOut.Enabled = false;
+
+    /* fade out the caption during sliding */
+    FadeCaption.Enabled = false;
+    FadeCaption.Value1 = Caption.Opacity;
+    FadeCaption.Value2 = 0x00;
+    FadeCaption.Enabled = true;
+
+
+  }
+
+  // This is an int32 change effect.
+  $rect <440,0,640,40>
+  object Effects::Int32Effect FadeListIn
+  {
+    preset OnAnimate = onAnimate;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = Washer::FadeInTime;
+    preset Outlet = ^TopList.Opacity;
+  }
+
+  // This is a slot method.
+  $rect <440,40,640,80>
+  slot onAnimate
+  {
+    sender; /* the method is called from the sender object */
+
+    BottomList.Opacity = TopList.Opacity;
+
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Caption
+  {
+    preset Bounds = <10,70,110,100>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Program";
+    preset Font = Washer::DescrFont;
+    preset Color = Washer::CaptionColor;
+  }
+
+  // This is an int32 change effect.
+  $rect <640,40,840,80>
+  object Effects::Int32Effect FadeCaption
+  {
+    preset Timing = Effects::Timing.FastIn_FastOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 200;
+    preset Outlet = ^Caption.Opacity;
+  }
+
+  // This is an int32 change effect.
+  $rect <640,0,840,40>
+  object Effects::Int32Effect FadeListOut
+  {
+    preset OnAnimate = onAnimate;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = Washer::FadeOutTime;
+    preset InitialDelay = Washer::HoldTime;
+    preset Value2 = 0;
+    preset Value1 = 255;
+    preset Outlet = ^TopList.Opacity;
+  }
+
+  $rect <240,270,440,310>
+  slot OnDrag
+  {
+    var point delta = SimpleTouchHandler.CurrentPos - SimpleTouchHandler.HittingPos;
+
+    /* as soon as the user has moved the finger a little bit - pass the touch events
+       to the slide touch handler */
+    if (( delta.y > 8 ) || ( delta.y < -8 ))
+    {
+      GetRoot().DeflectCursor( SlideTouchHandler, <0,0> );
+      SimpleTouchHandler.Enabled = false;
+    }
+  }
+
+  $rect <240,230,440,270>
+  slot OnRelease
+  {
+    /* ff the user has just tapped the simple touch handler without sliding, directly select the item */
+    if ( !SimpleTouchHandler.AutoDeflected && TopList.Opacity == 0xFF )
+    {
+      var int32 delta = 0;
+
+      /* calculate the offset in number of items */
+      if ( SimpleTouchHandler.CurrentPos.y < MainList.Bounds.y1 )
+        delta = ( SimpleTouchHandler.CurrentPos.y - MainList.Bounds.y1 ) / TopList.ItemHeight - 1;
+      else if ( SimpleTouchHandler.CurrentPos.y > MainList.Bounds.y2 )
+        delta = ( SimpleTouchHandler.CurrentPos.y - MainList.Bounds.y2 ) / BottomList.ItemHeight + 1;
+
+      if ( delta != 0 )
+      {
+        var int32 item = -MainList.ScrollOffset / MainList.ItemHeight + delta;
+        MainList.EnsureVisible( item, true, Int32Effect, null );
+        Washer::Device.ProgramNumber = item;
+      }
+    }
+
+    /* don't forget to start the fade out */
+    FadeListOut.Value1 = TopList.Opacity;
+    FadeListOut.Enabled = true;
+
+    /* fade in the caption after sliding */
+    FadeCaption.Enabled = false;
+    FadeCaption.Value1 = Caption.Opacity;
+    FadeCaption.Value2 = 0xFF;
+    FadeCaption.Enabled = true;
+
+  }
+
+  $rect <440,230,640,270>
+  object Effects::Int32Effect Int32Effect
+  {
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 200;
+  }
+
+  // Slot method to trigger the next phase of the auto demo.
+  $rect <240,320,440,360>
+  slot AutoDemo
+  {
+    postsignal OnStart;
+
+    var int32 val = Washer::Device.ProgramNumber + 1;
+
+    if ( val >= Washer::Device.WashingProgram.size )
+      val = 0;
+
+    MainList.EnsureVisible( val, true, AutoDemoEffect, OnEnd );
+
+  }
+
+  // This is an int32 change effect.
+  $rect <440,320,640,360>
+  object Effects::Int32Effect AutoDemoEffect
+  {
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset CycleDuration = 300;
+  }
+
+  // The class 'ProgList' implements a special type of list to display the washing \
+  // program, with a magnification effect of the middle item. For this purpose, three \
+  // different vertical lists are used: A top list with small items, a center list \
+  // with large items and a bottom list with small items. The three lists are synchronized, \
+  // so that it appears for the user as one list. In order to make the list widget \
+  // more attractive, the top and bottom list are connected with a fade-in/fade-out \
+  // effect: As soon as the user touches the widget, the text item dissappears, and \
+  // the top/bottom lists start to fade-in. After a certain idle time, the top/bottom \
+  // lists will fade-out.
+  note legend Note
+  {
+    attr Bounds = <0,420,810,550>;
+  }
+}
+
+// This is a GUI component.
+$rect <40,160,240,200>
+$output false
+class ProgItemL : Core::Group
+{
+  $rect <0,190,200,230>
+  inherited property Bounds = <0,0,220,160>;
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <20,0,220,160>;
+    preset WrapText = true;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Text";
+    preset Font = Washer::ListFontL;
+    preset Color = Washer::ButtonTextColor;
+  }
+
+  // The property 'Caption' contains the text of the list item.
+  $rect <250,0,450,40>
+  property string Caption = "";
+
+  $rect <250,40,450,80>
+  onset Caption
+  {
+    pure Caption = value;
+    Text.String = value;
+  }
+}
+
+// This is a font resource.
+$rect <690,430,890,470>
+$output false
+resource Resources::Font ListFontS
+{
+  attr fontname FontName = Source Sans Pro;
+  attr fontheight Height = 18;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0xFF;
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+// This is a font resource.
+$rect <690,390,890,430>
+$output false
+resource Resources::Font DescrFont
+{
+  attr fontname FontName = Source Sans Pro;
+  attr fontheight Height = 14;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0xFF;
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+// This is a font resource.
+$rect <690,470,890,510>
+$output false
+resource Resources::Font ListFontM
+{
+  attr fontname FontName = Source Sans Pro;
+  attr fontheight Height = 22;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0xFF;
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+// This is a font resource.
+$rect <690,510,890,550>
+$output false
+resource Resources::Font ListFontL
+{
+  attr fontname FontName = Source Sans Pro;
+  attr fontheight Height = 27;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0xFF;
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+// Color constant according UI design.
+$rect <890,160,1090,200>
+$output false
+const color ButtonBgColor = #E7EAEAFF;
+
+// Color constant according UI design.
+$rect <890,40,1090,80>
+$output false
+const color CaptionColor = #7090A6FF;
+
+// Color constant according UI design.
+$rect <890,200,1090,240>
+$output false
+const color ButtonTextColor = #1B4C59FF;
+
+$rect <240,490,440,530>
+$output false
+autoobject Washer::DeviceClass Device;
+
+// This is a GUI component.
+$rect <40,200,240,240>
+$output false
+class ProgItemS : Core::Group
+{
+  $rect <0,190,200,230>
+  inherited property Bounds = <0,0,220,40>;
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Back
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,220,40>;
+    preset Color = Washer::ListBgColor;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Left
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToTop, ResizeVert];
+    preset Bounds = <0,0,2,40>;
+    preset Color = Washer::ListBgColor;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Right
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight, AlignToTop, ResizeVert];
+    preset Bounds = <218,0,220,40>;
+    preset Color = Washer::ListBgColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <10,0,210,40>;
+    preset WrapText = true;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Text";
+    preset Font = Washer::ListFontS;
+    preset Color = Washer::ListTextColor;
+  }
+
+  // The property 'Caption' contains the text of the list item.
+  $rect <250,0,450,40>
+  property string Caption = "";
+
+  $rect <250,40,450,80>
+  onset Caption
+  {
+    pure Caption = value;
+    Text.String = value;
+  }
+}
+
+// Color constant according UI design.
+$rect <890,80,1090,120>
+$output false
+const color ListBgColor = #FFFFFF40;
+
+// Color constant according UI design.
+$rect <890,120,1090,160>
+$output false
+const color ListTextColor = #FFFFFFFF;
+
+// Constant to define a common animation time for list animations.
+$rect <690,40,890,80>
+$output false
+const int32 FadeInTime = 300;
+
+// Constant to define a common animation time for list animations.
+$rect <690,80,890,120>
+$output false
+const int32 HoldTime = 2000;
+
+// Constant to define a common animation time for list animations.
+$rect <690,120,890,160>
+$output false
+const int32 FadeOutTime = 1000;
+
+// This is a GUI component.
+$rect <240,240,440,280>
+$output false
+class TempList : Core::Group
+{
+  $rect <0,260,140,300>
+  inherited property Bounds = <0,0,46,240>;
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Back
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,80,400>;
+    preset Color = #00000000;
+  }
+
+  // This is a slide gesture handler.
+  $rect <20,20,160,60>
+  object Core::SlideTouchHandler SlideTouchHandler
+  {
+    preset Bounds = <0,0,46,240>;
+    preset OnEnd = OnEnd;
+    preset OnStart = OnStart;
+    preset SnapNext = <0,96>;
+    preset Friction = 0.1;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler SimpleTouchHandler
+  {
+    preset Point4 = <0,240>;
+    preset Point3 = <46,240>;
+    preset Point2 = <46,0>;
+    preset Point1 = <0,0>;
+    preset OnDrag = OnDrag;
+    preset OnRelease = OnRelease;
+    preset OnPress = OnStart;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,72,46,168>;
+    preset Color = Washer::ButtonBgColor;
+  }
+
+  // This is a vertical list component.
+  $rect <20,20,160,60>
+  object Core::VerticalList BottomList
+  {
+    preset Bounds = <0,168,46,240>;
+    preset Opacity = 0;
+    preset OnLoadItem = OnLoadBottom;
+    preset ItemHeight = 24;
+    preset NoOfItems = Washer::Device.WashingTemp.size;
+    preset ItemClass = Washer::TempItemS;
+  }
+
+  // This is a vertical list component.
+  $rect <20,20,160,60>
+  object Core::VerticalList MainList
+  {
+    preset Bounds = <0,72,46,168>;
+    preset Opacity = 0;
+    preset OnUpdate = OnUpdate;
+    preset OnLoadItem = OnLoadMain;
+    preset SlideHandler = SlideTouchHandler;
+    preset ItemHeight = 96;
+    preset NoOfItems = Washer::Device.WashingTemp.size;
+    preset ItemClass = Washer::TempItemL;
+  }
+
+  // This is a vertical list component.
+  $rect <20,20,160,60>
+  object Core::VerticalList TopList
+  {
+    preset Bounds = <0,0,46,72>;
+    preset Opacity = 0;
+    preset OnLoadItem = OnLoadTop;
+    preset ItemHeight = 24;
+    preset NoOfItems = Washer::Device.WashingTemp.size;
+    preset ItemClass = Washer::TempItemS;
+  }
+
+  // Slot method to load content of main scroll list.
+  $rect <240,90,440,130>
+  slot OnLoadMain
+  {
+    sender; /* the method is called from the sender object */
+
+    /* access the item to load the content */
+    var Washer::TempItemL itemView = (Washer::TempItemL)MainList.View;
+    var int32             itemNo   = MainList.Item;
+    var string            caption  = "";
+
+    /* get caption from corresponding array within device class */
+    if (( itemNo >= 0 ) && ( itemNo < Washer::Device.WashingTemp.size ))
+      caption = Washer::Device.WashingTemp[ itemNo ];
+
+    /* load the item with the content */
+    itemView.Caption     = caption;
+    itemView.Bounds.size = point( MainList.Bounds.w, MainList.ItemHeight );
+
+    /* assign the top/bottom color to the item */
+    switch ( itemNo )
+    {
+      case 0:
+      {
+        itemView.ColorTop    = Washer::TempColor0;
+        itemView.ColorBottom = Washer::TempColor1;
+      }
+      case 1:
+      {
+        itemView.ColorTop    = Washer::TempColor1;
+        itemView.ColorBottom = Washer::TempColor2;
+      }
+      case 2:
+      {
+        itemView.ColorTop    = Washer::TempColor2;
+        itemView.ColorBottom = Washer::TempColor3;
+      }
+      case 3:
+      {
+        itemView.ColorTop    = Washer::TempColor3;
+        itemView.ColorBottom = Washer::TempColor4;
+      }
+      case 4:
+      {
+        itemView.ColorTop    = Washer::TempColor4;
+        itemView.ColorBottom = Washer::TempColor5;
+      }
+      case 5:
+      {
+        itemView.ColorTop    = Washer::TempColor5;
+        itemView.ColorBottom = Washer::TempColor6;
+      }
+      default:
+      ;
+    }
+  }
+
+  // Slot method to load content of upper scroll list.
+  $rect <240,0,440,40>
+  slot OnLoadTop
+  {
+    sender; /* the method is called from the sender object */
+
+    /* access the item to load the content */
+    var Washer::TempItemS itemView = (Washer::TempItemS)TopList.View;
+    var int32             itemNo   = TopList.Item;
+    var string            caption  = "";
+
+    /* get caption from corresponding array within device class */
+    if (( itemNo >= 0 ) && ( itemNo < Washer::Device.WashingTemp.size ))
+      caption = Washer::Device.WashingTemp[ itemNo ];
+
+    /* load the item with the content */
+    itemView.Caption     = caption;
+    itemView.Bounds.size = point( TopList.Bounds.w, TopList.ItemHeight );
+  }
+
+  // Slot method to synchronize the scrolling of the upper/lower list with the current \
+  // scroll position of the center list.
+  $rect <240,130,440,170>
+  slot OnUpdate
+  {
+    sender; /* the method is called from the sender object */
+
+    /* synchronize upper and lower list  */
+    TopList.ScrollOffset = MainList.ScrollOffset * TopList.ItemHeight / MainList.ItemHeight + TopList.Bounds.h;
+    BottomList.ScrollOffset = MainList.ScrollOffset * BottomList.ItemHeight / MainList.ItemHeight - BottomList.ItemHeight;
+
+    /* calculate current border color */
+    var int32 itemNo = ( -MainList.ScrollOffset + MainList.ItemHeight / 2 ) / MainList.ItemHeight;
+    var int32 dx = (( -MainList.ScrollOffset + MainList.ItemHeight / 2 ) % MainList.ItemHeight) * 0xFF / MainList.ItemHeight;
+
+    if ( dx < 0 )
+      dx = 0;
+
+    var color c1 = Washer::TempColor6;
+    var color c2 = Washer::TempColor6;
+
+    switch ( itemNo )
+    {
+      case 0: { c1 = Washer::TempColor0; c2 = Washer::TempColor1; }
+      case 1: { c1 = Washer::TempColor1; c2 = Washer::TempColor2; }
+      case 2: { c1 = Washer::TempColor2; c2 = Washer::TempColor3; }
+      case 3: { c1 = Washer::TempColor3; c2 = Washer::TempColor4; }
+      case 4: { c1 = Washer::TempColor4; c2 = Washer::TempColor5; }
+      case 5: { c1 = Washer::TempColor5; c2 = Washer::TempColor6; }
+      default:
+        dx = 0;
+
+    }
+    var int32 r = ( c1.red   * ( 0xFF - dx ) + c2.red   * dx ) / 0xFF;
+    var int32 g = ( c1.green * ( 0xFF - dx ) + c2.green * dx ) / 0xFF;
+    var int32 b = ( c1.blue  * ( 0xFF - dx ) + c2.blue  * dx ) / 0xFF;
+
+    Text.Color = color( (uint8)r, (uint8)g, (uint8)b, 0xFF );
+
+    if ( ColorOutlet != null )
+      ColorOutlet^ =  Text.Color;
+
+  }
+
+  // Slot method to load content of lower scroll list.
+  $rect <240,180,440,220>
+  slot OnLoadBottom
+  {
+    sender; /* the method is called from the sender object */
+
+    /* access the item to load the content */
+    var Washer::TempItemS itemView = (Washer::TempItemS)BottomList.View;
+    var int32             itemNo   = BottomList.Item;
+    var string            caption  = "";
+
+    /* get caption from corresponding array within device class */
+    if (( itemNo >= 0 ) && ( itemNo < Washer::Device.WashingTemp.size ))
+      caption = Washer::Device.WashingTemp[ itemNo ];
+
+    /* load the item with the content */
+    itemView.Caption     = caption;
+    itemView.Bounds.size = point( BottomList.Bounds.w, BottomList.ItemHeight );
+  }
+
+  // Slot method to change the selection, when the item has reached its parking position.
+  $rect <440,130,640,170>
+  slot OnEnd
+  {
+    sender; /* the method is called from the sender object */
+
+    /* change the current program according user selection */
+    Washer::Device.TempNumber = -MainList.ScrollOffset / MainList.ItemHeight;
+
+    /* change the static text according new value */
+    Text.String = Washer::Device.WashingTemp[ Washer::Device.TempNumber ];
+
+    /* fade out upper/lower list */
+    FadeListOut.Value1 = TopList.Opacity;
+    FadeListOut.Enabled = true;
+
+    /* fade in the caption after sliding */
+    FadeCaption.Enabled = false;
+    FadeCaption.Value1 = Caption.Opacity;
+    FadeCaption.Value2 = 0xFF;
+    FadeCaption.Enabled = true;
+
+    SimpleTouchHandler.Enabled = true;
+
+  }
+
+  // Slot method to make the upper/lower list visible.
+  $rect <440,90,640,130>
+  slot OnStart
+  {
+    sender; /* the method is called from the sender object */
+
+    /* fade in the upper/lower list if not fully opaque */
+    if (( TopList.Opacity != 0xFF ) && !FadeListIn.Enabled )
+    {
+      FadeListIn.Value1 = TopList.Opacity;
+      FadeListIn.Enabled = true;
+    }
+    FadeListOut.Enabled = false;
+
+
+    /* fade out the caption during sliding */
+    FadeCaption.Enabled = false;
+    FadeCaption.Value1 = Caption.Opacity;
+    FadeCaption.Value2 = 0x00;
+    FadeCaption.Enabled = true;
+
+
+  }
+
+  // This is an int32 change effect.
+  $rect <440,0,640,40>
+  object Effects::Int32Effect FadeListIn
+  {
+    preset OnAnimate = onAnimate;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = Washer::FadeInTime;
+    preset Outlet = ^TopList.Opacity;
+  }
+
+  // This is a slot method.
+  $rect <440,40,640,80>
+  slot onAnimate
+  {
+    sender; /* the method is called from the sender object */
+
+    BottomList.Opacity = TopList.Opacity;
+
+    MainList.Opacity = TopList.Opacity;
+    Text.Opacity = 0xFF - TopList.Opacity;
+
+
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Caption
+  {
+    preset Bounds = <5,70,45,100>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Temp.";
+    preset Font = Washer::DescrFont;
+    preset Color = Washer::CaptionColor;
+  }
+
+  // This is an int32 change effect.
+  $rect <640,40,840,80>
+  object Effects::Int32Effect FadeCaption
+  {
+    preset Timing = Effects::Timing.FastIn_FastOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 200;
+    preset Outlet = ^Caption.Opacity;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,72,46,168>;
+    preset Alignment = Views::TextAlignment[AlignHorzCenter, AlignVertCenter];
+    preset String = Washer::Device.WashingTemp[0];
+    preset Font = Washer::ListFontL;
+    preset Color = Washer::TempColor0 * Washer::TempColor1;
+  }
+
+  // Color outlet to change a color depending on current temperature selection.
+  $rect <640,90,840,130>
+  property ^color ColorOutlet = null;
+
+  $rect <640,130,840,170>
+  onset ColorOutlet
+  {
+    pure ColorOutlet = value;
+  }
+
+  // This is an int32 change effect.
+  $rect <640,0,840,40>
+  object Effects::Int32Effect FadeListOut
+  {
+    preset OnAnimate = onAnimate;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = Washer::FadeOutTime;
+    preset InitialDelay = Washer::HoldTime;
+    preset Value2 = 0;
+    preset Value1 = 255;
+    preset Outlet = ^TopList.Opacity;
+  }
+
+  $rect <240,270,440,310>
+  slot OnDrag
+  {
+    var point delta = SimpleTouchHandler.CurrentPos - SimpleTouchHandler.HittingPos;
+
+    /* as soon as the user has moved the finger a little bit - pass the touch events
+       to the slide touch handler */
+    if (( delta.y > 8 ) || ( delta.y < -8 ))
+    {
+      GetRoot().DeflectCursor( SlideTouchHandler, <0,0> );
+      SimpleTouchHandler.Enabled = false;
+    }
+  }
+
+  $rect <240,230,440,270>
+  slot OnRelease
+  {
+    /* ff the user has just tapped the simple touch handler without sliding, directly select the item */
+    if ( !SimpleTouchHandler.AutoDeflected && TopList.Opacity == 0xFF )
+    {
+      var int32 delta = 0;
+
+      /* calculate the offset in number of items */
+      if ( SimpleTouchHandler.CurrentPos.y < MainList.Bounds.y1 )
+        delta = ( SimpleTouchHandler.CurrentPos.y - MainList.Bounds.y1 ) / TopList.ItemHeight - 1;
+      else if ( SimpleTouchHandler.CurrentPos.y > MainList.Bounds.y2 )
+        delta = ( SimpleTouchHandler.CurrentPos.y - MainList.Bounds.y2 ) / BottomList.ItemHeight + 1;
+
+      if ( delta != 0 )
+      {
+        var int32 item = -MainList.ScrollOffset / MainList.ItemHeight + delta;
+        MainList.EnsureVisible( item, true, Int32Effect, null );
+      }
+    }
+    /* don't forget to start the fade out */
+    signal OnEnd;
+
+  }
+
+  $rect <440,230,640,270>
+  object Effects::Int32Effect Int32Effect
+  {
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 200;
+  }
+
+  // Slot method to trigger the next phase of the auto demo.
+  $rect <240,320,440,360>
+  slot AutoDemo
+  {
+    postsignal OnStart;
+
+    var int32 val = Washer::Device.TempNumber + 1;
+
+    if ( val >= Washer::Device.WashingTemp.size )
+      val = 0;
+
+    MainList.EnsureVisible( val, true, AutoDemoEffect, OnEnd );
+
+  }
+
+  // This is an int32 change effect.
+  $rect <440,320,640,360>
+  object Effects::Int32Effect AutoDemoEffect
+  {
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset CycleDuration = 300;
+  }
+
+  // The class 'TempList' implements a special type of list to display the washing \
+  // temperature, with a magnification effect of the middle item. For this purpose, \
+  // three different vertical lists are used: A top list with small items, a center \
+  // list with large items and a bottom list with small items. The three lists are \
+  // synchronized, so that it appears for the user as one list. In order to make \
+  // the list widget more attractive, the top and bottom list are connected with \
+  // a fade-in/fade-out effect: As soon as the user touches the widget, the text \
+  // item dissappears, and the top/bottom lists start to fade-in. After a certain \
+  // idle time, the top/bottom lists will fade-out.
+  note legend Note
+  {
+    attr Bounds = <0,420,810,560>;
+  }
+}
+
+// This is a GUI component.
+$rect <240,160,440,200>
+$output false
+class TempItemL : Core::Group
+{
+  $rect <0,190,200,230>
+  inherited property Bounds = <0,0,80,160>;
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,80,160>;
+    preset Color = Washer::ButtonBgColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,80,160>;
+    preset Alignment = Views::TextAlignment[AlignHorzCenter, AlignVertCenter];
+    preset String = "Text";
+    preset Font = Washer::ListFontL;
+    preset Color = Washer::ListTextColor;
+  }
+
+  // The property 'Caption' contains the text of the list item.
+  $rect <250,0,450,40>
+  property string Caption = "";
+
+  $rect <250,40,450,80>
+  onset Caption
+  {
+    pure Caption = value;
+    Text.String = value;
+  }
+
+  // Color of the top border.
+  $rect <250,90,450,130>
+  property color ColorTop = #FFFFFFFF;
+
+  $rect <250,130,450,170>
+  onset ColorTop
+  {
+    pure ColorTop = value;
+
+    Rectangle.ColorTL = value;
+    Rectangle.ColorTR = value;
+
+
+  }
+
+  // Color of the bottom border.
+  $rect <450,90,650,130>
+  property color ColorBottom = #FFFFFFFF;
+
+  $rect <450,130,650,170>
+  onset ColorBottom
+  {
+    pure ColorBottom = value;
+
+    Rectangle.ColorBL = value;
+    Rectangle.ColorBR = value;
+
+
+  }
+}
+
+// This is a GUI component.
+$rect <240,200,440,240>
+$output false
+class TempItemS : Core::Group
+{
+  $rect <0,190,200,230>
+  inherited property Bounds = <0,0,80,40>;
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Back
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,80,40>;
+    preset Color = Washer::ListBgColor;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Right
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight, AlignToTop, ResizeVert];
+    preset Bounds = <78,0,80,40>;
+    preset Color = Washer::ListBgColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <10,0,80,40>;
+    preset WrapText = true;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Text";
+    preset Font = Washer::ListFontS;
+    preset Color = Washer::ListTextColor;
+  }
+
+  // The property 'Caption' contains the text of the list item.
+  $rect <250,0,450,40>
+  property string Caption = "";
+
+  $rect <250,40,450,80>
+  onset Caption
+  {
+    pure Caption = value;
+    Text.String = value;
+  }
+}
+
+// This is a GUI component.
+$rect <440,240,640,280>
+$output false
+class SpinList : Core::Group
+{
+  $rect <0,260,140,300>
+  inherited property Bounds = <0,0,46,240>;
+
+  // This is a slide gesture handler.
+  $rect <20,20,160,60>
+  object Core::SlideTouchHandler SlideTouchHandler
+  {
+    preset Bounds = <0,0,46,240>;
+    preset OnEnd = OnEnd;
+    preset OnStart = OnStart;
+    preset SnapNext = <0,96>;
+    preset Friction = 0.1;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler SimpleTouchHandler
+  {
+    preset Point4 = <0,240>;
+    preset Point3 = <46,240>;
+    preset Point2 = <46,0>;
+    preset Point1 = <0,0>;
+    preset OnDrag = OnDrag;
+    preset OnRelease = OnRelease;
+    preset OnPress = OnStart;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,72,46,168>;
+    preset Color = Washer::ButtonBgColor;
+  }
+
+  // This is a vertical list component.
+  $rect <20,20,160,60>
+  object Core::VerticalList BottomList
+  {
+    preset Bounds = <0,168,46,240>;
+    preset Opacity = 0;
+    preset OnLoadItem = OnLoadBottom;
+    preset ItemHeight = 24;
+    preset NoOfItems = Washer::Device.SpinTurn.size;
+    preset ItemClass = Washer::SpinItemS;
+  }
+
+  // This is a vertical list component.
+  $rect <20,20,160,60>
+  object Core::VerticalList MainList
+  {
+    preset Bounds = <0,72,46,168>;
+    preset OnUpdate = OnUpdate;
+    preset OnLoadItem = OnLoadMain;
+    preset SlideHandler = SlideTouchHandler;
+    preset ItemHeight = 96;
+    preset NoOfItems = Washer::Device.SpinTurn.size;
+    preset ItemClass = Washer::SpinItemL;
+  }
+
+  // This is a vertical list component.
+  $rect <20,20,160,60>
+  object Core::VerticalList TopList
+  {
+    preset Bounds = <0,0,46,72>;
+    preset Opacity = 0;
+    preset OnLoadItem = OnLoadTop;
+    preset ItemHeight = 24;
+    preset NoOfItems = Washer::Device.SpinTurn.size;
+    preset ItemClass = Washer::SpinItemS;
+  }
+
+  // Slot method to load content of main scroll list.
+  $rect <240,90,440,130>
+  slot OnLoadMain
+  {
+    sender; /* the method is called from the sender object */
+
+    /* access the item to load the content */
+    var Washer::SpinItemL itemView = (Washer::SpinItemL)MainList.View;
+    var int32             itemNo   = MainList.Item;
+    var string            caption  = "";
+
+    /* get caption from corresponding array within device class */
+    if (( itemNo >= 0 ) && ( itemNo < Washer::Device.SpinTurn.size ))
+      caption = Washer::Device.SpinTurn[ itemNo ];
+
+    /* load the item with the content */
+    itemView.Caption     = caption;
+    itemView.Bounds.size = point( MainList.Bounds.w, MainList.ItemHeight );
+  }
+
+  // Slot method to load content of upper scroll list.
+  $rect <240,0,440,40>
+  slot OnLoadTop
+  {
+    sender; /* the method is called from the sender object */
+
+    /* access the item to load the content */
+    var Washer::SpinItemS itemView = (Washer::SpinItemS)TopList.View;
+    var int32             itemNo   = TopList.Item;
+    var string            caption  = "";
+
+    /* get caption from corresponding array within device class */
+    if (( itemNo >= 0 ) && ( itemNo < Washer::Device.SpinTurn.size ))
+      caption = Washer::Device.SpinTurn[ itemNo ];
+
+    /* load the item with the content */
+    itemView.Caption     = caption;
+    itemView.Bounds.size = point( TopList.Bounds.w, TopList.ItemHeight );
+  }
+
+  // Slot method to synchronize the scrolling of the upper/lower list with the current \
+  // scroll position of the center list.
+  $rect <240,130,440,170>
+  slot OnUpdate
+  {
+    sender; /* the method is called from the sender object */
+
+    /* synchronize upper and lower list  */
+    TopList.ScrollOffset = MainList.ScrollOffset * TopList.ItemHeight / MainList.ItemHeight + TopList.Bounds.h;
+    BottomList.ScrollOffset = MainList.ScrollOffset * BottomList.ItemHeight / MainList.ItemHeight - BottomList.ItemHeight;
+
+
+
+  }
+
+  // Slot method to load content of lower scroll list.
+  $rect <240,180,440,220>
+  slot OnLoadBottom
+  {
+    sender; /* the method is called from the sender object */
+
+    /* access the item to load the content */
+    var Washer::SpinItemS itemView = (Washer::SpinItemS)BottomList.View;
+    var int32             itemNo   = BottomList.Item;
+    var string            caption  = "";
+
+    /* get caption from corresponding array within device class */
+    if (( itemNo >= 0 ) && ( itemNo < Washer::Device.SpinTurn.size ))
+      caption = Washer::Device.SpinTurn[ itemNo ];
+
+    /* load the item with the content */
+    itemView.Caption     = caption;
+    itemView.Bounds.size = point( BottomList.Bounds.w, BottomList.ItemHeight );
+  }
+
+  // Slot method to change the selection, when the item has reached its parking position.
+  $rect <440,130,640,170>
+  slot OnEnd
+  {
+    sender; /* the method is called from the sender object */
+
+    /* change the current program according user selection */
+    Washer::Device.SpinNumber = -MainList.ScrollOffset / MainList.ItemHeight;
+
+    /* fade out upper/lower list */
+    FadeListOut.Value1 = TopList.Opacity;
+    FadeListOut.Enabled = true;
+
+    /* fade in the caption after sliding */
+    FadeCaption.Enabled = false;
+    FadeCaption.Value1 = Caption.Opacity;
+    FadeCaption.Value2 = 0xFF;
+    FadeCaption.Enabled = true;
+
+    SimpleTouchHandler.Enabled = true;
+  }
+
+  // Slot method to make the upper/lower list visible.
+  $rect <440,90,640,130>
+  slot OnStart
+  {
+    sender; /* the method is called from the sender object */
+
+    /* fade in the upper/lower list if not fully opaque */
+    if (( TopList.Opacity != 0xFF ) && !FadeListIn.Enabled )
+    {
+      FadeListIn.Value1 = TopList.Opacity;
+      FadeListIn.Enabled = true;
+    }
+    FadeListOut.Enabled = false;
+
+    /* fade out the caption during sliding */
+    FadeCaption.Enabled = false;
+    FadeCaption.Value1 = Caption.Opacity;
+    FadeCaption.Value2 = 0x00;
+    FadeCaption.Enabled = true;
+
+
+  }
+
+  // This is an int32 change effect.
+  $rect <440,0,640,40>
+  object Effects::Int32Effect FadeListIn
+  {
+    preset OnAnimate = onAnimate;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = Washer::FadeInTime;
+    preset Outlet = ^TopList.Opacity;
+  }
+
+  // This is a slot method.
+  $rect <440,40,640,80>
+  slot onAnimate
+  {
+    sender; /* the method is called from the sender object */
+
+    BottomList.Opacity = TopList.Opacity;
+
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Caption
+  {
+    preset Bounds = <5,70,45,100>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "U/min";
+    preset Font = Washer::DescrFont;
+    preset Color = Washer::CaptionColor;
+  }
+
+  // This is an int32 change effect.
+  $rect <640,40,840,80>
+  object Effects::Int32Effect FadeCaption
+  {
+    preset Timing = Effects::Timing.FastIn_FastOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 200;
+    preset Outlet = ^Caption.Opacity;
+  }
+
+  // This is an int32 change effect.
+  $rect <640,0,840,40>
+  object Effects::Int32Effect FadeListOut
+  {
+    preset OnAnimate = onAnimate;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = Washer::FadeOutTime;
+    preset InitialDelay = Washer::HoldTime;
+    preset Value2 = 0;
+    preset Value1 = 255;
+    preset Outlet = ^TopList.Opacity;
+  }
+
+  $rect <240,270,440,310>
+  slot OnDrag
+  {
+    var point delta = SimpleTouchHandler.CurrentPos - SimpleTouchHandler.HittingPos;
+
+    /* as soon as the user has moved the finger a little bit - pass the touch events
+       to the slide touch handler */
+    if (( delta.y > 8 ) || ( delta.y < -8 ))
+    {
+      GetRoot().DeflectCursor( SlideTouchHandler, <0,0> );
+      SimpleTouchHandler.Enabled = false;
+    }
+  }
+
+  $rect <240,230,440,270>
+  slot OnRelease
+  {
+    /* ff the user has just tapped the simple touch handler without sliding, directly select the item */
+    if ( !SimpleTouchHandler.AutoDeflected && TopList.Opacity == 0xFF )
+    {
+      var int32 delta = 0;
+
+      /* calculate the offset in number of items */
+      if ( SimpleTouchHandler.CurrentPos.y < MainList.Bounds.y1 )
+        delta = ( SimpleTouchHandler.CurrentPos.y - MainList.Bounds.y1 ) / TopList.ItemHeight - 1;
+      else if ( SimpleTouchHandler.CurrentPos.y > MainList.Bounds.y2 )
+        delta = ( SimpleTouchHandler.CurrentPos.y - MainList.Bounds.y2 ) / BottomList.ItemHeight + 1;
+
+      if ( delta != 0 )
+      {
+        var int32 item = -MainList.ScrollOffset / MainList.ItemHeight + delta;
+        MainList.EnsureVisible( item, true, Int32Effect, null );
+      }
+    }
+    /* don't forget to start the fade out */
+    signal OnEnd;
+
+  }
+
+  $rect <440,230,640,270>
+  object Effects::Int32Effect Int32Effect
+  {
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 200;
+  }
+
+  // Slot method to trigger the next phase of the auto demo.
+  $rect <240,320,440,360>
+  slot AutoDemo
+  {
+    postsignal OnStart;
+
+    var int32 val = Washer::Device.SpinNumber + 1;
+
+    if ( val >= Washer::Device.SpinTurn.size )
+      val = 0;
+
+    MainList.EnsureVisible( val, true, AutoDemoEffect, OnEnd );
+
+  }
+
+  // This is an int32 change effect.
+  $rect <440,320,640,360>
+  object Effects::Int32Effect AutoDemoEffect
+  {
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset CycleDuration = 300;
+  }
+
+  // The class 'SpinList' implements a special type of list to display the spinning \
+  // speed, with a magnification effect of the middle item. For this purpose, three \
+  // different vertical lists are used: A top list with small items, a center list \
+  // with large items and a bottom list with small items. The three lists are synchronized, \
+  // so that it appears for the user as one list. In order to make the list widget \
+  // more attractive, the top and bottom list are connected with a fade-in/fade-out \
+  // effect: As soon as the user touches the widget, the text item dissappears, and \
+  // the top/bottom lists start to fade-in. After a certain idle time, the top/bottom \
+  // lists will fade-out.
+  note legend Note
+  {
+    attr Bounds = <0,420,810,550>;
+  }
+}
+
+// This is a GUI component.
+$rect <440,160,640,200>
+$output false
+class SpinItemL : Core::Group
+{
+  $rect <0,190,200,230>
+  inherited property Bounds = <0,0,80,160>;
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <10,0,80,160>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Text";
+    preset Font = Washer::ListFontM;
+    preset Color = Washer::ButtonTextColor;
+  }
+
+  // The property 'Caption' contains the text of the list item.
+  $rect <250,0,450,40>
+  property string Caption = "";
+
+  $rect <250,40,450,80>
+  onset Caption
+  {
+    pure Caption = value;
+    Text.String = value;
+  }
+}
+
+// This is a GUI component.
+$rect <440,200,640,240>
+$output false
+class SpinItemS : Core::Group
+{
+  $rect <0,190,200,230>
+  inherited property Bounds = <0,0,80,40>;
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Back
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,80,40>;
+    preset Color = Washer::ListBgColor;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Right
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight, AlignToTop, ResizeVert];
+    preset Bounds = <78,0,80,40>;
+    preset Color = Washer::ListBgColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <10,0,80,40>;
+    preset WrapText = true;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Text";
+    preset Font = Washer::ListFontS;
+    preset Color = Washer::ListTextColor;
+  }
+
+  // The property 'Caption' contains the text of the list item.
+  $rect <250,0,450,40>
+  property string Caption = "";
+
+  $rect <250,40,450,80>
+  onset Caption
+  {
+    pure Caption = value;
+    Text.String = value;
+  }
+}
+
+// This is a font resource.
+$rect <690,550,890,590>
+$output false
+resource Resources::Font ListFontXL
+{
+  attr fontname FontName = Source Sans Pro;
+  attr fontheight Height = 56;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = '0'-'9',':';
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+// This is a GUI component.
+$rect <40,380,240,420>
+$output false
+class OptList : Core::Group
+{
+  $rect <0,260,140,300>
+  inherited property Bounds = <0,0,92,240>;
+
+  // This is a slide gesture handler.
+  $rect <20,20,160,60>
+  object Core::SlideTouchHandler SlideTouchHandler
+  {
+    preset Bounds = <0,0,92,240>;
+    preset OnEnd = OnEnd;
+    preset OnStart = OnStart;
+    preset SnapNext = <0,96>;
+    preset Friction = 0.1;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler SimpleTouchHandler
+  {
+    preset Point4 = <0,240>;
+    preset Point3 = <92,240>;
+    preset Point2 = <92,0>;
+    preset Point1 = <0,0>;
+    preset OnDrag = OnDrag;
+    preset OnRelease = OnRelease;
+    preset OnPress = OnStart;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,72,92,168>;
+    preset Color = Washer::ButtonBgColor;
+  }
+
+  // This is a vertical list component.
+  $rect <20,20,160,60>
+  object Core::VerticalList BottomList
+  {
+    preset Bounds = <0,168,92,240>;
+    preset Opacity = 0;
+    preset OnLoadItem = OnLoadBottom;
+    preset ItemHeight = 36;
+    preset NoOfItems = Washer::Device.Options.size;
+    preset ItemClass = Washer::OptItemS;
+  }
+
+  // This is a vertical list component.
+  $rect <20,20,160,60>
+  object Core::VerticalList MainList
+  {
+    preset Bounds = <0,72,92,168>;
+    preset OnUpdate = OnUpdate;
+    preset OnLoadItem = OnLoadMain;
+    preset SlideHandler = SlideTouchHandler;
+    preset ItemHeight = 96;
+    preset NoOfItems = Washer::Device.Options.size;
+    preset ItemClass = Washer::OptItemL;
+  }
+
+  // This is a vertical list component.
+  $rect <20,20,160,60>
+  object Core::VerticalList TopList
+  {
+    preset Bounds = <0,0,92,72>;
+    preset Opacity = 0;
+    preset OnLoadItem = OnLoadTop;
+    preset ItemHeight = 36;
+    preset NoOfItems = Washer::Device.Options.size;
+    preset ItemClass = Washer::OptItemS;
+  }
+
+  // Slot method to load content of main scroll list.
+  $rect <240,90,440,130>
+  slot OnLoadMain
+  {
+    sender; /* the method is called from the sender object */
+
+    /* access the item to load the content */
+    var Washer::OptItemL itemView = (Washer::OptItemL)MainList.View;
+    var int32             itemNo   = MainList.Item;
+    var string            caption  = "";
+
+    /* get caption from corresponding array within device class */
+    if (( itemNo >= 0 ) && ( itemNo < Washer::Device.Options.size ))
+      caption = Washer::Device.Options[ itemNo ];
+
+    /* load the item with the content */
+    itemView.Caption     = caption;
+    itemView.Bounds.size = point( MainList.Bounds.w, MainList.ItemHeight );
+  }
+
+  // Slot method to load content of upper scroll list.
+  $rect <240,0,440,40>
+  slot OnLoadTop
+  {
+    sender; /* the method is called from the sender object */
+
+    /* access the item to load the content */
+    var Washer::OptItemS itemView = (Washer::OptItemS)TopList.View;
+    var int32             itemNo   = TopList.Item;
+    var string            caption  = "";
+
+    /* get caption from corresponding array within device class */
+    if (( itemNo >= 0 ) && ( itemNo < Washer::Device.Options.size ))
+      caption = Washer::Device.Options[ itemNo ];
+
+    /* load the item with the content */
+    itemView.Caption     = caption;
+    itemView.Bounds.size = point( TopList.Bounds.w, TopList.ItemHeight );
+  }
+
+  // Slot method to synchronize the scrolling of the upper/lower list with the current \
+  // scroll position of the center list.
+  $rect <240,130,440,170>
+  slot OnUpdate
+  {
+    sender; /* the method is called from the sender object */
+
+    /* synchronize upper and lower list  */
+    TopList.ScrollOffset = MainList.ScrollOffset * TopList.ItemHeight / MainList.ItemHeight + TopList.Bounds.h;
+    BottomList.ScrollOffset = MainList.ScrollOffset * BottomList.ItemHeight / MainList.ItemHeight - BottomList.ItemHeight;
+
+
+
+  }
+
+  // Slot method to load content of lower scroll list.
+  $rect <240,180,440,220>
+  slot OnLoadBottom
+  {
+    sender; /* the method is called from the sender object */
+
+    /* access the item to load the content */
+    var Washer::OptItemS itemView = (Washer::OptItemS)BottomList.View;
+    var int32             itemNo   = BottomList.Item;
+    var string            caption  = "";
+
+    /* get caption from corresponding array within device class */
+    if (( itemNo >= 0 ) && ( itemNo < Washer::Device.Options.size ))
+      caption = Washer::Device.Options[ itemNo ];
+
+    /* load the item with the content */
+    itemView.Caption     = caption;
+    itemView.Bounds.size = point( BottomList.Bounds.w, BottomList.ItemHeight );
+  }
+
+  // Slot method to change the selection, when the item has reached its parking position.
+  $rect <440,130,640,170>
+  slot OnEnd
+  {
+    sender; /* the method is called from the sender object */
+
+    /* change the current program according user selection */
+    Washer::Device.OptionNumber = -MainList.ScrollOffset / MainList.ItemHeight;
+
+    /* fade out upper/lower list */
+    FadeListOut.Value1 = TopList.Opacity;
+    FadeListOut.Enabled = true;
+
+    /* fade in the caption after sliding */
+    FadeCaption.Enabled = false;
+    FadeCaption.Value1 = Caption.Opacity;
+    FadeCaption.Value2 = 0xFF;
+    FadeCaption.Enabled = true;
+
+    SimpleTouchHandler.Enabled = true;
+  }
+
+  // Slot method to make the upper/lower list visible.
+  $rect <440,90,640,130>
+  slot OnStart
+  {
+    sender; /* the method is called from the sender object */
+
+    /* fade in the upper/lower list if not fully opaque */
+    if (( TopList.Opacity != 0xFF ) && !FadeListIn.Enabled )
+    {
+      FadeListIn.Value1 = TopList.Opacity;
+      FadeListIn.Enabled = true;
+    }
+    FadeListOut.Enabled = false;
+
+    /* fade out the caption during sliding */
+    FadeCaption.Enabled = false;
+    FadeCaption.Value1 = Caption.Opacity;
+    FadeCaption.Value2 = 0x00;
+    FadeCaption.Enabled = true;
+
+
+  }
+
+  // This is an int32 change effect.
+  $rect <440,0,640,40>
+  object Effects::Int32Effect FadeListIn
+  {
+    preset OnAnimate = onAnimate;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = Washer::FadeInTime;
+    preset Outlet = ^TopList.Opacity;
+  }
+
+  // This is a slot method.
+  $rect <440,40,640,80>
+  slot onAnimate
+  {
+    sender; /* the method is called from the sender object */
+
+    BottomList.Opacity = TopList.Opacity;
+
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Caption
+  {
+    preset Bounds = <5,70,85,100>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Options";
+    preset Font = Washer::DescrFont;
+    preset Color = Washer::CaptionColor;
+  }
+
+  // This is an int32 change effect.
+  $rect <640,40,840,80>
+  object Effects::Int32Effect FadeCaption
+  {
+    preset Timing = Effects::Timing.FastIn_FastOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 200;
+    preset Outlet = ^Caption.Opacity;
+  }
+
+  // This is an int32 change effect.
+  $rect <640,0,840,40>
+  object Effects::Int32Effect FadeListOut
+  {
+    preset OnAnimate = onAnimate;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = Washer::FadeOutTime;
+    preset InitialDelay = Washer::HoldTime;
+    preset Value2 = 0;
+    preset Value1 = 255;
+    preset Outlet = ^TopList.Opacity;
+  }
+
+  $rect <240,270,440,310>
+  slot OnDrag
+  {
+    var point delta = SimpleTouchHandler.CurrentPos - SimpleTouchHandler.HittingPos;
+
+    /* as soon as the user has moved the finger a little bit - pass the touch events
+       to the slide touch handler */
+    if (( delta.y > 8 ) || ( delta.y < -8 ))
+    {
+      GetRoot().DeflectCursor( SlideTouchHandler, <0,0> );
+      SimpleTouchHandler.Enabled = false;
+    }
+  }
+
+  $rect <240,230,440,270>
+  slot OnRelease
+  {
+    /* ff the user has just tapped the simple touch handler without sliding, directly select the item */
+    if ( !SimpleTouchHandler.AutoDeflected && TopList.Opacity == 0xFF )
+    {
+      var int32 delta = 0;
+
+      /* calculate the offset in number of items */
+      if ( SimpleTouchHandler.CurrentPos.y < MainList.Bounds.y1 )
+        delta = ( SimpleTouchHandler.CurrentPos.y - MainList.Bounds.y1 ) / TopList.ItemHeight - 1;
+      else if ( SimpleTouchHandler.CurrentPos.y > MainList.Bounds.y2 )
+        delta = ( SimpleTouchHandler.CurrentPos.y - MainList.Bounds.y2 ) / BottomList.ItemHeight + 1;
+
+      if ( delta != 0 )
+      {
+        var int32 item = -MainList.ScrollOffset / MainList.ItemHeight + delta;
+        MainList.EnsureVisible( item, true, Int32Effect, null );
+      }
+    }
+    /* don't forget to start the fade out */
+    signal OnEnd;
+
+  }
+
+  $rect <440,230,640,270>
+  object Effects::Int32Effect Int32Effect
+  {
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 200;
+  }
+
+  // Slot method to trigger the next phase of the auto demo.
+  $rect <240,320,440,360>
+  slot AutoDemo
+  {
+    postsignal OnStart;
+
+    var int32 val = Washer::Device.OptionNumber + 1;
+
+    if ( val >= Washer::Device.Options.size )
+      val = 0;
+
+    MainList.EnsureVisible( val, true, AutoDemoEffect, OnEnd );
+
+  }
+
+  // This is an int32 change effect.
+  $rect <440,320,640,360>
+  object Effects::Int32Effect AutoDemoEffect
+  {
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset CycleDuration = 300;
+  }
+
+  // The class 'OptList' implements a special type of list to display the washing \
+  // options, with a magnification effect of the middle item. For this purpose, three \
+  // different vertical lists are used: A top list with small items, a center list \
+  // with large items and a bottom list with small items. The three lists are synchronized, \
+  // so that it appears for the user as one list. In order to make the list widget \
+  // more attractive, the top and bottom list are connected with a fade-in/fade-out \
+  // effect: As soon as the user touches the widget, the text item dissappears, and \
+  // the top/bottom lists start to fade-in. After a certain idle time, the top/bottom \
+  // lists will fade-out.
+  note legend Note
+  {
+    attr Bounds = <0,420,810,550>;
+  }
+}
+
+// This is a GUI component.
+$rect <40,300,240,340>
+$output false
+class OptItemL : Core::Group
+{
+  $rect <0,190,200,230>
+  inherited property Bounds = <0,0,160,160>;
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <10,0,160,160>;
+    preset WrapText = true;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Text";
+    preset Font = Washer::ListFontM;
+    preset Color = Washer::ButtonTextColor;
+  }
+
+  // The property 'Caption' contains the text of the list item.
+  $rect <250,0,450,40>
+  property string Caption = "";
+
+  $rect <250,40,450,80>
+  onset Caption
+  {
+    pure Caption = value;
+    Text.String = value;
+  }
+}
+
+// This is a GUI component.
+$rect <40,340,240,380>
+$output false
+class OptItemS : Core::Group
+{
+  $rect <0,190,200,230>
+  inherited property Bounds = <0,0,160,60>;
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Back
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,160,60>;
+    preset Color = Washer::ListBgColor;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Right
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight, AlignToTop, ResizeVert];
+    preset Bounds = <158,0,160,60>;
+    preset Color = Washer::ListBgColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <10,0,150,60>;
+    preset WrapText = true;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Text";
+    preset Font = Washer::ListFontS;
+    preset Color = Washer::ListTextColor;
+  }
+
+  // The property 'Caption' contains the text of the list item.
+  $rect <250,0,450,40>
+  property string Caption = "";
+
+  $rect <250,40,450,80>
+  onset Caption
+  {
+    pure Caption = value;
+    Text.String = value;
+  }
+}
+
+// This is a GUI component.
+$rect <40,40,240,80>
+$output false
+class Washer : Core::Group
+{
+  $rect <510,50,710,90>
+  inherited property Bounds = <0,0,480,272>;
+
+  $rect <510,10,710,50>
+  inherited method Init()
+  {
+    postsignal onUpdateProgram;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,480,272>;
+    preset Color = #226173FF;
+  }
+
+  // This is an image view.
+  $rect <20,20,160,60>
+  object Views::Image Image
+  {
+    preset Bounds = <0,0,480,272>;
+    preset Color = #000000FF;
+  }
+
+  // This is a bitmap frame view.
+  $rect <20,20,160,60>
+  object Views::Frame Frame
+  {
+    preset Bounds = <12,90,460,200>;
+    preset Color = #00000080;
+    preset Edges = Graphics::Edges[Bottom, Left, Right, Top];
+    preset Bitmap = Washer::Shadow;
+  }
+
+  $rect <20,20,160,60>
+  object Washer::ProgList ProgList
+  {
+    preset Bounds = <12,18,138,258>;
+  }
+
+  $rect <20,20,160,60>
+  object Washer::TempList TempList
+  {
+    preset Bounds = <138,18,184,258>;
+    preset ColorOutlet = ^Border.Color;
+  }
+
+  $rect <20,20,160,60>
+  object Washer::SpinList SpinList
+  {
+    preset Bounds = <184,18,230,258>;
+  }
+
+  $rect <20,20,160,60>
+  object Washer::OptList OptList
+  {
+    preset Bounds = <230,18,322,258>;
+  }
+
+  $rect <20,20,160,60>
+  object Washer::TimeList TimeList
+  {
+    preset Bounds = <322,18,448,234>;
+    preset OnAppear = OnListAppear;
+    preset OnDisappear = OnListDisappear;
+  }
+
+  // This is a border view.
+  $rect <20,20,160,60>
+  object Views::Border Border
+  {
+    preset Bounds = <12,90,448,188>;
+    preset Width = 2;
+    preset Color = #FFC200FF;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Sep1
+  {
+    preset Bounds = <137,103,139,178>;
+    preset Color = #40404040;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Sep2
+  {
+    preset Bounds = <183,103,185,178>;
+    preset Color = #40404040;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Sep3
+  {
+    preset Bounds = <229,103,231,178>;
+    preset Color = #40404040;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Sep4
+  {
+    preset Bounds = <321,103,323,178>;
+    preset Color = #40404040;
+  }
+
+  // Slot method to update the display value.
+  $rect <0,350,200,390>
+  slot onUpdateProgram
+  {
+    sender; /* the method is called from the sender object */
+
+    /* fade out the background */
+    FadeBgEffect.Enabled = false;
+    FadeBgEffect.Value1 = Image.Opacity;
+    FadeBgEffect.Value2 = 0x00;
+    FadeBgEffect.Enabled = true;
+
+
+
+
+  }
+
+  // This variable refers to the autoobject 'Washer::Device'. It is used to keep \
+  // the device object within the memory during the whole liefetime of the application.
+  $rect <510,90,710,130>
+  var Washer::DeviceClass Device = Washer::Device;
+
+  // This is an int32 change effect.
+  $rect <210,310,410,350>
+  object Effects::Int32Effect FadeBgEffect
+  {
+    preset OnFinished = changeBackground;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 200;
+    preset Outlet = ^Image.Opacity;
+  }
+
+  // This is a slot method.
+  $rect <210,350,410,390>
+  slot changeBackground
+  {
+    sender; /* the method is called from the sender object */
+    if ( Image.Opacity == 0x00 )
+    {
+      switch ( Device.ProgramNumber )
+      {
+        case 0:
+          Image.Bitmap = Washer::BgHot;
+        case 1:
+          Image.Bitmap = Washer::BgEasyCare;
+        case 2:
+          Image.Bitmap = Washer::BgDelicates;
+        case 3:
+          Image.Bitmap = Washer::BgSportswear;
+        case 4:
+          Image.Bitmap = Washer::BgWool;
+        case 5:
+          Image.Bitmap = Washer::BgEco;
+        case 6:
+          Image.Bitmap = Washer::BgDrain;
+        case 7:
+          Image.Bitmap = Washer::BgSpin;
+        default:
+          Image.Bitmap = null;
+      }
+      FadeBgEffect.Enabled = false;
+      FadeBgEffect.Value1 = Image.Opacity;
+      FadeBgEffect.Value2 = 0xFF;
+      postsignal FadeBgEffect.StartEffect;
+    }
+  }
+
+  $rect <20,20,160,60>
+  object Washer::StartButton StartButton
+  {
+    preset Bounds = <322,190,458,234>;
+    preset OnChange = onStart;
+  }
+
+  // This is a move and resize rectangle effect.
+  $rect <510,240,710,280>
+  object Effects::RectEffect MoveStartEffect
+  {
+    preset Timing = Effects::Timing.FastIn_FastOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 200;
+    preset Value2 = <322,234,458,278>;
+    preset Value1 = <322,190,458,234>;
+    preset Outlet = ^StartButton.Bounds;
+  }
+
+  // Slot to receive signal that time list will appear.
+  $rect <510,160,710,200>
+  slot OnListAppear
+  {
+    sender; /* the method is called from the sender object */
+
+
+    MoveStartEffect.Reversed = false;
+    MoveStartEffect.Enabled = true;
+
+  }
+
+  // Slot to receive signal that time list has disappeared.
+  $rect <510,200,710,240>
+  slot OnListDisappear
+  {
+    sender; /* the method is called from the sender object */
+
+    MoveStartEffect.Reversed = true;
+    MoveStartEffect.Enabled = true;
+
+  }
+
+  $rect <510,310,710,350>
+  slot onStart
+  {
+    sender; /* the method is called from the sender object */
+
+    MessageEffect.Enabled = false;
+    Message.Opacity = 0xFF;
+    MessageEffect.Enabled = true;
+  }
+
+  // This is an int32 change effect.
+  $rect <510,350,710,390>
+  object Effects::Int32Effect MessageEffect
+  {
+    preset NoOfCycles = 1;
+    preset InitialDelay = 2000;
+    preset Value2 = 0;
+    preset Value1 = 255;
+    preset Outlet = ^Message.Opacity;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Message
+  {
+    preset Bounds = <10,240,320,270>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Sorry, this demo application cannot wash your clothes...";
+    preset Font = Washer::DescrFont;
+    preset Opacity = 0;
+  }
+
+  // Slot method to trigger the next phase of the auto demo.
+  $rect <740,270,940,310>
+  slot AutoDemoSlot
+  {
+    sender; /* the method is called from the sender object */
+
+    switch ( AutoState )
+    {
+    //  case  0: postsignal ProgList.AutoDemo;
+      case  1: postsignal ProgList.AutoDemo;
+      case  2: postsignal TempList.AutoDemo;
+      case  3: postsignal SpinList.AutoDemo;
+      case  4: postsignal OptList.AutoDemo;
+      case  5:
+      {
+        postsignal TempList.AutoDemo;
+        postsignal SpinList.AutoDemo;
+      }
+      case  6:
+      {
+        postsignal ProgList.AutoDemo;
+        postsignal TempList.AutoDemo;
+      }
+      case  7:
+      {
+        postsignal ProgList.AutoDemo;
+        postsignal SpinList.AutoDemo;
+        postsignal OptList.AutoDemo;
+      }
+      default:
+       ;
+    }
+
+    AutoState = AutoState + 1;
+    if ( AutoState > 7 )
+      AutoState = 0;
+  }
+
+  // Variable to store the current phase of the auto demo.
+  $rect <740,350,940,390>
+  var int32 AutoState = 0;
+
+  // This is the main screen of the washing machine. It arranges the different scrollable \
+  // list widgets.
+  // 
+  // The slot methods 'OnListAppear' and 'OnListDisappear' are responsible to move \
+  // the start button out of the list area as soon as the time list appears. When \
+  // the user presses the start button, the method 'onStart' will be called and a \
+  // message appears.
+  // The slot method 'onUpdateProgram' triggers the fade-out/fade-in effect of the \
+  // background image. It is signaled by the 'ProgramObserver' which listens to the \
+  // 'ProgramNumber' of the 'Device'.
+  // 
+  // To run the application within the Prototyper, press 'F5'.
+  note legend Note1
+  {
+    attr Bounds = <0,400,800,580>;
+  }
+
+  // This object is a handler of property notifications.
+  $rect <0,310,200,350>
+  object Core::PropertyObserver ProgramObserver
+  {
+    preset OnEvent = onUpdateProgram;
+    preset Outlet = ^Washer::Device.ProgramNumber;
+  }
+
+  // Timer object to drive the auto demo mode.
+  $rect <740,310,940,350>
+  object Core::Timer AutoDemoTimer
+  {
+    preset OnTrigger = AutoDemoSlot;
+    preset Period = 1500;
+    preset Begin = 0;
+  }
+}
+
+// This is a GUI component.
+$rect <240,340,440,380>
+$output false
+class HourItemS : Core::Group
+{
+  $rect <0,190,200,230>
+  inherited property Bounds = <0,0,110,40>;
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Back
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,110,40>;
+    preset Color = Washer::ListBgColor;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Center
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToTop, ResizeVert];
+    preset Bounds = <109,0,110,40>;
+    preset Color = Washer::ButtonTextColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,110,40>;
+    preset WrapText = true;
+    preset Alignment = Views::TextAlignment[AlignHorzCenter, AlignVertCenter];
+    preset String = "Text";
+    preset Font = Washer::ListFontS;
+    preset Color = Washer::ListTextColor;
+  }
+
+  // The property 'Caption' contains the text of the list item.
+  $rect <250,0,450,40>
+  property string Caption = "";
+
+  $rect <250,40,450,80>
+  onset Caption
+  {
+    pure Caption = value;
+    Text.String = value;
+  }
+}
+
+// This is a GUI component.
+$rect <240,380,640,420>
+$output false
+class TimeList : Core::Group
+{
+  $rect <0,240,140,280>
+  inherited property Bounds = <0,0,126,216>;
+
+  // This is a slide gesture handler.
+  $rect <20,20,160,60>
+  object Core::SlideTouchHandler SlideTouchHandlerH
+  {
+    preset Bounds = <0,0,63,216>;
+    preset OnEnd = OnEnd;
+    preset OnStart = OnStart;
+    preset SnapNext = <0,96>;
+    preset Friction = 0.1;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler SimpleTouchHandlerH
+  {
+    preset Point4 = <0,216>;
+    preset Point3 = <63,216>;
+    preset Point2 = <63,0>;
+    preset Point1 = <0,0>;
+    preset OnDrag = OnDragH;
+    preset OnRelease = OnReleaseH;
+    preset OnPress = OnStart;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,72,126,168>;
+    preset Color = Washer::ButtonBgColor;
+  }
+
+  // This is a vertical list component.
+  $rect <20,20,160,60>
+  object Core::VerticalList BottomListH
+  {
+    preset Bounds = <0,168,63,216>;
+    preset Opacity = 0;
+    preset OnLoadItem = OnLoadBottomH;
+    preset ItemHeight = 24;
+    preset NoOfItems = 24;
+    preset ItemClass = Washer::HourItemS;
+  }
+
+  // This is a vertical list component.
+  $rect <20,20,160,60>
+  object Core::VerticalList MainListH
+  {
+    preset Bounds = <0,72,63,168>;
+    preset OnUpdate = OnUpdateH;
+    preset OnLoadItem = OnLoadMainH;
+    preset SlideHandler = SlideTouchHandlerH;
+    preset ItemHeight = 96;
+    preset NoOfItems = 24;
+    preset ItemClass = Washer::HourItemL;
+  }
+
+  // This is a vertical list component.
+  $rect <20,20,160,60>
+  object Core::VerticalList TopListH
+  {
+    preset Bounds = <0,0,63,72>;
+    preset Opacity = 0;
+    preset OnLoadItem = OnLoadTopH;
+    preset ItemHeight = 24;
+    preset NoOfItems = 24;
+    preset ItemClass = Washer::HourItemS;
+  }
+
+  // Slot method to load content of main scroll list.
+  $rect <240,130,440,170>
+  slot OnLoadMainH
+  {
+    sender; /* the method is called from the sender object */
+
+    /* access the item to load the content */
+    var Washer::HourItemL itemView = (Washer::HourItemL)MainListH.View;
+    var int32             itemNo   = MainListH.Item;
+    var string            caption  = string( itemNo );
+
+    /* load the item with the content */
+    itemView.Caption     = caption;
+    itemView.Bounds.size = point( MainListH.Bounds.w, MainListH.ItemHeight );
+  }
+
+  // Slot method to load content of upper scroll list.
+  $rect <240,0,440,40>
+  slot OnLoadTopH
+  {
+    sender; /* the method is called from the sender object */
+
+    /* access the item to load the content */
+    var Washer::HourItemS itemView = (Washer::HourItemS)TopListH.View;
+    var int32             itemNo   = TopListH.Item;
+    var string            caption  = string( itemNo );
+
+    /* load the item with the content */
+    itemView.Caption     = caption;
+    itemView.Bounds.size = point( TopListH.Bounds.w, TopListH.ItemHeight );
+  }
+
+  // Slot method to synchronize the scrolling of the upper/lower list with the current \
+  // scroll position of the center list.
+  $rect <240,170,440,210>
+  slot OnUpdateH
+  {
+    sender; /* the method is called from the sender object */
+
+    /* synchronize upper and lower list  */
+    TopListH.ScrollOffset = MainListH.ScrollOffset * TopListH.ItemHeight / MainListH.ItemHeight + TopListH.Bounds.h;
+    BottomListH.ScrollOffset = MainListH.ScrollOffset * BottomListH.ItemHeight / MainListH.ItemHeight - BottomListH.ItemHeight;
+
+
+
+  }
+
+  // Slot method to load content of lower scroll list.
+  $rect <240,220,440,260>
+  slot OnLoadBottomH
+  {
+    sender; /* the method is called from the sender object */
+
+    /* access the item to load the content */
+    var Washer::HourItemS itemView = (Washer::HourItemS)BottomListH.View;
+    var int32             itemNo   = BottomListH.Item;
+    var string            caption  = string( itemNo );
+
+    /* load the item with the content */
+    itemView.Caption     = caption;
+    itemView.Bounds.size = point( BottomListH.Bounds.w, BottomListH.ItemHeight );
+  }
+
+  // Slot method to change the selection, when the item has reached its parking position.
+  $rect <640,170,840,210>
+  slot OnEnd
+  {
+    sender; /* the method is called from the sender object */
+
+    /* change the current program according user selection */
+    Washer::Device.Hour = -MainListH.ScrollOffset / MainListH.ItemHeight;
+    Washer::Device.Minute = -MainListM.ScrollOffset / MainListM.ItemHeight;
+
+    /* fade out upper/lower list */
+    FadeListOut.Value1 = TopListH.Opacity;
+    FadeListOut.Enabled = true;
+
+    /* fade in the caption after sliding */
+    FadeCaption.Enabled = false;
+    FadeCaption.Value1 = Caption.Opacity;
+    FadeCaption.Value2 = 0xFF;
+    FadeCaption.Enabled = true;
+
+    SimpleTouchHandlerH.Enabled = true;
+    SimpleTouchHandlerM.Enabled = true;
+
+  }
+
+  // Slot method to make the upper/lower list visible.
+  $rect <640,130,840,170>
+  slot OnStart
+  {
+    sender; /* the method is called from the sender object */
+
+    /* fade in the upper/lower list if not fully opaque */
+    if (( TopListH.Opacity != 0xFF ) && !FadeListIn.Enabled )
+    {
+      FadeListIn.Value1 = TopListH.Opacity;
+      FadeListIn.Enabled = true;
+    }
+    FadeListOut.Enabled = false;
+
+    /* fade out the caption during sliding */
+    FadeCaption.Enabled = false;
+    FadeCaption.Value1 = Caption.Opacity;
+    FadeCaption.Value2 = 0x00;
+    FadeCaption.Enabled = true;
+
+    /* fade out the duration during sliding */
+    FadeDuration.Enabled = false;
+    FadeDuration.Value1 = DurationText.Opacity;
+    FadeDuration.Value2 = 0x00;
+    FadeDuration.Enabled = true;
+
+    if ( TopListH.Opacity == 0x00 )
+      postsignal OnAppear;
+  }
+
+  // This is an int32 change effect.
+  $rect <640,0,840,40>
+  object Effects::Int32Effect FadeListIn
+  {
+    preset OnAnimate = onAnimate;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = Washer::FadeInTime;
+    preset Outlet = ^TopListH.Opacity;
+  }
+
+  // This is a slot method.
+  $rect <640,40,840,80>
+  slot onAnimate
+  {
+    sender; /* the method is called from the sender object */
+
+    TopListM.Opacity = TopListH.Opacity;
+    BottomListH.Opacity = TopListH.Opacity;
+    BottomListM.Opacity = TopListH.Opacity;
+
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Caption
+  {
+    preset Bounds = <5,70,55,100>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Finish";
+    preset Font = Washer::DescrFont;
+    preset Color = Washer::CaptionColor;
+  }
+
+  // This is an int32 change effect.
+  $rect <840,40,1040,80>
+  object Effects::Int32Effect FadeCaption
+  {
+    preset Timing = Effects::Timing.FastIn_FastOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 200;
+    preset Outlet = ^Caption.Opacity;
+  }
+
+  // This is a slide gesture handler.
+  $rect <20,20,160,60>
+  object Core::SlideTouchHandler SlideTouchHandlerM
+  {
+    preset Bounds = <63,0,126,216>;
+    preset OnEnd = OnEnd;
+    preset OnStart = OnStart;
+    preset SnapNext = <0,96>;
+    preset Friction = 0.1;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler SimpleTouchHandlerM
+  {
+    preset Point4 = <63,216>;
+    preset Point3 = <126,216>;
+    preset Point2 = <126,0>;
+    preset Point1 = <63,0>;
+    preset OnDrag = OnDragM;
+    preset OnRelease = OnReleaseM;
+    preset OnPress = OnStart;
+  }
+
+  // This is a vertical list component.
+  $rect <20,20,160,60>
+  object Core::VerticalList BottomListM
+  {
+    preset Bounds = <63,168,126,216>;
+    preset Opacity = 0;
+    preset OnLoadItem = OnLoadBottomM;
+    preset ItemHeight = 24;
+    preset NoOfItems = 60;
+    preset ItemClass = Washer::MinItemS;
+  }
+
+  // This is a vertical list component.
+  $rect <20,20,160,60>
+  object Core::VerticalList MainListM
+  {
+    preset Bounds = <63,72,126,168>;
+    preset OnUpdate = OnUpdateM;
+    preset OnLoadItem = OnLoadMainM;
+    preset SlideHandler = SlideTouchHandlerM;
+    preset ItemHeight = 96;
+    preset NoOfItems = 60;
+    preset ItemClass = Washer::MinItemL;
+  }
+
+  // This is a vertical list component.
+  $rect <20,20,160,60>
+  object Core::VerticalList TopListM
+  {
+    preset Bounds = <63,0,126,72>;
+    preset Opacity = 0;
+    preset OnLoadItem = OnLoadTopM;
+    preset ItemHeight = 24;
+    preset NoOfItems = 60;
+    preset ItemClass = Washer::MinItemS;
+  }
+
+  // Slot method to load content of main scroll list.
+  $rect <440,130,640,170>
+  slot OnLoadMainM
+  {
+    sender; /* the method is called from the sender object */
+
+    /* access the item to load the content */
+    var Washer::MinItemL itemView = (Washer::MinItemL)MainListM.View;
+    var int32             itemNo   = MainListM.Item;
+    var string            caption  = string( itemNo, 2 );
+
+    /* load the item with the content */
+    itemView.Caption     = caption;
+    itemView.Bounds.size = point( MainListM.Bounds.w, MainListM.ItemHeight );
+  }
+
+  // Slot method to load content of upper scroll list.
+  $rect <440,0,640,40>
+  slot OnLoadTopM
+  {
+    sender; /* the method is called from the sender object */
+
+    /* access the item to load the content */
+    var Washer::MinItemS itemView = (Washer::MinItemS)TopListM.View;
+    var int32             itemNo   = TopListM.Item;
+    var string            caption  = string( itemNo, 2 );
+
+    /* load the item with the content */
+    itemView.Caption     = caption;
+    itemView.Bounds.size = point( TopListM.Bounds.w, TopListM.ItemHeight );
+  }
+
+  // Slot method to load content of lower scroll list.
+  $rect <440,220,640,260>
+  slot OnLoadBottomM
+  {
+    sender; /* the method is called from the sender object */
+
+    /* access the item to load the content */
+    var Washer::MinItemS itemView = (Washer::MinItemS)BottomListM.View;
+    var int32             itemNo   = BottomListM.Item;
+    var string            caption  = string( itemNo, 2 );
+
+    /* load the item with the content */
+    itemView.Caption     = caption;
+    itemView.Bounds.size = point( BottomListM.Bounds.w, BottomListM.ItemHeight );
+  }
+
+  // Slot method to synchronize the scrolling of the upper/lower list with the current \
+  // scroll position of the center list.
+  $rect <440,170,640,210>
+  slot OnUpdateM
+  {
+    sender; /* the method is called from the sender object */
+
+    /* synchronize upper and lower list  */
+    TopListM.ScrollOffset = MainListM.ScrollOffset * TopListM.ItemHeight / MainListM.ItemHeight + TopListM.Bounds.h;
+    BottomListM.ScrollOffset = MainListM.ScrollOffset * BottomListM.ItemHeight / MainListM.ItemHeight - BottomListM.ItemHeight;
+
+
+
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <53,72,73,168>;
+    preset WrapText = true;
+    preset Alignment = Views::TextAlignment[AlignHorzCenter, AlignVertCenter];
+    preset String = ":";
+    preset Font = Washer::ListFontXL;
+    preset Color = Washer::ButtonTextColor;
+  }
+
+  // Slot property to signal that upper/lower list will appear.
+  $rect <840,130,1040,170>
+  property slot OnAppear = null;
+
+  // Slot property to signal that upper/lower list has disappeared.
+  $rect <840,170,1040,210>
+  property slot OnDisappear = null;
+
+  // This is a slot method.
+  $rect <640,80,840,120>
+  slot onFinished
+  {
+    sender; /* the method is called from the sender object */
+
+    if ( FadeListOut.Value == 0x00 )
+    {
+      postsignal OnDisappear;
+
+      /* fade in the duration after sliding */
+      FadeDuration.Enabled = false;
+      FadeDuration.Value1 = Caption.Opacity;
+      FadeDuration.Value2 = 0xFF;
+      FadeDuration.Enabled = true;
+    }
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text DurationText
+  {
+    preset Bounds = <20,140,130,170>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Duration: 2h 45min";
+    preset Font = Washer::DescrFont;
+    preset Color = Washer::CaptionColor;
+  }
+
+  // This is an int32 change effect.
+  $rect <840,80,1040,120>
+  object Effects::Int32Effect FadeDuration
+  {
+    preset Timing = Effects::Timing.FastIn_FastOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 200;
+    preset Outlet = ^DurationText.Opacity;
+  }
+
+  // This is an int32 change effect.
+  $rect <840,0,1040,40>
+  object Effects::Int32Effect FadeListOut
+  {
+    preset OnFinished = onFinished;
+    preset OnAnimate = onAnimate;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = Washer::FadeOutTime;
+    preset InitialDelay = Washer::HoldTime;
+    preset Value2 = 0;
+    preset Value1 = 255;
+    preset Outlet = ^TopListH.Opacity;
+  }
+
+  $rect <240,310,440,350>
+  slot OnDragH
+  {
+     var point delta = SimpleTouchHandlerH.CurrentPos - SimpleTouchHandlerH.HittingPos;
+
+    /* as soon as the user has moved the finger a little bit - pass the touch events
+       to the slide touch handler */
+    if (( delta.y > 8 ) || ( delta.y < -8 ))
+    {
+      GetRoot().DeflectCursor( SlideTouchHandlerH, <0,0> );
+      SimpleTouchHandlerH.Enabled = false;
+    }
+  }
+
+  $rect <240,270,440,310>
+  slot OnReleaseH
+  {
+    /* ff the user has just tapped the simple touch handler without sliding, directly select the item */
+    if ( !SimpleTouchHandlerH.AutoDeflected && TopListH.Opacity == 0xFF )
+    {
+      var int32 delta = 0;
+
+      /* calculate the offset in number of items */
+      if ( SimpleTouchHandlerH.CurrentPos.y < MainListH.Bounds.y1 )
+        delta = ( SimpleTouchHandlerH.CurrentPos.y - MainListH.Bounds.y1 ) / TopListH.ItemHeight - 1;
+      else if ( SimpleTouchHandlerH.CurrentPos.y > MainListH.Bounds.y2 )
+        delta = ( SimpleTouchHandlerH.CurrentPos.y - MainListH.Bounds.y2 ) / BottomListH.ItemHeight + 1;
+
+      if ( delta != 0 )
+      {
+        var int32 item = -MainListH.ScrollOffset / MainListH.ItemHeight + delta;
+        MainListH.EnsureVisible( item, true, Int32EffectH, null );
+      }
+    }
+    /* don't forget to start the fade out */
+    signal OnEnd;
+
+  }
+
+  $rect <440,270,640,310>
+  object Effects::Int32Effect Int32EffectH
+  {
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 200;
+  }
+
+  $rect <640,310,840,350>
+  slot OnDragM
+  {
+    var point delta = SimpleTouchHandlerM.CurrentPos - SimpleTouchHandlerM.HittingPos;
+
+    /* as soon as the user has moved the finger a little bit - pass the touch events
+       to the slide touch handler */
+    if (( delta.y > 8 ) || ( delta.y < -8 ))
+    {
+      GetRoot().DeflectCursor( SlideTouchHandlerM, <0,0> );
+      SimpleTouchHandlerM.Enabled = false;
+    }
+  }
+
+  $rect <640,270,840,310>
+  slot OnReleaseM
+  {
+    /* ff the user has just tapped the simple touch handler without sliding, directly select the item */
+    if ( !SimpleTouchHandlerM.AutoDeflected && TopListM.Opacity == 0xFF )
+    {
+      var int32 delta = 0;
+
+      /* calculate the offset in number of items */
+      if ( SimpleTouchHandlerM.CurrentPos.y < MainListM.Bounds.y1 )
+        delta = ( SimpleTouchHandlerM.CurrentPos.y - MainListM.Bounds.y1 ) / TopListM.ItemHeight - 1;
+      else if ( SimpleTouchHandlerM.CurrentPos.y > MainListM.Bounds.y2 )
+        delta = ( SimpleTouchHandlerM.CurrentPos.y - MainListM.Bounds.y2 ) / BottomListM.ItemHeight + 1;
+
+      if ( delta != 0 )
+      {
+        var int32 item = -MainListM.ScrollOffset / MainListM.ItemHeight + delta;
+        MainListM.EnsureVisible( item, true, Int32EffectM, null );
+      }
+    }
+    /* don't forget to start the fade out */
+    signal OnEnd;
+
+  }
+
+  $rect <840,270,1040,310>
+  object Effects::Int32Effect Int32EffectM
+  {
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 200;
+  }
+
+  // The class 'TimeList' implements a special type of list to display an hour value \
+  // and a minute value, both with a magnification effect of the middle item. For \
+  // this purpose, three different vertical lists are used for each side (hour and \
+  // minute): A top list with small items, a center list with large items and a bottom \
+  // list with small items. The three lists are synchronized, so that it appears \
+  // for the user as one list. In order to make the list widget more attractive, \
+  // the top and bottom lists are connected with a fade-in/fade-out effect: As soon \
+  // as the user touches the widget, the text item dissappears, and the top/bottom \
+  // lists start to fade-in. After a certain idle time, the top/bottom lists will \
+  // fade-out.
+  note legend Note
+  {
+    attr Bounds = <0,430,1040,550>;
+  }
+}
+
+// This is a GUI component.
+$rect <240,300,440,340>
+$output false
+class HourItemL : Core::Group
+{
+  $rect <0,190,200,230>
+  inherited property Bounds = <0,0,110,160>;
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,100,160>;
+    preset WrapText = true;
+    preset Alignment = Views::TextAlignment[AlignHorzRight, AlignVertCenter];
+    preset String = "00";
+    preset Font = Washer::ListFontXL;
+    preset Color = Washer::ButtonTextColor;
+  }
+
+  // The property 'Caption' contains the text of the list item.
+  $rect <250,0,450,40>
+  property string Caption = "";
+
+  $rect <250,40,450,80>
+  onset Caption
+  {
+    pure Caption = value;
+    Text.String = value;
+  }
+}
+
+// This is a GUI component.
+$rect <440,300,640,340>
+$output false
+class MinItemL : Core::Group
+{
+  $rect <0,190,200,230>
+  inherited property Bounds = <0,0,110,160>;
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <10,0,110,160>;
+    preset WrapText = true;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "00";
+    preset Font = Washer::ListFontXL;
+    preset Color = Washer::ButtonTextColor;
+  }
+
+  // The property 'Caption' contains the text of the list item.
+  $rect <250,0,450,40>
+  property string Caption = "";
+
+  $rect <250,40,450,80>
+  onset Caption
+  {
+    pure Caption = value;
+    Text.String = value;
+  }
+}
+
+// This is a GUI component.
+$rect <440,340,640,380>
+$output false
+class MinItemS : Core::Group
+{
+  $rect <0,190,200,230>
+  inherited property Bounds = <0,0,110,40>;
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Back
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,110,40>;
+    preset Color = Washer::ListBgColor;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Center
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToTop, ResizeVert];
+    preset Bounds = <0,0,1,40>;
+    preset Color = Washer::ButtonTextColor;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Right
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight, AlignToTop, ResizeVert];
+    preset Bounds = <108,0,110,40>;
+    preset Color = Washer::ListBgColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,110,40>;
+    preset WrapText = true;
+    preset Alignment = Views::TextAlignment[AlignHorzCenter, AlignVertCenter];
+    preset String = "Text";
+    preset Font = Washer::ListFontS;
+    preset Color = Washer::ListTextColor;
+  }
+
+  // The property 'Caption' contains the text of the list item.
+  $rect <250,0,450,40>
+  property string Caption = "";
+
+  $rect <250,40,450,80>
+  onset Caption
+  {
+    pure Caption = value;
+    Text.String = value;
+  }
+}
+
+// This is a bitmap resource.
+$rect <890,390,1090,430>
+$output false
+resource Resources::Bitmap BgHot
+{
+  attr bitmapfile FileName;
+  attr alphafile AlphaName = .\Res\Hot.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+// This is a bitmap resource.
+$rect <890,430,1090,470>
+$output false
+resource Resources::Bitmap BgDelicates
+{
+  attr bitmapfile FileName;
+  attr alphafile AlphaName = .\Res\Delicates.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+// This is a bitmap resource.
+$rect <890,470,1090,510>
+$output false
+resource Resources::Bitmap BgSportswear
+{
+  attr bitmapfile FileName;
+  attr alphafile AlphaName = .\Res\Sportswear.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+// This is a bitmap resource.
+$rect <890,510,1090,550>
+$output false
+resource Resources::Bitmap BgWool
+{
+  attr bitmapfile FileName;
+  attr alphafile AlphaName = .\Res\Wool.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+// This is a bitmap resource.
+$rect <890,550,1090,590>
+$output false
+resource Resources::Bitmap BgEco
+{
+  attr bitmapfile FileName;
+  attr alphafile AlphaName = .\Res\Eco.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+// Color constant according UI design.
+$rect <1090,40,1290,80>
+$output false
+const color TempColor0 = #2A7394FF;
+
+// Color constant according UI design.
+$rect <1090,120,1290,160>
+$output false
+const color TempColor2 = #BCE43FFF;
+
+// Color constant according UI design.
+$rect <1090,160,1290,200>
+$output false
+const color TempColor3 = #FDFD34FF;
+
+// Color constant according UI design.
+$rect <1090,200,1290,240>
+$output false
+const color TempColor4 = #FEC12BFF;
+
+// Color constant according UI design.
+$rect <1090,240,1290,280>
+$output false
+const color TempColor5 = #FD5521FF;
+
+// Color constant according UI design.
+$rect <1090,280,1290,320>
+$output false
+const color TempColor6 = #FD1A1FFF;
+
+// Color constant according UI design.
+$rect <1090,80,1290,120>
+$output false
+const color TempColor1 = #67A56CFF;
+
+// This is a bitmap resource.
+$rect <1090,510,1290,550>
+$output false
+resource Resources::Bitmap Shadow
+{
+  attr bitmapfile FileName;
+  attr alphafile AlphaName = .\Res\Shadow.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+// This is a GUI component.
+$rect <240,40,440,80>
+$output false
+class StartButton : Core::Group
+{
+  $rect <0,80,140,120>
+  inherited property Bounds = <0,0,136,44>;
+
+  $rect <10,110,210,150>
+  inherited method UpdateViewState()
+  {
+    aState;
+
+    /* colorize background if currently selected */
+    if ( TouchHandler.Down && TouchHandler.Inside )
+      Background.Color = Washer::StopColor;
+    else
+      Background.Color = Washer::StartColor;
+
+  }
+
+  // This is a bitmap frame view.
+  $rect <20,20,160,60>
+  object Views::Frame Frame
+  {
+    preset Bounds = <0,0,138,48>;
+    preset Color = #00000080;
+    preset Edges = Graphics::Edges[Bottom, Left, Right, Top];
+    preset Bitmap = Washer::Shadow;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler TouchHandler
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Point4 = <0,36>;
+    preset Point3 = <126,36>;
+    preset Point2 = <126,0>;
+    preset Point1 = <0,0>;
+    preset OnLeave = enterLeaveSlot;
+    preset OnEnter = enterLeaveSlot;
+    preset OnRelease = pressReleaseSlot;
+    preset OnPress = pressReleaseSlot;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Background
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,126,36>;
+    preset Color = #FFB65FFF;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,126,36>;
+    preset String = "START";
+    preset Font = Washer::ListFontM;
+  }
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <260,10,460,50>
+  slot enterLeaveSlot
+  {
+    InvalidateViewState();
+  }
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <260,50,460,90>
+  slot pressReleaseSlot
+  {
+    /* releasing the finger outside the button area is ignored */
+    if ( !TouchHandler.Down && TouchHandler.Inside )
+    {
+      /* inform the OnChange slot method */
+      signal OnChange;
+    }
+  }
+
+  // The property 'OnChange' can refer to a slot method, which will receive a signal \
+  // as soon the user has pressed the button. Thereupon the method's logic will be \
+  // executed.
+  $rect <460,50,660,90>
+  property slot OnChange = null;
+}
+
+// Color constant according UI design.
+$rect <890,240,1090,280>
+$output false
+const color StartColor = #8BD136FF;
+
+// Color constant according UI design.
+$rect <890,280,1090,320>
+$output false
+const color StopColor = #D13B00FF;
+
+// This is a bitmap resource.
+$rect <1090,390,1290,430>
+$output false
+resource Resources::Bitmap BgSpin
+{
+  attr bitmapfile FileName;
+  attr alphafile AlphaName = .\Res\Spin.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+// This is a bitmap resource.
+$rect <1090,430,1290,470>
+$output false
+resource Resources::Bitmap BgDrain
+{
+  attr bitmapfile FileName;
+  attr alphafile AlphaName = .\Res\Drain.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+// This is a bitmap resource.
+$rect <1090,470,1290,510>
+$output false
+resource Resources::Bitmap BgEasyCare
+{
+  attr bitmapfile FileName;
+  attr alphafile AlphaName = .\Res\EasyCare.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+// List item classes and list classes
+note group Note
+{
+  attr Bounds = <20,110,660,440>;
+}
+
+// Time and color constants
+note group Note1
+{
+  attr Bounds = <670,0,1310,340>;
+}
+
+// Resources
+note group Note2
+{
+  attr Bounds = <670,350,1310,610>;
+}
+
+// Device class
+note group Note3
+{
+  attr Bounds = <20,450,660,550>;
+}
+
+// Washing machine main screen and start button
+note group Note4
+{
+  attr Bounds = <20,0,660,100>;
+}
+
+// The sample application 'WashingMachine' implements the user interface of a modern \
+// washing machine with touch screen.
+// 
+// It contains a couple of fancy scrollable lists to choose the different parameters \
+// of the washing machine, like: washing program, temperature, spin, washing options \
+// and start time.
+// The speciality of this sample application is the magnification effect of the centered \
+// list items and the soft fade-in/fade-out effects.
+// 
+// This demo application is implemented for a screen size of 480x272 pixel.
+note legend Note5
+{
+  attr Bounds = <20,560,660,750>;
+}
+
+// Graphical design of 'WashingMachine' by Coeno - http://www.coeno.com
+note legend Note6
+{
+  attr Bounds = <670,620,1160,680>;
+}

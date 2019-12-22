@@ -723,7 +723,7 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
                                        usb_device_endpoint_callback_message_struct_t *message,
                                        void *callbackParam)
 {
-    usb_setup_struct_t *deviceSetup;
+    usb_setup_struct_t *deviceSetup, *setup;
     usb_device_common_class_struct_t *classHandle;
     uint8_t *buffer = (uint8_t *)NULL;
     uint32_t length = 0U;
@@ -756,7 +756,7 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
             return error;
         }
         /* Receive a setup request */
-        usb_setup_struct_t *setup = (usb_setup_struct_t *)(message->buffer);
+        setup = (usb_setup_struct_t *)(message->buffer);
 
         /* Copy the setup packet to the application buffer */
         deviceSetup->wValue = USB_SHORT_FROM_LITTLE_ENDIAN(setup->wValue);

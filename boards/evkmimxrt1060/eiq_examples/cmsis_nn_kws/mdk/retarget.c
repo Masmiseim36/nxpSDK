@@ -9,7 +9,7 @@
 #include <rt_sys.h>
 #include <rt_misc.h>
 
-#pragma import(__use_no_semihosting_swi)
+__asm(".global __use_no_semihosting");
 
 extern void $Super$$_sys_open(void);
 FILEHANDLE $Sub$$_sys_open(const char *name, int openmode)
@@ -63,4 +63,10 @@ extern void $Super$$_sys_exit(void);
 long $Sub$$_sys_exit(FILEHANDLE fh)
 {
     return -1;
+}
+
+extern void $Super$$_sys_command_string(void);
+char *$Sub$$_sys_command_string(char *cmd, int len)
+{
+    return NULL;
 }

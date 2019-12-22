@@ -28,7 +28,15 @@ SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_CLEAR_BSS")
 
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_INITIALIZE_NONCACHEDATA")
 
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mcpu=cortex-m7")
+
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -Wall")
+
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfloat-abi=hard")
+
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfpu=fpv5-d16")
+
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mthumb")
 
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -fno-common")
 
@@ -40,17 +48,9 @@ SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -ffreestanding")
 
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -fno-builtin")
 
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mthumb")
-
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mapcs")
 
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -std=gnu99")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfpu=fpv5-d16")
 
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -DDEBUG")
 
@@ -60,7 +60,15 @@ SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -D__STARTUP_INITIALIZE_NONCA
 
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -g")
 
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mcpu=cortex-m7")
+
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -Wall")
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfloat-abi=hard")
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfpu=fpv5-d16")
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mthumb")
 
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -fno-common")
 
@@ -72,17 +80,9 @@ SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -ffreestanding")
 
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -fno-builtin")
 
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mthumb")
-
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mapcs")
 
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -std=gnu99")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfpu=fpv5-d16")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
 
@@ -106,7 +106,21 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DTFLITE_MCU")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O3")
 
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wno-unused-but-set-variable")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mcpu=cortex-m7")
+
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mfloat-abi=hard")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mfpu=fpv5-d16")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mthumb")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -MMD")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -MP")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fno-common")
 
@@ -118,21 +132,9 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -ffreestanding")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fno-builtin")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mthumb")
-
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mapcs")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -std=gnu99")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mfpu=fpv5-d16")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -MMD")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -MP")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
 
@@ -158,7 +160,21 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
 
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wno-unused-but-set-variable")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mcpu=cortex-m7")
+
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mfloat-abi=hard")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mfpu=fpv5-d16")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mthumb")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -MMD")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -MP")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fno-common")
 
@@ -170,21 +186,9 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -ffreestanding")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fno-builtin")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mthumb")
-
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mapcs")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -std=gnu99")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mfpu=fpv5-d16")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -MMD")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -MP")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
 
@@ -226,7 +230,21 @@ SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wno-unused-local-typede
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wno-unused-variable")
 
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wno-unused-but-set-variable")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mcpu=cortex-m7")
+
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mfloat-abi=hard")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mfpu=fpv5-d16")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mthumb")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -MMD")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -MP")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-common")
 
@@ -238,19 +256,7 @@ SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -ffreestanding")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-builtin")
 
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mthumb")
-
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mapcs")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mfpu=fpv5-d16")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -MMD")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -MP")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG")
 
@@ -290,7 +296,21 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wno-unused-local-typedefs")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wno-unused-variable")
 
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wno-unused-but-set-variable")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mcpu=cortex-m7")
+
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mfloat-abi=hard")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mfpu=fpv5-d16")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mthumb")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MMD")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MP")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-common")
 
@@ -302,23 +322,11 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ffreestanding")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-builtin")
 
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mthumb")
-
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mapcs")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-rtti")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-exceptions")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mfpu=fpv5-d16")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MMD")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MP")
 
 include_directories(${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite)
 
@@ -332,167 +340,251 @@ include_directories(${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite
 
 include_directories(${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp)
 
+include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities)
+
 add_library(libtensorflow-lite.a STATIC
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/_string.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/allocation.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/allocation.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/arena_planner.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/arena_planner.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/builtin_op_data.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/builtin_ops.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/context.c"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/context.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/context_util.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/error_reporter.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/error_reporter.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/graph_info.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/graph_info.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/interpreter.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/interpreter.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/activation_functor.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/activations.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/add.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/arg_min_max.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/audio_spectrogram.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/basic_rnn.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/batch_to_space_nd.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/bidirectional_sequence_lstm.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/bidirectional_sequence_rnn.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/cast.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/comparisons.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/concatenation.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/conv.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/depthwise_conv.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/dequantize.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/detection_postprocess.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/div.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/eigen_support.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/eigen_support.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/elementwise.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/embedding_lookup.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/embedding_lookup_sparse.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/exp.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/expand_dims.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/fake_quant.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/floor.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/floor_div.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/fully_connected.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/gather.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/gemm_support.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/gemm_support.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/hashtable_lookup.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/common.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/compatibility.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/kernel_utils.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/kernel_utils.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/mfcc.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/mfcc_dct.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/mfcc_dct.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/mfcc_internal.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/mfcc_mel_filterbank.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/mfcc_mel_filterbank.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/optimized/cblas_conv.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/optimized/cblas_reference.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/optimized/cpu_check.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/optimized/depthwiseconv_float.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/optimized/depthwiseconv_uint8.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/optimized/depthwiseconv_uint8_3x3_filter.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/optimized/eigen_spatial_convolutions.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/optimized/eigen_tensor_reduced_instantiations_google.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/optimized/eigen_tensor_reduced_instantiations_oss.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/optimized/legacy_optimized_ops.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/optimized/multithreaded_conv.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/optimized/neon_tensor_utils.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/optimized/neon_tensor_utils.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/optimized/optimized_ops.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/optimized/tensor_utils_impl.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/quantization_util.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/quantization_util.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/reference/depthwiseconv_float.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/reference/depthwiseconv_uint8.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/reference/legacy_reference_ops.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/reference/portable_tensor_utils.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/reference/portable_tensor_utils.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/reference/reference_ops.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/round.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/spectrogram.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/spectrogram.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/strided_slice_logic.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/tensor.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/tensor_utils.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/tensor_utils.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/test_util.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/internal/types.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/kernel_util.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/kernel_util.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/l2norm.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/local_response_norm.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/logical.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/lsh_projection.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/lstm.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/maximum_minimum.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/mfcc.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/mul.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/neg.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/one_hot.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/op_macros.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/pack.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/pad.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/padding.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/pooling.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/pow.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/reduce.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/register.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/register.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/reshape.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/resize_bilinear.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/select.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/shape.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/skip_gram.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/slice.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/space_to_batch_nd.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/space_to_depth.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/sparse_to_dense.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/split.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/squeeze.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/strided_slice.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/sub.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/svdf.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/test_util.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/tile.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/topk_v2.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/transpose.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/transpose_conv.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/unidirectional_sequence_lstm.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/unidirectional_sequence_rnn.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/kernels/unpack.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/memory_planner.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/mmap_allocation_disabled.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/model.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/model.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/nnapi/NeuralNetworksShim.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/nnapi_delegate.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/nnapi_delegate_disabled.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/op_resolver.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/op_resolver.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/optional_debug_tools.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/optional_debug_tools.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/profiling/_time.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/profiling/profile_buffer.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/profiling/profile_summarizer.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/profiling/profile_summarizer.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/profiling/profiler.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/profiling/time.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/schema/schema_generated.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/simple_memory_arena.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/simple_memory_arena.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/string_util.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/string_util.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/util.cc"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/util.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/contrib/lite/version.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/core/public/session.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/core/public/version.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/core/util/stat_summarizer_options.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/core/util/stats_calculator.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/allocation.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/allocation.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/arena_planner.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/arena_planner.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/builtin_op_data.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/builtin_ops.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/c/builtin_op_data.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/c/c_api_internal.c"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/c/c_api_internal.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/context.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/context_util.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/error_reporter.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/error_reporter.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/flatbuffer_conversions.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/flatbuffer_conversions.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/op_resolver.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/op_resolver.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/profiler.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/subgraph.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/subgraph.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/error_reporter.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/graph_info.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/graph_info.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/interpreter.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/interpreter.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/activation_functor.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/activations.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/add.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/add_n.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/arg_min_max.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/audio_spectrogram.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/basic_rnn.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/batch_to_space_nd.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/bidirectional_sequence_lstm.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/bidirectional_sequence_rnn.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cast.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/ceil.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/comparisons.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/concatenation.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/conv.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_context.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_context.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_gemm.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_gemm_custom_gemv.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_gemm_eigen.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_gemm_eigen.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_gemm_gemmlowp.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_gemm_params.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_gemm_ruy.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_support.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_support.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_threadpool.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/depthwise_conv.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/dequantize.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/detection_postprocess.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/div.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/eigen_support.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/eigen_support.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/elementwise.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/embedding_lookup.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/embedding_lookup_sparse.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/exp.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/expand_dims.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/fake_quant.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/fill.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/floor.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/floor_div.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/floor_mod.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/fully_connected.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/gather.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/gather_nd.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/gemmlowp_support.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/gemmlowp_support.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/hashtable_lookup.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/if.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/common.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/compatibility.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/kernel_utils.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/kernel_utils.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/legacy_types.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/mfcc.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/mfcc_dct.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/mfcc_dct.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/mfcc_internal.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/mfcc_mel_filterbank.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/mfcc_mel_filterbank.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/cblas_conv.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/cblas_reference.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/cpu_check.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/depthwiseconv_3x3_filter_common.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/depthwiseconv_float.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/depthwiseconv_multithread.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/depthwiseconv_uint8.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/depthwiseconv_uint8_3x3_filter.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/eigen_spatial_convolutions.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/eigen_tensor_reduced_instantiations_oss.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/im2col_utils.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/integer_ops/add.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/integer_ops/conv.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/integer_ops/depthwise_conv.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/integer_ops/depthwise_conv_3x3_filter.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/integer_ops/fully_connected.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/integer_ops/mul.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/integer_ops/pooling.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/integer_ops/softmax.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/multithreaded_conv.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/neon_tensor_utils.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/neon_tensor_utils.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/optimized_ops.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/tensor_utils_impl.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/quantization_util.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/quantization_util.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/conv.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/depthwise_conv.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/depthwiseconv_float.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/depthwiseconv_uint8.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/fully_connected.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/add.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/conv.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/depthwise_conv.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/dequantize.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/fully_connected.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/l2normalization.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/log_softmax.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/logistic.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/mean.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/mul.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/pooling.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/softmax.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/tanh.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/legacy_reference_ops.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/pooling.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/portable_tensor_utils.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/portable_tensor_utils.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/reference_ops.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/softmax.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/round.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/spectrogram.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/spectrogram.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/strided_slice_logic.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/tensor.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/tensor_ctypes.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/tensor_utils.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/tensor_utils.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/types.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/kernel_util.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/kernel_util.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/l2norm.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/local_response_norm.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/logical.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/lsh_projection.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/lstm.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/lstm_eval.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/lstm_eval.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/matrix_diag.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/matrix_set_diag.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/maximum_minimum.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/mfcc.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/mirror_pad.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/mul.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/neg.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/one_hot.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/op_macros.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/pack.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/pad.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/padding.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/pooling.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/pow.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/quantize.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/range.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/rank.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/reduce.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/register.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/register.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/register_ref.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/register_ref.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/reshape.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/resize_bilinear.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/resize_nearest_neighbor.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/reverse.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/reverse_sequence.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/round.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/select.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/shape.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/skip_gram.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/slice.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/space_to_batch_nd.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/space_to_depth.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/sparse_to_dense.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/split.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/split_v.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/squared_difference.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/squeeze.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/strided_slice.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/sub.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/svdf.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/tile.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/topk_v2.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/transpose.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/transpose_conv.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/unidirectional_sequence_lstm.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/unidirectional_sequence_rnn.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/unique.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/unpack.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/where.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/while.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/zeros_like.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/memory_planner.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/minimal_logging.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/minimal_logging.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/minimal_logging_default.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/mmap_allocation_disabled.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/model.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/model.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/mutable_op_resolver.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/mutable_op_resolver.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/nnapi/NeuralNetworksShim.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/op_resolver.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/optional_debug_tools.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/optional_debug_tools.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/profiling/profile_buffer.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/profiling/profile_summarizer.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/profiling/profile_summarizer.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/profiling/profiler.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/profiling/time.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/profiling/time.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/schema/schema_generated.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/simple_memory_arena.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/simple_memory_arena.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/stderr_reporter.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/stderr_reporter.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/string.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/string_util.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/string_util.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/util.cc"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/util.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/version.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/Cholesky"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/CholmodSupport"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/Core"
@@ -571,6 +663,7 @@ add_library(libtensorflow-lite.a STATIC
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/NestByValue.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/NoAlias.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/NumTraits.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/PartialReduxEvaluator.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/PermutationMatrix.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/PlainObjectBase.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/Product.h"
@@ -579,6 +672,7 @@ add_library(libtensorflow-lite.a STATIC
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/Redux.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/Ref.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/Replicate.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/Reshaped.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/ReturnByValue.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/Reverse.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/Select.h"
@@ -588,6 +682,7 @@ add_library(libtensorflow-lite.a STATIC
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/SolveTriangular.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/SolverBase.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/StableNorm.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/StlIterators.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/Stride.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/Swap.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/Transpose.h"
@@ -600,6 +695,7 @@ add_library(libtensorflow-lite.a STATIC
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/AVX/MathFunctions.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/AVX/PacketMath.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/AVX/TypeCasting.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/AVX512/Complex.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/AVX512/MathFunctions.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/AVX512/PacketMath.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/AltiVec/Complex.h"
@@ -612,14 +708,28 @@ add_library(libtensorflow-lite.a STATIC
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/CUDA/PacketMathHalf.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/CUDA/TypeCasting.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/Default/ConjHelper.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/Default/GenericPacketMathFunctions.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/Default/Settings.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/GPU/Half.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/GPU/MathFunctions.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/GPU/PacketMath.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/GPU/PacketMathHalf.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/GPU/TypeCasting.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/MSA/Complex.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/MSA/MathFunctions.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/MSA/PacketMath.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/NEON/Complex.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/NEON/MathFunctions.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/NEON/PacketMath.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/NEON/TypeCasting.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/SSE/Complex.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/SSE/MathFunctions.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/SSE/PacketMath.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/SSE/TypeCasting.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/SYCL/InteropHeaders.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/SYCL/MathFunctions.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/SYCL/PacketMath.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/SYCL/TypeCasting.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/ZVector/Complex.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/ZVector/MathFunctions.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/arch/ZVector/PacketMath.h"
@@ -651,6 +761,7 @@ add_library(libtensorflow-lite.a STATIC
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/products/TriangularSolverMatrix_BLAS.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/products/TriangularSolverVector.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/util/BlasUtil.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/util/ConfigureVectorization.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/util/Constants.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/util/DisableStupidWarnings.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/util/ForwardDeclarations.h"
@@ -662,6 +773,7 @@ add_library(libtensorflow-lite.a STATIC
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/util/Meta.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/util/NonMPL2.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/util/ReenableStupidWarnings.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/util/ReshapedHelper.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/util/StaticAssert.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/util/SymbolicIndex.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/Core/util/XprHelper.h"
@@ -799,22 +911,7 @@ add_library(libtensorflow-lite.a STATIC
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/plugins/IndexedViewMethods.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/plugins/MatrixCwiseBinaryOps.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/plugins/MatrixCwiseUnaryOps.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Empty.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/blas/BandTriangularSolver.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/blas/GeneralRank1Update.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/blas/PackedSelfadjointProduct.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/blas/PackedTriangularMatrixVector.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/blas/PackedTriangularSolverVector.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/blas/Rank2Update.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/blas/common.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/blas/f2c/datatypes.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/blas/level1_cplx_impl.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/blas/level1_impl.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/blas/level1_real_impl.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/blas/level2_cplx_impl.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/blas/level2_impl.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/blas/level2_real_impl.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/blas/level3_impl.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/Eigen/src/plugins/ReshapedMethods.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/AdolcForward"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/AlignedVector3"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/ArpackSupport"
@@ -828,12 +925,14 @@ add_library(libtensorflow-lite.a STATIC
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorArgMaxSycl.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorAssign.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorBase.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorBlock.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorBroadcasting.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorChipping.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorConcatenation.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorContraction.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorContractionBlocking.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorContractionCuda.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorContractionGpu.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorContractionMapper.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorContractionSycl.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorContractionThreadPool.h"
@@ -845,6 +944,7 @@ add_library(libtensorflow-lite.a STATIC
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorDevice.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorDeviceCuda.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorDeviceDefault.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorDeviceGpu.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorDeviceSycl.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorDeviceThreadPool.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorDimensionList.h"
@@ -860,6 +960,8 @@ add_library(libtensorflow-lite.a STATIC
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorFunctors.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorGenerator.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorGlobalFunctions.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorGpuHipCudaDefines.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorGpuHipCudaUndefines.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorIO.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorImagePatch.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorIndexList.h"
@@ -876,6 +978,7 @@ add_library(libtensorflow-lite.a STATIC
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorRandom.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorReduction.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorReductionCuda.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorReductionGpu.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorReductionSycl.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorRef.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/Tensor/TensorReverse.h"
@@ -901,10 +1004,10 @@ add_library(libtensorflow-lite.a STATIC
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/TensorSymmetry/StaticSymmetry.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/TensorSymmetry/Symmetry.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/TensorSymmetry/util/TemplateGroupTheory.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/ThreadPool/Barrier.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/ThreadPool/EventCount.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/ThreadPool/NonBlockingThreadPool.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/ThreadPool/RunQueue.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/ThreadPool/SimpleThreadPool.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/ThreadPool/ThreadCancel.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/ThreadPool/ThreadEnvironment.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/CXX11/src/ThreadPool/ThreadLocal.h"
@@ -988,7 +1091,7 @@ add_library(libtensorflow-lite.a STATIC
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/src/SpecialFunctions/SpecialFunctionsHalf.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/src/SpecialFunctions/SpecialFunctionsImpl.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/src/SpecialFunctions/SpecialFunctionsPacketMath.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/src/SpecialFunctions/arch/CUDA/CudaSpecialFunctions.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/src/SpecialFunctions/arch/CUDA/GpuSpecialFunctions.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/src/Splines/Spline.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/src/Splines/SplineFitting.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen/unsupported/Eigen/src/Splines/SplineFwd.h"
@@ -998,7 +1101,6 @@ add_library(libtensorflow-lite.a STATIC
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen3/Eigen/LU"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen3/Eigen/QR"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen3/Eigen/SVD"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen3/LICENSE"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen3/unsupported/Eigen/CXX11/Core"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen3/unsupported/Eigen/CXX11/FixedPoint"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/eigen3/unsupported/Eigen/CXX11/NeuralNetworks"
@@ -1041,7 +1143,6 @@ add_library(libtensorflow-lite.a STATIC
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/registry.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/stl_emulation.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/util.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/eight_bit_int_gemm/eight_bit_int_gemm.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/fixedpoint/fixedpoint.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/fixedpoint/fixedpoint_msa.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/fixedpoint/fixedpoint_neon.h"
@@ -1050,6 +1151,7 @@ add_library(libtensorflow-lite.a STATIC
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/block_params.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/common.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/compute.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/detect_platform.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/dispatch_gemm_shape.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/kernel.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/kernel_default.h"
@@ -1102,6 +1204,8 @@ add_library(libtensorflow-lite.a STATIC
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/public/gemmlowp.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/public/map.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/public/output_stages.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/fsl_sbrk.c"
 )
+
 
 

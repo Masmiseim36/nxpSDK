@@ -12,6 +12,8 @@
 #include "pin_mux.h"
 #include "board.h"
 #include "clock_config.h"
+#include "fsl_codec_common.h"
+#include "fsl_codec_adapter.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -63,9 +65,9 @@
 static void txCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData);
 static void rxCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData);
 #if defined DEMO_SDCARD
-#include "fsl_sd.h"
 #include "ff.h"
 #include "diskio.h"
+#include "fsl_sd.h"
 /*!
  * @brief wait card insert function.
  */
@@ -75,13 +77,33 @@ static int SD_FatFsInit(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+wm8960_config_t wm8960Config = {
+    .i2cConfig = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE, .codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ},
+    .route     = kWM8960_RoutePlaybackandRecord,
+    .rightInputSource = kWM8960_InputDifferentialMicInput2,
+    .playSource       = kWM8960_PlaySourceDAC,
+    .slaveAddress     = WM8960_I2C_ADDR,
+    .bus              = kWM8960_BusI2S,
+    .format = {.mclk_HZ = 6144000U, .sampleRate = kWM8960_AudioSampleRate16KHz, .bitWidth = kWM8960_AudioBitWidth16bit},
+    .master_slave = false,
+};
+codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8960, .codecDevConfig = &wm8960Config};
+/*
+ * AUDIO PLL setting: Frequency = Fref * (DIV_SELECT + NUM / DENOM)
+ *                              = 24 * (32 + 77/100)
+ *                              = 786.48 MHz
+ */
+const clock_audio_pll_config_t audioPllConfig = {
+    .loopDivider = 32,  /* PLL loop divider. Valid range for DIV_SELECT divider value: 27~54. */
+    .postDivider = 1,   /* Divider after the PLL, should only be 1, 2, 4, 8, 16. */
+    .numerator   = 77,  /* 30 bit numerator of fractional loop divider. */
+    .denominator = 100, /* 30 bit denominator of fractional loop divider */
+};
 AT_NONCACHEABLE_SECTION_INIT(sai_edma_handle_t txHandle) = {0};
 edma_handle_t dmaTxHandle                                = {0};
 AT_NONCACHEABLE_SECTION_INIT(sai_edma_handle_t rxHandle) = {0};
 edma_handle_t dmaRxHandle                                = {0};
-sai_transfer_format_t format                             = {0};
 AT_NONCACHEABLE_SECTION_ALIGN(uint8_t audioBuff[BUFFER_SIZE * BUFFER_NUM], 4);
-codec_handle_t codecHandle = {0};
 extern codec_config_t boardCodecConfig;
 volatile bool istxFinished     = false;
 volatile bool isrxFinished     = false;
@@ -116,23 +138,23 @@ static const sdmmchost_pwr_card_t s_sdCardPwrCtrl = {
 };
 #endif
 #endif
+#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
+    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
+sai_master_clock_t mclkConfig = {
+#if defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)
+    .mclkOutputEnable = true,
+#if !(defined(FSL_FEATURE_SAI_HAS_NO_MCR_MICS) && (FSL_FEATURE_SAI_HAS_NO_MCR_MICS))
+    .mclkSource = kSAI_MclkSourceSysclk,
+#endif
+#endif
+};
+#endif
+sai_transceiver_t config;
+codec_handle_t codecHandle;
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-/*
- * AUDIO PLL setting: Frequency = Fref * (DIV_SELECT + NUM / DENOM)
- *                              = 24 * (32 + 77/100)
- *                              = 786.48 MHz
- */
-const clock_audio_pll_config_t audioPllConfig = {
-    .loopDivider = 32,  /* PLL loop divider. Valid range for DIV_SELECT divider value: 27~54. */
-    .postDivider = 1,   /* Divider after the PLL, should only be 1, 2, 4, 8, 16. */
-    .numerator   = 77,  /* 30 bit numerator of fractional loop divider. */
-    .denominator = 100, /* 30 bit denominator of fractional loop divider */
-};
-
 void BOARD_EnableSaiMclkOutput(bool enable)
 {
     if (enable)
@@ -268,14 +290,13 @@ int SD_FatFsInit()
  */
 int main(void)
 {
-    sai_config_t config;
-    uint32_t mclkSourceClockHz = 0U, masterClockHz = 0U;
     edma_config_t dmaConfig = {0};
     char input              = '1';
+    uint8_t userItem        = 1U;
 
     BOARD_ConfigMPU();
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     CLOCK_InitAudioPll(&audioPllConfig);
     BOARD_InitDebugConsole();
 
@@ -290,7 +311,6 @@ int main(void)
 
     /*Enable MCLK clock*/
     BOARD_EnableSaiMclkOutput(true);
-    BOARD_Codec_I2C_Init();
 
     PRINTF("SAI Demo started!\n\r");
 
@@ -312,56 +332,36 @@ int main(void)
     DMAMUX_SetSource(EXAMPLE_DMAMUX, EXAMPLE_RX_CHANNEL, (uint8_t)EXAMPLE_SAI_RX_SOURCE);
     DMAMUX_EnableChannel(EXAMPLE_DMAMUX, EXAMPLE_RX_CHANNEL);
 
-    /* Init SAI module */
-    /*
-     * config.masterSlave = kSAI_Master;
-     * config.mclkSource = kSAI_MclkSourceSysclk;
-     * config.protocol = kSAI_BusLeftJustified;
-     * config.syncMode = kSAI_ModeAsync;
-     * config.mclkOutputEnable = true;
-     */
-    SAI_TxGetDefaultConfig(&config);
-    SAI_TxInit(DEMO_SAI, &config);
-
-    /* Initialize SAI Rx */
-    SAI_RxGetDefaultConfig(&config);
-    SAI_RxInit(DEMO_SAI, &config);
-
-    /* Configure the audio format */
-    format.bitWidth      = kSAI_WordWidth16bits;
-    format.channel       = 0U;
-    format.sampleRate_Hz = SAMPLE_RATE;
-#if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) || \
-    (defined FSL_FEATURE_PCC_HAS_SAI_DIVIDER && FSL_FEATURE_PCC_HAS_SAI_DIVIDER)
-    masterClockHz = OVER_SAMPLE_RATE * format.sampleRate_Hz;
-#else
-    masterClockHz = DEMO_SAI_CLK_FREQ;
-#endif
-
-#if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER)
-    format.masterClockHz = masterClockHz;
-#endif
-
-    format.protocol           = config.protocol;
-    format.stereo             = kSAI_Stereo;
-    format.isFrameSyncCompact = true;
-#if defined(FSL_FEATURE_SAI_FIFO_COUNT) && (FSL_FEATURE_SAI_FIFO_COUNT > 1)
-    format.watermark = FSL_FEATURE_SAI_FIFO_COUNT / 2U;
-#endif
-
-    /* Use default setting to init codec */
-    CODEC_Init(&codecHandle, &boardCodecConfig);
-    CODEC_SetFormat(&codecHandle, masterClockHz, format.sampleRate_Hz, format.bitWidth);
-#if defined CODEC_USER_CONFIG
-    BOARD_Codec_Config(&codecHandle);
-#endif
+    /* SAI init */
+    SAI_Init(DEMO_SAI);
 
     SAI_TransferTxCreateHandleEDMA(DEMO_SAI, &txHandle, txCallback, NULL, &dmaTxHandle);
     SAI_TransferRxCreateHandleEDMA(DEMO_SAI, &rxHandle, rxCallback, NULL, &dmaRxHandle);
 
-    mclkSourceClockHz = DEMO_SAI_CLK_FREQ;
-    SAI_TransferTxSetFormatEDMA(DEMO_SAI, &txHandle, &format, mclkSourceClockHz, masterClockHz);
-    SAI_TransferRxSetFormatEDMA(DEMO_SAI, &rxHandle, &format, mclkSourceClockHz, masterClockHz);
+    /* I2S mode configurations */
+    SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, kSAI_Channel0Mask);
+    SAI_TransferTxSetConfigEDMA(DEMO_SAI, &txHandle, &config);
+    config.syncMode = kSAI_ModeSync;
+    SAI_TransferRxSetConfigEDMA(DEMO_SAI, &rxHandle, &config);
+
+    /* set bit clock divider */
+    SAI_TxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
+                          DEMO_AUDIO_DATA_CHANNEL);
+    SAI_RxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
+                          DEMO_AUDIO_DATA_CHANNEL);
+
+/* master clock configurations */
+#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
+    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
+#if defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER)
+    mclkConfig.mclkHz          = DEMO_AUDIO_MASTER_CLOCK;
+    mclkConfig.mclkSourceClkHz = DEMO_SAI_CLK_FREQ;
+#endif
+    SAI_SetMasterClockConfig(DEMO_SAI, &mclkConfig);
+#endif
+
+    /* Use default setting to init codec */
+    CODEC_Init(&codecHandle, &boardCodecConfig);
 
     /* Enable interrupt to handle FIFO error */
     SAI_TxEnableInterrupts(DEMO_SAI, kSAI_FIFOErrorInterruptEnable);
@@ -380,21 +380,21 @@ int main(void)
     PRINTF("\n\rPlease choose the option :\r\n");
     while (1)
     {
-        PRINTF("\r1. Record and playback at same time\r\n");
-        PRINTF("\r2. Playback sine wave\r\n");
+        PRINTF("\r%d. Record and playback at same time\r\n", userItem++);
+        PRINTF("\r%d. Playback sine wave\r\n", userItem++);
 #if defined DEMO_SDCARD
-        PRINTF("\r3. Record to SDcard, after record playback it\r\n");
+        PRINTF("\r%d. Record to SDcard, after record playback it\r\n", userItem++);
 #endif /* DEMO_SDCARD */
 #if defined DIG_MIC
-        PRINTF("\r4. Record using digital mic and playback at the same time\r\n");
+        PRINTF("\r%d. Record using digital mic and playback at the same time\r\n", userItem++);
 #endif
-        PRINTF("\r5. Quit\r\n");
+        PRINTF("\r%d. Quit\r\n", userItem);
 
         input = GETCHAR();
         PUTCHAR(input);
         PRINTF("\r\n");
 
-        if (input == '5')
+        if (input == (userItem + 48U))
         {
             break;
         }
@@ -404,7 +404,7 @@ int main(void)
             case '1':
 #if defined DIG_MIC
                 /* Set the audio input source to AUX */
-                DA7212_ChangeInput(&codecHandle, kDA7212_Input_AUX);
+                DA7212_ChangeInput((da7212_handle_t *)((uint32_t)(codecHandle.codecDevHandle)), kDA7212_Input_AUX);
 #endif
                 RecordPlayback(DEMO_SAI, 30);
                 break;
@@ -417,9 +417,9 @@ int main(void)
                 break;
 #endif
 #if defined DIG_MIC
-            case '4':
+            case userItem - 1U + 48U:
                 /* Set the audio input source to DMIC */
-                DA7212_ChangeInput(&codecHandle, kDA7212_Input_MIC1_Dig);
+                DA7212_ChangeInput((da7212_handle_t *)((uint32_t)(codecHandle.codecDevHandle)), kDA7212_Input_MIC1_Dig);
                 RecordPlayback(DEMO_SAI, 30);
                 break;
 #endif
@@ -427,6 +427,7 @@ int main(void)
                 PRINTF("\rInvallid Input Parameter, please re-enter\r\n");
                 break;
         }
+        userItem = 1U;
     }
 
     CODEC_Deinit(&codecHandle);

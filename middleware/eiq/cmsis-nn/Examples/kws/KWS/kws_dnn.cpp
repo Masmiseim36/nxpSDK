@@ -40,4 +40,3 @@ KWS_DNN::~KWS_DNN()
 {
   delete nn;
 }
-

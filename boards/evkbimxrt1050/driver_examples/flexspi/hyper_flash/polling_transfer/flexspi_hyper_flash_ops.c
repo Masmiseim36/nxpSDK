@@ -240,7 +240,7 @@ status_t flexspi_nor_hyperflash_cfi(FLEXSPI_Type *base)
     // CFI Entry
     status_t status;
     uint32_t buffer[2];
-    uint8_t data[2] = {0x00, 0x98};
+    uint8_t data[4] = {0x00, 0x98};
     status          = flexspi_nor_hyperbus_write(base, 0x555, (uint32_t *)data, 2);
     if (status != kStatus_Success)
     {

@@ -110,8 +110,6 @@ public:
             'STMP', //!< Signature in #elftosb::SB2Image::sb2_header_t::m_signature.
         ROM_IMAGE_HEADER_SIGNATURE2 =
             'sgtl',                       //!< Value for #elftosb::SB2Image::sb2_header_t::m_signature2;
-        ROM_BOOT_IMAGE_MAJOR_VERSION = 2, //!< Current boot image major version.
-        ROM_BOOT_IMAGE_MINOR_VERSION = 0  //!< Current boot image minor version.
     };
 
     enum
@@ -1259,8 +1257,10 @@ public:
 
    //! \brief The image is encrypted if there is at least one key.
     inline bool isEncrypted() const { return TRUE; }
-    inline bool isSigned() const { return (getFlags() & ROM_SIGNED); }
+    inline bool isSigned() const { return ((getFlags() & ROM_SIGNED) || isVersion21()); }
     inline uint8_t getCipherMode() const { return ((getFlags() & ROM_CIPHER_MODE) >> CIPHER_MODE_SHIFT); }
+	inline bool isVersion21() const { return m_majorVersion == 2 && m_minorVersion == 1; }
+	inline bool isVersion20() const { return m_majorVersion == 2 && m_minorVersion == 0; }
     //@}
 
     //! \name Versions
@@ -1268,6 +1268,12 @@ public:
     virtual void setProductVersion(const version_t &version);
     virtual void setComponentVersion(const version_t &version);
     //@}
+
+	//! \Secure Binary Versions
+	//@{
+	virtual void setMajorVersion(uint8_t majorVersion) { m_majorVersion = majorVersion; }
+	virtual void setMinorVersion(uint8_t minorVersion) { m_minorVersion = minorVersion; }
+	//@}
 
     //! \name Flags
     //@{
@@ -1283,6 +1289,10 @@ public:
 
     //! \brief Calculates the total number of cipher blocks the image consumes.
     uint32_t getImageSize();
+	//! \brief Calculates the total number of cipher blocks of header (all data excluding sections).
+	uint32_t getTotalImageHeaderSize();
+	//! \brief Provides offset in blocks to digital signature location from the image begining.
+	uint32_t getSignatureOffset();
 
     //! \brief Returns the preferred ".sb" extension for Encore boot images.
     virtual std::string getFileExtension() const { return ".sb2"; }
@@ -1290,6 +1300,8 @@ public:
     //@{
     //! \brief Write the boot image to an output stream.
     virtual void writeToStream(std::ostream &stream);
+	bool setSignatureSize();
+	bool signDigest(mbedtls_sha256_context &sha256_ctx, std::ostream & stream);
     //@}
 
     //! \brief Print out a string representation of the object.
@@ -1314,6 +1326,10 @@ protected:
     cert_table_t m_certTable;  //! Certificate table
     rkh_table m_rkhTable;      //! Root key hashes table
     string_vector_t m_rootKeyCertFilePaths;  //!< Paths to root key certificate files.
+	uint8_t m_majorVersion;       //!< Major version for the image format
+	uint8_t m_minorVersion;       //!< Minor version of the boot image format
+	size_t m_certDataSize = 0;	  //!< Size of certificate block in bytes
+	size_t m_signatureSize = 0;	  //!< Size of signature in bytes
     
     void prepareImageHeader(sb2_header_t &header);
     uint64_t getTimestamp();
@@ -1321,6 +1337,7 @@ protected:
     unsigned getPadBlockCountForSection(Section *section, unsigned offset);
     void prepareCertBlockHeader();
     void prepareSignDataSection();
+	bool prepareSignData(uint8_t * &data);
     uint32_t getKeyBlobBlock();
     uint32_t getKeyBlobBlockCount();
     uint16_t getMaxSectionMacCount();

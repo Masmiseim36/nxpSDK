@@ -105,7 +105,7 @@ $(BINARIES): %$(EXEXT): %.c $(DEP)
 
 clean:
 ifndef WINDOWS
-	rm -rf $(APPS) *.c *.datax TESTS
+	rm -rf $(BINARIES) *.c *.datax TESTS
 else
 	del /Q /F *.c *.exe *.datax
 ifneq ($(wildcard TESTS/.*),)
@@ -113,8 +113,9 @@ ifneq ($(wildcard TESTS/.*),)
 endif
 endif
 
+# Test suites caught by SKIP_TEST_SUITES are built but not executed.
 check: $(BINARIES)
-	perl scripts/run-test-suites.pl
+	perl scripts/run-test-suites.pl --skip=$(SKIP_TEST_SUITES)
 
 test: check
 

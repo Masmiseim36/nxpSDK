@@ -42,9 +42,6 @@ enum
     kFlexSpiSerialClk_200MHz = 9,
 };
 
-#define FLEXSPI_ENABLE_OCTAL_FLASH_SUPPORT (0)
-#define FLEXSPI_ENABLE_NO_CMD_MODE_SUPPORT (0)
-
 #endif // __TARGET_CONFIG_H__
 ////////////////////////////////////////////////////////////////////////////////
 // EOF

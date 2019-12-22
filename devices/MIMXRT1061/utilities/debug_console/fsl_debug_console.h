@@ -48,14 +48,6 @@ extern serial_handle_t g_serialHandle; /*!< serial manager handle */
 #define SDK_DEBUGCONSOLE 1U
 #endif
 
-/*! @brief Definition to select redirect toolchain printf, scanf to uart or not. */
-#ifndef SDK_DEBUGCONSOLE_UART
-/* mcux will handle this macro, not define it here */
-#if (!defined(__MCUXPRESSO))
-#define SDK_DEBUGCONSOLE_UART
-#endif
-#endif
-
 #if defined(SDK_DEBUGCONSOLE) && !(SDK_DEBUGCONSOLE)
 #include <stdio.h>
 #endif
@@ -95,6 +87,7 @@ extern "C" {
 /*! @name Initialization*/
 /* @{ */
 
+#if ((SDK_DEBUGCONSOLE == DEBUGCONSOLE_REDIRECT_TO_SDK) || defined(SDK_DEBUGCONSOLE_UART))
 /*!
  * @brief Initializes the peripheral used for debug messages.
  *
@@ -124,6 +117,31 @@ status_t DbgConsole_Init(uint8_t instance, uint32_t baudRate, serial_port_type_t
  * @return Indicates whether de-initialization was successful or not.
  */
 status_t DbgConsole_Deinit(void);
+#else
+/*!
+ * Use an error to replace the DbgConsole_Init when SDK_DEBUGCONSOLE is not DEBUGCONSOLE_REDIRECT_TO_SDK and
+ * SDK_DEBUGCONSOLE_UART is not defined.
+ */
+static inline status_t DbgConsole_Init(uint8_t instance,
+                                       uint32_t baudRate,
+                                       serial_port_type_t device,
+                                       uint32_t clkSrcFreq)
+{
+    (void)instance;
+    (void)baudRate;
+    (void)device;
+    (void)clkSrcFreq;
+    return (status_t)kStatus_Fail;
+}
+/*!
+ * Use an error to replace the DbgConsole_Deinit when SDK_DEBUGCONSOLE is not DEBUGCONSOLE_REDIRECT_TO_SDK and
+ * SDK_DEBUGCONSOLE_UART is not defined.
+ */
+static inline status_t DbgConsole_Deinit(void)
+{
+    return (status_t)kStatus_Fail;
+}
+#endif /* ((SDK_DEBUGCONSOLE == DEBUGCONSOLE_REDIRECT_TO_SDK) || defined(SDK_DEBUGCONSOLE_UART)) */
 
 #if SDK_DEBUGCONSOLE
 /*!
@@ -176,6 +194,19 @@ int DbgConsole_Scanf(char *formatString, ...);
  * @return Returns the character read.
  */
 int DbgConsole_Getchar(void);
+
+/*!
+ * @brief Writes formatted output to the standard output stream with the blocking mode.
+ *
+ * Call this function to write a formatted output to the standard output stream with the blocking mode.
+ * The function will send data with blocking mode no matter the DEBUG_CONSOLE_TRANSFER_NON_BLOCKING set
+ * or not.
+ * The function could be used in system ISR mode with DEBUG_CONSOLE_TRANSFER_NON_BLOCKING set.
+ *
+ * @param   formatString Format control string.
+ * @return  Returns the number of characters printed or a negative value if an error occurs.
+ */
+int DbgConsole_BlockingPrintf(const char *formatString, ...);
 
 /*!
  * @brief Debug console flush.

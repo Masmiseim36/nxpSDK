@@ -47,9 +47,9 @@
 #define FS_PRINTER_BULK_OUT_PACKET_SIZE (64U)
 #define HS_PRINTER_BULK_IN_PACKET_SIZE (64U)
 #define FS_PRINTER_BULK_IN_PACKET_SIZE (64U)
-#define HS_PRINTER_BULK_OUT_INTERVAL (0x06U) /* 2^(6-1) = 1ms */
+#define HS_PRINTER_BULK_OUT_INTERVAL (0x06U) /* 2^(6-1) = 4ms */
 #define FS_PRINTER_BULK_OUT_INTERVAL (0x04U)
-#define HS_PRINTER_BULK_IN_INTERVAL (0x06U) /* 2^(6-1) = 1ms */
+#define HS_PRINTER_BULK_IN_INTERVAL (0x06U) /* 2^(6-1) = 4ms */
 #define FS_PRINTER_BULK_IN_INTERVAL (0x04U)
 
 /*******************************************************************************

@@ -34,6 +34,10 @@
  * Variables
  ******************************************************************************/
 usb_host_handle g_hostHandle;
+/* Allocate the memory for the heap. */
+#if defined(configAPPLICATION_ALLOCATED_HEAP) && (configAPPLICATION_ALLOCATED_HEAP)
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t ucHeap[configTOTAL_HEAP_SIZE];
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -123,7 +127,7 @@ usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
                            uint32_t eventCode)
 {
     usb_status_t status = kStatus_USB_Success;
-    switch (eventCode)
+    switch (eventCode & 0x0000FFFFU)
     {
         case kUSB_HostEventAttach:
             USB_HostKeypadEvent(deviceHandle, configurationHandle, eventCode);
@@ -142,6 +146,10 @@ usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
         case kUSB_HostEventDetach:
             USB_HostKeypadEvent(deviceHandle, configurationHandle, eventCode);
             status = USB_HostAudioEvent(deviceHandle, configurationHandle, eventCode);
+            break;
+
+        case kUSB_HostEventEnumerationFail:
+            usb_echo("enumeration failed\r\n");
             break;
 
         default:

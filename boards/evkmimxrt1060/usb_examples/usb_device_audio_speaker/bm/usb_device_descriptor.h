@@ -9,9 +9,10 @@
 #ifndef __USB_DEVICE_DESCRIPTOR_H__
 #define __USB_DEVICE_DESCRIPTOR_H__
 
+#include "usb_device_audio.h"
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 /*! @brief Whether USB Audio use syn mode or not. */
 #define USB_DEVICE_AUDIO_USE_SYNC_MODE (0U)
 
@@ -45,7 +46,6 @@
 #define USB_AUDIO_CONTROL_INTERFACE_INDEX (0)
 #define USB_AUDIO_STREAM_INTERFACE_INDEX (1)
 
-
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
 #define USB_AUDIO_STREAM_ENDPOINT_COUNT (1)
 #else
@@ -57,6 +57,10 @@
 #define USB_AUDIO_CONTROL_ENDPOINT (1)
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
 #else
+/*If multiple data endpoints are to be serviced by the same feedback endpoint, the data endpoints must have ascending
+ordered¨Cbut not necessarily consecutive¨Cendpoint numbers. The first data endpoint and the feedback endpoint must have
+the same endpoint number (and opposite direction). for more information, please refer to Universal Serial Bus
+Specification, Revision 2.0 chapter 9.6.6*/
 #define USB_AUDIO_SPEAKER_FEEDBACK_ENDPOINT (2)
 #endif
 
@@ -81,8 +85,13 @@
 #define FS_ISO_OUT_ENDP_PACKET_SIZE (AUDIO_SAMPLING_RATE_KHZ * AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE)
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
 #else
+#if USBCFG_AUDIO_CLASS_2_0
+#define HS_ISO_FEEDBACK_ENDP_PACKET_SIZE (4)
+#define FS_ISO_FEEDBACK_ENDP_PACKET_SIZE (3)
+#else
 #define HS_ISO_FEEDBACK_ENDP_PACKET_SIZE (3)
 #define FS_ISO_FEEDBACK_ENDP_PACKET_SIZE (3)
+#endif
 #endif
 #define HS_ISO_OUT_ENDP_INTERVAL (0x04)
 #define HS_ISO_IN_ENDP_INTERVAL (0x04)
@@ -114,8 +123,8 @@
 #define USB_AUDIO_SPEAKER_CONTROL_OUTPUT_TERMINAL_ID (0x03)
 
 /*******************************************************************************
-* API
-******************************************************************************/
+ * API
+ ******************************************************************************/
 /*!
  * @brief USB device set speed function.
  *

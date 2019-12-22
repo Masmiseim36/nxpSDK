@@ -44,9 +44,9 @@
     #error No FreeMASTER communication serial driver interface is enabled. Please choose the driver (FMSTR_SERIAL_DRV) or set FMSTR_DISABLE option to 1.
 #endif
 
-/* Remove code for single wire communication */
-#ifndef FMSTR_SCI_TWOWIRE_ONLY
-    #define FMSTR_SCI_TWOWIRE_ONLY 1
+/* Switch serial for single wire communication */
+#ifndef FMSTR_SERIAL_SINGLEWIRE
+    #define FMSTR_SERIAL_SINGLEWIRE 0
 #endif
 
 #if FMSTR_COMM_BUFFER_SIZE > 254
@@ -77,6 +77,7 @@
 /******************************************************************************
 * Types definition
 ******************************************************************************/
+
 /* Serial Driver interface between the Serial layer and hardware driver */
 typedef struct FMSTR_SERIAL_DRV_INTF_S
 {
@@ -84,6 +85,7 @@ typedef struct FMSTR_SERIAL_DRV_INTF_S
     void (*EnableTransmit)(FMSTR_BOOL enable);          /* Serial adapter - Enable/Disable transmitter */
     void (*EnableReceive)(FMSTR_BOOL enable);           /* Serial adapter - Enable/Disable receiver */
     void (*EnableTransmitInterrupt)(FMSTR_BOOL enable); /* Serial adapter - Enable/Disable interrupt from transmit register empty event */
+    void (*EnableTransmitCompleteInterrupt)(FMSTR_BOOL enable); /* Serial adapter - Enable/Disable interrupt from transmit complete event */
     void (*EnableReceiveInterrupt)(FMSTR_BOOL enable);  /* Serial adapter - Enable/Disable interrupt from receive register full event */
     FMSTR_BOOL (*IsTransmitRegEmpty)(void);             /* Serial adapter - Returns TRUE if the transmit register is empty, and it's possible to put next char */
     FMSTR_BOOL (*IsReceiveRegFull)(void);               /* Serial adapter - Returns TRUE if the receive register is full, and it's possible to get received char */

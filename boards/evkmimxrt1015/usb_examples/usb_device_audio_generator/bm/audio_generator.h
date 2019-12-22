@@ -24,8 +24,22 @@
 #define CONTROLLER_ID kUSB_ControllerLpcIp3511Hs0
 #endif
 
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+/**********************************************************************
+Audio PLL contants
+      AUDIO_PLL_USB1_SOF_INTERVAL_COUNT
+      The Audio PLL clock is 24.576Mhz, and the USB1_SOF_TOGGLE frequency is 4kHz when the device is attached,
+      so AUDIO_PLL_USB1_SOF_INTERVAL_COUNT = (24576000 * 100 (stands for counter interval)) /4000 = 614400
+      AUDIO_PLL_FRACTIONAL_CHANGE_STEP
+      The Audio input clock is 24Mhz, and denominator is 4500, divider is 15 and PFD is 26.
+      so AUDIO_PLL_FRACTIONAL_CHANGE_STEP = (24000000 * 100 (stands for counter interval) * 18) / (27000 * 26 * 15
+*4000) + 1
+**********************************************************************/
+#define AUDIO_PLL_USB1_SOF_INTERVAL_COUNT (614400)  /* The USB1_SOF_TOGGLE's frequency is 4kHz. */
+#define AUDIO_PLL_USB1_SOF_INTERVAL_COUNT1 (491520) /* The USB1_SOF_TOGGLE's frequency is 4kHz. */
+#define AUDIO_PLL_FRACTIONAL_CHANGE_STEP (2)
+#endif
 #define USB_DEVICE_INTERRUPT_PRIORITY (3U)
-
 #define DATA_BUFF_SIZE (AUDIO_ENDPOINT_PACKET_SIZE)
 
 /* Define the types for application */
@@ -65,6 +79,15 @@ typedef struct _usb_audio_generator_struct
     uint8_t currentInterfaceAlternateSetting[USB_AUDIO_GENERATOR_INTERFACE_COUNT];
     uint8_t speed;
     uint8_t attach;
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+    volatile uint32_t generatorIntervalCount;
+    volatile uint32_t curAudioPllFrac;
+    volatile uint32_t audioPllTicksPrev;
+    volatile int32_t audioPllTicksDiff;
+    volatile int32_t audioPllTicksEma;
+    volatile int32_t audioPllTickEmaFrac;
+    volatile int32_t audioPllStep;
+#endif
 } usb_audio_generator_struct_t;
 
 #endif /* __USB_AUDIO_GENERATOR_H__ */

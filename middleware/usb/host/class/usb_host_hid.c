@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -357,7 +357,7 @@ static void USB_HostHidSetInterfaceCallback(void *param, usb_host_transfer_t *tr
 usb_status_t USB_HostHidInit(usb_device_handle deviceHandle, usb_host_class_handle *classHandle)
 {
     uint32_t infoValue;
-    usb_host_hid_instance_t *hidInstance = (usb_host_hid_instance_t *)USB_OsaMemoryAllocate(
+    usb_host_hid_instance_t *hidInstance = (usb_host_hid_instance_t *)OSA_MemoryAllocate(
         sizeof(usb_host_hid_instance_t)); /* malloc hid class instance */
 
     if (hidInstance == NULL)
@@ -518,7 +518,7 @@ usb_status_t USB_HostHidDeinit(usb_device_handle deviceHandle, usb_host_class_ha
         }
         USB_HostCloseDeviceInterface(deviceHandle,
                                      hidInstance->interfaceHandle); /* notify host driver the interface is closed */
-        USB_OsaMemoryFree(hidInstance);
+        OSA_MemoryFree(hidInstance);
     }
     else
     {

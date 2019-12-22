@@ -17,8 +17,10 @@ product: Pins v5.0
 processor: MIMXRT1021xxxxx
 package_id: MIMXRT1021DAG5A
 mcu_data: ksdk2_0
-processor_version: 0.0.22
+processor_version: 5.0.2
+board: MIMXRT1020-EVK
 pin_labels:
+- {pin_num: '99', pin_signal: GPIO_AD_B0_09, label: WL_REG_ON, identifier: ENET_RXD1;WL_REG_ON}
 - {pin_num: '83', pin_signal: GPIO_AD_B1_07, label: SD0_VSELECT, identifier: SD0_VSELECT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -67,6 +69,7 @@ BOARD_InitPins:
     drive_strength: R0_7, pull_keeper_select: Pull, pull_keeper_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm, hysteresis_enable: Disable}
   - {pin_num: '81', peripheral: LPUART2, signal: RX, pin_signal: GPIO_AD_B1_09}
   - {pin_num: '82', peripheral: LPUART2, signal: TX, pin_signal: GPIO_AD_B1_08}
+  - {pin_num: '99', peripheral: GPIO1, signal: 'gpio_io, 09', pin_signal: GPIO_AD_B0_09, identifier: WL_REG_ON, direction: OUTPUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -78,6 +81,15 @@ BOARD_InitPins:
  * END ****************************************************************************************************************/
 void BOARD_InitPins(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03U */
+
+  /* GPIO configuration of WL_REG_ON on GPIO_AD_B0_09 (pin 99) */
+  gpio_pin_config_t WL_REG_ON_config = {
+      .direction = kGPIO_DigitalOutput,
+      .outputLogic = 0U,
+      .interruptMode = kGPIO_NoIntmode
+  };
+  /* Initialize GPIO functionality on GPIO_AD_B0_09 (pin 99) */
+  GPIO_PinInit(GPIO1, 9U, &WL_REG_ON_config);
 
   /* GPIO configuration of SD0_VSELECT on GPIO_AD_B1_07 (pin 83) */
   gpio_pin_config_t SD0_VSELECT_config = {
@@ -93,6 +105,9 @@ void BOARD_InitPins(void) {
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_B0_07_LPUART1_RX,        /* GPIO_AD_B0_07 is configured as LPUART1_RX */
+      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+  IOMUXC_SetPinMux(
+      IOMUXC_GPIO_AD_B0_09_GPIO1_IO09,        /* GPIO_AD_B0_09 is configured as GPIO1_IO09 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_B1_07_GPIO1_IO23,        /* GPIO_AD_B1_07 is configured as GPIO1_IO23 */

@@ -52,6 +52,7 @@
 
 #include <windows.h>
 #include <winbase.h>
+#include <process.h>
 
 struct _hr_time
 {
@@ -267,18 +268,17 @@ unsigned long mbedtls_timing_get_timer( struct mbedtls_timing_hr_time *val, int 
 /* It's OK to use a global because alarm() is supposed to be global anyway */
 static DWORD alarmMs;
 
-static DWORD WINAPI TimerProc( LPVOID TimerContext )
+static void TimerProc( void *TimerContext )
 {
-    ((void) TimerContext);
+    (void) TimerContext;
     Sleep( alarmMs );
     mbedtls_timing_alarmed = 1;
-    return( TRUE );
+    /* _endthread will be called implicitly on return
+     * That ensures execution of thread funcition's epilogue */
 }
 
 void mbedtls_set_alarm( int seconds )
 {
-    DWORD ThreadId;
-
     if( seconds == 0 )
     {
         /* No need to create a thread for this simple case.
@@ -289,7 +289,7 @@ void mbedtls_set_alarm( int seconds )
 
     mbedtls_timing_alarmed = 0;
     alarmMs = seconds * 1000;
-    CloseHandle( CreateThread( NULL, 0, TimerProc, NULL, 0, &ThreadId ) );
+    (void) _beginthread( TimerProc, 0, NULL );
 }
 
 #else /* _WIN32 && !EFIX64 && !EFI32 */
@@ -426,7 +426,7 @@ int mbedtls_timing_self_test( int verbose )
     mbedtls_timing_delay_context ctx;
 
     if( verbose != 0 )
-        mbedtls_printf( "  TIMING tests note: will take some time!\n\r" );
+        mbedtls_printf( "  TIMING tests note: will take some time!\n" );
 
     if( verbose != 0 )
         mbedtls_printf( "  TIMING test #1 (set_alarm / get_timer): " );
@@ -449,7 +449,7 @@ int mbedtls_timing_self_test( int verbose )
     }
 
     if( verbose != 0 )
-        mbedtls_printf( "passed\n\r" );
+        mbedtls_printf( "passed\n" );
 
     if( verbose != 0 )
         mbedtls_printf( "  TIMING test #2 (set/get_delay        ): " );
@@ -478,7 +478,7 @@ int mbedtls_timing_self_test( int verbose )
         FAIL;
 
     if( verbose != 0 )
-        mbedtls_printf( "passed\n\r" );
+        mbedtls_printf( "passed\n" );
 
     if( verbose != 0 )
         mbedtls_printf( "  TIMING test #3 (hardclock / get_timer): " );
@@ -493,7 +493,7 @@ hard_test:
     if( hardfail > 1 )
     {
         if( verbose != 0 )
-            mbedtls_printf( "failed (ignored)\n\r" );
+            mbedtls_printf( "failed (ignored)\n" );
 
         goto hard_test_done;
     }
@@ -522,12 +522,12 @@ hard_test:
     }
 
     if( verbose != 0 )
-        mbedtls_printf( "passed\n\r" );
+        mbedtls_printf( "passed\n" );
 
 hard_test_done:
 
     if( verbose != 0 )
-        mbedtls_printf( "\n\r" );
+        mbedtls_printf( "\n" );
 
     return( 0 );
 }

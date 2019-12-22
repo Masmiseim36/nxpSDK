@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2018 NXP
+ * Copyright 2018 - 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -18,11 +18,13 @@
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 #include "app.h"
 #include "board.h"
+#include "host_app.h"
 
 #if ((!USB_HOST_CONFIG_KHCI) && (!USB_HOST_CONFIG_EHCI) && (!USB_HOST_CONFIG_OHCI) && (!USB_HOST_CONFIG_IP3516HS))
 #error Please enable USB_HOST_CONFIG_KHCI, USB_HOST_CONFIG_EHCI, USB_HOST_CONFIG_OHCI, or USB_HOST_CONFIG_IP3516HS in file usb_host_config.
 #endif
 
+extern volatile uint32_t g_deviceMode;
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -85,7 +87,7 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
     uint8_t interfaceIndex = 0;
 #endif
     usb_status_t status = kStatus_USB_Success;
-    switch (eventCode)
+    switch (eventCode & 0x0000FFFFU)
     {
         case kUSB_HostEventAttach:
 #if ((defined USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
@@ -151,6 +153,10 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
 #endif
             break;
 
+        case kUSB_HostEventEnumerationFail:
+            usb_echo("enumeration failed\r\n");
+            break;
+
         default:
             break;
     }
@@ -177,6 +183,38 @@ void USB_HostKhciIsr(void)
 #endif
 }
 
+void USB_HostTask(void *param)
+{
+    while (1)
+    {
+        USB_HostTaskFn(g_HostHandle);
+    }
+}
+
+/*!
+ * @brief host app task function.
+ */
+void Host_AppTaskFunction(void)
+{
+    USB_HostMsdTask(&g_MsdFatfsInstance);
+}
+
+/*!
+ * @brief host mouse freertos task function.
+ *
+ * @param param   the host mouse instance pointer.
+ */
+void Host_AppTask(void *param)
+{
+    while (1)
+    {
+        if (g_deviceMode == 0)
+        {
+            Host_AppTaskFunction();
+        }
+    }
+}
+
 void Host_AppInit(void)
 {
     usb_status_t status = kStatus_USB_Success;
@@ -195,6 +233,14 @@ void Host_AppInit(void)
     }
     USB_HostIsrEnable();
 
+    if (xTaskCreate(USB_HostTask, "usb host task", 2000L / sizeof(portSTACK_TYPE), NULL, 5, &g_MsdFatfsInstance.hostStackTaskHandle) != pdPASS)
+    {
+        usb_echo("create task error\r\n");
+    }
+    if (xTaskCreate(Host_AppTask, "host app task", 2000L / sizeof(portSTACK_TYPE), NULL, 4, &g_MsdFatfsInstance.hostAppTaskHandle) != pdPASS)
+    {
+        usb_echo("create task error\r\n");
+    }
     usb_echo("host init done\r\n");
 }
 
@@ -205,6 +251,20 @@ void Host_AppDeinit(void)
 {
     usb_status_t status = kStatus_USB_Success;
 
+    while ((g_MsdFatfsInstance.deviceState != kStatus_DEV_Idle) || (g_MsdFatfsInstance.classHandle != NULL))
+    {
+        vTaskDelay(2);
+    }
+
+    if (g_MsdFatfsInstance.hostStackTaskHandle != NULL)
+    {
+        vTaskDelete(g_MsdFatfsInstance.hostStackTaskHandle);
+    }
+    if (g_MsdFatfsInstance.hostAppTaskHandle != NULL)
+    {
+        vTaskDelete(g_MsdFatfsInstance.hostAppTaskHandle);
+    }
+
     USB_HostIsrDisable();
     status = USB_HostDeinit(g_HostHandle);
     if (status != kStatus_USB_Success)
@@ -214,13 +274,4 @@ void Host_AppDeinit(void)
     }
 
     usb_echo("host deinit done\r\n");
-}
-
-/*!
- * @brief host app task function.
- */
-void Host_AppTaskFunction(void)
-{
-    USB_HostTaskFn(g_HostHandle);
-    USB_HostMsdTask(&g_MsdFatfsInstance);
 }

@@ -7,9 +7,9 @@ Please take look into section "Board settings" if there are some board limitatio
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- GCC ARM Embedded  8.2.1
-- MCUXpresso  11.0.0
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -18,11 +18,12 @@ Hardware requirements
 - Personal Computer
 - Murata 1DX M.2 module
 - Murata uSD M.2 Adapter
+- 1 plug to receptable header cable
 
 Board settings
 ==============
-No special settings are required.
-
+The following pins between the evkbimxrt1050 board and Murata uSD M.2 Adapter are connected using the plug to receptable cables:
+- evkbimxrt1050 board's connector J22, pin 3 to Murata uSD M.2 Adapter's connector J9, pin 3
 Prepare the Demo
 ================
 Before running the demo it is need to configure AWS IoT Console and update some of project files:
@@ -161,40 +162,72 @@ Android application displays Accelerometer data for all three axis and status of
 Every mentioned action takes approximately 1-3 seconds.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-0 0 [Tmr Svc] Starting key provisioning...
-1 0 [Tmr Svc] Write root certificate...
-2 14 [Tmr Svc] Write device private key...
-3 448 [Tmr Svc] Write device certificate...
-4 467 [Tmr Svc] Key provisioning done...
-5 468 [Tmr Svc] Starting WiFi...
-6 2037 [Tmr Svc] WiFi module initialized.
-7 6195 [Tmr Svc] WiFi connected to AP External-Internet.
-8 6196 [Tmr Svc] IP Address acquired 192.168.0.245
-9 6214 [AWS-RemoteCtrl] [Shadow 0] MQTT: Creation of dedicated MQTT client succeeded.
-10 6578 [MQTT] Looked up a39m6stfia5skz.iot.us-west-2.amazonaws.com as 35.164.107.11
-11 19375 [AWS-RemoteCtrl] [Shadow 0] MQTT: Connect succeeded.
-12 19700 [AWS-RemoteCtrl] [Shadow 0] MQTT: Subscribe to accepted topic succeeded.
-13 20027 [AWS-RemoteCtrl] [Shadow 0] MQTT: Subscribe to rejected topic succeeded.
-14 20048 [AWS-RemoteCtrl] [Shadow 0] MQTT: Publish to operation topic succeeded.
-15 20682 [AWS-RemoteCtrl] [Shadow 0] MQTT: Unsubscribe from rejected topic succeeded.
-16 21010 [AWS-RemoteCtrl] [Shadow 0] MQTT: Subscribe to callback topic succeeded.
-17 21338 [AWS-RemoteCtrl] [Shadow 0] MQTT: Subscribe to accepted topic succeeded.
-18 21665 [AWS-RemoteCtrl] [Shadow 0] MQTT: Subscribe to rejected topic succeeded.
-19 21686 [AWS-RemoteCtrl] [Shadow 0] MQTT: Publish to operation topic succeeded.
-20 22009 [AWS-RemoteCtrl] AWS Remote Control Demo initialized.
-21 22017 [AWS-RemoteCtrl] Use mobile application to control the remote device.
-22 29514 [AWS-RemoteCtrl] Turn on LED1
-23 29531 [AWS-RemoteCtrl] [Shadow 0] MQTT: Publish to operation topic succeeded.
-24 29850 [AWS-RemoteCtrl] Successfully performed update.
-25 29858 [AWS-RemoteCtrl] [Shadow 0] MQTT: Return MQTT buffer succeeded.
-26 39678 [AWS-RemoteCtrl] Turn off LED1
-27 39696 [AWS-RemoteCtrl] [Shadow 0] MQTT: Publish to operation topic succeeded.
-28 41022 [AWS-RemoteCtrl] Successfully performed update.
-29 41030 [AWS-RemoteCtrl] [Shadow 0] MQTT: Return MQTT buffer succeeded.
-30 41962 [AWS-RemoteCtrl] Update accelerometer.
-31 41984 [AWS-RemoteCtrl] [Shadow 0] MQTT: Publish to operation topic succeeded.
-32 42303 [AWS-RemoteCtrl] Successfully performed update.
-33 42310 [AWS-RemoteCtrl] [Shadow 0] MQTT: Return MQTT buffer succeeded.
+0 114 [Tmr Svc] Write certificate...
+1 239 [Tmr Svc] Device credential provisioning succeeded.
+2 240 [Tmr Svc] Starting WiFi...
+
+ AsyncInterrupt is not supported 
+WLAN MAC Address : A0:C9:A0:3D:EE:8F
+WLAN Firmware    : wl0: Feb 12 2018 04:08:14 version 7.79.2 (r683798 CY) FWID 01-27b63357
+WLAN CLM         : API: 12.2 Data: 9.10.39 Compiler: 1.29.4 ClmImport: 1.36.3 Creation: 2018-02-12 04:00:50 
+3 1177 [Tmr Svc] WiFi module initialized.
+4 4942 [Tmr Svc] WiFi connected to AP Guest.
+5 4942 [Tmr Svc] IP Address acquired 192.168.2.100
+6 4951 [AWS-RemoteCtrl] [INFO ][INIT][4950] SDK successfully initialized.
+7 4957 [AWS-RemoteCtrl] [INFO ][Shadow][4957] Shadow library successfully initialized.
+8 8125 [AWS-RemoteCtrl] [INFO ][MQTT][8125] Establishing new MQTT connection.
+9 8135 [AWS-RemoteCtrl] [INFO ][MQTT][8134] Anonymous metrics (SDK language, SDK version) will be provided to AWS IoT. Recompile with AWS_IOT_MQTT_ENABLE_METRICS set to 0 to disable.
+10 8151 [AWS-RemoteCtrl] [INFO ][MQTT][8151] (MQTT connection 20209568, CONNECT operation 20209740) Waiting for operation completion.
+11 8345 [AWS-RemoteCtrl] [INFO ][MQTT][8344] (MQTT connection 20209568, CONNECT operation 20209740) Wait complete with result SUCCESS.
+12 8357 [AWS-RemoteCtrl] [INFO ][MQTT][8357] New MQTT connection 20208a68 established.
+13 8365 [AWS-RemoteCtrl] [INFO ][MQTT][8365] (MQTT connection 20209568) SUBSCRIBE operation scheduled.
+14 8365 [AWS-RemoteCtrl] [INFO ][MQTT][8365] (MQTT connection 20209568, SUBSCRIBE operation 2020a6c8) Waiting for operation completion.
+15 8522 [AWS-RemoteCtrl] [INFO ][MQTT][8522] (MQTT connection 20209568, SUBSCRIBE operation 2020a6c8) Wait complete with result SUCCESS.
+16 8522 [AWS-RemoteCtrl] [INFO ][MQTT][8522] (MQTT connection 20209568) SUBSCRIBE operation scheduled.
+17 8523 [AWS-RemoteCtrl] [INFO ][MQTT][8522] (MQTT connection 20209568, SUBSCRIBE operation 2020a6c8) Waiting for operation completion.
+18 8684 [AWS-RemoteCtrl] [INFO ][MQTT][8684] (MQTT connection 20209568, SUBSCRIBE operation 2020a6c8) Wait complete with result SUCCESS.
+19 8697 [AWS-RemoteCtrl] [INFO ][MQTT][8697] (MQTT connection 20209568) MQTT PUBLISH operation queued.
+20 8882 [iot_thread] [WARN ][Shadow][8882] Shadow DELETE of aws_rpr_michal was REJECTED.
+21 8882 [iot_thread] [WARN ][Shadow][8882] Code 404: "No shadow exists with name: 'aws_rpr_michal'".
+22 8899 [AWS-RemoteCtrl] [INFO ][MQTT][8899] (MQTT connection 20209568) UNSUBSCRIBE operation scheduled.
+23 8900 [AWS-RemoteCtrl] [INFO ][MQTT][8899] (MQTT connection 20209568, UNSUBSCRIBE operation 2020a6c8) Waiting for operation completion.
+24 9178 [AWS-RemoteCtrl] [INFO ][MQTT][9178] (MQTT connection 20209568, UNSUBSCRIBE operation 2020a6c8) Wait complete with result SUCCESS.
+25 9178 [AWS-RemoteCtrl] [INFO ][MQTT][9178] (MQTT connection 20209568) UNSUBSCRIBE operation scheduled.
+26 9179 [AWS-RemoteCtrl] [INFO ][MQTT][9178] (MQTT connection 20209568, UNSUBSCRIBE operation 2020a6c8) Waiting for operation completion.
+27 9338 [AWS-RemoteCtrl] [INFO ][MQTT][9338] (MQTT connection 20209568, UNSUBSCRIBE operation 2020a6c8) Wait complete with result SUCCESS.
+28 9351 [AWS-RemoteCtrl] [INFO ][Shadow][9351] (aws_rpr_michal) Modifying Shadow DELTA callback.
+29 9359 [AWS-RemoteCtrl] [INFO ][Shadow][9359] (aws_rpr_michal) Adding new DELTA callback.
+30 9368 [AWS-RemoteCtrl] [INFO ][MQTT][9368] (MQTT connection 20209568) SUBSCRIBE operation scheduled.
+31 9368 [AWS-RemoteCtrl] [INFO ][MQTT][9368] (MQTT connection 20209568, SUBSCRIBE operation 2020a680) Waiting for operation completion.
+32 9525 [AWS-RemoteCtrl] [INFO ][MQTT][9525] (MQTT connection 20209568, SUBSCRIBE operation 2020a680) Wait complete with result SUCCESS.
+33 9537 [AWS-RemoteCtrl] [INFO ][Shadow][9537] (aws_rpr_michal) Shadow DELTA callback operation complete with result SUCCESS.
+34 9549 [AWS-RemoteCtrl] [INFO ][Shadow][9549] (aws_rpr_michal) Modifying Shadow UPDATED callback.
+35 9557 [AWS-RemoteCtrl] [INFO ][Shadow][9557] (aws_rpr_michal) Shadow UPDATED callback operation complete with result SUCCESS.
+36 9569 [AWS-RemoteCtrl] [INFO ][MQTT][9569] (MQTT connection 20209568) SUBSCRIBE operation scheduled.
+37 9569 [AWS-RemoteCtrl] [INFO ][MQTT][9569] (MQTT connection 20209568, SUBSCRIBE operation 2020aa00) Waiting for operation completion.
+38 9731 [AWS-RemoteCtrl] [INFO ][MQTT][9731] (MQTT connection 20209568, SUBSCRIBE operation 2020aa00) Wait complete with result SUCCESS.
+39 9731 [AWS-RemoteCtrl] [INFO ][MQTT][9731] (MQTT connection 20209568) SUBSCRIBE operation scheduled.
+40 9732 [AWS-RemoteCtrl] [INFO ][MQTT][9732] (MQTT connection 20209568, SUBSCRIBE operation 2020aa00) Waiting for operation completion.
+41 9888 [AWS-RemoteCtrl] [INFO ][MQTT][9888] (MQTT connection 20209568, SUBSCRIBE operation 2020aa00) Wait complete with result SUCCESS.
+42 9901 [AWS-RemoteCtrl] [INFO ][MQTT][9901] (MQTT connection 20209568) MQTT PUBLISH operation queued.
+43 10091 [iot_thread] [INFO ][Shadow][10091] Shadow UPDATE of aws_rpr_michal was ACCEPTED.
+44 10099 [AWS-RemoteCtrl] AWS Remote Control Demo initialized.
+45 10105 [AWS-RemoteCtrl] Use mobile application to control the remote device.
+46 26970 [iot_thread] [WARN ][Shadow][26970] Shadow UPDATE callback received an unknown operation.
+47 26979 [AWS-RemoteCtrl] Turn on LED
+48 26983 [AWS-RemoteCtrl] [INFO ][MQTT][26983] (MQTT connection 20209568) MQTT PUBLISH operation queued.
+49 27294 [iot_thread] [INFO ][Shadow][27294] Shadow UPDATE of aws_rpr_michal was ACCEPTED.
+50 27302 [AWS-RemoteCtrl] Successfully performed update.
+51 34735 [iot_thread] [WARN ][Shadow][34734] Shadow UPDATE callback received an unknown operation.
+52 34744 [AWS-RemoteCtrl] Turn off LED
+53 34749 [AWS-RemoteCtrl] [INFO ][MQTT][34748] (MQTT connection 20209568) MQTT PUBLISH operation queued.
+54 35059 [iot_thread] [INFO ][Shadow][35059] Shadow UPDATE of aws_rpr_michal was ACCEPTED.
+55 35067 [AWS-RemoteCtrl] Successfully performed update.
+56 36795 [iot_thread] [WARN ][Shadow][36795] Shadow UPDATE callback received an unknown operation.
+57 36805 [AWS-RemoteCtrl] Update accelerometer.
+58 36812 [AWS-RemoteCtrl] [INFO ][MQTT][36812] (MQTT connection 20209568) MQTT PUBLISH operation queued.
+59 37121 [iot_thread] [INFO ][Shadow][37121] Shadow UPDATE of aws_rpr_michal was ACCEPTED.
+60 37129 [AWS-RemoteCtrl] Successfully performed update.
 .
 .
 .

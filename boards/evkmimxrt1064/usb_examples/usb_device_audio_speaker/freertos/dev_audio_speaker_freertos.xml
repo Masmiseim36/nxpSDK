@@ -6,6 +6,7 @@
     <definition extID="component.lists.MIMXRT1064"/>
     <definition extID="component.lpi2c_adapter.MIMXRT1064"/>
     <definition extID="component.lpuart_adapter.MIMXRT1064"/>
+    <definition extID="component.osa.MIMXRT1064"/>
     <definition extID="component.serial_manager.MIMXRT1064"/>
     <definition extID="component.serial_manager_uart.MIMXRT1064"/>
     <definition extID="component.wm8960_adapter.MIMXRT1064"/>
@@ -13,12 +14,15 @@
     <definition extID="device.MIMXRT1064_startup.MIMXRT1064"/>
     <definition extID="driver.codec.MIMXRT1064"/>
     <definition extID="driver.wm8960.MIMXRT1064"/>
-    <definition extID="middleware.amazon_freertos.freertos.MIMXRT1064"/>
-    <definition extID="middleware.amazon_freertos.freertos.heap_4.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-kernel.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-kernel.extension.MIMXRT1064"/>
+    <definition extID="middleware.amazon_freertos-kernel.heap_4.MIMXRT1064"/>
+    <definition extID="middleware.usb.device.MIMXRT1064"/>
     <definition extID="middleware.usb.device_controller_ehci.MIMXRT1064"/>
     <definition extID="middleware.usb.phy.MIMXRT1064"/>
     <definition extID="platform.Include_common.MIMXRT1064"/>
     <definition extID="platform.Include_core_cm7.MIMXRT1064"/>
+    <definition extID="platform.Include_dsp.MIMXRT1064"/>
     <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1064"/>
     <definition extID="platform.drivers.clock.MIMXRT1064"/>
     <definition extID="platform.drivers.common.MIMXRT1064"/>
@@ -31,8 +35,10 @@
     <definition extID="platform.drivers.sai.MIMXRT1064"/>
     <definition extID="platform.drivers.sai_edma.MIMXRT1064"/>
     <definition extID="platform.drivers.xip_board.MIMXRT1064"/>
+    <definition extID="platform.drivers.xip_board_dcd.MIMXRT1064"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1064"/>
     <definition extID="platform.utilities.assert.MIMXRT1064"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1064"/>
     <definition extID="utility.debug_console.MIMXRT1064"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -41,7 +47,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1064_dev_audio_speaker_freertos" name="dev_audio_speaker_freertos" category="usb_examples" dependency="middleware.usb.device_controller_ehci.MIMXRT1064 middleware.usb.phy.MIMXRT1064 platform.drivers.cache_armv7_m7.MIMXRT1064 driver.wm8960.MIMXRT1064 driver.codec.MIMXRT1064 component.wm8960_adapter.MIMXRT1064 component.lpi2c_adapter.MIMXRT1064 platform.drivers.lpi2c.MIMXRT1064 platform.drivers.sai.MIMXRT1064 platform.drivers.sai_edma.MIMXRT1064 platform.drivers.dmamux.MIMXRT1064 platform.drivers.edma.MIMXRT1064 middleware.amazon_freertos.freertos.heap_4.MIMXRT1064 middleware.amazon_freertos.freertos.MIMXRT1064 platform.drivers.clock.MIMXRT1064 platform.drivers.common.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 platform.utilities.assert.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.xip_board.MIMXRT1064 utility.debug_console.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 component.serial_manager.MIMXRT1064 component.serial_manager_uart.MIMXRT1064 component.lists.MIMXRT1064 platform.Include_core_cm7.MIMXRT1064 platform.Include_common.MIMXRT1064 component.codec_i2c.MIMXRT1064">
+  <example id="evkmimxrt1064_dev_audio_speaker_freertos" name="dev_audio_speaker_freertos" category="usb_examples" dependency="middleware.usb.device_controller_ehci.MIMXRT1064 middleware.usb.phy.MIMXRT1064 platform.drivers.cache_armv7_m7.MIMXRT1064 driver.wm8960.MIMXRT1064 driver.codec.MIMXRT1064 component.wm8960_adapter.MIMXRT1064 component.lpi2c_adapter.MIMXRT1064 platform.drivers.lpi2c.MIMXRT1064 platform.drivers.sai.MIMXRT1064 platform.drivers.sai_edma.MIMXRT1064 platform.drivers.dmamux.MIMXRT1064 platform.drivers.edma.MIMXRT1064 middleware.usb.device.MIMXRT1064 middleware.amazon_freertos-kernel.heap_4.MIMXRT1064 middleware.amazon_freertos-kernel.MIMXRT1064 platform.drivers.clock.MIMXRT1064 platform.drivers.common.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 platform.utilities.assert.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.xip_board.MIMXRT1064 platform.drivers.xip_board_dcd.MIMXRT1064 utility.debug_console.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 component.serial_manager.MIMXRT1064 component.lists.MIMXRT1064 component.serial_manager_uart.MIMXRT1064 component.osa.MIMXRT1064 platform.Include_core_cm7.MIMXRT1064 platform.Include_common.MIMXRT1064 platform.Include_dsp.MIMXRT1064 component.codec_i2c.MIMXRT1064 middleware.amazon_freertos-kernel.extension.MIMXRT1064 platform.utilities.misc_utilities.MIMXRT1064">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -50,7 +56,8 @@
       <memoryBlock addr="20000000" size="00020000" access="RW" type="RAM" id="SRAM_DTC_MIMXRT1064xxxxA" name="SRAM_DTC"/>
       <memoryBlock addr="00000000" size="00020000" access="RW" type="RAM" id="SRAM_ITC_MIMXRT1064xxxxA" name="SRAM_ITC"/>
       <memoryBlock addr="20200000" size="000C0000" access="RW" type="RAM" id="SRAM_OC_MIMXRT1064xxxxA" name="SRAM_OC"/>
-      <memoryBlock addr="80000000" size="02000000" access="RW" type="RAM" id="BOARD_SDRAM_evkmimxrt1064" name="BOARD_SDRAM"/>
+      <memoryBlock addr="80000000" size="01E00000" access="RW" type="RAM" id="BOARD_SDRAM_evkmimxrt1064" name="BOARD_SDRAM"/>
+      <memoryBlock addr="81E00000" size="00200000" access="RW" type="RAM" id="NCACHE_REGION_evkmimxrt1064" name="NCACHE_REGION"/>
     </memory>
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
@@ -76,6 +83,9 @@
           <value>BOARD_USE_CODEC=1</value>
           <value>CODEC_WM8960_ENABLE</value>
           <value>FSL_RTOS_FREE_RTOS</value>
+          <value>FSL_OSA_BM_TASK_ENABLE=0</value>
+          <value>FSL_OSA_BM_TIMER_CONFIG=0</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -92,6 +102,10 @@
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
           <value>&amp;Heap:Default;Default;0x2000&amp;Stack:Default;Default;0x2000</value>
         </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=SRAM_DTC;type=.data</value>
+          <value>isd=*(NonCacheable);region=SRAM_DTC;type=.bss</value>
+        </option>
       </toolchainSetting>
     </toolchainSettings>
     <debug_configurations>
@@ -105,20 +119,20 @@
         </drivers>
       </debug_configuration>
     </debug_configurations>
-    <source path="boards/evkmimxrt1064/usb_examples/usb_device_audio_speaker/freertos/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/evkmimxrt1064/usb_examples/usb_device_audio_speaker/freertos/armgcc" target_path="MIMXRT1064/gcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1064xxxxx_ram.ld"/>
     </source>
-    <source path="boards/evkmimxrt1064/usb_examples/usb_device_audio_speaker/freertos/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/evkmimxrt1064/usb_examples/usb_device_audio_speaker/freertos/iar" target_path="MIMXRT1064/iar" type="linker" toolchain="iar">
       <files mask="MIMXRT1064xxxxx_ram.icf"/>
     </source>
-    <source path="boards/evkmimxrt1064/usb_examples/usb_device_audio_speaker/freertos/iar" target_path="src" type="other" toolchain="iar">
+    <source path="boards/evkmimxrt1064/usb_examples/usb_device_audio_speaker/freertos/iar" target_path="evkmimxrt1064" type="other" toolchain="iar">
       <files mask="evkmimxrt1064.mac"/>
     </source>
-    <source path="boards/evkmimxrt1064/usb_examples/usb_device_audio_speaker/freertos/mdk" target_path="src" type="configuration" toolchain="mdk">
-      <files mask="evkmimxrt1064_ram.ini"/>
-    </source>
-    <source path="boards/evkmimxrt1064/usb_examples/usb_device_audio_speaker/freertos/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/evkmimxrt1064/usb_examples/usb_device_audio_speaker/freertos/mdk" target_path="MIMXRT1064/arm" type="linker" toolchain="mdk">
       <files mask="MIMXRT1064xxxxx_ram.scf"/>
+    </source>
+    <source path="boards/evkmimxrt1064/usb_examples/usb_device_audio_speaker/freertos/mdk" target_path="evkmimxrt1064" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt1064_ram.ini"/>
     </source>
     <source path="boards/evkmimxrt1064/usb_examples/usb_device_audio_speaker/freertos" target_path="board" type="c_include">
       <files mask="board.h"/>
@@ -133,6 +147,9 @@
     <source path="boards/evkmimxrt1064/usb_examples/usb_device_audio_speaker/freertos" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
       <files mask="readme.txt"/>
     </source>
+    <source path="boards/evkmimxrt1064/usb_examples/usb_device_audio_speaker/freertos" target_path="evkmimxrt1064/usb_examples/usb_device_audio_speaker/freertos" type="doc" exclude="true">
+      <files mask="readme.pdf"/>
+    </source>
     <source path="boards/evkmimxrt1064/usb_examples/usb_device_audio_speaker/freertos" target_path="source" type="c_include">
       <files mask="FreeRTOSConfig.h"/>
       <files mask="audio_speaker.h"/>
@@ -142,9 +159,6 @@
     <source path="boards/evkmimxrt1064/usb_examples/usb_device_audio_speaker/freertos" target_path="source" type="src">
       <files mask="audio_speaker.c"/>
       <files mask="usb_device_descriptor.c"/>
-    </source>
-    <source path="boards/evkmimxrt1064/usb_examples/usb_device_audio_speaker/freertos" target_path="src" type="doc" exclude="true">
-      <files mask="readme.pdf"/>
     </source>
     <source path="boards/evkmimxrt1064/usb_examples/usb_device_audio_speaker/freertos" target_path="usb/device/class/audio" type="c_include">
       <files mask="usb_device_audio.h"/>

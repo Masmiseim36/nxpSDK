@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 - 2018 NXP
+ * Copyright 2017 - 2019 NXP
  * All rights reserved.
  *
  *
@@ -47,8 +47,16 @@
  *
  */
 #ifndef DEBUG_CONSOLE_RECEIVE_BUFFER_LEN
-#define DEBUG_CONSOLE_RECEIVE_BUFFER_LEN (512U)
+#define DEBUG_CONSOLE_RECEIVE_BUFFER_LEN (1024U)
 #endif /* DEBUG_CONSOLE_RECEIVE_BUFFER_LEN */
+
+/*!@ brief Whether enable the reliable TX function
+ * If the macro is zero, the reliable TX function of the debug console is disabled.
+ * When the macro is zero, the string of PRINTF will be thrown away after the transmit buffer is full.
+ */
+#ifndef DEBUG_CONSOLE_TX_RELIABLE_ENABLE
+#define DEBUG_CONSOLE_TX_RELIABLE_ENABLE (1U)
+#endif /* DEBUG_CONSOLE_RX_ENABLE */
 
 #else
 #define DEBUG_CONSOLE_TRANSFER_BLOCKING

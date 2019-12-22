@@ -215,7 +215,7 @@ uint32_t a_time_get_msec(void)
 static uint32_t g_base_priority_array[OSA_MAX_ISR_CRITICAL_SECTION_DEPTH];
 static int32_t g_base_priority_top = 0;
 
-void OSA_EnterCritical(osa_critical_section_mode_t mode)
+void a_enter_critical(osa_critical_section_mode_t mode)
 {
     if (kCriticalDisableInt == mode)
     {
@@ -237,7 +237,7 @@ void OSA_EnterCritical(osa_critical_section_mode_t mode)
     }
 }
 
-void OSA_ExitCritical(osa_critical_section_mode_t mode)
+void a_exit_critical(osa_critical_section_mode_t mode)
 {
     if (kCriticalDisableInt == mode)
     {
@@ -258,3 +258,4 @@ void OSA_ExitCritical(osa_critical_section_mode_t mode)
         xTaskResumeAll();
     }
 }
+

@@ -572,7 +572,7 @@ static status_t MMC_StopTransmission(mmc_card_t *card)
 
 static status_t MMC_SwitchVoltage(mmc_card_t *card, uint32_t *opCode)
 {
-    mmc_voltage_window_t tempVoltage;
+    mmc_voltage_window_t tempVoltage = kMMC_VoltageWindowNone;
     /* Get host's voltage window. */
     if (((kHOST_SupportV330 != HOST_NOT_SUPPORT) || (kHOST_SupportV300 != HOST_NOT_SUPPORT)) &&
         (card->ocr & MMC_OCR_V270TO360_MASK) && ((card->hostVoltageWindowVCC == kMMC_VoltageWindowNone) ||

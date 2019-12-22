@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2017,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -10,6 +10,8 @@
 
 void FT9341_Init(ili9341_send_byte_t _writeData, ili9341_send_byte_t _writeCommand)
 {
+    SDK_DelayAtLeastUs(ILI9341_RESET_CANCEL_MS * 1000U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+
     _writeCommand(ILI9341_CMD_PWRA);
     _writeData(0x39);
     _writeData(0x2C);

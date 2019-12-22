@@ -1,0 +1,122 @@
+$version 6.60
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,70,240,110>
+unit Core
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,110,240,150>
+unit Resources
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,150,240,190>
+unit Graphics
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,190,240,230>
+unit Effects
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,230,240,270>
+unit Views
+{
+  attr Directory = $Mosaic;
+}
+
+// The 'default' Language. Each project has to contain at least one language brick \
+// called 'Default'
+$rect <540,70,740,110>
+language Default;
+
+// The unit of the application class
+$rect <40,350,240,390>
+unit Application
+{
+  attr Directory = .\;
+}
+
+$rect <40,390,240,430>
+unit Cutter
+{
+  attr Directory = .\;
+}
+
+// Mosaic Framework
+note group Note1
+{
+  attr Bounds = <20,20,260,290>;
+}
+
+// Profile Configuration
+note group Note2
+{
+  attr Bounds = <270,20,510,130>;
+}
+
+// Languages
+note group Note3
+{
+  attr Bounds = <520,20,760,130>;
+}
+
+// Project Units
+note group Note5
+{
+  attr Bounds = <20,300,260,450>;
+}
+
+// The sample application 'PaperCutter' implements the user interface of a paper \
+// cutting machine. The user can define the paper format, the paper feed, the number \
+// of papers and the speed of the cutting process.
+//
+// The different parameters are shown within separate small windows. As soon as the \
+// user touches on a window, the window is enhanced to host the corresponding settings \
+// dialog. Every transition between window and dialog appearance is done with several \
+// move and fade-in/fade-out animations.
+//
+// This demo application is implemented for a screen size of 480x272 pixel.
+//
+// You can double-click on the 'Cutter' brick to open the unit within the Composer \
+// and to analyze the implementation.
+//
+// To start the application within the Prototyper, press 'Ctrl'+'F5'.
+note legend Note
+{
+  attr Bounds = <270,140,900,450>;
+}
+
+// Graphical design of 'PaperCutter' by Coeno - http://www.coeno.com
+note legend Note4
+{
+  attr Bounds = <270,460,760,530>;
+}
+
+// This is a profile member for the project. This profile controls the code generation \
+// for the target system.
+$rect <290,70,490,110>
+profile iMX_RT : NXP.iMX_RT.RGB565
+{
+  attr ScreenOrientation = Normal;
+  attr ScreenSize = <480,272>;
+  attr Optimization = High;
+  attr ApplicationClass = Application::Application;
+  attr FormatOfBitmapResources = Compressed;
+  attr FormatOfStringConstants = Compressed;
+  attr OutputDirectory = ..\GeneratedCode;
+  attr CleanOutputDirectories = true;
+
+  $rect <10,10,154,50>
+  macro Author = "Dipl. Ing. Paul Banach and Dipl. Ing. Manfred Schweyer, Copyright (C) TARA Systems GmbH";
+}

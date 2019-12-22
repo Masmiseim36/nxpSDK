@@ -69,8 +69,8 @@ status_t serial_nor_eeprom_init(serial_nor_eeprom_config_t *config, data_transfe
     }
 
     // Check memory size
-    uint32_t maxMemorySize = (1 << config->addressLengthInBits);
-    uint32_t minMemorySize = (1 << config->addressLengthInBits - 8U);
+    uint32_t maxMemorySize = 1ul << (config->addressLengthInBits - 3);
+    uint32_t minMemorySize = 2048u;
     if ((config->memorySizeInBytes > maxMemorySize)
         || (config->memorySizeInBytes < minMemorySize))
     {

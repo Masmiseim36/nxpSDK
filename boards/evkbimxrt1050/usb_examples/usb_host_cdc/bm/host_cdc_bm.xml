@@ -4,17 +4,20 @@
     <definition extID="com.nxp.mcuxpresso"/>
     <definition extID="component.lists.MIMXRT1052"/>
     <definition extID="component.lpuart_adapter.MIMXRT1052"/>
+    <definition extID="component.osa.MIMXRT1052"/>
     <definition extID="component.serial_manager.MIMXRT1052"/>
     <definition extID="component.serial_manager_uart.MIMXRT1052"/>
     <definition extID="device.MIMXRT1052_CMSIS.MIMXRT1052"/>
     <definition extID="device.MIMXRT1052_startup.MIMXRT1052"/>
     <definition extID="middleware.baremetal.MIMXRT1052"/>
+    <definition extID="middleware.usb.host.MIMXRT1052"/>
     <definition extID="middleware.usb.host_cdc.MIMXRT1052"/>
     <definition extID="middleware.usb.host_controller_ehci.MIMXRT1052"/>
     <definition extID="middleware.usb.host_hub.MIMXRT1052"/>
     <definition extID="middleware.usb.phy.MIMXRT1052"/>
     <definition extID="platform.Include_common.MIMXRT1052"/>
     <definition extID="platform.Include_core_cm7.MIMXRT1052"/>
+    <definition extID="platform.Include_dsp.MIMXRT1052"/>
     <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1052"/>
     <definition extID="platform.drivers.clock.MIMXRT1052"/>
     <definition extID="platform.drivers.common.MIMXRT1052"/>
@@ -22,8 +25,10 @@
     <definition extID="platform.drivers.iomuxc.MIMXRT1052"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1052"/>
     <definition extID="platform.drivers.xip_board.MIMXRT1052"/>
+    <definition extID="platform.drivers.xip_board_dcd.MIMXRT1052"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1052"/>
     <definition extID="platform.utilities.assert.MIMXRT1052"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1052"/>
     <definition extID="utility.debug_console.MIMXRT1052"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -32,7 +37,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_host_cdc_bm" name="host_cdc_bm" category="usb_examples" dependency="middleware.usb.host_controller_ehci.MIMXRT1052 middleware.usb.phy.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 middleware.usb.host_hub.MIMXRT1052 middleware.usb.host_cdc.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 component.lists.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 middleware.baremetal.MIMXRT1052">
+  <example id="evkbimxrt1050_host_cdc_bm" name="host_cdc_bm" category="usb_examples" dependency="middleware.usb.host_controller_ehci.MIMXRT1052 middleware.usb.phy.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 middleware.usb.host.MIMXRT1052 middleware.usb.host_hub.MIMXRT1052 middleware.usb.host_cdc.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 platform.drivers.xip_board_dcd.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.lists.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 component.osa.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_dsp.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052 middleware.baremetal.MIMXRT1052">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -41,7 +46,8 @@
       <memoryBlock addr="20000000" size="00020000" access="RW" type="RAM" id="SRAM_DTC_evkbimxrt1050" name="SRAM_DTC"/>
       <memoryBlock addr="00000000" size="00020000" access="RW" type="RAM" id="SRAM_ITC_evkbimxrt1050" name="SRAM_ITC"/>
       <memoryBlock addr="20200000" size="00040000" access="RW" type="RAM" id="SRAM_OC_evkbimxrt1050" name="SRAM_OC"/>
-      <memoryBlock addr="80000000" size="02000000" access="RW" type="RAM" id="BOARD_SDRAM_evkbimxrt1050" name="BOARD_SDRAM"/>
+      <memoryBlock addr="80000000" size="01E00000" access="RW" type="RAM" id="BOARD_SDRAM_evkbimxrt1050" name="BOARD_SDRAM"/>
+      <memoryBlock addr="81E00000" size="00200000" access="RW" type="RAM" id="NCACHE_REGION_evkbimxrt1050" name="NCACHE_REGION"/>
     </memory>
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
@@ -60,7 +66,14 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
+          <value>DEBUG_CONSOLE_RX_ENABLE=0</value>
+          <value>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</value>
+          <value>DEBUG_CONSOLE_RECEIVE_BUFFER_LEN=16</value>
+          <value>DEBUG_CONSOLE_TRANSMIT_BUFFER_LEN=64</value>
           <value>USB_STACK_BM</value>
+          <value>FSL_OSA_BM_TASK_ENABLE=0</value>
+          <value>FSL_OSA_BM_TIMER_CONFIG=0</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -77,6 +90,10 @@
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
           <value>&amp;Heap:Default;Default;0x2000&amp;Stack:Default;Default;0x2000</value>
         </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=SRAM_DTC;type=.data</value>
+          <value>isd=*(NonCacheable);region=SRAM_DTC;type=.bss</value>
+        </option>
       </toolchainSetting>
     </toolchainSettings>
     <debug_configurations>
@@ -90,20 +107,20 @@
         </drivers>
       </debug_configuration>
     </debug_configurations>
-    <source path="boards/evkbimxrt1050/usb_examples/usb_host_cdc/bm/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/evkbimxrt1050/usb_examples/usb_host_cdc/bm/armgcc" target_path="MIMXRT1052/gcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1052xxxxx_ram.ld"/>
     </source>
-    <source path="boards/evkbimxrt1050/usb_examples/usb_host_cdc/bm/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/evkbimxrt1050/usb_examples/usb_host_cdc/bm/iar" target_path="MIMXRT1052/iar" type="linker" toolchain="iar">
       <files mask="MIMXRT1052xxxxx_ram.icf"/>
     </source>
-    <source path="boards/evkbimxrt1050/usb_examples/usb_host_cdc/bm/iar" target_path="src" type="other" toolchain="iar">
+    <source path="boards/evkbimxrt1050/usb_examples/usb_host_cdc/bm/iar" target_path="evkbimxrt1050" type="other" toolchain="iar">
       <files mask="evkbimxrt1050.mac"/>
     </source>
-    <source path="boards/evkbimxrt1050/usb_examples/usb_host_cdc/bm/mdk" target_path="src" type="configuration" toolchain="mdk">
-      <files mask="evkbimxrt1050_ram.ini"/>
-    </source>
-    <source path="boards/evkbimxrt1050/usb_examples/usb_host_cdc/bm/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/evkbimxrt1050/usb_examples/usb_host_cdc/bm/mdk" target_path="MIMXRT1052/arm" type="linker" toolchain="mdk">
       <files mask="MIMXRT1052xxxxx_ram.scf"/>
+    </source>
+    <source path="boards/evkbimxrt1050/usb_examples/usb_host_cdc/bm/mdk" target_path="evkbimxrt1050" type="configuration" toolchain="mdk">
+      <files mask="evkbimxrt1050_ram.ini"/>
     </source>
     <source path="boards/evkbimxrt1050/usb_examples/usb_host_cdc/bm" target_path="board" type="c_include">
       <files mask="board.h"/>
@@ -118,6 +135,12 @@
     <source path="boards/evkbimxrt1050/usb_examples/usb_host_cdc/bm" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
       <files mask="readme.txt"/>
     </source>
+    <source path="boards/evkbimxrt1050/usb_examples/usb_host_cdc/bm" target_path="evkbimxrt1050/usb_examples/usb_host_cdc/bm" type="binary" exclude="true">
+      <files mask="host_cdc_bm.bin"/>
+    </source>
+    <source path="boards/evkbimxrt1050/usb_examples/usb_host_cdc/bm" target_path="evkbimxrt1050/usb_examples/usb_host_cdc/bm" type="doc" exclude="true">
+      <files mask="readme.pdf"/>
+    </source>
     <source path="boards/evkbimxrt1050/usb_examples/usb_host_cdc/bm" target_path="source" type="c_include">
       <files mask="app.h"/>
       <files mask="host_cdc.h"/>
@@ -126,21 +149,6 @@
     <source path="boards/evkbimxrt1050/usb_examples/usb_host_cdc/bm" target_path="source" type="src">
       <files mask="app.c"/>
       <files mask="host_cdc.c"/>
-    </source>
-    <source path="boards/evkbimxrt1050/usb_examples/usb_host_cdc/bm" target_path="src" type="binary" exclude="true">
-      <files mask="host_cdc_bm.bin"/>
-    </source>
-    <source path="boards/evkbimxrt1050/usb_examples/usb_host_cdc/bm" target_path="src" type="doc" exclude="true">
-      <files mask="readme.pdf"/>
-    </source>
-    <source path="boards/evkbimxrt1050/usb_examples/usb_host_cdc/bm" target_path="src" type="src" exclude="true">
-      <files mask="usb_uart_drv.c"/>
-    </source>
-    <source path="boards/evkbimxrt1050/usb_examples/usb_host_cdc/bm" target_path="utility" type="c_include">
-      <files mask="usb_serial_port.h"/>
-    </source>
-    <source path="boards/evkbimxrt1050/usb_examples/usb_host_cdc/bm" target_path="utility" type="src">
-      <files mask="usb_lpuart_drv.c"/>
     </source>
   </example>
 </ksdk:examples>

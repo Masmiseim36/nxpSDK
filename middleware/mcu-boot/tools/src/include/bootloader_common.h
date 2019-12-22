@@ -118,7 +118,6 @@ enum _bl_status_groups
     kStatusGroup_RomApi                                           //!< ROM API status group number (108).
 };
 
-
 /*! @brief Generic status return codes. */
 enum _generic_status
 {
@@ -140,9 +139,9 @@ enum _bootloader_status
     kStatus_AbortDataPhase = MAKE_STATUS(kStatusGroup_Bootloader, 2),
     kStatus_Ping = MAKE_STATUS(kStatusGroup_Bootloader, 3),
     kStatus_NoResponse = MAKE_STATUS(kStatusGroup_Bootloader, 4),
-    kStatus_NoResponseExpected = MAKE_STATUS(kStatusGroup_Bootloader, 5)
+    kStatus_NoResponseExpected = MAKE_STATUS(kStatusGroup_Bootloader, 5),
+    kStatus_CommandUnsupported = MAKE_STATUS(kStatusGroup_Bootloader, 6),
 };
-
 
 // !@brief SB loader status codes.
 enum _sbloader_status
@@ -248,7 +247,6 @@ static inline void debug_printf(const char *format, ...)
     } while (false)
 #endif // (DEBUG || _DEBUG) && !DEBUG_PRINT_DISABLE
 
-
 //! @brief Structure of version property.
 //!
 //! @ingroup bl_core
@@ -274,8 +272,6 @@ typedef union StandardVersion
     }
 #endif
 } standard_version_t;
-
-
 
 #endif // __BOOTLOADER_COMMON_H__
 ////////////////////////////////////////////////////////////////////////////////

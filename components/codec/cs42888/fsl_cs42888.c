@@ -63,7 +63,7 @@ status_t CS42888_Init(cs42888_handle_t *handle, cs42888_config_t *config)
     handle->config = config;
 
     /* i2c bus initialization */
-    errorStatus = CODEC_I2C_Init(&(handle->i2cHandle), config->i2cConfig.codecI2CInstance, CS42888_I2C_BITRATE,
+    errorStatus = CODEC_I2C_Init(handle->i2cHandle, config->i2cConfig.codecI2CInstance, CS42888_I2C_BITRATE,
                                  config->i2cConfig.codecI2CSourceClock);
     if (errorStatus != kStatus_HAL_I2cSuccess)
     {
@@ -170,7 +170,7 @@ status_t CS42888_Deinit(cs42888_handle_t *handle)
     /* Disable all modules making CS42888 enter a low power mode */
     CS42888_WriteReg(handle, CS42888_FUNCTIONAL_MODE, 0U);
 
-    return CODEC_I2C_Deinit(&(handle->i2cHandle));
+    return CODEC_I2C_Deinit(handle->i2cHandle);
 }
 
 status_t CS42888_SetProtocol(cs42888_handle_t *handle, cs42888_bus_t protocol, uint32_t bitWidth)
@@ -410,14 +410,14 @@ status_t CS42888_WriteReg(cs42888_handle_t *handle, uint8_t reg, uint8_t val)
 {
     assert(handle->config);
 
-    return CODEC_I2C_Send(&(handle->i2cHandle), handle->config->slaveAddress, reg, 1U, &val, 1U);
+    return CODEC_I2C_Send(handle->i2cHandle, handle->config->slaveAddress, reg, 1U, &val, 1U);
 }
 
 status_t CS42888_ReadReg(cs42888_handle_t *handle, uint8_t reg, uint8_t *val)
 {
     assert(handle->config);
 
-    return CODEC_I2C_Receive(&(handle->i2cHandle), handle->config->slaveAddress, reg, 1U, val, 1U);
+    return CODEC_I2C_Receive(handle->i2cHandle, handle->config->slaveAddress, reg, 1U, val, 1U);
 }
 
 status_t CS42888_ModifyReg(cs42888_handle_t *handle, uint8_t reg, uint8_t mask, uint8_t val)

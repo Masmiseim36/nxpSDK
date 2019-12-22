@@ -500,10 +500,10 @@ uint32_t wwd_bus_packet_available_to_read(void)
         }
     }
 
+exit:
 #if defined(WICED_PLATFORM_MASKS_BUS_IRQ)
     host_platform_unmask_sdio_interrupt();
 #endif
-exit:
     return ((int_status) & (FRAME_AVAILABLE_MASK));
 }
 

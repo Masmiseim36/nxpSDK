@@ -32,6 +32,7 @@
 #define FMSTR_CFG_BUS_WIDTH         1
 #define FMSTR_TSA_FLAGS             0
 #define FMSTR_PLATFORM_BIG_ENDIAN   0
+#define FMSTR_MEMCPY_MAX_SIZE       4
 
 #ifndef FMSTR_PLATFORM_BASE_ADDRESS
 	/* Use Cortex-M memory base address as a default for optimized access. */
@@ -99,4 +100,3 @@ typedef char           FMSTR_CHAR;      /* regular character, part of string */
 #define FMSTR_ARR2ADDR FMSTR_PTR2ADDR
 
 #endif /* _FREEMASTER_GEN32LE_H */
-

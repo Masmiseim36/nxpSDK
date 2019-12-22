@@ -8,9 +8,10 @@
     <definition extID="component.serial_manager_uart.MIMXRT1052"/>
     <definition extID="device.MIMXRT1052_CMSIS.MIMXRT1052"/>
     <definition extID="device.MIMXRT1052_startup.MIMXRT1052"/>
-    <definition extID="middleware.littlefs.MIMXRT1052"/>
+    <definition extID="middleware.littlefs.common.MIMXRT1052"/>
     <definition extID="platform.Include_common.MIMXRT1052"/>
     <definition extID="platform.Include_core_cm7.MIMXRT1052"/>
+    <definition extID="platform.Include_dsp.MIMXRT1052"/>
     <definition extID="platform.drivers.clock.MIMXRT1052"/>
     <definition extID="platform.drivers.common.MIMXRT1052"/>
     <definition extID="platform.drivers.flexspi.MIMXRT1052"/>
@@ -18,6 +19,7 @@
     <definition extID="platform.drivers.iomuxc.MIMXRT1052"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1052"/>
     <definition extID="platform.utilities.assert.MIMXRT1052"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1052"/>
     <definition extID="utility.debug_console.MIMXRT1052"/>
     <definition extID="utility.shell.MIMXRT1052"/>
     <definition extID="iar"/>
@@ -25,7 +27,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_littlefs_shell" name="littlefs_shell" category="littlefs_examples" dependency="platform.drivers.flexspi.MIMXRT1052 middleware.littlefs.MIMXRT1052 utility.shell.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 component.lists.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052">
+  <example id="evkbimxrt1050_littlefs_shell" name="littlefs_shell" category="littlefs_examples" dependency="platform.drivers.flexspi.MIMXRT1052 middleware.littlefs.common.MIMXRT1052 utility.shell.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.lists.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_dsp.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -33,7 +35,8 @@
       <memoryBlock addr="20000000" size="00020000" access="RW" type="RAM" id="SRAM_DTC_evkbimxrt1050" name="SRAM_DTC"/>
       <memoryBlock addr="00000000" size="00020000" access="RW" type="RAM" id="SRAM_ITC_evkbimxrt1050" name="SRAM_ITC"/>
       <memoryBlock addr="20200000" size="00040000" access="RW" type="RAM" id="SRAM_OC_evkbimxrt1050" name="SRAM_OC"/>
-      <memoryBlock addr="80000000" size="02000000" access="RW" type="RAM" id="BOARD_SDRAM_evkbimxrt1050" name="BOARD_SDRAM"/>
+      <memoryBlock addr="80000000" size="01E00000" access="RW" type="RAM" id="BOARD_SDRAM_evkbimxrt1050" name="BOARD_SDRAM"/>
+      <memoryBlock addr="81E00000" size="00200000" access="RW" type="RAM" id="NCACHE_REGION_evkbimxrt1050" name="NCACHE_REGION"/>
     </memory>
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
@@ -47,6 +50,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>CPU_MIMXRT1052DVL6B</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>PRINTF_FLOAT_ENABLE=0</value>
@@ -73,20 +77,20 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/evkbimxrt1050/littlefs_examples/littlefs_shell/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/evkbimxrt1050/littlefs_examples/littlefs_shell/armgcc" target_path="MIMXRT1052/gcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1052xxxxx_ram.ld"/>
     </source>
-    <source path="boards/evkbimxrt1050/littlefs_examples/littlefs_shell/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/evkbimxrt1050/littlefs_examples/littlefs_shell/iar" target_path="MIMXRT1052/iar" type="linker" toolchain="iar">
       <files mask="MIMXRT1052xxxxx_ram.icf"/>
     </source>
-    <source path="boards/evkbimxrt1050/littlefs_examples/littlefs_shell/iar" target_path="src" type="other" toolchain="iar">
+    <source path="boards/evkbimxrt1050/littlefs_examples/littlefs_shell/iar" target_path="evkbimxrt1050" type="other" toolchain="iar">
       <files mask="evkbimxrt1050.mac"/>
     </source>
-    <source path="boards/evkbimxrt1050/littlefs_examples/littlefs_shell/mdk" target_path="src" type="configuration" toolchain="mdk">
-      <files mask="evkbimxrt1050_ram.ini"/>
-    </source>
-    <source path="boards/evkbimxrt1050/littlefs_examples/littlefs_shell/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/evkbimxrt1050/littlefs_examples/littlefs_shell/mdk" target_path="MIMXRT1052/arm" type="linker" toolchain="mdk">
       <files mask="MIMXRT1052xxxxx_ram.scf"/>
+    </source>
+    <source path="boards/evkbimxrt1050/littlefs_examples/littlefs_shell/mdk" target_path="evkbimxrt1050" type="configuration" toolchain="mdk">
+      <files mask="evkbimxrt1050_ram.ini"/>
     </source>
     <source path="boards/evkbimxrt1050/littlefs_examples/littlefs_shell" target_path="board" type="c_include">
       <files mask="board.h"/>

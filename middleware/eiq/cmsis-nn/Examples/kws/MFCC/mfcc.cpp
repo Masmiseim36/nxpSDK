@@ -25,18 +25,17 @@
 #include "mfcc.h"
 #include "float.h"
 
-#if defined(__ICCARM__) || defined(__CC_ARM) 
-#define M_PI   3.14159265358979323846264338327950288
+#ifndef M_PI
+#define M_PI 3.14159265358979323846264338327950288
 #endif
 
 MFCC::MFCC(int num_mfcc_features, int frame_len, int mfcc_dec_bits) 
-:num_mfcc_features(num_mfcc_features), 
- frame_len(frame_len), 
- mfcc_dec_bits(mfcc_dec_bits)
+  : num_mfcc_features(num_mfcc_features), 
+    frame_len(frame_len), 
+    mfcc_dec_bits(mfcc_dec_bits)
 {
-
   // Round-up to nearest power of 2.
-  frame_len_padded = pow(2.0,ceil((log((double)frame_len)/log(2.0))));
+  frame_len_padded = pow(2.0, ceil((log((double)frame_len)/log(2.0))));
 
   frame = new float[frame_len_padded];
   buffer = new float[frame_len_padded];

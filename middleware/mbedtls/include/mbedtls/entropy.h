@@ -287,4 +287,3 @@ int mbedtls_entropy_source_self_test( int verbose );
 #endif
 
 #endif /* entropy.h */
-

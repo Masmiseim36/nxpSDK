@@ -50,25 +50,25 @@ typedef enum _usb_khci_interrupt_type
 
 /*! @brief Set BDT buffer address */
 #define USB_KHCI_BDT_SET_ADDRESS(bdt_base, ep, direction, odd, address)                          \
-    *((volatile uint32_t *)((bdt_base & 0xfffffe00U) | (((uint32_t)ep & 0x0fU) << 5U) |          \
-                            (((uint32_t)direction & 1U) << 4U) | (((uint32_t)odd & 1U) << 3U)) + \
+    *(((volatile uint32_t *)((uint8_t *)((bdt_base & 0xfffffe00U) | (((uint32_t)ep & 0x0fU) << 5U) |          \
+                            (((uint32_t)direction & 1U) << 4U) | (((uint32_t)odd & 1U) << 3U)))) + \
       1U) = address
 
 /*! @brief Set BDT control fields*/
 #define USB_KHCI_BDT_SET_CONTROL(bdt_base, ep, direction, odd, control)                \
-    *(volatile uint32_t *)((bdt_base & 0xfffffe00U) | (((uint32_t)ep & 0x0fU) << 5U) | \
-                           (((uint32_t)direction & 1U) << 4U) | (((uint32_t)odd & 1U) << 3U)) = control
+    *((volatile uint32_t *)((uint8_t *)(((bdt_base) & 0xfffffe00U) | (((uint32_t)ep & 0x0fU) << 5U) | \
+                           (((uint32_t)direction & 1U) << 4U) | (((uint32_t)odd & 1U) << 3U)))) = control
 
 /*! @brief Get BDT buffer address*/
 #define USB_KHCI_BDT_GET_ADDRESS(bdt_base, ep, direction, odd)                                    \
-    (*((volatile uint32_t *)((bdt_base & 0xfffffe00U) | (((uint32_t)ep & 0x0fU) << 5U) |          \
-                             (((uint32_t)direction & 1U) << 4U) | (((uint32_t)odd & 1U) << 3U)) + \
+    (*((volatile uint32_t *)((uint8_t *)(((bdt_base & 0xfffffe00U) | (((uint32_t)ep & 0x0fU) << 5U) |          \
+                             (((uint32_t)direction & 1U) << 4U) | (((uint32_t)odd & 1U) << 3U)))) + \
        1U))
 
 /*! @brief Get BDT control fields*/
 #define USB_KHCI_BDT_GET_CONTROL(bdt_base, ep, direction, odd)                          \
-    (*(volatile uint32_t *)((bdt_base & 0xfffffe00U) | (((uint32_t)ep & 0x0fU) << 5U) | \
-                            (((uint32_t)direction & 1U) << 4U) | (((uint32_t)odd & 1U) << 3U)))
+    (*(volatile uint32_t *)((uint8_t *)((bdt_base & 0xfffffe00U) | (((uint32_t)ep & 0x0fU) << 5U) | \
+                            (((uint32_t)direction & 1U) << 4U) | (((uint32_t)odd & 1U) << 3U))))
 
 /*! @brief Endpoint state structure */
 typedef struct _usb_device_khci_endpoint_state_struct

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2018-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -39,10 +39,10 @@
 #define BOARD_ACCEL_I2C_CLOCK_FREQ (CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8 / (BOARD_ACCEL_I2C_CLOCK_SOURCE_DIVIDER + 1U))
 
 #define BOARD_CODEC_I2C_BASEADDR LPI2C1
+#define BOARD_CODEC_I2C_INSTANCE 1U
 #define BOARD_CODEC_I2C_CLOCK_SOURCE_SELECT (0U)
 #define BOARD_CODEC_I2C_CLOCK_SOURCE_DIVIDER (5U)
-#define BOARD_CODEC_I2C_CLOCK_FREQ \
-    ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (BOARD_CODEC_I2C_CLOCK_SOURCE_DIVIDER + 1U))
+#define BOARD_CODEC_I2C_CLOCK_FREQ (10000000U)
 
 /*! @brief The USER_LED used for board */
 #define LOGIC_LED_ON (0U)
@@ -145,23 +145,23 @@
 #define BOARD_USDHC_SDCARD_POWER_CONTROL(state) \
     (GPIO_PinWrite(BOARD_SD_POWER_RESET_GPIO, BOARD_SD_POWER_RESET_GPIO_PIN, state))
 
-#define BOARD_USDHC1_CLK_FREQ (CLOCK_GetSysPfdFreq(kCLOCK_Pfd2) / (CLOCK_GetDiv(kCLOCK_Usdhc1Div) + 1U))
-#define BOARD_USDHC2_CLK_FREQ (CLOCK_GetSysPfdFreq(kCLOCK_Pfd2) / (CLOCK_GetDiv(kCLOCK_Usdhc2Div) + 1U))
+#define BOARD_USDHC1_CLK_FREQ (CLOCK_GetSysPfdFreq(kCLOCK_Pfd0) / (CLOCK_GetDiv(kCLOCK_Usdhc1Div) + 1U))
+#define BOARD_USDHC2_CLK_FREQ (CLOCK_GetSysPfdFreq(kCLOCK_Pfd0) / (CLOCK_GetDiv(kCLOCK_Usdhc2Div) + 1U))
 
 #define BOARD_SD_HOST_BASEADDR BOARD_USDHC1_BASEADDR
 #define BOARD_SD_HOST_CLK_FREQ BOARD_USDHC1_CLK_FREQ
 #define BOARD_SD_HOST_IRQ USDHC1_IRQn
 
-#define BOARD_MMC_HOST_BASEADDR BOARD_USDHC2_BASEADDR
-#define BOARD_MMC_HOST_CLK_FREQ BOARD_USDHC2_CLK_FREQ
-#define BOARD_MMC_HOST_IRQ USDHC2_IRQn
+#define BOARD_MMC_HOST_BASEADDR BOARD_SD_HOST_BASEADDR
+#define BOARD_MMC_HOST_CLK_FREQ BOARD_SD_HOST_CLK_FREQ
+#define BOARD_MMC_HOST_IRQ BOARD_SD_HOST_IRQ
 #define BOARD_MMC_VCCQ_SUPPLY kMMC_VoltageWindow170to195
 #define BOARD_MMC_VCC_SUPPLY kMMC_VoltageWindows270to360
 /* we are using the BB SD socket to DEMO the MMC example,but the
  * SD socket provide 4bit bus only, so we define this macro to avoid
  * 8bit data bus test
  */
-#define BOARD_MMC_SUPPORT_8BIT_BUS (1U)
+#define BOARD_MMC_SUPPORT_8BIT_BUS (0U)
 
 #define BOARD_SD_HOST_SUPPORT_SDR104_FREQ (100000000U)
 #define BOARD_SD_HOST_SUPPORT_HS200_FREQ (180000000U)
@@ -181,6 +181,16 @@
 #define BOARD_INITGT202SHIELD_IRQ_LABEL "IRQ"                  /*!< Label */
 #define BOARD_INITGT202SHIELD_IRQ_NAME "IRQ"                   /*!< Identifier name */
 #define BOARD_INITGT202SHIELD_IRQ_DIRECTION kGPIO_DigitalInput /*!< Direction */
+
+/* Display. */
+#define BOARD_LCD_DC_GPIO GPIO1   /*! LCD data/command port */
+#define BOARD_LCD_DC_GPIO_PIN 15U /*! LCD data/command pin */
+
+/* @Brief Board Bluetooth HCI UART configuration */
+#define BOARD_BT_UART_BASEADDR LPUART3
+#define BOARD_BT_UART_CLK_FREQ BOARD_DebugConsoleSrcFreq()
+#define BOARD_BT_UART_IRQ LPUART3_IRQn
+#define BOARD_BT_UART_IRQ_HANDLER LPUART3_IRQHandler
 
 #if defined(__cplusplus)
 extern "C" {

@@ -14,7 +14,8 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-static float32_t do_fft(sai_transfer_format_t *dataFormat, uint8_t *buffer, float32_t *fftData, float32_t *fftResult);
+static float32_t do_fft(
+    uint32_t sampleRate, uint32_t bitWidth, uint8_t *buffer, float32_t *fftData, float32_t *fftResult);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -22,7 +23,6 @@ static float32_t ffData[2 * BUFFER_SIZE];
 static float32_t ffResult[BUFFER_SIZE];
 extern sai_edma_handle_t txHandle;
 extern sai_edma_handle_t rxHandle;
-extern sai_transfer_format_t format;
 extern uint8_t audioBuff[BUFFER_SIZE * BUFFER_NUM];
 extern volatile bool istxFinished;
 extern volatile bool isrxFinished;
@@ -35,7 +35,8 @@ extern volatile uint32_t emptyBlock;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static float32_t do_fft(sai_transfer_format_t *dataFormat, uint8_t *buffer, float32_t *fftData, float32_t *fftResult)
+static float32_t do_fft(
+    uint32_t sampleRate, uint32_t bitWidth, uint8_t *buffer, float32_t *fftData, float32_t *fftResult)
 {
     /* Counter variable for navigating buffers */
     uint32_t counter;
@@ -51,10 +52,9 @@ static float32_t do_fft(sai_transfer_format_t *dataFormat, uint8_t *buffer, floa
     float32_t maxValue;           /* max value for greatest FFT bin amplitude */
     uint32_t testIndex       = 0; /* value for storing the bin location with maxValue */
     uint32_t complexBuffSize = BUFFER_SIZE * 2;
-    uint32_t fftSize         = BUFFER_SIZE;               /* FFT bin size */
-    uint32_t ifftFlag        = 0;                         /* Flag for the selection of CFFT/CIFFT */
-    uint32_t doBitReverse    = 1;                         /* Flag for selection of normal order or bit reversed order */
-    uint32_t sampleRate      = dataFormat->sampleRate_Hz; /* Get sample rate from current format */
+    uint32_t fftSize         = BUFFER_SIZE; /* FFT bin size */
+    uint32_t ifftFlag        = 0;           /* Flag for the selection of CFFT/CIFFT */
+    uint32_t doBitReverse    = 1;           /* Flag for selection of normal order or bit reversed order */
     float32_t hzPerBin       = 2 * ((float32_t)sampleRate / (float32_t)fftSize); /* Calculate hz per FFT bin */
 
     uint8_t *temp8; /* Point to data for 8 bit samples */
@@ -70,7 +70,7 @@ static float32_t do_fft(sai_transfer_format_t *dataFormat, uint8_t *buffer, floa
     status = ARM_MATH_SUCCESS;
 
     /* Wav data variables */
-    switch (dataFormat->bitWidth)
+    switch (bitWidth)
     {
         case 8:
             temp8     = (uint8_t *)buffer;
@@ -201,7 +201,7 @@ static float32_t do_fft(sai_transfer_format_t *dataFormat, uint8_t *buffer, floa
 
 void PlaybackSine(I2S_Type *base, uint32_t SineWaveFreqHz, uint32_t time_s)
 {
-    uint32_t count      = SAMPLE_RATE / SineWaveFreqHz;
+    uint32_t count      = DEMO_AUDIO_SAMPLE_RATE / SineWaveFreqHz;
     uint32_t i          = 0;
     uint32_t val        = 0;
     sai_transfer_t xfer = {0};
@@ -230,10 +230,10 @@ void PlaybackSine(I2S_Type *base, uint32_t SineWaveFreqHz, uint32_t time_s)
     }
 
     /* Send times according to the time need to playback */
-    beginCount = SAMPLE_RATE * time_s * 4 / BUFFER_SIZE;
+    beginCount = DEMO_AUDIO_SAMPLE_RATE * time_s * 4 / BUFFER_SIZE;
 
     /* Compute the frequency of the data using FFT */
-    freq = do_fft(&format, audioBuff, ffData, ffResult);
+    freq = do_fft(DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH, audioBuff, ffData, ffResult);
 
     PRINTF("\r\n Data frequency is %f\r\n", freq);
 

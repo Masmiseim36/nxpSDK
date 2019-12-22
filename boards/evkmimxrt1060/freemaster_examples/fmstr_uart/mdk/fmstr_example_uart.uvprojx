@@ -7,6 +7,7 @@
       <TargetName>fmstr_example_uart debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>MIMXRT1062DVL6A</Device>
@@ -16,7 +17,6 @@
           <Cpu>CPUTYPE("Cortex-M7") FPU3(DFPU)</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0MIMXRT106x_HYPER_256KB_SEC -FS060000000 -FL04000000 -FP0($$Device:MIMXRT1062DVL6A$Flash\MIMXRT106x_HYPER_256KB_SEC.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>$$Device:MIMXRT1062DVL6A$Device\Include\fsl_device_registers.h</RegisterFile>
           <MemoryEnv/>
@@ -306,7 +306,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -315,10 +315,10 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
@@ -328,10 +328,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1062DVL6A, USB_STACK_BM</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>DEBUG, CPU_MIMXRT1062DVL6A, USB_STACK_BM, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../common/fmstr_example;..;../../../../../middleware/freemaster/boards/evkmimxrt1060;../../../../../CMSIS/Include;../../../../../devices;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/support/sec_ca/src;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le</IncludePath>
+              <IncludePath>../../common/fmstr_example;..;../../../../../middleware/freemaster/boards/evkmimxrt1060;../../../../../CMSIS/Include;../../../../../devices;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../components/serial_manager;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../devices/MIMXRT1062/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -344,7 +344,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
@@ -528,7 +528,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER</GroupName>
+          <GroupName>freemaster</GroupName>
           <Files>
             <File>
               <FileName>freemaster.h</FileName>
@@ -606,6 +606,11 @@
               <FilePath>../../../../../middleware/freemaster/src/common/freemaster_serial.h</FilePath>
             </File>
             <File>
+              <FileName>freemaster_sha.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_sha.c</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_tsa.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/freemaster/src/common/freemaster_tsa.c</FilePath>
@@ -638,7 +643,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER/drivers/mcuxsdk/can</GroupName>
+          <GroupName>freemaster/drivers/mcuxsdk/can</GroupName>
           <Files>
             <File>
               <FileName>freemaster_flexcan.c</FileName>
@@ -673,8 +678,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER/drivers/mcuxsdk/serial</GroupName>
+          <GroupName>freemaster/drivers/mcuxsdk/serial</GroupName>
           <Files>
+            <File>
+              <FileName>freemaster_serial_lpsci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_lpsci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.h</FilePath>
+            </File>
             <File>
               <FileName>freemaster_serial_lpuart.c</FileName>
               <FileType>1</FileType>
@@ -724,21 +739,6 @@
               <FileName>freemaster_serial_usb.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>FreeMASTER/support/sec_ca</GroupName>
-          <Files>
-            <File>
-              <FileName>sha1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/sec_ca/src/sha1.c</FilePath>
-            </File>
-            <File>
-              <FileName>sha1.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/sec_ca/src/sha1.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -913,13 +913,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER/platforms</GroupName>
+          <GroupName>freemaster/platforms</GroupName>
           <Files>
-            <File>
-              <FileName>freemaster_gen32le.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/platforms/gen32le/freemaster_gen32le.c</FilePath>
-            </File>
             <File>
               <FileName>freemaster_gen32le.h</FileName>
               <FileType>5</FileType>
@@ -936,21 +931,6 @@
               <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
@@ -959,6 +939,11 @@
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
@@ -981,6 +966,11 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
+              <FileName>core_armv81mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
+            </File>
+            <File>
               <FileName>core_armv8mbl.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
@@ -1000,6 +990,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -1008,6 +1013,7 @@
       <TargetName>fmstr_example_uart flexspi_nor_debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>MIMXRT1062DVL6A</Device>
@@ -1017,7 +1023,6 @@
           <Cpu>CPUTYPE("Cortex-M7") FPU3(DFPU)</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0MIMXRT106x_HYPER_256KB_SEC -FS060000000 -FL04000000 -FP0($$Device:MIMXRT1062DVL6A$Flash\MIMXRT106x_HYPER_256KB_SEC.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>$$Device:MIMXRT1062DVL6A$Device\Include\fsl_device_registers.h</RegisterFile>
           <MemoryEnv/>
@@ -1128,7 +1133,7 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
@@ -1307,7 +1312,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -1316,10 +1321,10 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
@@ -1329,10 +1334,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1062DVL6A, USB_STACK_BM</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1062DVL6A, USB_STACK_BM, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../common/fmstr_example;..;../../../../../middleware/freemaster/boards/evkmimxrt1060;../../../../../CMSIS/Include;../../../../../devices;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/support/sec_ca/src;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le</IncludePath>
+              <IncludePath>../../common/fmstr_example;..;../../../../../middleware/freemaster/boards/evkmimxrt1060;../../../../../CMSIS/Include;../../../../../devices;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../components/serial_manager;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../devices/MIMXRT1062/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1345,7 +1350,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
@@ -1529,7 +1534,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER</GroupName>
+          <GroupName>freemaster</GroupName>
           <Files>
             <File>
               <FileName>freemaster.h</FileName>
@@ -1607,6 +1612,11 @@
               <FilePath>../../../../../middleware/freemaster/src/common/freemaster_serial.h</FilePath>
             </File>
             <File>
+              <FileName>freemaster_sha.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_sha.c</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_tsa.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/freemaster/src/common/freemaster_tsa.c</FilePath>
@@ -1639,7 +1649,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER/drivers/mcuxsdk/can</GroupName>
+          <GroupName>freemaster/drivers/mcuxsdk/can</GroupName>
           <Files>
             <File>
               <FileName>freemaster_flexcan.c</FileName>
@@ -1674,8 +1684,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER/drivers/mcuxsdk/serial</GroupName>
+          <GroupName>freemaster/drivers/mcuxsdk/serial</GroupName>
           <Files>
+            <File>
+              <FileName>freemaster_serial_lpsci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_lpsci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.h</FilePath>
+            </File>
             <File>
               <FileName>freemaster_serial_lpuart.c</FileName>
               <FileType>1</FileType>
@@ -1725,21 +1745,6 @@
               <FileName>freemaster_serial_usb.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>FreeMASTER/support/sec_ca</GroupName>
-          <Files>
-            <File>
-              <FileName>sha1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/sec_ca/src/sha1.c</FilePath>
-            </File>
-            <File>
-              <FileName>sha1.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/sec_ca/src/sha1.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1914,13 +1919,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER/platforms</GroupName>
+          <GroupName>freemaster/platforms</GroupName>
           <Files>
-            <File>
-              <FileName>freemaster_gen32le.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/platforms/gen32le/freemaster_gen32le.c</FilePath>
-            </File>
             <File>
               <FileName>freemaster_gen32le.h</FileName>
               <FileType>5</FileType>
@@ -1937,21 +1937,6 @@
               <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
@@ -1960,6 +1945,11 @@
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
@@ -1982,6 +1972,11 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
+              <FileName>core_armv81mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
+            </File>
+            <File>
               <FileName>core_armv8mbl.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
@@ -2001,6 +1996,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -2009,6 +2019,7 @@
       <TargetName>fmstr_example_uart sdram_debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>MIMXRT1062DVL6A</Device>
@@ -2018,7 +2029,6 @@
           <Cpu>CPUTYPE("Cortex-M7") FPU3(DFPU)</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0MIMXRT106x_HYPER_256KB_SEC -FS060000000 -FL04000000 -FP0($$Device:MIMXRT1062DVL6A$Flash\MIMXRT106x_HYPER_256KB_SEC.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>$$Device:MIMXRT1062DVL6A$Device\Include\fsl_device_registers.h</RegisterFile>
           <MemoryEnv/>
@@ -2308,7 +2318,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -2317,10 +2327,10 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
@@ -2330,10 +2340,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
-              <Define>SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1062DVL6A, USB_STACK_BM</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1062DVL6A, USB_STACK_BM, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../common/fmstr_example;..;../../../../../middleware/freemaster/boards/evkmimxrt1060;../../../../../CMSIS/Include;../../../../../devices;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/support/sec_ca/src;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le</IncludePath>
+              <IncludePath>../../common/fmstr_example;..;../../../../../middleware/freemaster/boards/evkmimxrt1060;../../../../../CMSIS/Include;../../../../../devices;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../components/serial_manager;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../devices/MIMXRT1062/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2346,7 +2356,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
@@ -2530,7 +2540,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER</GroupName>
+          <GroupName>freemaster</GroupName>
           <Files>
             <File>
               <FileName>freemaster.h</FileName>
@@ -2608,6 +2618,11 @@
               <FilePath>../../../../../middleware/freemaster/src/common/freemaster_serial.h</FilePath>
             </File>
             <File>
+              <FileName>freemaster_sha.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_sha.c</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_tsa.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/freemaster/src/common/freemaster_tsa.c</FilePath>
@@ -2640,7 +2655,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER/drivers/mcuxsdk/can</GroupName>
+          <GroupName>freemaster/drivers/mcuxsdk/can</GroupName>
           <Files>
             <File>
               <FileName>freemaster_flexcan.c</FileName>
@@ -2675,8 +2690,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER/drivers/mcuxsdk/serial</GroupName>
+          <GroupName>freemaster/drivers/mcuxsdk/serial</GroupName>
           <Files>
+            <File>
+              <FileName>freemaster_serial_lpsci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_lpsci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.h</FilePath>
+            </File>
             <File>
               <FileName>freemaster_serial_lpuart.c</FileName>
               <FileType>1</FileType>
@@ -2726,21 +2751,6 @@
               <FileName>freemaster_serial_usb.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>FreeMASTER/support/sec_ca</GroupName>
-          <Files>
-            <File>
-              <FileName>sha1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/sec_ca/src/sha1.c</FilePath>
-            </File>
-            <File>
-              <FileName>sha1.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/sec_ca/src/sha1.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2915,13 +2925,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER/platforms</GroupName>
+          <GroupName>freemaster/platforms</GroupName>
           <Files>
-            <File>
-              <FileName>freemaster_gen32le.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/platforms/gen32le/freemaster_gen32le.c</FilePath>
-            </File>
             <File>
               <FileName>freemaster_gen32le.h</FileName>
               <FileType>5</FileType>
@@ -2938,21 +2943,6 @@
               <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
@@ -2961,6 +2951,11 @@
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
@@ -2983,6 +2978,11 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
+              <FileName>core_armv81mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
+            </File>
+            <File>
               <FileName>core_armv8mbl.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
@@ -3002,6 +3002,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -3010,6 +3025,7 @@
       <TargetName>fmstr_example_uart release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>MIMXRT1062DVL6A</Device>
@@ -3019,7 +3035,6 @@
           <Cpu>CPUTYPE("Cortex-M7") FPU3(DFPU)</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0MIMXRT106x_HYPER_256KB_SEC -FS060000000 -FL04000000 -FP0($$Device:MIMXRT1062DVL6A$Flash\MIMXRT106x_HYPER_256KB_SEC.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>$$Device:MIMXRT1062DVL6A$Device\Include\fsl_device_registers.h</RegisterFile>
           <MemoryEnv/>
@@ -3309,7 +3324,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>4</Optim>
+            <Optim>7</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -3318,10 +3333,10 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
@@ -3331,10 +3346,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1062DVL6A, USB_STACK_BM</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>NDEBUG, CPU_MIMXRT1062DVL6A, USB_STACK_BM, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../common/fmstr_example;..;../../../../../middleware/freemaster/boards/evkmimxrt1060;../../../../../CMSIS/Include;../../../../../devices;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/support/sec_ca/src;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le</IncludePath>
+              <IncludePath>../../common/fmstr_example;..;../../../../../middleware/freemaster/boards/evkmimxrt1060;../../../../../CMSIS/Include;../../../../../devices;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../components/serial_manager;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../devices/MIMXRT1062/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3347,7 +3362,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
@@ -3531,7 +3546,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER</GroupName>
+          <GroupName>freemaster</GroupName>
           <Files>
             <File>
               <FileName>freemaster.h</FileName>
@@ -3609,6 +3624,11 @@
               <FilePath>../../../../../middleware/freemaster/src/common/freemaster_serial.h</FilePath>
             </File>
             <File>
+              <FileName>freemaster_sha.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_sha.c</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_tsa.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/freemaster/src/common/freemaster_tsa.c</FilePath>
@@ -3641,7 +3661,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER/drivers/mcuxsdk/can</GroupName>
+          <GroupName>freemaster/drivers/mcuxsdk/can</GroupName>
           <Files>
             <File>
               <FileName>freemaster_flexcan.c</FileName>
@@ -3676,8 +3696,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER/drivers/mcuxsdk/serial</GroupName>
+          <GroupName>freemaster/drivers/mcuxsdk/serial</GroupName>
           <Files>
+            <File>
+              <FileName>freemaster_serial_lpsci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_lpsci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.h</FilePath>
+            </File>
             <File>
               <FileName>freemaster_serial_lpuart.c</FileName>
               <FileType>1</FileType>
@@ -3727,21 +3757,6 @@
               <FileName>freemaster_serial_usb.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>FreeMASTER/support/sec_ca</GroupName>
-          <Files>
-            <File>
-              <FileName>sha1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/sec_ca/src/sha1.c</FilePath>
-            </File>
-            <File>
-              <FileName>sha1.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/sec_ca/src/sha1.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3916,13 +3931,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER/platforms</GroupName>
+          <GroupName>freemaster/platforms</GroupName>
           <Files>
-            <File>
-              <FileName>freemaster_gen32le.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/platforms/gen32le/freemaster_gen32le.c</FilePath>
-            </File>
             <File>
               <FileName>freemaster_gen32le.h</FileName>
               <FileType>5</FileType>
@@ -3939,21 +3949,6 @@
               <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
@@ -3962,6 +3957,11 @@
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
@@ -3984,6 +3984,11 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
+              <FileName>core_armv81mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
+            </File>
+            <File>
               <FileName>core_armv8mbl.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
@@ -4003,6 +4008,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -4011,6 +4031,7 @@
       <TargetName>fmstr_example_uart flexspi_nor_release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>MIMXRT1062DVL6A</Device>
@@ -4020,7 +4041,6 @@
           <Cpu>CPUTYPE("Cortex-M7") FPU3(DFPU)</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0MIMXRT106x_HYPER_256KB_SEC -FS060000000 -FL04000000 -FP0($$Device:MIMXRT1062DVL6A$Flash\MIMXRT106x_HYPER_256KB_SEC.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>$$Device:MIMXRT1062DVL6A$Device\Include\fsl_device_registers.h</RegisterFile>
           <MemoryEnv/>
@@ -4131,7 +4151,7 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
@@ -4310,7 +4330,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>4</Optim>
+            <Optim>7</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -4319,10 +4339,10 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
@@ -4332,10 +4352,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1062DVL6A, USB_STACK_BM</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1062DVL6A, USB_STACK_BM, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../common/fmstr_example;..;../../../../../middleware/freemaster/boards/evkmimxrt1060;../../../../../CMSIS/Include;../../../../../devices;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/support/sec_ca/src;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le</IncludePath>
+              <IncludePath>../../common/fmstr_example;..;../../../../../middleware/freemaster/boards/evkmimxrt1060;../../../../../CMSIS/Include;../../../../../devices;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../components/serial_manager;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../devices/MIMXRT1062/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4348,7 +4368,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
@@ -4532,7 +4552,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER</GroupName>
+          <GroupName>freemaster</GroupName>
           <Files>
             <File>
               <FileName>freemaster.h</FileName>
@@ -4610,6 +4630,11 @@
               <FilePath>../../../../../middleware/freemaster/src/common/freemaster_serial.h</FilePath>
             </File>
             <File>
+              <FileName>freemaster_sha.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_sha.c</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_tsa.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/freemaster/src/common/freemaster_tsa.c</FilePath>
@@ -4642,7 +4667,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER/drivers/mcuxsdk/can</GroupName>
+          <GroupName>freemaster/drivers/mcuxsdk/can</GroupName>
           <Files>
             <File>
               <FileName>freemaster_flexcan.c</FileName>
@@ -4677,8 +4702,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER/drivers/mcuxsdk/serial</GroupName>
+          <GroupName>freemaster/drivers/mcuxsdk/serial</GroupName>
           <Files>
+            <File>
+              <FileName>freemaster_serial_lpsci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_lpsci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.h</FilePath>
+            </File>
             <File>
               <FileName>freemaster_serial_lpuart.c</FileName>
               <FileType>1</FileType>
@@ -4728,21 +4763,6 @@
               <FileName>freemaster_serial_usb.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>FreeMASTER/support/sec_ca</GroupName>
-          <Files>
-            <File>
-              <FileName>sha1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/sec_ca/src/sha1.c</FilePath>
-            </File>
-            <File>
-              <FileName>sha1.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/sec_ca/src/sha1.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4917,13 +4937,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER/platforms</GroupName>
+          <GroupName>freemaster/platforms</GroupName>
           <Files>
-            <File>
-              <FileName>freemaster_gen32le.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/platforms/gen32le/freemaster_gen32le.c</FilePath>
-            </File>
             <File>
               <FileName>freemaster_gen32le.h</FileName>
               <FileType>5</FileType>
@@ -4940,21 +4955,6 @@
               <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
@@ -4963,6 +4963,11 @@
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
@@ -4985,6 +4990,11 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
+              <FileName>core_armv81mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
+            </File>
+            <File>
               <FileName>core_armv8mbl.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
@@ -5004,6 +5014,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -5012,6 +5037,7 @@
       <TargetName>fmstr_example_uart sdram_release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>MIMXRT1062DVL6A</Device>
@@ -5021,7 +5047,6 @@
           <Cpu>CPUTYPE("Cortex-M7") FPU3(DFPU)</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0MIMXRT106x_HYPER_256KB_SEC -FS060000000 -FL04000000 -FP0($$Device:MIMXRT1062DVL6A$Flash\MIMXRT106x_HYPER_256KB_SEC.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>$$Device:MIMXRT1062DVL6A$Device\Include\fsl_device_registers.h</RegisterFile>
           <MemoryEnv/>
@@ -5311,7 +5336,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>4</Optim>
+            <Optim>7</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -5320,10 +5345,10 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
@@ -5333,10 +5358,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
-              <Define>SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1062DVL6A, USB_STACK_BM</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1062DVL6A, USB_STACK_BM, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../common/fmstr_example;..;../../../../../middleware/freemaster/boards/evkmimxrt1060;../../../../../CMSIS/Include;../../../../../devices;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/support/sec_ca/src;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le</IncludePath>
+              <IncludePath>../../common/fmstr_example;..;../../../../../middleware/freemaster/boards/evkmimxrt1060;../../../../../CMSIS/Include;../../../../../devices;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../components/serial_manager;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../xip;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../devices/MIMXRT1062/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5349,7 +5374,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
@@ -5533,7 +5558,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER</GroupName>
+          <GroupName>freemaster</GroupName>
           <Files>
             <File>
               <FileName>freemaster.h</FileName>
@@ -5611,6 +5636,11 @@
               <FilePath>../../../../../middleware/freemaster/src/common/freemaster_serial.h</FilePath>
             </File>
             <File>
+              <FileName>freemaster_sha.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_sha.c</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_tsa.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/freemaster/src/common/freemaster_tsa.c</FilePath>
@@ -5643,7 +5673,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER/drivers/mcuxsdk/can</GroupName>
+          <GroupName>freemaster/drivers/mcuxsdk/can</GroupName>
           <Files>
             <File>
               <FileName>freemaster_flexcan.c</FileName>
@@ -5678,8 +5708,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER/drivers/mcuxsdk/serial</GroupName>
+          <GroupName>freemaster/drivers/mcuxsdk/serial</GroupName>
           <Files>
+            <File>
+              <FileName>freemaster_serial_lpsci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_lpsci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.h</FilePath>
+            </File>
             <File>
               <FileName>freemaster_serial_lpuart.c</FileName>
               <FileType>1</FileType>
@@ -5729,21 +5769,6 @@
               <FileName>freemaster_serial_usb.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>FreeMASTER/support/sec_ca</GroupName>
-          <Files>
-            <File>
-              <FileName>sha1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/sec_ca/src/sha1.c</FilePath>
-            </File>
-            <File>
-              <FileName>sha1.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/support/sec_ca/src/sha1.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5918,13 +5943,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeMASTER/platforms</GroupName>
+          <GroupName>freemaster/platforms</GroupName>
           <Files>
-            <File>
-              <FileName>freemaster_gen32le.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/platforms/gen32le/freemaster_gen32le.c</FilePath>
-            </File>
             <File>
               <FileName>freemaster_gen32le.h</FileName>
               <FileType>5</FileType>
@@ -5941,21 +5961,6 @@
               <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
@@ -5964,6 +5969,11 @@
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
@@ -5986,6 +5996,11 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
+              <FileName>core_armv81mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
+            </File>
+            <File>
               <FileName>core_armv8mbl.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
@@ -6004,6 +6019,21 @@
               <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
           </Files>
         </Group>

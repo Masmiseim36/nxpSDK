@@ -45,17 +45,17 @@ extern "C" {
 void BOARD_InitBootPins(void);
 
 /* GPIO_AD_B0_07 (number 68), LPUART1_RXD */
-#define BOARD_INITPINS_UART1_RXD_PERIPHERAL                              LPUART1   /*!< Device name: LPUART1 */
-#define BOARD_INITPINS_UART1_RXD_SIGNAL                                       RX   /*!< LPUART1 signal: RX */
+#define BOARD_UART1_RXD_PERIPHERAL                                       LPUART1   /*!< Device name: LPUART1 */
+#define BOARD_UART1_RXD_SIGNAL                                                RX   /*!< LPUART1 signal: RX */
 
 /* GPIO_AD_B0_06 (number 72), LPUART1_TXD */
-#define BOARD_INITPINS_UART1_TXD_PERIPHERAL                              LPUART1   /*!< Device name: LPUART1 */
-#define BOARD_INITPINS_UART1_TXD_SIGNAL                                       TX   /*!< LPUART1 signal: TX */
+#define BOARD_UART1_TXD_PERIPHERAL                                       LPUART1   /*!< Device name: LPUART1 */
+#define BOARD_UART1_TXD_SIGNAL                                                TX   /*!< LPUART1 signal: TX */
 
 /* GPIO_SD_B1_01 (number 21), GPIO SD_B1_01 */
-#define BOARD_INITPINS_USER_LED_GPIO                                       GPIO3   /*!< GPIO device name: GPIO3 */
-#define BOARD_INITPINS_USER_LED_PORT                                       GPIO3   /*!< PORT device name: GPIO3 */
-#define BOARD_INITPINS_USER_LED_PIN                                          21U   /*!< GPIO3 pin index: 21 */
+#define BOARD_USER_LED_GPIO                                                GPIO3   /*!< GPIO device name: GPIO3 */
+#define BOARD_USER_LED_PORT                                                GPIO3   /*!< PORT device name: GPIO3 */
+#define BOARD_USER_LED_PIN                                                   21U   /*!< GPIO3 pin index: 21 */
 
 
 /*!
@@ -65,12 +65,12 @@ void BOARD_InitBootPins(void);
 void BOARD_InitPins(void);
 
 /* GPIO_AD_B1_14 (number 53), I2C1_SCL/U10[17]/J18[6]/U26[4] */
-#define BOARD_I2C_CONFIGUREPINS_I2C1_SCL_PERIPHERAL                       LPI2C1   /*!< Device name: LPI2C1 */
-#define BOARD_I2C_CONFIGUREPINS_I2C1_SCL_SIGNAL                              SCL   /*!< LPI2C1 signal: SCL */
+#define BOARD_I2C1_SCL_PERIPHERAL                                         LPI2C1   /*!< Device name: LPI2C1 */
+#define BOARD_I2C1_SCL_SIGNAL                                                SCL   /*!< LPI2C1 signal: SCL */
 
 /* GPIO_AD_B1_15 (number 52), I2C1_SDA/U10[18]/J18[5]/J19[9]/U26[6] */
-#define BOARD_I2C_CONFIGUREPINS_I2C1_SDA_PERIPHERAL                       LPI2C1   /*!< Device name: LPI2C1 */
-#define BOARD_I2C_CONFIGUREPINS_I2C1_SDA_SIGNAL                              SDA   /*!< LPI2C1 signal: SDA */
+#define BOARD_I2C1_SDA_PERIPHERAL                                         LPI2C1   /*!< Device name: LPI2C1 */
+#define BOARD_I2C1_SDA_SIGNAL                                                SDA   /*!< LPI2C1 signal: SDA */
 
 
 /*!

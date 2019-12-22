@@ -84,6 +84,18 @@ extern void USB_EhciPhyDeinit(uint8_t controllerId);
  */
 extern void USB_EhcihostPhyDisconnectDetectCmd(uint8_t controllerId, uint8_t enable);
 
+/*!
+ * @brief Force the PHY enter FS Mode
+ *
+ * on RT500 and RT600, the device doesn't enter FS Mode after vbus is invalide and the controller works as HS.
+ *
+ * @param[in] controllerId   EHCI controller ID; See #usb_controller_index_t.
+ * @param[in] enable
+ *            1U - enable;
+ *            0U - disable;
+ */
+extern void USB_PhyDeviceForceEnterFSMode(uint8_t controllerId, uint8_t enable);
+
 #if defined(__cplusplus)
 }
 #endif

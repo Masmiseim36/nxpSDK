@@ -83,6 +83,10 @@
 #define BOARD_SW_IRQ_HANDLER BOARD_USER_BUTTON_IRQ_HANDLER
 #define BOARD_SW_NAME BOARD_USER_BUTTON_NAME
 
+/* demo audio data channel */
+#define DEMO_AUDIO_DATA_CHANNEL (2U)
+/* demo audio bit width */
+#define DEMO_AUDIO_BIT_WIDTH kSAI_WordWidth16bits
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -94,7 +98,7 @@ void USB_DeviceTaskFn(void *deviceHandle);
 #endif
 
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param);
-extern void Init_Board_Sai_Codec(void);
+extern void Init_Board_Audio(void);
 extern usb_status_t USB_DeviceHidKeyboardAction(void);
 extern char *SW_GetName(void);
 extern void USB_AudioCodecTask(void);
@@ -105,12 +109,9 @@ extern void USB_AudioSpeakerResetTask(void);
 extern usb_device_composite_struct_t g_composite;
 extern uint8_t audioPlayDataBuff[AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_OUT_ENDP_PACKET_SIZE];
 extern uint8_t audioRecDataBuff[AUDIO_RECORDER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_IN_ENDP_PACKET_SIZE];
-extern sai_transfer_format_t audioFormat;
+
 volatile bool g_ButtonPress = false;
 
-sai_config_t saiTxConfig;
-sai_config_t saiRxConfig;
-sai_transfer_format_t audioFormat;
 sai_edma_handle_t txHandle = {0};
 edma_handle_t dmaTxHandle  = {0};
 sai_edma_handle_t rxHandle = {0};
@@ -119,10 +120,10 @@ USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 static uint8_t audioPlayDMATempBuff[FS_ISO_OUT_ENDP_PACKET_SIZE];
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 static uint8_t audioRecDMATempBuff[FS_ISO_IN_ENDP_PACKET_SIZE];
-uint32_t masterClockHz                       = 0U;
-uint8_t codecHandleBuffer[CODEC_HANDLE_SIZE] = {0U};
-codec_handle_t *codecHandle                  = (codec_handle_t *)codecHandleBuffer;
-wm8960_config_t wm8960Config                 = {
+uint32_t masterClockHz = 0U;
+codec_handle_t codecHandle;
+
+wm8960_config_t wm8960Config = {
     .i2cConfig = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE, .codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ},
     .route     = kWM8960_RoutePlaybackandRecord,
     .rightInputSource = kWM8960_InputDifferentialMicInput2,
@@ -136,6 +137,7 @@ wm8960_config_t wm8960Config                 = {
 };
 codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8960, .codecDevConfig = &wm8960Config};
 /* Composite device structure. */
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 usb_device_composite_struct_t g_composite;
 extern usb_device_class_struct_t g_UsbDeviceHidMouseClass;
 extern usb_device_class_struct_t g_UsbDeviceAudioClassRecorder;
@@ -236,53 +238,12 @@ char *SW_GetName(void)
 
 void BOARD_Codec_Init()
 {
-    CODEC_Init(codecHandle, &boardCodecConfig);
+    CODEC_Init(&codecHandle, &boardCodecConfig);
 }
 
 void BOARD_SetCodecMuteUnmute(bool mute)
 {
-    CODEC_SetMute(codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, mute);
-}
-
-void SAI_USB_Audio_TxInit(I2S_Type *SAIBase)
-{
-    SAI_TxGetDefaultConfig(&saiTxConfig);
-
-    SAI_TxInit(SAIBase, &saiTxConfig);
-}
-
-void SAI_USB_Audio_RxInit(I2S_Type *SAIBase)
-{
-    SAI_RxGetDefaultConfig(&saiRxConfig);
-
-    SAI_RxInit(SAIBase, &saiRxConfig);
-}
-
-void WM8960_Config_Audio_Formats(uint32_t samplingRate)
-{
-    /* Configure the audio audioFormat */
-    audioFormat.bitWidth      = kSAI_WordWidth16bits;
-    audioFormat.channel       = 0U;
-    audioFormat.sampleRate_Hz = samplingRate;
-
-#if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) || \
-    (defined FSL_FEATURE_PCC_HAS_SAI_DIVIDER && FSL_FEATURE_PCC_HAS_SAI_DIVIDER)
-    masterClockHz = OVER_SAMPLE_RATE * format.sampleRate_Hz;
-#else
-    masterClockHz = DEMO_SAI_CLK_FREQ;
-#endif
-    audioFormat.protocol = saiTxConfig.protocol;
-    audioFormat.stereo   = kSAI_Stereo;
-#if defined(FSL_FEATURE_SAI_FIFO_COUNT) && (FSL_FEATURE_SAI_FIFO_COUNT > 1)
-    audioFormat.watermark = FSL_FEATURE_SAI_FIFO_COUNT / 2U;
-#endif
-}
-
-void BOARD_USB_Audio_TxRxInit(uint32_t samplingRate)
-{
-    SAI_USB_Audio_TxInit(BOARD_DEMO_SAI);
-    SAI_USB_Audio_RxInit(BOARD_DEMO_SAI);
-    WM8960_Config_Audio_Formats(samplingRate);
+    CODEC_SetMute(&codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, mute);
 }
 
 static void txCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
@@ -337,7 +298,28 @@ static void rxCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t statu
     }
     SAI_TransferReceiveEDMA(base, handle, &xfer);
 }
+void BOARD_USB_Audio_TxRxInit(uint32_t samplingRate)
+{
+    sai_transceiver_t config;
+    SAI_Init(BOARD_DEMO_SAI);
+    SAI_TransferTxCreateHandleEDMA(BOARD_DEMO_SAI, &txHandle, txCallback, NULL, &dmaTxHandle);
+    SAI_TransferRxCreateHandleEDMA(BOARD_DEMO_SAI, &rxHandle, rxCallback, NULL, &dmaRxHandle);
+    /* I2S mode configurations */
+    SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, kSAI_Channel0Mask);
+    SAI_TransferTxSetConfigEDMA(BOARD_DEMO_SAI, &txHandle, &config);
+    config.syncMode = kSAI_ModeSync;
+    SAI_TransferRxSetConfigEDMA(BOARD_DEMO_SAI, &rxHandle, &config);
 
+#if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) || \
+    (defined FSL_FEATURE_PCC_HAS_SAI_DIVIDER && FSL_FEATURE_PCC_HAS_SAI_DIVIDER)
+    masterClockHz = OVER_SAMPLE_RATE * sampleRate_Hz;
+#else
+    masterClockHz = DEMO_SAI_CLK_FREQ;
+#endif
+    /* set bit clock divider */
+    SAI_TxSetBitClockRate(BOARD_DEMO_SAI, masterClockHz, samplingRate, DEMO_AUDIO_BIT_WIDTH, DEMO_AUDIO_DATA_CHANNEL);
+    SAI_RxSetBitClockRate(BOARD_DEMO_SAI, masterClockHz, samplingRate, DEMO_AUDIO_BIT_WIDTH, DEMO_AUDIO_DATA_CHANNEL);
+}
 void BOARD_DMA_EDMA_Config()
 {
     edma_config_t dmaConfig = {0};
@@ -351,21 +333,6 @@ void BOARD_DMA_EDMA_Config()
     DMAMUX_EnableChannel(EXAMPLE_DMAMUX, EXAMPLE_TX_CHANNEL);
     DMAMUX_SetSource(EXAMPLE_DMAMUX, EXAMPLE_RX_CHANNEL, (uint8_t)EXAMPLE_SAI_RX_SOURCE);
     DMAMUX_EnableChannel(EXAMPLE_DMAMUX, EXAMPLE_RX_CHANNEL);
-}
-
-void BOARD_Create_Audio_DMA_EDMA_Handle()
-{
-    SAI_TransferTxCreateHandleEDMA(BOARD_DEMO_SAI, &txHandle, txCallback, NULL, &dmaTxHandle);
-    SAI_TransferRxCreateHandleEDMA(BOARD_DEMO_SAI, &rxHandle, rxCallback, NULL, &dmaRxHandle);
-}
-
-void BOARD_DMA_EDMA_Set_AudioFormat()
-{
-    uint32_t mclkSourceClockHz = 0U;
-    mclkSourceClockHz          = DEMO_SAI_CLK_FREQ;
-    BOARD_Create_Audio_DMA_EDMA_Handle();
-    SAI_TransferTxSetFormatEDMA(BOARD_DEMO_SAI, &txHandle, &audioFormat, mclkSourceClockHz, masterClockHz);
-    SAI_TransferRxSetFormatEDMA(BOARD_DEMO_SAI, &rxHandle, &audioFormat, mclkSourceClockHz, masterClockHz);
 }
 
 void BOARD_DMA_EDMA_Enable_Audio_Interrupts()
@@ -390,11 +357,16 @@ void BOARD_DMA_EDMA_Start()
     SAI_TransferReceiveEDMA(BOARD_DEMO_SAI, &rxHandle, &xfer);
 }
 
-void BOARD_Transfer_Mode_Config()
+/*Initialize audio interface and codec.*/
+void Init_Board_Audio(void)
 {
+    usb_echo("Init Audio SAI and CODEC\r\n");
+
+    BOARD_USB_AUDIO_KEYBOARD_Init();
+
     BOARD_DMA_EDMA_Config();
-    BOARD_Create_Audio_DMA_EDMA_Handle();
-    BOARD_DMA_EDMA_Set_AudioFormat();
+    BOARD_USB_Audio_TxRxInit(AUDIO_SAMPLING_RATE);
+    BOARD_Codec_Init();
     BOARD_DMA_EDMA_Enable_Audio_Interrupts();
     BOARD_DMA_EDMA_Start();
 }
@@ -482,11 +454,16 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
     usb_status_t error = kStatus_USB_Error;
     uint16_t *temp16   = (uint16_t *)param;
     uint8_t *temp8     = (uint8_t *)param;
+    uint8_t count      = 0U;
 
     switch (event)
     {
         case kUSB_DeviceEventBusReset:
         {
+            for(count = 0U; count < USB_DEVICE_INTERFACE_COUNT; count++)
+            {
+                g_composite.currentInterfaceAlternateSetting[count] = 0U;
+            }
             g_composite.attach               = 0U;
             g_composite.currentConfiguration = 0U;
             error                            = kStatus_USB_Success;
@@ -648,7 +625,7 @@ void APPInit(void)
         USB_DeviceHidKeyboardInit(&g_composite);
     }
 
-    Init_Board_Sai_Codec();
+    Init_Board_Audio();
 
     USB_DeviceIsrEnable();
 

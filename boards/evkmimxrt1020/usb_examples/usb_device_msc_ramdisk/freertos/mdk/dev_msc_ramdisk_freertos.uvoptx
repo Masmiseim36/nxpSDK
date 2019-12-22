@@ -17,7 +17,7 @@
     <dwHighDateTime>0</dwHighDateTime>
   </DaveTm>
   <Target>
-    <TargetName>dev_msc_ramdisk_freertos flexspi_nor_debug</TargetName>
+    <TargetName>dev_msc_ramdisk_freertos flexspi_nor_sdram_debug</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -168,7 +168,7 @@
     </TargetOption>
   </Target>
   <Target>
-    <TargetName>dev_msc_ramdisk_freertos flexspi_nor_release</TargetName>
+    <TargetName>dev_msc_ramdisk_freertos flexspi_nor_sdram_release</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>

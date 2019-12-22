@@ -374,7 +374,7 @@ static void USB_DeviceApplicationInit(void)
     g_DevicePrinterApp.prnterTaskState = kPrinter_Idle;
     g_DevicePrinterApp.speed = USB_SPEED_FULL;
     g_DevicePrinterApp.attach = 0U;
-    g_DevicePrinterApp.classHandle = (uint32_t)NULL;
+    g_DevicePrinterApp.classHandle = (void *)NULL;
     g_DevicePrinterApp.deviceHandle = NULL;
     g_DevicePrinterApp.printerBuffer = s_PrinterBuffer;
 

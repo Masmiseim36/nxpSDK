@@ -28,7 +28,7 @@
 
 /*! @brief Enable or disable uart port (1 - enable, 0 - disable) */
 #ifndef SERIAL_PORT_TYPE_UART
-#define SERIAL_PORT_TYPE_UART (1U)
+#define SERIAL_PORT_TYPE_UART (0U)
 #endif
 
 /*! @brief Enable or disable USB CDC port (1 - enable, 0 - disable) */
@@ -208,8 +208,8 @@ extern "C" {
  * For UART,
  *  @code
  *   #define SERIAL_MANAGER_RING_BUFFER_SIZE          (256U)
- *   static uint8_t s_serialHandleBuffer[SERIAL_MANAGER_HANDLE_SIZE];
- *   static serial_handle_t s_serialHandle = &s_serialHandleBuffer[0];
+ *   static uint32_t s_serialHandleBuffer[((SERIAL_MANAGER_HANDLE_SIZE + sizeof(uint32_t) - 1) / sizeof(uitn32_t))];
+ *   static serial_handle_t s_serialHandle = (serial_handle_t)&s_serialHandleBuffer[0];
  *   static uint8_t s_ringBuffer[SERIAL_MANAGER_RING_BUFFER_SIZE];
  *
  *   serial_manager_config_t config;
@@ -230,8 +230,8 @@ extern "C" {
  * For USB CDC,
  *  @code
  *   #define SERIAL_MANAGER_RING_BUFFER_SIZE          (256U)
- *   static uint8_t s_serialHandleBuffer[SERIAL_MANAGER_HANDLE_SIZE];
- *   static serial_handle_t s_serialHandle = &s_serialHandleBuffer[0];
+ *   static uint32_t s_serialHandleBuffer[((SERIAL_MANAGER_HANDLE_SIZE + sizeof(uint32_t) - 1) / sizeof(uitn32_t))];
+ *   static serial_handle_t s_serialHandle = (serial_handle_t)&s_serialHandleBuffer[0];
  *   static uint8_t s_ringBuffer[SERIAL_MANAGER_RING_BUFFER_SIZE];
  *
  *   serial_manager_config_t config;
@@ -245,6 +245,7 @@ extern "C" {
  *  @endcode
  *
  * @param serialHandle Pointer to point to a memory space of size #SERIAL_MANAGER_HANDLE_SIZE allocated by the caller.
+ * The handle should be 4 byte aligned, because unaligned access does not support on some devices.
  * @param config Pointer to user-defined configuration structure.
  * @retval kStatus_SerialManager_Error An error occurred.
  * @retval kStatus_SerialManager_Success The Serial Manager module initialization succeed.
@@ -273,7 +274,9 @@ serial_manager_status_t SerialManager_Deinit(serial_handle_t serialHandle);
  * is needed for a task.
  *
  * @param serialHandle The serial manager module handle pointer.
+ * The handle should be 4 byte aligned, because unaligned access does not support on some devices.
  * @param writeHandle The serial manager module writing handle pointer.
+ * The handle should be 4 byte aligned, because unaligned access does not support on some devices.
  * @retval kStatus_SerialManager_Error An error occurred.
  * @retval kStatus_SerialManager_HandleConflict The writing handle was opened.
  * @retval kStatus_SerialManager_Success The writing handle is opened.
@@ -281,19 +284,19 @@ serial_manager_status_t SerialManager_Deinit(serial_handle_t serialHandle);
  * Example below shows how to use this API to write data.
  * For task 1,
  *  @code
- *   static uint8_t s_serialWriteHandleBuffer1[SERIAL_MANAGER_WRITE_HANDLE_SIZE];
- *   static serial_write_handle_t s_serialWriteHandle1 = &s_serialWriteHandleBuffer1[0];
- *   static uint8_t s_nonBlockingWelcome1[] = "This is non-blocking writing log for task1!\r\n";
- *   SerialManager_OpenWriteHandle(serialHandle, s_serialWriteHandle1);
+ *   static uint32_t s_serialWriteHandleBuffer1[((SERIAL_MANAGER_WRITE_HANDLE_SIZE + sizeof(uint32_t) - 1) /
+ * sizeof(uitn32_t))]; static serial_write_handle_t s_serialWriteHandle1 =
+ * (serial_write_handle_t)&s_serialWriteHandleBuffer1[0]; static uint8_t s_nonBlockingWelcome1[] = "This is non-blocking
+ * writing log for task1!\r\n"; SerialManager_OpenWriteHandle(serialHandle, s_serialWriteHandle1);
  *   SerialManager_InstallTxCallback(s_serialWriteHandle1, Task1_SerialManagerTxCallback, s_serialWriteHandle1);
  *   SerialManager_WriteNonBlocking(s_serialWriteHandle1, s_nonBlockingWelcome1, sizeof(s_nonBlockingWelcome1) - 1);
  *  @endcode
  * For task 2,
  *  @code
- *   static uint8_t s_serialWriteHandleBuffer2[SERIAL_MANAGER_WRITE_HANDLE_SIZE];
- *   static serial_write_handle_t s_serialWriteHandle2 = &s_serialWriteHandleBuffer2[0];
- *   static uint8_t s_nonBlockingWelcome2[] = "This is non-blocking writing log for task2!\r\n";
- *   SerialManager_OpenWriteHandle(serialHandle, s_serialWriteHandle2);
+ *   static uint32_t s_serialWriteHandleBuffer2[((SERIAL_MANAGER_WRITE_HANDLE_SIZE + sizeof(uint32_t) - 1) /
+ * sizeof(uitn32_t))]; static serial_write_handle_t s_serialWriteHandle2 =
+ * (serial_write_handle_t)&s_serialWriteHandleBuffer2[0]; static uint8_t s_nonBlockingWelcome2[] = "This is non-blocking
+ * writing log for task2!\r\n"; SerialManager_OpenWriteHandle(serialHandle, s_serialWriteHandle2);
  *   SerialManager_InstallTxCallback(s_serialWriteHandle2, Task2_SerialManagerTxCallback, s_serialWriteHandle2);
  *   SerialManager_WriteNonBlocking(s_serialWriteHandle2, s_nonBlockingWelcome2, sizeof(s_nonBlockingWelcome2) - 1);
  *  @endcode
@@ -319,16 +322,18 @@ serial_manager_status_t SerialManager_CloseWriteHandle(serial_write_handle_t wri
  * reading handle at the same time.
  *
  * @param serialHandle The serial manager module handle pointer.
+ * The handle should be 4 byte aligned, because unaligned access does not support on some devices.
  * @param readHandle The serial manager module reading handle pointer.
+ * The handle should be 4 byte aligned, because unaligned access does not support on some devices.
  * @retval kStatus_SerialManager_Error An error occurred.
  * @retval kStatus_SerialManager_Success The reading handle is opened.
  * @retval kStatus_SerialManager_Busy Previous reading handle is not closed.
  *
  * Example below shows how to use this API to read data.
  *  @code
- *   static uint8_t s_serialReadHandleBuffer[SERIAL_MANAGER_READ_HANDLE_SIZE];
- *   static serial_read_handle_t s_serialReadHandle = &s_serialReadHandleBuffer[0];
- *   SerialManager_OpenReadHandle(serialHandle, s_serialReadHandle);
+ *   static uint32_t s_serialReadHandleBuffer[((SERIAL_MANAGER_READ_HANDLE_SIZE + sizeof(uint32_t) - 1) /
+ * sizeof(uitn32_t))]; static serial_read_handle_t s_serialReadHandle =
+ * (serial_read_handle_t)&s_serialReadHandleBuffer[0]; SerialManager_OpenReadHandle(serialHandle, s_serialReadHandle);
  *   static uint8_t s_nonBlockingBuffer[64];
  *   SerialManager_InstallRxCallback(s_serialReadHandle, APP_SerialManagerRxCallback, s_serialReadHandle);
  *   SerialManager_ReadNonBlocking(s_serialReadHandle, s_nonBlockingBuffer, sizeof(s_nonBlockingBuffer));

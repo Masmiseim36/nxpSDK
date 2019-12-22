@@ -6,9 +6,9 @@
 **                          MIMXRT1064DVL6A
 **
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
-**     Reference manual:    IMXRT1064RM Rev.0.1, 12/2018
+**     Reference manual:    IMXRT1064RM Rev.0.1, 12/2018 | IMXRT1064SRM Rev.3
 **     Version:             rev. 0.1, 2018-06-22
-**     Build:               b190226
+**     Build:               b191015
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
@@ -50,14 +50,16 @@ if (isdefinedsymbol(__heap_size__)) {
   define symbol __size_heap__          = 0x1000;
 }
 
-define exported symbol __VECTOR_TABLE  = m_interrupts_start;
-define exported symbol __VECTOR_RAM    = m_interrupts_start;
+define exported symbol __NCACHE_REGION_START   = m_data2_start;
+define exported symbol __NCACHE_REGION_SIZE    = 0x0;
+
+define exported symbol __VECTOR_TABLE          = m_interrupts_start;
+define exported symbol __VECTOR_RAM            = m_interrupts_start;
 define exported symbol __RAM_VECTOR_TABLE_SIZE = 0x0;
 
 define memory mem with size = 4G;
 define region TEXT_region = mem:[from m_interrupts_start to m_interrupts_end]
                           | mem:[from m_text_start to m_text_end];
-
 define region DATA_region = mem:[from m_data_start to m_data_end-__size_cstack__];
 define region DATA2_region = mem:[from m_data2_start to m_data2_end];
 define region CSTACK_region = mem:[from m_data_end-__size_cstack__+1 to m_data_end];
@@ -79,4 +81,3 @@ place in DATA_region                        { block ZI };
 place in DATA_region                        { last block HEAP };
 place in DATA_region                        { block NCACHE_VAR };
 place in CSTACK_region                      { block CSTACK };
-

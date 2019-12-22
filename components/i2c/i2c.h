@@ -174,7 +174,7 @@ extern "C" {
  *
  * This is an example.
  * @code
- *  uint8_t g_i2cMasterHandleBuffer[HAL_I2C_MASTER_HANDLE_SIZE];
+ *  uint32_t g_i2cMasterHandleBuffer[((HAL_I2C_MASTER_HANDLE_SIZE + sizeof(uint32_t) - 1) / sizeof(uitn32_t))];
  *  hal_i2c_master_handle_t g_i2cMasterHandle = (hal_i2c_master_handle_t)&g_i2cMasterHandleBuffer[0];
  *  hal_i2c_master_config_t masterConfig;
  *  masterConfig.enableMaster = true;
@@ -185,6 +185,7 @@ extern "C" {
  * @endcode
  *
  * @param handle Pointer to point to a memory space of size #HAL_I2C_MASTER_HANDLE_SIZE allocated by the caller.
+ * The handle should be 4 byte aligned, because unaligned access does not support on some devices.
  * @param config A pointer to the master configuration structure
  * @retval kStatus_HAL_I2cError An error occurred.
  * @retval kStatus_HAL_I2cSuccess i2c master initialization succeed
@@ -214,6 +215,7 @@ hal_i2c_status_t HAL_I2cMasterInit(hal_i2c_master_handle_t handle, const hal_i2c
  * @endcode
  *
  * @param handle Pointer to point to a memory space of size #HAL_I2C_SLAVE_HANDLE_SIZE allocated by the caller.
+ * The handle should be 4 byte aligned, because unaligned access does not support on some devices.
  * @param config A pointer to the slave configuration structure
  * @retval kStatus_HAL_I2cError An error occurred.
  * @retval kStatus_HAL_I2cSuccess i2c slave initialization succeed

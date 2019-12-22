@@ -50,6 +50,12 @@ void SDMMCEVENT_InitTimer(void)
     /* special for i.mx6ul */
     SystemSetupSystick(1000U, (void *)SysTick_Handler, 32U);
     SystemClearSystickFlag();
+#elif defined MIMXRT1176_cm7_SERIES || MIMXRT1176_cm4_SERIES
+#if __CORTEX_M == 7
+    SysTick_Config(CLOCK_GetM7Freq() / 1000); // CLOCK_GetRootClockFreq(kCLOCK_Root_M7_Systick) / 1000U);
+#else
+    SysTick_Config(CLOCK_GetM4Freq() / 1000U);
+#endif
 #else
     /* Set systick reload value to generate 1ms interrupt */
     SysTick_Config(CLOCK_GetFreq(kCLOCK_CoreSysClk) / 1000U);

@@ -408,7 +408,7 @@ typedef struct _usb_host_video_stream_payload_mjpeg_frame_desc
     /*< Indicates how the frame interval can be programmed */
     uint8_t bFrameIntervalType;
     /*< Shortest frame interval supported (at highest frame rate), in 100ns units */
-    uint8_t dwMinFrameInterval[4];
+    uint8_t dwMinFrameInterval[0];
 } usb_host_video_stream_payload_mjpeg_frame_desc_t;
 
 /*! @brief video stream interface uncompressed frame descriptor structure */
@@ -443,7 +443,7 @@ typedef struct _usb_host_video_stream_payload_uncompressed_frame_desc
     /*< Indicates how the frame interval can be programmed */
     uint8_t bFrameIntervalType;
     /*< Shortest frame interval supported (at highest frame rate), in 100ns units */
-    uint8_t dwMinFrameInterval[4];
+    uint8_t dwMinFrameInterval[0];
 } usb_host_video_stream_payload_uncompressed_frame_desc_t;
 
 /*! @brief video stream interface probe and commit controls descriptor structure */

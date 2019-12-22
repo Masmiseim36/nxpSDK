@@ -15,9 +15,9 @@ https://community.cypress.com/docs/DOC-15586 (Linux)
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- GCC ARM Embedded  8.2.1
-- MCUXpresso  11.0.0
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -26,17 +26,17 @@ Hardware requirements
 - Personal Computer
 - Murata 1DX M.2 module
 - Murata uSD M.2 Adapter
-- 4 plug to receptable header cables
+- 5 plug to receptable header cables
 - USB/UART converter and cables
 
 Board settings
 ==============
 Murata 1DX M.2 module is connected with Murata uSD M.2 Adapter which is plugged into uSD connector on evkmimxrt1060 board.
 
-Murata uSD M.2 Adapter's jumpers J11 and J12 are open, J1 shorts position 2-3.
+Murata uSD M.2 Adapter's jumper J11 is open, J1 shorts position 2-3, J12 shorts position 1-2.
 
 The following pins between the evkmimxrt1060 board and Murata uSD M.2 Adapter are connected using the plug to receptable cables:
-- evkmimxrt1060 board's connector J22, pins 1-2 to Murata uSD M.2 Adapter's connector J9, pins 1-2
+- evkmimxrt1060 board's connector J22, pins 1, 2 and 4 to Murata uSD M.2 Adapter's connector J9, pins 1, 2 and 4
 - evkmimxrt1060 board's connector J23, pins 3-4 to Murata uSD M.2 Adapter's connector J8, pins 3-4
 
 Connect the board with PC by using USB/UART converter:

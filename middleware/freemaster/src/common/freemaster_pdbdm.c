@@ -40,9 +40,16 @@
     #error The communication buffer size (FMSTR_COMM_BUFFER_SIZE) must be smaller than 240 bytes.
 #endif
 
+#ifndef FMSTR_PDBDM_DEBUG
+    #define FMSTR_PDBDM_DEBUG 0
+#endif
+
 #include "freemaster_protocol.h"
 #include "freemaster_utils.h"
 
+#if FMSTR_PDBDM_DEBUG
+#include "stdio.h"
+#endif
 /******************************************************************************
 * Protocol constants
 *******************************************************************************/
@@ -68,7 +75,7 @@ typedef struct
     FMSTR_U8    padding0;                   /* Padding to align buffer by 4. */
     FMSTR_U8    cmdStatus;                  /* Command status byte */
     FMSTR_BCHR  commBuffer[FMSTR_COMM_BUFFER_SIZE]; /*FreeMASTER Packet driven BDM communication buffer (in/out) plus the STS */
-    FMSTR_U32   reservedForCrc;             /* Reserved to store additional checking informations in communication in case that full lenght of buffer is used. */
+    FMSTR_U32   reservedForCrc;             /* Reserved to store additional checking informations in communication in case that full length of buffer is used. */
     FMSTR_U32   ctxEnd;                     /* Border code of Packet driven BDM communication buffer */
 }FMSTR_PDBDM_COMBUFF;
 
@@ -134,6 +141,9 @@ static void _FMSTR_PdBdmPoll(void)
         FMSTR_INDEX i;
         FMSTR_Crc8Init(&crc);
 
+#if FMSTR_PDBDM_DEBUG
+        printf("PDBDM - Received Frame(cmd: 0x%02X, len: %d).\n", _pdbdm.cmdStatus, _pdbdm.pcktSize);
+#endif
         /* Check Packet consistency */
         FMSTR_Crc8AddByte(&crc, _pdbdm.pcktSize);
         FMSTR_Crc8AddByte(&crc, _pdbdm.cmdStatus);
@@ -144,6 +154,18 @@ static void _FMSTR_PdBdmPoll(void)
         /* If CRC is valid, do the prtocol decoding, otherwise wait to finish background write*/
         if(crc == _pdbdm.commBuffer[i])
         {
+#if FMSTR_PDBDM_DEBUG
+            FMSTR_INDEX j;
+            if(_pdbdm.pcktSize)
+            {
+                printf("PDBDM - Received Frame Data: \n");
+                for(j=0;j<_pdbdm.pcktSize;j++)
+                {
+                    printf("%02X ", _pdbdm.commBuffer[j]);
+                }
+                printf("\n");
+            }
+#endif
             /* Packet is potencionally received */
             _pdbdm.bdmState = FMSTR_PDBDM_DECODING_FRAME;
             /* Destroy the last CRC in memory */
@@ -151,6 +173,12 @@ static void _FMSTR_PdBdmPoll(void)
             /* Decode received packet */
             (void)FMSTR_ProtocolDecoder(_pdbdm.commBuffer, _pdbdm.pcktSize, _pdbdm.cmdStatus);
         }
+#if FMSTR_PDBDM_DEBUG
+        else
+        {
+            printf("PDBDM - Received Frame has invalid CRC(excepted: 0x%02X, received: 0x%02X).\n", crc, _pdbdm.commBuffer[i]);
+        }
+#endif
     }
 }
 
@@ -185,6 +213,17 @@ static void _FMSTR_PdBdmSendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, F
     _pdbdm.commBuffer[i] = crc;
     _pdbdm.pcktSize = nLength;
     _pdbdm.cmdStatus = statusCode;
+#if FMSTR_PDBDM_DEBUG
+        printf("PDBDM - Prepared response(status: 0x%02X, len: %d).\n", _pdbdm.cmdStatus, _pdbdm.pcktSize);
+        if(_pdbdm.pcktSize)
+        {
+            for(i=0;i<_pdbdm.pcktSize;i++)
+            {
+                printf("%02X ", _pdbdm.commBuffer[i]);
+            }
+        }
+        printf(" CRC: 0x%02X.\n", crc);
+#endif
     /* Frame is ready to send */
     _pdbdm.bdmState = FMSTR_PDBDM_FRAME_TO_SEND;
 }

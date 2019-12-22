@@ -13,20 +13,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-#ifndef TENSORFLOW_CONTRIB_LITE_EXAMPLES_LABEL_IMAGE_BITMAP_HELPERS_IMPL_H_
-#define TENSORFLOW_CONTRIB_LITE_EXAMPLES_LABEL_IMAGE_BITMAP_HELPERS_IMPL_H_
+/* File modified by NXP. Changes are described in file
+   /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes" */
 
-#include "tensorflow/contrib/lite/builtin_op_data.h"
-#include "tensorflow/contrib/lite/interpreter.h"
-#include "tensorflow/contrib/lite/kernels/register.h"
-#include "tensorflow/contrib/lite/string_util.h"
-#include "tensorflow/contrib/lite/version.h"
+#ifndef TENSORFLOW_LITE_EXAMPLES_BITMAP_HELPERS_IMPL_H_
+#define TENSORFLOW_LITE_EXAMPLES_BITMAP_HELPERS_IMPL_H_
 
-#include "tensorflow/contrib/lite/builtin_op_data.h"
-#include "tensorflow/contrib/lite/interpreter.h"
-#include "tensorflow/contrib/lite/kernels/register.h"
-#include "tensorflow/contrib/lite/string_util.h"
-#include "tensorflow/contrib/lite/version.h"
+#include "tensorflow/lite/builtin_op_data.h"
+#include "tensorflow/lite/interpreter.h"
+#include "tensorflow/lite/kernels/register.h"
+#include "tensorflow/lite/string_util.h"
+#include "tensorflow/lite/version.h"
+
+#include "tensorflow/lite/builtin_op_data.h"
+#include "tensorflow/lite/interpreter.h"
+#include "tensorflow/lite/kernels/register.h"
+#include "tensorflow/lite/string_util.h"
+#include "tensorflow/lite/version.h"
 
 #include "label_image.h"
 
@@ -34,7 +37,7 @@ namespace tflite {
 namespace label_image {
 
 template <class T>
-void resize(T* out, uint8_t* in, int image_height, int image_width,
+void Resize(T* out, uint8_t* in, int image_height, int image_width,
             int image_channels, int wanted_height, int wanted_width,
             int wanted_channels, Settings* s) {
   int number_of_pixels = image_height * image_width * image_channels;
@@ -100,4 +103,4 @@ void resize(T* out, uint8_t* in, int image_height, int image_width,
 }  // namespace label_image
 }  // namespace tflite
 
-#endif  // TENSORFLOW_CONTRIB_LITE_EXAMPLES_LABEL_IMAGE_BITMAP_HELPERS_IMPL_H_
+#endif  // TENSORFLOW_LITE_EXAMPLES_BITMAP_HELPERS_IMPL_H_

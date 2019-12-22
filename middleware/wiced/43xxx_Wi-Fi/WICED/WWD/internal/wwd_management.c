@@ -184,6 +184,9 @@ wwd_result_t wwd_management_wifi_on( wiced_country_code_t country )
         return retval;
     }
 
+    /* Unmask SDIO Interrupts */
+    host_platform_unmask_sdio_interrupt();
+
     /* Download blob file if exists */
 #ifdef WWD_DOWNLOAD_CLM_BLOB
     retval = wwd_process_clm_data();

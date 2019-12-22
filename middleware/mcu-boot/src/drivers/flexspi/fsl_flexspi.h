@@ -86,19 +86,10 @@
      FLEXSPI_LUT_NUM_PADS1(pad1) | FLEXSPI_LUT_OPCODE1(cmd1))
 
 //!@brief Defintions for FlexSPI Serial Clock Frequency
-typedef enum _FlexSpiSerialClockFreq
+enum
 {
     kFlexSpiSerialClk_SafeFreq = 1,
-    kFlexSpiSerialClk_30MHz = 1,
-    kFlexSpiSerialClk_50MHz = 2,
-    kFlexSpiSerialClk_60MHz = 3,
-    kFlexSpiSerialClk_75MHz = 4,
-    kFlexSpiSerialClk_80MHz = 5,
-    kFlexSpiSerialClk_100MHz = 6,
-    kFlexSpiSerialClk_133MHz = 7,
-    kFlexSpiSerialClk_166MHz = 8,
-    kFlexSpiSerialClk_200MHz = 9,
-} flexspi_serial_clk_freq_t;
+};
 
 //!@brief FlexSPI clock configuration type
 enum
@@ -151,7 +142,6 @@ enum
     kFlexSpiMiscOffset_DdrModeEnable = 6,            //!< Bit for DDR clock confiuration indication.
     kFlexSpiMiscOffset_UseValidTimeForAllFreq = 7,   //!< Bit for DLLCR settings under all modes
     kFlexSpiMiscOffset_SecondPinMux = 8,             //!< Bit for Second Pinmux group
-    kFlexSpiMiscOffset_SecondDqsPinMux = 9,          //!< Bit for Second DQS Pinmux
 };
 
 //!@brief Flash Type Definition
@@ -290,6 +280,14 @@ typedef enum
 
 //!@brief Generate bit mask
 #define FLEXSPI_BITMASK(bit_offset) (1u << (bit_offset))
+
+#ifndef FLEXSPI_ENABLE_OCTAL_FLASH_SUPPORT
+#define FLEXSPI_ENABLE_OCTAL_FLASH_SUPPORT (1)
+#endif
+
+#ifndef FLEXSPI_ENABLE_NO_CMD_MODE_SUPPORT
+#define FLEXSPI_ENABLE_NO_CMD_MODE_SUPPORT (1)
+#endif
 
 /**********************************************************************************************************************
  * API

@@ -34,8 +34,7 @@
 #include <stdbool.h>
 #include "fsl_pit.h"
 #include "fsl_gpc.h"
-#include "usb_io.h"
-#include "usb_timer.h"
+#include "timer.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -71,7 +70,9 @@ void USB_WaitClockLocked(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+#define TIMER_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_OscClk)
 extern usb_hid_mouse_struct_t g_UsbDeviceHidMouse;
+uint32_t g_halTimerHandle[(HAL_TIMER_HANDLE_SIZE + 3) / 4];
 
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_MouseBuffer[USB_HID_MOUSE_REPORT_LENGTH];
 usb_hid_mouse_struct_t g_UsbDeviceHidMouse;
@@ -115,7 +116,7 @@ void BOARD_USER_BUTTON_IRQ_HANDLER(void)
 void SW_IntControl(uint8_t enable)
 {
 }
-void SW_Callback(void)
+void SW_Callback(void *param)
 {
     g_UsbDeviceHidMouse.selfWakeup = 1U;
     SW_IntControl(0);
@@ -129,18 +130,31 @@ char *SW_GetName(void)
 {
     return BOARD_USER_BUTTON_NAME;
 }
-void HW_TimerCallback(void)
+void HW_TimerCallback(void *param)
 {
     g_UsbDeviceHidMouse.hwTick++;
     USB_DeviceUpdateHwTick(g_UsbDeviceHidMouse.deviceHandle, g_UsbDeviceHidMouse.hwTick);
 }
 void HW_TimerInit(void)
 {
-    USB_TimerInit(0, 1000U, CLOCK_GetFreq(kCLOCK_OscClk), HW_TimerCallback);
+    hal_timer_config_t halTimerConfig;
+    halTimerConfig.timeout            = 1000;
+    halTimerConfig.srcClock_Hz        = TIMER_SOURCE_CLOCK;
+    halTimerConfig.instance           = 0U;
+    hal_timer_handle_t halTimerHandle = &g_halTimerHandle[0];
+    HAL_TimerInit(halTimerHandle, &halTimerConfig);
+    HAL_TimerInstallCallback(halTimerHandle, HW_TimerCallback, NULL);
 }
 void HW_TimerControl(uint8_t enable)
 {
-    USB_TimerInt(0, enable);
+    if (enable)
+    {
+        HAL_TimerEnable(g_halTimerHandle);
+    }
+    else
+    {
+        HAL_TimerDisable(g_halTimerHandle);
+    }
 }
 void USB_LowpowerModeInit(void)
 {
@@ -706,7 +720,11 @@ void main(void)
     };
     /* Initialize input switch GPIO. */
     GPIO_PinInit(BOARD_USER_BUTTON_GPIO, BOARD_USER_BUTTON_GPIO_PIN, &sw_config);
-
+    /* GPIO configuration on GPIO_AD_B1_11 (pin 79) */
+    gpio_pin_config_t gpio1_pin27_config = {
+        .direction = kGPIO_DigitalOutput, .outputLogic = 1U, .interruptMode = kGPIO_NoIntmode};
+    /* Initialize GPIO functionality on GPIO_AD_B1_11 (pin 79) */
+    GPIO_PinInit(GPIO1, 27U, &gpio1_pin27_config);
     /* Enable GPIO pin interrupt */
     GPIO_PortEnableInterrupts(BOARD_USER_BUTTON_GPIO, 1U << BOARD_USER_BUTTON_GPIO_PIN);
     EnableIRQ(BOARD_USER_BUTTON_IRQ);

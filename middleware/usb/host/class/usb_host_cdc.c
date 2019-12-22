@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -464,7 +464,7 @@ static void USB_HostCdcSetContorlInterfaceCallback(void *param, usb_host_transfe
 usb_status_t USB_HostCdcInit(usb_device_handle deviceHandle, usb_host_class_handle *classHandle)
 {
     usb_host_cdc_instance_struct_t *control_ptr =
-        (usb_host_cdc_instance_struct_t *)USB_OsaMemoryAllocate(sizeof(usb_host_cdc_instance_struct_t));
+        (usb_host_cdc_instance_struct_t *)OSA_MemoryAllocate(sizeof(usb_host_cdc_instance_struct_t));
     uint32_t info_value;
 
     if (control_ptr == NULL)
@@ -757,7 +757,7 @@ usb_status_t USB_HostCdcDeinit(usb_device_handle deviceHandle, usb_host_class_ha
         }
         USB_HostCloseDeviceInterface(deviceHandle, cdcInstance->dataInterfaceHandle);
 
-        USB_OsaMemoryFree(cdcInstance);
+        OSA_MemoryFree(cdcInstance);
     }
     else
     {

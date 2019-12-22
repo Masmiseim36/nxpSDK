@@ -44,4 +44,3 @@ int NN::get_num_out_classes() {
 int NN::get_in_dec_bits() {
   return in_dec_bits;
 }
-

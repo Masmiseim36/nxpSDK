@@ -30,7 +30,15 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -D__
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -g")
 
+SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -mcpu=cortex-m7")
+
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -Wall")
+
+SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -mfloat-abi=hard")
+
+SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -mfpu=fpv5-d16")
+
+SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -mthumb")
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -fno-common")
 
@@ -42,17 +50,9 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -ffr
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -fno-builtin")
 
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -mthumb")
-
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -mapcs")
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -std=gnu99")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -mfpu=fpv5-d16")
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} -D__STARTUP_CLEAR_BSS")
 
@@ -60,7 +60,15 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} 
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} -D__STARTUP_INITIALIZE_NONCACHEDATA")
 
+SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} -mcpu=cortex-m7")
+
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} -Wall")
+
+SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} -mfloat-abi=hard")
+
+SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} -mfpu=fpv5-d16")
+
+SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} -mthumb")
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} -fno-common")
 
@@ -72,17 +80,9 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} 
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} -fno-builtin")
 
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} -mthumb")
-
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} -mapcs")
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} -std=gnu99")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} -mfpu=fpv5-d16")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DXIP_EXTERNAL_FLASH=1")
 
@@ -92,7 +92,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DDEBUG"
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DCPU_MIMXRT1052DVL6B")
 
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1")
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=0")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DHIGH_SPEED_SDIO_CLOCK")
 
@@ -104,11 +104,15 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DUNITY_
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DLWIP_NETIF_API=1")
 
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DAMAZON_FREERTOS_ENABLE_UNIT_TESTS=1")
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DAMAZON_FREERTOS_ENABLE_UNIT_TESTS")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DFSL_RTOS_FREE_RTOS")
 
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
+
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DWIFI_WICED")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DSDK_DEBUGCONSOLE_UART")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -g")
 
@@ -116,7 +120,19 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -O0")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -fomit-frame-pointer")
 
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -mcpu=cortex-m7")
+
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -Wall")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -mfloat-abi=hard")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -mfpu=fpv5-d16")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -mthumb")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -MMD")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -MP")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -fno-common")
 
@@ -128,21 +144,9 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -ffreest
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -fno-builtin")
 
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -mthumb")
-
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -mapcs")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -std=gnu99")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -mfpu=fpv5-d16")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -MMD")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -MP")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DXIP_EXTERNAL_FLASH=1")
 
@@ -152,7 +156,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DND
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DCPU_MIMXRT1052DVL6B")
 
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1")
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=0")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DHIGH_SPEED_SDIO_CLOCK")
 
@@ -164,17 +168,33 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DUN
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DLWIP_NETIF_API=1")
 
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DAMAZON_FREERTOS_ENABLE_UNIT_TESTS=1")
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DAMAZON_FREERTOS_ENABLE_UNIT_TESTS")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DFSL_RTOS_FREE_RTOS")
 
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
+
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DWIFI_WICED")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DSDK_DEBUGCONSOLE_UART")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -Os")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -fomit-frame-pointer")
 
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -mcpu=cortex-m7")
+
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -Wall")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -mfloat-abi=hard")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -mfpu=fpv5-d16")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -mthumb")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -MMD")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -MP")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -fno-common")
 
@@ -186,29 +206,31 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -ffr
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -fno-builtin")
 
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -mthumb")
-
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -mapcs")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -std=gnu99")
 
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -mfpu=fpv5-d16")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -MMD")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -MP")
-
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -DDEBUG")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -g")
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -O0")
 
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -mcpu=cortex-m7")
+
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -Wall")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -mfloat-abi=hard")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -mfpu=fpv5-d16")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -mthumb")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -MMD")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -MP")
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -fno-common")
 
@@ -220,29 +242,31 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -ffr
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -fno-builtin")
 
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -mthumb")
-
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -mapcs")
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -fno-rtti")
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -fno-exceptions")
 
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -mfpu=fpv5-d16")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -MMD")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -MP")
-
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -DNDEBUG")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -Os")
 
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -mcpu=cortex-m7")
+
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -Wall")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -mfloat-abi=hard")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -mfpu=fpv5-d16")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -mthumb")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -MMD")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -MP")
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -fno-common")
 
@@ -254,31 +278,23 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} 
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -fno-builtin")
 
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -mthumb")
-
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -mapcs")
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -fno-rtti")
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -fno-exceptions")
 
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -mfpu=fpv5-d16")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -MMD")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -MP")
-
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -g")
 
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} --specs=nano.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} --specs=nosys.specs")
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -mcpu=cortex-m7")
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -Wall")
+
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -mfloat-abi=hard")
+
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -mfpu=fpv5-d16")
+
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} --specs=nosys.specs")
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -fno-common")
 
@@ -314,12 +330,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_N
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -Map=output.map")
 
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -mfpu=fpv5-d16")
-
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} --defsym=__stack_size__=0x400")
@@ -328,11 +338,15 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_N
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} --defsym=__heap_size__=0x2000")
 
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} --specs=nano.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} --specs=nosys.specs")
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -mcpu=cortex-m7")
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -Wall")
+
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -mfloat-abi=hard")
+
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -mfpu=fpv5-d16")
+
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} --specs=nosys.specs")
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -fno-common")
 
@@ -368,12 +382,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -Map=output.map")
 
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -mfpu=fpv5-d16")
-
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} --defsym=__stack_size__=0x400")
@@ -384,33 +392,89 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI
 
 include_directories(${ProjDirPath}/../../..)
 
-include_directories(${ProjDirPath}/../../aws_tests)
+include_directories(${ProjDirPath}/../../aws_tests_wifi_wiced)
 
 include_directories(${ProjDirPath}/../config_files)
 
 include_directories(${ProjDirPath}/..)
-
-include_directories(${ProjDirPath}/../../..)
-
-include_directories(${ProjDirPath}/../../aws_tests)
-
-include_directories(${ProjDirPath}/../config_files)
-
-include_directories(${ProjDirPath}/..)
-
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F)
 
 include_directories(${ProjDirPath}/../../..)
 
 include_directories(${ProjDirPath}/../../aws_tests_wifi_wiced)
 
+include_directories(${ProjDirPath}/../config_files)
+
+include_directories(${ProjDirPath}/..)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F)
+
+include_directories(${ProjDirPath}/../../..)
+
+include_directories(${ProjDirPath}/../../aws_tests_wifi_wiced)
+
+include_directories(${ProjDirPath}/..)
+
 include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
 
 include_directories(${ProjDirPath}/../../../../../devices)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include)
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/dev_mode_key_provisioning/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private)
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/unity/extras/fixture/src)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/unity/src)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/wifi/test)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/test/access)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/greengrass/test)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/include)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/wifi/include)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/greengrass/include)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/greengrass/src)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/include)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/include)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/include)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/secure_sockets/include)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/crypto/include)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/pkcs11/include)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/include)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/tls/include)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/pkcs11/include)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/pkcs11/mbedtls)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/pkcs11)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/jsmn)
 
 include_directories(${ProjDirPath}/../../../../../middleware/mbedtls/include)
 
@@ -418,11 +482,11 @@ include_directories(${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk)
 
 include_directories(${ProjDirPath}/../config_files)
 
-include_directories(${ProjDirPath}/..)
-
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/mflash/mimxrt1052)
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/vendors/nxp/mflash/mimxrt1052)
+
+include_directories(${ProjDirPath}/../../../../../middleware/sdmmc/port)
 
 include_directories(${ProjDirPath}/../../../../../middleware/lwip/port)
 
@@ -430,19 +494,7 @@ include_directories(${ProjDirPath}/../../../../../middleware/lwip/src)
 
 include_directories(${ProjDirPath}/../../../../../middleware/lwip/src/include)
 
-include_directories(${ProjDirPath}/../../../../../middleware/sdmmc/port)
-
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include)
-
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/unity/src)
-
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/unity/extras/fixture/src)
-
 include_directories(${ProjDirPath}/../../../../../middleware/wiced/43xxx_Wi-Fi/platforms/MURATA_TYPE1DX)
-
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/jsmn)
-
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/pkcs11)
 
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1052)
 
@@ -498,6 +550,8 @@ include_directories(${ProjDirPath}/../../../../../middleware/wiced/43xxx_Wi-Fi/W
 
 include_directories(${ProjDirPath}/../../../../../middleware/lwip/src/include/lwip)
 
+include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities)
+
 add_executable(aws_tests_wiced.elf 
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
@@ -505,18 +559,19 @@ add_executable(aws_tests_wiced.elf
 "${ProjDirPath}/../config_files/aws_bufferpool_config.h"
 "${ProjDirPath}/../config_files/aws_ggd_config.h"
 "${ProjDirPath}/../config_files/aws_mbedtls_config.h"
-"${ProjDirPath}/../config_files/aws_mqtt_agent_config.h"
 "${ProjDirPath}/../config_files/aws_mqtt_config.h"
-"${ProjDirPath}/../config_files/aws_pkcs11_config.h"
 "${ProjDirPath}/../config_files/aws_secure_sockets_config.h"
 "${ProjDirPath}/../config_files/aws_shadow_config.h"
-"${ProjDirPath}/../config_files/aws_test_pkcs11_config.h"
 "${ProjDirPath}/../config_files/aws_test_runner_config.h"
 "${ProjDirPath}/../config_files/aws_test_tcp_config.h"
 "${ProjDirPath}/../config_files/aws_test_wifi_config.h"
 "${ProjDirPath}/../config_files/aws_wifi_config.h"
 "${ProjDirPath}/../config_files/FreeRTOSConfig.h"
 "${ProjDirPath}/../config_files/FreeRTOSIPConfig.h"
+"${ProjDirPath}/../config_files/iot_config.h"
+"${ProjDirPath}/../config_files/iot_mqtt_agent_config.h"
+"${ProjDirPath}/../config_files/iot_pkcs11_config.h"
+"${ProjDirPath}/../config_files/iot_test_pkcs11_config.h"
 "${ProjDirPath}/../config_files/unity_config.h"
 "${ProjDirPath}/../config_files/lwipopts.h"
 "${ProjDirPath}/../board.c"
@@ -531,10 +586,77 @@ add_executable(aws_tests_wiced.elf
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_cache.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_flexspi.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_flexspi.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/mflash/mimxrt1052/mflash_drv.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/mflash/mimxrt1052/mflash_drv.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/mflash/mimxrt1052/mflash_file.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/mflash/mimxrt1052/mflash_file.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/vendors/nxp/mflash/mimxrt1052/mflash_drv.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/vendors/nxp/mflash/mimxrt1052/mflash_drv.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/vendors/nxp/mflash/mimxrt1052/mflash_file.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/vendors/nxp/mflash/mimxrt1052/mflash_file.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_usdhc.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_usdhc.h"
+"${ProjDirPath}/../../../../../middleware/sdmmc/inc/fsl_sdio.h"
+"${ProjDirPath}/../../../../../middleware/sdmmc/inc/fsl_sdmmc_common.h"
+"${ProjDirPath}/../../../../../middleware/sdmmc/inc/fsl_sdmmc_host.h"
+"${ProjDirPath}/../../../../../middleware/sdmmc/src/fsl_sdio.c"
+"${ProjDirPath}/../../../../../middleware/sdmmc/src/fsl_sdmmc_common.c"
+"${ProjDirPath}/../../../../../middleware/sdmmc/port/fsl_sdmmc_event.h"
+"${ProjDirPath}/../../../../../middleware/sdmmc/port/usdhc/freertos/fsl_sdmmc_event.c"
+"${ProjDirPath}/../../../../../middleware/sdmmc/port/usdhc/freertos/fsl_sdmmc_host.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/dev_mode_key_provisioning/include/aws_dev_mode_key_provisioning.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/dev_mode_key_provisioning/src/aws_dev_mode_key_provisioning.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/mbedtls/utils/mbedtls_utils.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/vendors/nxp/wifi/wiced/iot_wifi.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/unity/extras/fixture/src/unity_fixture.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/unity/extras/fixture/src/unity_fixture.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/unity/extras/fixture/src/unity_fixture_internals.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/unity/extras/fixture/src/unity_fixture_malloc_overrides.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/unity/src/unity.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/unity/src/unity.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/unity/src/unity_internals.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/pkcs11/test/iot_test_pkcs11.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/secure_sockets/test/iot_test_tcp.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/wifi/test/iot_test_wifi.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/wifi/test/iot_test_wifi.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/test/aws_test_shadow.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/test/system/aws_iot_tests_shadow_system.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/test/unit/aws_iot_tests_shadow_api.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/test/unit/aws_iot_tests_shadow_parser.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/test/iot_memory_leak.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/test/iot_tests_taskpool.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/test/access/iot_test_access_mqtt.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/test/iot_test_mqtt_agent.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/test/system/iot_tests_mqtt_system.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/test/unit/iot_tests_mqtt_api.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/test/unit/iot_tests_mqtt_metrics.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/test/unit/iot_tests_mqtt_receive.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/test/unit/iot_tests_mqtt_subscription.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/test/unit/iot_tests_mqtt_validate.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/greengrass/test/aws_greengrass_discovery_test_access_declare.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/greengrass/test/aws_greengrass_discovery_test_access_define.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/greengrass/test/aws_test_greengrass_discovery.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/greengrass/test/aws_test_helper_secure_connect.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/crypto/test/iot_test_crypto.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/tls/test/iot_test_tls.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/tls/test/iot_test_tls.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/aws_test.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/aws_test_framework.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/aws_test_runner.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/iot_test_freertos.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/iot_tests_network.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/include/aws_application_version.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/include/aws_clientcredential.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/include/aws_clientcredential_keys.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/include/aws_test_framework.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/include/aws_test_runner.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/include/aws_test_tcp.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/include/aws_test_utils.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/include/aws_unity_config.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/include/iot_config_common.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/vendors/nxp/secure_sockets/lwip/iot_secure_sockets.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/wifi/include/iot_wifi.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/greengrass/include/aws_ggd_config_defaults.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/greengrass/include/aws_greengrass_discovery.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/greengrass/src/aws_greengrass_discovery.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/greengrass/src/aws_helper_secure_connect.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/greengrass/src/aws_helper_secure_connect.h"
 "${ProjDirPath}/../../../../../middleware/lwip/port/arch/cc.h"
 "${ProjDirPath}/../../../../../middleware/lwip/port/arch/perf.h"
 "${ProjDirPath}/../../../../../middleware/lwip/port/arch/sys_arch.h"
@@ -743,156 +865,122 @@ add_executable(aws_tests_wiced.elf
 "${ProjDirPath}/../../../../../middleware/lwip/src/netif/ppp/vj.c"
 "${ProjDirPath}/../../../../../middleware/lwip/src/netif/slipif.c"
 "${ProjDirPath}/../../../../../middleware/lwip/src/netif/zepif.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_usdhc.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_usdhc.h"
-"${ProjDirPath}/../../../../../middleware/sdmmc/inc/fsl_sdio.h"
-"${ProjDirPath}/../../../../../middleware/sdmmc/inc/fsl_sdmmc_common.h"
-"${ProjDirPath}/../../../../../middleware/sdmmc/inc/fsl_sdmmc_host.h"
-"${ProjDirPath}/../../../../../middleware/sdmmc/src/fsl_sdio.c"
-"${ProjDirPath}/../../../../../middleware/sdmmc/src/fsl_sdmmc_common.c"
-"${ProjDirPath}/../../../../../middleware/sdmmc/port/fsl_sdmmc_event.h"
-"${ProjDirPath}/../../../../../middleware/sdmmc/port/usdhc/freertos/fsl_sdmmc_event.c"
-"${ProjDirPath}/../../../../../middleware/sdmmc/port/usdhc/freertos/fsl_sdmmc_host.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/wifi/portable/nxp/wiced/aws_wifi.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/common/devmode_key_provisioning/aws_dev_mode_key_provisioning.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/common/logging/aws_logging_task_dynamic_buffers.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/greengrass/aws_greengrass_discovery.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/greengrass/aws_helper_secure_connect.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_appversion32.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/unity/extras/fixture/src/unity_fixture.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/unity/extras/fixture/src/unity_fixture.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/unity/extras/fixture/src/unity_fixture_internals.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/unity/extras/fixture/src/unity_fixture_malloc_overrides.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/unity/src/unity.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/unity/src/unity.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/unity/src/unity_internals.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/crypto/aws_test_crypto.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/framework/aws_test_framework.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/greengrass/aws_test_greengrass_discovery.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/greengrass/aws_test_helper_secure_connect.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_application_version.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_clientcredential.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_clientcredential_keys.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_dev_mode_key_provisioning.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_greengrass_discovery_test_access_declare.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_greengrass_discovery_test_access_define.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_logging_task.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_mqtt_lib_test_access_declare.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_mqtt_lib_test_access_define.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_test_framework.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_test_runner.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_test_tcp.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_test_tls.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_test_utils.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/memory_leak/aws_memory_leak.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/mqtt/aws_test_mqtt_agent.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/mqtt/aws_test_mqtt_lib.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/pkcs11/aws_test_pkcs11.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/secure_sockets/aws_test_tcp.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/shadow/aws_test_shadow.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/test_runner/aws_test_runner.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/tls/aws_test_tls.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/wifi/aws_test_wifi.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/secure_sockets/portable/nxp/lwip/aws_secure_sockets.c"
 "${ProjDirPath}/../../../../../middleware/wiced/43xxx_Wi-Fi/platforms/MURATA_TYPE1DX/wifi_nvram_image.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/port.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/portmacro.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/event_groups.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/message_buffer.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/list.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/mpu_prototypes.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/portable.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/threading_alt.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/queue.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/semphr.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/task.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/timers.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_appversion32.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_crypto.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_defender.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_greengrass_discovery.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_mqtt_agent.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_mqtt_lib.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_ota_agent.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_pkcs11.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_secure_sockets.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_shadow.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_system_init.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_tls.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_wifi.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/event_groups.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/message_buffer.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_bufferpool.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_default_root_certificates.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_defender_cpu.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_defender_internals.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_defender_report.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_defender_report_cpu.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_defender_report_header.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_defender_report_tcp_conn.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_defender_report_types.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_defender_report_uptime.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_defender_report_utils.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_defender_tcp_conn.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_defender_uptime.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_doubly_linked_list.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_ggd_config_defaults.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_helper_secure_connect.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_lib_init.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_mqtt_agent_config_defaults.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_mqtt_buffer.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_mqtt_config_defaults.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_ota_agent_internal.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_ota_cbor.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_ota_cbor_internal.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_ota_pal.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_ota_types.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_secure_sockets_config_defaults.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_shadow_config_defaults.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_shadow_json.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/list.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/mpu_prototypes.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/portable.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/threading_alt.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/queue.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/semphr.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/task.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/timers.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/bufferpool/aws_bufferpool_static_thread_safe.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/crypto/aws_crypto.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/mqtt/aws_mqtt_agent.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/mqtt/aws_mqtt_lib.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/pkcs11/mbedtls/aws_pkcs11_mbedtls.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/pkcs11/portable/nxp/common/aws_pkcs11_pal.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/shadow/aws_shadow.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/shadow/aws_shadow_json.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/tls/aws_tls.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/utils/aws_system_init.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/jsmn/jsmn.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/jsmn/jsmn.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11f.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11t.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/list.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/queue.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/timers.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/include/platform/iot_network_ble.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/include/platform/iot_network_freertos.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/include/platform/iot_platform_types_freertos.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/iot_clock_freertos.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/iot_metrics.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/iot_network_freertos.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/iot_threads_freertos.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/platform/iot_clock.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/platform/iot_metrics.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/platform/iot_network.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/platform/iot_threads.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/types/iot_platform_types.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/include/aws_iot_shadow.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/include/aws_shadow.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/include/types/aws_iot_shadow_types.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_api.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_operation.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_parser.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_static_memory.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_subscription.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_shadow.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_shadow_config_defaults.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/private/aws_iot_shadow_internal.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_appversion32.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_atomic.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_init.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_linear_containers.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_logging_setup.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_logging_task.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_taskpool.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_default_root_certificates.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_doubly_linked_list.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_error.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_lib_init.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_logging.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_static_memory.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_taskpool_internal.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/types/iot_network_types.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/types/iot_taskpool_types.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/iot_device_metrics.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/iot_init.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/iot_static_memory_common.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/logging/iot_logging.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/logging/iot_logging_task_dynamic_buffers.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/taskpool/iot_taskpool.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/taskpool/iot_taskpool_static_memory.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_agent.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_agent_config_defaults.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_config_defaults.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_lib.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/types/iot_mqtt_types.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_agent.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_api.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_network.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_operation.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_serialize.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_static_memory.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_subscription.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_validate.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/private/iot_mqtt_internal.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/include/iot_json_utils.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/include/iot_serializer.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/src/iot_json_utils.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/src/iot_serializer_static_memory.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/src/json/iot_serializer_json_decoder.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/src/json/iot_serializer_json_encoder.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets_config_defaults.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets_wrapper_metrics.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/crypto/include/iot_crypto.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/crypto/src/iot_crypto.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/pkcs11/include/iot_pkcs11.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/pkcs11/src/iot_pkcs11.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/include/iot_pki_utils.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/include/iot_system_init.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/src/iot_pki_utils.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/src/iot_system_init.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/tls/include/iot_tls.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/tls/src/iot_tls.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/pkcs11/include/iot_pkcs11_pal.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/pkcs11/mbedtls/iot_pkcs11_mbedtls.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/pkcs11/mbedtls/threading_alt.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/pkcs11/pkcs11.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/pkcs11/pkcs11f.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/pkcs11/pkcs11t.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/jsmn/jsmn.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/jsmn/jsmn.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/vendors/nxp/pkcs11/common/iot_pkcs11_pal.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/aes.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/aesni.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/arc4.h"
@@ -1070,8 +1158,6 @@ add_executable(aws_tests_wiced.elf
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/MIMXRT1052.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/MIMXRT1052_features.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/fsl_device_registers.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/system_MIMXRT1052.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/system_MIMXRT1052.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h"
@@ -1082,13 +1168,15 @@ add_executable(aws_tests_wiced.elf
 "${ProjDirPath}/../../../../../components/serial_manager/serial_manager.c"
 "${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"
 "${ProjDirPath}/../../../../../components/serial_manager/serial_port_internal.h"
+"${ProjDirPath}/../../../../../components/lists/generic_list.c"
+"${ProjDirPath}/../../../../../components/lists/generic_list.h"
 "${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.c"
 "${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.h"
-"${ProjDirPath}/../../../../../components/lists/generic_list.c"
-"${ProjDirPath}/../../../../../components/lists/generic_list.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/gcc/startup_MIMXRT1052.S"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/system_MIMXRT1052.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/system_MIMXRT1052.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/fsl_assert.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c"
@@ -1100,19 +1188,21 @@ add_executable(aws_tests_wiced.elf
 "${ProjDirPath}/../../../xip/evkbimxrt1050_sdram_ini_dcd.c"
 "${ProjDirPath}/../../../xip/evkbimxrt1050_sdram_ini_dcd.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/core_cm7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_compiler.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_armv81mml.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"
 "${ProjDirPath}/../../../../../middleware/sdmmc/inc/fsl_sdmmc_spec.h"
 "${ProjDirPath}/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/chips/4343W/4343WA1.h"
 "${ProjDirPath}/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/WWD/internal/chips/4343W/4343WA1_clm.h"
@@ -1193,6 +1283,8 @@ add_executable(aws_tests_wiced.elf
 "${ProjDirPath}/../../../../../middleware/wiced/43xxx_Wi-Fi/WICED/platform/platform_toolchain.h"
 "${ProjDirPath}/../../../../../middleware/wiced/43xxx_Wi-Fi/generated_mac_address.txt"
 "${ProjDirPath}/../../../../../middleware/wiced/43xxx_Wi-Fi/include/wiced_resource.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/fsl_sbrk.c"
 )
 
 
@@ -1218,4 +1310,5 @@ target_link_libraries(aws_tests_wiced.elf optimized gcc)
 target_link_libraries(aws_tests_wiced.elf optimized nosys)
 
 TARGET_LINK_LIBRARIES(aws_tests_wiced.elf -Wl,--end-group)
+
 

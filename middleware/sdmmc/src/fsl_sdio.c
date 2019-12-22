@@ -45,13 +45,13 @@ static status_t SDIO_SendRca(sdio_card_t *card);
  * @param card Card descriptor.
  * @param select/diselect flag
  */
-static status_t inline SDIO_SelectCard(sdio_card_t *card, bool isSelected);
+static inline status_t SDIO_SelectCard(sdio_card_t *card, bool isSelected);
 
 /*!
  * @brief card go idle
  * @param card Card descriptor.
  */
-static status_t inline SDIO_GoIdle(sdio_card_t *card);
+static inline status_t SDIO_GoIdle(sdio_card_t *card);
 
 /*!
  * @brief decode CIS
@@ -92,14 +92,14 @@ extern uint32_t g_sdmmc[SDK_SIZEALIGN(SDMMC_GLOBAL_BUFFER_SIZE, SDMMC_DATA_BUFFE
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static status_t inline SDIO_SelectCard(sdio_card_t *card, bool isSelected)
+static inline status_t SDIO_SelectCard(sdio_card_t *card, bool isSelected)
 {
     assert(card);
 
     return SDMMC_SelectCard(card->host.base, card->host.transfer, card->relativeAddress, isSelected);
 }
 
-static status_t inline SDIO_GoIdle(sdio_card_t *card)
+static inline status_t SDIO_GoIdle(sdio_card_t *card)
 {
     assert(card);
 
@@ -123,7 +123,11 @@ static status_t SDIO_ExecuteTuning(sdio_card_t *card)
 {
     assert(card);
 
+#ifdef SDMMC_ENABLE_SOFTWARE_TUNING
+    return SDMMC_ExecuteManualTuning(card->host.base, kSD_SendTuningBlock, 64U);
+#else
     return SDMMC_ExecuteTuning(card->host.base, card->host.transfer, kSD_SendTuningBlock, 64U);
+#endif
 }
 
 static status_t SDIO_SendRca(sdio_card_t *card)
@@ -898,6 +902,7 @@ static status_t SDIO_SelectBusTiming(sdio_card_t *card)
                     supportModeFlag     = SDIO_CCCR_SUPPORT_SDR104;
                     break;
                 }
+                SUPPRESS_FALL_THROUGH_WARNING();
 
             case kSD_TimingDDR50Mode:
                 if ((kSDMMCHOST_SupportDDR50 != SDMMCHOST_NOT_SUPPORT) &&
@@ -909,6 +914,7 @@ static status_t SDIO_SelectBusTiming(sdio_card_t *card)
                     supportModeFlag     = SDIO_CCCR_SUPPORT_DDR50;
                     break;
                 }
+                SUPPRESS_FALL_THROUGH_WARNING();
 
             case kSD_TimingSDR50Mode:
                 if ((kSDMMCHOST_SupportSDR50 != SDMMCHOST_NOT_SUPPORT) &&
@@ -920,6 +926,7 @@ static status_t SDIO_SelectBusTiming(sdio_card_t *card)
                     supportModeFlag     = SDIO_CCCR_SUPPORT_SDR50;
                     break;
                 }
+                SUPPRESS_FALL_THROUGH_WARNING();
 
             case kSD_TimingSDR25HighSpeedMode:
                 if ((card->host.capability.flags & kSDMMCHOST_SupportHighSpeed) &&
@@ -931,6 +938,7 @@ static status_t SDIO_SelectBusTiming(sdio_card_t *card)
                     supportModeFlag     = SDIO_CCCR_SUPPORT_HIGHSPEED;
                     break;
                 }
+                SUPPRESS_FALL_THROUGH_WARNING();
 
             default:
                 /* default timing mode */
@@ -1108,7 +1116,7 @@ static status_t SDIO_DecodeCIS(
         /* only decode FUNCID,FUNCE here  */
         if (tplCode == SDIO_TPL_CODE_FUNCID)
         {
-            card->funcCIS[func].funcID = dataBuffer[0U];
+            card->funcCIS[func - 1U].funcID = dataBuffer[0U];
         }
         else if (tplCode == SDIO_TPL_CODE_FUNCE)
         {

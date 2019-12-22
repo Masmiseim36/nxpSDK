@@ -3,7 +3,7 @@
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -13,6 +13,7 @@
 #include "usb_host_config.h"
 #include "usb_host.h"
 #include "usb_host_msd.h"
+#include "ff.h"
 #include "diskio.h"
 
 /*******************************************************************************

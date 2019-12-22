@@ -36,6 +36,9 @@
 #define mbedtls_calloc    calloc
 #define mbedtls_fprintf    fprintf
 #define mbedtls_printf     printf
+#define mbedtls_exit            exit
+#define MBEDTLS_EXIT_SUCCESS    EXIT_SUCCESS
+#define MBEDTLS_EXIT_FAILURE    EXIT_FAILURE
 #endif
 
 #if !defined(MBEDTLS_ENTROPY_C) || \
@@ -103,6 +106,7 @@ int main( void )
 
 #define DFL_SERVER_ADDR         NULL
 #define DFL_SERVER_PORT         "4433"
+#define DFL_RESPONSE_SIZE       -1
 #define DFL_DEBUG_LEVEL         0
 #define DFL_NBIO                0
 #define DFL_EVENT               0
@@ -177,15 +181,17 @@ int main( void )
  * You will need to adapt the mbedtls_ssl_get_bytes_avail() test in ssl-opt.sh
  * if you change this value to something outside the range <= 100 or > 500
  */
-#define IO_BUF_LEN      200
+#define DFL_IO_BUF_LEN      200
 
 #if defined(MBEDTLS_X509_CRT_PARSE_C)
 #if defined(MBEDTLS_FS_IO)
 #define USAGE_IO \
     "    ca_file=%%s          The single file containing the top-level CA(s) you fully trust\n" \
     "                        default: \"\" (pre-loaded)\n" \
+    "                        use \"none\" to skip loading any top-level CAs.\n" \
     "    ca_path=%%s          The path containing the top-level CA(s) you fully trust\n" \
     "                        default: \"\" (pre-loaded) (overrides ca_file)\n" \
+    "                        use \"none\" to skip loading any top-level CAs.\n" \
     "    crt_file=%%s         Your own cert and chain (in bottom to top order, top may be omitted)\n" \
     "                        default: see note after key_file2\n" \
     "    key_file=%%s         default: see note after key_file2\n" \
@@ -219,8 +225,12 @@ int main( void )
 #endif /* MBEDTLS_SSL_ASYNC_PRIVATE */
 
 #if defined(MBEDTLS_KEY_EXCHANGE__SOME__PSK_ENABLED)
-#define USAGE_PSK                                                   \
-    "    psk=%%s              default: \"\" (in hex, without 0x)\n" \
+#define USAGE_PSK                                                       \
+    "    psk=%%s              default: \"\" (in hex, without 0x)\n"     \
+    "    psk_list=%%s         default: \"\"\n"                          \
+    "                          A list of (PSK identity, PSK value) pairs.\n" \
+    "                          The PSK values are in hex, without 0x.\n" \
+    "                          id1,psk1[,id2,psk2[,...]]\n"             \
     "    psk_identity=%%s     default: \"Client_identity\"\n"
 #else
 #define USAGE_PSK ""
@@ -243,8 +253,14 @@ int main( void )
 #endif /* MBEDTLS_SSL_CACHE_C */
 
 #if defined(SNI_OPTION)
+#if defined(MBEDTLS_X509_CRL_PARSE_C)
+#define SNI_CRL              ",crl"
+#else
+#define SNI_CRL              ""
+#endif
+
 #define USAGE_SNI                                                           \
-    "    sni=%%s              name1,cert1,key1,ca1,crl1,auth1[,...]\n"  \
+    "    sni=%%s              name1,cert1,key1,ca1"SNI_CRL",auth1[,...]\n"  \
     "                        default: disabled\n"
 #else
 #define USAGE_SNI ""
@@ -356,6 +372,11 @@ int main( void )
     "    server_addr=%%s      default: (all interfaces)\n"  \
     "    server_port=%%d      default: 4433\n"              \
     "    debug_level=%%d      default: 0 (disabled)\n"      \
+    "    buffer_size=%%d      default: 200 \n" \
+    "                         (minimum: 1, max: 16385)\n" \
+    "    response_size=%%d    default: about 152 (basic response)\n" \
+    "                          (minimum: 0, max: 16384)\n" \
+    "                          increases buffer_size if bigger\n"\
     "    nbio=%%d             default: 0 (blocking I/O)\n"  \
     "                        options: 1 (non-blocking), 2 (added delays)\n" \
     "    event=%%d            default: 0 (loop)\n"                            \
@@ -402,6 +423,10 @@ int main( void )
     "                                in order from ssl3 to tls1_2\n"    \
     "                                default: all enabled\n"            \
     "    force_ciphersuite=<name>    default: all enabled\n"            \
+    "    query_config=<name>         return 0 if the specified\n"       \
+    "                                configuration macro is defined and 1\n"  \
+    "                                otherwise. The expansion of the macro\n" \
+    "                                is printed if it is defined\n"     \
     " acceptable ciphersuite names:\n"
 
 
@@ -420,6 +445,18 @@ int main( void )
     (out_be)[(i) + 7] = (unsigned char)( ( (in_le) >> 0  ) & 0xFF );    \
 }
 
+#if defined(MBEDTLS_CHECK_PARAMS)
+#include "mbedtls/platform_util.h"
+void mbedtls_param_failed( const char *failure_condition,
+                           const char *file,
+                           int line )
+{
+    mbedtls_printf( "%s:%i: Input param failed - %s\n",
+                    file, line, failure_condition );
+    mbedtls_exit( MBEDTLS_EXIT_FAILURE );
+}
+#endif
+
 /*
  * global options
  */
@@ -431,6 +468,8 @@ struct options
     int nbio;                   /* should I/O be blocking?                  */
     int event;                  /* loop or event-driven IO? level or edge triggered? */
     uint32_t read_timeout;      /* timeout on mbedtls_ssl_read() in milliseconds    */
+    int response_size;          /* pad response with header to requested size */
+    uint16_t buffer_size;       /* IO buffer size */
     const char *ca_file;        /* the file with the CA certificate(s)      */
     const char *ca_path;        /* the path with the CA certificate(s) reside */
     const char *crt_file;       /* the file with the server certificate     */
@@ -480,6 +519,8 @@ struct options
     int dgram_packing;          /* allow/forbid datagram packing            */
     int badmac_limit;           /* Limit of records with bad MAC            */
 } opt;
+
+int query_config( const char *config );
 
 static void my_debug( void *ctx, int level,
                       const char *file, int line,
@@ -553,11 +594,14 @@ static int get_auth_mode( const char *s )
  * Used by sni_parse and psk_parse to handle coma-separated lists
  */
 #define GET_ITEM( dst )         \
-    dst = p;                    \
-    while( *p != ',' )          \
-        if( ++p > end )         \
-            goto error;         \
-    *p++ = '\0';
+    do                          \
+    {                           \
+        (dst) = p;              \
+        while( *p != ',' )      \
+            if( ++p > end )     \
+                goto error;     \
+        *p++ = '\0';            \
+    } while( 0 )
 
 #if defined(SNI_OPTION)
 typedef struct _sni_entry sni_entry;
@@ -586,10 +630,10 @@ void sni_free( sni_entry *head )
 
         mbedtls_x509_crt_free( cur->ca );
         mbedtls_free( cur->ca );
-
+#if defined(MBEDTLS_X509_CRL_PARSE_C)
         mbedtls_x509_crl_free( cur->crl );
         mbedtls_free( cur->crl );
-
+#endif
         next = cur->next;
         mbedtls_free( cur );
         cur = next;
@@ -608,7 +652,10 @@ sni_entry *sni_parse( char *sni_string )
     sni_entry *cur = NULL, *new = NULL;
     char *p = sni_string;
     char *end = p;
-    char *crt_file, *key_file, *ca_file, *crl_file, *auth_str;
+    char *crt_file, *key_file, *ca_file, *auth_str;
+#if defined(MBEDTLS_X509_CRL_PARSE_C)
+    char *crl_file;
+#endif
 
     while( *end != '\0' )
         ++end;
@@ -626,7 +673,9 @@ sni_entry *sni_parse( char *sni_string )
         GET_ITEM( crt_file );
         GET_ITEM( key_file );
         GET_ITEM( ca_file );
+#if defined(MBEDTLS_X509_CRL_PARSE_C)
         GET_ITEM( crl_file );
+#endif
         GET_ITEM( auth_str );
 
         if( ( new->cert = mbedtls_calloc( 1, sizeof( mbedtls_x509_crt ) ) ) == NULL ||
@@ -651,6 +700,7 @@ sni_entry *sni_parse( char *sni_string )
                 goto error;
         }
 
+#if defined(MBEDTLS_X509_CRL_PARSE_C)
         if( strcmp( crl_file, "-" ) != 0 )
         {
             if( ( new->crl = mbedtls_calloc( 1, sizeof( mbedtls_x509_crl ) ) ) == NULL )
@@ -661,6 +711,7 @@ sni_entry *sni_parse( char *sni_string )
             if( mbedtls_x509_crl_parse_file( new->crl, crl_file ) != 0 )
                 goto error;
         }
+#endif
 
         if( strcmp( auth_str, "-" ) != 0 )
         {
@@ -714,15 +765,18 @@ int sni_callback( void *p_info, mbedtls_ssl_context *ssl,
 
 #if defined(MBEDTLS_KEY_EXCHANGE__SOME__PSK_ENABLED)
 
-#define HEX2NUM( c )                    \
-        if( c >= '0' && c <= '9' )      \
-            c -= '0';                   \
-        else if( c >= 'a' && c <= 'f' ) \
-            c -= 'a' - 10;              \
-        else if( c >= 'A' && c <= 'F' ) \
-            c -= 'A' - 10;              \
-        else                            \
-            return( -1 );
+#define HEX2NUM( c )                        \
+    do                                      \
+    {                                       \
+        if( (c) >= '0' && (c) <= '9' )      \
+            (c) -= '0';                     \
+        else if( (c) >= 'a' && (c) <= 'f' ) \
+            (c) -= 'a' - 10;                \
+        else if( (c) >= 'A' && (c) <= 'F' ) \
+            (c) -= 'A' - 10;                \
+        else                                \
+            return( -1 );                   \
+    } while( 0 )
 
 /*
  * Convert a hex string to bytes.
@@ -1166,7 +1220,7 @@ int main( int argc, char *argv[] )
 {
     int ret = 0, len, written, frags, exchanges_left;
     int version_suites[4][2];
-    unsigned char buf[IO_BUF_LEN];
+    unsigned char* buf = 0;
 #if defined(MBEDTLS_KEY_EXCHANGE__SOME__PSK_ENABLED)
     unsigned char psk[MBEDTLS_PSK_MAX_LEN];
     size_t psk_len = 0;
@@ -1297,10 +1351,12 @@ int main( int argc, char *argv[] )
         goto exit;
     }
 
+    opt.buffer_size         = DFL_IO_BUF_LEN;
     opt.server_addr         = DFL_SERVER_ADDR;
     opt.server_port         = DFL_SERVER_PORT;
     opt.debug_level         = DFL_DEBUG_LEVEL;
     opt.event               = DFL_EVENT;
+    opt.response_size       = DFL_RESPONSE_SIZE;
     opt.nbio                = DFL_NBIO;
     opt.read_timeout        = DFL_READ_TIMEOUT;
     opt.ca_file             = DFL_CA_FILE;
@@ -1393,6 +1449,20 @@ int main( int argc, char *argv[] )
         }
         else if( strcmp( p, "read_timeout" ) == 0 )
             opt.read_timeout = atoi( q );
+        else if( strcmp( p, "buffer_size" ) == 0 )
+        {
+            opt.buffer_size = atoi( q );
+            if( opt.buffer_size < 1 || opt.buffer_size > MBEDTLS_SSL_MAX_CONTENT_LEN + 1 )
+                goto usage;
+        }
+        else if( strcmp( p, "response_size" ) == 0 )
+        {
+            opt.response_size = atoi( q );
+            if( opt.response_size < 0 || opt.response_size > MBEDTLS_SSL_MAX_CONTENT_LEN )
+                goto usage;
+            if( opt.buffer_size < opt.response_size )
+                opt.buffer_size = opt.response_size;
+        }
         else if( strcmp( p, "ca_file" ) == 0 )
             opt.ca_file = q;
         else if( strcmp( p, "ca_path" ) == 0 )
@@ -1713,6 +1783,10 @@ int main( int argc, char *argv[] )
         {
             opt.sni = q;
         }
+        else if( strcmp( p, "query_config" ) == 0 )
+        {
+            return query_config( q );
+        }
         else
             goto usage;
     }
@@ -1729,6 +1803,13 @@ int main( int argc, char *argv[] )
 #if defined(MBEDTLS_DEBUG_C)
     mbedtls_debug_set_threshold( opt.debug_level );
 #endif
+    buf = mbedtls_calloc( 1, opt.buffer_size + 1 );
+    if( buf == NULL )
+    {
+        mbedtls_printf( "Could not allocate %u bytes\n", opt.buffer_size );
+        ret = 3;
+        goto exit;
+    }
 
     if( opt.force_ciphersuite[0] > 0 )
     {
@@ -1943,20 +2024,22 @@ int main( int argc, char *argv[] )
     mbedtls_printf( "  . Loading the CA root certificate ..." );
     fflush( stdout );
 
+    if( strcmp( opt.ca_path, "none" ) == 0 ||
+        strcmp( opt.ca_file, "none" ) == 0 )
+    {
+        ret = 0;
+    }
+    else
 #if defined(MBEDTLS_FS_IO)
     if( strlen( opt.ca_path ) )
-        if( strcmp( opt.ca_path, "none" ) == 0 )
-            ret = 0;
-        else
-            ret = mbedtls_x509_crt_parse_path( &cacert, opt.ca_path );
+        ret = mbedtls_x509_crt_parse_path( &cacert, opt.ca_path );
     else if( strlen( opt.ca_file ) )
-        if( strcmp( opt.ca_file, "none" ) == 0 )
-            ret = 0;
-        else
-            ret = mbedtls_x509_crt_parse_file( &cacert, opt.ca_file );
+        ret = mbedtls_x509_crt_parse_file( &cacert, opt.ca_file );
     else
 #endif
 #if defined(MBEDTLS_CERTS_C)
+    {
+#if defined(MBEDTLS_PEM_PARSE_C)
         for( i = 0; mbedtls_test_cas[i] != NULL; i++ )
         {
             ret = mbedtls_x509_crt_parse( &cacert,
@@ -1965,12 +2048,23 @@ int main( int argc, char *argv[] )
             if( ret != 0 )
                 break;
         }
+        if( ret == 0 )
+#endif /* MBEDTLS_PEM_PARSE_C */
+        for( i = 0; mbedtls_test_cas_der[i] != NULL; i++ )
+        {
+            ret = mbedtls_x509_crt_parse_der( &cacert,
+                         (const unsigned char *) mbedtls_test_cas_der[i],
+                         mbedtls_test_cas_der_len[i] );
+            if( ret != 0 )
+                break;
+        }
+    }
 #else
     {
         ret = 1;
-        mbedtls_printf("MBEDTLS_CERTS_C not defined.");
+        mbedtls_printf( "MBEDTLS_CERTS_C not defined." );
     }
-#endif
+#endif /* MBEDTLS_CERTS_C */
     if( ret < 0 )
     {
         mbedtls_printf( " failed\n  !  mbedtls_x509_crt_parse returned -0x%x\n\n", -ret );
@@ -2745,8 +2839,8 @@ data_exchange:
         do
         {
             int terminated = 0;
-            len = sizeof( buf ) - 1;
-            memset( buf, 0, sizeof( buf ) );
+            len = opt.buffer_size - 1;
+            memset( buf, 0, opt.buffer_size );
             ret = mbedtls_ssl_read( &ssl, buf, len );
 
             if( mbedtls_status_is_ssl_in_progress( ret ) )
@@ -2846,8 +2940,8 @@ data_exchange:
     }
     else /* Not stream, so datagram */
     {
-        len = sizeof( buf ) - 1;
-        memset( buf, 0, sizeof( buf ) );
+        len = opt.buffer_size - 1;
+        memset( buf, 0, opt.buffer_size );
 
         do
         {
@@ -2944,6 +3038,25 @@ data_exchange:
 
     len = sprintf( (char *) buf, HTTP_RESPONSE,
                    mbedtls_ssl_get_ciphersuite( &ssl ) );
+
+    /* Add padding to the response to reach opt.response_size in length */
+    if( opt.response_size != DFL_RESPONSE_SIZE &&
+        len < opt.response_size )
+    {
+        memset( buf + len, 'B', opt.response_size - len );
+        len += opt.response_size - len;
+    }
+
+    /* Truncate if response size is smaller than the "natural" size */
+    if( opt.response_size != DFL_RESPONSE_SIZE &&
+        len > opt.response_size )
+    {
+        len = opt.response_size;
+
+        /* Still end with \r\n unless that's really not possible */
+        if( len >= 2 ) buf[len - 2] = '\r';
+        if( len >= 1 ) buf[len - 1] = '\n';
+    }
 
     if( opt.transport == MBEDTLS_SSL_TRANSPORT_STREAM )
     {
@@ -3095,6 +3208,8 @@ exit:
 #if defined(MBEDTLS_SSL_COOKIE_C)
     mbedtls_ssl_cookie_free( &cookie_ctx );
 #endif
+
+    mbedtls_free( buf );
 
 #if defined(MBEDTLS_MEMORY_BUFFER_ALLOC_C)
 #if defined(MBEDTLS_MEMORY_DEBUG)

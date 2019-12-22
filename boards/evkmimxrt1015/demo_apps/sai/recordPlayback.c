@@ -20,7 +20,6 @@
  ******************************************************************************/
 extern sai_edma_handle_t txHandle;
 extern sai_edma_handle_t rxHandle;
-extern sai_transfer_format_t format;
 extern uint8_t audioBuff[BUFFER_SIZE * BUFFER_NUM];
 extern volatile bool istxFinished;
 extern volatile bool isrxFinished;
@@ -50,7 +49,7 @@ void RecordPlayback(I2S_Type *base, uint32_t time_s)
     SAI_RxSoftwareReset(base, kSAI_ResetTypeSoftware);
 
     /* Compute the begin count */
-    beginCount = time_s * SAMPLE_RATE * 4u / BUFFER_SIZE;
+    beginCount = time_s * DEMO_AUDIO_SAMPLE_RATE * 4u / BUFFER_SIZE;
 
     xfer.dataSize = BUFFER_SIZE;
     /* Wait for playback finished */

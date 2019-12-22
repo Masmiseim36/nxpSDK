@@ -420,7 +420,11 @@ static void USB_DeviceVideoApplicationSetDefault(void)
     g_UsbDeviceVideoVirtualCamera.stillProbeStruct = &s_StillProbeStruct;
     g_UsbDeviceVideoVirtualCamera.stillCommitStruct = &s_StillCommitStruct;
     g_UsbDeviceVideoVirtualCamera.classRequestBuffer = &s_ClassRequestBuffer[0];
-
+    for(uint8_t i = 0; i < USB_VIDEO_VIRTUAL_CAMERA_INTERFACE_COUNT; i++)
+    {
+        g_UsbDeviceVideoVirtualCamera.currentInterfaceAlternateSetting[i] = 0;
+    }
+    
     g_UsbDeviceVideoVirtualCamera.probeStruct->bFormatIndex = USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FORMAT_INDEX;
     g_UsbDeviceVideoVirtualCamera.probeStruct->bFrameIndex = USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FRAME_INDEX;
     USB_LONG_TO_LITTLE_ENDIAN_DATA(USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FRAME_DEFAULT_INTERVAL,

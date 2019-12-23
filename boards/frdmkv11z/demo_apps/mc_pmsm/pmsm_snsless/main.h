@@ -17,17 +17,15 @@
 #include "fsl_uart.h"
 #include "fsl_port.h"
 
+#include "freemaster_serial_uart.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
 /*! @brief The UART to use for FreeMASTER communication */
-#define BOARD_FMSTR_UART   (1) 
-#define BOARD_FMSTR_LPUART (2) 
 #define BOARD_FMSTR_UART_PORT UART0
-#define BOARD_FMSTR_UART_BAUDRATE 115200
-#define BOARD_FMSTR_UART_TYPE BOARD_FMSTR_UART 
-#define BOARD_FMSTR_USE_TSA (1)
+#define BOARD_FMSTR_UART_BAUDRATE 19200
 
 /* Macro for correct Cortex CM0 / CM4 end of interrupt */
 #define M1_END_OF_ISR \

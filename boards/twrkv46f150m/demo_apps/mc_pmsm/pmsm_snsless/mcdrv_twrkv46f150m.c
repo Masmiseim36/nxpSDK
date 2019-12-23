@@ -71,7 +71,7 @@ void MCDRV_Init_M1(void)
 void InitClock(void)
 {
     /* Calculate clock dependant variables for PMSM sensorless control algorithm */
-    g_sClockSetup.ui32FastPeripheralClock =  CLOCK_GetFreq(kCLOCK_CoreSysClk);
+    g_sClockSetup.ui32FastPeripheralClock =  CLOCK_GetFreq(kCLOCK_FastPeriphClk);    
     g_sClockSetup.ui32BusClock = CLOCK_GetFreq(kCLOCK_BusClk);
     g_sClockSetup.ui16M1PwmFreq = M1_PWM_FREQ; /* 10kHz */
                                              /* PWM module calculated as follows:

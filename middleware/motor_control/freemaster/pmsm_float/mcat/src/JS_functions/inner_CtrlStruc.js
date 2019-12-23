@@ -1068,8 +1068,8 @@ function writeCascadeHTMLOutput(prefix,xmlObject)
     /* scalar ramp increments */
     document.write(HTML_write_define_line_number(prefix,0,"SCALAR_RAMP_UP",xmlObject));
     document.write(HTML_write_define_line_number(prefix,0,"SCALAR_RAMP_DOWN",xmlObject));
-    setInnerHtmlValueAsText("SCALAR_RAMP_UP",0,rampIncUp,rampIncUp_float);
-    setInnerHtmlValueAsText("SCALAR_RAMP_DOWN",0,rampIncDown,rampIncDown_float);
+    setInnerHtmlValueAsText("SCALAR_RAMP_UP",0,ScalarRampIncUp,ScalarRampIncUp_float);
+    setInnerHtmlValueAsText("SCALAR_RAMP_DOWN",0,ScalarRampIncDown,ScalarRampIncDown_float);
 }
 
 /***************************************************************************//*!

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -41,28 +41,28 @@
 typedef struct _mcdrv_adc16
 {
     GDFLIB_FILTER_MA_T_A32 ui16FiltDcCurr; /* Dc-bus current offset filter */
-    ADC_Type *pui32UdcbAdcBase;            /* pointer to ADC where DC-bus voltage channel is assigned */
-    ADC_Type *pui32IdcbAdcBase;            /* pointer to ADC where DC-bus current channel is assigned */
-    ADC_Type *pui32BemfAAdcBase;           /* pointer to ADC where BEMF phase A channel is assigned */
-    ADC_Type *pui32BemfBAdcBase;           /* pointer to ADC where BEMF phase B channel is assigned */
-    ADC_Type *pui32BemfCAdcBase;           /* pointer to ADC where BEMF phase C channel is assigned */
-    ADC_Type *pui32AuxAdcBase;             /* pointer to ADC where AUX channel is assigned  */
-    uint16_t ui16IndexAux;                 /* auxiliary ADC channel index  */
-    uint16_t ui16IndexUdcb;                /* DC-bus voltage ADC channel index  */
-    uint16_t ui16IndexIdcb;                /* DC-bus current ADC channel index  */
-    uint16_t ui16IndexBemf;                /* BEMF ADC channel index  */
-    uint16_t ui16OffsetFiltWindow;         /* ADC offset filter window */
-    uint16_t ui16OffsetDcCurr;             /* Dc-bus current offset */
-    uint16_t ui16CalibDcCurr;              /* Dc-bus current offset calibration */
-    frac16_t *pf16IDcBus;                  /* pointer to DC-bus  current variable */
-    frac16_t *pf16UDcBus;                  /* pointer to DC-bus  voltage variable */
-    frac16_t *pf16BemfVoltage;             /* pointer to actual BEMF voltage     */
-    uint16_t *pui16AuxChan;                /* pointer to actual auxiliary variable   */
-    uint16_t ui16Sector;                   /* commutation sector */
-    uint16_t bldcAdc0SectorCfg[6];         /* array with BEMF channels assigned to ADC0 according commutation table */
-    uint16_t bldcAdc1SectorCfg[6];         /* array with BEMF channels assigned to ADC1 according commutation table */
-    uint16_t *pui16AdcArray;               /* pointer to ADC Array with channels numbers */
-    ADC_Type *bldcAdcSelCfg[6]; 		   /* array with ADC base addresses for BEMF sensing according commutation table*/
+    ADC_Type *pui32UdcbAdcBase; /* pointer to ADC where DC-bus voltage channel is assigned */
+    ADC_Type *pui32IdcbAdcBase; /* pointer to ADC where DC-bus current channel is assigned */
+    ADC_Type *pui32BemfAAdcBase; /* pointer to ADC where BEMF phase A channel is assigned */
+    ADC_Type *pui32BemfBAdcBase; /* pointer to ADC where BEMF phase B channel is assigned */
+    ADC_Type *pui32BemfCAdcBase; /* pointer to ADC where BEMF phase C channel is assigned */
+    ADC_Type *pui32AuxAdcBase; /* pointer to ADC where AUX channel is assigned  */
+    uint16_t ui16IndexAux; /* auxiliary ADC channel index  */
+    uint16_t ui16IndexUdcb; /* DC-bus voltage ADC channel index  */
+    uint16_t ui16IndexIdcb; /* DC-bus current ADC channel index  */
+    uint16_t ui16IndexBemf; /* BEMF ADC channel index  */
+    uint16_t ui16OffsetFiltWindow; /* ADC offset filter window */
+    uint16_t ui16OffsetDcCurr; /* Dc-bus current offset */
+    uint16_t ui16CalibDcCurr; /* Dc-bus current offset calibration */
+    frac16_t *pf16IDcBus; /* pointer to DC-bus  current variable */
+    frac16_t *pf16UDcBus; /* pointer to DC-bus  voltage variable */
+    frac16_t *pf16BemfVoltage; /* pointer to actual BEMF voltage     */
+    uint16_t *pui16AuxChan; /* pointer to actual auxiliary variable   */
+    uint16_t ui16Sector; /* commutation sector */
+    uint16_t bldcAdc0SectorCfg[6]; /* array with BEMF channels assigned to ADC0 according commutation table */
+    uint16_t bldcAdc1SectorCfg[6]; /* array with BEMF channels assigned to ADC1 according commutation table */
+    uint16_t *pui16AdcArray; /* pointer to ADC Array with channels numbers */
+    ADC_Type *bldcAdcSelCfg[6]; /* array with ADC base addresses for BEMF sensing according commutation table*/
 } mcdrv_adc16_t;
 
 typedef struct _mcdrv_adc16_init

@@ -10,7 +10,6 @@
     <tExt>*.txt; *.h; *.inc</tExt>
     <pExt>*.plm</pExt>
     <CppX>*.cpp</CppX>
-    <nMigrate>0</nMigrate>
   </Extensions>
   <DaveTm>
     <dwLowDateTime>0</dwLowDateTime>
@@ -21,13 +20,12 @@
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
-      <CLKADS>120000000</CLKADS>
+      <CLKADS>12000000</CLKADS>
       <OPTTT>
         <gFlags>1</gFlags>
         <BeepAtEnd>1</BeepAtEnd>
         <RunSim>0</RunSim>
         <RunTarget>1</RunTarget>
-        <RunAbUc>0</RunAbUc>
       </OPTTT>
       <OPTHX>
         <HexSelection>1</HexSelection>
@@ -70,29 +68,39 @@
       <OPTFL>
         <tvExp>0</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
-        <IsCurrentTarget>1</IsCurrentTarget>
+        <IsCurrentTarget>0</IsCurrentTarget>
       </OPTFL>
-      <CpuCode>0</CpuCode>
+      <CpuCode>14</CpuCode>
       <Books>
         <Book>
           <Number>0</Number>
-          <Title>TWR-KV46F150M Quick Start Guide for Motor Control (TWR-KV46F150M)</Title>
-          <Path>C:\DevTools\Keil_v5\ARM\PACK\Keil\Kinetis_KVxx_DFP\1.5.0\Boards\Freescale\TWR-KV46F150M\Documents\TWR-KV46F150MQSG.pdf</Path>
+          <Title>Quick Start Guide (TWR-K60D100M)</Title>
+          <Path>D:\tools\keil511\ARM\PACK\Keil\Kinetis_K60_DFP\1.0.2\Documents\TWR-K60D100MQSG.pdf</Path>
         </Book>
         <Book>
           <Number>1</Number>
-          <Title>TWR-KV46F150M Tower Module User's Guide (TWR-KV46F150M)</Title>
-          <Path>C:\DevTools\Keil_v5\ARM\PACK\Keil\Kinetis_KVxx_DFP\1.5.0\Boards\Freescale\TWR-KV46F150M\Documents\TWRKV46F150MUG.pdf</Path>
+          <Title>User Manual (TWR-K60D100M)</Title>
+          <Path>D:\tools\keil511\ARM\PACK\Keil\Kinetis_K60_DFP\1.0.2\Documents\TWR-K60D100M_SCH.pdf</Path>
         </Book>
         <Book>
           <Number>2</Number>
-          <Title>TWR-KV46F150M Schematics (TWR-KV46F150M)</Title>
-          <Path>C:\DevTools\Keil_v5\ARM\PACK\Keil\Kinetis_KVxx_DFP\1.5.0\Boards\Freescale\TWR-KV46F150M\Documents\TWRKV46F150M_SCH.pdf</Path>
+          <Title>User Manual (TWR-K60D100M)</Title>
+          <Path>D:\tools\keil511\ARM\PACK\Keil\Kinetis_K60_DFP\1.0.2\Documents\TWRK60D100MUM.pdf</Path>
         </Book>
         <Book>
           <Number>3</Number>
-          <Title>TWR-KV46F150M: Kinetis KV4x Family Tower System Module (TWR-KV46F150M)</Title>
-          <Path>http://www.freescale.com/webapp/sps/site/prod_summary.jsp?code=TWR-KV46F150M</Path>
+          <Title>Quick Start Guide (TWR-K64F120M)</Title>
+          <Path>D:\tools\keil511\ARM\PACK\Keil\Kinetis_K60_DFP\1.0.2\Documents\TWRK64FQSG.pdf</Path>
+        </Book>
+        <Book>
+          <Number>4</Number>
+          <Title>TWR-K60D100M Web Page (TWR-K60D100M)</Title>
+          <Path>http://www.freescale.com/webapp/sps/site/prod_summary.jsp?code=TWR-K60D100M</Path>
+        </Book>
+        <Book>
+          <Number>5</Number>
+          <Title>TWR-K64F120M Web Page (TWR-K64F120M)</Title>
+          <Path>http://www.freescale.com/webapp/sps/site/prod_summary.jsp?code=TWR-K64F120M</Path>
         </Book>
       </Books>
       <DebugOpt>
@@ -115,9 +123,10 @@
         <tRtrace>1</tRtrace>
         <sRSysVw>1</sRSysVw>
         <tRSysVw>1</tRSysVw>
+        <tPdscDbg>1</tPdscDbg>
         <sRunDeb>0</sRunDeb>
         <sLrtime>0</sLrtime>
-        <nTsel>14</nTsel>
+        <nTsel>12</nTsel>
         <sDll/>
         <sDllPa/>
         <sDlgDll/>
@@ -128,13 +137,18 @@
         <tDlgDll/>
         <tDlgPa/>
         <tIfile>.\Debug_RAM.ini</tIfile>
-        <pMon>PEMicro\Pemicro_ArmCortexInterface.dll</pMon>
+        <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
+          <Key>CMSIS_AGDI</Key>
+          <Name>-X"" -U -O206 -S0 -C0 -P00 -FO7 -FD20000000 -FC1000 -FN1 -FF0MK_P1M0.FLM -FS00 -FL0100000 -FP0($$Device:MK64FN1M0xxx12$Flash\MK_P1M0.FLM)</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
           <Key>UL2CM3</Key>
-          <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0MKP256_4KB_SECTOR -FS00 -FL040000 -FP0($$Device:MKV46F256xxx16$Flash\MKP256_4KB_SECTOR.FLM))</Name>
+          <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0MK_P1M0 -FS00 -FL0100000 -FP0($$Device:MK64FN1M0xxx12$Flash\MK_P1M0.FLM))</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -169,7 +183,6 @@
       </DebugFlag>
       <LintExecutable/>
       <LintConfigFile/>
-      <bLintAuto>0</bLintAuto>
     </TargetOption>
   </Target>
 </ProjectOpt>

@@ -63,7 +63,7 @@ extern "C" {
         GMCLIB_ElimDcBusRipHw_F16sas_Asm(f16UDCBus, a32IdxMod, psUAlBe, psUAlBeComp)
 #define GMCLIB_ElimDcBusRipFOC_F16(f16UDCBus, psUAlBe, psUAlBeComp)                   \
         GMCLIB_ElimDcBusRipFOCHw_F16_Asm(f16UDCBus, psUAlBe, psUAlBeComp)
-#else            
+#elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050)             
 #define GMCLIB_ElimDcBusRip_F16sas(f16UDCBus, a32IdxMod, psUAlBe, psUAlBeComp)        \
         GMCLIB_ElimDcBusRip_F16sas_Asm(f16UDCBus, a32IdxMod, psUAlBe, psUAlBeComp)
 #define GMCLIB_ElimDcBusRipFOC_F16(f16UDCBus, psUAlBe, psUAlBeComp)                   \

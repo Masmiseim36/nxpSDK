@@ -91,10 +91,10 @@ $(document).ready(function(){
 
 @return  none
 ******************************************************************************/
- $(document).ready(function(){
-   window.open('pcmaster:selitem:AllInOne:scope','_self'); 
-			// // window.close('pcmaster:selitem:algorithm block description:info'); 
-  });
+// $(document).ready(function(){
+//   window.open('pcmaster:selitem:AllInOne:scope','_self'); 
+// // window.close('pcmaster:selitem:algorithm block description:info'); 
+//  });
 /******************************************************************************
 @brief   Read FM variables and set gauge scales and page texts
 
@@ -255,16 +255,18 @@ function SpeedSliderInit()
 {
     $('#jqxSliderSetSpeed').jqxSlider(
     {
-        tooltip: true,
+        tooltip: false,
         theme:'energyblue',
         mode: 'default',
         showButtons: true,
         height: 30,
         width: 300,
-        min: -speedNominal*100, max: speedNominal*100,
-        step: 500,
-        ticksFrequency: 500,
-        values: [-speedNominal*100, speedNominal*100]
+       
+        min: -speedNominal, max: speedNominal,
+        step: 5,
+        ticksFrequency: 5,
+        
+        values: [-speedNominal, speedNominal]
     });
 
     /* set init value */
@@ -466,7 +468,7 @@ $(document).ready(function(){
     {
         if(demoMode == 0)
         {
-            speedReqNew= $('#jqxSliderSetSpeed').jqxSlider('getValue');
+            speedReqNew = ($('#jqxSliderSetSpeed').jqxSlider('getValue'))*100;
             succ = pcm.WriteVariable("Required Speed", speedReqNew, retMsg);
             $('#gaugeContainerSpeedRequired').jqxGauge({value: speedReqNew/100, });
             if(speedReqNew != 0)
@@ -814,7 +816,7 @@ function RequiredSpeedUpdate()
        speedRequiredAct = pcm.LastVariable_vValue;
 	   
     $('#gaugeContainerSpeedRequired').jqxGauge({value: speedRequiredAct/100, });
-    $('#jqxSliderSetSpeed').jqxSlider({value: speedRequiredAct});
+    $('#jqxSliderSetSpeed').jqxSlider({value: speedRequiredAct/100});
 }
 
 /******************************************************************************

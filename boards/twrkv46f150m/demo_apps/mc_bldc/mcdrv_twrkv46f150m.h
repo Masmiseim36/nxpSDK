@@ -34,6 +34,7 @@ typedef struct _clock_setup
   uint32_t ui32FastPeripheralClock;
     uint32_t ui32BusClock;
     uint16_t ui16PwmFreq;
+    uint16_t ui16PwmDeadTime;
     uint16_t ui16PwmModulo;
     uint32_t ui32CmtTimerFreq;
     uint16_t ui16CtrlLoopFreq;
@@ -58,17 +59,6 @@ typedef struct _clock_setup
 /* Define motor 1 ADC trigger PDB */
 #define M1_MCDRV_PDB (MCDRV_PDB0)
 
-/*******************************************************************************
- * FreeMASTER communication constants
- ******************************************************************************/
-/*! @brief The UART to use for FreeMASTER communication */
-#define BOARD_FMSTR_UART (1) 
-#define BOARD_FMSTR_LPUART (2) 
-#define BOARD_FMSTR_UART_PORT UART1
-#define BOARD_FMSTR_UART_BAUDRATE 115200
-#define BOARD_FMSTR_UART_TYPE BOARD_FMSTR_UART 
-#define BOARD_FMSTR_USE_TSA (1)
-
 /******************************************************************************
  * Clock & PWM definition
  ******************************************************************************/
@@ -78,6 +68,8 @@ typedef struct _clock_setup
 #define CTRL_LOOP_FREQ (1000)
 /* PWM frequency - 20kHz */
 #define PWM_FREQ (20000)
+/* Output PWM deadtime value in nanoseconds */
+#define PWM_DEADTIME (500)
 
 /* Assignment of FTM channels to motor phases
  * 0 - FTM channels 0&1

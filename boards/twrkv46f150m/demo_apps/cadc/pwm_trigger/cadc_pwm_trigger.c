@@ -134,8 +134,6 @@ static void InitTriggerSource(void)
      * pwmConfig.enableDebugMode = false;
      * pwmConfig.enableWait = false;
      * pwmConfig.reloadSelect = kPWM_LocalReload;
-     * pwmConfig.faultFilterCount = 0;
-     * pwmConfig.faultFilterPeriod = 0;
      * pwmConfig.clockSource = kPWM_BusClock;
      * pwmConfig.prescale = kPWM_Prescale_Divide_1;
      * pwmConfig.initializationControl = kPWM_Initialize_LocalSync;

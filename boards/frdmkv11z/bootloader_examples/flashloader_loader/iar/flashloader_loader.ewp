@@ -261,7 +261,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -495,6 +495,7 @@
         </option>
         <option>
           <name>ADefines</name>
+          <state>NDEBUG</state>
           <state>LITE_FOOTPRINT</state>
         </option>
         <option>
@@ -1061,6 +1062,15 @@
     <group>
       <name>utilities</name>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/fsl_assert.h</name>
+      </file>
+      <group>
+        <name>src</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/src/fsl_assert.c</name>
+        </file>
+      </group>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/vector_table_info.h</name>
       </file>
     </group>
@@ -1071,19 +1081,13 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm0plus.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_const_structs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
@@ -1098,6 +1102,9 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
     </file>
     <file>
@@ -1108,6 +1115,15 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_const_structs.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
     </file>
   </group>
 </project>

@@ -11,14 +11,13 @@
         <TargetCommonOption>
           <Device>MKV46F256VLL16</Device>
           <Vendor>NXP</Vendor>
-          <PackID>Keil.Kinetis_KVxx_DFP.1.5.0</PackID>
+          <PackID>Keil.Kinetis_KVxx_DFP.1.3.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>CPUTYPE("Cortex-M4") FPU2</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0MK_P512 -FS00 -FL080000 -FP0($$Device:MKV46F256xxx16$Flash\MK_P512.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
-          <RegisterFile>$$Device:MKV46F256xxx16$Device\Include\MKV46F16.h</RegisterFile>
+          <RegisterFile>$$Device:MKV46F256xxx15$Device\Include\MKV46F16.h</RegisterFile>
           <MemoryEnv/>
           <Cmp/>
           <Asm/>
@@ -28,7 +27,7 @@
           <SLE66CMisc/>
           <SLE66AMisc/>
           <SLE66LinkerMisc/>
-          <SFDFile>$$Device:MKV46F256xxx16$SVD\MKV46F16.svd</SFDFile>
+          <SFDFile>$$Device:MKV46F256xxx15$SVD\MKV46F25615.svd</SFDFile>
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath/>
@@ -49,7 +48,7 @@
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
-          <BrowseInformation>0</BrowseInformation>
+          <BrowseInformation>1</BrowseInformation>
           <ListingPath>.\output\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
@@ -77,12 +76,10 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>1</RunUserProg2>
-            <UserProg1Name>fromelf --bincombined release\flashloader.out --output flashloader.bin</UserProg1Name>
-            <UserProg2Name>python ..\..\..\..\..\middleware\mcu-boot\bin\create_fl_image_mdk.py release\flashloader.out flashloader.bin release\flashloader_image.c</UserProg2Name>
+            <UserProg1Name>fromelf --bincombined release\flashloader.out --output release\flashloader.bin</UserProg1Name>
+            <UserProg2Name>python ..\..\..\..\..\middleware\mcu-boot\bin\create_fl_image_mdk.py release\flashloader.out release\flashloader.bin release\flashloader_image.c</UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
-            <nStopA1X>0</nStopA1X>
-            <nStopA2X>0</nStopA2X>
           </AfterMake>
           <SelectedForBatchBuild>1</SelectedForBatchBuild>
           <SVCSIdString/>
@@ -135,7 +132,7 @@
           </Simulator>
           <Target>
             <UseTarget>1</UseTarget>
-            <LoadApplicationAtStartup>0</LoadApplicationAtStartup>
+            <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
             <RestoreWatchpoints>1</RestoreWatchpoints>
@@ -144,9 +141,10 @@
             <RestoreToolbox>1</RestoreToolbox>
             <RestoreTracepoints>1</RestoreTracepoints>
             <RestoreSysVw>1</RestoreSysVw>
+            <UsePdscDebugDescription>1</UsePdscDebugDescription>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>14</TargetSelection>
+          <TargetSelection>6</TargetSelection>
           <SimDlls>
             <CpuDll/>
             <CpuDllArguments/>
@@ -160,7 +158,7 @@
             <PeripheralDll/>
             <PeripheralDllArguments/>
             <InitializationFile>.\Debug_RAM.ini</InitializationFile>
-            <Driver>PEMicro\Pemicro_ArmCortexInterface.dll</Driver>
+            <Driver>Segger\JL2CM3.dll</Driver>
           </TargetDlls>
         </DebugOption>
         <Utilities>
@@ -169,7 +167,7 @@
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
-            <Capability>1</Capability>
+            <Capability>0</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
@@ -226,11 +224,10 @@
             <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
-            <nSecure>0</nSecure>
             <RoSelD>3</RoSelD>
             <RwSelD>3</RwSelD>
             <CodeSel>0</CodeSel>
-            <OptFeed>1</OptFeed>
+            <OptFeed>0</OptFeed>
             <NoZi1>0</NoZi1>
             <NoZi2>0</NoZi2>
             <NoZi3>0</NoZi3>
@@ -280,12 +277,12 @@
               <IRAM>
                 <Type>0</Type>
                 <StartAddress>0x20000000</StartAddress>
-                <Size>0x10000</Size>
+                <Size>0x8000</Size>
               </IRAM>
               <IROM>
                 <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x80000</Size>
+                <Size>0x40000</Size>
               </IROM>
               <XRAM>
                 <Type>0</Type>
@@ -310,7 +307,7 @@
               <OCR_RVCT4>
                 <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x80000</Size>
+                <Size>0x40000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
@@ -335,19 +332,20 @@
               <OCR_RVCT9>
                 <Type>0</Type>
                 <StartAddress>0x20000000</StartAddress>
-                <Size>0x10000</Size>
+                <Size>0x8000</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>
-                <StartAddress>0x1fff0000</StartAddress>
-                <Size>0x10000</Size>
+                <StartAddress>0x1fffc000</StartAddress>
+                <Size>0x4000</Size>
               </OCR_RVCT10>
             </OnChipMemories>
             <RvctStartVector/>
+            <nSecure>0</nSecure>
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>4</Optim>
+            <Optim>7</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -356,21 +354,22 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
-            <v6Lang>0</v6Lang>
-            <v6LangP>0</v6LangP>
-            <vShortEn>0</vShortEn>
-            <vShortWch>0</vShortWch>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186,170,2748,1461,1295,177,550 --library_type=standardlib</MiscControls>
-              <Define>NDEBUG, CPU_MKV46F256VLL16, BL_TARGET_RAM, TWR_KV46F150m</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb  -Wno-null-dereference  -Wno-unknown-attributes  -Wno-expansion-to-defined  -Wno-invalid-noreturn</MiscControls>
+              <Define>NDEBUG, CPU_MKV46F256VLL16, BL_TARGET_RAM, TWR_KV46F150m, FSL_OSA_BM_TIMER_CONFIG=FSL_OSA_BM_TIMER_NONE</Define>
               <Undefine/>
-              <IncludePath>../../../../../CMSIS/Include;../../../../../middleware/mcu-boot/src;../../../../../middleware/mcu-boot/src/bootloader;../../../../../middleware/mcu-boot/src/include;../../../../../middleware/mcu-boot/src/startup;../../../../../middleware/mcu-boot/src/utilities;../../../../../middleware/mcu-boot/src/drivers;../../../../../middleware/mcu-boot/src/drivers/crc;../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../middleware/mcu-boot/src/drivers/smc;../../../../../middleware/mcu-boot/targets/MKV46F16/src;../../../../../middleware/mcu-boot/src/autobaud;../../../../../devices/MKV46F16;../../../../../devices/MKV46F16/drivers;..;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers</IncludePath>
+              <IncludePath>../../../../../CMSIS/Include;../../../../../middleware/mcu-boot/src;../../../../../middleware/mcu-boot/src/bootloader;../../../../../middleware/mcu-boot/src/include;../../../../../middleware/mcu-boot/src/startup;../../../../../middleware/mcu-boot/src/utilities;../../../../../middleware/mcu-boot/src/drivers;../../../../../middleware/mcu-boot/src/drivers/crc;../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../middleware/mcu-boot/src/drivers/smc;../../../../../middleware/mcu-boot/targets/MKV46F16/src;../../../../../middleware/mcu-boot/src/autobaud;../../../../../devices/MKV46F16;../../../../../devices/MKV46F16/drivers;..;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../components/osa;../../../../../devices/MKV46F16/drivers;../../../../../components/lists</IncludePath>
             </VariousControls>
+            <v6Lang>3</v6Lang>
+            <v6Lto>1</v6Lto>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
+            <v6Rtti>0</v6Rtti>
           </Cads>
           <Aads>
             <interw>0</interw>
@@ -383,11 +382,12 @@
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
             <VariousControls>
-              <MiscControls>--cpreproc --diag_suppress=1609,1581</MiscControls>
-              <Define>BL_HAS_BOOTLOADER_CONFIG=0</Define>
+              <MiscControls/>
+              <Define>NDEBUG, BL_HAS_BOOTLOADER_CONFIG=0</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
+            <uClangAs>1</uClangAs>
           </Aads>
           <LDads>
             <umfTarg>0</umfTarg>
@@ -402,12 +402,13 @@
             <ScatterFile>MKV46F256xxx16_ram_flashloader.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --datacompressor off --feedback_type=unused,noiw --predefine="-D__ram_vector_table__=1"</Misc>
+            <Misc>--remove --datacompressor off --predefine="-D__ram_vector_table__=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
+      <uAC6>1</uAC6>
       <Groups>
         <Group>
           <GroupName>drivers</GroupName>
@@ -843,9 +844,9 @@
               <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.h</FilePath>
             </File>
             <File>
-              <FileName>pattern_fill.s</FileName>
+              <FileName>pattern_fill_gcc.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.s</FilePath>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill_gcc.S</FilePath>
             </File>
             <File>
               <FileName>sram_init.h</FileName>
@@ -957,6 +958,11 @@
         <Group>
           <GroupName>source-utilities-src</GroupName>
           <Files>
+            <File>
+              <FileName>debug_util.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/utilities/src/debug_util.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
@@ -1070,27 +1076,37 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
               <FileName>core_cm4.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_cm4.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -1101,6 +1117,11 @@
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
@@ -1123,6 +1144,11 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
+              <FileName>core_armv81mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
+            </File>
+            <File>
               <FileName>core_armv8mbl.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
@@ -1141,6 +1167,36 @@
               <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component-lists</GroupName>
+          <Files>
+            <File>
+              <FileName>generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
             </File>
           </Files>
         </Group>

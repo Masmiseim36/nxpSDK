@@ -403,7 +403,7 @@ int main(void)
 
     /* Init hardware */
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     /* Init using Led in Demo app */
     LED1_INIT();

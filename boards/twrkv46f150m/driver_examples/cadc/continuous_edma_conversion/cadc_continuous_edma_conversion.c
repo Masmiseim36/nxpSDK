@@ -20,7 +20,7 @@
  * Definitions
  ******************************************************************************/
 #define DEMO_CADC_BASEADDR ADC
-#define DEMO_CADC_USER_CHANNEL 4U
+#define DEMO_CADC_USER_CHANNEL 6U
 #define DEMO_DMAMUX_BASEADDR DMAMUX0
 #define DEMO_DMA_CHANNEL 0U
 #define DEMO_DMA_ADC_SOURCE 40U

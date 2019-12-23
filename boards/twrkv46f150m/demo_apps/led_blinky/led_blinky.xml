@@ -10,6 +10,7 @@
     <definition extID="device.MKV46F16_startup.MKV46F16"/>
     <definition extID="platform.Include_common.MKV46F16"/>
     <definition extID="platform.Include_core_cm4.MKV46F16"/>
+    <definition extID="platform.Include_dsp.MKV46F16"/>
     <definition extID="platform.drivers.clock.MKV46F16"/>
     <definition extID="platform.drivers.common.MKV46F16"/>
     <definition extID="platform.drivers.gpio.MKV46F16"/>
@@ -17,13 +18,14 @@
     <definition extID="platform.drivers.smc.MKV46F16"/>
     <definition extID="platform.drivers.uart.MKV46F16"/>
     <definition extID="platform.utilities.assert.MKV46F16"/>
+    <definition extID="platform.utilities.misc_utilities.MKV46F16"/>
     <definition extID="utility.debug_console.MKV46F16"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="twrkv46f150m_led_blinky" name="led_blinky" category="demo_apps" dependency="platform.drivers.gpio.MKV46F16 platform.drivers.clock.MKV46F16 platform.drivers.common.MKV46F16 device.MKV46F16_CMSIS.MKV46F16 utility.debug_console.MKV46F16 component.uart_adapter.MKV46F16 component.serial_manager.MKV46F16 component.serial_manager_uart.MKV46F16 platform.drivers.uart.MKV46F16 component.lists.MKV46F16 device.MKV46F16_startup.MKV46F16 platform.drivers.port.MKV46F16 platform.drivers.smc.MKV46F16 platform.utilities.assert.MKV46F16 platform.Include_core_cm4.MKV46F16 platform.Include_common.MKV46F16">
+  <example id="twrkv46f150m_led_blinky" name="led_blinky" category="demo_apps" dependency="platform.drivers.gpio.MKV46F16 platform.drivers.clock.MKV46F16 platform.drivers.common.MKV46F16 device.MKV46F16_CMSIS.MKV46F16 utility.debug_console.MKV46F16 component.uart_adapter.MKV46F16 component.serial_manager.MKV46F16 component.lists.MKV46F16 component.serial_manager_uart.MKV46F16 platform.drivers.uart.MKV46F16 device.MKV46F16_startup.MKV46F16 platform.drivers.port.MKV46F16 platform.drivers.smc.MKV46F16 platform.utilities.assert.MKV46F16 platform.Include_core_cm4.MKV46F16 platform.Include_common.MKV46F16 platform.Include_dsp.MKV46F16 platform.utilities.misc_utilities.MKV46F16">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -42,6 +44,7 @@
           <value>CPU_MKV46F256VLL16</value>
           <value>TWR_KV46F150M</value>
           <value>TOWER</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -57,14 +60,17 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/twrkv46f150m/demo_apps/led_blinky/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/twrkv46f150m/demo_apps/led_blinky/armgcc" target_path="MKV46F16/gcc" type="linker" toolchain="armgcc">
       <files mask="MKV46F256xxx16_flash.ld"/>
     </source>
-    <source path="boards/twrkv46f150m/demo_apps/led_blinky/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/twrkv46f150m/demo_apps/led_blinky/iar" target_path="MKV46F16/iar" type="linker" toolchain="iar">
       <files mask="MKV46F256xxx16_flash.icf"/>
     </source>
-    <source path="boards/twrkv46f150m/demo_apps/led_blinky/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/twrkv46f150m/demo_apps/led_blinky/mdk" target_path="MKV46F16/arm" type="linker" toolchain="mdk">
       <files mask="MKV46F256xxx16_flash.scf"/>
+    </source>
+    <source path="boards/twrkv46f150m/demo_apps/led_blinky" target_path="./" type="other" exclude="true">
+      <files mask="led_blinky.mex"/>
     </source>
     <source path="boards/twrkv46f150m/demo_apps/led_blinky" target_path="board" type="c_include">
       <files mask="board.h"/>
@@ -82,7 +88,7 @@
     <source path="boards/twrkv46f150m/demo_apps/led_blinky" target_path="source" type="src">
       <files mask="led_blinky.c"/>
     </source>
-    <source path="boards/twrkv46f150m/demo_apps/led_blinky" target_path="src" type="binary" exclude="true">
+    <source path="boards/twrkv46f150m/demo_apps/led_blinky" target_path="twrkv46f150m/demo_apps/led_blinky" type="binary" exclude="true">
       <files mask="led_blinky.bin"/>
     </source>
   </example>

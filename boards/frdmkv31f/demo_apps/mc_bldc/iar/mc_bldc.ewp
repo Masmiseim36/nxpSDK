@@ -184,6 +184,7 @@
           <state>CPU_MKV31F512VLL12</state>
           <state>FRDM_KV31F</state>
           <state>FREEDOM</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -260,7 +261,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -312,10 +313,13 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../middleware/motor_control/boards/frdmkv31f</state>
+          <state>$PROJ_DIR$/../../../../../middleware/motor_control/boards/frdmkv31f/mc_bldc</state>
+          <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
+          <state>$PROJ_DIR$/../../../../../middleware/motor_control/fmstr_cfg_uart</state>
+          <state>$PROJ_DIR$/../../../../../middleware/motor_control/bldc/mc_drivers</state>
+          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
@@ -334,19 +338,23 @@
           <state>$PROJ_DIR$/../../../../../middleware/motor_control/bldc/mc_algorithms</state>
           <state>$PROJ_DIR$/../../../../../middleware/motor_control/bldc/mc_state_machine</state>
           <state>$PROJ_DIR$/../../../../../middleware/motor_control/bldc/state_machine</state>
-          <state>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
+          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1185,6 +1193,7 @@
           <state>CPU_MKV31F512VLL12</state>
           <state>FRDM_KV31F</state>
           <state>FREEDOM</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1313,10 +1322,13 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../middleware/motor_control/boards/frdmkv31f</state>
+          <state>$PROJ_DIR$/../../../../../middleware/motor_control/boards/frdmkv31f/mc_bldc</state>
+          <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
+          <state>$PROJ_DIR$/../../../../../middleware/motor_control/fmstr_cfg_uart</state>
+          <state>$PROJ_DIR$/../../../../../middleware/motor_control/bldc/mc_drivers</state>
+          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
@@ -1335,19 +1347,23 @@
           <state>$PROJ_DIR$/../../../../../middleware/motor_control/bldc/mc_algorithms</state>
           <state>$PROJ_DIR$/../../../../../middleware/motor_control/bldc/mc_state_machine</state>
           <state>$PROJ_DIR$/../../../../../middleware/motor_control/bldc/state_machine</state>
-          <state>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
+          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2004,30 +2020,15 @@
     </settings>
   </configuration>
   <group>
-    <name>mc_drivers</name>
-    <file>
-      <name>$PROJ_DIR$/../mcdrv_adc_adc16.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../mcdrv_adc_adc16.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../mcdrv_ftm_cmt.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../mcdrv_ftm_cmt.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../mcdrv_pwm3ph_ftm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../mcdrv_pwm3ph_ftm.h</name>
-    </file>
-  </group>
-  <group>
     <name>source</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/fmstr_cfg_uart/freemaster_cfg.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../main.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../main.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../m1_bldc_appconfig.h</name>
@@ -2038,8 +2039,26 @@
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/motor_control/bldc/fm_tsa_bldc.h</name>
     </file>
+  </group>
+  <group>
+    <name>mc_drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../middleware/motor_control/bldc/freemaster_cfg.h</name>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/bldc/mc_drivers/mcdrv_adc_adc16.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/bldc/mc_drivers/mcdrv_adc_adc16.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/bldc/mc_drivers/mcdrv_ftm_cmt.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/bldc/mc_drivers/mcdrv_ftm_cmt.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/bldc/mc_drivers/mcdrv_pwm3ph_ftm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/bldc/mc_drivers/mcdrv_pwm3ph_ftm.h</name>
     </file>
   </group>
   <group>
@@ -2051,7 +2070,7 @@
       <name>$PROJ_DIR$/../mcdrv_frdmkv31f.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../mcdrv.h</name>
+      <name>$PROJ_DIR$/../../../../../middleware/motor_control/boards/frdmkv31f/mc_bldc/mcdrv.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../pin_mux.c</name>
@@ -2179,7 +2198,7 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/AMCLIB/Include/amclib.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/AMCLIB/Include/amclib_FP.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/AMCLIB/Include/amclib_fp.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/AMCLIB/Include/amclib_types.h</name>
@@ -2230,7 +2249,7 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GDFLIB/Include/gdflib.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GDFLIB/Include/gdflib_FP.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GDFLIB/Include/gdflib_fp.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GDFLIB/Include/gdflib_types.h</name>
@@ -2410,7 +2429,7 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/gflib.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/gflib_FP.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/gflib_fp.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB/Include/gflib_types.h</name>
@@ -2452,7 +2471,7 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GMCLIB/Include/gmclib.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GMCLIB/Include/gmclib_FP.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GMCLIB/Include/gmclib_fp.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GMCLIB/Include/gmclib_types.h</name>
@@ -2797,7 +2816,7 @@
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/mlib.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/mlib_FP.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/mlib_fp.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB/Include/mlib_types.h</name>
@@ -2829,66 +2848,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/motor_control/bldc/state_machine/state_machine.h</name>
-    </file>
-  </group>
-  <group>
-    <name>freemaster</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_Kxx.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_Kxx.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_appcmd.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_bdm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_can.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_defcfg.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_lin.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_pipes.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_private.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_protocol.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_protocol.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_rec.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_rec.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_scope.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_serial.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_sfio.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_tsa.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_tsa.h</name>
     </file>
   </group>
   <group>
@@ -2976,24 +2935,159 @@
     </file>
   </group>
   <group>
+    <name>freemaster</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_appcmd.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_can.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_can.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_defcfg.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_pdbdm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_pipes.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_private.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_protocol.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_protocol.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_rec.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_rec.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_scope.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_serial.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_serial.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_sha.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_tsa.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_tsa.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_ures.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_ures.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_utils.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_utils.h</name>
+    </file>
+    <group>
+      <name>drivers</name>
+      <group>
+        <name>mcuxsdk</name>
+        <group>
+          <name>can</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mcan.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mcan.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mscan.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mscan.h</name>
+          </file>
+        </group>
+        <group>
+          <name>serial</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpuart.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpuart.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_miniusart.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_miniusart.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_uart.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_uart.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usart.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usart.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</name>
+          </file>
+        </group>
+      </group>
+    </group>
+    <group>
+      <name>platforms</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le/freemaster_gen32le.h</name>
+      </file>
+    </group>
+  </group>
+  <group>
     <name>CMSIS</name>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm4.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_const_structs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
@@ -3008,6 +3102,9 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
     </file>
     <file>
@@ -3018,6 +3115,15 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_const_structs.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
     </file>
   </group>
 </project>

@@ -184,6 +184,7 @@
           <state>CPU_MKV11Z128VLH7</state>
           <state>FRDM_KV11Z</state>
           <state>FREEDOM</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -260,7 +261,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -328,11 +329,12 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MKV11Z7/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MKV11Z7/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MKV11Z7/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MKV11Z7/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MKV11Z7/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1162,6 +1164,7 @@
           <state>CPU_MKV11Z128VLH7</state>
           <state>FRDM_KV11Z</state>
           <state>FREEDOM</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1306,11 +1309,12 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MKV11Z7/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MKV11Z7/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MKV11Z7/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MKV11Z7/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MKV11Z7/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2140,19 +2144,13 @@
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/core_cm0plus.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_common_tables.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_const_structs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_math.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_compiler.h</name>
@@ -2167,6 +2165,9 @@
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/core_armv81mml.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/core_armv8mbl.h</name>
     </file>
     <file>
@@ -2177,6 +2178,15 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/mpu_armv8.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_common_tables.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_const_structs.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_math.h</name>
     </file>
   </group>
 </project>

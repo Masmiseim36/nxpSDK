@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,17 +14,20 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.0
+product: Pins v6.0
 processor: MKV11Z128xxx7
 package_id: MKV11Z128VLH7
 mcu_data: ksdk2_0
-processor_version: 0.0.8
+processor_version: 6.0.1
+pin_labels:
+- {pin_num: '63', pin_signal: ADC1_SE6/PTD6/LLWU_P15/FTM4_CH0/UART0_RX/FTM0_CH0/FTM1_CH0/FTM0_FLT0/SPI0_SOUT, label: LED, identifier: LED}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
 
 #include "fsl_common.h"
 #include "fsl_port.h"
+#include "fsl_gpio.h"
 #include "pin_mux.h"
 
 /* FUNCTION ************************************************************************************************************
@@ -60,8 +63,15 @@ void BOARD_InitPins(void)
     /* Port D Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortD);
 
+    gpio_pin_config_t LED_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PTD6 (pin 63)  */
+    GPIO_PinInit(BOARD_INITPINS_LED_GPIO, BOARD_INITPINS_LED_PIN, &LED_config);
+
     /* PORTD6 (pin 63) is configured as PTD6 */
-    PORT_SetPinMux(PORTD, 6U, kPORT_MuxAsGpio);
+    PORT_SetPinMux(BOARD_INITPINS_LED_PORT, BOARD_INITPINS_LED_PIN, kPORT_MuxAsGpio);
 }
 /***********************************************************************************************************************
  * EOF

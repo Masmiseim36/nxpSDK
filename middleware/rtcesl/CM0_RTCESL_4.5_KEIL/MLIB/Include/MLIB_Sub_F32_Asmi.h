@@ -56,25 +56,20 @@ static inline frac32_t MLIB_SubSat_F32_FAsmi(register frac32_t f32Min, register 
                         bgt SatEnd                         /* If f32Min > 0, then goes to the SatEnd */
                         subs f32SubVal, f32SubVal, #1      /* f32SubVal = 0x7FFFFFFF */
                     SatEnd:};
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)              /* For GCC compiler */
-                            ".syntax unified \n"           /* Using unified asm syntax */
-                        #endif
-                        "subs %0, %1, %2 \n"               /* f32SubVal = f32Min - f32Sub */
-                        "movs %3, %1 \n"                   /* f32SatVal = f32Min */
-                        "eors %3, %3, %2 \n"               /* f32SatVal = f32Min ^ f32Sub */
-                        "bpl .+16 \n"                      /* If f32SatVal >= 0, then goes to the end of function */
-                        "eors %1, %1, %0 \n"               /* f32Min = f32Min ^ (f32Min - f32Sub) */
-                        "bpl .+12 \n"                      /* If f32Min >= 0, then goes to the end of function */
-                        "movs %0, #128 \n"                 /* f32SubVal = 0x80 */
-                        "lsls %0, %0, #24 \n"                  /* f32SubVal = 0x80000000 */
-                        "cmp %2, #0 \n"                    /* Compares f32Sub with 0 */
-                        "bgt .+4 \n"                       /* If f32Min > 0, then goes to the end of function */
-                        "subs %0, %0, #1 \n"               /* f32SubVal = 0x7FFFFFFF */
-                        #if defined(__GNUC__)              /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "subs %0, %1, %2 \n\t"               /* f32SubVal = f32Min - f32Sub */
+                        "movs %3, %1 \n\t"                   /* f32SatVal = f32Min */
+                        "eors %3, %3, %2 \n\t"               /* f32SatVal = f32Min ^ f32Sub */
+                        "bpl MLIB_SUB_F32_SatEnd \n\t"       /* If f32SatVal >= 0, then goes to the end of function */
+                        "eors %1, %1, %0 \n\t"               /* f32Min = f32Min ^ (f32Min - f32Sub) */
+                        "bpl MLIB_SUB_F32_SatEnd \n\t"       /* If f32Min >= 0, then goes to the end of function */
+                        "movs %0, #128 \n\t"                 /* f32SubVal = 0x80 */
+                        "lsls %0, %0, #24 \n\t"              /* f32SubVal = 0x80000000 */
+                        "cmp %2, #0 \n\t"                    /* Compares f32Sub with 0 */
+                        "bgt MLIB_SUB_F32_SatEnd \n\t"       /* If f32Min > 0, then goes to the end of function */
+                        "subs %0, %0, #1 \n\t"               /* f32SubVal = 0x7FFFFFFF */
+                    "MLIB_SUB_F32_SatEnd: \n\t"   
                         : "=&l"(f32SubVal), "+l"(f32Min), "+l"(f32Sub), "+l"(f32SatVal):);
     #endif
 

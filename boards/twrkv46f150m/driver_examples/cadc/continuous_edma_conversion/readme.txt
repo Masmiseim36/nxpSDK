@@ -8,10 +8,10 @@ CADC results to memory and if users press any key, demo will average CADC result
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
-- MCUXpresso  11.0.0
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -21,7 +21,8 @@ Hardware requirements
 
 Board settings
 ==============
-To use UART on board, make sure that J505-3 connects to J505-4, J506-3 connects to J506-4
+- To use UART on board, make sure that J505-3 connects to J505-4, J506-3 connects to J506-4.
+- Connect an external DC voltage source to ADCA_CH6D (J503-10)
 
 Prepare the Demo
 ================

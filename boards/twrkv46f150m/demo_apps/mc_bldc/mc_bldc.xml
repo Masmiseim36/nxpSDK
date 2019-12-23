@@ -8,10 +8,13 @@
     <definition extID="component.uart_adapter.MKV46F16"/>
     <definition extID="device.MKV46F16_CMSIS.MKV46F16"/>
     <definition extID="device.MKV46F16_startup.MKV46F16"/>
+    <definition extID="middleware.fmstr.MKV46F16"/>
+    <definition extID="middleware.fmstr.platform_gen32le.MKV46F16"/>
     <definition extID="middleware.motor_control.bldc.MKV46F16"/>
     <definition extID="middleware.rtcesl.cm4f.MKV46F16"/>
     <definition extID="platform.Include_common.MKV46F16"/>
     <definition extID="platform.Include_core_cm4.MKV46F16"/>
+    <definition extID="platform.Include_dsp.MKV46F16"/>
     <definition extID="platform.drivers.clock.MKV46F16"/>
     <definition extID="platform.drivers.common.MKV46F16"/>
     <definition extID="platform.drivers.dmamux.MKV46F16"/>
@@ -23,13 +26,14 @@
     <definition extID="platform.drivers.uart.MKV46F16"/>
     <definition extID="platform.drivers.xbara.MKV46F16"/>
     <definition extID="platform.utilities.assert.MKV46F16"/>
+    <definition extID="platform.utilities.misc_utilities.MKV46F16"/>
     <definition extID="utility.debug_console.MKV46F16"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
-    <definition extID="mcuxpresso"/>
     <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="twrkv46f150m_mc_bldc" name="mc_bldc" category="demo_apps" dependency="platform.drivers.sim.MKV46F16 platform.drivers.port.MKV46F16 platform.drivers.dmamux.MKV46F16 platform.drivers.clock.MKV46F16 platform.drivers.xbara.MKV46F16 platform.drivers.dspi.MKV46F16 middleware.rtcesl.cm4f.MKV46F16 middleware.motor_control.bldc.MKV46F16 platform.drivers.common.MKV46F16 device.MKV46F16_CMSIS.MKV46F16 utility.debug_console.MKV46F16 component.uart_adapter.MKV46F16 component.serial_manager.MKV46F16 component.serial_manager_uart.MKV46F16 platform.drivers.uart.MKV46F16 component.lists.MKV46F16 device.MKV46F16_startup.MKV46F16 platform.drivers.smc.MKV46F16 platform.drivers.gpio.MKV46F16 platform.utilities.assert.MKV46F16 platform.Include_core_cm4.MKV46F16 platform.Include_common.MKV46F16">
+  <example id="twrkv46f150m_mc_bldc" name="mc_bldc" category="demo_apps" dependency="platform.drivers.sim.MKV46F16 platform.drivers.port.MKV46F16 platform.drivers.dmamux.MKV46F16 platform.drivers.clock.MKV46F16 platform.drivers.xbara.MKV46F16 platform.drivers.dspi.MKV46F16 middleware.rtcesl.cm4f.MKV46F16 middleware.motor_control.bldc.MKV46F16 platform.drivers.common.MKV46F16 device.MKV46F16_CMSIS.MKV46F16 utility.debug_console.MKV46F16 component.uart_adapter.MKV46F16 component.serial_manager.MKV46F16 component.lists.MKV46F16 component.serial_manager_uart.MKV46F16 platform.drivers.uart.MKV46F16 device.MKV46F16_startup.MKV46F16 platform.drivers.smc.MKV46F16 platform.drivers.gpio.MKV46F16 platform.utilities.assert.MKV46F16 middleware.fmstr.MKV46F16 middleware.fmstr.platform_gen32le.MKV46F16 platform.Include_core_cm4.MKV46F16 platform.Include_common.MKV46F16 platform.Include_dsp.MKV46F16 platform.utilities.misc_utilities.MKV46F16">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -48,6 +52,7 @@
           <value>CPU_MKV46F256VLL16</value>
           <value>TWR_KV46F150M</value>
           <value>TOWER</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -63,16 +68,21 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/twrkv46f150m/demo_apps/mc_bldc/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/twrkv46f150m/demo_apps/mc_bldc/armgcc" target_path="MKV46F16/gcc" type="linker" toolchain="armgcc">
+      <files mask="MKV46F256xxx16_flash.ld"/>
+    </source>
+    <source path="boards/twrkv46f150m/demo_apps/mc_bldc/iar" target_path="MKV46F16/iar" type="linker" toolchain="iar">
       <files mask="MKV46F256xxx16_flash.icf"/>
     </source>
-    <source path="boards/twrkv46f150m/demo_apps/mc_bldc/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/twrkv46f150m/demo_apps/mc_bldc/mdk" target_path="MKV46F16/arm" type="linker" toolchain="mdk">
       <files mask="MKV46F256xxx16_flash.scf"/>
+    </source>
+    <source path="boards/twrkv46f150m/demo_apps/mc_bldc" target_path="./" type="other" exclude="true">
+      <files mask="mc_bldc.mex"/>
     </source>
     <source path="boards/twrkv46f150m/demo_apps/mc_bldc" target_path="board" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
-      <files mask="mcdrv.h"/>
       <files mask="mcdrv_twrkv46f150m.h"/>
       <files mask="pin_mux.h"/>
     </source>
@@ -85,31 +95,35 @@
     <source path="boards/twrkv46f150m/demo_apps/mc_bldc" target_path="doc" type="doc">
       <files mask="readme.txt"/>
     </source>
-    <source path="boards/twrkv46f150m/demo_apps/mc_bldc" target_path="mc_drivers" type="c_include">
+    <source path="boards/twrkv46f150m/demo_apps/mc_bldc" target_path="motor_control/freemaster" type="other" exclude="true">
+      <files mask="bldc.pmp"/>
+    </source>
+    <source path="boards/twrkv46f150m/demo_apps/mc_bldc" target_path="source" type="c_include">
+      <files mask="m1_bldc_appconfig.h"/>
+      <files mask="main.h"/>
+    </source>
+    <source path="boards/twrkv46f150m/demo_apps/mc_bldc" target_path="source" type="src">
+      <files mask="main.c"/>
+    </source>
+    <source path="middleware/motor_control/bldc/mc_drivers" target_path="mc_drivers" type="c_include">
       <files mask="mcdrv_adc_adc12.h"/>
       <files mask="mcdrv_ftm_cmt.h"/>
       <files mask="mcdrv_mosfet_predrv_spi.h"/>
       <files mask="mcdrv_pwm3ph_ftm.h"/>
     </source>
-    <source path="boards/twrkv46f150m/demo_apps/mc_bldc" target_path="mc_drivers" type="src">
+    <source path="middleware/motor_control/bldc/mc_drivers" target_path="mc_drivers" type="src">
       <files mask="mcdrv_adc_adc12.c"/>
       <files mask="mcdrv_ftm_cmt.c"/>
       <files mask="mcdrv_mosfet_predrv_spi.c"/>
       <files mask="mcdrv_pwm3ph_ftm.c"/>
     </source>
-    <source path="boards/twrkv46f150m/demo_apps/mc_bldc" target_path="source" type="c_include">
-      <files mask="m1_bldc_appconfig.h"/>
+    <source path="middleware/motor_control/boards/twrkv46f150m/mc_bldc" target_path="board" type="c_include">
+      <files mask="mcdrv.h"/>
     </source>
-    <source path="boards/twrkv46f150m/demo_apps/mc_bldc" target_path="source" type="src">
-      <files mask="main.c"/>
+    <source path="middleware/motor_control/fmstr_cfg_uart" target_path="source" type="c_include">
+      <files mask="freemaster_cfg.h"/>
     </source>
-    <source path="boards/twrkv46f150m/demo_apps/mc_bldc" target_path="src" type="other" exclude="true">
-      <files mask="bldc.pmp"/>
-    </source>
-    <source path="devices/MKV46F16/gcc" target_path="src" type="linker" toolchain="armgcc">
-      <files mask="MKV46F256xxx16_flash.ld"/>
-    </source>
-    <source path="middleware/motor_control/freemaster/bldc/FM_control/styles/images" target_path="src" type="image" exclude="true">
+    <source path="middleware/motor_control/freemaster/bldc/FM_control/styles/images" target_path="motor_control/freemaster/bldc/FM_control/styles/images" type="image" exclude="true">
       <files mask="backImage.png"/>
       <files mask="backgroundTop.png"/>
       <files mask="bg_black.png"/>
@@ -248,21 +262,21 @@
       <files mask="wp_check_indeterminate_white.png"/>
       <files mask="wp_check_white.png"/>
     </source>
-    <source path="middleware/motor_control/freemaster/bldc/FM_control/styles" target_path="src" type="doc" exclude="true">
+    <source path="middleware/motor_control/freemaster/bldc/FM_control/styles" target_path="motor_control/freemaster/bldc/FM_control/styles" type="doc" exclude="true">
       <files mask="jqx.base.css"/>
       <files mask="jqx.energyblue.css"/>
       <files mask="jqx.energyblue.txt"/>
     </source>
-    <source path="middleware/motor_control/freemaster/bldc/FM_control/styles" target_path="src" type="other" exclude="true">
+    <source path="middleware/motor_control/freemaster/bldc/FM_control/styles" target_path="motor_control/freemaster/bldc/FM_control/styles" type="other" exclude="true">
       <files mask="jqx.energyblue"/>
     </source>
-    <source path="middleware/motor_control/freemaster/bldc/FM_control" target_path="src" type="doc" exclude="true">
+    <source path="middleware/motor_control/freemaster/bldc/FM_control" target_path="motor_control/freemaster/bldc/FM_control" type="doc" exclude="true">
       <files mask="FM_control_M1.htm"/>
     </source>
-    <source path="middleware/motor_control/freemaster/bldc/FM_control" target_path="src" type="image" exclude="true">
+    <source path="middleware/motor_control/freemaster/bldc/FM_control" target_path="motor_control/freemaster/bldc/FM_control" type="image" exclude="true">
       <files mask="logo.png"/>
     </source>
-    <source path="middleware/motor_control/freemaster/bldc/FM_control" target_path="src" type="script" exclude="true">
+    <source path="middleware/motor_control/freemaster/bldc/FM_control" target_path="motor_control/freemaster/bldc/FM_control" type="script" exclude="true">
       <files mask="control_page_config.js"/>
       <files mask="control_page_scripts.js"/>
       <files mask="jquery-1.11.1.min.js"/>
@@ -281,25 +295,22 @@
       <files mask="jqxtooltip.js"/>
       <files mask="jqxwindow.js"/>
     </source>
-    <source path="middleware/motor_control/freemaster/bldc/mcat/param_files" target_path="src" type="doc" exclude="true">
+    <source path="middleware/motor_control/freemaster/bldc/mcat/param_files" target_path="motor_control/freemaster/bldc/mcat/param_files" type="doc" exclude="true">
       <files mask="M1_params.txt"/>
       <files mask="M1_params_bldc_frdm-ke15z.txt"/>
-      <files mask="M1_params_bldc_frdm-kv10z.txt"/>
       <files mask="M1_params_bldc_frdm-kv31f.txt"/>
       <files mask="M1_params_bldc_hvp-ke18f.txt"/>
-      <files mask="M1_params_bldc_hvp-kv10z.txt"/>
       <files mask="M1_params_bldc_hvp-kv31f.txt"/>
       <files mask="M1_params_bldc_hvp-kv46f.txt"/>
       <files mask="M1_params_bldc_hvp-kv58f.txt"/>
       <files mask="M1_params_bldc_twr-ke18f.txt"/>
-      <files mask="M1_params_bldc_twr-kv10z.txt"/>
       <files mask="M1_params_bldc_twr-kv11z.txt"/>
       <files mask="M1_params_bldc_twr-kv31f.txt"/>
       <files mask="M1_params_bldc_twr-kv46f.txt"/>
       <files mask="M1_params_bldc_twr-kv58f.txt"/>
       <files mask="Setting_params.txt"/>
     </source>
-    <source path="middleware/motor_control/freemaster/bldc/mcat/src/JS_functions" target_path="src" type="script" exclude="true">
+    <source path="middleware/motor_control/freemaster/bldc/mcat/src/JS_functions" target_path="motor_control/freemaster/bldc/mcat/src/JS_functions" type="script" exclude="true">
       <files mask="calculations.js"/>
       <files mask="config.js"/>
       <files mask="fileProcessing.js"/>
@@ -310,7 +321,7 @@
       <files mask="mainInclude.js"/>
       <files mask="settings.js"/>
     </source>
-    <source path="middleware/motor_control/freemaster/bldc/mcat/src/images" target_path="src" type="image" exclude="true">
+    <source path="middleware/motor_control/freemaster/bldc/mcat/src/images" target_path="motor_control/freemaster/bldc/mcat/src/images" type="image" exclude="true">
       <files mask="BLDC_concept.png"/>
       <files mask="New Picture.png"/>
       <files mask="logo.png"/>
@@ -321,11 +332,11 @@
       <files mask="onoff_red_on1.png"/>
       <files mask="pozadi.png"/>
     </source>
-    <source path="middleware/motor_control/freemaster/bldc/mcat/src/xml_files" target_path="src" type="xml" exclude="true">
+    <source path="middleware/motor_control/freemaster/bldc/mcat/src/xml_files" target_path="motor_control/freemaster/bldc/mcat/src/xml_files" type="xml" exclude="true">
       <files mask="FM_params_list.xml"/>
       <files mask="Header_file_constant_list.xml"/>
     </source>
-    <source path="middleware/motor_control/freemaster/bldc/mcat/src" target_path="src" type="doc" exclude="true">
+    <source path="middleware/motor_control/freemaster/bldc/mcat/src" target_path="motor_control/freemaster/bldc/mcat/src" type="doc" exclude="true">
       <files mask="AppSetting.html"/>
       <files mask="MainPage.html"/>
       <files mask="form_PathSelector.html"/>

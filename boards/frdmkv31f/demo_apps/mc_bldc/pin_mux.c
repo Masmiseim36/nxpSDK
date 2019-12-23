@@ -15,11 +15,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v5.0
+product: Pins v7.0
 processor: MKV31F512xxx12
 package_id: MKV31F512VLL12
 mcu_data: ksdk2_0
-processor_version: 5.0.0
+processor_version: 0.7.1
 board: FRDM-KV31F
 pin_labels:
 - {pin_num: '76', pin_signal: PTC4/LLWU_P8/SPI0_PCS0/UART1_TX/FTM0_CH3/FB_AD11/CMP1_OUT/LPUART0_TX, label: 'J3[9]/FTM0_CH3', identifier: FTM0_CH3}
@@ -121,8 +121,8 @@ void PinTool_PWM(void)
 PinTool_Misc:
 - options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: '38', peripheral: GPIOA, signal: 'GPIO, 4', pin_signal: PTA4/LLWU_P3/FTM0_CH1/FTM0_FLT3/NMI_b/EZP_CS_b, direction: INPUT, slew_rate: fast, open_drain: disable,
-    pull_select: up, pull_enable: enable, passive_filter: enable}
+  - {pin_num: '38', peripheral: GPIOA, signal: 'GPIO, 4', pin_signal: PTA4/LLWU_P3/FTM0_CH1/FTM0_FLT3/NMI_b/EZP_CS_b, direction: INPUT, gpio_interrupt: kPORT_InterruptRisingEdge,
+    slew_rate: fast, open_drain: disable, pull_select: up, pull_enable: enable, passive_filter: enable}
   - {pin_num: '94', peripheral: GPIOD, signal: 'GPIO, 1', pin_signal: ADC0_SE5b/PTD1/SPI0_SCK/UART2_CTS_b/FTM3_CH1/FB_CS0_b/LPUART0_CTS_b, direction: OUTPUT}
   - {pin_num: '100', peripheral: GPIOD, signal: 'GPIO, 7', pin_signal: PTD7/UART0_TX/FTM0_CH7/FTM0_FLT1/SPI1_SIN, direction: OUTPUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
@@ -183,7 +183,7 @@ void PinTool_Misc(void)
     /* PORTA4 (pin 38) is configured as PTA4 */
     PORT_SetPinMux(PINTOOL_MISC_SW2_PORT, PINTOOL_MISC_SW2_PIN, kPORT_MuxAsGpio);
 
-    /* Interrupt configuration on PORTA4 (pin 34): Interrupt on rising edge */
+    /* Interrupt configuration on PORTA4 (pin 38): Interrupt on rising edge */
     PORT_SetPinInterruptConfig(PINTOOL_MISC_SW2_PORT, PINTOOL_MISC_SW2_PIN, kPORT_InterruptRisingEdge);
 
     /* PORTD1 (pin 94) is configured as PTD1 */

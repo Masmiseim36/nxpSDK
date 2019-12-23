@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -12,18 +12,6 @@
 
 #ifndef _PIN_MUX_H_
 #define _PIN_MUX_H_
-
-/***********************************************************************************************************************
- * Definitions
- **********************************************************************************************************************/
-
-/*! @brief Direction type  */
-typedef enum _pin_mux_direction
-{
-    kPIN_MUX_DirectionInput = 0U,        /* Input direction */
-    kPIN_MUX_DirectionOutput = 1U,       /* Output direction */
-    kPIN_MUX_DirectionInputOrOutput = 2U /* Input or output direction */
-} pin_mux_direction_t;
 
 /*!
  * @addtogroup pin_mux
@@ -43,6 +31,13 @@ extern "C" {
  *
  */
 void BOARD_InitBootPins(void);
+
+/*! @name PORTD0 (number 93), J500[A40]/J501[9]/GPIOD0/PWM_A0/LED0
+  @{ */
+#define BOARD_LED_GREEEN1_GPIO GPIOD /*!<@brief GPIO device name: GPIOD */
+#define BOARD_LED_GREEEN1_PORT PORTD /*!<@brief PORT device name: PORTD */
+#define BOARD_LED_GREEEN1_PIN 0U     /*!<@brief PORTD pin index: 0 */
+                                     /* @} */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

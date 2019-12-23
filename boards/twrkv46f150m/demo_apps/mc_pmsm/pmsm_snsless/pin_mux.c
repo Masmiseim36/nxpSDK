@@ -15,11 +15,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v5.0
+product: Pins v7.0
 processor: MKV46F256xxx16
 package_id: MKV46F256VLL16
 mcu_data: ksdk2_0
-processor_version: 5.0.0
+processor_version: 0.7.1
 board: TWR-KV46F150M
 pin_labels:
 - {pin_num: '38', pin_signal: PTA4/LLWU_P3/FTM0_CH1/XBARIN10/FTM0_FLT3/FlexPWM_B0/NMI_b, label: 'J503[3]/J18[9]/GA4', identifier: TMR_2}

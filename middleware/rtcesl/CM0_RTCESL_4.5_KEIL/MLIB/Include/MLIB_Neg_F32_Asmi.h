@@ -50,19 +50,14 @@ static inline frac32_t MLIB_NegSat_F32_FAsmi(register frac32_t f32Val)
                         subs f32Val, f32Val, #1         /* If f32SatVal = 0x80, then f32Val = f32Val - 1 */
                     SatEnd: };
 
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax unified \n"        /* Using unified asm syntax */
-                        #endif
-                        "rev %1, %0 \n"                 /* f32SatVal = byte-reverse of f32Val*/
-                        "rsbs %0, %0, #0 \n"            /* f32Val = - f32Val */
-                        "cmp %1, #128 \n"               /* Compares f32SatVal with 0x80 */
-                        "bne .+4 \n"                    /* If f32SatVal != 0x80, then jumps through next command */
-                        "subs %0, %0, #1 \n"            /* If f32SatVal = 0x80, then f32Val = f32Val - 1 */
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "rev %1, %0 \n\t"                 /* f32SatVal = byte-reverse of f32Val*/
+                        "rsbs %0, %0, #0 \n\t"            /* f32Val = - f32Val */
+                        "cmp %1, #128 \n\t"               /* Compares f32SatVal with 0x80 */
+                        "bne MLIB_NegSat_F32_SatEnd \n\t" /* If f32SatVal != 0x80, then jumps through next command */
+                        "subs %0, %0, #1 \n\t"            /* If f32SatVal = 0x80, then f32Val = f32Val - 1 */
+					"MLIB_NegSat_F32_SatEnd: \n\t"
                         : "+l"(f32Val), "+l"(f32SatVal):);
     #endif
 

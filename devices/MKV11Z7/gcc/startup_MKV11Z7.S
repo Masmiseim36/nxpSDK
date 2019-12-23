@@ -4,7 +4,7 @@
 /*            MKV11Z7                                                        */
 /*  @version: 1.1                                                            */
 /*  @date:    2017-3-22                                                      */
-/*  @build:   b190124                                                        */
+/*  @build:   b190918                                                        */
 /* ------------------------------------------------------------------------- */
 /*                                                                           */
 /* Copyright 1997-2016 Freescale Semiconductor, Inc.                         */
@@ -142,8 +142,8 @@ Reset_Handler:
 
     movs    r0, 0
 .LC2:
-    str r0, [r1, r2]
     subs    r2, 4
+    str r0, [r1, r2]
     bge .LC2
 .LC3:
 #endif

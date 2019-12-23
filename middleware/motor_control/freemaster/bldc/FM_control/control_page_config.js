@@ -62,6 +62,10 @@ var bldc_hvp_kv10z = {
     title   : "BLDC Sensorless Control using HVP-KV10Z32",
 }
 	
+var bldc_frdm_kv11z = {
+    title   : "PMSM Sensorless Control using FRDM-KV11Z75",
+}	
+	
 var bldc_twr_kv11z = {
     title   : "BLDC Sensorless Control using TWR-KV11Z75",
 }	
@@ -148,6 +152,9 @@ function AppIdenInit()
     case "bldc_twr-kv10z":
         document.getElementById("title").innerHTML = bldc_twr_kv10z.title;
         break;
+	case "bldc_frdm-kv11z":
+        document.getElementById("title").innerHTML = bldc_frdm_kv11z.title;
+        break;		
 	case "bldc_twr-kv11z":
         document.getElementById("title").innerHTML = bldc_twr_kv11z.title;
         break;

@@ -1,0 +1,587 @@
+/* Header: main container */
+.Header{
+    height: 61px; 
+    width:  844px; 
+    background-color: #7bb1db; 
+    position: absolute; 
+    left:   0px; 
+    top:    0px;
+}
+
+/* Header: logo image */
+.Header img{position:   absolute;}
+
+/* Header: bottom lines class */
+.HLines{
+    position: relative; 
+    top:    41px;
+    width:  844px;
+    height: 5px;
+    font-size: 1px; 
+}
+
+/* Header: bottom line color definitions */
+#Line1{background-color: #fbcb4c;}
+#Line2{background-color: #dfe466;}
+#Line3{background-color: #cae0f1;}
+#Line4{background-color: #fef0cc; height: 8px;}
+
+/* Header: headline text */
+#HeadLine{
+    color:  white; 
+    font-family:    Arial; 
+    padding-right:  5px;  
+    position:   absolute; 
+    right:  85px; 
+    top:    5px; 
+    font-size:  24px; 
+    font-weight:    bold; 
+    //font-style:     italic;
+}
+
+/* Triangle class */
+.Triangle{
+    margin:0px;
+    height: 0px;
+    width:  0px;
+    top: 0px;
+    position:   absolute;
+    border-style: solid;
+    border-width: 41px 41px 0px 0px;
+}
+
+/* Triangle: upper traingle colors */
+#UpTriang{
+    border-color: white #7bb1db transparent transparent;
+    left:   148px;
+} 
+
+/* Triangle: bottom traingle colors */
+#BotTriang{
+    border-color: rgb(53,58,63) white transparent transparent;
+    top:   4px;   /*Height of #fline*/
+    right: 0px;
+} 
+
+/* Footer: main container */
+#Footer{
+    height: 45px; 
+    width:  844px; 
+    font-family:    Arial; 
+    color:  white; 
+    background-color:   rgb(53,58,63); 
+    position:   absolute;  
+    left:   0px; 
+    top:    627px;
+  //  text-align: left;
+  //  overflow:   hidden;
+}
+
+/* Footer: credits */
+#fCredits1st{
+    position: relative; 
+    float: right;
+    right: 60px;
+    top: 5px;
+    font-family: Arial; 
+    font-size: 12px;
+}
+#fCredits2nd{
+    position: relative;
+    float: right;
+    left: 70px;
+    top: 22px;
+    font-family: Arial; 
+    font-style: italic;
+    font-size: 10px;
+}
+
+#fCredits3rd{
+    position: relative;
+    float: left;
+    left: 20px;
+    top: 9px;
+    font-family: Arial; 
+    font-style: italic;
+    font-size: 15px;
+    color:#888888;
+}
+/* Footer: bottom line */
+#fline{
+    width:  844px;
+    height: 4px;
+    font-size: 1px;
+    background-color: rgb(136,13,19);
+}
+/* Selected page headline border  */
+.HeadBorder{
+   //border-bottom:2px solid #FFF;
+   /*border-style: ridge;*/
+   //border-style: groove;
+   box-sizing: border-box;
+   margin-bottom: 5px;
+}
+/* Main content table */
+.MainTab{
+    padding:0px;  
+    box-sizing: border-box; 
+    border-spacing: 0; 
+    border-collapse: collapse;
+     overflow:auto;
+   // border:2px solid #FFF;
+}
+/* Foot button group table*/
+.fButtonGroup{
+    width: 740px;
+    position: absolute;
+    bottom: 0px;
+    margin-bottom: 25px;
+}
+/* Foot buttons enabled */
+.fButtonsEnabled{
+    padding:0px;
+    border: 1px solid #888888;
+    color: black;
+    text-decoration:none;
+    background-color: transparent;  
+    text-align: center;
+    font-size:14px;
+    font-family:verdana;
+    font-weight:normal;
+    border-radius: 3px;
+    width: 160px; 
+    height: 30px;
+    cursor: pointer;
+    border-right: 2px solid #888888;
+    border-bottom: 2px solid #888888;
+}
+.fButtonsEnabled:hover{background-color:#DDDDDD;}
+.fButtonsEnabled:active{ 
+    background: #F4F4F4 no-repeat scroll 6px 9px;
+    border-right: 1px solid #888888;
+    border-bottom:  1px solid #888888;
+    border-top: 2px solid #888888;
+    border-left: 2px solid #888888;
+}
+/* Foot buttons disabled */
+.fButtonsDisabled{
+    padding:2px;
+    border: 1px solid #999999;
+    color: #999999;
+    text-decoration:none;
+    background-color: transparent;  
+    text-align: center;
+    font-size:14px;
+    font-family:verdana;
+    font-weight:normal;
+    border-radius: 3px;
+    width: 160px; 
+    height: 30px;
+}
+/* Project path button selector */    
+.ProjPathButton{
+    border: 1px solid #888888;
+    color: black;
+    text-decoration:none;
+    background-color: transparent;  
+    text-align: center;
+    font-size:12px;
+    font-family:arial;
+    font-weight:bolder;
+    border-radius: 3px;
+    width: 60px; 
+    height: 25px;
+    cursor: pointer;
+    border-right: 2px solid #888888;
+    border-bottom: 2px solid #888888;
+    margin: 10px;
+}
+.ProjPathButton:hover{background-color:#DDDDDD;}
+.ProjPathButton:active{ 
+    background: #F4F4F4 no-repeat scroll 6px 9px;
+    border-right: 1px solid #888888;
+    border-bottom:  1px solid #888888;
+    border-top: 2px solid #888888;
+    border-left: 2px solid #888888;
+}
+
+/* Specific content box */
+.ContBox{
+   // border:1px solid #F4F4F4;
+    //border-color: #F4F4F4;
+    //border-style: solid;
+    border: 0px;
+    border-top: 2px solid #888888;
+    border-left: 0px solid #F4F4F4;
+    padding:0px; 
+    //padding-bottom: 10px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    text-align: left;
+    font-family:Arial;
+    font-size: 12px;
+   // border-radius: 15px;
+    //border:0px solid #666666;
+    border-radius:5px;
+    box-shadow:0px 0px 1px #888888;
+}
+
+.ContBox1{
+    padding-top: 5px;
+}
+.ContBoxTab{ 
+color: black;
+}
+
+.ContBoxTab1{ 
+color: red;
+}
+
+/* Specific content box */
+.ContAppSetPospeFieldBox{
+    height: 130px;
+    padding-left: 20px; 
+    margin: 1px 1px 5px 1px;  
+    box-sizing: border-box;
+    text-align: left;
+    font-family:Arial;
+    font-size: 12px;
+}
+
+.ContAppSetCtrlsetFieldBox{
+    height: 120px;
+    padding-left: 20px; 
+    margin: 1px 1px 5px 1px;  
+    box-sizing: border-box;
+    text-align: left;
+    font-family:Arial;
+    font-size: 12px;
+}
+
+.ContBoxTab td{ 
+    padding-bottom: 1px;
+    height:24px;
+}
+.ContBoxTab input{ 
+    height:16px;
+}
+
+.sLoopCB{ 
+    cursor: pointer;
+}
+
+/* Control page horizontal lines */
+.CtrlHLines{
+    width:  480px;
+    height: 1px;
+    font-size: 0px;
+    background-color: black;
+    margin: 10px 0px 10px 0px;
+}
+
+#menu {background: rgb(53,58,63); }
+#menu ul {
+  width:840px;
+  margin: 0px ;
+  padding:0px 0px 0px 0px;
+  overflow:auto;
+}
+
+#menu li {
+  float: left;
+  list-style-type: none;
+  text-align: center;
+}
+
+#menu li a.active { 
+  background-image:url('images/background.png');
+  color: rgb(53,58,63);
+  font-weight:normal;  
+  border-right: 1px solid #FFF;
+  }
+ #menu li a.nonactive { 
+  color: white;
+  font-weight:normal;  
+  border-right: 1px solid #FFF;
+  background: rgb(53,58,63);
+  }
+
+#menu li a {
+  text-decoration: none;
+  color: #FFF;
+  width:83px;
+  float: left;
+  display: inline;
+  line-height: 35px;
+  padding: 0 0px;
+  border-right: 1px solid #FFF;
+  font-family:arial;
+  font-weight:normal; 
+  font-size:12px;
+  cursor:pointer;
+}
+
+#menu li.first a {border-left: 0px solid #FFF;}
+#menu li a:hover {background-color: rgb(230,79,12);} 
+
+#header ul {
+  width:100%;
+	float:left;
+	height:34px;
+	margin:0;
+	padding:0px 0 0 30px;
+}
+
+#header li {
+  display:block;
+	float:left;
+	background-image:url('images/menu-item-right.jpg');
+	background-repeat:no-repeat;
+	background-position:top right;
+	//margin-left:5px;
+  width:130px;
+}
+
+#content {
+  background: transparent repeat-y top left;
+	font-weight: bolder;
+	width: 840px;
+	top: 135px;
+	height: 500px;
+	font-size:100%;
+}
+
+h1 {
+    margin: 0;
+    padding: 0 0 1px 0;
+} 
+
+#header #selected {
+    	background-image:url('images/menu-item-right-selected.jpg');
+}
+
+#header li a {
+  float:left;
+	border:none;
+	padding:9px 15px;
+	height:34px;
+	font-size:12px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	color:#888888;
+	text-decoration:none;
+	display:block;
+	background-image:url('images/menu-item-left.jpg');
+	background-repeat:no-repeat;
+	background-position:top left;
+  text-align:center;
+  width:130px;
+}    
+
+
+.xlink {cursor:pointer}     
+.fontControl  {font-size:13px; font-family:arial; font-weight: normal;text-align: center; font-weight: bold; padding: 4px;}     
+.fontControlNeg  {font-size:13px; font-family:arial; font-weight: normal;text-align: center; font-weight: bold; padding: 4px; color:rgb(195,199,204);}
+.fontControl2  {font-size:12px; font-family:verdana; font-weight: normal;text-align: center; font-weight: normal; padding: 4px;}
+.fontControlLabel  {font-size:12px; font-family:Arial; font-weight: bold; padding-left: 5px; padding-right: 10px; margin-left: 5px; margin-bottom: 5px; color:rgb(26,75,92);}         
+.fontControlLabelred  {font-size:12px; font-family:Arial; font-weight: bold; padding-left: 5px; padding-right: 10px; margin-left: 5px; margin-bottom: 5px; color:red;}         
+.fontControlLabelSet     {font-size:12px; font-family:Arial; text-align: left; font-weight: bold;}
+.fontControlLabelSet_M1  {font-size:12px; font-family:Arial; text-align: left; font-weight: bold; color:rgb(53,58,63);}
+.fontControlLabelSet_M2  {font-size:12px; font-family:Arial; text-align: left; font-weight: bold; color:rgb(40,113,138);}
+.fontControlLabelSet_M3  {font-size:12px; font-family:Arial; text-align: left; font-weight: bold; color:rgb(79,120,24);}
+.fontControlLabelNeg  {font-size:13px; font-family:Arial; text-align: center; font-weight: bold; padding: 4px; color:rgb(170,215,231);}
+.fontControlLabelS {font-size:14px; font-family:Arial; text-align: left; font-weight: normal;}
+.fontDataStorageTable {font-family:Arial; text-align: left; font-weight: normal;}
+.StorageTab_visible {position:relative; font-size:12px; visibility:visible;}
+.StorageTab_hidden  {position:relative; font-size:4px; visibility:hidden; }
+
+.ctrlStrucView{
+    /*padding:2px;*/
+    border: 1px solid #DDDDDD;
+    color: #666666;
+    /*text-decoration:none;*/
+    background-color: #DDDDDD;  
+    text-align: center;
+    font-size:12px;
+    font-family:verdana;
+    font-weight:normal;
+    border-radius: 1px;
+    cursor: pointer;
+}
+.ctrlStrucView:hover{
+    background-color: #F4F4F4;
+    border: 1px solid #DDDDDD;
+    border-radius: 1px;
+    color:#000;
+}
+
+.ctrlStrucView:focus{
+    background-color: #F4F4F4;
+    border-top: 1px solid #888888;
+    border-left: 1px solid #888888;
+    border-radius: 1px;
+    color:#000;
+}
+
+.UpDownButton_en{
+    padding:0px;
+    border: 0px solid #DDDDDD;
+    color: #666666;
+    background-color: #DDDDDD;  
+    text-align: center;
+    font-size:14px;
+    font-family:verdana;
+    font-weight:normal;
+    border-radius: 1px;
+    cursor: pointer;
+}
+.UpDownButton_en:hover{ background-color: #F4F4F4; border: 1px solid #DDDDDD; border-radius: 1px; color:#000;}
+
+.UpDownButton_dis{
+    padding:0px;
+    border: 1px solid #DDDDDD;
+    color: #666666;
+    background-color: #DDDDDD;  
+    text-align: center;
+    font-size:14px;
+    font-family:verdana;
+    font-weight:normal;
+    border-radius: 1px;
+}
+
+.fontControlLabelS1 {font-size:12px; font-family:Arial; text-align: center; font-weight: bold;}
+.fontControlUnit  {font-size:12px; font-family:verdana; text-align: left; font-weight: normal; padding: 4px;}         
+.fontControlData  {font-size:12px; font-family:verdana; text-align: left; font-weight: normal; width: 80px}         
+.fontTitle {font-size:18px; font-family:Arial; text-align: center; font-weight: bold; padding: 5px 0px 5px 0px;   color:rgb(136,13,19);}
+.fontcheckbox {cursor:pointer; font-size:12px; font-family:arial; font-weight: normal; text-align: left; padding-left:0.5cm;}
+.fontcheckbox2 {font-size:12px; font-family:arial; font-weight: normal; text-align: left;}
+.StorageTab_visible {position:absolute; left: 850px; top:0px; visibility:visible;}
+.StorageTab_hidden  {position:absolute; left: 0px; top:0px; visibility:hidden; }
+
+.switch_on    {cursor:pointer; background: url("images/switch_slide_on.png") no-repeat center; width: 150px; height: 37px;text-align: center;font-size:11px; font-family: arial; font-weight: bold; color:white;}
+.switch_off   {cursor:pointer; background: url("images/switch_slide_off.png") no-repeat center; width: 150px; height: 37px;text-align: center;font-size:11px; font-family: arial; font-weight: bold; color:gray;}
+.appOn {cursor:pointer; background: url("images/onoff_red_on.png") no-repeat top; width: 25px; height: 80px;}    
+.appOff {cursor:pointer; background: url("images/onoff_red_off.png") no-repeat top; width: 25px; height: 80px;}
+
+
+.appStateBox {
+    border: 1px solid black;
+    border-style: outset; 
+    border-right: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+    border-radius: 5px;
+    background-color: rgb(221,221,221);  
+    color:black;
+    text-decoration: none;    
+    text-align: center;
+    font-size:20px;
+    font-family:verdana;
+    font-weight:normal;
+    width: 150px;
+    height: 40px; 
+}
+
+.appStateBox_Button {
+    border: 1px solid #777777;
+    border-right: 2px solid #666666;
+    border-bottom: 2px solid #666666;
+    border-radius: 5px;
+    background-color: rgb(221,221,221);
+    color:red;
+    text-decoration: none;    
+    text-align: center;
+    font-size: 20px;
+    font-family:verdana;
+    font-weight:bold;
+
+    width: 150px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.appStateBox_Button:hover{
+    border: 1px solid #777777;
+    border-right: 2px solid #666666;
+    border-bottom: 2px solid #666666;
+    background-color: rgba(221,221,221,0.5);
+}
+
+.appStateBox_Button:active{
+    border: 1px solid #777777;
+    border-top: 2px solid #666666;
+    border-left: 2px solid #666666;
+    background-color: rgba(221,221,221,0.5);
+}
+
+.appStateLabel{
+    font-size:13px;
+    font-family:verdana;
+    color:black;
+    text-align: center; 
+    padding:  10px;
+    font-weight: bold;
+}
+
+.appStateLabel_red{
+    font-size:14px;
+    font-family:verdana;
+    color:red;
+    text-align: center; 
+    padding:  10px;
+    font-weight: bold;
+}
+
+a img{
+  cursor: pointer;
+  outline:none;
+  border-style:none;
+  background: transparent;  
+  opacity:0.01;
+  filter:alpha(opacity=1);  
+}
+
+a:hover img{
+ border-style:none;
+  outline:none;
+ background: transparent; 
+ opacity:1.0;
+ filter:alpha(opacity=100);
+}  
+
+// Project path select CSS
+#header{  background-image: url('images/pozadi.png');  border-bottom: solid 2px black;}
+#path{  position:absolute;  font-size: 9pt;  font-family: Arial;  font-weight: bold;  padding: 2px;}
+#list{  font-size: 9pt;  font-family: Arial;  overflow:auto;}
+
+.folders{
+  padding: 1px;
+  border-top: 1px solid whitesmoke;
+  border-bottom: 1px solid whitesmoke;
+  cursor: pointer;
+  background-color: white;
+  padding-left: 5px;
+  text-align: left; 
+}
+
+.folderButton{
+  padding-left: 5px;
+  text-align: left; 
+  cursor: pointer;
+  border-top: 1px solid #3394B8;
+  border-bottom: 1px solid #3394B8;
+  background-color: white;
+}
+A{  color:rgb(26,75,92);  text-decoration:none;  padding:5px;}
+A:hover{  color:#3394B8;  padding:5px;  border-style: none;  }
+
+
+.fontCheckbox {
+font-size:12px; font-family:arial; font-weight: normal; text-align: left; padding-top: 10px;
+}
+
+.DocLinkStyle{
+  color: white;
+}
+
+
+

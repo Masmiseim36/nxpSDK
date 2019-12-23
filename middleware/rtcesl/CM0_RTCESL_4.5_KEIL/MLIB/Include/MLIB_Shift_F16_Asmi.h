@@ -58,25 +58,20 @@ static inline frac16_t MLIB_Sh1LSat_F16_FAsmi(register frac16_t f16Val)
                         blt SatEnd                      /* If f16TestVal < 0, then goes to SatEnd */
                         subs f16Out, f16Out, #1         /* Else f16Out = 0x00007FFF*/
                     SatEnd: };
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax unified \n"        /* Using unified asm syntax */
-                        #endif
-                        "sxth %1, %1 \n"                /* Transforms 16-bit input f16Val to 32-bit */
-                        "mov %2, %1 \n"                 /* f16TestVal = f16Val */
-                        "lsls %0, %1, #1 \n"            /* f16Out = f16Val << 1 */
-                        "sxth %0, %0 \n"                /* Transforms 16-bit value to 32-bit */
-                        "eors %1, %1, %0 \n"            /* f16Val = f16Val ^ f16Out */
-                        "bpl .+12 \n"                   /* If f16Val >= 0, then jumps to the end of function */
-                        "movs %0, #128 \n"              /* f16Out = 0x80 */
-                        "lsls %0, %0, #8 \n"            /* f16Out = 0x00008000 */
-                        "cmp %2, #0 \n"                 /* Compares input value with 0 */
-                        "blt .+4 \n"                    /* If f16TestVal < 0, then jumps through next command */
-                        "subs %0, %0, #1 \n"            /* Else f16Out = 0x00007FFF */
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "sxth %1, %1 \n\t"                /* Transforms 16-bit input f16Val to 32-bit */
+                        "mov %2, %1 \n\t"                 /* f16TestVal = f16Val */
+                        "lsls %0, %1, #1 \n\t"            /* f16Out = f16Val << 1 */
+                        "sxth %0, %0 \n\t"                /* Transforms 16-bit value to 32-bit */
+                        "eors %1, %1, %0 \n\t"            /* f16Val = f16Val ^ f16Out */
+                        "bpl MLIB_Sh1LSat_F16_SatEnd \n\t"/* If f16Val >= 0, then jumps to the end of function */
+                        "movs %0, #128 \n\t"              /* f16Out = 0x80 */
+                        "lsls %0, %0, #8 \n\t"            /* f16Out = 0x00008000 */
+                        "cmp %2, #0 \n\t"                 /* Compares input value with 0 */
+                        "blt MLIB_Sh1LSat_F16_SatEnd \n\t"/* If f16TestVal < 0, then jumps through next command */
+                        "subs %0, %0, #1 \n\t"            /* Else f16Out = 0x00007FFF */
+					"MLIB_Sh1LSat_F16_SatEnd: \n\t"
                         : "+l"(f16Out), "+l"(f16Val), "+l"(f16TestVal):);
     #endif
 
@@ -127,33 +122,27 @@ static inline frac16_t MLIB_ShLSat_F16_FAsmi(register frac16_t f16Val, register 
                     NotSat:
                         lsls f16Val, f16Val, u16Sh       /* f16CmpVal = f16CmpVal << u16Sh */
                     SatEnd: }
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)            /* For GCC compiler */
-                            ".syntax unified \n"         /* Using unified asm syntax */
-                        #endif
-                        "sxth %0, %0 \n"                /* Transforms 16-bit input f16Val to 32-bit */
-                        "movs %3, #128 \n"               /* f16SatVal = 0x80 */
-                        "lsls %3, %3, #8 \n"             /* f16SatVal = 0x00008000 */
-                        "mov %2, %3 \n"                  /* f16CmpVal = 0x00008000 */
-                        "lsrs %2, %2, %1 \n"             /* f16CmpVal = f16CmpVal >> u16Sh */
-
-                        "cmp %0, %2 \n"                  /* Compares f16Val with (0x00008000 >> u16Sh) */
-                        "blt .+6 \n"                     /* If f16Val < f16CmpVal, then jumps through two commands */
-                        "subs %0, %3, #1 \n"             /* f16Val = 0x7FFF */
-                        "b .+16 \n"
-
-                        "mvns %2, %3 \n"                 /* f16CmpVal = 0xFFFF7FFF */
-                        "asrs %2, %2, %1 \n"             /* f16CmpVal = f16CmpVal >> u16Sh */
-
-                        "cmp %0, %2 \n"                  /* Compares f16Val with (0xFFFF7FFF >> u16Sh) */
-                        "bgt .+6 \n"                     /* If f16Val < f16CmpVal, then jumps through two commands */
-                        "sxth %0, %3 \n"                 /* f16Val = 0xFFFF8000 */
-                        "b .+4 \n"
-                        "lsls %0, %0, %1 \n"             /* f16CmpVal = f16CmpVal << u16Sh */
-                        #if defined(__GNUC__)            /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "sxth %0, %0 \n\t"                /* Transforms 16-bit input f16Val to 32-bit */
+                        "movs %3, #128 \n\t"               /* f16SatVal = 0x80 */
+                        "lsls %3, %3, #8 \n\t"             /* f16SatVal = 0x00008000 */
+                        "mov %2, %3 \n\t"                  /* f16CmpVal = 0x00008000 */
+                        "lsrs %2, %2, %1 \n\t"             /* f16CmpVal = f16CmpVal >> u16Sh */
+                        "cmp %0, %2 \n\t"                  /* Compares f16Val with (0x00008000 >> u16Sh) */
+                        "blt MLIB_ShLSat_F16_NegTest\n\t"  /* If f16Val < f16CmpVal, then jumps through two commands */
+                        "subs %0, %3, #1 \n\t"             /* f16Val = 0x7FFF */
+                        "b MLIB_ShLSat_F16_SatEnd\n\t"
+					"MLIB_ShLSat_F16_NegTest:\n\t"
+                        "mvns %2, %3 \n\t"                 /* f16CmpVal = 0xFFFF7FFF */
+                        "asrs %2, %2, %1 \n\t"             /* f16CmpVal = f16CmpVal >> u16Sh */
+                        "cmp %0, %2 \n\t"                  /* Compares f16Val with (0xFFFF7FFF >> u16Sh) */
+                        "bgt MLIB_ShLSat_F16_NotSat\n\t"   /* If f16Val < f16CmpVal, then jumps through two commands */
+                        "sxth %0, %3 \n\t"                 /* f16Val = 0xFFFF8000 */
+                        "b MLIB_ShLSat_F16_SatEnd\n\t"
+					"MLIB_ShLSat_F16_NotSat:\n\t"
+                        "lsls %0, %0, %1 \n\t"             /* f16CmpVal = f16CmpVal << u16Sh */
+					"MLIB_ShLSat_F16_SatEnd:\n\t"
                         : "+l"(f16Val), "+l"(u16Sh), "+l"(f16CmpVal), "+l"(f16SatVal):);
     #endif
 

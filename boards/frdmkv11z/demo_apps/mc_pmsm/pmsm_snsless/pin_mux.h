@@ -76,6 +76,7 @@ void BOARD_InitPins(void);
                                            /* @} */
 
 /*!
+ * @brief Configures pin routing and optionally pin electrical features.
  *
  */
 void PinTool_FTM(void);
@@ -96,12 +97,14 @@ void PinTool_FTM(void);
                                               /* @} */
 
 /*!
+ * @brief Configures pin routing and optionally pin electrical features.
  *
  */
 void PinTool_UART(void);
 
 /*! @name PORTD6 (number 63), J22[B33]/J22[D34]/J24[27]/J500[13]/U2[9]/FTM1_CH0/LED6
   @{ */
+#define PINTOOL_MISC_LED_ORANGE_FGPIO FGPIOD /*!<@brief FGPIO device name: FGPIOD */
 #define PINTOOL_MISC_LED_ORANGE_GPIO GPIOD /*!<@brief GPIO device name: GPIOD */
 #define PINTOOL_MISC_LED_ORANGE_PORT PORTD /*!<@brief PORT device name: PORTD */
 #define PINTOOL_MISC_LED_ORANGE_PIN 6U     /*!<@brief PORTD pin index: 6 */
@@ -109,12 +112,14 @@ void PinTool_UART(void);
 
 /*! @name PORTA4 (number 26), J24[7]/J500[14]/SW2
   @{ */
+#define PINTOOL_MISC_SW2_FGPIO FGPIOA /*!<@brief FGPIO device name: FGPIOA */
 #define PINTOOL_MISC_SW2_GPIO GPIOA /*!<@brief GPIO device name: GPIOA */
 #define PINTOOL_MISC_SW2_PORT PORTA /*!<@brief PORT device name: PORTA */
 #define PINTOOL_MISC_SW2_PIN 4U     /*!<@brief PORTA pin index: 4 */
                                     /* @} */
 
 /*!
+ * @brief Configures pin routing and optionally pin electrical features.
  *
  */
 void PinTool_Misc(void);

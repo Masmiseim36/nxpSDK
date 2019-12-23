@@ -7,11 +7,13 @@
     <definition extID="middleware.mcu-boot.src_startup.MKV31F51212"/>
     <definition extID="platform.Include_common.MKV31F51212"/>
     <definition extID="platform.Include_core_cm4.MKV31F51212"/>
+    <definition extID="platform.Include_dsp.MKV31F51212"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
+    <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmkv31f_led_demo_freedom_0000" name="led_demo_freedom_0000" category="bootloader_examples/demo_apps" dependency="device.MKV31F51212_CMSIS.MKV31F51212 middleware.mcu-boot.MKV31F51212_startup.MKV31F51212 middleware.mcu-boot.src_startup.MKV31F51212 platform.Include_core_cm4.MKV31F51212 platform.Include_common.MKV31F51212">
+  <example id="frdmkv31f_led_demo_freedom_0000" name="led_demo_freedom_0000" category="bootloader_examples/demo_apps" dependency="device.MKV31F51212_CMSIS.MKV31F51212 middleware.mcu-boot.MKV31F51212_startup.MKV31F51212 middleware.mcu-boot.src_startup.MKV31F51212 platform.Include_core_cm4.MKV31F51212 platform.Include_common.MKV31F51212 platform.Include_dsp.MKV31F51212">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -39,8 +41,8 @@
           <value>gnu.c.optimization.level.size</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
-          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
           <value>CPU_MKV31F512VLL12</value>
+          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
           <value>FREEDOM</value>
           <value>FRDM_KV31F</value>
         </option>
@@ -82,6 +84,9 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <source path="boards/frdmkv31f/bootloader_examples/demo_apps/led_demo_freedom_0000/armgcc" target_path="middleware/mcu-boot" type="linker" toolchain="armgcc">
+      <files mask="MKV31F512xxx12_application_0x0000.ld"/>
+    </source>
     <source path="boards/frdmkv31f/bootloader_examples/demo_apps/led_demo_freedom_0000/iar" target_path="middleware/mcu-boot" type="linker" toolchain="iar">
       <files mask="MKV31F512xxx12_application_0x0000.icf"/>
     </source>

@@ -40,4 +40,4 @@ Motor spinning can be controlled also by FreeMASTER file.
 More information
 ================
 For more information visit the page: http://www.nxp.com/motorcontrol_pmsm.
-The user guide is in SDK install folder\docs\MC\PMSMDEMOUG.pdf.
+The documentation is available on the web page: http://www.nxp.com/motorcontrol_pmsm.

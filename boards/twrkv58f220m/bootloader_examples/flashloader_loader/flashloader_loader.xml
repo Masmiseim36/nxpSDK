@@ -8,14 +8,16 @@
     <definition extID="middleware.mcu-boot.src_startup.MKV58F24"/>
     <definition extID="platform.Include_common.MKV58F24"/>
     <definition extID="platform.Include_core_cm7.MKV58F24"/>
+    <definition extID="platform.Include_dsp.MKV58F24"/>
     <definition extID="platform.drivers.clock.MKV58F24"/>
     <definition extID="platform.drivers.common.MKV58F24"/>
     <definition extID="platform.drivers.uart.MKV58F24"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
+    <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="twrkv58f220m_flashloader_loader" name="flashloader_loader" category="bootloader_examples" dependency="platform.drivers.clock.MKV58F24 device.MKV58F24_CMSIS.MKV58F24 middleware.mcu-boot.MKV58F24_startup.MKV58F24 middleware.mcu-boot.loadersources.MKV58F24 platform.drivers.uart.MKV58F24 middleware.mcu-boot.src_startup.MKV58F24 platform.drivers.common.MKV58F24 platform.Include_core_cm7.MKV58F24 platform.Include_common.MKV58F24">
+  <example id="twrkv58f220m_flashloader_loader" name="flashloader_loader" category="bootloader_examples" dependency="platform.drivers.clock.MKV58F24 device.MKV58F24_CMSIS.MKV58F24 middleware.mcu-boot.MKV58F24_startup.MKV58F24 middleware.mcu-boot.loadersources.MKV58F24 platform.drivers.uart.MKV58F24 middleware.mcu-boot.src_startup.MKV58F24 platform.drivers.common.MKV58F24 platform.Include_core_cm7.MKV58F24 platform.Include_common.MKV58F24 platform.Include_dsp.MKV58F24">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -43,9 +45,9 @@
           <value>gnu.c.optimization.level.size</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
-          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
           <value>CPU_MKV58F1M0VLQ24</value>
           <value>CPU_IS_ARM_CORTEX_M7=1</value>
+          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
           <value>BL_TARGET_FLASH</value>
           <value>TWR_KV58F220M</value>
         </option>
@@ -86,6 +88,9 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <source path="boards/twrkv58f220m/bootloader_examples/flashloader_loader/armgcc" target_path="middleware/mcu-boot" type="linker" toolchain="armgcc">
+      <files mask="MKV58F1M0xxx24_flashloader_loader.ld"/>
+    </source>
     <source path="boards/twrkv58f220m/bootloader_examples/flashloader_loader/iar" target_path="middleware/mcu-boot" type="linker" toolchain="iar">
       <files mask="MKV58F1M0xxx24_flashloader_loader.icf"/>
     </source>

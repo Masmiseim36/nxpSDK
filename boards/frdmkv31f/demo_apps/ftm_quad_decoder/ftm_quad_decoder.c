@@ -106,7 +106,7 @@ int main(void)
 
     /* Board pin, clock, debug console init */
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /* PIT configuration */

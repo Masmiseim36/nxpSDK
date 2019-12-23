@@ -66,7 +66,7 @@ int main(void)
     BOARD_BootClockRUN();
     CLOCK_SetLpuartClock(0x1U);
     NVIC_SetPriority(DEMO_LPUART_RX_TX_IRQn, 5);
-    if (xTaskCreate(uart_task, "Uart_task", configMINIMAL_STACK_SIZE + 10, NULL, uart_task_PRIORITY, NULL) != pdPASS)
+    if (xTaskCreate(uart_task, "Uart_task", configMINIMAL_STACK_SIZE + 100, NULL, uart_task_PRIORITY, NULL) != pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
         while (1)

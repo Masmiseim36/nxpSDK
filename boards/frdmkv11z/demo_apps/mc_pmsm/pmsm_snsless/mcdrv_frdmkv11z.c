@@ -77,7 +77,7 @@ void InitClock(void)
                                              /* PWM module calculated as follows:
                                               * PWM_MOD = PWM_CLOCK / PWM_FREQUNCY = 75 MHz / 10 kHz = 7500 */
     g_sClockSetup.ui16M1PwmModulo = g_sClockSetup.ui32SystemClock / g_sClockSetup.ui16M1PwmFreq;
-    g_sClockSetup.ui16M1PwmDeadTime = g_sClockSetup.ui32SystemClock / (1000000000U / M1_PWM_DEADTIME);
+    g_sClockSetup.ui16M1PwmDeadTime = (g_sClockSetup.ui32SystemClock / (1000000000U / M1_PWM_DEADTIME) / 4U);   
     g_sClockSetup.ui16M1SpeedLoopFreq = M1_SPEED_LOOP_FREQ; /* 1kHz */
 }
 
@@ -137,7 +137,7 @@ void InitFTM0(void)
                     FTM_COMBINE_DTEN2_MASK | FTM_COMBINE_SYNCEN2_MASK | FTM_COMBINE_FAULTEN2_MASK;
 
     /* Dead time */
-    FTM0->DEADTIME = FTM_DEADTIME_DTVAL(g_sClockSetup.ui16M1PwmDeadTime);
+    FTM0->DEADTIME = FTM_DEADTIME_DTPS(2U) | FTM_DEADTIME_DTVAL(g_sClockSetup.ui16M1PwmDeadTime);
 
     /* Initial setting of value registers to 50 % of duty cycle  */
     FTM0->CONTROLS[0].CnV = (uint32_t)(-g_sClockSetup.ui16M1PwmModulo / 4);

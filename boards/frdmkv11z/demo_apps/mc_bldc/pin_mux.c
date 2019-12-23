@@ -15,11 +15,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v6.0
+product: Pins v7.0
 processor: MKV11Z128xxx7
 package_id: MKV11Z128VLH7
 mcu_data: ksdk2_0
-processor_version: 0.2.0
+processor_version: 0.7.1
 pin_labels:
 - {pin_num: '44', pin_signal: ADC1_SE3/PTC1/LLWU_P6/SPI0_PCS3/UART1_RTS_b/FTM0_CH0/FTM2_CH0, label: FTM0_CH0, identifier: FTM0_CH0}
 - {pin_num: '45', pin_signal: ADC0_SE11/CMP1_IN0/PTC2/SPI0_PCS2/UART1_CTS_b/FTM0_CH1/FTM2_CH1, label: FTM0_CH1, identifier: FTM0_CH1}
@@ -231,12 +231,6 @@ void PinTool_Misc(void)
                                    kPORT_MuxAsGpio};
     /* PORTB0 (pin 35) is configured as PTB0 */
     PORT_SetPinConfig(PINTOOL_MISC_SW2_PORT, PINTOOL_MISC_SW2_PIN, &SW2);
-    
-    /* PORTB0 (pin 35) is configured as PTB0 */
-    PORT_SetPinMux(PINTOOL_MISC_SW2_PORT, PINTOOL_MISC_SW2_PIN, kPORT_MuxAsGpio);
-
-    /* Interrupt configuration on PORTB0 (pin 35): Interrupt on rising edge */
-    PORT_SetPinInterruptConfig(PINTOOL_MISC_SW2_PORT, PINTOOL_MISC_SW2_PIN, kPORT_InterruptRisingEdge);
 
     /* PORTD6 (pin 63) is configured as PTD6 */
     PORT_SetPinMux(PINTOOL_MISC_RGB_LED1_PORT, PINTOOL_MISC_RGB_LED1_PIN, kPORT_MuxAsGpio);

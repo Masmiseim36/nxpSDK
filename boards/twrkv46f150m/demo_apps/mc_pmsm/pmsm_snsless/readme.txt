@@ -43,7 +43,7 @@ J5      1-2      J21     open     J514    2-3
 J13     1-2,3-4  J23     open     J517    2-3 
 J15     1-2      J502    1-2      J519    3-4
 
-- see board jumper setting pictures in \docs\MC\PMSMDEMOUG.pdf
+- see board jumper setting pictures in documentation on the web page http://www.nxp.com/motorcontrol_pmsm.
 
 Prepare the Demo
 ===============
@@ -65,4 +65,4 @@ Motor spinning can be controlled also by FreeMASTER file.
 More information
 ================
 For more information visit the page: http://www.nxp.com/motorcontrol_pmsm.
-The user guide is in SDK install folder\docs\MC\PMSMDEMOUG.pdf.
+The documentation is available on the web page: http://www.nxp.com/motorcontrol_pmsm.

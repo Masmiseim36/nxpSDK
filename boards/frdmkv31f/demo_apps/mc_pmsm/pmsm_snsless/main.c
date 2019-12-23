@@ -126,7 +126,7 @@ void ADC0_IRQHandler(void)
     g_ui32MaxNumberOfCycles = g_ui32NumberOfCycles>g_ui32MaxNumberOfCycles ? g_ui32NumberOfCycles : g_ui32MaxNumberOfCycles;
 
     /* Call FreeMASTER recorder */
-    FMSTR_Recorder();
+    FMSTR_Recorder(0);
  
     /* Add empty instructions for correct interrupt flag clearing */
     M1_END_OF_ISR;
@@ -178,7 +178,7 @@ void FTM2_IRQHandler(void)
     /* Clear the TOF flag */
     FTM2->SC &= ~(FTM_SC_TOF_MASK);
 
-    /* add instructions for correct interrupt flag clearing */
+    /* Add instructions for correct interrupt flag clearing */
     M1_END_OF_ISR;
 }
 
@@ -211,7 +211,7 @@ void PDB0_IRQHandler(void)
         PDB0->SC &= (~PDB_SC_PDBIF_MASK);                                   /* Clear PDB interrupt flag */
     }
     
-	/* add instructions for correct interrupt flag clearing */
+	/* Add instructions for correct interrupt flag clearing */
     M1_END_OF_ISR;
 }
 
@@ -226,21 +226,23 @@ void PORTA_IRQHandler(void)
 {
     if (PORTA->PCR[4] & PORT_PCR_ISF_MASK)
     {
-        /* clear the flag */
+        /* Clear the flag */
         PORTA->PCR[4] |= PORT_PCR_ISF_MASK;
 
-        /* proceed only if pressing longer than timeout */
+        /* Proceed only if pressing longer than timeout */
         if (ui32ButtonFilter > 200)
         {
             ui32ButtonFilter = 0;
             if (bDemoModeSpeed)
             {
+                /* Stop application */
                 M1_SetSpeed(0);
                 M1_SetAppSwitch(FALSE);
                 bDemoModeSpeed = FALSE;
             }
             else
             {
+                /* Start application */
                 M1_SetAppSwitch(TRUE);
                 bDemoModeSpeed = TRUE;
                 ui32SpeedStimulatorCnt = 0;
@@ -346,6 +348,16 @@ void BOARD_InitUART(uint32_t u32UClockSpeedinHz, uint32_t u32BaudRate)
     config.enableRx = true;
 
     UART_Init(BOARD_FMSTR_UART_PORT, &config, u32UClockSpeedinHz);
+    
+    /* Register communication module used by FreeMASTER driver. */
+    FMSTR_SerialSetBaseAddress(BOARD_FMSTR_UART_PORT);
+
+    #if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
+        /* Enable UART interrupts. */
+        EnableIRQ(BOARD_UART_IRQ);
+        EnableGlobalIRQ(0);
+    #endif   
+    
 }
 
 /*!
@@ -363,10 +375,10 @@ void BOARD_InitGPIO(void)
         (uint8_t)1U          /* Set default logic high */
     };
 
-    /* enable port for RED LED D4 */
+    /* Enable port for RED LED D4 */
     GPIO_PinInit(GPIOD, 1U, &led_config);
 
-    /* enable port for GREEN LED D4 */
+    /* Enable port for GREEN LED D4 */
     GPIO_PinInit(GPIOD, 7U, &led_config);
     
     /* SW2 pin configuration */

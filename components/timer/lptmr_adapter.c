@@ -11,12 +11,6 @@
 #include "timer.h"
 #include "fsl_lptmr.h"
 
-#define gHalTimerInstanceNum_c (FSL_FEATURE_SOC_LPTMR_COUNT)
-/************************************************************************************
-*************************************************************************************
-* Private prototypes
-*************************************************************************************
-************************************************************************************/
 typedef struct _hal_timer_handle_struct_t
 {
     uint32_t timeout;
@@ -25,7 +19,14 @@ typedef struct _hal_timer_handle_struct_t
     void *callbackParam;
     uint8_t instance;
 } hal_timer_handle_struct_t;
-static hal_timer_handle_t g_timerHandle[gHalTimerInstanceNum_c];
+
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
+
+static LPTMR_Type *const s_LptmrBase[] = LPTMR_BASE_PTRS;
+
+static hal_timer_handle_t s_timerHandle[sizeof(s_LptmrBase) / sizeof(LPTMR_Type *)];
 /************************************************************************************
 *************************************************************************************
 * Private memory declarations
@@ -33,12 +34,13 @@ static hal_timer_handle_t g_timerHandle[gHalTimerInstanceNum_c];
 ************************************************************************************/
 static void HAL_TimerInterruptHandle(uint8_t instance)
 {
-    LPTMR_Type *mLptmrBase[]                 = LPTMR_BASE_PTRS;
-    hal_timer_handle_struct_t *halTimerState = (hal_timer_handle_struct_t *)g_timerHandle[instance];
+    hal_timer_handle_struct_t *halTimerState = (hal_timer_handle_struct_t *)s_timerHandle[instance];
 
-    LPTMR_ClearStatusFlags(mLptmrBase[halTimerState->instance], kLPTMR_TimerCompareFlag);
+    LPTMR_ClearStatusFlags(s_LptmrBase[halTimerState->instance], kLPTMR_TimerCompareFlag);
     if (halTimerState->callback != NULL)
+    {
         halTimerState->callback(halTimerState->callbackParam);
+    }
 }
 
 void PWT_LPTMR0_IRQHandler(void)
@@ -67,38 +69,36 @@ void LPTMR0_IRQHandler(void)
 ************************************************************************************/
 hal_timer_status_t HAL_TimerInit(hal_timer_handle_t halTimerHandle, hal_timer_config_t *halTimerConfig)
 {
-    IRQn_Type mLptmrIrqId[]  = LPTMR_IRQS;
-    LPTMR_Type *mLptmrBase[] = LPTMR_BASE_PTRS;
+    IRQn_Type mLptmrIrqId[] = LPTMR_IRQS;
     IRQn_Type irqId;
-    lptmr_config_t lptmrConfig;
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
+    /* Structure of initialize LPTMR */
+    lptmr_config_t lptmrConfig;
 
     assert(sizeof(hal_timer_handle_struct_t) == HAL_TIMER_HANDLE_SIZE);
     assert(halTimerConfig);
     assert(halTimerHandle);
-    if (halTimerConfig->instance >= gHalTimerInstanceNum_c)
-    {
-        return kStatus_HAL_TimerOutOfRanger;
-    }
+    assert(halTimerConfig->instance < (sizeof(s_LptmrBase) / sizeof(LPTMR_Type *)));
+
     halTimerState->timeout  = halTimerConfig->timeout;
     halTimerState->instance = halTimerConfig->instance;
     irqId                   = mLptmrIrqId[halTimerState->instance];
     LPTMR_GetDefaultConfig(&lptmrConfig);
 
     /* Initialize the LPTMR */
-    LPTMR_Init(mLptmrBase[halTimerState->instance], &lptmrConfig);
+    LPTMR_Init(s_LptmrBase[halTimerState->instance], &lptmrConfig);
     halTimerState->timerClock_Hz = halTimerConfig->srcClock_Hz;
     /*
      * Set timer period.
      * Note : the parameter "ticks" of LPTMR_SetTimerPeriod should be equal or greater than 1.
      */
-    LPTMR_SetTimerPeriod(mLptmrBase[halTimerState->instance],
+    LPTMR_SetTimerPeriod(s_LptmrBase[halTimerState->instance],
                          USEC_TO_COUNT(halTimerState->timeout, halTimerState->timerClock_Hz));
 
     /* Enable timer interrupt */
-    LPTMR_EnableInterrupts(mLptmrBase[halTimerState->instance], kLPTMR_TimerInterruptEnable);
+    LPTMR_EnableInterrupts(s_LptmrBase[halTimerState->instance], kLPTMR_TimerInterruptEnable);
 
-    g_timerHandle[halTimerState->instance] = halTimerHandle;
+    s_timerHandle[halTimerState->instance] = halTimerHandle;
 
     NVIC_SetPriority((IRQn_Type)irqId, HAL_TIMER_ISR_PRIORITY);
     EnableIRQ(irqId);
@@ -107,29 +107,25 @@ hal_timer_status_t HAL_TimerInit(hal_timer_handle_t halTimerHandle, hal_timer_co
 
 void HAL_TimerDeinit(hal_timer_handle_t halTimerHandle)
 {
-    LPTMR_Type *mLptmrBase[] = LPTMR_BASE_PTRS;
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
-    g_timerHandle[halTimerState->instance]   = NULL;
-    LPTMR_Deinit(mLptmrBase[halTimerState->instance]);
+    s_timerHandle[halTimerState->instance]   = NULL;
+    LPTMR_Deinit(s_LptmrBase[halTimerState->instance]);
 }
-
 /*************************************************************************************/
 void HAL_TimerEnable(hal_timer_handle_t halTimerHandle)
 {
-    LPTMR_Type *mLptmrBase[] = LPTMR_BASE_PTRS;
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
-    LPTMR_StartTimer(mLptmrBase[halTimerState->instance]);
+    LPTMR_StartTimer(s_LptmrBase[halTimerState->instance]);
 }
 
 /*************************************************************************************/
 void HAL_TimerDisable(hal_timer_handle_t halTimerHandle)
 {
-    LPTMR_Type *mLptmrBase[] = LPTMR_BASE_PTRS;
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
-    LPTMR_StopTimer(mLptmrBase[halTimerState->instance]);
+    LPTMR_StopTimer(s_LptmrBase[halTimerState->instance]);
 }
 
 /*************************************************************************************/
@@ -140,29 +136,31 @@ void HAL_TimerInstallCallback(hal_timer_handle_t halTimerHandle, hal_timer_callb
     halTimerState->callback                  = callback;
     halTimerState->callbackParam             = callbackParam;
 }
+
 uint32_t HAL_TimerGetMaxTimeout(hal_timer_handle_t halTimerHandle)
 {
     uint32_t reserveCount;
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
-    reserveCount                             = MSEC_TO_COUNT(4, halTimerState->timerClock_Hz);
-    if (reserveCount < MSEC_TO_COUNT(1, halTimerState->timerClock_Hz))
+    reserveCount                             = (uint32_t)MSEC_TO_COUNT((4), (halTimerState->timerClock_Hz));
+    if (reserveCount < MSEC_TO_COUNT((1), (halTimerState->timerClock_Hz)))
+    {
         return 1000;
+    }
     return COUNT_TO_USEC(0xFFFF - reserveCount, halTimerState->timerClock_Hz);
 }
-// return micro us
+/* return micro us */
 uint32_t HAL_TimerGetCurrentTimerCount(hal_timer_handle_t halTimerHandle)
 {
-    LPTMR_Type *mLptmrBase[] = LPTMR_BASE_PTRS;
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
-    return COUNT_TO_USEC(LPTMR_GetCurrentTimerCount(mLptmrBase[halTimerState->instance]), halTimerState->timerClock_Hz);
+    return COUNT_TO_USEC(LPTMR_GetCurrentTimerCount(s_LptmrBase[halTimerState->instance]),
+                         halTimerState->timerClock_Hz);
 }
 
 hal_timer_status_t HAL_TimerUpdateTimeout(hal_timer_handle_t halTimerHandle, uint32_t timeout)
 {
     uint32_t tickCount;
-    LPTMR_Type *mLptmrBase[] = LPTMR_BASE_PTRS;
 
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
@@ -170,13 +168,15 @@ hal_timer_status_t HAL_TimerUpdateTimeout(hal_timer_handle_t halTimerHandle, uin
     tickCount                                = USEC_TO_COUNT(halTimerState->timeout, halTimerState->timerClock_Hz);
     if ((tickCount < 1) || (tickCount > 0xfff0))
         return kStatus_HAL_TimerOutOfRanger;
-    LPTMR_SetTimerPeriod(mLptmrBase[halTimerState->instance], tickCount);
+    LPTMR_SetTimerPeriod(s_LptmrBase[halTimerState->instance], tickCount);
     return kStatus_HAL_TimerSuccess;
 }
+
 void HAL_TimerExitLowpower(hal_timer_handle_t halTimerHandle)
 {
     assert(halTimerHandle);
 }
+
 void HAL_TimerEnterLowpower(hal_timer_handle_t halTimerHandle)
 {
     assert(halTimerHandle);

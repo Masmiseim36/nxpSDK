@@ -119,12 +119,12 @@ void HSADC0_CCA_IRQHandler(void)
     /* StateMachine call */
     SM_StateMachineFast(&g_sM1Ctrl);
     
-    /* stop CPU tick number couting and store actual and maximum ticks */
+    /* Stop CPU tick number couting and store actual and maximum ticks */
     SYSTICK_STOP_COUNT(g_ui32NumberOfCycles);
     g_ui32MaxNumberOfCycles = g_ui32NumberOfCycles>g_ui32MaxNumberOfCycles ? g_ui32NumberOfCycles : g_ui32MaxNumberOfCycles;
 
     /* Call FreeMASTER recorder */
-    FMSTR_Recorder();
+    FMSTR_Recorder(0);
 
     /* Clear the EOS flag */
     HSADC0->STAT |= HSADC_STAT_EOSIA_MASK;
@@ -175,7 +175,7 @@ void FTM2_IRQHandler(void)
     /* Clear the TOF flag */
     FTM2->SC &= ~(FTM_SC_TOF_MASK);
 
-    /* add instructions for correct interrupt flag clearing */
+    /* Add instructions for correct interrupt flag clearing */
     M1_END_OF_ISR;
 }
 
@@ -190,23 +190,23 @@ void PORTA_IRQHandler(void)
 {
     if (PORTA->PCR[4] & PORT_PCR_ISF_MASK)
     {
-        /* clear the flag */
+        /* Clear the flag */
         PORTA->PCR[4] |= PORT_PCR_ISF_MASK;
 
-        /* proceed only if pressing longer than timeout */
+        /* Proceed only if pressing longer than timeout */
         if (ui32ButtonFilter > 200)
         {
             ui32ButtonFilter = 0;
             if (bDemoModeSpeed)
             {
-                /* stop application */
+                /* Stop application */
                 M1_SetSpeed(0);
                 M1_SetAppSwitch(FALSE);
                 bDemoModeSpeed = FALSE;
             }
             else
             {
-                /* start application */
+                /* Start application */
                 M1_SetAppSwitch(TRUE);
                 bDemoModeSpeed = TRUE;
                 ui32SpeedStimulatorCnt = 0;
@@ -214,7 +214,7 @@ void PORTA_IRQHandler(void)
         }
     }
     
-	/* add instructions for correct interrupt flag clearing */
+	/* Add instructions for correct interrupt flag clearing */
     M1_END_OF_ISR;
 }
 
@@ -313,6 +313,15 @@ void BOARD_InitUART(uint32_t u32UClockSpeedinHz, uint32_t u32BaudRate)
     config.enableRx = true;
 
     UART_Init(BOARD_FMSTR_UART_PORT, &config, u32UClockSpeedinHz);
+    
+    /* Register communication module used by FreeMASTER driver. */
+    FMSTR_SerialSetBaseAddress(BOARD_FMSTR_UART_PORT);
+
+    #if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
+        /* Enable UART interrupts. */
+        EnableIRQ(BOARD_UART_IRQ);
+        EnableGlobalIRQ(0);
+    #endif   
 }
 
 

@@ -322,40 +322,6 @@ void FLEXCAN_SoftReset(CAN_Type *baseAddr)
 
 /*FUNCTION**********************************************************************
  *
- * Function Name : FLEXCAN_ExitFreezeMode
- * Description   : Exit of freeze mode.
- *
- *END**************************************************************************/
-void FLEXCAN_ExitFreezeMode(CAN_Type *baseAddr)
-{
-    baseAddr->MCR &= ~CAN_MCR_HALT_MASK;
-    baseAddr->MCR &= ~CAN_MCR_FRZ_MASK;
-
-    /* Wait till exit freeze mode*/
-    while (baseAddr->MCR & CAN_MCR_FRZACK_MASK)
-    {
-    }
-}
-
-/*FUNCTION**********************************************************************
- *
- * Function Name : FLEXCAN_EnterFreezeMode
- * Description   : Enter the freeze mode.
- *
- *END**************************************************************************/
-void FLEXCAN_EnterFreezeMode(CAN_Type *baseAddr)
-{
-    baseAddr->MCR |= CAN_MCR_FRZ_MASK;
-    baseAddr->MCR |= CAN_MCR_HALT_MASK;
-
-    /* Wait for entering the freeze mode*/
-    while (!(baseAddr->MCR & CAN_MCR_FRZACK_MASK))
-    {
-    }
-}
-
-/*FUNCTION**********************************************************************
- *
  * Function Name : FLEXCAN_EnableOperationMode
  * Description   : Enable a FlexCAN operation mode.
  * This function will enable one of the modes listed in flexcan_operation_modes_t.
@@ -579,8 +545,8 @@ void flexcan_peripheral_init(uint32_t instance)
     }
 
     /* Init the interrupt sync object.*/
-    OSA_SemaCreate(&s_flexcanInfo.state.txIrqSync, 0);
-    OSA_SemaCreate(&s_flexcanInfo.state.rxIrqSync, 0);
+    OSA_SemaphoreCreate(&s_flexcanInfo.state.txIrqSync, 0);
+    OSA_SemaphoreCreate(&s_flexcanInfo.state.rxIrqSync, 0);
     s_flexcanInfo.state.rx_mb_idx = FLEXCAN_RX_MB;
     s_flexcanInfo.state.tx_mb_idx = FLEXCAN_TX_MB;
 
@@ -756,14 +722,14 @@ status_t FLEXCAN_Send(uint8_t instance,
 
         do
         {
-            syncStatus = OSA_SemaWait(&s_flexcanInfo.state.txIrqSync, timeout_ms);
-        } while (syncStatus == kStatus_OSA_Idle);
+            syncStatus = OSA_SemaphoreWait(&s_flexcanInfo.state.txIrqSync, timeout_ms);
+        } while (syncStatus == KOSA_StatusIdle);
 
         /* Disable message buffer interrupt*/
         FLEXCAN_DisableMbInterrupts((CAN_Type *)baseAddr, 1 << mb_idx);
 
         /* Wait for the interrupt*/
-        if (syncStatus != kStatus_OSA_Success)
+        if (syncStatus != KOSA_StatusSuccess)
         {
             return kStatus_Timeout;
         }
@@ -854,7 +820,7 @@ void FLEXCAN_IRQHandler(uint8_t instance)
         temp = (1 << s_flexcanInfo.state.rx_mb_idx);
         if (flag_reg & temp)
         {
-            OSA_SemaPost(&s_flexcanInfo.state.rxIrqSync);
+            OSA_SemaphorePost(&s_flexcanInfo.state.rxIrqSync);
 
             flexcan_frame_t rxFrame;
             /* Get RX MB field values*/
@@ -901,7 +867,7 @@ void FLEXCAN_IRQHandler(uint8_t instance)
         temp = (1 << s_flexcanInfo.state.tx_mb_idx);
         if (flag_reg & temp)
         {
-            OSA_SemaPost(&s_flexcanInfo.state.txIrqSync);
+            OSA_SemaphorePost(&s_flexcanInfo.state.txIrqSync);
         }
 
         baseAddr->IFLAG1 = flag_reg;

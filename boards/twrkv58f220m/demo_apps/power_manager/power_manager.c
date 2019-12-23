@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,9 +8,7 @@
 
 #include "fsl_common.h"
 #include "fsl_smc.h"
-#include "fsl_llwu.h"
 #include "fsl_rcm.h"
-#include "fsl_lptmr.h"
 #include "fsl_port.h"
 #include "fsl_debug_console.h"
 #include "power_manager.h"
@@ -20,6 +18,7 @@
 #include "pin_mux.h"
 #include "fsl_pmc.h"
 #include "fsl_uart.h"
+#include "peripherals.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -29,6 +28,12 @@
 #define LLWU_LPTMR_IDX 0U      /* LLWU_M0IF */
 #define LLWU_WAKEUP_PIN_IDX 3U /* LLWU_P3 */
 #define LLWU_WAKEUP_PIN_TYPE kLLWU_ExternalPinRisingEdge
+
+#define APP_LLWU DEMO_LLWU_PERIPHERAL
+#define APP_LLWU_IRQHANDLER DEMO_LLWU_IRQHANDLER
+
+#define APP_LPTMR DEMO_LPTMR_PERIPHERAL
+#define APP_LPTMR_IRQHANDLER DEMO_LPTMR_IRQHANDLER
 
 #define APP_WAKEUP_BUTTON_PORT BOARD_SW2_PORT
 #define APP_WAKEUP_BUTTON_GPIO_PIN BOARD_SW2_GPIO_PIN
@@ -274,18 +279,17 @@ status_t callback0(notifier_notification_block_t *notify, void *dataPtr)
 void LLWU_IRQHandler(void)
 {
     /* If wakeup by LPTMR. */
-    if (LLWU_GetInternalWakeupModuleFlag(LLWU, LLWU_LPTMR_IDX))
+    if (LLWU_GetInternalWakeupModuleFlag(APP_LLWU, LLWU_LPTMR_IDX))
     {
-        LPTMR_DisableInterrupts(LPTMR0, kLPTMR_TimerInterruptEnable);
-        LPTMR_ClearStatusFlags(LPTMR0, kLPTMR_TimerCompareFlag);
-        LPTMR_StopTimer(LPTMR0);
+        /* Disable lptmr as a wakeup source, so that lptmr's IRQ Handler will be executed when reset from VLLSx mode. */
+        LLWU_EnableInternalModuleInterruptWakup(APP_LLWU, LLWU_LPTMR_IDX, false);
     }
     /* If wakeup by external pin. */
-    if (LLWU_GetExternalWakeupPinFlag(LLWU, LLWU_WAKEUP_PIN_IDX))
+    if (LLWU_GetExternalWakeupPinFlag(APP_LLWU, LLWU_WAKEUP_PIN_IDX))
     {
-        PORT_SetPinInterruptConfig(APP_WAKEUP_BUTTON_PORT, APP_WAKEUP_BUTTON_GPIO_PIN, kPORT_InterruptOrDMADisabled);
-        PORT_ClearPinsInterruptFlags(APP_WAKEUP_BUTTON_PORT, (1U << APP_WAKEUP_BUTTON_GPIO_PIN));
-        LLWU_ClearExternalWakeupPinFlag(LLWU, LLWU_WAKEUP_PIN_IDX);
+        /* Disable WAKEUP pin as a wakeup source, so that WAKEUP pin's IRQ Handler will be executed when reset from
+         * VLLSx mode. */
+        LLWU_ClearExternalWakeupPinFlag(APP_LLWU, LLWU_WAKEUP_PIN_IDX);
     }
     __DSB();
 }
@@ -297,9 +301,9 @@ void LPTMR0_IRQHandler(void)
 {
     if (kLPTMR_TimerInterruptEnable & LPTMR_GetEnabledInterrupts(LPTMR0))
     {
-        LPTMR_DisableInterrupts(LPTMR0, kLPTMR_TimerInterruptEnable);
-        LPTMR_ClearStatusFlags(LPTMR0, kLPTMR_TimerCompareFlag);
-        LPTMR_StopTimer(LPTMR0);
+        LPTMR_DisableInterrupts(APP_LPTMR, kLPTMR_TimerInterruptEnable);
+        LPTMR_ClearStatusFlags(APP_LPTMR, kLPTMR_TimerCompareFlag);
+        LPTMR_StopTimer(APP_LPTMR);
     }
     __DSB();
 }
@@ -413,14 +417,14 @@ void APP_SetWakeupConfig(app_power_mode_t targetMode)
     /* Set LPTMR timeout value. */
     if (kAPP_WakeupSourceLptmr == s_wakeupSource)
     {
-        LPTMR_SetTimerPeriod(LPTMR0, (1000U * s_wakeupTimeout) - 1U);
-        LPTMR_StartTimer(LPTMR0);
+        LPTMR_SetTimerPeriod(APP_LPTMR, (1000U * s_wakeupTimeout) - 1U);
+        LPTMR_StartTimer(APP_LPTMR);
     }
 
     /* Set the wakeup module. */
     if (kAPP_WakeupSourceLptmr == s_wakeupSource)
     {
-        LPTMR_EnableInterrupts(LPTMR0, kLPTMR_TimerInterruptEnable);
+        LPTMR_EnableInterrupts(APP_LPTMR, kLPTMR_TimerInterruptEnable);
     }
     else
     {
@@ -433,11 +437,11 @@ void APP_SetWakeupConfig(app_power_mode_t targetMode)
     {
         if (kAPP_WakeupSourceLptmr == s_wakeupSource)
         {
-            LLWU_EnableInternalModuleInterruptWakup(LLWU, LLWU_LPTMR_IDX, true);
+            LLWU_EnableInternalModuleInterruptWakup(APP_LLWU, LLWU_LPTMR_IDX, true);
         }
         else
         {
-            LLWU_SetExternalWakeupPinMode(LLWU, LLWU_WAKEUP_PIN_IDX, LLWU_WAKEUP_PIN_TYPE);
+            LLWU_SetExternalWakeupPinMode(APP_LLWU, LLWU_WAKEUP_PIN_IDX, LLWU_WAKEUP_PIN_TYPE);
         }
         NVIC_EnableIRQ(LLWU_IRQn);
     }
@@ -654,7 +658,6 @@ int main(void)
     smc_power_state_t currentPowerState;
     app_power_mode_t targetPowerMode;
     bool needSetWakeup; /* Flag of whether or not need to set wakeup. */
-    lptmr_config_t lptmrConfig;
 
     /*Power mode configurations*/
     power_user_config_t vlprConfig = {
@@ -738,28 +741,8 @@ int main(void)
     }
 
     BOARD_BootClockRUN();
+    BOARD_InitPeripherals();
     APP_InitDebugConsole();
-
-    /* Setup LPTMR. */
-    /*
-     * lptmrConfig.timerMode = kLPTMR_TimerModeTimeCounter;
-     * lptmrConfig.pinSelect = kLPTMR_PinSelectInput_0;
-     * lptmrConfig.pinPolarity = kLPTMR_PinPolarityActiveHigh;
-     * lptmrConfig.enableFreeRunning = false;
-     * lptmrConfig.bypassPrescaler = true;
-     * lptmrConfig.prescalerClockSource = kLPTMR_PrescalerClock_1;
-     * lptmrConfig.value = kLPTMR_Prescale_Glitch_0;
-     */
-    LPTMR_GetDefaultConfig(&lptmrConfig);
-    /* Use LPO as clock source. */
-    lptmrConfig.prescalerClockSource = kLPTMR_PrescalerClock_1;
-    lptmrConfig.bypassPrescaler      = true;
-
-    LPTMR_Init(LPTMR0, &lptmrConfig);
-
-    NVIC_EnableIRQ(LLWU_IRQn);
-
-    NVIC_EnableIRQ(LPTMR0_IRQn);
 
     NVIC_EnableIRQ(APP_WAKEUP_BUTTON_IRQ);
 

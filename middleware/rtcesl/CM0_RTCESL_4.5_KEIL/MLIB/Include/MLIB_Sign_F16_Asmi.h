@@ -50,20 +50,16 @@ static inline frac16_t MLIB_Sign_F16_FAsmi(register frac16_t f16Val)
                         beq SignEnd                     /* If f16Val = 0, then goes to SignEnd */
                         subs f16Val, f16SigVal, #1      /* If f16Val > 0, then f16Val = 0x00007FFF */
                     SignEnd: };
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax unified \n"        /* Using unified asm syntax */
-                        #endif
-                        "lsls %0, %0, #16 \n"           /* f16Val << 16 */
-                        "bpl .+6 \n"                    /* If f16Val >= 0, then jumps through two commands */
-                        "sxth %0, %1 \n"                /* If f16Val < 0, then f16Val = 0xFFFF8000 */
-                        "b .+6 \n"                      /* Jumps to the end of function */
-                        "beq .+4 \n"                    /* If f16Val = 0, then jumps through next command */
-                        "subs %0, %1, #1 \n"            /* If f16Val > 0, then f16Val = 0x00007FFF */
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "lsls %0, %0, #16 \n\t"           /* f16Val << 16 */
+                        "bpl MLIB_Sign_F16_Next \n\t"     /* If f16Val >= 0, then jumps through two commands */
+                        "sxth %0, %1 \n\t"                /* If f16Val < 0, then f16Val = 0xFFFF8000 */
+                        "b MLIB_Sign_F16_SignEnd \n\t"    /* Jumps to the end of function */
+                    "MLIB_Sign_F16_Next: \n\t"    
+						"beq MLIB_Sign_F16_SignEnd \n\t"  /* If f16Val = 0, then jumps through next command */
+                        "subs %0, %1, #1 \n\t"            /* If f16Val > 0, then f16Val = 0x00007FFF */
+					"MLIB_Sign_F16_SignEnd: \n\t"
                         : "+l"(f16Val): "l"(f16SigVal));
     #endif
 

@@ -48,6 +48,9 @@ void init_hardware(void)
     // Enable all the ports
     SIM->SCGC5 |= (SIM_SCGC5_PORTA_MASK | SIM_SCGC5_PORTB_MASK | SIM_SCGC5_PORTC_MASK | SIM_SCGC5_PORTD_MASK |
                    SIM_SCGC5_PORTE_MASK);
+    
+    // Load the user configuration data so that we can configure the clocks
+    g_bootloaderContext.propertyInterface->load_user_config();
 }
 
 void deinit_hardware(void)

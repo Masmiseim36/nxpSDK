@@ -50,23 +50,18 @@ static inline frac32_t MLIB_MulSat_F32ss_FAsmi(register frac16_t f16Mult1, regis
                         bne NotSat                          /* If f32Out <> 0x80000000, then jumps through next command */
                         subs f32Out, f32Out, #1             /* If f32Out = 0x80000000, then f32Out = 0x7FFFFFFF */
                     NotSat: };
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax unified \n"            /* Using unified asm syntax */
-                        #endif
-                        "sxth %2, %2 \n"                    /* Converts 16-bit input to 32-bit */
-                        "sxth %1, %1 \n"                    /* Converts 16-bit input to 32-bit */
-                        "muls %2, %2, %1 \n"                /* f16Mult2 = f16Mult1 * f16Mult2 */
-                        "lsls %0, %2, #1 \n"                /* f32Out = f16Mult2 << 1 (fractional multiplication) */
-                        "movs %1, #128 \n"                  /* f16Mult1 = 0x80 */
-                        "rev %1, %1 \n"                     /* f16Mult1 = 0x80000000 */
-                        "cmp %0, %1 \n"                     /* Compares f32Out with 0x80000000*/
-                        "bne .+4 \n"                        /* If f32Out <> 0x80000000, then jumps through next command */
-                        "subs %0, %0, #1 \n"                /* If f32Out = 0x80000000, then f16Mult1 = 0x7FFFFFFF */
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "sxth %2, %2 \n\t"                    /* Converts 16-bit input to 32-bit */
+                        "sxth %1, %1 \n\t"                    /* Converts 16-bit input to 32-bit */
+                        "muls %2, %2, %1 \n\t"                /* f16Mult2 = f16Mult1 * f16Mult2 */
+                        "lsls %0, %2, #1 \n\t"                /* f32Out = f16Mult2 << 1 (fractional multiplication) */
+                        "movs %1, #128 \n\t"                  /* f16Mult1 = 0x80 */
+                        "rev %1, %1 \n\t"                     /* f16Mult1 = 0x80000000 */
+                        "cmp %0, %1 \n\t"                     /* Compares f32Out with 0x80000000*/
+                        "bne MLIB_MulSat_F32ss_NotSat \n\t"   /* If f32Out <> 0x80000000, then jumps through next command */
+                        "subs %0, %0, #1 \n\t"                /* If f32Out = 0x80000000, then f16Mult1 = 0x7FFFFFFF */
+					"MLIB_MulSat_F32ss_NotSat: \n\t"
                         : "=&l"(f32Out), "+l"(f16Mult1), "+l"(f16Mult2):);
     #endif
 

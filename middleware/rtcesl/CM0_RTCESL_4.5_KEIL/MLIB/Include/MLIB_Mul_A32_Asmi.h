@@ -78,43 +78,38 @@ static inline frac16_t MLIB_MulSat_F16as_FAsmi(register acc32_t a32Accum, regist
                         ble SatEnd                          /* If f16Mult >= 0xFFFF8000, then goes to SatEnd */
                         mov f16Mult, f32Val                 /* If f16Mult < 0xFFFF8000, then f16Mult = 0xFFFF8000 */
                     SatEnd: };
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax unified \n"            /* Using unified asm syntax */
-                        #endif
-                        "sxth %0, %0 \n"                    /* Converts 16-bit input to 32-bit */
-                        "uxth %2, %1 \n"                    /* f32Val = a32Accum.L */
-                        "asrs %1, %1, #16 \n"               /* a32Accum = a32Accum.H */
+                        "sxth %0, %0 \n\t"                    /* Converts 16-bit input to 32-bit */
+                        "uxth %2, %1 \n\t"                    /* f32Val = a32Accum.L */
+                        "asrs %1, %1, #16 \n\t"               /* a32Accum = a32Accum.H */
 
-                        "muls %2, %2, %0 \n"                /* f32Val = a32Accum.L * f16Mult */
-                        "asrs %2, %2, #15 \n"               /* f32Val = a32Accum.L * f16Mult >> 15 */
+                        "muls %2, %2, %0 \n\t"                /* f32Val = a32Accum.L * f16Mult */
+                        "asrs %2, %2, #15 \n\t"               /* f32Val = a32Accum.L * f16Mult >> 15 */
 
-                        "muls %0, %0, %1 \n"                /* f16Mult = a32Accum.H * f16Mult */
-                        "lsls %0, %0, #1 \n"                /* f16Mult << 1 */
-                        "adds %0, %0, %2 \n"                /* f16Mult = f16Mult + f32Val */
+                        "muls %0, %0, %1 \n\t"                /* f16Mult = a32Accum.H * f16Mult */
+                        "lsls %0, %0, #1 \n\t"                /* f16Mult << 1 */
+                        "adds %0, %0, %2 \n\t"                /* f16Mult = f16Mult + f32Val */
 
-                        "movs %2, #128 \n"                  /* f32Val = 0x80 */
-                        "lsls %2, %2, #8 \n"                /* f32Val = 0x8000 */
+                        "movs %2, #128 \n\t"                  /* f32Val = 0x80 */
+                        "lsls %2, %2, #8 \n\t"                /* f32Val = 0x8000 */
 
-                        "rev %1, %0 \n"                     /* Reverse byte */
-                        "cmp %1, #0x80 \n"                  /* Compares with 0x80 */
-                        "bne .+6 \n"                        /* If Result != 0x80000000, then jumps through two commands */
-                        "subs %0, %2, #1 \n"                /* If Result = 0x80000000, then f16Mult = 0x7FFF */
-                        "b .+18 \n"                         /* Jumps through eight commands */
-
-                        "cmp %2, %0 \n"                     /* Compares f16Mult with 0x8000 */
-                        "bge .+6 \n"                        /* If f16Mult < 0x8000, then jumps through two commands */
-                        "subs %0, %2, #1 \n"                /* If f16Mult >= 0x8000, then f16Mult = 0x7FFF */
-                        "b .+10 \n"                         /* Jumps through four commands */
-
-                        "sxth %2, %2 \n"                    /* f32Val = 0xFFFF8000 */
-                        "cmp %2, %0 \n"                     /* Compares f16Mult with 0xFFFF8000 */
-                        "ble .+4 \n"                        /* If f16Mult >= 0xFFFF8000, then jumps through next commands */
-                        "mov %0, %2 \n"                     /* If f16Mult < 0xFFFF8000, then f16Mult = 0xFFFF8000 */
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "rev %1, %0 \n\t"                     /* Reverse byte */
+                        "cmp %1, #0x80 \n\t"                  /* Compares with 0x80 */
+                        "bne MLIB_MulSat_F16as_PosTest \n\t"                        /* If Result != 0x80000000, then jumps through two commands */
+                        "subs %0, %2, #1 \n\t"                /* If Result = 0x80000000, then f16Mult = 0x7FFF */
+                        "b MLIB_MulSat_F16as_SatEnd \n\t"                         /* Jumps through eight commands */
+					"MLIB_MulSat_F16as_PosTest: \n\t"
+                        "cmp %2, %0 \n\t"                     /* Compares f16Mult with 0x8000 */
+                        "bge MLIB_MulSat_F16as_NegTest \n\t"                        /* If f16Mult < 0x8000, then jumps through two commands */
+                        "subs %0, %2, #1 \n\t"                /* If f16Mult >= 0x8000, then f16Mult = 0x7FFF */
+                        "b MLIB_MulSat_F16as_SatEnd \n\t"                         /* Jumps through four commands */
+					"MLIB_MulSat_F16as_NegTest: \n\t"
+                        "sxth %2, %2 \n\t"                    /* f32Val = 0xFFFF8000 */
+                        "cmp %2, %0 \n\t"                     /* Compares f16Mult with 0xFFFF8000 */
+                        "ble MLIB_MulSat_F16as_SatEnd \n\t"                        /* If f16Mult >= 0xFFFF8000, then jumps through next commands */
+                        "mov %0, %2 \n\t"                     /* If f16Mult < 0xFFFF8000, then f16Mult = 0xFFFF8000 */
+					"MLIB_MulSat_F16as_SatEnd: \n\t"
                         : "+l"(f16Mult), "+l"(a32Accum), "+l"(f32Val):);
     #endif
     return f16Mult;
@@ -161,34 +156,28 @@ static inline acc32_t MLIB_Mul_A32_FAsmi(register acc32_t a32Mult1, register acc
                         muls a32Mult1, a32Mult1, a32Mult2   /* a32Mult1 = a32Mult1.H * a32Mult2.H */
                         lsls a32Mult1, a32Mult1, #17        /* a32Mult1 << 17 */
                         adds a32Mult1, a32Mult1, a32Val2 }; /* a32Mult1 = a32Mult1 + a32Val2 */
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax unified \n"            /* Using unified asm syntax */
-                        #endif
-                        "uxth %2, %0 \n"                    /* a32Val1 = a32Mult1.L */
-                        "uxth %3, %1 \n"                    /* a32Val2 = a32Mult2.L */
+                        "uxth %2, %0 \n\t"                    /* a32Val1 = a32Mult1.L */
+                        "uxth %3, %1 \n\t"                    /* a32Val2 = a32Mult2.L */
 
-                        "asrs %0, %0, #16 \n"               /* a32Mult1 = a32Mult1.H */
-                        "asrs %1, %1, #16 \n"               /* a32Mult2 = a32Mult2.H */
+                        "asrs %0, %0, #16 \n\t"               /* a32Mult1 = a32Mult1.H */
+                        "asrs %1, %1, #16 \n\t"               /* a32Mult2 = a32Mult2.H */
 
-                        "movs %4, %2 \n"                    /* a32Val3 = a32Mult1.L */
-                        "muls %4, %4, %3 \n"                /* a32Val3 = a32Mult1.L * a32Mult2.L */
-                        "lsrs %4, %4, #15 \n"               /* a32Val3 >> 15 */
+                        "movs %4, %2 \n\t"                    /* a32Val3 = a32Mult1.L */
+                        "muls %4, %4, %3 \n\t"                /* a32Val3 = a32Mult1.L * a32Mult2.L */
+                        "lsrs %4, %4, #15 \n\t"               /* a32Val3 >> 15 */
 
-                        "muls %2, %2, %1 \n"                /* a32Val1 = a32Mult1.L * a32Mult2.H */
-                        "muls %3, %3, %0 \n"                /* a32Val2 = a32Mult2.L * a32Mult1.H */
-                        "adds %3, %3, %2 \n"                /* a32Val2 = a32Val2 + a32Val1 */
+                        "muls %2, %2, %1 \n\t"                /* a32Val1 = a32Mult1.L * a32Mult2.H */
+                        "muls %3, %3, %0 \n\t"                /* a32Val2 = a32Mult2.L * a32Mult1.H */
+                        "adds %3, %3, %2 \n\t"                /* a32Val2 = a32Val2 + a32Val1 */
 
-                        "lsls %3, %3, #1 \n"                /* a32Val2 << 1 */
-                        "adds %3, %3, %4 \n"                /* a32Val2 = a32Val2 + a32Val3 */
+                        "lsls %3, %3, #1 \n\t"                /* a32Val2 << 1 */
+                        "adds %3, %3, %4 \n\t"                /* a32Val2 = a32Val2 + a32Val3 */
 
-                        "muls %0, %0, %1 \n"                /* a32Mult1 = a32Mult1.H * a32Mult2.H */
-                        "lsls %0, %0, #17 \n"               /* a32Mult1 << 17 */
-                        "adds %0, %0, %3 \n"                /* a32Mult1 = a32Mult1 + a32Val2 */
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "muls %0, %0, %1 \n\t"                /* a32Mult1 = a32Mult1.H * a32Mult2.H */
+                        "lsls %0, %0, #17 \n\t"               /* a32Mult1 << 17 */
+                        "adds %0, %0, %3 \n\t"                /* a32Mult1 = a32Mult1 + a32Val2 */
                         : "+l"(a32Mult1), "+l"(a32Mult2), "+l"(a32Val1), "+l"(a32Val2), "+l"(a32Val3):);
     #endif
 
@@ -254,52 +243,46 @@ static inline acc32_t MLIB_MulSat_A32_FAsmi(register acc32_t a32Mult1, register 
                         subs a32Mult1, a32Mult1, a32Mult2   /* a32Mult1 = 0x7FFFFFFF - Sign of result */
 
                     MLIB_MulSat_A32_End: };
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax unified \n"            /* Using unified asm syntax */
-                        #endif
-                        "uxth %2, %0 \n"                    /* a32Val1 = a32Mult1.L */
-                        "uxth %3, %1 \n"                    /* a32Val2 = a32Mult2.L */
+                        "uxth %2, %0 \n\t"                    /* a32Val1 = a32Mult1.L */
+                        "uxth %3, %1 \n\t"                    /* a32Val2 = a32Mult2.L */
 
-                        "asrs %0, %0, #16 \n"               /* a32Mult1 = a32Mult1.H */
-                        "asrs %1, %1, #16 \n"               /* a32Mult2 = a32Mult2.H */
+                        "asrs %0, %0, #16 \n\t"               /* a32Mult1 = a32Mult1.H */
+                        "asrs %1, %1, #16 \n\t"               /* a32Mult2 = a32Mult2.H */
 
-                        "movs %4, %2 \n"                    /* a32Val3 = a32Mult1.L */
-                        "muls %4, %4, %3 \n"                /* a32Val3 = a32Mult1.L * a32Mult2.L */
-                        "lsrs %4, %4, #16 \n"               /* a32Val3 >> 16 */
+                        "movs %4, %2 \n\t"                    /* a32Val3 = a32Mult1.L */
+                        "muls %4, %4, %3 \n\t"                /* a32Val3 = a32Mult1.L * a32Mult2.L */
+                        "lsrs %4, %4, #16 \n\t"               /* a32Val3 >> 16 */
 
-                        "muls %2, %2, %1 \n"                /* a32Val1 = a32Mult1.L * a32Mult2.H */
-                        "muls %3, %3, %0 \n"                /* a32Val2 = a32Mult2.L * a32Mult1.H */
-                        "adds %3, %3, %2 \n"                /* a32Val2 = a32Val2 + a32Val1 */
-                        "adds %3, %3, %4 \n"                /* a32Val2 = a32Val2 + a32Val3 */
+                        "muls %2, %2, %1 \n\t"                /* a32Val1 = a32Mult1.L * a32Mult2.H */
+                        "muls %3, %3, %0 \n\t"                /* a32Val2 = a32Mult2.L * a32Mult1.H */
+                        "adds %3, %3, %2 \n\t"                /* a32Val2 = a32Val2 + a32Val1 */
+                        "adds %3, %3, %4 \n\t"                /* a32Val2 = a32Val2 + a32Val3 */
 
-                        "asrs %4, %3, #16 \n"               /* a32Val3 = a32Val2 >> 16 */
-                        "uxth %3, %3 \n"                    /* Clears higher 16 bits */
+                        "asrs %4, %3, #16 \n\t"               /* a32Val3 = a32Val2 >> 16 */
+                        "uxth %3, %3 \n\t"                    /* Clears higher 16 bits */
 
-                        "muls %0, %0, %1 \n"                /* a32Mult1 = a32Mult1.H * a32Mult2.H */
-                        "adds %0, %0, %4 \n"                /* a32Mult1 = a32Mult1 + a32Val3 */
+                        "muls %0, %0, %1 \n\t"                /* a32Mult1 = a32Mult1.H * a32Mult2.H */
+                        "adds %0, %0, %4 \n\t"                /* a32Mult1 = a32Mult1 + a32Val3 */
 
-                        "asrs %2, %0, #14 \n"               /* a32Val1 = higher 18 bits of multiplication */
-                        "asrs %1, %0, #31 \n"               /* a32Mult2 = sign of multiplication */
-                        "cmp %2, %1 \n"                     /* Compares a32Val1 and a32Val2 */
-                        "bne MLIB_MulSat_A32_Sat \n"        /* If a32Val1 != a32Mult2, then goes to the MLIB_MulSat_A32_Sat */
+                        "asrs %2, %0, #14 \n\t"               /* a32Val1 = higher 18 bits of multiplication */
+                        "asrs %1, %0, #31 \n\t"               /* a32Mult2 = sign of multiplication */
+                        "cmp %2, %1 \n\t"                     /* Compares a32Val1 and a32Val2 */
+                        "bne MLIB_MulSat_A32_Sat1 \n\t"        /* If a32Val1 != a32Mult2, then goes to the MLIB_MulSat_A32_Sat */
 
-                        "lsls %0, %0, #16 \n"               /* a32Mult1 << 16 */
-                        "adds %0, %0, %3 \n"                /* a32Mult1 = a32Mult1 + a32Val2 */
-                        "lsls %0, %0, #1 \n"                /* Result << 1 */
-                        "b MLIB_MulSat_A32_End \n"          /* Goes to the MLIB_MulSat_A32_End*/
+                        "lsls %0, %0, #16 \n\t"               /* a32Mult1 << 16 */
+                        "adds %0, %0, %3 \n\t"                /* a32Mult1 = a32Mult1 + a32Val2 */
+                        "lsls %0, %0, #1 \n\t"                /* Result << 1 */
+                        "b MLIB_MulSat_A32_End1 \n\t"          /* Goes to the MLIB_MulSat_A32_End*/
 
-                    "MLIB_MulSat_A32_Sat: \n"
-                        "movs %0, #0x80 \n"                 /* a32Mult1 = 0x80 */
-                        "lsls %0, %0, #24 \n"               /* a32Mult1 = 0x80000000 */
-                        "subs %0, %0, #1 \n"                /* a32Mult1 = 0x7FFFFFFF */
-                        "subs %0, %0, %1 \n"                /* a32Mult1 = 0x7FFFFFFF - Sign of result */
+                    "MLIB_MulSat_A32_Sat1: \n\t"
+                        "movs %0, #0x80 \n\t"                 /* a32Mult1 = 0x80 */
+                        "lsls %0, %0, #24 \n\t"               /* a32Mult1 = 0x80000000 */
+                        "subs %0, %0, #1 \n\t"                /* a32Mult1 = 0x7FFFFFFF */
+                        "subs %0, %0, %1 \n\t"                /* a32Mult1 = 0x7FFFFFFF - Sign of result */
 
-                    "MLIB_MulSat_A32_End: \n"
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                    "MLIB_MulSat_A32_End1: \n\t"
                         : "+l"(a32Mult1), "+l"(a32Mult2), "+l"(a32Val1), "+l"(a32Val2), "+l"(a32Val3):);
     #endif
 
@@ -348,35 +331,29 @@ static inline acc32_t MLIB_MulNeg_A32_FAsmi(register acc32_t a32Mult1, register 
                         lsls a32Mult1, a32Mult1, #17        /* a32Mult1 << 17 */
                         adds a32Mult1, a32Mult1, a32Val2    /* a32Mult1 = a32Mult1 + a32Val2 */
                         rsbs a32Mult1, a32Mult1, #0 };      /* Negation */
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax unified \n"            /* Using unified asm syntax */
-                        #endif
-                        "uxth %2, %0 \n"                    /* a32Val1 = a32Mult1.L */
-                        "uxth %3, %1 \n"                    /* a32Val2 = a32Mult2.L */
+                        "uxth %2, %0 \n\t"                    /* a32Val1 = a32Mult1.L */
+                        "uxth %3, %1 \n\t"                    /* a32Val2 = a32Mult2.L */
 
-                        "asrs %0, %0, #16 \n"               /* a32Mult1 = a32Mult1.H */
-                        "asrs %1, %1, #16 \n"               /* a32Mult2 = a32Mult2.H */
+                        "asrs %0, %0, #16 \n\t"               /* a32Mult1 = a32Mult1.H */
+                        "asrs %1, %1, #16 \n\t"               /* a32Mult2 = a32Mult2.H */
 
-                        "movs %4, %2 \n"                    /* a32Val3 = a32Mult1.L */
-                        "muls %4, %4, %3 \n"                /* a32Val3 = a32Mult1.L * a32Mult2.L */
-                        "lsrs %4, %4, #15 \n"               /* a32Val3 >> 15 */
+                        "movs %4, %2 \n\t"                    /* a32Val3 = a32Mult1.L */
+                        "muls %4, %4, %3 \n\t"                /* a32Val3 = a32Mult1.L * a32Mult2.L */
+                        "lsrs %4, %4, #15 \n\t"               /* a32Val3 >> 15 */
 
-                        "muls %2, %2, %1 \n"                /* a32Val1 = a32Mult1.L * a32Mult2.H */
-                        "muls %3, %3, %0 \n"                /* a32Val2 = a32Mult2.L * a32Mult1.H */
-                        "adds %3, %3, %2 \n"                /* a32Val2 = a32Val2 + a32Val1 */
+                        "muls %2, %2, %1 \n\t"                /* a32Val1 = a32Mult1.L * a32Mult2.H */
+                        "muls %3, %3, %0 \n\t"                /* a32Val2 = a32Mult2.L * a32Mult1.H */
+                        "adds %3, %3, %2 \n\t"                /* a32Val2 = a32Val2 + a32Val1 */
 
-                        "lsls %3, %3, #1 \n"                /* a32Val2 << 1 */
-                        "adds %3, %3, %4 \n"                /* a32Val2 = a32Val2 + a32Val3 */
+                        "lsls %3, %3, #1 \n\t"                /* a32Val2 << 1 */
+                        "adds %3, %3, %4 \n\t"                /* a32Val2 = a32Val2 + a32Val3 */
 
-                        "muls %0, %0, %1 \n"                /* a32Mult1 = a32Mult1.H * a32Mult2.H */
-                        "lsls %0, %0, #17 \n"               /* a32Mult1 << 17 */
-                        "adds %0, %0, %3 \n"                /* a32Mult1 = a32Mult1 + a32Val2 */
-                        "rsbs %0, %0, #0 \n"                /* Negation */
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "muls %0, %0, %1 \n\t"                /* a32Mult1 = a32Mult1.H * a32Mult2.H */
+                        "lsls %0, %0, #17 \n\t"               /* a32Mult1 << 17 */
+                        "adds %0, %0, %3 \n\t"                /* a32Mult1 = a32Mult1 + a32Val2 */
+                        "rsbs %0, %0, #0 \n\t"                /* Negation */
                         : "+l"(a32Mult1), "+l"(a32Mult2), "+l"(a32Val1), "+l"(a32Val2), "+l"(a32Val3):);
     #endif
 
@@ -442,52 +419,46 @@ static inline acc32_t MLIB_MulNegSat_A32_FAsmi(register acc32_t a32Mult1, regist
 
                     MLIB_MulNegSat_A32_End:
                         rsbs a32Mult1, a32Mult1, #0 };      /* a32Mult1 = - a32Mult1 */
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax unified \n"            /* Using unified asm syntax */
-                        #endif
-                        "uxth %2, %0 \n"                    /* a32Val1 = a32Mult1.L */
-                        "uxth %3, %1 \n"                    /* a32Val2 = a32Mult2.L */
+                        "uxth %2, %0 \n\t"                    /* a32Val1 = a32Mult1.L */
+                        "uxth %3, %1 \n\t"                    /* a32Val2 = a32Mult2.L */
 
-                        "asrs %0, %0, #16 \n"               /* a32Mult1 = a32Mult1.H */
-                        "asrs %1, %1, #16 \n"               /* a32Mult2 = a32Mult2.H */
+                        "asrs %0, %0, #16 \n\t"               /* a32Mult1 = a32Mult1.H */
+                        "asrs %1, %1, #16 \n\t"               /* a32Mult2 = a32Mult2.H */
 
-                        "movs %4, %2 \n"                    /* a32Val3 = a32Mult1.L */
-                        "muls %4, %4, %3 \n"                /* a32Val3 = a32Mult1.L * a32Mult2.L */
-                        "lsrs %4, %4, #16 \n"               /* a32Val3 >> 16 */
+                        "movs %4, %2 \n\t"                    /* a32Val3 = a32Mult1.L */
+                        "muls %4, %4, %3 \n\t"                /* a32Val3 = a32Mult1.L * a32Mult2.L */
+                        "lsrs %4, %4, #16 \n\t"               /* a32Val3 >> 16 */
 
-                        "muls %2, %2, %1 \n"                /* a32Val1 = a32Mult1.L * a32Mult2.H */
-                        "muls %3, %3, %0 \n"                /* a32Val2 = a32Mult2.L * a32Mult1.H */
-                        "adds %3, %3, %2 \n"                /* a32Val2 = a32Val2 + a32Val1 */
-                        "adds %3, %3, %4 \n"                /* a32Val2 = a32Val2 + a32Val3 */
+                        "muls %2, %2, %1 \n\t"                /* a32Val1 = a32Mult1.L * a32Mult2.H */
+                        "muls %3, %3, %0 \n\t"                /* a32Val2 = a32Mult2.L * a32Mult1.H */
+                        "adds %3, %3, %2 \n\t"                /* a32Val2 = a32Val2 + a32Val1 */
+                        "adds %3, %3, %4 \n\t"                /* a32Val2 = a32Val2 + a32Val3 */
 
-                        "asrs %4, %3, #16 \n"               /* a32Val3 = a32Val2 >> 16 */
-                        "uxth %3, %3 \n"                    /* Clears higher 16 bits */
+                        "asrs %4, %3, #16 \n\t"               /* a32Val3 = a32Val2 >> 16 */
+                        "uxth %3, %3 \n\t"                    /* Clears higher 16 bits */
 
-                        "muls %0, %0, %1 \n"                /* a32Mult1 = a32Mult1.H * a32Mult2.H */
-                        "adds %0, %0, %4 \n"                /* a32Mult1 = a32Mult1 + a32Val3 */
+                        "muls %0, %0, %1 \n\t"                /* a32Mult1 = a32Mult1.H * a32Mult2.H */
+                        "adds %0, %0, %4 \n\t"                /* a32Mult1 = a32Mult1 + a32Val3 */
 
-                        "asrs %2, %0, #14 \n"               /* a32Val1 = higher 18 bits of multiplication */
-                        "asrs %1, %0, #31 \n"               /* a32Mult2 = sign of multiplication */
-                        "cmp %2, %1 \n"                     /* Compares a32Val1 and a32Val2 */
-                        "bne MLIB_MulNegSat_A32_Sat \n"     /* If a32Val1 != a32Mult2, then goes to the MLIB_MulNegSat_A32_Sat */
+                        "asrs %2, %0, #14 \n\t"               /* a32Val1 = higher 18 bits of multiplication */
+                        "asrs %1, %0, #31 \n\t"               /* a32Mult2 = sign of multiplication */
+                        "cmp %2, %1 \n\t"                     /* Compares a32Val1 and a32Val2 */
+                        "bne MLIB_MulNegSat_A32_Sat1 \n\t"     /* If a32Val1 != a32Mult2, then goes to the MLIB_MulNegSat_A32_Sat */
 
-                        "lsls %0, %0, #16 \n"               /* a32Mult1 << 16 */
-                        "adds %0, %0, %3 \n"                /* a32Mult1 = a32Mult1 + a32Val2 */
-                        "lsls %0, %0, #1 \n"                /* Result << 1 */
-                        "b MLIB_MulNegSat_A32_End \n"       /* Goes to the MLIB_MulNegSat_A32_End*/
+                        "lsls %0, %0, #16 \n\t"               /* a32Mult1 << 16 */
+                        "adds %0, %0, %3 \n\t"                /* a32Mult1 = a32Mult1 + a32Val2 */
+                        "lsls %0, %0, #1 \n\t"                /* Result << 1 */
+                        "b MLIB_MulNegSat_A32_End1 \n\t"       /* Goes to the MLIB_MulNegSat_A32_End*/
 
-                    "MLIB_MulNegSat_A32_Sat: \n"
-                        "movs %0, #0x80 \n"                 /* a32Mult1 = 0x80 */
-                        "lsls %0, %0, #24 \n"               /* a32Mult1 = 0x80000000 */
-                        "subs %0, %0, %1 \n"                /* a32Mult1 = 0x80000000 - Sign of result */
+                    "MLIB_MulNegSat_A32_Sat1: \n\t"
+                        "movs %0, #0x80 \n\t"                 /* a32Mult1 = 0x80 */
+                        "lsls %0, %0, #24 \n\t"               /* a32Mult1 = 0x80000000 */
+                        "subs %0, %0, %1 \n\t"                /* a32Mult1 = 0x80000000 - Sign of result */
 
-                    "MLIB_MulNegSat_A32_End: \n"
-                        "rsbs %0, %0, #0 \n"                /* a32Mult1 = - a32Mult1 */
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                    "MLIB_MulNegSat_A32_End1: \n\t"
+                        "rsbs %0, %0, #0 \n\t"                /* a32Mult1 = - a32Mult1 */
                         : "+l"(a32Mult1), "+l"(a32Mult2), "+l"(a32Val1), "+l"(a32Val2), "+l"(a32Val3):);
     #endif
 
@@ -542,39 +513,34 @@ static inline frac16_t MLIB_MulNegSat_F16as_FAsmi(register acc32_t a32Accum, reg
                         mov f16Mult, f32Val                 /* If f16Mult < 0xFFFF8000, then f16Mult = 0xFFFF8000 */
                     SatEnd: };
 
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax unified \n"            /* Using unified asm syntax */
-                        #endif
-                        "sxth %0, %0 \n"                    /* Converts 16-bit input to 32-bit */
-                        "uxth %2, %1 \n"                    /* f32Val = a32Accum.L */
-                        "asrs %1, %1, #16 \n"               /* a32Accum = a32Accum.H */
+                        "sxth %0, %0 \n\t"                    /* Converts 16-bit input to 32-bit */
+                        "uxth %2, %1 \n\t"                    /* f32Val = a32Accum.L */
+                        "asrs %1, %1, #16 \n\t"               /* a32Accum = a32Accum.H */
 
-                        "muls %2, %2, %0 \n"                /* f32Val = a32Accum.L * f16Mult */
-                        "asrs %2, %2, #15 \n"               /* f32Val = a32Accum.L * f16Mult >> 15 */
+                        "muls %2, %2, %0 \n\t"                /* f32Val = a32Accum.L * f16Mult */
+                        "asrs %2, %2, #15 \n\t"               /* f32Val = a32Accum.L * f16Mult >> 15 */
 
-                        "muls %0, %0, %1 \n"                /* f16Mult = a32Accum.H * f16Mult */
-                        "lsls %0, %0, #1 \n"                /* f16Mult << 1 */
-                        "adds %0, %0, %2 \n"                /* f16Mult = f16Mult + f32Val */
+                        "muls %0, %0, %1 \n\t"                /* f16Mult = a32Accum.H * f16Mult */
+                        "lsls %0, %0, #1 \n\t"                /* f16Mult << 1 */
+                        "adds %0, %0, %2 \n\t"                /* f16Mult = f16Mult + f32Val */
 
-                        "rsbs %0, %0, #0 \n"                /* Negation */
+                        "rsbs %0, %0, #0 \n\t"                /* Negation */
 
-                        "movs %2, #128 \n"                  /* f32Val = 0x80 */
-                        "lsls %2, %2, #8 \n"                /* f32Val = 0x8000 */
+                        "movs %2, #128 \n\t"                  /* f32Val = 0x80 */
+                        "lsls %2, %2, #8 \n\t"                /* f32Val = 0x8000 */
 
-                        "cmp %2, %0 \n"                     /* Compares f16Mult with 0x8000 */
-                        "bge .+6 \n"                        /* If f16Mult < 0x8000, then jumps through two commands */
-                        "subs %0, %2, #1 \n"                /* If f16Mult >= 0x8000, then f16Mult = 0x7FFF */
-                        "b .+10 \n"                         /* Jumps through four commands */
-
-                        "sxth %2, %2 \n"                    /* f32Val = 0xFFFF8000 */
-                        "cmp %2, %0 \n"                     /* Compares f16Mult with 0xFFFF8000 */
-                        "ble .+4 \n"                        /* If f16Mult >= 0xFFFF8000, then jumps through next commands */
-                        "mov %0, %2 \n"                     /* If f16Mult < 0xFFFF8000, then f16Mult = 0xFFFF8000 */
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "cmp %2, %0 \n\t"                     /* Compares f16Mult with 0x8000 */
+                        "bge MLIB_MulNegSat_F16as_NegTest \n\t"/* If f16Mult < 0x8000, then jumps through two commands */
+                        "subs %0, %2, #1 \n\t"                /* If f16Mult >= 0x8000, then f16Mult = 0x7FFF */
+                        "b MLIB_MulNegSat_F16as_SatEnd \n\t"  /* Jumps through four commands */
+					"MLIB_MulNegSat_F16as_NegTest: \n\t"
+                        "sxth %2, %2 \n\t"                    /* f32Val = 0xFFFF8000 */
+                        "cmp %2, %0 \n\t"                     /* Compares f16Mult with 0xFFFF8000 */
+                        "ble MLIB_MulNegSat_F16as_SatEnd \n\t"/* If f16Mult >= 0xFFFF8000, then jumps through next commands */
+                        "mov %0, %2 \n\t"                     /* If f16Mult < 0xFFFF8000, then f16Mult = 0xFFFF8000 */
+					"MLIB_MulNegSat_F16as_SatEnd: \n\t"
                         : "+l"(f16Mult), "+l"(a32Accum), "+l"(f32Val):);
     #endif
     return f16Mult;

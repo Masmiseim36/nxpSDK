@@ -10,6 +10,7 @@
     <definition extID="device.MKV58F24_startup.MKV58F24"/>
     <definition extID="platform.Include_common.MKV58F24"/>
     <definition extID="platform.Include_core_cm7.MKV58F24"/>
+    <definition extID="platform.Include_dsp.MKV58F24"/>
     <definition extID="platform.drivers.clock.MKV58F24"/>
     <definition extID="platform.drivers.common.MKV58F24"/>
     <definition extID="platform.drivers.gpio.MKV58F24"/>
@@ -17,13 +18,14 @@
     <definition extID="platform.drivers.smc.MKV58F24"/>
     <definition extID="platform.drivers.uart.MKV58F24"/>
     <definition extID="platform.utilities.assert.MKV58F24"/>
+    <definition extID="platform.utilities.misc_utilities.MKV58F24"/>
     <definition extID="utility.debug_console.MKV58F24"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="twrkv58f220m_uart_interrupt" name="uart_interrupt" category="driver_examples/uart" dependency="platform.drivers.port.MKV58F24 platform.drivers.uart.MKV58F24 platform.drivers.clock.MKV58F24 platform.drivers.common.MKV58F24 device.MKV58F24_CMSIS.MKV58F24 utility.debug_console.MKV58F24 component.uart_adapter.MKV58F24 component.serial_manager.MKV58F24 component.serial_manager_uart.MKV58F24 component.lists.MKV58F24 device.MKV58F24_startup.MKV58F24 platform.drivers.smc.MKV58F24 platform.drivers.gpio.MKV58F24 platform.utilities.assert.MKV58F24 platform.Include_core_cm7.MKV58F24 platform.Include_common.MKV58F24">
+  <example id="twrkv58f220m_uart_interrupt" name="uart_interrupt" category="driver_examples/uart" dependency="platform.drivers.port.MKV58F24 platform.drivers.uart.MKV58F24 platform.drivers.clock.MKV58F24 platform.drivers.common.MKV58F24 device.MKV58F24_CMSIS.MKV58F24 utility.debug_console.MKV58F24 component.uart_adapter.MKV58F24 component.serial_manager.MKV58F24 component.lists.MKV58F24 component.serial_manager_uart.MKV58F24 device.MKV58F24_startup.MKV58F24 platform.drivers.smc.MKV58F24 platform.drivers.gpio.MKV58F24 platform.utilities.assert.MKV58F24 platform.Include_core_cm7.MKV58F24 platform.Include_common.MKV58F24 platform.Include_dsp.MKV58F24 platform.utilities.misc_utilities.MKV58F24">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -42,6 +44,7 @@
           <value>CPU_MKV58F1M0VLQ24</value>
           <value>TWR_KV58F220M</value>
           <value>TOWER</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -61,13 +64,13 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/twrkv58f220m/driver_examples/uart/interrupt/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/twrkv58f220m/driver_examples/uart/interrupt/armgcc" target_path="MKV58F24/gcc" type="linker" toolchain="armgcc">
       <files mask="MKV58F1M0xxx24_flash.ld"/>
     </source>
-    <source path="boards/twrkv58f220m/driver_examples/uart/interrupt/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/twrkv58f220m/driver_examples/uart/interrupt/iar" target_path="MKV58F24/iar" type="linker" toolchain="iar">
       <files mask="MKV58F1M0xxx24_flash.icf"/>
     </source>
-    <source path="boards/twrkv58f220m/driver_examples/uart/interrupt/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/twrkv58f220m/driver_examples/uart/interrupt/mdk" target_path="MKV58F24/arm" type="linker" toolchain="mdk">
       <files mask="MKV58F1M0xxx24_flash.scf"/>
     </source>
     <source path="boards/twrkv58f220m/driver_examples/uart/interrupt" target_path="board" type="c_include">

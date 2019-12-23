@@ -8,10 +8,13 @@
     <definition extID="component.uart_adapter.MKV58F24"/>
     <definition extID="device.MKV58F24_CMSIS.MKV58F24"/>
     <definition extID="device.MKV58F24_startup.MKV58F24"/>
+    <definition extID="middleware.fmstr.MKV58F24"/>
+    <definition extID="middleware.fmstr.platform_gen32le.MKV58F24"/>
     <definition extID="middleware.motor_control.pmsm.MKV58F24"/>
     <definition extID="middleware.rtcesl.cm7f.MKV58F24"/>
     <definition extID="platform.Include_common.MKV58F24"/>
     <definition extID="platform.Include_core_cm7.MKV58F24"/>
+    <definition extID="platform.Include_dsp.MKV58F24"/>
     <definition extID="platform.drivers.clock.MKV58F24"/>
     <definition extID="platform.drivers.common.MKV58F24"/>
     <definition extID="platform.drivers.dmamux.MKV58F24"/>
@@ -23,13 +26,14 @@
     <definition extID="platform.drivers.uart.MKV58F24"/>
     <definition extID="platform.drivers.xbara.MKV58F24"/>
     <definition extID="platform.utilities.assert.MKV58F24"/>
+    <definition extID="platform.utilities.misc_utilities.MKV58F24"/>
     <definition extID="utility.debug_console.MKV58F24"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
-    <definition extID="mcuxpresso"/>
     <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="twrkv58f220m_mc_pmsm" name="mc_pmsm" category="demo_apps" dependency="platform.drivers.sim.MKV58F24 platform.drivers.port.MKV58F24 platform.drivers.dmamux.MKV58F24 platform.drivers.xbara.MKV58F24 platform.drivers.clock.MKV58F24 platform.drivers.dspi.MKV58F24 middleware.rtcesl.cm7f.MKV58F24 middleware.motor_control.pmsm.MKV58F24 platform.drivers.common.MKV58F24 device.MKV58F24_CMSIS.MKV58F24 utility.debug_console.MKV58F24 component.uart_adapter.MKV58F24 component.serial_manager.MKV58F24 component.serial_manager_uart.MKV58F24 platform.drivers.uart.MKV58F24 component.lists.MKV58F24 device.MKV58F24_startup.MKV58F24 platform.drivers.smc.MKV58F24 platform.drivers.gpio.MKV58F24 platform.utilities.assert.MKV58F24 platform.Include_core_cm7.MKV58F24 platform.Include_common.MKV58F24">
+  <example id="twrkv58f220m_mc_pmsm" name="mc_pmsm" category="demo_apps" dependency="platform.drivers.sim.MKV58F24 platform.drivers.port.MKV58F24 platform.drivers.dmamux.MKV58F24 platform.drivers.xbara.MKV58F24 platform.drivers.clock.MKV58F24 platform.drivers.dspi.MKV58F24 middleware.rtcesl.cm7f.MKV58F24 middleware.motor_control.pmsm.MKV58F24 platform.drivers.common.MKV58F24 device.MKV58F24_CMSIS.MKV58F24 utility.debug_console.MKV58F24 component.uart_adapter.MKV58F24 component.serial_manager.MKV58F24 component.lists.MKV58F24 component.serial_manager_uart.MKV58F24 platform.drivers.uart.MKV58F24 device.MKV58F24_startup.MKV58F24 platform.drivers.smc.MKV58F24 platform.drivers.gpio.MKV58F24 platform.utilities.assert.MKV58F24 middleware.fmstr.MKV58F24 middleware.fmstr.platform_gen32le.MKV58F24 platform.Include_core_cm7.MKV58F24 platform.Include_common.MKV58F24 platform.Include_dsp.MKV58F24 platform.utilities.misc_utilities.MKV58F24">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -48,6 +52,7 @@
           <value>CPU_MKV58F1M0VLQ24</value>
           <value>TWR_KV58F220M</value>
           <value>TOWER</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -67,11 +72,17 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/twrkv58f220m/demo_apps/mc_pmsm/pmsm_snsless/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/twrkv58f220m/demo_apps/mc_pmsm/pmsm_snsless/armgcc" target_path="MKV58F24/gcc" type="linker" toolchain="armgcc">
+      <files mask="MKV58F1M0xxx24_flash.ld"/>
+    </source>
+    <source path="boards/twrkv58f220m/demo_apps/mc_pmsm/pmsm_snsless/iar" target_path="MKV58F24/iar" type="linker" toolchain="iar">
       <files mask="MKV58F1M0xxx24_flash.icf"/>
     </source>
-    <source path="boards/twrkv58f220m/demo_apps/mc_pmsm/pmsm_snsless/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/twrkv58f220m/demo_apps/mc_pmsm/pmsm_snsless/mdk" target_path="MKV58F24/arm" type="linker" toolchain="mdk">
       <files mask="MKV58F1M0xxx24_flash.scf"/>
+    </source>
+    <source path="boards/twrkv58f220m/demo_apps/mc_pmsm/pmsm_snsless" target_path="./" type="other" exclude="true">
+      <files mask="mc_pmsm.mex"/>
     </source>
     <source path="boards/twrkv58f220m/demo_apps/mc_pmsm/pmsm_snsless" target_path="board" type="c_include">
       <files mask="board.h"/>
@@ -90,22 +101,8 @@
     <source path="boards/twrkv58f220m/demo_apps/mc_pmsm/pmsm_snsless" target_path="doc" type="doc">
       <files mask="readme.txt"/>
     </source>
-    <source path="boards/twrkv58f220m/demo_apps/mc_pmsm/pmsm_snsless" target_path="mc_drivers" type="c_include">
-      <files mask="mcdrv_adc_hsadc.h"/>
-      <files mask="mcdrv_mosfet_predrv_spi.h"/>
-      <files mask="mcdrv_pwm3ph_pwma.h"/>
-    </source>
-    <source path="boards/twrkv58f220m/demo_apps/mc_pmsm/pmsm_snsless" target_path="mc_drivers" type="src">
-      <files mask="mcdrv_adc_hsadc.c"/>
-      <files mask="mcdrv_mosfet_predrv_spi.c"/>
-      <files mask="mcdrv_pwm3ph_pwma.c"/>
-    </source>
-    <source path="boards/twrkv58f220m/demo_apps/mc_pmsm/pmsm_snsless" target_path="mc_state_machine" type="c_include">
-      <files mask="m1_sm_snsless.h"/>
-      <files mask="sm_common.h"/>
-    </source>
-    <source path="boards/twrkv58f220m/demo_apps/mc_pmsm/pmsm_snsless" target_path="mc_state_machine" type="src">
-      <files mask="m1_sm_snsless.c"/>
+    <source path="boards/twrkv58f220m/demo_apps/mc_pmsm/pmsm_snsless" target_path="motor_control/freemaster" type="other" exclude="true">
+      <files mask="pmsm_float.pmp"/>
     </source>
     <source path="boards/twrkv58f220m/demo_apps/mc_pmsm/pmsm_snsless" target_path="source" type="c_include">
       <files mask="m1_pmsm_appconfig.h"/>
@@ -114,13 +111,10 @@
     <source path="boards/twrkv58f220m/demo_apps/mc_pmsm/pmsm_snsless" target_path="source" type="src">
       <files mask="main.c"/>
     </source>
-    <source path="boards/twrkv58f220m/demo_apps/mc_pmsm/pmsm_snsless" target_path="src" type="other" exclude="true">
-      <files mask="pmsm_float.pmp"/>
+    <source path="middleware/motor_control/fmstr_cfg_uart" target_path="source" type="c_include">
+      <files mask="freemaster_cfg.h"/>
     </source>
-    <source path="devices/MKV58F24/gcc" target_path="src" type="linker" toolchain="armgcc">
-      <files mask="MKV58F1M0xxx24_flash.ld"/>
-    </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images" target_path="src" type="image" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images" target_path="motor_control/freemaster/pmsm_float/fm_control/styles/images" type="image" exclude="true">
       <files mask="backImage.png"/>
       <files mask="backgroundTop.png"/>
       <files mask="bg_black.png"/>
@@ -259,21 +253,21 @@
       <files mask="wp_check_indeterminate_white.png"/>
       <files mask="wp_check_white.png"/>
     </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control/styles" target_path="src" type="doc" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control/styles" target_path="motor_control/freemaster/pmsm_float/fm_control/styles" type="doc" exclude="true">
       <files mask="jqx.base.css"/>
       <files mask="jqx.energyblue.css"/>
       <files mask="jqx.energyblue.txt"/>
     </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control/styles" target_path="src" type="other" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control/styles" target_path="motor_control/freemaster/pmsm_float/fm_control/styles" type="other" exclude="true">
       <files mask="jqx.energyblue"/>
     </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control" target_path="src" type="doc" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control" target_path="motor_control/freemaster/pmsm_float/fm_control" type="doc" exclude="true">
       <files mask="FM_control_M1.html"/>
     </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control" target_path="src" type="image" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control" target_path="motor_control/freemaster/pmsm_float/fm_control" type="image" exclude="true">
       <files mask="logo.png"/>
     </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control" target_path="src" type="script" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control" target_path="motor_control/freemaster/pmsm_float/fm_control" type="script" exclude="true">
       <files mask="Control_page.js"/>
       <files mask="control_page_config.js"/>
       <files mask="control_page_scripts.js"/>
@@ -293,24 +287,18 @@
       <files mask="jqxtooltip.js"/>
       <files mask="jqxwindow.js"/>
     </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float/mcat/param_files" target_path="src" type="doc" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float/mcat/param_files" target_path="motor_control/freemaster/pmsm_float/mcat/param_files" type="doc" exclude="true">
       <files mask="M1_params.txt"/>
-      <files mask="M1_params_pmsm_frdm-kv31.txt"/>
       <files mask="M1_params_pmsm_hvp-ke18.txt"/>
-      <files mask="M1_params_pmsm_hvp-kv11.txt"/>
-      <files mask="M1_params_pmsm_hvp-kv31.txt"/>
       <files mask="M1_params_pmsm_hvp-kv46.txt"/>
       <files mask="M1_params_pmsm_hvp-kv58.txt"/>
       <files mask="M1_params_pmsm_twr-ke18.txt"/>
       <files mask="M1_params_pmsm_twr-kv31.txt"/>
       <files mask="M1_params_pmsm_twr-kv46.txt"/>
       <files mask="M1_params_pmsm_twr-kv58.txt"/>
-      <files mask="M2_params.txt"/>
-      <files mask="M2_params_pmsm_frdm-kv31.txt"/>
-      <files mask="M2_params_pmsm_hvp-kv31.txt"/>
       <files mask="Setting_params.txt"/>
     </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float/mcat/src/JS_functions" target_path="src" type="script" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float/mcat/src/JS_functions" target_path="motor_control/freemaster/pmsm_float/mcat/src/JS_functions" type="script" exclude="true">
       <files mask="calculations.js"/>
       <files mask="config.js"/>
       <files mask="fileProcessing.js"/>
@@ -325,7 +313,7 @@
       <files mask="mainInclude.js"/>
       <files mask="settings.js"/>
     </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float/mcat/src/images" target_path="src" type="image" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float/mcat/src/images" target_path="motor_control/freemaster/pmsm_float/mcat/src/images" type="image" exclude="true">
       <files mask="Ccontrol.jpg"/>
       <files mask="Ccontrol.png"/>
       <files mask="NXP-Logo.png"/>
@@ -349,11 +337,11 @@
       <files mask="switch_slide_off.png"/>
       <files mask="switch_slide_on.png"/>
     </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float/mcat/src/xml_files" target_path="src" type="xml" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float/mcat/src/xml_files" target_path="motor_control/freemaster/pmsm_float/mcat/src/xml_files" type="xml" exclude="true">
       <files mask="FM_params_list.xml"/>
       <files mask="Header_file_constant_list.xml"/>
     </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float/mcat/src" target_path="src" type="doc" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float/mcat/src" target_path="motor_control/freemaster/pmsm_float/mcat/src" type="doc" exclude="true">
       <files mask="AppSetting.html"/>
       <files mask="MainPage.html"/>
       <files mask="form_PathSelector.html"/>
@@ -371,8 +359,25 @@
       <files mask="inner_SLoop.html"/>
       <files mask="style.css"/>
     </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float" target_path="src" type="doc" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float" target_path="motor_control/freemaster/pmsm_float" type="doc" exclude="true">
       <files mask="readme.txt"/>
+    </source>
+    <source path="middleware/motor_control/pmsm/pmsm_float/mc_drivers" target_path="mc_drivers" type="c_include">
+      <files mask="mcdrv_adc_hsadc.h"/>
+      <files mask="mcdrv_mosfet_predrv_spi.h"/>
+      <files mask="mcdrv_pwm3ph_pwma.h"/>
+    </source>
+    <source path="middleware/motor_control/pmsm/pmsm_float/mc_drivers" target_path="mc_drivers" type="src">
+      <files mask="mcdrv_adc_hsadc.c"/>
+      <files mask="mcdrv_mosfet_predrv_spi.c"/>
+      <files mask="mcdrv_pwm3ph_pwma.c"/>
+    </source>
+    <source path="middleware/motor_control/pmsm/pmsm_float/mc_state_machine" target_path="mc_state_machine" type="c_include">
+      <files mask="m1_sm_snsless.h"/>
+      <files mask="sm_common.h"/>
+    </source>
+    <source path="middleware/motor_control/pmsm/pmsm_float/mc_state_machine" target_path="mc_state_machine" type="src">
+      <files mask="m1_sm_snsless.c"/>
     </source>
   </example>
 </ksdk:examples>

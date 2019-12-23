@@ -110,7 +110,8 @@ int main(void)
     PRINTF("   GND      --    GND \r\n");
 #endif
 
-    if (xTaskCreate(slave_task, "Slave_task", configMINIMAL_STACK_SIZE + 64, NULL, slave_task_PRIORITY, NULL) != pdPASS)
+    if (xTaskCreate(slave_task, "Slave_task", configMINIMAL_STACK_SIZE + 100, NULL, slave_task_PRIORITY, NULL) !=
+        pdPASS)
     {
         PRINTF("Failed to create slave task");
         while (1)
@@ -197,7 +198,7 @@ static void slave_task(void *pvParameters)
 #endif /* ((SPI_MASTER_SLAVE == isSLAVE) ||  (EXAMPLE_CONNECT_DSPI == SINGLE_BOARD)) */
 
 #if ((SPI_MASTER_SLAVE == isMASTER) || (EXAMPLE_CONNECT_DSPI == SINGLE_BOARD))
-    if (xTaskCreate(master_task, "Master_task", configMINIMAL_STACK_SIZE + 64, NULL, master_task_PRIORITY, NULL) !=
+    if (xTaskCreate(master_task, "Master_task", configMINIMAL_STACK_SIZE + 100, NULL, master_task_PRIORITY, NULL) !=
         pdPASS)
     {
         PRINTF("Failed to create master task");

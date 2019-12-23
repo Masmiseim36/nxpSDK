@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="project_proj.xsd">
-  <SchemaVersion>1.1</SchemaVersion>
+<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="project_projx.xsd">
+  <SchemaVersion>2.1</SchemaVersion>
   <Header>### uVision Project, (C) Keil Software</Header>
   <Targets>
     <Target>
@@ -11,14 +11,13 @@
         <TargetCommonOption>
           <Device>MKV46F256VLL16</Device>
           <Vendor>NXP</Vendor>
-          <PackID>Keil.Kinetis_K20_DFP.1.1.0</PackID>
+          <PackID>Keil.Kinetis_KVxx_DFP.1.3.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>CPUTYPE("Cortex-M4") FPU2</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0MK_P512 -FS00 -FL080000 -FP0($$Device:MKV46F256xxx16$Flash\MK_P512.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
-          <RegisterFile>$$Device:MKV46F256xxx16$Device\Include\MKV46F16.h</RegisterFile>
+          <RegisterFile>$$Device:MKV46F256xxx15$Device\Include\MKV46F16.h</RegisterFile>
           <MemoryEnv/>
           <Cmp/>
           <Asm/>
@@ -28,7 +27,7 @@
           <SLE66CMisc/>
           <SLE66AMisc/>
           <SLE66LinkerMisc/>
-          <SFDFile>$$Device:MKV46F256xxx16$SVD\MKV46F16.svd</SFDFile>
+          <SFDFile>$$Device:MKV46F256xxx15$SVD\MKV46F25615.svd</SFDFile>
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath/>
@@ -49,7 +48,7 @@
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
-          <BrowseInformation>0</BrowseInformation>
+          <BrowseInformation>1</BrowseInformation>
           <ListingPath>.\output\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
@@ -145,7 +144,7 @@
             <UsePdscDebugDescription>1</UsePdscDebugDescription>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>14</TargetSelection>
+          <TargetSelection>6</TargetSelection>
           <SimDlls>
             <CpuDll/>
             <CpuDllArguments/>
@@ -159,7 +158,7 @@
             <PeripheralDll/>
             <PeripheralDllArguments/>
             <InitializationFile/>
-            <Driver>PEMicro\Pemicro_ArmCortexInterface.dll</Driver>
+            <Driver>Segger\JL2CM3.dll</Driver>
           </TargetDlls>
         </DebugOption>
         <Utilities>
@@ -168,8 +167,8 @@
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
-            <Capability>1</Capability>
-            <DriverSelection>4096</DriverSelection>
+            <Capability>0</Capability>
+            <DriverSelection>-1</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
@@ -228,7 +227,7 @@
             <RoSelD>3</RoSelD>
             <RwSelD>3</RwSelD>
             <CodeSel>0</CodeSel>
-            <OptFeed>1</OptFeed>
+            <OptFeed>0</OptFeed>
             <NoZi1>0</NoZi1>
             <NoZi2>0</NoZi2>
             <NoZi3>0</NoZi3>
@@ -278,12 +277,12 @@
               <IRAM>
                 <Type>0</Type>
                 <StartAddress>0x20000000</StartAddress>
-                <Size>0x10000</Size>
+                <Size>0x8000</Size>
               </IRAM>
               <IROM>
                 <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x80000</Size>
+                <Size>0x40000</Size>
               </IROM>
               <XRAM>
                 <Type>0</Type>
@@ -308,7 +307,7 @@
               <OCR_RVCT4>
                 <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x80000</Size>
+                <Size>0x40000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
@@ -333,12 +332,12 @@
               <OCR_RVCT9>
                 <Type>0</Type>
                 <StartAddress>0x20000000</StartAddress>
-                <Size>0x10000</Size>
+                <Size>0x8000</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>
-                <StartAddress>0x1fff0000</StartAddress>
-                <Size>0x10000</Size>
+                <StartAddress>0x1fffc000</StartAddress>
+                <Size>0x4000</Size>
               </OCR_RVCT10>
             </OnChipMemories>
             <RvctStartVector/>
@@ -346,7 +345,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>4</Optim>
+            <Optim>7</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -355,17 +354,21 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186,170,2748,1461,1295,177,550 --library_type=standardlib</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb  -Wno-null-dereference  -Wno-unknown-attributes  -Wno-expansion-to-defined  -Wno-invalid-noreturn</MiscControls>
               <Define>NDEBUG, CPU_MKV46F256VLL16, BL_TARGET_FLASH, TWR_KV46F150M</Define>
               <Undefine/>
               <IncludePath>../../flashloader/mdk;../../../../../CMSIS/Include;../../../../../middleware/mcu-boot/src;../../../../../middleware/mcu-boot/src/bootloader;../../../../../middleware/mcu-boot/src/include;../../../../../middleware/mcu-boot/src/startup;../../../../../middleware/mcu-boot/src/utilities;../../../../../middleware/mcu-boot/src/drivers;../../../../../middleware/mcu-boot/src/drivers/crc;../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../middleware/mcu-boot/targets/MKV46F16/src;../../../../../devices/MKV46F16;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers</IncludePath>
             </VariousControls>
+            <v6Lang>3</v6Lang>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
+            <v6Rtti>0</v6Rtti>
           </Cads>
           <Aads>
             <interw>0</interw>
@@ -378,11 +381,12 @@
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
             <VariousControls>
-              <MiscControls>--cpreproc --diag_suppress=1609,1581</MiscControls>
-              <Define>BL_HAS_BOOTLOADER_CONFIG=0, LITE_FOOTPRINT</Define>
+              <MiscControls/>
+              <Define>NDEBUG, BL_HAS_BOOTLOADER_CONFIG=0, LITE_FOOTPRINT</Define>
               <Undefine/>
               <IncludePath>../../../../../middleware/mcu-boot/src/include</IncludePath>
             </VariousControls>
+            <uClangAs>1</uClangAs>
           </Aads>
           <LDads>
             <umfTarg>0</umfTarg>
@@ -397,12 +401,13 @@
             <ScatterFile>MKV46F256xxx16_flashloader_loader.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --datacompressor off --feedback_type=unused,noiw</Misc>
+            <Misc>--remove --keep=*(.FlashConfig) --datacompressor off</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
+      <uAC6>1</uAC6>
       <Groups>
         <Group>
           <GroupName>MKV46F16</GroupName>
@@ -538,9 +543,24 @@
           <GroupName>source-utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
               <FileName>vector_table_info.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/utilities/vector_table_info.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source-utilities-src</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/utilities/src/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -553,21 +573,6 @@
               <FilePath>../../../../../CMSIS/Include/core_cm4.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
@@ -576,6 +581,11 @@
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
@@ -598,6 +608,11 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
+              <FileName>core_armv81mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
+            </File>
+            <File>
               <FileName>core_armv8mbl.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
@@ -616,6 +631,21 @@
               <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
           </Files>
         </Group>

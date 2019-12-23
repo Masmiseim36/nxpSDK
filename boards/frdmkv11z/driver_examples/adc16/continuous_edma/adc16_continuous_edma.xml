@@ -10,6 +10,7 @@
     <definition extID="device.MKV11Z7_startup.MKV11Z7"/>
     <definition extID="platform.Include_common.MKV11Z7"/>
     <definition extID="platform.Include_core_cm0plus.MKV11Z7"/>
+    <definition extID="platform.Include_dsp.MKV11Z7"/>
     <definition extID="platform.drivers.adc16.MKV11Z7"/>
     <definition extID="platform.drivers.clock.MKV11Z7"/>
     <definition extID="platform.drivers.common.MKV11Z7"/>
@@ -20,13 +21,14 @@
     <definition extID="platform.drivers.smc.MKV11Z7"/>
     <definition extID="platform.drivers.uart.MKV11Z7"/>
     <definition extID="platform.utilities.assert.MKV11Z7"/>
+    <definition extID="platform.utilities.misc_utilities.MKV11Z7"/>
     <definition extID="utility.debug_console.MKV11Z7"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmkv11z_adc16_continuous_edma" name="adc16_continuous_edma" category="driver_examples/adc16" dependency="platform.drivers.adc16.MKV11Z7 platform.drivers.port.MKV11Z7 platform.drivers.edma.MKV11Z7 platform.drivers.dmamux.MKV11Z7 platform.drivers.clock.MKV11Z7 platform.drivers.common.MKV11Z7 device.MKV11Z7_CMSIS.MKV11Z7 utility.debug_console.MKV11Z7 component.uart_adapter.MKV11Z7 component.serial_manager.MKV11Z7 component.serial_manager_uart.MKV11Z7 platform.drivers.uart.MKV11Z7 component.lists.MKV11Z7 device.MKV11Z7_startup.MKV11Z7 platform.drivers.smc.MKV11Z7 platform.drivers.gpio.MKV11Z7 platform.utilities.assert.MKV11Z7 platform.Include_core_cm0plus.MKV11Z7 platform.Include_common.MKV11Z7">
+  <example id="frdmkv11z_adc16_continuous_edma" name="adc16_continuous_edma" category="driver_examples/adc16" dependency="platform.drivers.adc16.MKV11Z7 platform.drivers.port.MKV11Z7 platform.drivers.edma.MKV11Z7 platform.drivers.dmamux.MKV11Z7 platform.drivers.clock.MKV11Z7 platform.drivers.common.MKV11Z7 device.MKV11Z7_CMSIS.MKV11Z7 utility.debug_console.MKV11Z7 component.uart_adapter.MKV11Z7 component.serial_manager.MKV11Z7 component.lists.MKV11Z7 component.serial_manager_uart.MKV11Z7 platform.drivers.uart.MKV11Z7 device.MKV11Z7_startup.MKV11Z7 platform.drivers.smc.MKV11Z7 platform.drivers.gpio.MKV11Z7 platform.utilities.assert.MKV11Z7 platform.Include_core_cm0plus.MKV11Z7 platform.Include_common.MKV11Z7 platform.Include_dsp.MKV11Z7 platform.utilities.misc_utilities.MKV11Z7">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -45,6 +47,7 @@
           <value>CPU_MKV11Z128VLH7</value>
           <value>FRDM_KV11Z</value>
           <value>FREEDOM</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -60,13 +63,13 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/frdmkv11z/driver_examples/adc16/continuous_edma/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/frdmkv11z/driver_examples/adc16/continuous_edma/armgcc" target_path="MKV11Z7/gcc" type="linker" toolchain="armgcc">
       <files mask="MKV11Z128xxx7_flash.ld"/>
     </source>
-    <source path="boards/frdmkv11z/driver_examples/adc16/continuous_edma/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/frdmkv11z/driver_examples/adc16/continuous_edma/iar" target_path="MKV11Z7/iar" type="linker" toolchain="iar">
       <files mask="MKV11Z128xxx7_flash.icf"/>
     </source>
-    <source path="boards/frdmkv11z/driver_examples/adc16/continuous_edma/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/frdmkv11z/driver_examples/adc16/continuous_edma/mdk" target_path="MKV11Z7/arm" type="linker" toolchain="mdk">
       <files mask="MKV11Z128xxx7_flash.scf"/>
     </source>
     <source path="boards/frdmkv11z/driver_examples/adc16/continuous_edma" target_path="board" type="c_include">

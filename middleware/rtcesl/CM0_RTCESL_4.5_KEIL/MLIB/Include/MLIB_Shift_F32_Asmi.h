@@ -56,23 +56,18 @@ static inline frac32_t MLIB_Sh1LSat_F32_FAsmi(register frac32_t f32Val)
                         blt SatEnd                      /* If f32TestVal < 0, then goes to SatEnd */
                         subs f32Out, f32Out, #1         /* Else f32Out = 0x00007FFF*/
                     SatEnd: }
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax unified \n"        /* Using unified asm syntax */
-                        #endif
-                        "mov %2, %1 \n"                 /* f32TestVal = f32Val */
-                        "lsls %0, %1, #1 \n"            /* f32Out = f32Val << 1 */
-                        "eors %1, %1, %0 \n"            /* f32Val = f32Val ^ f32Out */
-                        "bpl .+12 \n"                   /* If f32Val >= 0, then jumps to the end of function*/
-                        "movs %0, #128 \n"              /* f32Out = 0x80 */
-                        "rev %0, %0 \n"                 /* f32Out = 0x80000000 */
-                        "cmp %2, #0 \n"                 /* Compares input value with 0 */
-                        "blt .+4 \n"                    /* If f32TestVal < 0, then jumps through next command */
-                        "subs %0, %0, #1 \n"
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax divided \n"        /* Else f32Out = 0x00007FFF*/
-                        #endif
+                        "mov %2, %1 \n\t"                 /* f32TestVal = f32Val */
+                        "lsls %0, %1, #1 \n\t"            /* f32Out = f32Val << 1 */
+                        "eors %1, %1, %0 \n\t"            /* f32Val = f32Val ^ f32Out */
+                        "bpl MLIB_Sh1LSat_F32_SatEnd \n\t"/* If f32Val >= 0, then jumps to the end of function*/
+                        "movs %0, #128 \n\t"              /* f32Out = 0x80 */
+                        "rev %0, %0 \n\t"                 /* f32Out = 0x80000000 */
+                        "cmp %2, #0 \n\t"                 /* Compares input value with 0 */
+                        "blt MLIB_Sh1LSat_F32_SatEnd \n\t"/* If f32TestVal < 0, then jumps through next command */
+                        "subs %0, %0, #1 \n\t"
+					"MLIB_Sh1LSat_F32_SatEnd: \n\t" 
                         : "=l"(f32Out), "+l"(f32Val), "+l"(f32TestVal):);
     #endif
 
@@ -122,32 +117,28 @@ static inline frac32_t MLIB_ShLSat_F32_FAsmi(register frac32_t f32Val, register 
                     NotSat:
                         lsls f32Val, f32Val, u16Sh       /* f32CmpVal = f32CmpVal << u16Sh */
                     SatEnd: }
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)            /* For GCC compiler */
-                            ".syntax unified \n"         /* Using unified asm syntax */
-                        #endif
-                        "movs %3, #128 \n"               /* f32SatVal = 0x80 */
-                        "rev %3, %3 \n"                  /* f32SatVal = 0x80000000 */
-                        "subs %2, %3, #1 \n"             /* f32CmpVal = 0x7FFFFFFF */
-                        "asrs %2, %2, %1 \n"             /* f32CmpVal = f32CmpVal >> u16Sh */
+                        "movs %3, #128 \n\t"               /* f32SatVal = 0x80 */
+                        "rev %3, %3 \n\t"                  /* f32SatVal = 0x80000000 */
+                        "subs %2, %3, #1 \n\t"             /* f32CmpVal = 0x7FFFFFFF */
+                        "asrs %2, %2, %1 \n\t"             /* f32CmpVal = f32CmpVal >> u16Sh */
 
-                        "cmp %0, %2 \n"                  /* Compares f32Val with (0x7FFFFFFF >> u16Sh) */
-                        "ble .+6 \n"                     /* If f32Val <= f32CmpVal, then jumps through two commands */
-                        "subs %0, %3, #1 \n"             /* f32Val = 0x7FFF */
-                        "b .+16 \n"
+                        "cmp %0, %2 \n\t"                  /* Compares f32Val with (0x7FFFFFFF >> u16Sh) */
+                        "ble MLIB_ShLSat_F32_NegTest \n\t" /* If f32Val <= f32CmpVal, then jumps through two commands */
+                        "subs %0, %3, #1 \n\t"             /* f32Val = 0x7FFF */
+                        "b MLIB_ShLSat_F32_SatEnd \n\t"
+                    "MLIB_ShLSat_F32_NegTest: \n\t"
+                        "mov %2, %3 \n\t"                  /* f32CmpVal = 0x80000000 */
+                        "asrs %2, %2, %1 \n\t"             /* f32CmpVal = f32CmpVal >> u16Sh */
 
-                        "mov %2, %3 \n"                  /* f32CmpVal = 0x80000000 */
-                        "asrs %2, %2, %1 \n"             /* f32CmpVal = f32CmpVal >> u16Sh */
-
-                        "cmp %0, %2 \n"                  /* Compares f32Val with (0x80000000 >> u16Sh) */
-                        "bgt .+6 \n"                     /* If f32Val < f32CmpVal, then jumps through two commands */
-                        "mov %0, %3 \n"                  /* f32Val = 0x80000000 */
-                        "b .+4 \n"
-                        "lsls %0, %0, %1 \n"             /* f32CmpVal = f32CmpVal << u16Sh */
-                        #if defined(__GNUC__)            /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "cmp %0, %2 \n\t"                  /* Compares f32Val with (0x80000000 >> u16Sh) */
+                        "bgt MLIB_ShLSat_F32_NotSat \n\t"  /* If f32Val < f32CmpVal, then jumps through two commands */
+                        "mov %0, %3 \n\t"                  /* f32Val = 0x80000000 */
+                        "b MLIB_ShLSat_F32_SatEnd \n\t"
+                    "MLIB_ShLSat_F32_NotSat: \n\t"
+                        "lsls %0, %0, %1 \n\t"             /* f32CmpVal = f32CmpVal << u16Sh */
+                    "MLIB_ShLSat_F32_SatEnd: \n\t"
                         : "+l"(f32Val), "+l"(u16Sh), "+l"(f32CmpVal), "+l"(f32SatVal):);
     #endif
 

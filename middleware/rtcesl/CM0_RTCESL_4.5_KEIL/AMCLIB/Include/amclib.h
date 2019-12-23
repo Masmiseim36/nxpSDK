@@ -56,7 +56,7 @@ extern "C" {
         AMCLIB_PMSMBemfObsrvDQHw_F16_Asm(psIDQ, psUDQ, f16Speed, psCtrl)
 #define AMCLIB_PMSMBemfObsrvAB_F16(psIAlBe, psUAlBe, f16Speed, psCtrl)         \
         AMCLIB_PMSMBemfObsrvABHw_F16_C(psIAlBe, psUAlBe, f16Speed, psCtrl)   
-#else            
+#elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050)             
 #define AMCLIB_PMSMBemfObsrvDQ_F16(psIDQ, psUDQ, f16Speed, psCtrl)             \
         AMCLIB_PMSMBemfObsrvDQ_F16_Asm(psIDQ, psUDQ, f16Speed, psCtrl)
 #define AMCLIB_PMSMBemfObsrvAB_F16(psIAlBe, psUAlBe, f16Speed, psCtrl)         \

@@ -102,6 +102,7 @@ void PinTool_PWM(void);
 
 /*! @name PORTB0 (number 35), SW2
   @{ */
+#define PINTOOL_MISC_SW2_FGPIO FGPIOB /*!<@brief FGPIO device name: FGPIOB */
 #define PINTOOL_MISC_SW2_GPIO GPIOB /*!<@brief GPIO device name: GPIOB */
 #define PINTOOL_MISC_SW2_PORT PORTB /*!<@brief PORT device name: PORTB */
 #define PINTOOL_MISC_SW2_PIN 0U     /*!<@brief PORTB pin index: 0 */
@@ -109,6 +110,7 @@ void PinTool_PWM(void);
 
 /*! @name PORTA4 (number 26), SW3
   @{ */
+#define PINTOOL_MISC_SW3_FGPIO FGPIOA /*!<@brief FGPIO device name: FGPIOA */
 #define PINTOOL_MISC_SW3_GPIO GPIOA /*!<@brief GPIO device name: GPIOA */
 #define PINTOOL_MISC_SW3_PORT PORTA /*!<@brief PORT device name: PORTA */
 #define PINTOOL_MISC_SW3_PIN 4U     /*!<@brief PORTA pin index: 4 */
@@ -116,6 +118,7 @@ void PinTool_PWM(void);
 
 /*! @name PORTD6 (number 63), RGB_LED
   @{ */
+#define PINTOOL_MISC_RGB_LED1_FGPIO FGPIOD /*!<@brief FGPIO device name: FGPIOD */
 #define PINTOOL_MISC_RGB_LED1_GPIO GPIOD /*!<@brief GPIO device name: GPIOD */
 #define PINTOOL_MISC_RGB_LED1_PORT PORTD /*!<@brief PORT device name: PORTD */
 #define PINTOOL_MISC_RGB_LED1_PIN 6U     /*!<@brief PORTD pin index: 6 */
@@ -123,6 +126,7 @@ void PinTool_PWM(void);
 
 /*! @name PORTE29 (number 17), RGB_LED4
   @{ */
+#define PINTOOL_MISC_RGB_LED4_FGPIO FGPIOE /*!<@brief FGPIO device name: FGPIOE */
 #define PINTOOL_MISC_RGB_LED4_GPIO GPIOE /*!<@brief GPIO device name: GPIOE */
 #define PINTOOL_MISC_RGB_LED4_PORT PORTE /*!<@brief PORT device name: PORTE */
 #define PINTOOL_MISC_RGB_LED4_PIN 29U    /*!<@brief PORTE pin index: 29 */
@@ -136,6 +140,7 @@ void PinTool_Misc(void);
 
 /*! @name PORTE30 (number 18), ADC1_SE4
   @{ */
+#define PINTOOL_ADC_ADC1_SE4_FGPIO FGPIOE /*!<@brief FGPIO device name: FGPIOE */
 #define PINTOOL_ADC_ADC1_SE4_GPIO GPIOE /*!<@brief GPIO device name: GPIOE */
 #define PINTOOL_ADC_ADC1_SE4_PORT PORTE /*!<@brief PORT device name: PORTE */
 #define PINTOOL_ADC_ADC1_SE4_PIN 30U    /*!<@brief PORTE pin index: 30 */

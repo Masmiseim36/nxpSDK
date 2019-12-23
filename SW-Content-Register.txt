@@ -63,6 +63,15 @@ FreeRTOS_heap_newlib       Author: Dave Nadler, Nadler & Associates
                            tml                                               
                            version: 1.0.0                                    
 
+sdmmc_sdspi                name: SD Card middleware                          
+                           Location: middleware/sdmmc/src/fsl_sdspi.c        
+                           License: Open Source - BSC-3-Clause               
+                           Description: A software component support access  
+                           SD card through spi.                              
+                           Author: Freescale                                 
+                           version: 2.1.4                                    
+                           Format: source code                               
+
 fatfs                      Approved Open Source License: Yes                 
                            Author: Electronic Lives Mfg. by ChaN of Ageo     
                            city, Japan (hobbyist)                            
@@ -75,6 +84,52 @@ fatfs                      Approved Open Source License: Yes
                            name: FatFs                                       
                            URL: http://elm-chan.org/fsw/ff/00index_e.html    
                            version: 0.13c                                    
+
+rtcesl                     Author: NXP                                       
+                           version: 4.5                                      
+                           name: rtcesl                                      
+                           Format: object code & header files                
+                           License: Open Source - BSD-3-Clause               
+                           Location: middleware/rtcesl                       
+                           Description: NXP Real Time Control Embedded       
+                           Software Library.                                 
+
+motor_control              Author: NXP                                       
+                           version: 1.1.0                                    
+                           name: motor_control                               
+                           Format: source code                               
+                           License: Open Source - BSD-3-Clause               
+                           Location: middleware/motor_control                
+                           Description: Motor control examples for PMSM and  
+                           BLDC motors.                                      
+
+motor_control - jQuery     Author: jQWidgets                                 
+                           version: v3.7.1 (2015-Feb)                        
+                           name: motor_control                               
+                           Format: library                                   
+                           License: Commercial -                             
+                           http://www.jqwidgets.com/license/                 
+                           Location: middleware/motor_control/freemaster     
+                           Description: Advanced jQuery and HTML5 UI         
+                           framework.                                        
+
+motor_control - JavaScript Author: jQuery Foundation, Inc.                   
+                           version: v1.11.1                                  
+                           name: motor_control                               
+                           Format: source code                               
+                           License: Open Source - MIT (jquery.org/license)   
+                           Location: middleware/motor_control/freemaster     
+                           Description: Cross-platform JavaScript library.   
+
+motor_control - FreeMASTER Author: NXP                                       
+                           version: 2.0.3.1                                  
+                           name: motor_control - FreeMASTER                  
+                           Format: source code & header files                
+                           License: Proprietary. See                         
+                           LA_OPT_NXP_Software_License.htm.                  
+                           Location: middleware/motor_control/freemaster     
+                           Description: NXP FreeMASTER. Real time non        
+                           intrusive debugger.                               
 
 cmsis_drivers              Author: Freescale                                 
                            version: 2.x.x                                    
@@ -184,6 +239,16 @@ Host tools - SHA-1         Description: Implementation of the SHA-1 algorithm
                            middleware/mcu-boot/tools/tools/elftosb/common/SHA
                            1.cpp                                             
 
+Utility Source - elf.py    Description: Python implementation of an ELF file 
+                           reader                                            
+                           Author: Chris Liechti (cliechti@gmx.net)          
+                           License: BSD License                              
+                           URL:                                              
+                           http://bazaar.launchpad.net/~zsquareplusc/python-m
+                           sp430-tools/trunk/view/head:/msp430/memory/elf.py 
+                           Format: source code                               
+                           Location: middleware/mcu-boot/bin/elf.py          
+
 ELFtoSB - MBED TLS stack   Description: Cryptographic and SSL/TLS Library    
                            Author: ARM                                       
                            License: Apache-2.0                               
@@ -193,6 +258,26 @@ ELFtoSB - MBED TLS stack   Description: Cryptographic and SSL/TLS Library
                            Format: source code                               
                            Location:                                         
                            middleware/mcu-boot/tools/tools/elftosb/mbedtls   
+
+mmcau                      Author: Freescale                                 
+                           Description: S/W library that works with the      
+                           memory-mapped cryptographic acceleration unit     
+                           present on some MCUXpresso SoCs                   
+                           Format: source code                               
+                           License: Open Source - BSD-3-Clause               
+                           Location: middleware/mmcau                        
+                           name: mmCAU S/W Library                           
+                           version: 2.0.1                                    
+
+mbedtls                    Author: ARM                                       
+                           Description: Cryptographic and SSL/TLS Library    
+                           Format: source code                               
+                           License: Apache-2.0,                              
+                           middleware/mbedtls/apache-2.0.txt                 
+                           Location: middleware/mbedtls                      
+                           name: MBED TLS stack                              
+                           URL: https://tls.mbed.org/                        
+                           version: 2.16.2                                   
 
 issdk                      version: 1.7                                      
                            Location: middleware/issdk                        
@@ -232,26 +317,6 @@ sdmmc                      name: SD MMC SDIO Card middleware
                            Author: Freescale                                 
                            version: 2.2.7                                    
                            Format: source code                               
-
-sdmmc_sdspi                name: SD Card middleware                          
-                           Location: middleware/sdmmc                        
-                           License: Open Source - BSC-3-Clause               
-                           Description: A software component support access  
-                           SD card through spi.                              
-                           Author: Freescale                                 
-                           version: 2.1.4                                    
-                           Format: source code                               
-
-mbedtls                    Author: ARM                                       
-                           Description: Cryptographic and SSL/TLS Library    
-                           Format: source code                               
-                           License: Apache-2.0,                              
-                           middleware/mbedtls/apache-2.0.txt                 
-                           Location: middleware/mbedtls                      
-                           name: MBED TLS stack                              
-                           URL: https://tls.mbed.org/                        
-                           version: 2.16.2                                   
-
 wifi_qca                   version: 2.0.0                                    
                            Location: middleware/wifi_qca                     
                            Description: Qualcomm Wi-Fi stack                 
@@ -411,67 +476,6 @@ ntag_i2c_plus              Author: NXP
                            name: NTAG I2C plus                               
                            version: 1.0.0                                    
 
-mmcau                      Author: Freescale                                 
-                           Description: S/W library that works with the      
-                           memory-mapped cryptographic acceleration unit     
-                           present on some MCUXpresso SoCs                   
-                           Format: source code                               
-                           License: Open Source - BSD-3-Clause               
-                           Location: middleware/mmcau                        
-                           name: mmCAU S/W Library                           
-                           version: 2.0.1                                    
-
-rtcesl                     Author: NXP                                       
-                           version: 4.5                                      
-                           name: rtcesl                                      
-                           Format: object code & header files                
-                           License: Open Source - BSD-3-Clause               
-                           Location: middleware/rtcesl                       
-                           Description: NXP Real Time Control Embedded       
-                           Software Library.                                 
-
-motor_control              Author: NXP                                       
-                           version: 1.1.0                                    
-                           name: motor_control                               
-                           Format: source code                               
-                           License: Open Source - BSD-3-Clause               
-                           Location: middleware/motor_control                
-                           Description: Motor control examples for PMSM and  
-                           BLDC motors.                                      
-
-motor_control - jQuery     Author: jQWidgets                                 
-                           version: v3.7.1 (2015-Feb)                        
-                           name: motor_control                               
-                           Format: library                                   
-                           License: Commercial -                             
-                           http://www.jqwidgets.com/license/                 
-                           Location:                                         
-                           middleware/motor_control/freemaster/acim(bldc,pmsm
-                           _float,pmsm_float_enc,pmsm_frac)/fm_control       
-                           Description: Advanced jQuery and HTML5 UI         
-                           framework.                                        
-
-motor_control - JavaScript Author: jQuery Foundation, Inc.                   
-                           version: v1.11.1                                  
-                           name: motor_control                               
-                           Format: source code                               
-                           License: Open Source - MIT (jquery.org/license)   
-                           Location:                                         
-                           middleware/motor_control/freemaster/acim(bldc,pmsm
-                           _float,pmsm_float_enc,pmsm_frac)/fm_control/jquery
-                           -1.11.1.min.js                                    
-                           Description: Cross-platform JavaScript library.   
-
-motor_control - FreeMASTER Author: NXP                                       
-                           version: 2.0.3.1                                  
-                           name: motor_control - FreeMASTER                  
-                           Format: source code & header files                
-                           License: Proprietary. See                         
-                           LA_OPT_NXP_Software_License.htm.                  
-                           Location: middleware/motor_control/freemaster     
-                           Description: NXP FreeMASTER. Real time non        
-                           intrusive debugger.                               
-
 motor_control - FreeMASTER Author: NXP                                       
 driver                     version: 2.0.3.1                                  
                            name: motor_control - FreeMASTER driver           
@@ -564,16 +568,6 @@ cpp_option_parser          version: NA
                            URL:                                              
                            http://www.bradapp.com/ftp/src/libs/C++/Options.ht
                            ml                                                
-
-Utility Source - elf.py    Description: Python implementation of an ELF file 
-                           reader                                            
-                           Author: Chris Liechti (cliechti@gmx.net)          
-                           License: BSD License                              
-                           URL:                                              
-                           http://bazaar.launchpad.net/~zsquareplusc/python-m
-                           sp430-tools/trunk/view/head:/msp430/memory/elf.py 
-                           Format: source code                               
-                           Location: middleware/mcu-boot/bin/elf.py          
 
 Unity                      Author: Unity Project by Mike Karlesky, Mark      
                            VanderVoord, and Greg Williams                    

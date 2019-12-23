@@ -48,21 +48,15 @@ static inline acc32_t MLIB_MsuRnd_A32ass_FAsmi(register acc32_t a32Accum,
                         adds f16Mult1, f16Mult1, #128       /* Rounding */
                         asrs f16Mult1, f16Mult1, #8         /* f16Mult1 >> 8 for fractional multiplication */
                         subs a32Accum, a32Accum, f16Mult1}; /* a32Accum - f16Mult1 * f16Mult2 */
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax unified \n"            /* Using unified asm syntax */
-                        #endif
-                        "sxth %1, %1 \n"                    /* Converts 16-bit input to 32-bit */
-                        "sxth %2, %2 \n"                    /* Converts 16-bit input to 32-bit */
-                        "muls %1, %1, %2 \n"                /* f16Mult1 * f16Mult2 */
-                        "asrs %1, %1, #7 \n"                /* f16Mult1 >> 7 for fractional multiplication */
-                        "adds %1, %1, #128 \n"              /* Rounding */
-                        "asrs %1, %1, #8 \n"                /* f16Mult1 >> 8 for fractional multiplication */
-                        "subs %0, %0, %1 \n"                /* f32Accum - f16Mult1 * f16Mult2 */
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "sxth %1, %1 \n\t"                    /* Converts 16-bit input to 32-bit */
+                        "sxth %2, %2 \n\t"                    /* Converts 16-bit input to 32-bit */
+                        "muls %1, %1, %2 \n\t"                /* f16Mult1 * f16Mult2 */
+                        "asrs %1, %1, #7 \n\t"                /* f16Mult1 >> 7 for fractional multiplication */
+                        "adds %1, %1, #128 \n\t"              /* Rounding */
+                        "asrs %1, %1, #8 \n\t"                /* f16Mult1 >> 8 for fractional multiplication */
+                        "subs %0, %0, %1 \n\t"                /* f32Accum - f16Mult1 * f16Mult2 */
                         : "+l"(a32Accum), "+l"(f16Mult1), "+l"(f16Mult2):);
     #endif
 

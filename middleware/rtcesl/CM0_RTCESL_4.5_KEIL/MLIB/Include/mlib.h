@@ -325,7 +325,7 @@ extern "C" {
     #define MLIB_Rcp1Q_A32s(f16Denom)                           MLIB_RcpHw1Q_A32s_Asmi(f16Denom)
     #define MLIB_Rcp1_A32s(f16Denom)                            MLIB_RcpHw1_A32s_Asm(f16Denom)
     #define MLIB_Rcp_A32s(f16Denom)                             MLIB_RcpHw_A32s_Asm(f16Denom)
-#else  
+#elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050)   
     #define MLIB_Div1QSat_F16(f16Num, f16Denom)                 MLIB_Div1QSat_F16_Asm(f16Num, f16Denom)
     #define MLIB_Div1QSat_F16ll(f32Num, f32Denom)               MLIB_Div1QSat_F16ll_Asm(f32Num, f32Denom)
     #define MLIB_Div1QSat_F16ls(f32Num, f16Denom)               MLIB_Div1QSat_F16ls_Asm(f32Num, f16Denom) 

@@ -45,6 +45,9 @@ void init_hardware(void)
     tmp |= SIM_SOPT2_LPUARTSRC(1);
     SIM->SOPT2 = tmp; // Set the LPUART clock source to the IRC48Mhz clock
 #endif
+    
+    // Load the user configuration data so that we can configure the clocks
+    g_bootloaderContext.propertyInterface->load_user_config();
 }
 
 void deinit_hardware(void)

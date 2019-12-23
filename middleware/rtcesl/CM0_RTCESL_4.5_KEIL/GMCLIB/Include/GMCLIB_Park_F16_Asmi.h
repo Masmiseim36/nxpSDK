@@ -103,49 +103,45 @@ static inline void GMCLIB_Park_F16_FAsmi(const GMCLIB_2COOR_ALBE_T_F16 *psIn,
                         /* Stores d and q values */
                         strh f32Val1, [psOut]                /* Stores psOut->f16D */
                         strh f32Val2, [psOut, #2] };         /* Stores psOut->f16Q */
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)                /* For GCC compiler */
-                            ".syntax unified \n"             /* Using unified asm syntax */
-                        #endif
                         /* Loads input values */
-                        "ldrh %0, [%3, #2] \n"               /* Loads beta */
-                        "ldrh %1, [%3] \n"                   /* Loads alpha */
-                        "ldrh %2, [%4, #2] \n"               /* Loads cos(theta) */
-                        "ldrh %3, [%4] \n"                   /* Loads sin(theta) */
-                        "sxth %0, %0 \n"                     /* Sign extend */
-                        "sxth %1, %1 \n"                     /* Sign extend */
-                        "sxth %2, %2 \n"                     /* Sign extend */
-                        "sxth %3, %3 \n"                     /* Sign extend */
+                        "ldrh %0, [%3, #2] \n\t"               /* Loads beta */
+                        "ldrh %1, [%3] \n\t"                   /* Loads alpha */
+                        "ldrh %2, [%4, #2] \n\t"               /* Loads cos(theta) */
+                        "ldrh %3, [%4] \n\t"                   /* Loads sin(theta) */
+                        "sxth %0, %0 \n\t"                     /* Sign extend */
+                        "sxth %1, %1 \n\t"                     /* Sign extend */
+                        "sxth %2, %2 \n\t"                     /* Sign extend */
+                        "sxth %3, %3 \n\t"                     /* Sign extend */
                         /* Counts d and q coordinates */
-                        "movs %4, %1 \n"                     /* alpha */
-                        "muls %4, %2, %4 \n"                 /* alpha * cos(theta) */
-                        "muls %1, %1, %3 \n"                 /* alpha * sin(theta) */
-                        "muls %3, %3, %0 \n"                 /* beta * sin(theta) */
-                        "muls %0, %0, %2 \n"                 /* beta * cos(theta) */
-                        "subs %0, %0, %1 \n"                 /* q = beta * cos(theta) - alpha * sin(theta) */
-                        "adds %3, %3, %4 \n"                 /* d = beta * sin(theta) + alpha * cos(theta) */
-                        "asrs %0, %0, #15 \n"                /* q << 15 */
-                        "asrs %3, %3, #15 \n"                /* d << 15 */
+                        "movs %4, %1 \n\t"                     /* alpha */
+                        "muls %4, %2, %4 \n\t"                 /* alpha * cos(theta) */
+                        "muls %1, %1, %3 \n\t"                 /* alpha * sin(theta) */
+                        "muls %3, %3, %0 \n\t"                 /* beta * sin(theta) */
+                        "muls %0, %0, %2 \n\t"                 /* beta * cos(theta) */
+                        "subs %0, %0, %1 \n\t"                 /* q = beta * cos(theta) - alpha * sin(theta) */
+                        "adds %3, %3, %4 \n\t"                 /* d = beta * sin(theta) + alpha * cos(theta) */
+                        "asrs %0, %0, #15 \n\t"                /* q << 15 */
+                        "asrs %3, %3, #15 \n\t"                /* d << 15 */
                          /* Saturation */
-                        "movs %2, #0x80 \n"                  /* f32Val3 = 0x80 */
-                        "lsls %2, %2, #8 \n"                 /* f32Val3 = 0x8000 */
-                        "sxth %1, %0 \n"                     /* Sign extend */
-                        "eors %0, %1, %0 \n"                 /* f32Val2 ^ f32Val1 */
-                        "bpl .+6 \n"                         /* If f32Val2 < 0, then saturates result */
-                        "asrs %1, %1, #16 \n"                /* f32Val2 >> 16 */
-                        "adds %1, %2, %1 \n"                 /* q = 0x8000 + f32Val2 */
-                        "sxth %0, %3 \n"                     /* Sign extend */
-                        "eors %3, %0, %3 \n"                 /* f32Val2 ^ psIn */
-                        "bpl .+6 \n"                         /* If f32Val2 < 0, then saturates result */
-                        "asrs %0, %0, #16 \n"                /* f32Val1 >> 16*/
-                        "adds %0, %2, %0 \n"                 /* d = 0x8000 + f32Val1*/
+                        "movs %2, #0x80 \n\t"                  /* f32Val3 = 0x80 */
+                        "lsls %2, %2, #8 \n\t"                 /* f32Val3 = 0x8000 */
+                        "sxth %1, %0 \n\t"                     /* Sign extend */
+                        "eors %0, %1, %0 \n\t"                 /* f32Val2 ^ f32Val1 */
+                        "bpl GMCLIB_Park_F16_QNotSat \n\t"     /* If f32Val2 < 0, then saturates result */
+                        "asrs %1, %1, #16 \n\t"                /* f32Val2 >> 16 */
+                        "adds %1, %2, %1 \n\t"                 /* q = 0x8000 + f32Val2 */
+                    "GMCLIB_Park_F16_QNotSat: \n\t"	
+                        "sxth %0, %3 \n\t"                     /* Sign extend */
+                        "eors %3, %0, %3 \n\t"                 /* f32Val2 ^ psIn */
+                        "bpl GMCLIB_Park_F16_DNotSat \n\t"     /* If f32Val2 < 0, then saturates result */
+                        "asrs %0, %0, #16 \n\t"                /* f32Val1 >> 16*/
+                        "adds %0, %2, %0 \n\t"                 /* d = 0x8000 + f32Val1*/
+                    "GMCLIB_Park_F16_DNotSat: \n\t"	
                         /* Stores d and q values */
-                        "strh %0, [%5] \n"                   /* Stores psOut->f16D */
-                        "strh %1, [%5, #2] \n"               /* Stores psOut->f16Q */
-                        #if defined(__GNUC__)                /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "strh %0, [%5] \n\t"                   /* Stores psOut->f16D */
+                        "strh %1, [%5, #2] \n\t"               /* Stores psOut->f16Q */
                         : "+l"(f32Val1), "+l"(f32Val2), "+l"(f32Val3), "+l"(psIn), "+l"(psAnglePos): "l"(psOut));
     #endif
 }
@@ -228,49 +224,45 @@ static inline void GMCLIB_ParkInv_F16_FAsmi(const GMCLIB_2COOR_DQ_T_F16 *psIn,
                         /* Stores alpha and beta values */
                         strh f32Val1, [psOut]                /* Stores psOut->f16Alpha */
                         strh f32Val2, [psOut, #2] };         /* Stores psOut->f16Beta */
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)                /* For GCC compiler */
-                            ".syntax unified \n"             /* Using unified asm syntax */
-                        #endif
                         /* Loads input values */
-                        "ldrh %0, [%3, #2] \n"               /* Loads q */
-                        "ldrh %1, [%3] \n"                   /* Loads d */
-                        "ldrh %2, [%4, #2] \n"               /* Loads cos(theta) */
-                        "ldrh %3, [%4] \n"                   /* Loads sin(theta) */
-                        "sxth %0, %0 \n"                     /* Sign extend */
-                        "sxth %1, %1 \n"                     /* Sign extend */
-                        "sxth %2, %2 \n"                     /* Sign extend */
-                        "sxth %3, %3 \n"                     /* Sign extend */
+                        "ldrh %0, [%3, #2] \n\t"                    /* Loads q */
+                        "ldrh %1, [%3] \n\t"                        /* Loads d */
+                        "ldrh %2, [%4, #2] \n\t"                    /* Loads cos(theta) */
+                        "ldrh %3, [%4] \n\t"                        /* Loads sin(theta) */
+                        "sxth %0, %0 \n\t"                          /* Sign extend */
+                        "sxth %1, %1 \n\t"                          /* Sign extend */
+                        "sxth %2, %2 \n\t"                          /* Sign extend */
+                        "sxth %3, %3 \n\t"                          /* Sign extend */
                         /* Counts alpha and beta coordinates */
-                        "movs %4, %1 \n"                     /* d */
-                        "muls %4, %2, %4 \n"                 /* d * cos(theta) */
-                        "muls %1, %1, %3 \n"                 /* d * sin(theta) */
-                        "muls %3, %3, %0 \n"                 /* q * sin(theta) */
-                        "muls %0, %0, %2 \n"                 /* q * cos(theta) */
-                        "subs %3, %4, %3 \n"                 /* alpha = d * cos(theta) - q * sin(theta) */
-                        "adds %0, %0, %1 \n"                 /* beta  = d * sin(theta) + q * cos(theta) */
-                        "asrs %3, %3, #15 \n"                /* alpha << 15 */
-                        "asrs %0, %0, #15 \n"                /* beta << 15 */
-                        /* Saturation */
-                        "movs %2, #0x80 \n"                  /* f32Val3 = 0x80 */
-                        "lsls %2, %2, #8 \n"                 /* f32Val3 = 0x8000 */
-                        "sxth %1, %0 \n"                     /* Sign extend */
-                        "eors %0, %1, %0 \n"                 /* f32Val2 ^ f32Val1 */
-                        "bpl .+6 \n"                         /* If f32Val2 < 0, then saturates result */
-                        "asrs %1, %1, #16 \n"                /* f32Val2 >> 16 */
-                        "adds %1, %2, %1 \n"                 /* beta = 0x8000 + f32Val2 */
-                        "sxth %0, %3 \n"                     /* Sign extend */
-                        "eors %3, %0, %3 \n"                 /* f32Val2 ^ psIn */
-                        "bpl .+6 \n"                         /* If f32Val2 < 0, then saturates result */
-                        "asrs %0, %0, #16 \n"                /* f32Val1 >> 16*/
-                        "adds %0, %2, %0 \n"                 /* alpha = 0x8000 + f32Val1*/
+                        "movs %4, %1 \n\t"                          /* d */
+                        "muls %4, %2, %4 \n\t"                      /* d * cos(theta) */
+                        "muls %1, %1, %3 \n\t"                      /* d * sin(theta) */
+                        "muls %3, %3, %0 \n\t"                      /* q * sin(theta) */
+                        "muls %0, %0, %2 \n\t"                      /* q * cos(theta) */
+                        "subs %3, %4, %3 \n\t"                      /* alpha = d * cos(theta) - q * sin(theta) */
+                        "adds %0, %0, %1 \n\t"                      /* beta  = d * sin(theta) + q * cos(theta) */
+                        "asrs %3, %3, #15 \n\t"                     /* alpha << 15 */
+                        "asrs %0, %0, #15 \n\t"                     /* beta << 15 */
+                        /* Saturation */     
+                        "movs %2, #0x80 \n\t"                       /* f32Val3 = 0x80 */
+                        "lsls %2, %2, #8 \n\t"                      /* f32Val3 = 0x8000 */
+                        "sxth %1, %0 \n\t"                          /* Sign extend */
+                        "eors %0, %1, %0 \n\t"                      /* f32Val2 ^ f32Val1 */
+                        "bpl GMCLIB_Park_F16_Inv_F16_QNotSat \n\t"  /* If f32Val2 < 0, then saturates result */
+                        "asrs %1, %1, #16 \n\t"                     /* f32Val2 >> 16 */
+                        "adds %1, %2, %1 \n\t"                      /* beta = 0x8000 + f32Val2 */
+                    "GMCLIB_Park_F16_Inv_F16_QNotSat: \n\t"												
+                        "sxth %0, %3 \n\t"                          /* Sign extend */
+                        "eors %3, %0, %3 \n\t"                      /* f32Val2 ^ psIn */
+                        "bpl GMCLIB_Park_F16_Inv_F16_DNotSat \n\t"  /* If f32Val2 < 0, then saturates result */
+                        "asrs %0, %0, #16 \n\t"                     /* f32Val1 >> 16*/
+                        "adds %0, %2, %0 \n\t"                      /* alpha = 0x8000 + f32Val1*/
+                    "GMCLIB_Park_F16_Inv_F16_DNotSat: \n\t"												
                         /* Stores alpha and beta values */
-                        "strh %0, [%5] \n"                   /* Stores psOut->f16Alpha */
-                        "strh %1, [%5, #2] \n"               /* Stores psOut->f16Beta */
-                        #if defined(__GNUC__)                /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "strh %0, [%5] \n\t"                        /* Stores psOut->f16Alpha */
+                        "strh %1, [%5, #2] \n\t"                    /* Stores psOut->f16Beta */
                         : "+l"(f32Val1), "+l"(f32Val2), "+l"(f32Val3), "+l"(psIn), "+l"(psAnglePos): "l"(psOut));
     #endif
 }

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html style="text-align: center;">     
+  <head>       
+    <meta http-equiv="content-type" content="text/html; charset=windows-1250">       
+    <meta name="generator" content="PSPad editor, www.pspad.com">       
+    <title>    
+    </title>       
+    <link href="style.css" rel="stylesheet" type="text/css" />      
+    <script type="text/javascript" src="JS_functions\mainInclude.js"></script>
+    <script LANGUAGE="JavaScript" type ="text/javascript">
+      includeJSfiles();
+    </script>
+   </head>     
+  <body id="MID" onload="initLoadFormMID()"  background="images/background.png" style="display: inline-block; margin: 10px auto; text-align: center;">
+    <OBJECT id="MCB_PC_Master_Services1" style="display:none;" classid="clsid:48A185F1-FFDB-11D3-80E3-00C04F176153" name="pcm">	     
+    </OBJECT>
+    <script language="VBScript">
+    Sub pcm_OnVariableChanged(a1,a2)
+        Event_OnVariableChanged a1,a2
+    End Sub
+    Sub pcm_OnCommPortStateChanged(a1)
+        Event_OnCommPortStateChanged a1
+    End Sub
+    </script>	        
+    <OBJECT  CLASSID = "clsid:5220cb21-c88d-11cf-b347-00aa00a28331" style="display:none;">         
+        <PARAM NAME="LPKPath" VALUE="gmsctls.lpk">         
+    </OBJECT>  
+    <!-- Headline -->
+    <div class="HeadBorder fontTitle" style="width: 740px;">Parameters measurement</div>   
+    <div>
+      <table style="width: 740px;" border="0" class="MainTab" >               
+        <tr>
+          <!-- 1st column-->
+          <td width="40%" align="left" valign="top">
+            <!-- HW scales -->
+            <fieldset style="width: 100%; " class="ContBox">
+              <legend class="fontControlLabel">Inverter settings</legend>
+              <table id="parameterTable" width="100%"  border="0" align="left" class="ContBoxTab">
+                  <script>
+                  document.write(build_line_with_selector("HW board","Board_selector",""));
+                  // I max
+                  //document.write( build_parameter_line("I<sub>max</sub>","I_max", "A", "Phase current measurement scale, typical range <0.5;15>A", 0, ""));
+                  // UDCbus max
+                  //document.write( build_parameter_line("U<sub>DCB&nbsp;max</sub>","UDC_max", "V", "DC-bus voltage measurement scale, typical range <12;450>V", 0, ""));
+                  </script>
+                  
+              </table>
+              <table id="parameterTable" width="100%"  border="0" align="center" class="ContBoxTab">
+                <tr><td align="center">
+                  <button class="xlink, fButtonsDiabled" id = "GenCalButton" onclick="clickGenCalibFile()"  style="width: 250px;  border-width: 2px; margin:5px;">Generate Calibration Data File                         
+                  </button>
+                </td></tr>
+                 </table>
+            </fieldset> 
+            <fieldset id="PWRSTG_charact" style="width: 100%;" class="ContBox">
+              <legend class="fontControlLabel">Power Stage characterization</legend>        
+              <!-- Calibration-->
+              <fieldset style="border: none; padding:0px;">
+              <table id="parameterTable" width="100%"  border="0"  align="left" class="ContBoxTab">
+             
+                  <script>
+                  // calibration Rs
+                  document.write( build_parameter_line("Calib&nbsp;R<sub>s</sub>","Rs_calib", "\u03A9", "Connected Rs for calibration purpose", 0, ""));
+                  // calibration range
+                  document.write( build_parameter_line("Calib&nbsp;range","I_calib", "A", "Current range for calibration purpose", 0, ""));
+                  </script>
+              
+              </table>
+              </fieldset>
+              <fieldset style="border: none; padding:0px;">
+              <table id="parameterTable" width="100%"  border="0" align="center" class="ContBoxTab">
+                <tr><td align="center">
+                  <button class="xlink, fButtonsDisabled" id = "CalibrateButton" onclick="clickCalibrate()" disabled="disabled" style="width: 150px;  border-width: 2px; margin:5px;">Calibrate                         
+                  </button>
+                </td></tr>
+              </table>
+              </fieldset>
+            </fieldset>
+            
+            
+              <fieldset style="width: 100%;" class="ContBox">
+              <legend class="fontControlLabel">Motor Label Parameters</legend>
+              <table id="parameterTable" width="100%"  border="0" align="left" class="ContBoxTab">
+                  <script>
+                  document.write( build_parameter_line("P<sub>N</sub>","P_nom", "W", "Nominal power, typical range <100; 3000>W",4 , ""));
+                  document.write( build_parameter_line("U<sub>N</sub>","U_nom", "V<sub>rms</sub>", "Nominal stator voltage, typical range <100; 380>V",4 , ""));
+                  document.write( build_parameter_line("I<sub>N</sub>","I_nom", "A<sub>rms</sub>", "Nominal stator current, typical range <0.5; 5>A",4 , ""));
+                  document.write( build_parameter_line("f<sub>N</sub>","f_nom", "Hz", "Nominal frequency, typically 50Hz or 60Hz",0 , ""));
+                  document.write( build_parameter_line("pp","pp", "-", "Number of motor pole-pairs, typical range <1;6>",0 , ""));
+                  </script>
+                   
+              </table>
+            </fieldset> 
+                                                                
+            
+            
+            <fieldset style="width: 100%; padding: 0px;" class="ContBox">
+              <legend class="fontControlLabel">Measurement Setup </legend>        
+              <!-- Rs measurement-->
+              <fieldset style="border: none; padding:0px;">
+              <table id="parameterTable" width="100%"  border="0" align="left" class="ContBoxTab">              
+              
+                  <script>
+                  // current control loop bandwidth
+                  document.write( build_parameter_line("f<sub>0,Current</sub>","CLOOP_F0", "Hz", "Current control loop bandwidth, typical range <50;350>Hz", 0, ""));
+                  // current control loop bandwidth
+                  document.write( build_parameter_line("f<sub>0,Speed</sub>","SLOOP_F0", "Hz", "Speed control loop bandwidth, typical range <0.1;5>Hz", 0, ""));
+                  // mechanical parameter mesurement torque
+                  document.write( build_parameter_line( "Trq<sub>m</sub>","T_meas", "Nm", "Mechanical parameters measurement torque, typical range <0.1;10>Nm", 0, ""));
+                  </script>
+                  
+              </table>
+              </fieldset>
+              <fieldset style="border: none; padding:0px;">
+              <table class="ContBoxTab">
+                <tr> <td width="365" align="middle">
+                  <button class="xlink, fButtonsDisabled" id = "MeasureButton" onclick="clickMeasure()" disabled="disabled" style   ="width: 150px;  border-width: 2px; margin:5px;">Measure                         
+                  </button> 
+                </td></tr> 
+              </table>
+             </fieldset>
+          </td>
+          
+          <!-- 2nd column-->
+          <td width="60%" align="left" valign="top">
+            <fieldset style="width: 100%; " class="ContBox">
+              <legend class="fontControlLabel">Measured Motor Parameters</legend>        
+              <!-- Results-->
+              <table border="0" align="left" class="ContBoxTab">            
+                          
+                <script>
+                // Rs
+                document.write( build_constant_line_unit("R<sub>s</sub>","Rs_result", "Stator resistance Rs", "\u03A9"));
+                // Rr
+                document.write( build_constant_line_unit("R<sub>r</sub>","Rr_result", "Rotor resistance Rr", "\u03A9"));                
+                // Ls
+                document.write( build_constant_line_unit("L<sub>s</sub>","Ls_result", "Stator inductance Ls", "H"));
+                // Lr
+                document.write( build_constant_line_unit("L<sub>r</sub>","Lr_result", "Rotor inductance Lr", "H"));
+                // Lm
+                document.write( build_constant_line_unit("L<sub>m</sub>","Lm_result", "Mutual inductance Lm", "H"));
+                // J
+                document.write( build_constant_line_unit("J<sub>m</sub>","J_result", "Moment of inertia", "10<sup>-3</sup>kgm<sup>2</sup>"));
+                // Taum
+                document.write( build_constant_line_unit("&#964;<sub>m</sub>","Tm_result", "Mechanical time constant", "s"));
+                </script>	
+              	                            
+              </table>
+            </fieldset>
+             
+            <fieldset style="width: 100%; height: 50px;" class="ContBox" >
+            
+              <legend class="fontControlLabel">Status</legend> 
+              <div id="Status" align="center"><p></p></div>
+            <div align="center">
+          
+              <input type="button" value="Apply parameters on target" class="fButtonsDisabled" disabled="disabled"  style="text-align:center; margin-top:5px;  width:250px;"  id = "btnMIDUpdate" onclick="return fcnClickMIDUpdate();"> <br>
+              <input type="button" value="Restore parameters in target" class="fButtonsDisabled" disabled="disabled"  style="text-align:center; margin-top:5px; width:250px;"  id = "btnMIDRestore" onclick="return fcnClickMIDRestore();"> <br>
+              <button class="fButtonsDisabled" id = "StoreData" onclick="clickMIDStoreData()" disabled="disabled" style="margin-top:5px;width:250px;">Store data in MCAT</button><br>
+             
+            </div>
+           </fieldset>
+          </td>   
+        </tr>       
+      </table>                                     
+        
+      <span style="visibility: hidden" face="sans-serif" id="txtErrMsg">.       
+      </span>          
+    </div>     
+  </body>
+</html>

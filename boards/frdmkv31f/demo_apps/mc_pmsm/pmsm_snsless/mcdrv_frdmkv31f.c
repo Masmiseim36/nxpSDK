@@ -70,16 +70,16 @@ void MCDRV_Init_M1(void)
 */
 void InitClock(void)
 {
-    g_sClockSetup.ui32SystemClock = 
-        SystemCoreClock / (((SIM->CLKDIV1 & SIM_CLKDIV1_OUTDIV1_MASK) >> SIM_CLKDIV1_OUTDIV1_SHIFT) + 1);
-    g_sClockSetup.ui32BusClock =
-        SystemCoreClock / (((SIM->CLKDIV1 & SIM_CLKDIV1_OUTDIV2_MASK) >> SIM_CLKDIV1_OUTDIV2_SHIFT) + 1);
+    g_sClockSetup.ui32SystemClock = CLOCK_GetFreq(kCLOCK_CoreSysClk);
+    g_sClockSetup.ui32BusClock = CLOCK_GetFreq(kCLOCK_BusClk);
+    
     g_sClockSetup.ui16M1PwmFreq = M1_PWM_FREQ; /* 10kHz */
-                                             /* PWM module calculated as follows:
-                                              * PWM_MOD = PWM_CLOCK / PWM_FREQUNCY = 60 MHz / 10 kHz = 6000   */
+                                               /* PWM module calculated as follows: 
+                                                * PWM_MOD = PWM_CLOCK / PWM_FREQUNCY = 60 MHz / 10 kHz = 6000 */
+  
     g_sClockSetup.ui16M1PwmModulo = g_sClockSetup.ui32BusClock / g_sClockSetup.ui16M1PwmFreq;
     g_sClockSetup.ui16M1PwmDeadTime = g_sClockSetup.ui32BusClock / (1000000000U / M1_PWM_DEADTIME);
-    g_sClockSetup.ui16M1SpeedLoopFreq = M1_SPEED_LOOP_FREQ; /* 1kHz */
+    g_sClockSetup.ui16M1SpeedLoopFreq = M1_SPEED_LOOP_FREQ; /* 1kHz */  
 }
 
 /*!

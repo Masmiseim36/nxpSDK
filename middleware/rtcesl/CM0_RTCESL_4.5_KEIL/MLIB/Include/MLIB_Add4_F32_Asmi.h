@@ -70,37 +70,32 @@ static inline frac32_t MLIB_Add4Sat_F32_FAsmi(register frac32_t f32Add1, registe
                         subs f32Add1, f32Add1, f32Val2  /* f32Add1 = 0x7FFFFFFF - f32Val2 */
                     SatEnd: };
 
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax unified \n"        /* Using unified asm syntax */
-                        #endif
-                        "asrs %1, %0, #31 \n"           /* f32Val1 = sign of f32Add1 */
-                        "asrs %2, %3, #31 \n"           /* f32Val2 = sign of f32Add2 */
+                        "asrs %1, %0, #31 \n\t"           /* f32Val1 = sign of f32Add1 */
+                        "asrs %2, %3, #31 \n\t"           /* f32Val2 = sign of f32Add2 */
 
-                        "adds %0, %0, %3 \n"            /* f32Add1 = f32Add1 + f32Add2 */
-                        "adcs %1, %1, %2 \n"            /* f32Val1 = f32Val1 + f32Val2 + carry */
+                        "adds %0, %0, %3 \n\t"            /* f32Add1 = f32Add1 + f32Add2 */
+                        "adcs %1, %1, %2 \n\t"            /* f32Val1 = f32Val1 + f32Val2 + carry */
 
-                        "asrs %2, %4, #31 \n"           /* f32Val2 = sign of f32Add3 */
-                        "adds %0, %0, %4 \n"            /* f32Add1 = f32Add1 + f32Add3 */
-                        "adcs %1, %1, %2 \n"            /* f32Val1 = f32Val1 + f32Val2 + carry */
+                        "asrs %2, %4, #31 \n\t"           /* f32Val2 = sign of f32Add3 */
+                        "adds %0, %0, %4 \n\t"            /* f32Add1 = f32Add1 + f32Add3 */
+                        "adcs %1, %1, %2 \n\t"            /* f32Val1 = f32Val1 + f32Val2 + carry */
 
-                        "asrs %2, %5, #31 \n"           /* f32Val2 = sign of f32Add4 */
-                        "adds %0, %0, %5 \n"            /* f32Add1 = f32Add1 + f32Add4 */
-                        "adcs %1, %1, %2 \n"            /* f32Val1 = f32Val1 + f32Val2 + carry */
+                        "asrs %2, %5, #31 \n\t"           /* f32Val2 = sign of f32Add4 */
+                        "adds %0, %0, %5 \n\t"            /* f32Add1 = f32Add1 + f32Add4 */
+                        "adcs %1, %1, %2 \n\t"            /* f32Val1 = f32Val1 + f32Val2 + carry */
 
-                        "lsrs %2, %0, #31 \n"           /* f32Val2 = first bit of f32Add1 */
-                        "adds %2, %2, %1 \n"            /* f32Val2 = f32Val2 + f32Val1 */
-                        "beq .+12 \n"                      /* If r3 != 0, then saturates output */
+                        "lsrs %2, %0, #31 \n\t"           /* f32Val2 = first bit of f32Add1 */
+                        "adds %2, %2, %1 \n\t"            /* f32Val2 = f32Val2 + f32Val1 */
+                        "beq MLIB_Add4Sat_F32_SatEnd \n\t"                      /* If r3 != 0, then saturates output */
 
-                        "movs %0, #128 \n"              /* f32Add1 = 0x80 */
-                        "rev %0, %0 \n"                 /* f32Add1 = 0x80000000 */
-                        "subs %0, %0, #1 \n"            /* f32Add1 = 0x7FFFFFFF */
-                        "asrs %2, %2, #16 \n"           /* f32Val2 = sign of result */
-                        "subs %0, %0, %2 \n"            /* f32Add1 = 0x7FFFFFFF - f32Val2 */
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "movs %0, #128 \n\t"              /* f32Add1 = 0x80 */
+                        "rev %0, %0 \n\t"                 /* f32Add1 = 0x80000000 */
+                        "subs %0, %0, #1 \n\t"            /* f32Add1 = 0x7FFFFFFF */
+                        "asrs %2, %2, #16 \n\t"           /* f32Val2 = sign of result */
+                        "subs %0, %0, %2 \n\t"            /* f32Add1 = 0x7FFFFFFF - f32Val2 */
+					"MLIB_Add4Sat_F32_SatEnd: \n\t"					
                        : "+l"(f32Add1), "+l"(f32Val1), "+l"(f32Val2): "l"(f32Add2), "l"(f32Add3), "l"(f32Add4));
     #endif
 

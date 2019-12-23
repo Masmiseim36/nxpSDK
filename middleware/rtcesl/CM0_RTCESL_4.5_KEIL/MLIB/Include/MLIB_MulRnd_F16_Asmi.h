@@ -51,26 +51,21 @@ static inline frac16_t MLIB_MulRndSat_F16_FAsmi(register frac16_t f16Mult1, regi
                         bne NotSat                          /* If f16Mult1 <> 0x8000, then jumps through next command */
                         subs f16Mult1, f16Mult1, #1         /* If f16Mult1 = 0x8000, then f16Mult1 = 0x7FFF */
                     NotSat: };
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax unified \n"            /* Using unified asm syntax */
-                        #endif
-                        "sxth %0, %0 \n"                    /* Converts 16-bit input to 32-bit */
-                        "sxth %1, %1 \n"                    /* Converts 16-bit input to 32-bit */
-                        "muls %0, %0, %1 \n"                /* f16Mult1 * f16Mult2 */
-                        "asrs %0, %0, #7 \n"                /* f16Mult1 >> 7 */
-                        "adds %0, %0, #128 \n"              /* Rounding */
-                        "asrs %0, %0, #8 \n"                /* f16Mult1 >> 8 */
+                        "sxth %0, %0 \n\t"                    /* Converts 16-bit input to 32-bit */
+                        "sxth %1, %1 \n\t"                    /* Converts 16-bit input to 32-bit */
+                        "muls %0, %0, %1 \n\t"                /* f16Mult1 * f16Mult2 */
+                        "asrs %0, %0, #7 \n\t"                /* f16Mult1 >> 7 */
+                        "adds %0, %0, #128 \n\t"              /* Rounding */
+                        "asrs %0, %0, #8 \n\t"                /* f16Mult1 >> 8 */
 
-                        "movs %1, #128 \n"                  /* f16Mult2 = 0x80 */
-                        "lsls %1, %1, #8 \n"                /* f16Mult2 = 0x8000 */
-                        "cmp %0, %1 \n"                     /* Compares f16Mult1 with 0x8000*/
-                        "bne .+4 \n"                        /* If f16Mult1 <> 0x8000, then jumps through next command */
-                        "subs %0, %0, #1 \n"                /* If f16Mult1 = 0x8000, then f16Mult1 = 0x7FFF */
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "movs %1, #128 \n\t"                  /* f16Mult2 = 0x80 */
+                        "lsls %1, %1, #8 \n\t"                /* f16Mult2 = 0x8000 */
+                        "cmp %0, %1 \n\t"                     /* Compares f16Mult1 with 0x8000*/
+                        "bne MLIB_MulRndSat_F16_NotSat \n\t"  /* If f16Mult1 <> 0x8000, then jumps through next command */
+                        "subs %0, %0, #1 \n\t"                /* If f16Mult1 = 0x8000, then f16Mult1 = 0x7FFF */
+					"MLIB_MulRndSat_F16_NotSat: \n\t"
                         : "+l"(f16Mult1), "+l"(f16Mult2):);
     #endif
 

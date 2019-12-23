@@ -53,25 +53,21 @@ static inline frac16_t MLIB_AddSat_F16_FAsmi(register frac16_t f16Add1, register
                         ble SatEnd                      /* If f16Add1 >= 0xFFFF8000, then goes to SatEnd */
                         mov f16Add1, f32Val};           /* If f16Add1 < 0xFFFF8000, then f16Add1 = 0xFFFF8000 */
                     SatEnd:
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax unified \n"        /* Using unified asm syntax */
-                        #endif
-                        "sxth %1, %1 \n"                /* Transforms 16-bit input f16Add1 to 32-bit */
-                        "sxth %2, %2 \n"                /* Transforms 16-bit input f16Add2 to 32-bit */
-                        "adds %1, %2, %1 \n"            /* f16Add1 = f16Add1 + f16Add2 */
-                        "cmp %0, %1 \n"                 /* Compares f16Add1 with 0x8000 */
-                        "bgt .+6 \n"                    /* If f16Add1 <= 0x8000, then jumps through two commands */
-                        "subs %1, %0, #1 \n"            /* If f16Add1 > 0x8000, then f16Add1 = 0x7FFF */
-                        "b .+10 \n"                     /* Jumps through four commands */
-                        "rsbs %0, %0, #0 \n"            /* f32Val = 0xFFFF8000 */
-                        "cmp %0, %1 \n"                 /* Compares f16Add1 with 0xFFFF8000 */
-                        "ble .+4 \n"                    /* If f16Add1 >= 0xFFFF8000, then jumps through next commands */
-                        "mov %1, %0 \n"                 /* If f16Add1 < 0xFFFF8000, then f16Add1 = 0xFFFF8000 */
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "sxth %1, %1 \n\t"                /* Transforms 16-bit input f16Add1 to 32-bit */
+                        "sxth %2, %2 \n\t"                /* Transforms 16-bit input f16Add2 to 32-bit */
+                        "adds %1, %2, %1 \n\t"            /* f16Add1 = f16Add1 + f16Add2 */
+                        "cmp %0, %1 \n\t"                 /* Compares f16Add1 with 0x8000 */
+                        "bgt MLIB_AddSat_F16_NegTest \n\t"                /* If f16Add1 <= 0x8000, then jumps through two commands */
+				         "subs %1, %0, #1 \n\t"            /* If f16Add1 > 0x8000, then f16Add1 = 0x7FFF */			
+                        "b MLIB_AddSat_SatEnd \n\t"                  /* Jumps through four commands */
+                    "MLIB_AddSat_F16_NegTest: \n\t"	
+				        "rsbs %0, %0, #0 \n\t"            /* f32Val = 0xFFFF8000 */
+                        "cmp %0, %1 \n\t"                 /* Compares f16Add1 with 0xFFFF8000 */
+                        "ble MLIB_AddSat_SatEnd \n\t"                /* If f16Add1 >= 0xFFFF8000, then jumps through next commands */
+                        "mov %1, %0 \n\t"                 /* If f16Add1 < 0xFFFF8000, then f16Add1 = 0xFFFF8000 */
+                    "MLIB_AddSat_SatEnd: \n\t"
                         : "+l"(f32Val), "+l"(f16Add1), "+l"(f16Add2):);
     #endif
 

@@ -44,17 +44,11 @@ static inline acc32_t MLIB_Sub_A32ss_FAsmi(register frac16_t f16Min, register fr
         __asm volatile{ sxth f16Min, f16Min                /* Transforms 16-bit input f16Sub to 32-bit */
                         sxth f16Sub, f16Sub                /* Transforms 16-bit input f16Sub to 32-bit */
                         subs a32Val, f16Min, f16Sub};      /* f16Min = f16Min - f16Sub */
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)              /* For GCC compiler */
-                            ".syntax unified \n"           /* Using unified asm syntax */
-                        #endif
-                        "sxth %1, %1 \n"                   /* Transforms 16-bit input f16Sub to 32-bit */
-                        "sxth %2, %2 \n"                   /* Transforms 16-bit input f16Sub to 32-bit */
-                        "subs %0, %1, %2 \n"               /* f16Min = f16Min - f16Sub */
-                        #if defined(__GNUC__)              /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "sxth %1, %1 \n\t"                   /* Transforms 16-bit input f16Sub to 32-bit */
+                        "sxth %2, %2 \n\t"                   /* Transforms 16-bit input f16Sub to 32-bit */
+                        "subs %0, %1, %2 \n\t"               /* f16Min = f16Min - f16Sub */
                         : "=l"(a32Val), "+l"(f16Min), "+l"(f16Sub):);
     #endif
 
@@ -77,16 +71,10 @@ static inline acc32_t MLIB_Sub_A32as_FAsmi(register acc32_t a32Accum, register f
         __asm volatile{ sxth f16Sub, f16Sub                 /* Transforms 16-bit input f16Sub to 32-bit */
                         subs a32Accum, a32Accum, f16Sub};   /* a32Accum = a32Accum - f16Sub */
 
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax unified \n"            /* Using unified asm syntax */
-                        #endif
-                        "sxth %1, %1 \n"                    /* Transforms 16-bit input f16Sub to 32-bit */
-                        "subs %0, %0, %1 \n"                /* a32Accum = a32Accum - f16Sub */
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "sxth %1, %1 \n\t"                    /* Transforms 16-bit input f16Sub to 32-bit */
+                        "subs %0, %0, %1 \n\t"                /* a32Accum = a32Accum - f16Sub */
                         : "+l"(a32Accum), "+l"(f16Sub):);
     #endif
 

@@ -105,31 +105,6 @@
 #define BL_APP_VECTOR_TABLE_ADDRESS 0xa000
 #endif
 
-/* Serial Port Info */
-
-/**************************************************************************
- * Note:
- *
- * Because of the changes to the UART modules, we can no longer define
- * the TERM_PORT as a base pointer.  The uart functions have been modified
- * accommodate this change.  Now, TERM_PORT_NUM must be defined as the
- * number of the UART port desired to use
- *
- * TERM_PORT_NUM = 0  -- This allows you to use UART0; default pins are
- *                        PTA14 and PTA15
- *
- * TERM_PORT_NUM = 1  -- This allows you to use UART1; default pins are
- *                        PTC3 and PTC4
- *
- * TERM_PORT_NUM = 2  -- This allows you to use UART2; default pins are
- *                        PTD2 and PTD3
- *
- *************************************************************************/
-#define TERM_PORT_NUM 0
-
-#define TERMINAL_BAUD 19200
-#undef HW_FLOW_CONTROL
-
 #endif // __BOOTLOADER_CONFIG_H__
 ////////////////////////////////////////////////////////////////////////////////
 // EOF

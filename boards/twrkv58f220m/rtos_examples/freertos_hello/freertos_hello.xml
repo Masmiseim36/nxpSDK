@@ -8,10 +8,12 @@
     <definition extID="component.uart_adapter.MKV58F24"/>
     <definition extID="device.MKV58F24_CMSIS.MKV58F24"/>
     <definition extID="device.MKV58F24_startup.MKV58F24"/>
-    <definition extID="middleware.amazon_freertos.freertos.MKV58F24"/>
-    <definition extID="middleware.amazon_freertos.freertos.heap_4.MKV58F24"/>
+    <definition extID="middleware.amazon_freertos-kernel.MKV58F24"/>
+    <definition extID="middleware.amazon_freertos-kernel.extension.MKV58F24"/>
+    <definition extID="middleware.amazon_freertos-kernel.heap_4.MKV58F24"/>
     <definition extID="platform.Include_common.MKV58F24"/>
     <definition extID="platform.Include_core_cm7.MKV58F24"/>
+    <definition extID="platform.Include_dsp.MKV58F24"/>
     <definition extID="platform.drivers.clock.MKV58F24"/>
     <definition extID="platform.drivers.common.MKV58F24"/>
     <definition extID="platform.drivers.gpio.MKV58F24"/>
@@ -19,13 +21,14 @@
     <definition extID="platform.drivers.smc.MKV58F24"/>
     <definition extID="platform.drivers.uart.MKV58F24"/>
     <definition extID="platform.utilities.assert.MKV58F24"/>
+    <definition extID="platform.utilities.misc_utilities.MKV58F24"/>
     <definition extID="utility.debug_console.MKV58F24"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="twrkv58f220m_freertos_hello" name="freertos_hello" category="rtos_examples" dependency="platform.drivers.port.MKV58F24 platform.drivers.gpio.MKV58F24 platform.drivers.clock.MKV58F24 middleware.amazon_freertos.freertos.MKV58F24 middleware.amazon_freertos.freertos.heap_4.MKV58F24 platform.drivers.common.MKV58F24 device.MKV58F24_CMSIS.MKV58F24 utility.debug_console.MKV58F24 component.uart_adapter.MKV58F24 component.serial_manager.MKV58F24 component.serial_manager_uart.MKV58F24 platform.drivers.uart.MKV58F24 component.lists.MKV58F24 device.MKV58F24_startup.MKV58F24 platform.drivers.smc.MKV58F24 platform.utilities.assert.MKV58F24 platform.Include_core_cm7.MKV58F24 platform.Include_common.MKV58F24">
+  <example id="twrkv58f220m_freertos_hello" name="freertos_hello" category="rtos_examples" dependency="platform.drivers.port.MKV58F24 platform.drivers.gpio.MKV58F24 platform.drivers.clock.MKV58F24 middleware.amazon_freertos-kernel.heap_4.MKV58F24 platform.drivers.common.MKV58F24 device.MKV58F24_CMSIS.MKV58F24 utility.debug_console.MKV58F24 component.uart_adapter.MKV58F24 component.serial_manager.MKV58F24 component.lists.MKV58F24 component.serial_manager_uart.MKV58F24 platform.drivers.uart.MKV58F24 device.MKV58F24_startup.MKV58F24 platform.drivers.smc.MKV58F24 platform.utilities.assert.MKV58F24 platform.Include_core_cm7.MKV58F24 platform.Include_common.MKV58F24 platform.Include_dsp.MKV58F24 middleware.amazon_freertos-kernel.MKV58F24 middleware.amazon_freertos-kernel.extension.MKV58F24 platform.utilities.misc_utilities.MKV58F24">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -44,6 +47,7 @@
           <value>CPU_MKV58F1M0VLQ24</value>
           <value>TWR_KV58F220M</value>
           <value>TOWER</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>FSL_RTOS_FREE_RTOS</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
@@ -64,13 +68,13 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/twrkv58f220m/rtos_examples/freertos_hello/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/twrkv58f220m/rtos_examples/freertos_hello/armgcc" target_path="MKV58F24/gcc" type="linker" toolchain="armgcc">
       <files mask="MKV58F1M0xxx24_flash.ld"/>
     </source>
-    <source path="boards/twrkv58f220m/rtos_examples/freertos_hello/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/twrkv58f220m/rtos_examples/freertos_hello/iar" target_path="MKV58F24/iar" type="linker" toolchain="iar">
       <files mask="MKV58F1M0xxx24_flash.icf"/>
     </source>
-    <source path="boards/twrkv58f220m/rtos_examples/freertos_hello/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/twrkv58f220m/rtos_examples/freertos_hello/mdk" target_path="MKV58F24/arm" type="linker" toolchain="mdk">
       <files mask="MKV58F1M0xxx24_flash.scf"/>
     </source>
     <source path="boards/twrkv58f220m/rtos_examples/freertos_hello" target_path="board" type="c_include">

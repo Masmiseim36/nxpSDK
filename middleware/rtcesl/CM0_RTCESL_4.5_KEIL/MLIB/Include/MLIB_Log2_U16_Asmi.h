@@ -67,31 +67,26 @@ static inline uint16_t MLIB_Log2_U16_FAsmi(register uint16_t u16Val)
                     Cmp3:
                         lsrs u16Val, u16Val, #1         /* u16Val >> 1 */
                         orrs u16Val, u16Val, u16Log2 }; /* u16Val = u16Log2 | u16Val */
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax unified \n"        /* Using unified asm syntax */
-                        #endif
-                        "cmp %0, #0xFF \n"              /* Compares u16Val with 0xFF */
-                        "ble .+6 \n"                    /* If u16Val <= 0xFF, then jumps through two commands */
-                        "movs %1, #8 \n"                /* u16Log2 = 8 */
-                        "lsrs %0, %0, #8 \n"            /* u16Val >> 8 */
+                        "cmp %0, #0xFF \n\t"              /* Compares u16Val with 0xFF */
+                        "ble MLIB_Log2_U16_Cmp1 \n\t"                    /* If u16Val <= 0xFF, then jumps through two commands */
+                        "movs %1, #8 \n\t"                /* u16Log2 = 8 */
+                        "lsrs %0, %0, #8 \n\t"            /* u16Val >> 8 */
+					"MLIB_Log2_U16_Cmp1: \n\t"
+                        "cmp %0, #0xF \n\t"               /* Compares u16Val with 0xF */
+                        "ble MLIB_Log2_U16_Cmp2 \n\t"                    /* If u16Val <= 0xF, then jumps through two commands */
+                        "adds %1, #4 \n\t"                /* u16Log2 = u16Log2 + 4 */
+                        "lsrs %0, %0, #4 \n\t"            /* u16Val >> 4 */
+					"MLIB_Log2_U16_Cmp2: \n\t"
+                        "cmp %0, #0x3 \n\t"               /* Compares u16Val with 0x3 */
+                        "ble MLIB_Log2_U16_Cmp3 \n\t"                    /* If u16Val <= 0x3, then jumps through two commands */
+                        "adds %1, #2 \n\t"                /* u16Log2 = u16Log2 + 2 */
+                        "lsrs %0, %0, #2 \n\t"            /* u16Val >> 2 */
+					"MLIB_Log2_U16_Cmp3: \n\t"
+                        "lsrs %0, %0, #1 \n\t"            /* u16Val = 1 */
+                        "orrs %0, %0, %1 \n\t"            /* u16Val = u16Log2 | u16Val */
 
-                        "cmp %0, #0xF \n"               /* Compares u16Val with 0xF */
-                        "ble .+6 \n"                    /* If u16Val <= 0xF, then jumps through two commands */
-                        "adds %1, #4 \n"                /* u16Log2 = u16Log2 + 4 */
-                        "lsrs %0, %0, #4 \n"            /* u16Val >> 4 */
-
-                        "cmp %0, #0x3 \n"               /* Compares u16Val with 0x3 */
-                        "ble .+6 \n"                    /* If u16Val <= 0x3, then jumps through two commands */
-                        "adds %1, #2 \n"                /* u16Log2 = u16Log2 + 2 */
-                        "lsrs %0, %0, #2 \n"            /* u16Val >> 2 */
-
-                        "lsrs %0, %0, #1 \n"            /* u16Val = 1 */
-                        "orrs %0, %0, %1 \n"            /* u16Val = u16Log2 | u16Val */
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
                         : "+l"(u16Val), "+l"(u16Log2):);
     #endif
 

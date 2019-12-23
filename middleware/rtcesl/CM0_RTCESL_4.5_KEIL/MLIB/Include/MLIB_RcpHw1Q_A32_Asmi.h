@@ -75,30 +75,24 @@ static inline acc32_t MLIB_RcpHw1Q_A32s_FAsmi(register frac16_t f16Denom)
                         cmp     f32Temp1, f32Temp2           /* Compares f32Temp1 and f32Temp2 */
                         bne     RcpHw1Q_A32s_Recount         /* If f32Temp1 != f32Temp2, then goes to RcpHw1Q_A32s_Recount */
                     RcpHw1Q_A32s_End:  };
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)                /* For GCC compiler */
-                            ".syntax unified \n"             /* Using unified asm syntax */
-                        #endif
-                        "sxth    %0, %0 \n"                  /* Converts 16 input to 32-bit value */
-                        "cmp     %0, #0 \n"                  /* Compares Denominator with 0 */
-                        "beq     RcpHw1Q_A32s_End \n"        /* If Denominator = 0, then goes to RcpHw1Q_A32s_End */
-                        "ldrh    %2, [%4] \n"                /* f32Temp1 = gu16CntMmdvsq */
-                    "RcpHw1Q_A32s_Recount: \n"
-                        "adds    %3, %2, #1 \n"              /* f32Temp2 = gu16CntMmdvsq + 1 */
-                        "strh    %3, [%4] \n"                /* gu16CntMmdvsq = f32Temp2 */
-                        "movs    %2, #0 \n"                  /* f32TestVal = 0 */
-                        "str     %2, [%5, #8] \n"            /* MMDVSQ_CSR = 0x00000000 */
-                        "str     %6, [%5] \n"                /* MMDVSQ_DEND = f32Num */
-                        "str     %0, [%5, #4] \n"            /* MMDVSQ_DSOR = f16Denom */
-                        "ldr     %1, [%5, #12] \n"           /* f16Result = MMDVSQ_RES */
-                        "ldrh    %2, [%4] \n"                /* f32Temp1 = gu16CntMmdvsq */
-                        "cmp     %2, %3 \n"                  /* Compares f32Temp1 and f32Temp2 */
-                        "bne     RcpHw1Q_A32s_Recount \n"    /* If f32Temp1 != f32Temp2, then goes to RcpHw1Q_A32s_Recount */
-                    "RcpHw1Q_A32s_End: \n"
-                        #if defined(__GNUC__)                /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "sxth    %0, %0 \n\t"                  /* Converts 16 input to 32-bit value */
+                        "cmp     %0, #0 \n\t"                  /* Compares Denominator with 0 */
+                        "beq     MLIB_RcpHw1Q_A32s_End \n\t"   /* If Denominator = 0, then goes to RcpHw1Q_A32s_End */
+                        "ldrh    %2, [%4] \n\t"                /* f32Temp1 = gu16CntMmdvsq */
+                    "MLIB_RcpHw1Q_A32s_Recount: \n\t"
+                        "adds    %3, %2, #1 \n\t"              /* f32Temp2 = gu16CntMmdvsq + 1 */
+                        "strh    %3, [%4] \n\t"                /* gu16CntMmdvsq = f32Temp2 */
+                        "movs    %2, #0 \n\t"                  /* f32TestVal = 0 */
+                        "str     %2, [%5, #8] \n\t"            /* MMDVSQ_CSR = 0x00000000 */
+                        "str     %6, [%5] \n\t"                /* MMDVSQ_DEND = f32Num */
+                        "str     %0, [%5, #4] \n\t"            /* MMDVSQ_DSOR = f16Denom */
+                        "ldr     %1, [%5, #12] \n\t"           /* f16Result = MMDVSQ_RES */
+                        "ldrh    %2, [%4] \n\t"                /* f32Temp1 = gu16CntMmdvsq */
+                        "cmp     %2, %3 \n\t"                  /* Compares f32Temp1 and f32Temp2 */
+                        "bne     MLIB_RcpHw1Q_A32s_Recount \n\t"/* If f32Temp1 != f32Temp2, then goes to RcpHw1Q_A32s_Recount */
+                    "MLIB_RcpHw1Q_A32s_End: \n\t"
                         : "+l"(f16Denom), "+l"(a32Result), "+l"(f32Temp1), "+l"(f32Temp2): "l"(&gu16CntMmdvsq), "l"(f32BasePtr), "l"(f32Num):);
     #endif
     return a32Result;

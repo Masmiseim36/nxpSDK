@@ -44,19 +44,14 @@ static inline frac32_t MLIB_AbsSat_F32_FAsmi(register frac32_t f32Val)
                         bpl AbsEnd                      /* If f32Val >= 0, then goes to AbsEnd */
                         subs f32Val, f32Val, #1         /* If f32Val = 0x80000000, f32Val = 0x7FFFFFFF */
                     AbsEnd: };
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax unified \n"        /* Using unified asm syntax */
-                        #endif
-                        "cmp %0, #0 \n"                 /* Compares f32Val with 0 */
-                        "bge .+8 \n"                    /* If f32Val >= 0, then jumps through three commands */
-                        "rsbs %0, %0, #0 \n"            /* If f32Val < 0, then f32Val = 0 - f32Val */
-                        "bpl .+4 \n"                    /* If f32Val >= 0, then jumps through next command */
-                        "subs %0, %0, #1 \n"            /* If f32Val = 0x80000000, f32Val = 0x7FFFFFFF */
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "cmp %0, #0 \n\t"                 /* Compares f32Val with 0 */
+                        "bge MLIB_AbsSat_F32_AbsEnd \n\t"                    /* If f32Val >= 0, then jumps through three commands */
+                        "rsbs %0, %0, #0 \n\t"            /* If f32Val < 0, then f32Val = 0 - f32Val */
+                        "bpl MLIB_AbsSat_F32_AbsEnd \n\t"                    /* If f32Val >= 0, then jumps through next command */
+                        "subs %0, %0, #1 \n\t"            /* If f32Val = 0x80000000, f32Val = 0x7FFFFFFF */
+                     "MLIB_AbsSat_F32_AbsEnd: \n\t"
                         : "+l"(f32Val):);
     #endif
 

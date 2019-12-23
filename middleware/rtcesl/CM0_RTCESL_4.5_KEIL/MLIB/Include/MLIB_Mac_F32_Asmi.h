@@ -72,37 +72,32 @@ static inline frac32_t MLIB_Mac_F32_FAsmi(register frac32_t f32Accum,
                         lsls f32Mult1, f32Mult1, #1         /* f32Mult1 << 1 */
                         adds f32Mult1, f32Mult1, f32Val2    /* f32Mult1 = f32Mult1 + f32Val2 */
                         adds f32Accum, f32Accum, f32Mult1 };/* f32Accum + f16Mult1 * f16Mult2 */
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax unified \n"            /* Using unified asm syntax */
-                        #endif
-                        "uxth %3, %1 \n"                    /* f32Val1 = f32Mult1.L */
-                        "uxth %4, %2 \n"                    /* f32Val2 = f32Mult2.L */
+                        "uxth %3, %1 \n\t"                    /* f32Val1 = f32Mult1.L */
+                        "uxth %4, %2 \n\t"                    /* f32Val2 = f32Mult2.L */
 
-                        "asrs %1, %1, #16 \n"               /* f32Mult1 = f32Mult1.H */
-                        "asrs %2, %2, #16 \n"               /* f32Mult2 = f32Mult2.H */
+                        "asrs %1, %1, #16 \n\t"               /* f32Mult1 = f32Mult1.H */
+                        "asrs %2, %2, #16 \n\t"               /* f32Mult2 = f32Mult2.H */
 
-                        "movs %5, %3 \n"                    /* f32Val3 = f32Mult1.L */
-                        "muls %5, %5, %4 \n"                /* f32Val3 = f32Mult1.L * f32Mult2.L */
-                        "lsrs %5, %5, #16 \n"               /* f32Val3 >> 16 */
+                        "movs %5, %3 \n\t"                    /* f32Val3 = f32Mult1.L */
+                        "muls %5, %5, %4 \n\t"                /* f32Val3 = f32Mult1.L * f32Mult2.L */
+                        "lsrs %5, %5, #16 \n\t"               /* f32Val3 >> 16 */
 
-                        "muls %3, %3, %2 \n"                /* f32Val1 = f32Mult1.L * f32Mult2.H */
-                        "adds %3, %3, %5 \n"                /* f32Val1 = f32Val1 + f32Val3 */
-                        "asrs %3, %3, #1 \n"                /* f32Val1 >> 1 */
+                        "muls %3, %3, %2 \n\t"                /* f32Val1 = f32Mult1.L * f32Mult2.H */
+                        "adds %3, %3, %5 \n\t"                /* f32Val1 = f32Val1 + f32Val3 */
+                        "asrs %3, %3, #1 \n\t"                /* f32Val1 >> 1 */
 
-                        "muls %4, %4, %1 \n"                /* f32Val2 = f32Mult2.L * f32Mult1.H */
-                        "asrs %4, %4, #1 \n"                /* f32Val2 >> 1 */
-                        "adds %4, %4, %3 \n"                /* f32Val2 = f32Val2 + f32Val1 */
-                        "asrs %4, %4, #14 \n"               /* f32Val2 >> 14 */
+                        "muls %4, %4, %1 \n\t"                /* f32Val2 = f32Mult2.L * f32Mult1.H */
+                        "asrs %4, %4, #1 \n\t"                /* f32Val2 >> 1 */
+                        "adds %4, %4, %3 \n\t"                /* f32Val2 = f32Val2 + f32Val1 */
+                        "asrs %4, %4, #14 \n\t"               /* f32Val2 >> 14 */
 
-                        "muls %1, %1, %2 \n"                /* f32Mult1 = f32Mult1.H * f32Mult2.H */
-                        "lsls %1, %1, #1 \n"                /* f32Mult1 << 1 */
-                        "adds %1, %1, %4 \n"                /* f32Mult1 = f32Mult1 + f32Val2 */
-                        "adds %0, %0, %1 \n"                /* f32Accum + f16Mult1 * f16Mult2 */
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "muls %1, %1, %2 \n\t"                /* f32Mult1 = f32Mult1.H * f32Mult2.H */
+                        "lsls %1, %1, #1 \n\t"                /* f32Mult1 << 1 */
+                        "adds %1, %1, %4 \n\t"                /* f32Mult1 = f32Mult1 + f32Val2 */
+                        "adds %0, %0, %1 \n\t"                /* f32Accum + f16Mult1 * f16Mult2 */
+						
                         : "+l"(f32Accum), "+l"(f32Mult1), "+l"(f32Mult2), "+l"(f32Val1), "+l"(f32Val2), "+l"(f32Val3):);
     #endif
 
@@ -177,59 +172,54 @@ static inline frac32_t MLIB_MacSat_F32_FAsmi(register frac32_t f32Accum,
                         blt SatEnd                          /* If f32Mult1 < 0, then goes to SatEnd */
                         subs f32Mult2, f32Mult2, #1         /* result = 0x7FFFFFFF*/
                     SatEnd: };
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax unified \n"            /* Using unified asm syntax */
-                        #endif
-                        "uxth %3, %2 \n"                    /* f32Val1 = f32Mult1.L */
-                        "uxth %4, %1 \n"                    /* f32Val2 = f32Mult2.L */
+                        "uxth %3, %2 \n\t"                    /* f32Val1 = f32Mult1.L */
+                        "uxth %4, %1 \n\t"                    /* f32Val2 = f32Mult2.L */
 
-                        "asrs %2, %2, #16 \n"               /* f32Mult1 = f32Mult1.H */
-                        "asrs %1, %1, #16 \n"               /* f32Mult2 = f32Mult2.H */
+                        "asrs %2, %2, #16 \n\t"               /* f32Mult1 = f32Mult1.H */
+                        "asrs %1, %1, #16 \n\t"               /* f32Mult2 = f32Mult2.H */
 
-                        "movs %5, %3 \n"                    /* f32Val3 = f32Mult1.L */
-                        "muls %5, %5, %4 \n"                /* f32Val3 = f32Mult1.L * f32Mult2.L */
-                        "lsrs %5, %5, #16 \n"               /* f32Val3 >> 16 */
+                        "movs %5, %3 \n\t"                    /* f32Val3 = f32Mult1.L */
+                        "muls %5, %5, %4 \n\t"                /* f32Val3 = f32Mult1.L * f32Mult2.L */
+                        "lsrs %5, %5, #16 \n\t"               /* f32Val3 >> 16 */
 
-                        "muls %3, %3, %1 \n"                /* f32Val1 = f32Mult1.L * f32Mult2.H */
-                        "adds %3, %3, %5 \n"                /* f32Val1 = f32Val1 + f32Val3 */
-                        "asrs %3, %3, #1 \n"                /* f32Val1 >> 1 */
+                        "muls %3, %3, %1 \n\t"                /* f32Val1 = f32Mult1.L * f32Mult2.H */
+                        "adds %3, %3, %5 \n\t"                /* f32Val1 = f32Val1 + f32Val3 */
+                        "asrs %3, %3, #1 \n\t"                /* f32Val1 >> 1 */
 
-                        "muls %4, %4, %2 \n"                /* f32Val2 = f32Mult2.L * f32Mult1.H */
-                        "asrs %4, %4, #1 \n"                /* f32Val2 >> 1 */
-                        "adds %4, %4, %3 \n"                /* f32Val2 = f32Val2 + f32Val1 */
-                        "asrs %4, %4, #14 \n"               /* f32Val2 >> 14 */
+                        "muls %4, %4, %2 \n\t"                /* f32Val2 = f32Mult2.L * f32Mult1.H */
+                        "asrs %4, %4, #1 \n\t"                /* f32Val2 >> 1 */
+                        "adds %4, %4, %3 \n\t"                /* f32Val2 = f32Val2 + f32Val1 */
+                        "asrs %4, %4, #14 \n\t"               /* f32Val2 >> 14 */
 
-                        "movs %3, #0 \n"                    /* f32Val1 = 0 */
-                        "asrs %4, %4, #1 \n"                /* f32Val2 >> 1 */
-                        "adcs %3, %3, %3 \n"                /* Stores the last bit of multiplication to f32Val1 */
-                        "muls %2, %2, %1 \n"                /* f32Mult1 = f32Mult1.H * f32Mult2.H */
-                        "adds %2, %2, %4 \n"                /* f32Mult1 = f32Mult1 + f32Val2 */
+                        "movs %3, #0 \n\t"                    /* f32Val1 = 0 */
+                        "asrs %4, %4, #1 \n\t"                /* f32Val2 >> 1 */
+                        "adcs %3, %3, %3 \n\t"                /* Stores the last bit of multiplication to f32Val1 */
+                        "muls %2, %2, %1 \n\t"                /* f32Mult1 = f32Mult1.H * f32Mult2.H */
+                        "adds %2, %2, %4 \n\t"                /* f32Mult1 = f32Mult1 + f32Val2 */
 
-                        "movs %4, #0 \n"                    /* f32Val1 = 0 */
-                        "asrs %0, %0, #1 \n"                /* f32Accum >> 1 */
-                        "adcs %4, %4, %4 \n"                /* Stores the last bit of f32Accum to f32Val2 */
+                        "movs %4, #0 \n\t"                    /* f32Val1 = 0 */
+                        "asrs %0, %0, #1 \n\t"                /* f32Accum >> 1 */
+                        "adcs %4, %4, %4 \n\t"                /* Stores the last bit of f32Accum to f32Val2 */
 
-                        "adds %3, %3, %4 \n"                /* f32Val1 = f32Val1 + f32Val2 */
-                        "lsls %3, %3, #31 \n"               /* f32Val1 << 31 (Carry = the first bit of f32Val1) */
-                        "adcs %0, %0, %2 \n"                /* (result / 2) + Carry */
+                        "adds %3, %3, %4 \n\t"                /* f32Val1 = f32Val1 + f32Val2 */
+                        "lsls %3, %3, #31 \n\t"               /* f32Val1 << 31 (Carry = the first bit of f32Val1) */
+                        "adcs %0, %0, %2 \n\t"                /* (result / 2) + Carry */
 
-                        "mov %2, %0 \n"                     /* f32Mult1 = result / 2 */
-                        "lsls %1, %0, #1 \n"                /* f32Mult2 = result */
-                        "lsrs %3, %3, #31 \n"               /* f32Val1 >> 31 (the last bit of result) */
-                        "adds %1, %1, %3 \n"                /* f32Mult2 = result + last bit */
+                        "mov %2, %0 \n\t"                     /* f32Mult1 = result / 2 */
+                        "lsls %1, %0, #1 \n\t"                /* f32Mult2 = result */
+                        "lsrs %3, %3, #31 \n\t"               /* f32Val1 >> 31 (the last bit of result) */
+                        "adds %1, %1, %3 \n\t"                /* f32Mult2 = result + last bit */
 
-                        "eors %0, %0, %1 \n"                /* f32Accum = f32Accum ^ f32Mult2 */
-                        "bpl .+12 \n"                       /* If f32Accum >= 0, then jumps to the end of function*/
-                        "movs %1, #128 \n"                  /* f32Mult2 = 0x80 */
-                        "rev %1, %1 \n"                     /* result = 0x80000000 */
-                        "cmp %2, #0 \n"                     /* Compares input value with 0 */
-                        "blt .+4 \n"                        /* If f32Mult1 < 0, then jumps through next command */
-                        "subs %1, %1, #1 \n"                /* result = 0x7FFFFFFF*/
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "eors %0, %0, %1 \n\t"                /* f32Accum = f32Accum ^ f32Mult2 */
+                        "bpl MLIB_MacSat_F32_SatEnd \n\t"                       /* If f32Accum >= 0, then jumps to the end of function*/
+                        "movs %1, #128 \n\t"                  /* f32Mult2 = 0x80 */
+                        "rev %1, %1 \n\t"                     /* result = 0x80000000 */
+                        "cmp %2, #0 \n\t"                     /* Compares input value with 0 */
+                        "blt MLIB_MacSat_F32_SatEnd \n\t"                        /* If f32Mult1 < 0, then jumps through next command */
+                        "subs %1, %1, #1 \n\t"                /* result = 0x7FFFFFFF*/
+					"MLIB_MacSat_F32_SatEnd: \n\t"
                         : "+l"(f32Accum), "+l"(f32Mult2), "+l"(f32Mult1), "+l"(f32Val1), "+l"(f32Val2), "+l"(f32Val3):);
     #endif
 
@@ -273,32 +263,28 @@ static inline frac32_t MLIB_MacSat_F32lss_FAsmi(register frac32_t f32Accum,
                         blt SatEnd                          /* If f32Mult1 < 0, then jumps through next command */
                         subs f32Accum, f32Accum, #1         /* result = 0x7FFFFFFF*/
                     SatEnd: }
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax unified \n"            /* Using unified asm syntax */
-                        #endif
-                        "sxth %1, %1 \n"                    /* Converts 16-bit input to 32-bit */
-                        "sxth %2, %2 \n"                    /* Converts 16-bit input to 32-bit */
-                        "muls %1, %1, %2 \n"                /* f16Mult1 * f16Mult2 */
-                        "asrs %0, %0, #1 \n"                /* f32Accum >> 1 */
-                        "adcs %3, %3, %3 \n"                /* f32Val = the last bit of f32Accum */
-                        "adds %1, %1, %0 \n"                /* f16Mult1 * f16Mult2 */
 
-                        "mov %2, %1 \n"                     /* f16Mult1 = result / 2 */
-                        "lsls %0, %1, #1 \n"                /* f32Mult2 = result */
-                        "adds %0, %0, %3 \n"                /* f32Mult2 = result + last bit */
+                        "sxth %1, %1 \n\t"                    /* Converts 16-bit input to 32-bit */
+                        "sxth %2, %2 \n\t"                    /* Converts 16-bit input to 32-bit */
+                        "muls %1, %1, %2 \n\t"                /* f16Mult1 * f16Mult2 */
+                        "asrs %0, %0, #1 \n\t"                /* f32Accum >> 1 */
+                        "adcs %3, %3, %3 \n\t"                /* f32Val = the last bit of f32Accum */
+                        "adds %1, %1, %0 \n\t"                /* f16Mult1 * f16Mult2 */
 
-                        "eors %1, %1, %0 \n"                /* f32Accum = f32Accum ^ f32Mult2 */
-                        "bpl .+12 \n"                       /* If f32Accum >= 0, then jumps to the end of function*/
-                        "movs %0, #128 \n"                  /* f32Mult2 = 0x80 */
-                        "rev %0, %0 \n"                     /* result = 0x80000000 */
-                        "cmp %2, #0 \n"                     /* Compares input value with 0 */
-                        "blt .+4 \n"                        /* If f32Mult1 < 0, then jumps through next command */
-                        "subs %0, %0, #1 \n"                /* result = 0x7FFFFFFF*/
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "mov %2, %1 \n\t"                     /* f16Mult1 = result / 2 */
+                        "lsls %0, %1, #1 \n\t"                /* f32Mult2 = result */
+                        "adds %0, %0, %3 \n\t"                /* f32Mult2 = result + last bit */
+
+                        "eors %1, %1, %0 \n\t"                /* f32Accum = f32Accum ^ f32Mult2 */
+                        "bpl MLIB_MacSat_F32lss_SatEnd \n\t"                       /* If f32Accum >= 0, then jumps to the end of function*/
+                        "movs %0, #128 \n\t"                  /* f32Mult2 = 0x80 */
+                        "rev %0, %0 \n\t"                     /* result = 0x80000000 */
+                        "cmp %2, #0 \n\t"                     /* Compares input value with 0 */
+                        "blt MLIB_MacSat_F32lss_SatEnd \n\t"                        /* If f32Mult1 < 0, then jumps through next command */
+                        "subs %0, %0, #1 \n\t"                /* result = 0x7FFFFFFF*/
+					"MLIB_MacSat_F32lss_SatEnd: \n\t"
                         : "+l"(f32Accum), "+l"(f16Mult1), "+l"(f16Mult2), "+l"(f32Val):);
     #endif
 

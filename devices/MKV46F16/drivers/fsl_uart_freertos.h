@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,7 +8,6 @@
 #ifndef __FSL_UART_RTOS_H__
 #define __FSL_UART_RTOS_H__
 
-#include "FreeRTOSConfig.h"
 #include "fsl_uart.h"
 #include <FreeRTOS.h>
 #include <event_groups.h>
@@ -25,8 +24,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief UART freertos driver version 2.1.6. */
-#define FSL_UART_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 1, 6))
+/*! @brief UART FreeRTOS driver version 2.2.0. */
+#define FSL_UART_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
 /*@}*/
 
 /*! @brief UART configuration structure */

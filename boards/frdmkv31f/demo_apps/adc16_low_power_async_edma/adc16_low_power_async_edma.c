@@ -258,7 +258,7 @@ int main(void)
 {
     /* Initialize hardware */
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     /* Initialize Led */
     LED_INIT();

@@ -8,14 +8,16 @@
     <definition extID="middleware.mcu-boot.src_startup.MKV11Z7"/>
     <definition extID="platform.Include_common.MKV11Z7"/>
     <definition extID="platform.Include_core_cm0plus.MKV11Z7"/>
+    <definition extID="platform.Include_dsp.MKV11Z7"/>
     <definition extID="platform.drivers.clock.MKV11Z7"/>
     <definition extID="platform.drivers.common.MKV11Z7"/>
     <definition extID="platform.drivers.uart.MKV11Z7"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
+    <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmkv11z_flashloader_loader" name="flashloader_loader" category="bootloader_examples" dependency="platform.drivers.clock.MKV11Z7 device.MKV11Z7_CMSIS.MKV11Z7 middleware.mcu-boot.MKV11Z7_startup.MKV11Z7 middleware.mcu-boot.loadersources.MKV11Z7 platform.drivers.uart.MKV11Z7 middleware.mcu-boot.src_startup.MKV11Z7 platform.drivers.common.MKV11Z7 platform.Include_core_cm0plus.MKV11Z7 platform.Include_common.MKV11Z7">
+  <example id="frdmkv11z_flashloader_loader" name="flashloader_loader" category="bootloader_examples" dependency="platform.drivers.clock.MKV11Z7 device.MKV11Z7_CMSIS.MKV11Z7 middleware.mcu-boot.MKV11Z7_startup.MKV11Z7 middleware.mcu-boot.loadersources.MKV11Z7 platform.drivers.uart.MKV11Z7 middleware.mcu-boot.src_startup.MKV11Z7 platform.drivers.common.MKV11Z7 platform.Include_core_cm0plus.MKV11Z7 platform.Include_common.MKV11Z7 platform.Include_dsp.MKV11Z7">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -43,8 +45,8 @@
           <value>gnu.c.optimization.level.size</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
-          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
           <value>CPU_MKV11Z128VLH7</value>
+          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
           <value>BL_TARGET_FLASH</value>
           <value>FRDM_KV11Z75M</value>
         </option>
@@ -85,6 +87,9 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <source path="boards/frdmkv11z/bootloader_examples/flashloader_loader/armgcc" target_path="middleware/mcu-boot" type="linker" toolchain="armgcc">
+      <files mask="MKV11Z128xxx7_flashloader_loader.ld"/>
+    </source>
     <source path="boards/frdmkv11z/bootloader_examples/flashloader_loader/iar" target_path="middleware/mcu-boot" type="linker" toolchain="iar">
       <files mask="MKV11Z128xxx7_flashloader_loader.icf"/>
     </source>

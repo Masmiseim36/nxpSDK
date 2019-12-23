@@ -8,10 +8,13 @@
     <definition extID="component.uart_adapter.MKV46F16"/>
     <definition extID="device.MKV46F16_CMSIS.MKV46F16"/>
     <definition extID="device.MKV46F16_startup.MKV46F16"/>
+    <definition extID="middleware.fmstr.MKV46F16"/>
+    <definition extID="middleware.fmstr.platform_gen32le.MKV46F16"/>
     <definition extID="middleware.motor_control.pmsm.MKV46F16"/>
     <definition extID="middleware.rtcesl.cm4f.MKV46F16"/>
     <definition extID="platform.Include_common.MKV46F16"/>
     <definition extID="platform.Include_core_cm4.MKV46F16"/>
+    <definition extID="platform.Include_dsp.MKV46F16"/>
     <definition extID="platform.drivers.clock.MKV46F16"/>
     <definition extID="platform.drivers.common.MKV46F16"/>
     <definition extID="platform.drivers.dmamux.MKV46F16"/>
@@ -23,13 +26,14 @@
     <definition extID="platform.drivers.uart.MKV46F16"/>
     <definition extID="platform.drivers.xbara.MKV46F16"/>
     <definition extID="platform.utilities.assert.MKV46F16"/>
+    <definition extID="platform.utilities.misc_utilities.MKV46F16"/>
     <definition extID="utility.debug_console.MKV46F16"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
-    <definition extID="mcuxpresso"/>
     <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="twrkv46f150m_mc_pmsm" name="mc_pmsm" category="demo_apps" dependency="platform.drivers.sim.MKV46F16 platform.drivers.port.MKV46F16 platform.drivers.dmamux.MKV46F16 platform.drivers.xbara.MKV46F16 platform.drivers.clock.MKV46F16 platform.drivers.dspi.MKV46F16 middleware.rtcesl.cm4f.MKV46F16 middleware.motor_control.pmsm.MKV46F16 platform.drivers.common.MKV46F16 device.MKV46F16_CMSIS.MKV46F16 utility.debug_console.MKV46F16 component.uart_adapter.MKV46F16 component.serial_manager.MKV46F16 component.serial_manager_uart.MKV46F16 platform.drivers.uart.MKV46F16 component.lists.MKV46F16 device.MKV46F16_startup.MKV46F16 platform.drivers.smc.MKV46F16 platform.drivers.gpio.MKV46F16 platform.utilities.assert.MKV46F16 platform.Include_core_cm4.MKV46F16 platform.Include_common.MKV46F16">
+  <example id="twrkv46f150m_mc_pmsm" name="mc_pmsm" category="demo_apps" dependency="platform.drivers.sim.MKV46F16 platform.drivers.port.MKV46F16 platform.drivers.dmamux.MKV46F16 platform.drivers.xbara.MKV46F16 platform.drivers.clock.MKV46F16 platform.drivers.dspi.MKV46F16 middleware.rtcesl.cm4f.MKV46F16 middleware.motor_control.pmsm.MKV46F16 platform.drivers.common.MKV46F16 device.MKV46F16_CMSIS.MKV46F16 utility.debug_console.MKV46F16 component.uart_adapter.MKV46F16 component.serial_manager.MKV46F16 component.lists.MKV46F16 component.serial_manager_uart.MKV46F16 platform.drivers.uart.MKV46F16 device.MKV46F16_startup.MKV46F16 platform.drivers.smc.MKV46F16 platform.drivers.gpio.MKV46F16 platform.utilities.assert.MKV46F16 middleware.fmstr.MKV46F16 middleware.fmstr.platform_gen32le.MKV46F16 platform.Include_core_cm4.MKV46F16 platform.Include_common.MKV46F16 platform.Include_dsp.MKV46F16 platform.utilities.misc_utilities.MKV46F16">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -48,6 +52,7 @@
           <value>CPU_MKV46F256VLL16</value>
           <value>TWR_KV46F150M</value>
           <value>TOWER</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -63,11 +68,17 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/twrkv46f150m/demo_apps/mc_pmsm/pmsm_snsless/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/twrkv46f150m/demo_apps/mc_pmsm/pmsm_snsless/armgcc" target_path="MKV46F16/gcc" type="linker" toolchain="armgcc">
+      <files mask="MKV46F256xxx16_flash.ld"/>
+    </source>
+    <source path="boards/twrkv46f150m/demo_apps/mc_pmsm/pmsm_snsless/iar" target_path="MKV46F16/iar" type="linker" toolchain="iar">
       <files mask="MKV46F256xxx16_flash.icf"/>
     </source>
-    <source path="boards/twrkv46f150m/demo_apps/mc_pmsm/pmsm_snsless/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/twrkv46f150m/demo_apps/mc_pmsm/pmsm_snsless/mdk" target_path="MKV46F16/arm" type="linker" toolchain="mdk">
       <files mask="MKV46F256xxx16_flash.scf"/>
+    </source>
+    <source path="boards/twrkv46f150m/demo_apps/mc_pmsm/pmsm_snsless" target_path="./" type="other" exclude="true">
+      <files mask="mc_pmsm.mex"/>
     </source>
     <source path="boards/twrkv46f150m/demo_apps/mc_pmsm/pmsm_snsless" target_path="board" type="c_include">
       <files mask="board.h"/>
@@ -86,22 +97,8 @@
     <source path="boards/twrkv46f150m/demo_apps/mc_pmsm/pmsm_snsless" target_path="doc" type="doc">
       <files mask="readme.txt"/>
     </source>
-    <source path="boards/twrkv46f150m/demo_apps/mc_pmsm/pmsm_snsless" target_path="mc_drivers" type="c_include">
-      <files mask="mcdrv_adc_adc12.h"/>
-      <files mask="mcdrv_mosfet_predrv_spi.h"/>
-      <files mask="mcdrv_pwm3ph_pwma.h"/>
-    </source>
-    <source path="boards/twrkv46f150m/demo_apps/mc_pmsm/pmsm_snsless" target_path="mc_drivers" type="src">
-      <files mask="mcdrv_adc_adc12.c"/>
-      <files mask="mcdrv_mosfet_predrv_spi.c"/>
-      <files mask="mcdrv_pwm3ph_pwma.c"/>
-    </source>
-    <source path="boards/twrkv46f150m/demo_apps/mc_pmsm/pmsm_snsless" target_path="mc_state_machine" type="c_include">
-      <files mask="m1_sm_snsless.h"/>
-      <files mask="sm_common.h"/>
-    </source>
-    <source path="boards/twrkv46f150m/demo_apps/mc_pmsm/pmsm_snsless" target_path="mc_state_machine" type="src">
-      <files mask="m1_sm_snsless.c"/>
+    <source path="boards/twrkv46f150m/demo_apps/mc_pmsm/pmsm_snsless" target_path="motor_control/freemaster" type="other" exclude="true">
+      <files mask="pmsm_float.pmp"/>
     </source>
     <source path="boards/twrkv46f150m/demo_apps/mc_pmsm/pmsm_snsless" target_path="source" type="c_include">
       <files mask="m1_pmsm_appconfig.h"/>
@@ -110,13 +107,10 @@
     <source path="boards/twrkv46f150m/demo_apps/mc_pmsm/pmsm_snsless" target_path="source" type="src">
       <files mask="main.c"/>
     </source>
-    <source path="boards/twrkv46f150m/demo_apps/mc_pmsm/pmsm_snsless" target_path="src" type="other" exclude="true">
-      <files mask="pmsm_float.pmp"/>
+    <source path="middleware/motor_control/fmstr_cfg_uart" target_path="source" type="c_include">
+      <files mask="freemaster_cfg.h"/>
     </source>
-    <source path="devices/MKV46F16/gcc" target_path="src" type="linker" toolchain="armgcc">
-      <files mask="MKV46F256xxx16_flash.ld"/>
-    </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images" target_path="src" type="image" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images" target_path="motor_control/freemaster/pmsm_float/fm_control/styles/images" type="image" exclude="true">
       <files mask="backImage.png"/>
       <files mask="backgroundTop.png"/>
       <files mask="bg_black.png"/>
@@ -255,21 +249,21 @@
       <files mask="wp_check_indeterminate_white.png"/>
       <files mask="wp_check_white.png"/>
     </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control/styles" target_path="src" type="doc" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control/styles" target_path="motor_control/freemaster/pmsm_float/fm_control/styles" type="doc" exclude="true">
       <files mask="jqx.base.css"/>
       <files mask="jqx.energyblue.css"/>
       <files mask="jqx.energyblue.txt"/>
     </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control/styles" target_path="src" type="other" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control/styles" target_path="motor_control/freemaster/pmsm_float/fm_control/styles" type="other" exclude="true">
       <files mask="jqx.energyblue"/>
     </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control" target_path="src" type="doc" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control" target_path="motor_control/freemaster/pmsm_float/fm_control" type="doc" exclude="true">
       <files mask="FM_control_M1.html"/>
     </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control" target_path="src" type="image" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control" target_path="motor_control/freemaster/pmsm_float/fm_control" type="image" exclude="true">
       <files mask="logo.png"/>
     </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control" target_path="src" type="script" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float/fm_control" target_path="motor_control/freemaster/pmsm_float/fm_control" type="script" exclude="true">
       <files mask="Control_page.js"/>
       <files mask="control_page_config.js"/>
       <files mask="control_page_scripts.js"/>
@@ -289,24 +283,18 @@
       <files mask="jqxtooltip.js"/>
       <files mask="jqxwindow.js"/>
     </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float/mcat/param_files" target_path="src" type="doc" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float/mcat/param_files" target_path="motor_control/freemaster/pmsm_float/mcat/param_files" type="doc" exclude="true">
       <files mask="M1_params.txt"/>
-      <files mask="M1_params_pmsm_frdm-kv31.txt"/>
       <files mask="M1_params_pmsm_hvp-ke18.txt"/>
-      <files mask="M1_params_pmsm_hvp-kv11.txt"/>
-      <files mask="M1_params_pmsm_hvp-kv31.txt"/>
       <files mask="M1_params_pmsm_hvp-kv46.txt"/>
       <files mask="M1_params_pmsm_hvp-kv58.txt"/>
       <files mask="M1_params_pmsm_twr-ke18.txt"/>
       <files mask="M1_params_pmsm_twr-kv31.txt"/>
       <files mask="M1_params_pmsm_twr-kv46.txt"/>
       <files mask="M1_params_pmsm_twr-kv58.txt"/>
-      <files mask="M2_params.txt"/>
-      <files mask="M2_params_pmsm_frdm-kv31.txt"/>
-      <files mask="M2_params_pmsm_hvp-kv31.txt"/>
       <files mask="Setting_params.txt"/>
     </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float/mcat/src/JS_functions" target_path="src" type="script" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float/mcat/src/JS_functions" target_path="motor_control/freemaster/pmsm_float/mcat/src/JS_functions" type="script" exclude="true">
       <files mask="calculations.js"/>
       <files mask="config.js"/>
       <files mask="fileProcessing.js"/>
@@ -321,7 +309,7 @@
       <files mask="mainInclude.js"/>
       <files mask="settings.js"/>
     </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float/mcat/src/images" target_path="src" type="image" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float/mcat/src/images" target_path="motor_control/freemaster/pmsm_float/mcat/src/images" type="image" exclude="true">
       <files mask="Ccontrol.jpg"/>
       <files mask="Ccontrol.png"/>
       <files mask="NXP-Logo.png"/>
@@ -345,11 +333,11 @@
       <files mask="switch_slide_off.png"/>
       <files mask="switch_slide_on.png"/>
     </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float/mcat/src/xml_files" target_path="src" type="xml" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float/mcat/src/xml_files" target_path="motor_control/freemaster/pmsm_float/mcat/src/xml_files" type="xml" exclude="true">
       <files mask="FM_params_list.xml"/>
       <files mask="Header_file_constant_list.xml"/>
     </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float/mcat/src" target_path="src" type="doc" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float/mcat/src" target_path="motor_control/freemaster/pmsm_float/mcat/src" type="doc" exclude="true">
       <files mask="AppSetting.html"/>
       <files mask="MainPage.html"/>
       <files mask="form_PathSelector.html"/>
@@ -367,8 +355,25 @@
       <files mask="inner_SLoop.html"/>
       <files mask="style.css"/>
     </source>
-    <source path="middleware/motor_control/freemaster/pmsm_float" target_path="src" type="doc" exclude="true">
+    <source path="middleware/motor_control/freemaster/pmsm_float" target_path="motor_control/freemaster/pmsm_float" type="doc" exclude="true">
       <files mask="readme.txt"/>
+    </source>
+    <source path="middleware/motor_control/pmsm/pmsm_float/mc_drivers" target_path="mc_drivers" type="c_include">
+      <files mask="mcdrv_adc_adc12.h"/>
+      <files mask="mcdrv_mosfet_predrv_spi.h"/>
+      <files mask="mcdrv_pwm3ph_pwma.h"/>
+    </source>
+    <source path="middleware/motor_control/pmsm/pmsm_float/mc_drivers" target_path="mc_drivers" type="src">
+      <files mask="mcdrv_adc_adc12.c"/>
+      <files mask="mcdrv_mosfet_predrv_spi.c"/>
+      <files mask="mcdrv_pwm3ph_pwma.c"/>
+    </source>
+    <source path="middleware/motor_control/pmsm/pmsm_float/mc_state_machine" target_path="mc_state_machine" type="c_include">
+      <files mask="m1_sm_snsless.h"/>
+      <files mask="sm_common.h"/>
+    </source>
+    <source path="middleware/motor_control/pmsm/pmsm_float/mc_state_machine" target_path="mc_state_machine" type="src">
+      <files mask="m1_sm_snsless.c"/>
     </source>
   </example>
 </ksdk:examples>

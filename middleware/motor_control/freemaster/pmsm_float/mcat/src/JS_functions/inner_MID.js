@@ -62,13 +62,13 @@ function initLoadFormMID()
         /* for known boards read defined sample time from target MCU */
         if(appId!="offline")
         {
-            // replace and disable params
+			// replace and disable params
             reference_val = xmlDoc.getElementsByTagName([prefixM]+["Fast_Loop_Freq"])[0];
-
-            if(pcm.ReadVariable(reference_val.childNodes[0].nodeValue));
-                FastLoopTs = Math.round(1/pcm.LastVariable_tValue*10000)/10000;
+			if(pcm.ReadVariable(reference_val.childNodes[0].nodeValue))
+				FastLoopTs = Math.round(1/pcm.LastVariable_tValue*1000000)/1000000;
             
-  	        setParentHtmlValue((prefixM + "CLOOP_Ts"), FastLoopTs);
+			setParentHtmlValue((prefixM + "CLOOP_Ts"), FastLoopTs);
+			
         }
         else
         {
@@ -244,7 +244,7 @@ function clickCalculateMID()
     }
     //Parameters limitations
     TestRangeTrim("Rs_calib", 0.3, 50, "\u03A9");
-    TestRangeTrim("I_calib", 0.3, 8, "A");
+    TestRangeTrim("I_calib", 0.3, Imax, "A");
     TestRangeTrim("Id_meas", 0.05, getParentHtmlValue("I_calib"), "A");
     TestRangeTrim("Id_ampl", 0.05, getParentHtmlValue("I_calib"), "A");
     TestRangeTrim("Freq_start", 100, (1/dTs/10), "Hz");
@@ -1362,7 +1362,7 @@ function updateParams()
             //If there were no warnings during measurement
             if(MeasWarnings == 0)
             {
-                 alert("Electrical measurement completed.");
+                 alert("Electrical measurement completed. Continue with Mechanical parameter measurement or generate pmsm_appconfig.h (Output File tab) and rebuild application code.");
             }
             //If there were warnings during measurement
             else
@@ -1420,7 +1420,7 @@ function updateParams()
             //If there were no warnings during measurement
             if(MeasWarnings == 0)
             {
-                 alert("Mechanical measurement completed.");
+                 alert("Mechanical measurement completed. Generate pmsm_appconfig.h (Output File tab) and rebuild application code. ");
             }
             //If there were warnings during measurement
             else

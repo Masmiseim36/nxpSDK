@@ -15,11 +15,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v5.0
+product: Pins v7.0
 processor: MKV11Z128xxx7
 package_id: MKV11Z128VLH7
 mcu_data: ksdk2_0
-processor_version: 5.0.0
+processor_version: 0.7.1
 board: TWR-KV11Z75M
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -82,6 +82,7 @@ PinTool_FTM:
 /* FUNCTION ************************************************************************************************************
  *
  * Function Name : PinTool_FTM
+ * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
 void PinTool_FTM(void)
@@ -125,6 +126,7 @@ PinTool_UART:
 /* FUNCTION ************************************************************************************************************
  *
  * Function Name : PinTool_UART
+ * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
 void PinTool_UART(void)
@@ -166,6 +168,7 @@ PinTool_Misc:
 /* FUNCTION ************************************************************************************************************
  *
  * Function Name : PinTool_Misc
+ * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
 void PinTool_Misc(void)

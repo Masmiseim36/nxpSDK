@@ -148,7 +148,7 @@ static shell_status_t LedControl(shell_handle_t shellHandle, int32_t argc, char 
 int main(void)
 {
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /* Init led */

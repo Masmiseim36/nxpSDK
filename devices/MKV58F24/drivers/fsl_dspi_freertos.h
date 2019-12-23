@@ -8,7 +8,6 @@
 #ifndef __FSL_DSPI_FREERTOS_H__
 #define __FSL_DSPI_FREERTOS_H__
 
-#include "FreeRTOSConfig.h"
 #include "FreeRTOS.h"
 #include "portable.h"
 #include "semphr.h"
@@ -26,8 +25,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief DSPI FREERTOS driver version 2.2.1. */
-#define FSL_DSPI_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 2, 1))
+/*! @brief DSPI FreeRTOS driver version 2.2.2. */
+#define FSL_DSPI_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 2, 2))
 /*@}*/
 
 /*!

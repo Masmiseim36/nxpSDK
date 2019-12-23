@@ -105,49 +105,47 @@ static inline frac16_t GDFLIB_FilterMA_F16_FAsmi(frac16_t f16InX,
                         subs f32Val1, f32Val1, #1      /* f32Val1 = f32Val1 - 1 */
                         subs f16InX, f32Val1, f16InX   /* f16InX = f32Val1 - f16InX */
                     Res_NotSat:};
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)     /* For GCC compiler */
-                            ".syntax unified \n"  /* Using unified asm syntax */
-                        #endif
-                        "sxth %0, %0 \n"          /* Sign extend */
-                        /* a32Acc + f16InX  */
-                        "ldr %1, [%3] \n"         /* f32Val1 = psParam.a32Acc */
-                        "adds %2, %1, %0 \n"      /* f32Val2 = a32Acc + f16InX */
-                        "subs %1, %2, %1 \n"      /* f32Val1 = f32Val2 - a32Acc */
-                        "cmp %1, %0 \n"           /* Compares f32Val2 and f32Val1 */
-                        "beq .+12 \n"             /* If f32Val2 != f32Val1, then saturates result */
-                        "asrs %0, %0, #31 \n"     /* f16InX >> 16 */
-                        "movs %2, #0x80 \n"       /* f32Val2 = 0x80 */
-                        "rev %2, %2 \n"           /* f32Val2 = 0x80000000 */
-                        "subs %2, %2, #1 \n"      /* f32Val2 = 0x7FFFFFFF */
-                        "subs %2, %2, %0 \n"      /* f32Val2 = 0x7FFFFFFF - f16InX */
+                        "sxth %0, %0 \n\t"                         /* Sign extend */
+                        /* a32Acc + f16InX  */               
+                        "ldr %1, [%3] \n\t"                        /* f32Val1 = psParam.a32Acc */
+                        "adds %2, %1, %0 \n\t"                     /* f32Val2 = a32Acc + f16InX */
+                        "subs %1, %2, %1 \n\t"                     /* f32Val1 = f32Val2 - a32Acc */
+                        "cmp %1, %0 \n\t"                          /* Compares f32Val2 and f32Val1 */
+                        "beq GDFLIB_FilterMA_F16_Add_NotSat \n\t"  /* If f32Val2 != f32Val1, then saturates result */
+                        "asrs %0, %0, #31 \n\t"                    /* f16InX >> 16 */
+                        "movs %2, #0x80 \n\t"                      /* f32Val2 = 0x80 */
+                        "rev %2, %2 \n\t"                          /* f32Val2 = 0x80000000 */
+                        "subs %2, %2, #1 \n\t"                     /* f32Val2 = 0x7FFFFFFF */
+                        "subs %2, %2, %0 \n\t"                     /* f32Val2 = 0x7FFFFFFF - f16InX */
                         /* (a32Acc + f16InX) >> u16Sh */
-                        "ldrh %1, [%3, #4] \n"    /* Loads psParam.u16Sh */
-                        "mov %0, %2 \n"           /* f16InX = a32Acc + f16InX */
-                        "asrs %0, %0, %1 \n"      /* f32Val1 = (a32Acc + f16InX) >> u16Sh */
+                    "GDFLIB_FilterMA_F16_Add_NotSat: \n\t"						
+                        "ldrh %1, [%3, #4] \n\t"                   /* Loads psParam.u16Sh */
+
+                        "mov %0, %2 \n\t"                          /* f16InX = a32Acc + f16InX */
+                        "asrs %0, %0, %1 \n\t"                     /* f32Val1 = (a32Acc + f16InX) >> u16Sh */
                         /* (a32Acc + f16InX) - ((a32Acc + f16InX) >> u16Sh)*/
-                        "subs %1, %2, %0 \n"      /* f32Val1 = (a32Acc + f16InX) - ((a32Acc + f16InX) >> u16Sh) */
-                        "subs %2, %2, %1 \n"      /* f32Val2 = f32Val1 - (a32Acc + f16InX) */
-                        "cmp %2, %0 \n"           /* Compares values */
-                        "beq .+10 \n"             /* If values are not equal, then saturates result */
-                        "asrs %1, %0, #31 \n"     /* f32Val1 = f16InX >> 16 */
-                        "movs %2, #0x80 \n"       /* f32Val2 = 0x80 */
-                        "rev %2, %2 \n"           /* f32Val2 = 0x80000000 */
-                        "subs %1, %2, %1 \n"      /* f32Val1 = 0x80000000 - f32Val1 */
-                        "str %1, [%3] \n"         /* Saves new value of psParam.a32Acc */
+                        "subs %1, %2, %0 \n\t"                     /* f32Val1 = (a32Acc + f16InX) - ((a32Acc + f16InX) >> u16Sh) */
+                        "subs %2, %2, %1 \n\t"                     /* f32Val2 = f32Val1 - (a32Acc + f16InX) */
+                        "cmp %2, %0 \n\t"                          /* Compares values */
+                        "beq GDFLIB_FilterMA_F16_Sub_NotSat \n\t"  /* If values are not equal, then saturates result */
+                        "asrs %1, %0, #31 \n\t"                    /* f32Val1 = f16InX >> 16 */
+                        "movs %2, #0x80 \n\t"                      /* f32Val2 = 0x80 */
+                        "rev %2, %2 \n\t"                          /* f32Val2 = 0x80000000 */
+                        "subs %1, %2, %1 \n\t"                     /* f32Val1 = 0x80000000 - f32Val1 */
+                    "GDFLIB_FilterMA_F16_Sub_NotSat: \n\t"
+                        "str %1, [%3] \n\t"                        /* Saves new value of psParam.a32Acc */
                         /* Output saturation */
-                        "sxth %1, %0 \n"          /* Sign extend */
-                        "cmp %1, %0 \n"           /* Compares f32Val1 with f16InX */
-                        "beq .+12 \n"             /* If f32Val1 != f16InX, then saturates result */
-                        "movs %1, #0x80 \n"       /* f32Val1 = 0x80 */
-                        "lsls %1, %1, #8 \n"      /* f32Val1 = 0x8000 */
-                        "asrs %0, %0, #31 \n"     /* f16InX >> 16*/
-                        "subs %1, %1, #1 \n"      /* f32Val1 = f32Val1 - 1 */
-                        "subs %0, %1, %0 \n"      /* f16InX = f32Val1 - f16InX */
-                        #if defined(__GNUC__)     /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "sxth %1, %0 \n\t"                         /* Sign extend */
+                        "cmp %1, %0 \n\t"                          /* Compares f32Val1 with f16InX */
+                        "beq GDFLIB_FilterMA_F16_Res_NotSat \n\t"  /* If f32Val1 != f16InX, then saturates result */
+                        "movs %1, #0x80 \n\t"                      /* f32Val1 = 0x80 */
+                        "lsls %1, %1, #8 \n\t"                     /* f32Val1 = 0x8000 */
+                        "asrs %0, %0, #31 \n\t"                    /* f16InX >> 16*/
+                        "subs %1, %1, #1 \n\t"                     /* f32Val1 = f32Val1 - 1 */
+                        "subs %0, %1, %0 \n\t"                     /* f16InX = f32Val1 - f16InX */
+                    "GDFLIB_FilterMA_F16_Res_NotSat: \n\t"
                         : "+l"(f16InX), "+l"(f32Val1), "+l"(f32Val2): "l"(psParam));
     #endif
 

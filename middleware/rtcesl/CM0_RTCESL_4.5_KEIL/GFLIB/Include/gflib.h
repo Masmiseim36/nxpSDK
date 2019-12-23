@@ -101,7 +101,7 @@ extern "C" {
     #define GFLIB_VectorLimit1_F16(psVectorIn, f16Lim, psVectorOut)                                    GFLIB_VectorLimit1Hw_F16_C(psVectorIn, f16Lim, psVectorOut)
     #define GFLIB_DFlexRampCalcIncr_F16(f16Target, a32Duration, f32IncrSatMot, f32IncrSatGen, psParam) GFLIB_DFlexRampCalcIncrHw_F16_C(f16Target, a32Duration, f32IncrSatMot, f32IncrSatGen, psParam)
     #define GFLIB_FlexRampCalcIncr_F16(f16Target, a32Duration, psParam)                                GFLIB_FlexRampCalcIncrHw_F16_C(f16Target, a32Duration, psParam)                                  
-#else                                                                  
+#elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050)                                                                   
     #define GFLIB_AtanYX_F16(f16Y, f16X, pbErrFlag)                                                    GFLIB_AtanYX_F16_Asm(f16Y, f16X, pbErrFlag)
     #define GFLIB_Sqrt_F16(f16Val)                                                                     GFLIB_Sqrt_F16_C(f16Val)
     #define GFLIB_Sqrt_F16l(f32Val)                                                                    GFLIB_Sqrt_F16l_C(f32Val)

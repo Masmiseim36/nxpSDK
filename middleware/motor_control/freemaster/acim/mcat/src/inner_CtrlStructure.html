@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html style="text-align: center;">     
+  <head>       
+    <title>ContrulStructureTab</title>    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+    <link href="style.css" rel="stylesheet" type="text/css" />      
+    <script type="text/javascript" src="JS_functions\mainInclude.js"></script>
+    <script LANGUAGE="JavaScript" type ="text/javascript">
+      includeJSfiles();
+    </script>
+   </head>     
+  <body id="ControlStructure" onload="innerHTMLonload(); initLoadFormCascade();" background="images/background.png" style="display: inline-block; margin: 10px auto; text-align: center;">                                          
+    <OBJECT id="MCB_PC_Master_Services1" style="display:none;" classid="clsid:48A185F1-FFDB-11D3-80E3-00C04F176153" name="pcm">	     
+    </OBJECT>	
+        <script language="VBScript">
+            Sub pcm_OnVariableChanged(a1,a2)
+            Event1_OnVariableChanged a1,a2
+            End Sub
+        </script>
+    <OBJECT style="display:none;" CLASSID = "clsid:5220cb21-c88d-11cf-b347-00aa00a28331">         
+      <PARAM NAME="LPKPath" VALUE="gmsctls.lpk">         
+    </OBJECT>   
+      
+    <div class="HeadBorder fontTitle" style="width: 740px;">Application Control Structure</div>   
+    <div>    
+              
+   
+     <script>
+        // iframes for control structure block diagram with close button
+        document.write("<iframe id=\"cntrStrucFrameImage\" frameborder=\"1\" marginheight=\"15px\" marginwidth=\"15px\" scrolling=\"no\" src=\"\" style=\"display: none; background-color:white; position:absolute; z-index:10;\"></iframe>");
+        document.write("<iframe id=\"cntrStrucFrameButton\" width=\"120\" height=\"25\" frameborder=\"0\" marginheight=\"1px\" marginwidth=\"0px\" scrolling=\"no\" src=\"\" style=\"display: none; position:absolute;z-index:10;\"></iframe>");
+     </script>
+                      
+      <!-- main application state table-->
+      <table id="ccsTable" style="width: 740px; height: 100px;" class="MainTab">
+          <tr>
+            <td width="30%" align="left" valign="top" style="padding-right: 10px;">
+            <fieldset id="stateControlField" style="width:100%; height:200%;" class="ContBox">
+              <legend class="fontControlLabel">State Control</legend> 
+              <table width="100%" border="0" >
+                <tr> <td width="200"><div class="fontControl">ON</div></td></tr>
+                <tr> <td class="appOff" id="sw_app_onoff" onClick="OnOff_Click()" ></td></tr>
+                <tr> <td width="200"><div class="fontControl">OFF</div></td></tr>
+                <tr> <td> </td></tr>            
+                <tr> <td><div id="appStateLabel" class="appStateLabel">Application State</div></td></tr>
+                 <tr> 
+                 <td align="center" >
+                   <input disabled="disabled" type="button" id="textApplicationState" class="appStateBox" value="READY" onclick="ClearFault()" />     
+                 </td>
+                 </tr> 
+              </table>
+             
+            </fieldset>
+            </td> 
+              
+                 
+            <td width="70%" align="right" valign="top" style="text-align: right; padding-left: 10px;">
+                <form name="CtrlStructPage" >   
+              <fieldset id="ccsField" style="width: 100%; height: 100px; text-align: right;" class="ContBox" >
+              <legend class="fontControlLabel">Cascade Control Structure Composition</legend> 
+                                  		                            
+            <!-- current controller input parameters-->     
+              <table id="ControlStructureTable" border="0"  style="width: 100%; text-align: left;" >  
+                  <div>
+              <script>
+                  document.write(build_VHz_control_structure_line("scalar_ctrl","Scalar Control", "V/rpm<sub>factor</sub>","[%]", "Speed<sub>req</sub>","[rpm]", "Percentage value of a rated V/rpm rate", "Required mechanical speed"));
+                  // Voltage DQ control with position feedback
+                  document.write("<tr><td align=\"center\" colspan =\"5\"><div class=\"CtrlHLines\"></div></td></tr>");
+                  document.write(build_control_structure_line("volt_ctrl","Voltage FOC ",  "u<sub>sd_req</sub>","[V]", "u<sub>sq_req</sub>","[V]", "Required Ud voltage","Required Uq voltage"));
+                  // Current DQ control with position feedback
+                  document.write("<tr><td align=\"center\" colspan =\"5\"><div class=\"CtrlHLines\"></div></td></tr>");
+                  document.write(build_control_structure_line("current_ctrl","Current FOC ",  "i<sub>sd_req</sub>","[A]", "i<sub>sq_req</sub>","[A]", "Required Id current","Required Iq current"));
+                  // Speed controller with limitation
+                  document.write("<tr><td align=\"center\" colspan =\"5\"><div class=\"CtrlHLines\"></div></td></tr>");
+                  document.write(build_control_structure_line("speed_ctrl","Speed FOC ","Speed<sub>req</sub>","[rpm]","","", "","","Required Mechanical speed",""));
+                  // Position / Speed feedback
+                  document.write("<tr><td align=\"center\" colspan =\"5\"><div class=\"CtrlHLines\"></div></td></tr>");
+                  document.write(build_control_structure_line_with_selector("pospe_ctrl","Position & Speed Feedback","Sensor type","","Select the type of Position/Speed feedback"));
+              </script>
+              </div>
+              	<tr><td><br></td></tr>	                            
+              </table>	                               
+              </fieldset>
+              <!-- speed ramp-->     
+              <fieldset id="VHz_ramp" style="display:none; border:3px; color:gray; width: 100%; height: 50%;">
+                <legend class="fontControlLabel">VHz Profile </legend>        
+                <table  border="0" >            
+                  <tr><td>              
+                  <script>
+                    // VHz voltage ramp
+                    document.write( build_constant_line("VHz&nbsp;U&nbsp;boost", "VHz_Uboost", "V/Hz Profile Boost Voltage Scaled"));
+                    document.write( build_constant_line("VHz&nbsp;const", "VHz_const", "V/Hz constant for U required calculation")); 
+                    document.write( build_constant_line("VHz&nbsp;ramp&nbsp;inc", "VHz_ramp_inc", "V/Hz Speed ramp increment called in Current loop"));
+                  </script>	
+                  </td></tr>	                            
+               </table>
+              </fieldset> 
+              </form> 
+              </td>                             
+                                                            
+        </tr> 
+        </table>
+     <span style="visibility: hidden;" face="sans-serif" id="txtErrMsg">       
+      </span>          
+    </div>     
+  </body>
+</html>

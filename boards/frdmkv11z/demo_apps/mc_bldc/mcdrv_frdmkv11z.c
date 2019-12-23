@@ -86,14 +86,14 @@ void MCDRV_Init_M1(void)
 void InitClock(void)
 {
     /* Calculate clock dependant variables for BLDC sensorless control algorithm */
-    g_sClockSetup.ui32SystemClock = 
-        SystemCoreClock / (((SIM->CLKDIV1 & SIM_CLKDIV1_OUTDIV1_MASK) >> SIM_CLKDIV1_OUTDIV1_SHIFT) + 1);
-    g_sClockSetup.ui32BusClock =
-        SystemCoreClock / (((SIM->CLKDIV1 & SIM_CLKDIV1_OUTDIV4_MASK) >> SIM_CLKDIV1_OUTDIV4_SHIFT) + 1);
+    g_sClockSetup.ui32SystemClock = CLOCK_GetFreq(kCLOCK_CoreSysClk);
+    g_sClockSetup.ui32BusClock = CLOCK_GetFreq(kCLOCK_BusClk);
+    
     g_sClockSetup.ui16PwmFreq = PWM_FREQ; /* 20 kHz */
                                              /* PWM module calculated as follows:
                                               * PWM_MOD = PWM_CLOCK / PWM_FREQUNCY = 75 MHz / 20 kHz = 3750 */
     g_sClockSetup.ui16PwmModulo = g_sClockSetup.ui32SystemClock / g_sClockSetup.ui16PwmFreq;
+    g_sClockSetup.ui16PwmDeadTime = (g_sClockSetup.ui32SystemClock / (1000000000U / PWM_DEADTIME) / 4U);   
     g_sClockSetup.ui16CtrlLoopFreq = CTRL_LOOP_FREQ; /* 1 kHz */
 }
 
@@ -150,7 +150,7 @@ void InitFTM0(void)
 
     /* DTPS - deadtime prescaler: 0,1 = 1; 2 = 4; 3 = 16 */
     /* DTVAL - deadtime value (0-63): deadtime period = DTPS x DTVAL */
-    FTM0->DEADTIME = FTM_DEADTIME_DTVAL(63);
+    FTM0->DEADTIME = FTM_DEADTIME_DTPS(2U) | FTM_DEADTIME_DTVAL(g_sClockSetup.ui16PwmDeadTime);
 
     /* Enable generation of trigger when FTM counter is equal to CNTIN register */
     FTM0->EXTTRIG = FTM_EXTTRIG_INITTRIGEN_MASK;

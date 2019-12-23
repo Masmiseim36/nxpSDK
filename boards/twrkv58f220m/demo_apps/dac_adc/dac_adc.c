@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -128,8 +128,6 @@ int main(void)
     BOARD_InitDebugConsole();
     EnableIRQ(DEMO_ADC16_IRQn);
     PRINTF("\r\nDAC ADC Demo!\r\n");
-    PRINTF("\r\nPlease refer to Kinetis SDK Demo Applications User's Guide document,\r\n");
-    PRINTF("\r\nChapter DAC ADC demo, for pins configuration information.\r\n");
     PRINTF("\r\nADC Full Range: %d.\r\n", g_Adc16_12bitFullRange);
 
     PRINTF("\r\nPress any key to start demo.\r\n");

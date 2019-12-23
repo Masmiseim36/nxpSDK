@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html style="text-align: center;">
+  <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <style type="text/css">
+    .xlink {cursor:pointer}
+    //.fontControlLabel {font-size:15px; font-family:verdana; font-weight: normal;text-align: center; font-weight: bold; padding: 4px;}  
+    
+ .hGenButton{
+    padding:0px;
+    border: 1px solid #888888;
+    color: rgb(136,13,19);
+    text-decoration:none;
+    background-color: transparent;  
+    text-align: center;
+    font-size:15px;
+    font-family:verdana;
+    font-weight: bold;
+    border-radius: 3px;
+    width: 400px; 
+    height: 30px;
+    cursor: pointer;
+    border-right: 3px solid #888888;
+    border-bottom: 3px solid #888888;
+}
+
+.hGenButton:hover{  
+    background-color:#DDDDDD;
+ }
+ 
+.hGenButton:active{ 
+    background: #F4F4F4 no-repeat scroll 6px 9px;
+    border-right: 1px solid #888888;
+    border-bottom:  1px solid #888888;
+    border-top: 3px solid #888888;
+    border-left: 3px solid #888888;
+}
+  </style> 
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="JS_functions\mainInclude.js"></script>
+  <script LANGUAGE="JavaScript" type ="text/javascript">
+     includeJSfiles();
+  </script>
+  </head>
+  <body id="HeaderFileTab" onload="" background="images/background.png" style="display: inline-block; margin: 10px auto; text-align: center;">
+       <OBJECT id="MCB_PC_Master_Services1" style="display:none;" classid="clsid:48A185F1-FFDB-11D3-80E3-00C04F176153" name="pcm">	     
+    </OBJECT>	        
+    <OBJECT  style="display:none;" CLASSID = "clsid:5220cb21-c88d-11cf-b347-00aa00a28331">         
+      <PARAM NAME="LPKPath" VALUE="gmsctls.lpk">         
+    </OBJECT>           
+
+  <!--- Header ---> 
+  <div style="width: 740px;">
+  <table width="740px" cellspacing="3px"  > 
+    <tr>
+       <td><input type="button" class="hGenButton" value="Generate Configuration File" name="Save_h" id="Save_h_id" onclick="Save_h_click()" /></td> 
+    </tr>                                               
+  </table>
+  <hr width="740" size="1" color="#8F8F8F" align="left" noshade>
+  <!--- Application roots --->
+  <table width="740px" cellspacing="2px"  border="0" >
+    <tr>
+      <td id = "headTable_Ntab"></td> 
+      <td id = "headTable_Dtab"></td>
+    </tr>
+    <tr>
+        <script>
+              var today       = new Date();                         
+              var mounth      = MounthConverter(today.getMonth());
+              var t;
+              var c = ":";
+              t = today.getHours() + c;
+              t += today.getMinutes() + c;
+              t += today.getSeconds();
+              
+              //get active motor to selct proper prefix
+              var prefixM = getActiveMotor();
+              var prefix = prefixM;
+  
+              /*************** Read application settings from parent document tables ******/   
+              var MotorsNumber    = parent.document.getElementById("MotorsNo").innerText;
+
+              // if single motor app then without prefix
+              //if (MotorsNumber == "Single") prefix = "";
+              document.write(HTML_write_head_line("Description:","Automatically generated file for static configuration of the ACIM FOC application"));
+              document.write(HTML_write_head_line("File Name:","{FM_project_loc}/" + parent.document.getElementById(prefixM + "ProjectPath").innerHTML + prefix.toLowerCase() + "acim_appconfig.h"));
+              document.write(HTML_write_head_line("Date:",""+mounth+ " "+ today.getDate() + ", " + today.getFullYear() + ", " + t+ ""));                              
+              
+        </script>
+    </tr>
+  </table>  
+
+  <hr width="740" size="1" color="#8F8F8F" align="left" noshade>
+  <!--- ************************* Body ************************************ --->
+  
+  <!--- Application Scales --->  
+  <form action="" name="formH">
+  <table width="600px" cellspacing="1px"  border="0" >
+        <script>
+        
+        // input paramters
+        if(testActiveTab('Parameters'))
+            HTML_write_output_blocks('Parameters');
+        
+        // current loop              
+        if(testActiveTab('Current Loop'))
+            HTML_write_output_blocks('Current Loop');
+        
+        // Speed loop              
+        if(testActiveTab('Speed Loop'))
+          HTML_write_output_blocks('Speed Loop');
+      
+        // Speed loop              
+        if(testActiveTab('Flux Loop'))
+          HTML_write_output_blocks('Flux Loop');
+          
+        // Position & Speed Sensors module
+        if(testActiveTab('POSPE Sensors'))
+          HTML_write_output_blocks('POSPE Sensors');  
+        
+        // Sensorless RFO and MRAS
+        if(testActiveTab('Sensorless'))
+          HTML_write_output_blocks('Sensorless');  
+        
+        // Cascade Control Structure              
+        if(testActiveTab('Control Struc'))
+          HTML_write_output_blocks('Control Struc');
+          
+        // MID             
+        if(testActiveTab('MID'))
+          HTML_write_output_blocks('MID');  
+          
+        // FreeMASTER Scales              
+        if(testActiveTab('Parameters'))
+          HTML_write_output_blocks('FM Scales');  
+        
+        </script>	
+    </table>   
+  </form>
+  <hr width="740" size="2" color="#8F8F8F" align="left" noshade>
+
+  <table width="800px" cellspacing="2px"  border="0" >
+    <td>
+        <script>
+              document.write(HTML_write_head_line("End of Header File",""));
+        </script>
+    </td>
+  </table> 
+</div>
+  </body>
+</html>

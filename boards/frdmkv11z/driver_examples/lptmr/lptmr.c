@@ -63,12 +63,12 @@ int main(void)
     uint32_t currentCounter = 0U;
     lptmr_config_t lptmrConfig;
 
-    LED_INIT();
-
     /* Board pin, clock, debug console init */
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
+
+    LED_INIT();
 
     /* Configure LPTMR */
     /*

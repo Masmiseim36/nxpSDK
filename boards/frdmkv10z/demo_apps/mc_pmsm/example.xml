@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<example name="mc_pmsm" category="demo_apps" board_ref="FRDM_KV10Z" version="1.0.0" format_version="2.1">
+  <source path="CMSIS/Include" target_path="CMSIS/Include" type="c_include">
+    <files mask="arm_common_tables.h"/>
+    <files mask="arm_const_structs.h"/>
+    <files mask="arm_math.h"/>
+    <files mask="cmsis_armcc.h"/>
+    <files mask="cmsis_armcc_V6.h"/>
+    <files mask="cmsis_gcc.h"/>
+    <files mask="core_cm0.h"/>
+    <files mask="core_cm0plus.h"/>
+    <files mask="core_cm3.h"/>
+    <files mask="core_cm4.h"/>
+    <files mask="core_cm7.h"/>
+    <files mask="core_cmFunc.h"/>
+    <files mask="core_cmInstr.h"/>
+    <files mask="core_cmSimd.h"/>
+    <files mask="core_sc000.h"/>
+    <files mask="core_sc300.h"/>
+  </source>
+  <source path="boards/frdmkv10z/demo_apps/mc_pmsm" target_path="sources" type="c_include" compiler="arm">
+    <files mask="amclib.h"/>
+    <files mask="gdflib.h"/>
+    <files mask="gflib.h"/>
+    <files mask="gmclib.h"/>
+    <files mask="mlib.h"/>
+  </source>
+  <source path="boards/frdmkv10z/demo_apps/mc_pmsm" target_path="sources" type="c_include">
+    <files mask="board.h"/>
+    <files mask="clock_config.h"/>
+    <files mask="m1_pmsm_appconfig.h"/>
+    <files mask="mcdrv.h"/>
+    <files mask="mcdrv_frdmkv10z.h"/>
+    <files mask="pin_mux.h"/>
+  </source>
+  <source path="boards/frdmkv10z/demo_apps/mc_pmsm" target_path="sources" type="c_include" compiler="gcc">
+    <files mask="AMCLIB_AngleTrackObsrv_F32.h"/>
+    <files mask="AMCLIB_PMSMBemfObsrvDQHw_A32.h"/>
+    <files mask="AMCLIB_PMSMBemfObsrvDQ_A32.h"/>
+    <files mask="AMCLIB_TrackObsrv_F32.h"/>
+    <files mask="GDFLIB_FilterIIR1_F32.h"/>
+    <files mask="GDFLIB_FilterIIR2_F32.h"/>
+    <files mask="GDFLIB_FilterMA_A32.h"/>
+    <files mask="GDFLIB_FilterMA_A32_Asmi.h"/>
+    <files mask="GFLIB_AtanYXHw_A32.h"/>
+    <files mask="GFLIB_AtanYX_A32.h"/>
+    <files mask="GFLIB_Atan_A32.h"/>
+    <files mask="GFLIB_CtrlPIp_A32.h"/>
+    <files mask="GFLIB_DFlexRampHw_A32.h"/>
+    <files mask="GFLIB_DFlexRamp_A32.h"/>
+    <files mask="GFLIB_DRamp_F16.h"/>
+    <files mask="GFLIB_DRamp_F32.h"/>
+    <files mask="GFLIB_FlexRampHw_A32.h"/>
+    <files mask="GFLIB_FlexRamp_A32.h"/>
+    <files mask="GFLIB_Hyst_F16_Asmi.h"/>
+    <files mask="GFLIB_Integrator_A32.h"/>
+    <files mask="GFLIB_Limit_F16.h"/>
+    <files mask="GFLIB_Limit_F32.h"/>
+    <files mask="GFLIB_LowerLimit_F16.h"/>
+    <files mask="GFLIB_LowerLimit_F32.h"/>
+    <files mask="GFLIB_LutPer_F16_Asmi.h"/>
+    <files mask="GFLIB_LutPer_F32.h"/>
+    <files mask="GFLIB_Lut_F16_Asmi.h"/>
+    <files mask="GFLIB_Lut_F32.h"/>
+    <files mask="GFLIB_Ramp_F16.h"/>
+    <files mask="GFLIB_Ramp_F16_Asmi.h"/>
+    <files mask="GFLIB_Ramp_F32.h"/>
+    <files mask="GFLIB_Ramp_F32_Asmi.h"/>
+    <files mask="GFLIB_SinCos_A32.h"/>
+    <files mask="GFLIB_SqrtHw_F16.h"/>
+    <files mask="GFLIB_SqrtHw_F16_Asmi.h"/>
+    <files mask="GFLIB_SqrtHw_F32.h"/>
+    <files mask="GFLIB_SqrtHw_F32_Asmi.h"/>
+    <files mask="GFLIB_Sqrt_F16.h"/>
+    <files mask="GFLIB_Sqrt_F32.h"/>
+    <files mask="GFLIB_UpperLimit_F16.h"/>
+    <files mask="GFLIB_UpperLimit_F32.h"/>
+    <files mask="GFLIB_VectorLimit1Hw_F16.h"/>
+    <files mask="GFLIB_VectorLimit1_F16.h"/>
+    <files mask="GMCLIB_Clark_F16_Asmi.h"/>
+    <files mask="GMCLIB_Decoupling_A32.h"/>
+    <files mask="GMCLIB_ElimDcBusRipHw_A32.h"/>
+    <files mask="GMCLIB_ElimDcBusRipHw_F16.h"/>
+    <files mask="GMCLIB_ElimDcBusRip_A32.h"/>
+    <files mask="GMCLIB_ElimDcBusRip_F16.h"/>
+    <files mask="GMCLIB_Park_F16_Asmi.h"/>
+    <files mask="GMCLIB_Svm_F16.h"/>
+    <files mask="MLIB_Abs_F16.h"/>
+    <files mask="MLIB_Abs_F16_Asmi.h"/>
+    <files mask="MLIB_Abs_F32.h"/>
+    <files mask="MLIB_Abs_F32_Asmi.h"/>
+    <files mask="MLIB_Add4_F16.h"/>
+    <files mask="MLIB_Add4_F16_Asmi.h"/>
+    <files mask="MLIB_Add4_F32.h"/>
+    <files mask="MLIB_Add4_F32_Asmi.h"/>
+    <files mask="MLIB_Add_A32.h"/>
+    <files mask="MLIB_Add_A32_Asmi.h"/>
+    <files mask="MLIB_Add_F16.h"/>
+    <files mask="MLIB_Add_F16_Asmi.h"/>
+    <files mask="MLIB_Add_F32.h"/>
+    <files mask="MLIB_Add_F32_Asmi.h"/>
+    <files mask="MLIB_BiShift_F16.h"/>
+    <files mask="MLIB_BiShift_F16_Asmi.h"/>
+    <files mask="MLIB_BiShift_F32.h"/>
+    <files mask="MLIB_BiShift_F32_Asmi.h"/>
+    <files mask="MLIB_Clb_F16_Asmi.h"/>
+    <files mask="MLIB_Clb_F32.h"/>
+    <files mask="MLIB_Clb_F32_Asmi.h"/>
+    <files mask="MLIB_Conv_F32.h"/>
+    <files mask="MLIB_Div1Q_A32_Asm.h"/>
+    <files mask="MLIB_Div1Q_F16_Asm.h"/>
+    <files mask="MLIB_Div1Q_F32_Asm.h"/>
+    <files mask="MLIB_DivHw1Q_A32_Asm.h"/>
+    <files mask="MLIB_DivHw1Q_F16_Asm.h"/>
+    <files mask="MLIB_DivHw1Q_F32_Asm.h"/>
+    <files mask="MLIB_DivHw_A32_Asm.h"/>
+    <files mask="MLIB_DivHw_F16_Asm.h"/>
+    <files mask="MLIB_DivHw_F32.h"/>
+    <files mask="MLIB_DivHw_F32_Asm.h"/>
+    <files mask="MLIB_Div_A32_Asm.h"/>
+    <files mask="MLIB_Div_F16_Asm.h"/>
+    <files mask="MLIB_Div_F32_Asm.h"/>
+    <files mask="MLIB_Log2_U16_Asmi.h"/>
+    <files mask="MLIB_MMDVSQ.h"/>
+    <files mask="MLIB_Mac4Rnd_F16.h"/>
+    <files mask="MLIB_Mac4Rnd_F16_Asmi.h"/>
+    <files mask="MLIB_Mac4Rnd_F32_Asm.h"/>
+    <files mask="MLIB_Mac4_F32.h"/>
+    <files mask="MLIB_MacRnd_A32.h"/>
+    <files mask="MLIB_MacRnd_A32_Asmi.h"/>
+    <files mask="MLIB_MacRnd_F16.h"/>
+    <files mask="MLIB_MacRnd_F16_Asmi.h"/>
+    <files mask="MLIB_MacRnd_F32.h"/>
+    <files mask="MLIB_MacRnd_F32_Asmi.h"/>
+    <files mask="MLIB_Mac_A32.h"/>
+    <files mask="MLIB_Mac_F16.h"/>
+    <files mask="MLIB_Mac_F16_Asmi.h"/>
+    <files mask="MLIB_Mac_F32.h"/>
+    <files mask="MLIB_Mac_F32_Asmi.h"/>
+    <files mask="MLIB_MnacRnd_A32.h"/>
+    <files mask="MLIB_MnacRnd_A32_Asmi.h"/>
+    <files mask="MLIB_MnacRnd_F16.h"/>
+    <files mask="MLIB_MnacRnd_F16_Asmi.h"/>
+    <files mask="MLIB_MnacRnd_F32.h"/>
+    <files mask="MLIB_MnacRnd_F32_Asmi.h"/>
+    <files mask="MLIB_Mnac_A32.h"/>
+    <files mask="MLIB_Mnac_F16.h"/>
+    <files mask="MLIB_Mnac_F16_Asmi.h"/>
+    <files mask="MLIB_Mnac_F32.h"/>
+    <files mask="MLIB_Mnac_F32_Asmi.h"/>
+    <files mask="MLIB_Msu4Rnd_F16.h"/>
+    <files mask="MLIB_Msu4Rnd_F16_Asmi.h"/>
+    <files mask="MLIB_Msu4Rnd_F32_Asm.h"/>
+    <files mask="MLIB_Msu4_F32.h"/>
+    <files mask="MLIB_MsuRnd_A32.h"/>
+    <files mask="MLIB_MsuRnd_A32_Asmi.h"/>
+    <files mask="MLIB_MsuRnd_F16.h"/>
+    <files mask="MLIB_MsuRnd_F16_Asmi.h"/>
+    <files mask="MLIB_MsuRnd_F32.h"/>
+    <files mask="MLIB_MsuRnd_F32_Asmi.h"/>
+    <files mask="MLIB_Msu_A32.h"/>
+    <files mask="MLIB_Msu_F16.h"/>
+    <files mask="MLIB_Msu_F16_Asmi.h"/>
+    <files mask="MLIB_Msu_F32.h"/>
+    <files mask="MLIB_Msu_F32_Asmi.h"/>
+    <files mask="MLIB_MulRnd_A32.h"/>
+    <files mask="MLIB_MulRnd_A32_Asmi.h"/>
+    <files mask="MLIB_MulRnd_F16.h"/>
+    <files mask="MLIB_MulRnd_F16_Asmi.h"/>
+    <files mask="MLIB_MulRnd_F32.h"/>
+    <files mask="MLIB_MulRnd_F32_Asmi.h"/>
+    <files mask="MLIB_Mul_A32.h"/>
+    <files mask="MLIB_Mul_A32_Asmi.h"/>
+    <files mask="MLIB_Mul_F16.h"/>
+    <files mask="MLIB_Mul_F16_Asmi.h"/>
+    <files mask="MLIB_Mul_F32.h"/>
+    <files mask="MLIB_Mul_F32_Asmi.h"/>
+    <files mask="MLIB_Neg_F16.h"/>
+    <files mask="MLIB_Neg_F16_Asmi.h"/>
+    <files mask="MLIB_Neg_F32.h"/>
+    <files mask="MLIB_Neg_F32_Asmi.h"/>
+    <files mask="MLIB_Rcp1Q_A32_Asm.h"/>
+    <files mask="MLIB_RcpHw1Q_A32_Asmi.h"/>
+    <files mask="MLIB_RcpHw_A32_Asm.h"/>
+    <files mask="MLIB_Rcp_A32_Asm.h"/>
+    <files mask="MLIB_Rnd_F32.h"/>
+    <files mask="MLIB_Rnd_F32_Asmi.h"/>
+    <files mask="MLIB_Sat_A32.h"/>
+    <files mask="MLIB_Sat_A32_Asmi.h"/>
+    <files mask="MLIB_Shift_F16.h"/>
+    <files mask="MLIB_Shift_F16_Asmi.h"/>
+    <files mask="MLIB_Shift_F32.h"/>
+    <files mask="MLIB_Shift_F32_Asmi.h"/>
+    <files mask="MLIB_Sign_F16_Asmi.h"/>
+    <files mask="MLIB_Sign_F32_Asmi.h"/>
+    <files mask="MLIB_Sub4_F16.h"/>
+    <files mask="MLIB_Sub4_F16_Asmi.h"/>
+    <files mask="MLIB_Sub4_F32.h"/>
+    <files mask="MLIB_Sub4_F32_Asmi.h"/>
+    <files mask="MLIB_Sub_A32.h"/>
+    <files mask="MLIB_Sub_A32_Asmi.h"/>
+    <files mask="MLIB_Sub_F16.h"/>
+    <files mask="MLIB_Sub_F16_Asmi.h"/>
+    <files mask="MLIB_Sub_F32.h"/>
+    <files mask="MLIB_Sub_F32_Asmi.h"/>
+    <files mask="PCLIB_Ctrl2P2Z_F16.h"/>
+    <files mask="PCLIB_Ctrl3P3Z_F16.h"/>
+    <files mask="PCLIB_CtrlPID_F16.h"/>
+    <files mask="PCLIB_CtrlPI_F16.h"/>
+    <files mask="PCLIB_CtrlPIandLPFilter_F16.h"/>
+    <files mask="RTCESL_cfg.h"/>
+    <files mask="amclib.h"/>
+    <files mask="amclib_types.h"/>
+    <files mask="asm_mac.h"/>
+    <files mask="gdflib.h"/>
+    <files mask="gdflib_types.h"/>
+    <files mask="gflib.h"/>
+    <files mask="gflib_types.h"/>
+    <files mask="gmclib.h"/>
+    <files mask="gmclib_types.h"/>
+    <files mask="mlib.h"/>
+    <files mask="mlib_types.h"/>
+    <files mask="pclib.h"/>
+    <files mask="pclib_types.h"/>
+  </source>
+  <source path="boards/frdmkv10z/demo_apps/mc_pmsm" target_path="sources" type="c_include" compiler="iar">
+    <files mask="amclib.h"/>
+    <files mask="gdflib.h"/>
+    <files mask="gflib.h"/>
+    <files mask="gmclib.h"/>
+    <files mask="mlib.h"/>
+  </source>
+  <source path="boards/frdmkv10z/demo_apps/mc_pmsm" target_path="doc" type="doc">
+    <files mask="readme.txt"/>
+  </source>
+  <source path="boards/frdmkv10z/demo_apps/mc_pmsm" target_path="sources" type="src">
+    <files mask="board.c"/>
+    <files mask="clock_config.c"/>
+    <files mask="main.c"/>
+    <files mask="mcdrv_frdmkv10z.c"/>
+    <files mask="pin_mux.c"/>
+  </source>
+  <source path="devices/MKV10Z7/arm" target_path="devices/arm" type="src" compiler="arm">
+    <files mask="startup_MKV10Z7.s"/>
+  </source>
+  <source path="devices/MKV10Z7/drivers" target_path="drivers" type="c_include">
+    <files mask="fsl_clock.h"/>
+    <files mask="fsl_common.h"/>
+    <files mask="fsl_dmamux.h"/>
+    <files mask="fsl_flash.h"/>
+    <files mask="fsl_gpio.h"/>
+    <files mask="fsl_port.h"/>
+    <files mask="fsl_sim.h"/>
+    <files mask="fsl_smc.h"/>
+    <files mask="fsl_uart.h"/>
+  </source>
+  <source path="devices/MKV10Z7/drivers" target_path="drivers" type="src">
+    <files mask="fsl_clock.c"/>
+    <files mask="fsl_common.c"/>
+    <files mask="fsl_dmamux.c"/>
+    <files mask="fsl_flash.c"/>
+    <files mask="fsl_gpio.c"/>
+    <files mask="fsl_sim.c"/>
+    <files mask="fsl_smc.c"/>
+    <files mask="fsl_uart.c"/>
+  </source>
+  <source path="devices/MKV10Z7/gcc" target_path="devices/gcc" type="src" compiler="gcc">
+    <files mask="startup_MKV10Z7.S"/>
+  </source>
+  <source path="devices/MKV10Z7/iar" target_path="devices/iar" type="src" compiler="iar">
+    <files mask="startup_MKV10Z7.s"/>
+  </source>
+  <source path="devices/MKV10Z7/utilities" target_path="utilities" type="c_include">
+    <files mask="fsl_debug_console.h"/>
+  </source>
+  <source path="devices/MKV10Z7/utilities" target_path="utilities" type="src">
+    <files mask="fsl_debug_console.c"/>
+  </source>
+  <source path="devices/MKV10Z7" target_path="devices" type="c_include">
+    <files mask="MKV10Z7.h"/>
+    <files mask="MKV10Z7_features.h"/>
+    <files mask="fsl_device_registers.h"/>
+    <files mask="system_MKV10Z7.h"/>
+  </source>
+  <source path="devices/MKV10Z7" target_path="devices" type="src">
+    <files mask="system_MKV10Z7.c"/>
+  </source>
+  <source path="middleware/motor_control_1.1.0/pmsm/mc_algorithms" target_path="motor_control/pmsm/mc_algorithms" type="c_include">
+    <files mask="pmsm_control.h"/>
+  </source>
+  <source path="middleware/motor_control_1.1.0/pmsm/mc_algorithms" target_path="motor_control/pmsm/mc_algorithms" type="src">
+    <files mask="pmsm_control.c"/>
+  </source>
+  <source path="middleware/motor_control_1.1.0/pmsm/mc_drivers" target_path="motor_control/pmsm/mc_drivers" type="c_include">
+    <files mask="mcdrv_adc_adc16.h"/>
+    <files mask="mcdrv_ftm_pwm3ph.h"/>
+  </source>
+  <source path="middleware/motor_control_1.1.0/pmsm/mc_drivers" target_path="motor_control/pmsm/mc_drivers" type="src">
+    <files mask="mcdrv_adc_adc16.c"/>
+    <files mask="mcdrv_ftm_pwm3ph.c"/>
+  </source>
+  <source path="middleware/motor_control_1.1.0/pmsm/mc_state_machine" target_path="motor_control/pmsm/mc_state_machine" type="c_include">
+    <files mask="m1_sm_demo.h"/>
+  </source>
+  <source path="middleware/motor_control_1.1.0/pmsm/mc_state_machine" target_path="motor_control/pmsm/mc_state_machine" type="src">
+    <files mask="m1_sm_demo.c"/>
+  </source>
+  <source path="middleware/motor_control_1.1.0/pmsm/state_machine" target_path="motor_control/pmsm/state_machine" type="c_include">
+    <files mask="state_machine.h"/>
+  </source>
+  <source path="middleware/motor_control_1.1.0/pmsm/state_machine" target_path="motor_control/pmsm/state_machine" type="src">
+    <files mask="state_machine.c"/>
+  </source>
+  <source path="middleware/rtcesl_4.3/CM0_RTCESL_4.3_IAR/AMCLIB" target_path="rtcesl/CM0_RTCESL_4.3_IAR/AMCLIB" type="lib" compiler="iar">
+    <files mask="AMCLIB.a"/>
+  </source>
+  <source path="middleware/rtcesl_4.3/CM0_RTCESL_4.3_IAR/GDFLIB" target_path="rtcesl/CM0_RTCESL_4.3_IAR/GDFLIB" type="lib" compiler="iar">
+    <files mask="GDFLIB.a"/>
+  </source>
+  <source path="middleware/rtcesl_4.3/CM0_RTCESL_4.3_IAR/GFLIB" target_path="rtcesl/CM0_RTCESL_4.3_IAR/GFLIB" type="lib" compiler="iar">
+    <files mask="GFLIB.a"/>
+  </source>
+  <source path="middleware/rtcesl_4.3/CM0_RTCESL_4.3_IAR/GMCLIB" target_path="rtcesl/CM0_RTCESL_4.3_IAR/GMCLIB" type="lib" compiler="iar">
+    <files mask="GMCLIB.a"/>
+  </source>
+  <source path="middleware/rtcesl_4.3/CM0_RTCESL_4.3_IAR/MLIB" target_path="rtcesl/CM0_RTCESL_4.3_IAR/MLIB" type="lib" compiler="iar">
+    <files mask="MLIB.a"/>
+  </source>
+  <source path="middleware/rtcesl_4.3/CM0_RTCESL_4.3_IAR/PCLIB" target_path="rtcesl/CM0_RTCESL_4.3_IAR/PCLIB" type="lib" compiler="iar">
+    <files mask="PCLIB.a"/>
+  </source>
+  <source path="middleware/rtcesl_4.3/CM0_RTCESL_4.3_KDS/AMCLIB" target_path="rtcesl/CM0_RTCESL_4.3_KDS/AMCLIB" type="lib" compiler="gcc">
+    <files mask="libAMCLIB.a"/>
+  </source>
+  <source path="middleware/rtcesl_4.3/CM0_RTCESL_4.3_KDS/GDFLIB" target_path="rtcesl/CM0_RTCESL_4.3_KDS/GDFLIB" type="lib" compiler="gcc">
+    <files mask="libGDFLIB.a"/>
+  </source>
+  <source path="middleware/rtcesl_4.3/CM0_RTCESL_4.3_KDS/GFLIB" target_path="rtcesl/CM0_RTCESL_4.3_KDS/GFLIB" type="lib" compiler="gcc">
+    <files mask="libGFLIB.a"/>
+  </source>
+  <source path="middleware/rtcesl_4.3/CM0_RTCESL_4.3_KDS/GMCLIB" target_path="rtcesl/CM0_RTCESL_4.3_KDS/GMCLIB" type="lib" compiler="gcc">
+    <files mask="libGMCLIB.a"/>
+  </source>
+  <source path="middleware/rtcesl_4.3/CM0_RTCESL_4.3_KDS/MLIB" target_path="rtcesl/CM0_RTCESL_4.3_KDS/MLIB" type="lib" compiler="gcc">
+    <files mask="libMLIB.a"/>
+  </source>
+  <source path="middleware/rtcesl_4.3/CM0_RTCESL_4.3_KDS/PCLIB" target_path="rtcesl/CM0_RTCESL_4.3_KDS/PCLIB" type="lib" compiler="gcc">
+    <files mask="libPCLIB.a"/>
+  </source>
+  <source path="middleware/rtcesl_4.3/CM0_RTCESL_4.3_KEIL/AMCLIB" target_path="rtcesl/CM0_RTCESL_4.3_KEIL/AMCLIB" type="lib" compiler="arm">
+    <files mask="AMCLIB.lib"/>
+  </source>
+  <source path="middleware/rtcesl_4.3/CM0_RTCESL_4.3_KEIL/GDFLIB" target_path="rtcesl/CM0_RTCESL_4.3_KEIL/GDFLIB" type="lib" compiler="arm">
+    <files mask="GDFLIB.lib"/>
+  </source>
+  <source path="middleware/rtcesl_4.3/CM0_RTCESL_4.3_KEIL/GFLIB" target_path="rtcesl/CM0_RTCESL_4.3_KEIL/GFLIB" type="lib" compiler="arm">
+    <files mask="GFLIB.lib"/>
+  </source>
+  <source path="middleware/rtcesl_4.3/CM0_RTCESL_4.3_KEIL/GMCLIB" target_path="rtcesl/CM0_RTCESL_4.3_KEIL/GMCLIB" type="lib" compiler="arm">
+    <files mask="GMCLIB.lib"/>
+  </source>
+  <source path="middleware/rtcesl_4.3/CM0_RTCESL_4.3_KEIL/MLIB" target_path="rtcesl/CM0_RTCESL_4.3_KEIL/MLIB" type="lib" compiler="arm">
+    <files mask="MLIB.lib"/>
+  </source>
+  <source path="middleware/rtcesl_4.3/CM0_RTCESL_4.3_KEIL/PCLIB" target_path="rtcesl/CM0_RTCESL_4.3_KEIL/PCLIB" type="lib" compiler="arm">
+    <files mask="PCLIB.lib"/>
+  </source>
+  <include_paths>
+    <include path="CMSIS/Include"/>
+    <include path="devices"/>
+    <include path="drivers"/>
+    <include path="motor_control/pmsm/mc_algorithms"/>
+    <include path="motor_control/pmsm/mc_drivers"/>
+    <include path="motor_control/pmsm/mc_state_machine"/>
+    <include path="motor_control/pmsm/state_machine"/>
+    <include path="rtcesl/CM0_RTCESL_4.3_IAR/AMCLIB" compiler="iar"/>
+    <include path="rtcesl/CM0_RTCESL_4.3_IAR/GDFLIB" compiler="iar"/>
+    <include path="rtcesl/CM0_RTCESL_4.3_IAR/GFLIB" compiler="iar"/>
+    <include path="rtcesl/CM0_RTCESL_4.3_IAR/GMCLIB" compiler="iar"/>
+    <include path="rtcesl/CM0_RTCESL_4.3_IAR/MLIB" compiler="iar"/>
+    <include path="rtcesl/CM0_RTCESL_4.3_IAR/PCLIB" compiler="iar"/>
+    <include path="rtcesl/CM0_RTCESL_4.3_KDS/AMCLIB" compiler="gcc"/>
+    <include path="rtcesl/CM0_RTCESL_4.3_KDS/GDFLIB" compiler="gcc"/>
+    <include path="rtcesl/CM0_RTCESL_4.3_KDS/GFLIB" compiler="gcc"/>
+    <include path="rtcesl/CM0_RTCESL_4.3_KDS/GMCLIB" compiler="gcc"/>
+    <include path="rtcesl/CM0_RTCESL_4.3_KDS/MLIB" compiler="gcc"/>
+    <include path="rtcesl/CM0_RTCESL_4.3_KDS/PCLIB" compiler="gcc"/>
+    <include path="rtcesl/CM0_RTCESL_4.3_KEIL/AMCLIB" compiler="arm"/>
+    <include path="rtcesl/CM0_RTCESL_4.3_KEIL/GDFLIB" compiler="arm"/>
+    <include path="rtcesl/CM0_RTCESL_4.3_KEIL/GFLIB" compiler="arm"/>
+    <include path="rtcesl/CM0_RTCESL_4.3_KEIL/GMCLIB" compiler="arm"/>
+    <include path="rtcesl/CM0_RTCESL_4.3_KEIL/MLIB" compiler="arm"/>
+    <include path="rtcesl/CM0_RTCESL_4.3_KEIL/PCLIB" compiler="arm"/>
+    <include path="sources" compiler="arm"/>
+    <include path="sources"/>
+    <include path="sources" compiler="gcc"/>
+    <include path="sources" compiler="iar"/>
+    <include path="utilities"/>
+  </include_paths>
+</example>

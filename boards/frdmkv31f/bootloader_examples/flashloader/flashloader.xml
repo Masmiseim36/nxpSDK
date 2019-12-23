@@ -2,6 +2,8 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MKV31F51212"/>
+    <definition extID="component.osa_bm.MKV31F51212"/>
     <definition extID="device.MKV31F51212_CMSIS.MKV31F51212"/>
     <definition extID="middleware.mcu-boot.MKV31F51212_sources.MKV31F51212"/>
     <definition extID="middleware.mcu-boot.MKV31F51212_startup.MKV31F51212"/>
@@ -12,6 +14,7 @@
     <definition extID="middleware.mcu-boot.src_startup.MKV31F51212"/>
     <definition extID="platform.Include_common.MKV31F51212"/>
     <definition extID="platform.Include_core_cm4.MKV31F51212"/>
+    <definition extID="platform.Include_dsp.MKV31F51212"/>
     <definition extID="platform.drivers.clock.MKV31F51212"/>
     <definition extID="platform.drivers.common.MKV31F51212"/>
     <definition extID="platform.drivers.crc.MKV31F51212"/>
@@ -23,9 +26,10 @@
     <definition extID="platform.drivers.uart.MKV31F51212"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
+    <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmkv31f_flashloader" name="flashloader" category="bootloader_examples" dependency="middleware.mcu-boot.postaction.MKV31F51212 platform.drivers.clock.MKV31F51212 platform.drivers.flash.MKV31F51212 device.MKV31F51212_CMSIS.MKV31F51212 platform.drivers.uart.MKV31F51212 platform.drivers.gpio.MKV31F51212 platform.drivers.i2c.MKV31F51212 platform.drivers.port.MKV31F51212 platform.drivers.dspi.MKV31F51212 platform.drivers.crc.MKV31F51212 middleware.mcu-boot.MKV31F51212_startup.MKV31F51212 middleware.mcu-boot.bootsources.MKV31F51212 middleware.mcu-boot.bootsources_kinetis.MKV31F51212 middleware.mcu-boot.MKV31F51212_sources.MKV31F51212 middleware.mcu-boot.src_startup.MKV31F51212 middleware.mcu-boot.drv_microseconds.MKV31F51212 platform.drivers.common.MKV31F51212 platform.Include_core_cm4.MKV31F51212 platform.Include_common.MKV31F51212">
+  <example id="frdmkv31f_flashloader" name="flashloader" category="bootloader_examples" dependency="middleware.mcu-boot.postaction.MKV31F51212 platform.drivers.clock.MKV31F51212 platform.drivers.flash.MKV31F51212 device.MKV31F51212_CMSIS.MKV31F51212 platform.drivers.uart.MKV31F51212 platform.drivers.gpio.MKV31F51212 platform.drivers.i2c.MKV31F51212 platform.drivers.port.MKV31F51212 platform.drivers.dspi.MKV31F51212 platform.drivers.crc.MKV31F51212 middleware.mcu-boot.MKV31F51212_startup.MKV31F51212 middleware.mcu-boot.bootsources.MKV31F51212 middleware.mcu-boot.bootsources_kinetis.MKV31F51212 middleware.mcu-boot.MKV31F51212_sources.MKV31F51212 middleware.mcu-boot.src_startup.MKV31F51212 middleware.mcu-boot.drv_microseconds.MKV31F51212 component.osa_bm.MKV31F51212 platform.drivers.common.MKV31F51212 platform.Include_core_cm4.MKV31F51212 platform.Include_common.MKV31F51212 platform.Include_dsp.MKV31F51212 component.lists.MKV31F51212">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -56,10 +60,11 @@
           <value>gnu.c.optimization.level.size</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
-          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
           <value>CPU_MKV31F512VLL12</value>
+          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
           <value>BL_TARGET_RAM</value>
           <value>FRDM_KV31F</value>
+          <value>FSL_OSA_BM_TIMER_CONFIG=FSL_OSA_BM_TIMER_NONE</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -97,8 +102,14 @@
         <option id="com.crt.advproject.link.gcc.hdrlib" type="enum">
           <value>com.crt.advproject.gcc.link.hdrlib.newlibnano.none</value>
         </option>
+        <option id="com.crt.advproject.link.toram" type="boolean">
+          <value>true</value>
+        </option>
       </toolchainSetting>
     </toolchainSettings>
+    <source path="boards/frdmkv31f/bootloader_examples/flashloader/armgcc" target_path="middleware/mcu-boot" type="linker" toolchain="armgcc">
+      <files mask="MKV31F512xxx12_ram_flashloader.ld"/>
+    </source>
     <source path="boards/frdmkv31f/bootloader_examples/flashloader/iar" target_path="middleware/mcu-boot" type="linker" toolchain="iar">
       <files mask="MKV31F512xxx12_ram_flashloader.icf"/>
     </source>

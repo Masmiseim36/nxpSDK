@@ -15,11 +15,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v5.0
+product: Pins v7.0
 processor: MKV58F1M0xxx24
 package_id: MKV58F1M0VLQ24
 mcu_data: ksdk2_0
-processor_version: 5.0.0
+processor_version: 0.7.1
 board: TWR-KV58F220M
 pin_labels:
 - {pin_num: '139', pin_signal: PTD10/UART5_RTS_b/FLEXPWM0_A2/FB_A18, label: PWM_A2, identifier: PWM_A2}

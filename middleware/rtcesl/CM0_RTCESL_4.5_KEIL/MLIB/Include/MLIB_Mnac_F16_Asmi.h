@@ -61,32 +61,28 @@ static inline frac16_t MLIB_MnacSat_F16_FAsmi(register frac16_t f16Accum,
                         ble SatEnd                          /* If f16Accum >= 0xFFFF8000, then goes to SatEnd */
                         mov f16Accum, f16Mult1              /* If f16Accum < 0xFFFF8000, then f16Mult1 = 0xFFFF8000 */
                      SatEnd: };
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax unified \n"            /* Using unified asm syntax */
-                        #endif
-                        "sxth %0, %0 \n"                    /* Converts 16-bit input to 32-bit */
-                        "sxth %1, %1 \n"                    /* Converts 16-bit input to 32-bit */
-                        "sxth %2, %2 \n"                    /* Converts 16-bit input to 32-bit */
-                        "muls %1, %1, %2 \n"                /* f16Mult1 * f16Mult2 */
-                        "asrs %1, %1, #15 \n"               /* f16Mult1 >> 15 */
-                        "subs %0, %1, %0 \n"                /* f16Mult1 * f16Mult2 - f16Accum */
+                        "sxth %0, %0 \n\t"                    /* Converts 16-bit input to 32-bit */
+                        "sxth %1, %1 \n\t"                    /* Converts 16-bit input to 32-bit */
+                        "sxth %2, %2 \n\t"                    /* Converts 16-bit input to 32-bit */
+                        "muls %1, %1, %2 \n\t"                /* f16Mult1 * f16Mult2 */
+                        "asrs %1, %1, #15 \n\t"               /* f16Mult1 >> 15 */
+                        "subs %0, %1, %0 \n\t"                /* f16Mult1 * f16Mult2 - f16Accum */
                         
-                        "movs %1, #128 \n"                  /* f16Mult1 = 0x80 */
-                        "lsls %1, %1, #8 \n"                /* f16Mult1 = 0x8000 */
+                        "movs %1, #128 \n\t"                  /* f16Mult1 = 0x80 */
+                        "lsls %1, %1, #8 \n\t"                /* f16Mult1 = 0x8000 */
                             
-                        "cmp %1, %0 \n"                     /* Compares f16Accum with 0x8000 */
-                        "bgt .+6 \n"                        /* If f16Accum < 0x8000, then jumps through two commands */
-                        "subs %0, %1, #1 \n"                /* If f16Accum >= 0x8000, then f16Accum = 0x7FFF */
-                        "b .+10 \n"                         /* Jumps through four commands */
-                        "sxth %1, %1 \n"                    /* f16Mult1 = 0xFFFF8000 */
-                        "cmp %1, %0 \n"                     /* Compares f16Accum with 0xFFFF8000 */
-                        "ble .+4 \n"                        /* If f16Accum >= 0xFFFF8000, then jumps through next commands */
-                        "mov %0, %1 \n"                     /* If f16Accum < 0xFFFF8000, then f16Accum = 0xFFFF8000 */
-                        #if defined(__GNUC__)               /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "cmp %1, %0 \n\t"                     /* Compares f16Accum with 0x8000 */
+                        "bgt MLIB_MnacSat_F16_NegTest \n\t"   /* If f16Accum < 0x8000, then jumps through two commands */
+                        "subs %0, %1, #1 \n\t"                /* If f16Accum >= 0x8000, then f16Accum = 0x7FFF */
+                        "b MLIB_MnacSat_F16_SatEnd \n\t"      /* Jumps through four commands */
+					"MLIB_MnacSat_F16_NegTest: \n\t"
+                        "sxth %1, %1 \n\t"                    /* f16Mult1 = 0xFFFF8000 */
+                        "cmp %1, %0 \n\t"                     /* Compares f16Accum with 0xFFFF8000 */
+                        "ble MLIB_MnacSat_F16_SatEnd \n\t"    /* If f16Accum >= 0xFFFF8000, then jumps through next commands */
+                        "mov %0, %1 \n\t"                     /* If f16Accum < 0xFFFF8000, then f16Accum = 0xFFFF8000 */
+					"MLIB_MnacSat_F16_SatEnd: \n\t"
                         : "+l"(f16Accum), "+l"(f16Mult1), "+l"(f16Mult2):);
     #endif
 

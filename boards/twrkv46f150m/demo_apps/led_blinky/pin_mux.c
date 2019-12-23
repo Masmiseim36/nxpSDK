@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,17 +14,19 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.0
+product: Pins v6.0
 processor: MKV46F256xxx16
 package_id: MKV46F256VLL16
 mcu_data: ksdk2_0
-processor_version: 0.0.8
+processor_version: 6.0.1
+board: TWR-KV46F150M
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
 
 #include "fsl_common.h"
 #include "fsl_port.h"
+#include "fsl_gpio.h"
 #include "pin_mux.h"
 
 /* FUNCTION ************************************************************************************************************
@@ -42,9 +44,9 @@ void BOARD_InitBootPins(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins:
-- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', prefix: BOARD_, coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: '93', peripheral: GPIOD, signal: 'GPIO, 0', pin_signal: PTD0/LLWU_P12/SPI0_PCS0/FTM3_CH0/FTM0_CH0/FlexPWM_A0}
+  - {pin_num: '93', peripheral: GPIOD, signal: 'GPIO, 0', pin_signal: PTD0/LLWU_P12/SPI0_PCS0/FTM3_CH0/FTM0_CH0/FlexPWM_A0, direction: OUTPUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -60,8 +62,15 @@ void BOARD_InitPins(void)
     /* Port D Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortD);
 
+    gpio_pin_config_t LED_GREEEN1_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PTD0 (pin 93)  */
+    GPIO_PinInit(BOARD_LED_GREEEN1_GPIO, BOARD_LED_GREEEN1_PIN, &LED_GREEEN1_config);
+
     /* PORTD0 (pin 93) is configured as PTD0 */
-    PORT_SetPinMux(PORTD, 0U, kPORT_MuxAsGpio);
+    PORT_SetPinMux(BOARD_LED_GREEEN1_PORT, BOARD_LED_GREEEN1_PIN, kPORT_MuxAsGpio);
 }
 /***********************************************************************************************************************
  * EOF

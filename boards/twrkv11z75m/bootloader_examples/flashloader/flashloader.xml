@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MKV11Z7"/>
+    <definition extID="component.osa_bm.MKV11Z7"/>
+    <definition extID="device.MKV11Z7_CMSIS.MKV11Z7"/>
+    <definition extID="middleware.mcu-boot.MKV11Z7_sources.MKV11Z7"/>
+    <definition extID="middleware.mcu-boot.MKV11Z7_startup.MKV11Z7"/>
+    <definition extID="middleware.mcu-boot.bootsources.MKV11Z7"/>
+    <definition extID="middleware.mcu-boot.bootsources_kinetis.MKV11Z7"/>
+    <definition extID="middleware.mcu-boot.drv_microseconds.MKV11Z7"/>
+    <definition extID="middleware.mcu-boot.postaction.MKV11Z7"/>
+    <definition extID="middleware.mcu-boot.src_startup.MKV11Z7"/>
+    <definition extID="platform.Include_common.MKV11Z7"/>
+    <definition extID="platform.Include_core_cm0plus.MKV11Z7"/>
+    <definition extID="platform.Include_dsp.MKV11Z7"/>
+    <definition extID="platform.drivers.clock.MKV11Z7"/>
+    <definition extID="platform.drivers.common.MKV11Z7"/>
+    <definition extID="platform.drivers.crc.MKV11Z7"/>
+    <definition extID="platform.drivers.dspi.MKV11Z7"/>
+    <definition extID="platform.drivers.flash.MKV11Z7"/>
+    <definition extID="platform.drivers.flexcan.MKV11Z7"/>
+    <definition extID="platform.drivers.gpio.MKV11Z7"/>
+    <definition extID="platform.drivers.i2c.MKV11Z7"/>
+    <definition extID="platform.drivers.port.MKV11Z7"/>
+    <definition extID="platform.drivers.uart.MKV11Z7"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+  </externalDefinitions>
+  <example id="twrkv11z75m_flashloader" name="flashloader" category="bootloader_examples" dependency="middleware.mcu-boot.postaction.MKV11Z7 platform.drivers.clock.MKV11Z7 platform.drivers.flash.MKV11Z7 device.MKV11Z7_CMSIS.MKV11Z7 platform.drivers.uart.MKV11Z7 platform.drivers.gpio.MKV11Z7 platform.drivers.i2c.MKV11Z7 platform.drivers.port.MKV11Z7 platform.drivers.dspi.MKV11Z7 platform.drivers.crc.MKV11Z7 platform.drivers.flexcan.MKV11Z7 middleware.mcu-boot.MKV11Z7_startup.MKV11Z7 middleware.mcu-boot.bootsources.MKV11Z7 middleware.mcu-boot.bootsources_kinetis.MKV11Z7 middleware.mcu-boot.MKV11Z7_sources.MKV11Z7 middleware.mcu-boot.src_startup.MKV11Z7 middleware.mcu-boot.drv_microseconds.MKV11Z7 component.osa_bm.MKV11Z7 platform.drivers.common.MKV11Z7 platform.Include_core_cm0plus.MKV11Z7 platform.Include_common.MKV11Z7 platform.Include_dsp.MKV11Z7 component.lists.MKV11Z7">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <buildSteps>
+          <postBuildStep>arm-none-eabi-objcopy -I elf32-littlearm -O binary "${ProjName}.axf" "${ProjName}.bin"; python ../postaction/create_fl_image_mcux.py "${ProjName}.axf" "${ProjName}.bin" "flashloader_image.c"; mkdir -p "../../${ProjName}_loader/Release/"; cp "flashloader_image.c" "../../${ProjName}_loader/Release/"</postBuildStep>
+        </buildSteps>
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.none</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.none</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.size</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.size</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MKV11Z128VLH7</value>
+          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
+          <value>BL_TARGET_RAM</value>
+          <value>TWR_KV11Z7</value>
+          <value>FSL_OSA_BM_TIMER_CONFIG=FSL_OSA_BM_TIMER_NONE</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>false</value>
+          <value>false</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.none</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="gnu.c.link.option.other" type="stringList">
+          <value>--gc-sections</value>
+          <value>-Map=${BuildArtifactFileBaseName}.map</value>
+          <value>--defsym=__ram_vector_table__=1</value>
+        </option>
+        <option id="com.crt.advproject.gas.hdrlib" type="enum">
+          <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gas.specs" type="enum">
+          <value>com.crt.advproject.gas.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.specs" type="enum">
+          <value>com.crt.advproject.gcc.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.link.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.link.hdrlib.newlibnano.none</value>
+        </option>
+        <option id="com.crt.advproject.link.toram" type="boolean">
+          <value>true</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <source path="boards/twrkv11z75m/bootloader_examples/flashloader/armgcc" target_path="middleware/mcu-boot" type="linker" toolchain="armgcc">
+      <files mask="MKV11Z128xxx7_ram_flashloader.ld"/>
+    </source>
+    <source path="boards/twrkv11z75m/bootloader_examples/flashloader/iar" target_path="middleware/mcu-boot" type="linker" toolchain="iar">
+      <files mask="MKV11Z128xxx7_ram_flashloader.icf"/>
+    </source>
+    <source path="boards/twrkv11z75m/bootloader_examples/flashloader/mcux" target_path="middleware/mcu-boot" type="linker" toolchain="mcuxpresso">
+      <files mask="MKV11Z128xxx7_ram_flashloader.ld"/>
+    </source>
+    <source path="boards/twrkv11z75m/bootloader_examples/flashloader/mdk" target_path="middleware/mcu-boot" type="linker" toolchain="mdk">
+      <files mask="MKV11Z128xxx7_ram_flashloader.scf"/>
+    </source>
+  </example>
+</ksdk:examples>

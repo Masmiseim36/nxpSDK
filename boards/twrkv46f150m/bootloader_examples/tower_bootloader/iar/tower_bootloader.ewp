@@ -185,6 +185,7 @@
           <state>TOWER</state>
           <state>BL_TARGET_FLASH</state>
           <state>TWR_KV46F150m</state>
+          <state>FSL_OSA_BM_TIMER_CONFIG=FSL_OSA_BM_TIMER_NONE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -338,7 +339,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1167,6 +1170,7 @@
           <state>TOWER</state>
           <state>BL_TARGET_FLASH</state>
           <state>TWR_KV46F150m</state>
+          <state>FSL_OSA_BM_TIMER_CONFIG=FSL_OSA_BM_TIMER_NONE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1243,7 +1247,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -1320,7 +1324,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1486,6 +1492,7 @@
         </option>
         <option>
           <name>ADefines</name>
+          <state>NDEBUG</state>
         </option>
         <option>
           <name>AList</name>
@@ -2298,6 +2305,9 @@
       <group>
         <name>src</name>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/src/debug_util.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/src/fsl_assert.c</name>
         </file>
         <file>
@@ -2370,24 +2380,45 @@
     </file>
   </group>
   <group>
+    <name>component</name>
+    <group>
+      <name>osa</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+      </file>
+    </group>
+  </group>
+  <group>
     <name>CMSIS</name>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm4.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_const_structs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
@@ -2402,6 +2433,9 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
     </file>
     <file>
@@ -2412,6 +2446,15 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_const_structs.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
     </file>
   </group>
 </project>

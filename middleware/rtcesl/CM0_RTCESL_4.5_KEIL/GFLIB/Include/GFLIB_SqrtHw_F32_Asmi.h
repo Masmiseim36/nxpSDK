@@ -73,33 +73,27 @@ static inline frac16_t GFLIB_SqrtHw_F16l_FAsmi(register frac32_t f32Val)
                         cmp     f32Temp1, f32Temp2           /* Compares f32Temp1 and f32Temp2 */
                         bne     SqrtHw_F16l_Recount          /* If f32Temp1 != f32Temp2, then goes to SqrtHw_F16l_Recount */
                     SqrtHw_F16l_End: };
-    #else
-        __asm volatile(
-                        #if defined(__GNUC__)                /* For GCC compiler */
-                            ".syntax unified \n"             /* Using unified asm syntax */
-                        #endif
-                        "movs    %1, #0 \n"                  /* f16Result = 0 */
-                        "asrs    %0, %0, #1 \n"              /* f32Val >> 1 */
-                        "bmi     SqrtHw_F16l_End \n"         /* If f32Val < 0, then goes to SqrtHw_F16l_End */
-                        "ldrh    %2, [%4] \n"                /* f32Temp1 = gu16CntMmdvsq */
-                    "SqrtHw_F16l_Recount: \n"
-                        "adds    %3, %2, #1 \n"              /* f32Temp2 = gu16CntMmdvsq + 1 */
-                        "strh    %3, [%4] \n"                /* gu16CntMmdvsq = f32Temp2 */
-                        "movs    %2, #0 \n"                  /* f32TestVal = 0 */
-                        "str     %2, [%5, #8] \n"            /* MMDVSQ_CSR = 0x00000000 */
-                        "str     %0, [%5, #16] \n"           /* RTCESL_MMDVSQ_RCND = f32Val */
-                    "SqrtHw_F16l_Wait: \n"
-                        "ldr     %2, [%5, #8] \n"            /* f32Temp1 = MMDVSQ_CSR */
-                        "lsrs    %2, %2, #31 \n"             /* f32Temp1 >> 31*/
-                        "bne     SqrtHw_F16l_Wait \n"        /* If f32Temp1 != 0, then goes to SqrtHw_F16l_Wait */
-                        "ldr     %1, [%5, #12] \n"           /* f16Result = MMDVSQ_RES */
-                        "ldrh    %2, [%4] \n"                /* f32Temp1 = gu16CntMmdvsq */
-                        "cmp     %2, %3 \n"                  /* Compares f32Temp1 and f32Temp2 */
-                        "bne     SqrtHw_F16l_Recount \n"     /* If f32Temp1 != f32Temp2, then goes to SqrtHw_F16l_Recount */
-                    "SqrtHw_F16l_End: \n"
-                        #if defined(__GNUC__)                /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
+        __asm volatile( 
+                        "movs    %1, #0 \n\t"                    /* f16Result = 0 */
+                        "asrs    %0, %0, #1 \n\t"                /* f32Val >> 1 */
+                        "bmi     GFLIB_SqrtHw_F16l_End \n\t"     /* If f32Val < 0, then goes to GFLIB_SqrtHw_F16l_End */
+                        "ldrh    %2, [%4] \n\t"                  /* f32Temp1 = gu16CntMmdvsq */
+                    "GFLIB_SqrtHw_F16l_Recount: \n\t"       
+                        "adds    %3, %2, #1 \n\t"                /* f32Temp2 = gu16CntMmdvsq + 1 */
+                        "strh    %3, [%4] \n\t"                  /* gu16CntMmdvsq = f32Temp2 */
+                        "movs    %2, #0 \n\t"                    /* f32TestVal = 0 */
+                        "str     %2, [%5, #8] \n\t"              /* MMDVSQ_CSR = 0x00000000 */
+                        "str     %0, [%5, #16] \n\t"             /* RTCESL_MMDVSQ_RCND = f32Val */
+                    "GFLIB_SqrtHw_F16l_Wait: \n\t"       
+                        "ldr     %2, [%5, #8] \n\t"              /* f32Temp1 = MMDVSQ_CSR */
+                        "lsrs    %2, %2, #31 \n\t"               /* f32Temp1 >> 31*/
+                        "bne     GFLIB_SqrtHw_F16l_Wait \n\t"    /* If f32Temp1 != 0, then goes to GFLIB_SqrtHw_F16l_Wait */
+                        "ldr     %1, [%5, #12] \n\t"             /* f16Result = MMDVSQ_RES */
+                        "ldrh    %2, [%4] \n\t"                  /* f32Temp1 = gu16CntMmdvsq */
+                        "cmp     %2, %3 \n\t"                    /* Compares f32Temp1 and f32Temp2 */
+                        "bne     GFLIB_SqrtHw_F16l_Recount \n\t" /* If f32Temp1 != f32Temp2, then goes to GFLIB_SqrtHw_F16l_Recount */
+                    "GFLIB_SqrtHw_F16l_End: \n\t"
                         : "+l"(f32Val), "+l"(f16Result), "+l"(f32Temp1), "+l"(f32Temp2): "l"(&gu16CntMmdvsq), "l"(f32BasePtr):);
     #endif
     return f16Result;

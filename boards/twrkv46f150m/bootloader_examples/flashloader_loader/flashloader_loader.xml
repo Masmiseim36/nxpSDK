@@ -8,14 +8,16 @@
     <definition extID="middleware.mcu-boot.src_startup.MKV46F16"/>
     <definition extID="platform.Include_common.MKV46F16"/>
     <definition extID="platform.Include_core_cm4.MKV46F16"/>
+    <definition extID="platform.Include_dsp.MKV46F16"/>
     <definition extID="platform.drivers.clock.MKV46F16"/>
     <definition extID="platform.drivers.common.MKV46F16"/>
     <definition extID="platform.drivers.uart.MKV46F16"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
+    <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="twrkv46f150m_flashloader_loader" name="flashloader_loader" category="bootloader_examples" dependency="platform.drivers.clock.MKV46F16 device.MKV46F16_CMSIS.MKV46F16 middleware.mcu-boot.MKV46F16_startup.MKV46F16 middleware.mcu-boot.loadersources.MKV46F16 platform.drivers.uart.MKV46F16 middleware.mcu-boot.src_startup.MKV46F16 platform.drivers.common.MKV46F16 platform.Include_core_cm4.MKV46F16 platform.Include_common.MKV46F16">
+  <example id="twrkv46f150m_flashloader_loader" name="flashloader_loader" category="bootloader_examples" dependency="platform.drivers.clock.MKV46F16 device.MKV46F16_CMSIS.MKV46F16 middleware.mcu-boot.MKV46F16_startup.MKV46F16 middleware.mcu-boot.loadersources.MKV46F16 platform.drivers.uart.MKV46F16 middleware.mcu-boot.src_startup.MKV46F16 platform.drivers.common.MKV46F16 platform.Include_core_cm4.MKV46F16 platform.Include_common.MKV46F16 platform.Include_dsp.MKV46F16">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -43,8 +45,8 @@
           <value>gnu.c.optimization.level.size</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
-          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
           <value>CPU_MKV46F256VLL16</value>
+          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
           <value>BL_TARGET_FLASH</value>
           <value>TWR_KV46F150M</value>
         </option>
@@ -85,6 +87,9 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <source path="boards/twrkv46f150m/bootloader_examples/flashloader_loader/armgcc" target_path="middleware/mcu-boot" type="linker" toolchain="armgcc">
+      <files mask="MKV46F256xxx16_flashloader_loader.ld"/>
+    </source>
     <source path="boards/twrkv46f150m/bootloader_examples/flashloader_loader/iar" target_path="middleware/mcu-boot" type="linker" toolchain="iar">
       <files mask="MKV46F256xxx16_flashloader_loader.icf"/>
     </source>

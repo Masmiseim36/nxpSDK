@@ -47,19 +47,14 @@ static inline frac16_t MLIB_NegSat_F16_FAsmi(register frac16_t f16Val)
                         subs f16Val, f16Val, #1         /* Compares f16Val with 0x00008000 */
         SatEnd: };
 
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax unified \n"        /* Using unified asm syntax */
-                        #endif
-                        "sxth %0, %0 \n"                /* Transforms 16-bit input f16Val to 32-bit */
-                        "rsbs %0, %0, #0 \n"            /* f16Val = - f16Val */
-                        "cmp %0, %1 \n"                 /* Compares f16Val with 0x00008000 */
-                        "bne .+4 \n"                    /* If f32Val != 0x8000, then jumps through next command */
-                        "subs %0, %0, #1 \n"            /* Compares f16Val with 0x00008000 */
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "sxth %0, %0 \n\t"                /* Transforms 16-bit input f16Val to 32-bit */
+                        "rsbs %0, %0, #0 \n\t"            /* f16Val = - f16Val */
+                        "cmp %0, %1 \n\t"                 /* Compares f16Val with 0x00008000 */
+                        "bne MLIB_NegSat_F16_SatEnd \n\t" /* If f32Val != 0x8000, then jumps through next command */
+                        "subs %0, %0, #1 \n\t"            /* Compares f16Val with 0x00008000 */
+                    "MLIB_NegSat_F16_SatEnd: \n\t"    
                         : "+l"(f16Val): "l"(f32SatVal));
     #endif
 

@@ -61,31 +61,26 @@ static inline frac16_t MLIB_Sub4Sat_F16_FAsmi(register frac16_t f16Min, register
                         ble SatEnd                      /* If f16Min >= 0xFFFF8000, then goes to SatEnd */
                         mov f16Min, f32Val              /* If f16Min < 0xFFFF8000, then f16Min = 0xFFFF8000 */
                     SatEnd: };
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax unified \n"        /* Using unified asm syntax */
-                        #endif
-                        "sxth %1, %1 \n"                /* Transforms 16-bit input f16Min to 32-bit */
-                        "sxth %2, %2 \n"                /* Transforms 16-bit input f16Sub1 to 32-bit */
-                        "sxth %3, %3 \n"                /* Transforms 16-bit input f16Min to 32-bit */
-                        "sxth %4, %4 \n"                /* Transforms 16-bit input f16Sub1 to 32-bit */
-                        "subs %1, %1, %2 \n"            /* f16Min = f16Min - f16Sub1 */
-                        "subs %1, %1, %3 \n"            /* f16Min = f16Min - f16Sub2 */
-                        "subs %1, %1, %4 \n"            /* f16Min = f16Min - f16Sub3 */
+                        "sxth %1, %1 \n\t"                /* Transforms 16-bit input f16Min to 32-bit */
+                        "sxth %2, %2 \n\t"                /* Transforms 16-bit input f16Sub1 to 32-bit */
+                        "sxth %3, %3 \n\t"                /* Transforms 16-bit input f16Min to 32-bit */
+                        "sxth %4, %4 \n\t"                /* Transforms 16-bit input f16Sub1 to 32-bit */
+                        "subs %1, %1, %2 \n\t"            /* f16Min = f16Min - f16Sub1 */
+                        "subs %1, %1, %3 \n\t"            /* f16Min = f16Min - f16Sub2 */
+                        "subs %1, %1, %4 \n\t"            /* f16Min = f16Min - f16Sub3 */
 
-                        "cmp %0, %1 \n"                 /* Compares f16Min with 0x8000 */
-                        "bgt .+6 \n"                    /* If f16Min < 0x8000, then jumps through two commands */
-                        "subs %1, %0, #1 \n"            /* If f16Min >= 0x8000, then f16Min = 0x8000 */
-                        "b .+10 \n"                     /* Jumps through four commands */
-
-                        "sxth %0, %0 \n"                /* f32Val = 0xFFFF8000 */
-                        "cmp %0, %1 \n"                 /* Compares f16Min with 0xFFFF8000 */
-                        "ble .+4 \n"                    /* If f16Min >= 0xFFFF8000, then jumps through next commands */
-                        "mov %1, %0 \n"                 /* If f16Min < 0xFFFF8000, then f16Min = 0xFFFF8000 */
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "cmp %0, %1 \n\t"                 /* Compares f16Min with 0x8000 */
+                        "bgt MLIB_SUB4_F16_NegTest \n\t"  /* If f16Min < 0x8000, then jumps through two commands */
+                        "subs %1, %0, #1 \n\t"            /* If f16Min >= 0x8000, then f16Min = 0x8000 */
+                        "b MLIB_SUB4_F16_SatEnd \n\t"     /* Jumps through four commands */
+					"MLIB_SUB4_F16_NegTest: \n\t"
+                        "sxth %0, %0 \n\t"                /* f32Val = 0xFFFF8000 */
+                        "cmp %0, %1 \n\t"                 /* Compares f16Min with 0xFFFF8000 */
+                        "ble MLIB_SUB4_F16_SatEnd \n\t"   /* If f16Min >= 0xFFFF8000, then jumps through next commands */
+                        "mov %1, %0 \n\t"                 /* If f16Min < 0xFFFF8000, then f16Min = 0xFFFF8000 */
+                    "MLIB_SUB4_F16_SatEnd: \n\t"    
                         : "+l"(f32Val), "+l"(f16Min), "+l"(f16Sub1), "+l"(f16Sub2), "+l"(f16Sub3):);
     #endif
 

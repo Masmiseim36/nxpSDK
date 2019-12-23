@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<control>
+  <M1_appcontrol>
+    <M1_onoff>Application Switch</M1_onoff><!-- Main application switch of MOTOR1 -->
+  </M1_appcontrol>
+
+  <M1_states FreemasterName="Application State"><!-- Application state variable of MOTOR1 -->
+    <M1_state>FAULT</M1_state>
+    <M1_state>INIT</M1_state>
+    <M1_state>STOP</M1_state>
+    <M1_state>RUN</M1_state>   
+  </M1_states>
+    
+  <M1_Parameters><!-- Variables for rotor alignment for MOTOR1 -->
+    <M1_Align_Voltage>Alignment Voltage</M1_Align_Voltage>
+    <M1_Align_Current></M1_Align_Current>
+    <M1_Align_Duration>Alignment Duration</M1_Align_Duration>
+    
+    <M1_N_max>FMSTR_M1_speedScale</M1_N_max>
+    <M1_I_max>FMSTR_M1_currentScale</M1_I_max>
+    <M1_DCB_max>FMSTR_M1_DCBvoltageScale</M1_DCB_max>
+    <M1_U_max>FMSTR_M1_voltageScale</M1_U_max>
+    
+    <M1_DCB_under>Fault Threshold DcBusUnder</M1_DCB_under>
+    <M1_DCB_over>Fault Threshold DcBusOver</M1_DCB_over>
+    <M1_DCB_trip>Fault Threshold DcBusTrip</M1_DCB_trip>
+    <M1_N_min>Fault Threshold SpeedMin</M1_N_min>
+    <M1_N_over>Fault Threshold SpeedOver</M1_N_over>
+    <M1_N_underspd>Fault Threshold SpeedUnder</M1_N_underspd>
+    <M1_N_nom>Fault Threshold SpeedNom</M1_N_nom>
+    <M1_Scalar_Uq_min>Scalar Uq min</M1_Scalar_Uq_min><!-- V/Hz ratio -->
+  </M1_Parameters>
+ 
+  <M1_SpeedPiController><!-- Variables for Speed Controller for MOTOR1 -->
+    <M1_SL_Kp_g>Speed Loop Kp Gain</M1_SL_Kp_g><!-- Parallel PI KP gain --> 
+    <M1_SL_Kp_sc>Speed Loop Kp Shift</M1_SL_Kp_sc><!-- Parallel PI KP gain scale --> 
+    <M1_SL_Ki_g>Speed Loop Ki Gain</M1_SL_Ki_g><!-- Parallel PI KI gain -->
+    <M1_SL_Ki_sc>Speed Loop Ki Shift</M1_SL_Ki_sc><!-- Parallel PI KI gain scale -->
+    <M1_SPEED_BETA>Speed Loop Beta Gain</M1_SPEED_BETA>
+    <M1_SL_Nsh></M1_SL_Nsh><!-- Reccurent PI shift -->
+    <M1_SL_CC1SC></M1_SL_CC1SC><!-- Reccurent PI CC1 constant --> 
+    <M1_SL_CC2SC></M1_SL_CC2SC><!-- Reccurent PI CC2 constant  -->
+    <M1_SL_HIGH_LIM>Speed Loop Limit High</M1_SL_HIGH_LIM><!-- PI High limit -->
+    <M1_SL_LOW_LIM>Speed Loop Limit Low</M1_SL_LOW_LIM><!-- PI Low limit -->
+    <M1_RAMP_ACC>Speed Ramp Acc</M1_RAMP_ACC><!-- Speed ramp increment acceleration -->
+    <M1_RAMP_JRK>Speed Ramp Jrk</M1_RAMP_JRK><!-- Speed ramp increment jerk -->
+    <M1_SPEED_MAF_sc></M1_SPEED_MAF_sc><!-- Actual Speed Filter, number of samples -->
+    <M1_SPEED_REQ_MAX>Speed Required Max</M1_SPEED_REQ_MAX>
+    <M1_SPEED_REQ_MIN>Speed Required Min</M1_SPEED_REQ_MIN>   
+    <M1_SPEED_IIR_B0_g>Speed Filter B0</M1_SPEED_IIR_B0_g><!-- Actual Speed IIR Filter constant -->
+    <M1_SPEED_IIR_B1_g>Speed Filter B1</M1_SPEED_IIR_B1_g><!-- Actual Speed IIR Filter constant -->
+    <M1_SPEED_IIR_A1_g>Speed Filter A1</M1_SPEED_IIR_A1_g><!-- Actual Speed IIR Filter constant -->
+    
+    <M1_FLUX_ID_MIN>MTPA Id Min</M1_FLUX_ID_MIN>
+    <M1_FLUX_ID_MAX>MTPA Id Max</M1_FLUX_ID_MAX>
+    <M1_FLUX_MTPA_FILT_COEFF>MTPA Filt Coeff</M1_FLUX_MTPA_FILT_COEFF>
+    <M1_FLUX_ID_START_MIN>Startup Id</M1_FLUX_ID_START_MIN>
+    <M1_FLUX_ID_START_MIN_PCT>Startup Id Min Pct</M1_FLUX_ID_START_MIN_PCT>
+    <M1_FLUX_FW_ID_MIN>FW Id Min</M1_FLUX_FW_ID_MIN>
+    <M1_FLUX_FW_ID_MAX>FW Id Max</M1_FLUX_FW_ID_MAX>
+    <M1_FLUX_FW_KP_GAIN>FW Prop Gain</M1_FLUX_FW_KP_GAIN>
+    <M1_FLUX_FW_KI_GAIN>FW Integ Gain</M1_FLUX_FW_KI_GAIN>
+    <M1_FLUX_IIR_B0>FW Filter B0</M1_FLUX_IIR_B0>
+    <M1_FLUX_IIR_B1>FW Filter B1</M1_FLUX_IIR_B1>
+    <M1_FLUX_IIR_A1>FW Filter A1</M1_FLUX_IIR_A1>    
+        
+  </M1_SpeedPiController>
+  
+  <M1_CurrentPiController><!-- Variables for Current Controller for MOTOR1 -->
+    <M1_CL_LIMIT>Current Loop Limit</M1_CL_LIMIT><!-- Current loop limit -->
+    <M1_D_Kp_g>Id Kp Gain</M1_D_Kp_g><!-- Parallel D_PI KP gain --> 
+    <M1_D_Ki_g>Id Ki Gain</M1_D_Ki_g><!-- Parallel D_PI KIgain  --> 
+    <M1_D_Kp_sc>Id Kp Shift</M1_D_Kp_sc><!-- Parallel D_PI KP gain scale -->
+    <M1_D_Ki_sc>Id Ki Shift</M1_D_Ki_sc><!-- Parallel D_PI KI gain scale -->
+    <M1_Q_Kp_g>Iq Kp Gain</M1_Q_Kp_g><!-- Parallel Q_PI KP gain -->
+    <M1_Q_Ki_g>Iq Ki Gain</M1_Q_Ki_g><!-- Parallel Q_PI KI gain -->
+    <M1_Q_Kp_sc>Iq Kp Shift</M1_Q_Kp_sc><!-- Parallel Q_PI KP gain scale -->
+    <M1_Q_Ki_sc>Iq Ki Shift</M1_Q_Ki_sc><!-- Parallel Q_PI KI gain scale -->
+    <M1_D_NSHIFT></M1_D_NSHIFT><!-- Reccurent D_PI shift -->
+    <M1_D_CC1SC></M1_D_CC1SC><!-- Reccurent D_PI constant CC1 -->
+    <M1_D_CC2SC></M1_D_CC2SC><!-- Reccurent D_PI constant CC2 -->
+    <M1_Q_NSHIFT></M1_Q_NSHIFT><!-- Reccurent Q_PI shift -->
+    <M1_Q_CC1SC></M1_Q_CC1SC><!-- Reccurent Q_PI constant CC1 -->
+    <M1_Q_CC2SC></M1_Q_CC2SC><!-- Reccurent Q_PI constant CC2 -->
+    <M1_D_ZC_B0></M1_D_ZC_B0><!-- Zero Cancelation Filter constant D_B1 -->
+    <M1_D_ZC_B1></M1_D_ZC_B1><!-- Zero Cancelation Filter constant D_B2 -->
+    <M1_D_ZC_A1></M1_D_ZC_A1><!-- Zero Cancelation Filter constant D_A2 -->
+    <M1_Q_ZC_B0></M1_Q_ZC_B0><!-- Zero Cancelation Filter constant Q_B1 -->
+    <M1_Q_ZC_B1></M1_Q_ZC_B1><!-- Zero Cancelation Filter constant Q_B2 -->
+    <M1_Q_ZC_A1></M1_Q_ZC_A1><!-- Zero Cancelation Filter constant Q_A2 -->
+    <M1_ID_REQ>Speed Id Startup</M1_ID_REQ>
+  </M1_CurrentPiController>
+  
+  <M1_RFO><!-- Sensorless Control Tab Constants -->
+    <M1_RFO_KP_GAIN>RFO Kp Gain</M1_RFO_KP_GAIN>
+    <M1_RFO_KI_GAIN>RFO Ki Gain</M1_RFO_KI_GAIN>
+    <M1_RFO_PSI_RA1_GAIN>RFO PsiRA1 Gain</M1_RFO_PSI_RA1_GAIN>
+    <M1_RFO_PSI_RB1_GAIN>RFO PsiRB1 Gain</M1_RFO_PSI_RB1_GAIN>
+    <M1_RFO_PSI_SA1_GAIN>RFO PsiSA1 Gain</M1_RFO_PSI_SA1_GAIN>
+    <M1_RFO_PSI_SA2_GAIN>RFO PsiSA2 Gain</M1_RFO_PSI_SA2_GAIN>
+    <M1_RFO_KR_INV_GAIN>RFO Kr Inv Gain</M1_RFO_KR_INV_GAIN>
+    <M1_RFO_LS_TOT_LEAK_GAIN>RFO Ls Total Leak Gain</M1_RFO_LS_TOT_LEAK_GAIN>
+    <M1_RFO_RS_EST>RFO Rs Est</M1_RFO_RS_EST>
+    <M1_RFO_TRQCNST>RFO Torque Constant</M1_RFO_TRQCNST>
+  </M1_RFO>
+  
+  <M1_MRAS>
+    <M1_MRAS_KP_GAIN>MRAS Kp Gain</M1_MRAS_KP_GAIN>
+    <M1_MRAS_KI_GAIN>MRAS Ki Gain</M1_MRAS_KI_GAIN>
+    <M1_MRAS_PSI_RA1>MRAS PsiRA1 Gain</M1_MRAS_PSI_RA1>
+    <M1_MRAS_PSI_RB1>MRAS PsiRB1 Gain</M1_MRAS_PSI_RB1>
+    <M1_MRAS_TS>MRAS Sample Time</M1_MRAS_TS>
+    <M1_MRAS_SPDCNST>MRAS Speed Constant</M1_MRAS_SPDCNST>
+     
+  </M1_MRAS> 
+  
+  <M1_PoSpeSensor><!-- Variables for Position and Speed sensors of MOTOR1 -->
+    <M1_ATO_Kp_g>POSPE Kp Gain</M1_ATO_Kp_g>
+    <M1_ATO_Kp_sc>POSPE Kp Shift</M1_ATO_Kp_sc>
+    <M1_ATO_Ki_g>POSPE Ki Gain</M1_ATO_Ki_g>
+    <M1_ATO_Ki_sc>POSPE Ki Shift</M1_ATO_Ki_sc>
+    <M1_ATO_Nsh></M1_ATO_Nsh>
+    <M1_ATO_CC1></M1_ATO_CC1>
+    <M1_ATO_CC2></M1_ATO_CC2>
+    <M1_Integ_g>POSPE Integ Gain</M1_Integ_g>
+    <M1_Integ_sc>POSPE Integ Shift</M1_Integ_sc>
+  </M1_PoSpeSensor>
+  
+  <M1_MID><!-- Variables for Measurement of MOTOR1 -->
+  
+    <!-- General Fault -->
+    <M1_fm_Fault>Fault Pending</M1_fm_Fault>
+
+  
+    <!-- MID State Machine control variables -->
+    <M1_fm_MIDFault>MID Fault</M1_fm_MIDFault>
+    <M1_fm_MIDWarn>MID Warning</M1_fm_MIDWarn>
+    <M1_fm_MID_state>MID State</M1_fm_MID_state>
+    <M1_fm_MID_success>MID Success</M1_fm_MID_success>
+    <M1_fm_MID_update>MID Update Par</M1_fm_MID_update>
+    <M1_fm_MID_restore>MID Restore Par</M1_fm_MID_restore>
+    <M1_fm_EnableMeasurement>MID Enable</M1_fm_EnableMeasurement>
+    <M1_fm_Calibration>MID Calibration</M1_fm_Calibration>
+    <M1_fm_Blocked_RotorBlocked>MID Rotor Blocked</M1_fm_Blocked_RotorBlocked>
+    <M1_fm_CalcElParState>MID Calc El Par State</M1_fm_CalcElParState>
+    <M1_fm_CalcMeParState>MID Calc Me Par State</M1_fm_CalcMeParState>
+    
+    <M1_fm_CloopFreq>MID Current Loop Freq</M1_fm_CloopFreq>
+    <M1_fm_SloopFreq>MID Speed Loop Freq</M1_fm_SloopFreq>
+  
+    <!--MID motor parameters-->
+    <M1_fm_Rs>MID Par Rs</M1_fm_Rs>
+    <M1_fm_Rr>MID Par Rr</M1_fm_Rr>
+    <M1_fm_Ls>MID Par Ls</M1_fm_Ls>
+    <M1_fm_Lr>MID Par Lr</M1_fm_Lr>
+    <M1_fm_Lm>MID Par Lm</M1_fm_Lm>
+    <M1_fm_J>MID Par J</M1_fm_J>
+    <M1_fm_Tm>MID Par Tm</M1_fm_Tm>
+    
+    <M1_fm_Par_Pnom>MID Par Pnom</M1_fm_Par_Pnom>
+    <M1_fm_Par_Unom>MID Par Unom</M1_fm_Par_Unom>
+    <M1_fm_Par_Inom>MID Par Inom</M1_fm_Par_Inom>
+    <M1_fm_Par_fnom>MID Par fnom</M1_fm_Par_fnom>
+    <M1_fm_Par_pp>MID Par Pp</M1_fm_Par_pp>
+    
+    <M1_MID_SL_LIM>MID New Curr. Ampl. Limit</M1_MID_SL_LIM>
+    <M1_MID_FL_MTPA_MIN>MID New MTPA Lower Limit</M1_MID_FL_MTPA_MIN>
+    <M1_MID_FL_MTPA_MAX>MID New MTPA Upper Limit</M1_MID_FL_MTPA_MAX>
+    <M1_MID_FL_STARTUP>MID New Startup Current</M1_MID_FL_STARTUP>
+    <M1_MID_SL_SPDREQMIN>MID New Speed Required Min</M1_MID_SL_SPDREQMIN>
+    <M1_MID_SL_SPDREQMAX>MID New Speed Required Max</M1_MID_SL_SPDREQMAX>
+
+    <!-- MID PwrStg -->
+    <M1_fm_CharActive>MID PwrStg Active</M1_fm_CharActive>
+    <M1_fm_Rs_calib>MID PwrStg Rs</M1_fm_Rs_calib>
+    <M1_fm_I_calib>MID PwrStg I Calib</M1_fm_I_calib>
+    <M1_fm_I_increment>MID PwrStg I Inc</M1_fm_I_increment>
+    <M1_fm_PWRSTG_LookUp>MID PwrStg UErrLUT</M1_fm_PWRSTG_LookUp>
+    <M1_fm_pwrstg_numofpnts>MID PwrStg NumOfPnts</M1_fm_pwrstg_numofpnts>
+    
+    <!-- MID Rs -->
+    <M1_fm_RsActive>MID Rs Active</M1_fm_RsActive>
+    <M1_fm_Id_meas>MID Rs I Meas</M1_fm_Id_meas>
+    <M1_fm_Rescale_LUT_min>MID Rs LUT I Min</M1_fm_Rescale_LUT_min>
+    <M1_fm_Rescale_LUT_max>MID Rs LUT I Max</M1_fm_Rescale_LUT_max>
+    
+    <!-- MID NoLoad -->
+    <M1_fm_NoLoadActive>MID NoLoad Active</M1_fm_NoLoadActive>
+    <M1_fm_NoLoad_UMeas>MID NoLoad U Meas</M1_fm_NoLoad_UMeas>
+    
+    <!-- MID Blocked -->
+    <M1_fm_BlockedActive>MID Blocked Active</M1_fm_BlockedActive>
+    <M1_fm_Blocked_IMeas>MID Blocked Irms Meas</M1_fm_Blocked_IMeas>
+    
+     <!-- MID Mech -->
+    <M1_fm_MechActive>MID Mech Active</M1_fm_MechActive>
+    <M1_fm_Mech_SpdElEnd>MID Mech SpdEl End</M1_fm_Mech_SpdElEnd>
+    <M1_fm_Mech_TrqAccl>MID Mech Trq Accl</M1_fm_Mech_TrqAccl>
+
+  </M1_MID>
+  
+  <M1_ControlStructure><!-- Cascade Structure State Variables of MOTOR1 -->
+    <M1_ControlStructureMethod>MCAT Control</M1_ControlStructureMethod>
+    <M1_ControlStructurePoSpe>MCAT POSPE Sensor</M1_ControlStructurePoSpe>
+  </M1_ControlStructure>
+  
+  <M1_ControlVariables><!-- Control Cascade Structure Variables of MOTOR1 -->
+    <M1_Freq_req>Scalar Speed Required</M1_Freq_req><!-- V/Hz required speed -->
+    <M1_SCALAR_VHZ_FACTOR_GAIN>VHz Factor Gain</M1_SCALAR_VHZ_FACTOR_GAIN><!-- V/Hz ratio -->
+    <M1_SCALAR_VHZ_FACTOR_SHIFT>VHz Factor Gain Shift</M1_SCALAR_VHZ_FACTOR_SHIFT><!-- V/Hz ratio -->
+    <M1_Scalar_ramp_up>Scalar Ramp Up</M1_Scalar_ramp_up><!-- V/Hz frequency ramp increment -->
+    <M1_Scalar_ramp_down>Scalar Ramp Down</M1_Scalar_ramp_down><!-- V/Hz frequency ramp increment -->
+    <M1_Ud_req>Ud Req</M1_Ud_req><!-- Voltage FOC - Ud required -->
+    <M1_Uq_req>Uq Req</M1_Uq_req><!-- Voltage FOC - Uq required -->
+    <M1_Id_req>Id Req</M1_Id_req><!-- Current FOC - Id required -->
+    <M1_Iq_req>Iq Req</M1_Iq_req><!-- Current FOC - Id required -->
+    <M1_Speed_req>Speed Required</M1_Speed_req><!-- Speed FOC - Speed required -->
+    <M1_Id_foc_req>Speed Id Startup</M1_Id_foc_req><!-- Speed FOC - id req -->
+    <M1_FltClr>Fault Clear</M1_FltClr><!-- Clear fault button -->
+    <M1_TsSlowLoop>Slow Loop Sampling Period</M1_TsSlowLoop>
+    <M1_TsFastLoop>Fast Loop Sampling Period</M1_TsFastLoop>
+  </M1_ControlVariables>
+</control>
+
+

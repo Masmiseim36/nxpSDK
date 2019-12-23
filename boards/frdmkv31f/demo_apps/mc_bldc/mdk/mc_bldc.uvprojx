@@ -16,7 +16,6 @@
           <Cpu>CPUTYPE("Cortex-M4") FPU2</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC800 -FN1 -FF0MK_P512 -FS00 -FL080000 -FP0($$Device:MKV31F512xxx12$Flash\MK_P512.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>$$Device:MKV31F512xxx12$Device\Include\MKV31F51212.h</RegisterFile>
           <MemoryEnv/>
@@ -346,7 +345,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -355,17 +354,21 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186,1,1035 --diag_suppress=1296,186</MiscControls>
-              <Define>DEBUG, CPU_MKV31F512VLL12, FRDM_KV31F, FREEDOM</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>DEBUG, CPU_MKV31F512VLL12, FRDM_KV31F, FREEDOM, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/motor_control/boards/frdmkv31f;../../../../../CMSIS/Include;../../../../../devices;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212/drivers;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/AMCLIB;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/AMCLIB/Include;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GDFLIB;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GDFLIB/Include;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GFLIB;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GFLIB/Include;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GMCLIB;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GMCLIB/Include;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/MLIB;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/MLIB/Include;../../../../../middleware/motor_control/bldc;../../../../../middleware/motor_control/bldc/mc_algorithms;../../../../../middleware/motor_control/bldc/mc_state_machine;../../../../../middleware/motor_control/bldc/state_machine;../../../../../middleware/motor_control/freemaster/freemaster_drv;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212;../../../../../devices/MKV31F51212/utilities/str;../../../../../devices/MKV31F51212/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../devices/MKV31F51212/drivers;../../../../../components/lists;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212/drivers</IncludePath>
+              <IncludePath>../../../../../middleware/motor_control/boards/frdmkv31f/mc_bldc;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../middleware/motor_control/fmstr_cfg_uart;../../../../../middleware/motor_control/bldc/mc_drivers;..;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212/drivers;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/AMCLIB;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/AMCLIB/Include;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GDFLIB;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GDFLIB/Include;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GFLIB;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GFLIB/Include;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GMCLIB;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GMCLIB/Include;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/MLIB;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/MLIB/Include;../../../../../middleware/motor_control/bldc;../../../../../middleware/motor_control/bldc/mc_algorithms;../../../../../middleware/motor_control/bldc/mc_state_machine;../../../../../middleware/motor_control/bldc/state_machine;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212;../../../../../devices/MKV31F51212/utilities/str;../../../../../devices/MKV31F51212/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../components/serial_manager;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212/drivers;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../devices/MKV31F51212/utilities</IncludePath>
             </VariousControls>
+            <v6Lang>3</v6Lang>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
+            <v6Rtti>0</v6Rtti>
           </Cads>
           <Aads>
             <interw>0</interw>
@@ -383,6 +386,7 @@
               <Undefine/>
               <IncludePath/>
             </VariousControls>
+            <uClangAs>1</uClangAs>
           </Aads>
           <LDads>
             <umfTarg>0</umfTarg>
@@ -397,55 +401,31 @@
             <ScatterFile>MKV31F512xxx12_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/AMCLIB/AMCLIB.lib ../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GDFLIB/GDFLIB.lib ../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GFLIB/GFLIB.lib ../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GMCLIB/GMCLIB.lib ../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/MLIB/MLIB.lib --remove</Misc>
+            <Misc>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/AMCLIB/AMCLIB.lib ../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GDFLIB/GDFLIB.lib ../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GFLIB/GFLIB.lib ../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GMCLIB/GMCLIB.lib ../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/MLIB/MLIB.lib --remove --keep=*(.FlashConfig)</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
+      <uAC6>1</uAC6>
       <Groups>
-        <Group>
-          <GroupName>mc_drivers</GroupName>
-          <Files>
-            <File>
-              <FileName>mcdrv_adc_adc16.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../mcdrv_adc_adc16.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcdrv_adc_adc16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../mcdrv_adc_adc16.c</FilePath>
-            </File>
-            <File>
-              <FileName>mcdrv_ftm_cmt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../mcdrv_ftm_cmt.c</FilePath>
-            </File>
-            <File>
-              <FileName>mcdrv_ftm_cmt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../mcdrv_ftm_cmt.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcdrv_pwm3ph_ftm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../mcdrv_pwm3ph_ftm.c</FilePath>
-            </File>
-            <File>
-              <FileName>mcdrv_pwm3ph_ftm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../mcdrv_pwm3ph_ftm.h</FilePath>
-            </File>
-          </Files>
-        </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
             <File>
+              <FileName>freemaster_cfg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/motor_control/fmstr_cfg_uart/freemaster_cfg.h</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../main.c</FilePath>
+            </File>
+            <File>
+              <FileName>main.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../main.h</FilePath>
             </File>
             <File>
               <FileName>m1_bldc_appconfig.h</FileName>
@@ -462,10 +442,40 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/motor_control/bldc/fm_tsa_bldc.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mc_drivers</GroupName>
+          <Files>
             <File>
-              <FileName>freemaster_cfg.h</FileName>
+              <FileName>mcdrv_adc_adc16.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/motor_control/bldc/freemaster_cfg.h</FilePath>
+              <FilePath>../../../../../middleware/motor_control/bldc/mc_drivers/mcdrv_adc_adc16.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcdrv_adc_adc16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/motor_control/bldc/mc_drivers/mcdrv_adc_adc16.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcdrv_ftm_cmt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/motor_control/bldc/mc_drivers/mcdrv_ftm_cmt.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcdrv_ftm_cmt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/motor_control/bldc/mc_drivers/mcdrv_ftm_cmt.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcdrv_pwm3ph_ftm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/motor_control/bldc/mc_drivers/mcdrv_pwm3ph_ftm.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcdrv_pwm3ph_ftm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/motor_control/bldc/mc_drivers/mcdrv_pwm3ph_ftm.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -485,7 +495,7 @@
             <File>
               <FileName>mcdrv.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../mcdrv.h</FilePath>
+              <FilePath>../../../../../middleware/motor_control/boards/frdmkv31f/mc_bldc/mcdrv.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
@@ -693,9 +703,9 @@
               <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/AMCLIB/Include/amclib.h</FilePath>
             </File>
             <File>
-              <FileName>amclib_FP.h</FileName>
+              <FileName>amclib_fp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/AMCLIB/Include/amclib_FP.h</FilePath>
+              <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/AMCLIB/Include/amclib_fp.h</FilePath>
             </File>
             <File>
               <FileName>amclib_types.h</FileName>
@@ -778,9 +788,9 @@
               <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GDFLIB/Include/gdflib.h</FilePath>
             </File>
             <File>
-              <FileName>gdflib_FP.h</FileName>
+              <FileName>gdflib_fp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GDFLIB/Include/gdflib_FP.h</FilePath>
+              <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GDFLIB/Include/gdflib_fp.h</FilePath>
             </File>
             <File>
               <FileName>gdflib_types.h</FileName>
@@ -1078,9 +1088,9 @@
               <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GFLIB/Include/gflib.h</FilePath>
             </File>
             <File>
-              <FileName>gflib_FP.h</FileName>
+              <FileName>gflib_fp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GFLIB/Include/gflib_FP.h</FilePath>
+              <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GFLIB/Include/gflib_fp.h</FilePath>
             </File>
             <File>
               <FileName>gflib_types.h</FileName>
@@ -1148,9 +1158,9 @@
               <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GMCLIB/Include/gmclib.h</FilePath>
             </File>
             <File>
-              <FileName>gmclib_FP.h</FileName>
+              <FileName>gmclib_fp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GMCLIB/Include/gmclib_FP.h</FilePath>
+              <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GMCLIB/Include/gmclib_fp.h</FilePath>
             </File>
             <File>
               <FileName>gmclib_types.h</FileName>
@@ -1723,9 +1733,9 @@
               <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/MLIB/Include/mlib.h</FilePath>
             </File>
             <File>
-              <FileName>mlib_FP.h</FileName>
+              <FileName>mlib_fp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/MLIB/Include/mlib_FP.h</FilePath>
+              <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/MLIB/Include/mlib_fp.h</FilePath>
             </File>
             <File>
               <FileName>mlib_types.h</FileName>
@@ -1776,106 +1786,6 @@
               <FileName>state_machine.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/motor_control/bldc/state_machine/state_machine.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freemaster</GroupName>
-          <Files>
-            <File>
-              <FileName>freemaster.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_Kxx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_Kxx.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_Kxx.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_Kxx.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_appcmd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_appcmd.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_bdm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_bdm.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_can.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_can.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_defcfg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_defcfg.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_lin.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_lin.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_pipes.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_pipes.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_private.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_protocol.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_protocol.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_protocol.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_protocol.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_rec.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_rec.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_rec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_rec.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_scope.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_scope.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_serial.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_serial.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_sfio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_sfio.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_tsa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_tsa.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_tsa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_tsa.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2015,27 +1925,237 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>freemaster</GroupName>
+          <Files>
+            <File>
+              <FileName>freemaster.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_appcmd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_appcmd.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_can.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_can.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_can.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_can.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_defcfg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_defcfg.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_pdbdm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_pdbdm.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_pipes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_pipes.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_private.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_protocol.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_protocol.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_protocol.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_protocol.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_rec.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_rec.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_rec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_rec.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_scope.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_scope.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_serial.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_serial.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_sha.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_sha.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_tsa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_tsa.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_tsa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_tsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_ures.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_ures.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_ures.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_ures.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_utils.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freemaster/drivers/mcuxsdk/can</GroupName>
+          <Files>
+            <File>
+              <FileName>freemaster_flexcan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_flexcan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_mcan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mcan.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_mcan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mcan.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_mscan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mscan.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_mscan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mscan.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freemaster/drivers/mcuxsdk/serial</GroupName>
+          <Files>
+            <File>
+              <FileName>freemaster_serial_lpsci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_lpsci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpuart.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_miniusart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_miniusart.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_miniusart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_miniusart.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_usb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freemaster/platforms</GroupName>
+          <Files>
+            <File>
+              <FileName>freemaster_gen32le.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/platforms/gen32le/freemaster_gen32le.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
               <FileName>core_cm4.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_cm4.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -2046,6 +2166,11 @@
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
@@ -2068,6 +2193,11 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
+              <FileName>core_armv81mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
+            </File>
+            <File>
               <FileName>core_armv8mbl.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
@@ -2087,6 +2217,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -2104,7 +2249,6 @@
           <Cpu>CPUTYPE("Cortex-M4") FPU2</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC800 -FN1 -FF0MK_P512 -FS00 -FL080000 -FP0($$Device:MKV31F512xxx12$Flash\MK_P512.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>$$Device:MKV31F512xxx12$Device\Include\MKV31F51212.h</RegisterFile>
           <MemoryEnv/>
@@ -2434,7 +2578,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>4</Optim>
+            <Optim>7</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -2443,17 +2587,21 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186,1,1035 --diag_suppress=1296,186</MiscControls>
-              <Define>NDEBUG, CPU_MKV31F512VLL12, FRDM_KV31F, FREEDOM</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>NDEBUG, CPU_MKV31F512VLL12, FRDM_KV31F, FREEDOM, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/motor_control/boards/frdmkv31f;../../../../../CMSIS/Include;../../../../../devices;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212/drivers;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/AMCLIB;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/AMCLIB/Include;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GDFLIB;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GDFLIB/Include;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GFLIB;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GFLIB/Include;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GMCLIB;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GMCLIB/Include;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/MLIB;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/MLIB/Include;../../../../../middleware/motor_control/bldc;../../../../../middleware/motor_control/bldc/mc_algorithms;../../../../../middleware/motor_control/bldc/mc_state_machine;../../../../../middleware/motor_control/bldc/state_machine;../../../../../middleware/motor_control/freemaster/freemaster_drv;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212;../../../../../devices/MKV31F51212/utilities/str;../../../../../devices/MKV31F51212/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../devices/MKV31F51212/drivers;../../../../../components/lists;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212/drivers</IncludePath>
+              <IncludePath>../../../../../middleware/motor_control/boards/frdmkv31f/mc_bldc;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../middleware/motor_control/fmstr_cfg_uart;../../../../../middleware/motor_control/bldc/mc_drivers;..;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212/drivers;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/AMCLIB;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/AMCLIB/Include;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GDFLIB;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GDFLIB/Include;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GFLIB;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GFLIB/Include;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GMCLIB;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GMCLIB/Include;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/MLIB;../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/MLIB/Include;../../../../../middleware/motor_control/bldc;../../../../../middleware/motor_control/bldc/mc_algorithms;../../../../../middleware/motor_control/bldc/mc_state_machine;../../../../../middleware/motor_control/bldc/state_machine;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212;../../../../../devices/MKV31F51212/utilities/str;../../../../../devices/MKV31F51212/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../components/serial_manager;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212/drivers;../../../../../devices/MKV31F51212/drivers;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../devices/MKV31F51212/utilities</IncludePath>
             </VariousControls>
+            <v6Lang>3</v6Lang>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
+            <v6Rtti>0</v6Rtti>
           </Cads>
           <Aads>
             <interw>0</interw>
@@ -2471,6 +2619,7 @@
               <Undefine/>
               <IncludePath/>
             </VariousControls>
+            <uClangAs>1</uClangAs>
           </Aads>
           <LDads>
             <umfTarg>0</umfTarg>
@@ -2485,55 +2634,31 @@
             <ScatterFile>MKV31F512xxx12_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/AMCLIB/AMCLIB.lib ../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GDFLIB/GDFLIB.lib ../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GFLIB/GFLIB.lib ../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GMCLIB/GMCLIB.lib ../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/MLIB/MLIB.lib --remove</Misc>
+            <Misc>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/AMCLIB/AMCLIB.lib ../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GDFLIB/GDFLIB.lib ../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GFLIB/GFLIB.lib ../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GMCLIB/GMCLIB.lib ../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/MLIB/MLIB.lib --remove --keep=*(.FlashConfig)</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
+      <uAC6>1</uAC6>
       <Groups>
-        <Group>
-          <GroupName>mc_drivers</GroupName>
-          <Files>
-            <File>
-              <FileName>mcdrv_adc_adc16.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../mcdrv_adc_adc16.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcdrv_adc_adc16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../mcdrv_adc_adc16.c</FilePath>
-            </File>
-            <File>
-              <FileName>mcdrv_ftm_cmt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../mcdrv_ftm_cmt.c</FilePath>
-            </File>
-            <File>
-              <FileName>mcdrv_ftm_cmt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../mcdrv_ftm_cmt.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcdrv_pwm3ph_ftm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../mcdrv_pwm3ph_ftm.c</FilePath>
-            </File>
-            <File>
-              <FileName>mcdrv_pwm3ph_ftm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../mcdrv_pwm3ph_ftm.h</FilePath>
-            </File>
-          </Files>
-        </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
             <File>
+              <FileName>freemaster_cfg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/motor_control/fmstr_cfg_uart/freemaster_cfg.h</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../main.c</FilePath>
+            </File>
+            <File>
+              <FileName>main.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../main.h</FilePath>
             </File>
             <File>
               <FileName>m1_bldc_appconfig.h</FileName>
@@ -2550,10 +2675,40 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/motor_control/bldc/fm_tsa_bldc.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mc_drivers</GroupName>
+          <Files>
             <File>
-              <FileName>freemaster_cfg.h</FileName>
+              <FileName>mcdrv_adc_adc16.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/motor_control/bldc/freemaster_cfg.h</FilePath>
+              <FilePath>../../../../../middleware/motor_control/bldc/mc_drivers/mcdrv_adc_adc16.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcdrv_adc_adc16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/motor_control/bldc/mc_drivers/mcdrv_adc_adc16.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcdrv_ftm_cmt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/motor_control/bldc/mc_drivers/mcdrv_ftm_cmt.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcdrv_ftm_cmt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/motor_control/bldc/mc_drivers/mcdrv_ftm_cmt.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcdrv_pwm3ph_ftm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/motor_control/bldc/mc_drivers/mcdrv_pwm3ph_ftm.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcdrv_pwm3ph_ftm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/motor_control/bldc/mc_drivers/mcdrv_pwm3ph_ftm.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2573,7 +2728,7 @@
             <File>
               <FileName>mcdrv.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../mcdrv.h</FilePath>
+              <FilePath>../../../../../middleware/motor_control/boards/frdmkv31f/mc_bldc/mcdrv.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
@@ -2781,9 +2936,9 @@
               <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/AMCLIB/Include/amclib.h</FilePath>
             </File>
             <File>
-              <FileName>amclib_FP.h</FileName>
+              <FileName>amclib_fp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/AMCLIB/Include/amclib_FP.h</FilePath>
+              <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/AMCLIB/Include/amclib_fp.h</FilePath>
             </File>
             <File>
               <FileName>amclib_types.h</FileName>
@@ -2866,9 +3021,9 @@
               <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GDFLIB/Include/gdflib.h</FilePath>
             </File>
             <File>
-              <FileName>gdflib_FP.h</FileName>
+              <FileName>gdflib_fp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GDFLIB/Include/gdflib_FP.h</FilePath>
+              <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GDFLIB/Include/gdflib_fp.h</FilePath>
             </File>
             <File>
               <FileName>gdflib_types.h</FileName>
@@ -3166,9 +3321,9 @@
               <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GFLIB/Include/gflib.h</FilePath>
             </File>
             <File>
-              <FileName>gflib_FP.h</FileName>
+              <FileName>gflib_fp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GFLIB/Include/gflib_FP.h</FilePath>
+              <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GFLIB/Include/gflib_fp.h</FilePath>
             </File>
             <File>
               <FileName>gflib_types.h</FileName>
@@ -3236,9 +3391,9 @@
               <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GMCLIB/Include/gmclib.h</FilePath>
             </File>
             <File>
-              <FileName>gmclib_FP.h</FileName>
+              <FileName>gmclib_fp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GMCLIB/Include/gmclib_FP.h</FilePath>
+              <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GMCLIB/Include/gmclib_fp.h</FilePath>
             </File>
             <File>
               <FileName>gmclib_types.h</FileName>
@@ -3811,9 +3966,9 @@
               <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/MLIB/Include/mlib.h</FilePath>
             </File>
             <File>
-              <FileName>mlib_FP.h</FileName>
+              <FileName>mlib_fp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/MLIB/Include/mlib_FP.h</FilePath>
+              <FilePath>../../../../../middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/MLIB/Include/mlib_fp.h</FilePath>
             </File>
             <File>
               <FileName>mlib_types.h</FileName>
@@ -3864,106 +4019,6 @@
               <FileName>state_machine.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/motor_control/bldc/state_machine/state_machine.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freemaster</GroupName>
-          <Files>
-            <File>
-              <FileName>freemaster.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_Kxx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_Kxx.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_Kxx.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_Kxx.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_appcmd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_appcmd.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_bdm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_bdm.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_can.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_can.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_defcfg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_defcfg.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_lin.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_lin.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_pipes.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_pipes.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_private.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_protocol.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_protocol.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_protocol.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_protocol.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_rec.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_rec.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_rec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_rec.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_scope.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_scope.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_serial.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_serial.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_sfio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_sfio.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_tsa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_tsa.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_tsa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/motor_control/freemaster/freemaster_drv/freemaster_tsa.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4103,27 +4158,237 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>freemaster</GroupName>
+          <Files>
+            <File>
+              <FileName>freemaster.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_appcmd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_appcmd.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_can.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_can.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_can.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_can.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_defcfg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_defcfg.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_pdbdm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_pdbdm.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_pipes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_pipes.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_private.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_protocol.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_protocol.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_protocol.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_protocol.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_rec.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_rec.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_rec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_rec.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_scope.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_scope.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_serial.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_serial.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_sha.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_sha.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_tsa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_tsa.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_tsa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_tsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_ures.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_ures.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_ures.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_ures.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_utils.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freemaster/drivers/mcuxsdk/can</GroupName>
+          <Files>
+            <File>
+              <FileName>freemaster_flexcan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_flexcan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_mcan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mcan.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_mcan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mcan.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_mscan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mscan.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_mscan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mscan.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freemaster/drivers/mcuxsdk/serial</GroupName>
+          <Files>
+            <File>
+              <FileName>freemaster_serial_lpsci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_lpsci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpuart.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_miniusart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_miniusart.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_miniusart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_miniusart.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_usb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freemaster/platforms</GroupName>
+          <Files>
+            <File>
+              <FileName>freemaster_gen32le.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/platforms/gen32le/freemaster_gen32le.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
               <FileName>core_cm4.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_cm4.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -4134,6 +4399,11 @@
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
@@ -4156,6 +4426,11 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
+              <FileName>core_armv81mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
+            </File>
+            <File>
               <FileName>core_armv8mbl.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
@@ -4174,6 +4449,21 @@
               <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
           </Files>
         </Group>

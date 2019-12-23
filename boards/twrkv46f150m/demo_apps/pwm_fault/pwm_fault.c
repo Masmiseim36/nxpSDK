@@ -103,6 +103,7 @@ int main(void)
 {
     /* Structure of initialize PWM */
     pwm_config_t pwmConfig;
+    pwm_fault_input_filter_param_t pwmFaultInputFilterParam;
 
     cmp_config_t mCmpConfigStruct;
     cmp_dac_config_t mCmpDacConfigStruct;
@@ -142,8 +143,6 @@ int main(void)
      * pwmConfig.enableDebugMode = false;
      * pwmConfig.enableWait = false;
      * pwmConfig.reloadSelect = kPWM_LocalReload;
-     * pwmConfig.faultFilterCount = 0;
-     * pwmConfig.faultFilterPeriod = 0;
      * pwmConfig.clockSource = kPWM_BusClock;
      * pwmConfig.prescale = kPWM_Prescale_Divide_1;
      * pwmConfig.initializationControl = kPWM_Initialize_LocalSync;
@@ -153,11 +152,7 @@ int main(void)
      * pwmConfig.pairOperation = kPWM_Independent;
      */
     PWM_GetDefaultConfig(&pwmConfig);
-    /* Fault filter count */
-    pwmConfig.faultFilterCount = 0x07U;
-    /* Fault filter period; value of 0 will bypass the filter */
-    pwmConfig.faultFilterPeriod = 0x14U;
-    pwmConfig.prescale          = kPWM_Prescale_Divide_1;
+    pwmConfig.prescale = kPWM_Prescale_Divide_1;
     /* Use full cycle reload */
     pwmConfig.reloadLogic = kPWM_ReloadPwmFullCycle;
     /* PWM A & PWM B operate as 2 independent channels */
@@ -171,6 +166,14 @@ int main(void)
         PRINTF("\r\nPWM INIT FAILED");
         return 1;
     }
+
+    /* Fault filter count */
+    pwmFaultInputFilterParam.faultFilterCount = 0x07U;
+    /* Fault filter period; value of 0 will bypass the filter */
+    pwmFaultInputFilterParam.faultFilterPeriod = 0x14U;
+    /* Disable fault glitch stretch */
+    pwmFaultInputFilterParam.faultGlitchStretch = false;
+    PWM_SetupFaultInputFilter(DEMO_PWM_BASEADDR, &pwmFaultInputFilterParam);
 
     PWM_InitPhasePwm();
 

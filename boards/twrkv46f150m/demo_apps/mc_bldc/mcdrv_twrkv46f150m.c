@@ -94,12 +94,13 @@ void MCDRV_Init_M1(void)
 void InitClock(void)
 {
     /* Calculate clock dependant variables for BLDC sensorless control algorithm */
-    g_sClockSetup.ui32FastPeripheralClock = CLOCK_GetFreq(kCLOCK_CoreSysClk);
+    g_sClockSetup.ui32FastPeripheralClock = CLOCK_GetFreq(kCLOCK_FastPeriphClk);
     g_sClockSetup.ui32BusClock = CLOCK_GetFreq(kCLOCK_BusClk);
     g_sClockSetup.ui16PwmFreq = PWM_FREQ; /* 20 kHz */
                                              /* PWM module calculated as follows:
                                               * PWM_MOD = PWM_CLOCK / PWM_FREQUNCY = 74 MHz / 20 kHz = 3700 */
     g_sClockSetup.ui16PwmModulo = g_sClockSetup.ui32FastPeripheralClock / g_sClockSetup.ui16PwmFreq;
+    g_sClockSetup.ui16PwmDeadTime = g_sClockSetup.ui32FastPeripheralClock / (1000000000U / PWM_DEADTIME);
     g_sClockSetup.ui16CtrlLoopFreq = CTRL_LOOP_FREQ; /* 1 kHz */
 }
 
@@ -153,7 +154,7 @@ void InitFTM0(void)
 
     /* DTPS - dead-time pre-scaler: 0,1 = 1; 2 = 4; 3 = 16 */
     /* DTVAL - dead-time value (0-63): dead-time period = DTPS x DTVAL */
-    FTM0->DEADTIME = FTM_DEADTIME_DTVAL(63);
+    FTM0->DEADTIME = FTM_DEADTIME_DTVAL(g_sClockSetup.ui16PwmDeadTime);
 
     /* Enable generation of trigger when FTM counter is equal to CNTIN register */
     FTM0->EXTTRIG = FTM_EXTTRIG_INITTRIGEN_MASK;

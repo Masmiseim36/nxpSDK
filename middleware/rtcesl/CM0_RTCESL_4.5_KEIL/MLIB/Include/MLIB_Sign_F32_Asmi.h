@@ -50,20 +50,16 @@ static inline frac32_t MLIB_Sign_F32_FAsmi(register frac32_t f32Val)
                         rev f32Val, f32SigVal           /* If f32Val > 0, then f32Val = 0x80000000 */
                         subs f32Val, f32Val, #1         /* f32Val = f32Val - 1 */
                     SignEnd: };
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax unified \n"        /* Using unified asm syntax */
-                        #endif
-                        "cmp %0, #0 \n"                 /* Compares f32Val with 0 */
-                        "bge .+4 \n"                    /* If f32Val >= 0, then jumps through next command */
-                        "rev %0, %1 \n"                 /* If f32Val < 0, then f32Val = 0x80000000 */
-                        "ble .+6 \n"                    /* If f32Val = 0, then jumps through next command */
-                        "rev %0, %1 \n"                 /* If f32Val > 0, then f32Val = 0x80000000 */
-                        "subs %0, %0, #1 \n"            /* f32Val = f32Val - 1 */
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "cmp %0, #0 \n\t"                 /* Compares f32Val with 0 */
+                        "bge MLIB_Sign_F32_Next \n\t"     /* If f32Val >= 0, then jumps through next command */
+                        "rev %0, %1 \n\t"                 /* If f32Val < 0, then f32Val = 0x80000000 */
+                    "MLIB_Sign_F32_Next: \n\t"    
+						"ble MLIB_Sign_F32_SignEnd \n\t"  /* If f32Val = 0, then jumps through next command */
+                        "rev %0, %1 \n\t"                 /* If f32Val > 0, then f32Val = 0x80000000 */
+                        "subs %0, %0, #1 \n\t"            /* f32Val = f32Val - 1 */
+					"MLIB_Sign_F32_SignEnd: \n\t"
                         : "+l"(f32Val): "l"(f32SigVal));
     #endif
 

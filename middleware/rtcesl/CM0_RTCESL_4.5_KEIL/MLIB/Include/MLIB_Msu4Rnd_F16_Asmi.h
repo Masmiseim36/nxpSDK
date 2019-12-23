@@ -69,38 +69,34 @@ static inline frac16_t MLIB_Msu4RndSat_F16_FAsmi(register frac16_t f16MinMul1, r
                         bne SatEnd                               /* If result <> 0xFFFF0000, then goes to SatEnd */
                         subs f16MinMul1, f32SatVal, #1           /* If result = 0xFFFF0000, then result = 0x7FFF */
                     SatEnd: };
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)        /* For GCC compiler */
-                            ".syntax unified \n"     /* Using unified asm syntax */
-                        #endif
-                        "sxth %0, %0 \n"            /* Converts 16-bit input to 32-bit */
-                        "sxth %1, %1 \n"            /* Converts 16-bit input to 32-bit */
-                        "sxth %2, %2 \n"            /* Converts 16-bit input to 32-bit */
-                        "sxth %3, %3 \n"            /* Converts 16-bit input to 32-bit */
-                        "muls %2, %2, %3 \n"         /* f16SubMul1 * f16SubMul2 */
-                        "muls %0, %0, %1 \n"         /* f16MinMul1 * f16MinMul2 */
-                        "subs %0, %0, %2 \n"         /* f16MinMul1 * f16MinMul2 - f16SubMul1 * f16SubMul2 */
-                        "asrs %0, %0, #7 \n"         /* f16MinMul1 >> 7 */
-                        "adds %0, %0, #128 \n"       /* Rounding */
-                        "asrs %0, %0, #8 \n"         /* f16MinMul1 >> 8 */
-                        "movs %1, %0 \n"             /* Copies result to f16SubMul2 */
+                        "sxth %0, %0 \n\t"             /* Converts 16-bit input to 32-bit */
+                        "sxth %1, %1 \n\t"             /* Converts 16-bit input to 32-bit */
+                        "sxth %2, %2 \n\t"             /* Converts 16-bit input to 32-bit */
+                        "sxth %3, %3 \n\t"            /* Converts 16-bit input to 32-bit */
+                        "muls %2, %2, %3 \n\t"         /* f16SubMul1 * f16SubMul2 */
+                        "muls %0, %0, %1 \n\t"         /* f16MinMul1 * f16MinMul2 */
+                        "subs %0, %0, %2 \n\t"         /* f16MinMul1 * f16MinMul2 - f16SubMul1 * f16SubMul2 */
+                        "asrs %0, %0, #7 \n\t"         /* f16MinMul1 >> 7 */
+                        "adds %0, %0, #128 \n\t"       /* Rounding */
+                        "asrs %0, %0, #8 \n\t"         /* f16MinMul1 >> 8 */
+                        "movs %1, %0 \n\t"             /* Copies result to f16SubMul2 */
 
-                        "cmp %4, %0 \n"              /* Compares result with 0x7FFF */
-                        "bgt .+6 \n"                 /* If result < 0x8000, then jumps through two commands */
-                        "subs %0, %4, #1 \n"         /* If result >= 0x8000, then result = 0x7FFF */
-                        "b .+18 \n"                  /* Goes to the end of function */
-                        "sxth %2, %4 \n"             /* f16SubMul1 = 0xFFFF8000 */
-                        "cmp %2, %0 \n"              /* Compares result with 0xFFFF8000 */
-                        "ble .+12 \n"                /* If result >= 0xFFFF8000, then jumps through four commands */
-                        "mov %0, %2 \n"              /* If result < 0xFFFF8000, then result = 0xFFFF8000 */
-                        "lsls %2, %2, #1 \n"         /* f16SubMul1 = 0xFFFF0000 */
-                        "cmp %2, %1 \n"              /* Compares result with 0xFFFF0000 */
-                        "bne .+4 \n"                 /* If result <> 0xFFFF0000, then jumps through next command */
-                        "subs %0, %4, #1 \n"         /* If result = 0xFFFF0000, then result = 0x7FFF */
-                        #if defined(__GNUC__)        /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "cmp %4, %0 \n\t"              /* Compares result with 0x7FFF */
+                        "bgt MLIB_Msu4RndSat_F16_NegTest \n\t"/* If result < 0x8000, then jumps through two commands */
+                        "subs %0, %4, #1 \n\t"         /* If result >= 0x8000, then result = 0x7FFF */
+                        "b MLIB_Msu4RndSat_F16_NegTest \n\t"/* Goes to the end of function */
+                    "MLIB_Msu4RndSat_F16_NegTest: \n\t"
+                        "sxth %2, %4 \n\t"             /* f16SubMul1 = 0xFFFF8000 */
+                        "cmp %2, %0 \n\t"              /* Compares result with 0xFFFF8000 */
+                        "ble MLIB_Msu4RndSat_F16_SatEnd \n\t"/* If result >= 0xFFFF8000, then jumps through four commands */
+                        "mov %0, %2 \n\t"              /* If result < 0xFFFF8000, then result = 0xFFFF8000 */
+                        "lsls %2, %2, #1 \n\t"         /* f16SubMul1 = 0xFFFF0000 */
+                        "cmp %2, %1 \n\t"              /* Compares result with 0xFFFF0000 */
+                        "bne MLIB_Msu4RndSat_F16_SatEnd \n\t" /* If result <> 0xFFFF0000, then jumps through next command */
+                        "subs %0, %4, #1 \n\t"         /* If result = 0xFFFF0000, then result = 0x7FFF */
+                    "MLIB_Msu4RndSat_F16_SatEnd: \n\t"
                         : "+l"(f16MinMul1), "+l"(f16MinMul2), "+l"(f16SubMul1), "+l"(f16SubMul2): "l"(f32SatVal));
     #endif
 

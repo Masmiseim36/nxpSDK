@@ -116,6 +116,11 @@ var pmsm_evk_imxrt1020 = {
     title   :   "PMSM  Control using evk-imxrt1020",
 }
 
+var pmsm_evk_lpc55s69 = {
+    title   :   "PMSM  Control using evk-lpc55s69",
+}
+
+
 /******************************************************************************
 @brief   Read application identification paramters and parse them
 
@@ -158,31 +163,31 @@ function AppIdenInit()
     case "pmsm_twr-kv11z":
         document.getElementById("title").innerHTML = pmsm_twr_kv11z.title;
         break;
-    case "pmsm_frdm-kv31f":
-        document.getElementById("title").innerHTML = pmsm_frdm_kv31f.title;
+    case "pmsm_frdm-kv31":
+        document.getElementById("title").innerHTML = pmsm_frdm_kv31f.title;		
         break;
-    case "pmsm_twr-kv31f":
+    case "pmsm_twr-kv31":
         document.getElementById("title").innerHTML = pmsm_twr_kv31f.title;
         break;
-    case "pmsm_hvp-kv31f":
+    case "pmsm_hvp-kv31":
         document.getElementById("title").innerHTML = pmsm_hvp_kv31f.title;
         break;
-    case "pmsm_twr-kv46f":
+    case "pmsm_twr-kv46":
         document.getElementById("title").innerHTML = pmsm_twr_kv46f.title;
         break;
-    case "pmsm_hvp-kv46f":
+    case "pmsm_hvp-kv46":
         document.getElementById("title").innerHTML = pmsm_hvp_kv46f.title;
         break;
-    case "pmsm_twr-kv58f":
+    case "pmsm_twr-kv58":
         document.getElementById("title").innerHTML = pmsm_twr_kv58f.title;
         break;
-    case "pmsm_hvp-kv58f":
+    case "pmsm_hvp-kv58":
         document.getElementById("title").innerHTML = pmsm_hvp_kv58f.title;
         break;
-    case "pmsm_twr-ke18f":
+    case "pmsm_twr-ke18":
         document.getElementById("title").innerHTML = pmsm_twr_ke18f.title;
         break;
-    case "pmsm_hvp-ke18f":
+    case "pmsm_hvp-ke18":
         document.getElementById("title").innerHTML = pmsm_hvp_ke18f.title;
         break;
     case "pmsm_evk-imxrt1050":
@@ -194,9 +199,11 @@ function AppIdenInit()
 	case "pmsm_evk-imxrt1060":
         document.getElementById("title").innerHTML = pmsm_evk_imxrt1060.title;
         break;
-		
+	case "pmsm_evk-lpc55s69":
+        document.getElementById("title").innerHTML = pmsm_evk_lpc55s69.title;
+        break;	
     default:
-        document.getElementById("title").innerHTML = "PMSM Control";
+        document.getElementById("title").innerHTML = "PMSM Motor Control";
         break;
     }
 

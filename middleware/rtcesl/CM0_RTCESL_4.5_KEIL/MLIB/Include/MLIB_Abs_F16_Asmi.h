@@ -46,20 +46,15 @@ static inline frac16_t MLIB_AbsSat_F16_FAsmi(register frac16_t f16Val)
                         subs f16Val, f16Val, #1         /* If f16Val == 0xFFFF8000, f16Val = f16Val - 1 */
                     AbsEnd:
                         lsrs f16Val, f16Val, #16};      /* f16Val >> 16 */
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax unified \n"        /* Using unified asm syntax */
-                        #endif
-                        "lsls %0, %0, #16 \n"           /* f16Val << 16 */
-                        "bpl .+8 \n"                    /* If f16Val >= 0, then jumps through three commands */
-                        "rsbs %0, %0, #0 \n"            /* If f16Val < 0, then f16Val = 0 - f16Val */
-                        "bpl .+4 \n"                    /* If f16Val >= 0, then jumps through next command */
-                        "subs %0, %0, #1 \n"            /* If f16Val = 0x80000000, f16Val = 0x7FFFFFFF */
-                        "lsrs %0, %0, #16 \n"           /* f16Val >> 16 */
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "lsls %0, %0, #16 \n\t"           /* f16Val << 16 */
+                        "bpl MLIB_AbsSat_F16_AbsEnd \n\t"                    /* If f16Val >= 0, then jumps through three commands */
+                        "rsbs %0, %0, #0 \n\t"            /* If f16Val < 0, then f16Val = 0 - f16Val */
+                        "bpl MLIB_AbsSat_F16_AbsEnd \n\t"                    /* If f16Val >= 0, then jumps through next command */
+                        "subs %0, %0, #1 \n\t"            /* If f16Val = 0x80000000, f16Val = 0x7FFFFFFF */
+                    "MLIB_AbsSat_F16_AbsEnd: \n\t"
+				         "lsrs %0, %0, #16 \n\t"           /* f16Val >> 16 */
                         : "+l"(f16Val):);
     #endif
 

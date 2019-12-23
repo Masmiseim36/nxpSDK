@@ -75,39 +75,33 @@ inline static frac16_t GFLIB_LutPer1D_F16_FAsmi(frac16_t f16X, const frac16_t *p
                         muls   f16X, f32Val3, f16X              /* (y2 - y1) * x */
                         asrs   f16X, f16X, #15                  /* f16X >> 15 */
                         adds   f16X, f32Val2, f16X };           /* result = y1 + (y2 - y1) * x */
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax unified \n"        /* Using unified asm syntax */
-                        #endif
-                        "sxth   %0, %0 \n"              /* Transforms 16-bit input f16Val to 32-bit */
-                        "adds   %3, %3, %0 \n"          /* f32Val1 = 32768 + f16X */
+                        "sxth   %0, %0 \n\t"              /* Transforms 16-bit input f16Val to 32-bit */
+                        "adds   %3, %3, %0 \n\t"          /* f32Val1 = 32768 + f16X */
                         /* Calculates the number of bit shifts between the 16-bit and table resolution */
-                        "subs   %4, %4, %2 \n"          /* f32Val2 = 16 - u16TableSize */
+                        "subs   %4, %4, %2 \n\t"          /* f32Val2 = 16 - u16TableSize */
                         /* 16-bit argument is converted to the table table size bits */
-                        "lsrs   %3, %3, %4 \n"          /* f32Val1 = f32Val1 >> f32Val2 */
+                        "lsrs   %3, %3, %4 \n\t"          /* f32Val1 = f32Val1 >> f32Val2 */
                         /* The exact position between two table points is calculated by keeping the LSBits of the original
                          * argument, below the table resolution. Then it is shifted to get the frac16_t resolution */
-                        "subs   %4, %2, #1 \n"          /* f32Val2 = u16TableSize - 1 */
-                        "lsls   %0, %0, %4 \n"          /* f16X << (u16TableSize - 1) */
-                        "lsls   %0, %0, #17 \n"         /* f16X << 17 */
-                        "lsrs   %0, %0, #17 \n"         /* f16X >> 17: clears higher 17 bits */
-                        "lsls   %4, %3, #1 \n"          /* f32Val2 = f32Val1 << 1 */
-                        "ldrsh  %4, [%1, %4] \n"        /* Loads y1 */
-                        "adds   %3, %3, #1 \n"          /* f32Val1 = f32Val1 + 1 */
-                        "lsls   %5, %5, %2 \n"          /* f32Val3 = 1 << u16TableSize */
-                        "subs   %5, %5, #1 \n"          /* f32Val3 = (1 << u16TableSize) - 1 */
-                        "ands   %5, %5, %3 \n"          /* f32Val3 = f32Val3 & f32Val1 */
-                        "lsls   %5, %5, #1 \n"          /* f32Val3 << 1 */
-                        "ldrsh  %5, [%1, %5] \n"        /* Loads y2 */
+                        "subs   %4, %2, #1 \n\t"          /* f32Val2 = u16TableSize - 1 */
+                        "lsls   %0, %0, %4 \n\t"          /* f16X << (u16TableSize - 1) */
+                        "lsls   %0, %0, #17 \n\t"         /* f16X << 17 */
+                        "lsrs   %0, %0, #17 \n\t"         /* f16X >> 17: clears higher 17 bits */
+                        "lsls   %4, %3, #1 \n\t"          /* f32Val2 = f32Val1 << 1 */
+                        "ldrsh  %4, [%1, %4] \n\t"        /* Loads y1 */
+                        "adds   %3, %3, #1 \n\t"          /* f32Val1 = f32Val1 + 1 */
+                        "lsls   %5, %5, %2 \n\t"          /* f32Val3 = 1 << u16TableSize */
+                        "subs   %5, %5, #1 \n\t"          /* f32Val3 = (1 << u16TableSize) - 1 */
+                        "ands   %5, %5, %3 \n\t"          /* f32Val3 = f32Val3 & f32Val1 */
+                        "lsls   %5, %5, #1 \n\t"          /* f32Val3 << 1 */
+                        "ldrsh  %5, [%1, %5] \n\t"        /* Loads y2 */
                         /* Subtracts two table values and interpolates, the next value to the previous is +1. */
-                        "subs   %5, %5, %4 \n"          /* y2 - y1 */
-                        "muls   %0, %5, %0 \n"          /* (y2 - y1) * x */
-                        "asrs   %0, %0, #15 \n"         /* f16X >> 15 */
-                        "adds   %0, %4, %0 \n"          /* result = y1 + (y2 - y1) * x */
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "subs   %5, %5, %4 \n\t"          /* y2 - y1 */
+                        "muls   %0, %5, %0 \n\t"          /* (y2 - y1) * x */
+                        "asrs   %0, %0, #15 \n\t"         /* f16X >> 15 */
+                        "adds   %0, %4, %0 \n\t"          /* result = y1 + (y2 - y1) * x */
                         : "+l"(f16X), "+l"(pf16Table), "+l"(u16TableSize), "+l"(f32Val1), "+l"(f32Val2), "+l"(f32Val3):);
     #endif
 

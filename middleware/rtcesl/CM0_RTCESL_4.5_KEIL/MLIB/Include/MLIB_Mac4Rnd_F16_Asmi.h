@@ -68,38 +68,34 @@ static inline frac16_t MLIB_Mac4RndSat_F16_FAsmi(register frac16_t f16Add1Mul1, 
                         bne SatEnd                                 /* If result <> 0xFFFF0000, then goes to SatEnd */
                         mov f16Add2Mul1, f32SatVal                 /* If result = 0xFFFF0000, then result = 0x7FFF (in case, when all inputs are FRAC16(-1.0)) */
                     SatEnd: };
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)        /* For GCC compiler */
-                            ".syntax unified \n"     /* Using unified asm syntax */
-                        #endif
-                        "sxth %0, %0 \n"             /* Converts 16-bit input to 32-bit */
-                        "sxth %1, %1 \n"             /* Converts 16-bit input to 32-bit */
-                        "sxth %2, %2 \n"             /* Converts 16-bit input to 32-bit */
-                        "sxth %3, %3 \n"             /* Converts 16-bit input to 32-bit */
-                        "muls %2, %2, %3 \n"         /* f16Add1Mul1 * f16Add1Mul2 */
-                        "muls %0, %0, %1 \n"         /* f16Add2Mul1 * f16Add2Mul2 */
-                        "adds %0, %0, %2 \n"         /* f16Add1Mul1 * f16Add1Mul2 + f16Add2Mul1 * f16Add2Mul2 */
-                        "asrs %0, %0, #7 \n"         /* f16Add2Mul1 >> 7 */
-                        "adds %0, %0, #128 \n"       /* Rounding */
-                        "asrs %0, %0, #8 \n"         /* f16Add2Mul1 >> 8 */
-                        "movs %1, %0 \n"             /* Copies result to f16Add2Mul2 */
+                        "sxth %0, %0 \n\t"             /* Converts 16-bit input to 32-bit */
+                        "sxth %1, %1 \n\t"             /* Converts 16-bit input to 32-bit */
+                        "sxth %2, %2 \n\t"             /* Converts 16-bit input to 32-bit */
+                        "sxth %3, %3 \n\t"             /* Converts 16-bit input to 32-bit */
+                        "muls %2, %2, %3 \n\t"         /* f16Add1Mul1 * f16Add1Mul2 */
+                        "muls %0, %0, %1 \n\t"         /* f16Add2Mul1 * f16Add2Mul2 */
+                        "adds %0, %0, %2 \n\t"         /* f16Add1Mul1 * f16Add1Mul2 + f16Add2Mul1 * f16Add2Mul2 */
+                        "asrs %0, %0, #7 \n\t"         /* f16Add2Mul1 >> 7 */
+                        "adds %0, %0, #128 \n\t"       /* Rounding */
+                        "asrs %0, %0, #8 \n\t"         /* f16Add2Mul1 >> 8 */
+                        "movs %1, %0 \n\t"             /* Copies result to f16Add2Mul2 */
 
-                        "cmp %4, %0 \n"              /* Compares result with 0x7FFF */
-                        "bgt .+6 \n"                 /* If result < 0x7FFF, then jumps through two commands */
-                        "mov %0, %4 \n"              /* If result >= 0x7FFF, then result = 0x7FFF */
-                        "b .+18 \n"                  /* Goes to the end of function */
-                        "mvns %2, %4 \n"             /* f16Add1Mul1 = 0xFFFF8000 */
-                        "cmp %2, %0 \n"              /* Compares result with 0xFFFF8000 */
-                        "ble .+12 \n"                /* If result >= 0xFFFF8000, then jumps through four commands */
-                        "mov %0, %2 \n"              /* f16Add2Mul1 = 0xFFFF8000 */
-                        "lsls %2, %2, #1 \n"         /* f16Add1Mul1 = 0xFFFF0000 */
-                        "cmp %2, %1 \n"              /* Compares result with 0xFFFF0000 */
-                        "bne .+4 \n"                 /* If result <> 0xFFFF0000, then jumps through next command */
-                        "mov %0, %4 \n"              /* If result = 0xFFFF0000, then result = 0x7FFF (in case, when all inputs are FRAC16(-1.0)) */
-                        #if defined(__GNUC__)        /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "cmp %4, %0 \n\t"              /* Compares result with 0x7FFF */
+                        "bgt MLIB_Mac4RndSat_F16_NegTest \n\t"                 /* If result < 0x7FFF, then jumps through two commands */
+                        "mov %0, %4 \n\t"              /* If result >= 0x7FFF, then result = 0x7FFF */
+                        "b MLIB_Mac4RndSat_F16_SatEnd \n\t"                  /* Goes to the end of function */
+					"MLIB_Mac4RndSat_F16_NegTest: \n\t"
+                        "mvns %2, %4 \n\t"             /* f16Add1Mul1 = 0xFFFF8000 */
+                        "cmp %2, %0 \n\t"              /* Compares result with 0xFFFF8000 */
+                        "ble MLIB_Mac4RndSat_F16_SatEnd \n\t"                /* If result >= 0xFFFF8000, then jumps through four commands */
+                        "mov %0, %2 \n\t"              /* f16Add2Mul1 = 0xFFFF8000 */
+                        "lsls %2, %2, #1 \n\t"         /* f16Add1Mul1 = 0xFFFF0000 */
+                        "cmp %2, %1 \n\t"              /* Compares result with 0xFFFF0000 */
+                        "bne MLIB_Mac4RndSat_F16_SatEnd \n\t"                 /* If result <> 0xFFFF0000, then jumps through next command */
+                        "mov %0, %4 \n\t"              /* If result = 0xFFFF0000, then result = 0x7FFF (in case, when all inputs are FRAC16(-1.0)) */
+                    "MLIB_Mac4RndSat_F16_SatEnd: \n\t"  
                         : "+l"(f16Add2Mul1), "+l"(f16Add2Mul2), "+l"(f16Add1Mul1), "+l"(f16Add1Mul2): "l"(f32SatVal));
     #endif
 

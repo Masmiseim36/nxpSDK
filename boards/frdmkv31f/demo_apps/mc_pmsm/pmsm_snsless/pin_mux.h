@@ -64,6 +64,7 @@ void BOARD_InitPins(void);
                                         /* @} */
 
 /*!
+ * @brief Configures pin routing and optionally pin electrical features.
  *
  */
 void PinTool_FTM(void);
@@ -75,6 +76,7 @@ void PinTool_FTM(void);
                                               /* @} */
 
 /*!
+ * @brief Configures pin routing and optionally pin electrical features.
  *
  */
 void PinTool_UART(void);
@@ -101,6 +103,7 @@ void PinTool_UART(void);
                                     /* @} */
 
 /*!
+ * @brief Configures pin routing and optionally pin electrical features.
  *
  */
 void PinTool_Misc(void);

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html style="text-align: center;">     
+  <head>       
+    <meta http-equiv="content-type" content="text/html; charset=windows-1250">       
+    <meta name="generator" content="PSPad editor, www.pspad.com">       
+    <title>    
+    </title>       
+    <link href="style.css" rel="stylesheet" type="text/css" />      
+    <script type="text/javascript" src="JS_functions\mainInclude.js"></script>
+    <script LANGUAGE="JavaScript" type ="text/javascript">
+     includeJSfiles();
+    </script>
+   </head>   
+  <body id="RFObsrv" onload=" innerHTMLonload(); initLoadFormRFO();"  background="images/background.png"  style="display: inline-block; margin: 10px auto; text-align: center;">                                          
+    <OBJECT id="MCB_PC_Master_Services1" style="display:none;" classid="clsid:48A185F1-FFDB-11D3-80E3-00C04F176153" name="pcm">	     
+    </OBJECT>	
+    
+    <OBJECT style="display:none;" CLASSID = "clsid:5220cb21-c88d-11cf-b347-00aa00a28331">         
+      <PARAM NAME="LPKPath" VALUE="gmsctls.lpk">         
+    </OBJECT>     
+    <!-- Headline -->
+    <div class="HeadBorder fontTitle" style="width: 740px;">Rotor Flux Observer and MRAS Speed Estimator</div>   
+      
+    <div>              
+              
+      <table style="width: 370px;" class="MainTab">               
+        <tr>                 
+            <td width="45%" align="left" valign="top" style="padding-right: 10px;">                      		                            
+            <!-- RFO  parameters-->     
+              <fieldset id="RFO_params" style="width: 100%;" class="ContBox">
+                <legend class="fontControlLabel">Rotor Flux Observer Parameters</legend>        
+                <table id="parameterTable" width="100%"  border="0" class="ContBoxTab">            
+                  <script>
+                  // RFO proportianl gain
+                  document.write( build_parameter_line("K<sub>p CMPNS</sub>", "RFO_KpGain", "-", "RFO compensation controller proportional gain", 0, ""));
+                  // RFO integration gain
+                  document.write( build_parameter_line("K<sub>i CMPNS</sub>", "RFO_KiGain", "-", "RFO compensation controller integration gain", 0, ""));
+                  // RFO coeff
+                  document.write( build_parameter_line("f<sub>PsiSInt</sub>","CoeffRFO", "Hz", "Stator flux integrator bandwith, typical range <0.5;3> Hz", 0, ""));
+                  </script>
+                                            
+               </table>
+              </fieldset>
+           
+              <!-- MRAS Speed Estimator Parameters input parameters-->     
+              <fieldset id="MRAS_params" style="width: 100%;" class="ContBox">
+                <legend class="fontControlLabel">MRAS Speed Estimator Parameters</legend>        
+                <table id="parameterTable" width="100%"  border="0" class="ContBoxTab">            
+                           
+                  <script>    
+                  // MRAS proportianl gain
+                  document.write( build_parameter_line("K<sub>p MRAS</sub>", "MRAS_KpGain", "-", "MRAS internal PI controller proportional gain", 0, ""));
+                  // MRAS integration gain
+                  document.write( build_parameter_line("K<sub>i MRAS</sub>" ,"MRAS_KiGain", "-", "MRAS internal PI controller integration gain", 0, ""));
+                  </script>	
+                                          
+               </table>
+              </fieldset>
+              <!-- Rs estim parameters-->
+<!--
+              <fieldset  style="width: 100%;" class="ContBox">
+                <legend class="fontControlLabel">Stator Resistance Estimation</legend>        
+                <table id="parameterTable" width="100%"  border="0" class="ContBoxTab">            
+ -->
+                  <script>   
+//                  // Rs Estimation proportianl gain
+//                  document.write( build_parameter_line("K<sub>p RS</sub>", "RSESTIM_KpGain", "-", "Stator Resistance Internal PI Controller Proportional Gain", 0, ""));
+//                  // Rs Estimation integration gain
+//                  document.write( build_parameter_line("K<sub>i RS</sub>" ,"RSESTIM_KiGain", "-", "Stator Resistance Internal PI Controller Integration Gain", 0, ""));
+//                  // Rs Estimation max value
+//                  document.write( build_parameter_line("R<sub>s max</sub>" ,"RSESTIM_max", "%", "Expected Stator Resistance Maximal Raise, usually <0%, 300%> ", 0, ""));
+//                  // Rs Estimation min value
+//                  document.write( build_parameter_line("R<sub>s min</sub>" ,"RSESTIM_min", "%", "Expected Stator Resistance Maximal Drop, usually <-25%, 0%> ", 0, ""));
+                  </script>	
+<!--
+               </table>
+               </fieldset>
+-->
+             </td>                                      
+        </tr>         
+      </table>                      
+      <!-- calculation buttons-->
+      <table class = "fButtonGroup" >                     
+            <tr>  
+                <td><input type="button" class="fButtonsEnabled" value="Update Target" id="RFOUpdateFrm" onmouseout="unmarkUpdateSLSField()" onmouseover="markUpdateSLSField()" onclick="clickUpdatePoSpeRFOFM()" /></td> 
+                <td><input type="button" class="fButtonsDisabled" value="Reload Data" id="ReloadData" onclick="clickReloadData(); initLoadFormRFO();" disabled="disabled" /></td> 
+                <td><input type="button" class="fButtonsDisabled" value="Store Data" id="StoreData" onclick="clickStoreData()" disabled="disabled" /></td> 
+            </tr>            
+      </table>                 
+      <span style="visibility: hidden" face="sans-serif" id="txtErrMsg">       
+      </span>          
+    </div>     
+  </body>
+</html>

@@ -94,14 +94,14 @@ void MCDRV_Init_M1(void)
 void InitClock(void)
 {
     /* Calculate clock dependant variables for BLDC sensorless control algorithm */
-    g_sClockSetup.ui32FastPeripheralClock =
-        SystemCoreClock / (((SIM->CLKDIV1 & SIM_CLKDIV1_OUTDIV2_MASK) >> SIM_CLKDIV1_OUTDIV2_SHIFT) + 1);
-    g_sClockSetup.ui32BusClock =
-        SystemCoreClock / (((SIM->CLKDIV1 & SIM_CLKDIV1_OUTDIV4_MASK) >> SIM_CLKDIV1_OUTDIV4_SHIFT) + 1);
+    g_sClockSetup.ui32FastPeripheralClock =  CLOCK_GetFreq(kCLOCK_FastPeriphClk); 
+    g_sClockSetup.ui32BusClock = CLOCK_GetFreq(kCLOCK_BusClk); 
+        
     g_sClockSetup.ui16PwmFreq = PWM_FREQ; /* 20 kHz */
                                              /* PWM module calculated as follows:
                                               * PWM_MOD = PWM_CLOCK / PWM_FREQUNCY = 75 MHz / 20 kHz = 3750 */
     g_sClockSetup.ui16PwmModulo = g_sClockSetup.ui32FastPeripheralClock / g_sClockSetup.ui16PwmFreq;
+    g_sClockSetup.ui16PwmDeadTime = g_sClockSetup.ui32FastPeripheralClock / (1000000000U / PWM_DEADTIME);
     g_sClockSetup.ui16CtrlLoopFreq = CTRL_LOOP_FREQ; /* 1 kHz */
 }
 
@@ -164,13 +164,13 @@ void InitPWMA0(void)
 
     /* Set dead-time (number of Fast Peripheral Clocks)
        DTCNT0,1 = T_dead * f_fpc = 0.5us * 100MHz = 50 */
-    PWM0->SM[0].DTCNT0 = PWM_DTCNT0_DTCNT0(50);
-    PWM0->SM[1].DTCNT0 = PWM_DTCNT0_DTCNT0(50);
-    PWM0->SM[2].DTCNT0 = PWM_DTCNT0_DTCNT0(50);
+    PWM0->SM[0].DTCNT0 = PWM_DTCNT0_DTCNT0(g_sClockSetup.ui16PwmDeadTime);
+    PWM0->SM[1].DTCNT0 = PWM_DTCNT0_DTCNT0(g_sClockSetup.ui16PwmDeadTime);
+    PWM0->SM[2].DTCNT0 = PWM_DTCNT0_DTCNT0(g_sClockSetup.ui16PwmDeadTime);
 
-    PWM0->SM[0].DTCNT1 = PWM_DTCNT1_DTCNT1(50);
-    PWM0->SM[1].DTCNT1 = PWM_DTCNT1_DTCNT1(50);
-    PWM0->SM[2].DTCNT1 = PWM_DTCNT1_DTCNT1(50);
+    PWM0->SM[0].DTCNT1 = PWM_DTCNT1_DTCNT1(g_sClockSetup.ui16PwmDeadTime);
+    PWM0->SM[1].DTCNT1 = PWM_DTCNT1_DTCNT1(g_sClockSetup.ui16PwmDeadTime);
+    PWM0->SM[2].DTCNT1 = PWM_DTCNT1_DTCNT1(g_sClockSetup.ui16PwmDeadTime);
 
     /* Channels A and B disabled when fault 0 occurs */
     PWM0->SM[0].DISMAP[0] = PWM_DISMAP_DIS0A(0x00);
@@ -200,10 +200,13 @@ void InitPWMA0(void)
     PWM0->FFILT = (PWM_FFILT_FILT_PER(20) | PWM_FFILT_FILT_CNT(7));
 
     /* Enable A&B PWM outputs for SM0 & 1 & 2  */
-    PWM0->OUTEN = (PWM_OUTEN_PWMA_EN(0x7) | PWM_OUTEN_PWMB_EN(0x7));
+    PWM0->OUTEN = (PWM0->OUTEN & ~(uint16_t)PWM_OUTEN_PWMA_EN_MASK) | PWM_OUTEN_PWMA_EN(7);
+    PWM0->OUTEN = (PWM0->OUTEN & ~(uint16_t)PWM_OUTEN_PWMB_EN_MASK) | PWM_OUTEN_PWMB_EN(7);
 
     /* Start PWMs (set load OK flags and run) */
-    PWM0->MCTRL = (PWM_MCTRL_CLDOK(0x7) | PWM_MCTRL_LDOK(0x7) | PWM_MCTRL_RUN(0x7));
+    PWM0->MCTRL = (PWM0->MCTRL & ~(uint16_t)PWM_MCTRL_CLDOK_MASK) | PWM_MCTRL_CLDOK(0xF);
+    PWM0->MCTRL = (PWM0->MCTRL & ~(uint16_t)PWM_MCTRL_LDOK_MASK) | PWM_MCTRL_LDOK(0xF);
+    PWM0->MCTRL = (PWM0->MCTRL & ~(uint16_t)PWM_MCTRL_RUN_MASK) | PWM_MCTRL_RUN(0xF);
 
     /* Initialize MC driver */
     g_sM1Pwm3ph.pui32PwmBaseAddress = (PWM_Type *)PWM0;
@@ -246,9 +249,9 @@ void InitFTM1(void)
     /* Pre-scale factor 128 */
     FTM1->SC = FTM_SC_PS(7) | FTM_SC_CLKS(1);
     
-    /* Calculate frequency of timer used for forced commutation
-     * Bus clock divided by 2^FTM_prescaler */
-    g_sClockSetup.ui32CmtTimerFreq = g_sClockSetup.ui32FastPeripheralClock >> (FTM1->SC & FTM_SC_PS_MASK);
+    /* calculate frequency of timer used for forced commutation
+     * System clock divided by 2^FTM_prescaler */
+    g_sClockSetup.ui32CmtTimerFreq = g_sClockSetup.ui32FastPeripheralClock >> (FTM1->SC&FTM_SC_PS_MASK);
 
     /* Enable Output Compare interrupt, output Compare, Software Output
      * Compare only (ELSnB:ELSnA = 0:0, output pin is not controlled by FTM) */
@@ -284,25 +287,27 @@ void InitFTM2(void)
     /* Enable the counter */
     FTM2->MODE = FTM_MODE_WPDIS_MASK | FTM_MODE_FTMEN_MASK;
 
+    /* Settings up FTM SC register for clock setup */
+    /* Set system clock as source for FTM0 (CLKS[1:0] = 01) */
+    /* Set prescaler to 16 */
+    /* Enable interrupt */
+    FTM2->SC = FTM_SC_PS(4) | FTM_SC_CLKS(1) | FTM_SC_TOIE_MASK;
+
     /* Counter running in BDM mode */
     FTM2->CONF = FTM_CONF_BDMMODE(3);
 
     /* Set count value to 0 */
     FTM2->CNTIN = 0x0;
 
-    /* 20x slower than fast loop */
-    FTM2->MOD = (g_sClockSetup.ui16PwmModulo * 2 / 16 * 10);
+    /* 1kHz Slow Loop */
+    g_sClockSetup.ui16CtrlLoopModulo =
+        (g_sClockSetup.ui32FastPeripheralClock / g_sClockSetup.ui16CtrlLoopFreq) >> (FTM2->SC & FTM_SC_PS_MASK);
+    FTM2->MOD = g_sClockSetup.ui16CtrlLoopModulo;
 
     /* LOADOK */
     FTM2->PWMLOAD = FTM_PWMLOAD_LDOK_MASK;
 
-    /* Settings up FTM SC register for clock setup */
-    /* Set system clock as source for FTM0 (CLKS[1:0] = 01) */
-    /* Set pre-scaler to 16 */
-    /* Enable interrupt from FTM2 */
-    FTM2->SC = FTM_SC_PS(4) | FTM_SC_CLKS(1) | FTM_SC_TOIE_MASK;
-
-    /* Enable interrupt */
+    /* Enable & setup interrupts */
     EnableIRQ(FTM2_IRQn);
 
     /* Set priority to interrupt */
@@ -393,8 +398,8 @@ void InitHSADC(void)
     SIM->SCGC5 |= SIM_SCGC5_HSADC0_MASK;
     SIM->SCGC2 |= SIM_SCGC2_HSADC1_MASK;
 
-    /* Triggered sequential mode on HSADCA and HSADCC */
-    HSADC0->CTRL1 |= HSADC_CTRL1_SMODE(0x4);
+    /* Triggered parallel mode on HSADCA and HSADCC */
+    HSADC0->CTRL1 |= HSADC_CTRL1_SMODE(0x5);
     HSADC1->CTRL1 |= HSADC_CTRL1_SMODE(0x5);
 
     /* Enable end-of-scan interrupt */
@@ -411,14 +416,18 @@ void InitHSADC(void)
     HSADC0->CTRL2 &= ~(HSADC_CTRL2_STOPB(TRUE));
     HSADC1->CTRL2 &= ~(HSADC_CTRL2_STOPB(TRUE));
 
-    /* input clock is 60MHz (240MHz CPU clock divided by four),
+    /* input clock is 50MHz (150MHz CPU clock divided by tree),
        single ended */
-    HSADC0->CTRL2 = (HSADC0->CTRL2 & ~(uint16_t)HSADC_CTRL2_DIVA_MASK) | HSADC_CTRL2_DIVA(0x03);
-    HSADC1->CTRL2 = (HSADC1->CTRL2 & ~(uint16_t)HSADC_CTRL2_DIVA_MASK) | HSADC_CTRL2_DIVA(0x03);
-
+    HSADC0->CTRL2 = (HSADC0->CTRL2 & ~HSADC_CTRL2_DIVA_MASK) | HSADC_CTRL2_DIVA(0x02);
+    HSADC1->CTRL2 = (HSADC1->CTRL2 & ~HSADC_CTRL2_DIVA_MASK) | HSADC_CTRL2_DIVA(0x02);
+	
     /* Enable first two samples for HSADCA and HSADCC */
     HSADC0->SDIS = 0x0000;
     HSADC1->SDIS = 0x0000;
+
+    /* Select PWMA0_trig source (routed using XBARA) as sync signal */
+    SIM->SOPT7 = (SIM->SOPT7 & ~SIM_SOPT7_HSADC0AALTTRGEN_MASK) | SIM_SOPT7_HSADC0AALTTRGEN(0x00);
+    SIM->SOPT7 = (SIM->SOPT7 & ~SIM_SOPT7_HSADC1AALTTRGEN_MASK) | SIM_SOPT7_HSADC1AALTTRGEN(0x00);
 
     /* Configure HSADC calibration process */
     /* Single-ended input calibration on HSADC0A and HSADC1C */

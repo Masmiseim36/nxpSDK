@@ -2,6 +2,8 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MKV58F24"/>
+    <definition extID="component.osa_bm.MKV58F24"/>
     <definition extID="device.MKV58F24_CMSIS.MKV58F24"/>
     <definition extID="middleware.mcu-boot.MKV58F24_sources.MKV58F24"/>
     <definition extID="middleware.mcu-boot.MKV58F24_startup.MKV58F24"/>
@@ -13,6 +15,7 @@
     <definition extID="middleware.mcu-boot.src_startup.MKV58F24"/>
     <definition extID="platform.Include_common.MKV58F24"/>
     <definition extID="platform.Include_core_cm7.MKV58F24"/>
+    <definition extID="platform.Include_dsp.MKV58F24"/>
     <definition extID="platform.drivers.clock.MKV58F24"/>
     <definition extID="platform.drivers.common.MKV58F24"/>
     <definition extID="platform.drivers.crc.MKV58F24"/>
@@ -25,9 +28,10 @@
     <definition extID="platform.drivers.uart.MKV58F24"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
+    <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="twrkv58f220m_tower_bootloader" name="tower_bootloader" category="bootloader_examples" dependency="platform.drivers.clock.MKV58F24 platform.drivers.flash.MKV58F24 device.MKV58F24_CMSIS.MKV58F24 platform.drivers.uart.MKV58F24 platform.drivers.gpio.MKV58F24 platform.drivers.i2c.MKV58F24 platform.drivers.port.MKV58F24 platform.drivers.dspi.MKV58F24 platform.drivers.crc.MKV58F24 platform.drivers.flexcan.MKV58F24 middleware.mcu-boot.MKV58F24_startup.MKV58F24 middleware.mcu-boot.bootsources.MKV58F24 middleware.mcu-boot.bootsources_kinetis.MKV58F24 middleware.mcu-boot.MKV58F24_sources.MKV58F24 middleware.mcu-boot.src_security.MKV58F24 middleware.mcu-boot.drv_mmcau.MKV58F24 middleware.mcu-boot.src_startup.MKV58F24 middleware.mcu-boot.drv_microseconds_pit.MKV58F24 platform.drivers.common.MKV58F24 platform.Include_core_cm7.MKV58F24 platform.Include_common.MKV58F24">
+  <example id="twrkv58f220m_tower_bootloader" name="tower_bootloader" category="bootloader_examples" dependency="platform.drivers.clock.MKV58F24 platform.drivers.flash.MKV58F24 device.MKV58F24_CMSIS.MKV58F24 platform.drivers.uart.MKV58F24 platform.drivers.gpio.MKV58F24 platform.drivers.i2c.MKV58F24 platform.drivers.port.MKV58F24 platform.drivers.dspi.MKV58F24 platform.drivers.crc.MKV58F24 platform.drivers.flexcan.MKV58F24 middleware.mcu-boot.MKV58F24_startup.MKV58F24 middleware.mcu-boot.bootsources.MKV58F24 middleware.mcu-boot.bootsources_kinetis.MKV58F24 middleware.mcu-boot.MKV58F24_sources.MKV58F24 middleware.mcu-boot.src_security.MKV58F24 middleware.mcu-boot.drv_mmcau.MKV58F24 middleware.mcu-boot.src_startup.MKV58F24 middleware.mcu-boot.drv_microseconds_pit.MKV58F24 component.osa_bm.MKV58F24 platform.drivers.common.MKV58F24 platform.Include_core_cm7.MKV58F24 platform.Include_common.MKV58F24 platform.Include_dsp.MKV58F24 component.lists.MKV58F24">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -55,9 +59,9 @@
           <value>gnu.c.optimization.level.size</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
-          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
           <value>CPU_MKV58F1M0VLQ24</value>
           <value>CPU_IS_ARM_CORTEX_M7=1</value>
+          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
           <value>TOWER</value>
           <value>BL_TARGET_FLASH</value>
           <value>TWR_KV58F220M</value>
@@ -100,6 +104,9 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <source path="boards/twrkv58f220m/bootloader_examples/tower_bootloader/armgcc" target_path="middleware/mcu-boot" type="linker" toolchain="armgcc">
+      <files mask="MKV58F1M0xxx24_application_0x10000000.ld"/>
+    </source>
     <source path="boards/twrkv58f220m/bootloader_examples/tower_bootloader/iar" target_path="middleware/mcu-boot" type="linker" toolchain="iar">
       <files mask="MKV58F1M0xxx24_application_0x10000000.icf"/>
     </source>

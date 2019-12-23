@@ -10,6 +10,7 @@
     <definition extID="device.MKV31F51212_startup.MKV31F51212"/>
     <definition extID="platform.Include_common.MKV31F51212"/>
     <definition extID="platform.Include_core_cm4.MKV31F51212"/>
+    <definition extID="platform.Include_dsp.MKV31F51212"/>
     <definition extID="platform.drivers.clock.MKV31F51212"/>
     <definition extID="platform.drivers.common.MKV31F51212"/>
     <definition extID="platform.drivers.dac.MKV31F51212"/>
@@ -20,13 +21,14 @@
     <definition extID="platform.drivers.smc.MKV31F51212"/>
     <definition extID="platform.drivers.uart.MKV31F51212"/>
     <definition extID="platform.utilities.assert.MKV31F51212"/>
+    <definition extID="platform.utilities.misc_utilities.MKV31F51212"/>
     <definition extID="utility.debug_console.MKV31F51212"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmkv31f_pdb_dac_trigger" name="pdb_dac_trigger" category="driver_examples/pdb" dependency="platform.drivers.pdb.MKV31F51212 platform.drivers.dac.MKV31F51212 platform.drivers.port.MKV31F51212 platform.drivers.clock.MKV31F51212 platform.drivers.common.MKV31F51212 device.MKV31F51212_CMSIS.MKV31F51212 utility.debug_console.MKV31F51212 component.uart_adapter.MKV31F51212 component.serial_manager.MKV31F51212 component.serial_manager_uart.MKV31F51212 platform.drivers.uart.MKV31F51212 component.lists.MKV31F51212 device.MKV31F51212_startup.MKV31F51212 platform.drivers.lpuart.MKV31F51212 platform.drivers.smc.MKV31F51212 platform.drivers.gpio.MKV31F51212 platform.utilities.assert.MKV31F51212 platform.Include_core_cm4.MKV31F51212 platform.Include_common.MKV31F51212">
+  <example id="frdmkv31f_pdb_dac_trigger" name="pdb_dac_trigger" category="driver_examples/pdb" dependency="platform.drivers.pdb.MKV31F51212 platform.drivers.dac.MKV31F51212 platform.drivers.port.MKV31F51212 platform.drivers.clock.MKV31F51212 platform.drivers.common.MKV31F51212 device.MKV31F51212_CMSIS.MKV31F51212 utility.debug_console.MKV31F51212 component.uart_adapter.MKV31F51212 component.serial_manager.MKV31F51212 component.lists.MKV31F51212 component.serial_manager_uart.MKV31F51212 platform.drivers.uart.MKV31F51212 device.MKV31F51212_startup.MKV31F51212 platform.drivers.lpuart.MKV31F51212 platform.drivers.smc.MKV31F51212 platform.drivers.gpio.MKV31F51212 platform.utilities.assert.MKV31F51212 platform.Include_core_cm4.MKV31F51212 platform.Include_common.MKV31F51212 platform.Include_dsp.MKV31F51212 platform.utilities.misc_utilities.MKV31F51212">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -45,6 +47,7 @@
           <value>CPU_MKV31F512VLL12</value>
           <value>FRDM_KV31F</value>
           <value>FREEDOM</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -60,13 +63,13 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/frdmkv31f/driver_examples/pdb/dac_trigger/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/frdmkv31f/driver_examples/pdb/dac_trigger/armgcc" target_path="MKV31F51212/gcc" type="linker" toolchain="armgcc">
       <files mask="MKV31F512xxx12_flash.ld"/>
     </source>
-    <source path="boards/frdmkv31f/driver_examples/pdb/dac_trigger/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/frdmkv31f/driver_examples/pdb/dac_trigger/iar" target_path="MKV31F51212/iar" type="linker" toolchain="iar">
       <files mask="MKV31F512xxx12_flash.icf"/>
     </source>
-    <source path="boards/frdmkv31f/driver_examples/pdb/dac_trigger/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/frdmkv31f/driver_examples/pdb/dac_trigger/mdk" target_path="MKV31F51212/arm" type="linker" toolchain="mdk">
       <files mask="MKV31F512xxx12_flash.scf"/>
     </source>
     <source path="boards/frdmkv31f/driver_examples/pdb/dac_trigger" target_path="board" type="c_include">

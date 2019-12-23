@@ -14,7 +14,6 @@
           <Cpu>CPUTYPE("Cortex-M0+")</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD1FFFFE00 -FC800 -FN1 -FF0MK_P32_48MHZ -FS00 -FL08000 -FP0($$Device:MKV11Z128xxx7$Flash\MK_P32_48MHZ_KL03.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>$$Device:MKV11Z128xxx7$Device\Include\MKV11Z7.h</RegisterFile>
           <MemoryEnv/>
@@ -344,7 +343,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -353,17 +352,21 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
-              <Define>DEBUG, CPU_MKV11Z128VLH7, FRDM_KV11Z, FREEDOM</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>DEBUG, CPU_MKV11Z128VLH7, FRDM_KV11Z, FREEDOM, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../CMSIS/Driver/Include;../../../../..;../../../../../../../CMSIS/Include;../../../../../../../devices;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/cmsis_drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7;../../../../../../../devices/MKV11Z7/utilities/str;../../../../../../../devices/MKV11Z7/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/serial_manager;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../components/lists;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../CMSIS/Driver/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>..;../../../../../../../CMSIS/Driver/Include;../../../../..;../../../../../../../CMSIS/Include;../../../../../../../devices;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/cmsis_drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7;../../../../../../../devices/MKV11Z7/utilities/str;../../../../../../../devices/MKV11Z7/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../components/serial_manager;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../CMSIS/Driver/Include;../../../../../../../CMSIS/Driver/Include;../../../../../../../devices/MKV11Z7/utilities</IncludePath>
             </VariousControls>
+            <v6Lang>3</v6Lang>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
+            <v6Rtti>0</v6Rtti>
           </Cads>
           <Aads>
             <interw>0</interw>
@@ -381,6 +384,7 @@
               <Undefine/>
               <IncludePath/>
             </VariousControls>
+            <uClangAs>1</uClangAs>
           </Aads>
           <LDads>
             <umfTarg>0</umfTarg>
@@ -395,12 +399,13 @@
             <ScatterFile>MKV11Z128xxx7_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove</Misc>
+            <Misc>--remove --keep=*(.FlashConfig)</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
+      <uAC6>1</uAC6>
       <Groups>
         <Group>
           <GroupName>source</GroupName>
@@ -716,21 +721,6 @@
               <FilePath>../../../../../../../CMSIS/Include/core_cm0plus.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
@@ -739,6 +729,11 @@
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
@@ -761,6 +756,11 @@
               <FilePath>../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
+              <FileName>core_armv81mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
+            </File>
+            <File>
               <FileName>core_armv8mbl.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
@@ -779,6 +779,21 @@
               <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -810,7 +825,6 @@
           <Cpu>CPUTYPE("Cortex-M0+")</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD1FFFFE00 -FC800 -FN1 -FF0MK_P32_48MHZ_KL03 -FS00 -FL08000 -FP0($$Device:MKV11Z128xxx7$Flash\MK_P32_48MHZ_KL03.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>$$Device:MKV11Z128xxx7$Device\Include\MKV11Z7.h</RegisterFile>
           <MemoryEnv/>
@@ -1140,7 +1154,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>4</Optim>
+            <Optim>7</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -1149,17 +1163,21 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
-              <Define>NDEBUG, CPU_MKV11Z128VLH7, FRDM_KV11Z, FREEDOM</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>NDEBUG, CPU_MKV11Z128VLH7, FRDM_KV11Z, FREEDOM, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../CMSIS/Driver/Include;../../../../..;../../../../../../../CMSIS/Include;../../../../../../../devices;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/cmsis_drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7;../../../../../../../devices/MKV11Z7/utilities/str;../../../../../../../devices/MKV11Z7/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/serial_manager;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../components/lists;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../CMSIS/Driver/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>..;../../../../../../../CMSIS/Driver/Include;../../../../..;../../../../../../../CMSIS/Include;../../../../../../../devices;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/cmsis_drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7;../../../../../../../devices/MKV11Z7/utilities/str;../../../../../../../devices/MKV11Z7/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../components/serial_manager;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../devices/MKV11Z7/drivers;../../../../../../../CMSIS/Driver/Include;../../../../../../../CMSIS/Driver/Include;../../../../../../../devices/MKV11Z7/utilities</IncludePath>
             </VariousControls>
+            <v6Lang>3</v6Lang>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
+            <v6Rtti>0</v6Rtti>
           </Cads>
           <Aads>
             <interw>0</interw>
@@ -1177,6 +1195,7 @@
               <Undefine/>
               <IncludePath/>
             </VariousControls>
+            <uClangAs>1</uClangAs>
           </Aads>
           <LDads>
             <umfTarg>0</umfTarg>
@@ -1191,12 +1210,13 @@
             <ScatterFile>MKV11Z128xxx7_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove</Misc>
+            <Misc>--remove --keep=*(.FlashConfig)</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
+      <uAC6>1</uAC6>
       <Groups>
         <Group>
           <GroupName>source</GroupName>
@@ -1512,21 +1532,6 @@
               <FilePath>../../../../../../../CMSIS/Include/core_cm0plus.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
@@ -1535,6 +1540,11 @@
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
@@ -1557,6 +1567,11 @@
               <FilePath>../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
+              <FileName>core_armv81mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
+            </File>
+            <File>
               <FileName>core_armv8mbl.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
@@ -1575,6 +1590,21 @@
               <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
           </Files>
         </Group>

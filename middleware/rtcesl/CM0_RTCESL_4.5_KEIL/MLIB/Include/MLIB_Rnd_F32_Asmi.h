@@ -56,28 +56,23 @@ static inline frac16_t MLIB_RndSat_F16l_FAsmi(register frac32_t f32Val)
                         ble SatEnd                      /* If f32Val >= 0xFFFF7FFF, then goes to SatEnd */
                         adds f32Rnd, f32Val, #1         /* If f32Val < 0xFFFF7FFF, then f32Val = 0xFFFF8000 */
                     SatEnd: }
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax unified \n"        /* Using unified asm syntax */
-                        #endif
-                        "asrs %0,%0, #8 \n"             /* f32Val >> 8 */
-                        "adds %0, %0, %1 \n"            /* f32Val = f32Val + 0x80 */
-                        "lsls %1, %1, #8 \n"            /* f32Rnd = 0x00008000 */
-                        "asrs %0, %0, #8 \n"            /* f32Val >> 8 */
+                        "asrs %0,%0, #8 \n\t"             /* f32Val >> 8 */
+                        "adds %0, %0, %1 \n\t"            /* f32Val = f32Val + 0x80 */
+                        "lsls %1, %1, #8 \n\t"            /* f32Rnd = 0x00008000 */
+                        "asrs %0, %0, #8 \n\t"            /* f32Val >> 8 */
 
-                        "cmp %0, %1 \n"                 /* Compares f32Val with 0x00008000 */
-                        "bge .+6 \n"                    /* If f32Val <= 0x8000, then jumps through two commands */
-                        "subs %1, %0, #1 \n"            /* If f32Val > 0x8000, then f32Val = 0x7FFF */
-                        "b .+10 \n"                     /* Jumps through four commands */
-                        "mvns %0, %0 \n"                /* f32Rnd = 0xFFFF7FFF */
-                        "cmp %0, %1 \n"                 /* Compares f32Val with 0xFFFF7FFF */
-                        "ble .+4 \n"                    /* If f32Val >= 0xFFFF7FFF, then jumps through next commands */
-                        "adds %1, %0, #1 \n"            /* If f32Val < 0xFFFF7FFF, then f32Val = 0xFFFF8000 */
-
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "cmp %0, %1 \n\t"                 /* Compares f32Val with 0x00008000 */
+                        "bge MLIB_RndSat_F16l_NegTest \n\t"/* If f32Val <= 0x8000, then jumps through two commands */
+                        "subs %1, %0, #1 \n\t"            /* If f32Val > 0x8000, then f32Val = 0x7FFF */
+                        "b MLIB_RndSat_F16l_SatEnd \n\t"  /* Jumps through four commands */
+                    "MLIB_RndSat_F16l_NegTest: \n\t"   
+						"mvns %0, %0 \n\t"                /* f32Rnd = 0xFFFF7FFF */
+                        "cmp %0, %1 \n\t"                 /* Compares f32Val with 0xFFFF7FFF */
+                        "ble MLIB_RndSat_F16l_SatEnd \n\t"/* If f32Val >= 0xFFFF7FFF, then jumps through next commands */
+                        "adds %1, %0, #1 \n\t"            /* If f32Val < 0xFFFF7FFF, then f32Val = 0xFFFF8000 */
+					"MLIB_RndSat_F16l_SatEnd: \n\t"
                         : "+l"(f32Val), "+l"(f32Rnd):);
     #endif
 

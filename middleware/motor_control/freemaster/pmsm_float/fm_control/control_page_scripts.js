@@ -339,16 +339,18 @@ function SpeedSliderInit()
 {
     $('#jqxSliderSetSpeed').jqxSlider(
     {
-        tooltip: true,
+        tooltip: false,
         theme:'energyblue',
         mode: 'default',
         showButtons: true,
         height: 30,
         width: 300,
-        min: -speedNominal*100, max: speedNominal*100,
-        step: 500,
-        ticksFrequency: 500,
-        values: [-speedNominal*100, speedNominal*100]
+       
+        min: -speedNominal, max: speedNominal,
+        step: 5,
+        ticksFrequency: 5,
+        
+        values: [-speedNominal, speedNominal]
     });
 
     /* set init value */
@@ -443,7 +445,7 @@ function DCBusVoltGaugeInit()
         pointer: { size: '20%' },
         colorScheme: 'scheme05',
         labels: { interval: dcbVoltInterMaj, position: 'near', offset: 4 },
-		background: { style: { stroke: '#ffaaaa', fill: '#ffaaaa' }, visible: false, backgroundType: 'rectangle' },
+		    background: { style: { stroke: '#ffaaaa', fill: '#ffaaaa' }, visible: false, backgroundType: 'rectangle' },
         value: 0,
         ranges: [
             { startValue: 0, endValue: dcbVoltUnder, style: { fill: '#FF4800', stroke: '#FF4800'} },
@@ -480,7 +482,7 @@ function MotorCurrentGaugeInit()
         colorScheme: 'scheme05',
         labels: { interval: currentInterMaj, position: 'near',offset: 4 },
         background: { style: { stroke: '#ffaaaa', fill: '#ffaaaa' }, visible: false, backgroundType: 'rectangle' },
-		value: 0,
+		    value: 0,
         ranges: [
             { startValue: 0, endValue: currentScale, style: { fill: '#4bb648', stroke: '#4bb648'} },
             { startValue: currentScale, endValue: currentScaleMax, style: { fill: '#FF4800', stroke: '#FF4800'}}],
@@ -532,9 +534,10 @@ $(document).ready(function(){
     {
         if(demoMode == 0)
         {
-            speedReqNew= $('#jqxSliderSetSpeed').jqxSlider('getValue');
+            speedReqNew = ($('#jqxSliderSetSpeed').jqxSlider('getValue'))*100;
             succ = pcm.WriteVariable("M1 Speed Required", speedReqNew, retMsg);
             $('#gaugeContainerSpeedRequired').jqxGauge({value: speedReqNew/100, });
+            
             if(speedReqNew != 0)
             {
                 succ = pcm.WriteVariable("M1 Application Switch", 1, retMsg);
@@ -820,7 +823,7 @@ function RequiredSpeedUpdate()
        speedRequiredAct = pcm.LastVariable_vValue;
 
     $('#gaugeContainerSpeedRequired').jqxGauge({value: speedRequiredAct/100, });
-    $('#jqxSliderSetSpeed').jqxSlider({value: speedRequiredAct});
+    $('#jqxSliderSetSpeed').jqxSlider({value: speedRequiredAct/100});
 }
 
 /******************************************************************************

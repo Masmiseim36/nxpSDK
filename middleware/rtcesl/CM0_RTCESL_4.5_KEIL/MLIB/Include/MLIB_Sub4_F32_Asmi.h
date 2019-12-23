@@ -79,43 +79,39 @@ static inline frac32_t MLIB_Sub4Sat_F32_FAsmi(register frac32_t f32Min, register
                         lsls f32Min, f32Val2, #16       /* If f32Val1 <= 0xFFFF7FFFF, then f32Min = 0x80000000 */
                     SatEnd: };
 
-    #else
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
         __asm volatile(
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax unified \n"        /* Using unified asm syntax */
-                        #endif
-                        "asrs %2, %0, #31 \n"           /* f32Val1 = sign of f32Min */
-                        "asrs %3, %1, #31 \n"           /* f32Val2 = sign of f32Sub1 */
+                        "asrs %2, %0, #31 \n\t"           /* f32Val1 = sign of f32Min */
+                        "asrs %3, %1, #31 \n\t"           /* f32Val2 = sign of f32Sub1 */
 
-                        "subs %0, %0, %1 \n"            /* f32Min = f32Min - f32Sub1 */
-                        "sbcs %2, %2, %3 \n"            /* f32Val1 = f32Val1 - f32Val2 - carry */
+                        "subs %0, %0, %1 \n\t"            /* f32Min = f32Min - f32Sub1 */
+                        "sbcs %2, %2, %3 \n\t"            /* f32Val1 = f32Val1 - f32Val2 - carry */
 
-                        "asrs %3, %4, #31 \n"           /* f32Val2 = sign of f32Sub2 */
-                        "subs %0, %0, %4 \n"            /* f32Min = f32Min - f32Sub2 */
-                        "sbcs %2, %2, %3 \n"            /* f32Val1 = f32Val1 - f32Val2 - carry */
+                        "asrs %3, %4, #31 \n\t"           /* f32Val2 = sign of f32Sub2 */
+                        "subs %0, %0, %4 \n\t"            /* f32Min = f32Min - f32Sub2 */
+                        "sbcs %2, %2, %3 \n\t"            /* f32Val1 = f32Val1 - f32Val2 - carry */
 
-                        "asrs %3, %5, #31 \n"           /* f32Val2 = sign of f32Sub3 */
-                        "subs %0, %0, %5 \n"            /* f32Min = f32Min - f32Sub3 */
-                        "sbcs %2, %2, %3 \n"            /* f32Val1 = f32Val1 - f32Val2 - carry */
+                        "asrs %3, %5, #31 \n\t"           /* f32Val2 = sign of f32Sub3 */
+                        "subs %0, %0, %5 \n\t"            /* f32Min = f32Min - f32Sub3 */
+                        "sbcs %2, %2, %3 \n\t"            /* f32Val1 = f32Val1 - f32Val2 - carry */
 
-                        "lsls %2, %2, #16 \n"           /* f32Val1 << 16 */
-                        "lsrs %3, %0, #16 \n"           /* f32Val2 = f32Min >> 16 */
-                        "orrs %2, %2, %3 \n"            /* f32Val1 = f32Val1 | f32Val2 */
+                        "lsls %2, %2, #16 \n\t"           /* f32Val1 << 16 */
+                        "lsrs %3, %0, #16 \n\t"           /* f32Val2 = f32Min >> 16 */
+                        "orrs %2, %2, %3 \n\t"            /* f32Val1 = f32Val1 | f32Val2 */
 
-                        "movs %3, #128 \n"              /* f32Val2 = 0x80 */
-                        "lsls %3, %3, #8 \n"            /* f32Val2 = 0x8000 */
-                        "cmp %3, %2 \n"                 /* Compares f32Val1 with 0x00008000 */
-                        "bgt .+8 \n"                    /* If f32Val1 < 0x00008000, then jumps through three commands */
-                        "lsls %0, %3, #16 \n"           /* If f32Val1 >= 0x00008000, then f32Min = 0x80000000 */
-                        "subs %0, %0, #1 \n"            /* f32Min = 0x7FFFFFFF */
-                        "b .+10 \n"                     /* Jumps through four commands */
-                        "mvns %1, %3 \n"                /* f32Sub1 = 0xFFFF7FFF */
-                        "cmp %1, %2 \n"                 /* Compares f32Val1 with 0xFFFF7FFFF */
-                        "blt .+4 \n"                    /* If f32Val1 > 0xFFFF7FFFF, then jumps through next commands */
-                        "lsls %0, %3, #16 \n"           /* If f32Val1 <= 0xFFFF7FFFF, then f32Min = 0x80000000 */
-                        #if defined(__GNUC__)           /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+                        "movs %3, #128 \n\t"              /* f32Val2 = 0x80 */
+                        "lsls %3, %3, #8 \n\t"            /* f32Val2 = 0x8000 */
+                        "cmp %3, %2 \n\t"                 /* Compares f32Val1 with 0x00008000 */
+                        "bgt MLIB_Sub4Sat_F32_NegTest \n\t"/* If f32Val1 < 0x00008000, then jumps through three commands */
+                        "lsls %0, %3, #16 \n\t"           /* If f32Val1 >= 0x00008000, then f32Min = 0x80000000 */
+                        "subs %0, %0, #1 \n\t"            /* f32Min = 0x7FFFFFFF */
+                        "b MLIB_Sub4Sat_F32_SatEnd \n\t"
+					"MLIB_Sub4Sat_F32_NegTest: \n\t"  /* Jumps through four commands */
+                        "mvns %1, %3 \n\t"                /* f32Sub1 = 0xFFFF7FFF */
+                        "cmp %1, %2 \n\t"                 /* Compares f32Val1 with 0xFFFF7FFFF */
+                        "blt MLIB_Sub4Sat_F32_SatEnd \n\t"/* If f32Val1 > 0xFFFF7FFFF, then jumps through next commands */
+                        "lsls %0, %3, #16 \n\t"           /* If f32Val1 <= 0xFFFF7FFFF, then f32Min = 0x80000000 */
+                    "MLIB_Sub4Sat_F32_SatEnd: \n\t"   
                        : "+l"(f32Min), "+l"(f32Sub1), "+l"(f32Val1), "+l"(f32Val2): "l"(f32Sub2), "l"(f32Sub3));
     #endif
 

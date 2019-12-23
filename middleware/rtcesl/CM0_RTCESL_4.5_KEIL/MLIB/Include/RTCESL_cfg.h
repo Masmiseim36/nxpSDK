@@ -74,13 +74,17 @@ extern "C" {
     #define RTCESL_INLINE_OPTIM_SAVE                     /* Save original level - no value */
     #define RTCESL_INLINE_OPTIM_SET                      /* Set specific level */
     #define RTCESL_INLINE_OPTIM_RESTORE                  /* Restore original level - no value*/
-#elif defined(__CC_ARM)                                  /* For ARM(KEIL) compiler */
+#elif defined(__CC_ARM)                                  /* For ARM(KEIL) version < 6 compiler */
     #define RTCESL_INLINE_OPTIM_SAVE                     /* Save original level - no value */
     #define RTCESL_INLINE_OPTIM_SET                      /* Set specific level */
     #define RTCESL_INLINE_OPTIM_RESTORE                  /* Restore original level - no value*/
-#elif defined(__GNUC__)                                  /* For GCC compiler */ 
+#elif defined(__GNUC__) && ( __ARMCC_VERSION < 6010050)  /* For GCC compiler */ 
     #define RTCESL_INLINE_OPTIM_SAVE                     /* Save original level - no value */
     #define RTCESL_INLINE_OPTIM_SET                      /* Set specific level */
+    #define RTCESL_INLINE_OPTIM_RESTORE                  /* Restore original level - no value*/
+#elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) /* For ARM(KEIL) version >= 60 compiler */          
+    #define RTCESL_INLINE_OPTIM_SAVE                     /* Save original level - no value */
+    #define RTCESL_INLINE_OPTIM_SET //__attribute__((noinline))   /* Set specific level */
     #define RTCESL_INLINE_OPTIM_RESTORE                  /* Restore original level - no value*/
 #else                                                    /* Other compiler used */
     #warning "Unsupported compiler/IDE used !"    

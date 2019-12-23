@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html style="text-align: center;">     
+  <head>       
+    <meta http-equiv="content-type" content="text/html; charset=windows-1250">       
+    <meta name="generator" content="PSPad editor, www.pspad.com">       
+    <title>    
+    </title>       
+    <link href="style.css" rel="stylesheet" type="text/css" />      
+    <script type="text/javascript" src="JS_functions\mainInclude.js"></script>
+    <script LANGUAGE="JavaScript" type ="text/javascript">
+       includeJSfiles();
+    </script>
+  </head>     
+  <body id="FLoop"  onload=" initLoadFormFloop()" background="images/background.png"  style="display: inline-block; margin: 10px auto; text-align: center; ">                                          
+    <OBJECT id="MCB_PC_Master_Services1" style="display:none;" classid="clsid:48A185F1-FFDB-11D3-80E3-00C04F176153" name="pcm">	     
+    </OBJECT>	   
+    <OBJECT style="display:none;" CLASSID = "clsid:5220cb21-c88d-11cf-b347-00aa00a28331">         
+      <PARAM NAME="LPKPath" VALUE="gmsctls.lpk">         
+    </OBJECT>   
+      
+    <!-- Headline -->
+    <div class="HeadBorder fontTitle" style="width: 740px;">Rotor Flux Control Loop</div>  
+    <div>              
+      <table style="width: 740px;" class="MainTab">               
+        <tr>                 
+          <td width="45%" align="left" valign="top" style="padding-right: 10px;">                      		                            
+            <!-- MTPA settings -->
+              <fieldset  style="width: 100%;" class="ContBox">     
+                <legend class="fontControlLabel">Max Torque Per Ampere Settings</legend>        
+                <table border="0" class="ContBoxTab" >            
+                  <script>
+                    // maximal required value
+                    document.write( build_parameter_line("Maximum i<sub>sd</sub>", "FL_MTPA_MAX", "A", "Maximum d-axis current required value, usually set as 60*Unom/(2*pi*Nnom*Lm)", 0, ""));
+                    // minimal required value
+                    document.write( build_parameter_line("Minimum i<sub>sd</sub>", "FL_MTPA_MIN", "A", "Minimal d-axis current required value, usually 25% or more of maximal value", 0, ""));
+                    // filter coefficient
+                    document.write( build_parameter_line("f<sub>c</sub>", "FL_MTPA_FILT_FRQ", "Hz", "Required d-axis current filter cut-off frequency, usually <5,250> Hz", 0, ""));
+                  </script>	
+               </table>
+              </fieldset>
+            
+            <!--Statup settings-->
+            <fieldset  style="width: 100%;" class="ContBox">     
+                <legend class="fontControlLabel">Startup d-axis Current Settings</legend>        
+                <table border="0" class="ContBoxTab" >            
+                  <script>
+                    // startup d-axis current
+                    document.write( build_parameter_line("Startup i<sub>sd</sub>", "FL_STARTUP", "A", "D-axis current value during startup, usually can be selected equal to Inom ", 0, ""));
+                  </script>	
+               </table>
+              </fieldset>
+              
+
+          </td>                                
+          <td width="55%"  align="right" valign="top" style="padding-left: 10px;">  
+            <!-- Flux Weakening setup -->
+            <fieldset style="width: 300px; height:50px;"  class="ContBox">     
+              <legend class="fontControlLabel">Flux-Weakening Settings</legend>        
+                <table id="parameterTable" border="0" width="300"  class="ContBoxTab">            
+                <script>
+                  document.write( build_parameter_line("f<sub>fw</sub>", "FL_FW_F0", "Hz", "Flux weakening control loop bandwidth, usually <0.1,10>Hz", 0, ""));
+                  // minimal required value
+                  document.write( build_parameter_line("f<sub>IqErr</sub>", "FL_FW_IQERR_FILT_FRQ", "Hz", "Q-axis current error filter cut-off frequency, usually <5,500>Hz", 0, ""));
+                  
+                  document.write( build_parameter_line("Minimum i<sub>sd</sub>", "FL_FW_MIN", "A", "Minimal d-axis current required value, usually 25% or more of maximal value", 0, ""));
+                </script>	
+                </table>
+              </fieldset>
+          </td>                     
+        </tr>         
+      </table>                      
+      <!-- calculation buttons-->
+      <table class = "fButtonGroup" >                     
+          <tr>       
+            <td><input type="button" class="fButtonsEnabled" value="Update Target" id="FLoopUpdateFrm" onmouseout="unmarkUpdateFLField()" onmouseover="markUpdateFLField()" onclick="clickUpdateFloopFM()" /></td> 
+            <td><input type="button" class="fButtonsDisabled" value="Reload Data" id="ReloadData" onclick="clickReloadData(); initLoadFormFloop();" disabled="disabled" /></td> 
+            <td><input type="button" class="fButtonsDisabled" value="Store Data" id="StoreData" onclick="clickStoreData()" disabled="disabled" /></td> 
+          </tr>            
+      </table>                 
+    </div>
+<!--<div id="chart1" style="height:300px; width:500px;"></div>-->
+  </body>
+</html>

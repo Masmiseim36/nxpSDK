@@ -104,6 +104,7 @@ int main(void)
     ftmParam.level                 = pwmLevel;
     ftmParam.dutyCyclePercent      = updatedDutycycle;
     ftmParam.firstEdgeDelayPercent = 0U;
+    ftmParam.enableDeadtime        = false;
 
     /* Board pin, clock, debug console init */
     BOARD_InitPins();

@@ -125,7 +125,7 @@ void ADC0_IRQHandler(void)
     g_ui32MaxNumberOfCycles = g_ui32NumberOfCycles>g_ui32MaxNumberOfCycles ? g_ui32NumberOfCycles : g_ui32MaxNumberOfCycles;
 
     /* Call FreeMASTER recorder */
-    FMSTR_Recorder();
+    FMSTR_Recorder(0);
     
     /* Add empty instructions for correct interrupt flag clearing */
     M1_END_OF_ISR;
@@ -332,12 +332,12 @@ void BOARD_InitGPIO(void)
         kGPIO_DigitalOutput, /* Set current pin as digital output */
         (uint8_t)1U          /* Set default logic high */
     };
-  
-    /* Enable port for HVP GREEN LED */
-    GPIO_PinInit(GPIOD, 6U, &output_pin_config);
-
-    /* Enable port for Braking resistor */
+    
+    /* Enable port for LED */
     GPIO_PinInit(GPIOE, 29U, &output_pin_config);
+  
+    /* Enable port for LED */
+    GPIO_PinInit(GPIOD, 6U, &output_pin_config);
 
     /* SW2 pin configuration */
     PORT_SetPinInterruptConfig(PORTB, 0U, kPORT_InterruptRisingEdge); /* Enable interrupt */
@@ -374,6 +374,15 @@ void BOARD_InitUART(uint32_t u32UClockSpeedinHz, uint32_t u32BaudRate)
     config.enableRx = true;
 
     UART_Init(BOARD_FMSTR_UART_PORT, &config, u32UClockSpeedinHz);
+        
+    /* Register communication module used by FreeMASTER driver. */
+    FMSTR_SerialSetBaseAddress(BOARD_FMSTR_UART_PORT);
+
+    #if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
+        /* Enable UART interrupts. */
+        EnableIRQ(BOARD_UART_IRQ);
+        EnableGlobalIRQ(0);
+    #endif
 }
 
 /*!

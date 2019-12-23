@@ -35,6 +35,7 @@ typedef struct _clock_setup
     uint32_t ui32BusClock;
     uint16_t ui16PwmFreq;
     uint16_t ui16PwmModulo;
+    uint16_t ui16PwmDeadTime;
     uint32_t ui32CmtTimerFreq;
     uint16_t ui16CtrlLoopFreq;
     uint16_t ui16CtrlLoopModulo;
@@ -61,23 +62,12 @@ typedef struct _clock_setup
 #define ISR_PRIORITY_SLOW_TIMER (3) /* speed control loop (low ISR priority) */
 #define ISR_PRIORITY_FORCED_CMT (1) /* forced commutation (when missed sensorless cmt, open loop, timing) */
 
-/*******************************************************************************
- * FreeMASTER communication constants
- ******************************************************************************/
-/*! @brief The UART to use for FreeMASTER communication */
-#define BOARD_FMSTR_UART (1) 
-#define BOARD_FMSTR_LPUART (2) 
-#define BOARD_FMSTR_UART_PORT UART0
-#define BOARD_FMSTR_UART_BAUDRATE 115200
-#define BOARD_FMSTR_UART_TYPE BOARD_FMSTR_UART 
-#define BOARD_FMSTR_USE_TSA (1)
-
 /******************************************************************************
  * Clock & PWM definition
  ******************************************************************************/
-#define CPU_CLOCK (DEFAULT_SYSTEM_CLOCK) /* 75 MHz, CLOCK_SETUP = 1 */
 #define CTRL_LOOP_FREQ (1000) /* Frequency of control loop in Hz */
 #define PWM_FREQ (20000) /* PWM frequency - 20kHz */
+#define PWM_DEADTIME (500) /* Output PWM deadtime value in nanoseconds */
 
 /* Assignment of FTM channels to motor phases
  * 0 - FTM channels 0&1

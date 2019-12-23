@@ -97,36 +97,30 @@ static inline frac16_t GFLIB_Hyst_F16_FAsmi(frac16_t f16Val, GFLIB_HYST_T_F16 *p
                         ldrh f16Out, [psParam, #6]   /* f16Out = psParam->f16OutValOff */
                     Hyst_F16_End:
                         strh f16Out, [psParam, #8] };/* psParam->f16State = f16Out */
-    #else
-        __asm volatile(
-                        #if defined(__GNUC__)        /* For GCC compiler */
-                            ".syntax unified \n"     /* Using unified asm syntax */
-                        #endif
-                        "ldrh %2, [%3, #2] \n"       /* f16Temp = psParam->f16HystOff */
-                        "sxth %2, %2 \n"             /* Sign extend */
-                        "sxth %1, %1 \n"             /* Sign extend */
-                        "cmp %2, %1 \n"              /* Compares f16HystOff with f16Val*/
-                        "ble Hyst_F16_HystOn \n"     /* If f16HystOff <= f16Val, then goes to the Hyst_F16_HystOn */
-                        "ldrh %0, [%3, #6] \n"       /* f16Out = psParam->f16OutValOff */
-                        "b Hyst_F16_End \n"          /* Goes to the Hyst_F16_End */
-                    "Hyst_F16_HystOn: \n"
-                        "ldrh %2, [%3] \n"           /* f16Temp = psParam->f16HystOn */
-                        "sxth %2, %2 \n"             /* Sign extend */
-                        "cmp %2, %1 \n"              /* Compares f16HystOn with f16Val*/
-                        "bge Hyst_F16_State \n"      /* If f16HystOff >= f16Val, then goes to the Hyst_F16_State */
-                        "ldrh %0, [%3, #4] \n"       /* f16Out = psParam->f16OutValOn */
-                        "b Hyst_F16_End \n"          /* Goes to the Hyst_F16_End */
-                    "Hyst_F16_State: \n"
-                        "ldrh %0, [%3, #8] \n"       /* f16Out = psParam->f16State */
-                        "ldrh %2, [%3, #4] \n"       /* f16Temp = psParam->f16OutValOn */
-                        "cmp %0, %2 \n"              /* Compares f16State with f16OutValOn */
-                        "beq Hyst_F16_End \n"        /* If f16State != f16OutValOn, then executes next command */
-                        "ldrh %0, [%3, #6] \n"       /* f16Out = psParam->f16OutValOff */
-                    "Hyst_F16_End: \n"
-                        "strh %0, [%3, #8] \n"       /* psParam->f16State = f16Out */
-                        #if defined(__GNUC__)        /* For GCC compiler */
-                            ".syntax divided \n"
-                        #endif
+    #elif defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050) 
+        __asm volatile( 
+                        "ldrh %2, [%3, #2] \n\t"          /* f16Temp = psParam->f16HystOff */
+                        "sxth %2, %2 \n\t"                /* Sign extend */
+                        "sxth %1, %1 \n\t"                /* Sign extend */
+                        "cmp %2, %1 \n\t"                 /* Compares f16HystOff with f16Val*/
+                        "ble GFLIB_Hyst_F16_HystOn \n\t"  /* If f16HystOff <= f16Val, then goes to the GFLIB_Hyst_F16_HystOn */
+                        "ldrh %0, [%3, #6] \n\t"          /* f16Out = psParam->f16OutValOff */
+                        "b GFLIB_Hyst_F16_End \n\t"       /* Goes to the GFLIB_Hyst_F16_End */
+                    "GFLIB_Hyst_F16_HystOn: \n\t"
+                        "ldrh %2, [%3] \n\t"              /* f16Temp = psParam->f16HystOn */
+                        "sxth %2, %2 \n\t"                /* Sign extend */
+                        "cmp %2, %1 \n\t"                 /* Compares f16HystOn with f16Val*/
+                        "bge GFLIB_Hyst_F16_State \n\t"   /* If f16HystOff >= f16Val, then goes to the GFLIB_Hyst_F16_State */
+                        "ldrh %0, [%3, #4] \n\t"          /* f16Out = psParam->f16OutValOn */
+                        "b GFLIB_Hyst_F16_End \n\t"       /* Goes to the GFLIB_Hyst_F16_End */
+                    "GFLIB_Hyst_F16_State: \n\t"
+                        "ldrh %0, [%3, #8] \n\t"          /* f16Out = psParam->f16State */
+                        "ldrh %2, [%3, #4] \n\t"          /* f16Temp = psParam->f16OutValOn */
+                        "cmp %0, %2 \n\t"                 /* Compares f16State with f16OutValOn */
+                        "beq GFLIB_Hyst_F16_End \n\t"     /* If f16State != f16OutValOn, then executes next command */
+                        "ldrh %0, [%3, #6] \n\t"          /* f16Out = psParam->f16OutValOff */
+                    "GFLIB_Hyst_F16_End: \n\t"
+                        "strh %0, [%3, #8] \n\t"          /* psParam->f16State = f16Out */
                         : "=&l"(f16Out), "+l"(f16Val), "+l"(f16Temp): "l"(psParam));
     #endif
 
@@ -143,4 +137,4 @@ RTCESL_INLINE_OPTIM_RESTORE
 }
 #endif
 
-#endif    /* _GFLIB_HYST_F16_ASMI_H_ */
+#endif    /* _GFLIB_GFLIB_Hyst_F16_ASMI_H_ */

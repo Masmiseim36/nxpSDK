@@ -1,6 +1,6 @@
 '''
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
+* Copyright 2016-2019 NXP
 * All rights reserved.
 *
 * SPDX-License-Identifier: BSD-3-Clause
@@ -24,162 +24,6 @@ fsciLibrary.DestroyFSCIFrame.argtypes = [c_void_p]
 Spec = _Spec()
 
 
-class SMPairingRequestReplyRequestObserver(Observer):
-
-    opGroup = Spec.SMPairingRequestReplyRequestFrame.opGroup
-    opCode = Spec.SMPairingRequestReplyRequestFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMPairingRequestReplyRequestFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMPairingRequestReplyRequest()
-        frame.DestinationDeviceId = packet.getParamValueAsNumber("DestinationDeviceId")
-        frame.SmPairingParams_IoCapabilities = packet.getParamValueAsNumber("SmPairingParams_IoCapabilities")
-        frame.SmPairingParams_OobDataFlag = packet.getParamValueAsNumber("SmPairingParams_OobDataFlag")
-        frame.SmPairingParams_AuthRequest.BondingFlags = packet.getParamValueAsNumber("SmPairingParams_AuthRequestBondingFlags")
-        frame.SmPairingParams_AuthRequest.Mitm = packet.getParamValueAsNumber("SmPairingParams_AuthRequestMitm")
-        frame.SmPairingParams_AuthRequest.sc = packet.getParamValueAsNumber("SmPairingParams_AuthRequestsc")
-        frame.SmPairingParams_AuthRequest.keypress = packet.getParamValueAsNumber("SmPairingParams_AuthRequestkeypress")
-        frame.SmPairingParams_MaxEncKeySize = packet.getParamValueAsNumber("SmPairingParams_MaxEncKeySize")
-        frame.SmPairingParams_InitatorKeyDistribution.EncKey = packet.getParamValueAsNumber("SmPairingParams_InitatorKeyDistributionEncKey")
-        frame.SmPairingParams_InitatorKeyDistribution.IdKey = packet.getParamValueAsNumber("SmPairingParams_InitatorKeyDistributionIdKey")
-        frame.SmPairingParams_InitatorKeyDistribution.Sign = packet.getParamValueAsNumber("SmPairingParams_InitatorKeyDistributionSign")
-        frame.SmPairingParams_InitatorKeyDistribution.LinkKey = packet.getParamValueAsNumber("SmPairingParams_InitatorKeyDistributionLinkKey")
-        frame.SmPairingParams_InitatorKeyDistribution.Reserved = packet.getParamValueAsNumber("SmPairingParams_InitatorKeyDistributionReserved")
-        frame.SmPairingParams_ResponderKeyDistribution.EncKey = packet.getParamValueAsNumber("SmPairingParams_ResponderKeyDistributionEncKey")
-        frame.SmPairingParams_ResponderKeyDistribution.IdKey = packet.getParamValueAsNumber("SmPairingParams_ResponderKeyDistributionIdKey")
-        frame.SmPairingParams_ResponderKeyDistribution.Sign = packet.getParamValueAsNumber("SmPairingParams_ResponderKeyDistributionSign")
-        frame.SmPairingParams_ResponderKeyDistribution.LinkKey = packet.getParamValueAsNumber("SmPairingParams_ResponderKeyDistributionLinkKey")
-        frame.SmPairingParams_ResponderKeyDistribution.Reserved = packet.getParamValueAsNumber("SmPairingParams_ResponderKeyDistributionReserved")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMPasskeyRequestReplyRequestObserver(Observer):
-
-    opGroup = Spec.SMPasskeyRequestReplyRequestFrame.opGroup
-    opCode = Spec.SMPasskeyRequestReplyRequestFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMPasskeyRequestReplyRequestFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMPasskeyRequestReplyRequest()
-        frame.DestinationDeviceId = packet.getParamValueAsNumber("DestinationDeviceId")
-        frame.SmPasskeyReqReplyParams_KeyType = packet.getParamValueAsNumber("SmPasskeyReqReplyParams_KeyType")
-        frame.SmPasskeyReqReplyParams_Key = packet.getParamValueAsNumber("SmPasskeyReqReplyParams_Key")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMPairingKeysetRequestReplyRequestObserver(Observer):
-
-    opGroup = Spec.SMPairingKeysetRequestReplyRequestFrame.opGroup
-    opCode = Spec.SMPairingKeysetRequestReplyRequestFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMPairingKeysetRequestReplyRequestFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMPairingKeysetRequestReplyRequest()
-        frame.DestinationDeviceId = packet.getParamValueAsNumber("DestinationDeviceId")
-        frame.PairingKeysetRequestReplyParams_KeyDistPayload.Ltk = packet.getParamValueAsList("PairingKeysetRequestReplyParams_KeyDistPayloadLtk")
-        frame.PairingKeysetRequestReplyParams_KeyDistPayload.Irk = packet.getParamValueAsList("PairingKeysetRequestReplyParams_KeyDistPayloadIrk")
-        frame.PairingKeysetRequestReplyParams_KeyDistPayload.Csrk = packet.getParamValueAsList("PairingKeysetRequestReplyParams_KeyDistPayloadCsrk")
-        frame.PairingKeysetRequestReplyParams_KeyDistPayload.Ediv = packet.getParamValueAsNumber("PairingKeysetRequestReplyParams_KeyDistPayloadEdiv")
-        frame.PairingKeysetRequestReplyParams_KeyDistPayload.Rand = packet.getParamValueAsList("PairingKeysetRequestReplyParams_KeyDistPayloadRand")
-        frame.PairingKeysetRequestReplyParams_KeyDistPayload.BDAddr = packet.getParamValueAsList("PairingKeysetRequestReplyParams_KeyDistPayloadBDAddr")
-        frame.PairingKeysetRequestReplyParams_KeyDistPayload.BDAddrType = packet.getParamValueAsNumber("PairingKeysetRequestReplyParams_KeyDistPayloadBDAddrType")
-        frame.PairingKeysetRequestReplyParams_SentKeys.EncKey = packet.getParamValueAsNumber("PairingKeysetRequestReplyParams_SentKeysEncKey")
-        frame.PairingKeysetRequestReplyParams_SentKeys.IdKey = packet.getParamValueAsNumber("PairingKeysetRequestReplyParams_SentKeysIdKey")
-        frame.PairingKeysetRequestReplyParams_SentKeys.Sign = packet.getParamValueAsNumber("PairingKeysetRequestReplyParams_SentKeysSign")
-        frame.PairingKeysetRequestReplyParams_SentKeys.LinkKey = packet.getParamValueAsNumber("PairingKeysetRequestReplyParams_SentKeysLinkKey")
-        frame.PairingKeysetRequestReplyParams_SentKeys.Reserved = packet.getParamValueAsNumber("PairingKeysetRequestReplyParams_SentKeysReserved")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMLlLtkRequestReplyRequestObserver(Observer):
-
-    opGroup = Spec.SMLlLtkRequestReplyRequestFrame.opGroup
-    opCode = Spec.SMLlLtkRequestReplyRequestFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMLlLtkRequestReplyRequestFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMLlLtkRequestReplyRequest()
-        frame.DestinationDeviceId = packet.getParamValueAsNumber("DestinationDeviceId")
-        frame.LlLtkRequestReplyParams_LongTermKey = packet.getParamValueAsList("LlLtkRequestReplyParams_LongTermKey")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMLeScOobDataRequestReplyRequestObserver(Observer):
-
-    opGroup = Spec.SMLeScOobDataRequestReplyRequestFrame.opGroup
-    opCode = Spec.SMLeScOobDataRequestReplyRequestFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMLeScOobDataRequestReplyRequestFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMLeScOobDataRequestReplyRequest()
-        frame.DestinationDeviceId = packet.getParamValueAsNumber("DestinationDeviceId")
-        frame.LeScOobDataParams_ = packet.getParamValueAsNumber("LeScOobDataParams_")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
 
 
 class FSCIAckIndicationObserver(Observer):
@@ -292,14 +136,7 @@ class FSCIGetWakeupReasonResponseObserver(Observer):
         packet = Spec.FSCIGetWakeupReasonResponseFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = FSCIGetWakeupReasonResponse()
-        frame.WakeUpReason.Value0x01 = packet.getParamValueAsNumber("WakeUpReasonValue0x01")
-        frame.WakeUpReason.Value0x02 = packet.getParamValueAsNumber("WakeUpReasonValue0x02")
-        frame.WakeUpReason.Value0x04 = packet.getParamValueAsNumber("WakeUpReasonValue0x04")
-        frame.WakeUpReason.Value0x08 = packet.getParamValueAsNumber("WakeUpReasonValue0x08")
-        frame.WakeUpReason.Value0x10 = packet.getParamValueAsNumber("WakeUpReasonValue0x10")
-        frame.WakeUpReason.Value0x20 = packet.getParamValueAsNumber("WakeUpReasonValue0x20")
-        frame.WakeUpReason.Value0x40 = packet.getParamValueAsNumber("WakeUpReasonValue0x40")
-        frame.WakeUpReason.Value0x80 = packet.getParamValueAsNumber("WakeUpReasonValue0x80")
+        frame.WakeUpReason = packet.getParamValueAsNumber("WakeUpReason")
         framer.event_queue.put(frame) if sync_request else None
 
         if callback is not None:
@@ -309,22 +146,8 @@ class FSCIGetWakeupReasonResponseObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
-class NVMSaveConfirmObserver(Observer):
 
-    opGroup = Spec.NVMSaveConfirmFrame.opGroup
-    opCode = Spec.NVMSaveConfirmFrame.opCode
 
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.NVMSaveConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = NVMSaveConfirm()
-        frame.Status = NVMSaveConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         framer.event_queue.put(frame) if sync_request else None
 
         if callback is not None:
@@ -334,10 +157,10 @@ class NVMSaveConfirmObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
-class NVMGetDataSetDescConfirmObserver(Observer):
+class L2CAPCBConfirmObserver(Observer):
 
-    opGroup = Spec.NVMGetDataSetDescConfirmFrame.opGroup
-    opCode = Spec.NVMGetDataSetDescConfirmFrame.opCode
+    opGroup = Spec.L2CAPCBConfirmFrame.opGroup
+    opCode = Spec.L2CAPCBConfirmFrame.opCode
 
     @overrides(Observer)
     def observeEvent(self, framer, event, callback, sync_request):
@@ -346,12 +169,10 @@ class NVMGetDataSetDescConfirmObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.NVMGetDataSetDescConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        packet = Spec.L2CAPCBConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
-        frame = NVMGetDataSetDescConfirm()
-        frame.Status = packet.getParamValueAsNumber("Status")
-        frame.Count = packet.getParamValueAsNumber("Count")
-        frame.CountSizeandID = packet.getParamValueAsList("CountSizeandID")
+        frame = L2CAPCBConfirm()
+        frame.Status = L2CAPCBConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         framer.event_queue.put(frame) if sync_request else None
 
         if callback is not None:
@@ -361,429 +182,10 @@ class NVMGetDataSetDescConfirmObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
-class NVMGetCountersConfirmObserver(Observer):
+class L2CAPCBLePsmConnectionRequestIndicationObserver(Observer):
 
-    opGroup = Spec.NVMGetCountersConfirmFrame.opGroup
-    opCode = Spec.NVMGetCountersConfirmFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.NVMGetCountersConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = NVMGetCountersConfirm()
-        frame.Status = packet.getParamValueAsNumber("Status")
-        frame.nvmFirstVirtualPageEraseCounter = packet.getParamValueAsNumber("nvmFirstVirtualPageEraseCounter")
-        frame.nvmSecondVirtualPageEraseCounter = packet.getParamValueAsNumber("nvmSecondVirtualPageEraseCounter")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class NVMSetMonitoringConfirmObserver(Observer):
-
-    opGroup = Spec.NVMSetMonitoringConfirmFrame.opGroup
-    opCode = Spec.NVMSetMonitoringConfirmFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.NVMSetMonitoringConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = NVMSetMonitoringConfirm()
-        frame.Status = packet.getParamValueAsNumber("Status")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class NVMWriteMonitoringIndicationObserver(Observer):
-
-    opGroup = Spec.NVMWriteMonitoringIndicationFrame.opGroup
-    opCode = Spec.NVMWriteMonitoringIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.NVMWriteMonitoringIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = NVMWriteMonitoringIndication()
-        frame.nvmDatasetId = packet.getParamValueAsNumber("nvmDatasetId")
-        frame.elementId = packet.getParamValueAsNumber("elementId")
-        frame.saveAll = packet.getParamValueAsNumber("saveAll")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class NVMPageEraseMonitoringIndicationObserver(Observer):
-
-    opGroup = Spec.NVMPageEraseMonitoringIndicationFrame.opGroup
-    opCode = Spec.NVMPageEraseMonitoringIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.NVMPageEraseMonitoringIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = NVMPageEraseMonitoringIndication()
-        frame.nvmFlashErasedPageAddressParmName = packet.getParamValueAsNumber("nvmFlashErasedPageAddressParmName")
-        frame.Status = packet.getParamValueAsNumber("Status")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class NVMFormatReqConfirmObserver(Observer):
-
-    opGroup = Spec.NVMFormatReqConfirmFrame.opGroup
-    opCode = Spec.NVMFormatReqConfirmFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.NVMFormatReqConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = NVMFormatReqConfirm()
-        frame.Status = packet.getParamValueAsNumber("Status")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class NVMRestoreReqConfirmObserver(Observer):
-
-    opGroup = Spec.NVMRestoreReqConfirmFrame.opGroup
-    opCode = Spec.NVMRestoreReqConfirmFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.NVMRestoreReqConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = NVMRestoreReqConfirm()
-        frame.Status = packet.getParamValueAsNumber("Status")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class NVMRestoreMonitoringIndicationObserver(Observer):
-
-    opGroup = Spec.NVMRestoreMonitoringIndicationFrame.opGroup
-    opCode = Spec.NVMRestoreMonitoringIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.NVMRestoreMonitoringIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = NVMRestoreMonitoringIndication()
-        frame.nvmDatasetId = packet.getParamValueAsNumber("nvmDatasetId")
-        frame.Start = packet.getParamValueAsNumber("Start")
-        frame.Status = packet.getParamValueAsNumber("Status")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class NVMVirtualPageMonitoringIndicationObserver(Observer):
-
-    opGroup = Spec.NVMVirtualPageMonitoringIndicationFrame.opGroup
-    opCode = Spec.NVMVirtualPageMonitoringIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.NVMVirtualPageMonitoringIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = NVMVirtualPageMonitoringIndication()
-        frame.Start = packet.getParamValueAsNumber("Start")
-        frame.Status = packet.getParamValueAsNumber("Status")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class HCIConfirmObserver(Observer):
-
-    opGroup = Spec.HCIConfirmFrame.opGroup
-    opCode = Spec.HCIConfirmFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.HCIConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = HCIConfirm()
-        frame.Status = HCIConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class HCIEventIndicationObserver(Observer):
-
-    opGroup = Spec.HCIEventIndicationFrame.opGroup
-    opCode = Spec.HCIEventIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.HCIEventIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = HCIEventIndication()
-        frame.EventLength = packet.getParamValueAsNumber("EventLength")
-        frame.Event = packet.getParamValueAsList("Event")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class HCIDataIndicationObserver(Observer):
-
-    opGroup = Spec.HCIDataIndicationFrame.opGroup
-    opCode = Spec.HCIDataIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.HCIDataIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = HCIDataIndication()
-        frame.DataLength = packet.getParamValueAsNumber("DataLength")
-        frame.Data = packet.getParamValueAsList("Data")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class HCISynchronousDataIndicationObserver(Observer):
-
-    opGroup = Spec.HCISynchronousDataIndicationFrame.opGroup
-    opCode = Spec.HCISynchronousDataIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.HCISynchronousDataIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = HCISynchronousDataIndication()
-        frame.SynchronousDataLength = packet.getParamValueAsNumber("SynchronousDataLength")
-        frame.SynchronousData = packet.getParamValueAsList("SynchronousData")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class L2CAPConfirmObserver(Observer):
-
-    opGroup = Spec.L2CAPConfirmFrame.opGroup
-    opCode = Spec.L2CAPConfirmFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.L2CAPConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = L2CAPConfirm()
-        frame.Status = L2CAPConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-            if frame.Status != 'gBleSuccess_c':
-                print '\t[warning] L2CAPConfirm w/ Status ' + str(frame.Status)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class L2CAPAttDataIndicationObserver(Observer):
-
-    opGroup = Spec.L2CAPAttDataIndicationFrame.opGroup
-    opCode = Spec.L2CAPAttDataIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.L2CAPAttDataIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = L2CAPAttDataIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.PacketLength = packet.getParamValueAsNumber("PacketLength")
-        frame.Packet = packet.getParamValueAsList("Packet")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class L2CAPSmpDataIndicationObserver(Observer):
-
-    opGroup = Spec.L2CAPSmpDataIndicationFrame.opGroup
-    opCode = Spec.L2CAPSmpDataIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.L2CAPSmpDataIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = L2CAPSmpDataIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.PacketLength = packet.getParamValueAsNumber("PacketLength")
-        frame.Packet = packet.getParamValueAsList("Packet")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class L2CAPSignalingDataIndicationObserver(Observer):
-
-    opGroup = Spec.L2CAPSignalingDataIndicationFrame.opGroup
-    opCode = Spec.L2CAPSignalingDataIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.L2CAPSignalingDataIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = L2CAPSignalingDataIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.PacketLength = packet.getParamValueAsNumber("PacketLength")
-        frame.Packet = packet.getParamValueAsList("Packet")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class L2CAPLePsmConnectionRequestIndicationObserver(Observer):
-
-    opGroup = Spec.L2CAPLePsmConnectionRequestIndicationFrame.opGroup
-    opCode = Spec.L2CAPLePsmConnectionRequestIndicationFrame.opCode
+    opGroup = Spec.L2CAPCBLePsmConnectionRequestIndicationFrame.opGroup
+    opCode = Spec.L2CAPCBLePsmConnectionRequestIndicationFrame.opCode
 
     @overrides(Observer)
     def observeEvent(self, framer, event, callback, sync_request):
@@ -793,14 +195,14 @@ class L2CAPLePsmConnectionRequestIndicationObserver(Observer):
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
         # Create frame object
-        frame = L2CAPLePsmConnectionRequestIndication()
+        frame = L2CAPCBLePsmConnectionRequestIndication()
         curr = 0
         frame.InformationIncluded = data.contents[curr]
         curr += 1
         frame.LeCbConnectionRequest = []
-        for _ in range(frame.InformationIncluded):
+        if frame.InformationIncluded:
             # Create sub-object container
-            LeCbConnectionRequest = L2CAPLePsmConnectionRequestIndication.LeCbConnectionRequest()
+            LeCbConnectionRequest = L2CAPCBLePsmConnectionRequestIndication.LeCbConnectionRequest()
             LeCbConnectionRequest.DeviceId = data.contents[curr]
             curr += 1
             LeCbConnectionRequest.LePsm = list_to_int(data.contents[curr:curr + 2])
@@ -811,8 +213,7 @@ class L2CAPLePsmConnectionRequestIndicationObserver(Observer):
             curr += 2
             LeCbConnectionRequest.InitialCredits = list_to_int(data.contents[curr:curr + 2])
             curr += 2
-            # Add sub-object to list container.
-            frame.LeCbConnectionRequest.append(copy.deepcopy(LeCbConnectionRequest))
+            frame.LeCbConnectionRequest = copy.deepcopy(LeCbConnectionRequest)
 
         framer.event_queue.put(frame) if sync_request else None
 
@@ -823,10 +224,10 @@ class L2CAPLePsmConnectionRequestIndicationObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
-class L2CAPLePsmConnectionCompleteIndicationObserver(Observer):
+class L2CAPCBLePsmConnectionCompleteIndicationObserver(Observer):
 
-    opGroup = Spec.L2CAPLePsmConnectionCompleteIndicationFrame.opGroup
-    opCode = Spec.L2CAPLePsmConnectionCompleteIndicationFrame.opCode
+    opGroup = Spec.L2CAPCBLePsmConnectionCompleteIndicationFrame.opGroup
+    opCode = Spec.L2CAPCBLePsmConnectionCompleteIndicationFrame.opCode
 
     @overrides(Observer)
     def observeEvent(self, framer, event, callback, sync_request):
@@ -836,14 +237,14 @@ class L2CAPLePsmConnectionCompleteIndicationObserver(Observer):
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
         # Create frame object
-        frame = L2CAPLePsmConnectionCompleteIndication()
+        frame = L2CAPCBLePsmConnectionCompleteIndication()
         curr = 0
         frame.InformationIncluded = data.contents[curr]
         curr += 1
         frame.LeCbConnectionComplete = []
-        for _ in range(frame.InformationIncluded):
+        if frame.InformationIncluded:
             # Create sub-object container
-            LeCbConnectionComplete = L2CAPLePsmConnectionCompleteIndication.LeCbConnectionComplete()
+            LeCbConnectionComplete = L2CAPCBLePsmConnectionCompleteIndication.LeCbConnectionComplete()
             LeCbConnectionComplete.DeviceId = data.contents[curr]
             curr += 1
             LeCbConnectionComplete.ChannelId = list_to_int(data.contents[curr:curr + 2])
@@ -856,8 +257,7 @@ class L2CAPLePsmConnectionCompleteIndicationObserver(Observer):
             curr += 2
             LeCbConnectionComplete.Result = list_to_int(data.contents[curr:curr + 2])
             curr += 2
-            # Add sub-object to list container.
-            frame.LeCbConnectionComplete.append(copy.deepcopy(LeCbConnectionComplete))
+            frame.LeCbConnectionComplete = copy.deepcopy(LeCbConnectionComplete)
 
         framer.event_queue.put(frame) if sync_request else None
 
@@ -868,10 +268,10 @@ class L2CAPLePsmConnectionCompleteIndicationObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
-class L2CAPLePsmDisconnectNotificationIndicationObserver(Observer):
+class L2CAPCBLePsmDisconnectNotificationIndicationObserver(Observer):
 
-    opGroup = Spec.L2CAPLePsmDisconnectNotificationIndicationFrame.opGroup
-    opCode = Spec.L2CAPLePsmDisconnectNotificationIndicationFrame.opCode
+    opGroup = Spec.L2CAPCBLePsmDisconnectNotificationIndicationFrame.opGroup
+    opCode = Spec.L2CAPCBLePsmDisconnectNotificationIndicationFrame.opCode
 
     @overrides(Observer)
     def observeEvent(self, framer, event, callback, sync_request):
@@ -881,20 +281,19 @@ class L2CAPLePsmDisconnectNotificationIndicationObserver(Observer):
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
         # Create frame object
-        frame = L2CAPLePsmDisconnectNotificationIndication()
+        frame = L2CAPCBLePsmDisconnectNotificationIndication()
         curr = 0
         frame.InformationIncluded = data.contents[curr]
         curr += 1
         frame.LeCbDisconnection = []
-        for _ in range(frame.InformationIncluded):
+        if frame.InformationIncluded:
             # Create sub-object container
-            LeCbDisconnection = L2CAPLePsmDisconnectNotificationIndication.LeCbDisconnection()
+            LeCbDisconnection = L2CAPCBLePsmDisconnectNotificationIndication.LeCbDisconnection()
             LeCbDisconnection.DeviceId = data.contents[curr]
             curr += 1
             LeCbDisconnection.ChannelId = list_to_int(data.contents[curr:curr + 2])
             curr += 2
-            # Add sub-object to list container.
-            frame.LeCbDisconnection.append(copy.deepcopy(LeCbDisconnection))
+            frame.LeCbDisconnection = copy.deepcopy(LeCbDisconnection)
 
         framer.event_queue.put(frame) if sync_request else None
 
@@ -905,10 +304,10 @@ class L2CAPLePsmDisconnectNotificationIndicationObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
-class L2CAPNoPeerCreditsIndicationObserver(Observer):
+class L2CAPCBNoPeerCreditsIndicationObserver(Observer):
 
-    opGroup = Spec.L2CAPNoPeerCreditsIndicationFrame.opGroup
-    opCode = Spec.L2CAPNoPeerCreditsIndicationFrame.opCode
+    opGroup = Spec.L2CAPCBNoPeerCreditsIndicationFrame.opGroup
+    opCode = Spec.L2CAPCBNoPeerCreditsIndicationFrame.opCode
 
     @overrides(Observer)
     def observeEvent(self, framer, event, callback, sync_request):
@@ -918,20 +317,19 @@ class L2CAPNoPeerCreditsIndicationObserver(Observer):
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
         # Create frame object
-        frame = L2CAPNoPeerCreditsIndication()
+        frame = L2CAPCBNoPeerCreditsIndication()
         curr = 0
         frame.InformationIncluded = data.contents[curr]
         curr += 1
         frame.LeCbNoPeerCredits = []
-        for _ in range(frame.InformationIncluded):
+        if frame.InformationIncluded:
             # Create sub-object container
-            LeCbNoPeerCredits = L2CAPNoPeerCreditsIndication.LeCbNoPeerCredits()
+            LeCbNoPeerCredits = L2CAPCBNoPeerCreditsIndication.LeCbNoPeerCredits()
             LeCbNoPeerCredits.DeviceId = data.contents[curr]
             curr += 1
             LeCbNoPeerCredits.ChannelId = list_to_int(data.contents[curr:curr + 2])
             curr += 2
-            # Add sub-object to list container.
-            frame.LeCbNoPeerCredits.append(copy.deepcopy(LeCbNoPeerCredits))
+            frame.LeCbNoPeerCredits = copy.deepcopy(LeCbNoPeerCredits)
 
         framer.event_queue.put(frame) if sync_request else None
 
@@ -942,10 +340,10 @@ class L2CAPNoPeerCreditsIndicationObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
-class L2CAPLocalCreditsNotificationIndicationObserver(Observer):
+class L2CAPCBLocalCreditsNotificationIndicationObserver(Observer):
 
-    opGroup = Spec.L2CAPLocalCreditsNotificationIndicationFrame.opGroup
-    opCode = Spec.L2CAPLocalCreditsNotificationIndicationFrame.opCode
+    opGroup = Spec.L2CAPCBLocalCreditsNotificationIndicationFrame.opGroup
+    opCode = Spec.L2CAPCBLocalCreditsNotificationIndicationFrame.opCode
 
     @overrides(Observer)
     def observeEvent(self, framer, event, callback, sync_request):
@@ -955,22 +353,21 @@ class L2CAPLocalCreditsNotificationIndicationObserver(Observer):
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
         # Create frame object
-        frame = L2CAPLocalCreditsNotificationIndication()
+        frame = L2CAPCBLocalCreditsNotificationIndication()
         curr = 0
         frame.InformationIncluded = data.contents[curr]
         curr += 1
         frame.LeCbLocalCreditsNotification = []
-        for _ in range(frame.InformationIncluded):
+        if frame.InformationIncluded:
             # Create sub-object container
-            LeCbLocalCreditsNotification = L2CAPLocalCreditsNotificationIndication.LeCbLocalCreditsNotification()
+            LeCbLocalCreditsNotification = L2CAPCBLocalCreditsNotificationIndication.LeCbLocalCreditsNotification()
             LeCbLocalCreditsNotification.DeviceId = data.contents[curr]
             curr += 1
             LeCbLocalCreditsNotification.ChannelId = list_to_int(data.contents[curr:curr + 2])
             curr += 2
             LeCbLocalCreditsNotification.LocalCredits = list_to_int(data.contents[curr:curr + 2])
             curr += 2
-            # Add sub-object to list container.
-            frame.LeCbLocalCreditsNotification.append(copy.deepcopy(LeCbLocalCreditsNotification))
+            frame.LeCbLocalCreditsNotification = copy.deepcopy(LeCbLocalCreditsNotification)
 
         framer.event_queue.put(frame) if sync_request else None
 
@@ -981,10 +378,10 @@ class L2CAPLocalCreditsNotificationIndicationObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
-class L2CAPLeCbDataIndicationObserver(Observer):
+class L2CAPCBLeCbDataIndicationObserver(Observer):
 
-    opGroup = Spec.L2CAPLeCbDataIndicationFrame.opGroup
-    opCode = Spec.L2CAPLeCbDataIndicationFrame.opCode
+    opGroup = Spec.L2CAPCBLeCbDataIndicationFrame.opGroup
+    opCode = Spec.L2CAPCBLeCbDataIndicationFrame.opCode
 
     @overrides(Observer)
     def observeEvent(self, framer, event, callback, sync_request):
@@ -993,9 +390,9 @@ class L2CAPLeCbDataIndicationObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.L2CAPLeCbDataIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        packet = Spec.L2CAPCBLeCbDataIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
-        frame = L2CAPLeCbDataIndication()
+        frame = L2CAPCBLeCbDataIndication()
         frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
         frame.SrcCid = packet.getParamValueAsNumber("SrcCid")
         frame.PacketLength = packet.getParamValueAsNumber("PacketLength")
@@ -1009,1599 +406,6 @@ class L2CAPLeCbDataIndicationObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
-class SMConfirmObserver(Observer):
-
-    opGroup = Spec.SMConfirmFrame.opGroup
-    opCode = Spec.SMConfirmFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMConfirm()
-        frame.Status = SMConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMStatusIndicationObserver(Observer):
-
-    opGroup = Spec.SMStatusIndicationFrame.opGroup
-    opCode = Spec.SMStatusIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMStatusIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMStatusIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        frame.SmStatusParams_Status = SMStatusIndicationSmStatusParams_Status.getEnumString(packet.getParamValueAsNumber("SmStatusParams_Status"))
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMRemoteSecurityRequestIndicationObserver(Observer):
-
-    opGroup = Spec.SMRemoteSecurityRequestIndicationFrame.opGroup
-    opCode = Spec.SMRemoteSecurityRequestIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMRemoteSecurityRequestIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMRemoteSecurityRequestIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        frame.SmSecurityReqParams_AuthRequest.BondingFlags = packet.getParamValueAsNumber("SmSecurityReqParams_AuthRequestBondingFlags")
-        frame.SmSecurityReqParams_AuthRequest.Mitm = packet.getParamValueAsNumber("SmSecurityReqParams_AuthRequestMitm")
-        frame.SmSecurityReqParams_AuthRequest.sc = packet.getParamValueAsNumber("SmSecurityReqParams_AuthRequestsc")
-        frame.SmSecurityReqParams_AuthRequest.keypress = packet.getParamValueAsNumber("SmSecurityReqParams_AuthRequestkeypress")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMRemotePairingRequestIndicationObserver(Observer):
-
-    opGroup = Spec.SMRemotePairingRequestIndicationFrame.opGroup
-    opCode = Spec.SMRemotePairingRequestIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMRemotePairingRequestIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMRemotePairingRequestIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        frame.SmPairingParams_IoCapabilities = packet.getParamValueAsNumber("SmPairingParams_IoCapabilities")
-        frame.SmPairingParams_OobDataFlag = packet.getParamValueAsNumber("SmPairingParams_OobDataFlag")
-        frame.SmPairingParams_AuthRequest.BondingFlags = packet.getParamValueAsNumber("SmPairingParams_AuthRequestBondingFlags")
-        frame.SmPairingParams_AuthRequest.Mitm = packet.getParamValueAsNumber("SmPairingParams_AuthRequestMitm")
-        frame.SmPairingParams_AuthRequest.sc = packet.getParamValueAsNumber("SmPairingParams_AuthRequestsc")
-        frame.SmPairingParams_AuthRequest.keypress = packet.getParamValueAsNumber("SmPairingParams_AuthRequestkeypress")
-        frame.SmPairingParams_MaxEncKeySize = packet.getParamValueAsNumber("SmPairingParams_MaxEncKeySize")
-        frame.SmPairingParams_InitatorKeyDistribution.EncKey = packet.getParamValueAsNumber("SmPairingParams_InitatorKeyDistributionEncKey")
-        frame.SmPairingParams_InitatorKeyDistribution.IdKey = packet.getParamValueAsNumber("SmPairingParams_InitatorKeyDistributionIdKey")
-        frame.SmPairingParams_InitatorKeyDistribution.Sign = packet.getParamValueAsNumber("SmPairingParams_InitatorKeyDistributionSign")
-        frame.SmPairingParams_InitatorKeyDistribution.LinkKey = packet.getParamValueAsNumber("SmPairingParams_InitatorKeyDistributionLinkKey")
-        frame.SmPairingParams_InitatorKeyDistribution.Reserved = packet.getParamValueAsNumber("SmPairingParams_InitatorKeyDistributionReserved")
-        frame.SmPairingParams_ResponderKeyDistribution.EncKey = packet.getParamValueAsNumber("SmPairingParams_ResponderKeyDistributionEncKey")
-        frame.SmPairingParams_ResponderKeyDistribution.IdKey = packet.getParamValueAsNumber("SmPairingParams_ResponderKeyDistributionIdKey")
-        frame.SmPairingParams_ResponderKeyDistribution.Sign = packet.getParamValueAsNumber("SmPairingParams_ResponderKeyDistributionSign")
-        frame.SmPairingParams_ResponderKeyDistribution.LinkKey = packet.getParamValueAsNumber("SmPairingParams_ResponderKeyDistributionLinkKey")
-        frame.SmPairingParams_ResponderKeyDistribution.Reserved = packet.getParamValueAsNumber("SmPairingParams_ResponderKeyDistributionReserved")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMRemotePairingResponseIndicationObserver(Observer):
-
-    opGroup = Spec.SMRemotePairingResponseIndicationFrame.opGroup
-    opCode = Spec.SMRemotePairingResponseIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMRemotePairingResponseIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMRemotePairingResponseIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        frame.SmPairingParams_IoCapabilities = packet.getParamValueAsNumber("SmPairingParams_IoCapabilities")
-        frame.SmPairingParams_OobDataFlag = packet.getParamValueAsNumber("SmPairingParams_OobDataFlag")
-        frame.SmPairingParams_AuthRequest.BondingFlags = packet.getParamValueAsNumber("SmPairingParams_AuthRequestBondingFlags")
-        frame.SmPairingParams_AuthRequest.Mitm = packet.getParamValueAsNumber("SmPairingParams_AuthRequestMitm")
-        frame.SmPairingParams_AuthRequest.sc = packet.getParamValueAsNumber("SmPairingParams_AuthRequestsc")
-        frame.SmPairingParams_AuthRequest.keypress = packet.getParamValueAsNumber("SmPairingParams_AuthRequestkeypress")
-        frame.SmPairingParams_MaxEncKeySize = packet.getParamValueAsNumber("SmPairingParams_MaxEncKeySize")
-        frame.SmPairingParams_InitatorKeyDistribution.EncKey = packet.getParamValueAsNumber("SmPairingParams_InitatorKeyDistributionEncKey")
-        frame.SmPairingParams_InitatorKeyDistribution.IdKey = packet.getParamValueAsNumber("SmPairingParams_InitatorKeyDistributionIdKey")
-        frame.SmPairingParams_InitatorKeyDistribution.Sign = packet.getParamValueAsNumber("SmPairingParams_InitatorKeyDistributionSign")
-        frame.SmPairingParams_InitatorKeyDistribution.LinkKey = packet.getParamValueAsNumber("SmPairingParams_InitatorKeyDistributionLinkKey")
-        frame.SmPairingParams_InitatorKeyDistribution.Reserved = packet.getParamValueAsNumber("SmPairingParams_InitatorKeyDistributionReserved")
-        frame.SmPairingParams_ResponderKeyDistribution.EncKey = packet.getParamValueAsNumber("SmPairingParams_ResponderKeyDistributionEncKey")
-        frame.SmPairingParams_ResponderKeyDistribution.IdKey = packet.getParamValueAsNumber("SmPairingParams_ResponderKeyDistributionIdKey")
-        frame.SmPairingParams_ResponderKeyDistribution.Sign = packet.getParamValueAsNumber("SmPairingParams_ResponderKeyDistributionSign")
-        frame.SmPairingParams_ResponderKeyDistribution.LinkKey = packet.getParamValueAsNumber("SmPairingParams_ResponderKeyDistributionLinkKey")
-        frame.SmPairingParams_ResponderKeyDistribution.Reserved = packet.getParamValueAsNumber("SmPairingParams_ResponderKeyDistributionReserved")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMPasskeyDisplayRequestIndicationObserver(Observer):
-
-    opGroup = Spec.SMPasskeyDisplayRequestIndicationFrame.opGroup
-    opCode = Spec.SMPasskeyDisplayRequestIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMPasskeyDisplayRequestIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMPasskeyDisplayRequestIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        frame.PasskeyDisplayReqParams_Passkey = packet.getParamValueAsNumber("PasskeyDisplayReqParams_Passkey")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMPasskeyRequestIndicationObserver(Observer):
-
-    opGroup = Spec.SMPasskeyRequestIndicationFrame.opGroup
-    opCode = Spec.SMPasskeyRequestIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMPasskeyRequestIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMPasskeyRequestIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        frame.PasskeyReqParams_PasskeyType = packet.getParamValueAsNumber("PasskeyReqParams_PasskeyType")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMPairingKeysetRequestIndicationObserver(Observer):
-
-    opGroup = Spec.SMPairingKeysetRequestIndicationFrame.opGroup
-    opCode = Spec.SMPairingKeysetRequestIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMPairingKeysetRequestIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMPairingKeysetRequestIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        frame.PairingKeysetReqParams_RequestedKeys.EncKey = packet.getParamValueAsNumber("PairingKeysetReqParams_RequestedKeysEncKey")
-        frame.PairingKeysetReqParams_RequestedKeys.IdKey = packet.getParamValueAsNumber("PairingKeysetReqParams_RequestedKeysIdKey")
-        frame.PairingKeysetReqParams_RequestedKeys.Sign = packet.getParamValueAsNumber("PairingKeysetReqParams_RequestedKeysSign")
-        frame.PairingKeysetReqParams_RequestedKeys.LinkKey = packet.getParamValueAsNumber("PairingKeysetReqParams_RequestedKeysLinkKey")
-        frame.PairingKeysetReqParams_RequestedKeys.Reserved = packet.getParamValueAsNumber("PairingKeysetReqParams_RequestedKeysReserved")
-        frame.PairingKeysetReqParams_EncKeySize = packet.getParamValueAsNumber("PairingKeysetReqParams_EncKeySize")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMPairingKeysetReceivedIndicationObserver(Observer):
-
-    opGroup = Spec.SMPairingKeysetReceivedIndicationFrame.opGroup
-    opCode = Spec.SMPairingKeysetReceivedIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMPairingKeysetReceivedIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMPairingKeysetReceivedIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        frame.PairingKeysetReceivedParams_KeyDistPayload.Ltk = packet.getParamValueAsList("PairingKeysetReceivedParams_KeyDistPayloadLtk")
-        frame.PairingKeysetReceivedParams_KeyDistPayload.Irk = packet.getParamValueAsList("PairingKeysetReceivedParams_KeyDistPayloadIrk")
-        frame.PairingKeysetReceivedParams_KeyDistPayload.Csrk = packet.getParamValueAsList("PairingKeysetReceivedParams_KeyDistPayloadCsrk")
-        frame.PairingKeysetReceivedParams_KeyDistPayload.Ediv = packet.getParamValueAsNumber("PairingKeysetReceivedParams_KeyDistPayloadEdiv")
-        frame.PairingKeysetReceivedParams_KeyDistPayload.Rand = packet.getParamValueAsList("PairingKeysetReceivedParams_KeyDistPayloadRand")
-        frame.PairingKeysetReceivedParams_KeyDistPayload.BDAddr = packet.getParamValueAsList("PairingKeysetReceivedParams_KeyDistPayloadBDAddr")
-        frame.PairingKeysetReceivedParams_KeyDistPayload.BDAddrType = packet.getParamValueAsNumber("PairingKeysetReceivedParams_KeyDistPayloadBDAddrType")
-        frame.PairingKeysetReceivedParams_ReceivedKeys.EncKey = packet.getParamValueAsNumber("PairingKeysetReceivedParams_ReceivedKeysEncKey")
-        frame.PairingKeysetReceivedParams_ReceivedKeys.IdKey = packet.getParamValueAsNumber("PairingKeysetReceivedParams_ReceivedKeysIdKey")
-        frame.PairingKeysetReceivedParams_ReceivedKeys.Sign = packet.getParamValueAsNumber("PairingKeysetReceivedParams_ReceivedKeysSign")
-        frame.PairingKeysetReceivedParams_ReceivedKeys.LinkKey = packet.getParamValueAsNumber("PairingKeysetReceivedParams_ReceivedKeysLinkKey")
-        frame.PairingKeysetReceivedParams_ReceivedKeys.Reserved = packet.getParamValueAsNumber("PairingKeysetReceivedParams_ReceivedKeysReserved")
-        frame.PairingKeysetReceivedParams_EncKeySize = packet.getParamValueAsNumber("PairingKeysetReceivedParams_EncKeySize")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMPairingCompleteIndicationObserver(Observer):
-
-    opGroup = Spec.SMPairingCompleteIndicationFrame.opGroup
-    opCode = Spec.SMPairingCompleteIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMPairingCompleteIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMPairingCompleteIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        frame.PairingCompleteParams_EncKeySize = packet.getParamValueAsNumber("PairingCompleteParams_EncKeySize")
-        frame.PairingCompleteParams_bMitmProtection = packet.getParamValueAsNumber("PairingCompleteParams_bMitmProtection")
-        frame.PairingCompleteParams_bBonding = packet.getParamValueAsNumber("PairingCompleteParams_bBonding")
-        frame.PairingCompleteParams_LeSc = packet.getParamValueAsNumber("PairingCompleteParams_LeSc")
-        frame.PairingCompleteParams_LeScLtk = packet.getParamValueAsList("PairingCompleteParams_LeScLtk")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMPairingFailedIndicationObserver(Observer):
-
-    opGroup = Spec.SMPairingFailedIndicationFrame.opGroup
-    opCode = Spec.SMPairingFailedIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMPairingFailedIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMPairingFailedIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        frame.SmPairingFailedParams_Reason = SMPairingFailedIndicationSmPairingFailedParams_Reason.getEnumString(packet.getParamValueAsNumber("SmPairingFailedParams_Reason"))
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMReceivedPairingFailedIndicationObserver(Observer):
-
-    opGroup = Spec.SMReceivedPairingFailedIndicationFrame.opGroup
-    opCode = Spec.SMReceivedPairingFailedIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMReceivedPairingFailedIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMReceivedPairingFailedIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        frame.SmPairingFailedParams_Reason = SMReceivedPairingFailedIndicationSmPairingFailedParams_Reason.getEnumString(packet.getParamValueAsNumber("SmPairingFailedParams_Reason"))
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMLlLtkRequestIndicationObserver(Observer):
-
-    opGroup = Spec.SMLlLtkRequestIndicationFrame.opGroup
-    opCode = Spec.SMLlLtkRequestIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMLlLtkRequestIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMLlLtkRequestIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        frame.LlLtkRequestParams_RandomNumber = packet.getParamValueAsList("LlLtkRequestParams_RandomNumber")
-        frame.LlLtkRequestParams_EncryptedDiversifier = packet.getParamValueAsNumber("LlLtkRequestParams_EncryptedDiversifier")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMLlEncryptionStatusIndicationObserver(Observer):
-
-    opGroup = Spec.SMLlEncryptionStatusIndicationFrame.opGroup
-    opCode = Spec.SMLlEncryptionStatusIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMLlEncryptionStatusIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMLlEncryptionStatusIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        frame.LlEncryptionStatusParams_LlStatus = SMLlEncryptionStatusIndicationLlEncryptionStatusParams_LlStatus.getEnumString(packet.getParamValueAsNumber("LlEncryptionStatusParams_LlStatus"))
-        frame.LlEncryptionStatusParams_EncryptionState = SMLlEncryptionStatusIndicationLlEncryptionStatusParams_EncryptionState.getEnumString(packet.getParamValueAsNumber("LlEncryptionStatusParams_EncryptionState"))
-        frame.LlEncryptionStatusParams_EncKeyType = SMLlEncryptionStatusIndicationLlEncryptionStatusParams_EncKeyType.getEnumString(packet.getParamValueAsNumber("LlEncryptionStatusParams_EncKeyType"))
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMLlEncryptResIndicationObserver(Observer):
-
-    opGroup = Spec.SMLlEncryptResIndicationFrame.opGroup
-    opCode = Spec.SMLlEncryptResIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMLlEncryptResIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMLlEncryptResIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        frame.LlEncryptResParams_Status = SMLlEncryptResIndicationLlEncryptResParams_Status.getEnumString(packet.getParamValueAsNumber("LlEncryptResParams_Status"))
-        frame.LlEncryptResParams_EncryptedData = packet.getParamValueAsList("LlEncryptResParams_EncryptedData")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMLlRandResIndicationObserver(Observer):
-
-    opGroup = Spec.SMLlRandResIndicationFrame.opGroup
-    opCode = Spec.SMLlRandResIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMLlRandResIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMLlRandResIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        frame.LlRandResParams_Status = SMLlRandResIndicationLlRandResParams_Status.getEnumString(packet.getParamValueAsNumber("LlRandResParams_Status"))
-        frame.LlRandResParams_RandomNumber = packet.getParamValueAsList("LlRandResParams_RandomNumber")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMTbCreateRandomDeviceAddrResIndicationObserver(Observer):
-
-    opGroup = Spec.SMTbCreateRandomDeviceAddrResIndicationFrame.opGroup
-    opCode = Spec.SMTbCreateRandomDeviceAddrResIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMTbCreateRandomDeviceAddrResIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMTbCreateRandomDeviceAddrResIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        frame.TbCreateRandomDeviceAddrResParams_Status = SMTbCreateRandomDeviceAddrResIndicationTbCreateRandomDeviceAddrResParams_Status.getEnumString(packet.getParamValueAsNumber("TbCreateRandomDeviceAddrResParams_Status"))
-        frame.TbCreateRandomDeviceAddrResParams_AddrType = packet.getParamValueAsNumber("TbCreateRandomDeviceAddrResParams_AddrType")
-        frame.TbCreateRandomDeviceAddrResParams_Addr = packet.getParamValueAsList("TbCreateRandomDeviceAddrResParams_Addr")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMTbCheckResolvalePrivateAddrResIndicationObserver(Observer):
-
-    opGroup = Spec.SMTbCheckResolvalePrivateAddrResIndicationFrame.opGroup
-    opCode = Spec.SMTbCheckResolvalePrivateAddrResIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMTbCheckResolvalePrivateAddrResIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMTbCheckResolvalePrivateAddrResIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        frame.TbCheckResolvablePrivateAddrResParams_Status = SMTbCheckResolvalePrivateAddrResIndicationTbCheckResolvablePrivateAddrResParams_Status.getEnumString(packet.getParamValueAsNumber("TbCheckResolvablePrivateAddrResParams_Status"))
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMTbSignDataResIndicationObserver(Observer):
-
-    opGroup = Spec.SMTbSignDataResIndicationFrame.opGroup
-    opCode = Spec.SMTbSignDataResIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMTbSignDataResIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMTbSignDataResIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        frame.TbSignDataResParams_Status = SMTbSignDataResIndicationTbSignDataResParams_Status.getEnumString(packet.getParamValueAsNumber("TbSignDataResParams_Status"))
-        frame.TbSignDataResParams_Signature = packet.getParamValueAsList("TbSignDataResParams_Signature")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMTbVerifyDataSignatureResIndicationObserver(Observer):
-
-    opGroup = Spec.SMTbVerifyDataSignatureResIndicationFrame.opGroup
-    opCode = Spec.SMTbVerifyDataSignatureResIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMTbVerifyDataSignatureResIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMTbVerifyDataSignatureResIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        frame.TbVerifyDataSignatureResParams_Status = SMTbVerifyDataSignatureResIndicationTbVerifyDataSignatureResParams_Status.getEnumString(packet.getParamValueAsNumber("TbVerifyDataSignatureResParams_Status"))
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMRemoteKeypressNotificationIndicationObserver(Observer):
-
-    opGroup = Spec.SMRemoteKeypressNotificationIndicationFrame.opGroup
-    opCode = Spec.SMRemoteKeypressNotificationIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMRemoteKeypressNotificationIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMRemoteKeypressNotificationIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        frame.SmKeypressNotificationParams_keypressNotifType = packet.getParamValueAsNumber("SmKeypressNotificationParams_keypressNotifType")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMNcDisplayRequestIndicationObserver(Observer):
-
-    opGroup = Spec.SMNcDisplayRequestIndicationFrame.opGroup
-    opCode = Spec.SMNcDisplayRequestIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMNcDisplayRequestIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMNcDisplayRequestIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        frame.ncValue = packet.getParamValueAsNumber("ncValue")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMLeScOobDataRequestIndicationObserver(Observer):
-
-    opGroup = Spec.SMLeScOobDataRequestIndicationFrame.opGroup
-    opCode = Spec.SMLeScOobDataRequestIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMLeScOobDataRequestIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMLeScOobDataRequestIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMLocalLeScOobDataIndicationObserver(Observer):
-
-    opGroup = Spec.SMLocalLeScOobDataIndicationFrame.opGroup
-    opCode = Spec.SMLocalLeScOobDataIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMLocalLeScOobDataIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMLocalLeScOobDataIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        frame.LeScOobDataParams_ = packet.getParamValueAsNumber("LeScOobDataParams_")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class SMGenerateNewEcdhPkSkPairResIndicationObserver(Observer):
-
-    opGroup = Spec.SMGenerateNewEcdhPkSkPairResIndicationFrame.opGroup
-    opCode = Spec.SMGenerateNewEcdhPkSkPairResIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.SMGenerateNewEcdhPkSkPairResIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = SMGenerateNewEcdhPkSkPairResIndication()
-        frame.SourceDeviceId = packet.getParamValueAsNumber("SourceDeviceId")
-        frame.Status = SMGenerateNewEcdhPkSkPairResIndicationStatus.getEnumString(packet.getParamValueAsNumber("Status"))
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTConfirmObserver(Observer):
-
-    opGroup = Spec.ATTConfirmFrame.opGroup
-    opCode = Spec.ATTConfirmFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTConfirm()
-        frame.Status = ATTConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTGetMtuIndicationObserver(Observer):
-
-    opGroup = Spec.ATTGetMtuIndicationFrame.opGroup
-    opCode = Spec.ATTGetMtuIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTGetMtuIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTGetMtuIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Mtu = packet.getParamValueAsNumber("Mtu")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTClientIncomingServerErrorResponseIndicationObserver(Observer):
-
-    opGroup = Spec.ATTClientIncomingServerErrorResponseIndicationFrame.opGroup
-    opCode = Spec.ATTClientIncomingServerErrorResponseIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTClientIncomingServerErrorResponseIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTClientIncomingServerErrorResponseIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Params_RequestOpcodeInError = packet.getParamValueAsNumber("Params_RequestOpcodeInError")
-        frame.Params_AttributeHandleInError = packet.getParamValueAsNumber("Params_AttributeHandleInError")
-        frame.Params_ErrorCode = packet.getParamValueAsNumber("Params_ErrorCode")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTServerIncomingClientExchangeMtuRequestIndicationObserver(Observer):
-
-    opGroup = Spec.ATTServerIncomingClientExchangeMtuRequestIndicationFrame.opGroup
-    opCode = Spec.ATTServerIncomingClientExchangeMtuRequestIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTServerIncomingClientExchangeMtuRequestIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTServerIncomingClientExchangeMtuRequestIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Params_ClientRxMtu = packet.getParamValueAsNumber("Params_ClientRxMtu")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTClientIncomingServerExchangeMtuResponseIndicationObserver(Observer):
-
-    opGroup = Spec.ATTClientIncomingServerExchangeMtuResponseIndicationFrame.opGroup
-    opCode = Spec.ATTClientIncomingServerExchangeMtuResponseIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTClientIncomingServerExchangeMtuResponseIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTClientIncomingServerExchangeMtuResponseIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Params_ServerRxMtu = packet.getParamValueAsNumber("Params_ServerRxMtu")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTServerIncomingClientFindInformationRequestIndicationObserver(Observer):
-
-    opGroup = Spec.ATTServerIncomingClientFindInformationRequestIndicationFrame.opGroup
-    opCode = Spec.ATTServerIncomingClientFindInformationRequestIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTServerIncomingClientFindInformationRequestIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTServerIncomingClientFindInformationRequestIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Params_StartingHandle = packet.getParamValueAsNumber("Params_StartingHandle")
-        frame.Params_EndingHandle = packet.getParamValueAsNumber("Params_EndingHandle")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTClientIncomingServerFindInformationResponseIndicationObserver(Observer):
-
-    opGroup = Spec.ATTClientIncomingServerFindInformationResponseIndicationFrame.opGroup
-    opCode = Spec.ATTClientIncomingServerFindInformationResponseIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTClientIncomingServerFindInformationResponseIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTClientIncomingServerFindInformationResponseIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Params_Format = packet.getParamValueAsNumber("Params_Format")
-        frame.Params_InformationData = packet.getParamValueAsNumber("Params_InformationData")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTServerIncomingClientFindByTypeValueRequestIndicationObserver(Observer):
-
-    opGroup = Spec.ATTServerIncomingClientFindByTypeValueRequestIndicationFrame.opGroup
-    opCode = Spec.ATTServerIncomingClientFindByTypeValueRequestIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTServerIncomingClientFindByTypeValueRequestIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTServerIncomingClientFindByTypeValueRequestIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Params_StartingHandle = packet.getParamValueAsNumber("Params_StartingHandle")
-        frame.Params_EndingHandle = packet.getParamValueAsNumber("Params_EndingHandle")
-        frame.Params_AttributeType = packet.getParamValueAsNumber("Params_AttributeType")
-        frame.Params_AttributeLength = packet.getParamValueAsNumber("Params_AttributeLength")
-        frame.Params_AttributeValue = packet.getParamValueAsList("Params_AttributeValue")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTClientIncomingServerFindByTypeValueResponseIndicationObserver(Observer):
-
-    opGroup = Spec.ATTClientIncomingServerFindByTypeValueResponseIndicationFrame.opGroup
-    opCode = Spec.ATTClientIncomingServerFindByTypeValueResponseIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        # Create frame object
-        frame = ATTClientIncomingServerFindByTypeValueResponseIndication()
-        curr = 0
-        frame.DeviceId = data.contents[curr]
-        curr += 1
-        frame.Params_GroupCount = list_to_int(data.contents[curr:curr + 2])
-        curr += 2
-        frame.Params_HandleGroup = []
-        for _ in range(frame.Params_GroupCount):
-            # Create sub-object container
-            Params_HandleGroup = ATTClientIncomingServerFindByTypeValueResponseIndication.Params_HandleGroup()
-            Params_HandleGroup.StartingHandle = list_to_int(data.contents[curr:curr + 2])
-            curr += 2
-            Params_HandleGroup.EndingHandle = list_to_int(data.contents[curr:curr + 2])
-            curr += 2
-            # Add sub-object to list container.
-            frame.Params_HandleGroup.append(copy.deepcopy(Params_HandleGroup))
-
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTServerIncomingClientReadByTypeRequestIndicationObserver(Observer):
-
-    opGroup = Spec.ATTServerIncomingClientReadByTypeRequestIndicationFrame.opGroup
-    opCode = Spec.ATTServerIncomingClientReadByTypeRequestIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTServerIncomingClientReadByTypeRequestIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTServerIncomingClientReadByTypeRequestIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Params_StartingHandle = packet.getParamValueAsNumber("Params_StartingHandle")
-        frame.Params_EndingHandle = packet.getParamValueAsNumber("Params_EndingHandle")
-        frame.Params_Format = packet.getParamValueAsNumber("Params_Format")
-        frame.Params_AttributeType = packet.getParamValueAsNumber("Params_AttributeType")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTClientIncomingServerReadByTypeResponseIndicationObserver(Observer):
-
-    opGroup = Spec.ATTClientIncomingServerReadByTypeResponseIndicationFrame.opGroup
-    opCode = Spec.ATTClientIncomingServerReadByTypeResponseIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTClientIncomingServerReadByTypeResponseIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTClientIncomingServerReadByTypeResponseIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Params_Length = packet.getParamValueAsNumber("Params_Length")
-        frame.Params_AttributeDataListLength = packet.getParamValueAsNumber("Params_AttributeDataListLength")
-        frame.Params_AttributeDataList = packet.getParamValueAsList("Params_AttributeDataList")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTServerIncomingClientReadRequestIndicationObserver(Observer):
-
-    opGroup = Spec.ATTServerIncomingClientReadRequestIndicationFrame.opGroup
-    opCode = Spec.ATTServerIncomingClientReadRequestIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTServerIncomingClientReadRequestIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTServerIncomingClientReadRequestIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Params_AttributeHandle = packet.getParamValueAsNumber("Params_AttributeHandle")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTClientIncomingServerReadResponseIndicationObserver(Observer):
-
-    opGroup = Spec.ATTClientIncomingServerReadResponseIndicationFrame.opGroup
-    opCode = Spec.ATTClientIncomingServerReadResponseIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTClientIncomingServerReadResponseIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTClientIncomingServerReadResponseIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Params_AttributeLength = packet.getParamValueAsNumber("Params_AttributeLength")
-        frame.Params_AttributeValue = packet.getParamValueAsList("Params_AttributeValue")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTServerIncomingClientReadBlobRequestIndicationObserver(Observer):
-
-    opGroup = Spec.ATTServerIncomingClientReadBlobRequestIndicationFrame.opGroup
-    opCode = Spec.ATTServerIncomingClientReadBlobRequestIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTServerIncomingClientReadBlobRequestIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTServerIncomingClientReadBlobRequestIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Params_AttributeHandle = packet.getParamValueAsNumber("Params_AttributeHandle")
-        frame.Params_ValueOffset = packet.getParamValueAsNumber("Params_ValueOffset")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTClientIncomingServerReadBlobResponseIndicationObserver(Observer):
-
-    opGroup = Spec.ATTClientIncomingServerReadBlobResponseIndicationFrame.opGroup
-    opCode = Spec.ATTClientIncomingServerReadBlobResponseIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTClientIncomingServerReadBlobResponseIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTClientIncomingServerReadBlobResponseIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Params_AttributeLength = packet.getParamValueAsNumber("Params_AttributeLength")
-        frame.Params_AttributeValue = packet.getParamValueAsList("Params_AttributeValue")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTServerIncomingClientReadMultipleRequestIndicationObserver(Observer):
-
-    opGroup = Spec.ATTServerIncomingClientReadMultipleRequestIndicationFrame.opGroup
-    opCode = Spec.ATTServerIncomingClientReadMultipleRequestIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        # Create frame object
-        frame = ATTServerIncomingClientReadMultipleRequestIndication()
-        curr = 0
-        frame.DeviceId = data.contents[curr]
-        curr += 1
-        frame.Params_HandleCount = list_to_int(data.contents[curr:curr + 2])
-        curr += 2
-        frame.Params_ListOfHandles = []
-        for _ in range(frame.Params_HandleCount):
-            # Create sub-object container
-            Params_ListOfHandles = ATTServerIncomingClientReadMultipleRequestIndication.Params_ListOfHandles()
-            Params_ListOfHandles.Handle = list_to_int(data.contents[curr:curr + 2])
-            curr += 2
-            # Add sub-object to list container.
-            frame.Params_ListOfHandles.append(copy.deepcopy(Params_ListOfHandles))
-
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTClientIncomingServerReadMultipleResponseIndicationObserver(Observer):
-
-    opGroup = Spec.ATTClientIncomingServerReadMultipleResponseIndicationFrame.opGroup
-    opCode = Spec.ATTClientIncomingServerReadMultipleResponseIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTClientIncomingServerReadMultipleResponseIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTClientIncomingServerReadMultipleResponseIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Params_ListLength = packet.getParamValueAsNumber("Params_ListLength")
-        frame.Params_ListOfValues = packet.getParamValueAsList("Params_ListOfValues")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTServerIncomingClientReadByGroupTypeRequestIndicationObserver(Observer):
-
-    opGroup = Spec.ATTServerIncomingClientReadByGroupTypeRequestIndicationFrame.opGroup
-    opCode = Spec.ATTServerIncomingClientReadByGroupTypeRequestIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTServerIncomingClientReadByGroupTypeRequestIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTServerIncomingClientReadByGroupTypeRequestIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Params_StartingHandle = packet.getParamValueAsNumber("Params_StartingHandle")
-        frame.Params_EndingHandle = packet.getParamValueAsNumber("Params_EndingHandle")
-        frame.Params_Format = packet.getParamValueAsNumber("Params_Format")
-        frame.Params_AttributeType = packet.getParamValueAsNumber("Params_AttributeType")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTClientIncomingServerReadByGroupTypeResponseIndicationObserver(Observer):
-
-    opGroup = Spec.ATTClientIncomingServerReadByGroupTypeResponseIndicationFrame.opGroup
-    opCode = Spec.ATTClientIncomingServerReadByGroupTypeResponseIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTClientIncomingServerReadByGroupTypeResponseIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTClientIncomingServerReadByGroupTypeResponseIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Params_Length = packet.getParamValueAsNumber("Params_Length")
-        frame.Params_AttributeDataListLength = packet.getParamValueAsNumber("Params_AttributeDataListLength")
-        frame.Params_AttributeDataList = packet.getParamValueAsList("Params_AttributeDataList")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTServerIncomingClientWriteRequestIndicationObserver(Observer):
-
-    opGroup = Spec.ATTServerIncomingClientWriteRequestIndicationFrame.opGroup
-    opCode = Spec.ATTServerIncomingClientWriteRequestIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTServerIncomingClientWriteRequestIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTServerIncomingClientWriteRequestIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Params_AttributeHandle = packet.getParamValueAsNumber("Params_AttributeHandle")
-        frame.Params_AttributeLength = packet.getParamValueAsNumber("Params_AttributeLength")
-        frame.Params_AttributeValue = packet.getParamValueAsList("Params_AttributeValue")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTClientIncomingServerWriteResponseIndicationObserver(Observer):
-
-    opGroup = Spec.ATTClientIncomingServerWriteResponseIndicationFrame.opGroup
-    opCode = Spec.ATTClientIncomingServerWriteResponseIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTClientIncomingServerWriteResponseIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTClientIncomingServerWriteResponseIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTServerIncomingClientWriteCommandIndicationObserver(Observer):
-
-    opGroup = Spec.ATTServerIncomingClientWriteCommandIndicationFrame.opGroup
-    opCode = Spec.ATTServerIncomingClientWriteCommandIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTServerIncomingClientWriteCommandIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTServerIncomingClientWriteCommandIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Params_AttributeHandle = packet.getParamValueAsNumber("Params_AttributeHandle")
-        frame.Params_AttributeLength = packet.getParamValueAsNumber("Params_AttributeLength")
-        frame.Params_AttributeValue = packet.getParamValueAsList("Params_AttributeValue")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTServerIncomingClientSignedWriteCommandIndicationObserver(Observer):
-
-    opGroup = Spec.ATTServerIncomingClientSignedWriteCommandIndicationFrame.opGroup
-    opCode = Spec.ATTServerIncomingClientSignedWriteCommandIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTServerIncomingClientSignedWriteCommandIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTServerIncomingClientSignedWriteCommandIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Params_AttributeHandle = packet.getParamValueAsNumber("Params_AttributeHandle")
-        frame.Params_AttributeLength = packet.getParamValueAsNumber("Params_AttributeLength")
-        frame.Params_AttributeValue = packet.getParamValueAsList("Params_AttributeValue")
-        frame.Params_AuthenticationSignature = packet.getParamValueAsList("Params_AuthenticationSignature")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTServerIncomingClientPrepareWriteRequestIndicationObserver(Observer):
-
-    opGroup = Spec.ATTServerIncomingClientPrepareWriteRequestIndicationFrame.opGroup
-    opCode = Spec.ATTServerIncomingClientPrepareWriteRequestIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTServerIncomingClientPrepareWriteRequestIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTServerIncomingClientPrepareWriteRequestIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Params_AttributeHandle = packet.getParamValueAsNumber("Params_AttributeHandle")
-        frame.Params_ValueOffset = packet.getParamValueAsNumber("Params_ValueOffset")
-        frame.Params_AttributeLength = packet.getParamValueAsNumber("Params_AttributeLength")
-        frame.Params_AttributeValue = packet.getParamValueAsList("Params_AttributeValue")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTClientIncomingServerPrepareWriteResponseIndicationObserver(Observer):
-
-    opGroup = Spec.ATTClientIncomingServerPrepareWriteResponseIndicationFrame.opGroup
-    opCode = Spec.ATTClientIncomingServerPrepareWriteResponseIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTClientIncomingServerPrepareWriteResponseIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTClientIncomingServerPrepareWriteResponseIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Params_AttributeHandle = packet.getParamValueAsNumber("Params_AttributeHandle")
-        frame.Params_ValueOffset = packet.getParamValueAsNumber("Params_ValueOffset")
-        frame.Params_AttributeLength = packet.getParamValueAsNumber("Params_AttributeLength")
-        frame.Params_AttributeValue = packet.getParamValueAsList("Params_AttributeValue")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTServerIncomingClientExecuteWriteRequestIndicationObserver(Observer):
-
-    opGroup = Spec.ATTServerIncomingClientExecuteWriteRequestIndicationFrame.opGroup
-    opCode = Spec.ATTServerIncomingClientExecuteWriteRequestIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTServerIncomingClientExecuteWriteRequestIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTServerIncomingClientExecuteWriteRequestIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Params_Flags = packet.getParamValueAsNumber("Params_Flags")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTClientIncomingServerExecuteWriteResponseIndicationObserver(Observer):
-
-    opGroup = Spec.ATTClientIncomingServerExecuteWriteResponseIndicationFrame.opGroup
-    opCode = Spec.ATTClientIncomingServerExecuteWriteResponseIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTClientIncomingServerExecuteWriteResponseIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTClientIncomingServerExecuteWriteResponseIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTClientIncomingServerHandleValueNotificationIndicationObserver(Observer):
-
-    opGroup = Spec.ATTClientIncomingServerHandleValueNotificationIndicationFrame.opGroup
-    opCode = Spec.ATTClientIncomingServerHandleValueNotificationIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTClientIncomingServerHandleValueNotificationIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTClientIncomingServerHandleValueNotificationIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Params_AttributeHandle = packet.getParamValueAsNumber("Params_AttributeHandle")
-        frame.Params_AttributeLength = packet.getParamValueAsNumber("Params_AttributeLength")
-        frame.Params_AttributeValue = packet.getParamValueAsList("Params_AttributeValue")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTClientIncomingServerHandleValueIndicationIndicationObserver(Observer):
-
-    opGroup = Spec.ATTClientIncomingServerHandleValueIndicationIndicationFrame.opGroup
-    opCode = Spec.ATTClientIncomingServerHandleValueIndicationIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTClientIncomingServerHandleValueIndicationIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTClientIncomingServerHandleValueIndicationIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Params_AttributeHandle = packet.getParamValueAsNumber("Params_AttributeHandle")
-        frame.Params_AttributeLength = packet.getParamValueAsNumber("Params_AttributeLength")
-        frame.Params_AttributeValue = packet.getParamValueAsList("Params_AttributeValue")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTServerIncomingClientHandleValueConfirmationIndicationObserver(Observer):
-
-    opGroup = Spec.ATTServerIncomingClientHandleValueConfirmationIndicationFrame.opGroup
-    opCode = Spec.ATTServerIncomingClientHandleValueConfirmationIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTServerIncomingClientHandleValueConfirmationIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTServerIncomingClientHandleValueConfirmationIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTUnsupportedOpcodeIndicationObserver(Observer):
-
-    opGroup = Spec.ATTUnsupportedOpcodeIndicationFrame.opGroup
-    opCode = Spec.ATTUnsupportedOpcodeIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTUnsupportedOpcodeIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTUnsupportedOpcodeIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.Opcode = packet.getParamValueAsNumber("Opcode")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ATTTimeoutIndicationObserver(Observer):
-
-    opGroup = Spec.ATTTimeoutIndicationFrame.opGroup
-    opCode = Spec.ATTTimeoutIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ATTTimeoutIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ATTTimeoutIndication()
-        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
         framer.event_queue.put(frame) if sync_request else None
 
         if callback is not None:
@@ -3021,7 +825,7 @@ class GATTClientProcedureFindIncludedServicesIndicationObserver(Observer):
         curr += 2
         frame.Service_UuidType = data.contents[curr]
         curr += 1
-        frame.Service_Uuid = list_to_int(data.contents[curr:curr + 0])
+        #frame.Service_Uuid = list_to_int(data.contents[curr:curr + 0])
         if frame.Service_UuidType == UuidType.Uuid16Bits:
             selected_len = 2
         elif frame.Service_UuidType == UuidType.Uuid128Bits:
@@ -3030,6 +834,7 @@ class GATTClientProcedureFindIncludedServicesIndicationObserver(Observer):
             selected_len = 4
         else:
             print "Wrong UuidType value!"
+        frame.Service_Uuid = list_to_int(data.contents[curr:curr + selected_len])
         curr += selected_len
         frame.Service_NbOfCharacteristics = data.contents[curr]
         curr += 1
@@ -3162,7 +967,7 @@ class GATTClientProcedureDiscoverAllCharacteristicsIndicationObserver(Observer):
         curr += 2
         frame.Service_UuidType = data.contents[curr]
         curr += 1
-        frame.Service_Uuid = list_to_int(data.contents[curr:curr + 0])
+        #frame.Service_Uuid = list_to_int(data.contents[curr:curr + 0])
         if frame.Service_UuidType == UuidType.Uuid16Bits:
             selected_len = 2
         elif frame.Service_UuidType == UuidType.Uuid128Bits:
@@ -3171,6 +976,7 @@ class GATTClientProcedureDiscoverAllCharacteristicsIndicationObserver(Observer):
             selected_len = 4
         else:
             print "Wrong UuidType value!"
+        frame.Service_Uuid = list_to_int(data.contents[curr:curr + selected_len])
         curr += selected_len
         frame.Service_NbOfCharacteristics = data.contents[curr]
         curr += 1
@@ -3408,13 +1214,14 @@ class GATTClientProcedureDiscoverAllCharacteristicDescriptorsIndicationObserver(
             selected_len = 4
         else:
             print "Wrong UuidType value!"
+        frame.Characteristic_Value.Uuid = list_to_int(data.contents[curr:curr + selected_len])
         curr += selected_len
         frame.Characteristic_Value.ValueLength = list_to_int(data.contents[curr:curr + 2])
         curr += 2
         frame.Characteristic_Value.MaxValueLength = list_to_int(data.contents[curr:curr + 2])
         curr += 2
-        frame.Characteristic_Value.Value = data.contents[curr]
-        curr += 1
+        frame.Characteristic_Value.Value = data.contents[curr:curr + frame.Characteristic_Value.ValueLength]
+        curr += frame.Characteristic_Value.ValueLength
         frame.Characteristic_NbOfDescriptors = data.contents[curr]
         curr += 1
         frame.Characteristic_Descriptors = []
@@ -3493,13 +1300,18 @@ class GATTClientProcedureReadCharacteristicValueIndicationObserver(Observer):
             selected_len = 4
         else:
             print "Wrong UuidType value!"
+        #curr += selected_len
+        frame.Characteristic_Value.Uuid = list_to_int(data.contents[curr:curr + selected_len])
         curr += selected_len
         frame.Characteristic_Value.ValueLength = list_to_int(data.contents[curr:curr + 2])
         curr += 2
         frame.Characteristic_Value.MaxValueLength = list_to_int(data.contents[curr:curr + 2])
         curr += 2
-        frame.Characteristic_Value.Value = data.contents[curr]
-        curr += 1
+        #frame.Characteristic_Value.Value = data.contents[curr]
+        #curr += 1
+        frame.Characteristic_Value.Value = data.contents[curr:curr + frame.Characteristic_Value.ValueLength]
+        curr += frame.Characteristic_Value.ValueLength
+
         frame.Characteristic_NbOfDescriptors = data.contents[curr]
         curr += 1
         frame.Characteristic_Descriptors = []
@@ -3964,8 +1776,8 @@ class GATTServerErrorIndicationObserver(Observer):
         # Create frame object
         frame = GATTServerErrorIndication()
         frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
-        frame.ProcedureError_ProcedureType = GATTServerErrorIndicationProcedureError_ProcedureType.getEnumString(packet.getParamValueAsNumber("ProcedureError_ProcedureType"))
-        frame.ProcedureError_Error = GATTServerErrorIndicationProcedureError_Error.getEnumString(packet.getParamValueAsNumber("ProcedureError_Error"))
+        frame.ProcedureError_ProcedureType = packet.getParamValueAsNumber("ProcedureError_ProcedureType")
+        frame.ProcedureError_Error = packet.getParamValueAsNumber("ProcedureError_Error")
         framer.event_queue.put(frame) if sync_request else None
 
         if callback is not None:
@@ -4044,17 +1856,16 @@ class GATTDBConfirmObserver(Observer):
         packet = Spec.GATTDBConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = GATTDBConfirm()
-        frame.Status = GATTDBConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
-        if re.match(r'gGattDb.*NotFound_c', frame.Status):
-            print '\t[error] GATTDBConfirm w/ Status ' + frame.Status
+        frame.Status = packet.getParamValueAsNumber("Status")
+        print '\n GATTDBConfirm with Status: ' + str(frame.Status) + '\n'
         framer.event_queue.put(frame) if sync_request else None
 
         if callback is not None:
             callback(self.deviceName, frame)
         else:
             print_event(self.deviceName, frame)
-            if frame.Status != 'gBleSuccess_c':
-                print '\t[warning] GATTDBConfirm w/ Status ' + str(frame.Status)
+            # if frame.Status != 'gBleSuccess_c':
+            #     print '\t[warning] GATTDBConfirm w/ Status ' + str(frame.Status)
         fsciLibrary.DestroyFSCIFrame(event)
 
 
@@ -4359,35 +2170,10 @@ class GATTDBDynamicAddCharacteristicDeclarationWithUniqueValueIndicationObserver
         fsciLibrary.DestroyFSCIFrame(event)
 
 
-class GATTDBAttConfirmObserver(Observer):
+class GATTDBDynamicAddCharDescriptorWithUniqueValueIndicationObserver(Observer):
 
-    opGroup = Spec.GATTDBAttConfirmFrame.opGroup
-    opCode = Spec.GATTDBAttConfirmFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.GATTDBAttConfirmFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = GATTDBAttConfirm()
-        frame.Status = GATTDBAttConfirmStatus.getEnumString(packet.getParamValueAsNumber("Status"))
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class GATTDBAttFindInformationIndicationObserver(Observer):
-
-    opGroup = Spec.GATTDBAttFindInformationIndicationFrame.opGroup
-    opCode = Spec.GATTDBAttFindInformationIndicationFrame.opCode
+    opGroup = Spec.GATTDBDynamicAddCharDescriptorWithUniqueValueIndicationFrame.opGroup
+    opCode = Spec.GATTDBDynamicAddCharDescriptorWithUniqueValueIndicationFrame.opCode
 
     @overrides(Observer)
     def observeEvent(self, framer, event, callback, sync_request):
@@ -4396,315 +2182,10 @@ class GATTDBAttFindInformationIndicationObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.GATTDBAttFindInformationIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        packet = Spec.GATTDBDynamicAddCharDescriptorWithUniqueValueIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
-        frame = GATTDBAttFindInformationIndication()
-        frame.Params_Format = packet.getParamValueAsNumber("Params_Format")
-        frame.Params_InformationData = packet.getParamValueAsNumber("Params_InformationData")
-        frame.ErrorAttributeHandle = packet.getParamValueAsNumber("ErrorAttributeHandle")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class GATTDBAttFindByTypeValueIndicationObserver(Observer):
-
-    opGroup = Spec.GATTDBAttFindByTypeValueIndicationFrame.opGroup
-    opCode = Spec.GATTDBAttFindByTypeValueIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        # Create frame object
-        frame = GATTDBAttFindByTypeValueIndication()
-        curr = 0
-        frame.Params_GroupCount = list_to_int(data.contents[curr:curr + 2])
-        curr += 2
-        frame.Params_HandleGroup = []
-        for _ in range(frame.Params_GroupCount):
-            # Create sub-object container
-            Params_HandleGroup = GATTDBAttFindByTypeValueIndication.Params_HandleGroup()
-            Params_HandleGroup.StartingHandle = list_to_int(data.contents[curr:curr + 2])
-            curr += 2
-            Params_HandleGroup.EndingHandle = list_to_int(data.contents[curr:curr + 2])
-            curr += 2
-            # Add sub-object to list container.
-            frame.Params_HandleGroup.append(copy.deepcopy(Params_HandleGroup))
-
-        frame.ErrorAttributeHandle = list_to_int(data.contents[curr:curr + 2])
-        curr += 2
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class GATTDBAttReadByTypeIndicationObserver(Observer):
-
-    opGroup = Spec.GATTDBAttReadByTypeIndicationFrame.opGroup
-    opCode = Spec.GATTDBAttReadByTypeIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.GATTDBAttReadByTypeIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = GATTDBAttReadByTypeIndication()
-        frame.Params_Length = packet.getParamValueAsNumber("Params_Length")
-        frame.Params_AttributeDataListLength = packet.getParamValueAsNumber("Params_AttributeDataListLength")
-        frame.Params_AttributeDataList = packet.getParamValueAsList("Params_AttributeDataList")
-        frame.ErrorAttributeHandle = packet.getParamValueAsNumber("ErrorAttributeHandle")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class GATTDBAttReadIndicationObserver(Observer):
-
-    opGroup = Spec.GATTDBAttReadIndicationFrame.opGroup
-    opCode = Spec.GATTDBAttReadIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.GATTDBAttReadIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = GATTDBAttReadIndication()
-        frame.Params_AttributeLength = packet.getParamValueAsNumber("Params_AttributeLength")
-        frame.Params_AttributeValue = packet.getParamValueAsList("Params_AttributeValue")
-        frame.ErrorAttributeHandle = packet.getParamValueAsNumber("ErrorAttributeHandle")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class GATTDBAttReadBlobIndicationObserver(Observer):
-
-    opGroup = Spec.GATTDBAttReadBlobIndicationFrame.opGroup
-    opCode = Spec.GATTDBAttReadBlobIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.GATTDBAttReadBlobIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = GATTDBAttReadBlobIndication()
-        frame.ErrorAttributeHandle = packet.getParamValueAsNumber("ErrorAttributeHandle")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class GATTDBAttReadMultipleIndicationObserver(Observer):
-
-    opGroup = Spec.GATTDBAttReadMultipleIndicationFrame.opGroup
-    opCode = Spec.GATTDBAttReadMultipleIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.GATTDBAttReadMultipleIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = GATTDBAttReadMultipleIndication()
-        frame.Params_ListLength = packet.getParamValueAsNumber("Params_ListLength")
-        frame.Params_ListOfValues = packet.getParamValueAsList("Params_ListOfValues")
-        frame.ErrorAttributeHandle = packet.getParamValueAsNumber("ErrorAttributeHandle")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class GATTDBAttReadByGroupTypeIndicationObserver(Observer):
-
-    opGroup = Spec.GATTDBAttReadByGroupTypeIndicationFrame.opGroup
-    opCode = Spec.GATTDBAttReadByGroupTypeIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.GATTDBAttReadByGroupTypeIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = GATTDBAttReadByGroupTypeIndication()
-        frame.Params_Length = packet.getParamValueAsNumber("Params_Length")
-        frame.Params_AttributeDataListLength = packet.getParamValueAsNumber("Params_AttributeDataListLength")
-        frame.Params_AttributeDataList = packet.getParamValueAsList("Params_AttributeDataList")
-        frame.ErrorAttributeHandle = packet.getParamValueAsNumber("ErrorAttributeHandle")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class GATTDBAttWriteIndicationObserver(Observer):
-
-    opGroup = Spec.GATTDBAttWriteIndicationFrame.opGroup
-    opCode = Spec.GATTDBAttWriteIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.GATTDBAttWriteIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = GATTDBAttWriteIndication()
-        frame.ErrorAttributeHandle = packet.getParamValueAsNumber("ErrorAttributeHandle")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class GATTDBAttPrepareWriteIndicationObserver(Observer):
-
-    opGroup = Spec.GATTDBAttPrepareWriteIndicationFrame.opGroup
-    opCode = Spec.GATTDBAttPrepareWriteIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.GATTDBAttPrepareWriteIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = GATTDBAttPrepareWriteIndication()
-        frame.Params_AttributeHandle = packet.getParamValueAsNumber("Params_AttributeHandle")
-        frame.Params_ValueOffset = packet.getParamValueAsNumber("Params_ValueOffset")
-        frame.Params_AttributeLength = packet.getParamValueAsNumber("Params_AttributeLength")
-        frame.Params_AttributeValue = packet.getParamValueAsList("Params_AttributeValue")
-        frame.ErrorAttributeHandle = packet.getParamValueAsNumber("ErrorAttributeHandle")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class GATTDBAttExecuteWriteIndicationObserver(Observer):
-
-    opGroup = Spec.GATTDBAttExecuteWriteIndicationFrame.opGroup
-    opCode = Spec.GATTDBAttExecuteWriteIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.GATTDBAttExecuteWriteIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = GATTDBAttExecuteWriteIndication()
-        frame.ErrorAttributeHandle = packet.getParamValueAsNumber("ErrorAttributeHandle")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class GATTDBAttExecuteWriteFromQueueIndicationObserver(Observer):
-
-    opGroup = Spec.GATTDBAttExecuteWriteFromQueueIndicationFrame.opGroup
-    opCode = Spec.GATTDBAttExecuteWriteFromQueueIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.GATTDBAttExecuteWriteFromQueueIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = GATTDBAttExecuteWriteFromQueueIndication()
-        frame.ErrorAttributeHandle = packet.getParamValueAsNumber("ErrorAttributeHandle")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class GATTDBAttPrepareNotificationIndicationIndicationObserver(Observer):
-
-    opGroup = Spec.GATTDBAttPrepareNotificationIndicationIndicationFrame.opGroup
-    opCode = Spec.GATTDBAttPrepareNotificationIndicationIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.GATTDBAttPrepareNotificationIndicationIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = GATTDBAttPrepareNotificationIndicationIndication()
-        frame.ErrorAttributeHandle = packet.getParamValueAsNumber("ErrorAttributeHandle")
+        frame = GATTDBDynamicAddCharDescriptorWithUniqueValueIndication()
+        frame.DescriptorHandle = packet.getParamValueAsNumber("DescriptorHandle")
         framer.event_queue.put(frame) if sync_request else None
 
         if callback is not None:
@@ -4791,10 +2272,10 @@ class GAPCheckIndicationStatusIndicationObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
-class GAPGetBondedStaticAddressesIndicationObserver(Observer):
+class GAPLoadKeysIndicationObserver(Observer):
 
-    opGroup = Spec.GAPGetBondedStaticAddressesIndicationFrame.opGroup
-    opCode = Spec.GAPGetBondedStaticAddressesIndicationFrame.opCode
+    opGroup = Spec.GAPLoadKeysIndicationFrame.opGroup
+    opCode = Spec.GAPLoadKeysIndicationFrame.opCode
 
     @overrides(Observer)
     def observeEvent(self, framer, event, callback, sync_request):
@@ -4803,11 +2284,62 @@ class GAPGetBondedStaticAddressesIndicationObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.GAPGetBondedStaticAddressesIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
-        frame = GAPGetBondedStaticAddressesIndication()
-        frame.NbOfDeviceAddresses = packet.getParamValueAsNumber("NbOfDeviceAddresses")
-        frame.DeviceAddresses = packet.getParamValueAsList("DeviceAddresses")
+        frame = GAPLoadKeysIndication()
+        curr = 0
+        frame.Keys_LtkIncluded = data.contents[curr]
+        curr += 1
+        frame.Keys_LtkInfo = []
+        if frame.Keys_LtkIncluded:
+            # Create sub-object container
+            Keys_LtkInfo = GAPLoadKeysIndication.Keys_LtkInfo()
+            Keys_LtkInfo.LtkSize = data.contents[curr]
+            curr += 1
+            Keys_LtkInfo.Ltk = list_to_int(data.contents[curr:curr + Keys_LtkInfo.LtkSize])
+            curr += Keys_LtkInfo.LtkSize
+            frame.Keys_LtkInfo = copy.deepcopy(Keys_LtkInfo)
+
+        frame.Keys_IrkIncluded = data.contents[curr]
+        curr += 1
+        if frame.Keys_IrkIncluded:
+            frame.Keys_Irk = data.contents[curr:curr + 16]
+            curr += 16
+        frame.Keys_CsrkIncluded = data.contents[curr]
+        curr += 1
+        if frame.Keys_CsrkIncluded:
+            frame.Keys_Csrk = data.contents[curr:curr + 16]
+            curr += 16
+        frame.Keys_RandEdivInfo = []
+        if frame.Keys_LtkIncluded:
+            # Create sub-object container
+            Keys_RandEdivInfo = GAPLoadKeysIndication.Keys_RandEdivInfo()
+            Keys_RandEdivInfo.RandSize = data.contents[curr]
+            curr += 1
+            Keys_RandEdivInfo.Rand = list_to_int(data.contents[curr:curr + Keys_RandEdivInfo.RandSize])
+            curr += Keys_RandEdivInfo.RandSize
+            Keys_RandEdivInfo.Ediv = list_to_int(data.contents[curr:curr + 2])
+            curr += 2
+            frame.Keys_RandEdivInfo = copy.deepcopy(Keys_RandEdivInfo)
+
+        if frame.Keys_IrkIncluded:
+            frame.Keys_AddressIncluded = data.contents[curr]
+            curr += 1
+        frame.Keys_AddressInfo = []
+        if frame.Keys_AddressIncluded:
+            # Create sub-object container
+            Keys_AddressInfo = GAPLoadKeysIndication.Keys_AddressInfo()
+            Keys_AddressInfo.DeviceAddressType = data.contents[curr]
+            curr += 1
+            Keys_AddressInfo.DeviceAddress = list_to_int(data.contents[curr:curr + 6])
+            curr += 6
+            frame.Keys_AddressInfo = copy.deepcopy(Keys_AddressInfo)
+
+        frame.KeyFlags = data.contents[curr]
+        curr += 1
+        frame.LeSc = data.contents[curr]
+        curr += 1
+        frame.Authenticated = data.contents[curr]
+        curr += 1
         framer.event_queue.put(frame) if sync_request else None
 
         if callback is not None:
@@ -4954,8 +2486,15 @@ class GAPGenericEventInitializationCompleteIndicationObserver(Observer):
     def observeEvent(self, framer, event, callback, sync_request):
         # Call super, print common information
         Observer.observeEvent(self, framer, event, callback, sync_request)
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.GAPGenericEventInitializationCompleteIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = GAPGenericEventInitializationCompleteIndication()
+        frame.initCompleteData_SupportedFeatures = packet.getParamValueAsNumber("initCompleteData_SupportedFeatures")
+        frame.initCompleteData_MaxAdvDataSize = packet.getParamValueAsNumber("initCompleteData_MaxAdvDataSize")
+        frame.initCompleteData_NumOfSupportedAdvSets = packet.getParamValueAsNumber("initCompleteData_NumOfSupportedAdvSets")
+        frame.initCompleteData_PeriodicAdvListSize = packet.getParamValueAsNumber("initCompleteData_PeriodicAdvListSize")
         framer.event_queue.put(frame) if sync_request else None
 
         if callback is not None:
@@ -5158,6 +2697,7 @@ class GAPGenericEventRandomAddressReadyIndicationObserver(Observer):
         # Create frame object
         frame = GAPGenericEventRandomAddressReadyIndication()
         frame.Address = packet.getParamValueAsList("Address")
+        frame.Handle = packet.getParamValueAsNumber("Handle")
         framer.event_queue.put(frame) if sync_request else None
 
         if callback is not None:
@@ -5271,8 +2811,13 @@ class GAPGenericEventRandomAddressSetIndicationObserver(Observer):
     def observeEvent(self, framer, event, callback, sync_request):
         # Call super, print common information
         Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.GAPGenericEventRandomAddressSetIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = GAPGenericEventRandomAddressSetIndication()
+        frame.Handle = packet.getParamValueAsNumber("Handle")
         framer.event_queue.put(frame) if sync_request else None
 
         if callback is not None:
@@ -5426,7 +2971,7 @@ class GAPConnectionEventConnectedIndicationObserver(Observer):
         frame.ConnectionParameters_SupervisionTimeout = packet.getParamValueAsNumber("ConnectionParameters_SupervisionTimeout")
         frame.ConnectionParameters_MasterClockAccuracy = packet.getParamValueAsNumber("ConnectionParameters_MasterClockAccuracy")
         frame.PeerAddressType = packet.getParamValueAsNumber("PeerAddressType")
-        frame.PeerAddress = packet.getParamValueAsList("PeerAddress")[::-1]
+        frame.PeerAddress = packet.getParamValueAsList("PeerAddress")
         frame.peerRpaResolved = packet.getParamValueAsNumber("peerRpaResolved")
         frame.peerRpa = packet.getParamValueAsList("peerRpa")
         frame.localRpaUsed = packet.getParamValueAsNumber("localRpaUsed")
@@ -5684,28 +3229,27 @@ class GAPConnectionEventKeysReceivedIndicationObserver(Observer):
         frame.Keys_LtkIncluded = data.contents[curr]
         curr += 1
         frame.Keys_LtkInfo = []
-        for _ in range(frame.Keys_LtkIncluded):
+        if frame.Keys_LtkIncluded:
             # Create sub-object container
             Keys_LtkInfo = GAPConnectionEventKeysReceivedIndication.Keys_LtkInfo()
             Keys_LtkInfo.LtkSize = data.contents[curr]
             curr += 1
             Keys_LtkInfo.Ltk = list_to_int(data.contents[curr:curr + Keys_LtkInfo.LtkSize])
             curr += Keys_LtkInfo.LtkSize
-            # Add sub-object to list container.
-            frame.Keys_LtkInfo.append(copy.deepcopy(Keys_LtkInfo))
+            frame.Keys_LtkInfo = copy.deepcopy(Keys_LtkInfo)
 
         frame.Keys_IrkIncluded = data.contents[curr]
         curr += 1
-        if frame.Keys.IrkIncluded:
+        if frame.Keys_IrkIncluded:
             frame.Keys_Irk = data.contents[curr:curr + 16]
             curr += 16
         frame.Keys_CsrkIncluded = data.contents[curr]
         curr += 1
-        if frame.Keys.CsrkIncluded:
+        if frame.Keys_CsrkIncluded:
             frame.Keys_Csrk = data.contents[curr:curr + 16]
             curr += 16
         frame.Keys_RandEdivInfo = []
-        for _ in range(frame.Keys_LtkIncluded):
+        if frame.Keys_LtkIncluded:
             # Create sub-object container
             Keys_RandEdivInfo = GAPConnectionEventKeysReceivedIndication.Keys_RandEdivInfo()
             Keys_RandEdivInfo.RandSize = data.contents[curr]
@@ -5714,22 +3258,20 @@ class GAPConnectionEventKeysReceivedIndicationObserver(Observer):
             curr += Keys_RandEdivInfo.RandSize
             Keys_RandEdivInfo.Ediv = list_to_int(data.contents[curr:curr + 2])
             curr += 2
-            # Add sub-object to list container.
-            frame.Keys_RandEdivInfo.append(copy.deepcopy(Keys_RandEdivInfo))
+            frame.Keys_RandEdivInfo = copy.deepcopy(Keys_RandEdivInfo)
 
-        if frame.Keys.IrkIncluded:
+        if frame.Keys_IrkIncluded:
             frame.Keys_AddressIncluded = data.contents[curr]
             curr += 1
         frame.Keys_AddressInfo = []
-        for _ in range(frame.Keys_AddressIncluded):
+        if frame.Keys_AddressIncluded:
             # Create sub-object container
             Keys_AddressInfo = GAPConnectionEventKeysReceivedIndication.Keys_AddressInfo()
             Keys_AddressInfo.DeviceAddressType = data.contents[curr]
             curr += 1
             Keys_AddressInfo.DeviceAddress = list_to_int(data.contents[curr:curr + 6])
             curr += 6
-            # Add sub-object to list container.
-            frame.Keys_AddressInfo.append(copy.deepcopy(Keys_AddressInfo))
+            frame.Keys_AddressInfo = copy.deepcopy(Keys_AddressInfo)
 
         framer.event_queue.put(frame) if sync_request else None
 
@@ -6155,6 +3697,31 @@ class GAPGenericEventLeScLocalOobDataIndicationObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
+class GAPGenericEventHostPrivacyStateChangedIndicationObserver(Observer):
+
+    opGroup = Spec.GAPGenericEventHostPrivacyStateChangedIndicationFrame.opGroup
+    opCode = Spec.GAPGenericEventHostPrivacyStateChangedIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.GAPGenericEventHostPrivacyStateChangedIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = GAPGenericEventHostPrivacyStateChangedIndication()
+        frame.NewHostPrivacyState = packet.getParamValueAsNumber("NewHostPrivacyState")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
 class GAPGenericEventControllerPrivacyStateChangedIndicationObserver(Observer):
 
     opGroup = Spec.GAPGenericEventControllerPrivacyStateChangedIndicationFrame.opGroup
@@ -6205,6 +3772,34 @@ class GAPGenericEventTxPowerLevelSetCompleteIndicationObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
+class GAPGenericEventLePhyEventIndicationObserver(Observer):
+
+    opGroup = Spec.GAPGenericEventLePhyEventIndicationFrame.opGroup
+    opCode = Spec.GAPGenericEventLePhyEventIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.GAPGenericEventLePhyEventIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = GAPGenericEventLePhyEventIndication()
+        frame.eventType = packet.getParamValueAsNumber("eventType")
+        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
+        frame.txPhy = packet.getParamValueAsNumber("txPhy")
+        frame.rxPhy = packet.getParamValueAsNumber("rxPhy")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
 class GAPGetBondedDevicesIdentityInformationIndicationObserver(Observer):
 
     opGroup = Spec.GAPGetBondedDevicesIdentityInformationIndicationFrame.opGroup
@@ -6232,9 +3827,576 @@ class GAPGetBondedDevicesIdentityInformationIndicationObserver(Observer):
             curr += 6
             IdentityAddresses.Irk = list_to_int(data.contents[curr:curr + 16])
             curr += 16
+            IdentityAddresses.PrivacyMode = data.contents[curr]
+            curr += 1
             # Add sub-object to list container.
             frame.IdentityAddresses.append(copy.deepcopy(IdentityAddresses))
 
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPControllerNotificationIndicationObserver(Observer):
+
+    opGroup = Spec.GAPControllerNotificationIndicationFrame.opGroup
+    opCode = Spec.GAPControllerNotificationIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.GAPControllerNotificationIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = GAPControllerNotificationIndication()
+        frame.EventType = packet.getParamValueAsNumber("EventType")
+        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
+        frame.RSSI = packet.getParamValueAsNumber("RSSI")
+        frame.Channel = packet.getParamValueAsNumber("Channel")
+        frame.ConnEvCounter = packet.getParamValueAsNumber("ConnEvCounter")
+        frame.Status = packet.getParamValueAsNumber("Status")
+        frame.Timestamp = packet.getParamValueAsNumber("Timestamp")
+        frame.AdvHandle = packet.getParamValueAsNumber("AdvHandle")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPBondCreatedIndicationObserver(Observer):
+
+    opGroup = Spec.GAPBondCreatedIndicationFrame.opGroup
+    opCode = Spec.GAPBondCreatedIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.GAPBondCreatedIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = GAPBondCreatedIndication()
+        frame.NvmIndex = packet.getParamValueAsNumber("NvmIndex")
+        frame.AddrType = packet.getParamValueAsNumber("AddrType")
+        frame.Addr = packet.getParamValueAsList("Addr")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPGenericEventChannelMapSetIndicationObserver(Observer):
+
+    opGroup = Spec.GAPGenericEventChannelMapSetIndicationFrame.opGroup
+    opCode = Spec.GAPGenericEventChannelMapSetIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Create frame object
+        frame = GAPGenericEventChannelMapSetIndication()
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPConnectionEventChannelMapReadIndicationObserver(Observer):
+
+    opGroup = Spec.GAPConnectionEventChannelMapReadIndicationFrame.opGroup
+    opCode = Spec.GAPConnectionEventChannelMapReadIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.GAPConnectionEventChannelMapReadIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = GAPConnectionEventChannelMapReadIndication()
+        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
+        frame.ChannelMap = packet.getParamValueAsList("ChannelMap")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPConnectionEventChannelMapReadFailureIndicationObserver(Observer):
+
+    opGroup = Spec.GAPConnectionEventChannelMapReadFailureIndicationFrame.opGroup
+    opCode = Spec.GAPConnectionEventChannelMapReadFailureIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.GAPConnectionEventChannelMapReadFailureIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = GAPConnectionEventChannelMapReadFailureIndication()
+        frame.FailReason = GAPConnectionEventChannelMapReadFailureIndicationFailReason.getEnumString(packet.getParamValueAsNumber("FailReason"))
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPGenericEventExtAdvertisingParamSetupCompleteIndicationObserver(Observer):
+
+    opGroup = Spec.GAPGenericEventExtAdvertisingParamSetupCompleteIndicationFrame.opGroup
+    opCode = Spec.GAPGenericEventExtAdvertisingParamSetupCompleteIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.GAPGenericEventExtAdvertisingParamSetupCompleteIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = GAPGenericEventExtAdvertisingParamSetupCompleteIndication()
+        frame.SelectedTxPower = packet.getParamValueAsNumber("SelectedTxPower")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPGenericEventExtAdvertisingDataSetupCompleteIndicationObserver(Observer):
+
+    opGroup = Spec.GAPGenericEventExtAdvertisingDataSetupCompleteIndicationFrame.opGroup
+    opCode = Spec.GAPGenericEventExtAdvertisingDataSetupCompleteIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Create frame object
+        frame = GAPGenericEventExtAdvertisingDataSetupCompleteIndication()
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPGenericEventPeriodicAdvParamSetupCompleteIndicationObserver(Observer):
+
+    opGroup = Spec.GAPGenericEventPeriodicAdvParamSetupCompleteIndicationFrame.opGroup
+    opCode = Spec.GAPGenericEventPeriodicAdvParamSetupCompleteIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Create frame object
+        frame = GAPGenericEventPeriodicAdvParamSetupCompleteIndication()
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPGenericEventPeriodicAdvDataSetupCompleteIndicationObserver(Observer):
+
+    opGroup = Spec.GAPGenericEventPeriodicAdvDataSetupCompleteIndicationFrame.opGroup
+    opCode = Spec.GAPGenericEventPeriodicAdvDataSetupCompleteIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Create frame object
+        frame = GAPGenericEventPeriodicAdvDataSetupCompleteIndication()
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPGenericEventPeriodicAdvListUpdateCompleteIndicationObserver(Observer):
+
+    opGroup = Spec.GAPGenericEventPeriodicAdvListUpdateCompleteIndicationFrame.opGroup
+    opCode = Spec.GAPGenericEventPeriodicAdvListUpdateCompleteIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Create frame object
+        frame = GAPGenericEventPeriodicAdvListUpdateCompleteIndication()
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPAdvertisingEventExtAdvertisingStateChangedIndicationObserver(Observer):
+
+    opGroup = Spec.GAPAdvertisingEventExtAdvertisingStateChangedIndicationFrame.opGroup
+    opCode = Spec.GAPAdvertisingEventExtAdvertisingStateChangedIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Create frame object
+        frame = GAPAdvertisingEventExtAdvertisingStateChangedIndication()
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPAdvertisingEventAdvertisingSetTerminatedIndicationObserver(Observer):
+
+    opGroup = Spec.GAPAdvertisingEventAdvertisingSetTerminatedIndicationFrame.opGroup
+    opCode = Spec.GAPAdvertisingEventAdvertisingSetTerminatedIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.GAPAdvertisingEventAdvertisingSetTerminatedIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = GAPAdvertisingEventAdvertisingSetTerminatedIndication()
+        frame.Status = GAPAdvertisingEventAdvertisingSetTerminatedIndicationStatus.getEnumString(packet.getParamValueAsNumber("Status"))
+        frame.Handle = packet.getParamValueAsNumber("Handle")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPAdvertisingEventExtAdvertisingSetRemoveCompletedIndicationObserver(Observer):
+
+    opGroup = Spec.GAPAdvertisingEventExtAdvertisingSetRemoveCompletedIndicationFrame.opGroup
+    opCode = Spec.GAPAdvertisingEventExtAdvertisingSetRemoveCompletedIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Create frame object
+        frame = GAPAdvertisingEventExtAdvertisingSetRemoveCompletedIndication()
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPAdvertisingEventExtScanReqReceivedIndicationObserver(Observer):
+
+    opGroup = Spec.GAPAdvertisingEventExtScanReqReceivedIndicationFrame.opGroup
+    opCode = Spec.GAPAdvertisingEventExtScanReqReceivedIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.GAPAdvertisingEventExtScanReqReceivedIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = GAPAdvertisingEventExtScanReqReceivedIndication()
+        frame.Handle = packet.getParamValueAsNumber("Handle")
+        frame.ScannerAddressType = packet.getParamValueAsNumber("ScannerAddressType")
+        frame.ScannerAddress = packet.getParamValueAsList("ScannerAddress")
+        frame.ScannerAddressResolved = packet.getParamValueAsNumber("ScannerAddressResolved")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPAdvertisingEventPeriodicAdvertisingStateChangedIndicationObserver(Observer):
+
+    opGroup = Spec.GAPAdvertisingEventPeriodicAdvertisingStateChangedIndicationFrame.opGroup
+    opCode = Spec.GAPAdvertisingEventPeriodicAdvertisingStateChangedIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        # Create frame object
+        frame = GAPAdvertisingEventPeriodicAdvertisingStateChangedIndication()
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPScanningEventExtDeviceScannedIndicationObserver(Observer):
+
+    opGroup = Spec.GAPScanningEventExtDeviceScannedIndicationFrame.opGroup
+    opCode = Spec.GAPScanningEventExtDeviceScannedIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.GAPScanningEventExtDeviceScannedIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = GAPScanningEventExtDeviceScannedIndication()
+        frame.AddressType = packet.getParamValueAsNumber("AddressType")
+        frame.Address = packet.getParamValueAsList("Address")
+        frame.SID = packet.getParamValueAsNumber("SID")
+        frame.AdvertisingAddressResolved = packet.getParamValueAsNumber("AdvertisingAddressResolved")
+        frame.AdvEventProperties = packet.getParamValueAsNumber("AdvEventProperties")
+        frame.Rssi = packet.getParamValueAsNumber("Rssi")
+        frame.TxPower = packet.getParamValueAsNumber("TxPower")
+        frame.PrimaryPHY = packet.getParamValueAsNumber("PrimaryPHY")
+        frame.SecondaryPHY = packet.getParamValueAsNumber("SecondaryPHY")
+        frame.PeriodicAdvInterval = packet.getParamValueAsNumber("PeriodicAdvInterval")
+        frame.DirectRpaUsed = packet.getParamValueAsNumber("DirectRpaUsed")
+        frame.DirectRpaType = packet.getParamValueAsNumber("DirectRpaType")
+        frame.DirectRpa = packet.getParamValueAsList("DirectRpa")
+        frame.DataLength = packet.getParamValueAsNumber("DataLength")
+        frame.Data = packet.getParamValueAsList("Data")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPScanningEventPeriodicAdvSyncEstablishedIndicationObserver(Observer):
+
+    opGroup = Spec.GAPScanningEventPeriodicAdvSyncEstablishedIndicationFrame.opGroup
+    opCode = Spec.GAPScanningEventPeriodicAdvSyncEstablishedIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.GAPScanningEventPeriodicAdvSyncEstablishedIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = GAPScanningEventPeriodicAdvSyncEstablishedIndication()
+        frame.Status = GAPScanningEventPeriodicAdvSyncEstablishedIndicationStatus.getEnumString(packet.getParamValueAsNumber("Status"))
+        frame.SyncHandle = packet.getParamValueAsNumber("SyncHandle")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPScanningEventPeriodicAdvSyncTerminatedIndicationObserver(Observer):
+
+    opGroup = Spec.GAPScanningEventPeriodicAdvSyncTerminatedIndicationFrame.opGroup
+    opCode = Spec.GAPScanningEventPeriodicAdvSyncTerminatedIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Create frame object
+        frame = GAPScanningEventPeriodicAdvSyncTerminatedIndication()
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPScanningEventPeriodicAdvSyncLostIndicationObserver(Observer):
+
+    opGroup = Spec.GAPScanningEventPeriodicAdvSyncLostIndicationFrame.opGroup
+    opCode = Spec.GAPScanningEventPeriodicAdvSyncLostIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.GAPScanningEventPeriodicAdvSyncLostIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = GAPScanningEventPeriodicAdvSyncLostIndication()
+        frame.SyncHandle = packet.getParamValueAsNumber("SyncHandle")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPScanningEventPeriodicDeviceScannedIndicationObserver(Observer):
+
+    opGroup = Spec.GAPScanningEventPeriodicDeviceScannedIndicationFrame.opGroup
+    opCode = Spec.GAPScanningEventPeriodicDeviceScannedIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.GAPScanningEventPeriodicDeviceScannedIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = GAPScanningEventPeriodicDeviceScannedIndication()
+        frame.SyncHandle = packet.getParamValueAsNumber("SyncHandle")
+        frame.Rssi = packet.getParamValueAsNumber("Rssi")
+        frame.TxPower = packet.getParamValueAsNumber("TxPower")
+        frame.DataLength = packet.getParamValueAsNumber("DataLength")
+        frame.Data = packet.getParamValueAsList("Data")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPGenericEventPeriodicAdvCreateSyncCancelledIndicationObserver(Observer):
+
+    opGroup = Spec.GAPGenericEventPeriodicAdvCreateSyncCancelledIndicationFrame.opGroup
+    opCode = Spec.GAPGenericEventPeriodicAdvCreateSyncCancelledIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Create frame object
+        frame = GAPGenericEventPeriodicAdvCreateSyncCancelledIndication()
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPConnectionEventChannelSelectionAlgorithm2IndicationObserver(Observer):
+
+    opGroup = Spec.GAPConnectionEventChannelSelectionAlgorithm2IndicationFrame.opGroup
+    opCode = Spec.GAPConnectionEventChannelSelectionAlgorithm2IndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.GAPConnectionEventChannelSelectionAlgorithm2IndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = GAPConnectionEventChannelSelectionAlgorithm2Indication()
+        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class L2CAPCBErrorIndicationObserver(Observer):
+
+    opGroup = Spec.L2CAPCBErrorIndicationFrame.opGroup
+    opCode = Spec.L2CAPCBErrorIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        # Create frame object
+        frame = L2CAPCBErrorIndication()
+        curr = 0
+        frame.InformationIncluded = data.contents[curr]
+        curr += 1
+        if frame.InformationIncluded:
+            # Create sub-object container
+            LeCbError = L2CAPCBErrorIndication.LeCbError()
+            LeCbError.DeviceId = data.contents[curr]
+            curr += 1
+            LeCbError.Error = list_to_int(data.contents[curr:curr + 2])
+            curr += 2
         framer.event_queue.put(frame) if sync_request else None
 
         if callback is not None:

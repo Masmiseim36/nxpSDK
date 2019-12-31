@@ -24,7 +24,7 @@ Include Files
 #include "UARTConfiguration.h"
 
 #include "ble_sig_defines.h"
-#include "cmd_ble_1.2.8.h"
+#include "cmd_ble_1.3.5.h"
 
 /*==================================================================================================
 Private macros

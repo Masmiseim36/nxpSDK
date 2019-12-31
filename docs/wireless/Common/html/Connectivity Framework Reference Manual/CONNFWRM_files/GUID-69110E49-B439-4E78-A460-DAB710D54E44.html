@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="API primitives"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-D78DDA1E-70DD-43E3-B8A5-8FD1F3557848.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-69110E49-B439-4E78-A460-DAB710D54E44"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>API primitives</title>
+</head>
+<body id="GUID-69110E49-B439-4E78-A460-DAB710D54E44">
+
+
+    <h1 class="title topictitle1">API primitives</h1>
+
+    <div class="body">
+        <p class="p"><strong class="ph b">OSA_MsgQCreate ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">osaMsgQId_t OSA_MsgQCreate( uint32_t msgNo );</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Creates and initializes a message queue.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-69110E49-B439-4E78-A460-DAB710D54E44__TABLE_XDN_XCY_DZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d23880e74"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d23880e78"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d23880e82"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d23880e86"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d23880e74 ">msgNo</td>
+
+                        <td class="entry" valign="top" headers="d23880e78 ">Uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d23880e82 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d23880e86 ">Number of messages that the queue should acommodate</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">Message queue handle if successful, or NULL if failed.</p>
+
+        <p class="p"><strong class="ph b">OSA_MsgQDestroy ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">osaStatus_t OSA_MsgQDestroy(osaMsgQId_t msgQId);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Destroys a message queue.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-69110E49-B439-4E78-A460-DAB710D54E44__TABLE_PXQ_ZCY_DZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d23880e157"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d23880e161"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d23880e165"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d23880e169"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d23880e157 ">msgQId</td>
+
+                        <td class="entry" valign="top" headers="d23880e161 ">osaMsgQId_t</td>
+
+                        <td class="entry" valign="top" headers="d23880e165 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d23880e169 ">The queue handler returned by <em class="ph i">OSA_MsgQCreate()</em></td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <ul class="ul" id="GUID-69110E49-B439-4E78-A460-DAB710D54E44__UL_JZ4_1DY_DZ">
+            <li class="li"> osaStatus_Success – The queue was successfully destroyed.</li>
+
+            <li class="li"> osaStatus_Error – The message queue destruction failed.</li>
+
+        </ul>
+
+        <p class="p"><strong class="ph b">OSA_MsgQPut ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">osaStatus_t OSA_MsgQPut(osaMsgQId_t msgQId, void* pMessage);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Puts a message into the message queue.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-69110E49-B439-4E78-A460-DAB710D54E44__TABLE_CP2_GDY_DZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d23880e248"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d23880e252"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d23880e256"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d23880e260"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d23880e248 ">msgQId</td>
+
+                        <td class="entry" valign="top" headers="d23880e252 ">osaMsgQId_t</td>
+
+                        <td class="entry" valign="top" headers="d23880e256 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d23880e260 ">The queue handler returned by <em class="ph i">OSA_MsgQCreate()</em></td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d23880e248 ">pMessage</td>
+
+                        <td class="entry" valign="top" headers="d23880e252 ">Void*</td>
+
+                        <td class="entry" valign="top" headers="d23880e256 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d23880e260 ">The address of the message to be queued</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <ul class="ul" id="GUID-69110E49-B439-4E78-A460-DAB710D54E44__UL_OQ2_HDY_DZ">
+            <li class="li"> osaStatus_Success – A message is successfully put into the queue.</li>
+
+            <li class="li"> osaStatus_Error – The queue is full or an invalid parameter is passed.</li>
+
+        </ul>
+
+        <p class="p"><strong class="ph b">OSA_MsgQGet ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">osaStatus_t OSA_MsgQGet(osaMsgQId_t msgQId, void *pMessage, uint32_t millisec);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Gets a message from the message queue.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-69110E49-B439-4E78-A460-DAB710D54E44__TABLE_ACH_JDY_DZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d23880e355"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d23880e359"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d23880e363"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d23880e367"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d23880e355 ">msgQId</td>
+
+                        <td class="entry" valign="top" headers="d23880e359 ">osaMsgQId_t</td>
+
+                        <td class="entry" valign="top" headers="d23880e363 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d23880e367 ">The queue handler returned by <em class="ph i">OSA_MsgQCreate()</em></td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d23880e355 ">pMessage</td>
+
+                        <td class="entry" valign="top" headers="d23880e359 ">void *</td>
+
+                        <td class="entry" valign="top" headers="d23880e363 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d23880e367 ">The address where the message will be received.</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d23880e355 ">millisec</td>
+
+                        <td class="entry" valign="top" headers="d23880e359 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d23880e363 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d23880e367 ">Time to wait for a message to arrive, or <em class="ph i">osaWaitForever_c</em> in
+                            case of infinite time.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <ul class="ul" id="GUID-69110E49-B439-4E78-A460-DAB710D54E44__UL_QXC_KDY_DZ">
+            <li class="li"> osaStatus_Success – The message is successfully obtained from the queue.</li>
+
+            <li class="li"> osaStatus_Timeout – The queue remains empty after timeout.</li>
+
+            <li class="li"> osaStatus_Error – An invalid parameter.</li>
+
+        </ul>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-D78DDA1E-70DD-43E3-B8A5-8FD1F3557848.html">Message queues</a></div>
+</div>
+</div>
+
+</body>
+</html>

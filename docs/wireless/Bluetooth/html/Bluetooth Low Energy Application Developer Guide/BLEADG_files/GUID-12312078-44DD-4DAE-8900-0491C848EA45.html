@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Discover characteristic descriptors"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-14EEED00-68AD-49E9-A4A6-220E857226B3.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-12312078-44DD-4DAE-8900-0491C848EA45"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Discover characteristic descriptors</title>
+</head>
+<body id="GUID-12312078-44DD-4DAE-8900-0491C848EA45">
+
+
+    <h1 class="title topictitle1">Discover characteristic descriptors</h1>
+
+    <div class="body">
+        <p class="p">To discover all descriptors of a Characteristic, the following API is provided:</p>
+
+        <pre class="pre codeblock">bleResult_t<strong class="ph b">GattClient_DiscoverAllCharacteristicDescriptors</strong>
+(
+    deviceId_t                 deviceId,
+    gattCharacteristic_t *     pIoCharacteristic,
+    uint16_t                   endingHandle,
+    uint8_t                    maxDescriptorCount
+);</pre>
+
+        <p class="p">The <em class="ph i">pIoCharacteristic</em> pointer must point to a Characteristic structure with the
+                <em class="ph i">value.handle</em> field set (either by a discovery operation or by the
+            application) and the <em class="ph i">aDescriptors</em> field pointed to an allocated array of
+            Descriptor structures.</p>
+
+        <p class="p">The <em class="ph i">endingHandle</em> should be set to the handle of the next Characteristic or Service
+            declaration in the database to indicate when the search for descriptors must stop. The
+            GATT Client module uses ATT Find Information Requests to discover the descriptors, and
+            it does so until it discovers a Characteristic or Service declaration or until
+                <em class="ph i">endingHandle</em> is reached. Thus, by providing a correct ending handle, the
+            search for descriptors is optimized, sparing unnecessary extra air packets.</p>
+
+        <p class="p">If, however, the application does not know where the next declaration lies and cannot
+            provide this optimization hint, the <em class="ph i">endingHandle</em> should be set to
+            <em class="ph i">0xFFFF</em>.</p>
+
+        <p class="p">Continuing the example from <a class="xref" href="GUID-B37A8249-3DEB-44B7-B11D-7824A87DD59E.html#GUID-B37A8249-3DEB-44B7-B11D-7824A87DD59E">Discover characteristics by UUID</a>, the following code assumes that the Heart Rate Control Point
+            Characteristic has no more than 5 descriptors and performs Descriptor Discovery.</p>
+
+        <pre class="pre codeblock"><strong class="ph b">#define</strong> mcMaxDescriptors_c 5
+<strong class="ph b">static </strong>gattAttribute_t aDescriptors[mcMaxDescriptors_c];
+hrcpCharacteristic. aDescriptors = aDescriptors;
+ 
+bleResult_t result = GattClient_DiscoverAllCharacteristicDescriptors
+(
+    deviceId,
+    &amp;hrcpCharacteristic,
+    0xFFFF, /* We don’t know where the next Characterstic/Service begins */
+    mcMaxDescriptors_c
+);
+ 
+<strong class="ph b">if</strong> (<em class="ph i">gBleSuccess_c</em> != result)
+{
+    /* Handle error */
+}</pre>
+
+        <p class="p">The Client Procedure Callback is triggered at the end of the procedure.</p>
+
+        <pre class="pre codeblock"><strong class="ph b">void</strong><strong class="ph b">gattClientProcedureCallback</strong>
+(
+    deviceId_t             deviceId,
+    gattProcedureType_t    procedureType,
+    gattProcedureResult_t  procedureResult,
+    bleResult_t            error
+)
+{
+    <strong class="ph b">switch</strong> (procedureType)
+    {
+        /* ... */
+        <strong class="ph b">case</strong><em class="ph i">gGattProcDiscoverAllCharacteristicDescriptors_c</em>:
+            <strong class="ph b">if</strong> (<em class="ph i">gGattProcSuccess_c</em> == procedureResult)
+            {
+                /* Read number of discovered descriptors */
+                PRINT(hrcpCharacteristic. cNumDescriptors );
+                /* Read descriptor data */
+                <strong class="ph b">for</strong> ( uint8_t j = 0; j &lt; hrcpCharacteristic. cNumDescriptors ; j++)
+                {
+                    PRINT(hrcpCharacteristic. aDescriptors [j]. handle );
+                    PRINT(hrcpCharacteristic. aDescriptors [j]. uuidType );
+                    PRINT(hrcpCharacteristic. aDescriptors [j]. uuid );
+                }
+            }
+            <strong class="ph b">else</strong>
+            {
+                /* Handle error */
+                PRINT(error);
+            }
+            <strong class="ph b">break</strong>;
+
+        /* ... */
+    }
+}</pre>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-14EEED00-68AD-49E9-A4A6-220E857226B3.html">Service and characteristic discovery</a></div>
+</div>
+</div>
+
+</body>
+</html>

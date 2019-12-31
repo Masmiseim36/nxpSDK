@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Implemented profile and services"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-EA11D553-35FC-4A59-8DDE-7D52A25E6020.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-124A8481-4E81-45F9-9915-27A8F790919D"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Implemented profile and services</title>
+</head>
+<body id="GUID-124A8481-4E81-45F9-9915-27A8F790919D">
+
+
+  <h1 class="title topictitle1">Implemented profile and services</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">The Wireless UART application implements both the GATT client and server for the custom Wireless UART profile and services.</p>
+
+<ul class="ul">
+<li class="li">Wireless UART Service (UUID: 01ff0100-ba5e-f4ee-5ca1-eb1e5e4b1ce0)</li>
+
+<li class="li">Battery Service v1.0</li>
+
+<li class="li">Device Information Service v1.1</li>
+
+</ul>
+
+<p class="p">The Wireless UART service is a custom service that implements a custom writable ASCII Char characteristic (UUID: 01ff0101-ba5e-f4ee-5ca1-eb1e5e4b1ce0) 
+that holds the character written by the peer device.</p>
+
+<p class="p">The application behaves at first as a GAP central node. It enters GAP Limited Discovery Procedure and searches for other Wireless UART devices to connect.
+ If the node fails to find any peripherals within seconds, it changes its role to a GAP peripheral. It enters GAP General Discoverable Mode and waits for a GAP central node to connect.</p>
+
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-EA11D553-35FC-4A59-8DDE-7D52A25E6020.html">Wireless UART</a></div>
+</div>
+</div>
+
+</body>
+</html>

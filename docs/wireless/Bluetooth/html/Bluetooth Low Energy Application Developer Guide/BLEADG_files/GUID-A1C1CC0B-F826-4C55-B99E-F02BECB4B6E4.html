@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Building Bluetooth Low Energy OTAP image file from SREC file"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-53C35DEE-9212-4685-BF1E-7B66CB5A3860.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-A1C1CC0B-F826-4C55-B99E-F02BECB4B6E4"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Building Bluetooth Low Energy OTAP image file from SREC file</title>
+</head>
+<body id="GUID-A1C1CC0B-F826-4C55-B99E-F02BECB4B6E4">
+
+
+    <h1 class="title topictitle1">Building Bluetooth Low Energy OTAP image file from SREC file</h1>
+
+    <div class="body">
+        <p class="p">A SREC (Motorola S-record) file is an ASCII format file which contains binary
+            information. Common extensions are: .srec, .s19, .s28, .s37 and others. Most modern
+            compiler toolchains can output a SREC format executable.</p>
+
+        <p class="p">To enable the creation of a SREC file for your embedded application in IAR
+            Embedded Workbench®, open the target properties and go to the <em class="ph i">Output Converter</em>
+            tab. Activate the <em class="ph i">“Generate additional output”</em> checkbox and choose the
+                <em class="ph i">Motorola</em> option from the <em class="ph i">“Output format”</em> drop down menu. From the same
+            pane you can also override the name of the output file. A screenshot of the described
+            configuration is shown below.</p>
+
+        <div class="fig fignone" id="GUID-A1C1CC0B-F826-4C55-B99E-F02BECB4B6E4__FIG_UNY_MXM_CY"><span class="figcap">Figure 1. Enabling SREC Output in IAR Embedded Workbench</span>
+            
+            <img class="image" id="GUID-A1C1CC0B-F826-4C55-B99E-F02BECB4B6E4__IMAGE_EDP_PXM_CY" src="GUID-04A9A4A0-8333-44B0-837B-3D7F077EA315-high.png"/>
+        </div>
+
+        <p class="p">To enable the creation of a .srec file in MCUXpresso IDE go to the Project
+            properties -&gt; Settings -&gt; Build steps window and press the "Edit" button for the
+            Post-build steps. A Post-build steps window will show up in which the following command
+            must be added or uncommented (by removing the '#' character at the beginning) if it is
+            already there: <samp class="ph codeph"> arm-none-eabi-objcopy -v -O srec "${BuildArtifactFileName}"
+                "${BuildArtifactFileBaseName}.s19"</samp>. A screenshot of this window is shown in
+            the figure below."</p>
+
+        <div class="fig fignone"><span class="figcap">Figure 2. Enabling SREC output in MCUXpresso IDE Post-build steps</span>
+            
+            <img class="image" src="GUID-4D346E15-6410-4A9D-9D39-057C9C898281-high.png"/>
+     
+            
+        </div>
+
+        
+        
+        
+        <p class="p">The format of the SREC file is very simple. It contains lines of text called records
+            which have a specific format. An example of the contents of a SREC file is shown
+            below.</p>
+
+        <pre class="pre codeblock">S02000006F7461705F636C69656E745F6174745F4672656552544F532E73726563A1
+S1130000F83F0020EB0500007506000075060000AF
+S113001075060000750600007506000075060000F0
+S113002075060000750600007506000075060000E0
+S113003075060000750600007506000075060000D0
+S113004000000000000000000000000000000000AC
+S1130050000000000000000000000000000000009C
+.............
+S2140117900121380004F05FF8002866D12A003100E4
+S2140117A06846008804F022F8A689002E16D0002884
+S2140117B014D12569278801A868A11022F7F782FCB1
+S2140117C06B4601AA0121380004F045F800284CD1E7
+S2140117D02A0031006846008804F008F8A68A002E20</pre>
+
+        <p class="p">All records start with the ASCII letter ‘S’ followed by an ASCII digit from ‘0’ to ‘9’.
+            These two characters from the record type which identifies the format of the data field
+            of the record.</p>
+
+        <p class="p">The next 2 ASCII characters are 2 hex digits which indicate the number of bytes (hex
+            digit pairs) which follow the rest of the record (address, data and checksum).</p>
+
+        <p class="p">The address follows next which can have 4, 6 or 8 ASCII hex digits depending on the
+            record type.</p>
+
+        <p class="p">The data field is placed after the address and it contains 2 * n ASCII hex digits for n
+            bytes of actual data.</p>
+
+        <p class="p">The last element of the S record is the checksum which comprises of 2 ASCII hex digits.
+            The checksum is computed by adding all the bytes of the byte count, address and data
+            fields then computing the ones complement of the least significant octet of the sum.</p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-A1C1CC0B-F826-4C55-B99E-F02BECB4B6E4__TABLE_LB3_WXM_CY" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 1. Format of an S Record</span></caption>
+                
+                
+                
+                
+                
+                
+                
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top">Field</td>
+
+                        <td class="entry" valign="top"><em class="ph i">Record Type</em></td>
+
+                        <td class="entry" valign="top"><em class="ph i">Count</em></td>
+
+                        <td class="entry" valign="top"><em class="ph i">Address</em></td>
+
+                        <td class="entry" valign="top"><em class="ph i">Data</em></td>
+
+                        <td class="entry" valign="top"><em class="ph i">Checksum</em></td>
+
+                        <td class="entry" valign="top"><em class="ph i">Line Terminator</em></td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">Format</td>
+
+                        <td class="entry" valign="top">
+                            <p class="p">“Sn”,</p>
+
+                            <p class="p"> n=0..9</p>
+
+                        </td>
+
+                        <td class="entry" valign="top">
+                            <p class="p">ASCII</p>
+
+                            <p class="p">hex digits</p>
+
+                        </td>
+
+                        <td class="entry" valign="top">
+                            <p class="p">ASCII</p>
+
+                            <p class="p">hex digits</p>
+
+                        </td>
+
+                        <td class="entry" valign="top">
+                            <p class="p">ASCII</p>
+
+                            <p class="p">hex digits</p>
+
+                        </td>
+
+                        <td class="entry" valign="top">
+                            <p class="p">ASCII</p>
+
+                            <p class="p">hex digits</p>
+
+                        </td>
+
+                        <td class="entry" valign="top">“\r\n”</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">Length (characters)</td>
+
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">4,6,8</td>
+
+                        <td class="entry" valign="top"><em class="ph i">Count –</em>len<em class="ph i">(Address) – </em>len(<em class="ph i">Checksum)</em></td>
+
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">2</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p">More details about the SREC file format can be found at this location: <a class="xref" href="https://en.wikipedia.org/wiki/SREC_%28file_format%29" target="_blank">en.wikipedia.org/wiki/SREC_(file_format)</a></p>
+
+        <p class="p">We are only interested in records which contain actual data. These are S1, S2 and S3
+            records. The other types of records can be ignored.</p>
+
+        <p class="p">The S1, S2 and S3 records are used to build the Upgrade Image Sub-element of the image
+            file simply by placing the record data at the location specified by the record address
+            in the <em class="ph i">Value</em> field of the Sub-element. It is recommended to fill all gaps in S
+            record addresses with 0xFF.</p>
+
+        <p class="p">To build an OTAP Image File from a SREC file follow the procedure:</p>
+
+        <ul class="ul" id="GUID-A1C1CC0B-F826-4C55-B99E-F02BECB4B6E4__UL_B12_ZXM_CY">
+            <li class="li">Generate the SREC file by correctly configuring your toolchain to do so</li>
+
+            <li class="li">Create the image file header<ul class="ul" id="GUID-A1C1CC0B-F826-4C55-B99E-F02BECB4B6E4__UL_BD2_ZXM_CY">
+                    <li class="li">Set the Image ID field of the header to be unique on the OTAP Server.</li>
+
+                    <li class="li">Leave the Total Image File Size Field blank for the moment.</li>
+
+                </ul>
+</li>
+
+            <li class="li">Create the Upgrade Image Sub-element<ul class="ul" id="GUID-A1C1CC0B-F826-4C55-B99E-F02BECB4B6E4__UL_QD2_ZXM_CY">
+                    <li class="li">Read the S1, S2 and S3 records from the SREC file and place the binary
+                        record data to the record addresses in the <em class="ph i">Value</em> filed of the
+                        sub-element. Fill all address gaps in the S records with 0xFF.</li>
+
+                    <li class="li">Fill in the <em class="ph i">Length</em> field of the sub-element with the length of the
+                        written <em class="ph i">Value</em> filed.</li>
+
+                </ul>
+</li>
+
+            <li class="li">Create the Sector Bitmap Sub-element<ul class="ul" id="GUID-A1C1CC0B-F826-4C55-B99E-F02BECB4B6E4__UL_RD2_ZXM_CY">
+                    <li class="li">A default working setting would be all byes 0xFF for the <em class="ph i">Value</em> field
+                        of this sub-element</li>
+
+                </ul>
+</li>
+
+            <li class="li">Create the Image File CRC Sub-element<ul class="ul" id="GUID-A1C1CC0B-F826-4C55-B99E-F02BECB4B6E4__UL_G22_ZXM_CY">
+                    <li class="li">Compute the total image file size as the length of the header + the length
+                        of all 3 sub-elements and fill in the appropriate filed in the header with
+                        this value</li>
+
+                    <li class="li">Compute and write the <em class="ph i">Value </em>field of this sub-element using the
+                        header and all sub-elements except this one</li>
+
+                    <li class="li">The <em class="ph i">OTA_CrcCompute()</em> function in the <em class="ph i">OtaSupport.c</em> file can be
+                        used to incrementally compute the CRC</li>
+
+                </ul>
+</li>
+
+        </ul>
+
+        <p class="p">If the Image ID is not available when the image file is created then the CRC cannot be
+            computed. It can be computed later after the Image ID is established and written in the
+            appropriate field in the header.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-53C35DEE-9212-4685-BF1E-7B66CB5A3860.html">Over the Air Programming (OTAP)</a></div>
+</div>
+</div>
+
+</body>
+</html>

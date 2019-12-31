@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="How it works"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-9705F4AA-746A-4040-87A7-06D14F1E9BED.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-AA9D2F46-E493-4856-9E59-5E10B283AA81"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>How it works</title>
+</head>
+<body id="GUID-AA9D2F46-E493-4856-9E59-5E10B283AA81">
+
+
+    <h1 class="title topictitle1">How it works</h1>
+
+    <div class="body">
+        <p class="p">When a switch is pressed for the first time, the specific protocol application starts.
+            The first protocol to start has complete access to the radio (XCVR).</p>
+
+        <p class="p">When the other switch is pressed, the second protocol stack tries to start by acquiring
+            access to the XCVR. If the first protocol is idle, access will be granted. Else it will
+            be informed when the XVCR is idle, and the acquire control.</p>
+
+        <p class="p"> Since the Bluetooth protocol has strict timings, the GenFSK should not acquire the XCVR
+            for long periods. Instead it should check the inactivity duration of the Bluetooth stack
+            using the <em class="ph i">MWS_GetInactivityDuration()</em> API and release access to the XCVR before
+            the next Bluetooth event.</p>
+
+        <p class="p">Also, to maximize the GenFSK application activity, the MWS idle signal should be
+            monitored. The demo application is doing this by registering it’s own callback into the
+            MWS module using: <em class="ph i">MWS_GetRegisteredCallback()</em> API.</p>
+
+        <p class="p">The GenFSK link layer also needs to be informed of the MWS events, so to achieve this,
+            the application will first get the registered callback for the GenFSK protocol using
+                <em class="ph i">MWS_GetRegisteredCallback()</em> API, save this callback and call it in the
+            registered application callback. Using this method, multiple layers can chain callback
+            to monitor MWS events.</p>
+
+        <p class="p">By monitoring the MWS idle signal, the GenFSK application can start the RX operation
+            asap. Also, to give the control to the Bluetooth stack in time, the GenFSK application
+            starts a timer with an expire time less than the inactivity duration of Bluetooth to
+            release access to the XCVR. Upon release, the Bluetooth stack will receive an MWS idle
+            signal, and the handler will configure the XCVR for Bluetooth mode.</p>
+
+        <div class="p">The GenFSK TX is done periodically, using a timer. If when the timer expires, the
+            Bluetooth stack has access to the XCVR, or there is not enough idle time to perform the
+            GenFSK TX, then it will be postponed until the next idle signal is received.<div class="fig fignone"><span class="figcap">Figure 1. Working of GenFSK</span>
+                <img class="image" src="GUID-01E79287-0E14-4275-A528-5FD5332C92D5-high.png"/>
+            </div>
+</div>
+
+        <p class="p"> </p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-9705F4AA-746A-4040-87A7-06D14F1E9BED.html">Implementation</a></div>
+</div>
+</div>
+
+</body>
+</html>

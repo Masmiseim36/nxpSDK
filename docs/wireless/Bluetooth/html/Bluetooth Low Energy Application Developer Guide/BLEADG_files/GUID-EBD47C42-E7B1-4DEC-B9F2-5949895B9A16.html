@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Common files for hybrid applications"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-9AED4277-362F-4D6E-96B4-617293413B63.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-EBD47C42-E7B1-4DEC-B9F2-5949895B9A16"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Common files for hybrid applications</title>
+</head>
+<body id="GUID-EBD47C42-E7B1-4DEC-B9F2-5949895B9A16">
+
+
+    <h1 class="title topictitle1">Common files for hybrid applications</h1>
+
+    <div class="body">
+        <p class="p">All the hybrid applications should use the existing files from
+                <em class="ph i">examples/hybrid/common</em> without editing them. These perform common
+            initializations for both Bluetooth Low Energy and 802.15.4.</p>
+
+        <p class="p">The Bluetooth Low Energy initializations are similar to the ones described in <a class="xref" href="GUID-B0490BDE-83FF-46E9-BB3E-6BCF00183ABE.html#GUID-B0490BDE-83FF-46E9-BB3E-6BCF00183ABE">Bluetooth Low Energy initialization</a>.</p>
+
+        <p class="p">In the <em class="ph i">ApplMain.c</em>, both the Bluetooth Low Energy and 802.15.4 functionalities are enabled in the
+                <em class="ph i">main_task</em> function:</p>
+
+        <pre class="pre codeblock">/* Bluetooth Low Energy Host Stack Init */
+<strong class="ph b">Ble_Initialize</strong>(App_GenericCallback); 
+ 
+/* 802.15.4 PHY and MAC initialization */ 
+<strong class="ph b">Phy_Init</strong>();
+<strong class="ph b">MAC_Init</strong>();
+ 
+<strong class="ph b">App_Init</strong>();</pre>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-9AED4277-362F-4D6E-96B4-617293413B63.html">Hybrid (Dual-Mode) Bluetooth® Low Energy and IEEE® 802.15.4 Applications (KW41 Platform)</a></div>
+</div>
+</div>
+
+</body>
+</html>

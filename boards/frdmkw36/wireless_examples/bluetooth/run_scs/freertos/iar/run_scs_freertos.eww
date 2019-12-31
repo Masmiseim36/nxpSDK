@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<workspace>
+  <batchBuild>
+    <batchDefinition>
+      <name>all</name>
+      <member>
+        <project>run_scs_freertos</project>
+        <configuration>Release</configuration>
+      </member>
+      <member>
+        <project>run_scs_freertos</project>
+        <configuration>Debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>Release</name>
+      <member>
+        <project>run_scs_freertos</project>
+        <configuration>Release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>Debug</name>
+      <member>
+        <project>run_scs_freertos</project>
+        <configuration>Debug</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+  <project>
+    <path>$WS_DIR$/run_scs_freertos.ewp</path>
+  </project>
+</workspace>

@@ -1,13 +1,12 @@
 '''
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2017 NXP
+* Copyright 2016-2018 NXP
 * All rights reserved.
 *
 * SPDX-License-Identifier: BSD-3-Clause
 '''
 
 from com.nxp.wireless_connectivity.commands.fsci_parameter import FsciParameterType
-from com.nxp.wireless_connectivity.hsdk.config import BLE_PTS_TEST
 
 
 class FsciDataPacket(object):
@@ -171,17 +170,14 @@ class FsciDataPacket(object):
             for i in range(len(paramValue)):
                 val.append(paramValue[i])
 
-            if BLE_PTS_TEST:
-                return val
+            if paramObj.endianness == FsciParameterType.LittleEndianBytes:
+                return val[::-1]
             else:
-                if paramObj.endianness == FsciParameterType.LittleEndianBytes:
-                    return val[::-1]
-                else:
-                    return val
+                return val
 
     def fillFromBytes(self, payload, payloadLength):
         '''
-        This method will be called from the observers's observeEvent methods.
+        This method will be called from the observers' observeEvent methods.
         This is why payload has a ctypes type.
 
         @param payload: ctypes LP_c_ubyte_Array

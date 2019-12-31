@@ -71,7 +71,6 @@ var searchData=
   ['ggaloispolytype',['gGaloisPolyType',['../group__genfsk.html#gga2bbab3db5f1a230cf8e3065bb40c2d6cafa9199592c8c6609d1f691c0c3e455b2',1,'genfsk_interface.h']]],
   ['ggenfsk_5finstancescnt_5fc',['gGENFSK_InstancesCnt_c',['../group__genfsk.html#ga52c9a6a2ed2eb7952f03a0ee6a44b072',1,'genfsk_interface.h']]],
   ['ggenfsk_5finvalididx_5fc',['gGENFSK_InvalidIdx_c',['../group__genfsk.html#ga5b9477d8eb36c4b570a6cabc1ef891ca',1,'genfsk_interface.h']]],
-  ['ggenfsk_5firqno_5fd',['gGENFSK_IrqNo_d',['../group__genfsk.html#ga8f1ac8a7d38ebdba0e1c1e17eb270daf',1,'genfsk_interface.h']]],
   ['ggenfsk_5firqpriority_5fc',['gGENFSK_IrqPriority_c',['../group__genfsk.html#ga50471fa6b5d381144d4d080ae7c9e3ed',1,'genfsk_interface.h']]],
   ['ggenfsk_5ftaskpriority_5fc',['gGENFSK_TaskPriority_c',['../group__genfsk.html#gab5aa9f93222ff8b1f69b5a47f4adbe2a',1,'genfsk_interface.h']]],
   ['ggenfsk_5ftaskstacksize_5fc',['gGENFSK_TaskStackSize_c',['../group__genfsk.html#gad3969c71ccf040020ff5c0385c7d4bfe',1,'genfsk_interface.h']]],

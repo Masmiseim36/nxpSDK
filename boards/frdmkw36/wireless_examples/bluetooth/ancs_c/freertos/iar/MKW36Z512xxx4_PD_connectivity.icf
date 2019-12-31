@@ -1,0 +1,374 @@
+/*
+** ###################################################################
+**     Processors:          MKW36Z512VFP4
+**                          MKW36Z512VHT4
+**
+**     Compiler:            IAR ANSI C/C++ Compiler for ARM
+**     Reference manual:    MKW36A512RM Rev. 0, 11/2016
+**     Version:             rev. 1.0, 2016-12-05
+**     Build:               b170222
+**
+**     Abstract:
+**         Linker file for the IAR ANSI C/C++ Compiler for ARM
+**
+**     Copyright 2016 Freescale Semiconductor, Inc.
+**     Copyright 2016 - 2018 NXP
+**     All rights reserved.
+**
+**     SPDX-License-Identifier: BSD-3-Clause
+**
+**     http:                 www.nxp.com
+**     mail:                 support@nxp.com
+**
+** ###################################################################
+*/
+
+/******************* Map of Kinetis FLASH ***********************************
+
+             0x0008_0000    m_pflash_end
+    - - - +---------------+ - - - - - - - -
+          |               | m_fsl_prodInfo_end           0x7FFFF
+    2k    | Product Info  |
+          |               | m_fsl_prodInfo_start         0x7F800 
+    - - - +---------------+ - - - - - - - -
+          |               | NV_STORAGE_END_ADDRESS     0x7F7FF
+    8k    |  NV_STORAGE*  |
+          |               |
+          |               | NV_STORAGE_START_ADDRESS       0x7D800
+    - - - +---------------+ - - - - - - - -
+          |               | INT_STORAGE_END
+          |               | 
+          |               |
+          |               |
+  ~246k   | OTAP Internal |
+          |      Storage* |
+          |               |
+          |               |
+          |               |
+          |               | INT_STORAGE_START
+    - - - +---------------+ - - - - - - - -
+          |               | m_text_end                   0x3D7FF
+          |               |
+          |               |
+          |               | 
+  ~246k** |  Application  | 
+          |               |
+          |               |
+          |               | 
+          |               | m_text_start                 0x20D8
+    - - - +---------------+ - - - - - - - -
+          |               | m_bootFlags_end              0x20D7
+ 32 bytes |  Boot Flags*  |
+          |               | m_bootFlags_start            0x20C0
+    - - - +---------------+ - - - - - - - -
+          |   Interrupt   | m_interrupts_end             0x20BF
+  192     |    Vectors    |
+  bytes   |               | m_interrupts_start           0x2000
+    - - - +---------------+ - - - - - - - -
+          |               | m_bootloader_end             0x1FFF
+          |               |
+    8k    |  Bootloader*  |
+          |               |
+          |- - - - - - - -| m_flash_config_end
+          | FLASH_CONFIG  |
+          |- - - - - - - -| m_flash_config_start
+          |               |
+          |               | m_bootloader_start = __region_ROM_start__
+    - - - +---------------+ - - - - - - - -
+             0x0000_0000
+
+        * - These sections are optional for certain applications
+       ** - Application will occupy all the free space available
+*****************************************************************************/
+
+/* By default, the Bootloader is not used. */
+if (!isdefinedsymbol(gUseBootloaderLink_d)) {
+    define symbol gUseBootloaderLink_d = 0;
+}
+
+/* By default, the NVM is not used. */
+if (!isdefinedsymbol(gUseNVMLink_d)) {
+    define symbol gUseNVMLink_d = 0;
+}
+
+if (!isdefinedsymbol(gEraseNVMLink_d)) {
+    define symbol gEraseNVMLink_d = 0;
+}
+
+if (!isdefinedsymbol(gNVMSectorCountLink_d)) {
+    define symbol gNVMSectorCountLink_d = 4;
+}
+
+/* By default, the internal storage is not used. */
+if (!isdefinedsymbol(gUseInternalStorageLink_d)) {
+    define symbol gUseInternalStorageLink_d = 0;
+}
+
+/* By default, the RAM vector table is used. */
+if (!isdefinedsymbol(__ram_vector_table__))
+{
+    define symbol __ram_vector_table__ = 1;
+}
+
+/* By default, the Warm Boot is not used. */
+if (!isdefinedsymbol(gUseWarmBootLink_d)) {
+    define symbol gUseWarmBootLink_d = 0;
+}
+
+if (isdefinedsymbol(__warmboot_stack_addr__)) {
+    define symbol warmboot_stack_addr    = __warmboot_stack_addr__;
+} else {
+    define symbol warmboot_stack_addr    = 0x1FFFC000;
+}
+
+if (isdefinedsymbol(__warmboot_stack_size__)) {
+    define symbol warmboot_stack_size    = __warmboot_stack_size__;
+} else {
+    define symbol warmboot_stack_size    = 0x00000400;
+}
+
+
+/*-Memory Limits-*/
+define symbol __region_ROM_start__   = 0x00000000;
+define symbol __region_ROM_end__     = 0x0007FFFF;
+define symbol __region_RAM_start__   = 0x1FFFC000;
+define symbol __region_RAM_end__     = 0x2000BFFF;
+
+define symbol __vector_table_size__    =   48*4;
+
+if(__ram_vector_table__)
+{
+    define symbol __ram_vector_table_size__ = __vector_table_size__;
+}
+else
+{
+    define symbol __ram_vector_table_size__ = 0;
+}
+
+define exported symbol _RAM_START_  = __region_RAM_start__;
+define exported symbol _RAM_END_    = __region_RAM_end__;
+
+if (gUseBootloaderLink_d) 
+{
+    define symbol m_bootloader_start       = __region_ROM_start__;
+    define symbol m_bootloader_end         = ((__region_ROM_end__ + 1) / 64) - 1;
+
+    define symbol m_interrupts_start       = m_bootloader_end + 1;
+    define symbol m_interrupts_end         = m_interrupts_start + __vector_table_size__ - 1;
+
+    define symbol m_bootFlags_start        = m_interrupts_end + 1;
+    define symbol m_bootFlags_end          = m_bootFlags_start + 31;
+
+    define exported symbol __BootFlags_Start__ = m_bootFlags_start;
+}
+else
+{
+    define symbol m_interrupts_start       = __region_ROM_start__;
+    define symbol m_interrupts_end         = m_interrupts_start + __vector_table_size__ - 1;
+    define symbol m_flash_config_start     = 0x00000400;
+    define symbol m_flash_config_end       = 0x0000040F;
+}
+
+
+/*-Sizes-*/
+define symbol m_sector_size             = 2*1024; /* 2k flash sector size */
+
+if (isdefinedsymbol(__stack_size__)) {
+    define symbol __size_cstack__        = __stack_size__;
+} else {
+    define symbol __size_cstack__        = 384;
+}
+
+if (isdefinedsymbol(__heap_size__)) {
+    define symbol __size_heap__          = __heap_size__;
+} else {
+    define symbol __size_heap__          = 0;
+}
+
+
+/*** FSL Product Info region ***/
+define symbol m_fsl_prodInfo_start     = __region_ROM_end__ - m_sector_size + 1;
+define symbol m_fsl_prodInfo_end       = __region_ROM_end__;
+define exported symbol FREESCALE_PROD_DATA_BASE_ADDR = m_fsl_prodInfo_start;
+
+
+/*** NVM Configuration ***/
+if ( gUseNVMLink_d )
+{
+    define exported symbol NV_STORAGE_SECTOR_SIZE = m_sector_size;
+    define exported symbol NV_STORAGE_MAX_SECTORS = gNVMSectorCountLink_d;     /* NV_STORAGE_MAX_SECTORS * NV_STORAGE_SECTOR_SIZE = total NV Storage space */
+
+    if (!isdefinedsymbol(NV_STORAGE_END_ADDRESS)) {
+        define exported symbol NV_STORAGE_END_ADDRESS = m_fsl_prodInfo_start - 1;
+    }
+
+    define exported symbol NV_STORAGE_START_ADDRESS = NV_STORAGE_END_ADDRESS - (NV_STORAGE_MAX_SECTORS * NV_STORAGE_SECTOR_SIZE) + 1;
+}
+
+if (gUseInternalStorageLink_d)
+{
+    if ( gUseNVMLink_d )
+    {
+        define exported symbol INT_STORAGE_END = NV_STORAGE_START_ADDRESS - 1;
+    }
+    else
+    {
+        define exported symbol INT_STORAGE_END = m_fsl_prodInfo_start - 1;
+    }
+    define exported symbol INT_STORAGE_SIZE  = m_sector_size * ( ((INT_STORAGE_END + 1 - m_interrupts_start)/2)/m_sector_size +1);
+    define exported symbol INT_STORAGE_START   = INT_STORAGE_END - INT_STORAGE_SIZE + 1;
+    define exported symbol INT_STORAGE_SECTOR_SIZE = m_sector_size;
+}
+
+
+/* Define the limits of the memory regions*/
+if (gUseBootloaderLink_d) 
+{
+    define symbol m_text_start             = m_bootFlags_end + 1;
+}
+else
+{
+    define symbol m_text_start             = m_interrupts_end + 1;
+}
+
+if (gUseInternalStorageLink_d)
+{
+    define symbol m_text_end               = INT_STORAGE_START;
+}
+else if (gUseNVMLink_d)
+{
+    define symbol m_text_end               = NV_STORAGE_START_ADDRESS - 1;
+}
+else
+{
+    define symbol m_text_end               = m_fsl_prodInfo_start - 1;
+}
+
+if (gUseWarmBootLink_d)
+{
+    define symbol m_interrupts_ram_start   = 0x20000000;
+    define symbol m_interrupts_ram_end     = m_interrupts_ram_start + __ram_vector_table_size__ - 1;
+
+    define symbol m_warmboot_config_start  = m_interrupts_ram_end + 1;
+    define symbol m_warmboot_config_end    = m_warmboot_config_start + 7;
+    
+    define symbol m_warmboot_stack_start   = warmboot_stack_addr;
+    define symbol m_warmboot_stack_end     = warmboot_stack_addr + warmboot_stack_size -1;
+}
+else
+{
+    define symbol m_interrupts_ram_start   = __region_RAM_start__;
+    define symbol m_interrupts_ram_end     = m_interrupts_ram_start + __ram_vector_table_size__ - 1;
+}
+
+define symbol __CSTACK_end__   = __region_RAM_end__;
+define symbol __CSTACK_start__ = __CSTACK_end__ - __size_cstack__ + 1;
+define symbol __HEAP_end__     = __CSTACK_start__ - 1;
+define symbol __HEAP_start__   = __HEAP_end__ - __size_heap__ + 1;
+
+if (gUseWarmBootLink_d)
+{
+    define symbol m_data_start             = m_warmboot_config_end + 1;
+}
+else
+{
+    define symbol m_data_start             = m_interrupts_ram_end + 1;
+}
+
+define symbol m_data_end               = __HEAP_start__ - 1;
+
+
+define exported symbol __VECTOR_TABLE  = m_interrupts_start;
+define exported symbol __VECTOR_RAM    = isdefinedsymbol(__ram_vector_table__) ? m_interrupts_ram_start : m_interrupts_start;
+define exported symbol __RAM_VECTOR_TABLE_SIZE = __ram_vector_table_size__;
+define exported symbol __BOOT_STACK_ADDRESS = m_data_end-0x0F;
+
+
+/*** Define memory regions ***/
+define memory mem with size = 4G;
+if (gUseBootloaderLink_d)
+{
+    define region Bootloader_region = mem:[from m_bootloader_start  to  m_bootloader_end];
+    define region BootFlags_region  = mem:[from m_bootFlags_start   to  m_bootFlags_end];
+    define region TEXT_region       = mem:[from m_text_start to m_text_end];
+}
+else
+{
+    define region m_flash_config_region = mem:[from m_flash_config_start to m_flash_config_end];
+    define region TEXT_region = mem:[from m_text_start to m_flash_config_start - 1] |
+                                mem:[from m_flash_config_end + 1 to m_text_end];
+}
+
+if (gUseInternalStorageLink_d) {
+    define region InternalStorage    = mem:[from INT_STORAGE_START to INT_STORAGE_END];
+}
+
+if (gUseNVMLink_d) {
+    define symbol NV_VIRTUAL_PAGE_BOUND = NV_STORAGE_END_ADDRESS - (NV_STORAGE_MAX_SECTORS/2 * NV_STORAGE_SECTOR_SIZE);
+    define region sNVM_region         = mem:[from  NV_VIRTUAL_PAGE_BOUND+1 to NV_STORAGE_END_ADDRESS];
+    define region fNVM_region         = mem:[from  NV_STORAGE_START_ADDRESS to NV_VIRTUAL_PAGE_BOUND];
+    if(gEraseNVMLink_d)
+    {
+        place in fNVM_region              {readonly section fEraseNVM };
+        place in sNVM_region              {readonly section sEraseNVM };
+    } 
+}
+
+if (gUseWarmBootLink_d)
+{
+    define region m_warmboot_config_region = mem:[from m_warmboot_config_start to m_warmboot_config_end];
+    define region m_warmboot_stack_region = mem:[from m_warmboot_stack_start to m_warmboot_stack_end];
+    define region DATA_region   = mem:[from m_data_start to m_data_end];
+}
+else
+{
+    define region DATA_region   = mem:[from m_data_start to 0x1FFFFFFF] | [from 0x20000000 to m_data_end];
+    define region HEAP_region   = mem:[from __HEAP_start__ to __HEAP_end__];
+    define region CSTACK_region = mem:[from __CSTACK_start__ to __CSTACK_end__];
+}
+
+define block CSTACK    with alignment = 8, size = __size_cstack__   { };
+define block HEAP      with alignment = 8, size = __size_heap__     { };
+
+if (gUseWarmBootLink_d)
+{
+    define block WARMBOOT_CONFIG { section WarmbootConfig };
+    define block WARMBOOT_STACK    with alignment = 8, size = warmboot_stack_size   { };
+}
+
+
+initialize by copy { readwrite, section .textrw };
+do not initialize  { section .noinit };
+
+
+/*** Memory placements ***/
+place at address mem: m_interrupts_start    { readonly section .intvec };
+place at address mem: m_fsl_prodInfo_start  { readonly section .FREESCALE_PROD_DATA };
+place in TEXT_region                        { readonly };
+place in DATA_region                        { readwrite, zi };
+if (gUseWarmBootLink_d)
+{
+    place in DATA_region                        { block HEAP };
+    place in DATA_region                        { block CSTACK };
+}
+else
+{
+    place in HEAP_region                        { block HEAP };
+    place in CSTACK_region                      { block CSTACK };
+}
+
+if (gUseBootloaderLink_d)
+{
+    place at address mem: m_bootloader_start  { section .bootloader };
+    place at address mem: m_bootFlags_start   { readonly section BootloaderFlags };
+}
+else
+{
+    place in m_flash_config_region              { section FlashConfig };
+}
+
+if (gUseWarmBootLink_d)
+{
+    place in m_warmboot_config_region           { block WARMBOOT_CONFIG };
+    place in m_warmboot_stack_region            { block WARMBOOT_STACK };
+}

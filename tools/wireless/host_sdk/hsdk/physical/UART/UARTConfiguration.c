@@ -79,6 +79,7 @@ void disableFlowControl(UARTConfigurationData *config)
     config->lineConfig->handleDTRControl = DISABLEDTR;
     config->lineConfig->handleRTSControl = DISABLERTS;
     config->lineConfig->outCtsFlow = 0;
+	config->lineConfig->outDsrFlow = 0;
 }
 
 #ifdef _WIN32
@@ -145,6 +146,9 @@ int InitPort(File portHandle, UARTConfigurationData *config)
         case BR921600:
             dcbPortSettings.BaudRate = 921600;
             break;
+		case BR1000000:
+			dcbPortSettings.BaudRate = 1000000;
+			break;
         default:
             return FALSE;
     }
@@ -356,6 +360,10 @@ int InitPort(File portHandle, UARTConfigurationData *config)
         case BR921600:
 #define B921600 0010007 /* OS X does not have a define for this baudrate. */
             rc = cfsetspeed(&newtio, B921600);
+            break;
+        case BR1000000:
+#define B1000000 0010010 /* OS X does not have a define for this baudrate. */
+            rc = cfsetspeed(&newtio, B1000000);
             break;
     }
 

@@ -1,6 +1,6 @@
 '''
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2017 NXP
+* Copyright 2016-2018 NXP
 * All rights reserved.
 *
 * SPDX-License-Identifier: BSD-3-Clause
@@ -78,8 +78,8 @@ class PhysicalDevice(object):
             self.ll.CSpiLibrary.setSpeedHzSPI.argtypes = [c_void_p, c_uint32]
             self.ll.CSpiLibrary.setSpeedHzSPI(self.config, MAX_SPEED_HZ)
 
-        # disable flow control for JN devices
-        if '0403' in self.deviceState.vid and '6015' in self.deviceState.pid:
+        # disable flow control for JN devices and EEB-KW35
+        if '0403' in self.deviceState.vid and ('6015' in self.deviceState.pid or '6001' in self.deviceState.pid):
             print '[INFO] Flow control is disabled on port', self.name
             self.ll.CUartLibrary.disableFlowControl.argtypes = [c_void_p]
             self.ll.CUartLibrary.disableFlowControl(self.config)

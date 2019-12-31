@@ -5,6 +5,7 @@
 * SPDX-License-Identifier: BSD-3-Clause
 '''
 
+
 class GenericEnum(object):
 
     @classmethod
@@ -13,6 +14,14 @@ class GenericEnum(object):
             if v == value:
                 return k
         return value
+
+
+class FSCIOTASupportSetKeyRequestKeyType(GenericEnum):
+
+    # RHK (authentication)
+    RHK = 0x00
+    # SBKEK (encryption)
+    SBKEK = 0x01
 
 
 class FSCIFirmware_SetOperationModeRequestOperationMode(GenericEnum):

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="User interface"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-77E76719-2781-442F-A442-AA78D9069633.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-E79E3E2F-3D09-4E2D-B21B-70727E0650EE"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>User interface</title>
+</head>
+<body id="GUID-E79E3E2F-3D09-4E2D-B21B-70727E0650EE">
+
+
+	<h1 class="title topictitle1">User interface</h1>
+
+	
+	<div class="body"><p class="shortdesc"/>
+
+		<p class="p">After flashing the boards, the PRU device enters a “Null” state, and the PTU enters a “Power Save” state. A short press on the ADVSW button of the PTU device simulates a device configuration and the presence of a PRU device which requires charging. For this reason, the PTU device starts a scanning procedure. A short press on the ADVSW of the PRU device simulates sufficient power to start the advertising procedure. During both scanning and advertising procedures, CONNLED will flash. If the PRU device does not connect to the PTU for 10 seconds, the advertising is stopped and CONNLED turns off. In this case the PRU device returns to the “Null” state. After the PTU connects to the PRU, CONNLED is turned on.</p>
+
+		<p class="p">After the devices connect, the PTU performs device registration and determines if it has sufficient power to charge the PRU. If registration is successful, the push-buttons events change their meaning as follows:</p>
+
+		<ul class="ul">
+			<li class="li">Short press on the PTU device triggers another scanning procedure in case another device is supported.</li>
+
+			<li class="li">Short press on the PRU device prints the dynamic parameters in the console.</li>
+
+			<li class="li">Long press on the PTU device prints information regarding the connected devices and maximum power remaining.</li>
+
+			<li class="li">Long press on the PRU device simulates a charge complete event. After the PRU is considered charged, the PTU will disconnect from it. After disconnection, the PRU device enters in a “Boot” state and requires a very long press event to return to “Null” state.</li>
+
+			<li class="li">Very long press on the PTU device simulates an error case and disconnects all connected PRU devices.</li>
+
+			<li class="li">Very long press on the PRU device simulates power removal (taking a device outside the charge area).</li>
+
+		</ul>
+
+		<p class="p">If the PRU device is allowed to charge, it simulates charging by printing information in the console and by turning CHGLED on.</p>
+
+		<p class="p">See details below for hardware references.</p>
+
+		
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-E79E3E2F-3D09-4E2D-B21B-70727E0650EE__GUID-EDFEDC57-687F-4719-9FAC-102C934D398A" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 1. Hardware references</span></caption>
+				
+				
+				
+				
+				<thead class="thead" align="left">
+					<tr class="row">
+						<th class="entry" align="center" valign="top" id="d16082e68">Platform</th>
+
+						<th class="entry" align="center" valign="top" id="d16082e71">ADVSW</th>
+
+						<th class="entry" align="center" valign="top" id="d16082e74">CONNLED</th>
+
+						<th class="entry" align="center" valign="top" id="d16082e77">CHGLED</th>
+
+					</tr>
+
+				</thead>
+
+				<tbody class="tbody">
+					<tr class="row">
+						<td class="entry" align="center" valign="top" headers="d16082e68 ">FRDM-KW41Z</td>
+
+						<td class="entry" align="center" valign="top" headers="d16082e71 ">SW4</td>
+
+						<td class="entry" align="center" valign="top" headers="d16082e74 ">LED3</td>
+
+						<td class="entry" align="center" valign="top" headers="d16082e77 ">LED4</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" align="center" valign="top" headers="d16082e68 ">FRDM-KW36</td>
+
+						<td class="entry" align="center" valign="top" headers="d16082e71 ">SW2</td>
+
+						<td class="entry" align="center" valign="top" headers="d16082e74 ">LED3</td>
+
+						<td class="entry" align="center" valign="top" headers="d16082e77 ">LED4-RED</td>
+
+					</tr>
+
+					
+					
+				</tbody>
+
+			</table>
+</div>
+
+	</div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-77E76719-2781-442F-A442-AA78D9069633.html">Wireless Power Transfer System Receiving Unit and Transmitting Unit</a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -723,7 +723,7 @@ static void CreateListOfKinetisWIdentities()
     list[22] = "VID_1FC9"; // QN9080 DK VID
     list[23] = "PID_0090"; // QN9080 DK PID
 
-    AddDeviceIdentity(list, 22);
+    AddDeviceIdentity(list, KNOWN_VID_PID_PAIRS * 2);
     free(list);
 }
 

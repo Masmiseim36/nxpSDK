@@ -11,6 +11,19 @@ import com.nxp.wireless_connectivity.commands.firmware.frames as Frames
 from com.nxp.wireless_connectivity.commands.firmware.operations import *  # @UnusedWildImport
 
 
+def FSCIOTASupportSetKey(
+    device,
+    KeyType=FSCIOTASupportSetKeyRequestKeyType.RHK,
+    # Unit length: 32 bytes
+    Key=bytearray(32),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.Thread,
+    timeout=3
+):
+    request = Frames.FSCIOTASupportSetKeyRequest(KeyType, Key)
+    return FSCIOTASupportSetKeyOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
 def FSCIEnterBootloader(
     device,
     ack_policy=FsciAckPolicy.GLOBAL,

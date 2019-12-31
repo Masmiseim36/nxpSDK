@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Direct Test Mode"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-84AB0FCE-6242-4A79-9E48-A4D7D75F128F.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-3A6E5CFB-A0EE-4BFE-97F5-F8FDD6896E71"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Direct Test Mode</title>
+</head>
+<body id="GUID-3A6E5CFB-A0EE-4BFE-97F5-F8FDD6896E71">
+
+
+    <h1 class="title topictitle1">Direct Test Mode</h1>
+
+    <div class="body">
+        <div class="p">HCI Black Box application can be used to test radio functionality at
+            physical layer through Direct Test Mode (DTM) described in Bluetooth Specification
+            Version 5.0, Vol 6, Part F. The testing done so can cover physical layer characteristics
+            such as:<ul class="ul">
+        <li class="li">Transmission power and receiver sensitivity </li>
+
+        <li class="li">Frequency offset and drift</li>
+
+                <li class="li">Modulation characteristics </li>
+
+        <li class="li">Packet error rate </li>
+
+        <li class="li">Intermodulation performance </li>
+ </ul>
+</div>
+
+        <div class="p">DTM supports two interfaces for communication: <ul class="ul">
+        <li class="li">Over HCI (enabled by default in HCI Black Box) </li>
+
+        <li class="li">Over 2-Wire UART interface </li>
+</ul>
+</div>
+
+        <p class="p">To use DTM over 2-Wire UART, it must be enabled setting gEnableDTM_d on TRUE
+            and connecting to the proper pins on the board. The default baud rate speed is set to
+            115200 but it can be changed by configuring gDefaultDTMBaudrate(For 2-Wire UART) or
+            gHcitInterfaceSpeed_d(For HCI); For DTM pin connection, refer to Pinout chapter in
+            Reference Manual.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-84AB0FCE-6242-4A79-9E48-A4D7D75F128F.html">HCI Black Box</a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="User-defined data type definitions"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-EE6A179D-0BC4-4460-A7EF-7DD3A12CA151.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-53856348-36ED-43B8-BF28-E8F645A3BB17"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>User-defined data type definitions</title>
+</head>
+<body id="GUID-53856348-36ED-43B8-BF28-E8F645A3BB17">
+
+
+    <h1 class="title topictitle1">User-defined data type definitions</h1>
+
+    <div class="body">
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">typedef uint8_t LED_t;</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">LED type definition.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">typedef enum LED_OpMode_tag{
+    gLedFlashing_c, /* flash at a fixed rate */
+    gLedStopFlashing_c, /* same as gLedOff_c */
+    gLedBlip_c, /* just like flashing, but blinks only once */
+    gLedOn_c, /* on solid */
+    gLedOff_c, /* off solid */
+    gLedToggle_c /* toggle state */
+} LED_OpMode_t;</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Enumerated data type for all possible LED operation modes.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <p class="p">typedef uint8_t LedState_t;</p>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Possible LED states for LED_SetLed().</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-EE6A179D-0BC4-4460-A7EF-7DD3A12CA151.html">LED</a></div>
+</div>
+</div>
+
+</body>
+</html>

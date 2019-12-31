@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Implemented profiles and services"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-56C80BBD-BC39-4CFE-8B82-E072709546BA.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-CDBDF8EF-CCED-44DA-A15B-4F0EB62DC404"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Implemented profiles and services</title>
+</head>
+<body id="GUID-CDBDF8EF-CCED-44DA-A15B-4F0EB62DC404">
+
+
+  <h1 class="title topictitle1">Implemented profiles and services</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">The HID Host application implements a GATT client or server for the following profile and service.</p>
+
+<ul class="ul">
+<li class="li">HID over GATT Profile v1.0</li>
+
+<li class="li">Battery Service v1.0</li>
+
+<li class="li">Device Information Service v1.1</li>
+
+</ul>
+
+<p class="p">The application behaves as a GAP central node. It enters the GAP Limited Discovery Procedure and searches for HID devices to connect to. 
+After connecting with the peripheral, it configures notifications and displays the received HID reports on a terminal connected to the UART port.
+The application uses pairing with bonding by default. When connected with the HID Device application, it sends the 999999 passcode to the host stack by default.</p>
+
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-56C80BBD-BC39-4CFE-8B82-E072709546BA.html">HID Host</a></div>
+</div>
+</div>
+
+</body>
+</html>

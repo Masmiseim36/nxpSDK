@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Secured OTAP for multicore"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-267A161F-8693-4A2D-B892-DA44D4673EEE.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-D7558637-5AC8-4949-AD97-310B526A041D"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Secured OTAP for multicore</title>
+</head>
+<body id="GUID-D7558637-5AC8-4949-AD97-310B526A041D">
+
+
+    <h1 class="title topictitle1">Secured OTAP for multicore</h1>
+
+    <div class="body">
+        <p class="p"><span class="ph">FRDM-K32W042</span> is a multicore platform equipped with two cores: an Arm Cortex-M4 core and
+            an Arm Cortex-M0+ core. The process for performing OTA updates on this platform differs
+            from single core platforms:</p>
+
+        <ul class="ul">
+            <li class="li">Selective OTAP can be performed. A single OTA update can include only the M4 image,
+                only the M0+ image or both.</li>
+
+            <li class="li">The image files (*.bin or *.srec) are encrypted and signed beforehand, resulting in
+                a *.sbin file.</li>
+
+        </ul>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-267A161F-8693-4A2D-B892-DA44D4673EEE.html">Notes on multicore platforms and secured OTAP</a></div>
+</div>
+</div>
+
+</body>
+</html>

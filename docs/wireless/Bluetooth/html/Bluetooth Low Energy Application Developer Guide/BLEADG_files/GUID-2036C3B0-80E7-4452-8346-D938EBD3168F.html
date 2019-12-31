@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Multiple connections"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-7140E8F9-B4EB-4B9D-85B4-489C65E9D85F.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-2036C3B0-80E7-4452-8346-D938EBD3168F"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Multiple connections</title>
+</head>
+<body id="GUID-2036C3B0-80E7-4452-8346-D938EBD3168F">
+
+
+    <h1 class="title topictitle1">Multiple connections</h1>
+
+    <div class="body">
+        <p class="p">Applications can be configured to support multiple connections by setting
+                <em class="ph i">gAppMaxConnections_c</em> to a value up to the chip specific maximum number of
+                connections. See the chip documentation for the supported number of connections. The application can save information about the peer
+            devices it connects to according to the value of <em class="ph i">gAppMaxConnections_c</em>. The
+            Bluetooth Low Energy profile associated to the application use case should be
+            instantiated to support the use of its functionality for each peer device. When handling
+            multiple connections, the applications can behave as either the GAP central, GAP
+            peripheral, or both at the same time. It is up to the application code to decide whether
+            to start the advertising or scanning before creating the next connection. The supported
+            combinations enable a device to connect as a slave to multiple masters, as a master to
+            multiple slaves, or for it to be a master for some peers and a slave to others. The demo
+            applications provide this functionality as an example of exercising multiple connection
+            support, where the GAP role can be changed from central to peripheral and the
+            information is saved for each peer device.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-7140E8F9-B4EB-4B9D-85B4-489C65E9D85F.html">Application Structure</a></div>
+</div>
+</div>
+
+</body>
+</html>

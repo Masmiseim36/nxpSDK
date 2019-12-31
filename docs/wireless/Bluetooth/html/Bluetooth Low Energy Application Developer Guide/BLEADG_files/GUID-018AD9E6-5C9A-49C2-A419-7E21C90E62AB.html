@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Characteristic value read procedure"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-94F6BAD4-5465-47FB-A724-0A3777940B9C.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-018AD9E6-5C9A-49C2-A419-7E21C90E62AB"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Characteristic value read procedure</title>
+</head>
+<body id="GUID-018AD9E6-5C9A-49C2-A419-7E21C90E62AB">
+
+
+    <h1 class="title topictitle1">Characteristic value read procedure</h1>
+
+    <div class="body">
+        <p class="p">The main API for reading a Characteristic Value is shown here:</p>
+
+        <pre class="pre codeblock">bleResult_t<strong class="ph b">GattClient_ReadCharacteristicValue</strong>
+(
+    deviceId_t                 deviceId,
+    gattCharacteristic_t *     pIoCharacteristic,
+    uint16_t                   maxReadBytes
+);</pre>
+
+        <p class="p">This procedure assumes that the application knows the Characteristic Value Handle,
+            usually from a previous Characteristic Discovery procedure. Therefore, the
+                <em class="ph i">value.handle</em> field of the structure pointed by <em class="ph i">pIoCharacteristic</em> must
+            be completed.</p>
+
+        <p class="p">Also, the application must allocate a large enough array of bytes where the received
+            value (from the ATT packet exchange) is written. The <em class="ph i">maxReadBytes</em> parameter is
+            set to the size of this allocated array.</p>
+
+        <p class="p">The GATT Client module takes care of long characteristics, whose values have a greater
+            length than can fit in a single ATT packet, transparently by issuing repeated ATT Read
+            Blob Requests when needed.</p>
+
+        <p class="p">The following examples assume that the application knows the Characteristic Value Handle
+            and that the value length is variable, but limited to 50 bytes.</p>
+
+        <pre class="pre codeblock">gattCharacteristic_t myCharacteristic;
+myCharacteristic. value . handle = 0x10AB;
+ 
+<strong class="ph b">#define</strong> mcMaxValueLength_c 50
+<strong class="ph b">static</strong> uint8_t aValue[mcMaxValueLength_c];
+ 
+myCharacteristic. value . paValue = aValue;
+ 
+bleResult_t result = GattClient_ReadCharacteristicValue
+(
+    deviceId,
+    &amp;myCharacteristic,
+    mcMaxValueLength_c
+);
+ 
+<strong class="ph b">if</strong> (<em class="ph i">gBleSuccess_c</em> != result)
+{
+    /* Handle error */
+}</pre>
+
+        <p class="p">Regardless of the value length, the Client Procedure Callback is triggered when the
+            reading is complete. The received value length is also filled in the <em class="ph i">value</em>
+            structure.</p>
+
+        <pre class="pre codeblock"><strong class="ph b">void</strong><strong class="ph b">gattClientProcedureCallback</strong>
+(
+    deviceId_t             deviceId,
+    gattProcedureType_t    procedureType,
+    gattProcedureResult_t  procedureResult,
+    bleResult_t            error
+)
+{
+    <strong class="ph b">switch</strong> (procedureType)
+    {
+        /* ... */
+        case<em class="ph i">gGattProcReadCharacteristicValue_c</em>:
+            <strong class="ph b">if</strong> (<em class="ph i">gGattProcSuccess_c</em> == procedureResult)
+            {
+                /* Read value length */
+                PRINT(myCharacteristic. value . valueLength );
+                /* Read data */
+                <strong class="ph b">for</strong> ( uint16_t j = 0; j &lt; myCharacteristic. value . valueLength ; j++)
+                {
+                    PRINT(myCharacteristic. value . paValue [j]);
+                }
+            }
+            <strong class="ph b">else</strong>
+            {
+                /* Handle error */
+                PRINT(error);
+            }
+            <strong class="ph b">break</strong>;
+
+        /* ... */
+    }
+}</pre>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-94F6BAD4-5465-47FB-A724-0A3777940B9C.html">Reading and writing characteristics</a></div>
+</div>
+</div>
+
+</body>
+</html>

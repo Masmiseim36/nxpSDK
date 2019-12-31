@@ -524,8 +524,9 @@ static FrameStatus FSCIDataField(Framer *framer, FSCIFrame **currentFrame, uint3
 ********************************************************************************** */
 static FrameStatus FSCICrcField(Framer *framer, FSCIFrame **currentFrame, uint32_t *dataSize)
 {
-    if (*dataSize < 1)
+    if (*dataSize < 1) {
         return INSUFFICIENT_DATA;
+    }
 
     FSCIFrame *workingCopy = *currentFrame;
 
@@ -536,12 +537,17 @@ static FrameStatus FSCICrcField(Framer *framer, FSCIFrame **currentFrame, uint32
     workingCopy->crc = crc;
     *dataSize -= 1;
 
-    if (crc == calculatedCRC) {
+    if (framer->crcFieldSize == 2) {
+        framer->currentState = FSCI_SM_CRC_SND;
+
+        if (*dataSize > 0) {
+            return SUFFICIENT_DATA;
+        } else {
+            return INSUFFICIENT_DATA;
+        }
+    } else if (crc == calculatedCRC) {
         framer->currentState = FSCI_SM_FINISHED_FRAME;
         return VALID_FRAME;
-    } else if (framer->crcFieldSize == 2) {
-        framer->currentState = FSCI_SM_CRC_SND;
-        return SUFFICIENT_DATA;
     } else {
         framer->currentState = FSCI_SM_FINISHED_FRAME;
         return INVALID_CRC;

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="FSCI usage example"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-BB25C3E8-EA23-465A-861C-7D7F35945EB4.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-C07ED345-391A-4240-99BD-55ACE54C5F0E"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>FSCI usage example</title>
+</head>
+<body id="GUID-C07ED345-391A-4240-99BD-55ACE54C5F0E">
+
+
+    <h1 class="title topictitle1">FSCI usage example</h1>
+
+    <div class="body">
+        <div class="example" id="GUID-C07ED345-391A-4240-99BD-55ACE54C5F0E__GUID-00F8FA83-8391-4FBD-8912-BE111AED103E"><h2 class="title sectiontitle"> Initialization</h2>
+            
+            <pre class="pre codeblock">/* Configure the number of interfaces and virtual interfaces used */
+#define gFsciMaxInterfaces_c 4
+#define gFsciMaxVirtualInterfaces_c 2
+ 
+….
+/* Define the interfaces used */
+static const gFsciSerialConfig_t myFsciSerials[] = {
+    /* Baudrate, interface type, channel No, virtual interface */
+    {gUARTBaudRate115200_c, gSerialMgrUart_c, 1, 0},
+    {gUARTBaudRate115200_c, gSerialMgrUart_c, 1, 1},
+    {0 , gSerialMgrIICSlave_c, 1, 0},
+    {0 , gSerialMgrUSB_c, 0, 0},
+};
+ 
+….
+/* Call init function to open all interfaces */
+FSCI_Init( (void*)mFsciSerials );</pre>
+
+        </div>
+
+        <div class="example" id="GUID-C07ED345-391A-4240-99BD-55ACE54C5F0E__GUID-6F9F606E-3703-41FB-9348-999E1C8A8529"><h2 class="title sectiontitle"> Registering operation groups</h2>
+            
+            <pre class="pre codeblock">myOpGroup = 0x12; // Operation Group used
+myParam = NULL; // pointer to a parameter to be passed to the handler function (myHandlerFunc)
+myInterface = 1; // index of entry from myFsciSerials
+…
+FSCI_RegisterOpGroup( myOpGroup, gFsciMonitorMode_c, myHandlerFunc, myParam, myInterface );</pre>
+
+        </div>
+
+        <div class="example" id="GUID-C07ED345-391A-4240-99BD-55ACE54C5F0E__GUID-0FFC30E0-9872-411A-901D-89AEF17320D3"><h2 class="title sectiontitle"> Implementing handler function</h2>
+            
+            <pre class="pre codeblock">void fsciMcpsReqHandler(void *pData, void* param, uint32_t interfaceId)
+{
+    clientPacket_t *pClientPacket = ((clientPacket_t*)pData);
+    fsciLen_t myNewLen;
+ 
+    switch( pClientPacket-&gt;structured.header.opCode ) {
+    case 0x01:
+    {
+        /* Reuse packet received over the serial interface 
+        The OpCode remains the same.
+        The length of the response must be &lt;= that the length of the received packet */
+        pClientPacket-&gt;structured.header.opGroup = myResponseOpGroup;
+/* Process packet */
+ …
+        pClientPacket-&gt;structured.header. len = myNewLen;
+        FSCI_transmitFormatedPacket(pClientPacket, interfaceId);
+        return;
+    }
+ 
+    case 0x02:
+    {
+        /* Alocate a new message for the response.
+        The received packet is Freed */
+        clientPacket_t *pResponsePkt = MEM_BufferAlloc( sizeof(clientPacketHdr_t) + myPayloadSize_d + sizeof(uint8_t) // CRC);
+ 
+    if(pResponsePkt)
+        {
+            /* Process received data and fill the response packet */
+            …
+            pResponsePkt-&gt;structured.header. len = myPayloadSize_d;
+            FSCI_transmitFormatedPacket(pClientPacket, interfaceId);
+        }
+        break;
+    }
+ 
+    default:
+        MEM_BufferFree( pData );
+        FSCI_Error( gFsciUnknownOpcode_c, interfaceId );
+        return;
+    }
+    /* Free message received over the serial interface */
+    MEM_BufferFree( pData );
+}</pre>
+
+        </div>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-BB25C3E8-EA23-465A-861C-7D7F35945EB4.html">Framework Serial Communication Interface</a></div>
+</div>
+</div>
+
+</body>
+</html>

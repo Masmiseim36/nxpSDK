@@ -1,5 +1,5 @@
 '''
-* Copyright 2016-2017 NXP
+* Copyright 2016-2018 NXP
 * All rights reserved.
 *
 * SPDX-License-Identifier: BSD-3-Clause
@@ -31,10 +31,8 @@ COLORED_OUTPUT = True
 # Use Python's logging module.
 USE_LOGGER = False
 
-# Whether or not parameter endianness is relevant only for integers in BLE tests.
-# List-type parameters will not account for endianness in both TX and RX packets.
-# Status parameters in events will be integers.
-BLE_PTS_TEST = False
+# Enum parameters in events will be integers instead of strings.
+BLE_ENUMS_FORCE_INT = False
 
 # Whether the current package is being bundled in the Thread Harness
 THREAD_HARNESS = False

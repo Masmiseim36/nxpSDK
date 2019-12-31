@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Constant macro definitions"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-EE6A179D-0BC4-4460-A7EF-7DD3A12CA151.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-D375F880-C894-4AF9-BADF-20D20FFC50BE"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Constant macro definitions</title>
+</head>
+<body id="GUID-D375F880-C894-4AF9-BADF-20D20FFC50BE">
+
+
+	<h1 class="title topictitle1">Constant macro definitions</h1>
+
+	<div class="body">
+		<p class="p"><strong class="ph b">Name:</strong></p>
+
+		<pre class="pre codeblock">#define gLEDSupported_d TRUE</pre>
+
+		<p class="p"><strong class="ph b">Description:</strong></p>
+
+		<p class="p">Enables/disables the LED module.</p>
+
+		<p class="p"> </p>
+
+		<p class="p"><strong class="ph b">Name:</strong></p>
+
+		<pre class="pre codeblock">#define gLEDsOnTargetBoardCnt_c 4</pre>
+
+		<p class="p"><strong class="ph b">Description:</strong></p>
+
+		<p class="p">Configures the number of LEDs used (up to a maximum of four).</p>
+
+		<p class="p"> </p>
+
+		<p class="p"><strong class="ph b">Name:</strong></p>
+
+		<pre class="pre codeblock">#define gLEDBlipEnabled_d TRUE</pre>
+
+		<p class="p"><strong class="ph b">Description:</strong></p>
+
+		<p class="p">Enables/disables the blip feature.</p>
+
+		<p class="p"> </p>
+
+		<p class="p"><strong class="ph b">Name:</strong></p>
+
+		<pre class="pre codeblock">#define mLEDInterval_c 100</pre>
+
+		<p class="p"><strong class="ph b">Description:</strong></p>
+
+		<p class="p">Configures the ON period of the flashing feature in milliseconds.</p>
+
+		<p class="p"> </p>
+
+		<p class="p"><strong class="ph b">Name:</strong></p>
+
+		<pre class="pre codeblock">#define gLED_InvertedMode_d             FALSE</pre>
+
+		<p class="p"><strong class="ph b">Description:</strong></p>
+
+		<p class="p">Specifies if LEDs are operated in inverted mode. When the GPIO output is
+			high, the LED is on. This is defined as TRUE for the QN908x MCU-based platforms.</p>
+
+		<p class="p"> </p>
+
+		<p class="p"><strong class="ph b">Name:</strong></p>
+
+		<pre class="pre codeblock">#define LED1                            0x01
+#define LED2                            0x02
+#define LED3                            0x04
+#define LED4                            0x08
+#define LED_ALL                         0x0F
+#define LED1_FLASH                      0x10
+#define LED2_FLASH                      0x20
+#define LED3_FLASH                      0x40
+#define LED4_FLASH                      0x80
+#define LED_FLASH_ALL                   0xF0</pre>
+
+		<p class="p"><strong class="ph b">Description:</strong></p>
+
+		<p class="p">LEDs mapping.</p>
+
+		<p class="p"><strong class="ph b">Name:</strong></p>
+
+		<p class="p"/>
+
+		<pre class="pre codeblock">#define gLEDsOnTargetBoardDefault_c     4</pre>
+
+		<p class="p"><strong class="ph b">Description:</strong></p>
+
+		<p class="p">Specifies the default number of LEDs available on the board. The LED module supports up to 4 LEDs.</p>
+
+		<p class="p"><strong class="ph b">Name:</strong></p>
+
+		<p class="p"/>
+
+		<pre class="pre codeblock">#define gLedRgbEnabled_d               FALSE</pre>
+
+		<p class="p"><strong class="ph b">Description:</strong></p>
+
+		<p class="p">Specifies if RGB led is supported by the LED module.</p>
+
+		<p class="p"><strong class="ph b">Name:</strong></p>
+
+		<p class="p"/>
+
+		<pre class="pre codeblock">#define gLedColorWheelEnabled_d    TRUE</pre>
+
+		<p class="p"><strong class="ph b">Description:</strong></p>
+
+		<p class="p">Specifies if RGB led supports color wheel.</p>
+
+		<p class="p"><strong class="ph b">Name:</strong></p>
+
+		<p class="p"/>
+
+		<pre class="pre codeblock">#define gRgbLedDimmingEnabled_d    FALSE</pre>
+
+		<p class="p"><strong class="ph b">Description:</strong></p>
+
+		<p class="p">Enables/disables the RGB led dimming.</p>
+
+		<p class="p"><strong class="ph b">Name:</strong></p>
+
+		<p class="p"/>
+
+		<pre class="pre codeblock">#define gRgbLedDimDefaultInterval_c    3</pre>
+
+		<p class="p"><strong class="ph b">Description:</strong></p>
+
+		<p class="p">Specifies the default dimming interval expressed in seconds.</p>
+
+		<p class="p"><strong class="ph b">Name:</strong></p>
+
+		<p class="p"/>
+
+		<pre class="pre codeblock">#define gRgbLedDimMaxInterval_c       10</pre>
+
+		<p class="p"><strong class="ph b">Description:</strong></p>
+
+		<p class="p">Specifies the maximum supported dimming interval expressed in seconds.</p>
+
+		<p class="p"><strong class="ph b">Name:</strong></p>
+
+		<p class="p"/>
+
+		<pre class="pre codeblock">#define gRgbLedDimTimerTimeout_c      50</pre>
+
+		<p class="p"><strong class="ph b">Description:</strong></p>
+
+		<p class="p">Specifies the  dimming resolution  expressed in milliseconds.</p>
+
+	</div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-EE6A179D-0BC4-4460-A7EF-7DD3A12CA151.html">LED</a></div>
+</div>
+</div>
+
+</body>
+</html>

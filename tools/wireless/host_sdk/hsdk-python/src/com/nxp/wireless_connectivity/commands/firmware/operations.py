@@ -9,6 +9,14 @@ from com.nxp.wireless_connectivity.commands.firmware.events import *  # @UnusedW
 from com.nxp.wireless_connectivity.commands.fsci_operation import FsciOperation
 
 
+class FSCIOTASupportSetKeyOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.FSCIOTASupportSetKeyRequestFrame
+        self.observers = []
+        super(FSCIOTASupportSetKeyOperation, self).subscribeToEvents()
+
+
 class FSCIEnterBootloaderOperation(FsciOperation):
 
     def subscribeToEvents(self):

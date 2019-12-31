@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Connectivity Framework Bare Metal Task Scheduler"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-C4F1EFAB-49FB-4705-801B-2DC028FD0725.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-3F9CB1BC-75EE-4361-8DFC-3114D45A0B06.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-822824D0-5A70-4CF4-A7EF-17D273588093"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Connectivity Framework Bare Metal Task Scheduler</title>
+</head>
+<body id="GUID-822824D0-5A70-4CF4-A7EF-17D273588093">
+
+
+    <h1 class="title topictitle1">Connectivity Framework Bare Metal Task Scheduler</h1>
+
+    <div class="body">
+        <p class="p">The connectivity framework bare metal task scheduler has been developed to have a
+            non-preemptive, priority­-based scheduler, which is used to conceptually separate
+            various portions of protocol stacks.</p>
+
+        <p class="p">The MCU interrupts operate independently of tasks and may often pass control to a task by
+            using events.</p>
+
+        <p class="p">Each task must have its own event handler, as shown in the following
+            example. The initialization code for a task is optional. Each event is a single bit in
+            an event bit mask and is defined by the task. Multiple events may be set at the same
+            time.</p>
+
+        <pre class="pre codeblock">void MyTask(uint32_t parameter)
+{
+    osaEventFlags_t ev;
+    static uint8_t initialized = FALSE;
+ 
+    if(!initialized)
+    {
+        /* place initialization code here... */
+        myEventId = OSA_EventCreate(TRUE); 
+        initialized = TRUE;
+    }
+
+    while(1)
+    {
+        /* place event handler code here... */
+        OSA_EventWait(myEventId, 0x00FFFFFF, FALSE, osaWaitForever_c, &amp;ev);
+ 
+        if (ev &amp; myEvent_1)
+        {
+            /* place event handler code here... */
+
+        }
+
+        if(!gUseRtos_c)
+        {
+            break;
+        }
+    }
+}</pre>
+
+        <p class="p">Some functions use a combination of an event bit and a message queue to communicate data. </p>
+
+        <p class="p">Tasks are <strong class="ph b">non-preemptive</strong>, which means that, once a task gains control,
+            it has full control until it completes or returns from the task event handler function.
+            Tasks should complete in less than 2 ms to avoid starving other tasks of processing
+            time. If the task takes too long to process, it prevents the stack’s lower layers from
+            processing incoming packets. Under no circumstance should a task take longer than 10
+            ms.</p>
+
+        <p class="p">The <em class="ph i">OSA_Init() </em>and <em class="ph i">OSA_Start() </em>API are called from main() to
+            initialize and start the bare metal scheduler. For more information, see the
+                <em class="ph i">fsl_os_abstraction_bm.c</em> file.</p>
+
+        <pre class="pre codeblock">int main (void)
+{
+    OSA_Init();
+    /* Initialize MCU clock */
+    hardware_init();
+    OSA_TimeInit();
+    OSA_TaskCreate(OSA_TASK(main_task),NULL);
+    OSA_Start();
+    return 0;}</pre>
+
+    </div>
+
+<div class="related-links">
+<ul class="ullinks">
+<li class="link ulchildlink"><strong><a href="GUID-3F9CB1BC-75EE-4361-8DFC-3114D45A0B06.html">Internal functionality</a></strong><br/>
+</li>
+</ul>
+
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-C4F1EFAB-49FB-4705-801B-2DC028FD0725.html">OS abstraction</a></div>
+</div>
+</div>
+
+</body>
+</html>

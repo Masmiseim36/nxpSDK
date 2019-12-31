@@ -87,11 +87,11 @@ C
 
 Python
     - Remove Thread bindings
-    - Add BLE bindings
+    - Add Bluetooth LE bindings
 
 1.1.0
 ================================================================================
-This is the first unified package with Python bindings for both the BLE and
+This is the first unified package with Python bindings for both the Bluetooth LE and
 Thread stacks!
 
 C
@@ -99,11 +99,11 @@ C
 
 Python
     - subsystem updates for virtual interface selection
-    - subsystem updates to allow different protocol (e.g. Thread and BLE)
+    - subsystem updates to allow different protocol (e.g. Thread and Bluetooth LE)
       commands to be sent to the same physical device
     - fsci_bootloader.py: do not transfer useless 0xFFs from the end of the
       binary image, which results in better time transfers
-    - add hrs.py script which demonstrates a Heart Rate Sensor BLE profile
+    - add hrs.py script which demonstrates a Heart Rate Sensor Bluetooth LE profile
     - add multimode.py script which demonstrates a basic Thread network
       formation with continuous ping and Heart Rate sensor at the same time
     - update copyrights on txThings based examples (rgb_led.py, temp.py)
@@ -198,7 +198,7 @@ Python
 ================================================================================
 Update copyright headers.
 Python
-    - add a new device Hybrid device type to allow for both BLE and Hybrid
+    - add a new device Hybrid device type to allow for both Bluetooth LE and Hybrid
       devices in the same script
     - change PSKd from `kinetis` to `THREAD` in commissioning scripts
     - do not serve already opened ports in Python
@@ -233,7 +233,7 @@ DLL
     - Make VID/PID available for non Kinetis-W devices on Windows
 
 Python
-    - Update bindings for BLE 4.2
+    - Update bindings for Bluetooth LE 4.2
     - Disable ULA prefix add in serial TUN Python demo
 
 1.6.0
@@ -263,7 +263,7 @@ C
 
 Python
     - Improve border_router.py demo
-    - Improve multimode.py demo - do not reset hybrid board when starting BLE
+    - Improve multimode.py demo - do not reset hybrid board when starting Bluetooth LE
     - Improve relay.py - add external commissioning over TAP support
     - Fix OTA scripts - add TransferType parameter to FSCIFirmware_SetOperationMode
 
@@ -292,72 +292,26 @@ Python
 1.7.2
 ================================================================================
 Python
-    - Change BLE bindings to support KW35.
+    - Change Bluetooth LE bindings to support KW35.
 
 1.8.0
 ================================================================================
-Add hsdk-c/ directory containing C bindings generated from the BLE_1.3.2 FSCI XML.
+Add hsdk-c/ directory containing C bindings generated from the Bluetooth LE_1.3.2 FSCI XML.
 Add HeartRateSensor.c source file to demonstrate usage of the C bindings.
 
-1.8.1
+1.8.0.1
 ================================================================================
 C
     - Fix segfault when running PCAPTest
+    - Add support for serial baudrate value 1000000
+    - Fix disable flow control functionality to also disable DSR
+    - Fix detection of QN9080 DK boards
+    - Remove IPv6 threshold defines for the length data field
+    - Convert sAnnounceData from semaphore to event for Windows, for a unified
+      Windows/Linux approach
 
 C bindings
-    - Add Thread C bindings generated from the ThreadIP_1.3.1.xml FSCI XML.
-    - Add ThreadLeader.c source file to demonstrate basic usage of the C bindings.
+    - Update C bindings for Bluetooth LE
 
 Python bindings
-    - Regenerate the command set
-
-1.8.2
-================================================================================
-C bindings
-    - Add C bindings for the KW41Z Maintenance Release 1
-    - Add ZigBeeCoordinator sample program that makes use of the C bindings
-
-Python bindings
-    - Update Python bindings for the KW41Z Maintenance Release 1
-    - Remove warnings throughout the Python scripts and bindings
-
-1.8.2.1
-================================================================================
-C bindings
-    - Update C bindings for ZigBee and Thread
-
-Python bindings
-    - Update Python bindings for ZigBee and Thread
-
-1.8.2.2
-================================================================================
-C bindings
-    - Update C bindings for ZigBee
-
-Python bindings
-    - Update Python bindings for ZigBee
-1.8.2.3
-================================================================================
-C bindings
-    - Update C bindings for ZigBee
-    - Update C bindings for Thread
-
-Python bindings
-    - Update Python bindings for ZigBee
-    - Update Python bindings for Thread
-1.8.2.4
-================================================================================
-C bindings
-    - Update C bindings for ZigBee
-    - Update C bindings for Thread
-
-Python bindings
-    - Update Python bindings for ZigBee
-    - Update Python bindings for Thread
-1.8.2.5
-================================================================================
-C bindings
-    - Update C bindings for Thread
-
-Python bindings
-    - Update Python bindings for Thread
+    - Update Python bindings for Bluetooth LE

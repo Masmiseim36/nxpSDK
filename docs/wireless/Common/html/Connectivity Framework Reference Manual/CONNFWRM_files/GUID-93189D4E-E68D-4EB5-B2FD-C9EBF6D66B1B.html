@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Overview"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-8A8C68B5-7B1A-44A2-80BE-6427AD0835FE.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-93189D4E-E68D-4EB5-B2FD-C9EBF6D66B1B"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Overview</title>
+</head>
+<body id="GUID-93189D4E-E68D-4EB5-B2FD-C9EBF6D66B1B">
+
+
+    <h1 class="title topictitle1">Overview</h1>
+
+    <div class="body">
+        <p class="p">The Timers’ Manager offers timing services with increased resolution when compared to the
+            OS-based timing functions. The Timers’ Manager operates at the peripheral clock
+            frequency, while the OS timer frequency is set to 200 Hz (5 ms period).</p>
+
+        <p class="p">The following services are provided by the Timers’ Manager:</p>
+
+        <ul class="ul" id="GUID-93189D4E-E68D-4EB5-B2FD-C9EBF6D66B1B__UL_FS2_YQK_2Z">
+            <li class="li"> Initialize a module</li>
+
+            <li class="li"> Allocate a timer</li>
+
+            <li class="li"> Free a timer</li>
+
+            <li class="li"> Enable a timer</li>
+
+            <li class="li"> Start a timer</li>
+
+            <li class="li"> Stop a timer</li>
+
+            <li class="li"> Check if a timer is active</li>
+
+            <li class="li"> Get the remaining time until a specified timer times out</li>
+
+        </ul>
+
+        <p class="p">Two types of timers are provided as follows:</p>
+
+        <ul class="ul" id="GUID-93189D4E-E68D-4EB5-B2FD-C9EBF6D66B1B__UL_VS2_YQK_2Z">
+            <li class="li"> Single Shot Timers are run only once until they time out. They can be stopped
+                before the timeout.</li>
+
+            <li class="li"> Interval Timers are run continuously and time out at the set regular intervals
+                until explicitly stopped.</li>
+
+        </ul>
+
+        <p class="p">Each allocated timer has an associated callback function that is called from the
+            interrupt execution context. Therefore, it must not call the blocking OS APIs. They can
+            block but should never be used that way.</p>
+
+        <div class="note note"><span class="notetitle">Note:</span> The exact time at which a callback is executed is actually greater than or equal to
+            the requested value.</div>
+
+        <p class="p">The timer resolution is 1 ms, but it is recommended to use a multiple of 4 ms because
+            timeout values increase accuracy. This is due to internal integer calculation errors. </p>
+
+        <p class="p">The implementation of the Timers Manager on Kinetis MCU-based platforms uses
+            either FTM or TPM peripheral. On the QN908X platforms, the RTC free-running counter is
+            used.  An interrupt is generated each
+            time an allocated and running timer times out, so the mechanism is more efficient when
+            compared to the OS-managed timing, which requires the execution of periodic (default is
+            5 ms) interrupts.</p>
+
+        <p class="p">Timers can be identified as low-power timers on creation. For the Kinetis
+            MCU-based platforms, this doesn't mean that the low-power timers run in low-power modes.
+            Instead, they are synchronized when exiting the low-power mode. If a low-power timer
+            expires when the MCU sleeps, its expiration is processed when the MCU exits sleep. For
+            the QN908X MCU-based platforms, the RTC timer is on during the low-power mode (except
+            Power Down 1) and can generate
+            interrupts. </p>
+
+        <p class="p">The Timers’ Manager creates a task to handle the internal processing. All callbacks are
+            called in context and with the priority of the timer task. As a general guideline,
+            callbacks must be non-blocking and short. They must not do more than issue a
+            synchronization signal. The task is set up with an above-normal priority.</p>
+
+        <p class="p">The Timers’ Manager module also provides a timestamp functionality. This is
+            implemented on top of the RTC for the Kinetis MCU-based platforms that can also use the
+            PIT. In addition, it is possible to set the absolute time with a 30 milliseconds
+            resolution and register an alarm event in absolute or relative time with a 1 second
+            resolution. Note that there may be other framework components that use alarms, and only
+            one registered alarm event at a time is permitted. The RTC section of the timer module
+            requires its own initialization.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-8A8C68B5-7B1A-44A2-80BE-6427AD0835FE.html">Timers’ Manager</a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="GAP-ConnectionEventKeysReceived.Indication"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-09963304-D0A4-4B1E-A3D3-21E0AD0B1D98.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-B9C65271-4696-476C-B3C1-90C5C2166E58"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>GAP-ConnectionEventKeysReceived.Indication</title>
+</head>
+<body id="GUID-B9C65271-4696-476C-B3C1-90C5C2166E58">
+
+
+	<h1 class="title topictitle1">GAP-ConnectionEventKeysReceived.Indication</h1>
+
+	<div class="body">
+		<p class="p"><strong class="ph b">Description</strong></p>
+
+		<p class="p">SMP keys distributed by the peer during pairing were received.</p>
+
+		<p class="p"><strong class="ph b">Parameters</strong></p>
+
+		
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-B9C65271-4696-476C-B3C1-90C5C2166E58__TABLE_IXK_RP5_4Y" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 1. ConnectionEventKeysReceived.Indication Parameters</span></caption>
+				
+				
+				
+				<tbody class="tbody">
+					<tr class="row">
+						<td class="entry" valign="top"><strong class="ph b">Parameter</strong></td>
+
+						<td class="entry" valign="top"><strong class="ph b">Size (bytes)</strong></td>
+
+						<td class="entry" valign="top"><strong class="ph b">Comments</strong></td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">OpGroup</td>
+
+						<td class="entry" valign="top">1</td>
+
+						<td class="entry" valign="top">0x48</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">OpCode</td>
+
+						<td class="entry" valign="top">1</td>
+
+						<td class="entry" valign="top">0xA6</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">Length</td>
+
+						<td class="entry" valign="top">1</td>
+
+						<td class="entry" valign="top">Length in bytes of the following parameters</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">DeviceId</td>
+
+						<td class="entry" valign="top">1</td>
+
+						<td class="entry" valign="top">Device ID identifying the connection</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">Keys</td>
+
+						<td class="entry" valign="top">Variable</td>
+
+						<td class="entry" valign="top"> <p class="p">The SMP keys of the local device</p>
+ <p class="p">Structure type parameter. See the detailed table below for parameter structure.</p>
+ </td>
+
+					</tr>
+
+				</tbody>
+
+			</table>
+</div>
+
+		
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-B9C65271-4696-476C-B3C1-90C5C2166E58__TABLE_SB5_WP5_4Y" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 2. Keys Parameter Structure</span></caption>
+				
+				
+				
+				<tbody class="tbody">
+					<tr class="row">
+						<td class="entry" valign="top"><strong class="ph b">Structure Parameter</strong></td>
+
+						<td class="entry" valign="top"><strong class="ph b">Size (bytes)</strong></td>
+
+						<td class="entry" valign="top"><strong class="ph b">Comments</strong></td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">LtkIncluded</td>
+
+						<td class="entry" valign="top">1</td>
+
+						<td class="entry" valign="top">Boolean value which indicates if LTK size and LTK are included or not</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">LtkInfo</td>
+
+						<td class="entry" valign="top">Variable</td>
+
+						<td class="entry" valign="top"> <p class="p">LTK information (size and value)</p>
+ <p class="p">Structure type parameter. See the detailed table below for parameter structure.</p>
+ </td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">IrkIncluded</td>
+
+						<td class="entry" valign="top">1</td>
+
+						<td class="entry" valign="top">Boolean value which indicates if IRK is included or not</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">Irk</td>
+
+						<td class="entry" valign="top">16 x IrkIncluded</td>
+
+						<td class="entry" valign="top">Identity Resolving Key</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">CsrkIncluded</td>
+
+						<td class="entry" valign="top">1</td>
+
+						<td class="entry" valign="top">Boolean value which indicates if CSRK is included or not</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">Csrk</td>
+
+						<td class="entry" valign="top">16 x CsrkIncluded</td>
+
+						<td class="entry" valign="top">Connection Signature Resolving Key</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">RandEdivInfo</td>
+
+						<td class="entry" valign="top">Variable</td>
+
+						<td class="entry" valign="top"> <p class="p">Rand information (size and value) and Ediv</p>
+ <p class="p">Structure type parameter. See the detailed table below for parameter structure.</p>
+ </td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">AddressIncluded</td>
+
+						<td class="entry" valign="top">IrkIncluded</td>
+
+						<td class="entry" valign="top">Boolean value which indicates if Address is included or not</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">AddressInfo</td>
+
+						<td class="entry" valign="top">Variable</td>
+
+						<td class="entry" valign="top"> <p class="p">Address information (type and value</p>
+ <p class="p">Structure type parameter. See the detailed table below for parameter structure.</p>
+ </td>
+
+					</tr>
+
+				</tbody>
+
+			</table>
+</div>
+
+		
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-B9C65271-4696-476C-B3C1-90C5C2166E58__TABLE_ZYB_ZP5_4Y" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 3. LtkInfo Parameter Structure</span></caption>
+				
+				
+				
+				<tbody class="tbody">
+					<tr class="row">
+						<td class="entry" valign="top"><strong class="ph b">Structure Parameter</strong></td>
+
+						<td class="entry" valign="top"><strong class="ph b">Size (bytes)</strong></td>
+
+						<td class="entry" valign="top"><strong class="ph b">Comments</strong></td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">LtkSize</td>
+
+						<td class="entry" valign="top">1</td>
+
+						<td class="entry" valign="top">Encryption Key Size</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">Ltk</td>
+
+						<td class="entry" valign="top">LtkSize</td>
+
+						<td class="entry" valign="top">Long Term (Encryption) Key</td>
+
+					</tr>
+
+				</tbody>
+
+			</table>
+</div>
+
+		
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-B9C65271-4696-476C-B3C1-90C5C2166E58__TABLE_NPV_1Q5_4Y" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 4. RandEdivInfo Parameter Structure</span></caption>
+				
+				
+				
+				<tbody class="tbody">
+					<tr class="row">
+						<td class="entry" valign="top"><strong class="ph b">Structure Parameter</strong></td>
+
+						<td class="entry" valign="top"><strong class="ph b">Size (bytes)</strong></td>
+
+						<td class="entry" valign="top"><strong class="ph b">Comments</strong></td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">RandSize</td>
+
+						<td class="entry" valign="top">1</td>
+
+						<td class="entry" valign="top">Random value size</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">Rand</td>
+
+						<td class="entry" valign="top">RandSize</td>
+
+						<td class="entry" valign="top">Random value used to identify the LTK</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">Ediv</td>
+
+						<td class="entry" valign="top">2</td>
+
+						<td class="entry" valign="top">EDIV value used to identify the LTK</td>
+
+					</tr>
+
+				</tbody>
+
+			</table>
+</div>
+
+		
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-B9C65271-4696-476C-B3C1-90C5C2166E58__TABLE_GDW_CQ5_4Y" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 5. AddressInfo Parameter Structure</span></caption>
+				
+				
+				
+				<tbody class="tbody">
+					<tr class="row">
+						<td class="entry" valign="top"><strong class="ph b">Structure Parameter</strong></td>
+
+						<td class="entry" valign="top"><strong class="ph b">Size (bytes)</strong></td>
+
+						<td class="entry" valign="top"><strong class="ph b">Comments</strong></td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">DeviceAddressType</td>
+
+						<td class="entry" valign="top">1</td>
+
+						<td class="entry" valign="top"> <p class="p">Public or Random address</p>
+ <p class="p">Possible values: </p>
+ <p class="p">0x00: gPublic_c</p>
+ <p class="p">0x01: gRandom_c</p>
+ <p class="p"> </p>
+ </td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">DeviceAddress</td>
+
+						<td class="entry" valign="top">6</td>
+
+						<td class="entry" valign="top">Device Address</td>
+
+					</tr>
+
+				</tbody>
+
+			</table>
+</div>
+
+	</div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-09963304-D0A4-4B1E-A3D3-21E0AD0B1D98.html">GAP Messages</a></div>
+</div>
+</div>
+
+</body>
+</html>

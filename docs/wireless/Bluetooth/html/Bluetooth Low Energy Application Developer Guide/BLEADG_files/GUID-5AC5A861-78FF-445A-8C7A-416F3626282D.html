@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Using warm-boot sequence"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-0497F999-BC55-4BED-99D4-F3093B1F7F51.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-5AC5A861-78FF-445A-8C7A-416F3626282D"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Using warm-boot sequence</title>
+</head>
+<body id="GUID-5AC5A861-78FF-445A-8C7A-416F3626282D">
+
+
+    <h1 class="title topictitle1">Using warm-boot sequence</h1>
+
+    <div class="body">
+        <p class="p">The warm-boot sequence is intended to be used with deep sleep mode 5 and 8, where the MCU
+            is places in VLLS2 or VLLS3 mode.</p>
+
+        <p class="p">Because the VLLS2/3 modes have RAM retention but the MCU wake-up goes through the reset
+            sequence, all data will be re-initialized, and application state will be lost.</p>
+
+        <div class="p">The warm-boot allows the MCU to skip over the data initialization and restore the MCU
+            context. However, MCU general registers and peripherals that are not in state retention
+            need to be restored. To achieve this, the application must implement the following
+            callbacks that the Low Power Manager module will call at low power entry and low power
+            exit.<ol class="ol">
+                <li class="li"> At VLLS entry to save application specific context.<div class="p">
+                        <pre class="pre codeblock">void PWR_RegisterVLLSEnterCallback(pfPWRCallBack_t vllsEnterCallback);</pre>
+
+                    </div>
+<div class="p">In the application provided as example, it saves:<ul class="ul">
+                            <li class="li">VTOR</li>
+
+                            <li class="li">NVIC interrupt configuration</li>
+
+                            <li class="li">System clock gating control registers for enabled peripherals </li>
+
+                            <li class="li">SystemTick registers</li>
+
+                        </ul>
+</div>
+</li>
+
+                <li class="li"> At warm boot to restore the application entry context and re-init
+                    modules.<pre class="pre codeblock">void PWR_RegisterWarmbootCallback(pfPWRCallBack_t warmBootCallback);</pre>
+It
+                    restores everything that was saved in the VLLS entry callback and re-inits: <ul class="ul" id="GUID-5AC5A861-78FF-445A-8C7A-416F3626282D__UL_QQM_GWF_C3B">
+                        <li class="li">DCDC</li>
+
+                        <li class="li">Stack Timer</li>
+
+                        <li class="li">Switches</li>
+
+                    </ul>
+</li>
+
+            </ol>
+
+                To enable the warm-boot support into the application, the deep sleep modes 5 and 8 (VLLS2/3 based) needs to be enabled and used instead of deep sleep mode 3 and 1 (LLS3 based).</div>
+
+       
+        
+        
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-0497F999-BC55-4BED-99D4-F3093B1F7F51.html">Low-power usage examples</a></div>
+</div>
+</div>
+
+</body>
+</html>

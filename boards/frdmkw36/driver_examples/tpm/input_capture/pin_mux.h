@@ -1,0 +1,66 @@
+/*
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2017 NXP
+ * All rights reserved.
+ *
+ * 
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+#ifndef _PIN_MUX_H_
+#define _PIN_MUX_H_
+
+
+/*******************************************************************************
+ * Definitions
+ ******************************************************************************/
+
+/*! @brief Direction type  */
+typedef enum _pin_mux_direction
+{
+  kPIN_MUX_DirectionInput = 0U,         /* Input direction */
+  kPIN_MUX_DirectionOutput = 1U,        /* Output direction */
+  kPIN_MUX_DirectionInputOrOutput = 2U  /* Input or output direction */
+} pin_mux_direction_t;
+
+/*!
+ * @addtogroup pin_mux
+ * @{
+ */
+
+/*******************************************************************************
+ * API
+ ******************************************************************************/
+
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
+/*!
+ * @brief Calls initialization functions.
+ *
+ */
+void BOARD_InitBootPins(void);
+
+#define BOARD_INITPINS_LPUART0_TX_DIRECTION             kPIN_MUX_DirectionOutput   /*!< Direction of LPUART0_TX signal */
+#define BOARD_INITPINS_GPIOB_18_DIRECTION                kPIN_MUX_DirectionInput   /*!< Direction of GPIOB_18 signal */
+#define BOARD_INITPINS_TPM1_CH0_DIRECTION               kPIN_MUX_DirectionOutput   /*!< Direction of TPM1_CH0 signal */
+
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void BOARD_InitPins(void);
+
+#if defined(__cplusplus)
+}
+#endif
+
+/*!
+ * @}
+ */
+#endif /* _PIN_MUX_H_ */
+
+/*******************************************************************************
+ * EOF
+ ******************************************************************************/

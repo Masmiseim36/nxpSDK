@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="User interface"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-2C62D02E-23B8-4012-A26B-CD7DA2DFDE6D.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-91A741FA-4B89-4DA0-824F-095714C1D25F"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>User interface</title>
+</head>
+<body id="GUID-91A741FA-4B89-4DA0-824F-095714C1D25F">
+
+
+	<h1 class="title topictitle1">User interface</h1>
+
+	
+	<div class="body"><p class="shortdesc"/>
+
+		<p class="p">After flashing the board, the sensor is put in deep sleep (all LEDs are off). Also,
+			any attached debugger will lose its connection. <span class="ph">The
+				application default configuration enables low power, which disables LED support. The
+				user can manually change this and enable LED support, otherwise all subsequent LED
+				behavior references shall be ignored. </span>To wake up and start advertising, press
+			the ADVSW button. When in GAP Discoverable Mode, the CONNLED is on. When the central
+			node connects to the peripheral, the CONNLED remains solid. The heart rate measurement
+			values are generated randomly in the interval 40 to 200 bpm. The heart rate value format
+			is set to 8 bits and the contact status is on.</p>
+
+		<p class="p">See details below for hardware references.</p>
+
+		
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-91A741FA-4B89-4DA0-824F-095714C1D25F__GUID-F29BEB1F-286B-44D0-9BBA-936393E7165F" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 1. Hardware references</span></caption>
+				
+				
+				
+				<thead class="thead" align="left">
+					<tr class="row">
+						<th class="entry" align="center" valign="top" id="d11080e40">Platform</th>
+
+						<th class="entry" align="center" valign="top" id="d11080e43">ADVSW</th>
+
+						<th class="entry" align="center" valign="top" id="d11080e46">CONNLED</th>
+
+					</tr>
+
+				</thead>
+
+				<tbody class="tbody">
+					<tr class="row">
+						<td class="entry" align="center" valign="top" headers="d11080e40 ">FRDM-KW41Z</td>
+
+						<td class="entry" align="center" valign="top" headers="d11080e43 ">SW4</td>
+
+						<td class="entry" align="center" valign="top" headers="d11080e46 ">LED4</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" align="center" valign="top" headers="d11080e40 ">QN9080CDK</td>
+
+						<td class="entry" align="center" valign="top" headers="d11080e43 ">BUTTON1</td>
+
+						<td class="entry" align="center" valign="top" headers="d11080e46 ">D5-RED</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" align="center" valign="top" headers="d11080e40 ">FRDM-KW36</td>
+
+						<td class="entry" align="center" valign="top" headers="d11080e43 ">SW3</td>
+
+						<td class="entry" align="center" valign="top" headers="d11080e46 ">LED3</td>
+
+					</tr>
+
+					
+					
+					
+				</tbody>
+
+			</table>
+</div>
+
+	</div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-2C62D02E-23B8-4012-A26B-CD7DA2DFDE6D.html">Heart rate sensor</a></div>
+</div>
+</div>
+
+</body>
+</html>

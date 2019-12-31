@@ -1,6 +1,6 @@
 '''
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
+* Copyright 2016-2019 NXP
 * All rights reserved.
 *
 * SPDX-License-Identifier: BSD-3-Clause
@@ -15,676 +15,69 @@ from com.nxp.wireless_connectivity.hsdk.framing.fsci_framer import FsciFramer
 from com.nxp.wireless_connectivity.commands.ble.events import *  # @UnusedWildImport
 
 
-class HCIModeSelectOperation(FsciOperation):
+
+class L2CAPCBRegisterLeCbCallbacksOperation(FsciOperation):
 
     def subscribeToEvents(self):
-        self.spec = Spec.HCIModeSelectRequestFrame
-        self.observers = [HCIConfirmObserver('HCIConfirm'), ]
-        super(HCIModeSelectOperation, self).subscribeToEvents()
-
-
-class HCICommandOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.HCICommandRequestFrame
-        self.observers = [HCIConfirmObserver('HCIConfirm'), ]
-        super(HCICommandOperation, self).subscribeToEvents()
-
-
-class HCIDataOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.HCIDataRequestFrame
-        self.observers = [HCIConfirmObserver('HCIConfirm'), HCIDataIndicationObserver('HCIDataIndication'), ]
-        super(HCIDataOperation, self).subscribeToEvents()
-
-
-class HCISynchronousDataOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.HCISynchronousDataRequestFrame
-        self.observers = [HCIConfirmObserver('HCIConfirm'), HCISynchronousDataIndicationObserver('HCISynchronousDataIndication'), ]
-        super(HCISynchronousDataOperation, self).subscribeToEvents()
-
-
-class L2CAPModeSelectOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.L2CAPModeSelectRequestFrame
+        self.spec = Spec.L2CAPCBRegisterLeCbCallbacksRequestFrame
         self.observers = []
-        super(L2CAPModeSelectOperation, self).subscribeToEvents()
+        super(L2CAPCBRegisterLeCbCallbacksOperation, self).subscribeToEvents()
 
 
-class L2CAPInitOperation(FsciOperation):
+class L2CAPCBRegisterLePsmOperation(FsciOperation):
 
     def subscribeToEvents(self):
-        self.spec = Spec.L2CAPInitRequestFrame
+        self.spec = Spec.L2CAPCBRegisterLePsmRequestFrame
         self.observers = []
-        super(L2CAPInitOperation, self).subscribeToEvents()
+        super(L2CAPCBRegisterLePsmOperation, self).subscribeToEvents()
 
 
-class L2CAPConfigOperation(FsciOperation):
+class L2CAPCBDeregisterLePsmOperation(FsciOperation):
 
     def subscribeToEvents(self):
-        self.spec = Spec.L2CAPConfigRequestFrame
+        self.spec = Spec.L2CAPCBDeregisterLePsmRequestFrame
         self.observers = []
-        super(L2CAPConfigOperation, self).subscribeToEvents()
+        super(L2CAPCBDeregisterLePsmOperation, self).subscribeToEvents()
 
 
-class L2CAPSendAttDataOperation(FsciOperation):
+class L2CAPCBConnectLePsmOperation(FsciOperation):
 
     def subscribeToEvents(self):
-        self.spec = Spec.L2CAPSendAttDataRequestFrame
+        self.spec = Spec.L2CAPCBConnectLePsmRequestFrame
         self.observers = []
-        super(L2CAPSendAttDataOperation, self).subscribeToEvents()
+        super(L2CAPCBConnectLePsmOperation, self).subscribeToEvents()
 
 
-class L2CAPSendSmpDataOperation(FsciOperation):
+class L2CAPCBDisconnectLeCbChannelOperation(FsciOperation):
 
     def subscribeToEvents(self):
-        self.spec = Spec.L2CAPSendSmpDataRequestFrame
+        self.spec = Spec.L2CAPCBDisconnectLeCbChannelRequestFrame
         self.observers = []
-        super(L2CAPSendSmpDataOperation, self).subscribeToEvents()
+        super(L2CAPCBDisconnectLeCbChannelOperation, self).subscribeToEvents()
 
 
-class L2CAPSendSignalingDataOperation(FsciOperation):
+class L2CAPCBCancelConnectionOperation(FsciOperation):
 
     def subscribeToEvents(self):
-        self.spec = Spec.L2CAPSendSignalingDataRequestFrame
+        self.spec = Spec.L2CAPCBCancelConnectionRequestFrame
         self.observers = []
-        super(L2CAPSendSignalingDataOperation, self).subscribeToEvents()
+        super(L2CAPCBCancelConnectionOperation, self).subscribeToEvents()
 
 
-class L2CAPRegisterAttCallbackOperation(FsciOperation):
+class L2CAPCBSendLeCbDataOperation(FsciOperation):
 
     def subscribeToEvents(self):
-        self.spec = Spec.L2CAPRegisterAttCallbackRequestFrame
+        self.spec = Spec.L2CAPCBSendLeCbDataRequestFrame
         self.observers = []
-        super(L2CAPRegisterAttCallbackOperation, self).subscribeToEvents()
+        super(L2CAPCBSendLeCbDataOperation, self).subscribeToEvents()
 
 
-class L2CAPRegisterSmpCallbackOperation(FsciOperation):
+class L2CAPCBSendLeCreditOperation(FsciOperation):
 
     def subscribeToEvents(self):
-        self.spec = Spec.L2CAPRegisterSmpCallbackRequestFrame
+        self.spec = Spec.L2CAPCBSendLeCreditRequestFrame
         self.observers = []
-        super(L2CAPRegisterSmpCallbackOperation, self).subscribeToEvents()
-
-
-class L2CAPRegisterLePsmOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.L2CAPRegisterLePsmRequestFrame
-        self.observers = []
-        super(L2CAPRegisterLePsmOperation, self).subscribeToEvents()
-
-
-class L2CAPDeregisterLePsmOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.L2CAPDeregisterLePsmRequestFrame
-        self.observers = []
-        super(L2CAPDeregisterLePsmOperation, self).subscribeToEvents()
-
-
-class L2CAPConnectLePsmOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.L2CAPConnectLePsmRequestFrame
-        self.observers = []
-        super(L2CAPConnectLePsmOperation, self).subscribeToEvents()
-
-
-class L2CAPDisconnectLeCbChannelOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.L2CAPDisconnectLeCbChannelRequestFrame
-        self.observers = []
-        super(L2CAPDisconnectLeCbChannelOperation, self).subscribeToEvents()
-
-
-class L2CAPCancelConnectionOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.L2CAPCancelConnectionRequestFrame
-        self.observers = []
-        super(L2CAPCancelConnectionOperation, self).subscribeToEvents()
-
-
-class L2CAPSendLeCbDataOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.L2CAPSendLeCbDataRequestFrame
-        self.observers = []
-        super(L2CAPSendLeCbDataOperation, self).subscribeToEvents()
-
-
-class L2CAPSendLeCreditOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.L2CAPSendLeCreditRequestFrame
-        self.observers = []
-        super(L2CAPSendLeCreditOperation, self).subscribeToEvents()
-
-
-class SMModeSelectOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMModeSelectRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMModeSelectOperation, self).subscribeToEvents()
-
-
-class SMInitOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMInitRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMInitOperation, self).subscribeToEvents()
-
-
-class SMRegisterUserCallbackOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMRegisterUserCallbackRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMRegisterUserCallbackOperation, self).subscribeToEvents()
-
-
-class SMInitiatorStartPairingOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMInitiatorStartPairingRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMInitiatorStartPairingOperation, self).subscribeToEvents()
-
-
-class SMSendSecurityRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMSendSecurityRequestRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMSendSecurityRequestOperation, self).subscribeToEvents()
-
-
-class SMTerminatePairingOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMTerminatePairingRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMTerminatePairingOperation, self).subscribeToEvents()
-
-
-class SMPairingRequestReplyOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMPairingRequestReplyRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMPairingRequestReplyOperation, self).subscribeToEvents()
-
-
-class SMPasskeyRequestReplyOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMPasskeyRequestReplyRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMPasskeyRequestReplyOperation, self).subscribeToEvents()
-
-
-class SMPairingKeysetRequestReplyOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMPairingKeysetRequestReplyRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMPairingKeysetRequestReplyOperation, self).subscribeToEvents()
-
-
-class SMLlStartEncryptionOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMLlStartEncryptionRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMLlStartEncryptionOperation, self).subscribeToEvents()
-
-
-class SMLlLtkRequestNegativeReplyOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMLlLtkRequestNegativeReplyRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMLlLtkRequestNegativeReplyOperation, self).subscribeToEvents()
-
-
-class SMLlEncryptRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMLlEncryptRequestRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMLlEncryptRequestOperation, self).subscribeToEvents()
-
-
-class SMLlRandRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMLlRandRequestRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMLlRandRequestOperation, self).subscribeToEvents()
-
-
-class SMTbCreateRandomDeviceAddressRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMTbCreateRandomDeviceAddressRequestRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMTbCreateRandomDeviceAddressRequestOperation, self).subscribeToEvents()
-
-
-class SMTbCheckResolvablePrivateAddressRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMTbCheckResolvablePrivateAddressRequestRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMTbCheckResolvablePrivateAddressRequestOperation, self).subscribeToEvents()
-
-
-class SMTbSignDataRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMTbSignDataRequestRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMTbSignDataRequestOperation, self).subscribeToEvents()
-
-
-class SMTbVerifyDataSignatureRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMTbVerifyDataSignatureRequestRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMTbVerifyDataSignatureRequestOperation, self).subscribeToEvents()
-
-
-class SMDeviceConnectNotificationOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMDeviceConnectNotificationRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMDeviceConnectNotificationOperation, self).subscribeToEvents()
-
-
-class SMDeviceDisconnectNotificationOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMDeviceDisconnectNotificationRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMDeviceDisconnectNotificationOperation, self).subscribeToEvents()
-
-
-class SMSetDefaultPasskeyOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMSetDefaultPasskeyRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMSetDefaultPasskeyOperation, self).subscribeToEvents()
-
-
-class SMSetOobMitmProtectionOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMSetOobMitmProtectionRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMSetOobMitmProtectionOperation, self).subscribeToEvents()
-
-
-class SMSendKeypressNotificationOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMSendKeypressNotificationRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMSendKeypressNotificationOperation, self).subscribeToEvents()
-
-
-class SMNcDisplayConfirmOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMNcDisplayConfirmRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMNcDisplayConfirmOperation, self).subscribeToEvents()
-
-
-class SMLeScOobDataRequestReplyOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMLeScOobDataRequestReplyRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMLeScOobDataRequestReplyOperation, self).subscribeToEvents()
-
-
-class SMLocalLeScOobDataOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMLocalLeScOobDataRequestReqRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), SMLocalLeScOobDataIndicationObserver('SMLocalLeScOobDataIndication'), ]
-        super(SMLocalLeScOobDataOperation, self).subscribeToEvents()
-
-
-class SMGenerateNewEcdhPkSkPairOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMGenerateNewEcdhPkSkPairRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMGenerateNewEcdhPkSkPairOperation, self).subscribeToEvents()
-
-
-class SMSetMinPairingSecurityPropertiesOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.SMSetMinPairingSecurityPropertiesRequestFrame
-        self.observers = [SMConfirmObserver('SMConfirm'), ]
-        super(SMSetMinPairingSecurityPropertiesOperation, self).subscribeToEvents()
-
-
-class ATTModeSelectOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTModeSelectRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTModeSelectOperation, self).subscribeToEvents()
-
-
-class ATTInitOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTInitRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTInitOperation, self).subscribeToEvents()
-
-
-class ATTNotifyConnectionOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTNotifyConnectionRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTNotifyConnectionOperation, self).subscribeToEvents()
-
-
-class ATTNotifyDisconnectionOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTNotifyDisconnectionRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTNotifyDisconnectionOperation, self).subscribeToEvents()
-
-
-class ATTSetMtuOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTSetMtuRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTSetMtuOperation, self).subscribeToEvents()
-
-
-class ATTGetMtuOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTGetMtuRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ATTGetMtuIndicationObserver('ATTGetMtuIndication'), ]
-        super(ATTGetMtuOperation, self).subscribeToEvents()
-
-
-class ATTRegisterOpcodeCallbackOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTRegisterOpcodeCallbackRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTRegisterOpcodeCallbackOperation, self).subscribeToEvents()
-
-
-class ATTRegisterUnsupportedOpcodeCallbackOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTRegisterUnsupportedOpcodeCallbackRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTRegisterUnsupportedOpcodeCallbackOperation, self).subscribeToEvents()
-
-
-class ATTRegisterTimeoutCallbackOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTRegisterTimeoutCallbackRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTRegisterTimeoutCallbackOperation, self).subscribeToEvents()
-
-
-class ATTServerSendErrorResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTServerSendErrorResponseRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTServerSendErrorResponseOperation, self).subscribeToEvents()
-
-
-class ATTClientSendExchangeMtuRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTClientSendExchangeMtuRequestRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTClientSendExchangeMtuRequestOperation, self).subscribeToEvents()
-
-
-class ATTServerSendExchangeMtuResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTServerSendExchangeMtuResponseRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTServerSendExchangeMtuResponseOperation, self).subscribeToEvents()
-
-
-class ATTClientSendFindInformationRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTClientSendFindInformationRequestRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTClientSendFindInformationRequestOperation, self).subscribeToEvents()
-
-
-class ATTServerSendFindInformationResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTServerSendFindInformationResponseRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTServerSendFindInformationResponseOperation, self).subscribeToEvents()
-
-
-class ATTClientSendFindByTypeValueRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTClientSendFindByTypeValueRequestRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTClientSendFindByTypeValueRequestOperation, self).subscribeToEvents()
-
-
-class ATTServerSendFindByTypeValueResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTServerSendFindByTypeValueResponseRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTServerSendFindByTypeValueResponseOperation, self).subscribeToEvents()
-
-
-class ATTClientSendReadByTypeRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTClientSendReadByTypeRequestRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTClientSendReadByTypeRequestOperation, self).subscribeToEvents()
-
-
-class ATTServerSendReadByTypeResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTServerSendReadByTypeResponseRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTServerSendReadByTypeResponseOperation, self).subscribeToEvents()
-
-
-class ATTClientSendReadRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTClientSendReadRequestRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTClientSendReadRequestOperation, self).subscribeToEvents()
-
-
-class ATTServerSendReadResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTServerSendReadResponseRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTServerSendReadResponseOperation, self).subscribeToEvents()
-
-
-class ATTClientSendReadBlobRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTClientSendReadBlobRequestRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTClientSendReadBlobRequestOperation, self).subscribeToEvents()
-
-
-class ATTServerSendReadBlobResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTServerSendReadBlobResponseRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTServerSendReadBlobResponseOperation, self).subscribeToEvents()
-
-
-class ATTClientSendReadMultipleRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTClientSendReadMultipleRequestRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTClientSendReadMultipleRequestOperation, self).subscribeToEvents()
-
-
-class ATTServerSendReadMultipleResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTServerSendReadMultipleResponseRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTServerSendReadMultipleResponseOperation, self).subscribeToEvents()
-
-
-class ATTClientSendReadByGroupTypeRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTClientSendReadByGroupTypeRequestRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTClientSendReadByGroupTypeRequestOperation, self).subscribeToEvents()
-
-
-class ATTServerSendReadByGroupTypeResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTServerSendReadByGroupTypeResponseRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTServerSendReadByGroupTypeResponseOperation, self).subscribeToEvents()
-
-
-class ATTClientSendWriteRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTClientSendWriteRequestRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTClientSendWriteRequestOperation, self).subscribeToEvents()
-
-
-class ATTServerSendWriteResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTServerSendWriteResponseRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTServerSendWriteResponseOperation, self).subscribeToEvents()
-
-
-class ATTClientSendWriteCommandOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTClientSendWriteCommandRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTClientSendWriteCommandOperation, self).subscribeToEvents()
-
-
-class ATTClientSendSignedWriteCommandOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTClientSendSignedWriteCommandRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTClientSendSignedWriteCommandOperation, self).subscribeToEvents()
-
-
-class ATTClientSendPrepareWriteRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTClientSendPrepareWriteRequestRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTClientSendPrepareWriteRequestOperation, self).subscribeToEvents()
-
-
-class ATTServerSendPrepareWriteResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTServerSendPrepareWriteResponseRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTServerSendPrepareWriteResponseOperation, self).subscribeToEvents()
-
-
-class ATTClientSendExecuteWriteRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTClientSendExecuteWriteRequestRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTClientSendExecuteWriteRequestOperation, self).subscribeToEvents()
-
-
-class ATTServerSendExecuteWriteResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTServerSendExecuteWriteResponseRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTServerSendExecuteWriteResponseOperation, self).subscribeToEvents()
-
-
-class ATTServerSendHandleValueNotificationOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTServerSendHandleValueNotificationRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTServerSendHandleValueNotificationOperation, self).subscribeToEvents()
-
-
-class ATTServerSendHandleValueIndicationOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTServerSendHandleValueIndicationRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTServerSendHandleValueIndicationOperation, self).subscribeToEvents()
-
-
-class ATTClientSendHandleValueConfirmationOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.ATTClientSendHandleValueConfirmationRequestFrame
-        self.observers = [ATTConfirmObserver('ATTConfirm'), ]
-        super(ATTClientSendHandleValueConfirmationOperation, self).subscribeToEvents()
-
-
-class GATTModeSelectOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.GATTModeSelectRequestFrame
-        self.observers = []
-        super(GATTModeSelectOperation, self).subscribeToEvents()
+        super(L2CAPCBSendLeCreditOperation, self).subscribeToEvents()
 
 
 class GATTInitOperation(FsciOperation):
@@ -926,22 +319,12 @@ class GATTServerSendAttributeReadStatusOperation(FsciOperation):
         self.observers = []
         super(GATTServerSendAttributeReadStatusOperation, self).subscribeToEvents()
 
-
-class GATTDBModeSelectOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.GATTDBModeSelectRequestFrame
-        self.observers = []
-        super(GATTDBModeSelectOperation, self).subscribeToEvents()
-
-
-class GATTDBInitOperation(FsciOperation):
+class GATTServerRegisterUniqueHandlesForNotificationsOperation(FsciOperation):
 
     def subscribeToEvents(self):
-        self.spec = Spec.GATTDBInitRequestFrame
+        self.spec = Spec.GATTServerRegisterUniqueHandlesForNotificationsRequestFrame
         self.observers = []
-        super(GATTDBInitOperation, self).subscribeToEvents()
-
+        super(GATTServerRegisterUniqueHandlesForNotificationsOperation, self).subscribeToEvents()
 
 class GATTDBWriteAttributeOperation(FsciOperation):
 
@@ -990,14 +373,12 @@ class GATTDBFindDescriptorHandleForCharValueHandleOperation(FsciOperation):
         self.observers = [GATTDBFindDescriptorHandleForCharValueHandleIndicationObserver('GATTDBFindDescriptorHandleForCharValueHandleIndication'), ]
         super(GATTDBFindDescriptorHandleForCharValueHandleOperation, self).subscribeToEvents()
 
-
 class GATTDBDynamicInitOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.GATTDBDynamicInitRequestFrame
         self.observers = []
         super(GATTDBDynamicInitOperation, self).subscribeToEvents()
-
 
 class GATTDBDynamicReleaseDatabaseOperation(FsciOperation):
 
@@ -1078,134 +459,12 @@ class GATTDBDynamicRemoveCharacteristicOperation(FsciOperation):
         self.observers = []
         super(GATTDBDynamicRemoveCharacteristicOperation, self).subscribeToEvents()
 
-
-class GATTDBAttModeSelectOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.GATTDBAttModeSelectRequestFrame
-        self.observers = []
-        super(GATTDBAttModeSelectOperation, self).subscribeToEvents()
-
-
-class GATTDBAttFindInformationOperation(FsciOperation):
+class GATTDBDynamicAddCharDescriptorWithUniqueValueOperation(FsciOperation):
 
     def subscribeToEvents(self):
-        self.spec = Spec.GATTDBAttFindInformationRequestFrame
-        self.observers = [GATTDBAttFindInformationIndicationObserver('GATTDBAttFindInformationIndication'), ]
-        super(GATTDBAttFindInformationOperation, self).subscribeToEvents()
-
-
-class GATTDBAttFindByTypeValueOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.GATTDBAttFindByTypeValueRequestFrame
-        self.observers = [GATTDBAttFindByTypeValueIndicationObserver('GATTDBAttFindByTypeValueIndication'), ]
-        super(GATTDBAttFindByTypeValueOperation, self).subscribeToEvents()
-
-
-class GATTDBAttReadByTypeOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.GATTDBAttReadByTypeRequestFrame
-        self.observers = [GATTDBAttReadByTypeIndicationObserver('GATTDBAttReadByTypeIndication'), ]
-        super(GATTDBAttReadByTypeOperation, self).subscribeToEvents()
-
-
-class GATTDBAttReadOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.GATTDBAttReadRequestFrame
-        self.observers = [GATTDBAttReadIndicationObserver('GATTDBAttReadIndication'), ]
-        super(GATTDBAttReadOperation, self).subscribeToEvents()
-
-
-class GATTDBAttReadBlobOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.GATTDBAttReadBlobRequestFrame
-        self.observers = [GATTDBAttReadBlobIndicationObserver('GATTDBAttReadBlobIndication'), ]
-        super(GATTDBAttReadBlobOperation, self).subscribeToEvents()
-
-
-class GATTDBAttReadMultipleOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.GATTDBAttReadMultipleRequestFrame
-        self.observers = [GATTDBAttReadMultipleIndicationObserver('GATTDBAttReadMultipleIndication'), ]
-        super(GATTDBAttReadMultipleOperation, self).subscribeToEvents()
-
-
-class GATTDBAttReadByGroupTypeOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.GATTDBAttReadByGroupTypeRequestFrame
-        self.observers = [GATTDBAttReadByGroupTypeIndicationObserver('GATTDBAttReadByGroupTypeIndication'), ]
-        super(GATTDBAttReadByGroupTypeOperation, self).subscribeToEvents()
-
-
-class GATTDBAttWriteOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.GATTDBAttWriteRequestFrame
-        self.observers = [GATTDBAttWriteIndicationObserver('GATTDBAttWriteIndication'), ]
-        super(GATTDBAttWriteOperation, self).subscribeToEvents()
-
-
-class GATTDBAttWriteCommandOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.GATTDBAttWriteCommandRequestFrame
-        self.observers = []
-        super(GATTDBAttWriteCommandOperation, self).subscribeToEvents()
-
-
-class GATTDBAttSignedWriteCommandOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.GATTDBAttSignedWriteCommandRequestFrame
-        self.observers = []
-        super(GATTDBAttSignedWriteCommandOperation, self).subscribeToEvents()
-
-
-class GATTDBAttPrepareWriteOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.GATTDBAttPrepareWriteRequestFrame
-        self.observers = [GATTDBAttPrepareWriteIndicationObserver('GATTDBAttPrepareWriteIndication'), ]
-        super(GATTDBAttPrepareWriteOperation, self).subscribeToEvents()
-
-
-class GATTDBAttExecuteWriteOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.GATTDBAttExecuteWriteRequestFrame
-        self.observers = [GATTDBAttExecuteWriteIndicationObserver('GATTDBAttExecuteWriteIndication'), ]
-        super(GATTDBAttExecuteWriteOperation, self).subscribeToEvents()
-
-
-class GATTDBAttExecuteWriteFromQueueOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.GATTDBAttExecuteWriteFromQueueRequestFrame
-        self.observers = [GATTDBAttExecuteWriteFromQueueIndicationObserver('GATTDBAttExecuteWriteFromQueueIndication'), ]
-        super(GATTDBAttExecuteWriteFromQueueOperation, self).subscribeToEvents()
-
-
-class GATTDBAttPrepareNotificationIndicationOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.GATTDBAttPrepareNotificationIndicationRequestFrame
-        self.observers = []
-        super(GATTDBAttPrepareNotificationIndicationOperation, self).subscribeToEvents()
-
-
-class GAPModeSelectOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.GAPModeSelectRequestFrame
-        self.observers = []
-        super(GAPModeSelectOperation, self).subscribeToEvents()
-
+        self.spec = Spec.GATTDBDynamicAddCharDescriptorWithUniqueValueRequestFrame
+        self.observers = [GATTDBDynamicAddCharDescriptorWithUniqueValueIndicationObserver('GATTDBDynamicAddCharDescriptorWithUniqueValueIndication'), ]
+        super(GATTDBDynamicAddCharDescriptorWithUniqueValueOperation, self).subscribeToEvents()
 
 class BLEHostInitializeOperation(FsciOperation):
 
@@ -1285,14 +544,6 @@ class GAPCheckIndicationStatusOperation(FsciOperation):
         self.spec = Spec.GAPCheckIndicationStatusRequestFrame
         self.observers = []
         super(GAPCheckIndicationStatusOperation, self).subscribeToEvents()
-
-
-class GAPGetBondedStaticAddressesOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.GAPGetBondedStaticAddressesRequestFrame
-        self.observers = [GAPGetBondedStaticAddressesIndicationObserver('GAPGetBondedStaticAddressesIndication'), ]
-        super(GAPGetBondedStaticAddressesOperation, self).subscribeToEvents()
 
 
 class GAPPairOperation(FsciOperation):
@@ -1411,7 +662,7 @@ class GAPStartScanningOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.GAPStartScanningRequestFrame
-        self.observers = []
+        self.observers = [GAPScanningEventStateChangedIndicationObserver('GAPScanningEventStateChangedIndication'), ]
         super(GAPStartScanningOperation, self).subscribeToEvents()
 
 
@@ -1419,7 +670,7 @@ class GAPStopScanningOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.GAPStopScanningRequestFrame
-        self.observers = []
+        self.observers = [GAPScanningEventStateChangedIndicationObserver('GAPScanningEventStateChangedIndication'), ]
         super(GAPStopScanningOperation, self).subscribeToEvents()
 
 
@@ -1571,7 +822,7 @@ class GAPSetRandomAddressOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.GAPSetRandomAddressRequestFrame
-        self.observers = []
+        self.observers = [GAPGenericEventRandomAddressSetIndicationObserver('GAPGenericEventRandomAddressSetIndication'), ]
         super(GAPSetRandomAddressOperation, self).subscribeToEvents()
 
 
@@ -1695,6 +946,162 @@ class GAPSetTxPowerLevelOperation(FsciOperation):
         super(GAPSetTxPowerLevelOperation, self).subscribeToEvents()
 
 
+class GAPLeReadPhyOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GAPLeReadPhyRequestFrame
+        self.observers = []
+        super(GAPLeReadPhyOperation, self).subscribeToEvents()
+
+
+class GAPLeSetPhyOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GAPLeSetPhyRequestFrame
+        self.observers = []
+        super(GAPLeSetPhyOperation, self).subscribeToEvents()
+
+
+class GAPControllerEnhancedNotificationOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GAPControllerEnhancedNotificationRequestFrame
+        self.observers = []
+        super(GAPControllerEnhancedNotificationOperation, self).subscribeToEvents()
+
+
+class GAPLoadKeysOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GAPLoadKeysRequestFrame
+        self.observers = [GAPLoadKeysIndicationObserver('GAPLoadKeysIndication'), ]
+        super(GAPLoadKeysOperation, self).subscribeToEvents()
+
+class GAPSaveKeysOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GAPSaveKeysRequestFrame
+        self.observers = []
+        super(GAPSaveKeysOperation, self).subscribeToEvents()
+
+
+class GAPSetChannelMapOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GAPSetChannelMapRequestFrame
+        self.observers = []
+        super(GAPSetChannelMapOperation, self).subscribeToEvents()
+
+
+class GAPReadChannelMapOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GAPReadChannelMapRequestFrame
+        self.observers = []
+        super(GAPReadChannelMapOperation, self).subscribeToEvents()
+
+class GAPSetPrivacyModeOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GAPSetPrivacyModeRequestFrame
+        self.observers = []
+        super(GAPSetPrivacyModeOperation, self).subscribeToEvents()
+
+class GAPSetExtAdvertisingParametersOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GAPSetExtAdvertisingParametersRequestFrame
+        self.observers = []
+        super(GAPSetExtAdvertisingParametersOperation, self).subscribeToEvents()
+
+
+class GAPStartExtAdvertisingOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GAPStartExtAdvertisingRequestFrame
+        self.observers = []
+        super(GAPStartExtAdvertisingOperation, self).subscribeToEvents()
+
+
+class GAPRemoveAdvertisingSetOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GAPRemoveAdvertisingSetRequestFrame
+        self.observers = []
+        super(GAPRemoveAdvertisingSetOperation, self).subscribeToEvents()
+
+
+class GAPStopExtAdvertisingOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GAPStopExtAdvertisingRequestFrame
+        self.observers = []
+        super(GAPStopExtAdvertisingOperation, self).subscribeToEvents()
+
+
+class GAPUpdatePeriodicAdvListOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GAPUpdatePeriodicAdvListRequestFrame
+        self.observers = []
+        super(GAPUpdatePeriodicAdvListOperation, self).subscribeToEvents()
+
+
+class GAPSetPeriodicAdvParametersOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GAPSetPeriodicAdvParametersRequestFrame
+        self.observers = []
+        super(GAPSetPeriodicAdvParametersOperation, self).subscribeToEvents()
+
+
+class GAPStartPeriodicAdvertisingOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GAPStartPeriodicAdvertisingRequestFrame
+        self.observers = []
+        super(GAPStartPeriodicAdvertisingOperation, self).subscribeToEvents()
+
+
+class GAPStopPeriodicAdvertisingOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GAPStopPeriodicAdvertisingRequestFrame
+        self.observers = []
+        super(GAPStopPeriodicAdvertisingOperation, self).subscribeToEvents()
+
+
+class GAPSetExtAdvertisingDataOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GAPSetExtAdvertisingDataRequestFrame
+        self.observers = []
+        super(GAPSetExtAdvertisingDataOperation, self).subscribeToEvents()
+
+
+class GAPSetPeriodicAdvertisingDataOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GAPSetPeriodicAdvertisingDataRequestFrame
+        self.observers = []
+        super(GAPSetPeriodicAdvertisingDataOperation, self).subscribeToEvents()
+
+
+class GAPPeriodicAdvCreateSyncOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GAPPeriodicAdvCreateSyncRequestFrame
+        self.observers = []
+        super(GAPPeriodicAdvCreateSyncOperation, self).subscribeToEvents()
+
+
+class GAPPeriodicAdvTerminateSyncOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GAPPeriodicAdvTerminateSyncRequestFrame
+        self.observers = []
+        super(GAPPeriodicAdvTerminateSyncOperation, self).subscribeToEvents()
+
 class FSCICPUResetOperation(FsciOperation):
 
     def subscribeToEvents(self):
@@ -1743,589 +1150,67 @@ class FSCIWakeUpOperation(FsciOperation):
         super(FSCIWakeUpOperation, self).subscribeToEvents()
 
 
-class NVMSaveOperation(FsciOperation):
+class L2CAPCBOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = None
-        self.observers = [NVMSaveConfirmObserver('NVMSaveConfirm'), ]
-        super(NVMSaveOperation, self).subscribeToEvents()
+        self.observers = [L2CAPCBConfirmObserver('L2CAPCBConfirm'), ]
+        super(L2CAPCBOperation, self).subscribeToEvents()
 
 
-class NVMGetDataSetDescOperation(FsciOperation):
+class L2CAPCBLePsmConnectionRequestOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = None
-        self.observers = [NVMGetDataSetDescConfirmObserver('NVMGetDataSetDescConfirm'), ]
-        super(NVMGetDataSetDescOperation, self).subscribeToEvents()
+        self.observers = [L2CAPCBLePsmConnectionRequestIndicationObserver('L2CAPCBLePsmConnectionRequestIndication'), ]
+        super(L2CAPCBLePsmConnectionRequestOperation, self).subscribeToEvents()
 
 
-class NVMGetCountersOperation(FsciOperation):
+class L2CAPCBLePsmConnectionCompleteOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = None
-        self.observers = [NVMGetCountersConfirmObserver('NVMGetCountersConfirm'), ]
-        super(NVMGetCountersOperation, self).subscribeToEvents()
+        self.observers = [L2CAPCBLePsmConnectionCompleteIndicationObserver('L2CAPCBLePsmConnectionCompleteIndication'), ]
+        super(L2CAPCBLePsmConnectionCompleteOperation, self).subscribeToEvents()
 
 
-class NVMSetMonitoringOperation(FsciOperation):
+class L2CAPCBLePsmDisconnectNotificationOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = None
-        self.observers = [NVMSetMonitoringConfirmObserver('NVMSetMonitoringConfirm'), ]
-        super(NVMSetMonitoringOperation, self).subscribeToEvents()
+        self.observers = [L2CAPCBLePsmDisconnectNotificationIndicationObserver('L2CAPCBLePsmDisconnectNotificationIndication'), ]
+        super(L2CAPCBLePsmDisconnectNotificationOperation, self).subscribeToEvents()
 
 
-class NVMWriteMonitoringOperation(FsciOperation):
+class L2CAPCBNoPeerCreditsOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = None
-        self.observers = [NVMWriteMonitoringIndicationObserver('NVMWriteMonitoringIndication'), ]
-        super(NVMWriteMonitoringOperation, self).subscribeToEvents()
+        self.observers = [L2CAPCBNoPeerCreditsIndicationObserver('L2CAPCBNoPeerCreditsIndication'), ]
+        super(L2CAPCBNoPeerCreditsOperation, self).subscribeToEvents()
 
 
-class NVMPageEraseMonitoringOperation(FsciOperation):
+class L2CAPCBLocalCreditsNotificationOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = None
-        self.observers = [NVMPageEraseMonitoringIndicationObserver('NVMPageEraseMonitoringIndication'), ]
-        super(NVMPageEraseMonitoringOperation, self).subscribeToEvents()
+        self.observers = [L2CAPCBLocalCreditsNotificationIndicationObserver('L2CAPCBLocalCreditsNotificationIndication'), ]
+        super(L2CAPCBLocalCreditsNotificationOperation, self).subscribeToEvents()
 
 
-class NVMFormatReqOperation(FsciOperation):
+class L2CAPCBLeCbDataOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = None
-        self.observers = [NVMFormatReqConfirmObserver('NVMFormatReqConfirm'), ]
-        super(NVMFormatReqOperation, self).subscribeToEvents()
+        self.observers = [L2CAPCBLeCbDataIndicationObserver('L2CAPCBLeCbDataIndication'), ]
+        super(L2CAPCBLeCbDataOperation, self).subscribeToEvents()
 
+class L2CAPCBErrorOperation(FsciOperation):
 
-class NVMRestoreReqOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [NVMRestoreReqConfirmObserver('NVMRestoreReqConfirm'), ]
-        super(NVMRestoreReqOperation, self).subscribeToEvents()
-
-
-class NVMRestoreMonitoringOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [NVMRestoreMonitoringIndicationObserver('NVMRestoreMonitoringIndication'), ]
-        super(NVMRestoreMonitoringOperation, self).subscribeToEvents()
-
-
-class NVMVirtualPageMonitoringOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [NVMVirtualPageMonitoringIndicationObserver('NVMVirtualPageMonitoringIndication'), ]
-        super(NVMVirtualPageMonitoringOperation, self).subscribeToEvents()
-
-
-class HCIEventOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [HCIEventIndicationObserver('HCIEventIndication'), ]
-        super(HCIEventOperation, self).subscribeToEvents()
-
-
-class L2CAPAttDataOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [L2CAPAttDataIndicationObserver('L2CAPAttDataIndication'), ]
-        super(L2CAPAttDataOperation, self).subscribeToEvents()
-
-
-class L2CAPSmpDataOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [L2CAPSmpDataIndicationObserver('L2CAPSmpDataIndication'), ]
-        super(L2CAPSmpDataOperation, self).subscribeToEvents()
-
-
-class L2CAPSignalingDataOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [L2CAPSignalingDataIndicationObserver('L2CAPSignalingDataIndication'), ]
-        super(L2CAPSignalingDataOperation, self).subscribeToEvents()
-
-
-class L2CAPLePsmConnectionRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [L2CAPLePsmConnectionRequestIndicationObserver('L2CAPLePsmConnectionRequestIndication'), ]
-        super(L2CAPLePsmConnectionRequestOperation, self).subscribeToEvents()
-
-
-class L2CAPLePsmConnectionCompleteOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [L2CAPLePsmConnectionCompleteIndicationObserver('L2CAPLePsmConnectionCompleteIndication'), ]
-        super(L2CAPLePsmConnectionCompleteOperation, self).subscribeToEvents()
-
-
-class L2CAPLePsmDisconnectNotificationOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [L2CAPLePsmDisconnectNotificationIndicationObserver('L2CAPLePsmDisconnectNotificationIndication'), ]
-        super(L2CAPLePsmDisconnectNotificationOperation, self).subscribeToEvents()
-
-
-class L2CAPNoPeerCreditsOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [L2CAPNoPeerCreditsIndicationObserver('L2CAPNoPeerCreditsIndication'), ]
-        super(L2CAPNoPeerCreditsOperation, self).subscribeToEvents()
-
-
-class L2CAPLocalCreditsNotificationOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [L2CAPLocalCreditsNotificationIndicationObserver('L2CAPLocalCreditsNotificationIndication'), ]
-        super(L2CAPLocalCreditsNotificationOperation, self).subscribeToEvents()
-
-
-class L2CAPLeCbDataOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [L2CAPLeCbDataIndicationObserver('L2CAPLeCbDataIndication'), ]
-        super(L2CAPLeCbDataOperation, self).subscribeToEvents()
-
-
-class SMStatusOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [SMStatusIndicationObserver('SMStatusIndication'), ]
-        super(SMStatusOperation, self).subscribeToEvents()
-
-
-class SMRemoteSecurityRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [SMRemoteSecurityRequestIndicationObserver('SMRemoteSecurityRequestIndication'), ]
-        super(SMRemoteSecurityRequestOperation, self).subscribeToEvents()
-
-
-class SMRemotePairingRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [SMRemotePairingRequestIndicationObserver('SMRemotePairingRequestIndication'), ]
-        super(SMRemotePairingRequestOperation, self).subscribeToEvents()
-
-
-class SMRemotePairingResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [SMRemotePairingResponseIndicationObserver('SMRemotePairingResponseIndication'), ]
-        super(SMRemotePairingResponseOperation, self).subscribeToEvents()
-
-
-class SMPasskeyDisplayRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [SMPasskeyDisplayRequestIndicationObserver('SMPasskeyDisplayRequestIndication'), ]
-        super(SMPasskeyDisplayRequestOperation, self).subscribeToEvents()
-
-
-class SMPasskeyRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [SMPasskeyRequestIndicationObserver('SMPasskeyRequestIndication'), ]
-        super(SMPasskeyRequestOperation, self).subscribeToEvents()
-
-
-class SMPairingKeysetRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [SMPairingKeysetRequestIndicationObserver('SMPairingKeysetRequestIndication'), ]
-        super(SMPairingKeysetRequestOperation, self).subscribeToEvents()
-
-
-class SMPairingKeysetReceivedOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [SMPairingKeysetReceivedIndicationObserver('SMPairingKeysetReceivedIndication'), ]
-        super(SMPairingKeysetReceivedOperation, self).subscribeToEvents()
-
-
-class SMPairingCompleteOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [SMPairingCompleteIndicationObserver('SMPairingCompleteIndication'), ]
-        super(SMPairingCompleteOperation, self).subscribeToEvents()
-
-
-class SMPairingFailedOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [SMPairingFailedIndicationObserver('SMPairingFailedIndication'), ]
-        super(SMPairingFailedOperation, self).subscribeToEvents()
-
-
-class SMReceivedPairingFailedOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [SMReceivedPairingFailedIndicationObserver('SMReceivedPairingFailedIndication'), ]
-        super(SMReceivedPairingFailedOperation, self).subscribeToEvents()
-
-
-class SMLlLtkRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [SMLlLtkRequestIndicationObserver('SMLlLtkRequestIndication'), ]
-        super(SMLlLtkRequestOperation, self).subscribeToEvents()
-
-
-class SMLlEncryptionStatusOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [SMLlEncryptionStatusIndicationObserver('SMLlEncryptionStatusIndication'), ]
-        super(SMLlEncryptionStatusOperation, self).subscribeToEvents()
-
-
-class SMLlEncryptResOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [SMLlEncryptResIndicationObserver('SMLlEncryptResIndication'), ]
-        super(SMLlEncryptResOperation, self).subscribeToEvents()
-
-
-class SMLlRandResOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [SMLlRandResIndicationObserver('SMLlRandResIndication'), ]
-        super(SMLlRandResOperation, self).subscribeToEvents()
-
-
-class SMTbCreateRandomDeviceAddrResOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [SMTbCreateRandomDeviceAddrResIndicationObserver('SMTbCreateRandomDeviceAddrResIndication'), ]
-        super(SMTbCreateRandomDeviceAddrResOperation, self).subscribeToEvents()
-
-
-class SMTbCheckResolvalePrivateAddrResOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [SMTbCheckResolvalePrivateAddrResIndicationObserver('SMTbCheckResolvalePrivateAddrResIndication'), ]
-        super(SMTbCheckResolvalePrivateAddrResOperation, self).subscribeToEvents()
-
-
-class SMTbSignDataResOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [SMTbSignDataResIndicationObserver('SMTbSignDataResIndication'), ]
-        super(SMTbSignDataResOperation, self).subscribeToEvents()
-
-
-class SMTbVerifyDataSignatureResOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [SMTbVerifyDataSignatureResIndicationObserver('SMTbVerifyDataSignatureResIndication'), ]
-        super(SMTbVerifyDataSignatureResOperation, self).subscribeToEvents()
-
-
-class SMRemoteKeypressNotificationOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [SMRemoteKeypressNotificationIndicationObserver('SMRemoteKeypressNotificationIndication'), ]
-        super(SMRemoteKeypressNotificationOperation, self).subscribeToEvents()
-
-
-class SMNcDisplayRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [SMNcDisplayRequestIndicationObserver('SMNcDisplayRequestIndication'), ]
-        super(SMNcDisplayRequestOperation, self).subscribeToEvents()
-
-
-class SMLeScOobDataRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [SMLeScOobDataRequestIndicationObserver('SMLeScOobDataRequestIndication'), ]
-        super(SMLeScOobDataRequestOperation, self).subscribeToEvents()
-
-
-class SMGenerateNewEcdhPkSkPairResOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [SMGenerateNewEcdhPkSkPairResIndicationObserver('SMGenerateNewEcdhPkSkPairResIndication'), ]
-        super(SMGenerateNewEcdhPkSkPairResOperation, self).subscribeToEvents()
-
-
-class ATTClientIncomingServerErrorResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTClientIncomingServerErrorResponseIndicationObserver('ATTClientIncomingServerErrorResponseIndication'), ]
-        super(ATTClientIncomingServerErrorResponseOperation, self).subscribeToEvents()
-
-
-class ATTServerIncomingClientExchangeMtuRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTServerIncomingClientExchangeMtuRequestIndicationObserver('ATTServerIncomingClientExchangeMtuRequestIndication'), ]
-        super(ATTServerIncomingClientExchangeMtuRequestOperation, self).subscribeToEvents()
-
-
-class ATTClientIncomingServerExchangeMtuResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTClientIncomingServerExchangeMtuResponseIndicationObserver('ATTClientIncomingServerExchangeMtuResponseIndication'), ]
-        super(ATTClientIncomingServerExchangeMtuResponseOperation, self).subscribeToEvents()
-
-
-class ATTServerIncomingClientFindInformationRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTServerIncomingClientFindInformationRequestIndicationObserver('ATTServerIncomingClientFindInformationRequestIndication'), ]
-        super(ATTServerIncomingClientFindInformationRequestOperation, self).subscribeToEvents()
-
-
-class ATTClientIncomingServerFindInformationResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTClientIncomingServerFindInformationResponseIndicationObserver('ATTClientIncomingServerFindInformationResponseIndication'), ]
-        super(ATTClientIncomingServerFindInformationResponseOperation, self).subscribeToEvents()
-
-
-class ATTServerIncomingClientFindByTypeValueRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTServerIncomingClientFindByTypeValueRequestIndicationObserver('ATTServerIncomingClientFindByTypeValueRequestIndication'), ]
-        super(ATTServerIncomingClientFindByTypeValueRequestOperation, self).subscribeToEvents()
-
-
-class ATTClientIncomingServerFindByTypeValueResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTClientIncomingServerFindByTypeValueResponseIndicationObserver('ATTClientIncomingServerFindByTypeValueResponseIndication'), ]
-        super(ATTClientIncomingServerFindByTypeValueResponseOperation, self).subscribeToEvents()
-
-
-class ATTServerIncomingClientReadByTypeRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTServerIncomingClientReadByTypeRequestIndicationObserver('ATTServerIncomingClientReadByTypeRequestIndication'), ]
-        super(ATTServerIncomingClientReadByTypeRequestOperation, self).subscribeToEvents()
-
-
-class ATTClientIncomingServerReadByTypeResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTClientIncomingServerReadByTypeResponseIndicationObserver('ATTClientIncomingServerReadByTypeResponseIndication'), ]
-        super(ATTClientIncomingServerReadByTypeResponseOperation, self).subscribeToEvents()
-
-
-class ATTServerIncomingClientReadRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTServerIncomingClientReadRequestIndicationObserver('ATTServerIncomingClientReadRequestIndication'), ]
-        super(ATTServerIncomingClientReadRequestOperation, self).subscribeToEvents()
-
-
-class ATTClientIncomingServerReadResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTClientIncomingServerReadResponseIndicationObserver('ATTClientIncomingServerReadResponseIndication'), ]
-        super(ATTClientIncomingServerReadResponseOperation, self).subscribeToEvents()
-
-
-class ATTServerIncomingClientReadBlobRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTServerIncomingClientReadBlobRequestIndicationObserver('ATTServerIncomingClientReadBlobRequestIndication'), ]
-        super(ATTServerIncomingClientReadBlobRequestOperation, self).subscribeToEvents()
-
-
-class ATTClientIncomingServerReadBlobResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTClientIncomingServerReadBlobResponseIndicationObserver('ATTClientIncomingServerReadBlobResponseIndication'), ]
-        super(ATTClientIncomingServerReadBlobResponseOperation, self).subscribeToEvents()
-
-
-class ATTServerIncomingClientReadMultipleRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTServerIncomingClientReadMultipleRequestIndicationObserver('ATTServerIncomingClientReadMultipleRequestIndication'), ]
-        super(ATTServerIncomingClientReadMultipleRequestOperation, self).subscribeToEvents()
-
-
-class ATTClientIncomingServerReadMultipleResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTClientIncomingServerReadMultipleResponseIndicationObserver('ATTClientIncomingServerReadMultipleResponseIndication'), ]
-        super(ATTClientIncomingServerReadMultipleResponseOperation, self).subscribeToEvents()
-
-
-class ATTServerIncomingClientReadByGroupTypeRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTServerIncomingClientReadByGroupTypeRequestIndicationObserver('ATTServerIncomingClientReadByGroupTypeRequestIndication'), ]
-        super(ATTServerIncomingClientReadByGroupTypeRequestOperation, self).subscribeToEvents()
-
-
-class ATTClientIncomingServerReadByGroupTypeResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTClientIncomingServerReadByGroupTypeResponseIndicationObserver('ATTClientIncomingServerReadByGroupTypeResponseIndication'), ]
-        super(ATTClientIncomingServerReadByGroupTypeResponseOperation, self).subscribeToEvents()
-
-
-class ATTServerIncomingClientWriteRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTServerIncomingClientWriteRequestIndicationObserver('ATTServerIncomingClientWriteRequestIndication'), ]
-        super(ATTServerIncomingClientWriteRequestOperation, self).subscribeToEvents()
-
-
-class ATTClientIncomingServerWriteResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTClientIncomingServerWriteResponseIndicationObserver('ATTClientIncomingServerWriteResponseIndication'), ]
-        super(ATTClientIncomingServerWriteResponseOperation, self).subscribeToEvents()
-
-
-class ATTServerIncomingClientWriteCommandOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTServerIncomingClientWriteCommandIndicationObserver('ATTServerIncomingClientWriteCommandIndication'), ]
-        super(ATTServerIncomingClientWriteCommandOperation, self).subscribeToEvents()
-
-
-class ATTServerIncomingClientSignedWriteCommandOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTServerIncomingClientSignedWriteCommandIndicationObserver('ATTServerIncomingClientSignedWriteCommandIndication'), ]
-        super(ATTServerIncomingClientSignedWriteCommandOperation, self).subscribeToEvents()
-
-
-class ATTServerIncomingClientPrepareWriteRequestOperation(FsciOperation):
-
     def subscribeToEvents(self):
         self.spec = None
-        self.observers = [ATTServerIncomingClientPrepareWriteRequestIndicationObserver('ATTServerIncomingClientPrepareWriteRequestIndication'), ]
-        super(ATTServerIncomingClientPrepareWriteRequestOperation, self).subscribeToEvents()
-
-
-class ATTClientIncomingServerPrepareWriteResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTClientIncomingServerPrepareWriteResponseIndicationObserver('ATTClientIncomingServerPrepareWriteResponseIndication'), ]
-        super(ATTClientIncomingServerPrepareWriteResponseOperation, self).subscribeToEvents()
-
-
-class ATTServerIncomingClientExecuteWriteRequestOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTServerIncomingClientExecuteWriteRequestIndicationObserver('ATTServerIncomingClientExecuteWriteRequestIndication'), ]
-        super(ATTServerIncomingClientExecuteWriteRequestOperation, self).subscribeToEvents()
-
-
-class ATTClientIncomingServerExecuteWriteResponseOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTClientIncomingServerExecuteWriteResponseIndicationObserver('ATTClientIncomingServerExecuteWriteResponseIndication'), ]
-        super(ATTClientIncomingServerExecuteWriteResponseOperation, self).subscribeToEvents()
-
-
-class ATTClientIncomingServerHandleValueNotificationOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTClientIncomingServerHandleValueNotificationIndicationObserver('ATTClientIncomingServerHandleValueNotificationIndication'), ]
-        super(ATTClientIncomingServerHandleValueNotificationOperation, self).subscribeToEvents()
-
-
-class ATTClientIncomingServerHandleValueIndicationOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTClientIncomingServerHandleValueIndicationIndicationObserver('ATTClientIncomingServerHandleValueIndicationIndication'), ]
-        super(ATTClientIncomingServerHandleValueIndicationOperation, self).subscribeToEvents()
-
-
-class ATTServerIncomingClientHandleValueConfirmationOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTServerIncomingClientHandleValueConfirmationIndicationObserver('ATTServerIncomingClientHandleValueConfirmationIndication'), ]
-        super(ATTServerIncomingClientHandleValueConfirmationOperation, self).subscribeToEvents()
-
-
-class ATTUnsupportedOpcodeOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTUnsupportedOpcodeIndicationObserver('ATTUnsupportedOpcodeIndication'), ]
-        super(ATTUnsupportedOpcodeOperation, self).subscribeToEvents()
-
-
-class ATTTimeoutOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [ATTTimeoutIndicationObserver('ATTTimeoutIndication'), ]
-        super(ATTTimeoutOperation, self).subscribeToEvents()
-
+        self.observers = [L2CAPCBErrorIndicationObserver('L2CAPCBErrorIndication'), ]
+        super(L2CAPCBErrorOperation, self).subscribeToEvents()
 
 class GATTClientProcedureExchangeMtuOperation(FsciOperation):
 
@@ -2511,14 +1396,6 @@ class GATTServerAttributeReadOperation(FsciOperation):
         super(GATTServerAttributeReadOperation, self).subscribeToEvents()
 
 
-class GATTDBAttOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [GATTDBAttConfirmObserver('GATTDBAttConfirm'), ]
-        super(GATTDBAttOperation, self).subscribeToEvents()
-
-
 class GAPGenericEventInitializationCompleteOperation(FsciOperation):
 
     def subscribeToEvents(self):
@@ -2653,7 +1530,6 @@ class GAPAdvertisingEventCommandFailedOperation(FsciOperation):
         self.spec = None
         self.observers = [GAPAdvertisingEventCommandFailedIndicationObserver('GAPAdvertisingEventCommandFailedIndication'), ]
         super(GAPAdvertisingEventCommandFailedOperation, self).subscribeToEvents()
-
 
 class GAPScanningEventStateChangedOperation(FsciOperation):
 
@@ -2887,6 +1763,14 @@ class GAPGenericEventLeScLocalOobDataOperation(FsciOperation):
         super(GAPGenericEventLeScLocalOobDataOperation, self).subscribeToEvents()
 
 
+class GAPGenericEventHostPrivacyStateChangedOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPGenericEventHostPrivacyStateChangedIndicationObserver('GAPGenericEventHostPrivacyStateChangedIndication'), ]
+        super(GAPGenericEventHostPrivacyStateChangedOperation, self).subscribeToEvents()
+
+
 class GAPGenericEventControllerPrivacyStateChangedOperation(FsciOperation):
 
     def subscribeToEvents(self):
@@ -2903,15 +1787,181 @@ class GAPGenericEventTxPowerLevelSetCompleteOperation(FsciOperation):
         super(GAPGenericEventTxPowerLevelSetCompleteOperation, self).subscribeToEvents()
 
 
+class GAPGenericEventLePhyEventOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPGenericEventLePhyEventIndicationObserver('GAPGenericEventLePhyEventIndication'), ]
+        super(GAPGenericEventLePhyEventOperation, self).subscribeToEvents()
+
+
+class GAPControllerNotificationOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPControllerNotificationIndicationObserver('GAPControllerNotificationIndication'), ]
+        super(GAPControllerNotificationOperation, self).subscribeToEvents()
+
+
+class GAPBondCreatedOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPBondCreatedIndicationObserver('GAPBondCreatedIndication'), ]
+        super(GAPBondCreatedOperation, self).subscribeToEvents()
+
+
+class GAPGenericEventChannelMapSetOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPGenericEventChannelMapSetIndicationObserver('GAPGenericEventChannelMapSetIndication'), ]
+        super(GAPGenericEventChannelMapSetOperation, self).subscribeToEvents()
+
+
+class GAPConnectionEventChannelMapReadOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPConnectionEventChannelMapReadIndicationObserver('GAPConnectionEventChannelMapReadIndication'), ]
+        super(GAPConnectionEventChannelMapReadOperation, self).subscribeToEvents()
+
+
+class GAPConnectionEventChannelMapReadFailureOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPConnectionEventChannelMapReadFailureIndicationObserver('GAPConnectionEventChannelMapReadFailureIndication'), ]
+        super(GAPConnectionEventChannelMapReadFailureOperation, self).subscribeToEvents()
+
+class GAPGenericEventExtAdvertisingParamSetupCompleteOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPGenericEventExtAdvertisingParamSetupCompleteIndicationObserver('GAPGenericEventExtAdvertisingParamSetupCompleteIndication'), ]
+        super(GAPGenericEventExtAdvertisingParamSetupCompleteOperation, self).subscribeToEvents()
+
+class GAPGenericEventExtAdvertisingDataSetupCompleteOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPGenericEventExtAdvertisingDataSetupCompleteIndicationObserver('GAPGenericEventExtAdvertisingDataSetupCompleteIndication'), ]
+        super(GAPGenericEventExtAdvertisingDataSetupCompleteOperation, self).subscribeToEvents()
+
+class GAPGenericEventPeriodicAdvParamSetupCompleteOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPGenericEventPeriodicAdvParamSetupCompleteIndicationObserver('GAPGenericEventPeriodicAdvParamSetupCompleteIndication'), ]
+        super(GAPGenericEventPeriodicAdvParamSetupCompleteOperation, self).subscribeToEvents()
+
+class GAPGenericEventPeriodicAdvDataSetupCompleteOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPGenericEventPeriodicAdvDataSetupCompleteIndicationObserver('GAPGenericEventPeriodicAdvDataSetupCompleteIndication'), ]
+        super(GAPGenericEventPeriodicAdvDataSetupCompleteOperation, self).subscribeToEvents()
+
+class GAPGenericEventPeriodicAdvListUpdateCompleteOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPGenericEventPeriodicAdvListUpdateCompleteIndicationObserver('GAPGenericEventPeriodicAdvListUpdateCompleteIndication'), ]
+        super(GAPGenericEventPeriodicAdvListUpdateCompleteOperation, self).subscribeToEvents()
+
+class GAPAdvertisingEventExtAdvertisingStateChangedOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPAdvertisingEventExtAdvertisingStateChangedIndicationObserver('GAPAdvertisingEventExtAdvertisingStateChangedIndication'), ]
+        super(GAPAdvertisingEventExtAdvertisingStateChangedOperation, self).subscribeToEvents()
+
+class GAPAdvertisingEventAdvertisingSetTerminatedOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPAdvertisingEventAdvertisingSetTerminatedIndicationObserver('GAPAdvertisingEventAdvertisingSetTerminatedIndication'), ]
+        super(GAPAdvertisingEventAdvertisingSetTerminatedOperation, self).subscribeToEvents()
+
+class GAPAdvertisingEventExtAdvertisingSetRemoveCompletedOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPAdvertisingEventExtAdvertisingSetRemoveCompletedIndicationObserver('GAPAdvertisingEventExtAdvertisingSetRemoveCompletedIndication'), ]
+        super(GAPAdvertisingEventExtAdvertisingSetRemoveCompletedOperation, self).subscribeToEvents()
+
+class GAPAdvertisingEventExtScanReqReceivedOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPAdvertisingEventExtScanReqReceivedIndicationObserver('GAPAdvertisingEventExtScanReqReceivedIndication'), ]
+        super(GAPAdvertisingEventExtScanReqReceivedOperation, self).subscribeToEvents()
+
+class GAPAdvertisingEventPeriodicAdvertisingStateChangedOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPAdvertisingEventPeriodicAdvertisingStateChangedIndicationObserver('GAPAdvertisingEventPeriodicAdvertisingStateChangedIndication'), ]
+        super(GAPAdvertisingEventPeriodicAdvertisingStateChangedOperation, self).subscribeToEvents()
+
+class GAPScanningEventExtDeviceScannedOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPScanningEventExtDeviceScannedIndicationObserver('GAPScanningEventExtDeviceScannedIndication'), ]
+        super(GAPScanningEventExtDeviceScannedOperation, self).subscribeToEvents()
+
+class GAPScanningEventPeriodicAdvSyncEstablishedOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPScanningEventPeriodicAdvSyncEstablishedIndicationObserver('GAPScanningEventPeriodicAdvSyncEstablishedIndication'), ]
+        super(GAPScanningEventPeriodicAdvSyncEstablishedOperation, self).subscribeToEvents()
+
+class GAPScanningEventPeriodicAdvSyncTerminatedOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPScanningEventPeriodicAdvSyncTerminatedIndicationObserver('GAPScanningEventPeriodicAdvSyncTerminatedIndication'), ]
+        super(GAPScanningEventPeriodicAdvSyncTerminatedOperation, self).subscribeToEvents()
+
+class GAPScanningEventPeriodicAdvSyncLostOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPScanningEventPeriodicAdvSyncLostIndicationObserver('GAPScanningEventPeriodicAdvSyncLostIndication'), ]
+        super(GAPScanningEventPeriodicAdvSyncLostOperation, self).subscribeToEvents()
+
+class GAPScanningEventPeriodicDeviceScannedOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPScanningEventPeriodicDeviceScannedIndicationObserver('GAPScanningEventPeriodicDeviceScannedIndication'), ]
+        super(GAPScanningEventPeriodicDeviceScannedOperation, self).subscribeToEvents()
+
+class GAPGenericEventPeriodicAdvCreateSyncCancelledOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPGenericEventPeriodicAdvCreateSyncCancelledIndicationObserver('GAPGenericEventPeriodicAdvCreateSyncCancelledIndication'), ]
+        super(GAPGenericEventPeriodicAdvCreateSyncCancelledOperation, self).subscribeToEvents()
+
+class GAPConnectionEventChannelSelectionAlgorithm2Operation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPConnectionEventChannelSelectionAlgorithm2IndicationObserver('GAPConnectionEventChannelSelectionAlgorithm2Indication'), ]
+        super(GAPConnectionEventChannelSelectionAlgorithm2Operation, self).subscribeToEvents()
+
+
+
 def subscribe_to_async_ble_events_from(device, ack_policy=FsciAckPolicy.GLOBAL):
     ble_events = [
-        L2CAPConfirmObserver('L2CAPConfirm'),
+        L2CAPCBConfirmObserver('L2CAPCBConfirm'),
         GAPConfirmObserver('GAPConfirm'),
-        GATTConfirmObserver('GATTConfirm'),
-        GATTDBConfirmObserver('GATTDBConfirm'),
         GAPGenericEventInitializationCompleteIndicationObserver('GAPGenericEventInitializationCompleteIndication'),
         GAPAdvertisingEventCommandFailedIndicationObserver('GAPAdvertisingEventCommandFailedIndication'),
-        GATTServerErrorIndicationObserver('GATTServerErrorIndication'),
+        GAPConnectionEventLeDataLengthChangedIndicationObserver('GAPConnectionEventLeDataLengthChangedIndication'),
         GATTServerCharacteristicCccdWrittenIndicationObserver('GATTServerCharacteristicCccdWrittenIndication')
     ]
 

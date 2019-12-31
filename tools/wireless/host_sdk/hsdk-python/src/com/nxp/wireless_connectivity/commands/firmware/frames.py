@@ -9,6 +9,17 @@ from com.nxp.wireless_connectivity.commands.firmware.enums import *  # @UnusedWi
 from com.nxp.wireless_connectivity.hsdk.utils import to_bytes
 
 
+class FSCIOTASupportSetKeyRequest(object):
+
+    def __init__(self, KeyType=FSCIOTASupportSetKeyRequestKeyType.RHK, Key=bytearray(32)):
+        '''
+        @param KeyType: Type of key (RHK or SBKEK)
+        @param Key: Key value
+        '''
+        self.KeyType = KeyType
+        self.Key = Key
+
+
 class FSCIEnterBootloaderRequest(object):
 
     pass

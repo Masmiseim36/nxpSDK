@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Low-Power API"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-BD32F550-7639-4241-A13E-03413ED8C5C3.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-E8CC69B9-CD3C-4DCE-A5D8-F5A3E07AB40F"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Low-Power API</title>
+</head>
+<body id="GUID-E8CC69B9-CD3C-4DCE-A5D8-F5A3E07AB40F">
+
+
+    <h1 class="title topictitle1">Low-Power API</h1>
+
+    <div class="body">
+        <p class="p"><strong class="ph b">Configuration Macros</strong></p>
+
+        <p class="p"><strong class="ph b">Name</strong></p>
+
+        <pre class="pre codeblock">#define cPWR_UsePowerDownMode TRUE </pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">Enables/disables low-power-related code and variables.</p>
+
+        <p class="p"><strong class="ph b">Location</strong></p>
+
+        <p class="p">PWR_Configuration.h</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name</strong></p>
+
+        <pre class="pre codeblock">#define cPWR_DeepSleepMode 4</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">Configures default deep sleep mode.</p>
+
+        <p class="p"><strong class="ph b">Location</strong></p>
+
+        <p class="p">PWR_Configuration.h</p>
+
+        <p class="p"><strong class="ph b">Name</strong></p>
+
+        <pre class="pre codeblock"> #define cPWR_EnableDeepSleepMode_1      1
+ #define cPWR_EnableDeepSleepMode_2      1
+ #define cPWR_EnableDeepSleepMode_3      1
+ #define cPWR_EnableDeepSleepMode_4      1
+ #define cPWR_EnableDeepSleepMode_5      1
+ #define cPWR_EnableDeepSleepMode_6      1
+ <span class="ph">#define cPWR_EnableDeepSleepMode_7      1
+ #define cPWR_EnableDeepSleepMode_8      1</span></pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">These defines were provided to save code size. If a particular deep sleep
+            mode is not used, the corresponding define can be set to 0, causing it to be excluded
+            from the build. To maintain compatibility with other low-power components, the
+            PWR_EnterPowerOff(void) function was kept, but, in this implementation it puts the
+            system in the lowest power mode possible, which is mode 4. Be aware that disabling mode
+            4 (cPWR_EnableDeepSleepMode_4 = 0), puts this function in an infinite loop.</p>
+
+        <p class="p"><strong class="ph b">Location</strong></p>
+
+        <p class="p">PWR_Configuration.h</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name</strong></p>
+
+        <pre class="pre codeblock">#define cPWR_DeepSleepDurationMs 30000 </pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">Configures default deep sleep duration. It only has meaning for deep sleep
+            modes 1, 2, 3, and 6.</p>
+
+        <p class="p"><strong class="ph b">Location</strong></p>
+
+        <p class="p">PWR_Configuration.h</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name</strong></p>
+
+        <pre class="pre codeblock">#define cPWR_BLE_LL_Enable FALSE</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">Enables/disables BLE Link Layer Deep Sleep Mode functionalities.</p>
+
+        <p class="p"><strong class="ph b">Location</strong></p>
+
+        <p class="p">PWR_Configuration.h</p>
+
+        <p class="p"><strong class="ph b">Name</strong></p>
+
+        <pre class="pre codeblock">#define cPWR_GENFSK_LL_Enable FALSE</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">Enables/disables GenFSK Link Layer Deep Sleep Mode functionalities.</p>
+
+        <p class="p"><strong class="ph b">Location</strong></p>
+
+        <p class="p">PWR_Configuration.h</p>
+
+        <p class="p"><strong class="ph b">Name</strong>
+        </p>
+
+        <pre class="pre codeblock">#define cPWR_Z_LL_Enable       FALSE
+#define cPWR_ANT_LL_Enable     FALSE</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">Enables/disables Z_LL, ANT_LL functionalities. None of these functionalities
+            are currently implemented and these defines do not have any effect.</p>
+
+        <p class="p"><strong class="ph b">Location</strong></p>
+
+        <p class="p">PWR_Configuration.h</p>
+
+        <p class="p"/>
+
+        <p class="p"><strong class="ph b">Name</strong></p>
+
+        <pre class="pre codeblock">#define cPWR_Zigbee_Enable FALSE</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">This define enables/disables some legacy ZigBee stack-related checks before
+            entering low-power. Do not enable it unless you have the legacy Zigbee stack running on
+            this device.</p>
+
+        <p class="p"><strong class="ph b">Location</strong></p>
+
+        <p class="p">PWR_Configuration.h</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name</strong></p>
+
+        <pre class="pre codeblock">#define cPWR_BLE_LL_OffsetToWakeupInstant (8)</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">Number of slots (625 us) when the BLE Link Layer hardware needs to exit from
+            deep sleep mode before the BLE reference clock register reaches the wake up instant
+            register.</p>
+
+        <p class="p"><strong class="ph b">Location</strong></p>
+
+        <p class="p">PWR_Configurations.h</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name</strong></p>
+
+        <pre class="pre codeblock">#define cPWR_BLE_LL_OscStartupDelay (8)</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">The time period that the BLE Link Layer must wait after a system clock
+            request to ensure the oscillator is running and is stable. This is in X.Y format where X
+            is in terms of number of BT slots (625 us) and Y is in terms of number of clock periods
+            of 16 kHz clock input, required for the RF oscillator to stabilize the clock output
+            after the oscillator is turned ON. In this period, the clock is assumed to be unstable
+            and the controller does not turn on the clock to internal logic until this period is
+            over. This means that the wake up from deep sleep mode must account for the delay before
+            the wakeup instant.</p>
+
+        <p class="p">Osc_startup_delay[7:5] is number of slots (625 us)</p>
+
+        <p class="p">Osc_startup_delay[4:0 ] is number of clock periods of 16 kHz clock</p>
+
+        <p class="p">(Warning: Maximum value of Osc_startup_delay [4:0] supported is 9.
+            Therefore, do not program value greater than 9).</p>
+
+        <p class="p"><strong class="ph b">Location</strong></p>
+
+        <p class="p">PWR_Configurations.h</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name</strong></p>
+
+        <pre class="pre codeblock">#define cPWR_DCDC_InBypass (1)</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">Set this define 1 if DCDC is in bypass mode or 0 otherwise. It configures
+            deep sleep mode 4 to put the MCU in VLLS0 (when 1) or VLLS1 (when 0) because VLLS0 is
+            only supported in bypass mode.</p>
+
+        <p class="p"><strong class="ph b">Location</strong></p>
+
+        <p class="p">PWR_Configurations.h</p>
+
+        <p class="p"><strong class="ph b">Name</strong></p>
+
+        <pre class="pre codeblock">#define cPWR_POR_DisabledInVLLS0 (1)</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">If 1, this define disables the POR circuit in VLLS0 further reducing power
+            consumption. This define only has meaning if the cPWR_DCDC_InBypass is TRUE. </p>
+
+        <p class="p"><strong class="ph b">Location</strong></p>
+
+        <p class="p">PWR_Configurations.h</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name</strong></p>
+
+        <pre class="pre codeblock">#define cPWR_CheckLowPowerTimers FALSE</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">If enabled, the Low-Power module searches for the first Low-Power-Timer to
+            expire and sets up the sleep duration as the minimum between the low-power timer
+            time-out value and the requested sleep duration.</p>
+
+        <p class="p"><strong class="ph b">Location</strong></p>
+
+        <p class="p">PWR_Configurations.h</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name</strong></p>
+
+        <pre class="pre codeblock">#define cPWR_RAM2_EnabledInLLS2 (0)</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">Establishes whether RAM2 (extra 16K of RAM from 0x20004000 to 0x20007fff) is
+            retained in LLS2.</p>
+
+        <p class="p"><strong class="ph b">Location</strong></p>
+
+        <p class="p">PWR_Configurations.h</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name</strong></p>
+
+        <pre class="pre codeblock">#define gAllowDeviceToSleep_c 0</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">Functions PWR_AllowDeviceToSleep/PWR_DisallowDeviceToSleep
+            decrement/increment a global variable. When variable value is 0, the system is allowed
+            to enter low-power. This define sets the initial value of this variable.</p>
+
+        <p class="p"><strong class="ph b">Location</strong></p>
+
+        <p class="p">PWR_Interface.h</p>
+
+        <p class="p"/>
+
+        <p class="p"><strong class="ph b">Name</strong></p>
+
+        <pre class="pre codeblock">#define USE_WARMBOOT_SP 1</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">Enable/Disable dedicated stack for the warm-boot sequence.</p>
+
+        <p class="p"><strong class="ph b">Location</strong></p>
+
+        <p class="p">PWR_Interface.h</p>
+
+        <p class="p"/>
+
+        <p class="p"><strong class="ph b">Name</strong></p>
+
+        <pre class="pre codeblock">#define cPWR_RamRetentionInVLLS (2)</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <div class="p">Configure the amount of RAM to be retained in VLLS. Depending on this value, VLLS2 or
+            VLLS3 deep sleep mode will be selected: <ol class="ol">
+                <li class="li">16 K RAM retention (0x20000000- 0x20003fff): VLLS2 2 </li>
+
+                <li class="li">32 K RAM retention (0x20000000- 0x20007fff): VLLS2 3 </li>
+
+                <li class="li">Full RAM retention: VLLS3 </li>
+
+            </ol>
+</div>
+
+        <p class="p"><strong class="ph b">Location</strong></p>
+
+        <p class="p">PWR_Interface.h</p>
+
+        <p class="p"/>
+
+        <p class="p"><strong class="ph b">Data type definitions</strong></p>
+
+        <p class="p"><strong class="ph b">Name</strong></p>
+
+        <pre class="pre codeblock">typedef union {
+    uint8_t AllBits;
+    struct {
+        uint8_t FromReset :1; 
+        uint8_t FromPSwitch_UART :1; 
+        uint8_t FromKeyBoard :1; 
+        uint8_t FromLPTMR :1; 
+        uint8_t FromRadio :1; 
+        uint8_t FromBLE_LLTimer :1; 
+        uint8_t DeepSleepTimeout :1; 
+        uint8_t SleepTimeout :1; 
+    } Bits;
+} PWRLib_WakeupReason_t;</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">The data type above defines a bitmap created to identify the wakeup source.
+            The function PWR_EnterLowPower() returns a value of this type for the low-power modes
+            other than 4 and 5 (the system exits these modes through reset sequence). A global
+            variable of this type (extern volatile PWRLib_WakeupReason_t PWRLib_MCU_WakeupReason;)
+            is also updated at wakeup. For mode 4 and 5, the global variable is updated at PWR_Init
+            call. If the system exits low-power by a timer (FromLPTMR =1 or FromBLE_LLTimer=1), the
+            DeepSleepTimeout is also set. SleepTimeout is set when the system exits sleep (the
+            system couldn’t manage to enter deep sleep because a non low-power timer was
+            running).</p>
+
+        <p class="p"><strong class="ph b">Location</strong></p>
+
+        <p class="p">PWR_Interface.h</p>
+
+        <p class="p"/>
+
+        <p class="p"><strong class="ph b">Name</strong></p>
+
+        <pre class="pre codeblock">typedef void ( *pfPWRCallBack_t ) ( void);</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">Data type above defines a pointer to a callback function, which is going to
+            be called from the low-power module. Functions of this type are registered in the
+            low-power module using two functions described in the primitives section.</p>
+
+        <p class="p"><strong class="ph b">Location</strong></p>
+
+        <p class="p">PWR_Interface.h</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-BD32F550-7639-4241-A13E-03413ED8C5C3.html">Kinetis Wireless Dual Mode Microcontrollers Low-power Library Overview</a></div>
+</div>
+</div>
+
+</body>
+</html>

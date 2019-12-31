@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Implemented profile and services"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-40A3CB6C-9139-42B4-83B9-117067BB9D79.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-36850A01-5889-4ED6-9A20-4CE6838D19A3"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Implemented profile and services</title>
+</head>
+<body id="GUID-36850A01-5889-4ED6-9A20-4CE6838D19A3">
+
+
+    <h1 class="title topictitle1">Implemented profile and services</h1>
+
+    <div class="body">
+        <p class="p">The ANCS Client application implements an ANCS Client for the custom ANCS
+            Service available on iOS mobile devices.</p>
+
+        <p class="p">Check the documentation available on the iOS website for details about the
+            ANCS service, its characteristics and supported features.</p>
+
+        <p class="p">The demo application acts as a GAP Peripheral which advertises a service
+            solicitation for the custom ANCS Service. It also acts as a GATT Client once connected
+            to a device offering the ANCS Service. The application offers some services as GATT
+            Server.</p>
+
+        <p class="p">Once connected to a mobile device offering the ANCS Service, the application
+            displays information about ANCS Notifications received from that device. The
+            notifications are received via ATT Notifications for which the ANCS Client must register
+            on the peer ANCS Server. The application also retrieves and displays additional
+            information about the received ANCS Notifications. This is achieved by writing commands
+            to specified characteristics on the ANCS Server and receiving responses via ATT
+            Notifications from other characteristics. All information is displayed to the user using
+            a shell available over a serial communications interface.</p>
+
+        <p class="p">Accessing the ANCS Service requires Bluetooth LE security to be enabled. </p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-40A3CB6C-9139-42B4-83B9-117067BB9D79.html">ANCS Client</a></div>
+</div>
+</div>
+
+</body>
+</html>

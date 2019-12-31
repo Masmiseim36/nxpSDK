@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Bootloader HW configuration"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-9EE283E7-E36D-420A-86E6-9D2159B9A820.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-39BBF7FE-6B6E-4567-B4DB-45C37B891410"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Bootloader HW configuration</title>
+</head>
+<body id="GUID-39BBF7FE-6B6E-4567-B4DB-45C37B891410">
+
+
+    <h1 class="title topictitle1">Bootloader HW configuration</h1>
+
+    <div class="body">
+        <p class="p">The following defines can be found in the MCU-specific configuration file, MKxxxxx_cfg.h,
+            and can be modified to change the GPIO trigger pin, UART interface, or SPI
+            interface.</p>
+
+        <p class="p">The macro definitions from below represent the default hardware configuration:</p>
+
+        <p class="p"><strong class="ph b">GPIO trigger pin</strong></p>
+
+        <pre class="pre codeblock">#define BOOT_PIN_ENABLE_SIM_SCG_REG SIM_SCGC5
+#define BOOT_PIN_ENABLE_SIM_SCG_MASK SIM_SCGC5_PORTC_MASK
+#define BOOT_PIN_ENABLE_PORT_BASE PORTC_BASE_PTR 
+#define BOOT_PIN_ENABLE_GPIO_BASE PTC_BASE_PTR 
+#define BOOT_PIN_ENABLE_NUM 4 </pre>
+
+        <p class="p"><strong class="ph b">UART Configuration</strong></p>
+
+        <pre class="pre codeblock">#define BOOT_UART_IRQ INT_UART1_RX_TX
+#define BOOT_UART_BASE UART1_BASE_PTR
+#define BOOT_UART_SIM_SCG_REG SIM_SCGC4
+#define BOOT_UART_SIM_SCG_MASK SIM_SCGC4_UART1_MASK
+#define BOOT_UART_BAUD_RATE 57600
+#define BOOT_UART_GPIO_PORT_RX PORTE_BASE_PTR 
+#define BOOT_UART_GPIO_PORT_TX PORTE_BASE_PTR 
+#define BOOT_UART_GPIO_PORT_SIM_SCG_REG SIM_SCGC5
+#define BOOT_UART_GPIO_PORT_SIM_SCG_MASK SIM_SCGC5_PORTE_MASK
+#define BOOT_PIN_UART_ALTERNATIVE 3
+#define BOOT_UART_GPIO_PIN_RX 1 
+#define BOOT_UART_GPIO_PIN_TX 0 </pre>
+
+        <p class="p"><strong class="ph b">SPI Configuration</strong></p>
+
+        <pre class="pre codeblock">#define BOOT_SPI_Slave_IRQ INT_SPI0
+#define BOOT_SPI_Slave_BaseAddr SPI0_BASE_PTR
+#define BOOT_SPI_Slave_PORT_SIM_SCG SIM_SCGC5
+#define cSPI_Slave_PORT_SIM_SCG_Config_c SIM_SCGC5_PORTC_MASK
+#define BOOT_SPI_Slave_SIM_SCG SIM_SCGC6
+#define cSPI_Slave_SIM_SCG_Config_c SIM_SCGC6_SPI0_MASK
+#define BOOT_SPI_Slave_SCLK_PCR PORTC_PCR5
+#define BOOT_SPI_Slave_MOSI_PCR PORTC_PCR6
+#define BOOT_SPI_Slave_MISO_PCR PORTC_PCR7
+#define BOOT_SPI_Slave_SSEL_PCR PORTC_PCR4
+#define BOOT_SPI_Slave_ALTERNATIVE 2</pre>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-9EE283E7-E36D-420A-86E6-9D2159B9A820.html">FSCI Bootloader</a></div>
+</div>
+</div>
+
+</body>
+</html>

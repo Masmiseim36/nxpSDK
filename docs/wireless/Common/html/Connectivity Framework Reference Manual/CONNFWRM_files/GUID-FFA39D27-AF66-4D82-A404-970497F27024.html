@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Constant macro definitions"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-F74086D7-C1F8-46AE-9F01-2509633024A4.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-FFA39D27-AF66-4D82-A404-970497F27024"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Constant macro definitions</title>
+</head>
+<body id="GUID-FFA39D27-AF66-4D82-A404-970497F27024">
+
+
+    <h1 class="title topictitle1">Constant macro definitions</h1>
+
+    <div class="body">
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">#define gEnableOTAServer_d (0)</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Enables/disables the OTAP Server capabilities</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">#define gUpgradeImageOnCurrentDevice_d (0)</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">If enabled, the image received over the serial interface will be written into the MCU
+            (for testing purpose).</p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">#define gOtaVersion_c (0x01)</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Defines the version of the Over-the-Air programming support module.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">#define gOtaVerifyWrite_d (1)</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">If enabled, the OtaSupport module verifies that the image chunks are correctly written to
+            flash.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">#define gBootValueForTRUE_c (0x00)</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Do not change. Internal use only.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">#define gBootValueForFALSE_c (0xFF)</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Do not change. Internal use only.</p>
+
+        <p class="p"/>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">#define gBootData_StartMarker_Value_c</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">This represents the value of the start marker of the internal image storage.
+            It is used by bootloader to determine the start address of the internal storage if the
+            boot flags are invalid. If the value of this define is changed, then the define from the
+            source code of the bootloader must also be changed to remain in sync.</p>
+
+        <p class="p"/>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">#define gBootData_StartMarker_Offset_c </pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">This represents the offset to the location of the start marker.</p>
+
+        <p class="p"/>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">#define gBootData_Marker_Size_c</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">The represents size reserved for the start marker. If  internal storage is
+            not used, the size is zero.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">#define gBootData_ImageLength_Offset_c (gBootData_StartMarker_Offset_c + gBootData_Marker_Size_c)</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Defines the offset to the location of the image length field. Do not change. Internal use
+            only.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">#define gBootData_ImageLength_Size_c (0x04) </pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Defines the size of the image length field. Do not change. Internal use only.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">#define gBootData_SectorsBitmap_Offset_c gEepromAlignAddr_d(gBootData_ImageLength_Offset_c + \
+    gBootData_ImageLength_Size_c) </pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Defines the offset to the location of the sector bitmap field. Do not change. Internal
+            use only.</p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">#define gBootData_SectorsBitmap_Size_c (32) </pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Defines the length of the sector bitmap field. Do not change. Internal use only.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">#define gBootData_Image_Offset_c gEepromAlignAddr_d(gBootData_SectorsBitmap_Offset_c + \
+    gBootData_SectorsBitmap_Size_c) </pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Defines the offset to the location of the image binary. Do not change. Internal use
+            only.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">#define gFlashParams_MaxImageLength_c </pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Defines the maximum possible size for an image. Do not change. Internal use only.</p>
+
+        <p class="p"/>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">#define gBootFlagUnprogrammed_c </pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">This represents the default value of a boot flag. The value depends on the
+            flash controller program unit size. </p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-F74086D7-C1F8-46AE-9F01-2509633024A4.html">Over-the-Air programming support</a></div>
+</div>
+</div>
+
+</body>
+</html>

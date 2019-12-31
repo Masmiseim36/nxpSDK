@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Customization"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-5294AE15-398C-45C4-A2ED-732BEE0E902B.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-50EE0FD1-784B-43D9-9C81-7DD1028431A2"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Customization</title>
+</head>
+<body id="GUID-50EE0FD1-784B-43D9-9C81-7DD1028431A2">
+
+
+    <h1 class="title topictitle1">Customization</h1>
+
+    <div class="body">
+        <p class="p">The steps below will help changing the default settings of this demo. </p>
+
+        <p class="p">For Bluetooth LE, the default advertising config (gAppAdvParams), and data
+            (gAppAdvertisingData) are found in the app_config.c file. Also, the scanning parameters
+            (gScanParams) can be found in this file. The default scan interval is 100ms with a scan
+            window of 50ms.</p>
+
+        
+        <div class="note note"><span class="notetitle">Note:</span> The GFSK protocol is active during the inactive periods of the Bluetooth
+            LE protocol. Configuring a large scan window in comparison to the scan interval will not
+            leave enough room for the GFSK protocol to work. </div>
+
+        <p class="p">For GFSK, the following defines (self-explanatory) are used by the application, and can
+            be found in the “ble_genfsk_advertising.h” file:</p>
+
+        <ul class="ul" id="GUID-50EE0FD1-784B-43D9-9C81-7DD1028431A2__UL_B1P_FCL_FDB">
+            <li class="li">
+                <p class="p">gGenFSK_AdvAddress_c</p>
+
+            </li>
+
+            <li class="li">
+                <p class="p">gGenFskDefaultSyncAddress_c</p>
+
+            </li>
+
+            <li class="li">
+                <p class="p">gGenFskDefaultTxPowerLevel_c</p>
+
+            </li>
+
+            <li class="li">
+                <p class="p">gGenFskDefaultChannel_c</p>
+
+            </li>
+
+            <li class="li">
+                <p class="p">gGenFskApp_TxInterval_c</p>
+
+            </li>
+
+        </ul>
+
+        <p class="p">The “gGENFSK_MwsControl_c” define controls where the coexistence management should be
+            done:</p>
+
+        <p class="p"> </p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-50EE0FD1-784B-43D9-9C81-7DD1028431A2__TABLE_YBT_ZDB_SJB" class="table" frame="border" border="1" rules="all">
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d5217e75"><strong class="ph b">Value</strong></th>
+
+                        <th class="entry" valign="top" id="d5217e79"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                   
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d5217e75 ">gGENFSK_NoMwsControl_c</td>
+
+                        <td class="entry" valign="top" headers="d5217e79 ">No protocol coexistence management</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d5217e75 ">gGENFSK_LLMwsControl_c</td>
+
+                        <td class="entry" valign="top" headers="d5217e79 ">The GenFSK link layer manage the coexistence with Bluetooth protocol.
+                            In this case, the GenFSK will release control to the XCVR for Bluetooth
+                            after every sequence (TX/RX)</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d5217e75 ">gGENFSK_AppMwsControl_c</td>
+
+                        <td class="entry" valign="top" headers="d5217e79 ">The Application controls when the GenFSK releases the access to the
+                            XCVR. The GenFSK link layer still need to perform the XCVR configuration
+                            when the idle signal is received from the Bluetooth stack.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"> </p>
+
+        <p class="p">The payload to be transmitted over GFSK is represented by the “message” array, used by
+            the “GfskApp_Tx()” function.</p>
+
+        <div class="p">Other GFSK settings can also be changed, but require a more advanced knowledge of the
+            system:<ul class="ul">
+        <li class="li">pktConfig – configures the preamble size, length field config, synch address size</li>
+
+        <li class="li">crcConfig – enable/disable the data CRC, and the polynomial used</li>
+
+        <li class="li">whitenConfig – enable/disable data whitening, polynomial used, start/end markers</li>
+
+        <li class="li">radioConfig – change data rate and modulation</li>
+</ul>
+</div>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-5294AE15-398C-45C4-A2ED-732BEE0E902B.html">Hybrid (Dual-Mode) Bluetooth Low Energy and Generic FSK Advertising Demo Application</a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Usage"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-CA079D00-53E8-4F68-AEC1-41DECA5FD169.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-DEED66ED-D478-4747-A5CF-9AABC1AF2D51"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Usage</title>
+</head>
+<body id="GUID-DEED66ED-D478-4747-A5CF-9AABC1AF2D51">
+
+
+  <h1 class="title topictitle1">Usage</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">The application is built to work with any other two devices that implement a GAP
+      Peripheral and a GAP Central. The out of the box example describes the Bluetooth LE Relay
+      Proxy connecting with a Heart Rate Sensor application from the same SDK and a smartphone or a
+      tablet running the Kinetis Bluetooth LE Toolbox application.</p>
+
+<ol class="ol">
+<li class="li">Download a Heart Rate Sensor application on a supported platform and start it as described in the previous chapter.</li>
+
+<li class="li">Press SCANSW on the Bluetooth LE Relay Proxy application. The node will connect
+        with the Heart Rate Sensor and do Service Discovery. CONNLED is solid. After the database is
+        recreated locally, the node will start advertising with the same data as the original
+        device. CONNLED starts flashing.</li>
+
+<li class="li">Start Kinetis Bluetooth LE Toolbox and connect to the Bluetooth LE Relay Proxy
+        application as with a normal Heart Rate Sensor application.</li>
+
+<li class="li">All GATT Read and Write operations made by the Kinetis Bluetooth LE Toolbox are
+        relayed by the node to the initial Heart Rate Sensor. All GATT Notifications are relayed to
+        the Kinetis Bluetooth LE Toolbox application.</li>
+
+</ol>
+
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-CA079D00-53E8-4F68-AEC1-41DECA5FD169.html">Relay Proxy</a></div>
+</div>
+</div>
+
+</body>
+</html>

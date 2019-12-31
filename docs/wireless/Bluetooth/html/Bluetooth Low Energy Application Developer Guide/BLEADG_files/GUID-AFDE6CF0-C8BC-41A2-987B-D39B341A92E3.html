@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Pairing and bonding"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-4DE3D2A8-4928-4AE2-8EC1-2EFF8A5275E0.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-AFDE6CF0-C8BC-41A2-987B-D39B341A92E3"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Pairing and bonding</title>
+</head>
+<body id="GUID-AFDE6CF0-C8BC-41A2-987B-D39B341A92E3">
+
+
+    <h1 class="title topictitle1">Pairing and bonding</h1>
+
+    <div class="body">
+        <p class="p">After the user has connected to a Peripheral, use the following function to check whether
+            this device has bonded in the past:</p>
+
+        <pre class="pre codeblock">bleResult_t <strong class="ph b">Gap_CheckIfBonded</strong>
+(
+    deviceId_t   deviceId,
+    bool_t *     pOutIsBonded
+);</pre>
+
+        <p class="p">If it has, link encryption can be requested with:</p>
+
+        <pre class="pre codeblock">bleResult_t <strong class="ph b">Gap_EncryptLink</strong>
+(
+    deviceId_t     deviceId,
+);</pre>
+
+        <p class="p">If the link encryption is successful, the <em class="ph i">gConnEvtEncryptionChanged_c</em> connection
+            event is triggered. Otherwise, a <em class="ph i">gConnEvtAuthenticationRejected_c </em>event is
+            received with the <em class="ph i">rejectReason</em> event data parameter set to
+                <em class="ph i">gLinkEncryptionFailed_c</em>.</p>
+
+        <p class="p">On the other hand, if this is a new device (not bonded), pairing may be started as shown
+            here:</p>
+
+        <pre class="pre codeblock">bleResult_t <strong class="ph b">Gap_Pair</strong>
+(
+    deviceId_t                       deviceId,
+    const gapPairingParameters_t *   pPairingParameters
+);</pre>
+
+        <p class="p">The pairing parameters are shown here:</p>
+
+        <pre class="pre codeblock"><strong class="ph b">typedef</strong> <strong class="ph b">struct</strong> gapPairingParameters_tag {
+    bool_t                        withBonding ;
+    gapSecurityModeAndLevel_t     securityModeAndLevel ;
+    uint8_t                       maxEncryptionKeySize ;
+    gapIoCapabilities_t           localIoCapabilities ;
+    bool_t                        oobAvailable ;
+    gapSmpKeyFlags_t              centralKeys ;
+    gapSmpKeyFlags_t              peripheralKeys ;
+    bool_t                        leSecureConnectionSupported ;
+    bool_t                        useKeypressNotifications ;
+} gapPairingParameters_t;</pre>
+
+        <p class="p">The names of the parameters are self-explanatory. The <em class="ph i">withBonding</em> flag should be
+            set to <em class="ph i">TRUE</em> if the Central must/wants to bond.</p>
+
+        <p class="p">For the Security Mode and Level, the GAP layer defines them as follows:</p>
+
+        <ul class="ul" id="GUID-AFDE6CF0-C8BC-41A2-987B-D39B341A92E3__UL_MD1_GJV_1Y">
+            <li class="li">Security Mode 1 Level 1 stands for no security requirements</li>
+
+            <li class="li">Except for Level 1 (which is only used with Mode 1), Security Mode 1 requires
+                encryption, while Security Mode 2 requires data signing</li>
+
+            <li class="li">Mode 1 Level 2 and Mode 2 Level 1 do not require authentication (in other words,
+                they allow Just Works pairing, which has no MITM protection), while Mode 1 Level 3
+                and Mode 2 Level 2 require authentication (must pair with PIN or OOB data, which
+                provide MITM protection). </li>
+
+            <li class="li">Starting with Bluetooth specification 4.2 OOB pairing offers MITM protection only in
+                certain conditions. The application must inform the stack if its the OOB data
+                exchange capabilities offer MITM protection via a dedicated API.</li>
+
+            <li class="li">Security Mode 1 Level 4 is reserved for authenticated pairing (with MITM protection)
+                using a LE Secure Connections pairing method.</li>
+
+                     <li class="li">If a pairing method is used but it does
+                not offer MITM protection then the pairing parameters must use Security Mode 1 level
+                2.  If the requested pairing parameters are incompatible (for example, Security Mode
+                1 Level 4 without LE Secure Connections enabled), a gBleInvalidParameter_c status is
+                returned by the security API functions: Gap_SetDefaultPairingParameters,
+                Gap_SendSlaveSecurityRequest, Gap_Pair and Gap_AcceptPairingRequest.</li>
+
+            
+        </ul>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-AFDE6CF0-C8BC-41A2-987B-D39B341A92E3__TABLE_HLK_JJV_1Y" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 1. GAP Security Modes and Levels</span></caption>
+                
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" width="20%" id="d18171e176">—</th>
+
+                        <th class="entry" valign="top" width="20%" id="d18171e179">No security</th>
+
+                        <th class="entry" valign="top" width="20%" id="d18171e182">No MITM protection</th>
+
+                        <th class="entry" valign="top" width="20%" id="d18171e185">Legacy MITM protection</th>
+
+                        <th class="entry" valign="top" width="20%" id="d18171e188">LE secure connections with MITM protection</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" width="20%" headers="d18171e176 "><strong class="ph b">Mode 1 (encryption)</strong> distributed LTK (EDIV+RAND) or generated
+                            LTK</td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e179 "><strong class="ph b">Level 1</strong> no security</td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e182 "><strong class="ph b">Level 2</strong> unauthenticated encryption</td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e185 "><strong class="ph b">Level 3</strong> authenticated encryption</td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e188 "><strong class="ph b">Level 4</strong> LE SC authenticated encryption</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" width="20%" headers="d18171e176 "><strong class="ph b">Mode 2 (data signing)</strong> distributed CSRK</td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e179 ">—</td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e182 "><strong class="ph b">Level 1</strong> unauthenticated data signing</td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e185 "><strong class="ph b">Level 2</strong> authenticated data signing</td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e188 ">—</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p">The <em class="ph i">centralKeys</em> should have the flags set for all the keys that are available in
+            the application. The IRK is mandatory if the Central is using a Private Resolvable
+            Address, while the CSRK is necessary if the Central wants to use data signing. The LTK
+            is provided by the Peripheral and should only be included if the Central intends on
+            becoming a Peripheral in future reconnections (GAP role change).</p>
+
+        <p class="p">The <em class="ph i">peripheralKeys</em> should follow the same guidelines. The LTK is mandatory if
+            encryption is to be performed, while the peer’s IRK should be requested if the
+            Peripheral is using Private Resolvable Addresses.</p>
+
+        <p class="p">See <a class="xref" href="#GUID-AFDE6CF0-C8BC-41A2-987B-D39B341A92E3__TABLE_PJN_XLV_1Y">Table 2</a> for detailed guidelines regarding key distribution.</p>
+
+        <p class="p">The first three rows are both guidelines for Pairing Parameters (<em class="ph i">centralKeys</em> and
+                <em class="ph i">peripheralKeys</em>) and for distribution of keys with <em class="ph i">Gap_SendSmpKeys</em>.</p>
+
+        <p class="p">If LE Secure Connections Pairing is performed (Bluetooth LE 4.2 and above),
+            then the LTK is generated internally, so the corresponding bits in the key distribution
+            fields from the pairing parameters are ignored by the devices.</p>
+
+        <p class="p">The Identity Address shall be distributed if the IRK is also distributed (its flag has
+            been set in the Pairing Parameters). Therefore, it can be “asked” only by asking for IRK
+            (it does not have a separate flag in a <em class="ph i">gapSmpKeyFlags_t</em> structure), hence the
+            N/A.</p>
+
+        <p class="p">The negotiation of the distributed keys is as follows:</p>
+
+        <ul class="ul" id="GUID-AFDE6CF0-C8BC-41A2-987B-D39B341A92E3__UL_PQH_SLV_1Y">
+            <li class="li">In the SMP Pairing Request (started by <em class="ph i">Gap_Pair</em>), the Central sets the flags
+                for the keys it wants to distribute (<em class="ph i">centralKeys</em>) and receive
+                    (<em class="ph i">peripheralKeys</em>).</li>
+
+        </ul>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-AFDE6CF0-C8BC-41A2-987B-D39B341A92E3__TABLE_PJN_XLV_1Y" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 2. Key Distribution guidelines</span></caption>
+                
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" width="20%" id="d18171e331"> </th>
+
+                        <th class="entry" colspan="2" valign="top" id="d18171e333">CENTRAL</th>
+
+                                          <th class="entry" colspan="2" valign="top" id="d18171e336">PERIPHERAL</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" width="20%" headers="d18171e331 "> </td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e333 "><strong class="ph b">Central keys</strong></td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e333 "><strong class="ph b">Peripheral keys</strong></td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e336 "><strong class="ph b">Peripheral keys</strong></td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e336 "><strong class="ph b">Central keys</strong></td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" width="20%" headers="d18171e331 "><strong class="ph b">Long Term Key (LTK) +EDIV +RAND</strong></td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e333 ">If it wants to be a peripheral in a future reconnection</td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e333 ">If it wants encryption</td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e336 ">If it wants encryption</td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e336 ">If it wants to become a central in a future reconnection</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" width="20%" headers="d18171e331 "><strong class="ph b">Identity Resolving Key (IRK)</strong></td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e333 ">If it uses or intends to use private resolvable addresses</td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e333 ">If a peripheral is using a private resolvable address</td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e336 ">If it uses or intends to use private resolvable addresses</td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e336 ">If a central is using a private resolvable address</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" width="20%" headers="d18171e331 "><strong class="ph b">Connection Signature Resolving Key (CSRK)</strong></td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e333 ">If it wants to sign data as GATT Client</td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e333 ">If it wants the peripheral to sign data as GATT Client</td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e336 ">If it wants to sign data as GATT Client</td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e336 ">If it wants the Central to sign data as GATT Client</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" width="20%" headers="d18171e331 "><strong class="ph b">Identity address</strong></td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e333 ">If it distributes the IRK</td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e333 ">N/A</td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e336 ">If it distributes the IRK</td>
+
+                        <td class="entry" valign="top" width="20%" headers="d18171e336 ">N/A</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <ul class="ul" id="GUID-AFDE6CF0-C8BC-41A2-987B-D39B341A92E3__UL_VDS_P4V_1Y">
+            <li class="li">The Peripheral examines the two distributions and must send an SMP Pairing Response
+                (started by the <em class="ph i">Gap_AcceptPairingRequest</em>) after performing any changes it
+                deems necessary. The Peripheral is only allowed to set to 0 some flags that are set
+                to 1 by the Central, but not the other way around. For example, it cannot
+                request/distribute keys that were not offered/requested by the Central. If the
+                Peripheral is adverse to the Central’s distributions, it can reject the pairing by
+                using the <em class="ph i">Gap_RejectPairing</em> function.</li>
+
+            <li class="li">The Central examines the updated distributions from the Pairing Response. If it is
+                adverse to the changes made by the Peripheral, it can reject the pairing
+                    (<em class="ph i">Gap_RejectPairing</em>). Otherwise, the pairing continues and, during the key
+                distribution phase (the <em class="ph i">gConnEvtKeyExchangeRequest_c</em> event) only the final
+                negotiated keys are included in the key structure sent with
+                <em class="ph i">Gap_SendSmpKeys</em>.</li>
+
+            <li class="li">For LE Secure Connections (Both devices set the SC bit in the AuthReq
+                field of the Pairing Request and Pairing Response packets) the LTK is not
+                distributed it is generated and the corresponding bit in the Initiator Key
+                Distribution and Responder Key Distribution fields of the Pairing Response packet
+                shall be set to 0.</li>
+
+        </ul>
+
+        <p class="p">If LE Secure Connections Pairing (Bluetooth LE 4.2 and above) is used, and
+            OOB data needs to be exchanged, the application must obtain the local LE SC OOB Data
+            from the host stack by calling the <em class="ph i">Gap_LeScGetLocalOobData</em> function. The data is
+            contained by the generic <em class="ph i">gLeScLocalOobData_c</em> event.</p>
+
+        <p class="p">The local LE SC OOB Data is refreshed in the following situations:</p>
+
+        <ul class="ul" id="GUID-AFDE6CF0-C8BC-41A2-987B-D39B341A92E3__UL_BFH_YCB_BY">
+            <li class="li">The <em class="ph i">Gap_LeScRegeneratePublicKey</em> function is called (the
+                    <em class="ph i">gLeScPublicKeyRegenerated_c</em> generic event is also generated as a result
+                of this API).</li>
+
+            <li class="li">The device is reset (which also causes the Public Key to be regenerated).</li>
+
+        </ul>
+
+        <p class="p">If the pairing continues, the following connection events may occur:</p>
+
+        <ul class="ul" id="GUID-AFDE6CF0-C8BC-41A2-987B-D39B341A92E3__UL_WNS_ZCB_BY">
+            <li class="li"><strong class="ph b">Request events</strong><ul class="ul" id="GUID-AFDE6CF0-C8BC-41A2-987B-D39B341A92E3__UL_GTS_ZCB_BY">
+                    <li class="li"><em class="ph i">gConnEvtPasskeyRequest_c</em>: a PIN is required for pairing; the
+                        application must respond with the <em class="ph i">Gap_EnterPasskey(deviceId,
+                            passkey).</em></li>
+
+                    <li class="li"><em class="ph i">gConnEvtOobRequest_c</em>: if the pairing started with the
+                            <em class="ph i">oobAvailable</em> set to <em class="ph i">TRUE</em> by both sides; the application
+                        must respond with the <em class="ph i">Gap_ProvideOob(deviceId, oob).</em></li>
+
+                    <li class="li"><em class="ph i">gConnEvtKeyExchangeRequest_c</em>: the pairing has reached the key
+                        exchange phase; the application must respond with the
+                            <em class="ph i">Gap_SendSmpKeys(deviceId, smpKeys).</em></li>
+
+                    <li class="li"><em class="ph i">gConnEvtLeScOobDataRequest_c</em>: the stack requests the LE SC OOB Data
+                        received from the peer (r, Cr and Addr); the application must respond with
+                            <em class="ph i">Gap_LeScSetPeerOobData(deviceId, leScOobData).</em></li>
+
+                    <li class="li"><em class="ph i">gConnEvtLeScDisplayNumericValue_c</em>: the stack requests the display and
+                        confirmation of the LE SC Numeric Comparison Value; the application must
+                        respond with <em class="ph i">Gap_LeScValidateNumericValue(deviceId,
+                        ncvValidated).</em></li>
+
+                </ul>
+</li>
+
+            <li class="li"><strong class="ph b">Informational events</strong><ul class="ul" id="GUID-AFDE6CF0-C8BC-41A2-987B-D39B341A92E3__UL_YVS_ZCB_BY">
+                    <li class="li"><em class="ph i">gConnEvtKeysReceived_c</em>: the key exchange phase is
+                        complete; keys are automatically saved in the internal device database and
+                        are also provided to the application for immediate inspection; application
+                        does not have to save the keys in NVM storage because this is done
+                        internally if <em class="ph i">withBonding </em>was set to TRUE by both sides.</li>
+
+                    <li class="li"><em class="ph i">gConnEvtAuthenticationRejected_c</em>: the peer device rejected the
+                        pairing; the <em class="ph i">rejectReason</em> parameter of the event data indicates the
+                        reason that the Peripheral does not agree with the pairing parameters (it
+                        cannot be <em class="ph i">gLinkEncryptionFailed_c</em> because that reason is reserved for
+                        the link encryption failure).</li>
+
+                    <li class="li"><em class="ph i">gConnEvtPairingComplete_c</em>: the pairing process is complete, either
+                        successfully, or an error may have occurred during the SMP packet exchanges;
+                        note that this is different from the <em class="ph i">gConnEvtKeyExchangeRequest_c</em>
+                        event; the latter signals that the pairing was rejected by the peer, while
+                        the former is used for failures due to the SMP packet exchanges.</li>
+
+                    <li class="li"><em class="ph i">gConnEvtLeScKeypressNotification_c</em>: the stack informs the application
+                        that a remote SMP Keypress Notification has been received during Passkey
+                        Entry Pairing Method.</li>
+
+                </ul>
+</li>
+
+        </ul>
+
+        <p class="p">After the link encryption or pairing is completed successfully, the Central may
+            immediately start exchanging data using the GATT APIs.</p>
+
+        <div class="fig fignone" id="GUID-AFDE6CF0-C8BC-41A2-987B-D39B341A92E3__FIG_QT5_2DB_BY"><span class="figcap">Figure 1. Central pairing flow – APIs and eventsGap_RejectPairing may be called on any
+                pairing event</span>
+            
+            <img class="image" id="GUID-AFDE6CF0-C8BC-41A2-987B-D39B341A92E3__IMAGE_QXF_JDB_BY" src="GUID-C1F6A4EC-4C5E-463E-B360-09215417722E-high.png"/>
+        </div>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-4DE3D2A8-4928-4AE2-8EC1-2EFF8A5275E0.html">Central setup</a></div>
+</div>
+</div>
+
+</body>
+</html>

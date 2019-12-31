@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Usage"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-77E76719-2781-442F-A442-AA78D9069633.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-5CF81659-E394-40C7-9A21-88F18744157D"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Usage</title>
+</head>
+<body id="GUID-5CF81659-E394-40C7-9A21-88F18744157D">
+
+
+  <h1 class="title topictitle1">Usage</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">The setup requires two or three supported platforms, one for PTU device and one or two for PRU devices.</p>
+
+ <ol class="ol">
+<li class="li">Open serial port terminals for all the platforms. The start screen is displayed after the board is reset. At first the LEDs are flashing on all devices.</li>
+
+<li class="li">Press ADVSW on the PTU device and on a PRU device. CONNLED should start flashing on both devices until the connection is established or until the PRU device times out.</li>
+
+<li class="li">After the registration procedure is finished the PTU device will display a success message and will simulate the procedure for providing power to the PRU.
+<div class="fig fignone" id="GUID-5CF81659-E394-40C7-9A21-88F18744157D__BLEDAUGNT3024"><span class="figcap">Figure 1. PTU and PRU after connecting, registering and enabling charge</span>
+          
+          
+          <img class="image" src="GUID-120195E0-9951-486F-840B-D9B83C53A52D-high.png"/>
+        </div>
+</li>
+
+<li class="li">Short press ADVSW on the PRU device again to print most recent dynamic parameters.</li>
+
+<li class="li">Long press on ADVSW on the PTU device to get system information.
+<div class="fig fignone" id="GUID-5CF81659-E394-40C7-9A21-88F18744157D__BLEDAUGNT3025"><span class="figcap">Figure 2. PTU information and PRU dynamic parameters display</span>
+          
+          
+          <img class="image" src="GUID-28D720DD-3ACE-4C7B-863F-0BF23D026F85-high.png"/>
+        </div>
+</li>
+
+<li class="li">Long press ADVSW on the PRU device to simulate a charge complete event.
+<div class="fig fignone" id="GUID-5CF81659-E394-40C7-9A21-88F18744157D__BLEDAUGNT3026"><span class="figcap">Figure 3. PRU device charged</span>
+          
+          
+          <img class="image" src="GUID-41D3DC0F-714A-4848-95D3-F9D8EF155B9E-high.png"/>
+        </div>
+</li>
+
+<li class="li">Very long press ADVSW on the PRU device to simulate power removed and return it into a “Null” state.
+
+
+<div class="fig fignone" id="GUID-5CF81659-E394-40C7-9A21-88F18744157D__BLEDAUGNT3027"><span class="figcap">Figure 4. PRU power removed</span>
+          
+          
+          <img class="image" src="GUID-56137FBA-DBCE-46DD-95E0-DB34B8BCB6D4-high.png" height="278" width="541"/>
+        </div>
+</li>
+
+
+<li class="li">If a second PRU device is used, ADVSW can be short pressed on both the PTU and on the new PRU after step 3 was finished for the previous PRU. Also, to test the power 
+sharing procedure support, the gAdjustPowerCommandSupport_d macro should be defined as TRUE on at least one of the PRU devices before flashing the firmware. 
+If the above macro is set to TRUE a scenario is designed so that two PRU devices combined require more power than the PTU device can provide, but the PTU device attempts a 
+power sharing procedure so that it can adjust the power draw for at least one of the PRU’s.
+
+
+<div class="fig fignone" id="GUID-5CF81659-E394-40C7-9A21-88F18744157D__BLEDAUGNT3080"><span class="figcap">Figure 5. Power sharing support on one PRU</span>
+          
+          
+          <img class="image" src="GUID-4A884AE9-F797-4ECB-8CD7-05C0BA45DE92-high.png"/>
+        </div>
+</li>
+
+
+
+
+</ol>
+
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-77E76719-2781-442F-A442-AA78D9069633.html">Wireless Power Transfer System Receiving Unit and Transmitting Unit</a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="User-defined data type definitions"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-F74086D7-C1F8-46AE-9F01-2509633024A4.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-5791ABD4-CEE9-41C0-9781-F1FDFAD744F8"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>User-defined data type definitions</title>
+</head>
+<body id="GUID-5791ABD4-CEE9-41C0-9781-F1FDFAD744F8">
+
+
+    <h1 class="title topictitle1">User-defined data type definitions</h1>
+
+    <div class="body">
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">typedef enum {
+    gOtaSucess_c = 0,
+    gOtaNoImage_c,
+    gOtaUpdated_c,
+    gOtaError_c,
+    gOtaCrcError_c,
+    gOtaInvalidParam_c,
+    gOtaInvalidOperation_c,
+    gOtaExternalFlashError_c,
+    gOtaInternalFlashError_c,
+} otaResult_t;</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Status codes</p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">typedef enum {
+    gUpgradeImageOnCurrentDevice_c = 0,
+    gUseExternalMemoryForOtaUpdate_c,
+    gDoNotUseExternalMemoryForOtaUpdate_c,
+    gOtaTestingProcess
+}otaMode_t;</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Modes of operation for the OTAP Server.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">typedef otaResult_t (*pfOTA_Callback_t)(uint8_t* pBuffer, uint16_t len);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Callback function used by OTAP Server application which notify the reception of a FSCI
+            command.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">typedef struct otaServer_AppCB_tag{
+    pfOTA_Callback_t otaServerImgNotifyCnf;
+    pfOTA_Callback_t otaServerSetModeCnf;
+    pfOTA_Callback_t otaServerQueryImageCnf;
+    pfOTA_Callback_t otaServerPushChunkCnf;
+    pfOTA_Callback_t otaServerCancelImgCnf
+    pfOTA_Callback_t otaServerAbortProcessCnf;
+    pfOTA_Callback_t otaServerSetFileVersPoliciesCnf;
+}otaServer_AppCB_t;</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Callback functions used by the OTAP Server to notify the reception of a certain FSCI
+            command.</p>
+
+        <p class="p"/>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">typedef PACKED_STRUCT
+{
+    uint8_t  newBootImageAvailable[FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE];
+    uint8_t  bootProcessCompleted[FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE];
+    uint8_t  version[FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE];
+    uint8_t  internalStorageAddr [FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE];
+  
+}bootInfo_t;</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">This is the structure of the boot flags. Do not change this structure.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-F74086D7-C1F8-46AE-9F01-2509633024A4.html">Over-the-Air programming support</a></div>
+</div>
+</div>
+
+</body>
+</html>

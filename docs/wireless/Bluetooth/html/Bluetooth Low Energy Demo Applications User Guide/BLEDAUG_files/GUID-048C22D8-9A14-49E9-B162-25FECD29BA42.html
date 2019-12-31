@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Usage"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-56C80BBD-BC39-4CFE-8B82-E072709546BA.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-048C22D8-9A14-49E9-B162-25FECD29BA42"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Usage</title>
+</head>
+<body id="GUID-048C22D8-9A14-49E9-B162-25FECD29BA42">
+
+
+  <h1 class="title topictitle1">Usage</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">The application is built to work only with the HID Device application presented in the previous subchapter and it supports up to 2 peripherals connected at the same time.</p>
+
+<ol class="ol">
+<li class="li">Open a serial port terminal and connect it to board, in the same manner described in section 5.1.3. The start screen is displayed after the board is reset.</li>
+
+<li class="li">Press the SCANSW button on the HID Host board to start scanning for devices. Do the same on the HID
+        device board to make it enter discoverable mode. The host connects with the board after it
+        sees it advertise the HID service, connects to it, and configures report notifications. The
+        device then starts sending HID reports, as shown below. <div class="fig fignone" id="GUID-048C22D8-9A14-49E9-B162-25FECD29BA42__BLEDAUG3004"><span class="figcap">Figure 1. Tera Term – Output Console on HID Host with 1 peripheral connected</span>
+          
+          <img class="image" src="GUID-446E0237-207B-4AEC-95AE-244057448F97-high.png" height="288" width="411"/>
+          <p class="p"/>
+
+        </div>
+</li>
+
+
+<li class="li">To connect a second HID device, press again the SCANSW button on the HID Host board to start scanning for devices. Do the same on the second HID device board to make it enter discoverable mode. 
+The host connects with the board after it sees it advertise the HID service, connects to it, and configures report notifications. The device then starts sending HID reports. 
+The console will print reports from both devices, as shown below.
+
+
+<div class="fig fignone" id="GUID-048C22D8-9A14-49E9-B162-25FECD29BA42__BLEDAUG3005"><span class="figcap">Figure 2. Tera Term – Output Console on HID Host with 2 peripherals connected</span>
+          
+          
+          <img class="image" src="GUID-DF1DAAD3-E2C7-4734-B597-7D2A8027A983-high.png" height="280" width="541"/>
+</div>
+</li>
+
+
+
+
+
+
+</ol>
+
+
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-56C80BBD-BC39-4CFE-8B82-E072709546BA.html">HID Host</a></div>
+</div>
+</div>
+
+</body>
+</html>

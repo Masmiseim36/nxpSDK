@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Usage"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-62F8446F-A383-4BA4-B04D-22FCAC9B74A4.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-03ADB36F-C179-4D76-B7FC-115F6DEE1263"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Usage</title>
+</head>
+<body id="GUID-03ADB36F-C179-4D76-B7FC-115F6DEE1263">
+
+
+    <h1 class="title topictitle1">Usage</h1>
+
+    <div class="body">
+        <p class="p">The Private Profile Server can be connected to any supported platforms running Private Profile Client application.</p>
+
+        <p class="p">To make the Private Profile Server visible, press the ADVSW button to start sending advertisements, which causes CONNLED to start flashing. The device is visible with the name “NXP_QPP”. A solid CONNLED indicates a successful connection between 2 devices.</p>
+
+        <p class="p">The Private Profile is a cutom service that implements two custom characteristic:</p>
+
+        <ul class="ul">
+          <li class="li">Rx Characteristic (UUID: d44bc439-abfd-45a2-b575-925416129600), used to write data to the server</li>
+
+          <li class="li">Tx Characteristic (UUID: d44bc439-abfd-45a2-b575-925416129601), used to get data from the server through notifications</li>
+
+        </ul>
+
+        <p class="p">When in connection and if notifications are configured, the Private Profile Server starts sending data every 100 milliseconds through GATT instant value notifications.If the client starts writing the Rx characteristic, the value length received will be monitored in the data Rx callback. Every 10 seconds, a throughput statistics is made and Tx/Rx results are printed on the serial interface.</p>
+
+        <div class="fig fignone"><span class="figcap">Figure 1. Private Profile Server – Output Console</span>
+            
+            <img class="image" src="GUID-794137FC-E625-4822-95C4-6A5948E4EA53-high.png" height="397" width="406"/>
+            <p class="p"/>
+
+          </div>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-62F8446F-A383-4BA4-B04D-22FCAC9B74A4.html">Private Profile Server</a></div>
+</div>
+</div>
+
+</body>
+</html>

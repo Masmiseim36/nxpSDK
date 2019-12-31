@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="GATT database"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-787C2839-9165-473A-B6E1-98731DAF3188.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-4CD0561B-52CC-471B-BFF8-E935E3E2F24A"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>GATT database</title>
+</head>
+<body id="GUID-4CD0561B-52CC-471B-BFF8-E935E3E2F24A">
+
+
+    <h1 class="title topictitle1">GATT database</h1>
+
+    <div class="body">
+        <p class="p">For memory efficiency reasons, the Host Stack does not allocate memory for the GATT
+            Database.</p>
+
+        <p class="p">Instead, the application must allocate memory, define and populate the
+            database according to its requirements and constraints. It may do so either statically,
+            at application compile time, or dynamically.</p>
+
+        <p class="p">Regardless of how the GATT Database is created by the application, the following two
+            external references from <em class="ph i">gatt_database.h</em> must be defined:</p>
+
+        <pre class="pre codeblock">/*! The number of attributes in the GATT Database. */
+<strong class="ph b">extern</strong> uint16_t gGattDbAttributeCount_c;
+ 
+/*! Reference to the GATT database */
+<strong class="ph b">extern</strong> gattDbAttribute_t gattDatabase[];</pre>
+
+        <p class="p">The attribute template is defined as shown here:</p>
+
+        <pre class="pre codeblock"><strong class="ph b">typedef</strong> <strong class="ph b">struct</strong> {
+    uint16_t handle ; 
+/*!&lt; Attribute handle - cannot be 0x0000; attribute handles need not be consecutive, but must be strictly increasing. */
+    uint16_t permissions ; 
+/*!&lt; Attribute permissions as defined by ATT. */
+    uint32_t uuid ; 
+/*!&lt; The UUID should be read according to the gattDbAttribute_t.uuidType member: for 2-byte and 4-byte UUIDs, this contains the value of the UUID; for 16-byte UUIDs, this is a pointer to the allocated 16-byte array containing the UUID. */
+    uint8_t * pValue ; 
+/*!&lt; Pointer to allocated value array. */
+    uint16_t valueLength ; 
+/*!&lt; Size of the value array. */
+    uint16_t uuidType : 2; 
+/*!&lt; Identifies the length of the UUID; the 2-bit values are interpreted according to the bleUuidType_t enumeration. */
+    uint16_t maxVariableValueLength : 10; 
+/*!&lt; Maximum length of the attribute value array; if this is set to 0, then the attribute's length (valueLength) is fixed and cannot be changed. */
+} gattDbAttribute_t ;</pre>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-787C2839-9165-473A-B6E1-98731DAF3188.html">Prerequisites</a></div>
+</div>
+</div>
+
+</body>
+</html>

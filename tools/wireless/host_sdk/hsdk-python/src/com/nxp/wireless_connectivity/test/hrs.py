@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 '''
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
+* Copyright 2016-2019 NXP
 * All rights reserved.
 *
 * SPDX-License-Identifier: BSD-3-Clause
@@ -76,6 +76,7 @@ class BLEDevice(object):
 
         if args.reset:
             FSCICPUReset(self.serial_port, protocol=self.protocol)
+            sleep(7)
 
         self.handles = {}
         self.client_device_id = None
@@ -434,13 +435,13 @@ class BLEDevice(object):
         '''
         GAP pairing request received through event
         '''
-        GAPAcceptPairing(
+        GAPAcceptPairingRequest(
             self.serial_port,
             DeviceId=self.client_device_id,
             PairingParameters_WithBonding=False,
             PairingParameters_SecurityModeAndLevel=RequirementsSecurityModeLevel.gMode1Level3_c,
             PairingParameters_MaxEncryptionKeySize=0x10,
-            PairingParameters_LocalIoCapabilities=False,
+            PairingParameters_LocalIoCapabilities=PairingParametersLocalIoCapabilities.gIoDisplayOnly_c,
             PairingParameters_OobAvailable=False,
             PairingParameters_CentralKeys=PairingParametersCentralKeys.gIrk_c,
             PairingParameters_PeripheralKeys=PairingParametersPeripheralKeys.gLtk_c | PairingParametersPeripheralKeys.gIrk_c,
@@ -810,7 +811,6 @@ def main(args):
         dev.gap_register_device_security_requirements()
         dev.gap_set_local_passkey()
 
-    dev.gap_set_adv_data()
     dev.gatt_server_register_for_write_notifications(gBleSig_BatteryService_d)
 
     # get characteristic value handles
@@ -835,7 +835,9 @@ def main(args):
     while True:
         try:
             dev.gap_set_adv_parameters()
+            dev.gap_set_adv_data()
             dev.gap_start_adv()
+
             while not dev.gap_event_connected.is_set():
                 sleep(.1)
 

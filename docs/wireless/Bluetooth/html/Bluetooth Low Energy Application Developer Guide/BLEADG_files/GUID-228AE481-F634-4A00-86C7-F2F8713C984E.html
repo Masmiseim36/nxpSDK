@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Characteristic read by UUID procedure"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-94F6BAD4-5465-47FB-A724-0A3777940B9C.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-228AE481-F634-4A00-86C7-F2F8713C984E"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Characteristic read by UUID procedure</title>
+</head>
+<body id="GUID-228AE481-F634-4A00-86C7-F2F8713C984E">
+
+
+    <h1 class="title topictitle1">Characteristic read by UUID procedure</h1>
+
+    <div class="body">
+        <p class="p">This API for this procedure is shown here:</p>
+
+              
+        <pre class="pre codeblock">bleResult_t<strong class="ph b">GattClient_ReadUsingCharacteristicUuid</strong>
+(
+    deviceId_t               deviceId,
+    bleUuidType_t            uuidType,
+    const bleUuid_t*         pUuid,
+    const gattHandleRange_t* pHandleRange,
+    uint8_t*                 aOutBuffer,
+    uint16_t                 maxReadBytes,
+    uint16_t*                pOutActualReadBytes 
+);</pre>
+
+        <p class="p">This provides support for an important optimization, which involves reading a
+            Characteristic Value without performing any Service or Characteristic Discovery.</p>
+
+        <p class="p">For example, the following is the process to write an application that connects to any
+            Server and wants to read the device name.</p>
+
+        <p class="p">The device name is contained in the Device Name Characteristic from the GAP Service.
+            Therefore, the necessary steps involve discovering all primary services, identifying the
+            GAP Service by its UUID, discovering all Characteristics of the GAP Service and
+            identifying the Device Name Characteristic (alternatively, discovering Characteristic by
+            UUID inside GAP Service), and, finally, reading the device name by using the
+            Characteristic Read Procedure.</p>
+
+        <p class="p">Instead, the Characteristic Read by UUID Procedure allows reading a Characteristic with a
+            specified UUID, assuming one exists on the Server, without knowing the Characteristic
+            Value Handle.</p>
+
+  
+        <div class="p"> The described example is implemented as follows:
+            <pre class="pre codeblock"><strong class="ph b">#define</strong> mcMaxValueLength_c 20
+<strong class="ph b">static</strong> uint8_t aValue[2 + mcMaxValueLength_c]; //First 2 bytes are the handle
+<strong class="ph b">static</strong> uint16_t deviceNameLength;
+ 
+bleUuid_t uuid = {
+        .uuid16 = gBleSig_GapDeviceName_d
+};
+ 
+bleResult_t result = GattClient_ReadUsingCharacteristicUuid
+(
+    deviceId,
+    <em class="ph i">gBleUuidType16_c</em>,
+    &amp;uuid,
+    &amp;pHandleRange,
+    aValue,
+    mcMaxValueLength,
+    &amp;pOutActualReadBytes                
+        
+);
+ 
+<strong class="ph b">if</strong> (<em class="ph i">gBleSuccess_c</em> != result)
+{
+    /* Handle error */
+}</pre>
+The
+            Client Procedure Callback is triggered when the reading is complete. Because only one
+            air packet is exchanged during this procedure, it can only be used as a quick reading of
+            Characteristic Values with length no greater than <em class="ph i">ATT_MTU – 1</em>.</div>
+
+        <pre class="pre codeblock"><strong class="ph b">void</strong><strong class="ph b">gattClientProcedureCallback</strong>
+(
+    deviceId_t                 deviceId,
+    gattProcedureType_t        procedureType,
+    gattProcedureResult_t      procedureResult,
+    bleResult_t                error
+)
+{
+    <strong class="ph b">switch</strong> (procedureType)
+    {
+        /* ... */
+        <strong class="ph b">case</strong><em class="ph i">gGattProcReadUsingCharacteristicUuid_c</em>:
+            <strong class="ph b">if</strong> (<em class="ph i">gGattProcSuccess_c</em> == procedureResult)
+            {
+                /* Read characteristic value handle */
+                PRINT(aValue[0] | (aValue[1] &lt;&lt; 8));
+                deviceNameLength -= 2;
+
+                /* Read value length */
+                PRINT(deviceNameLength);
+                /* Read data */
+                <strong class="ph b">for</strong> ( uint8_t j = 0; j &lt; deviceNameLength; j++)
+                {
+                    PRINT(aValue[2 + j]);
+                }
+            }
+            <strong class="ph b">else</strong>
+            {
+                /* Handle error */
+                PRINT(error);
+            }
+            <strong class="ph b">break</strong>;
+
+        /* ... */
+    }
+}</pre>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-94F6BAD4-5465-47FB-A724-0A3777940B9C.html">Reading and writing characteristics</a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,1 +1,1 @@
-__all__ = ['bootloader', 'hrs', 'rgb_led', 'temp']
+__all__ = ['bootloader', 'hrs']

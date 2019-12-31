@@ -44,7 +44,7 @@ ifeq ($(ARMHF), yes)
 endif
 
 
-build: clean pre-build FsciBootloader GetKinetisDevices Thread_KW_Tun Thread_Shell PCAPTest
+build: clean pre-build FsciBootloader GetKinetisDevices 
 
 spi: SPITest
 
@@ -60,26 +60,6 @@ FsciBootloader.o: FsciBootloader.c
 GetKinetisDevices: GetKinetisDevices.o
 	$(CC) $(BUILDDIR)/$^ -o $(BINDIR)/$@ $(HSDK_LIBS) $(LDFLAGS)
 GetKinetisDevices.o: GetKinetisDevices.c
-	$(CC) $(CFLAGS) $(BUILDFLAGS) $^ -o $(BUILDDIR)/$@
-
-Thread_KW_Tun: Thread_KW_Tun.o
-	$(CC) $(BUILDDIR)/$^ -o $(BINDIR)/$@ $(HSDK_LIBS) $(LDFLAGS)
-Thread_KW_Tun.o: Thread_KW_Tun.c
-	$(CC) $(CFLAGS) $(BUILDFLAGS) $^ -o $(BUILDDIR)/$@
-
-Thread_Shell: Thread_Shell.o
-	$(CC) $(BUILDDIR)/$^ -o $(BINDIR)/$@ $(HSDK_LIBS) $(LDFLAGS)
-Thread_Shell.o: Thread_Shell.c
-	$(CC) $(CFLAGS) $(BUILDFLAGS) $^ -o $(BUILDDIR)/$@
-
-PCAPTest: PCAPTest.o
-	$(CC) $(BUILDDIR)/$^ -o $(BINDIR)/$@ $(HSDK_LIBS) $(LDFLAGS)
-PCAPTest.o: PCAPTest.c
-	$(CC) $(CFLAGS) $(BUILDFLAGS) $^ -o $(BUILDDIR)/$@
-
-SPITest: SPITest.o
-	$(CC) $(BUILDDIR)/$^ -o $(BINDIR)/$@ $(HSDK_LIBS)
-SPITest.o: SPITest.c
 	$(CC) $(CFLAGS) $(BUILDFLAGS) $^ -o $(BUILDDIR)/$@
 
 clean:

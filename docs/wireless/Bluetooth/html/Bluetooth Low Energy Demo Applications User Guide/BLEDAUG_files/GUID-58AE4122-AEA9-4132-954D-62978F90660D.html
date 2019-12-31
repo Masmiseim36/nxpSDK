@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Usage with IoT Toolbox"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-1494FED7-7DDB-4D3A-BA98-891523F88506.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-58AE4122-AEA9-4132-954D-62978F90660D"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Usage with IoT Toolbox</title>
+</head>
+<body id="GUID-58AE4122-AEA9-4132-954D-62978F90660D">
+
+
+  <h1 class="title topictitle1">Usage with IoT Toolbox</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">This is the list of requirements.</p>
+
+<ul class="ul">
+<li class="li">Mobile device running Android platform or iOS with hardware and software supporting
+        Bluetooth 4.0 and later</li>
+
+<li class="li">Kinetis Bluetooth LE Toolbox application – download from the specific application
+        store for your device</li>
+
+</ul>
+
+<p class="p">To run the application do the following.</p>
+
+<ol class="ol">
+<li class="li">Flash the OTAP Client ATT  and the OTAP Bootloader applications to a supported
+        platform. The Kinetis Bluetooth LE Toolbox only supports the ATT OTAP Client</li>
+
+<li class="li">Create the application to send over the air in .srec format. Follow the instructions from the previous section on how to do this.
+Remember to include the Bootloader in its appropriate section in your application.</li>
+
+<li class="li">Start the Kinetis Bluetooth LE Toolbox application on your mobile device and start
+        the OTAP Tool. The application starts scanning.</li>
+
+<li class="li">Press ADVSW on the board to start Advertising on the embedded OTAP Client application. The device should show up in the list of scanned devices. 
+Touch the device in the scan list to connect to and the application performs service discovery and displays some information shown in the figures below.
+
+<div class="fig fignone" id="GUID-58AE4122-AEA9-4132-954D-62978F90660D__BLEDAUG3023"><span class="figcap">Figure 1. IoT Toolbox - OTAP Tool Scanning and Discovery</span>
+  
+          <img class="image" src="GUID-2D9FAB1A-3548-4EAD-9197-AF8F253054C4-high.png" height="384" width="216"/>
+          <img class="image" src="GUID-5BC5F679-3A44-47D2-A91D-51FB51297DB0-high.png" height="384" width="216"/>
+        </div>
+</li>
+
+
+<li class="li">Press the “Open” button and load the .srec file to be sent over-the-air. Once the file is loaded some information about it is displayed. Press the “Upload” button to start the 
+image transfer process. A progress bar is shown while the image transfer is ongoing. The successful transfer is signaled by the progress bar reaching 100%. This is shown in the figures below.
+
+<div class="fig fignone" id="GUID-58AE4122-AEA9-4132-954D-62978F90660D__BLEDAUG3024"><span class="figcap">Figure 2. IoT Toolbox - OTAP Image Transfer</span>
+  
+          <img class="image" src="GUID-D698B4DD-D3CD-432E-8097-0E7B2FC52A85-high.png" height="384" width="216"/>
+        </div>
+</li>
+
+
+<li class="li">After the image transfer is complete the OTAP Client triggers the bootloader and resets the MCU. The bootloader takes about 30 seconds to flash the image on the board. 
+After this time passes the MCU resets again and runs the new image.</li>
+
+
+</ol>
+
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-1494FED7-7DDB-4D3A-BA98-891523F88506.html">Over the Air Programming (OTAP)</a></div>
+</div>
+</div>
+
+</body>
+</html>

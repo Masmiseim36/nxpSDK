@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Overview"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-8A565955-9A80-47D6-AA57-63D5487922A7.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-1FF3297E-B6E6-492E-982E-B89B0B8ECE6A"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Overview</title>
+</head>
+<body id="GUID-1FF3297E-B6E6-492E-982E-B89B0B8ECE6A">
+
+
+    <h1 class="title topictitle1">Overview</h1>
+
+    <div class="body">
+        <p class="p">The OS Abstraction layer offers common task creation and control services for RTOS
+            services and bare metal environment. The OS Abstraction provides the following services
+            for task creation and control:</p>
+
+        <ul class="ul" id="GUID-1FF3297E-B6E6-492E-982E-B89B0B8ECE6A__UL_GBL_SLX_DZ">
+            <li class="li"> Create</li>
+
+            <li class="li"> Terminate</li>
+
+            <li class="li"> Wait</li>
+
+            <li class="li"> Get ID</li>
+
+            <li class="li"> Yield</li>
+
+            <li class="li"> Set priority</li>
+
+            <li class="li"> Get priority</li>
+
+        </ul>
+
+        <p class="p">In the OS Abstraction layer, the task named main_task() is used as the starting point.
+            The user must implement a function with the prototype <em class="ph i">extern void main_task(void
+                *)</em> and treat it like a task. The OS Abstraction implementation declares this
+            function external. </p>
+
+        <p class="p">From this task, you can create other tasks, previously defined with
+                <em class="ph i">OSA_TASK_DEFINE(name, priority, instances, stackSz, useFloat)</em>. After system
+            initialization, the <em class="ph i">main_task</em> can either be terminated or reused. Note that
+            terminating <em class="ph i">main_task</em> does not necessarily free the used memory because the task
+            stack is defined as a global array for some RTOSes.</p>
+
+        <p class="p">The <em class="ph i">main_task</em> initially has the lowest priority. If necessary, the priority can be
+            modified at runtime, using the <em class="ph i">OSA_TaskSetPriority </em>API.</p>
+
+        <p class="p">Some framework components require a task to be defined and created. The task is defined
+            in the source files of the module and the task creation is done in the initialization
+            function. This approach makes the integration process easier without adding extra steps
+            to the initialization process.</p>
+
+        <p class="p">Tasks can be defined using the <em class="ph i">OSA_TASK_DEFINE</em> macro at compile time and are not
+            automatically started. After that, tasks can be created anytime by using the
+                <em class="ph i">OSA_TaskCreate</em> API.</p>
+
+        <p class="p">For FreeRTOS OS, the stacks are allocated internally. </p>
+
+        <p class="p">Tasks may also have multiple instances. The code to be executed is the same
+            for all instances, but each instance has its own stack. When using multiple instances,
+            the stack array is multiplied by the maximum number of instances. Tasks can also be
+            terminated.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-8A565955-9A80-47D6-AA57-63D5487922A7.html">Task creation and control</a></div>
+</div>
+</div>
+
+</body>
+</html>

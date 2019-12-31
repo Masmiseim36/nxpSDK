@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Pairing and bonding"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-FB27E41E-546F-4967-BC7B-0CC0802D71CB.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-67AA3017-DF85-4093-A27D-E6E9F0CF2231"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Pairing and bonding</title>
+</head>
+<body id="GUID-67AA3017-DF85-4093-A27D-E6E9F0CF2231">
+
+
+    <h1 class="title topictitle1">Pairing and bonding</h1>
+
+    <div class="body">
+        <p class="p">After a connection has been established to a Central, the Peripheral’s role regarding
+            security is a passive one. It is the Central’s responsibility to either start the
+            pairing process or, if the devices have already bonded in the past, to encrypt the link
+            using the shared LTK.</p>
+
+        <p class="p">If the Central attempts to access sensitive data without authenticating, the Peripheral
+            sends error responses (at ATT level) with proper error code (Insufficient
+            Authentication, Insufficient Encryption, Insufficient Authorization, and so on), thus
+            indicating to the Central that it needs to perform security procedures.</p>
+
+        <p class="p">All security checks are performed internally by the GAP module and the security error
+            responses are sent automatically. All the application developer needs to do is register
+            the security requirements.</p>
+
+        <p class="p">First, when building the GATT Database (see <a class="xref" href="GUID-C9D692A7-076C-4A9B-BEB3-74E17F41C5A7.html#GUID-C9D692A7-076C-4A9B-BEB3-74E17F41C5A7">Creating GATT database</a>), the sensitive attributes should have the security built into their
+            access permissions (for example, read-only / read with authentication / write with
+            authentication / write with authorization, and so on.).</p>
+
+        <p class="p">Second, if the GATT Database requires additional security besides that already specified
+            in attribute permissions (for example, certain services require higher security in
+            certain situations), the following function must be called:</p>
+
+        <pre class="pre codeblock">bleResult_t<strong class="ph b">Gap_RegisterDeviceSecurityRequirements</strong>
+(
+    gapDeviceSecurityRequirements_t * pSecurity
+);</pre>
+
+        <p class="p">The parameter is a pointer to a structure which contains a “device master security
+            setting” and service-specific security settings. All these security requirements are
+            pointers to <em class="ph i">gapSecurityRequirements_t</em> structures. The pointers that are to be
+            ignored should be set to <em class="ph i">NULL</em>.</p>
+
+        <p class="p">Although the Peripheral does not initiate any kind of security procedure, it can inform
+            the Central about its security requirements. This is usually done immediately after the
+            connection to avoid exchanging useless packets for requests that might be denied because
+            of insufficient security.</p>
+
+        <p class="p">The informing is performed through the Slave Security Request packet at SMP level. To use
+            it, the following GAP API is provided:</p>
+
+        <pre class="pre codeblock">bleResult_t<strong class="ph b">Gap_SendSlaveSecurityRequest</strong>
+(
+    deviceId_t                    deviceId,
+    const gapPairingParameters_t* pPairingParameters   
+);</pre>
+
+        
+        
+        <p class="p">The gapPairingParameters_t structure includes two important fields. The withBonding field indicates to the Central whether this Peripheral can bond and the securityModeAndLevel field informs about the required security mode and level that the Central should pair for. See Section 4.1.3 for an explanation about
+            security modes and levels, as defined by the GAP module.</p>
+
+        <p class="p">This request expects no reply, nor any immediate action from the Central. The Central may
+            easily choose to ignore the Slave Security Request.</p>
+
+        <p class="p">If the two devices have bonded in the past, the Peripheral should expect to
+            receive a <em class="ph i">gConnEvtLongTermKeyRequest_c</em> connection event (unless LE Secure
+            Connections Pairing was performed, as specified in Bluetooth Low Energy 4.2 and above), which means that
+            the Central has also recognized the bond and, instead of pairing, it goes directly to
+            encrypting the link using the previously shared LTK. At this point, the local LE
+            Controller requests that the Host provides the same LTK it exchanged during pairing. </p>
+
+        <p class="p">When the devices have been previously paired, along with the Peripheral’s LTK, the EDIV
+            (2 bytes) and RAND (8 bytes) values were also sent (their meaning is defined by the
+            SMP). Therefore, before providing the key to the Controller, the application should
+            check that the two values match with those received in the
+                <em class="ph i">gConnEvtLongTermKeyRequest_c</em> event. If they do, the application should reply
+            with:</p>
+
+        <pre class="pre codeblock">bleResult_t<strong class="ph b">Gap_ProvideLongTermKey</strong>
+(
+    deviceId_t         deviceId,
+    const uint8_t      aLtk,
+    uint8_t            ltkSize
+);</pre>
+
+        <p class="p">The LTK size cannot exceed the maximum value of 16.</p>
+
+        <p class="p">If the EDIV and RAND values do not match, or if the Peripheral does not recognize the
+            bond, it can reject the encryption request with:</p>
+
+        <pre class="pre codeblock">bleResult_t<strong class="ph b">Gap_DenyLongTermKey</strong>
+(
+    deviceId_t deviceId
+);</pre>
+
+        <p class="p">If LE SC Pairing was used then the LTK is generated internally by the host stack and it
+            is not requested from the application during post-bonding link encryption. In this
+            scenario, the application is only notified of the link encryption through the
+                <em class="ph i">gConnEvtEncryptionChanged_c</em> connection event.</p>
+
+        <p class="p">If the devices are not bonded, the Peripheral should expect to receive the
+                <em class="ph i">gConnEvtPairingRequest_c</em>, indicating that the Central has initiated
+            pairing.</p>
+
+        <p class="p">If the application agrees with the pairing parameters (see <a class="xref" href="GUID-AFDE6CF0-C8BC-41A2-987B-D39B341A92E3.html#GUID-AFDE6CF0-C8BC-41A2-987B-D39B341A92E3">Pairing and bonding</a> for detailed explanations), it can reply with:</p>
+
+        <pre class="pre codeblock">bleResult_t<strong class="ph b">Gap_AcceptPairingRequest</strong>
+(
+    deviceId_t                       deviceId,
+    const gapPairingParameters_t *   pPairingParameters
+);</pre>
+
+        <p class="p">This time, the Peripheral sends its own pairing parameters, as defined by the SMP. </p>
+
+        <p class="p">After sending this response, the application should expect to receive the
+            same pairing events as the Central (see <a class="xref" href="GUID-AFDE6CF0-C8BC-41A2-987B-D39B341A92E3.html#GUID-AFDE6CF0-C8BC-41A2-987B-D39B341A92E3">Pairing and bonding</a>), with one exception: the <em class="ph i">gConnEvtPasskeyRequest_c</em> event is
+            not called if the application sets the Passkey (PIN) for pairing before the connection
+            by calling the API:</p>
+
+        <pre class="pre codeblock">bleResult_t<strong class="ph b">Gap_SetLocalPasskey</strong>
+(
+    uint32_t passkey
+);</pre>
+
+        <p class="p">This is done because, usually, the Peripheral has a static secret PIN that it distributes
+            only to trusted devices. If, for any reason, the Peripheral must dynamically change the
+            PIN, it can call the aforementioned function every time it wants to, before the pairing
+            starts (for example, right before sending the pairing response with
+                <em class="ph i">Gap_AcceptPairingRequest</em>).</p>
+
+        <p class="p">If the Peripheral application never calls <em class="ph i">Gap_SetLocalPasskey</em>, then the
+                <em class="ph i">gConnEvtPasskeyRequest_c</em> event is sent to the application as usual.</p>
+
+        <p class="p">The following API can be used by the Peripheral to reject the pairing process:</p>
+
+        <pre class="pre codeblock">bleResult_t<strong class="ph b">Gap_RejectPairing</strong>
+(
+deviceId_t                         deviceId,
+gapAuthenticationRejectReason_t    reason
+);</pre>
+
+        <p class="p">The <em class="ph i">reason</em> should indicate why the application rejects the pairing. The value
+                <em class="ph i">gLinkEncryptionFailed_c</em> is reserved for the
+                <em class="ph i">gConnEvtAuthenticationRejected_c</em> connection event to indicate the link
+            encryption failure rather than pairing failures. Therefore, it is not meant as a pairing
+            reject reason.</p>
+
+        <p class="p">The <em class="ph i">Gap_RejectPairing</em> function may be called not only after the Pairing Request
+            was received, but also during the pairing process, when handling pairing events or
+            asynchronously, if for any reason the Peripheral decides to abort the pairing. This also
+            holds true for the Central.</p>
+
+        <div class="fig fignone" id="GUID-67AA3017-DF85-4093-A27D-E6E9F0CF2231__FIG_MFY_NJB_BY"><span class="figcap">Figure 1. Peripheral pairing flow – APIs and eventsGap_RejectPairing may be called on any
+                pairing event</span>
+            
+            <img class="image" id="GUID-67AA3017-DF85-4093-A27D-E6E9F0CF2231__IMAGE_BFB_RJB_BY" src="GUID-A23C7128-3794-4B5A-89BF-2C57D2E2AB02-high.png"/>
+        </div>
+
+        <p class="p">For both the Central and the Peripheral, bonding is performed internally and is not the
+            application’s concern. The application is informed about whether or not bonding occurred
+            through the <em class="ph i">gConnEvtPairingComplete_c</em> event parameters.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-FB27E41E-546F-4967-BC7B-0CC0802D71CB.html">Peripheral setup</a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Bonded devices data management"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-63657C9B-53F6-4C9C-BD21-827DE286933D.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-87EE87CF-06A3-4918-A860-A05ADED4F635"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Bonded devices data management</title>
+</head>
+<body id="GUID-87EE87CF-06A3-4918-A860-A05ADED4F635">
+
+
+    <h1 class="title topictitle1">Bonded devices data management</h1>
+
+    <div class="body">
+        <p class="p">The Host handles the management of the bonding data without requiring
+            application intervention. The application must provide are the NVM write, read, and
+            erase functions presented in section 2.3 and the Host will create bonds if bonding is
+            required after the pairing.</p>
+
+        <div class="p">The bonded data structure is presented below, together with the GAP APIs that access it,
+            for most APIs require a connection to be established with the device in the bonded list,
+            the others can be accessed any time using the NVM index.<ol class="ol">
+        <li class="li">Bond Header – identity address and address type that uniquely identify a
+                    device together with the IRK and privacy mode.<ul class="ul">
+                        <li class="li">Gap_GetBondedDevicesIdentityInformation – for all bonds</li>
+
+                    </ul>
+</li>
+
+        <li class="li">Bond Data Dynamic - security counters for signed operations – managed by the
+                    stack</li>
+
+        <li class="li">Bond Data Static – LTK, CSRK, Rand, EDIV, security information for read and
+                    write authorizations<ul class="ul">
+                        <li class="li">Gap_SaveKeys – NVM index</li>
+
+                        <li class="li">Gap_LoadKeys – NVM index</li>
+
+                        <li class="li">Gap_LoadEncryptionInformation - deviceId</li>
+
+                        <li class="li">Gap_Authorize – deviceId - GATT Server only</li>
+
+                    </ul>
+</li>
+
+        <li class="li">Bond Data Device Info - custom peer information (service discovery data)
+                    and device name<ul class="ul">
+                        <li class="li">Gap_SaveCustomPeerInformation - deviceId</li>
+
+                        <li class="li">Gap_LoadCustomPeerInformation - deviceId</li>
+
+                        <li class="li">Gap_SaveDeviceName - deviceId</li>
+
+                        <li class="li">Gap_GetBondedDeviceName – NVM index</li>
+
+                    </ul>
+</li>
+
+        <li class="li">Bond Data Descriptor List - configuration of indications and notifications
+                    for CCCD handles – GATT Server only<ul class="ul">
+                        <li class="li">Gap_CheckNotificationStatus - deviceId</li>
+
+                        <li class="li">Gap_CheckIndicationStatus - deviceId</li>
+
+                    </ul>
+</li>
+</ol>
+</div>
+
+        <div class="p">However, there may be some cases when an application wants to manage this
+            data to read data from a bonded device created by the Host, create a bond obtained out
+            of band or update an existing bond. For this use case, two GAP APIs and a GAP event have
+            been added.<ol class="ol">
+                <li class="li">Load the Keys of a bonded device.<p class="p">The user can call the following function to
+                        read the keys exchanged during pairing and stored by the Bluetooth LE stack
+                        in the bond area when the pairing is complete. </p>
+<p class="p">The application is
+                        informed of the NVM index through the gBondCreatedEvent_c sent by the stack
+                        immediately after the bond creation. The application is responsible for
+                        passing the memory in the pOutKeys OUT parameter to fill in the keys, if any
+                        of the keys are set to NULL, the stack will not fill that information. The
+                        pOutKeyFlags OUT parameter will indicate to the application which of the
+                        keys were stored by the stack as not all of them may have been distributed
+                        during pairing.</p>
+<p class="p">The pOutLeSc indicates if Bluetooth LE 4.2 LE Secure
+                        Connections Pairing was used, while the pOutAuth indicates if the peer
+                        device is authenticated for MITM protection. All these OUT parameters are
+                        recommended to be retrieved from the bond and added if later passed as input
+                        parameters for the save keys API.</p>
+<div class="p">This function executes
+                        synchronously.
+                        <pre class="pre codeblock">bleResult_t Gap_LoadKeys
+(    
+    uint8_t            nvmIndex,    
+    gapSmpKeys_t*      pOutKeys,    
+    gapSmpKeyFlags_t*  pOutKeyFlags,    
+    bool_t*            pOutLeSc,    
+    bool_t*             pOutAuth);
+);</pre>
+The
+                        gapSmpKeys_t is the structure used during the key distribution phase, as
+                        well as in the gConnEvtKeysReceived_c event and is as follows. The
+                        difference is that the Bluetooth LE device address cannot be set to NULL
+                        neither when loading a bond or when creating one as it identifies the bonded
+                        device together with the NVM index. 
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-87EE87CF-06A3-4918-A860-A05ADED4F635__TABLE_IVW_G2N_LHB" class="table" frame="border" border="1" rules="all">
+                                
+                                
+                                
+                                <thead class="thead" align="left">
+                                    <tr class="row">
+                                        <th class="entry" valign="top" width="21.008403361344538%" id="d12641e159">Event Data</th>
+
+                                        <th class="entry" valign="top" width="28.151260504201687%" id="d12641e162">Data type</th>
+
+                                        <th class="entry" valign="top" width="50.84033613445378%" id="d12641e165">Data Description</th>
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody class="tbody">
+                                    <tr class="row">
+                                        <td class="entry" valign="top" width="21.008403361344538%" headers="d12641e159 ">cLtkSize</td>
+
+                                        <td class="entry" valign="top" width="28.151260504201687%" headers="d12641e162 ">uint8_t</td>
+
+                                        <td class="entry" valign="top" width="50.84033613445378%" headers="d12641e165 ">Encryption Key Size filled by the stack. If aLtk is
+                                            NULL, this is ignored.</td>
+
+                                    </tr>
+
+                                    <tr class="row">
+                                        <td class="entry" valign="top" width="21.008403361344538%" headers="d12641e159 ">aLtk</td>
+
+                                        <td class="entry" valign="top" width="28.151260504201687%" headers="d12641e162 ">uint8_t*</td>
+
+                                        <td class="entry" valign="top" width="50.84033613445378%" headers="d12641e165 ">Long Term (Encryption) Key. NULL if LTK is not
+                                            distributed, else size is given by cLtkSize.</td>
+
+                                    </tr>
+
+                                    <tr class="row">
+                                        <td class="entry" valign="top" width="21.008403361344538%" headers="d12641e159 ">aIrk</td>
+
+                                        <td class="entry" valign="top" width="28.151260504201687%" headers="d12641e162 ">uint8_t*</td>
+
+                                        <td class="entry" valign="top" width="50.84033613445378%" headers="d12641e165 ">Identity Resolving Key. NULL if aIrk is not
+                                            distributed.</td>
+
+                                    </tr>
+
+                                    <tr class="row">
+                                        <td class="entry" valign="top" width="21.008403361344538%" headers="d12641e159 ">aCsrk</td>
+
+                                        <td class="entry" valign="top" width="28.151260504201687%" headers="d12641e162 ">uint8_t*</td>
+
+                                        <td class="entry" valign="top" width="50.84033613445378%" headers="d12641e165 ">Connection Signature Resolving Key. NULL if aCsrk is
+                                            not distributed.</td>
+
+                                    </tr>
+
+                                    <tr class="row">
+                                        <td class="entry" valign="top" width="21.008403361344538%" headers="d12641e159 ">cRandSize</td>
+
+                                        <td class="entry" valign="top" width="28.151260504201687%" headers="d12641e162 ">uint8_t</td>
+
+                                        <td class="entry" valign="top" width="50.84033613445378%" headers="d12641e165 ">Size of RAND filled by the stack; usually equal to
+                                            gcSmpMaxRandSize_c. If aLtk is NULL, this is
+                                            ignored.</td>
+
+                                    </tr>
+
+                                    <tr class="row">
+                                        <td class="entry" valign="top" width="21.008403361344538%" headers="d12641e159 ">aRand</td>
+
+                                        <td class="entry" valign="top" width="28.151260504201687%" headers="d12641e162 ">uint8_t*</td>
+
+                                        <td class="entry" valign="top" width="50.84033613445378%" headers="d12641e165 ">RAND value used to identify the LTK. If aLtk is NULL,
+                                            this is ignored.</td>
+
+                                    </tr>
+
+                                    <tr class="row">
+                                        <td class="entry" valign="top" width="21.008403361344538%" headers="d12641e159 ">ediv</td>
+
+                                        <td class="entry" valign="top" width="28.151260504201687%" headers="d12641e162 ">uint16_t</td>
+
+                                        <td class="entry" valign="top" width="50.84033613445378%" headers="d12641e165 ">EDIV value used to identify the LTK. If aLtk is NULL,
+                                            this is ignored.</td>
+
+                                    </tr>
+
+                                    <tr class="row">
+                                        <td class="entry" valign="top" width="21.008403361344538%" headers="d12641e159 ">addressType</td>
+
+                                        <td class="entry" valign="top" width="28.151260504201687%" headers="d12641e162 ">bleAddressType_t</td>
+
+                                        <td class="entry" valign="top" width="50.84033613445378%" headers="d12641e165 ">Public or Random address. </td>
+
+                                    </tr>
+
+                                    <tr class="row">
+                                        <td class="entry" valign="top" width="21.008403361344538%" headers="d12641e159 ">aAddress</td>
+
+                                        <td class="entry" valign="top" width="28.151260504201687%" headers="d12641e162 ">uint8_t*</td>
+
+                                        <td class="entry" valign="top" width="50.84033613445378%" headers="d12641e165 ">Device Address. It cannot be NULL.</td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+</div>
+The structure for the GAP SMP Key Flags is the following: 
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-87EE87CF-06A3-4918-A860-A05ADED4F635__TABLE_PGW_52N_LHB" class="table" frame="border" border="1" rules="all">
+                                
+                                
+                                <thead class="thead" align="left">
+                                    <tr class="row">
+                                        <th class="entry" valign="top" id="d12641e296">Flag Type</th>
+
+                                        <th class="entry" valign="top" id="d12641e299">Description</th>
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody class="tbody">
+                                    <tr class="row">
+                                        <td class="entry" valign="top" headers="d12641e296 ">gNoKeys_c</td>
+
+                                        <td class="entry" valign="top" headers="d12641e299 ">No key is available.</td>
+
+                                    </tr>
+
+                                    <tr class="row">
+                                        <td class="entry" valign="top" headers="d12641e296 ">gLtk_c</td>
+
+                                        <td class="entry" valign="top" headers="d12641e299 ">Long-Term Key available.</td>
+
+                                    </tr>
+
+                                    <tr class="row">
+                                        <td class="entry" valign="top" headers="d12641e296 ">gIrk_c</td>
+
+                                        <td class="entry" valign="top" headers="d12641e299 ">Identity Resolving Key available.</td>
+
+                                    </tr>
+
+                                    <tr class="row">
+                                        <td class="entry" valign="top" headers="d12641e296 ">gCsrk_c</td>
+
+                                        <td class="entry" valign="top" headers="d12641e299 ">Connection Signature Resolving Key available.</td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+</div>
+</div>
+</li>
+
+                <li class="li">Save the Keys to create a bond or update an existing bonded
+                        device.<p class="p">The user can call the following function to create a
+                        bond on a device based on information obtained Out of Band. For instance,
+                        one can use the output of Gap_LoadKeys from the previous section. This can
+                        be useful in transferring a bond created by the stack after a pairing
+                        procedure or if the application wants to manipulate bonding data. The
+                        behavior of the stack remains the same, if the bonding is required after a
+                        pairing, the stack will store the bonding information if possible. In this
+                        case, the NVM index is passed to the application through
+                        gBondCreatedEvent_c. </p>
+<p class="p">This function executes
+                        asynchronously, as the stack can create a bond during the execution. The
+                        application should listen for the previous mentioned event
+                        gBondCreatedEvent_c. The result of the function call is passed
+                        synchronously. However, if an asynchronous error has occurred during the
+                        actual save, it is passed to the application through the gInternalError_c
+                        event with a gSaveKeys_c error source.</p>
+<p class="p">The stack creates a
+                        bond if the NVM index is free or update the keys from an NVM index if it
+                        stores a valid entry.</p>
+<p class="p">The address from the GAP SMP Keys
+                        structure must not be NULL. If other members of the structure are NULL, they
+                        are ignored.</p>
+<div class="p">LE SC flag indicates if Bluetooth LE 4.2
+                        Secure Connections was used during pairing and Auth specifies if the peer is
+                        authenticated for MITM
+                        protection.<pre class="pre codeblock">bleResult_t Gap_SaveKeys
+(   
+    uint8_t         nvmIndex,   
+    gapSmpKeys_t*   pKeys,   
+    bool_t          leSc, 
+    bool_t          auth
+);</pre>
+</div>
+
+                </li>
+
+                <li class="li">Bond created event. <p class="p">A GAP event is added to the Bluetooth LE Generic Callback
+                        to inform the application of the NVM index whenever the stack creates a bond
+                        or when a Gap_SaveKeys request succeeds. The event is also generated if the
+                        NVM index was a valid occupied entry and only some of the keys in the bonded
+                        information have been updated. </p>
+<div class="p">The NVM index is then used in the GAP
+                        APIs to save or load information from the bond. 
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-87EE87CF-06A3-4918-A860-A05ADED4F635__TABLE_K1R_4CN_LHB" class="table" frame="border" border="1" rules="all">
+                                
+                                
+                                
+                                <thead class="thead" align="left">
+                                    <tr class="row">
+                                        <th class="entry" valign="top" id="d12641e381">Event Data</th>
+
+                                        <th class="entry" valign="top" id="d12641e384">Data type</th>
+
+                                        <th class="entry" valign="top" id="d12641e387">Data Description</th>
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody class="tbody">
+                                    <tr class="row">
+                                        <td class="entry" valign="top" headers="d12641e381 ">nvmIndex</td>
+
+                                        <td class="entry" valign="top" headers="d12641e384 ">uint8_t</td>
+
+                                        <td class="entry" valign="top" headers="d12641e387 ">NVM index for the new created bond</td>
+
+                                    </tr>
+
+                                    <tr class="row">
+                                        <td class="entry" valign="top" headers="d12641e381 ">addressType</td>
+
+                                        <td class="entry" valign="top" headers="d12641e384 ">bleAddressType_t</td>
+
+                                        <td class="entry" valign="top" headers="d12641e387 ">Public or Random (static) address of the bond</td>
+
+                                    </tr>
+
+                                    <tr class="row">
+                                        <td class="entry" valign="top" headers="d12641e381 ">address</td>
+
+                                        <td class="entry" valign="top" headers="d12641e384 ">bleDeviceAddress_t</td>
+
+                                        <td class="entry" valign="top" headers="d12641e387 ">Address of the bond</td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+</div>
+</div>
+</li>
+
+            </ol>
+</div>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-63657C9B-53F6-4C9C-BD21-827DE286933D.html">Generic Access Profile (GAP) Layer</a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Usage"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-EA11D553-35FC-4A59-8DDE-7D52A25E6020.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-B8E878E2-930F-46D1-A62A-12F4659FF0D8"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Usage</title>
+</head>
+<body id="GUID-B8E878E2-930F-46D1-A62A-12F4659FF0D8">
+
+
+  <h1 class="title topictitle1">Usage</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">The application is built to work with another supported platform running the
+      same example or with the Wireless UART from the IoT Toolbox application. When testing with two
+      boards do the following.</p>
+
+<ol class="ol">
+<li class="li">Open a serial port terminal and connect them to the two boards, in the same manner described in section 5.1.3. The start screen is blank after the board is reset.</li>
+
+<li class="li">The application starts as a GAP central. To switch the role to a GAP peripheral,
+        press the role switch. Depending on the role, when pressing the SCANSW, the application
+        starts either scanning or advertising.</li>
+
+<li class="li">As soon as the CONNLED turns solid on both devices, the user can start writing in one of the consoles. The text appears on the other terminal, as shown in the figure below.</li>
+
+      <li class="li">After creating a connection, the role (master or slave) is printed in the console. The role
+        switch can be pressed again before creating a new connection.</li>
+
+</ol>
+
+
+<div class="fig fignone" id="GUID-B8E878E2-930F-46D1-A62A-12F4659FF0D8__BLEDAUG3014"><span class="figcap">Figure 1. Tera Term – received text on Wireless UART</span>
+          
+      <img class="image" src="GUID-E56305EE-EB4A-4F19-9137-712D5EA746CA-high.png" height="133" width="493"/>
+        </div>
+
+
+<p class="p">When testing with one board and the IoT Toolbox do the following.</p>
+
+<ol class="ol">
+<li class="li">Open a serial port terminal and connect the board in the same manner described in section 5.1.3. The start screen is blank after the board is reset.</li>
+
+<li class="li">Press the role switch button to behave as a GAP peripheral and then press the
+        SCANSW to start advertising. The IoT Toolbox app can then connect. Select UART instead of
+        Console and start typing.</li>
+
+</ol>
+
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-EA11D553-35FC-4A59-8DDE-7D52A25E6020.html">Wireless UART</a></div>
+</div>
+</div>
+
+</body>
+</html>

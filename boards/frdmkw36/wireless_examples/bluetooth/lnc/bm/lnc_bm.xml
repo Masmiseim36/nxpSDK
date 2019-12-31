@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="middleware.framework.generic_lists.MKW36Z4"/>
+    <definition extID="middleware.wireless.ble_appl_main.MKW36Z4"/>
+    <definition extID="middleware.wireless.ble_controller.MKW36Z4"/>
+    <definition extID="middleware.wireless.ble_gatt_db.MKW36Z4"/>
+    <definition extID="middleware.wireless.ble_gatt_service_discovery.MKW36Z4"/>
+    <definition extID="middleware.wireless.ble_host.MKW36Z4"/>
+    <definition extID="middleware.wireless.ble_profiles.battery_service.MKW36Z4"/>
+    <definition extID="middleware.wireless.ble_profiles.device_info_service.MKW36Z4"/>
+    <definition extID="middleware.wireless.ble_profiles.location_and_navigation.MKW36Z4"/>
+    <definition extID="middleware.wireless.ble_profiles.time.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.coexistence.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.common.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.dcdc_MKW36Z.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.flash.internal.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.function_lib.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.gpio_adapter.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.keyboard.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.led.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.linkscripts_KW36.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.mem_manager.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.messaging.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.module_info.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.nvm.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.osa.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.osa_bm.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.panic.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.reset.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.rng.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.sec_lib.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.shell.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.smgr.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.smgr.i2c_adapter.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.smgr.spi_adapter.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.smgr.uart_adapter.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.tmr.MKW36Z4"/>
+    <definition extID="middleware.wireless.xcvr_kw36z.MKW36Z4"/>
+    <definition extID="platform.devices.MKW36Z4_CMSIS.MKW36Z4"/>
+    <definition extID="platform.devices.MKW36Z4_startup.MKW36Z4"/>
+    <definition extID="platform.drivers.adc16.MKW36Z4"/>
+    <definition extID="platform.drivers.clock.MKW36Z4"/>
+    <definition extID="platform.drivers.common.MKW36Z4"/>
+    <definition extID="platform.drivers.dspi.MKW36Z4"/>
+    <definition extID="platform.drivers.flash.MKW36Z4"/>
+    <definition extID="platform.drivers.gpio.MKW36Z4"/>
+    <definition extID="platform.drivers.i2c.MKW36Z4"/>
+    <definition extID="platform.drivers.llwu.MKW36Z4"/>
+    <definition extID="platform.drivers.lptmr.MKW36Z4"/>
+    <definition extID="platform.drivers.lpuart.MKW36Z4"/>
+    <definition extID="platform.drivers.ltc.MKW36Z4"/>
+    <definition extID="platform.drivers.pmc.MKW36Z4"/>
+    <definition extID="platform.drivers.port.MKW36Z4"/>
+    <definition extID="platform.drivers.rtc.MKW36Z4"/>
+    <definition extID="platform.drivers.smc.MKW36Z4"/>
+    <definition extID="platform.drivers.tpm.MKW36Z4"/>
+    <definition extID="platform.drivers.trng.MKW36Z4"/>
+    <definition extID="platform.utilities.debug_console.MKW36Z4"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="com.crt.advproject.config.exe.debug"/>
+    <definition extID="com.crt.advproject.config.exe.release"/>
+    <definition extID="iar"/>
+    <definition extID="drt"/>
+  </externalDefinitions>
+  <example id="frdmkw36_wireless_examples_bluetooth_lnc_bm" name="bm" category="wireless_examples/bluetooth/lnc" dependency="middleware.wireless.framework.osa_bm.MKW36Z4 middleware.wireless.framework.flash.internal.MKW36Z4 middleware.wireless.framework.gpio_adapter.MKW36Z4 middleware.wireless.framework.keyboard.MKW36Z4 middleware.wireless.framework.led.MKW36Z4 middleware.wireless.framework.reset.MKW36Z4 middleware.wireless.framework.common.MKW36Z4 middleware.wireless.framework.mem_manager.MKW36Z4 middleware.wireless.framework.messaging.MKW36Z4 middleware.wireless.framework.osa.MKW36Z4 middleware.wireless.framework.panic.MKW36Z4 middleware.wireless.framework.rng.MKW36Z4 middleware.wireless.framework.shell.MKW36Z4 middleware.wireless.framework.nvm.MKW36Z4 middleware.wireless.framework.smgr.MKW36Z4 middleware.wireless.framework.smgr.uart_adapter.MKW36Z4 middleware.wireless.framework.smgr.spi_adapter.MKW36Z4 middleware.wireless.framework.smgr.i2c_adapter.MKW36Z4 middleware.wireless.framework.tmr.MKW36Z4 middleware.wireless.framework.module_info.MKW36Z4 middleware.wireless.framework.function_lib.MKW36Z4 middleware.framework.generic_lists.MKW36Z4 middleware.wireless.framework.sec_lib.MKW36Z4 middleware.wireless.ble_host.MKW36Z4 middleware.wireless.ble_controller.MKW36Z4 middleware.wireless.ble_appl_main.MKW36Z4 middleware.wireless.ble_gatt_db.MKW36Z4 middleware.wireless.ble_gatt_service_discovery.MKW36Z4 middleware.wireless.ble_profiles.battery_service.MKW36Z4 middleware.wireless.ble_profiles.device_info_service.MKW36Z4 middleware.wireless.ble_profiles.location_and_navigation.MKW36Z4 middleware.wireless.ble_profiles.time.MKW36Z4 middleware.wireless.framework.coexistence.MKW36Z4 middleware.wireless.framework.linkscripts_KW36.MKW36Z4 platform.drivers.common.MKW36Z4 platform.drivers.trng.MKW36Z4 platform.drivers.flash.MKW36Z4 platform.drivers.lpuart.MKW36Z4 platform.drivers.gpio.MKW36Z4 platform.drivers.port.MKW36Z4 platform.drivers.tpm.MKW36Z4 platform.drivers.dspi.MKW36Z4 platform.drivers.i2c.MKW36Z4 platform.drivers.lptmr.MKW36Z4 platform.drivers.rtc.MKW36Z4 platform.drivers.llwu.MKW36Z4 platform.drivers.ltc.MKW36Z4 platform.drivers.pmc.MKW36Z4 platform.drivers.adc16.MKW36Z4 middleware.wireless.framework.dcdc_MKW36Z.MKW36Z4 middleware.wireless.xcvr_kw36z.MKW36Z4 platform.drivers.smc.MKW36Z4 platform.drivers.clock.MKW36Z4 platform.devices.MKW36Z4_CMSIS.MKW36Z4 platform.utilities.debug_console.MKW36Z4 platform.devices.MKW36Z4_startup.MKW36Z4" toolchain="iar mcuxpresso drt">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <memory>
+      <memoryBlock addr="00000000" size="0007B800" access="RO" type="Flash" id="PROGRAM_FLASH_" name="PROGRAM_FLASH"/>
+      <memoryBlock addr="0007B800" size="00004000" access="RO" type="Flash" id="NVM_region_" name="NVM_region"/>
+      <memoryBlock addr="0007F800" size="00000800" access="RO" type="Flash" id="FREESCALE_PROD_DATA_" name="FREESCALE_PROD_DATA"/>
+      <memoryBlock addr="1FFFC0C0" size="0000FF40" access="RW" type="RAM" id="SRAM_" name="SRAM"/>
+      <memoryBlock addr="1FFFC000" size="000000C0" access="RW" type="RAM" id="RAM_VECTOR_TABLE_" name="RAM_VECTOR_TABLE"/>
+    </memory>
+    <toolchainSettings>
+      <!-- Curently, mcux just supports one common settings set for both debug and release -->
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <!-- asm compiler -->
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.none</value>
+        </option>
+        <option id="gnu.both.asm.option.warnings.nowarn" type="boolean">
+          <value>false</value>
+        </option>
+        <!-- gcc compiler -->
+        <option id="com.crt.advproject.gcc.fpu" type="string">
+          <value>com.crt.advproject.gcc.fpu.none</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.nowarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.extrawarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.wconversion" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.toerrors" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>DEBUG</value>
+          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
+          <value>CPU_MKW36Z512VHT4</value>
+          <value>FRDM_KW36</value>
+          <value>FREEDOM</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin -imacros "${ProjDirPath}/source/app_preinclude.h"</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.nostdinc" type="boolean">
+          <value>false</value>
+        </option>
+        <!-- gcc linker -->
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.none</value>
+        </option>
+        <option id="gnu.c.link.option.nostart" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.link.option.nodeflibs" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.link.option.strip" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.link.option.noshared" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.link.option.other" type="stringList">
+          <value>--defsym=gUseNVMLink_d=1</value>
+          <value>--defsym=__ram_vector_table__=1</value>
+          <value>--gc-sections</value>
+        </option>
+        <option id="gnu.c.link.option.libs" type="stringList">
+          <value>m</value>
+          <value>c</value>
+          <value>gcc</value>
+          <value>nosys</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NOINIT);region=SRAM;type=.noinit</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <debug_configurations>
+      <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+        <drivers>
+          <driver id_refs="PROGRAM_FLASH_">
+            <driverBinary path="." type="binary">
+              <files mask="FTFE_2K_PD.cfx"/>
+            </driverBinary>
+          </driver>
+          <driver id_refs="NVM_region_">
+            <driverBinary path="." type="binary">
+              <files mask="FTFE_2K_PD.cfx"/>
+            </driverBinary>
+          </driver>
+          <driver id_refs="FREESCALE_PROD_DATA_">
+            <driverBinary path="." type="binary">
+              <files mask="FTFE_2K_PD.cfx"/>
+            </driverBinary>
+          </driver>
+        </drivers>
+      </debug_configuration>
+    </debug_configurations>
+    <source path="boards/frdmkw36/wireless_examples/bluetooth/lnc/bm" target_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="gpio_pins.h"/>
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/frdmkw36/wireless_examples/bluetooth/lnc/bm" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="gpio_pins.c"/>
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/frdmkw36/wireless_examples/bluetooth/lnc/bm" target_path="source" type="c_include">
+      <files mask="app_preinclude.h"/>
+    </source>
+    <source path="boards/frdmkw36/wireless_examples/bluetooth/lnc" target_path="doc" type="doc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/frdmkw36/wireless_examples/bluetooth/lnc" target_path="source" type="c_include">
+      <files mask="gatt_db.h"/>
+      <files mask="gatt_uuid128.h"/>
+      <files mask="location_and_navigation_client.h"/>
+    </source>
+    <source path="boards/frdmkw36/wireless_examples/bluetooth/lnc" target_path="source" type="src">
+      <files mask="app_config.c"/>
+      <files mask="location_and_navigation_client.c"/>
+    </source>
+    <source path="middleware/wireless/bluetooth_1.3.6/controller/lib" type="lib" method="copy" toolchain="mcuxpresso">
+      <files mask="lib_ble_kw36z_controller_gcc.a"/>
+    </source>
+    <source path="middleware/wireless/bluetooth_1.3.6/host/lib" type="lib" method="copy" toolchain="mcuxpresso">
+      <files mask="lib_ble_5-0_host_central_cm0p_gcc.a"/>
+    </source>
+    <source path="middleware/wireless/framework_5.4.6/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
+      <files mask="lib_crypto_m0.a"/>
+    </source>
+    <source path="middleware/wireless/bluetooth_1.3.6/controller/lib" type="lib" method="copy" toolchain="iar">
+      <files mask="lib_ble_kw36z_controller_iar.a"/>
+    </source>
+    <source path="middleware/wireless/bluetooth_1.3.6/host/lib" type="lib" method="copy" toolchain="iar">
+      <files mask="lib_ble_5-0_host_central_cm0p_iar.a"/>
+    </source>
+    <source path="middleware/wireless/framework_5.4.6/SecLib" type="lib" method="copy" toolchain="iar">
+      <files mask="lib_crypto_m0.a"/>
+    </source>
+  </example>
+</ksdk:examples>

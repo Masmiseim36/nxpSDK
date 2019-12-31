@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="MTU exchange"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-2C7C764E-E67E-46B5-9CA5-2BA3A8910E08.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-D147DDFA-3266-4B54-9171-A6C57039FE25"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>MTU exchange</title>
+</head>
+<body id="GUID-D147DDFA-3266-4B54-9171-A6C57039FE25">
+
+
+    <h1 class="title topictitle1">MTU exchange</h1>
+
+    <div class="body">
+        <p class="p">A radio packet sent over the Bluetooth Low Energy contains a maximum of 27 bytes of data for the L2CAP
+            layer. Because the L2CAP header is 4 bytes long (including the Channel ID), all layers
+            above L2CAP, including ATT and GATT, may only send 23 bytes of data in a radio packet
+            (as per Bluetooth 4.1 Specification for Bluetooth Low Energy).</p>
+
+        <div class="note note"><span class="notetitle">Note:</span> This number is fixed and cannot be increased in Bluetooth Low Energy 4.1.</div>
+
+        <p class="p">To maintain a logical mapping between radio packets and ATT packets, the Standard has set
+            the default length of an ATT packet (the so-called <em class="ph i">ATT_MTU</em>) also equal to 23.
+            Thus, any ATT request fits in a single radio packet. If the layer above ATT wishes to
+            send more than 23 bytes of data, it needs to fragment the data into smaller packets and
+            issue multiple ATT requests.</p>
+
+        <p class="p">However, the ATT protocol allows devices to increase the ATT_MTU, only if both can
+            support it. Increasing the ATT_MTU has only one effect: the application does not have to
+            fragment long data, however it can send more than 23 bytes in a single transaction. The
+            fragmentation is moved on to the L2CAP layer. Over the air though, there would still be
+            more than one radio packet sent.</p>
+
+        <p class="p">If the GATT Client supports a larger than default MTU, it should start an MTU exchange as
+            soon as it connects to any Server. During the MTU exchange, both devices would send
+            their maximum MTU to the other, and the minimum of the two is chosen as the new MTU.</p>
+
+        <p class="p">For example, if the Client supports a maximum ATT_MTU of 250, and the Server supports
+            maximum 120, after the exchange, both devices set the new ATT_MTU value equal to
+            120.</p>
+
+        <p class="p">To initiate the MTU exchange, call the following function from
+                <em class="ph i">gatt_client_interface.h</em>:</p>
+
+        <pre class="pre codeblock">bleResult_t result = GattClient_ExchangeMtu(deviceId);
+ 
+<strong class="ph b">if</strong> (<em class="ph i">gBleSuccess_c</em> != result)
+{
+    /* Treat error */
+}</pre>
+
+        <p class="p">The value of the maximum supported ATT_MTU of the local device does not have to be
+            included in the request because it is static. It is defined in the
+                <em class="ph i">ble_constants.h</em> file under the name <em class="ph i">gAttMaxMtu_c</em>. Inside the GATT
+            implementation, the ATT Exchange MTU Request (and Response, for Servers) uses that
+            value.</p>
+
+        <p class="p">When the exchange is complete, the Client callback is triggered by the
+                <em class="ph i">gGattProcExchangeMtu_c</em> procedure type.</p>
+
+        <pre class="pre codeblock"><strong class="ph b">void</strong><strong class="ph b">gattClientProcedureCallback</strong>
+(
+    deviceId_t deviceId,
+    gattProcedureType_t procedureType,
+    gattProcedureResult_t procedureResult,
+    bleResult_t error
+)
+{
+    <strong class="ph b">switch</strong> (procedureType)
+    {
+        /* ... */
+        <strong class="ph b">case</strong><em class="ph i">gGattProcExchangeMtu_c</em>:
+            <strong class="ph b">if</strong> (<em class="ph i">gGattProcSuccess_c</em> == procedureResult)
+            {
+                /* To obtain the new MTU */
+                uint16_t newMtu;
+                bleResult_t result = Gatt_GetMtu(deviceId, &amp;newMtu);
+                <strong class="ph b">if</strong> (<em class="ph i">gBleSuccess_c</em> == result)
+                {
+                    /* Use the value of the new MTU */
+                    (<strong class="ph b">void</strong>) newMtu;
+                }
+            }
+            <strong class="ph b">else</strong>
+            {
+                /* Handle error */
+            }
+            <strong class="ph b">break</strong>;
+
+        /* ... */
+    }
+}</pre>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-2C7C764E-E67E-46B5-9CA5-2BA3A8910E08.html">Client APIs</a></div>
+</div>
+</div>
+
+</body>
+</html>

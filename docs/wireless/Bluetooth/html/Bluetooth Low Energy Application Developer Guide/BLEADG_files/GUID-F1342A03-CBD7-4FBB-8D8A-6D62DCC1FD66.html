@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Static GATT database definition examples"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-0C0AA2A1-0B8B-49CD-972E-096A33DB9466.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-F1342A03-CBD7-4FBB-8D8A-6D62DCC1FD66"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Static GATT database definition examples</title>
+</head>
+<body id="GUID-F1342A03-CBD7-4FBB-8D8A-6D62DCC1FD66">
+
+
+	<h1 class="title topictitle1">Static GATT database definition examples</h1>
+
+	<div class="body">
+		<p class="p">The GAP Service must be present on any GATT Database. It has the Service UUID equal to 0x1800, <em class="ph i">&lt;&lt;GAP Service&gt;&gt;</em>, and it contains three read-only Characteristics no authentication required: <em class="ph i">Device Name, Appearance, </em>and <em class="ph i">Peripheral Preferred Connection Parameters</em>. These also have well defined UUIDs in the SIG documents.</p>
+
+		<p class="p">The definition for this Service is shown here:</p>
+
+		<pre class="pre codeblock"><strong class="ph b">PRIMARY_SERVICE(service_gap, 0x1800)</strong>
+
+    <strong class="ph b">CHARACTERISTIC(char_device_name, 0x2A00, (gGattCharPropRead_c) )</strong>
+        <strong class="ph b">VALUE(value_device_name, 0x2A00, (gGattAttPermAccessReadable_c), </strong>
+            <strong class="ph b">6, “Sensor”)</strong>
+
+    <strong class="ph b">CHARACTERISTIC(char_appearance, 0x2A01, (gGattCharPropRead_c) )</strong>
+        <strong class="ph b">VALUE(value_appearance, 0x2A01, (gGattAttPermAccessReadable_c), 2, 0xC2, 0x03)</strong>
+
+    <strong class="ph b">CHARACTERISTIC(char_ppcp, 0x2A04, (gGattCharPropRead_c) )</strong>
+        <strong class="ph b">VALUE(value_ppcp, 0x2A04, (gGattAttPermAccessReadable_c), </strong>
+            <strong class="ph b">8, 0x0A, 0x00, 0x10, 0x00, 0x64, 0x00, 0xE2, 0x04)</strong></pre>
+
+		<p class="p">Another often encountered Service is the Scan Parameters Service:</p>
+
+		<pre class="pre codeblock"><strong class="ph b">PRIMARY_SERVICE(service_scan_parameters, 0x1813)</strong>
+
+    <strong class="ph b">CHARACTERISTIC(char_scan_interval_window, 0x2A4F, (gGattCharPropWriteWithoutRsp_c) )</strong>
+        <strong class="ph b">VALUE(value_scan_interval_window, 0x2A4F, (gGattAttPermAccessWritable), </strong>
+            <strong class="ph b">4, 0x00, 0x00, 0x00, 0x00)</strong>
+
+    <strong class="ph b">CHARACTERISTIC(char_scan_refresh, 0x2A31, (gGattCharPropRead_c | gGattCharPropNotify_c) )</strong>
+        <strong class="ph b">VALUE(value_scan_refresh, 0x2A31, (gGattAttPermAccessReadable_c), 1, 0x00)</strong>
+        <strong class="ph b">CCCD(cccd_scan_refresh)</strong></pre>
+
+		<div class="note note"><span class="notetitle">Note:</span> All “user-friendly” names given in declarations are statically defined as <em class="ph i">enum</em> members, numerically equal to the <em class="ph i">attribute handle</em> of the declaration. This means that one of those names can be used in code wherever an attribute handle is required as a parameter of a function if <em class="ph i">gatt_db_handles.h</em> is included in the application source file. For example, to write the value of the Scan Refresh Characteristic from the application-level code, use these instructions:</div>
+
+		<pre class="pre codeblock">#include "gatt_db_handles.h"
+...
+uint8_t scan_refresh_value = 0x12;
+<em class="ph i">GattDb_WriteAttribute( char_scan_refresh, &amp;scan_refresh_value, 1);</em></pre>
+
+	</div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-0C0AA2A1-0B8B-49CD-972E-096A33DB9466.html">Creating static GATT database</a></div>
+</div>
+</div>
+
+</body>
+</html>

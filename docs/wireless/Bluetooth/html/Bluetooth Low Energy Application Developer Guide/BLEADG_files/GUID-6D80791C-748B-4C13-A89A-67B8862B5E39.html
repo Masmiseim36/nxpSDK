@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Building Bluetooth Low Energy OTAP image file from BIN file"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-53C35DEE-9212-4685-BF1E-7B66CB5A3860.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-6D80791C-748B-4C13-A89A-67B8862B5E39"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Building Bluetooth Low Energy OTAP image file from BIN file</title>
+</head>
+<body id="GUID-6D80791C-748B-4C13-A89A-67B8862B5E39">
+
+
+    <h1 class="title topictitle1">Building Bluetooth Low Energy OTAP image file from BIN file</h1>
+
+    <div class="body">
+        <p class="p">A BIN file is an binary file which contains an executable image. The most
+            common extension for this type of file is .bin. Most modern compiler toolchains can
+            output a BIN format executable.</p>
+
+        <p class="p">To enable the creation of a BIN file for your embedded application in IAR
+            Embedded Workbench open the target properties and go to the <em class="ph i">Output Converter</em> tab.
+            Activate the <em class="ph i">“Generate additional output”</em> checkbox and choose the <em class="ph i">binary</em>
+            option from the <em class="ph i">“Output format”</em> drop down menu. From the same pane you can also
+            override the name of the output file. A screenshot of the described configuration is
+            shown below.</p>
+
+        <div class="fig fignone" id="GUID-6D80791C-748B-4C13-A89A-67B8862B5E39__FIG_WTW_JYM_CY"><span class="figcap">Figure 1. Enabling BIN Output in IAR Embedded Workbench</span>
+            
+            <img class="image" id="GUID-6D80791C-748B-4C13-A89A-67B8862B5E39__IMAGE_HNR_LYM_CY" src="GUID-67477816-68A6-4F31-83FA-3059D57A98CC-high.png"/>
+        </div>
+
+        <p class="p">
+
+To enable the creation of a .bin file in MCUXpresso IDE go to the Project properties -&gt;
+            Settings -&gt; Build steps window and press the Edit button for the Post-build steps. A
+            Post-build steps window will show up in which the following command must be added or
+            uncommented (by removing the '#' character at the beginning) if it is already there:
+                <samp class="ph codeph">arm-none-eabi-objcopy -v -O binary "${BuildArtifactFileName}"
+                "${BuildArtifactFileBaseName}.bin"</samp>. A screenshot of this window is shown in
+            the figure below.</p>
+
+        <div class="fig fignone"><span class="figcap">Figure 2. Enabling BIN output in MCUXpresso IDE Post-build steps</span>
+
+
+            
+            <img class="image" src="GUID-4D346E15-6410-4A9D-9D39-057C9C898281-high.png"/>
+        </div>
+
+        <p class="p">The format of the BIN file is very simple. It contains the executable image in binary
+            format as is, starting from address 0 and up to the highest address. This type of file
+            does not have any explicit address information.</p>
+
+        <p class="p">To build an OTAP Image File from a BIN file follow the procedure:</p>
+
+        <ul class="ul" id="GUID-6D80791C-748B-4C13-A89A-67B8862B5E39__UL_AKM_NYM_CY">
+            <li class="li">Generate the BIN file by correctly configuring your toolchain to do so</li>
+
+            <li class="li">Create the image file header<ul class="ul" id="GUID-6D80791C-748B-4C13-A89A-67B8862B5E39__UL_FLM_NYM_CY">
+                    <li class="li">Set the Image ID field of the header to be unique on the OTAP Server.</li>
+
+                    <li class="li">Leave the Total Image File Size Field blank for the moment.</li>
+
+                </ul>
+</li>
+
+            <li class="li">Create the Upgrade Image Sub-element<ul class="ul" id="GUID-6D80791C-748B-4C13-A89A-67B8862B5E39__UL_VLM_NYM_CY">
+                    <li class="li">Compy the entire contents of the BIN file as is into the <em class="ph i">Value</em> filed
+                        of the sub-element.</li>
+
+                    <li class="li">Fill in the <em class="ph i">Length</em> field of the sub-element with the length of the
+                        written <em class="ph i">Value</em> filed.</li>
+
+                </ul>
+</li>
+
+            <li class="li">Create the Sector Bitmap Sub-element<ul class="ul" id="GUID-6D80791C-748B-4C13-A89A-67B8862B5E39__UL_WLM_NYM_CY">
+                    <li class="li">A default working setting would be all byes 0xFF for the <em class="ph i">Value</em> field
+                        of this sub-element</li>
+
+                </ul>
+</li>
+
+            <li class="li">Create the Image File CRC Sub-element<ul class="ul" id="GUID-6D80791C-748B-4C13-A89A-67B8862B5E39__UL_KMM_NYM_CY">
+                    <li class="li">Compute the total image file size as the length of the header + the length
+                        of all 3 sub-elements and fill in the appropriate filed in the header with
+                        this value</li>
+
+                    <li class="li">Compute and write the <em class="ph i">Value </em>field of this sub-element using the
+                        header and all sub-elements except this one</li>
+
+                    <li class="li">The <em class="ph i">OTA_CrcCompute()</em> function in the <em class="ph i">OtaSupport.c</em> file can be
+                        used to incrementally compute the CRC</li>
+
+                </ul>
+</li>
+
+        </ul>
+
+        <p class="p">If the Image ID is not available when the image file is created then the CRC cannot be
+            computed. It can be computed later after the Image ID is established and written in the
+            appropriate field in the header.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-53C35DEE-9212-4685-BF1E-7B66CB5A3860.html">Over the Air Programming (OTAP)</a></div>
+</div>
+</div>
+
+</body>
+</html>

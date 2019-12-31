@@ -1,6 +1,6 @@
 '''
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
+* Copyright 2016-2019 NXP
 * All rights reserved.
 *
 * SPDX-License-Identifier: BSD-3-Clause
@@ -131,7 +131,21 @@ class L2CAPRegisterSmpCallbackRequest(object):
     pass
 
 
-class L2CAPRegisterLePsmRequest(object):
+class L2CAPCBModeSelectRequest(object):
+
+    def __init__(self, Enable=bytearray(1)):
+        '''
+        @param Enable: Enable/disable L2CAP
+        '''
+        self.Enable = Enable
+
+
+class L2CAPCBRegisterLeCbCallbacksRequest(object):
+
+    pass
+
+
+class L2CAPCBRegisterLePsmRequest(object):
 
     def __init__(self, LePsm=bytearray(2), LePsmMtu=bytearray(2)):
         '''
@@ -142,7 +156,7 @@ class L2CAPRegisterLePsmRequest(object):
         self.LePsmMtu = LePsmMtu
 
 
-class L2CAPDeregisterLePsmRequest(object):
+class L2CAPCBDeregisterLePsmRequest(object):
 
     def __init__(self, LePsm=bytearray(2)):
         '''
@@ -151,7 +165,7 @@ class L2CAPDeregisterLePsmRequest(object):
         self.LePsm = LePsm
 
 
-class L2CAPConnectLePsmRequest(object):
+class L2CAPCBConnectLePsmRequest(object):
 
     def __init__(self, LePsm=bytearray(2), DeviceId=bytearray(1), InitialCredits=bytearray(2)):
         '''
@@ -164,7 +178,7 @@ class L2CAPConnectLePsmRequest(object):
         self.InitialCredits = InitialCredits
 
 
-class L2CAPDisconnectLeCbChannelRequest(object):
+class L2CAPCBDisconnectLeCbChannelRequest(object):
 
     def __init__(self, DeviceId=bytearray(1), ChannelId=bytearray(2)):
         '''
@@ -175,9 +189,9 @@ class L2CAPDisconnectLeCbChannelRequest(object):
         self.ChannelId = ChannelId
 
 
-class L2CAPCancelConnectionRequest(object):
+class L2CAPCBCancelConnectionRequest(object):
 
-    def __init__(self, LePsm=bytearray(2), DeviceId=bytearray(1), RefuseReason=L2CAPCancelConnectionRequestRefuseReason.gSuccessful_c):
+    def __init__(self, LePsm=bytearray(2), DeviceId=bytearray(1), RefuseReason=L2CAPCBCancelConnectionRequestRefuseReason.gSuccessful_c):
         '''
         @param LePsm: Bluetooth SIG or Vendor LE_PSM
         @param DeviceId: The DeviceId for which the command is intended
@@ -188,7 +202,7 @@ class L2CAPCancelConnectionRequest(object):
         self.RefuseReason = RefuseReason
 
 
-class L2CAPSendLeCbDataRequest(object):
+class L2CAPCBSendLeCbDataRequest(object):
 
     def __init__(self, DeviceId=bytearray(1), ChannelId=bytearray(2), PacketLength=bytearray(2), Packet=[]):
         '''
@@ -203,7 +217,7 @@ class L2CAPSendLeCbDataRequest(object):
         self.Packet = Packet
 
 
-class L2CAPSendLeCreditRequest(object):
+class L2CAPCBSendLeCreditRequest(object):
 
     def __init__(self, DeviceId=bytearray(1), ChannelId=bytearray(2), Credits=bytearray(2)):
         '''
@@ -214,932 +228,6 @@ class L2CAPSendLeCreditRequest(object):
         self.DeviceId = DeviceId
         self.ChannelId = ChannelId
         self.Credits = Credits
-
-
-class SMModeSelectRequest(object):
-
-    def __init__(self, Enable=bytearray(1)):
-        '''
-        @param Enable: Enable/disable SM
-        '''
-        self.Enable = Enable
-
-
-class SMInitRequest(object):
-
-    pass
-
-
-class SMRegisterUserCallbackRequest(object):
-
-    pass
-
-
-class SMInitiatorStartPairingRequest(object):
-
-    class SmPairingParams_AuthRequest(object):
-
-        def __init__(self, BondingFlags=SmPairingParams_AuthRequestBondingFlags.gNoBonding_c, Mitm=SmPairingParams_AuthRequestMitm.gReqOff_c, sc=SmPairingParams_AuthRequestsc.gReqOff_c, keypress=SmPairingParams_AuthRequestkeypress.gReqOff_c):
-            self.BondingFlags = BondingFlags
-            self.Mitm = Mitm
-            self.sc = sc
-            self.keypress = keypress
-
-    class SmPairingParams_InitatorKeyDistribution(object):
-
-        def __init__(self, EncKey=bytearray(1), IdKey=bytearray(1), Sign=bytearray(1), LinkKey=bytearray(1), Reserved=bytearray(1)):
-            self.EncKey = EncKey
-            self.IdKey = IdKey
-            self.Sign = Sign
-            self.LinkKey = LinkKey
-            self.Reserved = Reserved
-
-    class SmPairingParams_ResponderKeyDistribution(object):
-
-        def __init__(self, EncKey=bytearray(1), IdKey=bytearray(1), Sign=bytearray(1), LinkKey=bytearray(1), Reserved=bytearray(1)):
-            self.EncKey = EncKey
-            self.IdKey = IdKey
-            self.Sign = Sign
-            self.LinkKey = LinkKey
-            self.Reserved = Reserved
-
-    def __init__(self, DestinationDeviceId=bytearray(1), SmPairingParams_IoCapabilities=SMInitiatorStartPairingRequestSmPairingParams_IoCapabilities.gDisplayOnly_c, SmPairingParams_OobDataFlag=SMInitiatorStartPairingRequestSmPairingParams_OobDataFlag.gAuthDataNotPresent_c, SmPairingParams_AuthRequest=SmPairingParams_AuthRequest(), SmPairingParams_MaxEncKeySize=bytearray(1), SmPairingParams_InitatorKeyDistribution=SmPairingParams_InitatorKeyDistribution(), SmPairingParams_ResponderKeyDistribution=SmPairingParams_ResponderKeyDistribution()):
-        '''
-        @param DestinationDeviceId: DeviceId of the destination device
-        @param SmPairingParams_IoCapabilities: I/O capabilities
-        @param SmPairingParams_OobDataFlag: OOB data flag
-        @param SmPairingParams_AuthRequest: SM authentication request parameters
-        @param SmPairingParams_MaxEncKeySize: Maximum encryption key size
-        @param SmPairingParams_InitatorKeyDistribution: Initiator key distribution
-        @param SmPairingParams_ResponderKeyDistribution: Responder key distribution
-        '''
-        self.DestinationDeviceId = DestinationDeviceId
-        self.SmPairingParams_IoCapabilities = SmPairingParams_IoCapabilities
-        self.SmPairingParams_OobDataFlag = SmPairingParams_OobDataFlag
-        self.SmPairingParams_AuthRequest = SmPairingParams_AuthRequest
-        self.SmPairingParams_MaxEncKeySize = SmPairingParams_MaxEncKeySize
-        self.SmPairingParams_InitatorKeyDistribution = SmPairingParams_InitatorKeyDistribution
-        self.SmPairingParams_ResponderKeyDistribution = SmPairingParams_ResponderKeyDistribution
-
-
-class SMSendSecurityRequestRequest(object):
-
-    class SmSecurityReqParams_AuthRequest(object):
-
-        def __init__(self, BondingFlags=SmSecurityReqParams_AuthRequestBondingFlags.gNoBonding_c, Mitm=SmSecurityReqParams_AuthRequestMitm.gReqOff_c, sc=SmSecurityReqParams_AuthRequestsc.gReqOff_c, keypress=SmSecurityReqParams_AuthRequestkeypress.gReqOff_c):
-            self.BondingFlags = BondingFlags
-            self.Mitm = Mitm
-            self.sc = sc
-            self.keypress = keypress
-
-    def __init__(self, DestinationDeviceId=bytearray(1), SmSecurityReqParams_AuthRequest=SmSecurityReqParams_AuthRequest()):
-        '''
-        @param DestinationDeviceId: DeviceId of the destination device
-        @param SmSecurityReqParams_AuthRequest: SM authentication request parameters
-        '''
-        self.DestinationDeviceId = DestinationDeviceId
-        self.SmSecurityReqParams_AuthRequest = SmSecurityReqParams_AuthRequest
-
-
-class SMTerminatePairingRequest(object):
-
-    def __init__(self, DestinationDeviceId=bytearray(1), SmTerminatePairingParams_Reason=SMTerminatePairingRequestSmTerminatePairingParams_Reason.gReserved_c):
-        '''
-        @param DestinationDeviceId: DeviceId of the destination device
-        @param SmTerminatePairingParams_Reason: Reason
-        '''
-        self.DestinationDeviceId = DestinationDeviceId
-        self.SmTerminatePairingParams_Reason = SmTerminatePairingParams_Reason
-
-
-class SMPairingRequestReplyRequest(object):
-
-    class SmPairingParams_AuthRequest(object):
-
-        def __init__(self, BondingFlags=SmPairingParams_AuthRequestBondingFlags.gNoBonding_c, Mitm=SmPairingParams_AuthRequestMitm.gReqOff_c, sc=SmPairingParams_AuthRequestsc.gReqOff_c, keypress=SmPairingParams_AuthRequestkeypress.gReqOff_c):
-            self.BondingFlags = BondingFlags
-            self.Mitm = Mitm
-            self.sc = sc
-            self.keypress = keypress
-
-    class SmPairingParams_InitatorKeyDistribution(object):
-
-        def __init__(self, EncKey=bytearray(1), IdKey=bytearray(1), Sign=bytearray(1), LinkKey=bytearray(1), Reserved=bytearray(1)):
-            self.EncKey = EncKey
-            self.IdKey = IdKey
-            self.Sign = Sign
-            self.LinkKey = LinkKey
-            self.Reserved = Reserved
-
-    class SmPairingParams_ResponderKeyDistribution(object):
-
-        def __init__(self, EncKey=bytearray(1), IdKey=bytearray(1), Sign=bytearray(1), LinkKey=bytearray(1), Reserved=bytearray(1)):
-            self.EncKey = EncKey
-            self.IdKey = IdKey
-            self.Sign = Sign
-            self.LinkKey = LinkKey
-            self.Reserved = Reserved
-
-    def __init__(self, DestinationDeviceId=bytearray(1), SmPairingParams_IoCapabilities=SMPairingRequestReplyRequestSmPairingParams_IoCapabilities.gDisplayOnly_c, SmPairingParams_OobDataFlag=SMPairingRequestReplyRequestSmPairingParams_OobDataFlag.gAuthDataNotPresent_c, SmPairingParams_AuthRequest=SmPairingParams_AuthRequest(), SmPairingParams_MaxEncKeySize=bytearray(1), SmPairingParams_InitatorKeyDistribution=SmPairingParams_InitatorKeyDistribution(), SmPairingParams_ResponderKeyDistribution=SmPairingParams_ResponderKeyDistribution()):
-        '''
-        @param DestinationDeviceId: DeviceId of the destination device
-        @param SmPairingParams_IoCapabilities: I/O capabilities
-        @param SmPairingParams_OobDataFlag: OOB data flag
-        @param SmPairingParams_AuthRequest: SM authentication request parameters
-        @param SmPairingParams_MaxEncKeySize: Maximum encryption key size
-        @param SmPairingParams_InitatorKeyDistribution: Initiator key distribution
-        @param SmPairingParams_ResponderKeyDistribution: Responder key distribution
-        '''
-        self.DestinationDeviceId = DestinationDeviceId
-        self.SmPairingParams_IoCapabilities = SmPairingParams_IoCapabilities
-        self.SmPairingParams_OobDataFlag = SmPairingParams_OobDataFlag
-        self.SmPairingParams_AuthRequest = SmPairingParams_AuthRequest
-        self.SmPairingParams_MaxEncKeySize = SmPairingParams_MaxEncKeySize
-        self.SmPairingParams_InitatorKeyDistribution = SmPairingParams_InitatorKeyDistribution
-        self.SmPairingParams_ResponderKeyDistribution = SmPairingParams_ResponderKeyDistribution
-
-
-class SMPasskeyRequestReplyRequest(object):
-
-    def __init__(self, DestinationDeviceId=bytearray(1), SmPasskeyReqReplyParams_KeyType=SMPasskeyRequestReplyRequestSmPasskeyReqReplyParams_KeyType.Passkey, SmPasskeyReqReplyParams_Key=[]):
-        '''
-        @param DestinationDeviceId: DeviceId of the destination device
-        @param SmPasskeyReqReplyParams_KeyType: Decimal passkey from 0 to 999.999 or 16 byte OOB
-        @param SmPasskeyReqReplyParams_Key: The key as specifed by the key type
-        '''
-        self.DestinationDeviceId = DestinationDeviceId
-        self.SmPasskeyReqReplyParams_KeyType = SmPasskeyReqReplyParams_KeyType
-        self.SmPasskeyReqReplyParams_Key = SmPasskeyReqReplyParams_Key
-
-
-class SMPairingKeysetRequestReplyRequest(object):
-
-    class PairingKeysetRequestReplyParams_KeyDistPayload(object):
-
-        def __init__(self, Ltk=bytearray(16), Irk=bytearray(16), Csrk=bytearray(16), Ediv=bytearray(2), Rand=bytearray(8), BDAddr=bytearray(6), BDAddrType=PairingKeysetRequestReplyParams_KeyDistPayloadBDAddrType.gPublic_c):
-            # Unit length: 16 bytes
-            self.Ltk = Ltk
-            # Unit length: 16 bytes
-            self.Irk = Irk
-            # Unit length: 16 bytes
-            self.Csrk = Csrk
-            self.Ediv = Ediv
-            self.Rand = Rand
-            # Unit length: 6 bytes
-            self.BDAddr = BDAddr
-            self.BDAddrType = BDAddrType
-
-    class PairingKeysetRequestReplyParams_SentKeys(object):
-
-        def __init__(self, EncKey=bytearray(1), IdKey=bytearray(1), Sign=bytearray(1), LinkKey=bytearray(1), Reserved=bytearray(1)):
-            self.EncKey = EncKey
-            self.IdKey = IdKey
-            self.Sign = Sign
-            self.LinkKey = LinkKey
-            self.Reserved = Reserved
-
-    def __init__(self, DestinationDeviceId=bytearray(1), PairingKeysetRequestReplyParams_KeyDistPayload=PairingKeysetRequestReplyParams_KeyDistPayload(), PairingKeysetRequestReplyParams_SentKeys=PairingKeysetRequestReplyParams_SentKeys()):
-        '''
-        @param DestinationDeviceId: DeviceId of the destination device
-        @param PairingKeysetRequestReplyParams_KeyDistPayload: Keys and additional data to be exchanged during the SMP Pairing key distribution phase
-        @param PairingKeysetRequestReplyParams_SentKeys: Keys to be sent to the peer device during the SMP Pairing key distribution phase
-        '''
-        self.DestinationDeviceId = DestinationDeviceId
-        self.PairingKeysetRequestReplyParams_KeyDistPayload = PairingKeysetRequestReplyParams_KeyDistPayload
-        self.PairingKeysetRequestReplyParams_SentKeys = PairingKeysetRequestReplyParams_SentKeys
-
-
-class SMLlStartEncryptionRequest(object):
-
-    def __init__(self, DestinationDeviceId=bytearray(1), LlStartEncryptionParams_RandomNumber=bytearray(8), LlStartEncryptionParams_EncryptedDiversifier=bytearray(2), LlStartEncryptionParams_LongTermKey=bytearray(16)):
-        '''
-        @param DestinationDeviceId: DeviceId of the destination device
-        @param LlStartEncryptionParams_RandomNumber: Random number
-        @param LlStartEncryptionParams_EncryptedDiversifier: Encrypted Diversifier
-        @param LlStartEncryptionParams_LongTermKey: Long Term Key
-        '''
-        self.DestinationDeviceId = DestinationDeviceId
-        self.LlStartEncryptionParams_RandomNumber = LlStartEncryptionParams_RandomNumber
-        self.LlStartEncryptionParams_EncryptedDiversifier = LlStartEncryptionParams_EncryptedDiversifier
-        self.LlStartEncryptionParams_LongTermKey = LlStartEncryptionParams_LongTermKey
-
-
-class SMLlLtkRequestReplyRequest(object):
-
-    def __init__(self, DestinationDeviceId=bytearray(1), LlLtkRequestReplyParams_LongTermKey=bytearray(16)):
-        '''
-        @param DestinationDeviceId: DeviceId of the destination device
-        @param LlLtkRequestReplyParams_LongTermKey: Long Term Key
-        '''
-        self.DestinationDeviceId = DestinationDeviceId
-        self.LlLtkRequestReplyParams_LongTermKey = LlLtkRequestReplyParams_LongTermKey
-
-
-class SMLlLtkRequestNegativeReplyRequest(object):
-
-    def __init__(self, DestinationDeviceId=bytearray(1)):
-        '''
-        @param DestinationDeviceId: DeviceId of the destination device
-        '''
-        self.DestinationDeviceId = DestinationDeviceId
-
-
-class SMLlEncryptRequestRequest(object):
-
-    def __init__(self, LlEncryptReqParams_Key=bytearray(16), LlEncryptReqParams_PlainTextData=bytearray(16)):
-        '''
-        @param LlEncryptReqParams_Key: Key
-        @param LlEncryptReqParams_PlainTextData: Data
-        '''
-        self.LlEncryptReqParams_Key = LlEncryptReqParams_Key
-        self.LlEncryptReqParams_PlainTextData = LlEncryptReqParams_PlainTextData
-
-
-class SMLlRandRequestRequest(object):
-
-    pass
-
-
-class SMTbCreateRandomDeviceAddressRequestRequest(object):
-
-    class ResolvablePrivateAddr(object):
-
-        def __init__(self, IRK=bytearray(16), RandIncluded=bytearray(1), Rand=[]):
-            # Unit length: 16 bytes
-            self.IRK = IRK
-            self.RandIncluded = RandIncluded
-            # Unit length: 3 bytes
-            # Array length depends on RandIncluded.
-            self.Rand = Rand
-
-    def __init__(self, TbCreateRandomDeviceAddrReqParams_AddrType=SMTbCreateRandomDeviceAddressRequestRequestTbCreateRandomDeviceAddrReqParams_AddrType.RandAddrTypeNone, TbCreateRandomDeviceAddrReqParams_Data=[]):
-        '''
-        @param TbCreateRandomDeviceAddrReqParams_AddrType: Type of BLE Random Address to be created
-        @param TbCreateRandomDeviceAddrReqParams_Data: Data, depending on the random address type
-        '''
-        self.TbCreateRandomDeviceAddrReqParams_AddrType = TbCreateRandomDeviceAddrReqParams_AddrType
-        self.TbCreateRandomDeviceAddrReqParams_Data = TbCreateRandomDeviceAddrReqParams_Data
-
-
-class SMTbCheckResolvablePrivateAddressRequestRequest(object):
-
-    def __init__(self, TbCheckResolvablePrivateAddrReqParams_IRK=bytearray(16), TbCheckResolvablePrivateAddrReqParams_Address=bytearray(6)):
-        '''
-        @param TbCheckResolvablePrivateAddrReqParams_IRK: IRK used to check the Resolvable Private Address
-        @param TbCheckResolvablePrivateAddrReqParams_Address: Address to be checked
-        '''
-        self.TbCheckResolvablePrivateAddrReqParams_IRK = TbCheckResolvablePrivateAddrReqParams_IRK
-        self.TbCheckResolvablePrivateAddrReqParams_Address = TbCheckResolvablePrivateAddrReqParams_Address
-
-
-class SMTbSignDataRequestRequest(object):
-
-    def __init__(self, TbSignDataReqParams_CSRK=bytearray(16), TbSignDataReqParams_DataLength=bytearray(2), TbSignDataReqParams_Data=[]):
-        '''
-        @param TbSignDataReqParams_CSRK: CSRK used to sign the data block
-        @param TbSignDataReqParams_DataLength: Length of the data to be signed. Actual data + 4 byte sign counter
-        @param TbSignDataReqParams_Data: Data to be checked
-        '''
-        self.TbSignDataReqParams_CSRK = TbSignDataReqParams_CSRK
-        self.TbSignDataReqParams_DataLength = TbSignDataReqParams_DataLength
-        self.TbSignDataReqParams_Data = TbSignDataReqParams_Data
-
-
-class SMTbVerifyDataSignatureRequestRequest(object):
-
-    def __init__(self, TbVerifyDataSignatureReqParams_CSRK=bytearray(16), TbVerifyDataSignatureReqParams_DataLength=bytearray(2), TbVerifyDataSignatureReqParams_Data=[], TbVerifyDataSignatureReqParams_Signature=bytearray(8)):
-        '''
-        @param TbVerifyDataSignatureReqParams_CSRK: CSRK used to verify the signature of the data block
-        @param TbVerifyDataSignatureReqParams_DataLength: Length of the data to be verified. Actual data + 4 byte sign counter
-        @param TbVerifyDataSignatureReqParams_Data: Data to be verified
-        @param TbVerifyDataSignatureReqParams_Signature: Signature to be verified
-        '''
-        self.TbVerifyDataSignatureReqParams_CSRK = TbVerifyDataSignatureReqParams_CSRK
-        self.TbVerifyDataSignatureReqParams_DataLength = TbVerifyDataSignatureReqParams_DataLength
-        self.TbVerifyDataSignatureReqParams_Data = TbVerifyDataSignatureReqParams_Data
-        self.TbVerifyDataSignatureReqParams_Signature = TbVerifyDataSignatureReqParams_Signature
-
-
-class SMDeviceConnectNotificationRequest(object):
-
-    def __init__(self, DestinationDeviceId=bytearray(1)):
-        '''
-        @param DestinationDeviceId: DeviceId of the destination device
-        '''
-        self.DestinationDeviceId = DestinationDeviceId
-
-
-class SMDeviceDisconnectNotificationRequest(object):
-
-    def __init__(self, DestinationDeviceId=bytearray(1)):
-        '''
-        @param DestinationDeviceId: DeviceId of the destination device
-        '''
-        self.DestinationDeviceId = DestinationDeviceId
-
-
-class SMSetDefaultPasskeyRequest(object):
-
-    def __init__(self, SetDefaultPasskeyParams_DefaultPasskey=bytearray(4)):
-        '''
-        @param SetDefaultPasskeyParams_DefaultPasskey: The SM default passkey (0 to 999.999 decimal)
-        '''
-        self.SetDefaultPasskeyParams_DefaultPasskey = SetDefaultPasskeyParams_DefaultPasskey
-
-
-class SMSetOobMitmProtectionRequest(object):
-
-    def __init__(self, oobMitmProt=SMSetOobMitmProtectionRequestoobMitmProt.smOobMitmProtectionOff_c):
-        '''
-        @param oobMitmProt: Sets the OOB pairing method MITM protection to ON or OFF
-        '''
-        self.oobMitmProt = oobMitmProt
-
-
-class SMSendKeypressNotificationRequest(object):
-
-    def __init__(self, DestinationDeviceId=bytearray(1), SmKeypressNotificationParams_keypressNotifType=SMSendKeypressNotificationRequestSmKeypressNotificationParams_keypressNotifType.gSmpKeypressNotificationPasskeyEntryStarted_c):
-        '''
-        @param DestinationDeviceId: DeviceId of the destination device
-        @param SmKeypressNotificationParams_keypressNotifType: keypressNotifType
-        '''
-        self.DestinationDeviceId = DestinationDeviceId
-        self.SmKeypressNotificationParams_keypressNotifType = SmKeypressNotificationParams_keypressNotifType
-
-
-class SMNcDisplayConfirmRequest(object):
-
-    def __init__(self, DestinationDeviceId=bytearray(1), ncValueConfirm=bytearray(1)):
-        '''
-        @param DestinationDeviceId: DeviceId of the destination device
-        @param ncValueConfirm: True if the value is confirmed by the user (YES) and false otherwise (NO)
-        '''
-        self.DestinationDeviceId = DestinationDeviceId
-        self.ncValueConfirm = ncValueConfirm
-
-
-class SMLeScOobDataRequestReplyRequest(object):
-
-    def __init__(self, DestinationDeviceId=bytearray(1), LeScOobDataParams_=bytearray()):
-        '''
-        @param DestinationDeviceId: DeviceId of the destination device
-        @param LeScOobDataParams_:
-        '''
-        self.DestinationDeviceId = DestinationDeviceId
-        self.LeScOobDataParams_ = LeScOobDataParams_
-
-
-class SMLocalLeScOobDataRequestReqRequest(object):
-
-    pass
-
-
-class SMGenerateNewEcdhPkSkPairRequest(object):
-
-    pass
-
-
-class SMSetMinPairingSecurityPropertiesRequest(object):
-
-    def __init__(self, mitmProtection=bytearray(1), leSc=bytearray(1), minEncKeySize=bytearray(1)):
-        '''
-        @param mitmProtection: True if a Pairing Method which offers MITM protection is required to be used by the SMP Pairing Procedure
-        @param leSc: True if a LE Secure Connections Pairing Method is required to be used by the SMP Pairing Procedure
-        @param minEncKeySize: The minimum encryption key size required to be used for the SMP Pairing Procedure
-        '''
-        self.mitmProtection = mitmProtection
-        self.leSc = leSc
-        self.minEncKeySize = minEncKeySize
-
-
-class ATTModeSelectRequest(object):
-
-    def __init__(self, Enable=bytearray(1)):
-        '''
-        @param Enable: Enable/disable ATT
-        '''
-        self.Enable = Enable
-
-
-class ATTInitRequest(object):
-
-    pass
-
-
-class ATTNotifyConnectionRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        '''
-        self.DeviceId = DeviceId
-
-
-class ATTNotifyDisconnectionRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        '''
-        self.DeviceId = DeviceId
-
-
-class ATTSetMtuRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Mtu=bytearray(2)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Mtu: The MTU to be set
-        '''
-        self.DeviceId = DeviceId
-        self.Mtu = Mtu
-
-
-class ATTGetMtuRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        '''
-        self.DeviceId = DeviceId
-
-
-class ATTRegisterOpcodeCallbackRequest(object):
-
-    def __init__(self, Opcode=ATTRegisterOpcodeCallbackRequestOpcode.gErrorResponse_c):
-        '''
-        @param Opcode: The ATT opcode
-        '''
-        self.Opcode = Opcode
-
-
-class ATTRegisterUnsupportedOpcodeCallbackRequest(object):
-
-    pass
-
-
-class ATTRegisterTimeoutCallbackRequest(object):
-
-    pass
-
-
-class ATTServerSendErrorResponseRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_RequestOpcodeInError=ATTServerSendErrorResponseRequestParams_RequestOpcodeInError.gErrorResponse_c, Params_AttributeHandleInError=bytearray(2), Params_ErrorCode=ATTServerSendErrorResponseRequestParams_ErrorCode.gInvalidHandle_c):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_RequestOpcodeInError: Request opcode in error
-        @param Params_AttributeHandleInError: Attribute handle in error
-        @param Params_ErrorCode: ATT error code
-        '''
-        self.DeviceId = DeviceId
-        self.Params_RequestOpcodeInError = Params_RequestOpcodeInError
-        self.Params_AttributeHandleInError = Params_AttributeHandleInError
-        self.Params_ErrorCode = Params_ErrorCode
-
-
-class ATTClientSendExchangeMtuRequestRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_ClientRxMtu=bytearray(2)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_ClientRxMtu: Client received MTU
-        '''
-        self.DeviceId = DeviceId
-        self.Params_ClientRxMtu = Params_ClientRxMtu
-
-
-class ATTServerSendExchangeMtuResponseRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_ServerRxMtu=bytearray(2)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_ServerRxMtu: Server received MTU
-        '''
-        self.DeviceId = DeviceId
-        self.Params_ServerRxMtu = Params_ServerRxMtu
-
-
-class ATTClientSendFindInformationRequestRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_StartingHandle=bytearray(2), Params_EndingHandle=bytearray(2)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_StartingHandle: Starting handle
-        @param Params_EndingHandle: Ending handle
-        '''
-        self.DeviceId = DeviceId
-        self.Params_StartingHandle = Params_StartingHandle
-        self.Params_EndingHandle = Params_EndingHandle
-
-
-class ATTServerSendFindInformationResponseRequest(object):
-
-    class Uuid16BitFormat(object):
-
-        class HandleUuid16(object):
-
-            def __init__(self, Handle=bytearray(2), Uuid16=bytearray(2)):
-                self.Handle = Handle
-                self.Uuid16 = Uuid16
-
-        def __init__(self, HandleUuid16PairCount=bytearray(1), HandleUuid16=[]):
-            self.HandleUuid16PairCount = HandleUuid16PairCount
-            # Array length depends on HandleUuid16PairCount.
-            self.HandleUuid16 = HandleUuid16
-
-    class Uuid128BitFormat(object):
-
-        class HandleUuid128(object):
-
-            def __init__(self, Handle=bytearray(2), Uuid128=bytearray(16)):
-                self.Handle = Handle
-                # Unit length: 16 bytes
-                self.Uuid128 = Uuid128
-
-        def __init__(self, HandleUuid128PairCount=bytearray(1), HandleUuid128=[]):
-            self.HandleUuid128PairCount = HandleUuid128PairCount
-            # Array length depends on HandleUuid128PairCount.
-            self.HandleUuid128 = HandleUuid128
-
-    def __init__(self, DeviceId=bytearray(1), Params_Format=ATTServerSendFindInformationResponseRequestParams_Format(), Params_InformationData=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_Format: ATT Uuid format
-        @param Params_InformationData: Information data
-        '''
-        self.DeviceId = DeviceId
-        self.Params_Format = Params_Format
-        self.Params_InformationData = Params_InformationData
-
-
-class ATTClientSendFindByTypeValueRequestRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_StartingHandle=bytearray(2), Params_EndingHandle=bytearray(2), Params_AttributeType=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_StartingHandle: Starting handle
-        @param Params_EndingHandle: Ending handle
-        @param Params_AttributeType: Attribute type
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_StartingHandle = Params_StartingHandle
-        self.Params_EndingHandle = Params_EndingHandle
-        self.Params_AttributeType = Params_AttributeType
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class ATTServerSendFindByTypeValueResponseRequest(object):
-
-    class Params_HandleGroup(object):
-
-        def __init__(self, StartingHandle=bytearray(2), EndingHandle=bytearray(2)):
-            self.StartingHandle = StartingHandle
-            self.EndingHandle = EndingHandle
-
-        def pickle(self):
-            result = bytearray()
-            result += to_bytes(self.StartingHandle, 2)
-            result += to_bytes(self.EndingHandle, 2)
-            return result
-
-    def __init__(self, DeviceId=bytearray(1), Params_GroupCount=bytearray(2), Params_HandleGroup=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_GroupCount: Number of groups
-        @param Params_HandleGroup: ATT find information request parameters
-        '''
-        self.DeviceId = DeviceId
-        self.Params_GroupCount = Params_GroupCount
-        self.Params_HandleGroup = Params_HandleGroup
-
-    def pickle(self):
-        result = bytearray()
-        result += to_bytes(self.DeviceId, 1)
-        result += to_bytes(self.Params_GroupCount, 2)
-        for i in range(list_to_int(self.Params_GroupCount, False)):
-            result += self.Params_HandleGroup[i].pickle()
-        return result
-
-
-class ATTClientSendReadByTypeRequestRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_StartingHandle=bytearray(2), Params_EndingHandle=bytearray(2), Params_Format=ATTClientSendReadByTypeRequestRequestParams_Format(), Params_AttributeType=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_StartingHandle: Starting handle
-        @param Params_EndingHandle: Ending handle
-        @param Params_Format: ATT Uuid format
-        @param Params_AttributeType: Attribute type
-        '''
-        self.DeviceId = DeviceId
-        self.Params_StartingHandle = Params_StartingHandle
-        self.Params_EndingHandle = Params_EndingHandle
-        self.Params_Format = Params_Format
-        self.Params_AttributeType = Params_AttributeType
-
-
-class ATTServerSendReadByTypeResponseRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_Length=bytearray(1), Params_AttributeDataListLength=bytearray(2), Params_AttributeDataList=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_Length: Fixed length of each handle+value pair in the AttributeDataList
-        @param Params_AttributeDataListLength: Attribute data list length
-        @param Params_AttributeDataList: Attribute data list
-        '''
-        self.DeviceId = DeviceId
-        self.Params_Length = Params_Length
-        self.Params_AttributeDataListLength = Params_AttributeDataListLength
-        self.Params_AttributeDataList = Params_AttributeDataList
-
-
-class ATTClientSendReadRequestRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-
-
-class ATTServerSendReadResponseRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class ATTClientSendReadBlobRequestRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2), Params_ValueOffset=bytearray(2)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_ValueOffset: Value offset
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_ValueOffset = Params_ValueOffset
-
-
-class ATTServerSendReadBlobResponseRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class ATTClientSendReadMultipleRequestRequest(object):
-
-    class Params_ListOfHandles(object):
-
-        def __init__(self, Handle=bytearray(2)):
-            self.Handle = Handle
-
-        def pickle(self):
-            result = bytearray()
-            result += to_bytes(self.Handle, 2)
-            return result
-
-    def __init__(self, DeviceId=bytearray(1), Params_HandleCount=bytearray(2), Params_ListOfHandles=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_HandleCount: Number of handles
-        @param Params_ListOfHandles: List of handles
-        '''
-        self.DeviceId = DeviceId
-        self.Params_HandleCount = Params_HandleCount
-        self.Params_ListOfHandles = Params_ListOfHandles
-
-    def pickle(self):
-        result = bytearray()
-        result += to_bytes(self.DeviceId, 1)
-        result += to_bytes(self.Params_HandleCount, 2)
-        for i in range(list_to_int(self.Params_HandleCount, False)):
-            result += self.Params_ListOfHandles[i].pickle()
-        return result
-
-
-class ATTServerSendReadMultipleResponseRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_ListLength=bytearray(2), Params_ListOfValues=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_ListLength: List length
-        @param Params_ListOfValues: List of values
-        '''
-        self.DeviceId = DeviceId
-        self.Params_ListLength = Params_ListLength
-        self.Params_ListOfValues = Params_ListOfValues
-
-
-class ATTClientSendReadByGroupTypeRequestRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_StartingHandle=bytearray(2), Params_EndingHandle=bytearray(2), Params_Format=ATTClientSendReadByGroupTypeRequestRequestParams_Format(), Params_AttributeType=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_StartingHandle: Starting handle
-        @param Params_EndingHandle: Ending handle
-        @param Params_Format: ATT Uuid format
-        @param Params_AttributeType: Attribute type
-        '''
-        self.DeviceId = DeviceId
-        self.Params_StartingHandle = Params_StartingHandle
-        self.Params_EndingHandle = Params_EndingHandle
-        self.Params_Format = Params_Format
-        self.Params_AttributeType = Params_AttributeType
-
-
-class ATTServerSendReadByGroupTypeResponseRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_Length=bytearray(1), Params_AttributeDataListLength=bytearray(2), Params_AttributeDataList=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_Length: Fixed length of each handle+value pair in the AttributeDataList
-        @param Params_AttributeDataListLength: Attribute data list length
-        @param Params_AttributeDataList: Attribute data list
-        '''
-        self.DeviceId = DeviceId
-        self.Params_Length = Params_Length
-        self.Params_AttributeDataListLength = Params_AttributeDataListLength
-        self.Params_AttributeDataList = Params_AttributeDataList
-
-
-class ATTClientSendWriteRequestRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class ATTServerSendWriteResponseRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        '''
-        self.DeviceId = DeviceId
-
-
-class ATTClientSendWriteCommandRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class ATTClientSendSignedWriteCommandRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[], Params_AuthenticationSignature=bytearray(12)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        @param Params_AuthenticationSignature: Authentication signature
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-        self.Params_AuthenticationSignature = Params_AuthenticationSignature
-
-
-class ATTClientSendPrepareWriteRequestRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2), Params_ValueOffset=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_ValueOffset: Value offset
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_ValueOffset = Params_ValueOffset
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class ATTServerSendPrepareWriteResponseRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2), Params_ValueOffset=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_ValueOffset: Value offset
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_ValueOffset = Params_ValueOffset
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class ATTClientSendExecuteWriteRequestRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_Flags=ATTClientSendExecuteWriteRequestRequestParams_Flags.gCancel_c):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_Flags: Flags
-        '''
-        self.DeviceId = DeviceId
-        self.Params_Flags = Params_Flags
-
-
-class ATTServerSendExecuteWriteResponseRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        '''
-        self.DeviceId = DeviceId
-
-
-class ATTServerSendHandleValueNotificationRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class ATTServerSendHandleValueIndicationRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class ATTClientSendHandleValueConfirmationRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        '''
-        self.DeviceId = DeviceId
-
-
-class GATTModeSelectRequest(object):
-
-    def __init__(self, Enable=bytearray(1)):
-        '''
-        @param Enable: Enable/disable GATT
-        '''
-        self.Enable = Enable
-
 
 class GATTInitRequest(object):
 
@@ -2165,6 +1253,13 @@ class GATTServerRegisterHandlesForWriteNotificationsRequest(object):
         self.HandleCount = HandleCount
         self.AttributeHandles = AttributeHandles
 
+    def pickle(self):
+        result = bytearray()
+        result += to_bytes(self.HandleCount, 1)
+        for i in range(list_to_int(self.HandleCount, False)):
+            result += to_bytes(self.AttributeHandles[i], 2)
+        return result
+
 
 class GATTServerSendAttributeWrittenStatusRequest(object):
 
@@ -2241,6 +1336,13 @@ class GATTServerRegisterHandlesForReadNotificationsRequest(object):
         self.HandleCount = HandleCount
         self.AttributeHandles = AttributeHandles
 
+    def pickle(self):
+        result = bytearray()
+        result += to_bytes(self.HandleCount, 1)
+        for i in range(list_to_int(self.HandleCount, False)):
+            result += to_bytes(self.AttributeHandles[i], 2)
+        return result
+
 
 class GATTServerSendAttributeReadStatusRequest(object):
 
@@ -2262,11 +1364,6 @@ class GATTDBModeSelectRequest(object):
         @param Enable: Enable/disable GATT Database (application)
         '''
         self.Enable = Enable
-
-
-class GATTDBInitRequest(object):
-
-    pass
 
 
 class GATTDBWriteAttributeRequest(object):
@@ -2353,22 +1450,26 @@ class GATTDBDynamicReleaseDatabaseRequest(object):
 
 class GATTDBDynamicAddPrimaryServiceDeclarationRequest(object):
 
-    def __init__(self, UuidType=GATTDBDynamicAddPrimaryServiceDeclarationRequestUuidType.Uuid16Bits, Uuid=[]):
+    def __init__(self, DesiredHandle=bytearray(2), UuidType=GATTDBDynamicAddPrimaryServiceDeclarationRequestUuidType.Uuid16Bits, Uuid=[]):
         '''
+        @param DesiredHandle: The desired handle for the Primary Service declaration
         @param UuidType: UUID type
         @param Uuid: UUID value
         '''
+        self.DesiredHandle = DesiredHandle
         self.UuidType = UuidType
         self.Uuid = Uuid
 
 
 class GATTDBDynamicAddSecondaryServiceDeclarationRequest(object):
 
-    def __init__(self, UuidType=GATTDBDynamicAddSecondaryServiceDeclarationRequestUuidType.Uuid16Bits, Uuid=[]):
+    def __init__(self, DesiredHandle=bytearray(2), UuidType=GATTDBDynamicAddSecondaryServiceDeclarationRequestUuidType.Uuid16Bits, Uuid=[]):
         '''
+        @param DesiredHandle: The desired handle for the Secondary Service declaration
         @param UuidType: UUID type
         @param Uuid: UUID value
         '''
+        self.DesiredHandle = DesiredHandle
         self.UuidType = UuidType
         self.Uuid = Uuid
 
@@ -2464,232 +1565,17 @@ class GATTDBDynamicRemoveCharacteristicRequest(object):
         self.CharacteristicHandle = CharacteristicHandle
 
 
-class GATTDBAttModeSelectRequest(object):
+class GATTDBDynamicAddCharDescriptorWithUniqueValueRequest(object):
 
-    def __init__(self, Enable=bytearray(1)):
+    def __init__(self, UuidType=GATTDBDynamicAddCharDescriptorWithUniqueValueRequestUuidType.Uuid16Bits, Uuid=[], DescriptorAccessPermissions=GATTDBDynamicAddCharDescriptorWithUniqueValueRequestDescriptorAccessPermissions.gPermissionNone_c):
         '''
-        @param Enable: Enable/disable GATT Database (ATT)
+        @param UuidType: UUID type
+        @param Uuid: UUID value
+        @param DescriptorAccessPermissions: Access permissions for the descriptor attribute
         '''
-        self.Enable = Enable
-
-
-class GATTDBAttFindInformationRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_StartingHandle=bytearray(2), Params_EndingHandle=bytearray(2)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_StartingHandle: Starting handle
-        @param Params_EndingHandle: Ending handle
-        '''
-        self.DeviceId = DeviceId
-        self.Params_StartingHandle = Params_StartingHandle
-        self.Params_EndingHandle = Params_EndingHandle
-
-
-class GATTDBAttFindByTypeValueRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_StartingHandle=bytearray(2), Params_EndingHandle=bytearray(2), Params_AttributeType=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_StartingHandle: Starting handle
-        @param Params_EndingHandle: Ending handle
-        @param Params_AttributeType: Attribute type
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_StartingHandle = Params_StartingHandle
-        self.Params_EndingHandle = Params_EndingHandle
-        self.Params_AttributeType = Params_AttributeType
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class GATTDBAttReadByTypeRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_StartingHandle=bytearray(2), Params_EndingHandle=bytearray(2), Params_Format=GATTDBAttReadByTypeRequestParams_Format(), Params_AttributeType=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_StartingHandle: Starting handle
-        @param Params_EndingHandle: Ending handle
-        @param Params_Format: ATT Uuid format
-        @param Params_AttributeType: Attribute type
-        '''
-        self.DeviceId = DeviceId
-        self.Params_StartingHandle = Params_StartingHandle
-        self.Params_EndingHandle = Params_EndingHandle
-        self.Params_Format = Params_Format
-        self.Params_AttributeType = Params_AttributeType
-
-
-class GATTDBAttReadRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-
-
-class GATTDBAttReadBlobRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2), Params_ValueOffset=bytearray(2)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_ValueOffset: Value offset
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_ValueOffset = Params_ValueOffset
-
-
-class GATTDBAttReadMultipleRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_HandleCount=bytearray(2), Params_ListOfHandles=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_HandleCount: Number of handles
-        @param Params_ListOfHandles: List of handles
-        '''
-        self.DeviceId = DeviceId
-        self.Params_HandleCount = Params_HandleCount
-        self.Params_ListOfHandles = Params_ListOfHandles
-
-
-class GATTDBAttReadByGroupTypeRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_StartingHandle=bytearray(2), Params_EndingHandle=bytearray(2), Params_Format=GATTDBAttReadByGroupTypeRequestParams_Format(), Params_AttributeType=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_StartingHandle: Starting handle
-        @param Params_EndingHandle: Ending handle
-        @param Params_Format: ATT Uuid format
-        @param Params_AttributeType: Attribute type
-        '''
-        self.DeviceId = DeviceId
-        self.Params_StartingHandle = Params_StartingHandle
-        self.Params_EndingHandle = Params_EndingHandle
-        self.Params_Format = Params_Format
-        self.Params_AttributeType = Params_AttributeType
-
-
-class GATTDBAttWriteRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class GATTDBAttWriteCommandRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class GATTDBAttSignedWriteCommandRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[], Params_AuthenticationSignature=bytearray(12)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        @param Params_AuthenticationSignature: Authentication signature
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-        self.Params_AuthenticationSignature = Params_AuthenticationSignature
-
-
-class GATTDBAttPrepareWriteRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2), Params_ValueOffset=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_ValueOffset: Value offset
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_ValueOffset = Params_ValueOffset
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class GATTDBAttExecuteWriteRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_Flags=GATTDBAttExecuteWriteRequestParams_Flags.gCancel_c):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_Flags: Flags
-        '''
-        self.DeviceId = DeviceId
-        self.Params_Flags = Params_Flags
-
-
-class GATTDBAttExecuteWriteFromQueueRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2), Params_ValueOffset=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_ValueOffset: Value offset
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_ValueOffset = Params_ValueOffset
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class GATTDBAttPrepareNotificationIndicationRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class GAPModeSelectRequest(object):
-
-    def __init__(self, Enable=bytearray(1)):
-        '''
-        @param Enable: Enable/disable GAP
-        '''
-        self.Enable = Enable
+        self.UuidType = UuidType
+        self.Uuid = Uuid
+        self.DescriptorAccessPermissions = DescriptorAccessPermissions
 
 
 class BLEHostInitializeRequest(object):
@@ -2935,15 +1821,6 @@ class GAPCheckIndicationStatusRequest(object):
         self.Handle = Handle
 
 
-class GAPGetBondedStaticAddressesRequest(object):
-
-    def __init__(self, MaxNbOfDevices=bytearray(1)):
-        '''
-        @param MaxNbOfDevices: Maximum number of addresses to be obtained
-        '''
-        self.MaxNbOfDevices = MaxNbOfDevices
-
-
 class GAPPairRequest(object):
 
     def __init__(self, DeviceId=bytearray(1), PairingParameters_WithBonding=bytearray(1), PairingParameters_SecurityModeAndLevel=GAPPairRequestPairingParameters_SecurityModeAndLevel.gMode1Level1_c, PairingParameters_MaxEncryptionKeySize=bytearray(1), PairingParameters_LocalIoCapabilities=GAPPairRequestPairingParameters_LocalIoCapabilities.gIoDisplayOnly_c, PairingParameters_OobAvailable=bytearray(1), PairingParameters_CentralKeys=GAPPairRequestPairingParameters_CentralKeys.gNoKeys_c, PairingParameters_PeripheralKeys=GAPPairRequestPairingParameters_PeripheralKeys.gNoKeys_c, PairingParameters_LeSecureConnectionSupported=bytearray(1), PairingParameters_UseKeypressNotifications=bytearray(1)):
@@ -2973,15 +1850,29 @@ class GAPPairRequest(object):
 
 class GAPSendSlaveSecurityRequestRequest(object):
 
-    def __init__(self, DeviceId=bytearray(1), BondAfterPairing=bytearray(1), SecurityModeLevel=GAPSendSlaveSecurityRequestRequestSecurityModeLevel.gMode1Level1_c):
+    def __init__(self, DeviceId=bytearray(1), PairingParameters_WithBonding=bytearray(1), PairingParameters_SecurityModeAndLevel=GAPSendSlaveSecurityRequestRequestPairingParameters_SecurityModeAndLevel.gMode1Level1_c, PairingParameters_MaxEncryptionKeySize=bytearray(1), PairingParameters_LocalIoCapabilities=GAPSendSlaveSecurityRequestRequestPairingParameters_LocalIoCapabilities.gIoDisplayOnly_c, PairingParameters_OobAvailable=bytearray(1), PairingParameters_CentralKeys=GAPSendSlaveSecurityRequestRequestPairingParameters_CentralKeys.gNoKeys_c, PairingParameters_PeripheralKeys=GAPSendSlaveSecurityRequestRequestPairingParameters_PeripheralKeys.gNoKeys_c, PairingParameters_LeSecureConnectionSupported=bytearray(1), PairingParameters_UseKeypressNotifications=bytearray(1)):
         '''
         @param DeviceId: The GAP peer to pair with
-        @param BondAfterPairing: Specifies if bonding is supported
-        @param SecurityModeLevel: The level of security requested
+        @param PairingParameters_WithBonding: TRUE if this device is able to and wants to bond after pairing, FALSE otherwise
+        @param PairingParameters_SecurityModeAndLevel: The desired security mode-level
+        @param PairingParameters_MaxEncryptionKeySize: Maximum LTK size supported by the device
+        @param PairingParameters_LocalIoCapabilities: I/O capabilities used to determine the pairing method
+        @param PairingParameters_OobAvailable: TRUE if this device has Out-of-Band data that can be used for authenticated pairing, FALSE otherwise
+        @param PairingParameters_CentralKeys: SMP keys to be distributed by the Central
+        @param PairingParameters_PeripheralKeys: SMP keys to be distributed by the Peripheral
+        @param PairingParameters_LeSecureConnectionSupported: indicates if device supports LE Secure Connections pairing
+        @param PairingParameters_UseKeypressNotifications: Indicates if device supports Keypress Notification PDUs during Passkey Entry pairing
         '''
         self.DeviceId = DeviceId
-        self.BondAfterPairing = BondAfterPairing
-        self.SecurityModeLevel = SecurityModeLevel
+        self.PairingParameters_WithBonding = PairingParameters_WithBonding
+        self.PairingParameters_SecurityModeAndLevel = PairingParameters_SecurityModeAndLevel
+        self.PairingParameters_MaxEncryptionKeySize = PairingParameters_MaxEncryptionKeySize
+        self.PairingParameters_LocalIoCapabilities = PairingParameters_LocalIoCapabilities
+        self.PairingParameters_OobAvailable = PairingParameters_OobAvailable
+        self.PairingParameters_CentralKeys = PairingParameters_CentralKeys
+        self.PairingParameters_PeripheralKeys = PairingParameters_PeripheralKeys
+        self.PairingParameters_LeSecureConnectionSupported = PairingParameters_LeSecureConnectionSupported
+        self.PairingParameters_UseKeypressNotifications = PairingParameters_UseKeypressNotifications
 
 
 class GAPEncryptLinkRequest(object):
@@ -3116,7 +2007,7 @@ class GAPSendSmpKeysRequest(object):
         @param Keys_Csrk: Connection Signature Resolving Key
         @param Keys_RandEdivInfo: Rand information (size and value) and Ediv
         @param Keys_AddressIncluded: Boolean value which indicates if Address is included or not
-        @param Keys_AddressInfo: Address information (type and value
+        @param Keys_AddressInfo: Address information (type and value)
         '''
         self.DeviceId = DeviceId
         self.Keys_LtkIncluded = Keys_LtkIncluded
@@ -3219,19 +2110,31 @@ class GAPStartScanningRequest(object):
             result += to_bytes(self.FilterPolicy, 1)
             return result
 
-    def __init__(self, ScanningParametersIncluded=bytearray(1), ScanningParameters=ScanningParameters()):
+    def __init__(self, ScanningParametersIncluded=bytearray(1), ScanningParameters=ScanningParameters(), FilterDuplicates=bytearray(1), ScanningPHYs=bytearray(1), Duration=bytearray(2), Period=bytearray(2)):
         '''
         @param ScanningParametersIncluded: Boolean value which indicates if scanning parameters are included or not
         @param ScanningParameters: The scanning parameters
+        @param FilterDuplicates: Indicates whether duplicate advertising report filtering is enabled. For BLE 5.0 adds the possibility to reset filtering for each scan period
+        @param ScanningPHYs: ScanningPHYs
+        @param Duration: Scan duration - Time = N * 10ms
+        @param Period: Periodic scanning - Time = N * 1.28s
         '''
         self.ScanningParametersIncluded = ScanningParametersIncluded
         self.ScanningParameters = ScanningParameters
+        self.FilterDuplicates = FilterDuplicates
+        self.ScanningPHYs = ScanningPHYs
+        self.Duration = Duration
+        self.Period = Period
 
     def pickle(self):
         result = bytearray()
         result += to_bytes(self.ScanningParametersIncluded, 1)
         if self.ScanningParametersIncluded:
             result += self.ScanningParameters.pickle()
+        result += to_bytes(self.FilterDuplicates, 1)
+        result += to_bytes(self.ScanningPHYs, 1)
+        result += to_bytes(self.Duration, 2)
+        result += to_bytes(self.Period, 2)
         return result
 
 
@@ -3242,7 +2145,14 @@ class GAPStopScanningRequest(object):
 
 class GAPConnectRequest(object):
 
-    def __init__(self, CreateConnectionParameters_ScanInterval=bytearray(2), CreateConnectionParameters_ScanWindow=bytearray(2), CreateConnectionParameters_FilterPolicy=GAPConnectRequestCreateConnectionParameters_FilterPolicy.gUseDeviceAddress_c, CreateConnectionParameters_OwnAddressType=GAPConnectRequestCreateConnectionParameters_OwnAddressType.gPublic_c, CreateConnectionParameters_PeerAddressType=GAPConnectRequestCreateConnectionParameters_PeerAddressType.gPublic_c, CreateConnectionParameters_PeerAddress=bytearray(6), CreateConnectionParameters_ConnIntervalMin=bytearray(2), CreateConnectionParameters_ConnIntervalMax=bytearray(2), CreateConnectionParameters_ConnLatency=bytearray(2), CreateConnectionParameters_SupervisionTimeout=bytearray(2), CreateConnectionParameters_ConnEventLengthMin=bytearray(2), CreateConnectionParameters_ConnEventLengthMax=bytearray(2), CreateConnectionParameters_usePeerIdentityAddress=bytearray(1)):
+    class CreateConnectionParameters_Initiating_PHYs(object):
+
+        def __init__(self, gLePhy1M_c=bytearray(1), gLePhy2M_c=bytearray(1), gLePhyCoded_c=bytearray(1)):
+            self.gLePhy1M_c = gLePhy1M_c
+            self.gLePhy2M_c = gLePhy2M_c
+            self.gLePhyCoded_c = gLePhyCoded_c
+
+    def __init__(self, CreateConnectionParameters_ScanInterval=bytearray(2), CreateConnectionParameters_ScanWindow=bytearray(2), CreateConnectionParameters_FilterPolicy=GAPConnectRequestCreateConnectionParameters_FilterPolicy.gUseDeviceAddress_c, CreateConnectionParameters_OwnAddressType=GAPConnectRequestCreateConnectionParameters_OwnAddressType.gPublic_c, CreateConnectionParameters_PeerAddressType=GAPConnectRequestCreateConnectionParameters_PeerAddressType.gPublic_c, CreateConnectionParameters_PeerAddress=bytearray(6), CreateConnectionParameters_ConnIntervalMin=bytearray(2), CreateConnectionParameters_ConnIntervalMax=bytearray(2), CreateConnectionParameters_ConnLatency=bytearray(2), CreateConnectionParameters_SupervisionTimeout=bytearray(2), CreateConnectionParameters_ConnEventLengthMin=bytearray(2), CreateConnectionParameters_ConnEventLengthMax=bytearray(2), CreateConnectionParameters_usePeerIdentityAddress=bytearray(1), CreateConnectionParameters_Initiating_PHYs=GAPConnectRequestCreateConnectionParameters_Initiating_PHYs.gLePhy1M_c):
         '''
         @param CreateConnectionParameters_ScanInterval: Scanning interval - default 10ms
         @param CreateConnectionParameters_ScanWindow: Scanning window - default 10ms
@@ -3257,6 +2167,7 @@ class GAPConnectRequest(object):
         @param CreateConnectionParameters_ConnEventLengthMin: The minimum desired connection event length - default 0ms
         @param CreateConnectionParameters_ConnEventLengthMax: The maximum desired connection event length - default maximum possible, ~41 s
         @param CreateConnectionParameters_usePeerIdentityAddress: TRUE if the address defined in the peerAddressType and peerAddress is an identity address
+        @param CreateConnectionParameters_Initiating_PHYs: Phy Flags
         '''
         self.CreateConnectionParameters_ScanInterval = CreateConnectionParameters_ScanInterval
         self.CreateConnectionParameters_ScanWindow = CreateConnectionParameters_ScanWindow
@@ -3271,6 +2182,7 @@ class GAPConnectRequest(object):
         self.CreateConnectionParameters_ConnEventLengthMin = CreateConnectionParameters_ConnEventLengthMin
         self.CreateConnectionParameters_ConnEventLengthMax = CreateConnectionParameters_ConnEventLengthMax
         self.CreateConnectionParameters_usePeerIdentityAddress = CreateConnectionParameters_usePeerIdentityAddress
+        self.CreateConnectionParameters_Initiating_PHYs = CreateConnectionParameters_Initiating_PHYs
 
 
 class GAPDisconnectRequest(object):
@@ -3449,7 +2361,7 @@ class GAPSetScanModeRequest(object):
 
     class AutoConnectParams_AutoConnectData(object):
 
-        def __init__(self, ScanInterval=bytearray(2), ScanWindow=bytearray(2), FilterPolicy=AutoConnectParams_AutoConnectDataFilterPolicy.gUseDeviceAddress_c, OwnAddressType=AutoConnectParams_AutoConnectDataOwnAddressType.gPublic_c, PeerAddressType=AutoConnectParams_AutoConnectDataPeerAddressType.gPublic_c, PeerAddress=bytearray(6), ConnIntervalMin=bytearray(2), ConnIntervalMax=bytearray(2), ConnLatency=bytearray(2), SupervisionTimeout=bytearray(2), ConnEventLengthMin=bytearray(2), ConnEventLengthMax=bytearray(2), usePeerIdentityAddress=bytearray(1)):
+        def __init__(self, ScanInterval=bytearray(2), ScanWindow=bytearray(2), FilterPolicy=AutoConnectParams_AutoConnectDataFilterPolicy.gUseDeviceAddress_c, OwnAddressType=AutoConnectParams_AutoConnectDataOwnAddressType.gPublic_c, PeerAddressType=AutoConnectParams_AutoConnectDataPeerAddressType.gPublic_c, PeerAddress=bytearray(6), ConnIntervalMin=bytearray(2), ConnIntervalMax=bytearray(2), ConnLatency=bytearray(2), SupervisionTimeout=bytearray(2), ConnEventLengthMin=bytearray(2), ConnEventLengthMax=bytearray(2), usePeerIdentityAddress=bytearray(1), Initiating_PHYs=AutoConnectParams_AutoConnectDataInitiating_PHYs.gLePhy1M_c):
             self.ScanInterval = ScanInterval
             self.ScanWindow = ScanWindow
             self.FilterPolicy = FilterPolicy
@@ -3464,6 +2376,7 @@ class GAPSetScanModeRequest(object):
             self.ConnEventLengthMin = ConnEventLengthMin
             self.ConnEventLengthMax = ConnEventLengthMax
             self.usePeerIdentityAddress = usePeerIdentityAddress
+            self.Initiating_PHYs = Initiating_PHYs
 
         def pickle(self):
             result = bytearray()
@@ -3480,6 +2393,7 @@ class GAPSetScanModeRequest(object):
             result += to_bytes(self.ConnEventLengthMin, 2)
             result += to_bytes(self.ConnEventLengthMax, 2)
             result += to_bytes(self.usePeerIdentityAddress, 1)
+            result += to_bytes(self.Initiating_PHYs, 1)
             return result
 
     def __init__(self, ScanMode=GAPSetScanModeRequestScanMode.gDefaultScan_c, AutoConnectParams_NbOfAddresses=bytearray(1), AutoConnectParams_WriteInWhiteList=bytearray(1), AutoConnectParams_AutoConnectData=[]):
@@ -3613,18 +2527,20 @@ class GAPEnableControllerPrivacyRequest(object):
 
     class PeerIdentities(object):
 
-        def __init__(self, IdentityAddressType=PeerIdentitiesIdentityAddressType.gPublic_c, IdentityAddress=bytearray(6), Irk=bytearray(16)):
+        def __init__(self, IdentityAddressType=PeerIdentitiesIdentityAddressType.gPublic_c, IdentityAddress=bytearray(6), Irk=bytearray(16), PrivacyMode=PeerIdentitiesPrivacyMode.gNetworkPrivacy_c):
             self.IdentityAddressType = IdentityAddressType
             # Unit length: 6 bytes
             self.IdentityAddress = IdentityAddress
             # Unit length: 16 bytes
             self.Irk = Irk
+            self.PrivacyMode = PrivacyMode
 
         def pickle(self):
             result = bytearray()
             result += to_bytes(self.IdentityAddressType, 1)
             result += to_bytes(self.IdentityAddress, 6)
             result += to_bytes(self.Irk, 16)
+            result += to_bytes(self.PrivacyMode, 1)
             return result
 
     def __init__(self, Enable=bytearray(1), OwnIrk=[], PeerIdCount=[], PeerIdentities=[]):
@@ -3716,6 +2632,481 @@ class GAPSetTxPowerLevelRequest(object):
         self.channelType = channelType
 
 
+class GAPLeReadPhyRequest(object):
+
+    def __init__(self, DeviceId=bytearray(1)):
+        '''
+        @param DeviceId: Device ID of the peer.
+        '''
+        self.DeviceId = DeviceId
+
+
+class GAPLeSetPhyRequest(object):
+
+    def __init__(self, defaultMode=bytearray(1), DeviceId=bytearray(1), allPhys=bytearray(1), txPhys=bytearray(1), rxPhys=bytearray(1), phyOptions=GAPLeSetPhyRequestphyOptions.gLeCodingNoPreference_c):
+        '''
+        @param defaultMode: Use the provided values for all subsequent connections or provide a device ID for a single connection
+        @param DeviceId: Device ID of the peer.
+        @param allPhys: Bit mask indicating Host preferences on Tx and Rx Phy
+        @param txPhys: Bit mask indicating Host preferences on Tx Phy
+        @param rxPhys: Bit mask indicating Host preferences on Rx Phy
+        @param phyOptions: Host preferences on Coded Phy
+        '''
+        self.defaultMode = defaultMode
+        self.DeviceId = DeviceId
+        self.allPhys = allPhys
+        self.txPhys = txPhys
+        self.rxPhys = rxPhys
+        self.phyOptions = phyOptions
+
+
+class GAPControllerEnhancedNotificationRequest(object):
+
+    class EventType(object):
+
+        def __init__(self, Value0x01=bytearray(1), Value0x02=bytearray(1), Value0x04=bytearray(1), Value0x08=bytearray(1), Value0x10=bytearray(1), Value0x20=bytearray(1), Value0x40=bytearray(1), Value0x80=bytearray(1), Value0x0100=bytearray(1), Value0x0200=bytearray(1), Value0x0400=bytearray(1)):
+            self.Value0x01 = Value0x01
+            self.Value0x02 = Value0x02
+            self.Value0x04 = Value0x04
+            self.Value0x08 = Value0x08
+            self.Value0x10 = Value0x10
+            self.Value0x20 = Value0x20
+            self.Value0x40 = Value0x40
+            self.Value0x80 = Value0x80
+            self.Value0x0100 = Value0x0100
+            self.Value0x0200 = Value0x0200
+            self.Value0x0400 = Value0x0400
+
+    def __init__(self, EventType=EventType(2), DeviceId=bytearray(1)):
+        '''
+        @param EventType: Events to enable.
+        @param DeviceId: Device ID of the peer.
+        '''
+        self.EventType = EventType
+        self.DeviceId = DeviceId
+
+
+class GAPLoadKeysRequest(object):
+
+    def __init__(self, NvmIndex=bytearray(1)):
+        '''
+        @param NvmIndex: Index of the device in NVM bonding area
+        '''
+        self.NvmIndex = NvmIndex
+
+
+class GAPSaveKeysRequest(object):
+
+    class Keys_LtkInfo(object):
+
+        def __init__(self, LtkSize=bytearray(1), Ltk=[]):
+            self.LtkSize = LtkSize
+            # Array length depends on LtkSize.
+            self.Ltk = Ltk
+
+        def pickle(self):
+            result = bytearray()
+            result += to_bytes(self.LtkSize, 1)
+            result += to_bytes(self.Ltk, self.LtkSize)
+            return result
+
+    class Keys_RandEdivInfo(object):
+
+        def __init__(self, RandSize=bytearray(1), Rand=[], Ediv=bytearray(2)):
+            self.RandSize = RandSize
+            # Array length depends on RandSize.
+            self.Rand = Rand
+            self.Ediv = Ediv
+
+        def pickle(self):
+            result = bytearray()
+            result += to_bytes(self.RandSize, 1)
+            result += to_bytes(self.Rand, self.RandSize)
+            result += to_bytes(self.Ediv, 2)
+            return result
+
+    class Keys_AddressInfo(object):
+
+        def __init__(self, DeviceAddressType=Keys_AddressInfoDeviceAddressType.gPublic_c, DeviceAddress=bytearray(6)):
+            self.DeviceAddressType = DeviceAddressType
+            # Unit length: 6 bytes
+            self.DeviceAddress = DeviceAddress
+
+        def pickle(self):
+            result = bytearray()
+            result += to_bytes(self.DeviceAddressType, 1)
+            result += to_bytes(self.DeviceAddress, 6)
+            return result
+
+    def __init__(self, NvmIndex=bytearray(1), Keys_LtkIncluded=bytearray(1), Keys_LtkInfo=Keys_LtkInfo(), Keys_IrkIncluded=bytearray(1), Keys_Irk=[], Keys_CsrkIncluded=bytearray(1), Keys_Csrk=[], Keys_RandEdivInfo=Keys_RandEdivInfo(), Keys_AddressIncluded=[], Keys_AddressInfo=Keys_AddressInfo(), LeSc=bytearray(1), Authenticated=bytearray(1)):
+        '''
+        @param NvmIndex: Index of the device in NVM bonding area
+        @param Keys_LtkIncluded: Boolean value which indicates if LTK size and LTK are included or not
+        @param Keys_LtkInfo: LTK information (size and value)
+        @param Keys_IrkIncluded: Boolean value which indicates if IRK is included or not
+        @param Keys_Irk: Identity Resolving Key
+        @param Keys_CsrkIncluded: Boolean value which indicates if CSRK is included or not
+        @param Keys_Csrk: Connection Signature Resolving Key
+        @param Keys_RandEdivInfo: Rand information (size and value) and Ediv
+        @param Keys_AddressIncluded: Boolean value which indicates if Address is included or not
+        @param Keys_AddressInfo: Address information (type and value)
+        @param LeSc: LE SC connections pairing
+        @param Authenticated: Peer was authenticated during pairing
+        '''
+        self.NvmIndex = NvmIndex
+        self.Keys_LtkIncluded = Keys_LtkIncluded
+        self.Keys_LtkInfo = Keys_LtkInfo
+        self.Keys_IrkIncluded = Keys_IrkIncluded
+        self.Keys_Irk = Keys_Irk
+        self.Keys_CsrkIncluded = Keys_CsrkIncluded
+        self.Keys_Csrk = Keys_Csrk
+        self.Keys_RandEdivInfo = Keys_RandEdivInfo
+        self.Keys_AddressIncluded = Keys_AddressIncluded
+        self.Keys_AddressInfo = Keys_AddressInfo
+        self.LeSc = LeSc
+        self.Authenticated = Authenticated
+
+    def pickle(self):
+        result = bytearray()
+        result += to_bytes(self.NvmIndex, 1)
+        result += to_bytes(self.Keys_LtkIncluded, 1)
+        if self.Keys_LtkIncluded:
+            result += self.Keys_LtkInfo.pickle()
+        result += to_bytes(self.Keys_IrkIncluded, 1)
+        if self.Keys_IrkIncluded:
+            result += to_bytes(self.Keys_Irk, 16)
+        result += to_bytes(self.Keys_CsrkIncluded, 1)
+        if self.Keys_CsrkIncluded:
+            result += to_bytes(self.Keys_Csrk, 16)
+        if self.Keys_LtkIncluded:
+            result += self.Keys_RandEdivInfo.pickle()
+        if self.Keys_IrkIncluded:
+            result += to_bytes(self.Keys_AddressIncluded, 1)
+        if self.Keys_AddressIncluded:
+            result += self.Keys_AddressInfo.pickle()
+        result += to_bytes(self.LeSc, 1)
+        result += to_bytes(self.Authenticated, 1)
+        return result
+
+
+class GAPSetChannelMapRequest(object):
+
+    def __init__(self, ChannelMap=bytearray(5)):
+        '''
+        @param ChannelMap: Channel Map
+        '''
+        self.ChannelMap = ChannelMap
+
+
+class GAPReadChannelMapRequest(object):
+
+    def __init__(self, DeviceId=bytearray(1)):
+        '''
+        @param DeviceId: Device ID of the peer.
+        '''
+        self.DeviceId = DeviceId
+
+
+class GAPSetPrivacyModeRequest(object):
+
+    def __init__(self, NvmIndex=bytearray(1), PrivacyMode=GAPSetPrivacyModeRequestPrivacyMode.gNetworkPrivacy_c):
+        '''
+        @param NvmIndex: Index of the device in NVM bonding area
+        @param PrivacyMode: Privacy Mode
+        '''
+        self.NvmIndex = NvmIndex
+        self.PrivacyMode = PrivacyMode
+
+
+class GAPSetExtAdvertisingParametersRequest(object):
+
+    class ChannelMap(object):
+
+        def __init__(self, Value0x01=bytearray(1), Value0x02=bytearray(1), Value0x04=bytearray(1)):
+            self.Value0x01 = Value0x01
+            self.Value0x02 = Value0x02
+            self.Value0x04 = Value0x04
+
+    class AdvProperties(object):
+
+        def __init__(self, gExtAdvConnectable_c=bytearray(1), gExtAdvScannable_c=bytearray(1), gExtAdvDirected_c=bytearray(1), gExtAdvFastDirected_c=bytearray(1), gExtAdvLegacy_c=bytearray(1), gExtAdvAnonymous_c=bytearray(1), gExtAdvIncludeTxPower_c=bytearray(1), Reserved=bytearray(9)):
+            self.gExtAdvConnectable_c = gExtAdvConnectable_c
+            self.gExtAdvScannable_c = gExtAdvScannable_c
+            self.gExtAdvDirected_c = gExtAdvDirected_c
+            self.gExtAdvFastDirected_c = gExtAdvFastDirected_c
+            self.gExtAdvLegacy_c = gExtAdvLegacy_c
+            self.gExtAdvAnonymous_c = gExtAdvAnonymous_c
+            self.gExtAdvIncludeTxPower_c = gExtAdvIncludeTxPower_c
+            # Unit length: 9 bytes
+            self.Reserved = Reserved
+
+    def __init__(self, SID=bytearray(1), Handle=bytearray(1), MinInterval=bytearray(4), MaxInterval=bytearray(4), OwnAddressType=GAPSetExtAdvertisingParametersRequestOwnAddressType.gPublic_c, OwnRandomAddress=bytearray(6), PeerAddressType=GAPSetExtAdvertisingParametersRequestPeerAddressType.gPublic_c, PeerAddress=bytearray(6), ChannelMap=ChannelMap(1), FilterPolicy=GAPSetExtAdvertisingParametersRequestFilterPolicy.gProcessAll_c, AdvProperties=AdvProperties(2), AdvTxPowerLevel=bytearray(1), PrimaryAdvPHY=GAPSetExtAdvertisingParametersRequestPrimaryAdvPHY.gLePhy1M_c, SecondaryAdvPHY=GAPSetExtAdvertisingParametersRequestSecondaryAdvPHY.gLePhy1M_c, SecondaryAdvMaxSkip=bytearray(1), EnableScanReqNotification=bytearray(1)):
+        '''
+        @param SID: Advertising SID
+        @param Handle: Advertising set identifier
+        @param MinInterval: Minimum desired advertising interval - default 1.28s
+        @param MaxInterval: Maximum desired advertising interval - default 1.28s
+        @param OwnAddressType: Bluetooth device address types
+        @param OwnRandomAddress: Bluetooth device address
+        @param PeerAddressType: Bluetooth device address types
+        @param PeerAddress: Bluetooth device address
+        @param ChannelMap: Bit mask indicating which of the three advertising channels will be used - default all three
+        @param FilterPolicy: Indicates whether the connect and scan requests are filtered using the White List - default does not use White List
+        @param AdvProperties: Extended Advertising Properties
+        @param AdvTxPowerLevel: Advertising transmission power level (in dBm)
+        @param PrimaryAdvPHY: Phy Mode
+        @param SecondaryAdvPHY: Phy Mode
+        @param SecondaryAdvMaxSkip: Maximum advertising events the Controller can skip before sending the AUX_ADV_IND packets on the secondary advertising channel. If 0, AUX_ADV_IND shall be sent prior to the next advertising event
+        @param EnableScanReqNotification: Host is notified on scan requests
+        '''
+        self.SID = SID
+        self.Handle = Handle
+        self.MinInterval = MinInterval
+        self.MaxInterval = MaxInterval
+        self.OwnAddressType = OwnAddressType
+        self.OwnRandomAddress = OwnRandomAddress
+        self.PeerAddressType = PeerAddressType
+        self.PeerAddress = PeerAddress
+        self.ChannelMap = ChannelMap
+        self.FilterPolicy = FilterPolicy
+        self.AdvProperties = AdvProperties
+        self.AdvTxPowerLevel = AdvTxPowerLevel
+        self.PrimaryAdvPHY = PrimaryAdvPHY
+        self.SecondaryAdvPHY = SecondaryAdvPHY
+        self.SecondaryAdvMaxSkip = SecondaryAdvMaxSkip
+        self.EnableScanReqNotification = EnableScanReqNotification
+
+
+class GAPStartExtAdvertisingRequest(object):
+
+    def __init__(self, Handle=bytearray(1), Duration=bytearray(2), MaxExtAdvEvents=bytearray(1)):
+        '''
+        @param Handle: Advertising set ID
+        @param Duration: The duration of the advertising - Time = N * 10 ms
+        @param MaxExtAdvEvents: The maximum number of advertising events
+        '''
+        self.Handle = Handle
+        self.Duration = Duration
+        self.MaxExtAdvEvents = MaxExtAdvEvents
+
+
+class GAPRemoveAdvertisingSetRequest(object):
+
+    def __init__(self, Handle=bytearray(1)):
+        '''
+        @param Handle: Advertising handle to remove or 0xFF to remove all
+        '''
+        self.Handle = Handle
+
+
+class GAPStopExtAdvertisingRequest(object):
+
+    def __init__(self, Handle=bytearray(1)):
+        '''
+        @param Handle: Advertising set to be disabled or 0xFF to disable all
+        '''
+        self.Handle = Handle
+
+
+class GAPUpdatePeriodicAdvListRequest(object):
+
+    def __init__(self, Operation=GAPUpdatePeriodicAdvListRequestOperation.gAddDevice_c, DeviceAddressType=GAPUpdatePeriodicAdvListRequestDeviceAddressType.gPublic_c, DeviceAddress=bytearray(6), SID=bytearray(1)):
+        '''
+        @param Operation: The operation to be executed on the list
+        @param DeviceAddressType: Bluetooth device address types
+        @param DeviceAddress: Bluetooth device address
+        @param SID: Advertising set ID
+        '''
+        self.Operation = Operation
+        self.DeviceAddressType = DeviceAddressType
+        self.DeviceAddress = DeviceAddress
+        self.SID = SID
+
+
+class GAPSetPeriodicAdvParametersRequest(object):
+
+    def __init__(self, Handle=bytearray(1), IncludeTxPower=bytearray(1), MinInterval=bytearray(2), MaxInterval=bytearray(2)):
+        '''
+        @param Handle: Advertising set ID
+        @param IncludeTxPower: Include TxPower in the advertising PDU
+        @param MinInterval: Minimum advertising interval for periodic advertising
+        @param MaxInterval: Maximum advertising interval for periodic advertising
+        '''
+        self.Handle = Handle
+        self.IncludeTxPower = IncludeTxPower
+        self.MinInterval = MinInterval
+        self.MaxInterval = MaxInterval
+
+
+class GAPStartPeriodicAdvertisingRequest(object):
+
+    def __init__(self, Handle=bytearray(1)):
+        '''
+        @param Handle: Advertising handle
+        '''
+        self.Handle = Handle
+
+
+class GAPStopPeriodicAdvertisingRequest(object):
+
+    def __init__(self, Handle=bytearray(1)):
+        '''
+        @param Handle: Advertising handle
+        '''
+        self.Handle = Handle
+
+
+class GAPSetExtAdvertisingDataRequest(object):
+
+    class ExtAdvertisingData(object):
+
+        class AdStructures(object):
+
+            def __init__(self, Length=bytearray(1), Type=AdStructuresType(), Data=[]):
+                self.Length = Length
+                self.Type = Type
+                # Array length depends on Length.
+                self.Data = Data
+
+            def pickle(self):
+                result = bytearray()
+                result += to_bytes(self.Length, 1)
+                result += to_bytes(self.Type, 1)
+                result += to_bytes(self.Data, self.Length)
+                return result
+
+        def __init__(self, NbOfAdStructures=bytearray(1), AdStructures=[]):
+            self.NbOfAdStructures = NbOfAdStructures
+            # Array length depends on NbOfAdStructures.
+            self.AdStructures = AdStructures
+
+        def pickle(self):
+            result = bytearray()
+            result += to_bytes(self.NbOfAdStructures, 1)
+            for i in range(list_to_int(self.NbOfAdStructures, False)):
+                result += self.AdStructures[i].pickle()
+            return result
+
+    class ExtScanResponseData(object):
+
+        class AdStructures(object):
+
+            def __init__(self, Length=bytearray(1), Type=AdStructuresType(), Data=[]):
+                self.Length = Length
+                self.Type = Type
+                # Array length depends on Length.
+                self.Data = Data
+
+            def pickle(self):
+                result = bytearray()
+                result += to_bytes(self.Length, 1)
+                result += to_bytes(self.Type, 1)
+                result += to_bytes(self.Data, self.Length)
+                return result
+
+        def __init__(self, NbOfAdStructures=bytearray(1), AdStructures=[]):
+            self.NbOfAdStructures = NbOfAdStructures
+            # Array length depends on NbOfAdStructures.
+            self.AdStructures = AdStructures
+
+        def pickle(self):
+            result = bytearray()
+            result += to_bytes(self.NbOfAdStructures, 1)
+            for i in range(list_to_int(self.NbOfAdStructures, False)):
+                result += self.AdStructures[i].pickle()
+            return result
+
+    def __init__(self, Handle=bytearray(1), AdvertisingDataIncluded=bytearray(1), ExtAdvertisingData=ExtAdvertisingData(), ScanResponseDataIncluded=bytearray(1), ExtScanResponseData=ExtScanResponseData()):
+        '''
+        @param Handle: Advertising handle
+        @param AdvertisingDataIncluded: Boolean value which indicates if extended advertising data is included or not
+        @param ExtAdvertisingData: Extended Advertising data
+        @param ScanResponseDataIncluded: Boolean value which indicates if extended scan response data is included or not
+        @param ExtScanResponseData: Extended Scan response data
+        '''
+        self.Handle = Handle
+        self.AdvertisingDataIncluded = AdvertisingDataIncluded
+        self.ExtAdvertisingData = ExtAdvertisingData
+        self.ScanResponseDataIncluded = ScanResponseDataIncluded
+        self.ExtScanResponseData = ExtScanResponseData
+
+    def pickle(self):
+        result = bytearray()
+        result += to_bytes(self.Handle, 1)
+        result += to_bytes(self.AdvertisingDataIncluded, 1)
+        if self.AdvertisingDataIncluded:
+            result += self.ExtAdvertisingData.pickle()
+        result += to_bytes(self.ScanResponseDataIncluded, 1)
+        if self.ScanResponseDataIncluded:
+            result += self.ExtScanResponseData.pickle()
+        return result
+
+
+class GAPSetPeriodicAdvertisingDataRequest(object):
+
+    class PeriodicAdvertisingData_AdStructures(object):
+
+        def __init__(self, Length=bytearray(1), Type=PeriodicAdvertisingData_AdStructuresType(), Data=[]):
+            self.Length = Length
+            self.Type = Type
+            # Array length depends on Length.
+            self.Data = Data
+
+        def pickle(self):
+            result = bytearray()
+            result += to_bytes(self.Length, 1)
+            result += to_bytes(self.Type, 1)
+            result += to_bytes(self.Data, self.Length)
+            return result
+
+    def __init__(self, Handle=bytearray(1), PeriodicAdvertisingData_NbOfAdStructures=bytearray(1), PeriodicAdvertisingData_AdStructures=[]):
+        '''
+        @param Handle: Advertising handle
+        @param PeriodicAdvertisingData_NbOfAdStructures: Number of advertising data structures
+        @param PeriodicAdvertisingData_AdStructures: Advertising data structures
+        '''
+        self.Handle = Handle
+        self.PeriodicAdvertisingData_NbOfAdStructures = PeriodicAdvertisingData_NbOfAdStructures
+        self.PeriodicAdvertisingData_AdStructures = PeriodicAdvertisingData_AdStructures
+
+    def pickle(self):
+        result = bytearray()
+        result += to_bytes(self.Handle, 1)
+        result += to_bytes(self.PeriodicAdvertisingData_NbOfAdStructures, 1)
+        for i in range(list_to_int(self.PeriodicAdvertisingData_NbOfAdStructures, False)):
+            result += self.PeriodicAdvertisingData_AdStructures[i].pickle()
+        return result
+
+
+class GAPPeriodicAdvCreateSyncRequest(object):
+
+    def __init__(self, FilterPolicy=GAPPeriodicAdvCreateSyncRequestFilterPolicy.gUseCommandParameters_c, SID=bytearray(1), DeviceAddressType=GAPPeriodicAdvCreateSyncRequestDeviceAddressType.gPublic_c, DeviceAddress=bytearray(6), SkipCount=bytearray(2), Timeout=bytearray(2)):
+        '''
+        @param FilterPolicy: Periodic advertising create sync request parameters
+        @param SID: Periodic advertising create sync request parameters
+        @param DeviceAddressType: Periodic advertising create sync request parameters
+        @param DeviceAddress: Periodic advertising create sync request parameters
+        @param SkipCount: Periodic advertising create sync request parameters
+        @param Timeout: Periodic advertising create sync request parameters
+        '''
+        self.FilterPolicy = FilterPolicy
+        self.SID = SID
+        self.DeviceAddressType = DeviceAddressType
+        self.DeviceAddress = DeviceAddress
+        self.SkipCount = SkipCount
+        self.Timeout = Timeout
+
+
+class GAPPeriodicAdvTerminateSyncRequest(object):
+
+    def __init__(self, SyncHandle=bytearray(2)):
+        '''
+        @param SyncHandle: Sync_Handle to be used to identify the periodic advertiser
+        '''
+        self.SyncHandle = SyncHandle
+
+
+
 class FSCICPUResetRequest(object):
 
     pass
@@ -3773,214 +3164,23 @@ class FSCIWakeUpIndication(object):
 
 class FSCIGetWakeupReasonResponse(object):
 
-    def __init__(self, WakeUpReason=bytearray()):
+    def __init__(self, WakeUpReason=bytearray(1)):
         '''
         @param WakeUpReason: Wake Up Reason
         '''
         self.WakeUpReason = WakeUpReason
 
 
-class NVMSaveConfirm(object):
+class L2CAPCBConfirm(object):
 
-    def __init__(self, Status=NVMSaveConfirmStatus.SUCCESS):
-        '''
-        @param Status: Did it work?
-        '''
-        self.Status = Status
-
-
-class NVMGetDataSetDescConfirm(object):
-
-    def __init__(self, Status=bytearray(1), Count=bytearray(1), CountSizeandID=[]):
-        '''
-        @param Status: Status
-        @param Count: Number of data sets.
-        @param CountSizeandID: Address, Count, Element size and id of each data set.
-        '''
-        self.Status = Status
-        self.Count = Count
-        self.CountSizeandID = CountSizeandID
-
-
-class NVMGetCountersConfirm(object):
-
-    def __init__(self, Status=bytearray(1), nvmFirstVirtualPageEraseCounter=bytearray(4), nvmSecondVirtualPageEraseCounter=bytearray(4)):
-        '''
-        @param Status: Status Value
-        @param nvmFirstVirtualPageEraseCounter: Number of erased pages
-        @param nvmSecondVirtualPageEraseCounter: Number of erased pages
-        '''
-        self.Status = Status
-        self.nvmFirstVirtualPageEraseCounter = nvmFirstVirtualPageEraseCounter
-        self.nvmSecondVirtualPageEraseCounter = nvmSecondVirtualPageEraseCounter
-
-
-class NVMSetMonitoringConfirm(object):
-
-    def __init__(self, Status=bytearray(1)):
-        '''
-        @param Status: Status Value
-        '''
-        self.Status = Status
-
-
-class NVMWriteMonitoringIndication(object):
-
-    def __init__(self, nvmDatasetId=bytearray(2), elementId=bytearray(2), saveAll=bytearray(1)):
-        '''
-        @param nvmDatasetId: DataSetId
-        @param elementId: DataSet element id
-        @param saveAll: SaveAll
-        '''
-        self.nvmDatasetId = nvmDatasetId
-        self.elementId = elementId
-        self.saveAll = saveAll
-
-
-class NVMPageEraseMonitoringIndication(object):
-
-    def __init__(self, nvmFlashErasedPageAddressParmName=bytearray(4), Status=bytearray(1)):
-        '''
-        @param nvmFlashErasedPageAddressParmName: nvmFlashErasedPageAddress
-        @param Status: NVFormat status returned
-        '''
-        self.nvmFlashErasedPageAddressParmName = nvmFlashErasedPageAddressParmName
-        self.Status = Status
-
-
-class NVMFormatReqConfirm(object):
-
-    def __init__(self, Status=bytearray(1)):
-        '''
-        @param Status: NVFormat status returned
-        '''
-        self.Status = Status
-
-
-class NVMRestoreReqConfirm(object):
-
-    def __init__(self, Status=bytearray(1)):
-        '''
-        @param Status: NVFormat status returned
-        '''
-        self.Status = Status
-
-
-class NVMRestoreMonitoringIndication(object):
-
-    def __init__(self, nvmDatasetId=bytearray(2), Start=bytearray(1), Status=bytearray(1)):
-        '''
-        @param nvmDatasetId: DataSetId
-        @param Start: start=o,Stop=0
-        @param Status: Restore status
-        '''
-        self.nvmDatasetId = nvmDatasetId
-        self.Start = Start
-        self.Status = Status
-
-
-class NVMVirtualPageMonitoringIndication(object):
-
-    def __init__(self, Start=bytearray(1), Status=bytearray(1)):
-        '''
-        @param Start: start=o,Stop=0
-        @param Status: Change status
-        '''
-        self.Start = Start
-        self.Status = Status
-
-
-class HCIConfirm(object):
-
-    def __init__(self, Status=HCIConfirmStatus.gBleSuccess_c):
-        '''
-        @param Status: The status of the HCI request
-        '''
-        self.Status = Status
-
-
-class HCIEventIndication(object):
-
-    def __init__(self, EventLength=bytearray(2), Event=[]):
-        '''
-        @param EventLength: The length of the HCI event
-        @param Event: The HCI event
-        '''
-        self.EventLength = EventLength
-        self.Event = Event
-
-
-class HCIDataIndication(object):
-
-    def __init__(self, DataLength=bytearray(2), Data=[]):
-        '''
-        @param DataLength: The length of the HCI data
-        @param Data: The HCI data
-        '''
-        self.DataLength = DataLength
-        self.Data = Data
-
-
-class HCISynchronousDataIndication(object):
-
-    def __init__(self, SynchronousDataLength=bytearray(2), SynchronousData=[]):
-        '''
-        @param SynchronousDataLength: The length of the HCI synchronous data
-        @param SynchronousData: HCI received synchronous data
-        '''
-        self.SynchronousDataLength = SynchronousDataLength
-        self.SynchronousData = SynchronousData
-
-
-class L2CAPConfirm(object):
-
-    def __init__(self, Status=L2CAPConfirmStatus.gBleSuccess_c):
+    def __init__(self, Status=L2CAPCBConfirmStatus.gBleSuccess_c):
         '''
         @param Status: The status of the L2CAP request
         '''
         self.Status = Status
 
 
-class L2CAPAttDataIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), PacketLength=bytearray(2), Packet=[]):
-        '''
-        @param DeviceId: The DeviceId from which ATT data packet is received
-        @param PacketLength: Length of the received ATT data packet
-        @param Packet: The received ATT data packet
-        '''
-        self.DeviceId = DeviceId
-        self.PacketLength = PacketLength
-        self.Packet = Packet
-
-
-class L2CAPSmpDataIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), PacketLength=bytearray(2), Packet=[]):
-        '''
-        @param DeviceId: The DeviceId from which SM data packet is received
-        @param PacketLength: Length of the received SM data packet
-        @param Packet: The received SM data packet
-        '''
-        self.DeviceId = DeviceId
-        self.PacketLength = PacketLength
-        self.Packet = Packet
-
-
-class L2CAPSignalingDataIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), PacketLength=bytearray(2), Packet=[]):
-        '''
-        @param DeviceId: The DeviceId from which Signaling data packet is received
-        @param PacketLength: Length of the received Signaling data packet
-        @param Packet: The received Signaling data packet
-        '''
-        self.DeviceId = DeviceId
-        self.PacketLength = PacketLength
-        self.Packet = Packet
-
-
-class L2CAPLePsmConnectionRequestIndication(object):
+class L2CAPCBLePsmConnectionRequestIndication(object):
 
     class LeCbConnectionRequest(object):
 
@@ -4000,7 +3200,7 @@ class L2CAPLePsmConnectionRequestIndication(object):
         self.LeCbConnectionRequest = LeCbConnectionRequest
 
 
-class L2CAPLePsmConnectionCompleteIndication(object):
+class L2CAPCBLePsmConnectionCompleteIndication(object):
 
     class LeCbConnectionComplete(object):
 
@@ -4021,7 +3221,7 @@ class L2CAPLePsmConnectionCompleteIndication(object):
         self.LeCbConnectionComplete = LeCbConnectionComplete
 
 
-class L2CAPLePsmDisconnectNotificationIndication(object):
+class L2CAPCBLePsmDisconnectNotificationIndication(object):
 
     class LeCbDisconnection(object):
 
@@ -4038,7 +3238,7 @@ class L2CAPLePsmDisconnectNotificationIndication(object):
         self.LeCbDisconnection = LeCbDisconnection
 
 
-class L2CAPNoPeerCreditsIndication(object):
+class L2CAPCBNoPeerCreditsIndication(object):
 
     class LeCbNoPeerCredits(object):
 
@@ -4055,7 +3255,7 @@ class L2CAPNoPeerCreditsIndication(object):
         self.LeCbNoPeerCredits = LeCbNoPeerCredits
 
 
-class L2CAPLocalCreditsNotificationIndication(object):
+class L2CAPCBLocalCreditsNotificationIndication(object):
 
     class LeCbLocalCreditsNotification(object):
 
@@ -4073,7 +3273,7 @@ class L2CAPLocalCreditsNotificationIndication(object):
         self.LeCbLocalCreditsNotification = LeCbLocalCreditsNotification
 
 
-class L2CAPLeCbDataIndication(object):
+class L2CAPCBLeCbDataIndication(object):
 
     def __init__(self, DeviceId=bytearray(1), SrcCid=bytearray(2), PacketLength=bytearray(2), Packet=[]):
         '''
@@ -4086,882 +3286,6 @@ class L2CAPLeCbDataIndication(object):
         self.SrcCid = SrcCid
         self.PacketLength = PacketLength
         self.Packet = Packet
-
-
-class SMConfirm(object):
-
-    def __init__(self, Status=SMConfirmStatus.gBleSuccess_c):
-        '''
-        @param Status: The status of the SM request
-        '''
-        self.Status = Status
-
-
-class SMStatusIndication(object):
-
-    def __init__(self, SourceDeviceId=bytearray(1), SmStatusParams_Status=SMStatusIndicationSmStatusParams_Status.gBleSuccess_c):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        @param SmStatusParams_Status: A status returned by the SM regarding it's functionality
-        '''
-        self.SourceDeviceId = SourceDeviceId
-        self.SmStatusParams_Status = SmStatusParams_Status
-
-
-class SMRemoteSecurityRequestIndication(object):
-
-    class SmSecurityReqParams_AuthRequest(object):
-
-        def __init__(self, BondingFlags=SmSecurityReqParams_AuthRequestBondingFlags.gNoBonding_c, Mitm=SmSecurityReqParams_AuthRequestMitm.gReqOff_c, sc=SmSecurityReqParams_AuthRequestsc.gReqOff_c, keypress=SmSecurityReqParams_AuthRequestkeypress.gReqOff_c):
-            self.BondingFlags = BondingFlags
-            self.Mitm = Mitm
-            self.sc = sc
-            self.keypress = keypress
-
-    def __init__(self, SourceDeviceId=bytearray(1), SmSecurityReqParams_AuthRequest=SmSecurityReqParams_AuthRequest()):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        @param SmSecurityReqParams_AuthRequest: SM authentication request parameters
-        '''
-        self.SourceDeviceId = SourceDeviceId
-        self.SmSecurityReqParams_AuthRequest = SmSecurityReqParams_AuthRequest
-
-
-class SMRemotePairingRequestIndication(object):
-
-    class SmPairingParams_AuthRequest(object):
-
-        def __init__(self, BondingFlags=SmPairingParams_AuthRequestBondingFlags.gNoBonding_c, Mitm=SmPairingParams_AuthRequestMitm.gReqOff_c, sc=SmPairingParams_AuthRequestsc.gReqOff_c, keypress=SmPairingParams_AuthRequestkeypress.gReqOff_c):
-            self.BondingFlags = BondingFlags
-            self.Mitm = Mitm
-            self.sc = sc
-            self.keypress = keypress
-
-    class SmPairingParams_InitatorKeyDistribution(object):
-
-        def __init__(self, EncKey=bytearray(1), IdKey=bytearray(1), Sign=bytearray(1), LinkKey=bytearray(1), Reserved=bytearray(1)):
-            self.EncKey = EncKey
-            self.IdKey = IdKey
-            self.Sign = Sign
-            self.LinkKey = LinkKey
-            self.Reserved = Reserved
-
-    class SmPairingParams_ResponderKeyDistribution(object):
-
-        def __init__(self, EncKey=bytearray(1), IdKey=bytearray(1), Sign=bytearray(1), LinkKey=bytearray(1), Reserved=bytearray(1)):
-            self.EncKey = EncKey
-            self.IdKey = IdKey
-            self.Sign = Sign
-            self.LinkKey = LinkKey
-            self.Reserved = Reserved
-
-    def __init__(self, SourceDeviceId=bytearray(1), SmPairingParams_IoCapabilities=SMRemotePairingRequestIndicationSmPairingParams_IoCapabilities.gDisplayOnly_c, SmPairingParams_OobDataFlag=SMRemotePairingRequestIndicationSmPairingParams_OobDataFlag.gAuthDataNotPresent_c, SmPairingParams_AuthRequest=SmPairingParams_AuthRequest(), SmPairingParams_MaxEncKeySize=bytearray(1), SmPairingParams_InitatorKeyDistribution=SmPairingParams_InitatorKeyDistribution(), SmPairingParams_ResponderKeyDistribution=SmPairingParams_ResponderKeyDistribution()):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        @param SmPairingParams_IoCapabilities: I/O capabilities
-        @param SmPairingParams_OobDataFlag: OOB data flag
-        @param SmPairingParams_AuthRequest: SM authentication request parameters
-        @param SmPairingParams_MaxEncKeySize: Maximum encryption key size
-        @param SmPairingParams_InitatorKeyDistribution: Initiator key distribution
-        @param SmPairingParams_ResponderKeyDistribution: Responder key distribution
-        '''
-        self.SourceDeviceId = SourceDeviceId
-        self.SmPairingParams_IoCapabilities = SmPairingParams_IoCapabilities
-        self.SmPairingParams_OobDataFlag = SmPairingParams_OobDataFlag
-        self.SmPairingParams_AuthRequest = SmPairingParams_AuthRequest
-        self.SmPairingParams_MaxEncKeySize = SmPairingParams_MaxEncKeySize
-        self.SmPairingParams_InitatorKeyDistribution = SmPairingParams_InitatorKeyDistribution
-        self.SmPairingParams_ResponderKeyDistribution = SmPairingParams_ResponderKeyDistribution
-
-
-class SMRemotePairingResponseIndication(object):
-
-    class SmPairingParams_AuthRequest(object):
-
-        def __init__(self, BondingFlags=SmPairingParams_AuthRequestBondingFlags.gNoBonding_c, Mitm=SmPairingParams_AuthRequestMitm.gReqOff_c, sc=SmPairingParams_AuthRequestsc.gReqOff_c, keypress=SmPairingParams_AuthRequestkeypress.gReqOff_c):
-            self.BondingFlags = BondingFlags
-            self.Mitm = Mitm
-            self.sc = sc
-            self.keypress = keypress
-
-    class SmPairingParams_InitatorKeyDistribution(object):
-
-        def __init__(self, EncKey=bytearray(1), IdKey=bytearray(1), Sign=bytearray(1), LinkKey=bytearray(1), Reserved=bytearray(1)):
-            self.EncKey = EncKey
-            self.IdKey = IdKey
-            self.Sign = Sign
-            self.LinkKey = LinkKey
-            self.Reserved = Reserved
-
-    class SmPairingParams_ResponderKeyDistribution(object):
-
-        def __init__(self, EncKey=bytearray(1), IdKey=bytearray(1), Sign=bytearray(1), LinkKey=bytearray(1), Reserved=bytearray(1)):
-            self.EncKey = EncKey
-            self.IdKey = IdKey
-            self.Sign = Sign
-            self.LinkKey = LinkKey
-            self.Reserved = Reserved
-
-    def __init__(self, SourceDeviceId=bytearray(1), SmPairingParams_IoCapabilities=SMRemotePairingResponseIndicationSmPairingParams_IoCapabilities.gDisplayOnly_c, SmPairingParams_OobDataFlag=SMRemotePairingResponseIndicationSmPairingParams_OobDataFlag.gAuthDataNotPresent_c, SmPairingParams_AuthRequest=SmPairingParams_AuthRequest(), SmPairingParams_MaxEncKeySize=bytearray(1), SmPairingParams_InitatorKeyDistribution=SmPairingParams_InitatorKeyDistribution(), SmPairingParams_ResponderKeyDistribution=SmPairingParams_ResponderKeyDistribution()):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        @param SmPairingParams_IoCapabilities: I/O capabilities
-        @param SmPairingParams_OobDataFlag: OOB data flag
-        @param SmPairingParams_AuthRequest: SM authentication request parameters
-        @param SmPairingParams_MaxEncKeySize: Maximum encryption key size
-        @param SmPairingParams_InitatorKeyDistribution: Initiator key distribution
-        @param SmPairingParams_ResponderKeyDistribution: Responder key distribution
-        '''
-        self.SourceDeviceId = SourceDeviceId
-        self.SmPairingParams_IoCapabilities = SmPairingParams_IoCapabilities
-        self.SmPairingParams_OobDataFlag = SmPairingParams_OobDataFlag
-        self.SmPairingParams_AuthRequest = SmPairingParams_AuthRequest
-        self.SmPairingParams_MaxEncKeySize = SmPairingParams_MaxEncKeySize
-        self.SmPairingParams_InitatorKeyDistribution = SmPairingParams_InitatorKeyDistribution
-        self.SmPairingParams_ResponderKeyDistribution = SmPairingParams_ResponderKeyDistribution
-
-
-class SMPasskeyDisplayRequestIndication(object):
-
-    def __init__(self, SourceDeviceId=bytearray(1), PasskeyDisplayReqParams_Passkey=bytearray(4)):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        @param PasskeyDisplayReqParams_Passkey: A number between 0 and 999.999 decimal
-        '''
-        self.SourceDeviceId = SourceDeviceId
-        self.PasskeyDisplayReqParams_Passkey = PasskeyDisplayReqParams_Passkey
-
-
-class SMPasskeyRequestIndication(object):
-
-    def __init__(self, SourceDeviceId=bytearray(1), PasskeyReqParams_PasskeyType=SMPasskeyRequestIndicationPasskeyReqParams_PasskeyType.Passkey):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        @param PasskeyReqParams_PasskeyType: Decimal passkey from 0 to 999.999 or 16 byte OOB
-        '''
-        self.SourceDeviceId = SourceDeviceId
-        self.PasskeyReqParams_PasskeyType = PasskeyReqParams_PasskeyType
-
-
-class SMPairingKeysetRequestIndication(object):
-
-    class PairingKeysetReqParams_RequestedKeys(object):
-
-        def __init__(self, EncKey=bytearray(1), IdKey=bytearray(1), Sign=bytearray(1), LinkKey=bytearray(1), Reserved=bytearray(1)):
-            self.EncKey = EncKey
-            self.IdKey = IdKey
-            self.Sign = Sign
-            self.LinkKey = LinkKey
-            self.Reserved = Reserved
-
-    def __init__(self, SourceDeviceId=bytearray(1), PairingKeysetReqParams_RequestedKeys=PairingKeysetReqParams_RequestedKeys(), PairingKeysetReqParams_EncKeySize=bytearray(1)):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        @param PairingKeysetReqParams_RequestedKeys: Keys requested by the peer device to be exchanged during the SMP Pairing key distribution phase
-        @param PairingKeysetReqParams_EncKeySize: Encryption key size negotiated by the SMP
-        '''
-        self.SourceDeviceId = SourceDeviceId
-        self.PairingKeysetReqParams_RequestedKeys = PairingKeysetReqParams_RequestedKeys
-        self.PairingKeysetReqParams_EncKeySize = PairingKeysetReqParams_EncKeySize
-
-
-class SMPairingKeysetReceivedIndication(object):
-
-    class PairingKeysetReceivedParams_KeyDistPayload(object):
-
-        def __init__(self, Ltk=bytearray(16), Irk=bytearray(16), Csrk=bytearray(16), Ediv=bytearray(2), Rand=bytearray(8), BDAddr=bytearray(6), BDAddrType=PairingKeysetReceivedParams_KeyDistPayloadBDAddrType.gPublic_c):
-            # Unit length: 16 bytes
-            self.Ltk = Ltk
-            # Unit length: 16 bytes
-            self.Irk = Irk
-            # Unit length: 16 bytes
-            self.Csrk = Csrk
-            self.Ediv = Ediv
-            self.Rand = Rand
-            # Unit length: 6 bytes
-            self.BDAddr = BDAddr
-            self.BDAddrType = BDAddrType
-
-    class PairingKeysetReceivedParams_ReceivedKeys(object):
-
-        def __init__(self, EncKey=bytearray(1), IdKey=bytearray(1), Sign=bytearray(1), LinkKey=bytearray(1), Reserved=bytearray(1)):
-            self.EncKey = EncKey
-            self.IdKey = IdKey
-            self.Sign = Sign
-            self.LinkKey = LinkKey
-            self.Reserved = Reserved
-
-    def __init__(self, SourceDeviceId=bytearray(1), PairingKeysetReceivedParams_KeyDistPayload=PairingKeysetReceivedParams_KeyDistPayload(), PairingKeysetReceivedParams_ReceivedKeys=PairingKeysetReceivedParams_ReceivedKeys(), PairingKeysetReceivedParams_EncKeySize=bytearray(1)):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        @param PairingKeysetReceivedParams_KeyDistPayload: Keys and additional data exchanged during the SMP Pairing key distribution phase
-        @param PairingKeysetReceivedParams_ReceivedKeys: Keys received from the peer device during the SMP Pairing key distribution phase
-        @param PairingKeysetReceivedParams_EncKeySize: Encryption key size negotiated by the SMP
-        '''
-        self.SourceDeviceId = SourceDeviceId
-        self.PairingKeysetReceivedParams_KeyDistPayload = PairingKeysetReceivedParams_KeyDistPayload
-        self.PairingKeysetReceivedParams_ReceivedKeys = PairingKeysetReceivedParams_ReceivedKeys
-        self.PairingKeysetReceivedParams_EncKeySize = PairingKeysetReceivedParams_EncKeySize
-
-
-class SMPairingCompleteIndication(object):
-
-    def __init__(self, SourceDeviceId=bytearray(1), PairingCompleteParams_EncKeySize=bytearray(1), PairingCompleteParams_bMitmProtection=bytearray(1), PairingCompleteParams_bBonding=bytearray(1), PairingCompleteParams_LeSc=bytearray(1), PairingCompleteParams_LeScLtk=bytearray(16)):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        @param PairingCompleteParams_EncKeySize: Encryption key size negotiated by the SMP
-        @param PairingCompleteParams_bMitmProtection: The pairing procedure was completed with MITM protection enabled
-        @param PairingCompleteParams_bBonding: Both devices involved in the pairing procedure support bonding
-        @param PairingCompleteParams_LeSc: The pairing procedure was performed using a LE Secure Connections pairing method
-        @param PairingCompleteParams_LeScLtk: This is the LTK generated during a LE Secure Connections pairing procedure
-        '''
-        self.SourceDeviceId = SourceDeviceId
-        self.PairingCompleteParams_EncKeySize = PairingCompleteParams_EncKeySize
-        self.PairingCompleteParams_bMitmProtection = PairingCompleteParams_bMitmProtection
-        self.PairingCompleteParams_bBonding = PairingCompleteParams_bBonding
-        self.PairingCompleteParams_LeSc = PairingCompleteParams_LeSc
-        self.PairingCompleteParams_LeScLtk = PairingCompleteParams_LeScLtk
-
-
-class SMPairingFailedIndication(object):
-
-    def __init__(self, SourceDeviceId=bytearray(1), SmPairingFailedParams_Reason=SMPairingFailedIndicationSmPairingFailedParams_Reason.gReserved_c):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        @param SmPairingFailedParams_Reason: Reason
-        '''
-        self.SourceDeviceId = SourceDeviceId
-        self.SmPairingFailedParams_Reason = SmPairingFailedParams_Reason
-
-
-class SMReceivedPairingFailedIndication(object):
-
-    def __init__(self, SourceDeviceId=bytearray(1), SmPairingFailedParams_Reason=SMReceivedPairingFailedIndicationSmPairingFailedParams_Reason.gReserved_c):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        @param SmPairingFailedParams_Reason: Reason
-        '''
-        self.SourceDeviceId = SourceDeviceId
-        self.SmPairingFailedParams_Reason = SmPairingFailedParams_Reason
-
-
-class SMLlLtkRequestIndication(object):
-
-    def __init__(self, SourceDeviceId=bytearray(1), LlLtkRequestParams_RandomNumber=bytearray(8), LlLtkRequestParams_EncryptedDiversifier=bytearray(2)):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        @param LlLtkRequestParams_RandomNumber: Random number
-        @param LlLtkRequestParams_EncryptedDiversifier: Encrypted Diversifier
-        '''
-        self.SourceDeviceId = SourceDeviceId
-        self.LlLtkRequestParams_RandomNumber = LlLtkRequestParams_RandomNumber
-        self.LlLtkRequestParams_EncryptedDiversifier = LlLtkRequestParams_EncryptedDiversifier
-
-
-class SMLlEncryptionStatusIndication(object):
-
-    def __init__(self, SourceDeviceId=bytearray(1), LlEncryptionStatusParams_LlStatus=SMLlEncryptionStatusIndicationLlEncryptionStatusParams_LlStatus.gBleSuccess_c, LlEncryptionStatusParams_EncryptionState=SMLlEncryptionStatusIndicationLlEncryptionStatusParams_EncryptionState.gLinkEncryptionNoChange_c, LlEncryptionStatusParams_EncKeyType=SMLlEncryptionStatusIndicationLlEncryptionStatusParams_EncKeyType.gLinkEncKeyTypeNone_c):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        @param LlEncryptionStatusParams_LlStatus: Status returned by the Link Layer during the link encryption procedure
-        @param LlEncryptionStatusParams_EncryptionState: State of the encryption of the link
-        @param LlEncryptionStatusParams_EncKeyType: Type of key used to encrypt the link
-        '''
-        self.SourceDeviceId = SourceDeviceId
-        self.LlEncryptionStatusParams_LlStatus = LlEncryptionStatusParams_LlStatus
-        self.LlEncryptionStatusParams_EncryptionState = LlEncryptionStatusParams_EncryptionState
-        self.LlEncryptionStatusParams_EncKeyType = LlEncryptionStatusParams_EncKeyType
-
-
-class SMLlEncryptResIndication(object):
-
-    def __init__(self, SourceDeviceId=bytearray(1), LlEncryptResParams_Status=SMLlEncryptResIndicationLlEncryptResParams_Status.gBleSuccess_c, LlEncryptResParams_EncryptedData=bytearray(16)):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        @param LlEncryptResParams_Status: The status of the request
-        @param LlEncryptResParams_EncryptedData: Encrypted data
-        '''
-        self.SourceDeviceId = SourceDeviceId
-        self.LlEncryptResParams_Status = LlEncryptResParams_Status
-        self.LlEncryptResParams_EncryptedData = LlEncryptResParams_EncryptedData
-
-
-class SMLlRandResIndication(object):
-
-    def __init__(self, SourceDeviceId=bytearray(1), LlRandResParams_Status=SMLlRandResIndicationLlRandResParams_Status.gBleSuccess_c, LlRandResParams_RandomNumber=bytearray(8)):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        @param LlRandResParams_Status: The status of the request
-        @param LlRandResParams_RandomNumber: Random number
-        '''
-        self.SourceDeviceId = SourceDeviceId
-        self.LlRandResParams_Status = LlRandResParams_Status
-        self.LlRandResParams_RandomNumber = LlRandResParams_RandomNumber
-
-
-class SMTbCreateRandomDeviceAddrResIndication(object):
-
-    def __init__(self, SourceDeviceId=bytearray(1), TbCreateRandomDeviceAddrResParams_Status=SMTbCreateRandomDeviceAddrResIndicationTbCreateRandomDeviceAddrResParams_Status.gBleSuccess_c, TbCreateRandomDeviceAddrResParams_AddrType=SMTbCreateRandomDeviceAddrResIndicationTbCreateRandomDeviceAddrResParams_AddrType.RandAddrTypeNone, TbCreateRandomDeviceAddrResParams_Addr=bytearray(6)):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        @param TbCreateRandomDeviceAddrResParams_Status: Status of the operation
-        @param TbCreateRandomDeviceAddrResParams_AddrType: Type of BLE Random Address returned
-        @param TbCreateRandomDeviceAddrResParams_Addr: Returned random address
-        '''
-        self.SourceDeviceId = SourceDeviceId
-        self.TbCreateRandomDeviceAddrResParams_Status = TbCreateRandomDeviceAddrResParams_Status
-        self.TbCreateRandomDeviceAddrResParams_AddrType = TbCreateRandomDeviceAddrResParams_AddrType
-        self.TbCreateRandomDeviceAddrResParams_Addr = TbCreateRandomDeviceAddrResParams_Addr
-
-
-class SMTbCheckResolvalePrivateAddrResIndication(object):
-
-    def __init__(self, SourceDeviceId=bytearray(1), TbCheckResolvablePrivateAddrResParams_Status=SMTbCheckResolvalePrivateAddrResIndicationTbCheckResolvablePrivateAddrResParams_Status.gBleSuccess_c):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        @param TbCheckResolvablePrivateAddrResParams_Status: Status of the verification
-        '''
-        self.SourceDeviceId = SourceDeviceId
-        self.TbCheckResolvablePrivateAddrResParams_Status = TbCheckResolvablePrivateAddrResParams_Status
-
-
-class SMTbSignDataResIndication(object):
-
-    def __init__(self, SourceDeviceId=bytearray(1), TbSignDataResParams_Status=SMTbSignDataResIndicationTbSignDataResParams_Status.gBleSuccess_c, TbSignDataResParams_Signature=bytearray(8)):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        @param TbSignDataResParams_Status: Status of the signing operation
-        @param TbSignDataResParams_Signature: Signature for the provided data (64 bit CMAC)
-        '''
-        self.SourceDeviceId = SourceDeviceId
-        self.TbSignDataResParams_Status = TbSignDataResParams_Status
-        self.TbSignDataResParams_Signature = TbSignDataResParams_Signature
-
-
-class SMTbVerifyDataSignatureResIndication(object):
-
-    def __init__(self, SourceDeviceId=bytearray(1), TbVerifyDataSignatureResParams_Status=SMTbVerifyDataSignatureResIndicationTbVerifyDataSignatureResParams_Status.gBleSuccess_c):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        @param TbVerifyDataSignatureResParams_Status: Status of the signature verification operation
-        '''
-        self.SourceDeviceId = SourceDeviceId
-        self.TbVerifyDataSignatureResParams_Status = TbVerifyDataSignatureResParams_Status
-
-
-class SMRemoteKeypressNotificationIndication(object):
-
-    def __init__(self, SourceDeviceId=bytearray(1), SmKeypressNotificationParams_keypressNotifType=SMRemoteKeypressNotificationIndicationSmKeypressNotificationParams_keypressNotifType.gSmpKeypressNotificationPasskeyEntryStarted_c):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        @param SmKeypressNotificationParams_keypressNotifType: keypressNotifType
-        '''
-        self.SourceDeviceId = SourceDeviceId
-        self.SmKeypressNotificationParams_keypressNotifType = SmKeypressNotificationParams_keypressNotifType
-
-
-class SMNcDisplayRequestIndication(object):
-
-    def __init__(self, SourceDeviceId=bytearray(1), ncValue=bytearray(4)):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        @param ncValue: A number between 0 and 999999 decimal which must be confirmed by the user on both pairing devices
-        '''
-        self.SourceDeviceId = SourceDeviceId
-        self.ncValue = ncValue
-
-
-class SMLeScOobDataRequestIndication(object):
-
-    def __init__(self, SourceDeviceId=bytearray(1)):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        '''
-        self.SourceDeviceId = SourceDeviceId
-
-
-class SMLocalLeScOobDataIndication(object):
-
-    def __init__(self, SourceDeviceId=bytearray(1), LeScOobDataParams_=bytearray()):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        @param LeScOobDataParams_:
-        '''
-        self.SourceDeviceId = SourceDeviceId
-        self.LeScOobDataParams_ = LeScOobDataParams_
-
-
-class SMGenerateNewEcdhPkSkPairResIndication(object):
-
-    def __init__(self, SourceDeviceId=bytearray(1), Status=SMGenerateNewEcdhPkSkPairResIndicationStatus.gBleSuccess_c):
-        '''
-        @param SourceDeviceId: Device Id corresponding to the event
-        @param Status: Status of the signing operation
-        '''
-        self.SourceDeviceId = SourceDeviceId
-        self.Status = Status
-
-
-class ATTConfirm(object):
-
-    def __init__(self, Status=ATTConfirmStatus.gBleSuccess_c):
-        '''
-        @param Status: The status of the ATT request
-        '''
-        self.Status = Status
-
-
-class ATTGetMtuIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Mtu=bytearray(2)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Mtu: MTU value
-        '''
-        self.DeviceId = DeviceId
-        self.Mtu = Mtu
-
-
-class ATTClientIncomingServerErrorResponseIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_RequestOpcodeInError=ATTClientIncomingServerErrorResponseIndicationParams_RequestOpcodeInError.gErrorResponse_c, Params_AttributeHandleInError=bytearray(2), Params_ErrorCode=ATTClientIncomingServerErrorResponseIndicationParams_ErrorCode.gInvalidHandle_c):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_RequestOpcodeInError: Request opcode in error
-        @param Params_AttributeHandleInError: Attribute handle in error
-        @param Params_ErrorCode: ATT error code
-        '''
-        self.DeviceId = DeviceId
-        self.Params_RequestOpcodeInError = Params_RequestOpcodeInError
-        self.Params_AttributeHandleInError = Params_AttributeHandleInError
-        self.Params_ErrorCode = Params_ErrorCode
-
-
-class ATTServerIncomingClientExchangeMtuRequestIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_ClientRxMtu=bytearray(2)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_ClientRxMtu: Client received MTU
-        '''
-        self.DeviceId = DeviceId
-        self.Params_ClientRxMtu = Params_ClientRxMtu
-
-
-class ATTClientIncomingServerExchangeMtuResponseIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_ServerRxMtu=bytearray(2)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_ServerRxMtu: Server received MTU
-        '''
-        self.DeviceId = DeviceId
-        self.Params_ServerRxMtu = Params_ServerRxMtu
-
-
-class ATTServerIncomingClientFindInformationRequestIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_StartingHandle=bytearray(2), Params_EndingHandle=bytearray(2)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_StartingHandle: Starting handle
-        @param Params_EndingHandle: Ending handle
-        '''
-        self.DeviceId = DeviceId
-        self.Params_StartingHandle = Params_StartingHandle
-        self.Params_EndingHandle = Params_EndingHandle
-
-
-class ATTClientIncomingServerFindInformationResponseIndication(object):
-
-    class Uuid16BitFormat(object):
-
-        class HandleUuid16(object):
-
-            def __init__(self, Handle=bytearray(2), Uuid16=bytearray(2)):
-                self.Handle = Handle
-                self.Uuid16 = Uuid16
-
-        def __init__(self, HandleUuid16PairCount=bytearray(1), HandleUuid16=[]):
-            self.HandleUuid16PairCount = HandleUuid16PairCount
-            # Array length depends on HandleUuid16PairCount.
-            self.HandleUuid16 = HandleUuid16
-
-    class Uuid128BitFormat(object):
-
-        class HandleUuid128(object):
-
-            def __init__(self, Handle=bytearray(2), Uuid128=bytearray(16)):
-                self.Handle = Handle
-                # Unit length: 16 bytes
-                self.Uuid128 = Uuid128
-
-        def __init__(self, HandleUuid128PairCount=bytearray(1), HandleUuid128=[]):
-            self.HandleUuid128PairCount = HandleUuid128PairCount
-            # Array length depends on HandleUuid128PairCount.
-            self.HandleUuid128 = HandleUuid128
-
-    def __init__(self, DeviceId=bytearray(1), Params_Format=ATTClientIncomingServerFindInformationResponseIndicationParams_Format(), Params_InformationData=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_Format: ATT Uuid format
-        @param Params_InformationData: Information data
-        '''
-        self.DeviceId = DeviceId
-        self.Params_Format = Params_Format
-        self.Params_InformationData = Params_InformationData
-
-
-class ATTServerIncomingClientFindByTypeValueRequestIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_StartingHandle=bytearray(2), Params_EndingHandle=bytearray(2), Params_AttributeType=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_StartingHandle: Starting handle
-        @param Params_EndingHandle: Ending handle
-        @param Params_AttributeType: Attribute type
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_StartingHandle = Params_StartingHandle
-        self.Params_EndingHandle = Params_EndingHandle
-        self.Params_AttributeType = Params_AttributeType
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class ATTClientIncomingServerFindByTypeValueResponseIndication(object):
-
-    class Params_HandleGroup(object):
-
-        def __init__(self, StartingHandle=bytearray(2), EndingHandle=bytearray(2)):
-            self.StartingHandle = StartingHandle
-            self.EndingHandle = EndingHandle
-
-    def __init__(self, DeviceId=bytearray(1), Params_GroupCount=bytearray(2), Params_HandleGroup=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_GroupCount: Number of groups
-        @param Params_HandleGroup: ATT find information request parameters
-        '''
-        self.DeviceId = DeviceId
-        self.Params_GroupCount = Params_GroupCount
-        self.Params_HandleGroup = Params_HandleGroup
-
-
-class ATTServerIncomingClientReadByTypeRequestIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_StartingHandle=bytearray(2), Params_EndingHandle=bytearray(2), Params_Format=ATTServerIncomingClientReadByTypeRequestIndicationParams_Format(), Params_AttributeType=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_StartingHandle: Starting handle
-        @param Params_EndingHandle: Ending handle
-        @param Params_Format: ATT Uuid format
-        @param Params_AttributeType: Attribute type
-        '''
-        self.DeviceId = DeviceId
-        self.Params_StartingHandle = Params_StartingHandle
-        self.Params_EndingHandle = Params_EndingHandle
-        self.Params_Format = Params_Format
-        self.Params_AttributeType = Params_AttributeType
-
-
-class ATTClientIncomingServerReadByTypeResponseIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_Length=bytearray(1), Params_AttributeDataListLength=bytearray(2), Params_AttributeDataList=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_Length: Fixed length of each handle+value pair in the AttributeDataList
-        @param Params_AttributeDataListLength: Attribute data list length
-        @param Params_AttributeDataList: Attribute data list
-        '''
-        self.DeviceId = DeviceId
-        self.Params_Length = Params_Length
-        self.Params_AttributeDataListLength = Params_AttributeDataListLength
-        self.Params_AttributeDataList = Params_AttributeDataList
-
-
-class ATTServerIncomingClientReadRequestIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-
-
-class ATTClientIncomingServerReadResponseIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class ATTServerIncomingClientReadBlobRequestIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2), Params_ValueOffset=bytearray(2)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_ValueOffset: Value offset
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_ValueOffset = Params_ValueOffset
-
-
-class ATTClientIncomingServerReadBlobResponseIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class ATTServerIncomingClientReadMultipleRequestIndication(object):
-
-    class Params_ListOfHandles(object):
-
-        def __init__(self, Handle=bytearray(2)):
-            self.Handle = Handle
-
-    def __init__(self, DeviceId=bytearray(1), Params_HandleCount=bytearray(2), Params_ListOfHandles=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_HandleCount: Number of handles
-        @param Params_ListOfHandles: List of handles
-        '''
-        self.DeviceId = DeviceId
-        self.Params_HandleCount = Params_HandleCount
-        self.Params_ListOfHandles = Params_ListOfHandles
-
-
-class ATTClientIncomingServerReadMultipleResponseIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_ListLength=bytearray(2), Params_ListOfValues=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_ListLength: List length
-        @param Params_ListOfValues: List of values
-        '''
-        self.DeviceId = DeviceId
-        self.Params_ListLength = Params_ListLength
-        self.Params_ListOfValues = Params_ListOfValues
-
-
-class ATTServerIncomingClientReadByGroupTypeRequestIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_StartingHandle=bytearray(2), Params_EndingHandle=bytearray(2), Params_Format=ATTServerIncomingClientReadByGroupTypeRequestIndicationParams_Format(), Params_AttributeType=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_StartingHandle: Starting handle
-        @param Params_EndingHandle: Ending handle
-        @param Params_Format: ATT Uuid format
-        @param Params_AttributeType: Attribute type
-        '''
-        self.DeviceId = DeviceId
-        self.Params_StartingHandle = Params_StartingHandle
-        self.Params_EndingHandle = Params_EndingHandle
-        self.Params_Format = Params_Format
-        self.Params_AttributeType = Params_AttributeType
-
-
-class ATTClientIncomingServerReadByGroupTypeResponseIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_Length=bytearray(1), Params_AttributeDataListLength=bytearray(2), Params_AttributeDataList=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_Length: Fixed length of each handle+value pair in the AttributeDataList
-        @param Params_AttributeDataListLength: Attribute data list length
-        @param Params_AttributeDataList: Attribute data list
-        '''
-        self.DeviceId = DeviceId
-        self.Params_Length = Params_Length
-        self.Params_AttributeDataListLength = Params_AttributeDataListLength
-        self.Params_AttributeDataList = Params_AttributeDataList
-
-
-class ATTServerIncomingClientWriteRequestIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class ATTClientIncomingServerWriteResponseIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        '''
-        self.DeviceId = DeviceId
-
-
-class ATTServerIncomingClientWriteCommandIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class ATTServerIncomingClientSignedWriteCommandIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[], Params_AuthenticationSignature=bytearray(12)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        @param Params_AuthenticationSignature: Authentication signature
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-        self.Params_AuthenticationSignature = Params_AuthenticationSignature
-
-
-class ATTServerIncomingClientPrepareWriteRequestIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2), Params_ValueOffset=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_ValueOffset: Value offset
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_ValueOffset = Params_ValueOffset
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class ATTClientIncomingServerPrepareWriteResponseIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2), Params_ValueOffset=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_ValueOffset: Value offset
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_ValueOffset = Params_ValueOffset
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class ATTServerIncomingClientExecuteWriteRequestIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_Flags=ATTServerIncomingClientExecuteWriteRequestIndicationParams_Flags.gCancel_c):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_Flags: Flags
-        '''
-        self.DeviceId = DeviceId
-        self.Params_Flags = Params_Flags
-
-
-class ATTClientIncomingServerExecuteWriteResponseIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        '''
-        self.DeviceId = DeviceId
-
-
-class ATTClientIncomingServerHandleValueNotificationIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class ATTClientIncomingServerHandleValueIndicationIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Params_AttributeHandle=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        '''
-        self.DeviceId = DeviceId
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-
-
-class ATTServerIncomingClientHandleValueConfirmationIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        '''
-        self.DeviceId = DeviceId
-
-
-class ATTUnsupportedOpcodeIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1), Opcode=bytearray(1)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param Opcode: Unsupported opcode
-        '''
-        self.DeviceId = DeviceId
-        self.Opcode = Opcode
-
-
-class ATTTimeoutIndication(object):
-
-    def __init__(self, DeviceId=bytearray(1)):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        '''
-        self.DeviceId = DeviceId
 
 
 class GATTConfirm(object):
@@ -5802,190 +4126,13 @@ class GATTDBDynamicAddCharacteristicDeclarationWithUniqueValueIndication(object)
         self.CharacteristicHandle = CharacteristicHandle
 
 
-class GATTDBAttConfirm(object):
+class GATTDBDynamicAddCharDescriptorWithUniqueValueIndication(object):
 
-    def __init__(self, Status=GATTDBAttConfirmStatus.gBleSuccess_c):
+    def __init__(self, DescriptorHandle=bytearray(2)):
         '''
-        @param Status: The status of the GATT Database request
+        @param DescriptorHandle: Handle of the Descriptor declaration
         '''
-        self.Status = Status
-
-
-class GATTDBAttFindInformationIndication(object):
-
-    class Uuid16BitFormat(object):
-
-        class HandleUuid16(object):
-
-            def __init__(self, Handle=bytearray(2), Uuid16=bytearray(2)):
-                self.Handle = Handle
-                self.Uuid16 = Uuid16
-
-        def __init__(self, HandleUuid16PairCount=bytearray(1), HandleUuid16=[]):
-            self.HandleUuid16PairCount = HandleUuid16PairCount
-            # Array length depends on HandleUuid16PairCount.
-            self.HandleUuid16 = HandleUuid16
-
-    class Uuid128BitFormat(object):
-
-        class HandleUuid128(object):
-
-            def __init__(self, Handle=bytearray(2), Uuid128=bytearray(16)):
-                self.Handle = Handle
-                # Unit length: 16 bytes
-                self.Uuid128 = Uuid128
-
-        def __init__(self, HandleUuid128PairCount=bytearray(1), HandleUuid128=[]):
-            self.HandleUuid128PairCount = HandleUuid128PairCount
-            # Array length depends on HandleUuid128PairCount.
-            self.HandleUuid128 = HandleUuid128
-
-    def __init__(self, Params_Format=GATTDBAttFindInformationIndicationParams_Format(), Params_InformationData=[], ErrorAttributeHandle=bytearray(2)):
-        '''
-        @param Params_Format: ATT Uuid format
-        @param Params_InformationData: Information data
-        @param ErrorAttributeHandle: The attribute handle where an error occurred
-        '''
-        self.Params_Format = Params_Format
-        self.Params_InformationData = Params_InformationData
-        self.ErrorAttributeHandle = ErrorAttributeHandle
-
-
-class GATTDBAttFindByTypeValueIndication(object):
-
-    class Params_HandleGroup(object):
-
-        def __init__(self, StartingHandle=bytearray(2), EndingHandle=bytearray(2)):
-            self.StartingHandle = StartingHandle
-            self.EndingHandle = EndingHandle
-
-    def __init__(self, Params_GroupCount=bytearray(2), Params_HandleGroup=[], ErrorAttributeHandle=bytearray(2)):
-        '''
-        @param Params_GroupCount: Number of groups
-        @param Params_HandleGroup: ATT find information request parameters
-        @param ErrorAttributeHandle: The attribute handle where an error occurred
-        '''
-        self.Params_GroupCount = Params_GroupCount
-        self.Params_HandleGroup = Params_HandleGroup
-        self.ErrorAttributeHandle = ErrorAttributeHandle
-
-
-class GATTDBAttReadByTypeIndication(object):
-
-    def __init__(self, Params_Length=bytearray(1), Params_AttributeDataListLength=bytearray(2), Params_AttributeDataList=[], ErrorAttributeHandle=bytearray(2)):
-        '''
-        @param Params_Length: Fixed length of each handle+value pair in the AttributeDataList
-        @param Params_AttributeDataListLength: Attribute data list length
-        @param Params_AttributeDataList: Attribute data list
-        @param ErrorAttributeHandle: The attribute handle where an error occurred
-        '''
-        self.Params_Length = Params_Length
-        self.Params_AttributeDataListLength = Params_AttributeDataListLength
-        self.Params_AttributeDataList = Params_AttributeDataList
-        self.ErrorAttributeHandle = ErrorAttributeHandle
-
-
-class GATTDBAttReadIndication(object):
-
-    def __init__(self, Params_AttributeLength=bytearray(2), Params_AttributeValue=[], ErrorAttributeHandle=bytearray(2)):
-        '''
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        @param ErrorAttributeHandle: The attribute handle where an error occurred
-        '''
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-        self.ErrorAttributeHandle = ErrorAttributeHandle
-
-
-class GATTDBAttReadBlobIndication(object):
-
-    def __init__(self, ErrorAttributeHandle=bytearray(2)):
-        '''
-        @param ErrorAttributeHandle: The attribute handle where an error occurred
-        '''
-        self.ErrorAttributeHandle = ErrorAttributeHandle
-
-
-class GATTDBAttReadMultipleIndication(object):
-
-    def __init__(self, Params_ListLength=bytearray(2), Params_ListOfValues=[], ErrorAttributeHandle=bytearray(2)):
-        '''
-        @param Params_ListLength: List length
-        @param Params_ListOfValues: List of values
-        @param ErrorAttributeHandle: The attribute handle where an error occurred
-        '''
-        self.Params_ListLength = Params_ListLength
-        self.Params_ListOfValues = Params_ListOfValues
-        self.ErrorAttributeHandle = ErrorAttributeHandle
-
-
-class GATTDBAttReadByGroupTypeIndication(object):
-
-    def __init__(self, Params_Length=bytearray(1), Params_AttributeDataListLength=bytearray(2), Params_AttributeDataList=[], ErrorAttributeHandle=bytearray(2)):
-        '''
-        @param Params_Length: Fixed length of each handle+value pair in the AttributeDataList
-        @param Params_AttributeDataListLength: Attribute data list length
-        @param Params_AttributeDataList: Attribute data list
-        @param ErrorAttributeHandle: The attribute handle where an error occurred
-        '''
-        self.Params_Length = Params_Length
-        self.Params_AttributeDataListLength = Params_AttributeDataListLength
-        self.Params_AttributeDataList = Params_AttributeDataList
-        self.ErrorAttributeHandle = ErrorAttributeHandle
-
-
-class GATTDBAttWriteIndication(object):
-
-    def __init__(self, ErrorAttributeHandle=bytearray(2)):
-        '''
-        @param ErrorAttributeHandle: The attribute handle where an error occurred
-        '''
-        self.ErrorAttributeHandle = ErrorAttributeHandle
-
-
-class GATTDBAttPrepareWriteIndication(object):
-
-    def __init__(self, Params_AttributeHandle=bytearray(2), Params_ValueOffset=bytearray(2), Params_AttributeLength=bytearray(2), Params_AttributeValue=[], ErrorAttributeHandle=bytearray(2)):
-        '''
-        @param Params_AttributeHandle: Attribute handle
-        @param Params_ValueOffset: Value offset
-        @param Params_AttributeLength: Attribute length
-        @param Params_AttributeValue: Attribute value
-        @param ErrorAttributeHandle: The attribute handle where an error occurred
-        '''
-        self.Params_AttributeHandle = Params_AttributeHandle
-        self.Params_ValueOffset = Params_ValueOffset
-        self.Params_AttributeLength = Params_AttributeLength
-        self.Params_AttributeValue = Params_AttributeValue
-        self.ErrorAttributeHandle = ErrorAttributeHandle
-
-
-class GATTDBAttExecuteWriteIndication(object):
-
-    def __init__(self, ErrorAttributeHandle=bytearray(2)):
-        '''
-        @param ErrorAttributeHandle: The attribute handle where an error occurred
-        '''
-        self.ErrorAttributeHandle = ErrorAttributeHandle
-
-
-class GATTDBAttExecuteWriteFromQueueIndication(object):
-
-    def __init__(self, ErrorAttributeHandle=bytearray(2)):
-        '''
-        @param ErrorAttributeHandle: The attribute handle where an error occurred
-        '''
-        self.ErrorAttributeHandle = ErrorAttributeHandle
-
-
-class GATTDBAttPrepareNotificationIndicationIndication(object):
-
-    def __init__(self, ErrorAttributeHandle=bytearray(2)):
-        '''
-        @param ErrorAttributeHandle: The attribute handle where an error occurred
-        '''
-        self.ErrorAttributeHandle = ErrorAttributeHandle
+        self.DescriptorHandle = DescriptorHandle
 
 
 class GAPConfirm(object):
@@ -6015,15 +4162,57 @@ class GAPCheckIndicationStatusIndication(object):
         self.IsActive = IsActive
 
 
-class GAPGetBondedStaticAddressesIndication(object):
+class GAPLoadKeysIndication(object):
 
-    def __init__(self, NbOfDeviceAddresses=bytearray(1), DeviceAddresses=[]):
+    class Keys_LtkInfo(object):
+
+        def __init__(self, LtkSize=bytearray(1), Ltk=[]):
+            self.LtkSize = LtkSize
+            # Array length depends on LtkSize.
+            self.Ltk = Ltk
+
+    class Keys_RandEdivInfo(object):
+
+        def __init__(self, RandSize=bytearray(1), Rand=[], Ediv=bytearray(2)):
+            self.RandSize = RandSize
+            # Array length depends on RandSize.
+            self.Rand = Rand
+            self.Ediv = Ediv
+
+    class Keys_AddressInfo(object):
+
+        def __init__(self, DeviceAddressType=Keys_AddressInfoDeviceAddressType.gPublic_c, DeviceAddress=bytearray(6)):
+            self.DeviceAddressType = DeviceAddressType
+            # Unit length: 6 bytes
+            self.DeviceAddress = DeviceAddress
+
+    def __init__(self, Keys_LtkIncluded=bytearray(1), Keys_LtkInfo=Keys_LtkInfo(), Keys_IrkIncluded=bytearray(1), Keys_Irk=[], Keys_CsrkIncluded=bytearray(1), Keys_Csrk=[], Keys_RandEdivInfo=Keys_RandEdivInfo(), Keys_AddressIncluded=[], Keys_AddressInfo=Keys_AddressInfo(), KeyFlags=GAPLoadKeysIndicationKeyFlags.gNoKeys_c, LeSc=bytearray(1), Authenticated=bytearray(1)):
         '''
-        @param NbOfDeviceAddresses: The number of device addresses
-        @param DeviceAddresses: Device addresses list
+        @param Keys_LtkIncluded: Boolean value which indicates if LTK size and LTK are included or not
+        @param Keys_LtkInfo: LTK information (size and value)
+        @param Keys_IrkIncluded: Boolean value which indicates if IRK is included or not
+        @param Keys_Irk: Identity Resolving Key
+        @param Keys_CsrkIncluded: Boolean value which indicates if CSRK is included or not
+        @param Keys_Csrk: Connection Signature Resolving Key
+        @param Keys_RandEdivInfo: Rand information (size and value) and Ediv
+        @param Keys_AddressIncluded: Boolean value which indicates if Address is included or not
+        @param Keys_AddressInfo: Address information (type and value)
+        @param KeyFlags: Mask identifying the keys stored
+        @param LeSc: LE SC pairing
+        @param Authenticated: Peer is authenticated during pairing
         '''
-        self.NbOfDeviceAddresses = NbOfDeviceAddresses
-        self.DeviceAddresses = DeviceAddresses
+        self.Keys_LtkIncluded = Keys_LtkIncluded
+        self.Keys_LtkInfo = Keys_LtkInfo
+        self.Keys_IrkIncluded = Keys_IrkIncluded
+        self.Keys_Irk = Keys_Irk
+        self.Keys_CsrkIncluded = Keys_CsrkIncluded
+        self.Keys_Csrk = Keys_Csrk
+        self.Keys_RandEdivInfo = Keys_RandEdivInfo
+        self.Keys_AddressIncluded = Keys_AddressIncluded
+        self.Keys_AddressInfo = Keys_AddressInfo
+        self.KeyFlags = KeyFlags
+        self.LeSc = LeSc
+        self.Authenticated = Authenticated
 
 
 class GAPLoadEncryptionInformationIndication(object):
@@ -6079,7 +4268,17 @@ class GAPGetBondedDeviceNameIndication(object):
 
 class GAPGenericEventInitializationCompleteIndication(object):
 
-    pass
+    def __init__(self, initCompleteData_SupportedFeatures=bytearray(4), initCompleteData_MaxAdvDataSize=bytearray(2), initCompleteData_NumOfSupportedAdvSets=bytearray(1), initCompleteData_PeriodicAdvListSize=bytearray(1)):
+        '''
+        @param initCompleteData_SupportedFeatures: local supported features
+        @param initCompleteData_MaxAdvDataSize: The maximum length of data supported by the Controller for use as advertisement data or scan response data in an advertising event or as periodic advertisement data
+        @param initCompleteData_NumOfSupportedAdvSets: number of supported advertising sets
+        @param initCompleteData_PeriodicAdvListSize: periodic advertiser list size
+        '''
+        self.initCompleteData_SupportedFeatures = initCompleteData_SupportedFeatures
+        self.initCompleteData_MaxAdvDataSize = initCompleteData_MaxAdvDataSize
+        self.initCompleteData_NumOfSupportedAdvSets = initCompleteData_NumOfSupportedAdvSets
+        self.initCompleteData_PeriodicAdvListSize = initCompleteData_PeriodicAdvListSize
 
 
 class GAPGenericEventInternalErrorIndication(object):
@@ -6140,11 +4339,13 @@ class GAPGenericEventWhiteListClearedIndication(object):
 
 class GAPGenericEventRandomAddressReadyIndication(object):
 
-    def __init__(self, Address=bytearray(6)):
+    def __init__(self, Address=bytearray(6), Handle=bytearray(1)):
         '''
         @param Address: Random address
+        @param Handle: Advertising set handle if the generated device address will be used on an extended set, 0xFF otherwise
         '''
         self.Address = Address
+        self.Handle = Handle
 
 
 class GAPGenericEventCreateConnectionCanceledIndication(object):
@@ -6181,7 +4382,11 @@ class GAPGenericEventPrivateResolvableAddressVerifiedIndication(object):
 
 class GAPGenericEventRandomAddressSetIndication(object):
 
-    pass
+    def __init__(self, Handle=bytearray(1)):
+        '''
+        @param Handle: Advertising handle of the configured set or 0xFF in case of legacy advertising or scanning and initiating address
+        '''
+        self.Handle = Handle
 
 
 class GAPAdvertisingEventStateChangedIndication(object):
@@ -6421,7 +4626,7 @@ class GAPConnectionEventKeysReceivedIndication(object):
         @param Keys_Csrk: Connection Signature Resolving Key
         @param Keys_RandEdivInfo: Rand information (size and value) and Ediv
         @param Keys_AddressIncluded: Boolean value which indicates if Address is included or not
-        @param Keys_AddressInfo: Address information (type and value
+        @param Keys_AddressInfo: Address information (type and value)
         '''
         self.DeviceId = DeviceId
         self.Keys_LtkIncluded = Keys_LtkIncluded
@@ -6631,6 +4836,15 @@ class GAPGenericEventLeScLocalOobDataIndication(object):
         self.ConfirmValue = ConfirmValue
 
 
+class GAPGenericEventHostPrivacyStateChangedIndication(object):
+
+    def __init__(self, NewHostPrivacyState=bytearray(1)):
+        '''
+        @param NewHostPrivacyState: Indicates the new state of the host privacy: TRUE if enabled, FALSE if disabled
+        '''
+        self.NewHostPrivacyState = NewHostPrivacyState
+
+
 class GAPGenericEventControllerPrivacyStateChangedIndication(object):
 
     def __init__(self, NewControllerPrivacyState=bytearray(1)):
@@ -6649,16 +4863,32 @@ class GAPGenericEventTxPowerLevelSetCompleteIndication(object):
         self.status = status
 
 
+class GAPGenericEventLePhyEventIndication(object):
+
+    def __init__(self, eventType=GAPGenericEventLePhyEventIndicationeventType.gPhySetDefaultComplete_c, DeviceId=bytearray(1), txPhy=GAPGenericEventLePhyEventIndicationtxPhy(), rxPhy=GAPGenericEventLePhyEventIndicationrxPhy()):
+        '''
+        @param eventType: Specifies the Phy event type
+        @param DeviceId: Device ID identifying the connection
+        @param txPhy: Specifies the Tx Phy, valid only for gPhyRead_c or gPhyUpdateComplete_c event type.
+        @param rxPhy: Specifies the Rx Phy, valid only for gPhyRead_c or gPhyUpdateComplete_c event type.
+        '''
+        self.eventType = eventType
+        self.DeviceId = DeviceId
+        self.txPhy = txPhy
+        self.rxPhy = rxPhy
+
+
 class GAPGetBondedDevicesIdentityInformationIndication(object):
 
     class IdentityAddresses(object):
 
-        def __init__(self, IdentityAddressType=IdentityAddressesIdentityAddressType.gPublic_c, IdentityAddress=bytearray(6), Irk=bytearray(16)):
+        def __init__(self, IdentityAddressType=IdentityAddressesIdentityAddressType.gPublic_c, IdentityAddress=bytearray(6), Irk=bytearray(16), PrivacyMode=IdentityAddressesPrivacyMode.gNetworkPrivacy_c):
             self.IdentityAddressType = IdentityAddressType
             # Unit length: 6 bytes
             self.IdentityAddress = IdentityAddress
             # Unit length: 16 bytes
             self.Irk = Irk
+            self.PrivacyMode = PrivacyMode
 
     def __init__(self, NbOfDeviceIdentityAddresses=bytearray(1), IdentityAddresses=[]):
         '''
@@ -6667,3 +4897,244 @@ class GAPGetBondedDevicesIdentityInformationIndication(object):
         '''
         self.NbOfDeviceIdentityAddresses = NbOfDeviceIdentityAddresses
         self.IdentityAddresses = IdentityAddresses
+
+
+class GAPControllerNotificationIndication(object):
+
+    def __init__(self, EventType=bytearray(2), DeviceId=bytearray(1), RSSI=bytearray(1), Channel=bytearray(1), ConnEvCounter=bytearray(2), Status=bytearray(1), Timestamp=bytearray(2), AdvHandle=bytearray(1)):
+        '''
+        @param EventType: Events type.
+        @param DeviceId: Device ID identifying the connection
+        @param RSSI: RSSI, valid for Rx event types
+        @param Channel: Channel, valid for conn event over or Rx/Tx events
+        @param ConnEvCounter: Connection event counter, valid for conn event over or Conn Rx event
+        @param Status: Status of the request to select which events to be enabled/disabled
+        @param Timestamp: Timestamp of the event, valid for conn created or Conn Rx event
+        @param AdvHandle: Advertising Handle, valid for advertising events from multiple sets
+        '''
+        self.EventType = EventType
+        self.DeviceId = DeviceId
+        self.RSSI = RSSI
+        self.Channel = Channel
+        self.ConnEvCounter = ConnEvCounter
+        self.Status = Status
+        self.Timestamp = Timestamp
+        self.AdvHandle = AdvHandle
+
+
+class GAPBondCreatedIndication(object):
+
+    def __init__(self, NvmIndex=bytearray(1), AddrType=GAPBondCreatedIndicationAddrType.gPublic_c, Addr=bytearray(6)):
+        '''
+        @param NvmIndex: Index of the device in NVM bonding area
+        @param AddrType: BLE Address Type
+        @param Addr: BLE Address
+        '''
+        self.NvmIndex = NvmIndex
+        self.AddrType = AddrType
+        self.Addr = Addr
+
+
+class GAPGenericEventChannelMapSetIndication(object):
+
+    pass
+
+
+class GAPConnectionEventChannelMapReadIndication(object):
+
+    def __init__(self, DeviceId=bytearray(1), ChannelMap=bytearray(5)):
+        '''
+        @param DeviceId: Device ID identifying the connection
+        @param ChannelMap: Channel Map
+        '''
+        self.DeviceId = DeviceId
+        self.ChannelMap = ChannelMap
+
+
+class GAPConnectionEventChannelMapReadFailureIndication(object):
+
+    def __init__(self, FailReason=GAPConnectionEventChannelMapReadFailureIndicationFailReason.gBleSuccess_c):
+        '''
+        @param FailReason: Reason for channel read failure
+        '''
+        self.FailReason = FailReason
+
+
+class GAPGenericEventExtAdvertisingParamSetupCompleteIndication(object):
+
+    def __init__(self, SelectedTxPower=bytearray(1)):
+        '''
+        @param SelectedTxPower: Indicates the transmit power selected by the Controller (in dBm)
+        '''
+        self.SelectedTxPower = SelectedTxPower
+
+
+class GAPGenericEventExtAdvertisingDataSetupCompleteIndication(object):
+
+    pass
+
+
+class GAPGenericEventPeriodicAdvParamSetupCompleteIndication(object):
+
+    pass
+
+
+class GAPGenericEventPeriodicAdvDataSetupCompleteIndication(object):
+
+    pass
+
+
+class GAPGenericEventPeriodicAdvListUpdateCompleteIndication(object):
+
+    pass
+
+
+class GAPAdvertisingEventExtAdvertisingStateChangedIndication(object):
+
+    pass
+
+
+class GAPAdvertisingEventAdvertisingSetTerminatedIndication(object):
+
+    def __init__(self, Status=GAPAdvertisingEventAdvertisingSetTerminatedIndicationStatus.gBleSuccess_c, Handle=bytearray(1)):
+        '''
+        @param Status: The status of the request
+        @param Handle: Advertising set identifier
+        '''
+        self.Status = Status
+        self.Handle = Handle
+
+
+class GAPAdvertisingEventExtAdvertisingSetRemoveCompletedIndication(object):
+
+    pass
+
+
+class GAPAdvertisingEventExtScanReqReceivedIndication(object):
+
+    def __init__(self, Handle=bytearray(1), ScannerAddressType=GAPAdvertisingEventExtScanReqReceivedIndicationScannerAddressType.gPublic_c, ScannerAddress=bytearray(6), ScannerAddressResolved=bytearray(1)):
+        '''
+        @param Handle: Advertising set identifier
+        @param ScannerAddressType: The type of the address of the scanner device
+        @param ScannerAddress: The address of the scanner device
+        @param ScannerAddressResolved: TRUE if the address contained in the ScannerAddressType and ScannerAddress fields corresponds to a Resolved Private Address
+        '''
+        self.Handle = Handle
+        self.ScannerAddressType = ScannerAddressType
+        self.ScannerAddress = ScannerAddress
+        self.ScannerAddressResolved = ScannerAddressResolved
+
+
+class GAPAdvertisingEventPeriodicAdvertisingStateChangedIndication(object):
+
+    pass
+
+
+class GAPScanningEventExtDeviceScannedIndication(object):
+
+    def __init__(self, AddressType=GAPScanningEventExtDeviceScannedIndicationAddressType.gPublic_c, Address=bytearray(6), SID=bytearray(1), AdvertisingAddressResolved=bytearray(1), AdvEventProperties=bytearray(2), Rssi=bytearray(1), TxPower=bytearray(1), PrimaryPHY=bytearray(1), SecondaryPHY=bytearray(1), PeriodicAdvInterval=bytearray(2), DirectRpaUsed=bytearray(1), DirectRpaType=GAPScanningEventExtDeviceScannedIndicationDirectRpaType.gPublic_c, DirectRpa=bytearray(6), DataLength=bytearray(2), Data=[]):
+        '''
+        @param AddressType: Device's advertising address type
+        @param Address: Device's advertising address
+        @param SID: Advertising set ID
+        @param AdvertisingAddressResolved: TRUE if the address contained in the addressType and aAddress fields is the identity address of a resolved RPA from the Advertising Address field
+        @param AdvEventProperties: Advertising report properties, indicating what type of event generated this data (advertising, scan response)
+        @param Rssi: Value of the RSSI
+        @param TxPower: The Tx power level of the advertiser
+        @param PrimaryPHY: Advertiser PHY for primary channel
+        @param SecondaryPHY: Advertiser PHY for secondary channel
+        @param PeriodicAdvInterval: Interval of the periodic advertising. Zero if not periodic advertising
+        @param DirectRpaUsed: TRUE if directed advertising with Resolvable Private Address as Direct Address was detected while Enhanced Privacy is enabled
+        @param DirectRpaType: Resolvable Private Address type
+        @param DirectRpa: Resolvable Private Address set as Direct Address for directed advertising
+        @param DataLength: Length of the advertising or scan response data
+        @param Data: Advertising or scan response data
+        '''
+        self.AddressType = AddressType
+        self.Address = Address
+        self.SID = SID
+        self.AdvertisingAddressResolved = AdvertisingAddressResolved
+        self.AdvEventProperties = AdvEventProperties
+        self.Rssi = Rssi
+        self.TxPower = TxPower
+        self.PrimaryPHY = PrimaryPHY
+        self.SecondaryPHY = SecondaryPHY
+        self.PeriodicAdvInterval = PeriodicAdvInterval
+        self.DirectRpaUsed = DirectRpaUsed
+        self.DirectRpaType = DirectRpaType
+        self.DirectRpa = DirectRpa
+        self.DataLength = DataLength
+        self.Data = Data
+
+
+class GAPScanningEventPeriodicAdvSyncEstablishedIndication(object):
+
+    def __init__(self, Status=GAPScanningEventPeriodicAdvSyncEstablishedIndicationStatus.gBleSuccess_c, SyncHandle=bytearray(2)):
+        '''
+        @param Status: Periodic advertising sync status
+        @param SyncHandle: Sync_Handle to be used to identify the periodic advertiser
+        '''
+        self.Status = Status
+        self.SyncHandle = SyncHandle
+
+
+class GAPScanningEventPeriodicAdvSyncTerminatedIndication(object):
+
+    pass
+
+
+class GAPScanningEventPeriodicAdvSyncLostIndication(object):
+
+    def __init__(self, SyncHandle=bytearray(2)):
+        '''
+        @param SyncHandle: Sync_Handle to be used to identify the periodic advertiser
+        '''
+        self.SyncHandle = SyncHandle
+
+
+class GAPScanningEventPeriodicDeviceScannedIndication(object):
+
+    def __init__(self, SyncHandle=bytearray(2), Rssi=bytearray(1), TxPower=bytearray(1), DataLength=bytearray(2), Data=[]):
+        '''
+        @param SyncHandle: Sync Handle
+        @param Rssi: Value of the RSSI
+        @param TxPower: The Tx power level of the advertiser
+        @param DataLength: Length of the advertising or scan response data
+        @param Data: Advertising or scan response data
+        '''
+        self.SyncHandle = SyncHandle
+        self.Rssi = Rssi
+        self.TxPower = TxPower
+        self.DataLength = DataLength
+        self.Data = Data
+
+
+class GAPGenericEventPeriodicAdvCreateSyncCancelledIndication(object):
+
+    pass
+class GAPConnectionEventChannelSelectionAlgorithm2Indication(object):
+
+    def __init__(self, DeviceId=bytearray(1)):
+        '''
+        @param DeviceId: The DeviceId for which the command is intended
+        '''
+        self.DeviceId = DeviceId
+
+
+class L2CAPCBErrorIndication(object):
+
+    class LeCbError(object):
+
+        def __init__(self, DeviceId=bytearray(1), Error=LeCbErrorError.gBleSuccess_c):
+            self.DeviceId = DeviceId
+            self.Error = Error
+
+    def __init__(self, InformationIncluded=bytearray(1), LeCbError=LeCbError()):
+        '''
+        @param InformationIncluded: Information is included or not
+        @param LeCbError: Internal error event data
+        '''
+        self.InformationIncluded = InformationIncluded
+        self.LeCbError = LeCbError
+
+

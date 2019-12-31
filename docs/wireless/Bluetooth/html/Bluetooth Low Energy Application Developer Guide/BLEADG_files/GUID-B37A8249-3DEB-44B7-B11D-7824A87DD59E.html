@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Discover characteristics by UUID"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-14EEED00-68AD-49E9-A4A6-220E857226B3.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-B37A8249-3DEB-44B7-B11D-7824A87DD59E"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Discover characteristics by UUID</title>
+</head>
+<body id="GUID-B37A8249-3DEB-44B7-B11D-7824A87DD59E">
+
+
+    <h1 class="title topictitle1">Discover characteristics by UUID</h1>
+
+    <div class="body">
+        <p class="p">This procedure is useful when the Client intends to discover a specific Characteristic in
+            a specific Service. The API allows for multiple Characteristics of the same type to be
+            discovered, but most often it is used when a single Characteristic of the given type is
+            expected to be found.</p>
+
+        <p class="p">Continuing the example from <a class="xref" href="GUID-48BDDB4C-EEF2-4536-9536-AF1AE98BB6B5.html#GUID-48BDDB4C-EEF2-4536-9536-AF1AE98BB6B5">Discover primary services by UUID</a>, let’s assume the Client wants to discover the Heart
+            Rate Control Point Characteristic inside the Heart Rate Service, as shown in the
+            following code.</p>
+
+        <pre class="pre codeblock">gattService_t * pService = &amp;heartRateService;
+
+<strong class="ph b">static </strong>gattCharacteristic_t hrcpCharacteristic;
+<strong class="ph b">static </strong>uint8_t mcHrcpChar;
+
+bleResult_t result = GattClient_DiscoverCharacteristicOfServiceByUuid
+(
+    deviceId, 
+    <em class="ph i">gBleUuidType16_c</em>, 
+    gBleSig_HrControlPoint_d,
+    pService, 
+    &amp;hrcpCharacteristic, 
+    1, 
+    &amp;mcHrcpChar
+);</pre>
+
+        <p class="p">This API can be used as in the previous examples, in other words, following a Service
+            Discovery procedure. However, the user may want to perform a Characteristic search with
+            UUID over the entire database, skipping the Service Discovery entirely. To do so, a
+            dummy service structure must be defined and its range must be set to maximum, as shown
+            in the following example:</p>
+
+        <pre class="pre codeblock">gattService_t dummyService;
+dummyService. startHandle = 0x0001;
+dummyService. endHandle = 0xFFFF; 
+<strong class="ph b">static </strong>gattCharacteristic_t hrcpCharacteristic;
+<strong class="ph b">static </strong>uint8_t mcHrcpChar;
+ 
+bleResult_t result = GattClient_DiscoverCharacteristicOfServiceByUuid
+(
+    deviceId,
+    <em class="ph i">gBleUuidType16_c</em>,
+    gBleSig_HrControlPoint_d,
+    &amp;dummyService,
+    &amp;hrcpCharacteristic,
+    1,
+    &amp;mcHrcpChar
+);</pre>
+
+        <p class="p">In either case, the value of the <em class="ph i">mcHrcpChar</em> variable should be checked in the
+            procedure callback.</p>
+
+        <pre class="pre codeblock"><strong class="ph b">void</strong><strong class="ph b">gattClientProcedureCallback</strong>
+(
+    deviceId_t             deviceId,
+    gattProcedureType_t    procedureType,
+    gattProcedureResult_t  procedureResult,
+    bleResult_t            error
+)
+{
+    <strong class="ph b">switch</strong> (procedureType)
+    {
+        /* ... */
+        <strong class="ph b">case</strong><em class="ph i">gGattProcDiscoverCharacteristicByUuid_c</em>:
+            <strong class="ph b">if</strong> (<em class="ph i">gGattProcSuccess_c</em> == procedureResult)
+            {
+                <strong class="ph b">if</strong> (1 == mcHrcpChar)
+                {
+                    /* HRCP found, read discovered data */
+                    PRINT(hrcpCharacteristic. properties );
+                    PRINT(hrcpCharacteristic. value . handle );
+                }
+                <strong class="ph b">else</strong>
+                {
+                    /* HRCP not found! */
+                }
+            }
+            <strong class="ph b">else</strong>
+            {
+                /* Handle error */
+                PRINT(error);
+            }
+            <strong class="ph b">break</strong>;
+
+        /* ... */
+    }
+}</pre>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-14EEED00-68AD-49E9-A4A6-220E857226B3.html">Service and characteristic discovery</a></div>
+</div>
+</div>
+
+</body>
+</html>

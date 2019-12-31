@@ -14,6 +14,7 @@ from com.nxp.wireless_connectivity.hsdk.singleton import singleton
 class Spec(object):
 
     def __init__(self):
+        self.FSCIOTASupportSetKeyRequestFrame = self.InitFSCIOTASupportSetKeyRequest()
         self.FSCIEnterBootloaderRequestFrame = self.InitFSCIEnterBootloaderRequest()
         self.FSCICPUResetRequestFrame = self.InitFSCICPUResetRequest()
         self.FSCIFirmware_StartImageRequestFrame = self.InitFSCIFirmware_StartImageRequest()
@@ -35,6 +36,14 @@ class Spec(object):
         self.FSCIFirmware_CommitImageConfirmFrame = self.InitFSCIFirmware_CommitImageConfirm()
         self.FSCIFirmware_ImageNotifyConfirmFrame = self.InitFSCIFirmware_ImageNotifyConfirm()
         self.FSCIFirmware_SetFileVersionPolicyConfirmFrame = self.InitFSCIFirmware_SetFileVersionPolicyConfirm()
+
+    def InitFSCIOTASupportSetKeyRequest(self):
+        cmdParams = []
+        KeyType = FsciParameter("KeyType", 1)
+        cmdParams.append(KeyType)
+        Key = FsciParameter("Key", 32)
+        cmdParams.append(Key)
+        return FsciFrameDescription(0xA3, 0x27, cmdParams)
 
     def InitFSCIEnterBootloaderRequest(self):
         cmdParams = []

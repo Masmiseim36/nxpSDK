@@ -1,0 +1,1367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="API primitives"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-C860B9CA-C640-4D63-AE47-0BE31AAE976C.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>API primitives</title>
+</head>
+<body id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00">
+
+
+    <h1 class="title topictitle1">API primitives</h1>
+
+    <div class="body">
+        <p class="p"><strong class="ph b">SerialManager_Init ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void Serial_InitManager( void );</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Creates the Serial Manager’s task and initializes internal data
+            structures.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">Serial_InitInterface ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">serialStatus_t Serial_InitInterface (uint8_t *pInterfaceId, serialInterfaceType_t interfaceType, uint8_t instance);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Initializes a communication interface.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__TABLE_WJS_CVS_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d8694e105"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e109"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e113"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e117"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e105 ">InterfaceId</td>
+
+                        <td class="entry" valign="top" headers="d8694e109 ">uint8_t *</td>
+
+                        <td class="entry" valign="top" headers="d8694e113 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e117 ">Interface ID</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e105 ">interfaceType</td>
+
+                        <td class="entry" valign="top" headers="d8694e109 ">serialInterfaceType_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e113 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e117 ">The type of interface</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e105 ">instance</td>
+
+                        <td class="entry" valign="top" headers="d8694e109 ">uint8_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e113 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e117 ">The instance of the HW module (ex: if UART1 is used,
+                            this value should be 1)</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <ul class="ul" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__UL_M1M_DVS_2Z">
+            <li class="li"> gSerial_InterfaceInUse_c if the interface is already opened </li>
+
+            <li class="li"> gSerial_InvalidInterface_c if the interface is invalid </li>
+
+            <li class="li"> gSerial_SemCreateError_c if the semaphore creation fails </li>
+
+            <li class="li"> gSerial_MaxInterfacesReached_c if the maximum number of interfaces is reached</li>
+
+            <li class="li"> gSerial_InternalError_c if an internal error occurred</li>
+
+            <li class="li"> gSerial_Success_c if the operation was successful</li>
+
+        </ul>
+
+        <p class="p"><strong class="ph b">Serial_SetBaudRate ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <p class="p">serialStatus_t Serial_SetBaudRate <strong class="ph b">(</strong>uint8_t InterfaceId<strong class="ph b">,</strong> uint32_t
+                baudRate<strong class="ph b">);</strong></p>
+
+        <p class="p"><strong class="ph b">Description:</strong>Sets the communication speed of an interface.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__TABLE_VXZ_GVS_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d8694e245"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e249"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e253"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e257"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e245 ">InterfaceId</td>
+
+                        <td class="entry" valign="top" headers="d8694e249 ">uint8_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e253 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e257 ">Interface ID.</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e245 ">baudRate</td>
+
+                        <td class="entry" valign="top" headers="d8694e249 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e253 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e257 ">Communication speed.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <ul class="ul" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__UL_CDL_3VS_2Z">
+            <li class="li"> gSerial_InvalidParameter_c if a parameter is invalid </li>
+
+            <li class="li"> gSerial_InvalidInterface_c if the interface is invalid</li>
+
+            <li class="li"> gSerial_InternalError_c if an internal error occurred </li>
+
+            <li class="li"> gSerial_Success_c if the operation was successful</li>
+
+        </ul>
+
+        <p class="p"><strong class="ph b">Serial_RxBufferByteCount ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">serialStatus_t Serial_RxBufferByteCount (uint8_t InterfaceId, uint16_t *bytesCount);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Gets the number of bytes in the RX buffer.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__TABLE_PGZ_JVS_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d8694e356"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e360"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e364"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e368"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e356 ">InterfaceId</td>
+
+                        <td class="entry" valign="top" headers="d8694e360 ">uint8_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e364 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e368 ">Interface ID</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e356 ">bytesCount</td>
+
+                        <td class="entry" valign="top" headers="d8694e360 ">uint16_t *</td>
+
+                        <td class="entry" valign="top" headers="d8694e364 ">[OUT]</td>
+
+                        <td class="entry" valign="top" headers="d8694e368 ">Number of bytes in the RX queue</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <ul class="ul" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__UL_ULP_KVS_2Z">
+            <li class="li"> gSerial_InvalidParameter_c if a parameter is invalid</li>
+
+            <li class="li"> gSerial_Success_c if the operation was successful</li>
+
+        </ul>
+
+        <p class="p"><strong class="ph b">Serial_SetRxCallBack ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">serialStatus_t Serial_SetRxCallBack (uint8_t InterfaceId, pSerialCallBack_t cb, void *pRxParam);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Sets a pointer to a function that is called when data is received.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__TABLE_CK5_MVS_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d8694e460"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e464"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e468"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e472"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e460 ">InterfaceId</td>
+
+                        <td class="entry" valign="top" headers="d8694e464 ">uint8_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e468 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e472 ">Interface ID</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e460 ">cb</td>
+
+                        <td class="entry" valign="top" headers="d8694e464 ">pSerialCallBack_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e468 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e472 ">Pointer to the callback function</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e460 ">pRxParam</td>
+
+                        <td class="entry" valign="top" headers="d8694e464 ">void *</td>
+
+                        <td class="entry" valign="top" headers="d8694e468 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e472 ">–</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <ul class="ul" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__UL_IGL_NVS_2Z">
+            <li class="li"> gSerial_InvalidParameter_c if a parameter is invalid </li>
+
+            <li class="li"> gSerial_Success_c if the operation was successful</li>
+
+        </ul>
+
+        <p class="p"><strong class="ph b">Serial_Read ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">serialStatus_t Serial_Read (uint8_t InterfaceId, uint8_t *pData, uint16_t bytesToRead, uint16_t *bytesRead);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Returns a specified number of characters from the RX buffer.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__TABLE_HKL_RVS_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d8694e579"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e583"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e587"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e591"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e579 ">InterfaceId</td>
+
+                        <td class="entry" valign="top" headers="d8694e583 ">uint8_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e587 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e591 ">Interface ID</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e579 ">pData</td>
+
+                        <td class="entry" valign="top" headers="d8694e583 ">uint8_t *</td>
+
+                        <td class="entry" valign="top" headers="d8694e587 ">[OUT]</td>
+
+                        <td class="entry" valign="top" headers="d8694e591 ">Pointer to a buffer to store the data</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e579 ">bytesToRead</td>
+
+                        <td class="entry" valign="top" headers="d8694e583 ">uint16_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e587 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e591 ">Number of bytes to read</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e579 ">bytesRead</td>
+
+                        <td class="entry" valign="top" headers="d8694e583 ">uint16_t *</td>
+
+                        <td class="entry" valign="top" headers="d8694e587 ">[OUT]</td>
+
+                        <td class="entry" valign="top" headers="d8694e591 ">Pointer to a location to store the number of bytes read</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <ul class="ul" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__UL_ACD_SVS_2Z">
+            <li class="li"> gSerial_InvalidParameter_c if a parameter is invalid </li>
+
+            <li class="li"> gSerial_InvalidInterface_c if the interface is invalid </li>
+
+            <li class="li"> gSerial_Success_c if the operation was successful</li>
+
+        </ul>
+
+        <p class="p"><strong class="ph b"><span class="ph" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00___TOC346017123">Serial_GetByteFromRxBuffer ()</span></strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">#define Serial_GetByteFromRxBuffer(InterfaceId, pDst, readBytes) Serial_Read(InterfaceId, pDst, 1, readBytes)</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Retrieves one byte from the RX buffer. Returns the number of bytes
+            retrieved (1/0).</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__TABLE_HHZ_FJT_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d8694e718"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e722"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e726"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e730"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e718 ">InterfaceId</td>
+
+                        <td class="entry" valign="top" headers="d8694e722 ">uint8_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e726 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e730 ">Interface ID</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e718 ">pDst</td>
+
+                        <td class="entry" valign="top" headers="d8694e722 ">uint8_t *</td>
+
+                        <td class="entry" valign="top" headers="d8694e726 ">[OUT]</td>
+
+                        <td class="entry" valign="top" headers="d8694e730 ">Output buffer pointer</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e718 ">readBytes</td>
+
+                        <td class="entry" valign="top" headers="d8694e722 ">uint16_t *</td>
+
+                        <td class="entry" valign="top" headers="d8694e726 ">[OUT]</td>
+
+                        <td class="entry" valign="top" headers="d8694e730 ">Output value representing the bytes retrieved (1 or 0)</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <ul class="ul" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__UL_BNV_GJT_2Z">
+            <li class="li"> gSerial_InvalidParameter_c if a parameter is invalid </li>
+
+            <li class="li"> gSerial_Success_c if successful </li>
+
+            <li class="li"> gSerial_InvalidInterface_c if the interface is not valid</li>
+
+        </ul>
+
+        <p class="p"><strong class="ph b">Serial_SyncWrite ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <p class="p">serialStatus_t Serial_SyncWrite <strong class="ph b">(</strong>uint8_t InterfaceId<strong class="ph b">,</strong> uint8_t
+                <strong class="ph b">*</strong>pBuf<strong class="ph b">,</strong> uint16_t bufLen<strong class="ph b">);</strong></p>
+
+        <p class="p"><strong class="ph b">Description:</strong>Transmits a data buffer synchronously. The task blocks until the TX is
+            done.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__TABLE_ZYL_HJT_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d8694e854"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e858"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e862"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e866"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e854 ">InterfaceId</td>
+
+                        <td class="entry" valign="top" headers="d8694e858 ">uint8_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e862 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e866 ">Interface ID</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e854 ">pBuf</td>
+
+                        <td class="entry" valign="top" headers="d8694e858 ">uint8_t *</td>
+
+                        <td class="entry" valign="top" headers="d8694e862 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e866 ">Pointer to a buffer containing the data to be sent</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e854 ">bufLen</td>
+
+                        <td class="entry" valign="top" headers="d8694e858 ">uint16_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e862 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e866 ">Buffer length</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <ul class="ul" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__UL_TPB_3JT_2Z">
+            <li class="li"> gSerial_InvalidParameter_c if a parameter is invalid </li>
+
+            <li class="li"> gSerial_OutOfMemory_c if there is no room left in the TX queue </li>
+
+            <li class="li"> gSerial_Success_c if the operation was successful</li>
+
+        </ul>
+
+        <p class="p"><strong class="ph b">Serial_AsyncWrite ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">serialStatus_t Serial_AsyncWrite (uint8_t InterfaceId, uint8_t *pBuf, uint16_t bufLen, pSerialCallBack_t cb, void *pTxParam);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Transmits a data buffer asynchronously.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__TABLE_SX1_LJT_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d8694e976"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e980"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e984"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e988"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e976 ">InterfaceId</td>
+
+                        <td class="entry" valign="top" headers="d8694e980 ">uint8_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e984 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e988 ">Interface ID</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e976 ">pBuf</td>
+
+                        <td class="entry" valign="top" headers="d8694e980 ">uint8_t *</td>
+
+                        <td class="entry" valign="top" headers="d8694e984 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e988 ">Pointer to a buffer containing the data to be sent</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e976 ">bufLen</td>
+
+                        <td class="entry" valign="top" headers="d8694e980 ">uint16_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e984 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e988 ">Buffer length</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e976 ">cb</td>
+
+                        <td class="entry" valign="top" headers="d8694e980 ">pSerialCallBack_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e984 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e988 ">Pointer to the callback function</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e976 ">pTxParam</td>
+
+                        <td class="entry" valign="top" headers="d8694e980 ">void *</td>
+
+                        <td class="entry" valign="top" headers="d8694e984 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e988 ">Parameter to be passed to the callback when it executes</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <ul class="ul" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__UL_L5W_LJT_2Z">
+            <li class="li"> gSerial_InvalidParameter_c if a parameter is invalid </li>
+
+            <li class="li"> gSerial_OutOfMemory_c if there is no room left in the TX queue </li>
+
+            <li class="li"> gSerial_Success_c if the operation was successful</li>
+
+        </ul>
+
+        <p class="p"><strong class="ph b">Serial_Print ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">serialStatus_t Serial_Print (uint8_t InterfaceId, char * pString, serialBlock_t allowToBlock);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Prints a string to the serial interface.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__TABLE_H3H_NJT_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d8694e1129"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1133"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1137"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1141"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e1129 ">InterfaceId</td>
+
+                        <td class="entry" valign="top" headers="d8694e1133 ">uint8_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e1137 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e1141 ">Interface ID</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e1129 ">pString</td>
+
+                        <td class="entry" valign="top" headers="d8694e1133 ">char *</td>
+
+                        <td class="entry" valign="top" headers="d8694e1137 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e1141 ">Pointer to a buffer containing the string to be sent</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e1129 ">allowToBlock</td>
+
+                        <td class="entry" valign="top" headers="d8694e1133 ">serialBlock_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e1137 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e1141 ">Specifies if the task waits for the TX to finish or not</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <ul class="ul" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__UL_B4X_NJT_2Z">
+            <li class="li"> gSerial_InvalidParameter_c if a parameter is invalid</li>
+
+            <li class="li"> gSerial_OutOfMemory_c if there is no room left in the TX queue</li>
+
+            <li class="li"> gSerial_Success_c if the operation was successful</li>
+
+        </ul>
+
+        <p class="p"><strong class="ph b">Serial_PrintHex ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">serialStatus_t Serial_PrintHex (uint8_t InterfaceId, uint8_t *hex, uint8_t len, uint8_t flags);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Prints a number in hexadecimal format to the serial interface. The
+            task waits until the TX has finished.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__TABLE_XSQ_RJT_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d8694e1251"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1255"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1259"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1263"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e1251 ">InterfaceId</td>
+
+                        <td class="entry" valign="top" headers="d8694e1255 ">uint8_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e1259 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e1263 ">Interface ID</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e1251 ">hex</td>
+
+                        <td class="entry" valign="top" headers="d8694e1255 ">uint8_t *</td>
+
+                        <td class="entry" valign="top" headers="d8694e1259 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e1263 ">Pointer to the number to be printed</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e1251 ">len</td>
+
+                        <td class="entry" valign="top" headers="d8694e1255 ">uint8_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e1259 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e1263 ">The number of bytes of the number</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e1251 ">flags</td>
+
+                        <td class="entry" valign="top" headers="d8694e1255 ">uint8_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e1259 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e1263 ">Flags specify display options: comma, space, new line</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <ul class="ul" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__UL_SDM_SJT_2Z">
+            <li class="li"> gSerial_InvalidParameter_c if a parameter is invalid</li>
+
+            <li class="li"> gSerial_OutOfMemory_c if there is no room left in the TX queue</li>
+
+            <li class="li"> gSerial_Success_c if the operation was successful</li>
+
+        </ul>
+
+        <p class="p"><strong class="ph b">Serial_PrintDec ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">serialStatus_t Serial_PrintDec (uint8_t InterfaceId, uint32_t nr);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Prints an unsigned integer to the serial interface.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__TABLE_AQR_5JT_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d8694e1388"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1392"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1396"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1400"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e1388 ">InterfaceId</td>
+
+                        <td class="entry" valign="top" headers="d8694e1392 ">uint8_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e1396 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e1400 ">Interface ID</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e1388 ">nr</td>
+
+                        <td class="entry" valign="top" headers="d8694e1392 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e1396 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e1400 ">Number to be printed</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <ul class="ul" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__UL_LC3_VJT_2Z">
+            <li class="li"> gSerial_InvalidParameter_c if a parameter is invalid</li>
+
+            <li class="li"> gSerial_OutOfMemory_c if there is no room left in the TX queue </li>
+
+            <li class="li"> gSerial_Success_c if the operation was successful</li>
+
+        </ul>
+
+        <p class="p"><strong class="ph b">Serial_EnableLowPowerWakeup ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">serialStatus_t Serial_EnableLowPowerWakeup( serialInterfaceType_t interfaceType);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Configures the enabled hardware modules of the given interface type as
+            a wake-up source from the STOP mode.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__TABLE_T1B_YJT_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d8694e1496"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1500"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1504"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1508"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e1496 ">interfaceType</td>
+
+                        <td class="entry" valign="top" headers="d8694e1500 ">serialInterfaceType_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e1504 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e1508 ">Interface type of the modules to configure.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <ul class="ul" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__UL_HSW_YJT_2Z">
+            <li class="li"> gSerial_Success_c if there is at least one module to configure </li>
+
+            <li class="li"> gSerial_InvalidInterface_c otherwise</li>
+
+        </ul>
+
+        <p class="p"><strong class="ph b">Serial_DisableLowPowerWakeup ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">serialStatus_t Serial_DisableLowPowerWakeup( serialInterfaceType_t interfaceType);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Configures the enabled hardware modules of the given interface type as
+            modules without wake-up capabilities.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__TABLE_MQT_1KT_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d8694e1585"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1589"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1593"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1597"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e1585 ">interfaceType</td>
+
+                        <td class="entry" valign="top" headers="d8694e1589 ">serialInterfaceType_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e1593 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e1597 ">Interface type of the modules to configure.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <ul class="ul" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__UL_R2N_BKT_2Z">
+            <li class="li"> gSerial_Success_c if there is at least one module to configure </li>
+
+            <li class="li"> gSerial_InvalidInterface_c otherwise</li>
+
+        </ul>
+
+        <p class="p"><strong class="ph b">Serial_IsWakeUpSource ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">bool_t Serial_IsWakeUpSource( serialInterfaceType_t interfaceType);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Decides whether an enabled hardware module of the given interface type
+            woke the CPU up from the STOP mode.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__TABLE_OC3_2KT_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d8694e1674"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1678"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1682"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1686"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e1674 ">interfaceType</td>
+
+                        <td class="entry" valign="top" headers="d8694e1678 ">serialInterfaceType_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e1682 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e1686 ">Interface type of the modules to be evaluated as wake-up
+                            source.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">TRUE if a module of the given interface type was the wake-up source, FALSE otherwise.</p>
+
+        <p class="p"><strong class="ph b">HexToAscii ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">#define HexToAscii(hex)</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Converts a 0x00-0x0F (4 bytes) number to ascii '0'-'F'.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__TABLE_W5S_GKT_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d8694e1758"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1762"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1766"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1770"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e1758 ">hex</td>
+
+                        <td class="entry" valign="top" headers="d8694e1762 ">uint8_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e1766 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e1770 ">Number to be converted</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">ASCII code of the number.</p>
+
+        <p class="p"/>
+
+        <p class="p"><strong class="ph b">Serial_CustomReceiveData ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">uint32_t Serial_CustomReceiveData(uint8_t InterfaceId, uint8_t *pRxData, uint32_t size);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function must be called by a custom interface to notify the Serial Manager that a specified number of bytes have been received.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__TABLE_FCH_VLK_FDB" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d8694e1843"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1847"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1851"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1855"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e1843 ">InterfaceID</td>
+
+                        <td class="entry" valign="top" headers="d8694e1847 ">uint8_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e1851 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e1855 ">Interface ID</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e1843 ">pRxData</td>
+
+                        <td class="entry" valign="top" headers="d8694e1847 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d8694e1851 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e1855 ">Pointer to the received data</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e1843 ">Size</td>
+
+                        <td class="entry" valign="top" headers="d8694e1847 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e1851 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e1855 ">Number of bytes received</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">The number of bytes that could not be stored by Serial Manager.</p>
+
+        <p class="p"/>
+
+        <p class="p"><strong class="ph b">Serial_CustomSendData ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">uint32_t Serial_CustomSendData (uint8_t *pData, uint32_t size);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function must be implemented by the custom interface, and it is called by the Serial Manager to transmit data over the custom interface.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__TABLE_TKX_VLK_FDB" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d8694e1959"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1963"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1967"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e1971"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e1959 ">pData</td>
+
+                        <td class="entry" valign="top" headers="d8694e1963 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d8694e1967 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e1971 ">Pointer to the data</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e1959 ">Size</td>
+
+                        <td class="entry" valign="top" headers="d8694e1963 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e1967 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e1971 ">Number of bytes to transmit</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">Error code, or 0 if success.</p>
+
+        <p class="p"/>
+
+        <p class="p"><strong class="ph b"><strong class="ph b">Serial_CustomSendCompleted</strong> ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void Serial_CustomSendCompleted (uint8_t InterfaceId);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function must be called by a custom interface to
+            notify the Serial Manager that the current data transmission has ended.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-2EB95C5A-BC4D-4ECE-96DE-0F5294BD1F00__TABLE_LZK_WLK_FDB" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d8694e2061"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e2065"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e2069"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d8694e2073"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d8694e2061 ">InterfaceId</td>
+
+                        <td class="entry" valign="top" headers="d8694e2065 ">uint8_t</td>
+
+                        <td class="entry" valign="top" headers="d8694e2069 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d8694e2073 ">Interface ID</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-C860B9CA-C640-4D63-AE47-0BE31AAE976C.html">Serial manager</a></div>
+</div>
+</div>
+
+</body>
+</html>

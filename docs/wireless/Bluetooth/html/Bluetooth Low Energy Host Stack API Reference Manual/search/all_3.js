@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['car_5fsupported',['CAR_Supported',['../group___g_a_p.html#gga1d5213f9ebf3df622b2bba3c4a4cac76a5a39f92a5913bfbd94a2ca31a7698a33',1,'gap_types.h']]],
+  ['car_5funavailable',['CAR_Unavailable',['../group___g_a_p.html#gga1d5213f9ebf3df622b2bba3c4a4cac76ae4d812bb642aabbc1fac01a5f9ddd15d',1,'gap_types.h']]],
+  ['car_5funknown',['CAR_Unknown',['../group___g_a_p.html#gga1d5213f9ebf3df622b2bba3c4a4cac76ac345e6aab8413fa33d23a0bf04456563',1,'gap_types.h']]],
+  ['car_5funsupported',['CAR_Unsupported',['../group___g_a_p.html#gga1d5213f9ebf3df622b2bba3c4a4cac76a2a0951b91e4d89adb4c657e194ef74c3',1,'gap_types.h']]],
+  ['centralkeys',['centralKeys',['../group___g_a_p.html#a28dd012a21c32d152aa82c3d20a4e20f',1,'gapPairingParameters_t']]],
+  ['channelmap',['channelMap',['../group___g_a_p.html#a015d0cb70fcf9a1b03773064bbcdc68b',1,'gapAdvertisingParameters_t::channelMap()'],['../group___g_a_p.html#a04e9e854ec7fe3484095100ae76c9451',1,'gapAdChannelMapUpdateIndication_tag::channelMap()']]],
+  ['cltksize',['cLtkSize',['../group___g_a_p.html#a87dcc605cda330d671e1d10376fb50bd',1,'gapSmpKeys_t']]],
+  ['cnumaddresses',['cNumAddresses',['../group___g_a_p.html#a4305cd8280e762c783c705b81760dd34',1,'gapAutoConnectParams_t']]],
+  ['cnumadstructures',['cNumAdStructures',['../group___g_a_p.html#ab4c723b952aad6dc28fbefaef0064717',1,'gapAdvertisingData_t']]],
+  ['cnumcharacteristics',['cNumCharacteristics',['../group___g_a_t_t.html#a93d54663d64e802771b14628dee52291',1,'gattService_t']]],
+  ['cnumdescriptors',['cNumDescriptors',['../group___g_a_t_t.html#a0323f930167355830bc48c2ef93409ee',1,'gattCharacteristic_t']]],
+  ['cnumhandles',['cNumHandles',['../group___g_a_p.html#a7b47a35f55f9341a181d40d4ee72693e',1,'gapHandleList_t']]],
+  ['cnumincludedservices',['cNumIncludedServices',['../group___g_a_t_t.html#af48fd26ea8730e3d619eaf4e875e5885',1,'gattService_t']]],
+  ['cnumservices',['cNumServices',['../group___g_a_p.html#a02f09d7027978223f304205ebbd3ef1e',1,'gapDeviceSecurityRequirements_t']]],
+  ['confirmvalue',['confirmValue',['../group___b_l_e.html#a935daf48789bfac19cbb24ffcde140ef',1,'gapLeScOobData_t']]],
+  ['connectioncallback',['connectionCallback',['../group___g_a_p.html#a1d555fbfe254c1e1d7fbd77c9e76dadf',1,'gapAutoConnectParams_t']]],
+  ['conneventlengthmax',['connEventLengthMax',['../group___g_a_p.html#add7279f0c2c2600ddfb49a5810b5b23e',1,'gapConnectionRequestParameters_t']]],
+  ['conneventlengthmin',['connEventLengthMin',['../group___g_a_p.html#a9e7603123e94e1b0ea9effbb359536ed',1,'gapConnectionRequestParameters_t']]],
+  ['conninterval',['connInterval',['../group___g_a_p.html#a5d12ee5e6530a33098f2b6df704d541b',1,'gapConnectionParameters_t::connInterval()'],['../group___g_a_p.html#a4f8694b28991fedd98bfc7a3019fe979',1,'gapConnParamsUpdateComplete_t::connInterval()']]],
+  ['connintervalmax',['connIntervalMax',['../group___g_a_p.html#a76c02e975e3fb4b248c4fb689069a020',1,'gapConnectionRequestParameters_t::connIntervalMax()'],['../group___g_a_p.html#gad08de4b318a8160e2cb0036b6bc5b511',1,'connIntervalMax():&#160;gap_types.h']]],
+  ['connintervalmin',['connIntervalMin',['../group___g_a_p.html#af167a57defb13f070c607a46f468d230',1,'gapConnectionRequestParameters_t']]],
+  ['connlatency',['connLatency',['../group___g_a_p.html#a1f5aa921568c6670fb22c81592ed0d1f',1,'gapConnectionRequestParameters_t::connLatency()'],['../group___g_a_p.html#af2d3c7f664a015abe7c055fbc57e4ab7',1,'gapConnectionParameters_t::connLatency()'],['../group___g_a_p.html#aa33612121c06cc4ca7f153209b5f94ea',1,'gapConnParamsUpdateComplete_t::connLatency()']]],
+  ['connparameters',['connParameters',['../group___g_a_p.html#a488bcc8950c3c1f8b540aca9133c8c0c',1,'gapConnectedEvent_t']]],
+  ['crandsize',['cRandSize',['../group___g_a_p.html#aaf6e9eec4246eb32f63426c9ababafe3',1,'gapSmpKeys_t']]],
+  ['cvaluelength',['cValueLength',['../group___g_a_t_t___s_e_r_v_e_r.html#a1c022a778a0caaa97dd1e20a8e4555fa',1,'gattServerAttributeWrittenEvent_t::cValueLength()'],['../group___g_a_t_t___s_e_r_v_e_r.html#a27329a51988ee0ecd984402e1c39f213',1,'gattServerLongCharacteristicWrittenEvent_t::cValueLength()']]]
+];

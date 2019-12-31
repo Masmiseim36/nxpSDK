@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="GAP-RegisterDeviceSecurityRequirements.Request"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-09963304-D0A4-4B1E-A3D3-21E0AD0B1D98.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-88B119F0-F3A0-49BA-8E36-985547E5602A"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>GAP-RegisterDeviceSecurityRequirements.Request</title>
+</head>
+<body id="GUID-88B119F0-F3A0-49BA-8E36-985547E5602A">
+
+
+	<h1 class="title topictitle1">GAP-RegisterDeviceSecurityRequirements.Request</h1>
+
+	<div class="body">
+		<p class="p"><strong class="ph b">Description</strong></p>
+
+		<p class="p">Registers the device security requirements.</p>
+
+		<p class="p"><strong class="ph b">Parameters</strong></p>
+
+		
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-88B119F0-F3A0-49BA-8E36-985547E5602A__TABLE_OKZ_1K1_PY" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 1. GAP-RegisterDeviceSecurityRequirements.Request Parameters</span></caption>
+				
+				
+				
+				<tbody class="tbody">
+					<tr class="row">
+						<td class="entry" valign="top"><strong class="ph b">Parameter</strong></td>
+
+						<td class="entry" valign="top"><strong class="ph b">Size (bytes)</strong></td>
+
+						<td class="entry" valign="top"><strong class="ph b">Comments</strong></td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">OpGroup</td>
+
+						<td class="entry" valign="top">1</td>
+
+						<td class="entry" valign="top">0x48</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">OpCode</td>
+
+						<td class="entry" valign="top">1</td>
+
+						<td class="entry" valign="top">0x02</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">Length</td>
+
+						<td class="entry" valign="top">1</td>
+
+						<td class="entry" valign="top">Length in bytes of the following parameters</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">SecurityRequirementsIncluded</td>
+
+						<td class="entry" valign="top">1</td>
+
+						<td class="entry" valign="top">Boolean value which indicates if security requirements are included or not</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">SecurityRequirements</td>
+
+						<td class="entry" valign="top">Variable</td>
+
+						<td class="entry" valign="top"> <p class="p">Device security requirements</p>
+ <p class="p">Structure type parameter. See the detailed table below for parameter structure.</p>
+ </td>
+
+					</tr>
+
+				</tbody>
+
+			</table>
+</div>
+
+		
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-88B119F0-F3A0-49BA-8E36-985547E5602A__TABLE_HPY_CK1_PY" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 2. SecurityRequirements Parameter Structure</span></caption>
+				
+				
+				
+				<tbody class="tbody">
+					<tr class="row">
+						<td class="entry" valign="top"><strong class="ph b">Structure Parameter</strong></td>
+
+						<td class="entry" valign="top"><strong class="ph b">Size (bytes)</strong></td>
+
+						<td class="entry" valign="top"><strong class="ph b">Comments</strong></td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">MasterSecurityRequirements</td>
+
+						<td class="entry" valign="top">Variable</td>
+
+						<td class="entry" valign="top"> <p class="p">Security requirements added to all services</p>
+ <p class="p">Structure type parameter. See the detailed table below for parameter structure.</p>
+ </td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">NbOfServices</td>
+
+						<td class="entry" valign="top">1</td>
+
+						<td class="entry" valign="top">Number of service-specific requirements</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">GapServiceSecurityRequirements</td>
+
+						<td class="entry" valign="top">Variable</td>
+
+						<td class="entry" valign="top"> <p class="p">Array of service-specific requirements</p>
+ <p class="p">Structure type parameter. See the detailed table below for parameter structure.</p>
+ </td>
+
+					</tr>
+
+				</tbody>
+
+			</table>
+</div>
+
+		
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-88B119F0-F3A0-49BA-8E36-985547E5602A__TABLE_GDM_FK1_PY" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 3. MasterSecurityRequirements Parameter Structure</span></caption>
+				
+				
+				
+				<tbody class="tbody">
+					<tr class="row">
+						<td class="entry" valign="top"><strong class="ph b">Structure Parameter</strong></td>
+
+						<td class="entry" valign="top"><strong class="ph b">Size (bytes)</strong></td>
+
+						<td class="entry" valign="top"><strong class="ph b">Comments</strong></td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">SecurityModeLevel</td>
+
+						<td class="entry" valign="top">1</td>
+
+						<td class="entry" valign="top"> <p class="p">Security mode and level</p>
+ <p class="p">Possible values: </p>
+ <p class="p">0x10: gMode1Level1_c (Mode 1 Level 1 - No Security)</p>
+ <p class="p">0x11: gMode1Level2_c (Mode 1 Level 2 - Encryption without authentication)</p>
+ <p class="p">0x12: gMode1Level3_c (Mode 1 Level 3 - Encryption with authentication)</p>
+ <p class="p">0x13: gMode1Level4_c (Mode 1 Level 4 - Encryption with LE Secure Connections
+								pairing)</p>
+ <p class="p">0x21: gMode2Level1_c (Mode 2 Level 1 - Data Signing without authentication)</p>
+ <p class="p">0x22: gMode2Level2_c (Mode 2 Level 2 - Data Signing with authentication)</p>
+ <p class="p"> </p>
+ </td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">Authorization</td>
+
+						<td class="entry" valign="top">1</td>
+
+						<td class="entry" valign="top">Authorization required</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">MinimumEncryptionKeySize</td>
+
+						<td class="entry" valign="top">2</td>
+
+						<td class="entry" valign="top">Minimum encryption key (LTK) size</td>
+
+					</tr>
+
+				</tbody>
+
+			</table>
+</div>
+
+		
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-88B119F0-F3A0-49BA-8E36-985547E5602A__TABLE_PW2_HK1_PY" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 4. GapServiceSecurityRequirements Parameter Structure</span></caption>
+				
+				
+				
+				<tbody class="tbody">
+					<tr class="row">
+						<td class="entry" valign="top"><strong class="ph b">Structure Parameter</strong></td>
+
+						<td class="entry" valign="top"><strong class="ph b">Size (bytes)</strong></td>
+
+						<td class="entry" valign="top"><strong class="ph b">Comments</strong></td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">ServiceHandle</td>
+
+						<td class="entry" valign="top">2</td>
+
+						<td class="entry" valign="top">Handle of the Service declaration in the GATT Database</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">Requirements</td>
+
+						<td class="entry" valign="top">Variable</td>
+
+						<td class="entry" valign="top"> <p class="p">Requirements for all attributes in this service</p>
+ <p class="p">Structure type parameter. See the detailed table below for parameter structure.</p>
+ </td>
+
+					</tr>
+
+				</tbody>
+
+			</table>
+</div>
+
+		
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-88B119F0-F3A0-49BA-8E36-985547E5602A__TABLE_O4X_3K1_PY" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 5. Requirements Parameter Structure</span></caption>
+				
+				
+				
+				<tbody class="tbody">
+					<tr class="row">
+						<td class="entry" valign="top"><strong class="ph b">Structure Parameter</strong></td>
+
+						<td class="entry" valign="top"><strong class="ph b">Size (bytes)</strong></td>
+
+						<td class="entry" valign="top"><strong class="ph b">Comments</strong></td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">SecurityModeLevel</td>
+
+						<td class="entry" valign="top">1</td>
+
+						<td class="entry" valign="top"> <p class="p">Security mode and level</p>
+ <p class="p">Possible values: </p>
+ <p class="p">0x10: gMode1Level1_c (Mode 1 Level 1 - No Security)</p>
+ <p class="p">0x11: gMode1Level2_c (Mode 1 Level 2 - Encryption without authentication)</p>
+ <p class="p">0x12: gMode1Level3_c (Mode 1 Level 3 - Encryption with authentication)</p>
+ <p class="p">0x13: gMode1Level4_c (Mode 1 Level 4 - Encryption with LE Secure Connections
+								pairing)</p>
+ <p class="p">0x21: gMode2Level1_c (Mode 2 Level 1 - Data Signing without authentication)</p>
+ <p class="p">0x22: gMode2Level2_c (Mode 2 Level 2 - Data Signing with authentication)</p>
+ <p class="p"> </p>
+ </td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">Authorization</td>
+
+						<td class="entry" valign="top">1</td>
+
+						<td class="entry" valign="top">Authorization required</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top">MinimumEncryptionKeySize</td>
+
+						<td class="entry" valign="top">2</td>
+
+						<td class="entry" valign="top">Minimum encryption key (LTK) size</td>
+
+					</tr>
+
+				</tbody>
+
+			</table>
+</div>
+
+	</div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-09963304-D0A4-4B1E-A3D3-21E0AD0B1D98.html">GAP Messages</a></div>
+</div>
+</div>
+
+</body>
+</html>

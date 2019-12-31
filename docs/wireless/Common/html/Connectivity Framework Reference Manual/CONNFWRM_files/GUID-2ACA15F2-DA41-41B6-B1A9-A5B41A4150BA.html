@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Overview"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-D20A90C0-E2C9-4793-9725-46DFDBEFD558.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-2ACA15F2-DA41-41B6-B1A9-A5B41A4150BA"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Overview</title>
+</head>
+<body id="GUID-2ACA15F2-DA41-41B6-B1A9-A5B41A4150BA">
+
+
+    <h1 class="title topictitle1">Overview</h1>
+
+    <div class="body">
+        <p class="p">The Bootloader is a program which resides in a reserved area of the flash
+            memory of the device. It starts
+            before the application, checks if an application image update needs to be performed,
+            and, if true, it proceeds to replace the current application image with a new image. If
+            an update does not need to be performed, the bootloader terminates and the application
+            starts to run.</p>
+
+        <p class="p">There are two types of bootloaders available in the Connectivity Software package:</p>
+
+        <ul class="ul" id="GUID-2ACA15F2-DA41-41B6-B1A9-A5B41A4150BA__UL_QCS_MVK_GZ">
+            <li class="li"> OTAP Bootloader</li>
+
+            <li class="li"> FSCI Bootloader</li>
+
+        </ul>
+
+        <p class="p">The figure below shows the memory layout of the device with the relevant sections and
+            their size, such as the bootloader, the application, and the reserved areas.</p>
+
+        <div class="fig fignone" id="GUID-2ACA15F2-DA41-41B6-B1A9-A5B41A4150BA__FIG_WHC_NVK_GZ"><span class="figcap">Figure 1. Bootloader overview</span>
+            
+            <img class="image" src="GUID-215558FF-F36F-4E0E-97FD-5F92711FC5D9-high.png" alt=""/>
+        </div>
+
+        <p class="p">The application image is divided into the following sections:</p>
+
+        <ol class="ol">
+            <li class="li"> The ISR_TABLE section contains the MCU interrupt table which has a
+                fixed reserved size. This section must be placed immediately after the bootloader
+                image.</li>
+
+            <li class="li"> <p class="p">The BOOT_FLAGS section contains bootloader flags, target bootloader version, and
+                    address of the internal storage. </p>
+
+        
+        <p class="p">The OTAP Bootloader looks for this section immediately after the ISR_TABLE
+                    section which has fixed size. </p>
+
+        <div class="p"><ul class="ul">
+            <li class="li"> New Image Flag – set by the application to notify the OTAP Bootloader that a new
+                image is available. This flag is set by calling the <em class="ph i">OTA_SetNewImageFlag() </em>
+                function from the <em class="ph i">OtaSupport </em> module. </li>
+
+            <li class="li"> Image Upgrade Complete Flag – set by the OTAP Bootloader when the new image copy
+                process is completed successfully. </li>
+
+            <li class="li"> Bootloader Version – bootloader version expected by the application;
+                            set at compile time.</li>
+
+                        <li class="li">Internal Storage start address – set by the application to inform the
+                            OAP Bootloader the flash address of the internal storage at which the
+                            new image is available. If this flag is invalid, the external image
+                            storage will be used.</li>
+</ul>
+</div>
+</li>
+
+                    <li class="li"> The APPLICATION section contains the application code, read only data, and,
+                        optionally , an internal image storage area and an application NVM
+                        section:</li>
+
+                
+            <li class="li"> The optional application NVM section is placed at the highest flash
+                address range available (not reserved), if present. </li>
+
+            <li class="li"> The optional internal image storage area is placed before the NVM
+                section if the NVM is present, or at the highest available flash address if the NVM
+                is not present.</li>
+
+        
+        </ol>
+
+        <p class="p">If the application uses the default connectivity linker file, the user can add the
+                    <strong class="ph b"><em class="ph i">gUseBootloaderLink_d=1</em></strong>symbol to the project linker configuration
+            to offset the application’s binary and accommodate the Bootloader.</p>
+
+        <div class="note note"><span class="notetitle">Note:</span> The bootloader can only update the application’s binary code. The
+            bootloader image itself is not updated.</div>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-D20A90C0-E2C9-4793-9725-46DFDBEFD558.html">Bootloader</a></div>
+</div>
+</div>
+
+</body>
+</html>

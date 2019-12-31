@@ -1,0 +1,11 @@
+
+            __start_VERSION_TAGS = .;
+            KEEP(*(.VERSION_TAGS))
+            __stop_VERSION_TAGS = .;
+            /* NVM table section */
+            __start_NVM_TABLE = .;
+            KEEP(*(.NVM_TABLE))
+            __stop_NVM_TABLE = .;
+
+            *(.text*)
+

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<flash_board>
+  <pass>
+    <loader>$TOOLKIT_DIR$\config\flashloader\NXP\FlashKW3xZ4_256K.flash</loader>
+    <range>CODE 0x00000000 0x0003ffff</range>
+  </pass>
+  <pass>
+    <loader>$TOOLKIT_DIR$\config\flashloader\NXP\DFlashKW3xZ4_256K.flash</loader>
+    <range>CODE 0x00040000 0x0007ffff</range>
+    <rel_offset>0x007C0000</rel_offset>
+  </pass>
+  <pass>
+    <loader>$TOOLKIT_DIR$\config\flashloader\NXP\DFlashKW3xZ4_256K.flash</loader>
+    <range>CODE 0x10000000 0x1003ffff</range>
+    <rel_offset>0xF0800000</rel_offset>
+  </pass>
+</flash_board>

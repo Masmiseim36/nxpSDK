@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Implemented profiles and services"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-580074D7-5C40-44FE-96C8-D28FC5261116.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-0906B387-AEF0-44BF-B8EE-AFA501571419"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Implemented profiles and services</title>
+</head>
+<body id="GUID-0906B387-AEF0-44BF-B8EE-AFA501571419">
+
+
+  <h1 class="title topictitle1">Implemented profiles and services</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">The Temperature Sensor application implements a GATT server, a custom profile and the following services.</p>
+
+<ul class="ul">
+<li class="li">Temperature Service (UUID: 01ff0200-ba5e-f4ee-5ca1-eb1e5e4b1ce0)</li>
+
+<li class="li">Battery Service v1.0</li>
+
+<li class="li">Device Information Service v1.1</li>
+
+</ul>
+
+<p class="p">The application behaves as a GAP peripheral node. It enters GAP General Discoverable Mode and waits for a GAP central node to connect and configure notifications for the temperature value.</p>
+
+<p class="p">The Temperature service is a custom service that implements the Temperature characteristic (UUID: 0x2A6E) with a Characteristic Presentation Format descriptor (UUID: 0x2904), 
+both defined by the Bluetooth SIG.</p>
+
+<p class="p">The Temperature Collector application implements a GATT client or server for the following profile and services.</p>
+
+<ul class="ul">
+<li class="li">Temperature Service (UUID: 01ff0200-ba5e-f4ee-5ca1-eb1e5e4b1ce0)</li>
+
+<li class="li">Battery Service v1.0</li>
+
+<li class="li">Device Information Service v1.1</li>
+
+</ul>
+
+<p class="p">The application behaves as a GAP central node. It enters GAP Limited Discovery Procedure and searches for sensor devices to pair with. After pairing with the peripheral, it configures 
+notifications and displays temperature values on a terminal connected to the UART port.</p>
+
+<p class="p">Both application uses pairing with bonding by default. When connected with the Low Power Temperature Sensor application, the collector sends the 999999 passcode to the host stack by default.</p>
+
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-580074D7-5C40-44FE-96C8-D28FC5261116.html">Low Power Temperature Sensor and Collector</a></div>
+</div>
+</div>
+
+</body>
+</html>

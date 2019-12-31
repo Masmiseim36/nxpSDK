@@ -66,7 +66,6 @@ var group__genfsk =
       [ "payload", "group__genfsk.html#gad4552af5abbd09d09d87eff23a9cc279", null ]
     ] ],
     [ "GENFSK_DRIVER_VERSION", "group__genfsk.html#gacb962a8985ca8216297ef116f258a4fe", null ],
-    [ "gGENFSK_IrqNo_d", "group__genfsk.html#ga8f1ac8a7d38ebdba0e1c1e17eb270daf", null ],
     [ "gGENFSK_IrqPriority_c", "group__genfsk.html#ga50471fa6b5d381144d4d080ae7c9e3ed", null ],
     [ "gGENFSK_TaskStackSize_c", "group__genfsk.html#gad3969c71ccf040020ff5c0385c7d4bfe", null ],
     [ "gGENFSK_TaskPriority_c", "group__genfsk.html#gab5aa9f93222ff8b1f69b5a47f4adbe2a", null ],

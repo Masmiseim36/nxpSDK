@@ -53,6 +53,7 @@ typedef enum {
     BR57600,
     BR115200,
     BR921600,
+	BR1000000,
 } Baudrate;
 
 /**

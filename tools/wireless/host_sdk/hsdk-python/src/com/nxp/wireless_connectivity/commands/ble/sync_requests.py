@@ -1,6 +1,6 @@
 '''
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
+* Copyright 2016-2019 NXP
 * All rights reserved.
 *
 * SPDX-License-Identifier: BSD-3-Clause
@@ -10,154 +10,17 @@ from com.nxp.wireless_connectivity.commands.ble.enums import *  # @UnusedWildImp
 import com.nxp.wireless_connectivity.commands.ble.frames as Frames
 from com.nxp.wireless_connectivity.commands.ble.operations import *  # @UnusedWildImport
 
-
-def HCIModeSelect(
-    device,
-    Enable=False,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.HCIModeSelectRequest(Enable)
-    return HCIModeSelectOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def HCICommand(
-    device,
-    CommandLength=bytearray(2),
-    # Array length depends on CommandLength. Mask: 0xFFFF. Shift: 0x0000.
-    Command=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.HCICommandRequest(CommandLength, Command)
-    return HCICommandOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def HCIData(
-    device,
-    DataLength=bytearray(2),
-    # Array length depends on DataLength. Mask: 0xFFFF. Shift: 0x0000.
-    Data=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.HCIDataRequest(DataLength, Data)
-    return HCIDataOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def HCISynchronousData(
-    device,
-    SynchronousDataLength=bytearray(2),
-    # Array length depends on SynchronousDataLength. Mask: 0xFFFF. Shift: 0x0000.
-    SynchronousData=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.HCISynchronousDataRequest(SynchronousDataLength, SynchronousData)
-    return HCISynchronousDataOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def L2CAPModeSelect(
-    device,
-    Enable=False,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.L2CAPModeSelectRequest(Enable)
-    return L2CAPModeSelectOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def L2CAPInit(
+def L2CAPCBRegisterLeCbCallbacks(
     device,
     ack_policy=FsciAckPolicy.GLOBAL,
     protocol=Protocol.BLE,
     timeout=1
 ):
-    request = Frames.L2CAPInitRequest()
-    return L2CAPInitOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+    request = Frames.L2CAPCBRegisterLeCbCallbacksRequest()
+    return L2CAPCBRegisterLeCbCallbacksOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
-def L2CAPConfig(
-    device,
-    ConfigStruct_LeFeatures=bytearray(4),
-    ConfigStruct_HCILeBufferSize=bytearray(4),
-    ConfigStruct_MaxPduPayloadSize=bytearray(2),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.L2CAPConfigRequest(ConfigStruct_LeFeatures, ConfigStruct_HCILeBufferSize, ConfigStruct_MaxPduPayloadSize)
-    return L2CAPConfigOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def L2CAPSendAttData(
-    device,
-    DeviceId=bytearray(1),
-    PacketLength=bytearray(2),
-    # Array length depends on PacketLength. Mask: 0xFFFF. Shift: 0x0000.
-    Packet=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.L2CAPSendAttDataRequest(DeviceId, PacketLength, Packet)
-    return L2CAPSendAttDataOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def L2CAPSendSmpData(
-    device,
-    DeviceId=bytearray(1),
-    PacketLength=bytearray(2),
-    # Array length depends on PacketLength. Mask: 0xFFFF. Shift: 0x0000.
-    Packet=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.L2CAPSendSmpDataRequest(DeviceId, PacketLength, Packet)
-    return L2CAPSendSmpDataOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def L2CAPSendSignalingData(
-    device,
-    DeviceId=bytearray(1),
-    PacketLength=bytearray(2),
-    # Array length depends on PacketLength. Mask: 0xFFFF. Shift: 0x0000.
-    Packet=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.L2CAPSendSignalingDataRequest(DeviceId, PacketLength, Packet)
-    return L2CAPSendSignalingDataOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def L2CAPRegisterAttCallback(
-    device,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.L2CAPRegisterAttCallbackRequest()
-    return L2CAPRegisterAttCallbackOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def L2CAPRegisterSmpCallback(
-    device,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.L2CAPRegisterSmpCallbackRequest()
-    return L2CAPRegisterSmpCallbackOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def L2CAPRegisterLePsm(
+def L2CAPCBRegisterLePsm(
     device,
     LePsm=bytearray(2),
     LePsmMtu=bytearray(2),
@@ -165,22 +28,22 @@ def L2CAPRegisterLePsm(
     protocol=Protocol.BLE,
     timeout=1
 ):
-    request = Frames.L2CAPRegisterLePsmRequest(LePsm, LePsmMtu)
-    return L2CAPRegisterLePsmOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+    request = Frames.L2CAPCBRegisterLePsmRequest(LePsm, LePsmMtu)
+    return L2CAPCBRegisterLePsmOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
-def L2CAPDeregisterLePsm(
+def L2CAPCBDeregisterLePsm(
     device,
     LePsm=bytearray(2),
     ack_policy=FsciAckPolicy.GLOBAL,
     protocol=Protocol.BLE,
     timeout=1
 ):
-    request = Frames.L2CAPDeregisterLePsmRequest(LePsm)
-    return L2CAPDeregisterLePsmOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+    request = Frames.L2CAPCBDeregisterLePsmRequest(LePsm)
+    return L2CAPCBDeregisterLePsmOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
-def L2CAPConnectLePsm(
+def L2CAPCBConnectLePsm(
     device,
     LePsm=bytearray(2),
     DeviceId=bytearray(1),
@@ -189,11 +52,11 @@ def L2CAPConnectLePsm(
     protocol=Protocol.BLE,
     timeout=1
 ):
-    request = Frames.L2CAPConnectLePsmRequest(LePsm, DeviceId, InitialCredits)
-    return L2CAPConnectLePsmOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+    request = Frames.L2CAPCBConnectLePsmRequest(LePsm, DeviceId, InitialCredits)
+    return L2CAPCBConnectLePsmOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
-def L2CAPDisconnectLeCbChannel(
+def L2CAPCBDisconnectLeCbChannel(
     device,
     DeviceId=bytearray(1),
     ChannelId=bytearray(2),
@@ -201,24 +64,24 @@ def L2CAPDisconnectLeCbChannel(
     protocol=Protocol.BLE,
     timeout=1
 ):
-    request = Frames.L2CAPDisconnectLeCbChannelRequest(DeviceId, ChannelId)
-    return L2CAPDisconnectLeCbChannelOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+    request = Frames.L2CAPCBDisconnectLeCbChannelRequest(DeviceId, ChannelId)
+    return L2CAPCBDisconnectLeCbChannelOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
-def L2CAPCancelConnection(
+def L2CAPCBCancelConnection(
     device,
     LePsm=bytearray(2),
     DeviceId=bytearray(1),
-    RefuseReason=L2CAPCancelConnectionRequestRefuseReason.gSuccessful_c,
+    RefuseReason=L2CAPCBCancelConnectionRequestRefuseReason.gSuccessful_c,
     ack_policy=FsciAckPolicy.GLOBAL,
     protocol=Protocol.BLE,
     timeout=1
 ):
-    request = Frames.L2CAPCancelConnectionRequest(LePsm, DeviceId, RefuseReason)
-    return L2CAPCancelConnectionOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+    request = Frames.L2CAPCBCancelConnectionRequest(LePsm, DeviceId, RefuseReason)
+    return L2CAPCBCancelConnectionOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
-def L2CAPSendLeCbData(
+def L2CAPCBSendLeCbData(
     device,
     DeviceId=bytearray(1),
     ChannelId=bytearray(2),
@@ -229,11 +92,11 @@ def L2CAPSendLeCbData(
     protocol=Protocol.BLE,
     timeout=1
 ):
-    request = Frames.L2CAPSendLeCbDataRequest(DeviceId, ChannelId, PacketLength, Packet)
-    return L2CAPSendLeCbDataOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+    request = Frames.L2CAPCBSendLeCbDataRequest(DeviceId, ChannelId, PacketLength, Packet)
+    return L2CAPCBSendLeCbDataOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
-def L2CAPSendLeCredit(
+def L2CAPCBSendLeCredit(
     device,
     DeviceId=bytearray(1),
     ChannelId=bytearray(2),
@@ -242,861 +105,8 @@ def L2CAPSendLeCredit(
     protocol=Protocol.BLE,
     timeout=1
 ):
-    request = Frames.L2CAPSendLeCreditRequest(DeviceId, ChannelId, Credits)
-    return L2CAPSendLeCreditOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMModeSelect(
-    device,
-    Enable=False,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMModeSelectRequest(Enable)
-    return SMModeSelectOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMInit(
-    device,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMInitRequest()
-    return SMInitOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMRegisterUserCallback(
-    device,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMRegisterUserCallbackRequest()
-    return SMRegisterUserCallbackOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMInitiatorStartPairing(
-    device,
-    DestinationDeviceId=bytearray(1),
-    SmPairingParams_IoCapabilities=SMInitiatorStartPairingRequestSmPairingParams_IoCapabilities.gDisplayOnly_c,
-    SmPairingParams_OobDataFlag=SMInitiatorStartPairingRequestSmPairingParams_OobDataFlag.gAuthDataNotPresent_c,
-    SmPairingParams_AuthRequest=SMInitiatorStartPairingRequest.SmPairingParams_AuthRequest(),
-    SmPairingParams_MaxEncKeySize=bytearray(1),
-    SmPairingParams_InitatorKeyDistribution=SMInitiatorStartPairingRequest.SmPairingParams_InitatorKeyDistribution(),
-    SmPairingParams_ResponderKeyDistribution=SMInitiatorStartPairingRequest.SmPairingParams_ResponderKeyDistribution(),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMInitiatorStartPairingRequest(DestinationDeviceId, SmPairingParams_IoCapabilities, SmPairingParams_OobDataFlag, SmPairingParams_AuthRequest,
-                                                    SmPairingParams_MaxEncKeySize, SmPairingParams_InitatorKeyDistribution, SmPairingParams_ResponderKeyDistribution)
-    return SMInitiatorStartPairingOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMSendSecurity(
-    device,
-    DestinationDeviceId=bytearray(1),
-    SmSecurityReqParams_AuthRequest=SMSendSecurityRequestRequest.SmSecurityReqParams_AuthRequest(),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMSendSecurityRequestRequest(DestinationDeviceId, SmSecurityReqParams_AuthRequest)
-    return SMSendSecurityRequestOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMTerminatePairing(
-    device,
-    DestinationDeviceId=bytearray(1),
-    SmTerminatePairingParams_Reason=SMTerminatePairingRequestSmTerminatePairingParams_Reason.gReserved_c,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMTerminatePairingRequest(DestinationDeviceId, SmTerminatePairingParams_Reason)
-    return SMTerminatePairingOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMPairingReply(
-    device,
-    DestinationDeviceId=bytearray(1),
-    SmPairingParams_IoCapabilities=SMPairingRequestReplyRequestSmPairingParams_IoCapabilities.gDisplayOnly_c,
-    SmPairingParams_OobDataFlag=SMPairingRequestReplyRequestSmPairingParams_OobDataFlag.gAuthDataNotPresent_c,
-    SmPairingParams_AuthRequest=SMPairingRequestReplyRequest.SmPairingParams_AuthRequest(),
-    SmPairingParams_MaxEncKeySize=bytearray(1),
-    SmPairingParams_InitatorKeyDistribution=SMPairingRequestReplyRequest.SmPairingParams_InitatorKeyDistribution(),
-    SmPairingParams_ResponderKeyDistribution=SMPairingRequestReplyRequest.SmPairingParams_ResponderKeyDistribution(),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMPairingRequestReplyRequest(DestinationDeviceId, SmPairingParams_IoCapabilities, SmPairingParams_OobDataFlag, SmPairingParams_AuthRequest,
-                                                  SmPairingParams_MaxEncKeySize, SmPairingParams_InitatorKeyDistribution, SmPairingParams_ResponderKeyDistribution)
-    return SMPairingRequestReplyOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMPasskeyReply(
-    device,
-    DestinationDeviceId=bytearray(1),
-    SmPasskeyReqReplyParams_KeyType=SMPasskeyRequestReplyRequestSmPasskeyReqReplyParams_KeyType.Passkey,
-    # Array length depends on KeyType. Mask: 0xFF. Shift: 0x00.
-    SmPasskeyReqReplyParams_Key=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMPasskeyRequestReplyRequest(DestinationDeviceId, SmPasskeyReqReplyParams_KeyType, SmPasskeyReqReplyParams_Key)
-    return SMPasskeyRequestReplyOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMPairingKeysetReply(
-    device,
-    DestinationDeviceId=bytearray(1),
-    PairingKeysetRequestReplyParams_KeyDistPayload=SMPairingKeysetRequestReplyRequest.PairingKeysetRequestReplyParams_KeyDistPayload(),
-    PairingKeysetRequestReplyParams_SentKeys=SMPairingKeysetRequestReplyRequest.PairingKeysetRequestReplyParams_SentKeys(),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMPairingKeysetRequestReplyRequest(DestinationDeviceId, PairingKeysetRequestReplyParams_KeyDistPayload, PairingKeysetRequestReplyParams_SentKeys)
-    return SMPairingKeysetRequestReplyOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMLlStartEncryption(
-    device,
-    DestinationDeviceId=bytearray(1),
-    LlStartEncryptionParams_RandomNumber=bytearray(8),
-    LlStartEncryptionParams_EncryptedDiversifier=bytearray(2),
-    # Unit length: 16 bytes
-    LlStartEncryptionParams_LongTermKey=bytearray(16),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMLlStartEncryptionRequest(DestinationDeviceId, LlStartEncryptionParams_RandomNumber, LlStartEncryptionParams_EncryptedDiversifier, LlStartEncryptionParams_LongTermKey)
-    return SMLlStartEncryptionOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMLlLtkReply(
-    device,
-    DestinationDeviceId=bytearray(1),
-    # Unit length: 16 bytes
-    LlLtkRequestReplyParams_LongTermKey=bytearray(16),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMLlLtkRequestReplyRequest(DestinationDeviceId, LlLtkRequestReplyParams_LongTermKey)
-    return SMLlLtkRequestOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMLlLtkNegativeReply(
-    device,
-    DestinationDeviceId=bytearray(1),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMLlLtkRequestNegativeReplyRequest(DestinationDeviceId)
-    return SMLlLtkRequestNegativeReplyOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMLlEncrypt(
-    device,
-    # Unit length: 16 bytes
-    LlEncryptReqParams_Key=bytearray(16),
-    # Unit length: 16 bytes
-    LlEncryptReqParams_PlainTextData=bytearray(16),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMLlEncryptRequestRequest(LlEncryptReqParams_Key, LlEncryptReqParams_PlainTextData)
-    return SMLlEncryptResOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMLlRand(
-    device,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMLlRandRequestRequest()
-    return SMLlRandResOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMTbCreateRandomDeviceAddress(
-    device,
-    TbCreateRandomDeviceAddrReqParams_AddrType=SMTbCreateRandomDeviceAddressRequestRequestTbCreateRandomDeviceAddrReqParams_AddrType.RandAddrTypeNone,
-    # Array length depends on AddrType. Mask: 0xFF. Shift: 0x00.
-    TbCreateRandomDeviceAddrReqParams_Data=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMTbCreateRandomDeviceAddressRequestRequest(TbCreateRandomDeviceAddrReqParams_AddrType, TbCreateRandomDeviceAddrReqParams_Data)
-    return SMTbCreateRandomDeviceAddrResOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMTbCheckResolvablePrivateAddress(
-    device,
-    # Unit length: 16 bytes
-    TbCheckResolvablePrivateAddrReqParams_IRK=bytearray(16),
-    # Unit length: 6 bytes
-    TbCheckResolvablePrivateAddrReqParams_Address=bytearray(6),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMTbCheckResolvablePrivateAddressRequestRequest(TbCheckResolvablePrivateAddrReqParams_IRK, TbCheckResolvablePrivateAddrReqParams_Address)
-    return SMTbCheckResolvablePrivateAddressRequestOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMTbSignData(
-    device,
-    # Unit length: 16 bytes
-    TbSignDataReqParams_CSRK=bytearray(16),
-    TbSignDataReqParams_DataLength=bytearray(2),
-    # Array length depends on DataLength. Mask: 0xFFFF. Shift: 0x0000.
-    TbSignDataReqParams_Data=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMTbSignDataRequestRequest(TbSignDataReqParams_CSRK, TbSignDataReqParams_DataLength, TbSignDataReqParams_Data)
-    return SMTbSignDataRequestOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMTbVerifyDataSignature(
-    device,
-    # Unit length: 16 bytes
-    TbVerifyDataSignatureReqParams_CSRK=bytearray(16),
-    TbVerifyDataSignatureReqParams_DataLength=bytearray(2),
-    # Array length depends on DataLength. Mask: 0xFFFF. Shift: 0x0000.
-    TbVerifyDataSignatureReqParams_Data=[],
-    TbVerifyDataSignatureReqParams_Signature=bytearray(8),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMTbVerifyDataSignatureRequestRequest(TbVerifyDataSignatureReqParams_CSRK, TbVerifyDataSignatureReqParams_DataLength, TbVerifyDataSignatureReqParams_Data, TbVerifyDataSignatureReqParams_Signature)
-    return SMTbVerifyDataSignatureRequestOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMDeviceConnectNotification(
-    device,
-    DestinationDeviceId=bytearray(1),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMDeviceConnectNotificationRequest(DestinationDeviceId)
-    return SMDeviceConnectNotificationOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMDeviceDisconnectNotification(
-    device,
-    DestinationDeviceId=bytearray(1),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMDeviceDisconnectNotificationRequest(DestinationDeviceId)
-    return SMDeviceDisconnectNotificationOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMSetDefaultPasskey(
-    device,
-    SetDefaultPasskeyParams_DefaultPasskey=bytearray(4),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMSetDefaultPasskeyRequest(SetDefaultPasskeyParams_DefaultPasskey)
-    return SMSetDefaultPasskeyOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMSetOobMitmProtection(
-    device,
-    oobMitmProt=SMSetOobMitmProtectionRequestoobMitmProt.smOobMitmProtectionOff_c,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMSetOobMitmProtectionRequest(oobMitmProt)
-    return SMSetOobMitmProtectionOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMSendKeypressNotification(
-    device,
-    DestinationDeviceId=bytearray(1),
-    SmKeypressNotificationParams_keypressNotifType=SMSendKeypressNotificationRequestSmKeypressNotificationParams_keypressNotifType.gSmpKeypressNotificationPasskeyEntryStarted_c,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMSendKeypressNotificationRequest(DestinationDeviceId, SmKeypressNotificationParams_keypressNotifType)
-    return SMSendKeypressNotificationOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMNcDisplayConfirm(
-    device,
-    DestinationDeviceId=bytearray(1),
-    ncValueConfirm=False,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMNcDisplayConfirmRequest(DestinationDeviceId, ncValueConfirm)
-    return SMNcDisplayConfirmOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMLeScOobDataReply(
-    device,
-    DestinationDeviceId=bytearray(1),
-    LeScOobDataParams_=bytearray(),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMLeScOobDataRequestReplyRequest(DestinationDeviceId, LeScOobDataParams_)
-    return SMLeScOobDataRequestReplyOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMLocalLeScOobDataReq(
-    device,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMLocalLeScOobDataRequestReqRequest()
-    return SMLocalLeScOobDataOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMGenerateNewEcdhPkSkPair(
-    device,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMGenerateNewEcdhPkSkPairRequest()
-    return SMGenerateNewEcdhPkSkPairOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def SMSetMinPairingSecurityProperties(
-    device,
-    mitmProtection=False,
-    leSc=False,
-    minEncKeySize=bytearray(1),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.SMSetMinPairingSecurityPropertiesRequest(mitmProtection, leSc, minEncKeySize)
-    return SMSetMinPairingSecurityPropertiesOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTModeSelect(
-    device,
-    Enable=False,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTModeSelectRequest(Enable)
-    return ATTModeSelectOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTInit(
-    device,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTInitRequest()
-    return ATTInitOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTNotifyConnection(
-    device,
-    DeviceId=bytearray(1),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTNotifyConnectionRequest(DeviceId)
-    return ATTNotifyConnectionOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTNotifyDisconnection(
-    device,
-    DeviceId=bytearray(1),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTNotifyDisconnectionRequest(DeviceId)
-    return ATTNotifyDisconnectionOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTSetMtu(
-    device,
-    DeviceId=bytearray(1),
-    Mtu=bytearray(2),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTSetMtuRequest(DeviceId, Mtu)
-    return ATTSetMtuOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTGetMtu(
-    device,
-    DeviceId=bytearray(1),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTGetMtuRequest(DeviceId)
-    return ATTGetMtuOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTRegisterOpcodeCallback(
-    device,
-    Opcode=ATTRegisterOpcodeCallbackRequestOpcode.gErrorResponse_c,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTRegisterOpcodeCallbackRequest(Opcode)
-    return ATTRegisterOpcodeCallbackOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTRegisterUnsupportedOpcodeCallback(
-    device,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTRegisterUnsupportedOpcodeCallbackRequest()
-    return ATTRegisterUnsupportedOpcodeCallbackOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTRegisterTimeoutCallback(
-    device,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTRegisterTimeoutCallbackRequest()
-    return ATTRegisterTimeoutCallbackOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTServerSendErrorResponse(
-    device,
-    DeviceId=bytearray(1),
-    Params_RequestOpcodeInError=ATTServerSendErrorResponseRequestParams_RequestOpcodeInError.gErrorResponse_c,
-    Params_AttributeHandleInError=bytearray(2),
-    Params_ErrorCode=ATTServerSendErrorResponseRequestParams_ErrorCode.gInvalidHandle_c,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTServerSendErrorResponseRequest(DeviceId, Params_RequestOpcodeInError, Params_AttributeHandleInError, Params_ErrorCode)
-    return ATTServerSendErrorResponseOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTClientSendExchangeMtu(
-    device,
-    DeviceId=bytearray(1),
-    Params_ClientRxMtu=bytearray(2),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTClientSendExchangeMtuRequestRequest(DeviceId, Params_ClientRxMtu)
-    return ATTClientSendExchangeMtuRequestOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTServerSendExchangeMtuResponse(
-    device,
-    DeviceId=bytearray(1),
-    Params_ServerRxMtu=bytearray(2),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTServerSendExchangeMtuResponseRequest(DeviceId, Params_ServerRxMtu)
-    return ATTServerSendExchangeMtuResponseOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTClientSendFindInformation(
-    device,
-    DeviceId=bytearray(1),
-    Params_StartingHandle=bytearray(2),
-    Params_EndingHandle=bytearray(2),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTClientSendFindInformationRequestRequest(DeviceId, Params_StartingHandle, Params_EndingHandle)
-    return ATTClientSendFindInformationRequestOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTServerSendFindInformationResponse(
-    device,
-    DeviceId=bytearray(1),
-    Params_Format=ATTServerSendFindInformationResponseRequestParams_Format(),
-    # Array length depends on Format. Mask: 0xFF. Shift: 0x00.
-    Params_InformationData=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTServerSendFindInformationResponseRequest(DeviceId, Params_Format, Params_InformationData)
-    return ATTServerSendFindInformationResponseOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTClientSendFindByTypeValue(
-    device,
-    DeviceId=bytearray(1),
-    Params_StartingHandle=bytearray(2),
-    Params_EndingHandle=bytearray(2),
-    Params_AttributeType=bytearray(2),
-    Params_AttributeLength=bytearray(2),
-    # Array length depends on AttributeLength. Mask: 0xFF. Shift: 0x00.
-    Params_AttributeValue=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTClientSendFindByTypeValueRequestRequest(DeviceId, Params_StartingHandle, Params_EndingHandle, Params_AttributeType, Params_AttributeLength, Params_AttributeValue)
-    return ATTClientSendFindByTypeValueRequestOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTServerSendFindByTypeValueResponse(
-    device,
-    DeviceId=bytearray(1),
-    Params_GroupCount=bytearray(2),
-    # Array length depends on GroupCount. Mask: 0xFFFF. Shift: 0x0000.
-    Params_HandleGroup=ATTServerSendFindByTypeValueResponseRequest.Params_HandleGroup(),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTServerSendFindByTypeValueResponseRequest(DeviceId, Params_GroupCount, Params_HandleGroup)
-    return ATTServerSendFindByTypeValueResponseOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTClientSendReadByType(
-    device,
-    DeviceId=bytearray(1),
-    Params_StartingHandle=bytearray(2),
-    Params_EndingHandle=bytearray(2),
-    Params_Format=ATTClientSendReadByTypeRequestRequestParams_Format(),
-    # Array length depends on Format. Mask: 0xFF. Shift: 0x00.
-    Params_AttributeType=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTClientSendReadByTypeRequestRequest(DeviceId, Params_StartingHandle, Params_EndingHandle, Params_Format, Params_AttributeType)
-    return ATTClientSendReadByTypeRequestOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTServerSendReadByTypeResponse(
-    device,
-    DeviceId=bytearray(1),
-    Params_Length=bytearray(1),
-    Params_AttributeDataListLength=bytearray(2),
-    # Array length depends on AttributeDataListLength. Mask: 0xFFFF. Shift: 0x0000.
-    Params_AttributeDataList=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTServerSendReadByTypeResponseRequest(DeviceId, Params_Length, Params_AttributeDataListLength, Params_AttributeDataList)
-    return ATTServerSendReadByTypeResponseOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTClientSendRead(
-    device,
-    DeviceId=bytearray(1),
-    Params_AttributeHandle=bytearray(2),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTClientSendReadRequestRequest(DeviceId, Params_AttributeHandle)
-    return ATTClientSendReadRequestOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTServerSendReadResponse(
-    device,
-    DeviceId=bytearray(1),
-    Params_AttributeLength=bytearray(2),
-    # Array length depends on AttributeLength. Mask: 0xFFFF. Shift: 0x0000.
-    Params_AttributeValue=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTServerSendReadResponseRequest(DeviceId, Params_AttributeLength, Params_AttributeValue)
-    return ATTServerSendReadResponseOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTClientSendReadBlob(
-    device,
-    DeviceId=bytearray(1),
-    Params_AttributeHandle=bytearray(2),
-    Params_ValueOffset=bytearray(2),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTClientSendReadBlobRequestRequest(DeviceId, Params_AttributeHandle, Params_ValueOffset)
-    return ATTClientSendReadBlobRequestOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTServerSendReadBlobResponse(
-    device,
-    DeviceId=bytearray(1),
-    Params_AttributeLength=bytearray(2),
-    # Array length depends on AttributeLength. Mask: 0xFFFF. Shift: 0x0000.
-    Params_AttributeValue=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTServerSendReadBlobResponseRequest(DeviceId, Params_AttributeLength, Params_AttributeValue)
-    return ATTServerSendReadBlobResponseOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTClientSendReadMultiple(
-    device,
-    DeviceId=bytearray(1),
-    Params_HandleCount=bytearray(2),
-    # Array length depends on HandleCount. Mask: 0xFFFF. Shift: 0x0000.
-    Params_ListOfHandles=ATTClientSendReadMultipleRequestRequest.Params_ListOfHandles(),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTClientSendReadMultipleRequestRequest(DeviceId, Params_HandleCount, Params_ListOfHandles)
-    return ATTClientSendReadMultipleRequestOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTServerSendReadMultipleResponse(
-    device,
-    DeviceId=bytearray(1),
-    Params_ListLength=bytearray(2),
-    # Array length depends on ListLength. Mask: 0xFFFF. Shift: 0x0000.
-    Params_ListOfValues=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTServerSendReadMultipleResponseRequest(DeviceId, Params_ListLength, Params_ListOfValues)
-    return ATTServerSendReadMultipleResponseOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTClientSendReadByGroupType(
-    device,
-    DeviceId=bytearray(1),
-    Params_StartingHandle=bytearray(2),
-    Params_EndingHandle=bytearray(2),
-    Params_Format=ATTClientSendReadByGroupTypeRequestRequestParams_Format(),
-    # Array length depends on Format. Mask: 0xFF. Shift: 0x00.
-    Params_AttributeType=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTClientSendReadByGroupTypeRequestRequest(DeviceId, Params_StartingHandle, Params_EndingHandle, Params_Format, Params_AttributeType)
-    return ATTClientSendReadByGroupTypeRequestOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTServerSendReadByGroupTypeResponse(
-    device,
-    DeviceId=bytearray(1),
-    Params_Length=bytearray(1),
-    Params_AttributeDataListLength=bytearray(2),
-    # Array length depends on AttributeDataListLength. Mask: 0xFFFF. Shift: 0x0000.
-    Params_AttributeDataList=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTServerSendReadByGroupTypeResponseRequest(DeviceId, Params_Length, Params_AttributeDataListLength, Params_AttributeDataList)
-    return ATTServerSendReadByGroupTypeResponseOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTClientSendWrite(
-    device,
-    DeviceId=bytearray(1),
-    Params_AttributeHandle=bytearray(2),
-    Params_AttributeLength=bytearray(2),
-    # Array length depends on AttributeLength. Mask: 0xFFFF. Shift: 0x0000.
-    Params_AttributeValue=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTClientSendWriteRequestRequest(DeviceId, Params_AttributeHandle, Params_AttributeLength, Params_AttributeValue)
-    return ATTClientSendWriteRequestOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTServerSendWriteResponse(
-    device,
-    DeviceId=bytearray(1),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTServerSendWriteResponseRequest(DeviceId)
-    return ATTServerSendWriteResponseOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTClientSendWriteCommand(
-    device,
-    DeviceId=bytearray(1),
-    Params_AttributeHandle=bytearray(2),
-    Params_AttributeLength=bytearray(2),
-    # Array length depends on AttributeLength. Mask: 0xFFFF. Shift: 0x0000.
-    Params_AttributeValue=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTClientSendWriteCommandRequest(DeviceId, Params_AttributeHandle, Params_AttributeLength, Params_AttributeValue)
-    return ATTClientSendWriteCommandOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTClientSendSignedWriteCommand(
-    device,
-    DeviceId=bytearray(1),
-    Params_AttributeHandle=bytearray(2),
-    Params_AttributeLength=bytearray(2),
-    # Array length depends on AttributeLength. Mask: 0xFFFF. Shift: 0x0000.
-    Params_AttributeValue=[],
-    # Unit length: 12 bytes
-    Params_AuthenticationSignature=bytearray(12),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTClientSendSignedWriteCommandRequest(DeviceId, Params_AttributeHandle, Params_AttributeLength, Params_AttributeValue, Params_AuthenticationSignature)
-    return ATTClientSendSignedWriteCommandOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTClientSendPrepareWrite(
-    device,
-    DeviceId=bytearray(1),
-    Params_AttributeHandle=bytearray(2),
-    Params_ValueOffset=bytearray(2),
-    Params_AttributeLength=bytearray(2),
-    # Array length depends on AttributeLength. Mask: 0xFFFF. Shift: 0x0000.
-    Params_AttributeValue=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTClientSendPrepareWriteRequestRequest(DeviceId, Params_AttributeHandle, Params_ValueOffset, Params_AttributeLength, Params_AttributeValue)
-    return ATTClientSendPrepareWriteRequestOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTServerSendPrepareWriteResponse(
-    device,
-    DeviceId=bytearray(1),
-    Params_AttributeHandle=bytearray(2),
-    Params_ValueOffset=bytearray(2),
-    Params_AttributeLength=bytearray(2),
-    # Array length depends on AttributeLength. Mask: 0xFFFF. Shift: 0x0000.
-    Params_AttributeValue=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTServerSendPrepareWriteResponseRequest(DeviceId, Params_AttributeHandle, Params_ValueOffset, Params_AttributeLength, Params_AttributeValue)
-    return ATTServerSendPrepareWriteResponseOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTClientSendExecuteWrite(
-    device,
-    DeviceId=bytearray(1),
-    Params_Flags=ATTClientSendExecuteWriteRequestRequestParams_Flags.gCancel_c,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTClientSendExecuteWriteRequestRequest(DeviceId, Params_Flags)
-    return ATTClientSendExecuteWriteRequestOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTServerSendExecuteWriteResponse(
-    device,
-    DeviceId=bytearray(1),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTServerSendExecuteWriteResponseRequest(DeviceId)
-    return ATTServerSendExecuteWriteResponseOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTServerSendHandleValueNotification(
-    device,
-    DeviceId=bytearray(1),
-    Params_AttributeHandle=bytearray(2),
-    Params_AttributeLength=bytearray(2),
-    # Array length depends on AttributeLength. Mask: 0xFFFF. Shift: 0x0000.
-    Params_AttributeValue=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTServerSendHandleValueNotificationRequest(DeviceId, Params_AttributeHandle, Params_AttributeLength, Params_AttributeValue)
-    return ATTServerSendHandleValueNotificationOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTServerSendHandleValueIndication(
-    device,
-    DeviceId=bytearray(1),
-    Params_AttributeHandle=bytearray(2),
-    Params_AttributeLength=bytearray(2),
-    # Array length depends on AttributeLength. Mask: 0xFFFF. Shift: 0x0000.
-    Params_AttributeValue=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTServerSendHandleValueIndicationRequest(DeviceId, Params_AttributeHandle, Params_AttributeLength, Params_AttributeValue)
-    return ATTServerSendHandleValueIndicationOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def ATTClientSendHandleValueConfirmation(
-    device,
-    DeviceId=bytearray(1),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.ATTClientSendHandleValueConfirmationRequest(DeviceId)
-    return ATTClientSendHandleValueConfirmationOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def GATTModeSelect(
-    device,
-    Enable=False,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.GATTModeSelectRequest(Enable)
-    return GATTModeSelectOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+    request = Frames.L2CAPCBSendLeCreditRequest(DeviceId, ChannelId, Credits)
+    return L2CAPCBSendLeCreditOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
 def GATTInit(
@@ -1543,25 +553,16 @@ def GATTServerSendAttributeReadStatus(
     return GATTServerSendAttributeReadStatusOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
-def GATTDBModeSelect(
+def GATTServerRegisterUniqueHandlesForNotifications(
     device,
-    Enable=False,
+    bWrite=False,
+    bRead=False,
     ack_policy=FsciAckPolicy.GLOBAL,
     protocol=Protocol.BLE,
     timeout=1
 ):
-    request = Frames.GATTDBModeSelectRequest(Enable)
-    return GATTDBModeSelectOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def GATTDBInit(
-    device,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.GATTDBInitRequest()
-    return GATTDBInitOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+    request = Frames.GATTServerRegisterUniqueHandlesForNotificationsRequest(bWrite, bRead)
+    return GATTServerRegisterUniqueHandlesForNotificationsOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
 def GATTDBWriteAttribute(
@@ -1665,6 +666,7 @@ def GATTDBDynamicReleaseDatabase(
 
 def GATTDBDynamicAddPrimaryServiceDeclaration(
     device,
+    DesiredHandle=bytearray(2),
     UuidType=GATTDBDynamicAddPrimaryServiceDeclarationRequestUuidType.Uuid16Bits,
     # Array length depends on UuidType. Mask: 0xFF. Shift: 0x00.
     Uuid=[],
@@ -1672,12 +674,13 @@ def GATTDBDynamicAddPrimaryServiceDeclaration(
     protocol=Protocol.BLE,
     timeout=1
 ):
-    request = Frames.GATTDBDynamicAddPrimaryServiceDeclarationRequest(UuidType, Uuid)
+    request = Frames.GATTDBDynamicAddPrimaryServiceDeclarationRequest(DesiredHandle, UuidType, Uuid)
     return GATTDBDynamicAddPrimaryServiceDeclarationOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
 def GATTDBDynamicAddSecondaryServiceDeclaration(
     device,
+    DesiredHandle=bytearray(2),
     UuidType=GATTDBDynamicAddSecondaryServiceDeclarationRequestUuidType.Uuid16Bits,
     # Array length depends on UuidType. Mask: 0xFF. Shift: 0x00.
     Uuid=[],
@@ -1685,7 +688,7 @@ def GATTDBDynamicAddSecondaryServiceDeclaration(
     protocol=Protocol.BLE,
     timeout=1
 ):
-    request = Frames.GATTDBDynamicAddSecondaryServiceDeclarationRequest(UuidType, Uuid)
+    request = Frames.GATTDBDynamicAddSecondaryServiceDeclarationRequest(DesiredHandle, UuidType, Uuid)
     return GATTDBDynamicAddSecondaryServiceDeclarationOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
@@ -1787,233 +790,18 @@ def GATTDBDynamicRemoveCharacteristic(
     return GATTDBDynamicRemoveCharacteristicOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
-def GATTDBAttModeSelect(
+def GATTDBDynamicAddCharDescriptorWithUniqueValue(
     device,
-    Enable=False,
+    UuidType=GATTDBDynamicAddCharDescriptorWithUniqueValueRequestUuidType.Uuid16Bits,
+    # Array length depends on UuidType. Mask: 0xFF. Shift: 0x00.
+    Uuid=[],
+    DescriptorAccessPermissions=GATTDBDynamicAddCharDescriptorWithUniqueValueRequestDescriptorAccessPermissions.gPermissionNone_c,
     ack_policy=FsciAckPolicy.GLOBAL,
     protocol=Protocol.BLE,
     timeout=1
 ):
-    request = Frames.GATTDBAttModeSelectRequest(Enable)
-    return GATTDBAttModeSelectOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def GATTDBAttFindInformation(
-    device,
-    DeviceId=bytearray(1),
-    Params_StartingHandle=bytearray(2),
-    Params_EndingHandle=bytearray(2),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.GATTDBAttFindInformationRequest(DeviceId, Params_StartingHandle, Params_EndingHandle)
-    return GATTDBAttFindInformationOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def GATTDBAttFindByTypeValue(
-    device,
-    DeviceId=bytearray(1),
-    Params_StartingHandle=bytearray(2),
-    Params_EndingHandle=bytearray(2),
-    Params_AttributeType=bytearray(2),
-    Params_AttributeLength=bytearray(2),
-    # Array length depends on AttributeLength. Mask: 0xFF. Shift: 0x00.
-    Params_AttributeValue=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.GATTDBAttFindByTypeValueRequest(DeviceId, Params_StartingHandle, Params_EndingHandle, Params_AttributeType, Params_AttributeLength, Params_AttributeValue)
-    return GATTDBAttFindByTypeValueOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def GATTDBAttReadByType(
-    device,
-    DeviceId=bytearray(1),
-    Params_StartingHandle=bytearray(2),
-    Params_EndingHandle=bytearray(2),
-    Params_Format=GATTDBAttReadByTypeRequestParams_Format(),
-    # Array length depends on Format. Mask: 0xFF. Shift: 0x00.
-    Params_AttributeType=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.GATTDBAttReadByTypeRequest(DeviceId, Params_StartingHandle, Params_EndingHandle, Params_Format, Params_AttributeType)
-    return GATTDBAttReadByTypeOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def GATTDBAttRead(
-    device,
-    DeviceId=bytearray(1),
-    Params_AttributeHandle=bytearray(2),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.GATTDBAttReadRequest(DeviceId, Params_AttributeHandle)
-    return GATTDBAttReadOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def GATTDBAttReadBlob(
-    device,
-    DeviceId=bytearray(1),
-    Params_AttributeHandle=bytearray(2),
-    Params_ValueOffset=bytearray(2),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.GATTDBAttReadBlobRequest(DeviceId, Params_AttributeHandle, Params_ValueOffset)
-    return GATTDBAttReadBlobOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def GATTDBAttReadMultiple(
-    device,
-    DeviceId=bytearray(1),
-    Params_HandleCount=bytearray(2),
-    # Array length depends on HandleCount. Mask: 0xFFFF. Shift: 0x0000.
-    Params_ListOfHandles=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.GATTDBAttReadMultipleRequest(DeviceId, Params_HandleCount, Params_ListOfHandles)
-    return GATTDBAttReadMultipleOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def GATTDBAttReadByGroupType(
-    device,
-    DeviceId=bytearray(1),
-    Params_StartingHandle=bytearray(2),
-    Params_EndingHandle=bytearray(2),
-    Params_Format=GATTDBAttReadByGroupTypeRequestParams_Format(),
-    # Array length depends on Format. Mask: 0xFF. Shift: 0x00.
-    Params_AttributeType=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.GATTDBAttReadByGroupTypeRequest(DeviceId, Params_StartingHandle, Params_EndingHandle, Params_Format, Params_AttributeType)
-    return GATTDBAttReadByGroupTypeOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def GATTDBAttWrite(
-    device,
-    DeviceId=bytearray(1),
-    Params_AttributeHandle=bytearray(2),
-    Params_AttributeLength=bytearray(2),
-    # Array length depends on AttributeLength. Mask: 0xFFFF. Shift: 0x0000.
-    Params_AttributeValue=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.GATTDBAttWriteRequest(DeviceId, Params_AttributeHandle, Params_AttributeLength, Params_AttributeValue)
-    return GATTDBAttWriteOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def GATTDBAttWriteCommand(
-    device,
-    DeviceId=bytearray(1),
-    Params_AttributeHandle=bytearray(2),
-    Params_AttributeLength=bytearray(2),
-    # Array length depends on AttributeLength. Mask: 0xFFFF. Shift: 0x0000.
-    Params_AttributeValue=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.GATTDBAttWriteCommandRequest(DeviceId, Params_AttributeHandle, Params_AttributeLength, Params_AttributeValue)
-    return GATTDBAttWriteCommandOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def GATTDBAttSignedWriteCommand(
-    device,
-    DeviceId=bytearray(1),
-    Params_AttributeHandle=bytearray(2),
-    Params_AttributeLength=bytearray(2),
-    # Array length depends on AttributeLength. Mask: 0xFFFF. Shift: 0x0000.
-    Params_AttributeValue=[],
-    # Unit length: 12 bytes
-    Params_AuthenticationSignature=bytearray(12),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.GATTDBAttSignedWriteCommandRequest(DeviceId, Params_AttributeHandle, Params_AttributeLength, Params_AttributeValue, Params_AuthenticationSignature)
-    return GATTDBAttSignedWriteCommandOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def GATTDBAttPrepareWrite(
-    device,
-    DeviceId=bytearray(1),
-    Params_AttributeHandle=bytearray(2),
-    Params_ValueOffset=bytearray(2),
-    Params_AttributeLength=bytearray(2),
-    # Array length depends on AttributeLength. Mask: 0xFFFF. Shift: 0x0000.
-    Params_AttributeValue=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.GATTDBAttPrepareWriteRequest(DeviceId, Params_AttributeHandle, Params_ValueOffset, Params_AttributeLength, Params_AttributeValue)
-    return GATTDBAttPrepareWriteOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def GATTDBAttExecuteWrite(
-    device,
-    DeviceId=bytearray(1),
-    Params_Flags=GATTDBAttExecuteWriteRequestParams_Flags.gCancel_c,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.GATTDBAttExecuteWriteRequest(DeviceId, Params_Flags)
-    return GATTDBAttExecuteWriteOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def GATTDBAttExecuteWriteFromQueue(
-    device,
-    DeviceId=bytearray(1),
-    Params_AttributeHandle=bytearray(2),
-    Params_ValueOffset=bytearray(2),
-    Params_AttributeLength=bytearray(2),
-    # Array length depends on AttributeLength. Mask: 0xFFFF. Shift: 0x0000.
-    Params_AttributeValue=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.GATTDBAttExecuteWriteFromQueueRequest(DeviceId, Params_AttributeHandle, Params_ValueOffset, Params_AttributeLength, Params_AttributeValue)
-    return GATTDBAttExecuteWriteFromQueueOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def GATTDBAttPrepareNotificationIndication(
-    device,
-    DeviceId=bytearray(1),
-    Params_AttributeHandle=bytearray(2),
-    Params_AttributeLength=bytearray(2),
-    # Array length depends on AttributeLength. Mask: 0xFFFF. Shift: 0x0000.
-    Params_AttributeValue=[],
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.GATTDBAttPrepareNotificationIndicationRequest(DeviceId, Params_AttributeHandle, Params_AttributeLength, Params_AttributeValue)
-    return GATTDBAttPrepareNotificationIndicationOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
-def GAPModeSelect(
-    device,
-    Enable=False,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.GAPModeSelectRequest(Enable)
-    return GAPModeSelectOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+    request = Frames.GATTDBDynamicAddCharDescriptorWithUniqueValueRequest(UuidType, Uuid, DescriptorAccessPermissions)
+    return GATTDBDynamicAddCharDescriptorWithUniqueValueOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
 def BLEHostInitialize(
@@ -2048,7 +836,7 @@ def GAPSetAdvertisingParameters(
     AdvertisingParameters_PeerAddressType=GAPSetAdvertisingParametersRequestAdvertisingParameters_PeerAddressType.gPublic_c,
     # Unit length: 6 bytes
     AdvertisingParameters_PeerAddress=bytearray(6),
-    AdvertisingParameters_ChannelMap=GAPSetAdvertisingParametersRequestAdvertisingParameters_ChannelMap.gChannel37_c,
+    AdvertisingParameters_ChannelMap=bytearray(1),
     AdvertisingParameters_FilterPolicy=GAPSetAdvertisingParametersRequestAdvertisingParameters_FilterPolicy.gProcessAll_c,
     ack_policy=FsciAckPolicy.GLOBAL,
     protocol=Protocol.BLE,
@@ -2145,17 +933,6 @@ def GAPCheckIndicationStatus(
     return GAPCheckIndicationStatusOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
-def GAPGetBondedStaticAddresses(
-    device,
-    MaxNbOfDevices=bytearray(1),
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.GAPGetBondedStaticAddressesRequest(MaxNbOfDevices)
-    return GAPGetBondedStaticAddressesOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
-
 def GAPPair(
     device,
     DeviceId=bytearray(1),
@@ -2177,16 +954,24 @@ def GAPPair(
     return GAPPairOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
-def GAPSendSlaveSecurity(
+def GAPSendSlaveSecurityRequest(
     device,
     DeviceId=bytearray(1),
-    BondAfterPairing=False,
-    SecurityModeLevel=GAPSendSlaveSecurityRequestRequestSecurityModeLevel.gMode1Level1_c,
+    PairingParameters_WithBonding=False,
+    PairingParameters_SecurityModeAndLevel=GAPSendSlaveSecurityRequestRequestPairingParameters_SecurityModeAndLevel.gMode1Level1_c,
+    PairingParameters_MaxEncryptionKeySize=bytearray(1),
+    PairingParameters_LocalIoCapabilities=GAPSendSlaveSecurityRequestRequestPairingParameters_LocalIoCapabilities.gIoDisplayOnly_c,
+    PairingParameters_OobAvailable=False,
+    PairingParameters_CentralKeys=GAPSendSlaveSecurityRequestRequestPairingParameters_CentralKeys.gNoKeys_c,
+    PairingParameters_PeripheralKeys=GAPSendSlaveSecurityRequestRequestPairingParameters_PeripheralKeys.gNoKeys_c,
+    PairingParameters_LeSecureConnectionSupported=False,
+    PairingParameters_UseKeypressNotifications=False,
     ack_policy=FsciAckPolicy.GLOBAL,
     protocol=Protocol.BLE,
     timeout=1
 ):
-    request = Frames.GAPSendSlaveSecurityRequestRequest(DeviceId, BondAfterPairing, SecurityModeLevel)
+    request = Frames.GAPSendSlaveSecurityRequestRequest(DeviceId, PairingParameters_WithBonding, PairingParameters_SecurityModeAndLevel, PairingParameters_MaxEncryptionKeySize, PairingParameters_LocalIoCapabilities,
+                                                        PairingParameters_OobAvailable, PairingParameters_CentralKeys, PairingParameters_PeripheralKeys, PairingParameters_LeSecureConnectionSupported, PairingParameters_UseKeypressNotifications)
     return GAPSendSlaveSecurityRequestOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
@@ -2201,7 +986,7 @@ def GAPEncryptLink(
     return GAPEncryptLinkOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
-def GAPAcceptPairing(
+def GAPAcceptPairingRequest(
     device,
     DeviceId=bytearray(1),
     PairingParameters_WithBonding=False,
@@ -2259,7 +1044,7 @@ def GAPProvideOob(
     return GAPProvideOobOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
-def GAPRejectPasskey(
+def GAPRejectPasskeyRequest(
     device,
     DeviceId=bytearray(1),
     ack_policy=FsciAckPolicy.GLOBAL,
@@ -2298,7 +1083,7 @@ def GAPSendSmpKeys(
     return GAPSendSmpKeysOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
-def GAPRejectKeyExchange(
+def GAPRejectKeyExchangeRequest(
     device,
     DeviceId=bytearray(1),
     ack_policy=FsciAckPolicy.GLOBAL,
@@ -2361,11 +1146,15 @@ def GAPStartScanning(
     ScanningParametersIncluded=False,
     # Array length depends on ScanningParametersIncluded. Mask: 0xFF. Shift: 0x00.
     ScanningParameters=GAPStartScanningRequest.ScanningParameters(),
+    EnableFilterDuplicates=False,
+    ScanningPHY=bytearray(1),
+    Duration=bytearray(2),
+    Period=bytearray(2),
     ack_policy=FsciAckPolicy.GLOBAL,
     protocol=Protocol.BLE,
     timeout=1
 ):
-    request = Frames.GAPStartScanningRequest(ScanningParametersIncluded, ScanningParameters)
+    request = Frames.GAPStartScanningRequest(ScanningParametersIncluded, ScanningParameters, EnableFilterDuplicates, ScanningPHY, Duration, Period)
     return GAPStartScanningOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
@@ -2395,12 +1184,13 @@ def GAPConnect(
     CreateConnectionParameters_ConnEventLengthMin=bytearray(2),
     CreateConnectionParameters_ConnEventLengthMax=bytearray(2),
     CreateConnectionParameters_usePeerIdentityAddress=False,
+    CreateConnectionParameters_Initiating_PHY=bytearray(1),
     ack_policy=FsciAckPolicy.GLOBAL,
     protocol=Protocol.BLE,
     timeout=1
 ):
     request = Frames.GAPConnectRequest(CreateConnectionParameters_ScanInterval, CreateConnectionParameters_ScanWindow, CreateConnectionParameters_FilterPolicy, CreateConnectionParameters_OwnAddressType, CreateConnectionParameters_PeerAddressType, CreateConnectionParameters_PeerAddress, CreateConnectionParameters_ConnIntervalMin,
-                                       CreateConnectionParameters_ConnIntervalMax, CreateConnectionParameters_ConnLatency, CreateConnectionParameters_SupervisionTimeout, CreateConnectionParameters_ConnEventLengthMin, CreateConnectionParameters_ConnEventLengthMax, CreateConnectionParameters_usePeerIdentityAddress)
+                                       CreateConnectionParameters_ConnIntervalMax, CreateConnectionParameters_ConnLatency, CreateConnectionParameters_SupervisionTimeout, CreateConnectionParameters_ConnEventLengthMin, CreateConnectionParameters_ConnEventLengthMax, CreateConnectionParameters_usePeerIdentityAddress, CreateConnectionParameters_Initiating_PHY)
     return GAPConnectOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
@@ -2815,6 +1605,295 @@ def GAPSetTxPowerLevel(
 ):
     request = Frames.GAPSetTxPowerLevelRequest(powerLevel, channelType)
     return GAPSetTxPowerLevelOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def GAPLeReadPhy(
+    device,
+    DeviceId=bytearray(1),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GAPLeReadPhyRequest(DeviceId)
+    return GAPLeReadPhyOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def GAPLeSetPhy(
+    device,
+    defaultMode=False,
+    DeviceId=bytearray(1),
+    allPhys=bytearray(1),
+    txPhys=bytearray(1),
+    rxPhys=bytearray(1),
+    phyOptions=GAPLeSetPhyRequestphyOptions.gLeCodingNoPreference_c,
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GAPLeSetPhyRequest(defaultMode, DeviceId, allPhys, txPhys, rxPhys, phyOptions)
+    return GAPLeSetPhyOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def GAPControllerEnhancedNotification(
+    device,
+    eventType=bytearray(2),
+    DeviceId=bytearray(1),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GAPControllerEnhancedNotificationRequest(eventType, DeviceId)
+    return GAPControllerEnhancedNotificationOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def GAPLoadKeys(
+    device,
+    NvmIndex=bytearray(1),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GAPLoadKeysRequest(NvmIndex)
+    return GAPLoadKeysOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def GAPSaveKeys(
+    device,
+    NvmIndex=bytearray(1),
+    Keys_LtkIncluded=False,
+    # Array length depends on LtkIncluded. Mask: 0xFF. Shift: 0x00.
+    Keys_LtkInfo=GAPSaveKeysRequest.Keys_LtkInfo(),
+    Keys_IrkIncluded=False,
+    # Unit length: 16 bytes
+        # Array length depends on IrkIncluded. Mask: 0xFF. Shift: 0x00.
+    Keys_Irk=[],
+    Keys_CsrkIncluded=False,
+    # Unit length: 16 bytes
+        # Array length depends on CsrkIncluded. Mask: 0xFF. Shift: 0x00.
+    Keys_Csrk=[],
+    # Array length depends on LtkIncluded. Mask: 0xFF. Shift: 0x00.
+    Keys_RandEdivInfo=GAPSaveKeysRequest.Keys_RandEdivInfo(),
+    # Array length depends on IrkIncluded. Mask: 0xFF. Shift: 0x00.
+    Keys_AddressIncluded=[],
+    # Array length depends on AddressIncluded. Mask: 0xFF. Shift: 0x00.
+    Keys_AddressInfo=GAPSaveKeysRequest.Keys_AddressInfo(),
+    leSc=False,
+    auth=False,
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GAPSaveKeysRequest(NvmIndex, Keys_LtkIncluded, Keys_LtkInfo, Keys_IrkIncluded, Keys_Irk, Keys_CsrkIncluded, Keys_Csrk, Keys_RandEdivInfo, Keys_AddressIncluded, Keys_AddressInfo, leSc, auth)
+    return GAPSaveKeysOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def GAPSetChannelMap(
+    device,
+    # Unit length: 5 bytes
+    ChannelMap=bytearray(5),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GAPSetChannelMapRequest(ChannelMap)
+    return GAPSetChannelMapOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def GAPReadChannelMap(
+    device,
+    DeviceId=bytearray(1),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GAPReadChannelMapRequest(DeviceId)
+    return GAPReadChannelMapOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def GAPSetPrivacyMode(
+    device,
+    NvmIndex=bytearray(1),
+    PrivacyMode=GAPSetPrivacyModeRequestPrivacyMode.gNetworkPrivacy_c,
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GAPSetPrivacyModeRequest(NvmIndex, PrivacyMode)
+    return GAPSetPrivacyModeOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def GAPSetExtAdvertisingParameters(
+    device,
+    SID=bytearray(1),
+    Handle=bytearray(1),
+    MinInterval=bytearray(4),
+    MaxInterval=bytearray(4),
+    OwnAddressType=GAPSetExtAdvertisingParametersRequestOwnAddressType.gPublic_c,
+    # Unit length: 6 bytes
+    OwnRandomAddress=bytearray(6),
+    PeerAddressType=GAPSetExtAdvertisingParametersRequestPeerAddressType.gPublic_c,
+    # Unit length: 6 bytes
+    PeerAddress=bytearray(6),
+    ChannelMap=bytearray(1),
+    FilterPolicy=GAPSetExtAdvertisingParametersRequestFilterPolicy.gProcessAll_c,
+    AdvProperties=bytearray(2),
+    AdvTxPowerLevel=bytearray(1),
+    PrimaryAdvPHY=GAPSetExtAdvertisingParametersRequestPrimaryAdvPHY.gLePhy1M_c,
+    SecondaryAdvPHY=GAPSetExtAdvertisingParametersRequestSecondaryAdvPHY.gLePhy1M_c,
+    SecondaryAdvMaxSkip=bytearray(1),
+    EnableScanReqNotification=False,
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GAPSetExtAdvertisingParametersRequest(SID, Handle, MinInterval, MaxInterval, OwnAddressType, OwnRandomAddress, PeerAddressType,
+                                                           PeerAddress, ChannelMap, FilterPolicy, AdvProperties, AdvTxPowerLevel, PrimaryAdvPHY, SecondaryAdvPHY, SecondaryAdvMaxSkip, EnableScanReqNotification)
+    return GAPSetExtAdvertisingParametersOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def GAPStartExtAdvertising(
+    device,
+    Handle=bytearray(1),
+    Duration=bytearray(2),
+    MaxExtAdvEvents=bytearray(1),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GAPStartExtAdvertisingRequest(Handle, Duration, MaxExtAdvEvents)
+    return GAPStartExtAdvertisingOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def GAPRemoveAdvertisingSet(
+    device,
+    Handle=bytearray(1),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GAPRemoveAdvertisingSetRequest(Handle)
+    return GAPRemoveAdvertisingSetOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def GAPStopExtAdvertising(
+    device,
+    Handle=bytearray(1),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GAPStopExtAdvertisingRequest(Handle)
+    return GAPStopExtAdvertisingOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def GAPUpdatePeriodicAdvList(
+    device,
+    Operation=GAPUpdatePeriodicAdvListRequestOperation.gAddDevice_c,
+    DeviceAddressType=GAPUpdatePeriodicAdvListRequestDeviceAddressType.gPublic_c,
+    # Unit length: 6 bytes
+    DeviceAddress=bytearray(6),
+    SID=bytearray(1),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GAPUpdatePeriodicAdvListRequest(Operation, DeviceAddressType, DeviceAddress, SID)
+    return GAPUpdatePeriodicAdvListOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def GAPSetPeriodicAdvParameters(
+    device,
+    Handle=bytearray(1),
+    IncludeTxPower=False,
+    MinInterval=bytearray(2),
+    MaxInterval=bytearray(2),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GAPSetPeriodicAdvParametersRequest(Handle, IncludeTxPower, MinInterval, MaxInterval)
+    return GAPSetPeriodicAdvParametersOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def GAPStartPeriodicAdvertising(
+    device,
+    Handle=bytearray(1),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GAPStartPeriodicAdvertisingRequest(Handle)
+    return GAPStartPeriodicAdvertisingOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def GAPStopPeriodicAdvertising(
+    device,
+    Handle=bytearray(1),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GAPStopPeriodicAdvertisingRequest(Handle)
+    return GAPStopPeriodicAdvertisingOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def GAPSetExtAdvertisingData(
+    device,
+    Handle=bytearray(1),
+    AdvertisingDataIncluded=False,
+    # Array length depends on AdvertisingDataIncluded. Mask: 0xFF. Shift: 0x00.
+    ExtAdvertisingData=GAPSetExtAdvertisingDataRequest.ExtAdvertisingData(),
+    ScanResponseDataIncluded=False,
+    # Array length depends on ScanResponseDataIncluded. Mask: 0xFF. Shift: 0x00.
+    ExtScanResponseData=GAPSetExtAdvertisingDataRequest.ExtScanResponseData(),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GAPSetExtAdvertisingDataRequest(Handle, AdvertisingDataIncluded, ExtAdvertisingData, ScanResponseDataIncluded, ExtScanResponseData)
+    return GAPSetExtAdvertisingDataOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def GAPSetPeriodicAdvertisingData(
+    device,
+    Handle=bytearray(1),
+    PeriodicAdvertisingData_NbOfAdStructures=bytearray(1),
+    # Array length depends on NbOfAdStructures. Mask: 0xFF. Shift: 0x00.
+    PeriodicAdvertisingData_AdStructures=GAPSetPeriodicAdvertisingDataRequest.PeriodicAdvertisingData_AdStructures(),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GAPSetPeriodicAdvertisingDataRequest(Handle, PeriodicAdvertisingData_NbOfAdStructures, PeriodicAdvertisingData_AdStructures)
+    return GAPSetPeriodicAdvertisingDataOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def GAPPeriodicAdvCreateSync(
+    device,
+    FilterPolicy=GAPPeriodicAdvCreateSyncRequestFilterPolicy.gUseCommandParameters_c,
+    SID=bytearray(1),
+    DeviceAddressType=GAPPeriodicAdvCreateSyncRequestDeviceAddressType.gPublic_c,
+    # Unit length: 6 bytes
+    DeviceAddress=bytearray(6),
+    SkipCount=bytearray(2),
+    Timeout=bytearray(2),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GAPPeriodicAdvCreateSyncRequest(FilterPolicy, SID, DeviceAddressType, DeviceAddress, SkipCount, Timeout)
+    return GAPPeriodicAdvCreateSyncOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+
+def GAPPeriodicAdvTerminateSync(
+    device,
+    SyncHandle=bytearray(2),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GAPPeriodicAdvTerminateSyncRequest(SyncHandle)
+    return GAPPeriodicAdvTerminateSyncOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
 def FSCICPUReset(

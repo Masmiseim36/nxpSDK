@@ -83,14 +83,20 @@ static uint8_t s_wakeupTimeout;            /* Wakeup timeout. (Unit: Second) */
 static app_wakeup_source_t s_wakeupSource; /* Wakeup source.                 */
 static SemaphoreHandle_t s_wakeupSig;
 static const char *s_modeNames[] = {"RUN", "WAIT", "STOP", "VLPR", "VLPW", "VLPS", "HSRUN", "LLS", "VLLS"};
+bool disableWirelessPinsInVLLS;
+bool disableJtagPinsInVLLS;
 
 /*******************************************************************************
  * Function Code
  ******************************************************************************/
 extern const scg_sys_clk_config_t g_sysClkConfigVlpr;
 extern const scg_sys_clk_config_t g_sysClkConfigHsrun;
+extern bool disableWirelessPinsInVLLS;
+extern bool disableJtagPinsInVLLS;
 extern void LLWU0_IRQHandler(void);
 extern bool BOARD_IsRunOnQSPI(void);
+
+static uint32_t iomuxBackup[32 + 20]; /* Backup 32 PTA and 20 PTB IOMUX registers */
 
 static const pmc0_hsrun_mode_config_t s_pmc0HsrunModeConfig = {
     .coreRegulatorVoltLevel = 33U, /* 0.596 + 33 * 0.01083 = 0.95339 */
@@ -193,33 +199,106 @@ static void BOARD_InitClockAndPins(void)
 
 static void APP_Suspend(void)
 {
-    /* Uninit PMIC I2C */
-    IOMUXC_SetPinMux(IOMUXC_PTB12_ADC1_CH13A_CMP1_IN0, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_PTB12_ADC1_CH13A_CMP1_IN0, 0U);
-    IOMUXC_SetPinMux(IOMUXC_PTB13_ADC1_CH13B_CMP1_IN1, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_PTB13_ADC1_CH13B_CMP1_IN1, 0U);
+    uint32_t i;
 
-    /* Uninit I2S */
-    IOMUXC_SetPinMux(IOMUXC_PTA2_CMP1_IN2_3V, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_PTA2_CMP1_IN2_3V, 0U);
-    IOMUXC_SetPinMux(IOMUXC_PTA4_ADC1_CH3A, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_PTA4_ADC1_CH3A, 0U);
-    IOMUXC_SetPinMux(IOMUXC_PTA5_ADC1_CH3B, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_PTA5_ADC1_CH3B, 0U);
-    IOMUXC_SetPinMux(IOMUXC_PTA6_ADC1_CH4A, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_PTA6_ADC1_CH4A, 0U);
-    IOMUXC_SetPinMux(IOMUXC_PTA7_ADC1_CH4B, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_PTA7_ADC1_CH4B, 0U);
+    /* Backup PTA/PTB IOMUXC registers */
+    for (i = kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTA0; i <= kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTB19; i++)
+    {
+        iomuxBackup[i] = IOMUXC0->SW_MUX_CTL_PAD[i];
+    }
 
-    /* Uninit VOL- GPIO */
-    IOMUXC_SetPinMux(IOMUXC_PTA13_ADC1_CH7B, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_PTA13_ADC1_CH7B, 0U);
+    /* Set PTA0 - PTA2 pads to analog. */
+    for (i = kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTA0; i <= kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTA2; i++)
+    {
+        IOMUXC0->SW_MUX_CTL_PAD[i] = 0;
+    }
 
-    /* Uninit Audio Codec I2C */
-    IOMUXC_SetPinMux(IOMUXC_PTA16_CMP1_IN5_3V, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_PTA16_CMP1_IN5_3V, 0U);
-    IOMUXC_SetPinMux(IOMUXC_PTA17_CMP1_IN6_3V, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_PTA17_CMP1_IN6_3V, 0U);
+    /* PTA3 */
+    if ((LLWU->PE1 & LLWU_PE1_WUPE1_MASK) == 0)
+    {
+        /* VOL+ button is not a wakeup source, can be disabled */
+        IOMUXC0->SW_MUX_CTL_PAD[kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTA3] = 0;
+    }
+    else
+    {
+        /* It's wakeup source, need to set as GPIO */
+        IOMUXC0->SW_MUX_CTL_PAD[kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTA3] = IOMUXC0_SW_MUX_CTL_PAD_MUX_MODE(1);
+    }
+
+    /* Set PTA4 - PTA13 pads to analog. */
+    for (i = kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTA4; i <= kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTA13; i++)
+    {
+        IOMUXC0->SW_MUX_CTL_PAD[i] = 0;
+    }
+
+    if (disableWirelessPinsInVLLS)
+    {
+        IOMUXC0->SW_MUX_CTL_PAD[kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTA14] = 0;
+        IOMUXC0->SW_MUX_CTL_PAD[kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTA15] = 0;
+    }
+    else
+    {
+        /* PTA14 - PTA15 keep unchanged to avoid wireless driver failure in Linux resume. */
+    }
+
+    /* Set PTA16 - PTA25 pads to analog. */
+    for (i = kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTA16; i <= kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTA25; i++)
+    {
+        IOMUXC0->SW_MUX_CTL_PAD[i] = 0;
+    }
+
+    if (disableJtagPinsInVLLS)
+    {
+        for (i = kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTA26; i <= kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTA30; i++)
+        {
+            IOMUXC0->SW_MUX_CTL_PAD[i] = 0;
+        }
+    }
+    else
+    {
+        /* PTA26 - PTA30 keep unchanged as JTAG pads. */
+    }
+
+    /* PTA31 */
+    if ((LLWU->PE1 & LLWU_PE1_WUPE7_MASK) == 0)
+    {
+        /* WL_HOST_WAKE is not a wakeup source, can be disabled */
+        IOMUXC0->SW_MUX_CTL_PAD[kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTA31] = 0;
+    }
+
+    /* Set PTB0 - PTB6 pads to analog */
+    for (i = kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTB0; i <= kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTB6; i++)
+    {
+        IOMUXC0->SW_MUX_CTL_PAD[i] = 0;
+    }
+
+    /* PTB7 */
+    if ((LLWU->PE1 & LLWU_PE1_WUPE11_MASK) == 0)
+    {
+        /* BT_HOST_WAKE is not a wakeup source, can be disabled */
+        IOMUXC0->SW_MUX_CTL_PAD[kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTB7] = 0;
+    }
+
+    /* PTB8 keep unchanged as QSPI pad in XIP. Otherwise set it to analog. */
+    if (!BOARD_IsRunOnQSPI())
+    {
+        IOMUXC0->SW_MUX_CTL_PAD[kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTB8] = 0;
+    }
+
+    /* Set PTB9 - PTB14 pads to analog */
+    for (i = kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTB9; i <= kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTB14; i++)
+    {
+        IOMUXC0->SW_MUX_CTL_PAD[i] = 0;
+    }
+
+    /* PTB15 - PTB19 keep unchanged as QSPI pads in XIP. Otherwise set them to analog. */
+    if (!BOARD_IsRunOnQSPI())
+    {
+        for (i = kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTB15; i <= kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTB19; i++)
+        {
+            IOMUXC0->SW_MUX_CTL_PAD[i] = 0;
+        }
+    }
 
     /* Save SRTM context */
     APP_SRTM_Suspend();
@@ -227,33 +306,13 @@ static void APP_Suspend(void)
 
 static void APP_Resume(bool resume)
 {
-    /* Recover PMIC pinmux. */
-    IOMUXC_SetPinMux(IOMUXC_PTB12_LPI2C3_SCL, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_PTB12_LPI2C3_SCL, IOMUXC0_SW_MUX_CTL_PAD_ODE_MASK);
-    IOMUXC_SetPinMux(IOMUXC_PTB13_LPI2C3_SDA, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_PTB13_LPI2C3_SDA, IOMUXC0_SW_MUX_CTL_PAD_ODE_MASK);
+    uint32_t i;
 
-    /* Recover I2S pinmux. */
-    IOMUXC_SetPinMux(IOMUXC_PTA2_I2S0_RXD0, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_PTA2_I2S0_RXD0, 0U);
-    IOMUXC_SetPinMux(IOMUXC_PTA4_I2S0_MCLK, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_PTA4_I2S0_MCLK, IOMUXC0_SW_MUX_CTL_PAD_OBE_MASK | IOMUXC0_SW_MUX_CTL_PAD_DSE_MASK);
-    IOMUXC_SetPinMux(IOMUXC_PTA5_I2S0_TX_BCLK, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_PTA5_I2S0_TX_BCLK, IOMUXC0_SW_MUX_CTL_PAD_DSE_MASK);
-    IOMUXC_SetPinMux(IOMUXC_PTA6_I2S0_TX_FS, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_PTA6_I2S0_TX_FS, IOMUXC0_SW_MUX_CTL_PAD_DSE_MASK);
-    IOMUXC_SetPinMux(IOMUXC_PTA7_I2S0_TXD0, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_PTA7_I2S0_TXD0, IOMUXC0_SW_MUX_CTL_PAD_DSE_MASK);
-
-    /* Recover VOL- GPIO pinmux. */
-    IOMUXC_SetPinMux(IOMUXC_PTA13_PTA13, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_PTA13_PTA13, IOMUXC0_SW_MUX_CTL_PAD_IBE_MASK);
-
-    /* Recover Audio Codec pinmux. */
-    IOMUXC_SetPinMux(IOMUXC_PTA16_LPI2C0_SCL, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_PTA16_LPI2C0_SCL, IOMUXC0_SW_MUX_CTL_PAD_ODE_MASK);
-    IOMUXC_SetPinMux(IOMUXC_PTA17_LPI2C0_SDA, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_PTA17_LPI2C0_SDA, IOMUXC0_SW_MUX_CTL_PAD_ODE_MASK);
+    /* Restore PTA/PTB IOMUXC registers */
+    for (i = kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTA0; i <= kIOMUXC0_IOMUXC0_SW_MUX_CTL_PAD_PTB19; i++)
+    {
+        IOMUXC0->SW_MUX_CTL_PAD[i] = iomuxBackup[i];
+    }
 
     if (resume)
     {
@@ -749,6 +808,56 @@ static void APP_SetPmicRegister(void)
     GETCHAR();
 }
 
+static void APP_PowerTestMode(void)
+{
+    uint32_t cmd;
+
+    for (;;)
+    {
+        PRINTF("[Power Test Mode]\r\n");
+        PRINTF("Commands:\r\n");
+        /* Should not disable SW3, just for trial */
+        PRINTF("0: Toggle PMIC SW3 regulator");
+        PRINTF(" - Just for trial. Should not do it on EVK board.\r\n");
+        /* Should not disable DDR_SW_EN, just for trial */
+        PRINTF("1: Toggle DDR_SW_EN load switch");
+        PRINTF(" - Just for trial. Should not do it on EVK board.\r\n");
+        /* Have impact on Linux WIFI feature resume, but can reduce leakage. */
+        PRINTF("2: %s WL_REG_ON/BT_REG_ON pins in VLLS\r\n", disableWirelessPinsInVLLS ? "Enable" : "Disable");
+        PRINTF("   - Disable these pins leads to failure in Linux WIFI driver resume.\r\n");
+        PRINTF("   - Just for showing minimum board leakage. \r\n");
+        /* Have impact on debug feature during suspend/resume. */
+        PRINTF("3: %s JTAG pins in VLLS\r\n", disableJtagPinsInVLLS ? "Enable" : "Disable");
+        PRINTF("Selection:");
+        cmd = APP_GetInputNumWithEcho(1U, true);
+        if (3 >= cmd)
+        {
+            break;
+        }
+    }
+    PRINTF("\r\n");
+
+    if (cmd == 0)
+    {
+        APP_SRTM_ToggleSW3();
+    }
+    else if (cmd == 1)
+    {
+        GPIO_PortToggle(GPIOB, 1U << 6);
+    }
+    else if (cmd == 2)
+    {
+        disableWirelessPinsInVLLS = !disableWirelessPinsInVLLS;
+    }
+    else
+    {
+        disableJtagPinsInVLLS = !disableJtagPinsInVLLS;
+    }
+
+    PRINTF("Press Any Key to Home Page...");
+    GETCHAR();
+}
+
 void APP_SetPowerMode(smc_power_state_t powerMode)
 {
     switch (powerMode)
@@ -826,6 +935,7 @@ void PowerModeSwitchTask(void *pvParameters)
         PRINTF("Press  V for boot CA7 core.\r\n");
         PRINTF("Press  R for read PF1550 Register.\r\n");
         PRINTF("Press  S for set PF1550 Register.\r\n");
+        PRINTF("Press  Z for enhanced power configuration.\r\n");
         PRINTF("\r\nWaiting for power mode select..\r\n\r\n");
 
         /* Wait for user response */
@@ -922,6 +1032,10 @@ void PowerModeSwitchTask(void *pvParameters)
         else if ('S' == ch)
         {
             APP_SetPmicRegister();
+        }
+        else if ('Z' == ch)
+        {
+            APP_PowerTestMode();
         }
         else
         {

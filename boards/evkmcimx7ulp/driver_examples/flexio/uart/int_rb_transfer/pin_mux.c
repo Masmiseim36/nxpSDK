@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP.
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,11 +13,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
-processor: MCIMX7U5xxx05
+product: Pins v6.0
+processor: MCIMX7U5xxxxx
 package_id: MCIMX7U5CVP05
 mcu_data: ksdk2_0
-processor_version: 0.0.3
+processor_version: 6.0.1
 board: MCIMX7ULP-EVK-REV-B
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -39,7 +39,7 @@ void BOARD_InitBootPins(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins:
-- options: {callFromInitBoot: 'false', coreID: cm4}
+- options: {callFromInitBoot: 'false', prefix: BOARD_, coreID: cm4}
 - pin_list:
   - {pin_num: AD19, peripheral: FXIO0, signal: 'fxio_d, 1', pin_signal: PTA17}
   - {pin_num: AG18, peripheral: FXIO0, signal: 'fxio_d, 0', pin_signal: PTA16}
@@ -53,8 +53,8 @@ BOARD_InitPins:
  *
  * END ****************************************************************************************************************/
 void BOARD_InitPins(void) {                                /*!< Function assigned for the core: Cortex-M4[cm4] */
-    IOMUXC_SetPinMux(BOARD_INITPINS_I2C0_SCL_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinMux(BOARD_INITPINS_I2C0_SDA_PIN_FUNCTION_ID, 0U);
+    IOMUXC_SetPinMux(BOARD_I2C0_SCL_PIN_FUNCTION_ID, 0U);
+    IOMUXC_SetPinMux(BOARD_I2C0_SDA_PIN_FUNCTION_ID, 0U);
 }
 
 /***********************************************************************************************************************

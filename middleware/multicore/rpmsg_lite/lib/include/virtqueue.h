@@ -31,6 +31,7 @@
  * $FreeBSD$
  */
 
+#include <stdbool.h>
 #include <stdint.h>
 #include "rpmsg_default_config.h"
 typedef uint8_t boolean;
@@ -49,12 +50,6 @@ typedef uint8_t boolean;
 #define ERROR_VRING_NO_BUFF (VQ_ERROR_BASE - 7)
 #define ERROR_VQUEUE_INVLD_PARAM (VQ_ERROR_BASE - 8)
 
-#ifndef true
-#define true 1
-#endif
-#ifndef false
-#define false 0
-#endif
 #define VQUEUE_SUCCESS (0)
 #define VQUEUE_DEBUG (false)
 
@@ -95,41 +90,41 @@ struct virtqueue
 {
     /* 32bit aligned { */
     char vq_name[VIRTQUEUE_MAX_NAME_SZ];
-    unsigned long vq_flags;
-    int vq_alignment;
-    int vq_ring_size;
+    uint32_t vq_flags;
+    int32_t vq_alignment;
+    int32_t vq_ring_size;
     void *vq_ring_mem;
-    void (*callback)(struct virtqueue *vq);
-    void (*notify)(struct virtqueue *vq);
-    int vq_max_indirect_size;
-    int vq_indirect_mem_size;
+    void (*callback_fc)(struct virtqueue *vq);
+    void (*notify_fc)(struct virtqueue *vq);
+    int32_t vq_max_indirect_size;
+    int32_t vq_indirect_mem_size;
     struct vring vq_ring;
     /* } 32bit aligned */
 
     /* 16bit aligned { */
-    unsigned short vq_queue_index;
-    unsigned short vq_nentries;
-    unsigned short vq_free_cnt;
-    unsigned short vq_queued_cnt;
+    uint16_t vq_queue_index;
+    uint16_t vq_nentries;
+    uint16_t vq_free_cnt;
+    uint16_t vq_queued_cnt;
 
     /*
      * Head of the free chain in the descriptor table. If
      * there are no free descriptors, this will be set to
      * VQ_RING_DESC_CHAIN_END.
      */
-    unsigned short vq_desc_head_idx;
+    uint16_t vq_desc_head_idx;
 
     /*
      * Last consumed descriptor in the used table,
      * trails vq_ring.used->idx.
      */
-    unsigned short vq_used_cons_idx;
+    uint16_t vq_used_cons_idx;
 
     /*
      * Last consumed descriptor in the available table -
      * used by the consumer side.
      */
-    unsigned short vq_available_idx;
+    uint16_t vq_available_idx;
     /* } 16bit aligned */
 
     boolean avail_read;  /* 8bit wide */
@@ -137,7 +132,7 @@ struct virtqueue
     boolean used_read;   /* 8bit wide */
     boolean used_write;  /* 8bit wide */
 
-    unsigned short padd; /* aligned to 32bits after this: */
+    uint16_t padd; /* aligned to 32bits after this: */
 
     void *priv; /* private pointer, upper layer instance pointer */
 #if defined(RL_USE_ENVIRONMENT_CONTEXT) && (RL_USE_ENVIRONMENT_CONTEXT == 1)
@@ -149,9 +144,9 @@ struct virtqueue
 struct vring_alloc_info
 {
     void *phy_addr;
-    unsigned long align;
-    unsigned short num_descs;
-    unsigned short pad;
+    uint32_t align;
+    uint16_t num_descs;
+    uint16_t pad;
 };
 
 struct vq_static_context
@@ -187,7 +182,7 @@ typedef void vq_notify(struct virtqueue *vq);
     if ((vq)->dir == false)  \
         (vq)->dir = true;    \
     else                     \
-    VQASSERT(vq, (vq)->dir == false, "VirtQueue already in use")
+        VQASSERT(vq, (vq)->dir == false, "VirtQueue already in use")
 
 #define VQUEUE_IDLE(vq, dir) ((vq)->dir = false)
 
@@ -202,36 +197,36 @@ typedef void vq_notify(struct virtqueue *vq);
 
 #endif
 
-int virtqueue_create(unsigned short id,
-                     char *name,
-                     struct vring_alloc_info *ring,
-                     void (*callback)(struct virtqueue *vq),
-                     void (*notify)(struct virtqueue *vq),
-                     struct virtqueue **v_queue);
+int32_t virtqueue_create(uint16_t id,
+                         const char *name,
+                         struct vring_alloc_info *ring,
+                         void (*callback_fc)(struct virtqueue *vq),
+                         void (*notify_fc)(struct virtqueue *vq),
+                         struct virtqueue **v_queue);
 
-int virtqueue_create_static(unsigned short id,
-                            char *name,
-                            struct vring_alloc_info *ring,
-                            void (*callback)(struct virtqueue *vq),
-                            void (*notify)(struct virtqueue *vq),
-                            struct virtqueue **v_queue,
-                            struct vq_static_context *vq_ctxt);
+int32_t virtqueue_create_static(uint16_t id,
+                                const char *name,
+                                struct vring_alloc_info *ring,
+                                void (*callback_fc)(struct virtqueue *vq),
+                                void (*notify_fc)(struct virtqueue *vq),
+                                struct virtqueue **v_queue,
+                                struct vq_static_context *vq_ctxt);
 
-int virtqueue_add_buffer(struct virtqueue *vq, unsigned short head_idx);
+int32_t virtqueue_add_buffer(struct virtqueue *vq, uint16_t head_idx);
 
-int virtqueue_fill_used_buffers(struct virtqueue *vq, void *buffer, unsigned long len);
+int32_t virtqueue_fill_used_buffers(struct virtqueue *vq, void *buffer, uint32_t len);
 
-int virtqueue_fill_avail_buffers(struct virtqueue *vq, void *buffer, unsigned long len);
+int32_t virtqueue_fill_avail_buffers(struct virtqueue *vq, void *buffer, uint32_t len);
 
-void *virtqueue_get_buffer(struct virtqueue *vq, unsigned long *len, unsigned short *idx);
+void *virtqueue_get_buffer(struct virtqueue *vq, uint32_t *len, uint16_t *idx);
 
-void *virtqueue_get_available_buffer(struct virtqueue *vq, unsigned short *avail_idx, unsigned long *len);
+void *virtqueue_get_available_buffer(struct virtqueue *vq, uint16_t *avail_idx, uint32_t *len);
 
-int virtqueue_add_consumed_buffer(struct virtqueue *vq, unsigned short head_idx, unsigned long len);
+int32_t virtqueue_add_consumed_buffer(struct virtqueue *vq, uint16_t head_idx, uint32_t len);
 
 void virtqueue_disable_cb(struct virtqueue *vq);
 
-int virtqueue_enable_cb(struct virtqueue *vq);
+int32_t virtqueue_enable_cb(struct virtqueue *vq);
 
 void virtqueue_kick(struct virtqueue *vq);
 
@@ -243,9 +238,9 @@ void virtqueue_dump(struct virtqueue *vq);
 
 void virtqueue_notification(struct virtqueue *vq);
 
-unsigned long virtqueue_get_desc_size(struct virtqueue *vq);
+uint32_t virtqueue_get_desc_size(struct virtqueue *vq);
 
-unsigned long virtqueue_get_buffer_length(struct virtqueue *vq, unsigned short idx);
+uint32_t virtqueue_get_buffer_length(struct virtqueue *vq, uint16_t idx);
 
 void vq_ring_init(struct virtqueue *vq);
 

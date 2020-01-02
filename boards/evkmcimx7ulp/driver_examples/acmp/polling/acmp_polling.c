@@ -75,8 +75,12 @@ int main(void)
     /* Configure DAC. */
     dacConfigStruct.referenceVoltageSource = kACMP_VrefSourceVin1;
     dacConfigStruct.DACValue               = 0x7FU; /* Half of referene voltage. */
-    dacConfigStruct.enableOutput           = false;
-    dacConfigStruct.workMode               = kACMP_DACWorkLowSpeedMode;
+#if defined(FSL_FEATURE_ACMP_HAS_C1_DACOE_BIT) && (FSL_FEATURE_ACMP_HAS_C1_DACOE_BIT == 1U)
+    dacConfigStruct.enableOutput = true;
+#endif /* FSL_FEATURE_ACMP_HAS_C1_DACOE_BIT */
+#if defined(FSL_FEATURE_ACMP_HAS_C1_DMODE_BIT) && (FSL_FEATURE_ACMP_HAS_C1_DMODE_BIT == 1U)
+    dacConfigStruct.workMode = kACMP_DACWorkLowSpeedMode;
+#endif /* FSL_FEATURE_ACMP_HAS_C1_DMODE_BIT */
     ACMP_SetDACConfig(DEMO_ACMP_BASEADDR, &dacConfigStruct);
 
     ACMP_Enable(DEMO_ACMP_BASEADDR, true);

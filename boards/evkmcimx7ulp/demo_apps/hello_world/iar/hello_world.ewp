@@ -181,11 +181,13 @@
         <option>
           <name>CCDefines</name>
           <state>DEBUG</state>
-          <state>CPU_MCIMX7U5DVP08</state>
+          <state>CPU_MCIMX7U5CVP05</state>
+          <state>CPU_MCIMX7U5CVP05_cm4</state>
           <state>PRINTF_FLOAT_ENABLE=0</state>
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -262,7 +264,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -315,6 +317,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
@@ -326,10 +329,11 @@
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1158,11 +1162,13 @@
           <state>DEBUG</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>ENABLE_RAM_VECTOR_TABLE</state>
-          <state>CPU_MCIMX7U5DVP08</state>
+          <state>CPU_MCIMX7U5CVP05</state>
+          <state>CPU_MCIMX7U5CVP05_cm4</state>
           <state>PRINTF_FLOAT_ENABLE=0</state>
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1239,7 +1245,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -1292,6 +1298,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
@@ -1303,10 +1310,11 @@
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2136,11 +2144,13 @@
         <option>
           <name>CCDefines</name>
           <state>NDEBUG</state>
-          <state>CPU_MCIMX7U5DVP08</state>
+          <state>CPU_MCIMX7U5CVP05</state>
+          <state>CPU_MCIMX7U5CVP05_cm4</state>
           <state>PRINTF_FLOAT_ENABLE=0</state>
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2270,6 +2280,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
@@ -2281,10 +2292,11 @@
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3113,11 +3125,13 @@
           <state>NDEBUG</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>ENABLE_RAM_VECTOR_TABLE</state>
-          <state>CPU_MCIMX7U5DVP08</state>
+          <state>CPU_MCIMX7U5CVP05</state>
+          <state>CPU_MCIMX7U5CVP05_cm4</state>
           <state>PRINTF_FLOAT_ENABLE=0</state>
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3247,6 +3261,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
@@ -3258,10 +3273,11 @@
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4070,19 +4086,13 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm4.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_const_structs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
@@ -4097,6 +4107,9 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
     </file>
     <file>
@@ -4107,6 +4120,15 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_const_structs.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
     </file>
   </group>
 </project>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP.
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,11 +13,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
-processor: MCIMX7U5xxx05
+product: Pins v6.0
+processor: MCIMX7U5xxxxx
 package_id: MCIMX7U5CVP05
 mcu_data: ksdk2_0
-processor_version: 0.0.3
+processor_version: 6.0.1
 board: MCIMX7ULP-EVK-REV-B
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -39,7 +39,7 @@ void BOARD_InitBootPins(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins:
-- options: {callFromInitBoot: 'false', coreID: cm4}
+- options: {callFromInitBoot: 'false', prefix: BOARD_, coreID: cm4}
 - pin_list:
   - {pin_num: AB19, peripheral: LPUART0, signal: lpuart_rx, pin_signal: PTA19, PE: PE_1_pull_enabled, PS: PS_1_pull_up}
   - {pin_num: AC19, peripheral: LPUART0, signal: lpuart_tx, pin_signal: PTA18, PE: PE_1_pull_enabled, PS: PS_1_pull_up}
@@ -59,16 +59,16 @@ void BOARD_InitPins(void) {                                /*!< Function assigne
     IOMUXC_SetPinConfig(IOMUXC_PTA11_TPM2_CH0,
                         IOMUXC0_SW_MUX_CTL_PAD_PE_MASK |
                         IOMUXC0_SW_MUX_CTL_PAD_PS_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINS_UART0_TX_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINS_UART0_TX_PIN_FUNCTION_ID,
+    IOMUXC_SetPinMux(BOARD_UART0_TX_PIN_FUNCTION_ID, 0U);
+    IOMUXC_SetPinConfig(BOARD_UART0_TX_PIN_FUNCTION_ID,
                         IOMUXC0_SW_MUX_CTL_PAD_PE_MASK |
                         IOMUXC0_SW_MUX_CTL_PAD_PS_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINS_UART0_RX_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINS_UART0_RX_PIN_FUNCTION_ID,
+    IOMUXC_SetPinMux(BOARD_UART0_RX_PIN_FUNCTION_ID, 0U);
+    IOMUXC_SetPinConfig(BOARD_UART0_RX_PIN_FUNCTION_ID,
                         IOMUXC0_SW_MUX_CTL_PAD_PE_MASK |
                         IOMUXC0_SW_MUX_CTL_PAD_PS_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINS_PTB0_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINS_PTB0_PIN_FUNCTION_ID,
+    IOMUXC_SetPinMux(BOARD_PTB0_PIN_FUNCTION_ID, 0U);
+    IOMUXC_SetPinConfig(BOARD_PTB0_PIN_FUNCTION_ID,
                         IOMUXC0_SW_MUX_CTL_PAD_PE_MASK |
                         IOMUXC0_SW_MUX_CTL_PAD_PS_MASK);
 }

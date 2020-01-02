@@ -9,8 +9,8 @@ The file 'lpspi_edma_b2b_transfer_master.c' includes the LPSPI master code.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
 
 Hardware requirements
 =====================

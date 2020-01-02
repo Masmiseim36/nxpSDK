@@ -207,9 +207,8 @@ static const srtm_io_event_t llwuPinModeEvents[] = {
 };
 
 wm8960_config_t wm8960Config;
-codec_config_t boardCodecConfig              = {.codecDevType = kCODEC_WM8960};
-uint8_t codecHandleBuffer[CODEC_HANDLE_SIZE] = {0U};
-codec_handle_t *codecHandle                  = (codec_handle_t *)codecHandleBuffer;
+codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8960};
+codec_handle_t codecHandle;
 
 static struct _srtm_sensor_adapter sensorAdapter = {.enableStateDetector = APP_SRTM_Sensor_EnableStateDetector,
                                                     .enableDataReport    = APP_SRTM_Sensor_EnableDataReport,
@@ -737,6 +736,7 @@ void CMC1_IRQHandler(void)
         irqHandler(CMC1_IRQn, irqHandlerParam);
     }
 
+    PRINTF("CMC1 IRQ\r\n");
     APP_SRTM_A7ResetHandler();
 
     /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
@@ -1084,6 +1084,23 @@ void APP_UpdateSimDgo(uint32_t gpIdx, uint32_t mask, uint32_t value)
     }
 }
 
+static void APP_ToggleSW3(srtm_dispatcher_t dispatcher, void *param1, void *param2)
+{
+    PF1550_EnableRegulator(
+        &pf1550Handle, kPF1550_ModuleSwitch3, kPF1550_OperatingStatusRun,
+        !PF1550_IsRegulatorEnabled(&pf1550Handle, kPF1550_ModuleSwitch3, kPF1550_OperatingStatusRun));
+}
+
+void APP_SRTM_ToggleSW3(void)
+{
+    srtm_procedure_t proc;
+
+    proc = SRTM_Procedure_Create(APP_ToggleSW3, NULL, NULL);
+    assert(proc);
+    SRTM_Dispatcher_CallProc(disp, proc, SRTM_WAIT_FOR_EVER);
+    SRTM_Procedure_Destroy(proc);
+}
+
 static void APP_PowerOffCA7(bool suspendMode)
 {
     if (!suspendMode)
@@ -1271,7 +1288,7 @@ static void APP_SuspendTimerCallback(TimerHandle_t xTimer)
 static void APP_HeartBeatTimerCallback(TimerHandle_t xTimer)
 {
     srtm_procedure_t proc = SRTM_Procedure_Create(APP_SRTM_ControlCA7, (void *)APP_SRTM_StateReboot, NULL);
-
+    PRINTF("Heart Beat timeout\r\n");
     if (proc)
     {
         SRTM_Dispatcher_PostProc(disp, proc);
@@ -1399,6 +1416,7 @@ static srtm_status_t APP_SRTM_LfclEventHandler(
 
         case SRTM_Lfcl_Event_RebootReq:
             /* Now prepare reboot */
+            PRINTF("Linux reboot message\r\n");
             APP_ResetSRTM(APP_SRTM_StateReboot);
             break;
 
@@ -1789,7 +1807,7 @@ static void APP_SRTM_InitAudioService(void)
     wm8960Config.master_slave                  = false;
     boardCodecConfig.codecDevConfig            = &wm8960Config;
     /* Initialize WM8960 codec */
-    CODEC_Init(codecHandle, &boardCodecConfig);
+    CODEC_Init(&codecHandle, &boardCodecConfig);
 
     /* Create I2C Codec adaptor */
     i2cCodecConfig.mclk        = saiTxConfig.mclk;
@@ -1797,7 +1815,7 @@ static void APP_SRTM_InitAudioService(void)
     i2cCodecConfig.regWidth    = kCODEC_RegWidth8Bit;
     i2cCodecConfig.writeRegMap = APP_SRTM_WriteCodecRegMap;
     i2cCodecConfig.readRegMap  = APP_SRTM_ReadCodecRegMap;
-    codecAdapter               = SRTM_I2CCodecAdapter_Create(codecHandle, &i2cCodecConfig);
+    codecAdapter               = SRTM_I2CCodecAdapter_Create(&codecHandle, &i2cCodecConfig);
     assert(codecAdapter);
 
     /* Create and register audio service */
@@ -2294,7 +2312,7 @@ void APP_SRTM_BootCA7(void)
 void APP_SRTM_RebootCA7(void)
 {
     srtm_procedure_t proc = SRTM_Procedure_Create(APP_SRTM_ControlCA7, (void *)APP_SRTM_StateReboot, NULL);
-
+    PRINTF("M4 reboot A7\r\n");
     assert(proc);
     SRTM_Dispatcher_PostProc(disp, proc);
 }

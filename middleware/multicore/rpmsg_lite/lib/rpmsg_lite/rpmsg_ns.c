@@ -68,9 +68,9 @@ struct rpmsg_ns_msg
  * @return  RL_RELEASE, message is always freed
  *
  */
-static int rpmsg_ns_rx_cb(void *payload, unsigned int payload_len, unsigned long src, void *priv)
+static int32_t rpmsg_ns_rx_cb(void *payload, uint32_t payload_len, uint32_t src, void *priv)
 {
-    struct rpmsg_ns_msg *ns_msg_ptr = payload;
+    struct rpmsg_ns_msg *ns_msg_ptr        = payload;
     struct rpmsg_ns_callback_data *cb_ctxt = priv;
     RL_ASSERT(priv != RL_NULL);
     RL_ASSERT(cb_ctxt->cb != RL_NULL);
@@ -110,7 +110,7 @@ rpmsg_ns_handle rpmsg_ns_bind(struct rpmsg_lite_instance *rpmsg_lite_dev, rpmsg_
 
     /* Set-up the nameservice callback context */
     ns_ept_ctxt->cb_ctxt.user_data = user_data;
-    ns_ept_ctxt->cb_ctxt.cb = app_cb;
+    ns_ept_ctxt->cb_ctxt.cb        = app_cb;
 
     ns_ctxt->cb_ctxt = &ns_ept_ctxt->cb_ctxt;
 
@@ -134,7 +134,7 @@ rpmsg_ns_handle rpmsg_ns_bind(struct rpmsg_lite_instance *rpmsg_lite_dev, rpmsg_
 
         /* Set-up the nameservice callback context */
         cb_ctxt->user_data = user_data;
-        cb_ctxt->cb = app_cb;
+        cb_ctxt->cb        = app_cb;
 
         ns_ctxt->cb_ctxt = cb_ctxt;
 
@@ -145,7 +145,7 @@ rpmsg_ns_handle rpmsg_ns_bind(struct rpmsg_lite_instance *rpmsg_lite_dev, rpmsg_
     return (rpmsg_ns_handle)ns_ctxt;
 }
 
-int rpmsg_ns_unbind(struct rpmsg_lite_instance *rpmsg_lite_dev, rpmsg_ns_handle handle)
+int32_t rpmsg_ns_unbind(struct rpmsg_lite_instance *rpmsg_lite_dev, rpmsg_ns_handle handle)
 {
     struct rpmsg_ns_context *ns_ctxt = (struct rpmsg_ns_context *)handle;
 
@@ -153,7 +153,7 @@ int rpmsg_ns_unbind(struct rpmsg_lite_instance *rpmsg_lite_dev, rpmsg_ns_handle 
     return rpmsg_lite_destroy_ept(rpmsg_lite_dev, ns_ctxt->ept);
 #else
     {
-        int retval;
+        int32_t retval;
 
         retval = rpmsg_lite_destroy_ept(rpmsg_lite_dev, ns_ctxt->ept);
         env_free_memory(ns_ctxt->cb_ctxt);
@@ -163,10 +163,10 @@ int rpmsg_ns_unbind(struct rpmsg_lite_instance *rpmsg_lite_dev, rpmsg_ns_handle 
 #endif
 }
 
-int rpmsg_ns_announce(struct rpmsg_lite_instance *rpmsg_lite_dev,
-                      struct rpmsg_lite_endpoint *new_ept,
-                      char *ept_name,
-                      unsigned long flags)
+int32_t rpmsg_ns_announce(struct rpmsg_lite_instance *rpmsg_lite_dev,
+                          struct rpmsg_lite_endpoint *new_ept,
+                          char *ept_name,
+                          uint32_t flags)
 {
     struct rpmsg_ns_msg ns_msg;
 
@@ -182,12 +182,8 @@ int rpmsg_ns_announce(struct rpmsg_lite_instance *rpmsg_lite_dev,
 
     env_strncpy(ns_msg.name, ept_name, RL_NS_NAME_SIZE);
     ns_msg.flags = flags;
-    ns_msg.addr = new_ept->addr;
+    ns_msg.addr  = new_ept->addr;
 
-    return rpmsg_lite_send(rpmsg_lite_dev,
-                    new_ept,
-                    RL_NS_EPT_ADDR,
-                    (char *)&ns_msg,
-                    sizeof(struct rpmsg_ns_msg),
-                    RL_BLOCK);
+    return rpmsg_lite_send(rpmsg_lite_dev, new_ept, RL_NS_EPT_ADDR, (char *)&ns_msg, sizeof(struct rpmsg_ns_msg),
+                           RL_BLOCK);
 }

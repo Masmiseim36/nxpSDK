@@ -334,7 +334,7 @@ void fsciBleGapHandler(void *pData, void *param, uint32_t fsciBleInterfaceId)
                 fsciBleGetUint8ValueFromBuffer(*pOutParams->pLtkSize, pBuffer);
             }
 
-            if (NULL != pOutParams->pLtk)
+            if (NULL != pOutParams->pLtk && NULL != pOutParams->pLtkSize)
             {
                 fsciBleGetArrayFromBuffer(pOutParams->pLtk, pBuffer, *pOutParams->pLtkSize);
             }

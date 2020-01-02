@@ -261,7 +261,7 @@ static void AppRpmsgMonitor(struct rpmsg_lite_instance *rpmsgHandle, bool ready,
 
 static void BridgeTask(void *param)
 {
-    unsigned long remoteAddr;
+    uint32_t remoteAddr;
     int32_t result;
     uint8_t *rpmsgBuffer;
     uint32_t rpmsgBufferLen;
@@ -278,8 +278,8 @@ static void BridgeTask(void *param)
                 break;
             }
 
-            result = rpmsg_queue_recv_nocopy(myRpmsg, myQueue, &remoteAddr, (char **)&rpmsgBuffer,
-                                             (int *)&rpmsgBufferLen, 50U);
+            result =
+                rpmsg_queue_recv_nocopy(myRpmsg, myQueue, &remoteAddr, (char **)&rpmsgBuffer, &rpmsgBufferLen, 50U);
             if (RL_SUCCESS == result)
             {
                 if (a7Addr == RL_ADDR_ANY)

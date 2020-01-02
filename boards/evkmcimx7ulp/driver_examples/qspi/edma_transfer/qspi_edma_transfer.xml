@@ -8,6 +8,7 @@
     <definition extID="component.serial_manager_uart.MCIMX7U5"/>
     <definition extID="platform.Include_common.MCIMX7U5"/>
     <definition extID="platform.Include_core_cm4.MCIMX7U5"/>
+    <definition extID="platform.Include_dsp.MCIMX7U5"/>
     <definition extID="platform.devices.MCIMX7U5_CMSIS.MCIMX7U5"/>
     <definition extID="platform.devices.MCIMX7U5_startup.MCIMX7U5"/>
     <definition extID="platform.drivers.clock.MCIMX7U5"/>
@@ -21,13 +22,14 @@
     <definition extID="platform.drivers.qspi.MCIMX7U5"/>
     <definition extID="platform.drivers.qspi_edma.MCIMX7U5"/>
     <definition extID="platform.utilities.assert.MCIMX7U5"/>
+    <definition extID="platform.utilities.misc_utilities.MCIMX7U5"/>
     <definition extID="utility.debug_console.MCIMX7U5"/>
     <definition extID="iar"/>
     <definition extID="armgcc"/>
     <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkmcimx7ulp_qspi_edma_transfer" name="qspi_edma_transfer" category="driver_examples/qspi" dependency="platform.drivers.port.MCIMX7U5 platform.drivers.gpio.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.qspi.MCIMX7U5 platform.drivers.qspi_edma.MCIMX7U5 platform.drivers.dmamux.MCIMX7U5 platform.drivers.edma.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 utility.debug_console.MCIMX7U5 component.lpuart_adapter.MCIMX7U5 component.serial_manager.MCIMX7U5 component.serial_manager_uart.MCIMX7U5 platform.drivers.lpuart.MCIMX7U5 component.lists.MCIMX7U5 platform.devices.MCIMX7U5_startup.MCIMX7U5 platform.drivers.msmc.MCIMX7U5 platform.utilities.assert.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.Include_common.MCIMX7U5">
+  <example id="evkmcimx7ulp_qspi_edma_transfer" name="qspi_edma_transfer" category="driver_examples/qspi" dependency="platform.drivers.port.MCIMX7U5 platform.drivers.gpio.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.qspi.MCIMX7U5 platform.drivers.qspi_edma.MCIMX7U5 platform.drivers.dmamux.MCIMX7U5 platform.drivers.edma.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 utility.debug_console.MCIMX7U5 component.lpuart_adapter.MCIMX7U5 component.serial_manager.MCIMX7U5 component.lists.MCIMX7U5 component.serial_manager_uart.MCIMX7U5 platform.drivers.lpuart.MCIMX7U5 platform.devices.MCIMX7U5_startup.MCIMX7U5 platform.drivers.msmc.MCIMX7U5 platform.utilities.assert.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.Include_common.MCIMX7U5 platform.Include_dsp.MCIMX7U5 platform.utilities.misc_utilities.MCIMX7U5">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -43,7 +45,9 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
-          <value>CPU_MCIMX7U5DVP08</value>
+          <value>CPU_MCIMX7U5CVP05</value>
+          <value>CPU_MCIMX7U5CVP05_cm4</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -59,10 +63,10 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/evkmcimx7ulp/driver_examples/qspi/edma_transfer/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/evkmcimx7ulp/driver_examples/qspi/edma_transfer/armgcc" target_path="MCIMX7U5/gcc" type="linker" toolchain="armgcc">
       <files mask="MCIMX7U5xxxxx_cm4_ram.ld"/>
     </source>
-    <source path="boards/evkmcimx7ulp/driver_examples/qspi/edma_transfer/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/evkmcimx7ulp/driver_examples/qspi/edma_transfer/iar" target_path="MCIMX7U5/iar" type="linker" toolchain="iar">
       <files mask="MCIMX7U5xxxxx_cm4_ram.icf"/>
     </source>
     <source path="boards/evkmcimx7ulp/driver_examples/qspi/edma_transfer" target_path="board" type="c_include">

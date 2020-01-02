@@ -191,7 +191,7 @@ void fsciBleGattDbAppHandler(void *pData, void *pParam, uint32_t fsciBleInterfac
                 fsciBleGetUint16ValueFromBuffer(*pOutParams->pValueLength, pBuffer);
             }
 
-            if (NULL != pOutParams->pValue)
+            if (NULL != pOutParams->pValue && NULL != pOutParams->pValueLength)
             {
                 fsciBleGetArrayFromBuffer(pOutParams->pValue, pBuffer, *pOutParams->pValueLength);
             }

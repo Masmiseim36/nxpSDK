@@ -371,7 +371,7 @@ osaStatus_t OSA_SemaphorePost(osaSemaphoreId_t semId)
         {
             portBASE_TYPE taskToWake = pdFALSE;
 
-            if (pdTRUE == xSemaphoreGiveFromISR(sem, &taskToWake))
+            if (pdPASS == xSemaphoreGiveFromISR(sem, &taskToWake))
             {
                 if (pdTRUE == taskToWake)
                 {
@@ -386,7 +386,7 @@ osaStatus_t OSA_SemaphorePost(osaSemaphoreId_t semId)
         }
         else
         {
-            if (pdTRUE == xSemaphoreGive(sem))
+            if (pdPASS == xSemaphoreGive(sem))
             {
                 status = osaStatus_Success; /* sync object given */
             }
@@ -577,6 +577,7 @@ osaEventId_t OSA_EventCreate(bool_t autoClear)
 osaStatus_t OSA_EventSet(osaEventId_t eventId, osaEventFlags_t flagsToSet)
 {
 #if osNumberOfEvents
+    osaStatus_t status = osaStatus_Error;
     osEventStruct_t *pEventStruct;
     portBASE_TYPE taskToWake = pdFALSE;
     if (osObjectIsAllocated(&osEventInfo, eventId) == FALSE)
@@ -590,17 +591,32 @@ osaStatus_t OSA_EventSet(osaEventId_t eventId, osaEventFlags_t flagsToSet)
     }
     if (__get_IPSR())
     {
-        xEventGroupSetBitsFromISR(pEventStruct->event.eventHandler, (event_flags_t)flagsToSet, &taskToWake);
-        if (pdTRUE == taskToWake)
+        if (pdPASS ==
+            xEventGroupSetBitsFromISR(pEventStruct->event.eventHandler, (event_flags_t)flagsToSet, &taskToWake))
         {
-            portYIELD();
+            if (pdTRUE == taskToWake)
+            {
+                portYIELD();
+            }
+            status = osaStatus_Success;
+        }
+        else
+        {
+            status = osaStatus_Error;
         }
     }
     else
     {
-        xEventGroupSetBits(pEventStruct->event.eventHandler, (event_flags_t)flagsToSet);
+        if (pdPASS == xEventGroupSetBits(pEventStruct->event.eventHandler, (event_flags_t)flagsToSet))
+        {
+            status = osaStatus_Success;
+        }
+        else
+        {
+            status = osaStatus_Error;
+        }
     }
-    return osaStatus_Success;
+    return status;
 #else
     (void)eventId;
     (void)flagsToSet;
@@ -799,7 +815,7 @@ osaStatus_t OSA_MsgQPut(osaMsgQId_t msgQId, void *pMessage)
         {
             portBASE_TYPE taskToWake = pdFALSE;
 
-            if (pdTRUE == xQueueSendToBackFromISR(handler, pMessage, &taskToWake))
+            if (pdPASS == xQueueSendToBackFromISR(handler, pMessage, &taskToWake))
             {
                 if (pdTRUE == taskToWake)
                 {

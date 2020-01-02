@@ -39,11 +39,19 @@ uint8_t masterRxData[TRANSFER_SIZE] = {0U};
 uint8_t masterTxData[TRANSFER_SIZE] = {0U};
 
 lpspi_master_handle_t g_m_handle;
-volatile bool isTransferCompleted = false;
+volatile bool isTransferCompleted  = false;
+volatile uint32_t g_systickCounter = 20U;
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
+void SysTick_Handler(void)
+{
+    if (g_systickCounter != 0U)
+    {
+        g_systickCounter--;
+    }
+}
 
 void LPSPI_MasterUserCallback(LPSPI_Type *base, lpspi_master_handle_t *handle, status_t status, void *userData)
 {
@@ -145,9 +153,16 @@ int main(void)
         }
 
         /* Delay to wait slave is ready */
-        for (i = 0; i < EXAMPLE_LPSPI_DEALY_COUNT; i++)
+        if (SysTick_Config(SystemCoreClock / 1000U))
         {
-            __NOP();
+            while (1)
+            {
+            }
+        }
+        /* Delay 20 ms */
+        g_systickCounter = 20U;
+        while (g_systickCounter != 0U)
+        {
         }
 
         /* Start master transfer, receive data from slave */

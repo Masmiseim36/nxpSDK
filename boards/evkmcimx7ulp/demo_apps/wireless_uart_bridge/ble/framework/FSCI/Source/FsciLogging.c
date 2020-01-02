@@ -76,7 +76,7 @@ void FSCI_Print(uint8_t readyToSend, void *pSrc, fsciLen_t len)
     static uint8_t *pData    = NULL;
     static uint16_t totalLen = 0;
 
-    if (!gFsciTxDisable)
+    if (!gFsciTxDisable && (gFsciLoggingInterface_c < gFsciMaxInterfaces_c))
     {
         if (NULL == pData)
         {

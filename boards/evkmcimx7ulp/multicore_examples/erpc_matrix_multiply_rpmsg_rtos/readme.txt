@@ -23,8 +23,8 @@ eRPC documentation can be also found in: http://embeddedrpc.github.io
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
 
 Hardware requirements
 =====================
@@ -38,6 +38,9 @@ Board settings
 The Multicore eRPC Matrix Multiply RTOS project does not call for any special hardware configurations.
 Although not required, the recommendation is to leave the development board jumper settings and
 configurations in default state when running this demo.
+
+#### Please note gcc ram debug target exceeds the RAM size so only ram release target and flash targets
+are available!
 
 Prepare the Demo
 ================

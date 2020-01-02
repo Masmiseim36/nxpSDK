@@ -722,7 +722,9 @@ fsci_packetStatus_t FSCI_checkPacket(clientPacket_t *pData, uint16_t bytes, uint
     if (bytes >= len + sizeof(clientPacketHdr_t) + sizeof(checksum))
     {
         checksum = FSCI_computeChecksum(pData->raw + 1, len + sizeof(clientPacketHdr_t) - 1);
-        *pVIntf  = pData->structured.payload[len] - checksum;
+        *pVIntf =
+            ((len == sizeof(pData->structured.payload)) ? pData->structured.checksum : pData->structured.payload[len]) -
+            checksum;
     }
 
     if (bytes == len + sizeof(clientPacketHdr_t) + sizeof(checksum))

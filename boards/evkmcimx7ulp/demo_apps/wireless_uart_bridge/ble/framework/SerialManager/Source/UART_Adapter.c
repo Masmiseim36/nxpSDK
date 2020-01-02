@@ -762,6 +762,10 @@ static void LPUART_ISR(void)
             break;
         }
     }
+    if (instance == FSL_FEATURE_SOC_LPUART_COUNT)
+    {
+        return;
+    }
 
     base       = mLpuartBase[instance];
     pState     = pLpuartStates[instance];

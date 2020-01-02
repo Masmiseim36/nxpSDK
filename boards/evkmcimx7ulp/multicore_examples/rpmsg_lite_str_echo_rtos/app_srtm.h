@@ -141,6 +141,9 @@ uint32_t APP_SRTM_GetPmicReg(uint32_t reg);
 /* Set PMIC register */
 void APP_SRTM_SetPmicReg(uint32_t reg, uint32_t value);
 
+/* Toggle SW3 regulator (on/off) */
+void APP_SRTM_ToggleSW3(void);
+
 /* Enable or disable wakeup pin
  * event[7:0]: llwu_external_pin_mode_t
  * event[8]: LLWU wakeup enable

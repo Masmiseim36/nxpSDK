@@ -129,7 +129,7 @@ void SystemInit (void) {
        When running in QSPI flash, it's possible to violate that timing
        requirement. So we put the WDOG operation in RAM */
     /* Is WDOG 32bit access enabled? */
-    if (WDOG0->CS & WDOG_CS_CMD32EN_MASK)
+    if ((WDOG0->CS & WDOG_CS_CMD32EN_MASK) != 0U)
     {
       WdogDisable = (WdogFuncPtr)(((uint32_t)WdogDisable32) | 1U); /* thumb code */
     }

@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.7.2</span>
+   &#160;<span id="projectnumber">Rev. 1.7.3</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -161,6 +161,9 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:a06481a55e8b2f7fafe264a6071ce5dcb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_server.html#a06481a55e8b2f7fafe264a6071ce5dcb">addService</a> (<a class="el" href="classerpc_1_1_service.html">Service</a> *service)</td></tr>
 <tr class="memdesc:a06481a55e8b2f7fafe264a6071ce5dcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add service.  <a href="#a06481a55e8b2f7fafe264a6071ce5dcb">More...</a><br /></td></tr>
 <tr class="separator:a06481a55e8b2f7fafe264a6071ce5dcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1560af298a463f75b921e8c00c11d5f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_server.html#a1560af298a463f75b921e8c00c11d5f9">removeService</a> (<a class="el" href="classerpc_1_1_service.html">Service</a> *service)</td></tr>
+<tr class="memdesc:a1560af298a463f75b921e8c00c11d5f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove service.  <a href="#a1560af298a463f75b921e8c00c11d5f9">More...</a><br /></td></tr>
+<tr class="separator:a1560af298a463f75b921e8c00c11d5f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac1644dcaf2b4d46a4166a56bb52a8bb9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac1644dcaf2b4d46a4166a56bb52a8bb9"></a>
 virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_server.html#ac1644dcaf2b4d46a4166a56bb52a8bb9">run</a> (void)=0</td></tr>
 <tr class="memdesc:ac1644dcaf2b4d46a4166a56bb52a8bb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function runs the server. <br /></td></tr>
@@ -331,6 +334,30 @@ Protected Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">service</td><td><a class="el" href="classerpc_1_1_service.html" title="Abstract interface for service, which can be executed on server side. ">Service</a> to use. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a1560af298a463f75b921e8c00c11d5f9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Server::removeService </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classerpc_1_1_service.html">Service</a> *&#160;</td>
+          <td class="paramname"><em>service</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Remove service. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">service</td><td><a class="el" href="classerpc_1_1_service.html" title="Abstract interface for service, which can be executed on server side. ">Service</a> to remove. </td></tr>
   </table>
   </dd>
 </dl>

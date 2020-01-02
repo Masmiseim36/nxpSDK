@@ -47,7 +47,7 @@ typedef struct _srtm_rpmsg_endpoint
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static int SRTM_RPMsgEndpoint_RxHandler(void *payload, int payload_len, unsigned long src, void *priv)
+static int32_t SRTM_RPMsgEndpoint_RxHandler(void *payload, uint32_t payload_len, uint32_t src, void *priv)
 {
     srtm_rpmsg_endpoint_t handle = (srtm_rpmsg_endpoint_t)priv;
 

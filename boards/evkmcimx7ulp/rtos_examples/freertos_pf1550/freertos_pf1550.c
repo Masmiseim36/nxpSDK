@@ -274,17 +274,9 @@ static void DEMO_SetRegulatorOutput(void)
                     module = kPF1550_ModuleLdo2;
                     break;
 
-                case 'f':
+                default:
                     module = kPF1550_ModuleLdo3;
                     break;
-
-                default:
-                    PRINTF("\f");
-                    PRINTF("Unsupported regulator is selected!!!\r\n");
-                    PRINTF("Press Any Key to Continue...\r\n");
-                    GETCHAR();
-                    PRINTF("\f");
-                    continue;
             }
 
             PRINTF("\f");

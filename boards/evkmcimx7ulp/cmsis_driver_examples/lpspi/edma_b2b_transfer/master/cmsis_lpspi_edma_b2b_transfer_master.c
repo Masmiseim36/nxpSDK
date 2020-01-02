@@ -39,9 +39,10 @@ void LPSPI_MasterSignalEvent_t(uint32_t event);
 AT_NONCACHEABLE_SECTION_INIT(uint8_t masterRxData[TRANSFER_SIZE]) = {0};
 AT_NONCACHEABLE_SECTION_INIT(uint8_t masterTxData[TRANSFER_SIZE]) = {0};
 
-volatile bool isTransferCompleted = false;
-volatile bool isMasterOnTransmit  = false;
-volatile bool isMasterOnReceive   = false;
+volatile bool isTransferCompleted  = false;
+volatile bool isMasterOnTransmit   = false;
+volatile bool isMasterOnReceive    = false;
+volatile uint32_t g_systickCounter = 20U;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -50,6 +51,14 @@ uint32_t LPSPI1_GetFreq(void)
 {
     return CLOCK_GetIpFreq(kCLOCK_Lpspi1);
 }
+void SysTick_Handler(void)
+{
+    if (g_systickCounter != 0U)
+    {
+        g_systickCounter--;
+    }
+}
+
 void LPSPI_MasterSignalEvent_t(uint32_t event)
 {
     if (true == isMasterOnReceive)
@@ -138,9 +147,16 @@ int main(void)
         }
 
         /* Delay to wait slave is ready */
-        for (i = 0U; i < EXAMPLE_LPSPI_DEALY_COUNT; i++)
+        if (SysTick_Config(SystemCoreClock / 1000U))
         {
-            __NOP();
+            while (1)
+            {
+            }
+        }
+        /* Delay 20 ms */
+        g_systickCounter = 20U;
+        while (g_systickCounter != 0U)
+        {
         }
 
         isTransferCompleted = false;

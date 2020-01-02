@@ -6,6 +6,7 @@ var classerpc_1_1_server =
     [ "setCodecFactory", "classerpc_1_1_server.html#a10343432a08dc5f419d513690ff17bad", null ],
     [ "setTransport", "classerpc_1_1_server.html#a51eff77c9e51f4a95264b674ffb45ead", null ],
     [ "addService", "classerpc_1_1_server.html#a06481a55e8b2f7fafe264a6071ce5dcb", null ],
+    [ "removeService", "classerpc_1_1_server.html#a1560af298a463f75b921e8c00c11d5f9", null ],
     [ "run", "classerpc_1_1_server.html#ac1644dcaf2b4d46a4166a56bb52a8bb9", null ],
     [ "stop", "classerpc_1_1_server.html#a9e52d510fa41358445fec23e66da4de5", null ],
     [ "processMessage", "classerpc_1_1_server.html#a9dc0e23354f3ba5749926bdd190c0b54", null ],

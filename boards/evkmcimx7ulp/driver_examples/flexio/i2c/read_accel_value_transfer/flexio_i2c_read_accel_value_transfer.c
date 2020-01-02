@@ -111,6 +111,8 @@ static bool I2C_example_readAccelWhoAmI(void)
         return false;
     }
 
+    FLEXIO_I2C_MasterTransferCreateHandle(&i2cDev, &g_m_handle, flexio_i2c_master_callback, NULL);
+
     flexio_i2c_master_transfer_t masterXfer;
     memset(&masterXfer, 0, sizeof(masterXfer));
 
@@ -279,7 +281,6 @@ int main(void)
 
     PRINTF("\r\nFlexIO I2C example read accelerometer value\r\n");
 
-    FLEXIO_I2C_MasterTransferCreateHandle(&i2cDev, &g_m_handle, flexio_i2c_master_callback, NULL);
     isThereAccel = I2C_example_readAccelWhoAmI();
 
     /*  read the accel xyz value if there is accel device on board */

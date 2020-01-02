@@ -23,7 +23,6 @@ var searchData=
   ['_7eserialtransport',['~SerialTransport',['../classerpc_1_1_serial_transport.html#a7665efda4dacfa4d9c66690fa32ef12f',1,'erpc::SerialTransport']]],
   ['_7eserver',['~Server',['../classerpc_1_1_server.html#a7d16c4654358bd70e50f6f2527bf43a5',1,'erpc::Server']]],
   ['_7eservice',['~Service',['../classerpc_1_1_service.html#a0a6140625249eed4c73e2a78da969ef8',1,'erpc::Service']]],
-  ['_7esimpleserver',['~SimpleServer',['../classerpc_1_1_simple_server.html#a04f2f4786dcb358eee2c49e70760e692',1,'erpc::SimpleServer']]],
   ['_7espimastertransport',['~SpiMasterTransport',['../classerpc_1_1_spi_master_transport.html#ae3a82d2a5d772bd608218fbffb275430',1,'erpc::SpiMasterTransport']]],
   ['_7espislavetransport',['~SpiSlaveTransport',['../classerpc_1_1_spi_slave_transport.html#a8ef4f9e6c7b8bf6ca67aceea843c7533',1,'erpc::SpiSlaveTransport']]],
   ['_7estaticmessagebufferfactory',['~StaticMessageBufferFactory',['../class_static_message_buffer_factory.html#abf0e875d3ccb2c659142ffd3e4d81c75',1,'StaticMessageBufferFactory']]],

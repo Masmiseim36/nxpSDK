@@ -14,8 +14,9 @@
     <definition extID="driver.srtm.MCIMX7U5"/>
     <definition extID="driver.srtm.freertos.MCIMX7U5"/>
     <definition extID="driver.wm8960.MCIMX7U5"/>
-    <definition extID="middleware.amazon_freertos.freertos.MCIMX7U5"/>
-    <definition extID="middleware.amazon_freertos.freertos.heap_4.MCIMX7U5"/>
+    <definition extID="middleware.amazon_freertos-kernel.MCIMX7U5"/>
+    <definition extID="middleware.amazon_freertos-kernel.extension.MCIMX7U5"/>
+    <definition extID="middleware.amazon_freertos-kernel.heap_4.MCIMX7U5"/>
     <definition extID="middleware.issdk.algorithms.pedometer.MCIMX7U5"/>
     <definition extID="middleware.issdk.algorithms.pedometer.lib_cm4.MCIMX7U5"/>
     <definition extID="middleware.issdk.sensor.allregdefs.MCIMX7U5"/>
@@ -27,6 +28,7 @@
     <definition extID="platform.CMSIS_Driver_Include.SPI_CMSISInclude.MCIMX7U5"/>
     <definition extID="platform.Include_common.MCIMX7U5"/>
     <definition extID="platform.Include_core_cm4.MCIMX7U5"/>
+    <definition extID="platform.Include_dsp.MCIMX7U5"/>
     <definition extID="platform.devices.MCIMX7U5_CMSIS.MCIMX7U5"/>
     <definition extID="platform.devices.MCIMX7U5_startup.MCIMX7U5"/>
     <definition extID="platform.drivers.clock.MCIMX7U5"/>
@@ -47,13 +49,14 @@
     <definition extID="platform.drivers.sai_edma.MCIMX7U5"/>
     <definition extID="platform.drivers.snvs_lp.MCIMX7U5"/>
     <definition extID="platform.utilities.assert.MCIMX7U5"/>
+    <definition extID="platform.utilities.misc_utilities.MCIMX7U5"/>
     <definition extID="utility.debug_console.MCIMX7U5"/>
     <definition extID="iar"/>
     <definition extID="armgcc"/>
     <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkmcimx7ulp_power_mode_switch" name="power_mode_switch" category="demo_apps" dependency="platform.drivers.port.MCIMX7U5 platform.drivers.llwu.MCIMX7U5 platform.drivers.lptmr.MCIMX7U5 platform.drivers.gpio.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 utility.debug_console.MCIMX7U5 component.lpuart_adapter.MCIMX7U5 component.serial_manager.MCIMX7U5 component.serial_manager_uart.MCIMX7U5 platform.drivers.lpuart.MCIMX7U5 component.lists.MCIMX7U5 platform.devices.MCIMX7U5_startup.MCIMX7U5 platform.drivers.msmc.MCIMX7U5 platform.utilities.assert.MCIMX7U5 platform.drivers.dmamux.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.Include_common.MCIMX7U5 platform.drivers.edma.MCIMX7U5 platform.drivers.lpi2c.MCIMX7U5 platform.drivers.lpi2c_freertos.MCIMX7U5 middleware.amazon_freertos.freertos.MCIMX7U5 platform.drivers.pmc0.MCIMX7U5 platform.drivers.snvs_lp.MCIMX7U5 platform.drivers.mu.MCIMX7U5 driver.pf1550.MCIMX7U5 platform.drivers.sai.MCIMX7U5 platform.drivers.sai_edma.MCIMX7U5 driver.wm8960.MCIMX7U5 component.codec_i2c.MCIMX7U5 driver.srtm.freertos.MCIMX7U5 driver.srtm.MCIMX7U5 middleware.multicore.rpmsg_lite.imx7ulp_m4_freertos.MCIMX7U5 middleware.multicore.rpmsg_lite.freertos.MCIMX7U5 middleware.multicore.rpmsg_lite.MCIMX7U5 middleware.amazon_freertos.freertos.heap_4.MCIMX7U5 middleware.issdk.sensor.allregdefs.MCIMX7U5 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MCIMX7U5 platform.CMSIS_Driver_Include.Common_CMSISInclude.MCIMX7U5 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MCIMX7U5 middleware.issdk.algorithms.pedometer.MCIMX7U5 driver.codec.MCIMX7U5 component.wm8960_adapter.MCIMX7U5 component.lpi2c_adapter.MCIMX7U5 middleware.issdk.algorithms.pedometer.lib_cm4.MCIMX7U5">
+  <example id="evkmcimx7ulp_power_mode_switch" name="power_mode_switch" category="demo_apps" dependency="platform.drivers.port.MCIMX7U5 platform.drivers.llwu.MCIMX7U5 platform.drivers.lptmr.MCIMX7U5 platform.drivers.gpio.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 utility.debug_console.MCIMX7U5 component.lpuart_adapter.MCIMX7U5 component.serial_manager.MCIMX7U5 component.lists.MCIMX7U5 component.serial_manager_uart.MCIMX7U5 platform.drivers.lpuart.MCIMX7U5 platform.devices.MCIMX7U5_startup.MCIMX7U5 platform.drivers.msmc.MCIMX7U5 platform.utilities.assert.MCIMX7U5 platform.drivers.dmamux.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.Include_common.MCIMX7U5 platform.Include_dsp.MCIMX7U5 platform.drivers.edma.MCIMX7U5 platform.drivers.lpi2c.MCIMX7U5 platform.drivers.lpi2c_freertos.MCIMX7U5 middleware.amazon_freertos-kernel.MCIMX7U5 middleware.amazon_freertos-kernel.extension.MCIMX7U5 platform.drivers.pmc0.MCIMX7U5 platform.drivers.snvs_lp.MCIMX7U5 platform.drivers.mu.MCIMX7U5 driver.pf1550.MCIMX7U5 platform.drivers.sai.MCIMX7U5 platform.drivers.sai_edma.MCIMX7U5 driver.wm8960.MCIMX7U5 component.codec_i2c.MCIMX7U5 driver.srtm.freertos.MCIMX7U5 driver.srtm.MCIMX7U5 middleware.multicore.rpmsg_lite.imx7ulp_m4_freertos.MCIMX7U5 middleware.multicore.rpmsg_lite.freertos.MCIMX7U5 middleware.multicore.rpmsg_lite.MCIMX7U5 middleware.amazon_freertos-kernel.heap_4.MCIMX7U5 middleware.issdk.sensor.allregdefs.MCIMX7U5 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MCIMX7U5 platform.CMSIS_Driver_Include.Common_CMSISInclude.MCIMX7U5 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MCIMX7U5 middleware.issdk.algorithms.pedometer.MCIMX7U5 driver.codec.MCIMX7U5 component.wm8960_adapter.MCIMX7U5 component.lpi2c_adapter.MCIMX7U5 platform.utilities.misc_utilities.MCIMX7U5 middleware.issdk.algorithms.pedometer.lib_cm4.MCIMX7U5">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -71,7 +74,9 @@
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>SRTM_DEBUG_MESSAGE_FUNC=DbgConsole_Printf</value>
           <value>SRTM_DEBUG_VERBOSE_LEVEL=SRTM_DEBUG_VERBOSE_WARN</value>
-          <value>CPU_MCIMX7U5DVP08</value>
+          <value>CPU_MCIMX7U5CVP05</value>
+          <value>CPU_MCIMX7U5CVP05_cm4</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>FSL_RTOS_FREE_RTOS</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>BOARD_USE_CODEC=1</value>
@@ -97,17 +102,17 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <source path="boards/evkmcimx7ulp/demo_apps/power_mode_switch/armgcc" target_path="evkmcimx7ulp/gcc" type="linker" toolchain="armgcc">
+      <files mask="MCIMX7U5xxxxx_cm4_lpm_ram.ld"/>
+    </source>
     <source path="boards/evkmcimx7ulp/demo_apps/power_mode_switch/armgcc" target_path="source" type="asm_include" toolchain="armgcc">
       <files mask="lpm_asm.S"/>
     </source>
-    <source path="boards/evkmcimx7ulp/demo_apps/power_mode_switch/armgcc" target_path="src" type="linker" toolchain="armgcc">
-      <files mask="MCIMX7U5xxxxx_cm4_lpm_ram.ld"/>
+    <source path="boards/evkmcimx7ulp/demo_apps/power_mode_switch/iar" target_path="evkmcimx7ulp/iar" type="linker" toolchain="iar">
+      <files mask="MCIMX7U5xxxxx_cm4_lpm_ram.icf"/>
     </source>
     <source path="boards/evkmcimx7ulp/demo_apps/power_mode_switch/iar" target_path="source" type="asm_include" toolchain="iar">
       <files mask="lpm_asm.s"/>
-    </source>
-    <source path="boards/evkmcimx7ulp/demo_apps/power_mode_switch/iar" target_path="src" type="linker" toolchain="iar">
-      <files mask="MCIMX7U5xxxxx_cm4_lpm_ram.icf"/>
     </source>
     <source path="boards/evkmcimx7ulp/demo_apps/power_mode_switch/srtm/channels" target_path="srtm/channels" type="c_include">
       <files mask="srtm_rpmsg_endpoint.h"/>
@@ -155,6 +160,9 @@
     <source path="boards/evkmcimx7ulp/demo_apps/power_mode_switch" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>
     </source>
+    <source path="boards/evkmcimx7ulp/demo_apps/power_mode_switch" target_path="evkmcimx7ulp/demo_apps/power_mode_switch" type="binary" exclude="true">
+      <files mask="power_mode_switch.bin"/>
+    </source>
     <source path="boards/evkmcimx7ulp/demo_apps/power_mode_switch" target_path="source" type="c_include">
       <files mask="FreeRTOSConfig.h"/>
       <files mask="app_srtm.h"/>
@@ -167,9 +175,6 @@
       <files mask="clock_scg.c"/>
       <files mask="lpm.c"/>
       <files mask="power_mode_switch.c"/>
-    </source>
-    <source path="boards/evkmcimx7ulp/demo_apps/power_mode_switch" target_path="src" type="binary" exclude="true">
-      <files mask="power_mode_switch.bin"/>
     </source>
   </example>
 </ksdk:examples>

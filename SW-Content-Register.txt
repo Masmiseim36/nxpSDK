@@ -495,7 +495,7 @@ MCMGR                      version: 4.0.3
                            name: MCMGR                                       
                            Format: source code                               
 
-multicore                  version: 2.6.0                                    
+multicore                  version: 2.7.0                                    
                            Location: middleware/multicore                    
                            Description: NXP Multicore Software Development   
                            Kit.                                              
@@ -514,7 +514,7 @@ percepio_snapshot          version: 3.0.9
                            name: Percepio Tracealyzer - Snapshot Demo        
                            Format: source code                               
 
-rpmsg_lite                 version: 2.2.0                                    
+rpmsg_lite                 version: 3.0.0                                    
                            Location: middleware/multicore/rpmsg_lite         
                            Description: Open Asymmetric Multi Processing     
                            (OpenAMP) framework project                       
@@ -525,7 +525,7 @@ rpmsg_lite                 version: 2.2.0
                            Format: source code                               
                            URL: https://github.com/OpenAMP/open-amp          
 
-erpc                       version: 1.7.2                                    
+erpc                       version: 1.7.3                                    
                            Location: middleware/multicore/erpc               
                            Description: Embedded Remote Procedure Call       
                            License: Open Source - BSD-3-Clause               

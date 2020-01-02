@@ -26,7 +26,7 @@ Client side usage:
 void example_client(void) {
     // Initialize client running over UART.
     erpc_client_init(
-        erpc_transport_cmsis_uart_init(UART0_NonBlocking_Driver);
+        erpc_transport_cmsis_uart_init(Driver_USART0);
 
     // Now we can call the remote function to turn on the green LED.
     set_led(kGreen, true);
@@ -43,7 +43,7 @@ void set_led(LEDName whichLed, bool onOrOff) {
 void example_server(void) {
     // Initialize server running over UART.
     erpc_server_init(
-        erpc_transport_uart_init(UART0_NonBlocking_Driver);
+        erpc_transport_cmsis_uart_init(Driver_USART0);
 
     // Add the IO service.
     erpc_add_service_to_server(create_IO_service());

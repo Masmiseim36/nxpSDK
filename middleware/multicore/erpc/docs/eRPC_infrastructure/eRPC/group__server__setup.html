@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.7.2</span>
+   &#160;<span id="projectnumber">Rev. 1.7.3</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -146,6 +146,9 @@ Server setup</h2></td></tr>
 <tr class="memitem:gab4a3e4d15e49a871f3528040cdac1d7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__server__setup.html#gab4a3e4d15e49a871f3528040cdac1d7e">erpc_add_service_to_server</a> (void *service)</td></tr>
 <tr class="memdesc:gab4a3e4d15e49a871f3528040cdac1d7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function adds service to server.  <a href="#gab4a3e4d15e49a871f3528040cdac1d7e">More...</a><br /></td></tr>
 <tr class="separator:gab4a3e4d15e49a871f3528040cdac1d7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga58ac8e0e493af45e28a6bb9647a9a9f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__server__setup.html#ga58ac8e0e493af45e28a6bb9647a9a9f2">erpc_remove_service_from_server</a> (void *service)</td></tr>
+<tr class="memdesc:ga58ac8e0e493af45e28a6bb9647a9a9f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function removes service from server.  <a href="#ga58ac8e0e493af45e28a6bb9647a9a9f2">More...</a><br /></td></tr>
+<tr class="separator:ga58ac8e0e493af45e28a6bb9647a9a9f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadbe047d1e39e0401f0d97780c7e75fc8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__server__setup.html#gadbe047d1e39e0401f0d97780c7e75fc8">erpc_server_set_crc</a> (uint32_t crcStart)</td></tr>
 <tr class="memdesc:gadbe047d1e39e0401f0d97780c7e75fc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Can be used to set own crcStart number.  <a href="#gadbe047d1e39e0401f0d97780c7e75fc8">More...</a><br /></td></tr>
 <tr class="separator:gadbe047d1e39e0401f0d97780c7e75fc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -228,6 +231,30 @@ Server control</h2></td></tr>
 
 <p>This function adds service to server. </p>
 <p>Services contain implementations of functions called from client to server.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">service</td><td>Service which contains implementations of functions called from client to server. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga58ac8e0e493af45e28a6bb9647a9a9f2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void erpc_remove_service_from_server </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>service</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function removes service from server. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">service</td><td>Service which contains implementations of functions called from client to server. </td></tr>

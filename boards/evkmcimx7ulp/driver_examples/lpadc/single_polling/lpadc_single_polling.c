@@ -55,7 +55,7 @@ int main(void)
     SCG0->FIRCDIV |= SCG_FIRCDIV_FIRCDIV2(2); /* 24MHZ. */
     CLOCK_SetIpSrc(kCLOCK_Adc1, kCLOCK_IpSrcFircAsync);
 
-    PRINTF("LPADC Polling Example\r\n");
+    PRINTF("LPADC Single Polling Example\r\n");
 
     LPADC_GetDefaultConfig(&mLpadcConfigStruct);
     mLpadcConfigStruct.enableAnalogPreliminary = true;

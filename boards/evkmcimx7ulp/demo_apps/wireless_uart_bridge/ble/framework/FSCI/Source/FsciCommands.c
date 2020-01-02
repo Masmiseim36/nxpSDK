@@ -109,7 +109,7 @@ void FSCI_Error(uint8_t errorCode, uint32_t fsciInterface)
     if (!mFsciErrorReported)
     {
         mFsciErrorMsg.status   = errorCode;
-        mFsciErrorMsg.checksum = FSCI_computeChecksum(&mFsciErrorMsg.header.opGroup, size - 2);
+        mFsciErrorMsg.checksum = FSCI_computeChecksum(((uint8_t *)&mFsciErrorMsg) + 1, size - 2);
 
         if (virtInterface)
         {
@@ -144,7 +144,7 @@ void FSCI_Ack(uint8_t checksum, uint32_t fsciInterface)
     uint8_t size           = sizeof(mFsciAckMsg) - 1;
 
     mFsciAckMsg.checksumPacketReceived = checksum;
-    mFsciAckMsg.checksum               = FSCI_computeChecksum(&mFsciAckMsg.header.opGroup, size - 2);
+    mFsciAckMsg.checksum               = FSCI_computeChecksum(((uint8_t *)&mFsciAckMsg) + 1, size - 2);
 
     if (virtInterface)
     {

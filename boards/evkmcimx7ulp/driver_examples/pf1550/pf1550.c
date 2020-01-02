@@ -191,7 +191,7 @@ static void DEMO_SetRegulatorOutput(void)
 {
     uint8_t regulatorSel;
     uint32_t outputVoltage = 0;
-    pf1550_module_t module;
+    pf1550_module_t module = kPF1550_ModuleSwitch1;
 
     for (;;)
     {
@@ -270,14 +270,6 @@ static void DEMO_SetRegulatorOutput(void)
                 case 'f':
                     module = kPF1550_ModuleLdo3;
                     break;
-
-                default:
-                    PRINTF("\f");
-                    PRINTF("Unsupported regulator is selected!!!\r\n");
-                    PRINTF("Press Any Key to Continue...\r\n");
-                    GETCHAR();
-                    PRINTF("\f");
-                    continue;
             }
 
             PRINTF("\f");

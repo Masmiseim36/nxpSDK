@@ -11,7 +11,6 @@
 #include "timer.h"
 #include "fsl_tpm.h"
 
-#define gHalTimerInstanceNum_c (FSL_FEATURE_SOC_TPM_COUNT)
 typedef struct _hal_timer_handle_struct_t
 {
     uint32_t timeout;
@@ -20,12 +19,21 @@ typedef struct _hal_timer_handle_struct_t
     void *callbackParam;
     uint8_t instance;
 } hal_timer_handle_struct_t;
+
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
+
+static TPM_Type *const s_TPMBase[] = TPM_BASE_PTRS;
+
+static hal_timer_handle_t s_timerHandle[sizeof(s_TPMBase) / sizeof(TPM_Type *)];
+
 /************************************************************************************
 *************************************************************************************
 * Private prototypes
 *************************************************************************************
 ************************************************************************************/
-static hal_timer_handle_t g_timerHandle[gHalTimerInstanceNum_c];
+
 /************************************************************************************
 *************************************************************************************
 * Private memory declarations
@@ -33,16 +41,42 @@ static hal_timer_handle_t g_timerHandle[gHalTimerInstanceNum_c];
 ************************************************************************************/
 static void HAL_TimerInterruptHandle(uint8_t instance)
 {
-    TPM_Type *mTPMBase[]                     = TPM_BASE_PTRS;
-    hal_timer_handle_struct_t *halTimerState = (hal_timer_handle_struct_t *)g_timerHandle[instance];
+    hal_timer_handle_struct_t *halTimerState = (hal_timer_handle_struct_t *)s_timerHandle[instance];
 
-    TPM_ClearStatusFlags(mTPMBase[halTimerState->instance], (uint32_t)kTPM_TimeOverflowFlag);
+    TPM_ClearStatusFlags(s_TPMBase[halTimerState->instance], (uint32_t)kTPM_TimeOverflowFlag);
     if (halTimerState->callback != NULL)
     {
         halTimerState->callback(halTimerState->callbackParam);
     }
 }
 
+static void HAL_TimerHwInit(hal_timer_handle_t halTimerHandle)
+{
+    IRQn_Type mTPMIrqId[]                    = TPM_IRQS;
+    hal_timer_handle_struct_t *halTimerState = halTimerHandle;
+    IRQn_Type irqId;
+    tpm_config_t tpmInfo;
+
+    assert(halTimerHandle);
+    TPM_GetDefaultConfig(&tpmInfo);
+    /* Initialize TPM module */
+    tpmInfo.prescale = kTPM_Prescale_Divide_128;
+    TPM_Init(s_TPMBase[halTimerState->instance], (void *)&tpmInfo);
+    TPM_StopTimer(s_TPMBase[halTimerState->instance]);
+
+    /* Set the timer to be in free-running mode */
+    s_TPMBase[halTimerState->instance]->MOD = 0xFFFF;
+
+    HAL_TimerUpdateTimeout(halTimerHandle, halTimerState->timeout);
+
+    /* Install ISR */
+    irqId = mTPMIrqId[halTimerState->instance];
+    TPM_EnableInterrupts(s_TPMBase[halTimerState->instance], (uint32_t)kTPM_TimeOverflowInterruptEnable);
+
+    s_timerHandle[halTimerState->instance] = halTimerHandle;
+    NVIC_SetPriority(irqId, HAL_TIMER_ISR_PRIORITY);
+    (void)EnableIRQ(irqId);
+}
 void TPM0_IRQHandler(void);
 void TPM1_IRQHandler(void);
 void TPM2_IRQHandler(void);
@@ -82,73 +116,46 @@ void TPM2_IRQHandler(void)
 ************************************************************************************/
 hal_timer_status_t HAL_TimerInit(hal_timer_handle_t halTimerHandle, hal_timer_config_t *halTimerConfig)
 {
-    IRQn_Type mTPMIrqId[]                    = TPM_IRQS;
-    TPM_Type *mTPMBase[]                     = TPM_BASE_PTRS;
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
-    IRQn_Type irqId;
     tpm_config_t tpmInfo;
-    TPM_Type *TPMBaseAddr;
 
     assert(sizeof(hal_timer_handle_struct_t) == HAL_TIMER_HANDLE_SIZE);
     assert(halTimerConfig);
     assert(halTimerHandle);
-    if (halTimerConfig->instance >= gHalTimerInstanceNum_c)
-    {
-        return kStatus_HAL_TimerOutOfRanger;
-    }
+    assert(halTimerConfig->instance < (sizeof(s_TPMBase) / sizeof(TPM_Type *)));
 
     halTimerState->timeout  = halTimerConfig->timeout;
     halTimerState->instance = halTimerConfig->instance;
-    TPMBaseAddr             = (TPM_Type *)mTPMBase[halTimerState->instance];
-    assert(TPMBaseAddr);
-    TPM_GetDefaultConfig(&tpmInfo);
-    /* TPM clock divide by 128 */
-    tpmInfo.prescale = kTPM_Prescale_Divide_128;
-    /* Initialize TPM module */
-    TPM_Init(TPMBaseAddr, (void *)&tpmInfo);
-    TPM_StopTimer(TPMBaseAddr);
-    halTimerState->timerClock_Hz = halTimerConfig->srcClock_Hz / (1UL << (uint8_t)tpmInfo.prescale);
-    /* Set the timer to be in free-running mode */
-    TPMBaseAddr->MOD = 0xFFFF;
-    if (USEC_TO_COUNT((halTimerState->timeout), (halTimerState->timerClock_Hz)) > 0xFFFFU)
-    {
-        return kStatus_HAL_TimerOutOfRanger;
-    }
-    /* Configure channel to Software compare; output pin not used */
-    TPM_SetTimerPeriod(TPMBaseAddr, (uint32_t)USEC_TO_COUNT((halTimerState->timeout), (halTimerState->timerClock_Hz)));
-    /* Install ISR */
-    irqId = mTPMIrqId[halTimerState->instance];
-    TPM_EnableInterrupts(TPMBaseAddr, (uint32_t)kTPM_TimeOverflowInterruptEnable);
+    assert(s_TPMBase[halTimerState->instance]);
 
-    g_timerHandle[halTimerState->instance] = halTimerHandle;
-    NVIC_SetPriority(irqId, HAL_TIMER_ISR_PRIORITY);
-    (void)EnableIRQ(irqId);
+    /* TPM clock divide by 128 */
+    tpmInfo.prescale             = kTPM_Prescale_Divide_128;
+    halTimerState->timerClock_Hz = halTimerConfig->srcClock_Hz / (1UL << (uint8_t)tpmInfo.prescale);
+
+    HAL_TimerHwInit(halTimerHandle);
     return kStatus_HAL_TimerSuccess;
 }
 void HAL_TimerDeinit(hal_timer_handle_t halTimerHandle)
 {
-    TPM_Type *mTPMBase[] = TPM_BASE_PTRS;
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
-    g_timerHandle[halTimerState->instance]   = NULL;
-    TPM_Deinit(mTPMBase[halTimerState->instance]);
+    s_timerHandle[halTimerState->instance]   = NULL;
+    TPM_Deinit(s_TPMBase[halTimerState->instance]);
 }
 /*************************************************************************************/
 void HAL_TimerEnable(hal_timer_handle_t halTimerHandle)
 {
-    TPM_Type *mTPMBase[] = TPM_BASE_PTRS;
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
-    TPM_StartTimer(mTPMBase[halTimerState->instance], kTPM_SystemClock);
+    TPM_StartTimer(s_TPMBase[halTimerState->instance], kTPM_SystemClock);
 }
 
 /*************************************************************************************/
 void HAL_TimerDisable(hal_timer_handle_t halTimerHandle)
 {
-    TPM_Type *mTPMBase[] = TPM_BASE_PTRS;
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
-    TPM_StopTimer(mTPMBase[halTimerState->instance]);
+    TPM_StopTimer(s_TPMBase[halTimerState->instance]);
 }
 
 /*************************************************************************************/
@@ -174,17 +181,16 @@ uint32_t HAL_TimerGetMaxTimeout(hal_timer_handle_t halTimerHandle)
 /* return micro us */
 uint32_t HAL_TimerGetCurrentTimerCount(hal_timer_handle_t halTimerHandle)
 {
-    TPM_Type *mTPMBase[] = TPM_BASE_PTRS;
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
-    return (uint32_t)COUNT_TO_USEC((TPM_GetCurrentTimerCount(mTPMBase[halTimerState->instance])),
+    return (uint32_t)COUNT_TO_USEC((TPM_GetCurrentTimerCount(s_TPMBase[halTimerState->instance])),
                                    (halTimerState->timerClock_Hz));
 }
 
 hal_timer_status_t HAL_TimerUpdateTimeout(hal_timer_handle_t halTimerHandle, uint32_t timeout)
 {
     uint32_t tickCount;
-    TPM_Type *mTPMBase[] = TPM_BASE_PTRS;
+
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
     halTimerState->timeout                   = timeout;
@@ -193,13 +199,14 @@ hal_timer_status_t HAL_TimerUpdateTimeout(hal_timer_handle_t halTimerHandle, uin
     {
         return kStatus_HAL_TimerOutOfRanger;
     }
-    TPM_SetTimerPeriod(mTPMBase[halTimerState->instance], tickCount);
+    TPM_SetTimerPeriod(s_TPMBase[halTimerState->instance], tickCount);
     return kStatus_HAL_TimerSuccess;
 }
 
 void HAL_TimerExitLowpower(hal_timer_handle_t halTimerHandle)
 {
     assert(halTimerHandle);
+    HAL_TimerHwInit(halTimerHandle);
 }
 
 void HAL_TimerEnterLowpower(hal_timer_handle_t halTimerHandle)

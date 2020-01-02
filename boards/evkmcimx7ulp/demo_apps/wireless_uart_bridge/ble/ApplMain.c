@@ -44,6 +44,8 @@
 #define gAppEvtMsgFromHostStack_c (1 << 0)
 #define gAppEvtAppCallback_c (1 << 1)
 
+#define POINTER_ON_BASE(base, pnt) (((uint8_t *)(base)) + (((uint32_t)(pnt)) - ((uint32_t)(base))))
+
 /************************************************************************************
 *************************************************************************************
 * Private type definitions
@@ -522,6 +524,7 @@ static void App_GenericCallback(gapGenericEvent_t *pGenericEvent)
 
 static void App_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEvent_t *pConnectionEvent)
 {
+    uint8_t *pMsg;
     appMsgFromHost_t *pMsgIn = NULL;
     uint8_t msgLen           = GetRelAddr(appMsgFromHost_t, msgData) + sizeof(gapConnectionEvent_t);
 
@@ -542,7 +545,8 @@ static void App_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEvent_t
         msgLen += (pKeys->aCsrk != NULL) ? gcSmpCsrkSize_c : 0;
     }
 
-    pMsgIn = MSG_Alloc(msgLen);
+    pMsg   = MSG_Alloc(msgLen);
+    pMsgIn = (appMsgFromHost_t *)pMsg;
 
     if (!pMsgIn)
         return;
@@ -553,7 +557,7 @@ static void App_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEvent_t
     if (pConnectionEvent->eventType == gConnEvtKeysReceived_c)
     {
         gapSmpKeys_t *pKeys = pConnectionEvent->eventData.keysReceivedEvent.pKeys;
-        uint8_t *pCursor    = (uint8_t *)&pMsgIn->msgData.connMsg.connEvent.eventData.keysReceivedEvent.pKeys;
+        uint8_t *pCursor = POINTER_ON_BASE(pMsg, &pMsgIn->msgData.connMsg.connEvent.eventData.keysReceivedEvent.pKeys);
 
         pMsgIn->msgData.connMsg.connEvent.eventType = gConnEvtKeysReceived_c;
         pCursor += sizeof(void *);
@@ -634,6 +638,7 @@ static void App_AdvertisingCallback(gapAdvertisingEvent_t *pAdvertisingEvent)
 
 static void App_ScanningCallback(gapScanningEvent_t *pScanningEvent)
 {
+    uint8_t *pMsg;
     appMsgFromHost_t *pMsgIn = NULL;
 
     uint8_t msgLen = GetRelAddr(appMsgFromHost_t, msgData) + sizeof(gapScanningEvent_t);
@@ -643,7 +648,8 @@ static void App_ScanningCallback(gapScanningEvent_t *pScanningEvent)
         msgLen += pScanningEvent->eventData.scannedDevice.dataLength;
     }
 
-    pMsgIn = MSG_Alloc(msgLen);
+    pMsg   = MSG_Alloc(msgLen);
+    pMsgIn = (appMsgFromHost_t *)pMsg;
 
     if (!pMsgIn)
         return;
@@ -663,8 +669,8 @@ static void App_ScanningCallback(gapScanningEvent_t *pScanningEvent)
 
         /* Copy data after the gapScanningEvent_t structure and update the data pointer*/
         pMsgIn->msgData.scanMsg.eventData.scannedDevice.data = (uint8_t *)&pMsgIn->msgData + sizeof(gapScanningEvent_t);
-        FLib_MemCpy(pMsgIn->msgData.scanMsg.eventData.scannedDevice.data, pScanningEvent->eventData.scannedDevice.data,
-                    pScanningEvent->eventData.scannedDevice.dataLength);
+        FLib_MemCpy(POINTER_ON_BASE(pMsg, pMsgIn->msgData.scanMsg.eventData.scannedDevice.data),
+                    pScanningEvent->eventData.scannedDevice.data, pScanningEvent->eventData.scannedDevice.dataLength);
     }
 
     /* Put message in the Host Stack to App queue */
@@ -676,6 +682,7 @@ static void App_ScanningCallback(gapScanningEvent_t *pScanningEvent)
 
 static void App_GattServerCallback(deviceId_t deviceId, gattServerEvent_t *pServerEvent)
 {
+    uint8_t *pMsg;
     appMsgFromHost_t *pMsgIn = NULL;
     uint16_t msgLen          = GetRelAddr(appMsgFromHost_t, msgData) + sizeof(gattServerMsg_t);
 
@@ -685,7 +692,8 @@ static void App_GattServerCallback(deviceId_t deviceId, gattServerEvent_t *pServ
         msgLen += pServerEvent->eventData.attributeWrittenEvent.cValueLength;
     }
 
-    pMsgIn = MSG_Alloc(msgLen);
+    pMsg   = MSG_Alloc(msgLen);
+    pMsgIn = (appMsgFromHost_t *)pMsg;
 
     if (!pMsgIn)
         return;
@@ -701,9 +709,10 @@ static void App_GattServerCallback(deviceId_t deviceId, gattServerEvent_t *pServ
         pMsgIn->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue =
             (uint8_t *)&pMsgIn->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue +
             sizeof(uint8_t *);
-        FLib_MemCpy(pMsgIn->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue,
-                    pServerEvent->eventData.attributeWrittenEvent.aValue,
-                    pServerEvent->eventData.attributeWrittenEvent.cValueLength);
+        FLib_MemCpy(
+            POINTER_ON_BASE(pMsg, pMsgIn->msgData.gattServerMsg.serverEvent.eventData.attributeWrittenEvent.aValue),
+            pServerEvent->eventData.attributeWrittenEvent.aValue,
+            pServerEvent->eventData.attributeWrittenEvent.cValueLength);
     }
 
     /* Put message in the Host Stack to App queue */
@@ -743,10 +752,12 @@ static void App_GattClientNotificationCallback(deviceId_t deviceId,
                                                uint8_t *aValue,
                                                uint16_t valueLength)
 {
+    uint8_t *pMsg;
     appMsgFromHost_t *pMsgIn = NULL;
 
     /* Allocate a buffer with enough space to store also the notified value*/
-    pMsgIn = MSG_Alloc(GetRelAddr(appMsgFromHost_t, msgData) + sizeof(gattClientNotifIndMsg_t) + valueLength);
+    pMsg   = MSG_Alloc(GetRelAddr(appMsgFromHost_t, msgData) + sizeof(gattClientNotifIndMsg_t) + valueLength);
+    pMsgIn = (appMsgFromHost_t *)pMsg;
 
     if (!pMsgIn)
         return;
@@ -758,7 +769,7 @@ static void App_GattClientNotificationCallback(deviceId_t deviceId,
 
     /* Copy value after the gattClientNotifIndMsg_t structure and update the aValue pointer*/
     pMsgIn->msgData.gattClientNotifIndMsg.aValue = (uint8_t *)&pMsgIn->msgData + sizeof(gattClientNotifIndMsg_t);
-    FLib_MemCpy(pMsgIn->msgData.gattClientNotifIndMsg.aValue, aValue, valueLength);
+    FLib_MemCpy(POINTER_ON_BASE(pMsg, pMsgIn->msgData.gattClientNotifIndMsg.aValue), aValue, valueLength);
 
     /* Put message in the Host Stack to App queue */
     MSG_Queue(&mHostAppInputQueue, pMsgIn);
@@ -772,10 +783,12 @@ static void App_GattClientIndicationCallback(deviceId_t deviceId,
                                              uint8_t *aValue,
                                              uint16_t valueLength)
 {
+    uint8_t *pMsg;
     appMsgFromHost_t *pMsgIn = NULL;
 
     /* Allocate a buffer with enough space to store also the notified value*/
-    pMsgIn = MSG_Alloc(GetRelAddr(appMsgFromHost_t, msgData) + sizeof(gattClientNotifIndMsg_t) + valueLength);
+    pMsg   = MSG_Alloc(GetRelAddr(appMsgFromHost_t, msgData) + sizeof(gattClientNotifIndMsg_t) + valueLength);
+    pMsgIn = (appMsgFromHost_t *)pMsg;
 
     if (!pMsgIn)
         return;
@@ -787,7 +800,7 @@ static void App_GattClientIndicationCallback(deviceId_t deviceId,
 
     /* Copy value after the gattClientIndIndMsg_t structure and update the aValue pointer*/
     pMsgIn->msgData.gattClientNotifIndMsg.aValue = (uint8_t *)&pMsgIn->msgData + sizeof(gattClientNotifIndMsg_t);
-    FLib_MemCpy(pMsgIn->msgData.gattClientNotifIndMsg.aValue, aValue, valueLength);
+    FLib_MemCpy(POINTER_ON_BASE(pMsg, pMsgIn->msgData.gattClientNotifIndMsg.aValue), aValue, valueLength);
 
     /* Put message in the Host Stack to App queue */
     MSG_Queue(&mHostAppInputQueue, pMsgIn);
@@ -798,10 +811,12 @@ static void App_GattClientIndicationCallback(deviceId_t deviceId,
 
 static void App_L2caLeDataCallback(deviceId_t deviceId, uint16_t lePsm, uint8_t *pPacket, uint16_t packetLength)
 {
+    uint8_t *pMsg;
     appMsgFromHost_t *pMsgIn = NULL;
 
     /* Allocate a buffer with enough space to store the packet */
-    pMsgIn = MSG_Alloc(GetRelAddr(appMsgFromHost_t, msgData) + sizeof(l2caLeCbDataMsg_t) + packetLength);
+    pMsg   = MSG_Alloc(GetRelAddr(appMsgFromHost_t, msgData) + sizeof(l2caLeCbDataMsg_t) + packetLength);
+    pMsgIn = (appMsgFromHost_t *)pMsg;
 
     if (!pMsgIn)
     {
@@ -813,7 +828,7 @@ static void App_L2caLeDataCallback(deviceId_t deviceId, uint16_t lePsm, uint8_t 
     pMsgIn->msgData.l2caLeCbDataMsg.lePsm        = lePsm;
     pMsgIn->msgData.l2caLeCbDataMsg.packetLength = packetLength;
 
-    FLib_MemCpy((&pMsgIn->msgData.l2caLeCbDataMsg) + 1, pPacket, packetLength);
+    FLib_MemCpy(POINTER_ON_BASE(pMsg, &pMsgIn->msgData.l2caLeCbDataMsg + 1), pPacket, packetLength);
 
     /* Put message in the Host Stack to App queue */
     MSG_Queue(&mHostAppInputQueue, pMsgIn);
@@ -824,6 +839,7 @@ static void App_L2caLeDataCallback(deviceId_t deviceId, uint16_t lePsm, uint8_t 
 
 static void App_L2caLeControlCallback(l2capControlMessageType_t messageType, void *pMessage)
 {
+    uint8_t *pMsg;
     appMsgFromHost_t *pMsgIn = NULL;
     uint8_t messageLength    = 0;
 
@@ -859,7 +875,8 @@ static void App_L2caLeControlCallback(l2capControlMessageType_t messageType, voi
     }
 
     /* Allocate a buffer with enough space to store the biggest packet */
-    pMsgIn = MSG_Alloc(GetRelAddr(appMsgFromHost_t, msgData) + sizeof(l2caLeCbControlMsg_t) + messageLength);
+    pMsg   = MSG_Alloc(GetRelAddr(appMsgFromHost_t, msgData) + sizeof(l2caLeCbControlMsg_t) + messageLength);
+    pMsgIn = (appMsgFromHost_t *)pMsg;
 
     if (!pMsgIn)
     {
@@ -869,7 +886,7 @@ static void App_L2caLeControlCallback(l2capControlMessageType_t messageType, voi
     pMsgIn->msgType                                = gAppL2caLeControlMsg_c;
     pMsgIn->msgData.l2caLeCbControlMsg.messageType = messageType;
 
-    FLib_MemCpy((&pMsgIn->msgData.l2caLeCbControlMsg) + 1, pMessage, messageLength);
+    FLib_MemCpy(POINTER_ON_BASE(pMsg, &pMsgIn->msgData.l2caLeCbControlMsg + 1), pMessage, messageLength);
 
     /* Put message in the Host Stack to App queue */
     MSG_Queue(&mHostAppInputQueue, pMsgIn);

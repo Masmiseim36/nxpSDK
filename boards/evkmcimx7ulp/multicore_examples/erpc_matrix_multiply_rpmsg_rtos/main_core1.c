@@ -131,7 +131,8 @@ void app_task(void *param)
     erpc_server_init(transport, message_buffer_factory);
 
     /* adding the service to the server */
-    erpc_add_service_to_server(create_MatrixMultiplyService_service());
+    erpc_service_t service = create_MatrixMultiplyService_service();
+    erpc_add_service_to_server(service);
 
     PRINTF("\r\neRPC setup done, waiting for requests...\r\n");
 
@@ -149,8 +150,15 @@ void app_task(void *param)
         /* print error description */
         erpc_error_handler(status, 0);
 
+        /* removing the service from the server */
+        erpc_remove_service_from_server(service);
+        destroy_MatrixMultiplyService_service();
+
         /* stop erpc server */
         erpc_server_stop();
+
+        /* print error description */
+        erpc_server_deinit();
     }
 
     while (1)

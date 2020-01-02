@@ -137,7 +137,8 @@ int main(void)
         slaveReceiveBuffer[i] = 0;
     }
 
-    if (xTaskCreate(slave_task, "Slave_task", configMINIMAL_STACK_SIZE + 64, NULL, slave_task_PRIORITY, NULL) != pdPASS)
+    if (xTaskCreate(slave_task, "Slave_task", configMINIMAL_STACK_SIZE + 100, NULL, slave_task_PRIORITY, NULL) !=
+        pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
         while (1)
@@ -217,7 +218,7 @@ static void slave_task(void *pvParameters)
 #endif /* (SPI_MASTER_SLAVE == isSLAVE) || (EXAMPLE_CONNECT_SPI == SINGLE_BOARD) */
 
 #if ((SPI_MASTER_SLAVE == isMASTER) || (EXAMPLE_CONNECT_SPI == SINGLE_BOARD))
-    if (xTaskCreate(master_task, "Master_task", configMINIMAL_STACK_SIZE + 64, NULL, master_task_PRIORITY, NULL) !=
+    if (xTaskCreate(master_task, "Master_task", configMINIMAL_STACK_SIZE + 100, NULL, master_task_PRIORITY, NULL) !=
         pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");

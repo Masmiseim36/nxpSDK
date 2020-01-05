@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -20,8 +20,8 @@
 #define ECHO_BUFFER_LENGTH 8
 
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 
 /*******************************************************************************
  * Prototypes
@@ -35,10 +35,10 @@ AT_NONCACHEABLE_SECTION_INIT(uint8_t g_tipString[]) =
     "USART EDMA example\r\nSend back received data\r\nEcho every 8 characters\r\n";
 AT_NONCACHEABLE_SECTION_INIT(uint8_t g_txBuffer[ECHO_BUFFER_LENGTH]) = {0};
 AT_NONCACHEABLE_SECTION_INIT(uint8_t g_rxBuffer[ECHO_BUFFER_LENGTH]) = {0};
-volatile bool rxBufferEmpty = true;
-volatile bool txBufferFull = false;
-volatile bool txOnGoing = false;
-volatile bool rxOnGoing = false;
+volatile bool rxBufferEmpty                                          = true;
+volatile bool txBufferFull                                           = false;
+volatile bool txOnGoing                                              = false;
+volatile bool rxOnGoing                                              = false;
 
 /*******************************************************************************
  * Code
@@ -56,13 +56,13 @@ void USART_Callback(uint32_t event)
     if (event == ARM_USART_EVENT_SEND_COMPLETE)
     {
         txBufferFull = false;
-        txOnGoing = false;
+        txOnGoing    = false;
     }
 
     if (event == ARM_USART_EVENT_RECEIVE_COMPLETE)
     {
         rxBufferEmpty = false;
-        rxOnGoing = false;
+        rxOnGoing     = false;
     }
 }
 
@@ -117,7 +117,7 @@ int main(void)
         {
             memcpy(g_txBuffer, g_rxBuffer, ECHO_BUFFER_LENGTH);
             rxBufferEmpty = true;
-            txBufferFull = true;
+            txBufferFull  = true;
         }
     }
 }

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -11,6 +11,9 @@
 /*******************************************************************************
  * Definitations
  ******************************************************************************/
+
+/*! @brief swap byte sequence in  16 bit data */
+#define SGTL_SWAP_UINT16_BYTE_SEQUENCE(x) (__REV16(x))
 
 /*******************************************************************************
  * Prototypes
@@ -23,59 +26,26 @@
 /*******************************************************************************
  * Code
  ******************************************************************************/
-status_t SGTL_Init(codec_handle_t *handle, void *codec_config)
+status_t SGTL_Init(sgtl_handle_t *handle, sgtl_config_t *config)
 {
-    sgtl_config_t *config = (sgtl_config_t *)codec_config;
+    assert(handle != NULL);
+    assert(config != NULL);
 
-    handle->slaveAddress = SGTL5000_I2C_ADDR;
-
-    /* NULL pointer means default setting. */
-    if (config == NULL)
+    handle->config = config;
+    /* i2c bus initialization */
+    if (CODEC_I2C_Init(handle->i2cHandle, config->i2cConfig.codecI2CInstance, SGTL_I2C_BITRATE,
+                       config->i2cConfig.codecI2CSourceClock) != kStatus_HAL_I2cSuccess)
     {
-        /* Power up Inputs/Outputs/Digital Blocks
-           Power up LINEOUT, HP, ADC, DAC. */
-        SGTL_WriteReg(handle, CHIP_ANA_POWER, 0x6AFFU);
-
-        /* Power up desired digital blocks.
-        I2S_IN (bit 0), I2S_OUT (bit 1), DAP (bit 4), DAC (bit 5), ADC (bit 6) are powered on */
-        SGTL_WriteReg(handle, CHIP_DIG_POWER, 0x0063U);
-
-        /* Configure SYS_FS clock to 48kHz, MCLK_FREQ to 256*Fs. */
-        SGTL_ModifyReg(handle, CHIP_CLK_CTRL, 0xFFC8U, 0x0008U);
-
-        /* Configure the I2S clocks in slave mode.
-           I2S LRCLK is same as the system sample clock.
-           Data length = 16 bits. */
-        SGTL_WriteReg(handle, CHIP_I2S_CTRL, 0x0170U);
-
-        /* I2S_IN -> DAC -> HP_OUT, Route I2S_IN to DAC */
-        SGTL_ModifyReg(handle, CHIP_SSS_CTRL, 0xFFDFU, 0x0010U);
-
-        /* Select DAC as the input to HP_OUT */
-        SGTL_ModifyReg(handle, CHIP_ANA_CTRL, 0xFFBFU, 0x0000U);
-
-        /* LINE_IN -> ADC -> I2S_OUT. Set ADC input to LINE_IN. */
-        SGTL_ModifyReg(handle, CHIP_ANA_CTRL, 0xFFFFU, 0x0004U);
-
-        /* Route ADC to I2S_OUT */
-        SGTL_ModifyReg(handle, CHIP_SSS_CTRL, 0xFFFCU, 0x0000U);
-
-        /* Default using I2S left format. */
-        SGTL_SetProtocol(handle, kSGTL_BusI2S);
+        return kStatus_Fail;
     }
-    else
-    {
-        SGTL_WriteReg(handle, CHIP_ANA_POWER, 0x6AFF);
 
-        /* Set the data route */
-        SGTL_SetDataRoute(handle, config->route);
+    SGTL_WriteReg(handle, CHIP_ANA_POWER, 0x6AFF);
 
-        /* Set the audio format */
-        SGTL_SetProtocol(handle, config->bus);
+    /* Set the data route */
+    SGTL_SetDataRoute(handle, config->route);
 
-        /* Set sgtl5000 to master or slave */
-        SGTL_SetMasterSlave(handle, config->master_slave);
-    }
+    /* Set sgtl5000 to master or slave */
+    SGTL_SetMasterSlave(handle, config->master_slave);
 
     /* Input Volume Control
     Configure ADC left and right analog volume to desired default.
@@ -104,10 +74,24 @@ status_t SGTL_Init(codec_handle_t *handle, void *codec_config)
     /* Unmute ADC */
     SGTL_ModifyReg(handle, CHIP_ANA_CTRL, 0xFFFEU, 0x0000U);
 
+    /* Set the audio format */
+    SGTL_SetProtocol(handle, config->bus);
+    SGTL_ConfigDataFormat(handle, config->format.mclk_HZ, config->format.sampleRate, config->format.bitWidth);
+
+    /* sclk valid edge */
+    if (config->format.sclkEdge == kSGTL_SclkValidEdgeRising)
+    {
+        SGTL_ModifyReg(handle, CHIP_I2S_CTRL, SGTL5000_I2S_SCLK_INV_CLR_MASK, SGTL5000_I2S_VAILD_RISING_EDGE);
+    }
+    else
+    {
+        SGTL_ModifyReg(handle, CHIP_I2S_CTRL, SGTL5000_I2S_SCLK_INV_CLR_MASK, SGTL5000_I2S_VAILD_FALLING_EDGE);
+    }
+
     return kStatus_Success;
 }
 
-status_t SGTL_Deinit(codec_handle_t *handle)
+status_t SGTL_Deinit(sgtl_handle_t *handle)
 {
     SGTL_DisableModule(handle, kSGTL_ModuleADC);
     SGTL_DisableModule(handle, kSGTL_ModuleDAC);
@@ -116,10 +100,10 @@ status_t SGTL_Deinit(codec_handle_t *handle)
     SGTL_DisableModule(handle, kSGTL_ModuleI2SOUT);
     SGTL_DisableModule(handle, kSGTL_ModuleLineOut);
 
-    return kStatus_Success;
+    return CODEC_I2C_Deinit(handle->i2cHandle);
 }
 
-void SGTL_SetMasterSlave(codec_handle_t *handle, bool master)
+void SGTL_SetMasterSlave(sgtl_handle_t *handle, bool master)
 {
     if (master == 1)
     {
@@ -131,7 +115,7 @@ void SGTL_SetMasterSlave(codec_handle_t *handle, bool master)
     }
 }
 
-status_t SGTL_EnableModule(codec_handle_t *handle, sgtl_module_t module)
+status_t SGTL_EnableModule(sgtl_handle_t *handle, sgtl_module_t module)
 {
     status_t ret = kStatus_Success;
     switch (module)
@@ -177,7 +161,7 @@ status_t SGTL_EnableModule(codec_handle_t *handle, sgtl_module_t module)
     return ret;
 }
 
-status_t SGTL_DisableModule(codec_handle_t *handle, sgtl_module_t module)
+status_t SGTL_DisableModule(sgtl_handle_t *handle, sgtl_module_t module)
 {
     status_t ret = kStatus_Success;
     switch (module)
@@ -223,7 +207,7 @@ status_t SGTL_DisableModule(codec_handle_t *handle, sgtl_module_t module)
     return ret;
 }
 
-status_t SGTL_SetDataRoute(codec_handle_t *handle, sgtl_route_t route)
+status_t SGTL_SetDataRoute(sgtl_handle_t *handle, sgtl_route_t route)
 {
     status_t ret = kStatus_Success;
     switch (route)
@@ -293,7 +277,7 @@ status_t SGTL_SetDataRoute(codec_handle_t *handle, sgtl_route_t route)
     return ret;
 }
 
-status_t SGTL_SetProtocol(codec_handle_t *handle, sgtl_protocol_t protocol)
+status_t SGTL_SetProtocol(sgtl_handle_t *handle, sgtl_protocol_t protocol)
 {
     status_t ret = kStatus_Success;
     switch (protocol)
@@ -329,7 +313,7 @@ status_t SGTL_SetProtocol(codec_handle_t *handle, sgtl_protocol_t protocol)
     return ret;
 }
 
-status_t SGTL_SetVolume(codec_handle_t *handle, sgtl_module_t module, uint32_t volume)
+status_t SGTL_SetVolume(sgtl_handle_t *handle, sgtl_module_t module, uint32_t volume)
 {
     uint16_t vol = 0;
     status_t ret = kStatus_Success;
@@ -359,7 +343,7 @@ status_t SGTL_SetVolume(codec_handle_t *handle, sgtl_module_t module, uint32_t v
     return ret;
 }
 
-uint32_t SGTL_GetVolume(codec_handle_t *handle, sgtl_module_t module)
+uint32_t SGTL_GetVolume(sgtl_handle_t *handle, sgtl_module_t module)
 {
     uint16_t vol = 0;
     switch (module)
@@ -387,7 +371,7 @@ uint32_t SGTL_GetVolume(codec_handle_t *handle, sgtl_module_t module)
     return vol;
 }
 
-status_t SGTL_SetMute(codec_handle_t *handle, sgtl_module_t module, bool mute)
+status_t SGTL_SetMute(sgtl_handle_t *handle, sgtl_module_t module, bool mute)
 {
     status_t ret = kStatus_Success;
     switch (module)
@@ -422,13 +406,12 @@ status_t SGTL_SetMute(codec_handle_t *handle, sgtl_module_t module, bool mute)
     return ret;
 }
 
-status_t SGTL_ConfigDataFormat(codec_handle_t *handle, uint32_t mclk, uint32_t sample_rate, uint32_t bits)
+status_t SGTL_ConfigDataFormat(sgtl_handle_t *handle, uint32_t mclk, uint32_t sample_rate, uint32_t bits)
 {
-    uint16_t val = 0;
-    uint16_t regVal = 0;
-    status_t retval = kStatus_Success;
+    uint16_t val     = 0;
+    uint16_t regVal  = 0;
     uint16_t mul_clk = 0U;
-    uint32_t sysFs = 0U;
+    uint32_t sysFs   = 0U;
 
     /* Over sample rate can only up to 512, the least to 8k */
     if ((mclk / (MIN(sample_rate * 6U, 96000U)) > 512U) || (mclk / sample_rate < 256U))
@@ -442,78 +425,77 @@ status_t SGTL_ConfigDataFormat(codec_handle_t *handle, uint32_t mclk, uint32_t s
         case 8000:
             if (mclk > 32000U * 512U)
             {
-                val = 0x0038;
+                val   = 0x0038;
                 sysFs = 48000;
             }
             else
             {
-                val = 0x0020;
+                val   = 0x0020;
                 sysFs = 32000;
             }
             break;
         case 11025:
-            val = 0x0024;
+            val   = 0x0024;
             sysFs = 44100;
             break;
         case 12000:
-            val = 0x0028;
+            val   = 0x0028;
             sysFs = 48000;
             break;
         case 16000:
             if (mclk > 32000U * 512U)
             {
-                val = 0x003C;
+                val   = 0x003C;
                 sysFs = 96000;
             }
             else
             {
-                val = 0x0010;
+                val   = 0x0010;
                 sysFs = 32000;
             }
             break;
         case 22050:
-            val = 0x0014;
+            val   = 0x0014;
             sysFs = 44100;
             break;
         case 24000:
             if (mclk > 48000U * 512U)
             {
-                val = 0x002C;
+                val   = 0x002C;
                 sysFs = 96000;
             }
             else
             {
-                val = 0x0018;
+                val   = 0x0018;
                 sysFs = 48000;
             }
             break;
         case 32000:
-            val = 0x0000;
+            val   = 0x0000;
             sysFs = 32000;
             break;
         case 44100:
-            val = 0x0004;
+            val   = 0x0004;
             sysFs = 44100;
             break;
         case 48000:
             if (mclk > 48000U * 512U)
             {
-                val = 0x001C;
+                val   = 0x001C;
                 sysFs = 96000;
             }
             else
             {
-                val = 0x0008;
+                val   = 0x0008;
                 sysFs = 48000;
             }
             break;
         case 96000:
-            val = 0x000C;
+            val   = 0x000C;
             sysFs = 96000;
             break;
         default:
-            retval = kStatus_InvalidArgument;
-            break;
+            return kStatus_InvalidArgument;
     }
 
     SGTL_ReadReg(handle, CHIP_I2S_CTRL, &regVal);
@@ -552,34 +534,69 @@ status_t SGTL_ConfigDataFormat(codec_handle_t *handle, uint32_t mclk, uint32_t s
             SGTL_ModifyReg(handle, CHIP_I2S_CTRL, SGTL5000_I2S_DLEN_CLR_MASK, SGTL5000_I2S_DLEN_32);
             break;
         default:
-            retval = kStatus_InvalidArgument;
-            break;
+            return kStatus_InvalidArgument;
     }
 
-    return retval;
+    return kStatus_Success;
 }
 
-status_t SGTL_WriteReg(codec_handle_t *handle, uint16_t reg, uint16_t val)
+status_t SGTL_SetPlay(sgtl_handle_t *handle, uint32_t playSource)
+{
+    uint16_t regValue = 0U, regBitMask = 0x40U;
+
+    /* headphone source form PGA */
+    if (playSource == kSGTL_PlaySourceLineIn)
+    {
+        regValue = 0x40U;
+    }
+    /* headphone source from DAC */
+    else
+    {
+        regValue = 0U;
+    }
+
+    return SGTL_ModifyReg(handle, CHIP_ANA_CTRL, regBitMask, regValue);
+}
+
+status_t SGTL_SetRecord(sgtl_handle_t *handle, uint32_t recordSource)
+{
+    uint16_t regValue = 0U, regBitMask = 0x4U;
+
+    /* ADC source form LINEIN */
+    if (recordSource == kSGTL_RecordSourceLineIn)
+    {
+        regValue = 0x4U;
+    }
+    /* ADC source from MIC */
+    else
+    {
+        regValue = 0U;
+    }
+
+    return SGTL_ModifyReg(handle, CHIP_ANA_CTRL, regBitMask, regValue);
+}
+
+status_t SGTL_WriteReg(sgtl_handle_t *handle, uint16_t reg, uint16_t val)
+{
+    uint16_t writeValue = SGTL_SWAP_UINT16_BYTE_SEQUENCE(val);
+
+    return CODEC_I2C_Send(handle->i2cHandle, handle->config->slaveAddress, reg, 2U, (uint8_t *)&writeValue, 2U);
+}
+
+status_t SGTL_ReadReg(sgtl_handle_t *handle, uint16_t reg, uint16_t *val)
 {
     status_t retval = 0;
 
-    retval = CODEC_I2C_WriteReg(handle->slaveAddress, kCODEC_RegAddr16Bit, reg, kCODEC_RegWidth16Bit, val,
-                                handle->I2C_SendFunc);
+    uint16_t readValue = 0U;
+
+    retval = CODEC_I2C_Receive(handle->i2cHandle, handle->config->slaveAddress, reg, 2U, (uint8_t *)&readValue, 2U);
+
+    *val = SGTL_SWAP_UINT16_BYTE_SEQUENCE(readValue);
 
     return retval;
 }
 
-status_t SGTL_ReadReg(codec_handle_t *handle, uint16_t reg, uint16_t *val)
-{
-    status_t retval = 0;
-
-    retval = CODEC_I2C_ReadReg(handle->slaveAddress, kCODEC_RegAddr16Bit, reg, kCODEC_RegWidth16Bit, val,
-                               handle->I2C_ReceiveFunc);
-
-    return retval;
-}
-
-status_t SGTL_ModifyReg(codec_handle_t *handle, uint16_t reg, uint16_t clr_mask, uint16_t val)
+status_t SGTL_ModifyReg(sgtl_handle_t *handle, uint16_t reg, uint16_t clr_mask, uint16_t val)
 {
     status_t retval = 0;
     uint16_t reg_val;

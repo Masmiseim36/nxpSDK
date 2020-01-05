@@ -8,11 +8,10 @@ data using AES-CBC, DES3-CBC and Hash algorithms MD5, SHA1 and SHA256.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.70.1
-- Keil MDK 5.20
-- GCC ARM Embedded 2015-4.9-q3
-- Kinetis Development Studio IDE 3.2.0
-- Atollic TrueSTUDIO 5.5.2
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -27,21 +26,6 @@ Although not required, the recommendation is to leave the development board's ju
 and configurations in default state when running this example.
 Prepare the Demo
 ================
-Connect a serial cable from the debug UART port of the board to the PC. Start Tera Term
-(http://ttssh2.osdn.jp) and make a connection to the virtual serial port.
-
-1. Start Tera Term
-2. New connection -> Serial
-3. Set apropriate COMx port (x is port number) in Port context menu. Number is provided by operation
-   system and could be different from computer to computer. Select COM number related to virtual
-   serial port. Confirm selected port by OK button.
-4. Set following connection parameters in menu Setup->Serial port...
-        Baud rate:    115200
-        Data:         8
-        Parity:       none
-        Stop:         1
-        Flow control: one
-5.  Confirm selected parameters by OK button.
 
 Running the demo
 ================
@@ -108,7 +92,7 @@ Computed SHA1:
 2fd4e1c67a2d28fced849ee1bb76e7391b93eb12
 
 Computed SHA256:
-d7a8fbb37d7809469ca9abcb0082e4f8d5651e46d3cdb762d02d0bf37c9e592
+d7a8fbb307d7809469ca9abcb0082e4f8d5651e46d3cdb762d02d0bf37c9e592
 
 Computed MD5:
 9e107d9d372bb6826bd81d3542a419d6

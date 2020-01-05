@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*******************************************************************************
@@ -45,6 +23,7 @@
  * Definitions
  ******************************************************************************/
 
+#define CORE_CLK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
 /* Number of cycles for througput measurement. One data buffer of certain size if processed this times. */
 #define CYCLES_FOR_THROUGHPUT 128
 
@@ -154,7 +133,7 @@ void SysTick_Handler(void)
 static uint32_t time_config(void)
 {
     /* call CMSIS SysTick function. It enables the SysTick interrupt at low priority */
-    return SysTick_Config(CLOCK_GetFreq(kCLOCK_CoreSysClk) / 1000); /* 1 ms period */
+    return SysTick_Config(CORE_CLK_FREQ / 1000); /* 1 ms period */
 }
 
 /*!
@@ -169,10 +148,10 @@ static float time_get_ms(void)
     do
     {
         currMsCount = g_msCount;
-        currTick = SysTick->VAL;
+        currTick    = SysTick->VAL;
     } while (currMsCount != g_msCount);
 
-    loadTick = CLOCK_GetFreq(kCLOCK_CoreSysClk) / 1000;
+    loadTick = CORE_CLK_FREQ / 1000;
     return (float)currMsCount + ((float)loadTick - (float)currTick) / (float)loadTick;
 }
 
@@ -639,7 +618,7 @@ static void mmcau_example_task(void)
     PRINTF("AES CBC Encryption of %d bytes.\r\n", length);
 
     /* Call AES_cbc encryption */
-    cycles = CYCLES_FOR_THROUGHPUT;
+    cycles     = CYCLES_FOR_THROUGHPUT;
     timeBefore = time_get_ms();
     while (cycles)
     {
@@ -661,7 +640,7 @@ static void mmcau_example_task(void)
     PRINTF("AES CBC Decryption of %d bytes.\r\n", length);
 
     /* Call AES_cbc decryption */
-    cycles = CYCLES_FOR_THROUGHPUT;
+    cycles     = CYCLES_FOR_THROUGHPUT;
     timeBefore = time_get_ms();
     while (cycles)
     {
@@ -692,7 +671,7 @@ static void mmcau_example_task(void)
     /*   ENCRYPTION   */
     PRINTF("DES3 CBC Encryption of %d bytes.\r\n", length);
     /* Call DES3_cbc encryption */
-    cycles = CYCLES_FOR_THROUGHPUT;
+    cycles     = CYCLES_FOR_THROUGHPUT;
     timeBefore = time_get_ms();
     while (cycles)
     {
@@ -713,7 +692,7 @@ static void mmcau_example_task(void)
     /*   DECRYPTION   */
     PRINTF("DES3 CBC decryption of %d bytes.\r\n", length);
     /* Call DES3_cbc decryption */
-    cycles = CYCLES_FOR_THROUGHPUT;
+    cycles     = CYCLES_FOR_THROUGHPUT;
     timeBefore = time_get_ms();
     while (cycles)
     {
@@ -750,7 +729,7 @@ static void mmcau_example_task(void)
     blocks = length / CRYPTO_BLOCK_LENGTH;
 
     /*Compute SHA1, SHA256 and MD5*/
-    cycles = CYCLES_FOR_THROUGHPUT;
+    cycles     = CYCLES_FOR_THROUGHPUT;
     timeBefore = time_get_ms();
     while (cycles)
     {
@@ -762,11 +741,11 @@ static void mmcau_example_task(void)
            mmcau_get_throughput(timeAfter - timeBefore, CYCLES_FOR_THROUGHPUT * length));
     for (int i = 0; i < SHA1_RESULT_LENGTH / sizeof(uint32_t); i++)
     {
-        PRINTF("%0x", resultSha1[i]);
+        PRINTF("%08x", resultSha1[i]);
     }
     PRINTF("\r\n\r\n");
 
-    cycles = CYCLES_FOR_THROUGHPUT;
+    cycles     = CYCLES_FOR_THROUGHPUT;
     timeBefore = time_get_ms();
     while (cycles)
     {
@@ -778,11 +757,11 @@ static void mmcau_example_task(void)
            mmcau_get_throughput(timeAfter - timeBefore, CYCLES_FOR_THROUGHPUT * length));
     for (int i = 0; i < SHA256_RESULT_LENGTH / sizeof(uint32_t); i++)
     {
-        PRINTF("%0x", resultSha256[i]);
+        PRINTF("%08x", resultSha256[i]);
     }
     PRINTF("\r\n\r\n");
 
-    cycles = CYCLES_FOR_THROUGHPUT;
+    cycles     = CYCLES_FOR_THROUGHPUT;
     timeBefore = time_get_ms();
     while (cycles)
     {
@@ -798,7 +777,7 @@ static void mmcau_example_task(void)
         uint8_t *pByte = (uint8_t *)&resultMd5[i];
         for (int j = 0; j < 4; j++)
         {
-            PRINTF("%0x", pByte[j]);
+            PRINTF("%02x", pByte[j]);
         }
     }
     /* Format console output */

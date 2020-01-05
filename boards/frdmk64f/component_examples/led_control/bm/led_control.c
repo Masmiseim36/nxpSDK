@@ -287,15 +287,14 @@ void main_task(void *param)
             BUTTON_InstallCallback(buttonHandle[i], button_callback, NULL);
         }
 #endif
-
-#if !(defined(SHELL_NON_BLOCKING_MODE) && (SHELL_NON_BLOCKING_MODE > 0U))
-        SHELL_Task(s_shellHandle);
-#endif
     }
 
 #if USE_RTOS
     while (1)
-    {
-    }
 #endif
+    {
+#if !(defined(SHELL_NON_BLOCKING_MODE) && (SHELL_NON_BLOCKING_MODE > 0U))
+        SHELL_Task(s_shellHandle);
+#endif
+    }
 }

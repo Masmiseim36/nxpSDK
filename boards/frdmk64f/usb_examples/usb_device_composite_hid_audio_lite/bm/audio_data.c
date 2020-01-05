@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -261,17 +261,17 @@ uint32_t audioPosition = 0U;
  *
  * This function prepare audio wav data before send.
  */
-void USB_PrepareData(void)
+void USB_AudioRecorderGetBuffer(uint8_t *buffer, uint32_t size)
 {
     uint8_t k;
     /* copy audio wav data from flash to buffer */
-    for (k = 0U; k < AUDIO_ENDPOINT_MAX_PACKET_SIZE; k++)
+    for (k = 0U; k < size; k++)
     {
         if (audioPosition > (wavSize - 1U))
         {
             audioPosition = 0U;
         }
-        s_wavBuff[k] = wavData[audioPosition];
+        *(buffer + k)= wavData[audioPosition];
         audioPosition++;
     }
 }

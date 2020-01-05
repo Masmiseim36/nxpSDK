@@ -108,7 +108,7 @@ static A_STATUS driver_thread_operation(A_VOID *pCxt)
             break;
     }
     pDCxt->asynchRequest = NULL;
-    reg_query_bool = true;
+    reg_query_bool       = true;
     DRIVER_WAKE_USER(pCxt);
 #undef PTR_REG_MOD
 #undef PARAM
@@ -117,16 +117,16 @@ static A_STATUS driver_thread_operation(A_VOID *pCxt)
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-*  Function Name  : ath_ioctl_handler
-*  PARAMS         :
-*                   qca_ptr-> ptr to qca context
-*                   inout_param -> input/output data for command.
-*  Returned Value : QCA_OK or error code
-*  Comments       :
-*        IOCTL implementation of Atheros Wifi device.
-*
-*END*-----------------------------------------------------------------*/
+ *
+ *  Function Name  : ath_ioctl_handler
+ *  PARAMS         :
+ *                   qca_ptr-> ptr to qca context
+ *                   inout_param -> input/output data for command.
+ *  Returned Value : QCA_OK or error code
+ *  Comments       :
+ *        IOCTL implementation of Atheros Wifi device.
+ *
+ *END*-----------------------------------------------------------------*/
 
 static uint32_t ath_ioctl_handler_ext(A_VOID *qca_ptr, ATH_IOCTL_PARAM_STRUCT_PTR param_ptr)
 {
@@ -146,7 +146,7 @@ static uint32_t ath_ioctl_handler_ext(A_VOID *qca_ptr, ATH_IOCTL_PARAM_STRUCT_PT
     {
         case ATH_REG_QUERY:
             /* set the operation to be executed by the driver thread */
-            pQuery = param_ptr->data;
+            pQuery         = param_ptr->data;
             reg_query_bool = false;
             if (pDCxt->asynchRequest != NULL)
             {
@@ -161,10 +161,10 @@ static uint32_t ath_ioctl_handler_ext(A_VOID *qca_ptr, ATH_IOCTL_PARAM_STRUCT_PT
             break;
         case ATH_MEM_QUERY:
             // read the memory location for stat storage
-            regQuery.address = TARG_VTOP(HOST_INTEREST_ITEM_ADDRESS(hi_flash_is_present));
+            regQuery.address   = TARG_VTOP(HOST_INTEREST_ITEM_ADDRESS(hi_flash_is_present));
             regQuery.operation = ATH_REG_OP_READ;
-            pQuery = &regQuery;
-            reg_query_bool = false;
+            pQuery             = &regQuery;
+            reg_query_bool     = false;
 
             if (pDCxt->asynchRequest != NULL)
             {
@@ -181,7 +181,7 @@ static uint32_t ath_ioctl_handler_ext(A_VOID *qca_ptr, ATH_IOCTL_PARAM_STRUCT_PT
             }
             // capture the value in regQuery.address
             regQuery.address = TARG_VTOP(regQuery.value);
-            ptr = (uint32_t *)param_ptr->data;
+            ptr              = (uint32_t *)param_ptr->data;
 
             for (i = 0; i < 5; i++)
             {
@@ -207,7 +207,7 @@ static uint32_t ath_ioctl_handler_ext(A_VOID *qca_ptr, ATH_IOCTL_PARAM_STRUCT_PT
             }
             /* for allocram remaining we query address allocram_remaining_bytes.*/
             regQuery.address = TARG_VTOP(0x541f2c);
-            reg_query_bool = false;
+            reg_query_bool   = false;
 
             if (pDCxt->asynchRequest != NULL)
             {
@@ -245,10 +245,9 @@ static uint32_t ath_ioctl_handler_ext(A_VOID *qca_ptr, ATH_IOCTL_PARAM_STRUCT_PT
 
 #define LED_STATE_ERROR \
     (0x00000001) /* LED 3 will only light in the event of an error (because its red and red means bad) */
-#define LED_STATE_PROGRESS                                                                                         \
-    (                                                                                                              \
-        0x00000002) /* LED 4 will only light in the event the progress is occurring (because its yellow and yellow \
-                       means indeterminate). */
+#define LED_STATE_PROGRESS                                                                                      \
+    (0x00000002) /* LED 4 will only light in the event the progress is occurring (because its yellow and yellow \
+                    means indeterminate). */
 #define LED_STATE_INFO_1                                                                                             \
     (0x00000008) /* LED 1 will light to indicate different information under different conditions (because its green \
                     and we like green). */
@@ -263,10 +262,9 @@ static uint32_t ath_ioctl_handler_ext(A_VOID *qca_ptr, ATH_IOCTL_PARAM_STRUCT_PT
 
 #define LED_STATE_ERROR \
     (0x00000004) /* LED 3 will only light in the event of an error (because its red and red means bad) */
-#define LED_STATE_PROGRESS                                                                                         \
-    (                                                                                                              \
-        0x00000008) /* LED 4 will only light in the event the progress is occurring (because its yellow and yellow \
-                       means indeterminate). */
+#define LED_STATE_PROGRESS                                                                                      \
+    (0x00000008) /* LED 4 will only light in the event the progress is occurring (because its yellow and yellow \
+                    means indeterminate). */
 #define LED_STATE_INFO_1                                                                                             \
     (0x00000001) /* LED 1 will light to indicate different information under different conditions (because its green \
                     and we like green). */
@@ -279,7 +277,7 @@ static uint32_t ath_ioctl_handler_ext(A_VOID *qca_ptr, ATH_IOCTL_PARAM_STRUCT_PT
 void LED_SetOutput(uint32_t signal);
 void LED_SetOutput(uint32_t signal)
 {
-#if 0 
+#if 0
 	E.Y. hide to disable the LED op
     static const uint32_t led1[] = {
         LED_1,
@@ -297,13 +295,13 @@ void LED_SetOutput(uint32_t signal)
         LED_4,
         GPIO_LIST_END
     };
-       
 
-    if (output_port) { 
+
+    if (output_port) {
         ioctl(output_port, (signal & 0x00000001) ? LED_ON : LED_OFF, (pointer) &led1);
         ioctl(output_port, (signal & 0x00000002) ? LED_ON : LED_OFF, (pointer) &led2);
         ioctl(output_port, (signal & 0x00000004) ? LED_ON : LED_OFF, (pointer) &led3);
-        ioctl(output_port, (signal & 0x00000008) ? LED_ON : LED_OFF, (pointer) &led4);    
+        ioctl(output_port, (signal & 0x00000008) ? LED_ON : LED_OFF, (pointer) &led4);
     }
 #endif
 }
@@ -315,7 +313,7 @@ void LED_SetOutput(uint32_t signal)
 
 void add_one_profile(uint8_t event_id, uint16_t timestamp)
 {
-    profiles[profile_head].event_id = event_id;
+    profiles[profile_head].event_id  = event_id;
     profiles[profile_head].timestamp = timestamp;
 
     CYCLE_QUEUE_INC(profile_head);
@@ -369,13 +367,13 @@ void gpio_process_register_value(uint8_t *datap, uint32_t len)
 
 void clear_kf_profile(void)
 {
-    kf_profile_head = 0;
+    kf_profile_head  = 0;
     kf_profile_trail = 0;
 }
 
 void add_one_kf_profile(uint16_t event_id, uint32_t timestamp)
 {
-    kf_profiles[kf_profile_head].event_id = event_id;
+    kf_profiles[kf_profile_head].event_id  = event_id;
     kf_profiles[kf_profile_head].timestamp = timestamp;
 
     QUEUE_IDX_INC(kf_profile_head);
@@ -469,21 +467,21 @@ void output_kf_pfm(void)
         switch ((id >> 12) & 0x0F)
         {
             case 1:
-                type = "once";
+                type       = "once";
                 event_name = kf_once_event_str[(id & 0x0F) - 1];
                 break;
 
             case 2:
-                type = "repeat";
+                type       = "repeat";
                 event_name = kf_repeat_event_str[(id & 0x0F) - 1];
                 break;
 
             case 3:
-                type = "stati";
+                type       = "stati";
                 event_name = kf_statistic_event_str[(id & 0x0F) - 1];
                 break;
             default:
-                type = "unknown";
+                type       = "unknown";
                 event_name = "unknown";
                 break;
         }
@@ -498,7 +496,7 @@ void atheros_driver_setup(void)
     // ath_custom_init.Boot_Profile = LED_SetOutput;
     ath_custom_init.Boot_Profile = boot_profile_output;
 
-    ath_custom_init.Api_GpioDataEventRx = gpio_process_register_value;
-    ath_custom_init.Custom_Api_PfmDataEventRx = Custom_PfmDataEventRx;
+    ath_custom_init.Api_GpioDataEventRx           = gpio_process_register_value;
+    ath_custom_init.Custom_Api_PfmDataEventRx     = Custom_PfmDataEventRx;
     ath_custom_init.Custom_Api_PfmDataDoneEventRx = Custom_PfmDataDoneEventRx;
 }

@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016, 2018 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_host_config.h"
@@ -67,12 +45,15 @@ extern usb_status_t USB_DeviceHidMouseAction(uint32_t moveAction);
  * Variables
  ******************************************************************************/
 
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+static uint8_t s_KeyboardBuffer[HID_BUFFER_SIZE]; /*!< use to receive report descriptor and data */
 usb_host_keyboard_instance_t g_HostHidKeyboard;
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
+/*Host hid example doesn't support HID report descriptor analysis, this example assume that the received data are sent
+ * by specific order. */
 static void USB_HostKeyboardProcessBuffer(usb_host_keyboard_instance_t *keyboardInstance)
 {
     uint8_t index;
@@ -132,17 +113,17 @@ static void USB_HostHidInCallback(void *param, uint8_t *data, uint32_t dataLengt
 {
     usb_host_keyboard_instance_t *keyboardInstance = (usb_host_keyboard_instance_t *)param;
 
-    if (keyboardInstance->runWaitState == kRunWaitDataReceived)
+    if (keyboardInstance->runWaitState == kUSB_HostHidRunWaitDataReceived)
     {
         if (keyboardInstance->deviceState == kStatus_DEV_Attached)
         {
             if (status == kStatus_USB_Success)
             {
-                keyboardInstance->runState = kRunDataReceived; /* go to process data */
+                keyboardInstance->runState = kUSB_HostHidRunDataReceived; /* go to process data */
             }
             else
             {
-                keyboardInstance->runState = kRunPrimeDataReceive; /* go to prime next receiving */
+                keyboardInstance->runState = kUSB_HostHidRunPrimeDataReceive; /* go to prime next receiving */
             }
         }
     }
@@ -152,21 +133,22 @@ static void USB_HostHidControlCallback(void *param, uint8_t *data, uint32_t data
 {
     usb_host_keyboard_instance_t *keyboardInstance = (usb_host_keyboard_instance_t *)param;
 
-    if (keyboardInstance->runWaitState == kRunWaitSetInterface) /* set interface done */
+    if (keyboardInstance->runWaitState == kUSB_HostHidRunWaitSetInterface) /* set interface done */
     {
-        keyboardInstance->runState = kRunSetInterfaceDone;
+        keyboardInstance->runState = kUSB_HostHidRunSetInterfaceDone;
     }
-    else if (keyboardInstance->runWaitState == kRunWaitSetIdle) /* hid set idle done */
+    else if (keyboardInstance->runWaitState == kUSB_HostHidRunWaitSetIdle) /* hid set idle done */
     {
-        keyboardInstance->runState = kRunSetIdleDone;
+        keyboardInstance->runState = kUSB_HostHidRunSetIdleDone;
     }
-    else if (keyboardInstance->runWaitState == kRunWaitGetReportDescriptor) /* hid get report descriptor done */
+    else if (keyboardInstance->runWaitState ==
+             kUSB_HostHidRunWaitGetReportDescriptor) /* hid get report descriptor done */
     {
-        keyboardInstance->runState = kRunGetReportDescriptorDone;
+        keyboardInstance->runState = kUSB_HostHidRunGetReportDescriptorDone;
     }
-    else if (keyboardInstance->runWaitState == kRunWaitSetProtocol) /* hid set protocol done */
+    else if (keyboardInstance->runWaitState == kUSB_HostHidRunWaitSetProtocol) /* hid set protocol done */
     {
-        keyboardInstance->runState = kRunSetProtocolDone;
+        keyboardInstance->runState = kUSB_HostHidRunSetProtocolDone;
     }
     else
     {
@@ -192,14 +174,14 @@ void USB_HostHidKeyboardTask(void *param)
                 break;
 
             case kStatus_DEV_Attached: /* deivce is attached and numeration is done */
-                keyboardInstance->runState = kRunSetInterface;
+                keyboardInstance->runState = kUSB_HostHidRunSetInterface;
                 USB_HostHidInit(keyboardInstance->deviceHandle,
                                 &keyboardInstance->classHandle); /* hid class initialization */
                 usb_echo("keyboard attached\r\n");
                 break;
 
             case kStatus_DEV_Detached: /* device is detached */
-                keyboardInstance->runState = kRunIdle;
+                keyboardInstance->runState    = kUSB_HostHidRunIdle;
                 keyboardInstance->deviceState = kStatus_DEV_Idle;
                 USB_HostHidDeinit(keyboardInstance->deviceHandle,
                                   keyboardInstance->classHandle); /* hid class de-initialization */
@@ -214,12 +196,12 @@ void USB_HostHidKeyboardTask(void *param)
 
     switch (keyboardInstance->runState)
     {
-        case kRunIdle:
+        case kUSB_HostHidRunIdle:
             break;
 
-        case kRunSetInterface: /* 1. set hid interface */
-            keyboardInstance->runWaitState = kRunWaitSetInterface;
-            keyboardInstance->runState = kRunIdle;
+        case kUSB_HostHidRunSetInterface: /* 1. set hid interface */
+            keyboardInstance->runWaitState = kUSB_HostHidRunWaitSetInterface;
+            keyboardInstance->runState     = kUSB_HostHidRunIdle;
             if (USB_HostHidSetInterface(keyboardInstance->classHandle, keyboardInstance->interfaceHandle, 0,
                                         USB_HostHidControlCallback, keyboardInstance) != kStatus_USB_Success)
             {
@@ -227,13 +209,13 @@ void USB_HostHidKeyboardTask(void *param)
             }
             break;
 
-        case kRunSetInterfaceDone: /* 2. hid set idle */
+        case kUSB_HostHidRunSetInterfaceDone: /* 2. hid set idle */
             keyboardInstance->maxPacketSize =
                 USB_HostHidGetPacketsize(keyboardInstance->classHandle, USB_ENDPOINT_INTERRUPT, USB_IN);
 
             /* first: set idle */
-            keyboardInstance->runWaitState = kRunWaitSetIdle;
-            keyboardInstance->runState = kRunIdle;
+            keyboardInstance->runWaitState = kUSB_HostHidRunWaitSetIdle;
+            keyboardInstance->runState     = kUSB_HostHidRunIdle;
             if (USB_HostHidSetIdle(keyboardInstance->classHandle, 0, 0, USB_HostHidControlCallback, keyboardInstance) !=
                 kStatus_USB_Success)
             {
@@ -241,11 +223,11 @@ void USB_HostHidKeyboardTask(void *param)
             }
             break;
 
-        case kRunSetIdleDone: /* 3. hid get report descriptor */
+        case kUSB_HostHidRunSetIdleDone: /* 3. hid get report descriptor */
             /* get report descriptor */
             hidDescriptor = NULL;
-            descriptor = (uint8_t *)((usb_host_interface_t *)keyboardInstance->interfaceHandle)->interfaceExtension;
-            endPosition = (uint32_t)descriptor +
+            descriptor    = (uint8_t *)((usb_host_interface_t *)keyboardInstance->interfaceHandle)->interfaceExtension;
+            endPosition   = (uint32_t)descriptor +
                           ((usb_host_interface_t *)keyboardInstance->interfaceHandle)->interfaceExtensionLength;
 
             while ((uint32_t)descriptor < endPosition)
@@ -279,23 +261,23 @@ void USB_HostHidKeyboardTask(void *param)
             if (keyboardReportLength > HID_BUFFER_SIZE)
             {
                 usb_echo("hid buffer is too small\r\n");
-                keyboardInstance->runState = kRunIdle;
+                keyboardInstance->runState = kUSB_HostHidRunIdle;
                 return;
             }
 
             if (keyboardReportLength > 0) /* when report descriptor length is zero, go to next step */
             {
-                keyboardInstance->runWaitState = kRunWaitGetReportDescriptor;
-                keyboardInstance->runState = kRunIdle;
+                keyboardInstance->runWaitState = kUSB_HostHidRunWaitGetReportDescriptor;
+                keyboardInstance->runState     = kUSB_HostHidRunIdle;
                 /* second: get report descriptor */
                 USB_HostHidGetReportDescriptor(keyboardInstance->classHandle, keyboardInstance->keyboardBuffer,
                                                keyboardReportLength, USB_HostHidControlCallback, keyboardInstance);
                 break;
             }
 
-        case kRunGetReportDescriptorDone: /* 4. hid set protocol */
-            keyboardInstance->runWaitState = kRunWaitSetProtocol;
-            keyboardInstance->runState = kRunIdle;
+        case kUSB_HostHidRunGetReportDescriptorDone: /* 4. hid set protocol */
+            keyboardInstance->runWaitState = kUSB_HostHidRunWaitSetProtocol;
+            keyboardInstance->runState     = kUSB_HostHidRunIdle;
             /* third: set protocol */
             if (USB_HostHidSetProtocol(keyboardInstance->classHandle, USB_HOST_HID_REQUEST_PROTOCOL_REPORT,
                                        USB_HostHidControlCallback, keyboardInstance) != kStatus_USB_Success)
@@ -304,9 +286,9 @@ void USB_HostHidKeyboardTask(void *param)
             }
             break;
 
-        case kRunSetProtocolDone: /* 5. start to receive data */
-            keyboardInstance->runWaitState = kRunWaitDataReceived;
-            keyboardInstance->runState = kRunIdle;
+        case kUSB_HostHidRunSetProtocolDone: /* 5. start to receive data */
+            keyboardInstance->runWaitState = kUSB_HostHidRunWaitDataReceived;
+            keyboardInstance->runState     = kUSB_HostHidRunIdle;
             if (USB_HostHidRecv(keyboardInstance->classHandle, keyboardInstance->keyboardBuffer,
                                 keyboardInstance->maxPacketSize, USB_HostHidInCallback,
                                 keyboardInstance) != kStatus_USB_Success)
@@ -315,11 +297,11 @@ void USB_HostHidKeyboardTask(void *param)
             }
             break;
 
-        case kRunDataReceived: /* process received data and receive next data */
+        case kUSB_HostHidRunDataReceived: /* process received data and receive next data */
             USB_HostKeyboardProcessBuffer(keyboardInstance);
 
-            keyboardInstance->runWaitState = kRunWaitDataReceived;
-            keyboardInstance->runState = kRunIdle;
+            keyboardInstance->runWaitState = kUSB_HostHidRunWaitDataReceived;
+            keyboardInstance->runState     = kUSB_HostHidRunIdle;
             if (USB_HostHidRecv(keyboardInstance->classHandle, keyboardInstance->keyboardBuffer,
                                 keyboardInstance->maxPacketSize, USB_HostHidInCallback,
                                 keyboardInstance) != kStatus_USB_Success)
@@ -328,9 +310,9 @@ void USB_HostHidKeyboardTask(void *param)
             }
             break;
 
-        case kRunPrimeDataReceive: /* receive data */
-            keyboardInstance->runWaitState = kRunWaitDataReceived;
-            keyboardInstance->runState = kRunIdle;
+        case kUSB_HostHidRunPrimeDataReceive: /* receive data */
+            keyboardInstance->runWaitState = kUSB_HostHidRunWaitDataReceived;
+            keyboardInstance->runState     = kUSB_HostHidRunIdle;
             if (USB_HostHidRecv(keyboardInstance->classHandle, keyboardInstance->keyboardBuffer,
                                 keyboardInstance->maxPacketSize, USB_HostHidInCallback,
                                 keyboardInstance) != kStatus_USB_Success)
@@ -355,7 +337,7 @@ usb_status_t USB_HostHidKeyboardEvent(usb_device_handle deviceHandle,
     uint8_t interfaceIndex;
     uint8_t id;
 
-    switch (eventCode)
+    switch (eventCode & 0x0000FFFFU)
     {
         case kUSB_HostEventAttach:
             /* judge whether is configurationHandle supported */
@@ -363,7 +345,7 @@ usb_status_t USB_HostHidKeyboardEvent(usb_device_handle deviceHandle,
             for (interfaceIndex = 0; interfaceIndex < configuration->interfaceCount; ++interfaceIndex)
             {
                 interface = &configuration->interfaceList[interfaceIndex];
-                id = interface->interfaceDesc->bInterfaceClass;
+                id        = interface->interfaceDesc->bInterfaceClass;
                 if (id != USB_HOST_HID_CLASS_CODE)
                 {
                     continue;
@@ -383,9 +365,10 @@ usb_status_t USB_HostHidKeyboardEvent(usb_device_handle deviceHandle,
                     if (g_HostHidKeyboard.deviceState == kStatus_DEV_Idle)
                     {
                         /* the interface is supported by the application */
-                        g_HostHidKeyboard.deviceHandle = deviceHandle;
+                        g_HostHidKeyboard.keyboardBuffer  = s_KeyboardBuffer;
+                        g_HostHidKeyboard.deviceHandle    = deviceHandle;
                         g_HostHidKeyboard.interfaceHandle = interface;
-                        g_HostHidKeyboard.configHandle = configurationHandle;
+                        g_HostHidKeyboard.configHandle    = configurationHandle;
                         return kStatus_USB_Success;
                     }
                     else
@@ -436,6 +419,10 @@ usb_status_t USB_HostHidKeyboardEvent(usb_device_handle deviceHandle,
                     g_HostHidKeyboard.deviceState = kStatus_DEV_Detached;
                 }
             }
+            break;
+
+        case kUSB_HostEventEnumerationFail:
+            usb_echo("enumeration failed\r\n");
             break;
 
         default:

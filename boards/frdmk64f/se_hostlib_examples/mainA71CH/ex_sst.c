@@ -32,8 +32,8 @@
 #include "tstHostCrypto.h"
 
 #include "HostCryptoAPI.h"
-static U8 exSstSym(U8 initMode, U16 appletVersion);
-static U8 exSstPub(U8 initMode, U16 appletVersion);
+static U8 exSstSym(U8 initMode);
+static U8 exSstPub(U8 initMode);
 
 /**
  * Demonstrate storage of symmetric keys:
@@ -43,7 +43,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion);
  * - ::exSstPub
  *
  */
-U8 exSst(U16 appletVersion)
+U8 exSst()
 {
     U8 result = 1;
     PRINTF( "\r\n-----------\r\nStart exSst()\r\n------------\r\n");
@@ -53,18 +53,18 @@ U8 exSst(U16 appletVersion)
     // No channel encryption
     // ---------------------
     // - Sym keys
-    result &= exSstSym(INIT_MODE_RESET, appletVersion);
+    result &= exSstSym(INIT_MODE_RESET);
 
     // - Public keys
-    result &= exSstPub(INIT_MODE_RESET, appletVersion);
+    result &= exSstPub(INIT_MODE_RESET);
 
     // Using channel encryption
     // ------------------------
     // - Sym keys
-    result &= exSstSym(INIT_MODE_RESET_DO_SCP03, appletVersion);
+    result &= exSstSym(INIT_MODE_RESET_DO_SCP03);
 
     // - Public keys
-    result &= exSstPub(INIT_MODE_RESET_DO_SCP03, appletVersion);
+    result &= exSstPub(INIT_MODE_RESET_DO_SCP03);
 
     // overall result
     PRINTF( "\r\n-----------\r\nEnd exSst(), result = %s\r\n------------\r\n", ((result == 1)? "OK": "FAILED"));
@@ -83,7 +83,7 @@ U8 exSst(U16 appletVersion)
  *
  * @return     1 if successful.
  */
-static U8 exSstSym(U8 initMode, U16 appletVersion)
+static U8 exSstSym(U8 initMode)
 {
     U8 result = 1;
     U16 err;
@@ -232,17 +232,6 @@ static U8 exSstSym(U8 initMode, U16 appletVersion)
     result &= AX_CHECK_SW(err, SW_OK, "err");
 
 
-    if (appletVersion < 0x0130)
-    {
-        // Now Lock the first half of the slots for update
-        for (indexAesKey=0; indexAesKey<A71CH_SYM_KEY_MAX>>1; indexAesKey++)
-        {
-            PRINTF( "\r\nA71_FreezeSymKey(0x%02x)\r\n", indexAesKey);
-            err = A71_FreezeSymKey((SST_Index_t)indexAesKey);
-            result &= AX_CHECK_SW(err, SW_OK, "err");
-        }
-    }
-
     // Slots are filled up with known keys, do a KDF as proof
     for (indexAesKey=0; indexAesKey<A71CH_SYM_KEY_MAX; indexAesKey++)
     {
@@ -253,17 +242,6 @@ static U8 exSstSym(U8 initMode, U16 appletVersion)
         // axPrintByteArray("derivedData", derivedData, derivedDataLen, AX_COLON_32);
         result &= AX_COMPARE_BYTE_ARRAY("derivedDataRef[indexAesKey]", derivedDataRef[indexAesKey], sizeof(derivedDataRef[indexAesKey]),
             "derivedData", derivedData, derivedDataLen, AX_COLON_32);
-    }
-
-    if (appletVersion < 0x0130)
-    {
-        // Check whether the locked half (i.e. first half) is truly 'frozen' ....
-        for (indexAesKey=0; indexAesKey<A71CH_SYM_KEY_MAX>>1; indexAesKey++)
-        {
-            PRINTF( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
-            err = A71_SetSymKey((SST_Index_t)indexAesKey, aesRef[indexAesKey], sizeof(aesRef[indexAesKey]));
-            result &= AX_CHECK_SW(err, SW_COMMAND_NOT_ALLOWED, "Expected to fail, frozen credential cannot be overwritten");
-        }
     }
 
     // Overwrite the second half
@@ -369,7 +347,7 @@ static U8 exSstSym(U8 initMode, U16 appletVersion)
  *   to be successfull.
  * @param[in] appletVersion In case an applet older than Revision 1.2 (0x012x) is attached, a negative test is skipped.
  */
-static U8 exSstPub(U8 initMode, U16 appletVersion)
+static U8 exSstPub(U8 initMode)
 {
     U8 result = 1;
     U16 err;
@@ -380,11 +358,11 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
 
     ECCCurve_t eccCurve = ECCCurve_NIST_P256;
 
-    EC_KEY *eccKeyCA[A71CH_PUBLIC_KEY_MAX];
-    eccKeyComponents_t eccKcCA[A71CH_PUBLIC_KEY_MAX];
+    EC_KEY *eccKeyCA[A71CH_PUBLIC_KEY_MAX] = {0};
+    eccKeyComponents_t eccKcCA[A71CH_PUBLIC_KEY_MAX] = {0};
 
     EC_KEY *eccKeyAlternative = NULL;
-    eccKeyComponents_t eccKcAlternative;
+    eccKeyComponents_t eccKcAlternative = {0};
 
     U8 fetchedPubKey[65];
     U16 fetchedPubKeyLen = sizeof(fetchedPubKey);
@@ -623,7 +601,6 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
     result &= AX_CHECK_SW(err, SW_OK, "err");
     assert(result);
 
-    if (appletVersion >= 0x0120)
     {
         // Setting unwrapped public keys (in second half) MUST fail
         for (pubKeyIndex = A71CH_PUBLIC_KEY_MAX >> 1; pubKeyIndex < A71CH_PUBLIC_KEY_MAX; pubKeyIndex++)

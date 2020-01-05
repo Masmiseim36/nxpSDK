@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, NXP Semiconductor
+ * Copyright 2016, NXP
  * All rights reserved.
  *
  *
@@ -70,7 +70,7 @@ int main(void)
     PRINTF("\r\n The LED is blinking when RF field is detected.\r\n");
 
     uint8_t reg = 0;
-    uint8_t FD = 1;
+    uint8_t FD  = 1;
     BOOL status = FALSE;
 
     /* configure ntag to active the field detection signal on the presence of the RF field. */

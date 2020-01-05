@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MK22F51212"/>
+    <definition extID="component.osa.MK22F51212"/>
+    <definition extID="component.serial_manager.MK22F51212"/>
+    <definition extID="component.serial_manager_uart.MK22F51212"/>
+    <definition extID="component.uart_adapter.MK22F51212"/>
+    <definition extID="device.MK22F51212_CMSIS.MK22F51212"/>
+    <definition extID="device.MK22F51212_startup.MK22F51212"/>
+    <definition extID="middleware.baremetal.MK22F51212"/>
+    <definition extID="middleware.usb.device.MK22F51212"/>
+    <definition extID="middleware.usb.device_controller_khci.MK22F51212"/>
+    <definition extID="platform.Include_common.MK22F51212"/>
+    <definition extID="platform.Include_core_cm4.MK22F51212"/>
+    <definition extID="platform.Include_dsp.MK22F51212"/>
+    <definition extID="platform.drivers.clock.MK22F51212"/>
+    <definition extID="platform.drivers.common.MK22F51212"/>
+    <definition extID="platform.drivers.gpio.MK22F51212"/>
+    <definition extID="platform.drivers.lpuart.MK22F51212"/>
+    <definition extID="platform.drivers.port.MK22F51212"/>
+    <definition extID="platform.drivers.smc.MK22F51212"/>
+    <definition extID="platform.drivers.uart.MK22F51212"/>
+    <definition extID="platform.utilities.assert.MK22F51212"/>
+    <definition extID="platform.utilities.misc_utilities.MK22F51212"/>
+    <definition extID="utility.debug_console.MK22F51212"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+  </externalDefinitions>
+  <example id="twrk22f120m_dev_composite_cdc_vcom_cdc_vcom_lite_bm" name="dev_composite_cdc_vcom_cdc_vcom_lite_bm" category="usb_examples" dependency="middleware.usb.device_controller_khci.MK22F51212 middleware.usb.device.MK22F51212 platform.drivers.smc.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 device.MK22F51212_CMSIS.MK22F51212 device.MK22F51212_startup.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.drivers.gpio.MK22F51212 platform.utilities.assert.MK22F51212 utility.debug_console.MK22F51212 component.uart_adapter.MK22F51212 component.serial_manager.MK22F51212 component.lists.MK22F51212 component.serial_manager_uart.MK22F51212 platform.drivers.port.MK22F51212 component.osa.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.Include_common.MK22F51212 platform.Include_dsp.MK22F51212 platform.utilities.misc_utilities.MK22F51212 middleware.baremetal.MK22F51212">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv4.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv4.hard</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>_DEBUG=1</value>
+          <value>CPU_MK22FN512VDC12</value>
+          <value>USB_STACK_BM</value>
+          <value>FSL_OSA_BM_TASK_ENABLE=0</value>
+          <value>FSL_OSA_BM_TIMER_CONFIG=0</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv4.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
+          <value>&amp;Heap:Default;Default;0x2000&amp;Stack:Default;Default;0x2000</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <source path="boards/twrk22f120m/usb_examples/usb_device_composite_cdc_vcom_cdc_vcom_lite/bm/armgcc" target_path="MK22F51212/gcc" type="linker" toolchain="armgcc">
+      <files mask="MK22FN512xxx12_flash.ld"/>
+    </source>
+    <source path="boards/twrk22f120m/usb_examples/usb_device_composite_cdc_vcom_cdc_vcom_lite/bm/iar" target_path="MK22F51212/iar" type="linker" toolchain="iar">
+      <files mask="MK22FN512xxx12_flash.icf"/>
+    </source>
+    <source path="boards/twrk22f120m/usb_examples/usb_device_composite_cdc_vcom_cdc_vcom_lite/bm/mdk" target_path="MK22F51212/arm" type="linker" toolchain="mdk">
+      <files mask="MK22FN512xxx12_flash.scf"/>
+    </source>
+    <source path="boards/twrk22f120m/usb_examples/usb_device_composite_cdc_vcom_cdc_vcom_lite/bm" target_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/twrk22f120m/usb_examples/usb_device_composite_cdc_vcom_cdc_vcom_lite/bm" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/twrk22f120m/usb_examples/usb_device_composite_cdc_vcom_cdc_vcom_lite/bm" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/twrk22f120m/usb_examples/usb_device_composite_cdc_vcom_cdc_vcom_lite/bm" target_path="source" type="c_include">
+      <files mask="composite.h"/>
+      <files mask="usb_device_cdc_acm.h"/>
+      <files mask="usb_device_ch9.h"/>
+      <files mask="usb_device_config.h"/>
+      <files mask="usb_device_descriptor.h"/>
+      <files mask="virtual_com.h"/>
+    </source>
+    <source path="boards/twrk22f120m/usb_examples/usb_device_composite_cdc_vcom_cdc_vcom_lite/bm" target_path="source" type="src">
+      <files mask="composite.c"/>
+      <files mask="usb_device_cdc_acm.c"/>
+      <files mask="usb_device_ch9.c"/>
+      <files mask="usb_device_descriptor.c"/>
+      <files mask="virtual_com.c"/>
+    </source>
+    <source path="boards/twrk22f120m/usb_examples/usb_device_composite_cdc_vcom_cdc_vcom_lite/bm" target_path="twrk22f120m/usb_examples/usb_device_composite_cdc_vcom_cdc_vcom_lite/bm" type="binary" exclude="true">
+      <files mask="dev_composite_cdc_vcom_cdc_vcom_lite_bm.bin"/>
+    </source>
+    <source path="boards/twrk22f120m/usb_examples/usb_device_composite_cdc_vcom_cdc_vcom_lite/bm" target_path="twrk22f120m/usb_examples/usb_device_composite_cdc_vcom_cdc_vcom_lite/bm" type="doc" exclude="true">
+      <files mask="readme.pdf"/>
+    </source>
+    <source path="boards/twrk22f120m/usb_examples/usb_device_composite_cdc_vcom_cdc_vcom_lite/inf" target_path="usb/example/usb_device_composite_cdc_vcom_cdc_vcom_lite/inf" type="configuration" exclude="true">
+      <files mask="fsl_ucwxp.inf"/>
+    </source>
+    <source path="boards/twrk22f120m/usb_examples/usb_device_composite_cdc_vcom_cdc_vcom_lite/inf" target_path="usb/example/usb_device_composite_cdc_vcom_cdc_vcom_lite/inf" type="other" exclude="true">
+      <files mask="cdc.cat"/>
+    </source>
+  </example>
+</ksdk:examples>

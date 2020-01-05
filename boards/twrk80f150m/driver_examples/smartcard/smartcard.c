@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_device_registers.h"
@@ -227,9 +201,9 @@ static int16_t receive_atr(smartcard_context_t *context, uint8_t *buf, uint16_t 
 
     /* Set the correct context */
     context->transferState = kSMARTCARD_ReceivingState;
-    xfer.size = length;
-    xfer.buff = buf;
-    xfer.direction = kSMARTCARD_Receive;
+    xfer.size              = length;
+    xfer.buff              = buf;
+    xfer.direction         = kSMARTCARD_Receive;
     /* Receive ATR bytes using non-blocking API */
     SMARTCARD_TransferNonBlocking(base, context, &xfer);
     /* Wait for transfer to finish */
@@ -242,14 +216,14 @@ static int16_t receive_atr(smartcard_context_t *context, uint8_t *buf, uint16_t 
 
 /*!
  * @brief Function sends data using smartcard driver API.
-*/
+ */
 static void send_data(smartcard_context_t *context, uint8_t *buff, uint16_t length)
 {
     smartcard_xfer_t xfer;
 
     /* Initialize transfer structure */
-    xfer.size = length;
-    xfer.buff = buff;
+    xfer.size      = length;
+    xfer.buff      = buff;
     xfer.direction = kSMARTCARD_Transmit;
     /* Wait until previous transfer is completed */
     while (0 != SMARTCARD_GetTransferRemainingBytes(base, context))
@@ -275,8 +249,8 @@ static uint16_t receive_data(smartcard_context_t *context, uint8_t *buff, uint16
 
     /* Fill transfer structure */
     xfer.direction = kSMARTCARD_Receive;
-    xfer.buff = buff;
-    xfer.size = length;
+    xfer.buff      = buff;
+    xfer.size      = length;
     /* wait until previous transfer is finished */
     while (0 != SMARTCARD_GetTransferRemainingBytes(base, context))
     {
@@ -302,12 +276,12 @@ static int smartcard_parse_atr(smartcard_context_t *context, uint8_t *buff, uint
     uint8_t TCK = 0u;
     uint8_t Y1;
     uint8_t Y2;
-    uint8_t historicalBytes = 0u;
+    uint8_t historicalBytes             = 0u;
     smartcard_card_params_t *cardParams = &context->cardParams;
 
     cardParams->modeNegotiable = true;
-    cardParams->atrComplete = true;
-    cardParams->atrValid = true;
+    cardParams->atrComplete    = true;
+    cardParams->atrValid       = true;
 
     for (i = 0u; i < length; i++)
     {
@@ -322,8 +296,8 @@ static int smartcard_parse_atr(smartcard_context_t *context, uint8_t *buff, uint
     /* parsing data */
     i = 0u;
     /* STORING y1 TO CHECK WHICH COMPONENTS ARE AVAILABLE */
-    ch = buff[i];
-    Y1 = ch >> 4u;
+    ch              = buff[i];
+    Y1              = ch >> 4u;
     historicalBytes = ch & 0x0fu;
     length -= historicalBytes;
     i++;
@@ -344,59 +318,59 @@ static int smartcard_parse_atr(smartcard_context_t *context, uint8_t *buff, uint
 /*Fi = 1 is only allowed value*/
 #if defined(ISO7816_CARD_SUPPORT)
             case 0u:
-                cardParams->Fi = 372u;
+                cardParams->Fi   = 372u;
                 cardParams->fMax = 4u;
                 break;
 #endif
             case 1u:
-                cardParams->Fi = 372u;
+                cardParams->Fi   = 372u;
                 cardParams->fMax = 5u;
                 break;
 #if defined(ISO7816_CARD_SUPPORT)
             case 2u:
-                cardParams->Fi = 558u;
+                cardParams->Fi   = 558u;
                 cardParams->fMax = 6u;
                 break;
             case 3u:
-                cardParams->Fi = 744u;
+                cardParams->Fi   = 744u;
                 cardParams->fMax = 8u;
                 break;
             case 4u:
-                cardParams->Fi = 1116u;
+                cardParams->Fi   = 1116u;
                 cardParams->fMax = 12u;
                 break;
             case 5u:
-                cardParams->Fi = 1488u;
+                cardParams->Fi   = 1488u;
                 cardParams->fMax = 16u;
                 break;
             case 6u:
-                cardParams->Fi = 1860u;
+                cardParams->Fi   = 1860u;
                 cardParams->fMax = 20u;
                 break;
             case 9u:
-                cardParams->Fi = 512u;
+                cardParams->Fi   = 512u;
                 cardParams->fMax = 5u;
                 break;
             case 10u:
-                cardParams->Fi = 768u;
+                cardParams->Fi   = 768u;
                 cardParams->fMax = 7u;
                 break;
             case 11u:
-                cardParams->Fi = 1024u;
+                cardParams->Fi   = 1024u;
                 cardParams->fMax = 10u;
                 break;
             case 12u:
-                cardParams->Fi = 1536u;
+                cardParams->Fi   = 1536u;
                 cardParams->fMax = 15u;
                 break;
             case 13u:
-                cardParams->Fi = 2048u;
+                cardParams->Fi   = 2048u;
                 cardParams->fMax = 20u;
                 break;
 #endif
             default:
-                cardParams->Fi = 372u;
-                cardParams->fMax = 5u;
+                cardParams->Fi       = 372u;
+                cardParams->fMax     = 5u;
                 cardParams->atrValid = false;
                 return -1;
         }
@@ -434,7 +408,7 @@ static int smartcard_parse_atr(smartcard_context_t *context, uint8_t *buff, uint
                 break;
 #endif
             default:
-                cardParams->Di = 1;
+                cardParams->Di       = 1;
                 cardParams->atrValid = false;
                 return -1;
         }
@@ -442,9 +416,9 @@ static int smartcard_parse_atr(smartcard_context_t *context, uint8_t *buff, uint
     }
     else
     {
-        cardParams->Fi = 372u;
+        cardParams->Fi   = 372u;
         cardParams->fMax = 5u;
-        cardParams->Di = 1u;
+        cardParams->Di   = 1u;
     }
     if (Y1 & 0x2u)
     {
@@ -530,7 +504,7 @@ static int smartcard_parse_atr(smartcard_context_t *context, uint8_t *buff, uint
     { /* TD1 absent,meaning only T= 0 has to be used*/
         cardParams->t0Indicated = true;
         cardParams->t1Indicated = false;
-        Y2 = 0u;
+        Y2                      = 0u;
     }
     if (Y2 & 0x1u)
     {
@@ -541,7 +515,7 @@ static int smartcard_parse_atr(smartcard_context_t *context, uint8_t *buff, uint
             return -1;
         }
         cardParams->modeNegotiable = false;
-        ch = buff[i];
+        ch                         = buff[i];
         if ((ch & 0x0fu) == 0u)
         { /* T = 0 specific mode */
             cardParams->t0Indicated = true;
@@ -626,9 +600,9 @@ static int smartcard_test(void)
 {
     uint8_t atrBuff[EMVL1_ATR_BUFF_SIZE];
     uint16_t i;
-    uint32_t rcvLength = 0;
-    smartcard_context_t context = {0};
-    g_smartcardContext = &context;
+    uint32_t rcvLength                = 0;
+    smartcard_context_t context       = {0};
+    g_smartcardContext                = &context;
     uint8_t txBuff[MAX_TRANSFER_SIZE] = {0};
     uint8_t rxBuff[MAX_TRANSFER_SIZE] = {0};
 
@@ -640,33 +614,33 @@ static int smartcard_test(void)
     SMARTCARD_PHY_GetDefaultConfig(&context.interfaceConfig);
     /* Fill in SMARTCARD driver user configuration data */
     context.interfaceConfig.smartCardClock = BOARD_SMARTCARD_CLOCK_VALUE;
-    context.interfaceConfig.vcc = kSMARTCARD_VoltageClassB3_3V;
+    context.interfaceConfig.vcc            = kSMARTCARD_VoltageClassB3_3V;
 
 #if (defined(USING_PHY_GPIO) || defined(USING_PHY_TDA8035))
-    context.interfaceConfig.clockModule = BOARD_SMARTCARD_CLOCK_MODULE;
-    context.interfaceConfig.clockModuleChannel = BOARD_SMARTCARD_CLOCK_MODULE_CHANNEL;
+    context.interfaceConfig.clockModule            = BOARD_SMARTCARD_CLOCK_MODULE;
+    context.interfaceConfig.clockModuleChannel     = BOARD_SMARTCARD_CLOCK_MODULE_CHANNEL;
     context.interfaceConfig.clockModuleSourceClock = BOARD_SMARTCARD_CLOCK_MODULE_SOURCE_CLK;
-    context.interfaceConfig.controlPort = BOARD_SMARTCARD_CONTROL_PORT;
-    context.interfaceConfig.controlPin = BOARD_SMARTCARD_CONTROL_PIN;
-    context.interfaceConfig.resetPort = BOARD_SMARTCARD_RST_PORT;
-    context.interfaceConfig.resetPin = BOARD_SMARTCARD_RST_PIN;
+    context.interfaceConfig.controlPort            = BOARD_SMARTCARD_CONTROL_PORT;
+    context.interfaceConfig.controlPin             = BOARD_SMARTCARD_CONTROL_PIN;
+    context.interfaceConfig.resetPort              = BOARD_SMARTCARD_RST_PORT;
+    context.interfaceConfig.resetPin               = BOARD_SMARTCARD_RST_PIN;
 #endif
 
 #if defined(BOARD_SMARTCARD_IRQ_PORT)
     context.interfaceConfig.irqPort = BOARD_SMARTCARD_IRQ_PORT;
-    context.interfaceConfig.irqPin = BOARD_SMARTCARD_IRQ_PIN;
+    context.interfaceConfig.irqPin  = BOARD_SMARTCARD_IRQ_PIN;
 #endif
 
 #if defined(USING_PHY_TDA8035)
     context.interfaceConfig.vsel0Port = BOARD_SMARTCARD_VSEL0_PORT;
-    context.interfaceConfig.vsel0Pin = BOARD_SMARTCARD_VSEL0_PIN;
+    context.interfaceConfig.vsel0Pin  = BOARD_SMARTCARD_VSEL0_PIN;
     context.interfaceConfig.vsel1Port = BOARD_SMARTCARD_VSEL1_PORT;
-    context.interfaceConfig.vsel1Pin = BOARD_SMARTCARD_VSEL1_PIN;
+    context.interfaceConfig.vsel1Pin  = BOARD_SMARTCARD_VSEL1_PIN;
 #endif
 
 #if defined(USING_PHY_GPIO)
-    context.interfaceConfig.dataPort = BOARD_SMARTCARD_DATA_PORT;
-    context.interfaceConfig.dataPin = BOARD_SMARTCARD_DATA_PIN;
+    context.interfaceConfig.dataPort   = BOARD_SMARTCARD_DATA_PORT;
+    context.interfaceConfig.dataPin    = BOARD_SMARTCARD_DATA_PIN;
     context.interfaceConfig.dataPinMux = BOARD_SMARTCARD_DATA_PIN_MUX;
 #endif
 
@@ -710,9 +684,9 @@ static int smartcard_test(void)
     SMARTCARD_Control(base, &context, kSMARTCARD_DisableWWT, 0u);
     /* Set internal driver context to receive initial TS character */
     context.transferState = kSMARTCARD_WaitingForTSState;
-    context.xIsBusy = true;
+    context.xIsBusy       = true;
     /* Wait for Initial character. In case wrong Initial character is received, reject the card
-    */
+     */
     while ((context.xIsBusy == true) && (context.transferState == kSMARTCARD_WaitingForTSState))
     { /* Wait until all the data is received, or error occurs */
     }

@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 - 2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_otg_config.h"
@@ -48,7 +22,7 @@
 #include "usb_otg_max3353.h"
 #endif
 #include "board.h"
-
+#include "fsl_debug_console.h"
 #include "fsl_device_registers.h"
 #include "pin_mux.h"
 #include "clock_config.h"
@@ -123,10 +97,9 @@ void USB_OtgClockInit(void)
 void USB_OtgIsrEnable(void)
 {
     uint8_t irqNumber;
-#if defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)
+
     uint8_t usbHOSTKhciIrq[] = USB_IRQS;
-    irqNumber = usbHOSTKhciIrq[0];
-#endif /* USB_HOST_CONFIG_KHCI */
+    irqNumber                = usbHOSTKhciIrq[0];
 
 /* Install isr, set priority, and enable IRQ. */
 #if defined(__GIC_PRIO_BITS)
@@ -135,58 +108,6 @@ void USB_OtgIsrEnable(void)
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_HOST_INTERRUPT_PRIORITY);
 #endif
     EnableIRQ((IRQn_Type)irqNumber);
-}
-
-usb_status_t USB_UartTryReadChar(char *value)
-{
-#if (BOARD_DEBUG_UART_TYPE == DEBUG_CONSOLE_DEVICE_TYPE_UART)
-    UART_Type *base = (UART_Type *)BOARD_DEBUG_UART_BASEADDR;
-#if defined(FSL_FEATURE_UART_HAS_FIFO) && FSL_FEATURE_UART_HAS_FIFO
-    if (base->RCFIFO)
-#else
-    if (base->S1 & UART_S1_RDRF_MASK)
-#endif
-    {
-        *value = (char)base->D;
-        return kStatus_USB_Success;
-    }
-    else
-    {
-        return kStatus_USB_Error;
-    }
-
-#elif(BOARD_DEBUG_UART_TYPE == DEBUG_CONSOLE_DEVICE_TYPE_LPUART)
-    LPUART_Type *base = (LPUART_Type *)BOARD_DEBUG_UART_BASEADDR;
-#if defined(FSL_FEATURE_LPUART_HAS_FIFO) && FSL_FEATURE_LPUART_HAS_FIFO
-    if ((base->WATER & LPUART_WATER_RXCOUNT_MASK) >> LPUART_WATER_RXCOUNT_SHIFT)
-#else
-    if (base->STAT & LPUART_STAT_RDRF_MASK)
-#endif
-    {
-        *value = (char)base->DATA;
-        return kStatus_USB_Success;
-    }
-    else
-    {
-        return kStatus_USB_Error;
-    }
-
-#elif(BOARD_DEBUG_UART_TYPE == DEBUG_CONSOLE_DEVICE_TYPE_LPSCI)
-    UART0_Type *base = (UART0_Type *)BOARD_DEBUG_UART_BASEADDR;
-#if defined(FSL_FEATURE_LPSCI_HAS_FIFO) && FSL_FEATURE_LPSCI_HAS_FIFO
-    if (base->RCFIFO)
-#else
-    if (base->S1 & UART0_S1_RDRF_MASK)
-#endif
-    {
-        *value = (char)base->DATA;
-        return kStatus_USB_Success;
-    }
-    else
-    {
-        return kStatus_USB_Error;
-    }
-#endif
 }
 
 static void USB_OtgAppPrintState(uint32_t state)
@@ -539,8 +460,8 @@ void USB_OtgHidMouseApplicationTask(void *param)
 
     switch (otgMouseInstance->runState)
     {
-        case kOtgRunIdle:
-            if (USB_UartTryReadChar(&uartData) == kStatus_USB_Success)
+        case kUSB_HostOtgRunIdle:
+            if (DbgConsole_TryGetchar(&uartData) == kStatus_USB_Success)
             {
                 if (uartData == 'p')
                 {
@@ -592,7 +513,7 @@ static void USB_OtgApplicationInit(void)
 
     g_OtgMouseInstance.hostHandle = NULL;
     g_OtgMouseInstance.deviceHandle = NULL;
-    g_OtgMouseInstance.runState = kOtgRunIdle;
+    g_OtgMouseInstance.runState = kUSB_HostOtgRunIdle;
     g_OtgMouseInstance.otgStateMachine = kOtg_State_Start;
     g_OtgMouseInstance.otgMouseState = kState_None;
     g_OtgMouseInstance.aSetBHNPEnable = 0U;

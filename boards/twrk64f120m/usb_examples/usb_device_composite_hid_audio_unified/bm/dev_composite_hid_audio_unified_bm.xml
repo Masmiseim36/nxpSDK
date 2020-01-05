@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.codec_i2c.MK64F12"/>
+    <definition extID="component.i2c_adapter.MK64F12"/>
+    <definition extID="component.lists.MK64F12"/>
+    <definition extID="component.osa.MK64F12"/>
+    <definition extID="component.serial_manager.MK64F12"/>
+    <definition extID="component.serial_manager_uart.MK64F12"/>
+    <definition extID="component.sgtl_adapter.MK64F12"/>
+    <definition extID="component.uart_adapter.MK64F12"/>
+    <definition extID="device.MK64F12_CMSIS.MK64F12"/>
+    <definition extID="device.MK64F12_startup.MK64F12"/>
+    <definition extID="driver.codec.MK64F12"/>
+    <definition extID="driver.sgtl5000.MK64F12"/>
+    <definition extID="middleware.baremetal.MK64F12"/>
+    <definition extID="middleware.usb.device.MK64F12"/>
+    <definition extID="middleware.usb.device_controller_khci.MK64F12"/>
+    <definition extID="platform.Include_common.MK64F12"/>
+    <definition extID="platform.Include_core_cm4.MK64F12"/>
+    <definition extID="platform.Include_dsp.MK64F12"/>
+    <definition extID="platform.drivers.clock.MK64F12"/>
+    <definition extID="platform.drivers.common.MK64F12"/>
+    <definition extID="platform.drivers.dmamux.MK64F12"/>
+    <definition extID="platform.drivers.edma.MK64F12"/>
+    <definition extID="platform.drivers.gpio.MK64F12"/>
+    <definition extID="platform.drivers.i2c.MK64F12"/>
+    <definition extID="platform.drivers.port.MK64F12"/>
+    <definition extID="platform.drivers.sai.MK64F12"/>
+    <definition extID="platform.drivers.sai_edma.MK64F12"/>
+    <definition extID="platform.drivers.smc.MK64F12"/>
+    <definition extID="platform.drivers.sysmpu.MK64F12"/>
+    <definition extID="platform.drivers.uart.MK64F12"/>
+    <definition extID="platform.utilities.assert.MK64F12"/>
+    <definition extID="platform.utilities.misc_utilities.MK64F12"/>
+    <definition extID="utility.debug_console.MK64F12"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+  </externalDefinitions>
+  <example id="twrk64f120m_dev_composite_hid_audio_unified_bm" name="dev_composite_hid_audio_unified_bm" category="usb_examples" dependency="middleware.usb.device_controller_khci.MK64F12 platform.drivers.sai.MK64F12 driver.sgtl5000.MK64F12 platform.drivers.i2c.MK64F12 platform.drivers.sai_edma.MK64F12 platform.drivers.dmamux.MK64F12 platform.drivers.edma.MK64F12 driver.codec.MK64F12 component.sgtl_adapter.MK64F12 component.i2c_adapter.MK64F12 middleware.usb.device.MK64F12 platform.drivers.smc.MK64F12 platform.drivers.clock.MK64F12 platform.drivers.common.MK64F12 device.MK64F12_CMSIS.MK64F12 device.MK64F12_startup.MK64F12 platform.drivers.uart.MK64F12 platform.drivers.gpio.MK64F12 platform.drivers.sysmpu.MK64F12 platform.utilities.assert.MK64F12 utility.debug_console.MK64F12 component.uart_adapter.MK64F12 component.serial_manager.MK64F12 component.lists.MK64F12 component.serial_manager_uart.MK64F12 platform.drivers.port.MK64F12 component.osa.MK64F12 platform.Include_core_cm4.MK64F12 platform.Include_common.MK64F12 platform.Include_dsp.MK64F12 component.codec_i2c.MK64F12 platform.utilities.misc_utilities.MK64F12 middleware.baremetal.MK64F12">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv4.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv4.hard</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>_DEBUG=1</value>
+          <value>CPU_MK64FN1M0VMD12</value>
+          <value>USB_STACK_BM</value>
+          <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
+          <value>BOARD_USE_CODEC=1</value>
+          <value>CODEC_SGTL5000_ENABLE</value>
+          <value>FSL_OSA_BM_TASK_ENABLE=0</value>
+          <value>FSL_OSA_BM_TIMER_CONFIG=0</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv4.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
+          <value>&amp;Heap:Default;Default;0x2000&amp;Stack:Default;Default;0x2000</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <source path="boards/twrk64f120m/usb_examples/usb_device_composite_hid_audio_unified/bm/armgcc" target_path="MK64F12/gcc" type="linker" toolchain="armgcc">
+      <files mask="MK64FN1M0xxx12_flash.ld"/>
+    </source>
+    <source path="boards/twrk64f120m/usb_examples/usb_device_composite_hid_audio_unified/bm/iar" target_path="MK64F12/iar" type="linker" toolchain="iar">
+      <files mask="MK64FN1M0xxx12_flash.icf"/>
+    </source>
+    <source path="boards/twrk64f120m/usb_examples/usb_device_composite_hid_audio_unified/bm/mdk" target_path="MK64F12/arm" type="linker" toolchain="mdk">
+      <files mask="MK64FN1M0xxx12_flash.scf"/>
+    </source>
+    <source path="boards/twrk64f120m/usb_examples/usb_device_composite_hid_audio_unified/bm" target_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/twrk64f120m/usb_examples/usb_device_composite_hid_audio_unified/bm" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/twrk64f120m/usb_examples/usb_device_composite_hid_audio_unified/bm" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/twrk64f120m/usb_examples/usb_device_composite_hid_audio_unified/bm" target_path="source" type="c_include">
+      <files mask="audio_unified.h"/>
+      <files mask="composite.h"/>
+      <files mask="hid_keyboard.h"/>
+      <files mask="usb_device_config.h"/>
+      <files mask="usb_device_descriptor.h"/>
+    </source>
+    <source path="boards/twrk64f120m/usb_examples/usb_device_composite_hid_audio_unified/bm" target_path="source" type="src">
+      <files mask="audio_unified.c"/>
+      <files mask="composite.c"/>
+      <files mask="hid_keyboard.c"/>
+      <files mask="usb_device_descriptor.c"/>
+    </source>
+    <source path="boards/twrk64f120m/usb_examples/usb_device_composite_hid_audio_unified/bm" target_path="twrk64f120m/usb_examples/usb_device_composite_hid_audio_unified/bm" type="doc" exclude="true">
+      <files mask="readme.pdf"/>
+    </source>
+    <source path="boards/twrk64f120m/usb_examples/usb_device_composite_hid_audio_unified/bm" target_path="usb/device/class/audio" type="c_include">
+      <files mask="usb_device_audio.h"/>
+    </source>
+    <source path="boards/twrk64f120m/usb_examples/usb_device_composite_hid_audio_unified/bm" target_path="usb/device/class/audio" type="src">
+      <files mask="usb_device_audio.c"/>
+    </source>
+    <source path="boards/twrk64f120m/usb_examples/usb_device_composite_hid_audio_unified/bm" target_path="usb/device/class/hid" type="c_include">
+      <files mask="usb_device_hid.h"/>
+    </source>
+    <source path="boards/twrk64f120m/usb_examples/usb_device_composite_hid_audio_unified/bm" target_path="usb/device/class/hid" type="src">
+      <files mask="usb_device_hid.c"/>
+    </source>
+    <source path="boards/twrk64f120m/usb_examples/usb_device_composite_hid_audio_unified/bm" target_path="usb/device/class" type="c_include">
+      <files mask="usb_device_class.h"/>
+    </source>
+    <source path="boards/twrk64f120m/usb_examples/usb_device_composite_hid_audio_unified/bm" target_path="usb/device/class" type="src">
+      <files mask="usb_device_class.c"/>
+    </source>
+    <source path="boards/twrk64f120m/usb_examples/usb_device_composite_hid_audio_unified/bm" target_path="usb/device/source" type="c_include">
+      <files mask="usb_device_ch9.h"/>
+    </source>
+    <source path="boards/twrk64f120m/usb_examples/usb_device_composite_hid_audio_unified/bm" target_path="usb/device/source" type="src">
+      <files mask="usb_device_ch9.c"/>
+    </source>
+  </example>
+</ksdk:examples>

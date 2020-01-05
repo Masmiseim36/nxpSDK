@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "board.h"
@@ -52,6 +30,7 @@
 #define LPTMR_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_LpoClk)
 /* Define LPTMR microseconds counts value */
 #define LPTMR_USEC_COUNT (500000U)
+#define CORE_CLK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
 
 /*******************************************************************************
  * Prototypes
@@ -74,7 +53,7 @@ static const IRQn_Type s_llwuIRQ[] = LLWU_IRQS;
 void DelayMs(uint32_t n)
 {
     uint32_t temp = 0U;
-    temp = n * ((CLOCK_GetFreq(kCLOCK_CoreSysClk)) / 1000U);
+    temp          = n * ((CORE_CLK_FREQ) / 1000U);
 
     SysTick->CTRL |= SysTick_CTRL_CLKSOURCE_Msk; /* use core clock */
     SysTick->CTRL &= ~SysTick_CTRL_TICKINT_Msk;  /* disable interrupt */
@@ -89,7 +68,7 @@ void DelayMs(uint32_t n)
         else
         {
             SysTick->LOAD = temp;
-            temp = 0;
+            temp          = 0;
         }
         SysTick->VAL = 0U;
         SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
@@ -105,7 +84,12 @@ void TSI0_IRQHandler(void)
 {
     /* Clear flags */
     TSI_ClearStatusFlags(TSI0, kTSI_EndOfScanFlag);
-    TSI_ClearStatusFlags(TSI0, kTSI_OutOfRangeFlag);
+    TSI_ClearStatusFlags(TSI0, (uint32_t)kTSI_OutOfRangeFlag);
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
+#if defined __CORTEX_M && (__CORTEX_M == 4U)
+    __DSB();
+#endif
 }
 
 void LLWU_IRQHandler(void)
@@ -114,8 +98,13 @@ void LLWU_IRQHandler(void)
     {
         /* Clear flags */
         TSI_ClearStatusFlags(TSI0, kTSI_EndOfScanFlag);
-        TSI_ClearStatusFlags(TSI0, kTSI_OutOfRangeFlag);
+        TSI_ClearStatusFlags(TSI0, (uint32_t)kTSI_OutOfRangeFlag);
     }
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
+#if defined __CORTEX_M && (__CORTEX_M == 4U)
+    __DSB();
+#endif
 }
 
 /*!
@@ -124,23 +113,22 @@ void LLWU_IRQHandler(void)
 int main(void)
 {
     volatile uint32_t i = 0U;
-    uint8_t usrInput = 0U;
+    uint8_t usrInput    = 0U;
 #if (defined(FSL_FEATURE_MCG_HAS_PLL) && FSL_FEATURE_MCG_HAS_PLL)
     bool tsi_pee_work_mode_flag = 0;
 #endif /* FSL_FEATURE_MCG_HAS_PLL */
-    tsi_config_t tsiConfig_normal = {0};
+    tsi_config_t tsiConfig_normal   = {0};
     tsi_config_t tsiConfig_lowPower = {0};
     lptmr_config_t lptmrConfig;
     memset((void *)&lptmrConfig, 0, sizeof(lptmrConfig));
 
 #if (defined(FSL_FEATURE_SOC_OSC_COUNT) && FSL_FEATURE_SOC_OSC_COUNT)
     oscer_config_t osc_tsiConfig = {0};
-    osc_tsiConfig.enableMode = kOSC_ErClkEnable | kOSC_ErClkEnableInStop;
+    osc_tsiConfig.enableMode     = kOSC_ErClkEnable | kOSC_ErClkEnableInStop;
 #if (defined(FSL_FEATURE_OSC_HAS_EXT_REF_CLOCK_DIVIDER) && FSL_FEATURE_OSC_HAS_EXT_REF_CLOCK_DIVIDER)
     osc_tsiConfig.erclkDiv = 0;
 #endif /* FSL_FEATURE_OSC_HAS_EXT_REF_CLOCK_DIVIDER */
 #endif /* FSL_FEATURE_SOC_OSC_COUNT */
-
 
 #if (defined(FSL_FEATURE_SMC_HAS_LLS_SUBMODE) && FSL_FEATURE_SMC_HAS_LLS_SUBMODE) || \
     (defined(FSL_FEATURE_SMC_HAS_LPOPO) && FSL_FEATURE_SMC_HAS_LPOPO)
@@ -153,7 +141,7 @@ int main(void)
 
 #if (defined(FSL_FEATURE_SMC_HAS_VERY_LOW_LEAKAGE_STOP_MODE) && FSL_FEATURE_SMC_HAS_VERY_LOW_LEAKAGE_STOP_MODE)
     smc_power_mode_vlls_config_t vlls_config;
-    vlls_config.subMode = kSMC_StopSub1;
+    vlls_config.subMode                = kSMC_StopSub1;
     vlls_config.enablePorDetectInVlls0 = true;
 #if (defined(FSL_FEATURE_SMC_HAS_RAM2_POWER_OPTION) && FSL_FEATURE_SMC_HAS_RAM2_POWER_OPTION)
     vlls_config.enableRam2InVlls2 = true;
@@ -172,18 +160,18 @@ int main(void)
     {
         tsi_pee_work_mode_flag = 1U;
     }
-#endif  /* FSL_FEATURE_MCG_HAS_PLL */
+#endif /* FSL_FEATURE_MCG_HAS_PLL */
 
 #if (defined(FSL_FEATURE_SIM_OPT_HAS_OSC32K_SELECTION) && FSL_FEATURE_SIM_OPT_HAS_OSC32K_SELECTION)
-     CLOCK_SetEr32kClock(0x3U);                       /* Use LPO as source clock */
-#endif  /* FSL_FEATURE_SIM_OPT_HAS_OSC32K_SELECTION */
+    CLOCK_SetEr32kClock(0x3U); /* Use LPO as source clock */
+#endif                         /* FSL_FEATURE_SIM_OPT_HAS_OSC32K_SELECTION */
 #if (defined(FSL_FEATURE_SOC_OSC_COUNT) && FSL_FEATURE_SOC_OSC_COUNT)
-     OSC_SetExtRefClkConfig(OSC0, &osc_tsiConfig);
-#endif  /* FSL_FEATURE_SOC_OSC_COUNT */
+    OSC_SetExtRefClkConfig(OSC0, &osc_tsiConfig);
+#endif /* FSL_FEATURE_SOC_OSC_COUNT */
 
 #if (defined(FSL_FEATURE_SOC_SCG_COUNT) && FSL_FEATURE_SOC_SCG_COUNT)
-    SCG->SOSCCSR |= SCG_SOSCCSR_SOSCSTEN_MASK;        /* System OSC is enabled in Stop modes */
-#endif  /* FSL_FEATURE_SOC_SCG_COUNT */
+    SCG->SOSCCSR |= SCG_SOSCCSR_SOSCSTEN_MASK; /* System OSC is enabled in Stop modes */
+#endif                                         /* FSL_FEATURE_SOC_SCG_COUNT */
 
     /* Check wake up from VLLSx mode */
     if (RCM_GetPreviousResetSources(RCM) & 0x01U)
@@ -227,9 +215,9 @@ int main(void)
      * lptmrConfig.prescalerClockSource = kLPTMR_PrescalerClock_1;
      * lptmrConfig.value = kLPTMR_Prescale_Glitch_0;
      */
-    LPTMR_GetDefaultConfig(&lptmrConfig);                                     /* Configure LPTMR */
-    lptmrConfig.prescalerClockSource = kLPTMR_PrescalerClock_1;               /* Use LPO as clock source. */
-    LPTMR_Init(LPTMR0, &lptmrConfig);                                         /* Initialize the LPTMR */
+    LPTMR_GetDefaultConfig(&lptmrConfig);                                              /* Configure LPTMR */
+    lptmrConfig.prescalerClockSource = kLPTMR_PrescalerClock_1;                        /* Use LPO as clock source. */
+    LPTMR_Init(LPTMR0, &lptmrConfig);                                                  /* Initialize the LPTMR */
     LPTMR_SetTimerPeriod(LPTMR0, USEC_TO_COUNT(LPTMR_USEC_COUNT, LPTMR_SOURCE_CLOCK)); /* Set timer period */
     /* TSI hardware configuration for low power mode */
     TSI_GetLowPowerModeDefaultConfig(&tsiConfig_lowPower);
@@ -242,7 +230,7 @@ int main(void)
     TSI_EnableHardwareTriggerScan(TSI0, true);
     TSI_EnableInterrupts(TSI0, kTSI_GlobalInterruptEnable);
     TSI_EnableInterrupts(TSI0, kTSI_OutOfRangeInterruptEnable);
-    TSI_ClearStatusFlags(TSI0, kTSI_OutOfRangeFlag);
+    TSI_ClearStatusFlags(TSI0, (uint32_t)kTSI_OutOfRangeFlag);
     TSI_EnableModule(TSI0, true);
 
     SMC_SetPowerModeProtection(SMC, SMC_PMPROT_AVLLS_MASK | SMC_PMPROT_ALLS_MASK | SMC_PMPROT_AVLP_MASK);
@@ -259,12 +247,12 @@ int main(void)
         PRINTF("1 ------>  VLPS MODE \r\n");
 #if (defined(FSL_FEATURE_SMC_HAS_LOW_LEAKAGE_STOP_MODE) && FSL_FEATURE_SMC_HAS_LOW_LEAKAGE_STOP_MODE)
         PRINTF("2 ------>  LLS  MODE \r\n");
-#endif  /* FSL_FEATURE_SMC_HAS_LLS_SUBMODE */
+#endif /* FSL_FEATURE_SMC_HAS_LLS_SUBMODE */
 #if (defined(FSL_FEATURE_SMC_HAS_VERY_LOW_LEAKAGE_STOP_MODE) && FSL_FEATURE_SMC_HAS_VERY_LOW_LEAKAGE_STOP_MODE)
         PRINTF("3 ------>  VLLS1 MODE\r\n");
         PRINTF("4 ------>  VLLS2 MODE\r\n");
         PRINTF("5 ------>  VLLS3 MODE\r\n");
-#endif  /* FSL_FEATURE_SMC_HAS_VERY_LOW_LEAKAGE_STOP_MODE */
+#endif /* FSL_FEATURE_SMC_HAS_VERY_LOW_LEAKAGE_STOP_MODE */
         usrInput = GETCHAR();
         switch (usrInput)
         {
@@ -345,7 +333,7 @@ int main(void)
 
                 PRINTF("\r\nShould never get here !!!!!!\r\n");
                 break;
-#endif    /* FSL_FEATURE_SMC_HAS_VERY_LOW_LEAKAGE_STOP_MODE */
+#endif /* FSL_FEATURE_SMC_HAS_VERY_LOW_LEAKAGE_STOP_MODE */
             default:
                 PRINTF("Please input a valid character, 0~5!!!\r\n");
                 break;

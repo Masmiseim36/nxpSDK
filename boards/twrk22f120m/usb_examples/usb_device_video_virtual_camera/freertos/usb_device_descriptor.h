@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef __USB_DEVICE_DESCRIPTOR_H__
@@ -48,27 +26,27 @@
 
 #define USB_DEVICE_VIDEO_SPECIFIC_BCD_VERSION (0x0150U)
 #define USB_DEVICE_VIDEO_VIRTUAL_CAMERA_PROTOCOL USB_DEVICE_VIDEO_PC_PROTOCOL_15
-#define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (0xC4U)
+#define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (sizeof(g_UsbDeviceConfigurationDescriptor))
 
 #elif defined(USB_DEVICE_VIDEO_CLASS_VERSION_1_1) && (USB_DEVICE_VIDEO_CLASS_VERSION_1_1 > 0U)
 
 #define USB_DEVICE_VIDEO_SPECIFIC_BCD_VERSION (0x0110U)
 #define USB_DEVICE_VIDEO_VIRTUAL_CAMERA_PROTOCOL USB_DEVICE_VIDEO_PC_PROTOCOL_UNDEFINED
-#define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (0xC3U)
+#define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (sizeof(g_UsbDeviceConfigurationDescriptor))
 
 #else
 
 #define USB_DEVICE_VIDEO_SPECIFIC_BCD_VERSION (0x0100U)
 #define USB_DEVICE_VIDEO_VIRTUAL_CAMERA_PROTOCOL USB_DEVICE_VIDEO_PC_PROTOCOL_UNDEFINED
-#define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (0xC2U)
+#define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (sizeof(g_UsbDeviceConfigurationDescriptor))
 
 #endif
 
 #define USB_DESCRIPTOR_LENGTH_INTERFACE_ASSOCIATION (0x08U)
-#define USB_DESCRIPTOR_LENGTH_STRING0 (4U)
-#define USB_DESCRIPTOR_LENGTH_STRING1 (38U)
-#define USB_DESCRIPTOR_LENGTH_STRING2 (22U)
-#define USB_DESCRIPTOR_LENGTH_STRING3 (44U)
+#define USB_DESCRIPTOR_LENGTH_STRING0 (sizeof(g_UsbDeviceString0))
+#define USB_DESCRIPTOR_LENGTH_STRING1 (sizeof(g_UsbDeviceString1))
+#define USB_DESCRIPTOR_LENGTH_STRING2 (sizeof(g_UsbDeviceString2))
+#define USB_DESCRIPTOR_LENGTH_STRING3 (sizeof(g_UsbDeviceString3))
 
 #define USB_DEVICE_CONFIGURATION_COUNT (1U)
 #define USB_DEVICE_STRING_COUNT (4U)

@@ -1,3 +1,35 @@
+Overview
+========
+The qca_demo example provides basic commands to show the functionality of qca_wifi stack.
+The default IP configuration is "addr: 192.168.1.10 mask: 255.255.255.0 gw: 192.168.1.1".
+To obtain a valid IP configuration from DHCP server, press 'd' after WiFi connection is established.
+
+Toolchain supported
+===================
+- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+
+Hardware requirements
+=====================
+- Mini/micro USB cable
+- FRDM-K64F board
+- GT202 Adaptor V1.04 or Silex SX-ULPAN-2401
+- Personal Computer
+
+Board settings
+==============
+Plug SX-ULPAN-2401 or GT202 Adaptor board to FRDM stackable headers (J1, J2, J3, J4).
+GT202 shield is compatible with FRDM-K64 SCH-REV E and higher.
+Previous revisions cannot provide GPIO mux on J2:2 (WLAN_PWRON).
+
+The default compilation settings are predefined for Silex SX-ULPAN-2401 shield.
+If you want to use GT202 shield, please add following "Compiler define" in project options:
+
+WIFISHIELD_IS=WIFISHIELD_IS_GT202
+
+The "wifi_shield.h" then includes specific shield support.
 Prepare the Demo
 ================
 
@@ -55,42 +87,6 @@ When the demo runs successfully, the log would be seen on the CMSIS DAP terminal
 - Press 'd' to get an IP address by DHCP.
 - Press 'g' to download several bytes of NXP website.
 
-Overview
-========
-The qca_demo example provides basic commands to show the functionality of qca_wifi stack.
-The default IP configuration is "addr: 192.168.1.10 mask: 255.255.255.0 gw: 192.168.1.1".
-To obtain a valid IP configuration from DHCP server, press 'd' after WiFi connection is established.
-Hardware requirements
+Customization options
 =====================
-- Mini/micro USB cable
-- FRDM-K64F board
-- GT202 Adaptor V1.04 or Silex SX-ULPAN-2401
-- Personal Computer
-
-Board settings
-==============
-Plug GT202 Adaptor board to FRDM stackable headers (J1, J2, J3, J4).
-GT202 shield is compatible *only* with FRDM-K64 rev_E.
-Previous revisions cannot provide GPIO mux on J2:2 (WLAN_PWRON).
-
-The default shield support is set to GT202 shield. To enable 
-Silex SX-ULPAN-2401, please open "wifi_shield.h" and uncomment
-following lines:
-
-//#define WIFISHIELD_IS_SILEX2041
-
-//#elif defined(WIFISHIELD_IS_SILEX2041)
-//#include "wifi_shield_silex2401.h"
-
-and comment out:
-
-#define WIFISHIELD_IS_GT202
-
-
-Toolchain supported
-===================
-- MCUXpresso 10.3.0
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
 

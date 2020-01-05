@@ -22,15 +22,15 @@
 // Author(s): ="Atheros"
 //==============================================================================
 /*
-* $FileName: Task_Manager.c$
-* $Version : $
-* $Date    : May-20-2011$
-*
-* Comments: Handles all task management functions including mutithreaded support.
-*
-*
-*
-*END************************************************************************/
+ * $FileName: Task_Manager.c$
+ * $Version : $
+ * $Date    : May-20-2011$
+ *
+ * Comments: Handles all task management functions including mutithreaded support.
+ *
+ *
+ *
+ *END************************************************************************/
 
 #include "main.h"
 #include <string.h>
@@ -75,7 +75,7 @@ extern uint32_t __START_RODATA;
 
 extern WMI_POWER_MODE power_mode;
 uint8_t wps_in_progress = 0;
-uint8_t number_streams = 0; // Counter to control number of streams
+uint8_t number_streams  = 0; // Counter to control number of streams
 
 // I wonder if this is always the same as p_Driver_Cxt[0] (from the driver)
 _qca_handle handle;
@@ -88,10 +88,10 @@ extern int32_t p2p_callback(uint8_t evt_flag);
 #endif
 
 /************************************************************************
-* NAME: DoPeriodic
-*
-* DESCRIPTION: Periodic WPS query.
-************************************************************************/
+ * NAME: DoPeriodic
+ *
+ * DESCRIPTION: Periodic WPS query.
+ ************************************************************************/
 static void DoPeriodic(void)
 {
 #if USE_ATH_CHANGES
@@ -103,10 +103,10 @@ static void DoPeriodic(void)
 }
 
 /************************************************************************
-* NAME: worker_cmd_quit
-*
-* DESCRIPTION: Called when user enters "benchquit"
-************************************************************************/
+ * NAME: worker_cmd_quit
+ *
+ * DESCRIPTION: Called when user enters "benchquit"
+ ************************************************************************/
 int worker_cmd_quit(shell_handle_t context, int argc, char **argv)
 {
     bench_quit = 1;
@@ -117,10 +117,10 @@ extern QueueHandle_t shell_q;
 worker_shell_msg_t g_msg = {0};
 
 /************************************************************************
-* NAME: worker_cmd_handler
-*
-* DESCRIPTION: Handles incoming commands from Shell task
-************************************************************************/
+ * NAME: worker_cmd_handler
+ *
+ * DESCRIPTION: Handles incoming commands from Shell task
+ ************************************************************************/
 int32_t worker_cmd_handler(shell_handle_t context, int32_t argc, char **argv)
 {
     assert(argc < WORKER_SHELL_ARGC);
@@ -149,10 +149,10 @@ int32_t worker_cmd_handler(shell_handle_t context, int32_t argc, char **argv)
 }
 
 /************************************************************************
-* NAME: DoWork
-*
-* DESCRIPTION: Calls functions corresponding to shell command.
-************************************************************************/
+ * NAME: DoWork
+ *
+ * DESCRIPTION: Calls functions corresponding to shell command.
+ ************************************************************************/
 static void DoWork(int argc, char *argv[])
 {
     if (strcmp(argv[0], "benchtx") == 0)
@@ -256,10 +256,10 @@ static void DoWork(int argc, char *argv[])
 
 // two worker tasks - rx/tx bench at the same time
 /************************************************************************
-* NAME: wmiconfig_Task1
-*
-* DESCRIPTION: Handler for 1st task, waits for Shell task to provide command
-************************************************************************/
+ * NAME: wmiconfig_Task1
+ *
+ * DESCRIPTION: Handler for 1st task, waits for Shell task to provide command
+ ************************************************************************/
 
 void wmiconfig_Task1(uint32_t temp)
 {

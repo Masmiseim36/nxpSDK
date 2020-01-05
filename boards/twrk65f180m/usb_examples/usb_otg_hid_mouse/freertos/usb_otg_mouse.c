@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016 - 2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_otg_config.h"
@@ -36,14 +14,15 @@
 #include "usb_device.h"
 #include "usb_otg_mouse.h"
 #include "board.h"
-#if (defined(FSL_FEATURE_SOC_MPU_COUNT) && (FSL_FEATURE_SOC_MPU_COUNT > 0U))
-#include "fsl_mpu.h"
-#endif /* FSL_FEATURE_SOC_MPU_COUNT */
+#if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
+#include "fsl_sysmpu.h"
+#endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
+
 #if ((defined USB_OTG_KHCI_PERIPHERAL_ENABLE) && (USB_OTG_KHCI_PERIPHERAL_ENABLE))
 #include "usb_otg_max3353.h"
 #endif
 #include "board.h"
-
+#include "fsl_debug_console.h"
 #include "fsl_device_registers.h"
 #include "fsl_gpio.h"
 #include "pin_mux.h"
@@ -64,13 +43,6 @@
 #define BOARD_MAX3353_I2C_SLAVE_ADDR_7BIT (0x2CU)
 #define BOARD_MAX3353_I2C_BAUDRATE (100U)
 
-/* USB clock source and frequency*/
-#define USB_FS_CLK_SRC kCLOCK_UsbSrcPll0
-#define USB_FS_CLK_FREQ CLOCK_GetFreq(kCLOCK_PllFllSelClk)
-#define USB_HS_PHY_CLK_SRC kCLOCK_UsbPhySrcExt
-#define USB_HS_PHY_CLK_FREQ BOARD_XTAL0_CLK_HZ
-#define USB_HS_CLK_SRC kCLOCK_UsbSrcUnused
-#define USB_HS_CLK_FREQ 0U
 
 #define USB_HOST_INTERRUPT_PRIORITY (3U)
 #define FREERTOS_MSEC_TO_TICK(msec) ((1000L + ((uint32_t)configTICK_RATE_HZ * (uint32_t)(msec - 1U))) / 1000L)
@@ -84,7 +56,8 @@ extern usb_status_t USB_OtgHostMouseDeinit(usb_host_handle hostHandle);
 extern usb_status_t USB_OtgDeviceMouseInit(usb_device_handle *deviceHandle);
 extern usb_status_t USB_OtgDeviceMouseDeinit(usb_device_handle deviceHandle);
 extern void USB_HostHidMouseTask(void);
-
+extern void USB_OtgClockInit(void);
+extern void USB_OtgIsrEnable(void);
 void BOARD_InitHardware(void);
 
 /*******************************************************************************
@@ -97,58 +70,6 @@ usb_otg_mouse_instance_t g_OtgMouseInstance;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-usb_status_t USB_UartTryReadChar(char *value)
-{
-#if (BOARD_DEBUG_UART_TYPE == DEBUG_CONSOLE_DEVICE_TYPE_UART)
-    UART_Type *base = (UART_Type *)BOARD_DEBUG_UART_BASEADDR;
-#if defined(FSL_FEATURE_UART_HAS_FIFO) && FSL_FEATURE_UART_HAS_FIFO
-    if (base->RCFIFO)
-#else
-    if (base->S1 & UART_S1_RDRF_MASK)
-#endif
-    {
-        *value = (char)base->D;
-        return kStatus_USB_Success;
-    }
-    else
-    {
-        return kStatus_USB_Error;
-    }
-
-#elif(BOARD_DEBUG_UART_TYPE == DEBUG_CONSOLE_DEVICE_TYPE_LPUART)
-    LPUART_Type *base = (LPUART_Type *)BOARD_DEBUG_UART_BASEADDR;
-#if defined(FSL_FEATURE_LPUART_HAS_FIFO) && FSL_FEATURE_LPUART_HAS_FIFO
-    if ((base->WATER & LPUART_WATER_RXCOUNT_MASK) >> LPUART_WATER_RXCOUNT_SHIFT)
-#else
-    if (base->STAT & LPUART_STAT_RDRF_MASK)
-#endif
-    {
-        *value = (char)base->DATA;
-        return kStatus_USB_Success;
-    }
-    else
-    {
-        return kStatus_USB_Error;
-    }
-
-#elif(BOARD_DEBUG_UART_TYPE == DEBUG_CONSOLE_DEVICE_TYPE_LPSCI)
-    UART0_Type *base = (UART0_Type *)BOARD_DEBUG_UART_BASEADDR;
-#if defined(FSL_FEATURE_LPSCI_HAS_FIFO) && FSL_FEATURE_LPSCI_HAS_FIFO
-    if (base->RCFIFO)
-#else
-    if (base->S1 & UART0_S1_RDRF_MASK)
-#endif
-    {
-        *value = (char)base->DATA;
-        return kStatus_USB_Success;
-    }
-    else
-    {
-        return kStatus_USB_Error;
-    }
-#endif
-}
 
 void USB0_IRQHandler(void)
 {
@@ -165,6 +86,32 @@ void USB0_IRQHandler(void)
     else
     {
     }
+    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+    exception return operation might vector to incorrect interrupt */
+    __DSB();
+}
+
+void USB_OtgClockInit(void)
+{
+    /* initialize khci clock */
+    CLOCK_EnableUsbfs0Clock(kCLOCK_UsbSrcPll0, CLOCK_GetFreq(kCLOCK_PllFllSelClk));
+}
+
+void USB_OtgIsrEnable(void)
+{
+    uint8_t irqNumber;
+#if defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)
+    uint8_t usbHOSTKhciIrq[] = USB_IRQS;
+    irqNumber                = usbHOSTKhciIrq[0];
+#endif /* USB_HOST_CONFIG_KHCI */
+
+/* Install isr, set priority, and enable IRQ. */
+#if defined(__GIC_PRIO_BITS)
+    GIC_SetPriority((IRQn_Type)irqNumber, USB_HOST_INTERRUPT_PRIORITY);
+#else
+    NVIC_SetPriority((IRQn_Type)irqNumber, USB_HOST_INTERRUPT_PRIORITY);
+#endif
+    EnableIRQ((IRQn_Type)irqNumber);
 }
 
 static void USB_OtgAppPrintState(uint32_t state)
@@ -411,11 +358,11 @@ static void USB_OtgMouseProcessStack(usb_otg_mouse_instance_t *otgMouseInstance,
         case kOtg_StackHostInit:
             if (otgMouseInstance->otgMouseState == kState_Device)
             {
-                NVIC_DisableIRQ(usbIrq);
+                DisableIRQ(usbIrq);
                 status = USB_OtgDeviceMouseDeinit(otgMouseInstance->deviceHandle);
                 otgMouseInstance->otgMouseState = kState_None;
                 otgMouseInstance->deviceHandle = NULL;
-                NVIC_EnableIRQ(usbIrq);
+                EnableIRQ(usbIrq);
                 if (status == kStatus_USB_Success)
                 {
                     usb_echo("device deinit success\r\n");
@@ -426,11 +373,11 @@ static void USB_OtgMouseProcessStack(usb_otg_mouse_instance_t *otgMouseInstance,
                 }
             }
             otgMouseInstance->hostHandle = NULL;
-            NVIC_DisableIRQ(usbIrq);
+            DisableIRQ(usbIrq);
             otgMouseInstance->otgMouseState = kState_Host;
             otgMouseInstance->aSetBHNPEnable = 0U;
             status = USB_OtgHostMouseInit(&otgMouseInstance->hostHandle);
-            NVIC_EnableIRQ(usbIrq);
+            EnableIRQ(usbIrq);
             if (status == kStatus_USB_Success)
             {
                 usb_echo("host init success\r\n");
@@ -444,11 +391,11 @@ static void USB_OtgMouseProcessStack(usb_otg_mouse_instance_t *otgMouseInstance,
         case kOtg_StackDeviceInit:
             if (otgMouseInstance->otgMouseState == kState_Host)
             {
-                NVIC_DisableIRQ(usbIrq);
+                DisableIRQ(usbIrq);
                 status = USB_OtgHostMouseDeinit(otgMouseInstance->hostHandle);
                 otgMouseInstance->otgMouseState = kState_None;
                 otgMouseInstance->hostHandle = NULL;
-                NVIC_EnableIRQ(usbIrq);
+                EnableIRQ(usbIrq);
                 if (status == kStatus_USB_Success)
                 {
                     usb_echo("host deinit success\r\n");
@@ -459,10 +406,10 @@ static void USB_OtgMouseProcessStack(usb_otg_mouse_instance_t *otgMouseInstance,
                 }
             }
             otgMouseInstance->deviceHandle = NULL;
-            NVIC_DisableIRQ(usbIrq);
+            DisableIRQ(usbIrq);
             otgMouseInstance->otgMouseState = kState_Device;
             status = USB_OtgDeviceMouseInit(&otgMouseInstance->deviceHandle);
-            NVIC_EnableIRQ(usbIrq);
+            EnableIRQ(usbIrq);
             if (status == kStatus_USB_Success)
             {
                 usb_echo("device init success\r\n");
@@ -474,11 +421,11 @@ static void USB_OtgMouseProcessStack(usb_otg_mouse_instance_t *otgMouseInstance,
             break;
 
         case kOtg_StackHostDeinit:
-            NVIC_DisableIRQ(usbIrq);
+            DisableIRQ(usbIrq);
             status = USB_OtgHostMouseDeinit(otgMouseInstance->hostHandle);
             otgMouseInstance->otgMouseState = kState_None;
             otgMouseInstance->hostHandle = NULL;
-            NVIC_EnableIRQ(usbIrq);
+            EnableIRQ(usbIrq);
             if (status == kStatus_USB_Success)
             {
                 usb_echo("host deinit success\r\n");
@@ -490,11 +437,11 @@ static void USB_OtgMouseProcessStack(usb_otg_mouse_instance_t *otgMouseInstance,
             break;
 
         case kOtg_StackDeviceDeinit:
-            NVIC_DisableIRQ(usbIrq);
+            DisableIRQ(usbIrq);
             status = USB_OtgDeviceMouseDeinit(otgMouseInstance->deviceHandle);
             otgMouseInstance->otgMouseState = kState_None;
             otgMouseInstance->deviceHandle = NULL;
-            NVIC_EnableIRQ(usbIrq);
+            EnableIRQ(usbIrq);
             if (status == kStatus_USB_Success)
             {
                 usb_echo("device deinit success\r\n");
@@ -517,8 +464,8 @@ void USB_OtgHidMouseApplicationTask(void *param)
 
     switch (otgMouseInstance->runState)
     {
-        case kOtgRunIdle:
-            if (USB_UartTryReadChar(&uartData) == kStatus_USB_Success)
+        case kUSB_HostOtgRunIdle:
+            if (DbgConsole_TryGetchar(&uartData) == kStatus_USB_Success)
             {
                 if (uartData == 'p')
                 {
@@ -562,8 +509,6 @@ static void USB_OtgCallback(void *param, uint8_t eventType, uint32_t eventValue)
 static void USB_OtgApplicationInit(void)
 {
     usb_status_t status;
-    IRQn_Type usbIrq;
-    IRQn_Type usbFsIrqs[] = USB_IRQS;
 
 #if ((defined USB_OTG_KHCI_PERIPHERAL_ENABLE) && (USB_OTG_KHCI_PERIPHERAL_ENABLE))
     /* initialize otg peripheral */
@@ -572,16 +517,16 @@ static void USB_OtgApplicationInit(void)
 
     g_OtgMouseInstance.hostHandle = NULL;
     g_OtgMouseInstance.deviceHandle = NULL;
-    g_OtgMouseInstance.runState = kOtgRunIdle;
+    g_OtgMouseInstance.runState = kUSB_HostOtgRunIdle;
     g_OtgMouseInstance.otgStateMachine = kOtg_State_Start;
     g_OtgMouseInstance.otgMouseState = kState_None;
     g_OtgMouseInstance.aSetBHNPEnable = 0U;
 
     /* initialize khci clock */
-    CLOCK_EnableUsbfs0Clock(USB_FS_CLK_SRC, USB_FS_CLK_FREQ);
-#if (defined(FSL_FEATURE_SOC_MPU_COUNT) && (FSL_FEATURE_SOC_MPU_COUNT > 0U))
-    MPU_Enable(MPU, 0);
-#endif /* FSL_FEATURE_SOC_MPU_COUNT */
+    USB_OtgClockInit();
+#if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
+    SYSMPU_Enable(SYSMPU, 0);
+#endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
     /* initialize otg stack */
     status = USB_OtgInit(kUSB_ControllerKhci0, &g_OtgHandle, USB_OtgCallback, &g_OtgMouseInstance);
@@ -591,10 +536,7 @@ static void USB_OtgApplicationInit(void)
         return;
     }
 
-    /* initialize usb interrupt */
-    usbIrq = usbFsIrqs[kUSB_ControllerKhci0 - kUSB_ControllerKhci0];
-    NVIC_SetPriority(usbIrq, USB_HOST_INTERRUPT_PRIORITY);
-    NVIC_EnableIRQ(usbIrq);
+    USB_OtgIsrEnable();
 
     usb_echo("usb otg stack init done\r\n");
 }

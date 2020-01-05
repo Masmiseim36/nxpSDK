@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, NXP Semiconductor, Inc.
+ * Copyright 2017 NXP
  * All rights reserved.
  *
  * 
@@ -13,6 +13,7 @@
 #include "driver_cxt.h"
 #include "wifi_spi.h"
 #include "wifi_shield.h"
+#include "fsl_gpio.h"
 
 
 /*!

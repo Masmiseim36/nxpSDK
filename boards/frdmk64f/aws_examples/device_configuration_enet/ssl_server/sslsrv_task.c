@@ -8,8 +8,8 @@
  */
 
 /*
-*   SSLSRV tasks and session processing.
-*/
+ *   SSLSRV tasks and session processing.
+ */
 
 #include "sslsrv.h"
 #include "sslsrv_prv.h"
@@ -48,7 +48,10 @@ void sslsrv_server_task(void *arg)
         int new_sock;
 
         /* limit number of opened sessions */
-        xSemaphoreTake(server->ses_cnt, portMAX_DELAY);
+        if (xSemaphoreTake(server->ses_cnt, portMAX_DELAY) != pdTRUE)
+        {
+            break;
+        }
         SSL_SRV_PRINTF("waiting for client connection ...\n");
         /* Get socket with incoming connection (IPv4 or IPv6) */
         int connsock = sslsrv_wait_for_conn(server->sock);
@@ -105,7 +108,7 @@ void sslsrv_server_task(void *arg)
                             {
                                 server->session[i] = session;
 
-                                ses_param->server = server;
+                                ses_param->server    = server;
                                 ses_param->session_p = &server->session[i];
 
                                 /* Try to create task for session */
@@ -167,8 +170,8 @@ void sslsrv_server_task(void *arg)
 static void sslsrv_session_task(void *arg)
 {
     SSLSRV_SES_TASK_PARAM *ses_param = (SSLSRV_SES_TASK_PARAM *)arg;
-    SSLSRV_STRUCT *server = ses_param->server;
-    SSLSRV_SESSION_STRUCT *session = *ses_param->session_p;
+    SSLSRV_STRUCT *server            = ses_param->server;
+    SSLSRV_SESSION_STRUCT *session   = *ses_param->session_p;
 
     while (session->valid)
     {
@@ -284,11 +287,11 @@ static int sslsrv_ses_init(SSLSRV_STRUCT *server, SSLSRV_SESSION_STRUCT *session
 {
     if (server && session)
     {
-        session->sock = sock;
-        session->valid = SSLSRV_VALID;
-        session->timeout = pdMS_TO_TICKS(SSLSRV_CFG_SES_TIMEOUT);
-        session->time = xTaskGetTickCount();
-        session->process_func = sslsrv_process;
+        session->sock          = sock;
+        session->valid         = SSLSRV_VALID;
+        session->timeout       = pdMS_TO_TICKS(SSLSRV_CFG_SES_TIMEOUT);
+        session->time          = xTaskGetTickCount();
+        session->process_func  = sslsrv_process;
         session->authenticated = false;
         return SSLSRV_OK;
     }
@@ -328,7 +331,7 @@ static void sslsrv_ses_close(SSLSRV_SESSION_STRUCT *session)
 int srv_ssl_read(SSLSRV_SESSION_STRUCT *session, char *buffer, size_t length)
 {
     uint32_t to_receive = length;
-    uint32_t received = 0;
+    uint32_t received   = 0;
     int result;
     do
     {
@@ -435,7 +438,7 @@ void sslsrv_process(void *server_ptr, void *session_ptr)
             if (dev_cfg_check_login_password(buffer, data_len) == 0)
             {
                 session->authenticated = true;
-                resp.status = kCMD_Ok;
+                resp.status            = kCMD_Ok;
             }
         }
     }

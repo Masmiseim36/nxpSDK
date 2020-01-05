@@ -28,7 +28,7 @@
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #include "usb_phy.h"
 #endif
 
@@ -78,9 +78,9 @@ void USB_DeviceIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbDeviceKhciIrq[] = USB_IRQS;
-    irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+    irqNumber                  = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 
-/* Install isr, set priority, and enable IRQ. */
+    /* Install isr, set priority, and enable IRQ. */
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
     EnableIRQ((IRQn_Type)irqNumber);
 }

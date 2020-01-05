@@ -1,86 +1,35 @@
 /*
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
-
+
+/* clang-format off */
 /*
- * TEXT BELOW IS USED AS SETTING FOR THE PINS TOOL *****************************
-PinsProfile:
-- !!product 'Pins v1.0'
-- !!processor 'MK65FN2M0xxx18'
-- !!package 'MK65FN2M0VMI18'
-- !!mcu_data 'ksdk2_0'
-- !!processor_version '1.0.0'
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR THE PINS TOOL ***
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+!!GlobalInfo
+product: Pins v3.0
+processor: MK65FN2M0xxx18
+package_id: MK65FN2M0VMI18
+mcu_data: ksdk2_0
+processor_version: 0.0.10
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
+/* clang-format on */
 
 #include "fsl_common.h"
 #include "fsl_port.h"
 #include "pin_mux.h"
 
-#define PIN0_IDX                         0u   /*!< Pin number for pin 0 in a port */
-#define PIN1_IDX                         1u   /*!< Pin number for pin 1 in a port */
-#define PIN2_IDX                         2u   /*!< Pin number for pin 2 in a port */
-#define PIN3_IDX                         3u   /*!< Pin number for pin 3 in a port */
-#define PIN4_IDX                         4u   /*!< Pin number for pin 4 in a port */
-#define PIN5_IDX                         5u   /*!< Pin number for pin 5 in a port */
-#define PIN6_IDX                         6u   /*!< Pin number for pin 6 in a port */
-#define PIN7_IDX                         7u   /*!< Pin number for pin 7 in a port */
-#define PIN8_IDX                         8u   /*!< Pin number for pin 8 in a port */
-#define PIN9_IDX                         9u   /*!< Pin number for pin 9 in a port */
-#define PIN10_IDX                       10u   /*!< Pin number for pin 10 in a port */
-#define PIN11_IDX                       11u   /*!< Pin number for pin 11 in a port */
-#define PIN12_IDX                       12u   /*!< Pin number for pin 12 in a port */
-#define PIN13_IDX                       13u   /*!< Pin number for pin 13 in a port */
-#define PIN14_IDX                       14u   /*!< Pin number for pin 14 in a port */
-#define PIN15_IDX                       15u   /*!< Pin number for pin 15 in a port */
-#define PIN16_IDX                       16u   /*!< Pin number for pin 16 in a port */
-#define PIN17_IDX                       17u   /*!< Pin number for pin 17 in a port */
-#define PIN18_IDX                       18u   /*!< Pin number for pin 18 in a port */
-#define PIN19_IDX                       19u   /*!< Pin number for pin 19 in a port */
-#define PIN20_IDX                       20u   /*!< Pin number for pin 20 in a port */
-#define PIN21_IDX                       21u   /*!< Pin number for pin 21 in a port */
-#define PIN22_IDX                       22u   /*!< Pin number for pin 22 in a port */
-#define PIN23_IDX                       23u   /*!< Pin number for pin 23 in a port */
-#define PIN24_IDX                       24u   /*!< Pin number for pin 24 in a port */
-#define PIN25_IDX                       25u   /*!< Pin number for pin 25 in a port */
-#define PIN26_IDX                       26u   /*!< Pin number for pin 26 in a port */
-#define PIN27_IDX                       27u   /*!< Pin number for pin 27 in a port */
-#define PIN28_IDX                       28u   /*!< Pin number for pin 28 in a port */
-#define PIN29_IDX                       29u   /*!< Pin number for pin 29 in a port */
-#define PIN30_IDX                       30u   /*!< Pin number for pin 30 in a port */
-#define PIN31_IDX                       31u   /*!< Pin number for pin 31 in a port */
 
+
+/* clang-format off */
 /*
- * TEXT BELOW IS USED AS SETTING FOR THE PINS TOOL *****************************
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins:
-- options: {coreID: singlecore, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: H3, peripheral: UART2, signal: TX, pin_signal: ADC0_SE4a/PTE16/SPI0_PCS0/UART2_TX/FTM_CLKIN0/FTM0_FLT3/TPM_CLKIN0}
   - {pin_num: F5, peripheral: UART2, signal: RX, pin_signal: ADC0_SE5a/PTE17/LLWU_P19/SPI0_SCK/UART2_RX/FTM_CLKIN1/LPTMR0_ALT3/TPM_CLKIN1}
@@ -142,84 +91,209 @@ BOARD_InitPins:
   - {pin_num: G12, peripheral: SDRAM, signal: RAS, pin_signal: ADC0_SE9/ADC1_SE9/TSI0_CH6/PTB1/I2C0_SDA/FTM1_CH1/RMII0_MDC/MII0_MDC/SDRAM_RAS_b/FTM1_QD_PHB/TPM1_CH1}
   - {pin_num: G11, peripheral: SDRAM, signal: WE, pin_signal: ADC0_SE12/TSI0_CH7/PTB2/I2C0_SCL/UART0_RTS_b/ENET0_1588_TMR0/SDRAM_WE/FTM0_FLT3}
   - {pin_num: M10, peripheral: SDRAM, signal: CLKOUT, pin_signal: PTA6/FTM0_CH3/CLKOUT/TRACE_CLKOUT}
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR THE PINS TOOL ***
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
+/* clang-format on */
 
-/*FUNCTION**********************************************************************
+/* FUNCTION ************************************************************************************************************
  *
  * Function Name : BOARD_InitPins
  * Description   : Configures pin routing and optionally pin electrical features.
  *
- *END**************************************************************************/
-void BOARD_InitPins(void) {
-  CLOCK_EnableClock(kCLOCK_PortA);                           /* Port A Clock Gate Control: Clock enabled */
-  CLOCK_EnableClock(kCLOCK_PortB);                           /* Port B Clock Gate Control: Clock enabled */
-  CLOCK_EnableClock(kCLOCK_PortC);                           /* Port C Clock Gate Control: Clock enabled */
-  CLOCK_EnableClock(kCLOCK_PortD);                           /* Port D Clock Gate Control: Clock enabled */
-  CLOCK_EnableClock(kCLOCK_PortE);                           /* Port E Clock Gate Control: Clock enabled */
+ * END ****************************************************************************************************************/
+void BOARD_InitPins(void)
+{
+    /* Port A Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortA);
+    /* Port B Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortB);
+    /* Port C Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortC);
+    /* Port D Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortD);
+    /* Port E Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortE);
 
-  PORT_SetPinMux(PORTA, PIN24_IDX, kPORT_MuxAlt5);           /* PORTA24 (pin K11) is configured as SDRAM_D15 */
-  PORT_SetPinMux(PORTA, PIN25_IDX, kPORT_MuxAlt5);           /* PORTA25 (pin J11) is configured as SDRAM_D14 */
-  PORT_SetPinMux(PORTA, PIN26_IDX, kPORT_MuxAlt5);           /* PORTA26 (pin J10) is configured as SDRAM_D13 */
-  PORT_SetPinMux(PORTA, PIN27_IDX, kPORT_MuxAlt5);           /* PORTA27 (pin H13) is configured as SDRAM_D12 */
-  PORT_SetPinMux(PORTA, PIN30_IDX, kPORT_MuxAlt5);           /* PORTA30 (pin H10) is configured as SDRAM_D11 */
-  PORT_SetPinMux(PORTA, PIN31_IDX, kPORT_MuxAlt5);           /* PORTA31 (pin J9) is configured as SDRAM_D10 */
-  PORT_SetPinMux(PORTA, PIN6_IDX, kPORT_MuxAlt5);            /* PORTA6 (pin M10) is configured as CLKOUT */
-  PORT_SetPinMux(PORTB, PIN0_IDX, kPORT_MuxAlt5);            /* PORTB0 (pin G13) is configured as SDRAM_CAS_b */
-  PORT_SetPinMux(PORTB, PIN1_IDX, kPORT_MuxAlt5);            /* PORTB1 (pin G12) is configured as SDRAM_RAS_b */
-  PORT_SetPinMux(PORTB, PIN10_IDX, kPORT_MuxAlt5);           /* PORTB10 (pin G9) is configured as SDRAM_D19 */
-  PORT_SetPinMux(PORTB, PIN11_IDX, kPORT_MuxAlt5);           /* PORTB11 (pin E13) is configured as SDRAM_D18 */
-  PORT_SetPinMux(PORTB, PIN12_IDX, kPORT_MuxAlt5);           /* PORTB12 (pin E12) is configured as SDRAM_D9 */
-  PORT_SetPinMux(PORTB, PIN13_IDX, kPORT_MuxAlt5);           /* PORTB13 (pin E11) is configured as SDRAM_D8 */
-  PORT_SetPinMux(PORTB, PIN14_IDX, kPORT_MuxAlt5);           /* PORTB14 (pin E10) is configured as SDRAM_D7 */
-  PORT_SetPinMux(PORTB, PIN15_IDX, kPORT_MuxAlt5);           /* PORTB15 (pin E9) is configured as SDRAM_D6 */
-  PORT_SetPinMux(PORTB, PIN16_IDX, kPORT_MuxAlt5);           /* PORTB16 (pin F8) is configured as SDRAM_D17 */
-  PORT_SetPinMux(PORTB, PIN17_IDX, kPORT_MuxAlt5);           /* PORTB17 (pin D13) is configured as SDRAM_D16 */
-  PORT_SetPinMux(PORTB, PIN18_IDX, kPORT_MuxAlt5);           /* PORTB18 (pin D12) is configured as SDRAM_A23 */
-  PORT_SetPinMux(PORTB, PIN2_IDX, kPORT_MuxAlt5);            /* PORTB2 (pin G11) is configured as SDRAM_WE */
-  PORT_SetPinMux(PORTB, PIN20_IDX, kPORT_MuxAlt5);           /* PORTB20 (pin D10) is configured as SDRAM_D31 */
-  PORT_SetPinMux(PORTB, PIN21_IDX, kPORT_MuxAlt5);           /* PORTB21 (pin D9) is configured as SDRAM_D30 */
-  PORT_SetPinMux(PORTB, PIN22_IDX, kPORT_MuxAlt5);           /* PORTB22 (pin C13) is configured as SDRAM_D29 */
-  PORT_SetPinMux(PORTB, PIN23_IDX, kPORT_MuxAlt5);           /* PORTB23 (pin C12) is configured as SDRAM_D28 */
-  PORT_SetPinMux(PORTB, PIN3_IDX, kPORT_MuxAlt5);            /* PORTB3 (pin G10) is configured as SDRAM_CS0_b */
-  PORT_SetPinMux(PORTB, PIN4_IDX, kPORT_MuxAlt5);            /* PORTB4 (pin H9) is configured as SDRAM_CS1_b */
-  PORT_SetPinMux(PORTB, PIN6_IDX, kPORT_MuxAlt5);            /* PORTB6 (pin F12) is configured as SDRAM_D23 */
-  PORT_SetPinMux(PORTB, PIN7_IDX, kPORT_MuxAlt5);            /* PORTB7 (pin F11) is configured as SDRAM_D22 */
-  PORT_SetPinMux(PORTB, PIN8_IDX, kPORT_MuxAlt5);            /* PORTB8 (pin F10) is configured as SDRAM_D21 */
-  PORT_SetPinMux(PORTB, PIN9_IDX, kPORT_MuxAlt5);            /* PORTB9 (pin F9) is configured as SDRAM_D20 */
-  PORT_SetPinMux(PORTC, PIN0_IDX, kPORT_MuxAlt5);            /* PORTC0 (pin B13) is configured as SDRAM_A22 */
-  PORT_SetPinMux(PORTC, PIN1_IDX, kPORT_MuxAlt5);            /* PORTC1 (pin B12) is configured as SDRAM_A21 */
-  PORT_SetPinMux(PORTC, PIN10_IDX, kPORT_MuxAlt5);           /* PORTC10 (pin A8) is configured as SDRAM_A13 */
-  PORT_SetPinMux(PORTC, PIN12_IDX, kPORT_MuxAlt5);           /* PORTC12 (pin B9) is configured as SDRAM_D27 */
-  PORT_SetPinMux(PORTC, PIN13_IDX, kPORT_MuxAlt5);           /* PORTC13 (pin B8) is configured as SDRAM_D26 */
-  PORT_SetPinMux(PORTC, PIN14_IDX, kPORT_MuxAlt5);           /* PORTC14 (pin C8) is configured as SDRAM_D25 */
-  PORT_SetPinMux(PORTC, PIN15_IDX, kPORT_MuxAlt5);           /* PORTC15 (pin D8) is configured as SDRAM_D24 */
-  PORT_SetPinMux(PORTC, PIN16_IDX, kPORT_MuxAlt5);           /* PORTC16 (pin E8) is configured as SDRAM_DQM2 */
-  PORT_SetPinMux(PORTC, PIN17_IDX, kPORT_MuxAlt5);           /* PORTC17 (pin E7) is configured as SDRAM_DQM3 */
-  PORT_SetPinMux(PORTC, PIN18_IDX, kPORT_MuxAlt5);           /* PORTC18 (pin D7) is configured as SDRAM_DQM1 */
-  PORT_SetPinMux(PORTC, PIN19_IDX, kPORT_MuxAlt5);           /* PORTC19 (pin C7) is configured as SDRAM_DQM0 */
-  PORT_SetPinMux(PORTC, PIN2_IDX, kPORT_MuxAlt5);            /* PORTC2 (pin A13) is configured as SDRAM_A20 */
-  PORT_SetPinMux(PORTC, PIN24_IDX, kPORT_MuxAlt5);           /* PORTC24 (pin B7) is configured as SDRAM_D5 */
-  PORT_SetPinMux(PORTC, PIN25_IDX, kPORT_MuxAlt5);           /* PORTC25 (pin A7) is configured as SDRAM_D4 */
-  PORT_SetPinMux(PORTC, PIN26_IDX, kPORT_MuxAlt5);           /* PORTC26 (pin E6) is configured as SDRAM_D3 */
-  PORT_SetPinMux(PORTC, PIN27_IDX, kPORT_MuxAlt5);           /* PORTC27 (pin D6) is configured as SDRAM_D2 */
-  PORT_SetPinMux(PORTC, PIN28_IDX, kPORT_MuxAlt5);           /* PORTC28 (pin C6) is configured as SDRAM_D1 */
-  PORT_SetPinMux(PORTC, PIN29_IDX, kPORT_MuxAlt5);           /* PORTC29 (pin B6) is configured as SDRAM_D0 */
-  PORT_SetPinMux(PORTC, PIN4_IDX, kPORT_MuxAlt5);            /* PORTC4 (pin B11) is configured as SDRAM_A19 */
-  PORT_SetPinMux(PORTC, PIN5_IDX, kPORT_MuxAlt5);            /* PORTC5 (pin A11) is configured as SDRAM_A18 */
-  PORT_SetPinMux(PORTC, PIN6_IDX, kPORT_MuxAlt5);            /* PORTC6 (pin A10) is configured as SDRAM_A17 */
-  PORT_SetPinMux(PORTC, PIN7_IDX, kPORT_MuxAlt5);            /* PORTC7 (pin B10) is configured as SDRAM_A16 */
-  PORT_SetPinMux(PORTC, PIN8_IDX, kPORT_MuxAlt5);            /* PORTC8 (pin C10) is configured as SDRAM_A15 */
-  PORT_SetPinMux(PORTC, PIN9_IDX, kPORT_MuxAlt5);            /* PORTC9 (pin C9) is configured as SDRAM_A14 */
-  PORT_SetPinMux(PORTD, PIN2_IDX, kPORT_MuxAlt5);            /* PORTD2 (pin A4) is configured as SDRAM_A12 */
-  PORT_SetPinMux(PORTD, PIN3_IDX, kPORT_MuxAlt5);            /* PORTD3 (pin B4) is configured as SDRAM_A11 */
-  PORT_SetPinMux(PORTD, PIN4_IDX, kPORT_MuxAlt5);            /* PORTD4 (pin B5) is configured as SDRAM_A10 */
-  PORT_SetPinMux(PORTD, PIN5_IDX, kPORT_MuxAlt5);            /* PORTD5 (pin C4) is configured as SDRAM_A9 */
-  PORT_SetPinMux(PORTD, PIN7_IDX, kPORT_MuxAlt5);            /* PORTD7 (pin E5) is configured as SDRAM_CKE */
-  PORT_SetPinMux(PORTE, PIN16_IDX, kPORT_MuxAlt3);           /* PORTE16 (pin H3) is configured as UART2_TX */
-  PORT_SetPinMux(PORTE, PIN17_IDX, kPORT_MuxAlt3);           /* PORTE17 (pin F5) is configured as UART2_RX */
+    /* PORTA24 (pin K11) is configured as SDRAM_D15 */
+    PORT_SetPinMux(PORTA, 24U, kPORT_MuxAlt5);
+
+    /* PORTA25 (pin J11) is configured as SDRAM_D14 */
+    PORT_SetPinMux(PORTA, 25U, kPORT_MuxAlt5);
+
+    /* PORTA26 (pin J10) is configured as SDRAM_D13 */
+    PORT_SetPinMux(PORTA, 26U, kPORT_MuxAlt5);
+
+    /* PORTA27 (pin H13) is configured as SDRAM_D12 */
+    PORT_SetPinMux(PORTA, 27U, kPORT_MuxAlt5);
+
+    /* PORTA30 (pin H10) is configured as SDRAM_D11 */
+    PORT_SetPinMux(PORTA, 30U, kPORT_MuxAlt5);
+
+    /* PORTA31 (pin J9) is configured as SDRAM_D10 */
+    PORT_SetPinMux(PORTA, 31U, kPORT_MuxAlt5);
+
+    /* PORTA6 (pin M10) is configured as CLKOUT */
+    PORT_SetPinMux(PORTA, 6U, kPORT_MuxAlt5);
+
+    /* PORTB0 (pin G13) is configured as SDRAM_CAS_b */
+    PORT_SetPinMux(PORTB, 0U, kPORT_MuxAlt5);
+
+    /* PORTB1 (pin G12) is configured as SDRAM_RAS_b */
+    PORT_SetPinMux(PORTB, 1U, kPORT_MuxAlt5);
+
+    /* PORTB10 (pin G9) is configured as SDRAM_D19 */
+    PORT_SetPinMux(PORTB, 10U, kPORT_MuxAlt5);
+
+    /* PORTB11 (pin E13) is configured as SDRAM_D18 */
+    PORT_SetPinMux(PORTB, 11U, kPORT_MuxAlt5);
+
+    /* PORTB12 (pin E12) is configured as SDRAM_D9 */
+    PORT_SetPinMux(PORTB, 12U, kPORT_MuxAlt5);
+
+    /* PORTB13 (pin E11) is configured as SDRAM_D8 */
+    PORT_SetPinMux(PORTB, 13U, kPORT_MuxAlt5);
+
+    /* PORTB14 (pin E10) is configured as SDRAM_D7 */
+    PORT_SetPinMux(PORTB, 14U, kPORT_MuxAlt5);
+
+    /* PORTB15 (pin E9) is configured as SDRAM_D6 */
+    PORT_SetPinMux(PORTB, 15U, kPORT_MuxAlt5);
+
+    /* PORTB16 (pin F8) is configured as SDRAM_D17 */
+    PORT_SetPinMux(PORTB, 16U, kPORT_MuxAlt5);
+
+    /* PORTB17 (pin D13) is configured as SDRAM_D16 */
+    PORT_SetPinMux(PORTB, 17U, kPORT_MuxAlt5);
+
+    /* PORTB18 (pin D12) is configured as SDRAM_A23 */
+    PORT_SetPinMux(PORTB, 18U, kPORT_MuxAlt5);
+
+    /* PORTB2 (pin G11) is configured as SDRAM_WE */
+    PORT_SetPinMux(PORTB, 2U, kPORT_MuxAlt5);
+
+    /* PORTB20 (pin D10) is configured as SDRAM_D31 */
+    PORT_SetPinMux(PORTB, 20U, kPORT_MuxAlt5);
+
+    /* PORTB21 (pin D9) is configured as SDRAM_D30 */
+    PORT_SetPinMux(PORTB, 21U, kPORT_MuxAlt5);
+
+    /* PORTB22 (pin C13) is configured as SDRAM_D29 */
+    PORT_SetPinMux(PORTB, 22U, kPORT_MuxAlt5);
+
+    /* PORTB23 (pin C12) is configured as SDRAM_D28 */
+    PORT_SetPinMux(PORTB, 23U, kPORT_MuxAlt5);
+
+    /* PORTB3 (pin G10) is configured as SDRAM_CS0_b */
+    PORT_SetPinMux(PORTB, 3U, kPORT_MuxAlt5);
+
+    /* PORTB4 (pin H9) is configured as SDRAM_CS1_b */
+    PORT_SetPinMux(PORTB, 4U, kPORT_MuxAlt5);
+
+    /* PORTB6 (pin F12) is configured as SDRAM_D23 */
+    PORT_SetPinMux(PORTB, 6U, kPORT_MuxAlt5);
+
+    /* PORTB7 (pin F11) is configured as SDRAM_D22 */
+    PORT_SetPinMux(PORTB, 7U, kPORT_MuxAlt5);
+
+    /* PORTB8 (pin F10) is configured as SDRAM_D21 */
+    PORT_SetPinMux(PORTB, 8U, kPORT_MuxAlt5);
+
+    /* PORTB9 (pin F9) is configured as SDRAM_D20 */
+    PORT_SetPinMux(PORTB, 9U, kPORT_MuxAlt5);
+
+    /* PORTC0 (pin B13) is configured as SDRAM_A22 */
+    PORT_SetPinMux(PORTC, 0U, kPORT_MuxAlt5);
+
+    /* PORTC1 (pin B12) is configured as SDRAM_A21 */
+    PORT_SetPinMux(PORTC, 1U, kPORT_MuxAlt5);
+
+    /* PORTC10 (pin A8) is configured as SDRAM_A13 */
+    PORT_SetPinMux(PORTC, 10U, kPORT_MuxAlt5);
+
+    /* PORTC12 (pin B9) is configured as SDRAM_D27 */
+    PORT_SetPinMux(PORTC, 12U, kPORT_MuxAlt5);
+
+    /* PORTC13 (pin B8) is configured as SDRAM_D26 */
+    PORT_SetPinMux(PORTC, 13U, kPORT_MuxAlt5);
+
+    /* PORTC14 (pin C8) is configured as SDRAM_D25 */
+    PORT_SetPinMux(PORTC, 14U, kPORT_MuxAlt5);
+
+    /* PORTC15 (pin D8) is configured as SDRAM_D24 */
+    PORT_SetPinMux(PORTC, 15U, kPORT_MuxAlt5);
+
+    /* PORTC16 (pin E8) is configured as SDRAM_DQM2 */
+    PORT_SetPinMux(PORTC, 16U, kPORT_MuxAlt5);
+
+    /* PORTC17 (pin E7) is configured as SDRAM_DQM3 */
+    PORT_SetPinMux(PORTC, 17U, kPORT_MuxAlt5);
+
+    /* PORTC18 (pin D7) is configured as SDRAM_DQM1 */
+    PORT_SetPinMux(PORTC, 18U, kPORT_MuxAlt5);
+
+    /* PORTC19 (pin C7) is configured as SDRAM_DQM0 */
+    PORT_SetPinMux(PORTC, 19U, kPORT_MuxAlt5);
+
+    /* PORTC2 (pin A13) is configured as SDRAM_A20 */
+    PORT_SetPinMux(PORTC, 2U, kPORT_MuxAlt5);
+
+    /* PORTC24 (pin B7) is configured as SDRAM_D5 */
+    PORT_SetPinMux(PORTC, 24U, kPORT_MuxAlt5);
+
+    /* PORTC25 (pin A7) is configured as SDRAM_D4 */
+    PORT_SetPinMux(PORTC, 25U, kPORT_MuxAlt5);
+
+    /* PORTC26 (pin E6) is configured as SDRAM_D3 */
+    PORT_SetPinMux(PORTC, 26U, kPORT_MuxAlt5);
+
+    /* PORTC27 (pin D6) is configured as SDRAM_D2 */
+    PORT_SetPinMux(PORTC, 27U, kPORT_MuxAlt5);
+
+    /* PORTC28 (pin C6) is configured as SDRAM_D1 */
+    PORT_SetPinMux(PORTC, 28U, kPORT_MuxAlt5);
+
+    /* PORTC29 (pin B6) is configured as SDRAM_D0 */
+    PORT_SetPinMux(PORTC, 29U, kPORT_MuxAlt5);
+
+    /* PORTC4 (pin B11) is configured as SDRAM_A19 */
+    PORT_SetPinMux(PORTC, 4U, kPORT_MuxAlt5);
+
+    /* PORTC5 (pin A11) is configured as SDRAM_A18 */
+    PORT_SetPinMux(PORTC, 5U, kPORT_MuxAlt5);
+
+    /* PORTC6 (pin A10) is configured as SDRAM_A17 */
+    PORT_SetPinMux(PORTC, 6U, kPORT_MuxAlt5);
+
+    /* PORTC7 (pin B10) is configured as SDRAM_A16 */
+    PORT_SetPinMux(PORTC, 7U, kPORT_MuxAlt5);
+
+    /* PORTC8 (pin C10) is configured as SDRAM_A15 */
+    PORT_SetPinMux(PORTC, 8U, kPORT_MuxAlt5);
+
+    /* PORTC9 (pin C9) is configured as SDRAM_A14 */
+    PORT_SetPinMux(PORTC, 9U, kPORT_MuxAlt5);
+
+    /* PORTD2 (pin A4) is configured as SDRAM_A12 */
+    PORT_SetPinMux(PORTD, 2U, kPORT_MuxAlt5);
+
+    /* PORTD3 (pin B4) is configured as SDRAM_A11 */
+    PORT_SetPinMux(PORTD, 3U, kPORT_MuxAlt5);
+
+    /* PORTD4 (pin B5) is configured as SDRAM_A10 */
+    PORT_SetPinMux(PORTD, 4U, kPORT_MuxAlt5);
+
+    /* PORTD5 (pin C4) is configured as SDRAM_A9 */
+    PORT_SetPinMux(PORTD, 5U, kPORT_MuxAlt5);
+
+    /* PORTD7 (pin E5) is configured as SDRAM_CKE */
+    PORT_SetPinMux(PORTD, 7U, kPORT_MuxAlt5);
+
+    /* PORTE16 (pin H3) is configured as UART2_TX */
+    PORT_SetPinMux(PORTE, 16U, kPORT_MuxAlt3);
+
+    /* PORTE17 (pin F5) is configured as UART2_RX */
+    PORT_SetPinMux(PORTE, 17U, kPORT_MuxAlt3);
 }
-
-/*******************************************************************************
+/***********************************************************************************************************************
  * EOF
- ******************************************************************************/
+ **********************************************************************************************************************/

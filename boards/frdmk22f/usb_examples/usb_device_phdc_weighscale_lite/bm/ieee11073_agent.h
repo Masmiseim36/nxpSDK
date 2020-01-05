@@ -70,7 +70,7 @@ typedef struct _ieee11073_timer_struct
 /*! @brief agent structure */
 typedef struct _agent_struct
 {
-    uint32_t agentHandle; /*!< the agent handle */
+    void *agentHandle; /*!< the agent handle */
     uint8_t agentState;   /*!< the agent state */
 #if IEEE_MAX_TIMER_OBJECTS
     ieee11073_timer_struct_t agentTimer[2U]; /*!< timer to implement timeout functionalities */
@@ -94,7 +94,7 @@ extern "C" {
  *
  * @param handle            the agent handle.
  */
-void AGENT_Init(uint32_t handle);
+void AGENT_Init(void *handle);
 
 /*!
  * @brief medical callback.
@@ -106,7 +106,7 @@ void AGENT_Init(uint32_t handle);
  *
  * @return None.
  */
-void AGENT_MedicalCallback(uint32_t handle, uint8_t eventType, uint8_t *data);
+void AGENT_MedicalCallback(void *handle, uint8_t eventType, uint8_t *data);
 
 /*!
  * @brief send association request.
@@ -119,7 +119,7 @@ void AGENT_MedicalCallback(uint32_t handle, uint8_t eventType, uint8_t *data);
  * @param associationData     the association request data.
  * @param size          the association request data size.
  */
-void AGENT_SendAssociationRequest(uint32_t handle, uint8_t *associationData, uint32_t size);
+void AGENT_SendAssociationRequest(void *handle, uint8_t *associationData, uint32_t size);
 
 #if AGENT_SUPPORT_FULL_FEATURE
 /*!
@@ -131,7 +131,7 @@ void AGENT_SendAssociationRequest(uint32_t handle, uint8_t *associationData, uin
  * @param handle        the agent handle.
  * @param abortReason   the abort reason.
  */
-void AGENT_SendAssociationAbortRequest(uint32_t handle, abort_reason_t abortReason);
+void AGENT_SendAssociationAbortRequest(void *handle, abort_reason_t abortReason);
 
 /*!
  * @brief send association release request.
@@ -142,7 +142,7 @@ void AGENT_SendAssociationAbortRequest(uint32_t handle, abort_reason_t abortReas
  * @param handle            the agent handle.
  * @param releaseReason     the release reason.
  */
-void AGENT_SendAssociationRleaseRequest(uint32_t handle, release_request_reason_t releaseReason);
+void AGENT_SendAssociationRleaseRequest(void *handle, release_request_reason_t releaseReason);
 #endif
 
 /*!
@@ -153,7 +153,7 @@ void AGENT_SendAssociationRleaseRequest(uint32_t handle, release_request_reason_
  * @param handle            the agent handle.
  * @param state             the state of Agent.
  */
-void AGENT_SetAgentState(uint32_t handle, uint8_t state);
+void AGENT_SetAgentState(void *handle, uint8_t state);
 
 /*!
  * @brief send agent configuration.
@@ -165,7 +165,7 @@ void AGENT_SetAgentState(uint32_t handle, uint8_t state);
  * @param config    the agent configuration data.
  * @param size          the agent configuration data size.
  */
-void AGENT_SendConfig(uint32_t handle, uint8_t *config, uint32_t size);
+void AGENT_SendConfig(void *handle, uint8_t *config, uint32_t size);
 #if defined(__cplusplus)
 }
 #endif

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -89,8 +89,8 @@ typedef enum _fun_key_status
 /*! @brief Data structure for Shell environment. */
 typedef struct _shell_context_handle
 {
-    list_t commandContextListHead; /*!< Command shellContextHandle list queue head */
-    serial_handle_t serialHandle;  /*!< Serial manager handle */
+    list_label_t commandContextListHead; /*!< Command shellContextHandle list queue head */
+    serial_handle_t serialHandle;        /*!< Serial manager handle */
     uint8_t
         serialWriteHandleBuffer[SERIAL_MANAGER_WRITE_HANDLE_SIZE];   /*!< The buffer for serial manager write handle */
     serial_write_handle_t serialWriteHandle;                         /*!< The serial manager write handle */
@@ -441,6 +441,9 @@ void SHELL_Task(shell_handle_t shellHandle)
                         /* If command line is NULL, will start a new transfer */
                         if (0U == strlen(shellContextHandle->line))
                         {
+                            /* Reset all params */
+                            shellContextHandle->c_pos = shellContextHandle->l_pos = 0;
+                            shellContextHandle->hist_current                      = 0;
                             (void)SHELL_Write(shellContextHandle, shellContextHandle->prompt,
                                               strlen(shellContextHandle->prompt));
                             continue;
@@ -696,7 +699,7 @@ static void SHELL_AutoComplete(shell_context_handle_t *shellContextHandle)
         {
             /* Show possible matches */
             SHELL_Printf(shellContextHandle, "%s\r\n", (char *)cmdName);
-            if (minLen > strlen(cmdName))
+            if (minLen > ((int32_t)strlen(cmdName)))
             {
                 namePtr = cmdName;
                 minLen  = (int32_t)strlen(namePtr);
@@ -871,8 +874,7 @@ shell_status_t SHELL_Init(shell_handle_t shellHandle, serial_handle_t serialHand
 
     (void)SHELL_Write(shellContextHandle, "\r\nSHELL build: ", strlen("\r\nSHELL build: "));
     (void)SHELL_Write(shellContextHandle, __DATE__, strlen(__DATE__));
-    (void)SHELL_Write(shellContextHandle, "\r\nCopyright  2018  NXP\r\n",
-                      strlen("\r\nCopyright  2018  NXP\r\n"));
+    (void)SHELL_Write(shellContextHandle, "\r\nCopyright  2018  NXP\r\n", strlen("\r\nCopyright  2018  NXP\r\n"));
     (void)SHELL_Write(shellContextHandle, shellContextHandle->prompt, strlen(shellContextHandle->prompt));
 
     return kStatus_SHELL_Success;

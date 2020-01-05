@@ -47,20 +47,20 @@
  *
  * @return     1 if successful. Else 0.
  */
-U8 exPsk(U16 appletVersion)
+U8 exPsk()
 {
     U8 result = 1;
     PRINTF( "\r\n-----------\r\nStart exPsk()\r\n------------\r\n");
 
     // Without channel encryption
-    result &= exPskTls1_2(INIT_MODE_RESET, PLAIN_PSK, appletVersion);
+    result &= exPskTls1_2(INIT_MODE_RESET, PLAIN_PSK);
 
-    result &= exPskTls1_2(INIT_MODE_RESET, ECDH_PSK, appletVersion);
+    result &= exPskTls1_2(INIT_MODE_RESET, ECDH_PSK);
 
     // With channel encryption
-    result &= exPskTls1_2(INIT_MODE_RESET_DO_SCP03, PLAIN_PSK, appletVersion);
+    result &= exPskTls1_2(INIT_MODE_RESET_DO_SCP03, PLAIN_PSK);
 
-    result &= exPskTls1_2(INIT_MODE_RESET_DO_SCP03, ECDH_PSK, appletVersion);
+    result &= exPskTls1_2(INIT_MODE_RESET_DO_SCP03, ECDH_PSK);
 
     // overall result
     PRINTF( "\r\n-----------\r\nEnd exPsk(), result = %s\r\n------------\r\n", ((result == 1)? "OK": "FAILED"));
@@ -91,7 +91,7 @@ U8 exPsk(U16 appletVersion)
 #pragma optimize=none
 #endif
 
-U8 exPskTls1_2(U8 initMode, U8 pskMode, U16 appletVersion)
+U8 exPskTls1_2(U8 initMode, U8 pskMode)
 {
     U8 result = 1;
     U16 err = SW_OK;
@@ -110,16 +110,16 @@ U8 exPskTls1_2(U8 initMode, U8 pskMode, U16 appletVersion)
     U8 indexAesKey = 0;
 
     char labelString[] = "master secret";
-    U8 label[AX_TLS_LABEL_LEN];
+    U8 label[AX_TLS_LABEL_LEN] = {0};
 
-    U8 clientHelloRandom[AX_TLS_SECRET_LEN];
+    U8 clientHelloRandom[AX_TLS_SECRET_LEN] = {0};
     U16 clientHelloRandomLen = sizeof(clientHelloRandom);
-    U8 serverHelloRandom[AX_TLS_SECRET_LEN];
+    U8 serverHelloRandom[AX_TLS_SECRET_LEN] = {0};
 
-    U8 labelAndSeed[AX_TLS_LABEL_LEN+2*AX_TLS_SECRET_LEN];
+    U8 labelAndSeed[AX_TLS_LABEL_LEN+2*AX_TLS_SECRET_LEN] = {0};
     U16 labelAndSeedLen = sizeof(labelAndSeed);
 
-    U8 serverSeed[AX_TLS_SECRET_LEN];
+    U8 serverSeed[AX_TLS_SECRET_LEN] = {0};
     U16 serverSeedLen = sizeof(serverSeed);
 
     U8 hostPsk[A71CH_SYM_KEY_MAX*16];
@@ -128,8 +128,8 @@ U8 exPskTls1_2(U8 initMode, U8 pskMode, U16 appletVersion)
     U8 premasterSecret[256];
     U16 premasterSecretLen = 0;
 
-    U8 masterSecret[AX_TLS_PSK_MASTER_SECRET_LEN];
-    U8 masterSecretHost[AX_TLS_PSK_MASTER_SECRET_LEN];
+    U8 masterSecret[AX_TLS_PSK_MASTER_SECRET_LEN] = {0};
+    U8 masterSecretHost[AX_TLS_PSK_MASTER_SECRET_LEN] = {0};
     U16 masterSecretHostLen = sizeof(masterSecretHost);
 
     SST_Index_t indexKp;
@@ -254,7 +254,6 @@ U8 exPskTls1_2(U8 initMode, U8 pskMode, U16 appletVersion)
         {
             int j;
 
-            if (appletVersion >= 0x0130)
             {
                 clientHelloRandomLen = sizeof(clientHelloRandom);
                 err = A71_CreateClientHelloRandom(clientHelloRandom, (U8)clientHelloRandomLen);

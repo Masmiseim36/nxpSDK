@@ -7,11 +7,10 @@ that PC send to the board. Note: two queued transfer in this example, so please 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.50.1
-- Keil MDK 5.17
-- GCC ARM Embedded 2015-4.9-q3
-- Kinetis Development Studio IDE 3.0.0
-- Atollic TrueSTUDIO 5.4.0
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -42,14 +41,13 @@ Prepare the Demo
 
 Running the demo
 ================
-When the demo runs successfully, the log would be seen on the OpenSDA terminal like:
+When the demo runs successfully, the log would be seen on the UART Terminal port which connected to the USB2COM like:
+
 ~~~~~~~~~~~~~~~~~~~~~
 Flexio uart interrupt example
 Board receives 8 characters then sends them out
 Now please input:
 ~~~~~~~~~~~~~~~~~~~~~
-
 Customization options
 =====================
-
 

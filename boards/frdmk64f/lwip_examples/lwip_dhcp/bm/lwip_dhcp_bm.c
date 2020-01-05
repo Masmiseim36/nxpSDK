@@ -1,11 +1,11 @@
 /*
-* Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
-* All rights reserved.
-*
-* 
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
+ * All rights reserved.
+ *
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 /*******************************************************************************
  * Includes
@@ -21,7 +21,7 @@
 #include "lwip/dhcp.h"
 #include "lwip/prot/dhcp.h"
 #include "netif/ethernet.h"
-#include "ethernetif.h"
+#include "enet_ethernetif.h"
 
 #include "board.h"
 
@@ -33,7 +33,10 @@
  ******************************************************************************/
 
 /* MAC address configuration. */
-#define configMAC_ADDR {0x02, 0x12, 0x13, 0x10, 0x15, 0x11}
+#define configMAC_ADDR                     \
+    {                                      \
+        0x02, 0x12, 0x13, 0x10, 0x15, 0x11 \
+    }
 
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
@@ -51,13 +54,18 @@
 #define BOARD_SW_IRQ_HANDLER BOARD_SW3_IRQ_HANDLER
 
 
-/*******************************************************************************
-* Prototypes
-******************************************************************************/
+#ifndef EXAMPLE_NETIF_INIT_FN
+/*! @brief Network interface initialization function. */
+#define EXAMPLE_NETIF_INIT_FN ethernetif0_init
+#endif /* EXAMPLE_NETIF_INIT_FN */
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
+
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
 
 /*******************************************************************************
  * Code
@@ -79,7 +87,7 @@ void SysTick_Handler(void)
 static void print_dhcp_state(struct netif *netif)
 {
     static u8_t dhcp_last_state = DHCP_STATE_OFF;
-    struct dhcp *dhcp = netif_dhcp_data(netif);
+    struct dhcp *dhcp           = netif_dhcp_data(netif);
 
     if (dhcp == NULL)
     {
@@ -146,12 +154,18 @@ static void print_dhcp_state(struct netif *netif)
  */
 int main(void)
 {
-    struct netif fsl_netif0;
-    ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
-    ethernetif_config_t fsl_enet_config0 = {
+    struct netif netif;
+#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
+    mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
+#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
+    ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
+    ethernetif_config_t enet_config = {
         .phyAddress = EXAMPLE_PHY_ADDRESS,
-        .clockName = EXAMPLE_CLOCK_NAME,
+        .clockName  = EXAMPLE_CLOCK_NAME,
         .macAddress = configMAC_ADDR,
+#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
+        .non_dma_memory = non_dma_memory,
+#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     };
 
     SYSMPU_Type *base = SYSMPU;
@@ -163,18 +177,17 @@ int main(void)
 
     time_init();
 
-    IP4_ADDR(&fsl_netif0_ipaddr, 0U, 0U, 0U, 0U);
-    IP4_ADDR(&fsl_netif0_netmask, 0U, 0U, 0U, 0U);
-    IP4_ADDR(&fsl_netif0_gw, 0U, 0U, 0U, 0U);
+    IP4_ADDR(&netif_ipaddr, 0U, 0U, 0U, 0U);
+    IP4_ADDR(&netif_netmask, 0U, 0U, 0U, 0U);
+    IP4_ADDR(&netif_gw, 0U, 0U, 0U, 0U);
 
     lwip_init();
 
-    netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw,
-              &fsl_enet_config0, ethernetif0_init, ethernet_input);
-    netif_set_default(&fsl_netif0);
-    netif_set_up(&fsl_netif0);
+    netif_add(&netif, &netif_ipaddr, &netif_netmask, &netif_gw, &enet_config, EXAMPLE_NETIF_INIT_FN, ethernet_input);
+    netif_set_default(&netif);
+    netif_set_up(&netif);
 
-    dhcp_start(&fsl_netif0);
+    dhcp_start(&netif);
 
     PRINTF("\r\n************************************************\r\n");
     PRINTF(" DHCP example\r\n");
@@ -183,13 +196,13 @@ int main(void)
     while (1)
     {
         /* Poll the driver, get any outstanding frames */
-        ethernetif_input(&fsl_netif0);
+        ethernetif_input(&netif);
 
         /* Handle all system timeouts for all core protocols */
         sys_check_timeouts();
 
         /* Print DHCP progress */
-        print_dhcp_state(&fsl_netif0);
+        print_dhcp_state(&netif);
     }
 }
 #endif

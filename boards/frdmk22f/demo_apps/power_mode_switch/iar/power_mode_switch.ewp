@@ -184,6 +184,7 @@
           <state>CPU_MK22FN512VLH12</state>
           <state>FRDM_K22F</state>
           <state>FREEDOM</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -260,7 +261,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -330,10 +331,11 @@
           <state>$PROJ_DIR$/../../../../../devices/MK22F51212/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK22F51212/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1167,6 +1169,7 @@
           <state>CPU_MK22FN512VLH12</state>
           <state>FRDM_K22F</state>
           <state>FREEDOM</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1313,10 +1316,11 @@
           <state>$PROJ_DIR$/../../../../../devices/MK22F51212/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK22F51212/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1968,16 +1972,13 @@
     </settings>
   </configuration>
   <group>
-    <name>source</name>
-    <file>
-      <name>$PROJ_DIR$/../power_mode_switch.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../power_mode_switch.h</name>
-    </file>
-  </group>
-  <group>
     <name>board</name>
+    <file>
+      <name>$PROJ_DIR$/../peripherals.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../peripherals.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../pin_mux.c</name>
     </file>
@@ -1998,6 +1999,15 @@
     </file>
   </group>
   <group>
+    <name>source</name>
+    <file>
+      <name>$PROJ_DIR$/../power_mode_switch.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../power_mode_switch.h</name>
+    </file>
+  </group>
+  <group>
     <name>doc</name>
     <file>
       <name>$PROJ_DIR$/../readme.txt</name>
@@ -2009,22 +2019,22 @@
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_port.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_llwu.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_llwu.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_pmc.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_llwu.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_pmc.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_smc.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_pmc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_smc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_smc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_rcm.c</name>
@@ -2039,46 +2049,46 @@
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_lptmr.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_gpio.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_gpio.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_clock.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_gpio.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_clock.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_common.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_clock.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_common.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_uart.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_common.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_uart.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_lpuart.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_uart.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_lpuart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_lpuart.h</name>
     </file>
   </group>
   <group>
     <name>device</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/fsl_device_registers.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/MK22F51212.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/MK22F51212_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/system_MK22F51212.c</name>
@@ -2090,12 +2100,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -2103,6 +2107,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console_conf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/utilities/str/fsl_str.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/utilities/fsl_assert.c</name>
@@ -2122,25 +2132,28 @@
     <group>
       <name>serial_manager</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_internal.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
       </file>
     </group>
   </group>
@@ -2162,22 +2175,34 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
@@ -2187,12 +2212,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
   </group>
 </project>

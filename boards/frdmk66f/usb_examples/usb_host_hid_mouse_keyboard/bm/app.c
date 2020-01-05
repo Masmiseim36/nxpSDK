@@ -158,7 +158,7 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
     usb_status_t status2;
     usb_status_t status = kStatus_USB_Success;
 
-    switch (eventCode)
+    switch (eventCode & 0x0000FFFFU)
     {
         case kUSB_HostEventAttach:
             status1 = USB_HostHidKeyboardEvent(deviceHandle, configurationHandle, eventCode);
@@ -189,6 +189,10 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
             {
                 status = kStatus_USB_Error;
             }
+            break;
+
+        case kUSB_HostEventEnumerationFail:
+            usb_echo("enumeration failed\r\n");
             break;
 
         default:

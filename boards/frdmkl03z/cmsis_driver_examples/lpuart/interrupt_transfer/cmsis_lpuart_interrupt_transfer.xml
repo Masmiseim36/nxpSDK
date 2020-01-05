@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL03Z4"/>
+    <definition extID="platform.CMSIS_Driver_Include.USART_CMSISInclude.MKL03Z4"/>
+    <definition extID="platform.devices.MKL03Z4_CMSIS.MKL03Z4"/>
+    <definition extID="platform.devices.MKL03Z4_startup.MKL03Z4"/>
+    <definition extID="platform.drivers.clock.MKL03Z4"/>
+    <definition extID="platform.drivers.common.MKL03Z4"/>
+    <definition extID="platform.drivers.flash.MKL03Z4"/>
+    <definition extID="platform.drivers.gpio.MKL03Z4"/>
+    <definition extID="platform.drivers.lpuart.MKL03Z4"/>
+    <definition extID="platform.drivers.lpuart_cmsis.MKL03Z4"/>
+    <definition extID="platform.drivers.port.MKL03Z4"/>
+    <definition extID="platform.drivers.smc.MKL03Z4"/>
+    <definition extID="platform.utilities.assert.MKL03Z4"/>
+    <definition extID="platform.utilities.debug_console.MKL03Z4"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="kds"/>
+    <definition extID="atl"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="armgcc"/>
+  </externalDefinitions>
+  <example id="frdmkl03z_cmsis_lpuart_interrupt_transfer" name="cmsis_lpuart_interrupt_transfer" category="cmsis_driver_examples/lpuart" dependency="platform.drivers.port.MKL03Z4 platform.drivers.common.MKL03Z4 platform.drivers.clock.MKL03Z4 platform.drivers.lpuart.MKL03Z4 platform.drivers.lpuart_cmsis.MKL03Z4 platform.CMSIS_Driver_Include.USART_CMSISInclude.MKL03Z4 platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL03Z4 platform.drivers.flash.MKL03Z4 platform.devices.MKL03Z4_CMSIS.MKL03Z4 platform.devices.MKL03Z4_startup.MKL03Z4 platform.utilities.debug_console.MKL03Z4 platform.drivers.smc.MKL03Z4 platform.drivers.gpio.MKL03Z4 platform.utilities.assert.MKL03Z4" toolchain="iar mdk armgcc kds mcuxpresso">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <!-- Curently, mcux just supports one common settings set for both debug and release -->
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <!-- asm compiler -->
+        <!-- gcc compiler -->
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MKL03Z32VFK4</value>
+          <value>FRDM_KL03Z</value>
+          <value>FREEDOM</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <!-- gcc linker -->
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="gnu.c.link.option.other" type="stringList">
+          <value>--gc-sections</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <source path="boards/frdmkl03z/cmsis_driver_examples/lpuart/interrupt_transfer" target_path="board" type="c_include">
+      <files mask="RTE_Device.h"/>
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/frdmkl03z/cmsis_driver_examples/lpuart/interrupt_transfer" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/frdmkl03z/cmsis_driver_examples/lpuart/interrupt_transfer" target_path="doc" type="doc" toolchain="iar mdk kds atl mcuxpresso">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/frdmkl03z/cmsis_driver_examples/lpuart/interrupt_transfer" target_path="source" type="src">
+      <files mask="cmsis_usart_interrupt_transfer.c"/>
+    </source>
+  </example>
+</ksdk:examples>

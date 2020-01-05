@@ -79,7 +79,7 @@ static uint32_t LPTMR_GetInstance(LPTMR_Type *base)
  */
 void LPTMR_Init(LPTMR_Type *base, const lptmr_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
 #if defined(LPTMR_CLOCKS)
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
@@ -146,10 +146,10 @@ void LPTMR_Deinit(LPTMR_Type *base)
  */
 void LPTMR_GetDefaultConfig(lptmr_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     /* Use time counter mode */
     config->timerMode = kLPTMR_TimerModeTimeCounter;
@@ -162,7 +162,12 @@ void LPTMR_GetDefaultConfig(lptmr_config_t *config)
     /* Bypass the prescaler */
     config->bypassPrescaler = true;
     /* LPTMR clock source */
+#if !(defined(FSL_FEATURE_LPTMR_HAS_NO_PRESCALER_CLOCK_SOURCE_1_SUPPORT) && \
+      FSL_FEATURE_LPTMR_HAS_NO_PRESCALER_CLOCK_SOURCE_1_SUPPORT)
     config->prescalerClockSource = kLPTMR_PrescalerClock_1;
+#else
+    config->prescalerClockSource = kLPTMR_PrescalerClock_0;
+#endif /* FSL_FEATURE_LPTMR_HAS_NO_PRESCALER_CLOCK_SOURCE_1_SUPPORT */
     /* Divide the prescaler clock by 2 */
     config->value = kLPTMR_Prescale_Glitch_0;
 }

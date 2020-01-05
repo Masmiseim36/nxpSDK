@@ -1,9 +1,15 @@
+;
+; Copyright 2016 - 2018 NXP
+; All rights reserved.
+;
+; SPDX-License-Identifier: BSD-3-Clause
+;
+
 [Version]
 Signature="$Windows NT$"
 Class=Ports
 ClassGuid={4D36E978-E325-11CE-BFC1-08002BE10318}
 Provider=%MFGNAME%
-LayoutFile=layout.inf
 CatalogFile=%MFGFILENAME%.cat
 DriverVer=02/16/2011,1.0
 
@@ -20,11 +26,7 @@ DefaultDestDir=12
 
 [DriverInstall.nt]
 include=mdmcpq.inf
-CopyFiles=DriverCopyFiles.nt
 AddReg=DriverInstall.nt.AddReg
-
-[DriverCopyFiles.nt]
-usbser.sys,,,0x20
 
 [DriverInstall.nt.AddReg]
 HKR,,DevLoader,,*ntkern
@@ -47,11 +49,7 @@ ServiceBinary=%12%\%DRIVERFILENAME%.sys
 
 [DriverInstall.NTamd64]
 include=mdmcpq.inf
-CopyFiles=DriverCopyFiles.NTamd64
 AddReg=DriverInstall.NTamd64.AddReg
-
-[DriverCopyFiles.NTamd64]
-%DRIVERFILENAME%.sys,,,0x20
 
 [DriverInstall.NTamd64.AddReg]
 HKR,,DevLoader,,*ntkern
@@ -81,13 +79,16 @@ ServiceBinary=%12%\%DRIVERFILENAME%.sys
 [SourceDisksFiles]
 [SourceDisksNames]
 [DeviceList]
-%DESCRIPTION%=DriverInstall, USB\VID_15A2&PID_0300
-%DESCRIPTION%=DriverInstall, USB\VID_15A2&PID_0800&MI_00
+%DESCRIPTION%=DriverInstall, USB\VID_1FC9&PID_0094
+%DESCRIPTION%=DriverInstall, USB\VID_1FC9&PID_009E&MI_00
+%DESCRIPTION%=DriverInstall, USB\VID_1FC9&PID_009F&MI_00
+%DESCRIPTION%=DriverInstall, USB\VID_1FC9&PID_00A3&MI_00
 
 [DeviceList.NTamd64]
-%DESCRIPTION% = DriverInstall, USB\VID_15A2&PID_0300
-%DESCRIPTION% = DriverInstall, USB\VID_15A2&PID_0800&MI_00
-
+%DESCRIPTION% = DriverInstall, USB\VID_1FC9&PID_0094
+%DESCRIPTION% = DriverInstall, USB\VID_1FC9&PID_009E&MI_00
+%DESCRIPTION% = DriverInstall, USB\VID_1FC9&PID_009F&MI_00
+%DESCRIPTION% = DriverInstall, USB\VID_1FC9&PID_00A3&MI_00
 
 ;------------------------------------------------------------------------------
 ; String Definitions
@@ -97,8 +98,8 @@ ServiceBinary=%12%\%DRIVERFILENAME%.sys
 [Strings]
 MFGFILENAME="CDC"
 DRIVERFILENAME ="usbser"
-MFGNAME="Freescale"
-INSTDISK="Freescale CDC Driver Installer"
+MFGNAME="NXP"
+INSTDISK="NXP CDC Driver Installer"
 DESCRIPTION="Virtual Com Port"
-SERVICE="FSL Virtual COM Driver"
+SERVICE="NXP Virtual COM Driver"
 

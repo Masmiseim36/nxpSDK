@@ -4,6 +4,7 @@ This example demonstrates how the board can discover Greengrass core and communi
 You will need device (A Mac, Windows PC, or UNIX-like system) for running AWS Greengrass. Example will connect to WiFi network, try to discover your AWS Greengrass device and send Hello World message to AWS IoT cloud through it.
 This demo needs network with internet access and opened 8883 and 8443 ports.
 
+
 Prepare the AWS Greengrass and AWS IoT
 Before running the demo it is needed to configure AWS IoT Console, AWS Greengrass:
 
@@ -24,6 +25,24 @@ Before running the demo it is needed to configure AWS IoT Console, AWS Greengras
 5.  Go to AWS IoT, find your Greengrass group and deploy it again. You should do new deployment after every configuration change.
 
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
+- Keil MDK  5.29
+- MCUXpresso  11.1.0
+
+Hardware requirements
+=====================
+- Mini/micro USB cable
+- FRDM-K64F board
+- Personal Computer
+- Network cable RJ45 standard (Network with Internet access)
+
+Board settings
+==============
+No special settings are required.
 Prepare the Demo
 ================
 
@@ -33,22 +52,22 @@ Prepare the Demo
         static const char clientcredentialMQTT_BROKER_ENDPOINT[] = "abcdefgh123456.iot.us-west-2.amazonaws.com";
         #define clientcredentialIOT_THING_NAME "HelloWorldDevice"
 
-    Each of device certificates needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h" or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\amazon-freertos\demos\common\devmode_key_provisioning\CertificateConfigurationTool) to generate the "aws_clientcredential_keys.h".
+    The device certificate and private key needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h" or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\amazon-freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
 
-    clientcredentialCLIENT_CERTIFICATE_PEM is stored in <device id>.cert.pem file and clientcredentialCLIENT_PRIVATE_KEY_PEM is stored in <device id>.private.key file.
+    keyCLIENT_CERTIFICATE_PEM is stored in <device id>.cert.pem file and keyCLIENT_PRIVATE_KEY_PEM is stored in <device id>.private.key file.
 
     Example:
-        static const char clientcredentialCLIENT_CERTIFICATE_PEM[] = "Paste client certificate here.";
+        #define keyCLIENT_CERTIFICATE_PEM "Paste client certificate here."
 
         Needs to be changed to:
 
-        static const char clientcredentialCLIENT_CERTIFICATE_PEM[] =
-            "-----BEGIN CERTIFICATE-----\n"
-            "MIIDWTCCAkGgAwIBAgIUPwbiJBIJhO6eF498l1GZ8siO/K0wDQYJKoZIhvcNAQEL\n"
-            .
-            .
-            "KByzyTutxTeI9UKcIPFxK40s4qF50a40/6UFxrGueW+TzZ4iubWzP7eG+47r\n"
-            "-----END CERTIFICATE-----\n";
+        #define keyCLIENT_CERTIFICATE_PEM "-----BEGIN CERTIFICATE-----\n"\
+        "MIIDWTCCAkGgAwIBAgIUfmv3zA+JULlMOxmz+upkAzhEkQ0wDQYJKoZIhvcNAQEL\n"\
+        .
+        .
+        .
+        "mepuT3lKmD0jZupsQ9vLQOA09rMjVMd0YPmI9ozvvWqLpjVvNTKVhsf/3slM\n"\
+        "-----END CERTIFICATE-----\n"
 
     In the same way update the private key array.
 
@@ -78,44 +97,43 @@ You can check connection log in Greengrass device on path: /greengrass/ggc/var/l
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-0 0 [Tmr Svc] Starting key provisioning...
-1 0 [Tmr Svc] Write root certificate...
-2 6 [Tmr Svc] Write device private key...
-3 198 [Tmr Svc] Write device certificate...
-4 207 [Tmr Svc] Key provisioning done...
-5 1901 [Tmr Svc] Getting IP address from DHCP ...
-6 4901 [Tmr Svc] IPv4 address: 10.42.0.198
-7 4901 [Tmr Svc] DHCP OK
-8 4902 [IoT_GGD] Attempting automated selection of Greengrass device
-9 18069 [IoT_GGD] About to close socket.
-10 18071 [IoT_GGD] Socket closed.
-11 18071 [IoT_GGD] Stack high watermark for discovery helper task: 1556.
-12 23791 [IoT_GGD] About to close socket.
-13 23794 [IoT_GGD] Socket closed.
-14 23794 [IoT_GGD] Stack high watermark for discovery helper task: 906.
-15 23794 [IoT_GGD] Greengrass device discovered.
-16 23794 [IoT_GGD] Establishing MQTT communication to Greengrass...
-17 33978 [IoT_GGD] Disconnecting from broker.
-18 33981 [IoT_GGD] Disconnected from the broker.
-19 33981 [IoT_GGD] Deleted Client.
-20 33981 [IoT_GGD] Heap low watermark: 6456. Stack high watermark: 906.
-21 33981 [IoT_GGD] ----Demo finished----
+Initializing PHY...
+0 159 [Tmr Svc] Write certificate...
+1 468 [Tmr Svc] Device credential provisioning succeeded.
+2 2091 [Tmr Svc] Getting IP address from DHCP ...
+3 5091 [Tmr Svc] IPv4 Address: 192.168.2.102
+4 5091 [Tmr Svc] DHCP OK
+5 5094 [iot_thread] [INFO ][INIT][5094] SDK successfully initialized.
+6 5094 [iot_thread] [INFO ][DEMO][5094] Successfully initialized the demo. Network type for the demo: 4
+7 5094 [iot_thread] Attempting automated selection of Greengrass device
+8 16847 [iot_thread] About to close socket.
+9 16849 [iot_thread] Socket closed.
+10 16849 [iot_thread] Stack high watermark for discovery helper task: 1409.
+11 21021 [iot_thread] About to close socket.
+12 21024 [iot_thread] Socket closed.
+13 21024 [iot_thread] Stack high watermark for discovery helper task: 759.
+14 21024 [iot_thread] Greengrass device discovered.
+15 21024 [iot_thread] Establishing MQTT communication to Greengrass...
+16 25201 [iot_thread] [INFO ][MQTT][25201] Establishing new MQTT connection.
+17 25203 [iot_thread] [INFO ][MQTT][25203] Anonymous metrics (SDK language, SDK version) will be provided to AWS IoT. Recompile with AWS_IOT_MQTT_ENABLE_METRICS set to 0 to disable.
+18 25204 [iot_thread] [INFO ][MQTT][25204] (MQTT connection 2000c520, CONNECT operation 20006448) Waiting for operation completion.
+19 25207 [iot_thread] [INFO ][MQTT][25207] (MQTT connection 2000c520, CONNECT operation 20006448) Wait complete with result SUCCESS.
+20 25208 [iot_thread] [INFO ][MQTT][25208] New MQTT connection 2000b2a8 established.
+21 25209 [iot_thread] [INFO ][MQTT][25209] (MQTT connection 2000c520) MQTT PUBLISH operation queued.
+22 26709 [iot_thread] [INFO ][MQTT][26709] (MQTT connection 2000c520) MQTT PUBLISH operation queued.
+23 28209 [iot_thread] [INFO ][MQTT][28209] (MQTT connection 2000c520) MQTT PUBLISH operation queued.
+24 29709 [iot_thread] Disconnecting from broker.
+25 29709 [iot_thread] [INFO ][MQTT][29709] (MQTT connection 2000c520) Disconnecting connection.
+26 29709 [iot_thread] [INFO ][MQTT][29709] (MQTT connection 2000c520, DISCONNECT operation 2000c638) Waiting for operation completion.
+27 29710 [iot_thread] [INFO ][MQTT][29709] (MQTT connection 2000c520, DISCONNECT operation 2000c638) Wait complete with result SUCCESS.
+28 29711 [iot_thread] [INFO ][MQTT][29711] (MQTT connection 2000c520) Connection disconnected.
+29 29712 [iot_thread] [INFO ][MQTT][29712] (MQTT connection 2000c520) Network connection closed.
+30 29712 [iot_thread] [INFO ][MQTT][29712] (MQTT connection 2000c520) Network connection destroyed.
+31 29712 [iot_thread] Disconnected from the broker.
+32 29712 [iot_thread] Deleted Client.
+33 29714 [iot_thread] Heap low watermark: 11904. Stack high watermark: 759.
+34 29714 [iot_thread] ----Demo finished----
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Hardware requirements
+Customization options
 =====================
-- Mini/micro USB cable
-- FRDM-K64F board
-- Personal Computer
-- Network cable RJ45 standard (Network with Internet access)
-
-Board settings
-==============
-No special settings are required.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
 

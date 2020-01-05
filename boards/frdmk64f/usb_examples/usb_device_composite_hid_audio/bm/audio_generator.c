@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -31,7 +31,7 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-extern void USB_PrepareData(void);
+extern void USB_AudioRecorderGetBuffer(uint8_t *buffer, uint32_t size);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -363,7 +363,9 @@ usb_status_t USB_DeviceAudioGeneratorCallback(class_handle_t handle, uint32_t ev
                                              HS_ISO_IN_ENDP_PACKET_SIZE :
                                              FS_ISO_IN_ENDP_PACKET_SIZE)))
             {
-                USB_PrepareData();
+                USB_AudioRecorderGetBuffer(s_wavBuff, (USB_SPEED_HIGH == g_deviceComposite->audioGenerator.speed) ?
+                                                HS_ISO_IN_ENDP_PACKET_SIZE :
+                                                FS_ISO_IN_ENDP_PACKET_SIZE);
                 error = USB_DeviceAudioSend(handle, USB_AUDIO_STREAM_ENDPOINT, s_wavBuff,
                                             (USB_SPEED_HIGH == g_deviceComposite->audioGenerator.speed) ?
                                                 HS_ISO_IN_ENDP_PACKET_SIZE :
@@ -404,7 +406,9 @@ usb_status_t USB_DeviceAudioGeneratorSetInterface(class_handle_t handle, uint8_t
 {
     if (alternateSetting == 1U)
     {
-        USB_PrepareData();
+        USB_AudioRecorderGetBuffer(s_wavBuff, (USB_SPEED_HIGH == g_deviceComposite->audioGenerator.speed) ?
+                                        HS_ISO_IN_ENDP_PACKET_SIZE :
+                                        FS_ISO_IN_ENDP_PACKET_SIZE);
         USB_DeviceAudioSend(g_deviceComposite->audioGenerator.audioHandle, USB_AUDIO_STREAM_ENDPOINT, s_wavBuff,
                             (USB_SPEED_HIGH == g_deviceComposite->audioGenerator.speed) ? HS_ISO_IN_ENDP_PACKET_SIZE :
                                                                                           FS_ISO_IN_ENDP_PACKET_SIZE);

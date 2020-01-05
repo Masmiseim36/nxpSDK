@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016, 2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_device_config.h"
@@ -53,13 +31,17 @@
 usb_device_endpoint_struct_t g_UsbDevicePrinterEndpoints[USB_PRINTER_ENDPOINT_COUNT] = {
     /* printer BULK OUT pipe */
     {
-        USB_PRINTER_BULK_ENDPOINT_OUT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT), USB_ENDPOINT_BULK,
+        USB_PRINTER_BULK_ENDPOINT_OUT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
+        USB_ENDPOINT_BULK,
         FS_PRINTER_BULK_OUT_PACKET_SIZE,
+        0U,
     },
     /* printer BULK IN pipe */
     {
-        USB_PRINTER_BULK_ENDPOINT_IN | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT), USB_ENDPOINT_BULK,
+        USB_PRINTER_BULK_ENDPOINT_IN | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
+        USB_ENDPOINT_BULK,
         FS_PRINTER_BULK_IN_PACKET_SIZE,
+        0U,
     },
 };
 
@@ -80,7 +62,7 @@ usb_device_interfaces_struct_t g_UsbDevicePrinterInterfaces[USB_PRINTER_INTERFAC
         USB_PRINTER_PROTOCOL,        /* printer demo protocol code */
         USB_PRINTER_INTERFACE_INDEX, /* The interface number of the printer demo */
         g_UsbDevicePrinterInterface, /* Interfaces handle */
-        sizeof(g_UsbDevicePrinterInterface) / sizeof(usb_device_interfaces_struct_t),
+        sizeof(g_UsbDevicePrinterInterface) / sizeof(usb_device_interface_struct_t),
     },
 };
 
@@ -97,7 +79,8 @@ usb_device_class_struct_t g_UsbDevicePrinterClass = {
     USB_DEVICE_CONFIGURATION_COUNT,  /* The configuration count */
 };
 
-uint8_t g_UsbDeviceDescriptor[USB_DESCRIPTOR_LENGTH_DEVICE] = {
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_DEVICE, /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_DEVICE,   /* DEVICE Descriptor Type */
     USB_SHORT_GET_LOW(USB_DEVICE_SPECIFIC_BCD_VERSION),
@@ -108,8 +91,10 @@ uint8_t g_UsbDeviceDescriptor[USB_DESCRIPTOR_LENGTH_DEVICE] = {
     USB_DEVICE_PROTOCOL,                                 /* Protocol code (assigned by the USB-IF). */
     USB_CONTROL_MAX_PACKET_SIZE,                         /* Maximum packet size for endpoint zero
                                                             (only 8, 16, 32, or 64 are valid) */
-    0xC9U, 0x1FU,                                        /* Vendor ID (assigned by the USB-IF) */
-    0x9BU, 0x00U,                                        /* Product ID (assigned by the manufacturer) */
+    0xC9U,
+    0x1FU, /* Vendor ID (assigned by the USB-IF) */
+    0x9BU,
+    0x00U, /* Product ID (assigned by the manufacturer) */
     USB_SHORT_GET_LOW(USB_DEVICE_DEMO_BCD_VERSION),
     USB_SHORT_GET_HIGH(USB_DEVICE_DEMO_BCD_VERSION), /* Device release number in binary-coded decimal */
     0x01U,                                           /* Index of string descriptor describing manufacturer */
@@ -119,16 +104,19 @@ uint8_t g_UsbDeviceDescriptor[USB_DESCRIPTOR_LENGTH_DEVICE] = {
     USB_DEVICE_CONFIGURATION_COUNT,                  /* Number of possible configurations */
 };
 
-uint8_t g_UsbDeviceConfigurationDescriptor[USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL] = {
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_CONFIGURE, /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_CONFIGURE,   /* CONFIGURATION Descriptor Type */
-    USB_SHORT_GET_LOW(USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL),
-    USB_SHORT_GET_HIGH(
-        USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL), /* Total length of data returned for this configuration. */
-    USB_PRINTER_INTERFACE_COUNT,                  /* Number of interfaces supported by this configuration */
-    USB_PRINTER_CONFIGURE_INDEX,                  /* Value to use as an argument to the
-                                                       SetConfiguration() request to select this configuration */
-    0x00U,                                        /* Index of string descriptor describing this configuration */
+    USB_SHORT_GET_LOW(USB_DESCRIPTOR_LENGTH_CONFIGURE + USB_DESCRIPTOR_LENGTH_INTERFACE +
+                      USB_DESCRIPTOR_LENGTH_ENDPOINT + USB_DESCRIPTOR_LENGTH_ENDPOINT),
+    USB_SHORT_GET_HIGH(USB_DESCRIPTOR_LENGTH_CONFIGURE + USB_DESCRIPTOR_LENGTH_INTERFACE +
+                       USB_DESCRIPTOR_LENGTH_ENDPOINT +
+                       USB_DESCRIPTOR_LENGTH_ENDPOINT), /* Total length of data returned for this configuration. */
+    USB_PRINTER_INTERFACE_COUNT,                        /* Number of interfaces supported by this configuration */
+    USB_PRINTER_CONFIGURE_INDEX,                        /* Value to use as an argument to the
+                                                             SetConfiguration() request to select this configuration */
+    0x00U,                                              /* Index of string descriptor describing this configuration */
     (USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_D7_MASK) |
         (USB_DEVICE_CONFIG_SELF_POWER << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_SELF_POWERED_SHIFT) |
         (USB_DEVICE_CONFIG_REMOTE_WAKEUP << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_REMOTE_WAKEUP_SHIFT),
@@ -181,102 +169,81 @@ uint8_t g_UsbDeviceConfigurationDescriptor[USB_DESCRIPTOR_LENGTH_CONFIGURATION_A
     FS_PRINTER_BULK_IN_INTERVAL, /* Interval for polling endpoint for data transfers. */
 };
 
-uint8_t g_UsbDeviceString0[USB_DESCRIPTOR_LENGTH_STRING0] = {
-    sizeof(g_UsbDeviceString0), USB_DESCRIPTOR_TYPE_STRING, 0x09U, 0x04U,
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceString0[] = {
+    2U + 2U,
+    USB_DESCRIPTOR_TYPE_STRING,
+    0x09U,
+    0x04U,
 };
 
-uint8_t g_UsbDeviceString1[USB_DESCRIPTOR_LENGTH_STRING1] = {
-    sizeof(g_UsbDeviceString1),
-    USB_DESCRIPTOR_TYPE_STRING,
-    'N',
-    0x00U,
-    'X',
-    0x00U,
-    'P',
-    0x00U,
-    ' ',
-    0x00U,
-    'S',
-    0x00U,
-    'E',
-    0x00U,
-    'M',
-    0x00U,
-    'I',
-    0x00U,
-    'C',
-    0x00U,
-    'O',
-    0x00U,
-    'N',
-    0x00U,
-    'D',
-    0x00U,
-    'U',
-    0x00U,
-    'C',
-    0x00U,
-    'T',
-    0x00U,
-    'O',
-    0x00U,
-    'R',
-    0x00U,
-    'S',
-    0x00U,
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceString1[] = {
+    2U + 2U * 18U, USB_DESCRIPTOR_TYPE_STRING,
+    'N',           0x00U,
+    'X',           0x00U,
+    'P',           0x00U,
+    ' ',           0x00U,
+    'S',           0x00U,
+    'E',           0x00U,
+    'M',           0x00U,
+    'I',           0x00U,
+    'C',           0x00U,
+    'O',           0x00U,
+    'N',           0x00U,
+    'D',           0x00U,
+    'U',           0x00U,
+    'C',           0x00U,
+    'T',           0x00U,
+    'O',           0x00U,
+    'R',           0x00U,
+    'S',           0x00U,
 };
 
-uint8_t g_UsbDeviceString2[USB_DESCRIPTOR_LENGTH_STRING2] = {
-    sizeof(g_UsbDeviceString2),
-    USB_DESCRIPTOR_TYPE_STRING,
-    'M',
-    0x00U,
-    'C',
-    0x00U,
-    'U',
-    0x00U,
-    ' ',
-    0x00U,
-    'P',
-    0x00U,
-    'R',
-    0x00U,
-    'I',
-    0x00U,
-    'N',
-    0x00U,
-    'T',
-    0x00U,
-    'E',
-    0x00U,
-    'R',
-    0x00U,
-    ' ',
-    0x00U,
-    'D',
-    0x00U,
-    'E',
-    0x00U,
-    'M',
-    0x00U,
-    'O',
-    0x00U,
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceString2[] = {
+    2U + 2U * 16U, USB_DESCRIPTOR_TYPE_STRING,
+    'M',           0x00U,
+    'C',           0x00U,
+    'U',           0x00U,
+    ' ',           0x00U,
+    'P',           0x00U,
+    'R',           0x00U,
+    'I',           0x00U,
+    'N',           0x00U,
+    'T',           0x00U,
+    'E',           0x00U,
+    'R',           0x00U,
+    ' ',           0x00U,
+    'D',           0x00U,
+    'E',           0x00U,
+    'M',           0x00U,
+    'O',           0x00U,
 };
 
 uint32_t g_UsbDeviceStringDescriptorLength[USB_DEVICE_STRING_COUNT] = {
-    sizeof(g_UsbDeviceString0), sizeof(g_UsbDeviceString1), sizeof(g_UsbDeviceString2),
+    sizeof(g_UsbDeviceString0),
+    sizeof(g_UsbDeviceString1),
+    sizeof(g_UsbDeviceString2),
 };
 
 uint8_t *g_UsbDeviceStringDescriptorArray[USB_DEVICE_STRING_COUNT] = {
-    g_UsbDeviceString0, g_UsbDeviceString1, g_UsbDeviceString2,
+    g_UsbDeviceString0,
+    g_UsbDeviceString1,
+    g_UsbDeviceString2,
 };
 
 usb_language_t g_UsbDeviceLanguage[USB_DEVICE_LANGUAGE_COUNT] = {{
-    g_UsbDeviceStringDescriptorArray, g_UsbDeviceStringDescriptorLength, (uint16_t)0x0409U,
+    g_UsbDeviceStringDescriptorArray,
+    g_UsbDeviceStringDescriptorLength,
+    (uint16_t)0x0409U,
 }};
 
 usb_language_list_t g_UsbDeviceLanguageList = {
-    g_UsbDeviceString0, sizeof(g_UsbDeviceString0), g_UsbDeviceLanguage, USB_DEVICE_LANGUAGE_COUNT,
+    g_UsbDeviceString0,
+    sizeof(g_UsbDeviceString0),
+    g_UsbDeviceLanguage,
+    USB_DEVICE_LANGUAGE_COUNT,
 };
 
 /*******************************************************************************
@@ -310,7 +277,7 @@ usb_status_t USB_DeviceGetStringDescriptor(usb_device_handle handle,
                                            usb_device_get_string_descriptor_struct_t *stringDescriptor)
 {
     uint8_t languageIndex = 0U;
-    uint8_t stringIndex = USB_DEVICE_STRING_COUNT;
+    uint8_t stringIndex   = USB_DEVICE_STRING_COUNT;
 
     if (stringDescriptor->stringIndex == 0U)
     {

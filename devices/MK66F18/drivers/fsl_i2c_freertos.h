@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,7 +8,6 @@
 #ifndef __FSL_I2C_FREERTOS_H__
 #define __FSL_I2C_FREERTOS_H__
 
-#include "FreeRTOSConfig.h"
 #include "FreeRTOS.h"
 #include "portable.h"
 #include "semphr.h"
@@ -26,8 +25,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief I2C freertos driver version 2.0.5. */
-#define FSL_I2C_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 0, 7))
+/*! @brief I2C FreeRTOS driver version 2.0.8. */
+#define FSL_I2C_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 0, 8))
 /*@}*/
 
 /*!

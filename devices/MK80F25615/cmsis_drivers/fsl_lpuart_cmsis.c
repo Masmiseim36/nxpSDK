@@ -20,6 +20,11 @@
 
 #include "fsl_lpuart_cmsis.h"
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.lpuart_cmsis"
+#endif
+
 /* Re-mapping for LPUART & UART indexing. */
 #if (FSL_FEATURE_SOC_LPUART_COUNT == 1) && FSL_FEATURE_SOC_UART_COUNT
 
@@ -174,7 +179,8 @@
 #endif
 
 #if ((RTE_USART0 && defined(LPUART0)) || (RTE_USART1 && defined(LPUART1)) || (RTE_USART2 && defined(LPUART2)) || \
-     (RTE_USART3 && defined(LPUART3)) || (RTE_USART4 && defined(LPUART4)) || (RTE_USART5 && defined(LPUART5)))
+     (RTE_USART3 && defined(LPUART3)) || (RTE_USART4 && defined(LPUART4)) || (RTE_USART5 && defined(LPUART5)) || \
+     (RTE_USART6 && defined(LPUART6)))
 
 #define ARM_LPUART_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2, 0)
 
@@ -182,7 +188,7 @@
  * ARMCC does not support split the data section automatically, so the driver
  * needs to split the data to separate sections explicitly, to reduce codesize.
  */
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 #define ARMCC_SECTION(section_name) __attribute__((section(section_name)))
 #endif
 
@@ -423,10 +429,10 @@ static ARM_USART_MODEM_STATUS LPUARTx_GetModemStatus(void)
 {
     ARM_USART_MODEM_STATUS modem_status;
 
-    modem_status.cts = 0U;
-    modem_status.dsr = 0U;
-    modem_status.ri = 0U;
-    modem_status.dcd = 0U;
+    modem_status.cts      = 0U;
+    modem_status.dsr      = 0U;
+    modem_status.ri       = 0U;
+    modem_status.dcd      = 0U;
     modem_status.reserved = 0U;
 
     return modem_status;
@@ -436,7 +442,8 @@ static ARM_USART_MODEM_STATUS LPUARTx_GetModemStatus(void)
 
 #if ((RTE_USART0_DMA_EN && defined(LPUART0)) || (RTE_USART1_DMA_EN && defined(LPUART1)) || \
      (RTE_USART2_DMA_EN && defined(LPUART2)) || (RTE_USART3_DMA_EN && defined(LPUART3)) || \
-     (RTE_USART4_DMA_EN && defined(LPUART4)) || (RTE_USART5_DMA_EN && defined(LPUART5)))
+     (RTE_USART4_DMA_EN && defined(LPUART4)) || (RTE_USART5_DMA_EN && defined(LPUART5)) || \
+     (RTE_USART6_DMA_EN && defined(LPUART6)))
 
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
 void KSDK_LPUART_DmaCallback(LPUART_Type *base, lpuart_dma_handle_t *handle, status_t status, void *userData)
@@ -464,7 +471,7 @@ static int32_t LPUART_DmaInitialize(ARM_USART_SignalEvent_t cb_event, cmsis_lpua
     if (!(lpuart->flags & USART_FLAG_INIT))
     {
         lpuart->cb_event = cb_event;
-        lpuart->flags = USART_FLAG_INIT;
+        lpuart->flags    = USART_FLAG_INIT;
     }
 
     return ARM_DRIVER_OK;
@@ -546,7 +553,7 @@ static int32_t LPUART_DmaSend(const void *data, uint32_t num, cmsis_lpuart_dma_d
     status_t status;
     lpuart_transfer_t xfer;
 
-    xfer.data = (uint8_t *)data;
+    xfer.data     = (uint8_t *)data;
     xfer.dataSize = num;
 
     status = LPUART_TransferSendDMA(lpuart->resource->base, lpuart->handle, &xfer);
@@ -576,7 +583,7 @@ static int32_t LPUART_DmaReceive(void *data, uint32_t num, cmsis_lpuart_dma_driv
     status_t status;
     lpuart_transfer_t xfer;
 
-    xfer.data = data;
+    xfer.data     = data;
     xfer.dataSize = num;
 
     status = LPUART_TransferReceiveDMA(lpuart->resource->base, lpuart->handle, &xfer);
@@ -676,15 +683,15 @@ static ARM_USART_STATUS LPUART_DmaGetStatus(cmsis_lpuart_dma_driver_state_t *lpu
     stat.rx_busy = ((kLPUART_RxBusy == lpuart->handle->rxState) ? (1U) : (0U));
 
     stat.tx_underflow = 0U;
-    stat.rx_overflow = (!(!(ksdk_lpuart_status & kLPUART_RxOverrunFlag)));
+    stat.rx_overflow  = (!(!(ksdk_lpuart_status & kLPUART_RxOverrunFlag)));
 #if defined(FSL_FEATURE_LPUART_HAS_LIN_BREAK_DETECT) && FSL_FEATURE_LPUART_HAS_LIN_BREAK_DETECT
-    stat.rx_break = (!(!(ksdk_lpuart_status & kLPUART_LinBreakFlag)));
+    stat.rx_break = (!(!(ksdk_lpuart_status & (uint32_t)kLPUART_LinBreakFlag)));
 #else
     stat.rx_break = 0U;
 #endif
     stat.rx_framing_error = (!(!(ksdk_lpuart_status & kLPUART_FramingErrorFlag)));
-    stat.rx_parity_error = (!(!(ksdk_lpuart_status & kLPUART_ParityErrorFlag)));
-    stat.reserved = 0U;
+    stat.rx_parity_error  = (!(!(ksdk_lpuart_status & kLPUART_ParityErrorFlag)));
+    stat.reserved         = 0U;
 
     return stat;
 }
@@ -716,7 +723,7 @@ static int32_t LPUART_EdmaInitialize(ARM_USART_SignalEvent_t cb_event, cmsis_lpu
     if (!(lpuart->flags & USART_FLAG_INIT))
     {
         lpuart->cb_event = cb_event;
-        lpuart->flags = USART_FLAG_INIT;
+        lpuart->flags    = USART_FLAG_INIT;
     }
 
     return ARM_DRIVER_OK;
@@ -799,7 +806,7 @@ static int32_t LPUART_EdmaSend(const void *data, uint32_t num, cmsis_lpuart_edma
     status_t status;
     lpuart_transfer_t xfer;
 
-    xfer.data = (uint8_t *)data;
+    xfer.data     = (uint8_t *)data;
     xfer.dataSize = num;
 
     status = LPUART_SendEDMA(lpuart->resource->base, lpuart->handle, &xfer);
@@ -829,7 +836,7 @@ static int32_t LPUART_EdmaReceive(void *data, uint32_t num, cmsis_lpuart_edma_dr
     status_t status;
     lpuart_transfer_t xfer;
 
-    xfer.data = data;
+    xfer.data     = data;
     xfer.dataSize = num;
 
     status = LPUART_ReceiveEDMA(lpuart->resource->base, lpuart->handle, &xfer);
@@ -929,15 +936,15 @@ static ARM_USART_STATUS LPUART_EdmaGetStatus(cmsis_lpuart_edma_driver_state_t *l
     stat.rx_busy = ((kLPUART_RxBusy == lpuart->handle->rxState) ? (1U) : (0U));
 
     stat.tx_underflow = 0U;
-    stat.rx_overflow = (!(!(ksdk_lpuart_status & kLPUART_RxOverrunFlag)));
+    stat.rx_overflow  = (!(!(ksdk_lpuart_status & kLPUART_RxOverrunFlag)));
 #if defined(FSL_FEATURE_LPUART_HAS_LIN_BREAK_DETECT) && FSL_FEATURE_LPUART_HAS_LIN_BREAK_DETECT
-    stat.rx_break = (!(!(ksdk_lpuart_status & kLPUART_LinBreakFlag)));
+    stat.rx_break = (!(!(ksdk_lpuart_status & (uint32_t)kLPUART_LinBreakFlag)));
 #else
     stat.rx_break = 0U;
 #endif
     stat.rx_framing_error = (!(!(ksdk_lpuart_status & kLPUART_FramingErrorFlag)));
-    stat.rx_parity_error = (!(!(ksdk_lpuart_status & kLPUART_ParityErrorFlag)));
-    stat.reserved = 0U;
+    stat.rx_parity_error  = (!(!(ksdk_lpuart_status & kLPUART_ParityErrorFlag)));
+    stat.reserved         = 0U;
 
     return stat;
 }
@@ -950,7 +957,8 @@ static ARM_USART_STATUS LPUART_EdmaGetStatus(cmsis_lpuart_edma_driver_state_t *l
      ((RTE_USART2 && !RTE_USART2_DMA_EN) && defined(LPUART2)) || \
      ((RTE_USART3 && !RTE_USART3_DMA_EN) && defined(LPUART3)) || \
      ((RTE_USART4 && !RTE_USART4_DMA_EN) && defined(LPUART4)) || \
-     ((RTE_USART5 && !RTE_USART5_DMA_EN) && defined(LPUART5)))
+     ((RTE_USART5 && !RTE_USART5_DMA_EN) && defined(LPUART5)) || \
+     ((RTE_USART6 && !RTE_USART6_DMA_EN) && defined(LPUART6)))
 
 void KSDK_LPUART_NonBlockingCallback(LPUART_Type *base, lpuart_handle_t *handle, status_t status, void *userData)
 {
@@ -982,7 +990,7 @@ static int32_t LPUART_NonBlockingInitialize(ARM_USART_SignalEvent_t cb_event,
     if (!(lpuart->flags & USART_FLAG_INIT))
     {
         lpuart->cb_event = cb_event;
-        lpuart->flags = USART_FLAG_INIT;
+        lpuart->flags    = USART_FLAG_INIT;
     }
 
     return ARM_DRIVER_OK;
@@ -1045,7 +1053,7 @@ static int32_t LPUART_NonBlockingSend(const void *data, uint32_t num, cmsis_lpua
     status_t status;
     lpuart_transfer_t xfer;
 
-    xfer.data = (uint8_t *)data;
+    xfer.data     = (uint8_t *)data;
     xfer.dataSize = num;
 
     status = LPUART_TransferSendNonBlocking(lpuart->resource->base, lpuart->handle, &xfer);
@@ -1075,7 +1083,7 @@ static int32_t LPUART_NonBlockingReceive(void *data, uint32_t num, cmsis_lpuart_
     status_t status;
     lpuart_transfer_t xfer;
 
-    xfer.data = data;
+    xfer.data     = data;
     xfer.dataSize = num;
 
     status = LPUART_TransferReceiveNonBlocking(lpuart->resource->base, lpuart->handle, &xfer, NULL);
@@ -1177,15 +1185,15 @@ static ARM_USART_STATUS LPUART_NonBlockingGetStatus(cmsis_lpuart_non_blocking_dr
     stat.rx_busy = ((kLPUART_RxBusy == lpuart->handle->rxState) ? (1U) : (0U));
 
     stat.tx_underflow = 0U;
-    stat.rx_overflow = (!(!(ksdk_lpuart_status & kLPUART_RxOverrunFlag)));
+    stat.rx_overflow  = (!(!(ksdk_lpuart_status & kLPUART_RxOverrunFlag)));
 #if defined(FSL_FEATURE_LPUART_HAS_LIN_BREAK_DETECT) && FSL_FEATURE_LPUART_HAS_LIN_BREAK_DETECT
-    stat.rx_break = (!(!(ksdk_lpuart_status & kLPUART_LinBreakFlag)));
+    stat.rx_break = (!(!(ksdk_lpuart_status & (uint32_t)kLPUART_LinBreakFlag)));
 #else
     stat.rx_break = 0U;
 #endif
     stat.rx_framing_error = (!(!(ksdk_lpuart_status & kLPUART_FramingErrorFlag)));
-    stat.rx_parity_error = (!(!(ksdk_lpuart_status & kLPUART_ParityErrorFlag)));
-    stat.reserved = 0U;
+    stat.rx_parity_error  = (!(!(ksdk_lpuart_status & kLPUART_ParityErrorFlag)));
+    stat.reserved         = 0U;
 
     return stat;
 }
@@ -1219,11 +1227,11 @@ lpuart_dma_handle_t LPUART0_DmaHandle;
 dma_handle_t LPUART0_DmaRxHandle;
 dma_handle_t LPUART0_DmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpuart0_dma_driver_state")
 cmsis_lpuart_dma_driver_state_t LPUART0_DmaDriverState = {
 #else
-cmsis_lpuart_dma_driver_state_t LPUART0_DmaDriverState = {
+cmsis_lpuart_dma_driver_state_t LPUART0_DmaDriverState   = {
 #endif
     &LPUART0_Resource, &LPUART0_DmaResource, &LPUART0_DmaHandle, &LPUART0_DmaRxHandle, &LPUART0_DmaTxHandle,
 };
@@ -1298,7 +1306,7 @@ lpuart_edma_handle_t LPUART0_EdmaHandle;
 edma_handle_t LPUART0_EdmaRxHandle;
 edma_handle_t LPUART0_EdmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpuart0_edma_driver_state")
 cmsis_lpuart_edma_driver_state_t LPUART0_EdmaDriverState = {
 #else
@@ -1373,13 +1381,14 @@ static uint8_t lpuart0_rxRingBuffer[USART_RX_BUFFER_LEN];
 static uint8_t lpuart1_rxRingBuffer[USART_RX_BUFFER_LEN];
 #endif
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpuart0_non_blocking_driver_state")
 cmsis_lpuart_non_blocking_driver_state_t LPUART0_NonBlockingDriverState = {
 #else
 cmsis_lpuart_non_blocking_driver_state_t LPUART0_NonBlockingDriverState = {
 #endif
-    &LPUART0_Resource, &LPUART0_Handle,
+    &LPUART0_Resource,
+    &LPUART0_Handle,
 };
 
 static int32_t LPUART0_NonBlockingInitialize(ARM_USART_SignalEvent_t cb_event)
@@ -1467,9 +1476,9 @@ static ARM_USART_STATUS LPUART0_NonBlockingGetStatus(void)
 #if (FSL_FEATURE_SOC_LPUART_COUNT == 1)
 #if (FSL_FEATURE_SOC_UART_COUNT == 3)
 ARM_DRIVER_USART Driver_USART3 = {
-#elif(FSL_FEATURE_SOC_UART_COUNT == 4)
+#elif (FSL_FEATURE_SOC_UART_COUNT == 4)
 ARM_DRIVER_USART Driver_USART4 = {
-#elif(FSL_FEATURE_SOC_UART_COUNT == 5)
+#elif (FSL_FEATURE_SOC_UART_COUNT == 5)
 ARM_DRIVER_USART Driver_USART5 = {
 #else
 ARM_DRIVER_USART Driver_USART0 = {
@@ -1531,11 +1540,11 @@ lpuart_dma_handle_t LPUART1_DmaHandle;
 dma_handle_t LPUART1_DmaRxHandle;
 dma_handle_t LPUART1_DmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpuart1_dma_driver_state")
 cmsis_lpuart_dma_driver_state_t LPUART1_DmaDriverState = {
 #else
-cmsis_lpuart_dma_driver_state_t LPUART1_DmaDriverState = {
+cmsis_lpuart_dma_driver_state_t LPUART1_DmaDriverState   = {
 #endif
     &LPUART1_Resource, &LPUART1_DmaResource, &LPUART1_DmaHandle, &LPUART1_DmaRxHandle, &LPUART1_DmaTxHandle,
 };
@@ -1609,7 +1618,7 @@ lpuart_edma_handle_t LPUART1_EdmaHandle;
 edma_handle_t LPUART1_EdmaRxHandle;
 edma_handle_t LPUART1_EdmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpuart1_edma_driver_state")
 cmsis_lpuart_edma_driver_state_t LPUART1_EdmaDriverState = {
 #else
@@ -1684,13 +1693,14 @@ static uint8_t lpuart1_rxRingBuffer[USART_RX_BUFFER_LEN];
 static uint8_t lpuart2_rxRingBuffer[USART_RX_BUFFER_LEN];
 #endif
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpuart1_non_blocking_driver_state")
 cmsis_lpuart_non_blocking_driver_state_t LPUART1_NonBlockingDriverState = {
 #else
 cmsis_lpuart_non_blocking_driver_state_t LPUART1_NonBlockingDriverState = {
 #endif
-    &LPUART1_Resource, &LPUART1_Handle,
+    &LPUART1_Resource,
+    &LPUART1_Handle,
 };
 
 static int32_t LPUART1_NonBlockingInitialize(ARM_USART_SignalEvent_t cb_event)
@@ -1831,11 +1841,11 @@ lpuart_dma_handle_t LPUART2_DmaHandle;
 dma_handle_t LPUART2_DmaRxHandle;
 dma_handle_t LPUART2_DmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpuart2_dma_driver_state")
 cmsis_lpuart_dma_driver_state_t LPUART2_DmaDriverState = {
 #else
-cmsis_lpuart_dma_driver_state_t LPUART2_DmaDriverState = {
+cmsis_lpuart_dma_driver_state_t LPUART2_DmaDriverState   = {
 #endif
     &LPUART2_Resource, &LPUART2_DmaResource, &LPUART2_DmaHandle, &LPUART2_DmaRxHandle, &LPUART2_DmaTxHandle,
 };
@@ -1909,7 +1919,7 @@ lpuart_edma_handle_t LPUART2_EdmaHandle;
 edma_handle_t LPUART2_EdmaRxHandle;
 edma_handle_t LPUART2_EdmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpuart2_edma_driver_state")
 cmsis_lpuart_edma_driver_state_t LPUART2_EdmaDriverState = {
 #else
@@ -1984,13 +1994,14 @@ static uint8_t lpuart2_rxRingBuffer[USART_RX_BUFFER_LEN];
 static uint8_t lpuart3_rxRingBuffer[USART_RX_BUFFER_LEN];
 #endif
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpuart2_non_blocking_driver_state")
 cmsis_lpuart_non_blocking_driver_state_t LPUART2_NonBlockingDriverState = {
 #else
 cmsis_lpuart_non_blocking_driver_state_t LPUART2_NonBlockingDriverState = {
 #endif
-    &LPUART2_Resource, &LPUART2_Handle,
+    &LPUART2_Resource,
+    &LPUART2_Handle,
 };
 
 static int32_t LPUART2_NonBlockingInitialize(ARM_USART_SignalEvent_t cb_event)
@@ -2131,11 +2142,11 @@ lpuart_dma_handle_t LPUART3_DmaHandle;
 dma_handle_t LPUART3_DmaRxHandle;
 dma_handle_t LPUART3_DmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpuart3_dma_driver_state")
 cmsis_lpuart_dma_driver_state_t LPUART3_DmaDriverState = {
 #else
-cmsis_lpuart_dma_driver_state_t LPUART3_DmaDriverState = {
+cmsis_lpuart_dma_driver_state_t LPUART3_DmaDriverState   = {
 #endif
     &LPUART3_Resource, &LPUART3_DmaResource, &LPUART3_DmaHandle, &LPUART3_DmaRxHandle, &LPUART3_DmaTxHandle,
 };
@@ -2209,7 +2220,7 @@ lpuart_edma_handle_t LPUART3_EdmaHandle;
 edma_handle_t LPUART3_EdmaRxHandle;
 edma_handle_t LPUART3_EdmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpuart3_edma_driver_state")
 cmsis_lpuart_edma_driver_state_t LPUART3_EdmaDriverState = {
 #else
@@ -2284,13 +2295,14 @@ static uint8_t lpuart3_rxRingBuffer[USART_RX_BUFFER_LEN];
 static uint8_t lpuart4_rxRingBuffer[USART_RX_BUFFER_LEN];
 #endif
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpuart3_non_blocking_driver_state")
 cmsis_lpuart_non_blocking_driver_state_t LPUART3_NonBlockingDriverState = {
 #else
 cmsis_lpuart_non_blocking_driver_state_t LPUART3_NonBlockingDriverState = {
 #endif
-    &LPUART3_Resource, &LPUART3_Handle,
+    &LPUART3_Resource,
+    &LPUART3_Handle,
 };
 
 static int32_t LPUART3_NonBlockingInitialize(ARM_USART_SignalEvent_t cb_event)
@@ -2431,11 +2443,11 @@ lpuart_dma_handle_t LPUART4_DmaHandle;
 dma_handle_t LPUART4_DmaRxHandle;
 dma_handle_t LPUART4_DmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpuart4_dma_driver_state")
 cmsis_lpuart_dma_driver_state_t LPUART4_DmaDriverState = {
 #else
-cmsis_lpuart_dma_driver_state_t LPUART4_DmaDriverState = {
+cmsis_lpuart_dma_driver_state_t LPUART4_DmaDriverState   = {
 #endif
     &LPUART4_Resource, &LPUART4_DmaResource, &LPUART4_DmaHandle, &LPUART4_DmaRxHandle, &LPUART4_DmaTxHandle};
 
@@ -2508,7 +2520,7 @@ lpuart_edma_handle_t LPUART4_EdmaHandle;
 edma_handle_t LPUART4_EdmaRxHandle;
 edma_handle_t LPUART4_EdmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpuart4_edma_driver_state")
 cmsis_lpuart_edma_driver_state_t LPUART4_EdmaDriverState = {
 #else
@@ -2582,13 +2594,14 @@ static uint8_t lpuart4_rxRingBuffer[USART_RX_BUFFER_LEN];
 static uint8_t lpuart5_rxRingBuffer[USART_RX_BUFFER_LEN];
 #endif
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpuart4_non_blocking_driver_state")
 cmsis_lpuart_non_blocking_driver_state_t LPUART4_NonBlockingDriverState = {
 #else
 cmsis_lpuart_non_blocking_driver_state_t LPUART4_NonBlockingDriverState = {
 #endif
-    &LPUART4_Resource, &LPUART4_Handle,
+    &LPUART4_Resource,
+    &LPUART4_Handle,
 };
 
 static int32_t LPUART4_NonBlockingInitialize(ARM_USART_SignalEvent_t cb_event)
@@ -2729,11 +2742,11 @@ lpuart_dma_handle_t LPUART5_DmaHandle;
 dma_handle_t LPUART5_DmaRxHandle;
 dma_handle_t LPUART5_DmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpuart5_dma_driver_state")
 cmsis_lpuart_dma_driver_state_t LPUART5_DmaDriverState = {
 #else
-cmsis_lpuart_dma_driver_state_t LPUART5_DmaDriverState = {
+cmsis_lpuart_dma_driver_state_t LPUART5_DmaDriverState   = {
 #endif
     &LPUART5_Resource, &LPUART5_DmaResource, &LPUART5_DmaHandle, &LPUART5_DmaRxHandle, &LPUART5_DmaTxHandle,
 };
@@ -2809,7 +2822,7 @@ lpuart_edma_handle_t LPUART5_EdmaHandle;
 edma_handle_t LPUART5_EdmaRxHandle;
 edma_handle_t LPUART5_EdmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpuart5_edma_driver_state")
 cmsis_lpuart_edma_driver_state_t LPUART5_EdmaDriverState = {
 #else
@@ -2880,13 +2893,14 @@ lpuart_handle_t LPUART5_Handle;
 static uint8_t lpuart5_rxRingBuffer[USART_RX_BUFFER_LEN];
 #endif
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpuart5_non_blocking_driver_state")
 cmsis_lpuart_non_blocking_driver_state_t LPUART5_NonBlockingDriverState = {
 #else
 cmsis_lpuart_non_blocking_driver_state_t LPUART5_NonBlockingDriverState = {
 #endif
-    &LPUART5_Resource, &LPUART5_Handle,
+    &LPUART5_Resource,
+    &LPUART5_Handle,
 };
 
 static int32_t LPUART5_NonBlockingInitialize(ARM_USART_SignalEvent_t cb_event)
@@ -2983,7 +2997,7 @@ ARM_DRIVER_USART Driver_USART5 = {LPUARTx_GetVersion,      LPUARTx_GetCapabiliti
                                   LPUART5_DmaSend,         LPUART5_DmaReceive,      LPUART5_DmaTransfer,
                                   LPUART5_DmaGetTxCount,   LPUART5_DmaGetRxCount,   LPUART5_DmaControl,
                                   LPUART5_DmaGetStatus,
-#endif
+#endif /* FSL_FEATURE_SOC_EDMA_COUNT */
 #else
                                   LPUART5_NonBlockingInitialize,
                                   LPUART5_NonBlockingUninitialize,
@@ -2995,7 +3009,306 @@ ARM_DRIVER_USART Driver_USART5 = {LPUARTx_GetVersion,      LPUARTx_GetCapabiliti
                                   LPUART5_NonBlockingGetRxCount,
                                   LPUART5_NonBlockingControl,
                                   LPUART5_NonBlockingGetStatus,
-#endif
+#endif /* RTE_USART5_DMA_EN */
                                   LPUARTx_SetModemControl, LPUARTx_GetModemStatus};
 
 #endif /* LPUART5 */
+
+#if defined(LPUART6) && RTE_USART6
+
+/* User needs to provide the implementation for LPUART5_GetFreq/InitPins/DeinitPins
+in the application for enabling according instance. */
+extern uint32_t LPUART6_GetFreq(void);
+extern void LPUART6_InitPins(void);
+extern void LPUART6_DeinitPins(void);
+
+cmsis_lpuart_resource_t LPUART6_Resource = {LPUART6, LPUART6_GetFreq};
+
+#if RTE_USART6_DMA_EN
+
+#if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
+
+cmsis_lpuart_dma_resource_t LPUART6_DmaResource = {
+    RTE_USART6_DMA_TX_DMA_BASE,    RTE_USART6_DMA_TX_CH,          RTE_USART6_DMA_TX_PERI_SEL,
+    RTE_USART6_DMA_RX_DMA_BASE,    RTE_USART6_DMA_RX_CH,          RTE_USART6_DMA_RX_PERI_SEL,
+
+#if (defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT)
+    RTE_USART6_DMA_TX_DMAMUX_BASE, RTE_USART6_DMA_RX_DMAMUX_BASE,
+#endif
+};
+
+lpuart_dma_handle_t LPUART6_DmaHandle;
+dma_handle_t LPUART6_DmaRxHandle;
+dma_handle_t LPUART6_DmaTxHandle;
+
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
+ARMCC_SECTION("lpuart5_dma_driver_state")
+cmsis_lpuart_dma_driver_state_t LPUART6_DmaDriverState = {
+#else
+cmsis_lpuart_dma_driver_state_t LPUART6_DmaDriverState   = {
+#endif
+    &LPUART6_Resource, &LPUART6_DmaResource, &LPUART6_DmaHandle, &LPUART6_DmaRxHandle, &LPUART6_DmaTxHandle,
+};
+
+static int32_t LPUART6_DmaInitialize(ARM_USART_SignalEvent_t cb_event)
+{
+    LPUART6_InitPins();
+    return LPUART_DmaInitialize(cb_event, &LPUART6_DmaDriverState);
+}
+
+static int32_t LPUART6_DmaUninitialize(void)
+{
+    LPUART6_DeinitPins();
+    return LPUART_DmaUninitialize(&LPUART6_DmaDriverState);
+}
+
+static int32_t LPUART6_DmaPowerControl(ARM_POWER_STATE state)
+{
+    return LPUART_DmaPowerControl(state, &LPUART6_DmaDriverState);
+}
+
+static int32_t LPUART6_DmaSend(const void *data, uint32_t num)
+{
+    return LPUART_DmaSend(data, num, &LPUART6_DmaDriverState);
+}
+
+static int32_t LPUART6_DmaReceive(void *data, uint32_t num)
+{
+    return LPUART_DmaReceive(data, num, &LPUART6_DmaDriverState);
+}
+
+static int32_t LPUART6_DmaTransfer(const void *data_out, void *data_in, uint32_t num)
+{
+    return LPUART_DmaTransfer(data_out, data_in, num, &LPUART6_DmaDriverState);
+}
+
+static uint32_t LPUART6_DmaGetTxCount(void)
+{
+    return LPUART_DmaGetTxCount(&LPUART6_DmaDriverState);
+}
+
+static uint32_t LPUART6_DmaGetRxCount(void)
+{
+    return LPUART_DmaGetRxCount(&LPUART6_DmaDriverState);
+}
+
+static int32_t LPUART6_DmaControl(uint32_t control, uint32_t arg)
+{
+    return LPUART_DmaControl(control, arg, &LPUART6_DmaDriverState);
+}
+
+static ARM_USART_STATUS LPUART6_DmaGetStatus(void)
+{
+    return LPUART_DmaGetStatus(&LPUART6_DmaDriverState);
+}
+
+/* LPUART6 Driver Control Block */
+
+#endif
+
+#if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
+
+cmsis_lpuart_edma_resource_t LPUART6_EdmaResource = {
+    RTE_USART6_DMA_TX_DMA_BASE,    RTE_USART6_DMA_TX_CH,          RTE_USART6_DMA_TX_PERI_SEL,
+    RTE_USART6_DMA_RX_DMA_BASE,    RTE_USART6_DMA_RX_CH,          RTE_USART6_DMA_RX_PERI_SEL,
+
+#if (defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT)
+    RTE_USART6_DMA_TX_DMAMUX_BASE, RTE_USART6_DMA_RX_DMAMUX_BASE,
+#endif
+};
+
+lpuart_edma_handle_t LPUART6_EdmaHandle;
+edma_handle_t LPUART6_EdmaRxHandle;
+edma_handle_t LPUART6_EdmaTxHandle;
+
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
+ARMCC_SECTION("lpuart6_edma_driver_state")
+cmsis_lpuart_edma_driver_state_t LPUART6_EdmaDriverState = {
+#else
+cmsis_lpuart_edma_driver_state_t LPUART6_EdmaDriverState = {
+#endif
+    &LPUART6_Resource, &LPUART6_EdmaResource, &LPUART6_EdmaHandle, &LPUART6_EdmaRxHandle, &LPUART6_EdmaTxHandle,
+};
+
+static int32_t LPUART6_EdmaInitialize(ARM_USART_SignalEvent_t cb_event)
+{
+    LPUART6_InitPins();
+    return LPUART_EdmaInitialize(cb_event, &LPUART6_EdmaDriverState);
+}
+
+static int32_t LPUART6_EdmaUninitialize(void)
+{
+    LPUART6_DeinitPins();
+    return LPUART_EdmaUninitialize(&LPUART6_EdmaDriverState);
+}
+
+static int32_t LPUART6_EdmaPowerControl(ARM_POWER_STATE state)
+{
+    return LPUART_EdmaPowerControl(state, &LPUART6_EdmaDriverState);
+}
+
+static int32_t LPUART6_EdmaSend(const void *data, uint32_t num)
+{
+    return LPUART_EdmaSend(data, num, &LPUART6_EdmaDriverState);
+}
+
+static int32_t LPUART6_EdmaReceive(void *data, uint32_t num)
+{
+    return LPUART_EdmaReceive(data, num, &LPUART6_EdmaDriverState);
+}
+
+static int32_t LPUART6_EdmaTransfer(const void *data_out, void *data_in, uint32_t num)
+{
+    return LPUART_EdmaTransfer(data_out, data_in, num, &LPUART6_EdmaDriverState);
+}
+
+static uint32_t LPUART6_EdmaGetTxCount(void)
+{
+    return LPUART_EdmaGetTxCount(&LPUART6_EdmaDriverState);
+}
+
+static uint32_t LPUART6_EdmaGetRxCount(void)
+{
+    return LPUART_EdmaGetRxCount(&LPUART6_EdmaDriverState);
+}
+
+static int32_t LPUART6_EdmaControl(uint32_t control, uint32_t arg)
+{
+    return LPUART_EdmaControl(control, arg, &LPUART6_EdmaDriverState);
+}
+
+static ARM_USART_STATUS LPUART6_EdmaGetStatus(void)
+{
+    return LPUART_EdmaGetStatus(&LPUART6_EdmaDriverState);
+}
+
+#endif
+
+#else
+
+lpuart_handle_t LPUART6_Handle;
+
+#if defined(USART6_RX_BUFFER_ENABLE) && (USART6_RX_BUFFER_ENABLE == 1)
+static uint8_t lpuart6_rxRingBuffer[USART_RX_BUFFER_LEN];
+#endif
+
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
+ARMCC_SECTION("lpuart6_non_blocking_driver_state")
+cmsis_lpuart_non_blocking_driver_state_t LPUART6_NonBlockingDriverState = {
+#else
+cmsis_lpuart_non_blocking_driver_state_t LPUART6_NonBlockingDriverState = {
+#endif
+    &LPUART6_Resource,
+    &LPUART6_Handle,
+};
+
+static int32_t LPUART6_NonBlockingInitialize(ARM_USART_SignalEvent_t cb_event)
+{
+    LPUART6_InitPins();
+    return LPUART_NonBlockingInitialize(cb_event, &LPUART6_NonBlockingDriverState);
+}
+
+static int32_t LPUART6_NonBlockingUninitialize(void)
+{
+    LPUART6_DeinitPins();
+    return LPUART_NonBlockingUninitialize(&LPUART6_NonBlockingDriverState);
+}
+
+static int32_t LPUART6_NonBlockingPowerControl(ARM_POWER_STATE state)
+{
+    uint32_t result;
+
+    result = LPUART_NonBlockingPowerControl(state, &LPUART6_NonBlockingDriverState);
+
+#if defined(USART6_RX_BUFFER_ENABLE) && (USART6_RX_BUFFER_ENABLE == 1)
+    if ((state == ARM_POWER_FULL) && (LPUART6_NonBlockingDriverState.handle->rxRingBuffer == NULL))
+    {
+        LPUART_TransferStartRingBuffer(LPUART6_NonBlockingDriverState.resource->base,
+                                       LPUART6_NonBlockingDriverState.handle, lpuart6_rxRingBuffer,
+                                       USART_RX_BUFFER_LEN);
+    }
+#endif
+
+    return result;
+}
+
+static int32_t LPUART6_NonBlockingSend(const void *data, uint32_t num)
+{
+    return LPUART_NonBlockingSend(data, num, &LPUART6_NonBlockingDriverState);
+}
+
+static int32_t LPUART6_NonBlockingReceive(void *data, uint32_t num)
+{
+    return LPUART_NonBlockingReceive(data, num, &LPUART6_NonBlockingDriverState);
+}
+
+static int32_t LPUART6_NonBlockingTransfer(const void *data_out, void *data_in, uint32_t num)
+{
+    return LPUART_NonBlockingTransfer(data_out, data_in, num, &LPUART6_NonBlockingDriverState);
+}
+
+static uint32_t LPUART6_NonBlockingGetTxCount(void)
+{
+    return LPUART_NonBlockingGetTxCount(&LPUART6_NonBlockingDriverState);
+}
+
+static uint32_t LPUART6_NonBlockingGetRxCount(void)
+{
+    return LPUART_NonBlockingGetRxCount(&LPUART6_NonBlockingDriverState);
+}
+
+static int32_t LPUART6_NonBlockingControl(uint32_t control, uint32_t arg)
+{
+    int32_t result;
+
+    result = LPUART_NonBlockingControl(control, arg, &LPUART6_NonBlockingDriverState);
+    if (ARM_DRIVER_OK != result)
+    {
+        return result;
+    }
+
+    /* Enable the receive interrupts if ring buffer is used */
+    if (LPUART6_NonBlockingDriverState.handle->rxRingBuffer != NULL)
+    {
+        LPUART_EnableInterrupts(LPUART6_NonBlockingDriverState.resource->base,
+                                kLPUART_RxDataRegFullInterruptEnable | kLPUART_RxOverrunInterruptEnable);
+    }
+
+    return ARM_DRIVER_OK;
+}
+
+static ARM_USART_STATUS LPUART6_NonBlockingGetStatus(void)
+{
+    return LPUART_NonBlockingGetStatus(&LPUART6_NonBlockingDriverState);
+}
+
+#endif
+
+ARM_DRIVER_USART Driver_USART6 = {LPUARTx_GetVersion,      LPUARTx_GetCapabilities,
+#if RTE_USART6_DMA_EN
+#if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
+                                  LPUART6_EdmaInitialize,  LPUART6_EdmaUninitialize, LPUART6_EdmaPowerControl,
+                                  LPUART6_EdmaSend,        LPUART6_EdmaReceive,      LPUART6_EdmaTransfer,
+                                  LPUART6_EdmaGetTxCount,  LPUART6_EdmaGetRxCount,   LPUART6_EdmaControl,
+                                  LPUART6_EdmaGetStatus,
+#else
+                                  LPUART6_DmaInitialize,   LPUART6_DmaUninitialize, LPUART6_DmaPowerControl,
+                                  LPUART6_DmaSend,         LPUART6_DmaReceive,      LPUART6_DmaTransfer,
+                                  LPUART6_DmaGetTxCount,   LPUART6_DmaGetRxCount,   LPUART6_DmaControl,
+                                  LPUART6_DmaGetStatus,
+#endif /* FSL_FEATURE_SOC_EDMA_COUNT */
+#else
+                                  LPUART6_NonBlockingInitialize,
+                                  LPUART6_NonBlockingUninitialize,
+                                  LPUART6_NonBlockingPowerControl,
+                                  LPUART6_NonBlockingSend,
+                                  LPUART6_NonBlockingReceive,
+                                  LPUART6_NonBlockingTransfer,
+                                  LPUART6_NonBlockingGetTxCount,
+                                  LPUART6_NonBlockingGetRxCount,
+                                  LPUART6_NonBlockingControl,
+                                  LPUART6_NonBlockingGetStatus,
+#endif /* RTE_USART6_DMA_EN */
+                                  LPUARTx_SetModemControl, LPUARTx_GetModemStatus};
+
+#endif /* LPUART6 */

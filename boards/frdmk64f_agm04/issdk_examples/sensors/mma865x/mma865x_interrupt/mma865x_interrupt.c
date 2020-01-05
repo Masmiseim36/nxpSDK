@@ -2,15 +2,15 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /**
  * @file mma865x_interrupt.c
-*   @brief The mma865x_interrupt.c file implements the ISSDK MMA865x sensor driver
-*        example demonstration with Interrupt mode.
-*/
+ *   @brief The mma865x_interrupt.c file implements the ISSDK MMA865x sensor driver
+ *        example demonstration with Interrupt mode.
+ */
 
 //-----------------------------------------------------------------------
 // SDK Includes

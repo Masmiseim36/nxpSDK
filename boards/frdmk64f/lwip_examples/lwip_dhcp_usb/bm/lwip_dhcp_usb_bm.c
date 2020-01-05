@@ -1,11 +1,11 @@
 /*
-* Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
-* All rights reserved.
-*
-* 
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
+ * All rights reserved.
+ *
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 /*******************************************************************************
  * Includes
@@ -29,7 +29,6 @@
 #include "lwip/dns.h"
 #include "netif/etharp.h"
 
-
 #include "board.h"
 
 #include "fsl_device_registers.h"
@@ -46,20 +45,24 @@
 
 #define CONTROLLER_ID kUSB_ControllerKhci0
 
-
 #if defined(__GIC_PRIO_BITS)
 #define USB_HOST_INTERRUPT_PRIORITY (25U)
 #else
 #define USB_HOST_INTERRUPT_PRIORITY (3U)
 #endif
 
-/*******************************************************************************
-* Prototypes
-******************************************************************************/
+#ifndef EXAMPLE_NETIF_INIT_FN
+/*! @brief Network interface initialization function. */
+#define EXAMPLE_NETIF_INIT_FN USB_EthernetIfInIt
+#endif /* EXAMPLE_NETIF_INIT_FN */
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
+
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
 extern usb_host_handle g_HostHandle;
 /*set when dhcp get ip address*/
 uint32_t dhcpReady;
@@ -70,11 +73,13 @@ uint8_t dnsReady;
 ip4_addr_t addrBuffer;
 ip4_addr_t currentaddr;
 
-uint8_t website[40] = {'w','w','w','.','n','x','p','.','c','o','m',};
+uint8_t website[40] = {
+    'w', 'w', 'w', '.', 'n', 'x', 'p', '.', 'c', 'o', 'm',
+};
 
-struct netif fsl_netif0;
+struct netif netif;
 ethernetifConfig_t ethernetConfig;
-ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
+ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
 
 /*******************************************************************************
  * Code
@@ -99,7 +104,7 @@ void USB_HostIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbHOSTKhciIrq[] = USB_IRQS;
-    irqNumber = usbHOSTKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+    irqNumber                = usbHOSTKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 
 /* Install isr, set priority, and enable IRQ. */
 #if defined(__GIC_PRIO_BITS)
@@ -124,7 +129,7 @@ void SysTick_Handler(void)
 }
 void lwip_dns_dns_found(const char *name, const ip_addr_t *ipaddr, void *arg)
 {
-    if(ipaddr != NULL)
+    if (ipaddr != NULL)
     {
         dnsReady = 1;
 
@@ -132,7 +137,7 @@ void lwip_dns_dns_found(const char *name, const ip_addr_t *ipaddr, void *arg)
     }
     else
     {
-         PRINTF("\r\n error in dns request\r\n");
+        PRINTF("\r\n error in dns request\r\n");
     }
 }
 /*!
@@ -143,36 +148,34 @@ void lwip_dns_dns_found(const char *name, const ip_addr_t *ipaddr, void *arg)
 static void print_dhcp_state(struct netif *netif)
 {
     static u8_t dhcp_last_state = DHCP_STATE_OFF;
-    struct dhcp *dhcp = netif_dhcp_data(netif);
+    struct dhcp *dhcp           = netif_dhcp_data(netif);
 
-    if((dhcpReady) && (!dnsReady))
+    if ((dhcpReady) && (!dnsReady))
     {
         err_t err;
         dhcpReady = 0;
-        PRINTF("\r\n  waiting for getting the IP Address....%s\r\n");
-        err = dns_gethostbyname((char*)&website[0], &addrBuffer, lwip_dns_dns_found, (void*)&fsl_netif0);
-        if(ERR_INPROGRESS == err)
+        PRINTF("\r\n  waiting for getting the IP Address....\r\n");
+        err = dns_gethostbyname((char *)&website[0], &addrBuffer, lwip_dns_dns_found, (void *)&netif);
+        if (ERR_INPROGRESS == err)
         {
-             /* PRINTF("\r\n error in dns get\r\n");*/
+            /* PRINTF("\r\n error in dns get\r\n");*/
         }
-        else if(ERR_OK == err)
+        else if (ERR_OK == err)
         {
-            dnsReady = 1;
+            dnsReady         = 1;
             currentaddr.addr = addrBuffer.addr;
         }
-
     }
     if (dnsReady)
-    {   
-        if(!pingReady)
+    {
+        if (!pingReady)
         {
             pingReady = 1;
-            
+
             ping_init(&currentaddr);
         }
         dnsReady = 0;
         PRINTF("\r\n the IP Address of nxp.com is   : %s\r\n", ipaddr_ntoa(&currentaddr));
-
     }
     if (dhcp == NULL)
     {
@@ -230,22 +233,17 @@ static void print_dhcp_state(struct netif *netif)
             PRINTF("\r\n IPv4 Address     : %s\r\n", ipaddr_ntoa(&netif->ip_addr));
             PRINTF(" IPv4 Subnet mask : %s\r\n", ipaddr_ntoa(&netif->netmask));
             PRINTF(" IPv4 Gateway     : %s\r\n\r\n", ipaddr_ntoa(&netif->gw));
-            
+
             dhcpReady = 1;
         }
     }
-    
-
-
 }
 
 /*!
  * @brief Main function.
  */
- int main(void)
+int main(void)
 {
-
-
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
@@ -255,20 +253,18 @@ static void print_dhcp_state(struct netif *netif)
 
     time_init();
 
-
-    IP4_ADDR(&fsl_netif0_ipaddr, 0U, 0U, 0U, 0U);
-    IP4_ADDR(&fsl_netif0_netmask, 0U, 0U, 0U, 0U);
-    IP4_ADDR(&fsl_netif0_gw, 0U, 0U, 0U, 0U);
+    IP4_ADDR(&netif_ipaddr, 0U, 0U, 0U, 0U);
+    IP4_ADDR(&netif_netmask, 0U, 0U, 0U, 0U);
+    IP4_ADDR(&netif_gw, 0U, 0U, 0U, 0U);
     ethernetConfig.controllerId = CONTROLLER_ID;
-    ethernetConfig.privateData = NULL;
+    ethernetConfig.privateData  = NULL;
     lwip_init();
 
-    netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw,
-              &ethernetConfig, USB_EthernetIfInIt, ethernet_input);
-    netif_set_default(&fsl_netif0);
-    netif_set_up(&fsl_netif0);
+    netif_add(&netif, &netif_ipaddr, &netif_netmask, &netif_gw, &ethernetConfig, EXAMPLE_NETIF_INIT_FN, ethernet_input);
+    netif_set_default(&netif);
+    netif_set_up(&netif);
 
-    dhcp_start(&fsl_netif0);
+    dhcp_start(&netif);
 
     PRINTF("\r\n************************************************\r\n");
     PRINTF(" DHCP example\r\n");
@@ -277,13 +273,13 @@ static void print_dhcp_state(struct netif *netif)
     while (1)
     {
         /* Poll the driver, get any outstanding frames */
-        usb_ethernetif_input(&fsl_netif0);
+        usb_ethernetif_input(&netif);
 
         /* Handle all system timeouts for all core protocols */
         sys_check_timeouts();
 
         /* Print DHCP progress */
-        print_dhcp_state(&fsl_netif0);
+        print_dhcp_state(&netif);
     }
 }
 #endif

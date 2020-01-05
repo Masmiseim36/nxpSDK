@@ -52,12 +52,12 @@ extern uint32_t concurrent_connect_flag;
 extern uint16_t ap_channel_hint;
 extern uint8_t ssid_str_concurrent[MAX_SSID_LENGTH];
 /*FUNCTION*-----------------------------------------------------------------
-*
-* Function Name  : check_driver_state
-* Returned Value : A_OK or A_ERROR
-* Comments       : Checks if driver is loaded or not
-*
-*END------------------------------------------------------------------*/
+ *
+ * Function Name  : check_driver_state
+ * Returned Value : A_OK or A_ERROR
+ * Comments       : Checks if driver is loaded or not
+ *
+ *END------------------------------------------------------------------*/
 int32_t check_driver_state(void)
 {
 #if 0
@@ -86,19 +86,19 @@ A_STATUS handle_ioctl(ATH_IOCTL_PARAM_STRUCT *inout_param)
 {
     _qca_handle qcahandle;
 
-    qcahandle = get_active_device_handle();
+    qcahandle      = get_active_device_handle();
     A_STATUS error = (A_STATUS)ENET_mediactl(qcahandle, QCA_MEDIACTL_VENDOR_SPECIFIC, inout_param);
 
     return error;
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : driver_updown_indicator()
-* Returned Value  : A_OK - success, A_ERROR - failure
-* Comments	: handles the state of driver either up/down
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : driver_updown_indicator()
+ * Returned Value  : A_OK - success, A_ERROR - failure
+ * Comments	: handles the state of driver either up/down
+ *
+ *END*-----------------------------------------------------------------*/
 uint8_t driver_status(uint8_t val)
 {
     static uint8_t driver_down_flag = DRIVER_UP;
@@ -124,12 +124,12 @@ uint8_t driver_status(uint8_t val)
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : NetConnect()
-* Returned Value  : 0 - success, 1 - failure
-* Comments	: Handles connection to AP after WPS
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : NetConnect()
+ * Returned Value  : 0 - success, 1 - failure
+ * Comments	: Handles connection to AP after WPS
+ *
+ *END*-----------------------------------------------------------------*/
 int32_t NetConnect(ATH_NETPARAMS *pNetparams)
 {
     int32_t status = A_ERROR;
@@ -240,11 +240,11 @@ int32_t CompleteWPS(ATH_NETPARAMS *pNetparams, uint8_t block, wifimode_t mode_fl
 
     enet_device = get_active_device();
 
-    pNetparams->error = 0;
+    pNetparams->error      = 0;
     pNetparams->dont_block = (block) ? 0 : 1;
 
     param.cmd_id = ATH_AWAIT_WPS_COMPLETION;
-    param.data = pNetparams;
+    param.data   = pNetparams;
     param.length = sizeof(*pNetparams);
 
     /* this will block until the WPS operation completes or times out */
@@ -341,7 +341,7 @@ int32_t CompleteWPS(ATH_NETPARAMS *pNetparams, uint8_t block, wifimode_t mode_fl
         else
         {
             pNetparams->error = (pNetparams->error) ? pNetparams->error : A_EBUSY;
-            status = 0;
+            status            = 0;
         }
     }
 
@@ -382,13 +382,13 @@ void application_frame_cb(A_VOID *ptr)
 extern uint32_t ar4XXX_boot_param;
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : ath_driver_state()
-* Returned Value  : A_OK - successful completion or
-*		   A_ERROR - failed.
-* Comments		  : Handles sriver reset functionality
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : ath_driver_state()
+ * Returned Value  : A_OK - successful completion or
+ *		   A_ERROR - failed.
+ * Comments		  : Handles sriver reset functionality
+ *
+ *END*-----------------------------------------------------------------*/
 
 int32_t ath_driver_state(int32_t argc, char *argv[])
 {
@@ -410,7 +410,7 @@ int32_t ath_driver_state(int32_t argc, char *argv[])
             value = 1;
 
             ath_param.data = &value;
-            error = HANDLE_IOCTL(&ath_param);
+            error          = HANDLE_IOCTL(&ath_param);
 
             if (error == A_OK)
             {
@@ -425,9 +425,9 @@ int32_t ath_driver_state(int32_t argc, char *argv[])
         }
         else if (strcmp(argv[0], "down") == 0)
         {
-            value = 0;
+            value          = 0;
             ath_param.data = &value;
-            error = HANDLE_IOCTL(&ath_param);
+            error          = HANDLE_IOCTL(&ath_param);
 
             if (error == A_OK)
             {
@@ -448,9 +448,9 @@ int32_t ath_driver_state(int32_t argc, char *argv[])
                 A_MDELAY(500);
             }
 
-            value = 0;
+            value          = 0;
             ath_param.data = &value;
-            error = HANDLE_IOCTL(&ath_param);
+            error          = HANDLE_IOCTL(&ath_param);
 
             if (error == A_OK)
             {
@@ -465,12 +465,12 @@ int32_t ath_driver_state(int32_t argc, char *argv[])
         else if (strcmp(argv[0], "raw") == 0)
         {
             ar4XXX_boot_param = AR4XXX_PARAM_RAWMODE_BOOT;
-            value = 0;
-            ath_param.data = &value;
+            value             = 0;
+            ath_param.data    = &value;
             if ((error = HANDLE_IOCTL(&ath_param)) != A_OK)
                 return A_ERROR;
 
-            value = 1;
+            value          = 1;
             ath_param.data = &value;
             if ((error = HANDLE_IOCTL(&ath_param)) != A_OK)
                 return A_ERROR;
@@ -488,12 +488,12 @@ int32_t ath_driver_state(int32_t argc, char *argv[])
         else if (strcmp(argv[0], "normal") == 0)
         {
             ar4XXX_boot_param = AR4XXX_PARAM_MODE_NORMAL;
-            value = 0;
-            ath_param.data = &value;
+            value             = 0;
+            ath_param.data    = &value;
             if ((error = HANDLE_IOCTL(&ath_param)) != A_OK)
                 return A_ERROR;
 
-            value = 1;
+            value          = 1;
             ath_param.data = &value;
             if ((error = HANDLE_IOCTL(&ath_param)) != A_OK)
                 return A_ERROR;
@@ -512,13 +512,13 @@ int32_t ath_driver_state(int32_t argc, char *argv[])
 }
 
 /*FUNCTION*--------------------------------------------------------------------
-*
-* Function Name   : ath_reg_query()
-* Returned Value  : A_OK - on successful completion
-*					A_ERROR - on any failure.
-* Comments        : reads / writes AR600X registers.
-*
-*END*------------------------------------------------------------------------*/
+ *
+ * Function Name   : ath_reg_query()
+ * Returned Value  : A_OK - on successful completion
+ *					A_ERROR - on any failure.
+ * Comments        : reads / writes AR600X registers.
+ *
+ *END*------------------------------------------------------------------------*/
 int32_t ath_reg_query(int32_t argc, char *argv[])
 {
     int32_t error;
@@ -540,7 +540,7 @@ int32_t ath_reg_query(int32_t argc, char *argv[])
             break;
 
         ath_regquery.operation = atoi(argv[0]);
-        ath_regquery.address = mystrtoul(argv[1], NULL, 16);
+        ath_regquery.address   = mystrtoul(argv[1], NULL, 16);
 
         if (ath_regquery.operation == ATH_REG_OP_READ)
         {
@@ -562,7 +562,7 @@ int32_t ath_reg_query(int32_t argc, char *argv[])
                 break;
 
             ath_regquery.value = mystrtoul(argv[2], NULL, 16);
-            ath_regquery.mask = mystrtoul(argv[3], NULL, 16);
+            ath_regquery.mask  = mystrtoul(argv[3], NULL, 16);
         }
         else
         {
@@ -570,7 +570,7 @@ int32_t ath_reg_query(int32_t argc, char *argv[])
         }
 
         ath_param.cmd_id = ATH_REG_QUERY;
-        ath_param.data = &ath_regquery;
+        ath_param.data   = &ath_regquery;
         ath_param.length = sizeof(ath_regquery);
 
         error = ENET_mediactl(qcahandle, QCA_MEDIACTL_VENDOR_SPECIFIC, &ath_param);
@@ -595,13 +595,13 @@ int32_t ath_reg_query(int32_t argc, char *argv[])
 }
 
 /*FUNCTION*--------------------------------------------------------------------
-*
-* Function Name   : ath_mem_query()
-* Returned Value  : A_OK - on successful completion
-*					A_ERROR - on any failure.
-* Comments        : reads / writes AR600X registers.
-*
-*END*------------------------------------------------------------------------*/
+ *
+ * Function Name   : ath_mem_query()
+ * Returned Value  : A_OK - on successful completion
+ *					A_ERROR - on any failure.
+ * Comments        : reads / writes AR600X registers.
+ *
+ *END*------------------------------------------------------------------------*/
 int32_t ath_mem_query(int32_t argc, char *argv[])
 {
     int32_t error;
@@ -614,7 +614,7 @@ int32_t ath_mem_query(int32_t argc, char *argv[])
     do
     {
         ath_param.cmd_id = ATH_MEM_QUERY;
-        ath_param.data = &ath_memquery;
+        ath_param.data   = &ath_memquery;
         ath_param.length = sizeof(ath_memquery);
 
         error = ENET_mediactl(qcahandle, QCA_MEDIACTL_VENDOR_SPECIFIC, &ath_param);
@@ -862,12 +862,12 @@ int32_t wmi_set_scan(uint32_t dev_num, void *start_scan)
 }
 
 /*FUNCTION*--------------------------------------------------------------------
-*
-* Function Name   : pushButtonWPS()
-* Returned Value  : None
-* Comments        :Called in response to MAUI pushbutton press
-*
-*END*------------------------------------------------------------------------*/
+ *
+ * Function Name   : pushButtonWPS()
+ * Returned Value  : None
+ * Comments        :Called in response to MAUI pushbutton press
+ *
+ *END*------------------------------------------------------------------------*/
 void pushButtonWPS(void)
 {
     qcom_wps_credentials_t wpsCred;
@@ -876,7 +876,7 @@ void pushButtonWPS(void)
     enet_device = get_active_device();
     PRINTF("Start WPS" NL);
     wps_context.wps_in_progress = 1;
-    wps_context.connect_flag = 1;
+    wps_context.connect_flag    = 1;
     set_power_mode(MAX_PERF_POWER, WPS);
 
     A_MEMZERO(&wpsCred, sizeof(qcom_wps_credentials_t));
@@ -904,13 +904,13 @@ extern void __boot(void);
 extern uint8_t bench_quit;
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : SystemReset()
-* Returned Value  : None
-*
-* Comments        : Sample function to depict how to safely reset the host
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : SystemReset()
+ * Returned Value  : None
+ *
+ * Comments        : Sample function to depict how to safely reset the host
+ *
+ *END*-----------------------------------------------------------------*/
 
 void SystemReset(void)
 {
@@ -921,7 +921,7 @@ void SystemReset(void)
 
     qcahandle = get_active_device_handle();
     /*
-        *  If benchrx is already started and reset is given,
+     *  If benchrx is already started and reset is given,
      * stop the benchrx thread by making bench_quit = 1 */
     bench_quit = 1;
     A_MDELAY(100);
@@ -937,9 +937,9 @@ void SystemReset(void)
     }
     ath_param.cmd_id = ATH_CHIP_STATE;
     ath_param.length = sizeof(value);
-    value = 0;
-    ath_param.data = &value;
-    error = ENET_mediactl(qcahandle, QCA_MEDIACTL_VENDOR_SPECIFIC, &ath_param);
+    value            = 0;
+    ath_param.data   = &value;
+    error            = ENET_mediactl(qcahandle, QCA_MEDIACTL_VENDOR_SPECIFIC, &ath_param);
     if (error != A_OK)
     {
         PRINTF("IOCTL error" NL);
@@ -964,7 +964,7 @@ int32_t ext_scan(void)
         return A_ERROR;
     }
     inout_param.cmd_id = ATH_START_SCAN_EXT;
-    inout_param.data = NULL;
+    inout_param.data   = NULL;
 
     error = HANDLE_IOCTL(&inout_param);
 
@@ -974,7 +974,7 @@ int32_t ext_scan(void)
     }
 
     inout_param.cmd_id = ATH_GET_SCAN_EXT;
-    inout_param.data = (A_VOID *)&param;
+    inout_param.data   = (A_VOID *)&param;
 
     error = HANDLE_IOCTL(&inout_param);
 
@@ -1118,13 +1118,13 @@ int32_t ext_scan(void)
 #if ENABLE_STACK_OFFLOAD
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : wmi_ping()
-* Returned Value  : None
-*
-* Comments        : Sample function to depict IPv4 ping functionality
-*                   Only used with On-Chip IP stack
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : wmi_ping()
+ * Returned Value  : None
+ *
+ * Comments        : Sample function to depict IPv4 ping functionality
+ *                   Only used with On-Chip IP stack
+ *END*-----------------------------------------------------------------*/
 int wmi_ping(shell_handle_t context, int argc, char **argv)
 {
     unsigned long hostaddr = 0;
@@ -1228,16 +1228,16 @@ int wmi_ping(shell_handle_t context, int argc, char **argv)
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : wmi_ping6()
-* Returned Value  : None
-*
-* Comments        : Sample function to depict IPv6 ping functionality
-*                   Only used with On-Chip IP stack
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : wmi_ping6()
+ * Returned Value  : None
+ *
+ * Comments        : Sample function to depict IPv6 ping functionality
+ *                   Only used with On-Chip IP stack
+ *END*-----------------------------------------------------------------*/
 int wmi_ping6(shell_handle_t context, int argc, char **argv)
 {
-    int32_t error = -1;
+    int32_t error      = -1;
     IP6_ADDR_T ip6addr = {0};
     char ip_str[48];
     uint32_t count, index, size;
@@ -1284,12 +1284,12 @@ int wmi_ping6(shell_handle_t context, int argc, char **argv)
     if (argc == 2)
     {
         count = 1;
-        size = 64;
+        size  = 64;
     }
     else if (argc == 6)
     {
         count = atoi(argv[3]);
-        size = atoi(argv[5]);
+        size  = atoi(argv[5]);
     }
     else
     {
@@ -1321,13 +1321,13 @@ int wmi_ping6(shell_handle_t context, int argc, char **argv)
 #else
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : wmi_ping()
-* Returned Value  : None
-*
-* Comments        : Sample function to depict IPv4 ping functionality
-*                   Only used with RTCS IP stack
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : wmi_ping()
+ * Returned Value  : None
+ *
+ * Comments        : Sample function to depict IPv4 ping functionality
+ *                   Only used with RTCS IP stack
+ *END*-----------------------------------------------------------------*/
 int32_t wmi_ping(int32_t argc, char *argv[])
 {
     _ip_address hostaddr;
@@ -1497,13 +1497,13 @@ int32_t wmi_ping(int32_t argc, char *argv[])
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : wmi_ping6()
-* Returned Value  : None
-*
-* Comments        : Sample function to depict IPv6 ping functionality
-*                   Not supported on RTCS
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : wmi_ping6()
+ * Returned Value  : None
+ *
+ * Comments        : Sample function to depict IPv6 ping functionality
+ *                   Not supported on RTCS
+ *END*-----------------------------------------------------------------*/
 int32_t wmi_ping6(int32_t argc, char *argv[])
 {
     PRINTF("ping6 command not supported ..." NL);

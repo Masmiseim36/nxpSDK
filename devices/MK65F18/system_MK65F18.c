@@ -5,50 +5,29 @@
 **                          MK65FX1M0CAC18
 **                          MK65FX1M0VMI18
 **
-**     Compilers:           Keil ARM C/C++ Compiler
-**                          Freescale C/C++ for Embedded ARM
+**     Compilers:           Freescale C/C++ for Embedded ARM
 **                          GNU C Compiler
 **                          IAR ANSI C/C++ Compiler for ARM
+**                          Keil ARM C/C++ Compiler
+**                          MCUXpresso Compiler
 **
 **     Reference manual:    K65P169M180SF5RMV2, Rev. 1, Mar 2015
 **     Version:             rev. 3.0, 2015-03-25
-**     Build:               b151216
+**     Build:               b181105
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
 **         contains the system frequency. It configures the device and initializes
 **         the oscillator (PLL) that is part of the microcontroller device.
 **
-**     Copyright (c) 2015 Freescale Semiconductor, Inc.
+**     Copyright 2016 Freescale Semiconductor, Inc.
+**     Copyright 2016-2018 NXP
 **     All rights reserved.
 **
-**     Redistribution and use in source and binary forms, with or without modification,
-**     are permitted provided that the following conditions are met:
+**     SPDX-License-Identifier: BSD-3-Clause
 **
-**     o Redistributions of source code must retain the above copyright notice, this list
-**       of conditions and the following disclaimer.
-**
-**     o Redistributions in binary form must reproduce the above copyright notice, this
-**       list of conditions and the following disclaimer in the documentation and/or
-**       other materials provided with the distribution.
-**
-**     o Neither the name of Freescale Semiconductor, Inc. nor the names of its
-**       contributors may be used to endorse or promote products derived from this
-**       software without specific prior written permission.
-**
-**     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-**     ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-**     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-**     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-**     ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-**     (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-**     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-**     ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-**     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-**     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-**
-**     http:                 www.freescale.com
-**     mail:                 support@freescale.com
+**     http:                 www.nxp.com
+**     mail:                 support@nxp.com
 **
 **     Revisions:
 **     - rev. 1.0 (2013-09-02)
@@ -119,6 +98,7 @@ void SystemInit (void) {
                  0x0100U;
 #endif /* (DISABLE_WDOG) */
 
+  SystemInitHook();
 }
 
 /* ----------------------------------------------------------------------------
@@ -128,6 +108,7 @@ void SystemInit (void) {
 void SystemCoreClockUpdate (void) {
   uint32_t MCGOUTClock;                                                        /* Variable to store output clock frequency of the MCG module */
   uint16_t Divider;
+  uint8_t tmpC7 = 0;
 
   if ((MCG->C1 & MCG_C1_CLKS_MASK) == 0x00U) {
     /* Output of FLL or PLL is selected */
@@ -147,7 +128,8 @@ void SystemCoreClockUpdate (void) {
           MCGOUTClock = CPU_INT_IRC_CLK_HZ; /* IRC 48MHz oscillator drives MCG clock */
           break;
         }
-        if (((MCG->C2 & MCG_C2_RANGE_MASK) != 0x00U) && ((MCG->C7 & MCG_C7_OSCSEL_MASK) != 0x01U)) {
+        tmpC7 = MCG->C7;
+        if (((MCG->C2 & MCG_C2_RANGE_MASK) != 0x00U) && ((tmpC7 & MCG_C7_OSCSEL_MASK) != 0x01U)) {
           switch (MCG->C1 & MCG_C1_FRDIV_MASK) {
           case 0x38U:
             Divider = 1536U;
@@ -193,6 +175,7 @@ void SystemCoreClockUpdate (void) {
           MCGOUTClock *= 2929U;
           break;
         default:
+          MCGOUTClock *= 640U;
           break;
       }
     } else { /* (!((MCG->C6 & MCG_C6_PLLS_MASK) == 0x00U)) */
@@ -202,7 +185,7 @@ void SystemCoreClockUpdate (void) {
         MCGOUTClock = (uint32_t)(CPU_XTAL_CLK_HZ / Divider); /* Calculate the PLL reference clock */
         Divider = (((uint16_t)MCG->C6 & MCG_C6_VDIV_MASK) + 16U);
         MCGOUTClock *= Divider;        /* Calculate the VCO output clock */
-        MCGOUTClock /= 2;              /* Calculate the MCG output clock */
+        MCGOUTClock /= 2U;             /* Calculate the MCG output clock */
       } else {
         /* External PLL is selected */
         if ((USBPHY->ANACTRL & USBPHY_ANACTRL_PFD_CLK_SEL_MASK) == 0x00U) {
@@ -214,8 +197,9 @@ void SystemCoreClockUpdate (void) {
           } else if ((USBPHY->ANACTRL & USBPHY_ANACTRL_PFD_CLK_SEL_MASK) == USBPHY_ANACTRL_PFD_CLK_SEL(2)) {
             Divider *= 0x02U;
           } else {
+            Divider *= 0x01U;
           }
-          MCGOUTClock = (uint32_t)(480000000 / Divider);
+          MCGOUTClock = (uint32_t)(480000000U / Divider);
           MCGOUTClock *= 18;
         }
       }
@@ -247,4 +231,12 @@ void SystemCoreClockUpdate (void) {
     return;
   } /* (!((MCG->C1 & MCG_C1_CLKS_MASK) == 0x80U)) */
   SystemCoreClock = (MCGOUTClock / (0x01U + ((SIM->CLKDIV1 & SIM_CLKDIV1_OUTDIV1_MASK) >> SIM_CLKDIV1_OUTDIV1_SHIFT)));
+}
+
+/* ----------------------------------------------------------------------------
+   -- SystemInitHook()
+   ---------------------------------------------------------------------------- */
+
+__attribute__ ((weak)) void SystemInitHook (void) {
+  /* Void implementation of the weak function. */
 }

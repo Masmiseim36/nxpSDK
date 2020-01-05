@@ -258,15 +258,8 @@ status_t SSD1963_Init(ssd1963_handle_t *handle,
     handle->xferOps->writeCommand(xferOpsData, SSD1963_SET_VERT_PERIOD);
     handle->xferOps->writeData(xferOpsData, commandParam, 7 * SSD1963_DATA_WITDH_BYTE);
 
-    /* Data interface. */
-    commandParam[0] = config->pixelInterface;
-    handle->xferOps->writeCommand(xferOpsData, SSD1963_SET_PIXEL_DATA_INTERFACE);
-    handle->xferOps->writeData(xferOpsData, commandParam, 1 * SSD1963_DATA_WITDH_BYTE);
-
-    /* Address mode. */
-    commandParam[0] = 0U;
-    handle->xferOps->writeCommand(xferOpsData, SSD1963_SET_ADDRESS_MODE);
-    handle->xferOps->writeData(xferOpsData, commandParam, 1 * SSD1963_DATA_WITDH_BYTE);
+    /* Pixel format. */
+    SSD1963_SetPixelFormat(handle, config->pixelInterface);
 
     return kStatus_Success;
 }
@@ -430,6 +423,42 @@ void SSD1963_EnableTearEffect(ssd1963_handle_t *handle, bool enable)
     {
         handle->xferOps->writeCommand(handle->xferOpsData, SSD1963_SET_TEAR_OFF);
     }
+}
+
+void SSD1963_SetPixelFormat(ssd1963_handle_t *handle, ssd1963_pixel_interface_t pixelFormat)
+{
+#if (16 == SSD1963_DATA_WITDH)
+    uint16_t commandParam[1];
+#else
+    uint8_t commandParam[1];
+#endif
+
+    /* Data interface. */
+#if (8 == SSD1963_DATA_WITDH)
+    commandParam[0] = 0;
+#else
+    commandParam[0] = 3;
+#endif
+    handle->xferOps->writeCommand(handle->xferOpsData, SSD1963_SET_PIXEL_DATA_INTERFACE);
+    handle->xferOps->writeData(handle->xferOpsData, commandParam, 1 * SSD1963_DATA_WITDH_BYTE);
+
+    /* Address mode. */
+    handle->addrMode &= ~SSD1963_ADDR_MODE_BGR;
+#if (8 == SSD1963_DATA_WITDH)
+    if (kSSD1963_RGB888 == pixelFormat)
+    {
+        handle->addrMode |= SSD1963_ADDR_MODE_BGR;
+    }
+#else
+    if (kSSD1963_BGR565 == pixelFormat)
+    {
+        handle->addrMode |= SSD1963_ADDR_MODE_BGR;
+    }
+#endif
+
+    commandParam[0] = handle->addrMode;
+    handle->xferOps->writeCommand(handle->xferOpsData, SSD1963_SET_ADDRESS_MODE);
+    handle->xferOps->writeData(handle->xferOpsData, commandParam, 1 * SSD1963_DATA_WITDH_BYTE);
 }
 
 void SSD1963_ReadMemory(ssd1963_handle_t *handle, uint8_t *data, uint32_t length)

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2017, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,9 +21,9 @@
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-#if ((defined USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI))
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #include "usb_phy.h"
-#endif /* USB_HOST_CONFIG_EHCI */
+#endif
 
 #include "fsl_common.h"
 #include "pin_mux.h"
@@ -81,9 +81,9 @@ void USB_DeviceIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbDeviceKhciIrq[] = USB_IRQS;
-    irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+    irqNumber                  = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 
-/* Install isr, set priority, and enable IRQ. */
+    /* Install isr, set priority, and enable IRQ. */
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
     EnableIRQ((IRQn_Type)irqNumber);
 }
@@ -124,7 +124,7 @@ static usb_status_t USB_DevicePrinterBulkOutCallback(usb_device_handle handle,
 {
     usb_status_t status = kStatus_USB_Error;
 
-    if ((g_DevicePrinterApp.attach) && (g_DevicePrinterApp.printerState == kPrinter_Receiving))
+    if ((g_DevicePrinterApp.attach) && (g_DevicePrinterApp.prnterTaskState == kPrinter_Receiving))
     {
         if ((message != NULL) && (message->length != USB_UNINITIALIZED_VAL_32))
         {
@@ -133,14 +133,9 @@ static usb_status_t USB_DevicePrinterBulkOutCallback(usb_device_handle handle,
         }
         else
         {
-            g_DevicePrinterApp.printerState = kPrinter_Idle;
-            status = USB_DeviceRecvRequest(g_DevicePrinterApp.deviceHandle, USB_PRINTER_BULK_ENDPOINT_OUT,
-                                           g_DevicePrinterApp.printerBuffer, USB_PRINTER_BUFFER_SIZE);
-            if (status == kStatus_USB_Success)
-            {
-                g_DevicePrinterApp.printerState = kPrinter_Receiving;
-            }
+            g_DevicePrinterApp.printerState = kPrinter_ReceiveNeedPrime;
         }
+        g_DevicePrinterApp.stateChanged = 1;
     }
 
     return status;
@@ -158,6 +153,8 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             USB_DeviceControlPipeInit(g_DevicePrinterApp.deviceHandle);
             g_DevicePrinterApp.attach = 0U;
             g_DevicePrinterApp.printerState = kPrinter_Idle;
+            g_DevicePrinterApp.prnterTaskState = kPrinter_Idle;
+            g_DevicePrinterApp.stateChanged = 1;
             g_DevicePrinterApp.sendBuffer = NULL;
             g_DevicePrinterApp.sendLength = 0;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
@@ -194,6 +191,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 usb_device_endpoint_callback_struct_t epCallback;
 
                 epInitStruct.zlt = 0U;
+                epInitStruct.interval = 0U;
                 epInitStruct.transferType = USB_ENDPOINT_BULK;
                 epCallback.callbackParam = handle;
 
@@ -228,14 +226,9 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 USB_DeviceInitEndpoint(g_DevicePrinterApp.deviceHandle, &epInitStruct, &epCallback);
 
                 g_DevicePrinterApp.attach = 1U;
-                g_DevicePrinterApp.printerState = kPrinter_Idle;
                 /* demo run */
-                status = USB_DeviceRecvRequest(g_DevicePrinterApp.deviceHandle, USB_PRINTER_BULK_ENDPOINT_OUT,
-                                               g_DevicePrinterApp.printerBuffer, USB_PRINTER_BUFFER_SIZE);
-                if (status == kStatus_USB_Success)
-                {
-                    g_DevicePrinterApp.printerState = kPrinter_Receiving;
-                }
+                g_DevicePrinterApp.printerState = kPrinter_ReceiveNeedPrime;
+                g_DevicePrinterApp.stateChanged = 1;
 
                 USB_DeviceSendRequest(g_DevicePrinterApp.deviceHandle, USB_PRINTER_BULK_ENDPOINT_IN,
                                       g_DevicePrinterApp.sendBuffer, g_DevicePrinterApp.sendLength);
@@ -371,10 +364,6 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
             break;
 
         case USB_DEVICE_PRINTER_SOFT_RESET:
-            if ((uint8_t)(setup->wIndex) == USB_PRINTER_INTERFACE_INDEX)
-            {
-                g_DevicePrinterApp.printerState = kPrinter_Idle;
-            }
             break;
         default:
             break;
@@ -393,6 +382,8 @@ static void USB_DeviceApplicationInit(void)
     /* set printer app to default state */
     g_DevicePrinterApp.printerPortStatus = USB_DEVICE_PRINTER_PORT_STATUS_DEFAULT_VALUE;
     g_DevicePrinterApp.printerState = kPrinter_Idle;
+    g_DevicePrinterApp.prnterTaskState = kPrinter_Idle;
+    g_DevicePrinterApp.prnterTaskState = kPrinter_Idle;
     g_DevicePrinterApp.speed = USB_SPEED_FULL;
     g_DevicePrinterApp.attach = 0U;
     g_DevicePrinterApp.deviceHandle = NULL;
@@ -420,23 +411,39 @@ void USB_DevicePrinterAppTask(void *parameter)
 {
     usb_device_printer_app_t *printerApp = (usb_device_printer_app_t *)parameter;
     usb_status_t status = kStatus_USB_Error;
+    uint32_t irqMaskValue;
 
     if (printerApp->attach)
     {
-        if (printerApp->printerState == kPrinter_Received)
+        irqMaskValue = DisableGlobalIRQ();
+        if (printerApp->stateChanged)
         {
-            USB_PrinterPrintData(printerApp->printerBuffer, printerApp->dataReceiveLength);
-            printerApp->printerState = kPrinter_Idle;
+            printerApp->stateChanged = 0;
+            EnableGlobalIRQ(irqMaskValue);
+            if (printerApp->printerState == kPrinter_Received)
+            {
+                USB_PrinterPrintData(printerApp->printerBuffer, printerApp->dataReceiveLength);
+                printerApp->prnterTaskState = kPrinter_ReceiveNeedPrime;
+            }
+
+            if (printerApp->printerState == kPrinter_ReceiveNeedPrime)
+            {
+                printerApp->prnterTaskState = kPrinter_ReceiveNeedPrime;
+            }
+        }
+        else
+        {
+            EnableGlobalIRQ(irqMaskValue);
         }
 
-        if (printerApp->printerState == kPrinter_Idle)
+        if (printerApp->prnterTaskState == kPrinter_ReceiveNeedPrime)
         {
             status = USB_DeviceRecvRequest(printerApp->deviceHandle, USB_PRINTER_BULK_ENDPOINT_OUT,
                                            printerApp->printerBuffer, USB_PRINTER_BUFFER_SIZE);
 
-            if (status == kStatus_USB_Success)
+            if ((status == kStatus_USB_Success) || (status == kStatus_USB_Busy))
             {
-                printerApp->printerState = kPrinter_Receiving;
+                printerApp->prnterTaskState = kPrinter_Receiving;
             }
         }
     }

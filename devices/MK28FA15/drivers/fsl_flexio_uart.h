@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -23,18 +23,18 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief FlexIO UART driver version 2.1.5. */
-#define FSL_FLEXIO_UART_DRIVER_VERSION (MAKE_VERSION(2, 1, 5))
+/*! @brief FlexIO UART driver version 2.1.6. */
+#define FSL_FLEXIO_UART_DRIVER_VERSION (MAKE_VERSION(2, 1, 6))
 /*@}*/
 
 /*! @brief Error codes for the UART driver. */
-enum _flexio_uart_status
+enum
 {
     kStatus_FLEXIO_UART_TxBusy = MAKE_STATUS(kStatusGroup_FLEXIO_UART, 0), /*!< Transmitter is busy. */
     kStatus_FLEXIO_UART_RxBusy = MAKE_STATUS(kStatusGroup_FLEXIO_UART, 1), /*!< Receiver is busy. */
     kStatus_FLEXIO_UART_TxIdle = MAKE_STATUS(kStatusGroup_FLEXIO_UART, 2), /*!< UART transmitter is idle. */
     kStatus_FLEXIO_UART_RxIdle = MAKE_STATUS(kStatusGroup_FLEXIO_UART, 3), /*!< UART receiver is idle. */
-    kStatus_FLEXIO_UART_ERROR = MAKE_STATUS(kStatusGroup_FLEXIO_UART, 4),  /*!< ERROR happens on UART. */
+    kStatus_FLEXIO_UART_ERROR  = MAKE_STATUS(kStatusGroup_FLEXIO_UART, 4), /*!< ERROR happens on UART. */
     kStatus_FLEXIO_UART_RxRingBufferOverrun =
         MAKE_STATUS(kStatusGroup_FLEXIO_UART, 5), /*!< UART RX software ring buffer overrun. */
     kStatus_FLEXIO_UART_RxHardwareOverrun = MAKE_STATUS(kStatusGroup_FLEXIO_UART, 6) /*!< UART RX receiver overrun. */
@@ -52,15 +52,15 @@ typedef enum _flexio_uart_bit_count_per_char
 enum _flexio_uart_interrupt_enable
 {
     kFLEXIO_UART_TxDataRegEmptyInterruptEnable = 0x1U, /*!< Transmit buffer empty interrupt enable. */
-    kFLEXIO_UART_RxDataRegFullInterruptEnable = 0x2U,  /*!< Receive buffer full interrupt enable. */
+    kFLEXIO_UART_RxDataRegFullInterruptEnable  = 0x2U, /*!< Receive buffer full interrupt enable. */
 };
 
 /*! @brief Define FlexIO UART status mask. */
 enum _flexio_uart_status_flags
 {
     kFLEXIO_UART_TxDataRegEmptyFlag = 0x1U, /*!< Transmit buffer empty flag. */
-    kFLEXIO_UART_RxDataRegFullFlag = 0x2U,  /*!< Receive buffer full flag. */
-    kFLEXIO_UART_RxOverRunFlag = 0x4U,      /*!< Receive buffer over run flag. */
+    kFLEXIO_UART_RxDataRegFullFlag  = 0x2U, /*!< Receive buffer full flag. */
+    kFLEXIO_UART_RxOverRunFlag      = 0x4U, /*!< Receive buffer over run flag. */
 };
 
 /*! @brief Define FlexIO UART access structure typedef. */
@@ -176,7 +176,7 @@ status_t FLEXIO_UART_Init(FLEXIO_UART_Type *base, const flexio_uart_config_t *us
  * @note After calling this API, call the FLEXO_UART_Init to use the FlexIO UART module.
  *
  * @param base Pointer to FLEXIO_UART_Type structure
-*/
+ */
 void FLEXIO_UART_Deinit(FLEXIO_UART_Type *base);
 
 /*!
@@ -203,7 +203,7 @@ void FLEXIO_UART_GetDefaultConfig(flexio_uart_config_t *userConfig);
  *
  * @param base Pointer to the FLEXIO_UART_Type structure.
  * @return FlexIO UART status flags.
-*/
+ */
 
 uint32_t FLEXIO_UART_GetStatusFlags(FLEXIO_UART_Type *base);
 
@@ -216,7 +216,7 @@ uint32_t FLEXIO_UART_GetStatusFlags(FLEXIO_UART_Type *base);
  *          @arg kFLEXIO_UART_TxDataRegEmptyFlag
  *          @arg kFLEXIO_UART_RxEmptyFlag
  *          @arg kFLEXIO_UART_RxOverRunFlag
-*/
+ */
 
 void FLEXIO_UART_ClearStatusFlags(FLEXIO_UART_Type *base, uint32_t mask);
 
@@ -290,7 +290,7 @@ static inline uint32_t FLEXIO_UART_GetRxDataRegisterAddress(FLEXIO_UART_Type *ba
  */
 static inline void FLEXIO_UART_EnableTxDMA(FLEXIO_UART_Type *base, bool enable)
 {
-    FLEXIO_EnableShifterStatusDMA(base->flexioBase, 1 << base->shifterIndex[0], enable);
+    FLEXIO_EnableShifterStatusDMA(base->flexioBase, 1UL << base->shifterIndex[0], enable);
 }
 
 /*!
@@ -303,7 +303,7 @@ static inline void FLEXIO_UART_EnableTxDMA(FLEXIO_UART_Type *base, bool enable)
  */
 static inline void FLEXIO_UART_EnableRxDMA(FLEXIO_UART_Type *base, bool enable)
 {
-    FLEXIO_EnableShifterStatusDMA(base->flexioBase, 1 << base->shifterIndex[1], enable);
+    FLEXIO_EnableShifterStatusDMA(base->flexioBase, 1UL << base->shifterIndex[1], enable);
 }
 
 /* @} */
@@ -318,7 +318,7 @@ static inline void FLEXIO_UART_EnableRxDMA(FLEXIO_UART_Type *base, bool enable)
  *
  * @param base Pointer to the FLEXIO_UART_Type.
  * @param enable True to enable, false does not have any effect.
-*/
+ */
 static inline void FLEXIO_UART_Enable(FLEXIO_UART_Type *base, bool enable)
 {
     if (enable)
@@ -353,7 +353,7 @@ static inline void FLEXIO_UART_WriteByte(FLEXIO_UART_Type *base, const uint8_t *
  */
 static inline void FLEXIO_UART_ReadByte(FLEXIO_UART_Type *base, uint8_t *buffer)
 {
-    *buffer = base->flexioBase->SHIFTBUFBYS[base->shifterIndex[1]];
+    *buffer = (uint8_t)(base->flexioBase->SHIFTBUFBYS[base->shifterIndex[1]]);
 }
 
 /*!

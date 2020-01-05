@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_host_config.h"
@@ -44,6 +18,10 @@
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 #include "app.h"
 #include "board.h"
+#if (defined(USB_HOST_CONFIG_BATTERY_CHARGER) && (USB_HOST_CONFIG_BATTERY_CHARGER > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+#include "usb_charger_detect.h"
+#endif
 
 #if ((!USB_HOST_CONFIG_KHCI) && (!USB_HOST_CONFIG_EHCI) && (!USB_HOST_CONFIG_OHCI) && (!USB_HOST_CONFIG_IP3516HS))
 #error Please enable USB_HOST_CONFIG_KHCI, USB_HOST_CONFIG_EHCI, USB_HOST_CONFIG_OHCI, or USB_HOST_CONFIG_IP3516HS in file usb_host_config.
@@ -56,7 +34,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
+#if (defined(USB_HOST_CONFIG_BATTERY_CHARGER) && (USB_HOST_CONFIG_BATTERY_CHARGER > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+char *SW_GetName(void);
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -104,6 +85,10 @@ void BOARD_InitHardware(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+/* Allocate the memory for the heap. */
+#if defined(configAPPLICATION_ALLOCATED_HEAP) && (configAPPLICATION_ALLOCATED_HEAP)
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t ucHeap[configTOTAL_HEAP_SIZE];
+#endif
 /*! @brief USB host mouse instance global variable */
 extern usb_host_mouse_instance_t g_HostHidMouse;
 usb_host_handle g_HostHandle;
@@ -111,7 +96,7 @@ usb_host_handle g_HostHandle;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-#if defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)
+
 void USB0_IRQHandler(void)
 {
     USB_HostKhciIsrFunction(g_HostHandle);
@@ -119,23 +104,19 @@ void USB0_IRQHandler(void)
     exception return operation might vector to incorrect interrupt */
     __DSB();
 }
-#endif /* USB_HOST_CONFIG_KHCI */
 
 void USB_HostClockInit(void)
 {
-#if defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)
     SystemCoreClockUpdate();
     CLOCK_EnableUsbfs0Clock(kCLOCK_UsbSrcPll0, CLOCK_GetFreq(kCLOCK_PllFllSelClk));
-#endif
 }
 
 void USB_HostIsrEnable(void)
 {
     uint8_t irqNumber;
-#if defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)
+
     uint8_t usbHOSTKhciIrq[] = USB_IRQS;
-    irqNumber = usbHOSTKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
-#endif /* USB_HOST_CONFIG_KHCI */
+    irqNumber                = usbHOSTKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 
 /* Install isr, set priority, and enable IRQ. */
 #if defined(__GIC_PRIO_BITS)
@@ -148,9 +129,7 @@ void USB_HostIsrEnable(void)
 
 void USB_HostTaskFn(void *param)
 {
-#if defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)
     USB_HostKhciTaskFunction(param);
-#endif
 }
 
 /*!
@@ -163,7 +142,7 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
 {
     usb_status_t status = kStatus_USB_Success;
 
-    switch (eventCode)
+    switch (eventCode & 0x0000FFFFU)
     {
         case kUSB_HostEventAttach:
             status = USB_HostHidMouseEvent(deviceHandle, configurationHandle, eventCode);
@@ -179,6 +158,10 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
 
         case kUSB_HostEventDetach:
             status = USB_HostHidMouseEvent(deviceHandle, configurationHandle, eventCode);
+            break;
+
+        case kUSB_HostEventEnumerationFail:
+            usb_echo("enumeration failed\r\n");
             break;
 
         default:
@@ -203,9 +186,21 @@ static void USB_HostApplicationInit(void)
         usb_echo("host init error\r\n");
         return;
     }
+#if (defined(USB_HOST_CONFIG_BATTERY_CHARGER) && (USB_HOST_CONFIG_BATTERY_CHARGER > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+    USB_HostSetChargerType(g_HostHandle, kUSB_DcdSDP);
+    g_HostHidMouse.switchChargerTypeTriggered = 0U;
+    g_HostHidMouse.chargerType                = 0;
+    g_HostHidMouse.vbusState                  = 1;
+#endif
     USB_HostIsrEnable();
 
     usb_echo("host init done\r\n");
+
+#if (defined(USB_HOST_CONFIG_BATTERY_CHARGER) && (USB_HOST_CONFIG_BATTERY_CHARGER > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+    usb_echo("Please Press the switch(%s) to change the charge type.\r\n", SW_GetName());
+#endif
 }
 
 static void USB_HostTask(void *param)
@@ -234,7 +229,7 @@ int main(void)
 
     /* enable usb host vbus */
     pinConfig.pinDirection = kGPIO_DigitalOutput;
-    pinConfig.outputLogic = 1;
+    pinConfig.outputLogic  = 1;
 
     GPIO_PinInit(GPIOC, 19, &pinConfig);
 

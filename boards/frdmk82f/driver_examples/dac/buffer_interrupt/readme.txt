@@ -13,11 +13,10 @@ The terminal would also display the log that shows the current buffer pointer's 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.50.1
-- Keil MDK 5.17
-- GCC ARM Embedded 2015-4.9-q3
-- Kinetis Development Studio IDE 3.0.0
-- Atollic TrueSTUDIO 5.4.0
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -45,7 +44,9 @@ Prepare the Demo
 Running the demo
 ================
 When the demo runs successfully, the log would be seen on the OpenSDA terminal like:
+
 DAC buffer interrupt Example.
+
 DAC Buffer Information
       Buffer index max  : 15
       Buffer watermark  : 14
@@ -66,15 +67,15 @@ Buffer Index 12:
 Buffer Index 13:
 Buffer Index 14: WatermarkEvent
 Buffer Index 15: ReadPointerBottomPositionEvent
+
 Buffer Index  0: ReadPointerTopPositionEvent
 Buffer Index  1:
 Buffer Index  2:
 Buffer Index  3:
 ...
+
 User can take a look at how the pointer is moved by triggered, then user can also measure the DAC output
 pin to check responding voltage.
-
 Customization options
 =====================
-
 

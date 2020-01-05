@@ -27,17 +27,18 @@
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #include "usb_phy.h"
 #endif
 
 #include "fsl_common.h"
 #include "pin_mux.h"
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 /* Composite device structure. */
 usb_device_composite_struct_t g_composite;
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_SetupOutBuffer[8];
 
 void BOARD_InitHardware(void);
 void USB_DeviceClockInit(void);
@@ -47,15 +48,15 @@ void USB_DeviceTaskFn(void *deviceHandle);
 #endif
 
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 
 /*******************************************************************************
-* Code
-******************************************************************************/
+ * Code
+ ******************************************************************************/
 
 void USB0_IRQHandler(void)
 {
@@ -74,9 +75,9 @@ void USB_DeviceIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbDeviceKhciIrq[] = USB_IRQS;
-    irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+    irqNumber                  = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 
-/* Install isr, set priority, and enable IRQ. */
+    /* Install isr, set priority, and enable IRQ. */
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
     EnableIRQ((IRQn_Type)irqNumber);
 }
@@ -100,14 +101,14 @@ void USB_DeviceTaskFn(void *deviceHandle)
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
     usb_status_t error = kStatus_USB_Error;
-    uint8_t *temp8 = (uint8_t *)param;
+    uint8_t *temp8     = (uint8_t *)param;
 
     switch (event)
     {
         case kUSB_DeviceEventBusReset:
         {
             USB_DeviceControlPipeInit(handle);
-            g_composite.attach = 0;
+            g_composite.attach               = 0;
             g_composite.currentConfiguration = 0;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
@@ -120,9 +121,9 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
-            if (0U ==(*temp8))
+            if (0U == (*temp8))
             {
-                g_composite.attach = 0;
+                g_composite.attach               = 0;
                 g_composite.currentConfiguration = 0U;
             }
             else if (USB_COMPOSITE_CONFIGURE_INDEX == (*temp8))
@@ -131,11 +132,11 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 USB_DeviceCdcVcomSetConfigure(handle, *temp8);
                 USB_DeviceMscDiskSetConfigure(handle, *temp8);
                 g_composite.currentConfiguration = *temp8;
-                error = kStatus_USB_Success;
+                error                            = kStatus_USB_Success;
             }
             else
             {
-                error = kStatus_USB_InvalidRequest; 
+                error = kStatus_USB_InvalidRequest;
             }
             break;
         default:
@@ -235,8 +236,8 @@ usb_status_t USB_DeviceConfigureRemoteWakeup(usb_device_handle handle, uint8_t e
 usb_status_t USB_DeviceConfigureEndpointStatus(usb_device_handle handle, uint8_t ep, uint8_t status)
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
-    error = USB_DeviceCdcVcomConfigureEndpointStatus(handle, ep, status);
-    error = USB_DeviceMscDiskConfigureEndpointStatus(handle, ep, status);
+    error              = USB_DeviceCdcVcomConfigureEndpointStatus(handle, ep, status);
+    error              = USB_DeviceMscDiskConfigureEndpointStatus(handle, ep, status);
 
     return error;
 }
@@ -258,12 +259,11 @@ usb_status_t USB_DeviceGetClassReceiveBuffer(usb_device_handle handle,
                                              uint32_t *length,
                                              uint8_t **buffer)
 {
-    static uint8_t setupOut[8];
-    if ((NULL == buffer) || ((*length) > sizeof(setupOut)))
+    if ((NULL == buffer) || ((*length) > sizeof(s_SetupOutBuffer)))
     {
         return kStatus_USB_InvalidRequest;
     }
-    *buffer = setupOut;
+    *buffer = s_SetupOutBuffer;
     return kStatus_USB_Success;
 }
 
@@ -315,8 +315,8 @@ void APPInit(void)
     SYSMPU_Enable(SYSMPU, 0);
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-    g_composite.speed = USB_SPEED_FULL;
-    g_composite.attach = 0;
+    g_composite.speed        = USB_SPEED_FULL;
+    g_composite.attach       = 0;
     g_composite.deviceHandle = NULL;
 
     if (kStatus_USB_Success != USB_DeviceInit(CONTROLLER_ID, USB_DeviceCallback, &g_composite.deviceHandle))

@@ -1,31 +1,9 @@
 /*
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_device_config.h"
@@ -134,7 +112,7 @@ static const usb_standard_request_callback_t s_UsbDeviceStandardRequest[] = {
  * @param buffer          It is an out parameter, is used to save the buffer address to response the host's request.
  * @param length          It is an out parameter, the data length.
  *
- * @retval kStatus_USB_Success              The requst is handled successfully.
+ * @retval kStatus_USB_Success              The request is handled successfully.
  * @retval kStatus_USB_InvalidRequest       The request can not be handle in current device state,
  *                                          or, the request is unsupported.
  */
@@ -155,13 +133,28 @@ static usb_status_t USB_DeviceCh9GetStatus(usb_device_common_class_struct_t *cla
 
     if ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) == USB_REQUEST_TYPE_RECIPIENT_DEVICE)
     {
-        /* Get the device status */
-        error =
-            USB_DeviceGetStatus(classHandle->handle, kUSB_DeviceStatusDevice, &classHandle->standardTranscationBuffer);
-        classHandle->standardTranscationBuffer = classHandle->standardTranscationBuffer & USB_GET_STATUS_DEVICE_MASK;
-        classHandle->standardTranscationBuffer = USB_SHORT_TO_LITTLE_ENDIAN(classHandle->standardTranscationBuffer);
-        /* The device status length must be USB_DEVICE_STATUS_SIZE. */
-        *length = USB_DEVICE_STATUS_SIZE;
+#if (defined(USB_DEVICE_CONFIG_OTG) && (USB_DEVICE_CONFIG_OTG))
+        if (setup->wIndex == USB_REQUEST_STANDARD_GET_STATUS_OTG_STATUS_SELECTOR)
+        {
+            error =
+                USB_DeviceGetStatus(classHandle->handle, kUSB_DeviceStatusOtg, &classHandle->standardTranscationBuffer);
+            classHandle->standardTranscationBuffer = USB_SHORT_TO_LITTLE_ENDIAN(classHandle->standardTranscationBuffer);
+            /* The device status length must be USB_DEVICE_STATUS_SIZE. */
+            *length = 1;
+        }
+        else /* Get the device status */
+        {
+#endif
+            error = USB_DeviceGetStatus(classHandle->handle, kUSB_DeviceStatusDevice,
+                                        &classHandle->standardTranscationBuffer);
+            classHandle->standardTranscationBuffer =
+                classHandle->standardTranscationBuffer & USB_GET_STATUS_DEVICE_MASK;
+            classHandle->standardTranscationBuffer = USB_SHORT_TO_LITTLE_ENDIAN(classHandle->standardTranscationBuffer);
+            /* The device status length must be USB_DEVICE_STATUS_SIZE. */
+            *length = USB_DEVICE_STATUS_SIZE;
+#if (defined(USB_DEVICE_CONFIG_OTG) && (USB_DEVICE_CONFIG_OTG))
+        }
+#endif
     }
     else if ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) == USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
     {
@@ -201,7 +194,7 @@ static usb_status_t USB_DeviceCh9GetStatus(usb_device_common_class_struct_t *cla
  * @param buffer          It is an out parameter, is used to save the buffer address to response the host's request.
  * @param length          It is an out parameter, the data length.
  *
- * @retval kStatus_USB_Success              The requst is handled successfully.
+ * @retval kStatus_USB_Success              The request is handled successfully.
  * @retval kStatus_USB_InvalidRequest       The request can not be handle in current device state,
  *                                          or, the request is unsupported.
  */
@@ -222,25 +215,35 @@ static usb_status_t USB_DeviceCh9SetClearFeature(usb_device_common_class_struct_
     }
 
     /* Identify the request is set or clear the feature. */
-    if (USB_REQUSET_STANDARD_SET_FEATURE == setup->bRequest)
+    if (USB_REQUEST_STANDARD_SET_FEATURE == setup->bRequest)
     {
         isSet = 1U;
     }
 
     if ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) == USB_REQUEST_TYPE_RECIPIENT_DEVICE)
     {
-        /* Set or Clear the device featrue. */
-        if (USB_REQUSET_STANDARD_FEATURE_SELECTOR_DEVICE_REMOTE_WAKEUP == setup->wValue)
+        /* Set or Clear the device feature. */
+        if (USB_REQUEST_STANDARD_FEATURE_SELECTOR_DEVICE_REMOTE_WAKEUP == setup->wValue)
         {
-            /* Set or Clear the device remote wakeup featrue. */
+#if ((defined(USB_DEVICE_CONFIG_REMOTE_WAKEUP)) && (USB_DEVICE_CONFIG_REMOTE_WAKEUP > 0U))
+            USB_DeviceSetStatus(classHandle->handle, kUSB_DeviceStatusRemoteWakeup, &isSet);
+#endif
+            /* Set or Clear the device remote wakeup feature. */
             error = USB_DeviceClassCallback(classHandle->handle, kUSB_DeviceEventSetRemoteWakeup, &isSet);
         }
-#if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) && \
-    (defined(USB_DEVICE_CONFIG_EHCI_TEST_MODE) && (USB_DEVICE_CONFIG_EHCI_TEST_MODE > 0U))
-        else if (USB_REQUSET_STANDARD_FEATURE_SELECTOR_DEVICE_TEST_MODE == setup->wValue)
+#if ((defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) ||                \
+     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))) && \
+    (defined(USB_DEVICE_CONFIG_USB20_TEST_MODE) && (USB_DEVICE_CONFIG_USB20_TEST_MODE > 0U))
+        else if (USB_REQUEST_STANDARD_FEATURE_SELECTOR_DEVICE_TEST_MODE == setup->wValue)
         {
             state = kUSB_DeviceStateTestMode;
             error = USB_DeviceSetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state);
+        }
+#endif
+#if (defined(USB_DEVICE_CONFIG_OTG) && (USB_DEVICE_CONFIG_OTG))
+        else if (USB_REQUEST_STANDARD_FEATURE_SELECTOR_B_HNP_ENABLE == setup->wValue)
+        {
+            error = USB_DeviceClassCallback(classHandle->handle, kUSB_DeviceEventSetBHNPEnable, &isSet);
         }
 #endif
         else
@@ -249,29 +252,23 @@ static usb_status_t USB_DeviceCh9SetClearFeature(usb_device_common_class_struct_
     }
     else if ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) == USB_REQUEST_TYPE_RECIPIENT_ENDPOINT)
     {
-        /* Set or Clear the endpoint featrue. */
-        if (USB_REQUSET_STANDARD_FEATURE_SELECTOR_ENDPOINT_HALT == setup->wValue)
+        /* Set or Clear the endpoint feature. */
+        if (USB_REQUEST_STANDARD_FEATURE_SELECTOR_ENDPOINT_HALT == setup->wValue)
         {
             if (USB_CONTROL_ENDPOINT == (setup->wIndex & USB_ENDPOINT_NUMBER_MASK))
             {
                 /* Set or Clear the control endpoint status(halt or not). */
                 if (isSet)
                 {
-                    USB_DeviceStallEndpoint(
-                        classHandle->handle,
-                        (setup->wIndex & USB_ENDPOINT_NUMBER_MASK) |
-                            (uint8_t)(setup->wIndex >> USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT));
+                    USB_DeviceStallEndpoint(classHandle->handle, (uint8_t)setup->wIndex);
                 }
                 else
                 {
-                    USB_DeviceUnstallEndpoint(
-                        classHandle->handle,
-                        (setup->wIndex & USB_ENDPOINT_NUMBER_MASK) |
-                            (uint8_t)(setup->wIndex >> USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT));
+                    USB_DeviceUnstallEndpoint(classHandle->handle, (uint8_t)setup->wIndex);
                 }
             }
 
-            /* Set or Clear the endpoint status featrue. */
+            /* Set or Clear the endpoint status feature. */
             if (isSet)
             {
                 error = USB_DeviceClassEvent(classHandle->handle, kUSB_DeviceClassEventSetEndpointHalt, &setup->wIndex);
@@ -303,7 +300,7 @@ static usb_status_t USB_DeviceCh9SetClearFeature(usb_device_common_class_struct_
  * @param buffer          It is an out parameter, is used to save the buffer address to response the host's request.
  * @param length          It is an out parameter, the data length.
  *
- * @retval kStatus_USB_Success              The requst is handled successfully.
+ * @retval kStatus_USB_Success              The request is handled successfully.
  * @retval kStatus_USB_InvalidRequest       The request can not be handle in current device state.
  */
 static usb_status_t USB_DeviceCh9SetAddress(usb_device_common_class_struct_t *classHandle,
@@ -317,7 +314,7 @@ static usb_status_t USB_DeviceCh9SetAddress(usb_device_common_class_struct_t *cl
     USB_DeviceGetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state);
 
     if ((kUSB_DeviceStateAddressing != state) && (kUSB_DeviceStateAddress != state) &&
-        (kUSB_DeviceStateDefault != state))
+        (kUSB_DeviceStateDefault != state) && (kUSB_DeviceStateConfigured != state))
     {
         return error;
     }
@@ -355,7 +352,7 @@ static usb_status_t USB_DeviceCh9SetAddress(usb_device_common_class_struct_t *cl
  * @param buffer          It is an out parameter, is used to save the buffer address to response the host's request.
  * @param length          It is an out parameter, the data length.
  *
- * @retval kStatus_USB_Success              The requst is handled successfully.
+ * @retval kStatus_USB_Success              The request is handled successfully.
  * @retval kStatus_USB_InvalidRequest       The request can not be handle in current device state,
  *                                          or, the request is unsupported.
  */
@@ -423,6 +420,23 @@ static usb_status_t USB_DeviceCh9GetDescriptor(usb_device_common_class_struct_t 
                                         &commonDescriptor.hidPhysicalDescriptor);
     }
 #endif
+#if (defined(USB_DEVICE_CONFIG_CV_TEST) && (USB_DEVICE_CONFIG_CV_TEST > 0U))
+    else if (USB_DESCRIPTOR_TYPE_DEVICE_QUALITIER == descriptorType)
+    {
+        /* Get the device descriptor */
+        error = USB_DeviceClassCallback(classHandle->handle, kUSB_DeviceEventGetDeviceQualifierDescriptor,
+                                        &commonDescriptor.deviceDescriptor);
+    }
+#endif
+#if (defined(USB_DEVICE_CONFIG_LPM_L1) && (USB_DEVICE_CONFIG_LPM_L1 > 0U))
+    else if (USB_DESCRIPTOR_TYPE_BOS == descriptorType)
+    {
+        /* Get the configuration descriptor */
+        commonDescriptor.configurationDescriptor.configuration = descriptorIndex;
+        error = USB_DeviceClassCallback(classHandle->handle, kUSB_DeviceEventGetBOSDescriptor,
+                                        &commonDescriptor.configurationDescriptor);
+    }
+#endif
     else
     {
     }
@@ -441,7 +455,7 @@ static usb_status_t USB_DeviceCh9GetDescriptor(usb_device_common_class_struct_t 
  * @param buffer          It is an out parameter, is used to save the buffer address to response the host's request.
  * @param length          It is an out parameter, the data length.
  *
- * @retval kStatus_USB_Success              The requst is handled successfully.
+ * @retval kStatus_USB_Success              The request is handled successfully.
  * @retval kStatus_USB_InvalidRequest       The request can not be handle in current device state,
  *                                          or, the request is unsupported.
  */
@@ -475,7 +489,7 @@ static usb_status_t USB_DeviceCh9GetConfiguration(usb_device_common_class_struct
  * @param buffer          It is an out parameter, is used to save the buffer address to response the host's request.
  * @param length          It is an out parameter, the data length.
  *
- * @retval kStatus_USB_Success              The requst is handled successfully.
+ * @retval kStatus_USB_Success              The request is handled successfully.
  * @retval kStatus_USB_InvalidRequest       The request can not be handle in current device state,
  *                                          or, the request is unsupported.
  */
@@ -519,7 +533,7 @@ static usb_status_t USB_DeviceCh9SetConfiguration(usb_device_common_class_struct
  * @param buffer          It is an out parameter, is used to save the buffer address to response the host's request.
  * @param length          It is an out parameter, the data length.
  *
- * @retval kStatus_USB_Success              The requst is handled successfully.
+ * @retval kStatus_USB_Success              The request is handled successfully.
  * @retval kStatus_USB_InvalidRequest       The request can not be handle in current device state,
  *                                          or, the request is unsupported.
  */
@@ -539,11 +553,13 @@ static usb_status_t USB_DeviceCh9GetInterface(usb_device_common_class_struct_t *
     }
     *length = USB_INTERFACE_SIZE;
     *buffer = (uint8_t *)&classHandle->standardTranscationBuffer;
-    classHandle->standardTranscationBuffer = setup->wIndex & 0xFFU;
+    classHandle->standardTranscationBuffer = (uint16_t)(((uint32_t)setup->wIndex & 0xFFU) << 8U);
     /* The Bit[15~8] is used to save the interface index, and the alternate setting will be saved in Bit[7~0] by
      * application. */
-    return USB_DeviceClassCallback(classHandle->handle, kUSB_DeviceEventGetInterface,
-                                   &classHandle->standardTranscationBuffer);
+    error = USB_DeviceClassCallback(classHandle->handle, kUSB_DeviceEventGetInterface,
+                                    &classHandle->standardTranscationBuffer);
+    classHandle->standardTranscationBuffer = USB_SHORT_TO_LITTLE_ENDIAN(classHandle->standardTranscationBuffer);
+    return error;
 }
 
 /*!
@@ -556,7 +572,7 @@ static usb_status_t USB_DeviceCh9GetInterface(usb_device_common_class_struct_t *
  * @param buffer          It is an out parameter, is used to save the buffer address to response the host's request.
  * @param length          It is an out parameter, the data length.
  *
- * @retval kStatus_USB_Success              The requst is handled successfully.
+ * @retval kStatus_USB_Success              The request is handled successfully.
  * @retval kStatus_USB_InvalidRequest       The request can not be handle in current device state,
  *                                          or, the request is unsupported.
  */
@@ -594,7 +610,7 @@ static usb_status_t USB_DeviceCh9SetInterface(usb_device_common_class_struct_t *
  * @param buffer          It is an out parameter, is used to save the buffer address to response the host's request.
  * @param length          It is an out parameter, the data length.
  *
- * @retval kStatus_USB_Success              The requst is handled successfully.
+ * @retval kStatus_USB_Success              The request is handled successfully.
  * @retval kStatus_USB_InvalidRequest       The request can not be handle in current device state,
  *                                          or, the request is unsupported.
  */
@@ -613,7 +629,7 @@ static usb_status_t USB_DeviceCh9SynchFrame(usb_device_common_class_struct_t *cl
         return error;
     }
 
-    classHandle->standardTranscationBuffer = setup->wIndex;
+    classHandle->standardTranscationBuffer = USB_SHORT_FROM_LITTLE_ENDIAN(setup->wIndex);
     /* Get the sync frame value */
     error =
         USB_DeviceGetStatus(classHandle->handle, kUSB_DeviceStatusSynchFrame, &classHandle->standardTranscationBuffer);
@@ -624,9 +640,9 @@ static usb_status_t USB_DeviceCh9SynchFrame(usb_device_common_class_struct_t *cl
 }
 
 /*!
- * @brief Send the reponse to the host.
+ * @brief Send the response to the host.
  *
- * This function is used to send the reponse to the host.
+ * This function is used to send the response to the host.
  *
  * There are two cases this function will be called.
  * Case one when a setup packet is received in control endpoint callback function:
@@ -642,7 +658,7 @@ static usb_status_t USB_DeviceCh9SynchFrame(usb_device_common_class_struct_t *cl
  *
  * @param handle          The device handle. It equals the value returned from USB_DeviceInit.
  * @param setup           The pointer of the setup packet.
- * @param error           The error code returned from the standard request fucntion.
+ * @param error           The error code returned from the standard request function.
  * @param stage           The stage of the control transfer.
  * @param buffer          It is an out parameter, is used to save the buffer address to response the host's request.
  * @param length          It is an out parameter, the data length.
@@ -663,7 +679,7 @@ static usb_status_t USB_DeviceControlCallbackFeedback(usb_device_handle handle,
     {
         /* Stall the control pipe when the request is unsupported. */
         if ((!((setup->bmRequestType & USB_REQUEST_TYPE_TYPE_MASK) == USB_REQUEST_TYPE_TYPE_STANDARD)) &&
-            ((setup->bmRequestType & USB_REQUSET_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT) && (setup->wLength) &&
+            ((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT) && (setup->wLength) &&
             (kUSB_DeviceControlPipeSetupStage == stage))
         {
             direction = USB_OUT;
@@ -681,7 +697,7 @@ static usb_status_t USB_DeviceControlCallbackFeedback(usb_device_handle handle,
         errorCode = USB_DeviceSendRequest(handle, (USB_CONTROL_ENDPOINT), *buffer, *length);
 
         if ((kStatus_USB_Success == errorCode) &&
-            (USB_REQUEST_TYPE_DIR_IN == (setup->bmRequestType & USB_REQUSET_TYPE_DIR_MASK)))
+            (USB_REQUEST_TYPE_DIR_IN == (setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK)))
         {
             errorCode = USB_DeviceRecvRequest(handle, (USB_CONTROL_ENDPOINT), (uint8_t *)NULL, 0U);
         }
@@ -692,13 +708,13 @@ static usb_status_t USB_DeviceControlCallbackFeedback(usb_device_handle handle,
 /*!
  * @brief Control endpoint callback function.
  *
- * This callback function is used to notify uplayer the tranfser result of a transfer.
- * This callback pointer is passed when a sepcified endpoint initialied by calling API USB_DeviceInitEndpoint.
+ * This callback function is used to notify uplayer the transfser result of a transfer.
+ * This callback pointer is passed when a specified endpoint initialized by calling API USB_DeviceInitEndpoint.
  *
  * @param handle          The device handle. It equals the value returned from USB_DeviceInit.
  * @param message         The result of a transfer, includes transfer buffer, transfer length and whether is in setup
  * phase for control pipe.
- * @param callbackParam  The paramter for this callback. It is same with
+ * @param callbackParam  The parameter for this callback. It is same with
  * usb_device_endpoint_callback_struct_t::callbackParam.
  *
  * @return A USB error code or kStatus_USB_Success.
@@ -707,7 +723,7 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
                                        usb_device_endpoint_callback_message_struct_t *message,
                                        void *callbackParam)
 {
-    usb_setup_struct_t *deviceSetup;
+    usb_setup_struct_t *deviceSetup, *setup;
     usb_device_common_class_struct_t *classHandle;
     uint8_t *buffer = (uint8_t *)NULL;
     uint32_t length = 0U;
@@ -728,7 +744,7 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
         if ((USB_SETUP_PACKET_SIZE != message->length) || (NULL == message->buffer))
         {
             /* If a invalid setup is received, the control pipes should be de-init and init again.
-             * Due to the IP can not meet this require, it is revesed for feature.
+             * Due to the IP can not meet this require, it is reserved for feature.
              */
             /*
             USB_DeviceDeinitEndpoint(handle,
@@ -740,7 +756,7 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
             return error;
         }
         /* Receive a setup request */
-        usb_setup_struct_t *setup = (usb_setup_struct_t *)(message->buffer);
+        setup = (usb_setup_struct_t *)(message->buffer);
 
         /* Copy the setup packet to the application buffer */
         deviceSetup->wValue = USB_SHORT_FROM_LITTLE_ENDIAN(setup->wValue);
@@ -751,16 +767,19 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
 
         if ((deviceSetup->bmRequestType & USB_REQUEST_TYPE_TYPE_MASK) == USB_REQUEST_TYPE_TYPE_STANDARD)
         {
-            /* Handle the standard request */
-            if (s_UsbDeviceStandardRequest[deviceSetup->bRequest] != (usb_standard_request_callback_t)NULL)
+            /* Handle the standard request, only handle the request in request array. */
+            if(deviceSetup->bRequest < (sizeof(s_UsbDeviceStandardRequest)/4))
             {
-                error = s_UsbDeviceStandardRequest[deviceSetup->bRequest](classHandle, deviceSetup, &buffer, &length);
+                if (s_UsbDeviceStandardRequest[deviceSetup->bRequest] != (usb_standard_request_callback_t)NULL)
+                {
+                    error = s_UsbDeviceStandardRequest[deviceSetup->bRequest](classHandle, deviceSetup, &buffer, &length);
+                }
             }
         }
         else
         {
             if ((deviceSetup->wLength) &&
-                ((deviceSetup->bmRequestType & USB_REQUSET_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT))
+                ((deviceSetup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT))
             {
                 /* Class or vendor request with the OUT data phase. */
                 if ((deviceSetup->wLength) &&
@@ -831,7 +850,7 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
                 }
             }
         }
-        /* Send the reponse to the host. */
+        /* Send the response to the host. */
         error = USB_DeviceControlCallbackFeedback(handle, deviceSetup, error, kUSB_DeviceControlPipeSetupStage, &buffer,
                                                   &length);
     }
@@ -840,8 +859,9 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
         /* Set the device address to controller. */
         error = s_UsbDeviceStandardRequest[deviceSetup->bRequest](classHandle, deviceSetup, &buffer, &length);
     }
-#if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) && \
-    (defined(USB_DEVICE_CONFIG_EHCI_TEST_MODE) && (USB_DEVICE_CONFIG_EHCI_TEST_MODE > 0U))
+#if ((defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) ||                \
+     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))) && \
+    (defined(USB_DEVICE_CONFIG_USB20_TEST_MODE) && (USB_DEVICE_CONFIG_USB20_TEST_MODE > 0U))
     else if (kUSB_DeviceStateTestMode == state)
     {
         uint8_t portTestControl = (uint8_t)(deviceSetup->wIndex >> 8);
@@ -850,7 +870,7 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
     }
 #endif
     else if ((message->length) && (deviceSetup->wLength) &&
-             ((deviceSetup->bmRequestType & USB_REQUSET_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT))
+             ((deviceSetup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT))
     {
         if (((deviceSetup->bmRequestType & USB_REQUEST_TYPE_TYPE_CLASS) == USB_REQUEST_TYPE_TYPE_CLASS))
         {
@@ -875,7 +895,7 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
         else
         {
         }
-        /* Send the reponse to the host. */
+        /* Send the response to the host. */
         error = USB_DeviceControlCallbackFeedback(handle, deviceSetup, error, kUSB_DeviceControlPipeDataStage, &buffer,
                                                   &length);
     }
@@ -898,18 +918,19 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
 usb_status_t USB_DeviceControlPipeInit(usb_device_handle handle, void *param)
 {
     usb_device_endpoint_init_struct_t epInitStruct;
-    usb_device_endpoint_callback_struct_t endpointCallback;
+    usb_device_endpoint_callback_struct_t epCallback;
     usb_status_t error;
 
-    endpointCallback.callbackFn = USB_DeviceControlCallback;
-    endpointCallback.callbackParam = param;
+    epCallback.callbackFn = USB_DeviceControlCallback;
+    epCallback.callbackParam = param;
 
     epInitStruct.zlt = 1U;
     epInitStruct.transferType = USB_ENDPOINT_CONTROL;
+    epInitStruct.interval = 0;
     epInitStruct.endpointAddress = USB_CONTROL_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
     epInitStruct.maxPacketSize = USB_CONTROL_MAX_PACKET_SIZE;
     /* Initialize the control IN pipe */
-    error = USB_DeviceInitEndpoint(handle, &epInitStruct, &endpointCallback);
+    error = USB_DeviceInitEndpoint(handle, &epInitStruct, &epCallback);
 
     if (kStatus_USB_Success != error)
     {
@@ -917,7 +938,7 @@ usb_status_t USB_DeviceControlPipeInit(usb_device_handle handle, void *param)
     }
     epInitStruct.endpointAddress = USB_CONTROL_ENDPOINT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
     /* Initialize the control OUT pipe */
-    error = USB_DeviceInitEndpoint(handle, &epInitStruct, &endpointCallback);
+    error = USB_DeviceInitEndpoint(handle, &epInitStruct, &epCallback);
 
     if (kStatus_USB_Success != error)
     {

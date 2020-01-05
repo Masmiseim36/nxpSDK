@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2018 NXP
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_host_config.h"
@@ -34,6 +12,7 @@
 #include "ieee11073_types.h"
 #include "ieee11073_nomenclature.h"
 #include "host_phdc_manager.h"
+#include "app.h"
 
 #include "usb_host_phdc.h"
 #include "fsl_debug_console.h"
@@ -85,6 +64,9 @@ static void PHDC_ManagerRecvComplete(void *param);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_SendDataBuffer[APDU_MAX_BUFFER_SIZE];   /*!< use to send application protocol data unit */
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_RecvDataBuffer[APDU_MAX_BUFFER_SIZE];   /*!< use to receive application protocol data unit */
 
 /*! @brief the temp buffer used to prepare the manager response data */
 uint8_t s_tempBuffer[50U];
@@ -1676,9 +1658,9 @@ static void PHDC_ManagerControlCallback(void *param, uint8_t *data, uint32_t dat
     }
     else
     {
-        if (phdcManagerInstance->runWaitState == kRunWaitSetInterface)
+        if (phdcManagerInstance->runWaitState == kUSB_HostPhdcRunWaitSetInterface)
         {
-            phdcManagerInstance->runState = kRunSetInterfaceDone;
+            phdcManagerInstance->runState = kUSB_HostPhdcRunSetInterfaceDone;
         }
     }
 }
@@ -1697,17 +1679,17 @@ static void PHDC_ManagerBulkInCallback(void *param, uint8_t *data, uint32_t data
 {
     host_phdc_manager_instance_t *phdcManagerInstance = (host_phdc_manager_instance_t *)param;
 
-    if (phdcManagerInstance->runWaitState == kRunWaitDataReceived)
+    if (phdcManagerInstance->runWaitState == kUSB_HostPhdcRunWaitDataReceived)
     {
         if (phdcManagerInstance->devState == kStatus_DEV_Attached)
         {
             if (status == kStatus_USB_Success)
             {
-                phdcManagerInstance->runState = kRunDataReceived;
+                phdcManagerInstance->runState = kUSB_HostPhdcRunDataReceived;
             }
             else
             {
-                phdcManagerInstance->runState = kRunPrimeDataReceive;
+                phdcManagerInstance->runState = kUSB_HostPhdcRunPrimeDataReceive;
             }
         }
     }
@@ -1786,7 +1768,7 @@ void HOST_PhdcManagerTask(void *param)
                 break;
 
             case kStatus_DEV_Attached:
-                phdcManagerInstance->runState = kRunSetInterface;
+                phdcManagerInstance->runState = kUSB_HostPhdcRunSetInterface;
                 status =
                     USB_HostPhdcInit(phdcManagerInstance->deviceHandle, (void **)&phdcManagerInstance->classHandle);
                 if (status != kStatus_USB_Success)
@@ -1801,7 +1783,7 @@ void HOST_PhdcManagerTask(void *param)
                 break;
             case kStatus_DEV_Detached:
                 phdcManagerInstance->devState = kStatus_DEV_Idle;
-                phdcManagerInstance->runState = kRunIdle;
+                phdcManagerInstance->runState = kUSB_HostPhdcRunIdle;
                 USB_HostPhdcDeinit(phdcManagerInstance->deviceHandle, phdcManagerInstance->classHandle);
                 PHDC_ManagerSetState(phdcManagerInstance, IEEE11073_MANAGER_DISCONNECTED);
                 phdcManagerInstance->classHandle = NULL;
@@ -1815,12 +1797,12 @@ void HOST_PhdcManagerTask(void *param)
     /* run state */
     switch (phdcManagerInstance->runState)
     {
-        case kRunIdle:
+        case kUSB_HostPhdcRunIdle:
             break;
 
-        case kRunSetInterface:
-            phdcManagerInstance->runWaitState = kRunWaitSetInterface;
-            phdcManagerInstance->runState = kRunIdle;
+        case kUSB_HostPhdcRunSetInterface:
+            phdcManagerInstance->runWaitState = kUSB_HostPhdcRunWaitSetInterface;
+            phdcManagerInstance->runState = kUSB_HostPhdcRunIdle;
             if (USB_HostPhdcSetInterface(phdcManagerInstance->classHandle, phdcManagerInstance->interfaceHandle, 0U,
                                          PHDC_ManagerControlCallback, phdcManagerInstance) != kStatus_USB_Success)
             {
@@ -1828,12 +1810,12 @@ void HOST_PhdcManagerTask(void *param)
             }
             break;
 
-        case kRunSetInterfaceDone:
+        case kUSB_HostPhdcRunSetInterfaceDone:
             PHDC_ManagerSetState(param, IEEE11073_MANAGER_CONNECTED_UNASSOCIATED);
             /* Clear received buffer */
             memset((void *)&phdcManagerInstance->recvDataBuffer[0U], 0U, APDU_MAX_BUFFER_SIZE);
-            phdcManagerInstance->runWaitState = kRunWaitDataReceived;
-            phdcManagerInstance->runState = kRunIdle;
+            phdcManagerInstance->runWaitState = kUSB_HostPhdcRunWaitDataReceived;
+            phdcManagerInstance->runState = kUSB_HostPhdcRunIdle;
             status = USB_HostPhdcRecv(phdcManagerInstance->classHandle, 0xFEU, phdcManagerInstance->recvDataBuffer,
                                       APDU_MAX_BUFFER_SIZE, PHDC_ManagerBulkInCallback, phdcManagerInstance);
             if (status != kStatus_USB_Success)
@@ -1841,10 +1823,10 @@ void HOST_PhdcManagerTask(void *param)
                 usb_echo("Error in USB_HostPhdcRecv: %x\r\n", status);
             }
             break;
-        case kRunDataReceived:
+        case kUSB_HostPhdcRunDataReceived:
             PHDC_ManagerRecvComplete(param);
-            phdcManagerInstance->runWaitState = kRunWaitDataReceived;
-            phdcManagerInstance->runState = kRunIdle;
+            phdcManagerInstance->runWaitState = kUSB_HostPhdcRunWaitDataReceived;
+            phdcManagerInstance->runState = kUSB_HostPhdcRunIdle;
             status = USB_HostPhdcRecv(phdcManagerInstance->classHandle, 0xFEU, phdcManagerInstance->recvDataBuffer,
                                       APDU_MAX_BUFFER_SIZE, PHDC_ManagerBulkInCallback, phdcManagerInstance);
             if (status != kStatus_USB_Success)
@@ -1853,9 +1835,9 @@ void HOST_PhdcManagerTask(void *param)
             }
             break;
 
-        case kRunPrimeDataReceive:
-            phdcManagerInstance->runWaitState = kRunWaitDataReceived;
-            phdcManagerInstance->runState = kRunIdle;
+        case kUSB_HostPhdcRunPrimeDataReceive:
+            phdcManagerInstance->runWaitState = kUSB_HostPhdcRunWaitDataReceived;
+            phdcManagerInstance->runState = kUSB_HostPhdcRunIdle;
             status = USB_HostPhdcRecv(phdcManagerInstance->classHandle, 0xFEU, phdcManagerInstance->recvDataBuffer,
                                       APDU_MAX_BUFFER_SIZE, PHDC_ManagerBulkInCallback, phdcManagerInstance);
             if (status != kStatus_USB_Success)
@@ -1917,6 +1899,8 @@ usb_status_t HOST_PhdcManagerEvent(usb_device_handle deviceHandle,
                 }
                 else
                 {
+                    g_phdcManagerInstance.recvDataBuffer = s_RecvDataBuffer;
+                    g_phdcManagerInstance.sendDataBuffer = s_SendDataBuffer;
                     g_phdcManagerInstance.deviceHandle = deviceHandle;
                     g_phdcManagerInstance.interfaceHandle = interface;
                     configHandle = configurationHandle;

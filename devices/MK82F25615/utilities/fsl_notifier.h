@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _FSL_NOTIFIER_H_
@@ -49,15 +27,15 @@
 enum _notifier_status
 {
     kStatus_NOTIFIER_ErrorNotificationBefore =
-        MAKE_STATUS(kStatusGroup_NOTIFIER, 0), /*!< Error occurs during send "BEFORE" notification. */
+        MAKE_STATUS(kStatusGroup_NOTIFIER, 0), /*!< An error occurs during send "BEFORE" notification. */
     kStatus_NOTIFIER_ErrorNotificationAfter =
-        MAKE_STATUS(kStatusGroup_NOTIFIER, 1), /*!< Error occurs during send "AFTER" notification. */
+        MAKE_STATUS(kStatusGroup_NOTIFIER, 1), /*!< An error occurs during send "AFTER" notification. */
 };
 
 /*!
  * @brief Notifier policies.
  *
- * Defines whether user function execution is forced or not.
+ * Defines whether the user function execution is forced or not.
  * For kNOTIFIER_PolicyForcible, the user function is executed regardless of the callback results,
  * while kNOTIFIER_PolicyAgreement policy is used to exit NOTIFIER_SwitchConfig()
  * when any of the callbacks returns error code.
@@ -67,47 +45,47 @@ typedef enum _notifier_policy
 {
     kNOTIFIER_PolicyAgreement, /*!< NOTIFIER_SwitchConfig() method is exited when any of the callbacks returns error
                                       code. */
-    kNOTIFIER_PolicyForcible,  /*!< user function is executed regardless of the results. */
+    kNOTIFIER_PolicyForcible,  /*!< The user function is executed regardless of the results. */
 } notifier_policy_t;
 
 /*! @brief Notification type. Used to notify registered callbacks */
 typedef enum _notifier_notification_type
 {
     kNOTIFIER_NotifyRecover = 0x00U, /*!< Notify IP to recover to previous work state. */
-    kNOTIFIER_NotifyBefore = 0x01U,  /*!< Notify IP that configuration setting is going to change. */
-    kNOTIFIER_NotifyAfter = 0x02U,   /*!< Notify IP that configuration setting has been changed. */
+    kNOTIFIER_NotifyBefore  = 0x01U, /*!< Notify IP that configuration setting is going to change. */
+    kNOTIFIER_NotifyAfter   = 0x02U, /*!< Notify IP that configuration setting has been changed. */
 } notifier_notification_type_t;
 
 /*!
- * @brief The callback type, indicates what kinds of notification the callback handles.
+ * @brief The callback type, which indicates kinds of notification the callback handles.
  *
  * Used in the callback configuration structure (notifier_callback_config_t)
- * to specify when the registered callback is called during configuration switch initiated by
+ * to specify when the registered callback is called during configuration switch initiated by the
  * NOTIFIER_SwitchConfig().
- * Callback can be invoked in following situations:
- *  - before the configuration switch (Callback return value can affect NOTIFIER_SwitchConfig()
- *    execution. Refer to the NOTIFIER_SwitchConfig() and notifier_policy_t documentation).
- *  - after unsuccessful attempt to switch configuration
- *  - after sucecessful configuration switch
+ * Callback can be invoked in following situations.
+ *  - Before the configuration switch (Callback return value can affect NOTIFIER_SwitchConfig()
+ *    execution. See the NOTIFIER_SwitchConfig() and notifier_policy_t documentation).
+ *  - After an unsuccessful attempt to switch configuration
+ *  - After a successful configuration switch
  */
 typedef enum _notifier_callback_type
 {
-    kNOTIFIER_CallbackBefore = 0x01U,      /*!< Callback handles BEFORE notification. */
-    kNOTIFIER_CallbackAfter = 0x02U,       /*!< Callback handles AFTER notification. */
+    kNOTIFIER_CallbackBefore      = 0x01U, /*!< Callback handles BEFORE notification. */
+    kNOTIFIER_CallbackAfter       = 0x02U, /*!< Callback handles AFTER notification. */
     kNOTIFIER_CallbackBeforeAfter = 0x03U, /*!< Callback handles BEFORE and AFTER notification. */
 } notifier_callback_type_t;
 
-/*! @brief notifier user configuration type.
+/*! @brief Notifier user configuration type.
  *
- * Reference of user defined configuration is stored in an array, notifer switch between these configurations
+ * Reference of the user defined configuration is stored in an array; the notifier switches between these configurations
  * based on this array.
  */
 typedef void notifier_user_config_t;
 
-/*! @brief notifier user function prototype
- * User can use this function to execute specific operations in configuration switch.
- * Before and after this function execution, different notification will be sent to registered callbacks.
- * If this function returns any error code, NOTIFIER_SwitchConfig() will exit.
+/*! @brief Notifier user function prototype
+ * Use this function to execute specific operations in configuration switch.
+ * Before and after this function execution, different notification is sent to registered callbacks.
+ * If this function returns any error code, NOTIFIER_SwitchConfig() exits.
  *
  * @param targetConfig target Configuration.
  * @param userData Refers to other specific data passed to user function.
@@ -126,16 +104,16 @@ typedef struct _notifier_notification_block
 /*!
  * @brief Callback prototype.
  *
- * Declaration of callback. It is common for registered callbacks.
- * Reference to function of this type is part of notifier_callback_config_t callback configuration structure.
+ * Declaration of a callback. It is common for registered callbacks.
+ * Reference to function of this type is part of the notifier_callback_config_t callback configuration structure.
  * Depending on callback type, function of this prototype is called (see NOTIFIER_SwitchConfig())
- * before configuration switch, after it or in both cases to notify about
- * the switch progress (see notifier_callback_type_t). When called, type of the notification
- * is passed as parameter along with reference to the target configuration structure (see notifier_notification_block_t)
- * and any data passed during the callback registration.
- * When notified before configuration switch, depending on the configuration switch policy (see
- * notifier_policy_t) the callback may deny the execution of user function by returning any error code different
- * from kStatus_Success (see NOTIFIER_SwitchConfig()).
+ * before configuration switch, after it or in both use cases to notify about
+ * the switch progress (see notifier_callback_type_t). When called, the type of the notification
+ * is passed as a parameter along with the reference to the target configuration structure (see
+ * notifier_notification_block_t) and any data passed during the callback registration. When notified before the
+ * configuration switch, depending on the configuration switch policy (see notifier_policy_t), the callback may deny the
+ * execution of the user function by returning an error code different than kStatus_Success (see
+ * NOTIFIER_SwitchConfig()).
  *
  * @param notify Notification block.
  * @param data Callback data. Refers to the data passed during callback registration. Intended to
@@ -145,11 +123,11 @@ typedef struct _notifier_notification_block
 typedef status_t (*notifier_callback_t)(notifier_notification_block_t *notify, void *data);
 
 /*!
- * @brief callback configuration structure
+ * @brief Callback configuration structure.
  *
- * This structure holds configuration of callbacks.
+ * This structure holds the configuration of callbacks.
  * Callbacks of this type are expected to be statically allocated.
- * This structure contains following application-defined data:
+ * This structure contains the following application-defined data.
  *  callback - pointer to the callback function
  *  callbackType - specifies when the callback is called
  *  callbackData - pointer to the data passed to the callback.
@@ -164,10 +142,10 @@ typedef struct _notifier_callback_config
 /*!
  * @brief Notifier handle structure.
  *
- * Notifier handle structure. Contains data necessary for Notifier proper function.
+ * Notifier handle structure. Contains data necessary for the Notifier proper function.
  * Stores references to registered configurations, callbacks, information about their numbers,
- * user function, user data and other internal data.
- * NOTIFIER_CreateHandle() must be called to intialize this handle.
+ * user function, user data, and other internal data.
+ * NOTIFIER_CreateHandle() must be called to initialize this handle.
  */
 typedef struct _notifier_handle
 {
@@ -177,8 +155,8 @@ typedef struct _notifier_handle
     uint8_t callbacksNumber;                    /*!< Maximum number of callback configurations. */
     uint8_t errorCallbackIndex;                 /*!< Index of callback returns error. */
     uint8_t currentConfigIndex;                 /*!< Index of current configuration.  */
-    notifier_user_function_t userFunction;      /*!< user function. */
-    void *userData;                             /*!< user data passed to user function. */
+    notifier_user_function_t userFunction;      /*!< User function. */
+    void *userData;                             /*!< User data passed to user function. */
 } notifier_handle_t;
 
 /*******************************************************************************
@@ -190,17 +168,17 @@ extern "C" {
 #endif
 
 /*!
- * @brief Create Notifier handle.
+ * @brief Creates a Notifier handle.
  *
- * @param notifierHandle A pointer to notifier handle
+ * @param notifierHandle A pointer to the notifier handle.
  * @param configs A pointer to an array with references to all configurations which is handled by the Notifier.
- * @param configsNumber Number of configurations. Size of configs array.
+ * @param configsNumber Number of configurations. Size of the configuration array.
  * @param callbacks A pointer to an array of callback configurations.
  *  If there are no callbacks to register during Notifier initialization, use NULL value.
- * @param callbacksNumber Number of registered callbacks. Size of callbacks array.
- * @param userFunction user function.
- * @param userData user data passed to user function.
- * @return An error code or kStatus_Success.
+ * @param callbacksNumber Number of registered callbacks. Size of the callbacks array.
+ * @param userFunction User function.
+ * @param userData User data passed to user function.
+ * @return An error Code or kStatus_Success.
  */
 status_t NOTIFIER_CreateHandle(notifier_handle_t *notifierHandle,
                                notifier_user_config_t **configs,
@@ -211,7 +189,7 @@ status_t NOTIFIER_CreateHandle(notifier_handle_t *notifierHandle,
                                void *userData);
 
 /*!
- * @brief Switch configuration according to a pre-defined structure.
+ * @brief Switches the configuration according to a pre-defined structure.
  *
  * This function sets the system to the target configuration. Before transition,
  * the Notifier sends notifications to all callbacks registered to the callback table.
@@ -221,12 +199,12 @@ status_t NOTIFIER_CreateHandle(notifier_handle_t *notifierHandle,
  * the change from registered callbacks. If any registered callback denies the
  * configuration change, further execution of this function depends on the notifier policy: the
  * configuration change is either forced (kNOTIFIER_PolicyForcible) or exited (kNOTIFIER_PolicyAgreement).
- * When configuration change is forced, the result of the before switch notifications are ignored. If
- * agreement is required, if any callback returns an error code then further notifications
- * before switch notifications are cancelled and all already notified callbacks are re-invoked
+ * When configuration change is forced, the result of the before switch notifications are ignored. If an
+ * agreement is required, if any callback returns an error code, further notifications
+ * before switch notifications are cancelled and all already notified callbacks are re-invoked.
  * The index of the callback which returned error code during pre-switch notifications is stored
  * (any error codes during callbacks re-invocation are ignored) and NOTIFIER_GetErrorCallback() can be used to get it.
- * Regardless of the policies, if any callback returned an error code, an error code denoting in which phase
+ * Regardless of the policies, if any callback returns an error code, an error code indicating in which phase
  * the error occurred is returned when NOTIFIER_SwitchConfig() exits.
  * @param notifierHandle pointer to notifier handle
  * @param configIndex Index of the target configuration.
@@ -240,13 +218,13 @@ status_t NOTIFIER_SwitchConfig(notifier_handle_t *notifierHandle, uint8_t config
 /*!
  * @brief This function returns the last failed notification callback.
  *
- * This function returns index of the last callback that failed during the configuration switch while
+ * This function returns an index of the last callback that failed during the configuration switch while
  * the last NOTIFIER_SwitchConfig() was called. If the last NOTIFIER_SwitchConfig() call ended successfully
- * value equal to callbacks number is returned. Returned value represents index in the array of
+ * value equal to callbacks number is returned. The returned value represents an index in the array of
  * static call-backs.
  *
- * @param notifierHandle pointer to notifier handle
- * @return Callback index of last failed callback or value equal to callbacks count.
+ * @param notifierHandle Pointer to the notifier handle
+ * @return Callback Index of the last failed callback or value equal to callbacks count.
  */
 uint8_t NOTIFIER_GetErrorCallbackIndex(notifier_handle_t *notifierHandle);
 

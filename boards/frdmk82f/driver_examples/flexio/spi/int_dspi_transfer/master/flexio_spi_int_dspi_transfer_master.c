@@ -1,32 +1,10 @@
 /*
-* Copyright (c) 2015, Freescale Semiconductor, Inc.
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without modification,
-* are permitted provided that the following conditions are met:
-*
-* o Redistributions of source code must retain the above copyright notice, this list
-*   of conditions and the following disclaimer.
-*
-* o Redistributions in binary form must reproduce the above copyright notice, this
-*   list of conditions and the following disclaimer in the documentation and/or
-*   other materials provided with the distribution.
-*
-* o Neither the name of Freescale Semiconductor, Inc. nor the names of its
-*   contributors may be used to endorse or promote products derived from this
-*   software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-* ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 #include "fsl_debug_console.h"
 #include "fsl_dspi.h"
@@ -65,8 +43,8 @@ void DSPI_SlaveUserCallback(SPI_Type *base, dspi_slave_handle_t *handle, status_
  ******************************************************************************/
 uint8_t masterRxData[TRANSFER_SIZE] = {0U};
 uint8_t masterTxData[TRANSFER_SIZE] = {0U};
-uint8_t slaveRxData[TRANSFER_SIZE] = {0U};
-uint8_t slaveTxData[TRANSFER_SIZE] = {0U};
+uint8_t slaveRxData[TRANSFER_SIZE]  = {0U};
+uint8_t slaveTxData[TRANSFER_SIZE]  = {0U};
 
 FLEXIO_SPI_Type spiDev;
 flexio_spi_master_handle_t g_m_handle;
@@ -144,27 +122,27 @@ int main(void)
     FLEXIO_SPI_MasterGetDefaultConfig(&masterConfig);
     masterConfig.baudRate_Bps = 500000U;
 
-    spiDev.flexioBase = BOARD_FLEXIO_BASE;
-    spiDev.SDOPinIndex = FLEXIO_SPI_SOUT_PIN;
-    spiDev.SDIPinIndex = FLEXIO_SPI_SIN_PIN;
-    spiDev.SCKPinIndex = FLEXIO_SPI_CLK_PIN;
-    spiDev.CSnPinIndex = FLEXIO_SPI_PCS_PIN;
+    spiDev.flexioBase      = BOARD_FLEXIO_BASE;
+    spiDev.SDOPinIndex     = FLEXIO_SPI_SOUT_PIN;
+    spiDev.SDIPinIndex     = FLEXIO_SPI_SIN_PIN;
+    spiDev.SCKPinIndex     = FLEXIO_SPI_CLK_PIN;
+    spiDev.CSnPinIndex     = FLEXIO_SPI_PCS_PIN;
     spiDev.shifterIndex[0] = 0U;
     spiDev.shifterIndex[1] = 1U;
-    spiDev.timerIndex[0] = 0U;
-    spiDev.timerIndex[1] = 1U;
+    spiDev.timerIndex[0]   = 0U;
+    spiDev.timerIndex[1]   = 1U;
 
     FLEXIO_SPI_MasterInit(&spiDev, &masterConfig, FLEXIO_CLOCK_FREQUENCY);
 
     /* Slave config */
-    slaveConfig.whichCtar = kDSPI_Ctar0;
-    slaveConfig.ctarConfig.bitsPerFrame = 8;
-    slaveConfig.ctarConfig.cpol = kDSPI_ClockPolarityActiveHigh;
-    slaveConfig.ctarConfig.cpha = kDSPI_ClockPhaseFirstEdge;
-    slaveConfig.enableContinuousSCK = false;
-    slaveConfig.enableRxFifoOverWrite = false;
+    slaveConfig.whichCtar                  = kDSPI_Ctar0;
+    slaveConfig.ctarConfig.bitsPerFrame    = 8;
+    slaveConfig.ctarConfig.cpol            = kDSPI_ClockPolarityActiveHigh;
+    slaveConfig.ctarConfig.cpha            = kDSPI_ClockPhaseFirstEdge;
+    slaveConfig.enableContinuousSCK        = false;
+    slaveConfig.enableRxFifoOverWrite      = false;
     slaveConfig.enableModifiedTimingFormat = false;
-    slaveConfig.samplePoint = kDSPI_SckToSin0Clock;
+    slaveConfig.samplePoint                = kDSPI_SckToSin0Clock;
 
     DSPI_SlaveInit(BOARD_DSPI_SLAVE_BASE, &slaveConfig);
 
@@ -187,9 +165,9 @@ int main(void)
     DSPI_SlaveTransferCreateHandle(BOARD_DSPI_SLAVE_BASE, &g_s_handle, DSPI_SlaveUserCallback, NULL);
 
     /*Set slave transfer ready to receive/send data*/
-    slaveXfer.txData = slaveTxData;
-    slaveXfer.rxData = slaveRxData;
-    slaveXfer.dataSize = TRANSFER_SIZE;
+    slaveXfer.txData      = slaveTxData;
+    slaveXfer.rxData      = slaveRxData;
+    slaveXfer.dataSize    = TRANSFER_SIZE;
     slaveXfer.configFlags = kDSPI_SlaveCtar0;
 
     DSPI_SlaveTransferNonBlocking(BOARD_DSPI_SLAVE_BASE, &g_s_handle, &slaveXfer);
@@ -198,10 +176,10 @@ int main(void)
     FLEXIO_SPI_MasterTransferCreateHandle(&spiDev, &g_m_handle, FLEXIO_SPI_MasterUserCallback, NULL);
 
     /*Start master transfer*/
-    masterXfer.txData = masterTxData;
-    masterXfer.rxData = masterRxData;
+    masterXfer.txData   = masterTxData;
+    masterXfer.rxData   = masterRxData;
     masterXfer.dataSize = TRANSFER_SIZE;
-    masterXfer.flags = kFLEXIO_SPI_8bitMsb;
+    masterXfer.flags    = kFLEXIO_SPI_8bitMsb;
 
     FLEXIO_SPI_MasterTransferNonBlocking(&spiDev, &g_m_handle, &masterXfer);
 
@@ -229,7 +207,7 @@ int main(void)
     }
     else
     {
-        PRINTF("Error occured in FLEXIO SPI master <-> DSPI slave transfer!\r\n");
+        PRINTF("Error occurred in FLEXIO SPI master <-> DSPI slave transfer!\r\n");
     }
 
     FLEXIO_SPI_MasterDeinit(&spiDev);

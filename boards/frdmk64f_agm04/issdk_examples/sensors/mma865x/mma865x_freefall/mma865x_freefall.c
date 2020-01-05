@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -60,8 +60,9 @@ const registerwritelist_t cMma865xConfigFreeFall[] =
      /*! Configure the MMA865x to route Data Ready Interrupts to INT1. */
      {MMA865x_CTRL_REG5, MMA865x_CTRL_REG5_INT_CFG_FF_MT_INT1, MMA865x_CTRL_REG5_INT_CFG_FF_MT_MASK},
      /*! Configure the MMA865x to set freefall Mode and enable all XYZ axis events and event latching. */
-     {MMA865x_FF_MT_CFG, MMA865x_FF_MT_CFG_ELE_EN | MMA865x_FF_MT_CFG_OAE_FREEFALL | MMA865x_FF_MT_CFG_XEFE_EN |
-                             MMA865x_FF_MT_CFG_YEFE_EN | MMA865x_FF_MT_CFG_ZEFE_EN,
+     {MMA865x_FF_MT_CFG,
+      MMA865x_FF_MT_CFG_ELE_EN | MMA865x_FF_MT_CFG_OAE_FREEFALL | MMA865x_FF_MT_CFG_XEFE_EN |
+          MMA865x_FF_MT_CFG_YEFE_EN | MMA865x_FF_MT_CFG_ZEFE_EN,
       MMA865x_FF_MT_CFG_ELE_MASK | MMA865x_FF_MT_CFG_OAE_MASK | MMA865x_FF_MT_CFG_XEFE_MASK |
           MMA865x_FF_MT_CFG_YEFE_MASK | MMA865x_FF_MT_CFG_ZEFE_MASK},
      /*! Configure the MMA865x to set Debounce counter to be cleared on favourable events and the thresholds . */
@@ -147,7 +148,7 @@ int main(void)
 
     /* Set data not ready, event data will be available after sensor is configured and free fall detected. */
     gMma865xEventReady = false;
-    dataReady = 0;
+    dataReady          = 0;
 
     /*! Configure the MMA865x sensor for Freefall detection Mode. */
     status = MMA865x_I2C_Configure(&mma865xDriver, cMma865xConfigFreeFall);
@@ -160,7 +161,7 @@ int main(void)
 
     for (;;) /* Forever loop */
     {        /* In ISR Mode we do not need to check Event Ready Register.
-              * The receipt of interrupt will indicate Event has occured. */
+              * The receipt of interrupt will indicate Event has occurred. */
         if (false == gMma865xEventReady)
         { /* Loop, if new sample is not available. */
             SMC_SetPowerModeWait(SMC);

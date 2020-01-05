@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016, 2018 NXP
+ * Copyright 2016, 2018-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -12,13 +12,12 @@
 #include "host_cdc.h"
 #include "fsl_debug_console.h"
 #include "board.h"
-#include "usb_serial_port.h"
+#include "serial_manager.h"
 #include "app.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
-#define USB_KHCI_TASK_STACKSIZE 3500U
 /*******************************************************************************
   * Prototypes
   ******************************************************************************/
@@ -59,9 +58,8 @@ USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) usb_host_cdc_line_coding_struct_
 char usbRecvUart[USB_HOST_CDC_UART_RX_MAX_LEN];
 
 extern uint8_t g_AttachFlag;
-extern usb_serial_port_handle_t g_UartHandle;
-extern usb_serial_port_xfer_t g_xfer;
-usb_serial_port_xfer_t g_txfer;
+extern serial_write_handle_t g_UartTxHandle;
+extern serial_write_handle_t g_UartRxHandle;
 
 uint32_t g_UartActive;
 /*******************************************************************************
@@ -286,18 +284,17 @@ void USB_HostCdcDataOutCallback(void *param, uint8_t *data, uint32_t dataLength,
  *
  *This callback will be called if the uart has get specific num(USB_HOST_CDC_UART_RX_MAX_LEN) char.
  *
- * @param instance           instancehandle.
- * @param uartState           callback event code, please reference to enumeration host_event_t.
- *
  */
-void UART_UserCallback(void *handle, status_t status, void *param)
+ void UART_UserRxCallback(void *callbackParam, serial_manager_callback_message_t *message,
+                        serial_manager_status_t status)
+
 {
-    if ((usb_serial_port_status_t)status == kStatus_USB_SERIAL_PORT_RxIdle)
+    if (status == kStatus_SerialManager_Success)
     {
         if (0 == g_AttachFlag)
         {
             /* prime the receive buffer for uart callback which is triggered the next time */
-            USB_SerialPortRecv(&g_UartHandle, &g_xfer, NULL);
+            SerialManager_ReadNonBlocking(g_UartRxHandle, (uint8_t *)&usbRecvUart[0], USB_HOST_CDC_UART_RX_MAX_LEN);
             return;
         }
         g_UartActive = 0;
@@ -321,17 +318,30 @@ void UART_UserCallback(void *handle, status_t status, void *param)
             /*if code run to here, it means buffer has been run out once, some data has been lost*/
             g_CurrentUartRecvNode = getNodeFromQueue(&g_EmptyQueue);
         }
-        USB_SerialPortRecv(&g_UartHandle, &g_xfer, NULL);
+        SerialManager_ReadNonBlocking(g_UartRxHandle, (uint8_t *)&usbRecvUart[0], USB_HOST_CDC_UART_RX_MAX_LEN);
     }
-    else if ((usb_serial_port_status_t)status == kStatus_USB_SERIAL_PORT_TxIdle)
+    else
+    {
+    }
+    return;
+}
+/*!
+ * @brief uart callback function.
+ *
+ *This callback will be called if the uart send get specific num(USB_HOST_CDC_UART_RX_MAX_LEN) char.
+ *
+ */
+ void UART_UserTxCallback(void *callbackParam, serial_manager_callback_message_t *message,
+                        serial_manager_status_t status)
+
+{
+    if (status == kStatus_SerialManager_Success)
     {
         freeNodeToQueue(&g_EmptySendQueue, g_UartSendNode);
         g_UartSendNode = getNodeFromQueue(&g_UartSendQueue);
         if (g_UartSendNode)
         {
-            g_txfer.buffer = g_UartSendNode->buffer;
-            g_txfer.size = g_UartSendNode->dataLength;
-            USB_SerialPortSend(&g_UartHandle, &g_txfer);
+            SerialManager_WriteNonBlocking(g_UartTxHandle, g_UartSendNode->buffer, g_UartSendNode->dataLength);
         }
         else
         {
@@ -342,24 +352,6 @@ void UART_UserCallback(void *handle, status_t status, void *param)
     {
     }
     return;
-}
-/* IRQ handler for uart */
-/*FUNCTION*----------------------------------------------------------------
- *
- * Function Name  : UART_RX_TX_IRQHandler
- * Returned Value : none
- * Comments       :
- *     Implementation of UART handler.
- *
- *END*--------------------------------------------------------------------*/
-void BOARD_UART_IRQ_HANDLER(void)
-{
-    USB_SerialPortIRQHandler(&g_UartHandle);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
 }
 
 /*!
@@ -555,10 +547,9 @@ void USB_HostCdcTask(void *param)
 
                     if (g_UartSendNode)
                     {
-                        g_txfer.buffer = g_UartSendNode->buffer;
-                        g_txfer.size = g_UartSendNode->dataLength;
+
                         g_UartSendBusy = 1;
-                        USB_SerialPortSend(&g_UartHandle, &g_txfer);
+                        SerialManager_WriteNonBlocking(g_UartTxHandle, g_UartSendNode->buffer, g_UartSendNode->dataLength);
                     }
                 }
                 g_UartActive++;
@@ -675,7 +666,7 @@ usb_status_t USB_HostCdcEvent(usb_device_handle deviceHandle,
                 {
                     continue;
                 }
-                /*judge whether the subclass code */
+                /*judge the subclass code */
                 /*            id = hostInterface->interfaceDesc->bInterfaceProtocol;
                             if (id != USB_HOST_CDC_PROTOCOL_CODE)
                             {

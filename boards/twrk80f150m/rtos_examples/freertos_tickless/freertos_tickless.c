@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "FreeRTOS.h"
 #include "task.h"
@@ -47,7 +21,7 @@
 #include "fsl_device_registers.h"
 #include "fsl_common.h"
 #include "clock_config.h"
-#if configUSE_TICKLESS_IDLE
+#if configUSE_TICKLESS_IDLE == 2
 #include "fsl_lptmr.h"
 #endif
 /*******************************************************************************
@@ -90,6 +64,7 @@ SemaphoreHandle_t xSWSemaphore = NULL;
  * Code
  ******************************************************************************/
 
+#if configUSE_TICKLESS_IDLE == 2
 /*!
  * @brief Interrupt service fuction of LPT timer.
  *
@@ -121,12 +96,23 @@ IRQn_Type vPortGetLptmrIrqn(void)
 {
     return LPTMR0_LPTMR1_IRQn;
 }
+#endif
 /*!
  * @brief Main function
  */
 int main(void)
 {
-#if configUSE_TICKLESS_IDLE
+/* Define the init structure for the input switch pin */
+#ifdef BOARD_SW_NAME
+    gpio_pin_config_t sw_config = {
+        kGPIO_DigitalInput,
+        0,
+#if defined(FSL_FEATURE_SOC_IGPIO_COUNT) && (FSL_FEATURE_SOC_IGPIO_COUNT > 0)
+        kGPIO_IntRisingEdge,
+#endif
+    };
+#endif
+#if configUSE_TICKLESS_IDLE == 2
     lptmr_config_t lptmrConfig;
 
     CLOCK_EnableClock(kCLOCK_Lptmr0);
@@ -151,40 +137,9 @@ int main(void)
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
 
-    /*Create tickless task*/
-    if (xTaskCreate(Tickless_task, "Tickless_task", configMINIMAL_STACK_SIZE + 38, NULL, tickless_task_PRIORITY,
-                    NULL) != pdPASS)
-    {
-        PRINTF("Task creation failed!.\r\n");
-        while (1)
-            ;
-    }
-    if (xTaskCreate(SW_task, "Switch_task", configMINIMAL_STACK_SIZE + 38, NULL, SW_task_PRIORITY, NULL) != pdPASS)
-    {
-        PRINTF("Task creation failed!.\r\n");
-        while (1)
-            ;
-    }
-    /*Task Scheduler*/
-    vTaskStartScheduler();
-    for (;;)
-        ;
-}
+    PRINTF("Press any key to start the example\r\n");
+    GETCHAR();
 
-/* Tickless Task */
-static void Tickless_task(void *pvParameters)
-{
-/* Define the init structure for the input switch pin */
-#ifdef BOARD_SW_NAME
-    gpio_pin_config_t sw_config =
-    {
-        kGPIO_DigitalInput,
-        0,
-#if defined(FSL_FEATURE_SOC_IGPIO_COUNT) && (FSL_FEATURE_SOC_IGPIO_COUNT > 0)
-        kGPIO_IntRisingEdge,
-#endif
-    };
-#endif
     /* Print a note to terminal. */
     PRINTF("Tickless Demo example\r\n");
 #ifdef BOARD_SW_NAME
@@ -208,7 +163,31 @@ static void Tickless_task(void *pvParameters)
     GPIO_PortEnableInterrupts(BOARD_SW_GPIO, 1U << BOARD_SW_GPIO_PIN);
 #endif
 #endif
+
+    /*Create tickless task*/
+    if (xTaskCreate(Tickless_task, "Tickless_task", configMINIMAL_STACK_SIZE + 100, NULL, tickless_task_PRIORITY,
+                    NULL) != pdPASS)
+    {
+        PRINTF("Task creation failed!.\r\n");
+        while (1)
+            ;
+    }
+    if (xTaskCreate(SW_task, "Switch_task", configMINIMAL_STACK_SIZE + 100, NULL, SW_task_PRIORITY, NULL) != pdPASS)
+    {
+        PRINTF("Task creation failed!.\r\n");
+        while (1)
+            ;
+    }
     PRINTF("\r\nTick count :\r\n");
+    /*Task Scheduler*/
+    vTaskStartScheduler();
+    for (;;)
+        ;
+}
+
+/* Tickless Task */
+static void Tickless_task(void *pvParameters)
+{
     for (;;)
     {
         PRINTF("%d\r\n", xTaskGetTickCount());
@@ -224,7 +203,7 @@ static void SW_task(void *pvParameters)
     {
         if (xSemaphoreTake(xSWSemaphore, portMAX_DELAY) == pdTRUE)
         {
-            PRINTF("CPU waked up by EXT interrupt\r\n");
+            PRINTF("CPU woken up by external interrupt\r\n");
         }
     }
 }

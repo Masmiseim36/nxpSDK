@@ -1,31 +1,9 @@
 /*
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016 - 2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_device_config.h"
@@ -47,10 +25,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#if (defined(FSL_FEATURE_SOC_MPU_COUNT) && (FSL_FEATURE_SOC_MPU_COUNT > 0U))
-#include "fsl_mpu.h"
-#endif /* FSL_FEATURE_SOC_MPU_COUNT */
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+#if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
+#include "fsl_sysmpu.h"
+#endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
+
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #include "usb_phy.h"
 #endif
 
@@ -64,6 +43,11 @@
  * Prototypes
  ******************************************************************************/
 void BOARD_InitHardware(void);
+void USB_DeviceClockInit(void);
+void USB_DeviceIsrEnable(void);
+#if USB_DEVICE_CONFIG_USE_TASK
+void USB_DeviceTaskFn(void *deviceHandle);
+#endif
 
 static usb_status_t USB_DeviceHidGenericCallback(class_handle_t handle, uint32_t event, void *param);
 static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param);
@@ -73,6 +57,8 @@ static void USB_DeviceApplicationInit(void);
  * Variables
  ******************************************************************************/
 
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint32_t s_GenericBuffer0[USB_HID_GENERIC_OUT_BUFFER_LENGTH >> 2];
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint32_t s_GenericBuffer1[USB_HID_GENERIC_OUT_BUFFER_LENGTH >> 2];
 usb_hid_generic_struct_t g_UsbDeviceHidGeneric;
 
 extern usb_device_class_struct_t g_UsbDeviceHidGenericConfig;
@@ -96,6 +82,36 @@ usb_device_class_config_list_struct_t g_UsbDeviceHidConfigList = {
 /*******************************************************************************
  * Code
  ******************************************************************************/
+
+void USB0_IRQHandler(void)
+{
+    USB_DeviceKhciIsrFunction(g_UsbDeviceHidGeneric.deviceHandle);
+    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+    exception return operation might vector to incorrect interrupt */
+    __DSB();
+}
+void USB_DeviceClockInit(void)
+{
+    SystemCoreClockUpdate();
+    CLOCK_EnableUsbfs0Clock(kCLOCK_UsbSrcIrc48M, 48000000U);
+}
+void USB_DeviceIsrEnable(void)
+{
+    uint8_t irqNumber;
+
+    uint8_t usbDeviceKhciIrq[] = USB_IRQS;
+    irqNumber                  = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+
+    /* Install isr, set priority, and enable IRQ. */
+    NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
+    EnableIRQ((IRQn_Type)irqNumber);
+}
+#if USB_DEVICE_CONFIG_USE_TASK
+void USB_DeviceTaskFn(void *deviceHandle)
+{
+    USB_DeviceKhciTaskFunction(deviceHandle);
+}
+#endif
 
 /* The hid class callback */
 static usb_status_t USB_DeviceHidGenericCallback(class_handle_t handle, uint32_t event, void *param)
@@ -148,7 +164,9 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
         {
             /* USB bus reset signal detected */
             g_UsbDeviceHidGeneric.attach = 0U;
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+            g_UsbDeviceHidGeneric.currentConfiguration = 0U;
+#if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
+    (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
             if (kStatus_USB_Success == USB_DeviceClassGetSpeed(CONTROLLER_ID, &g_UsbDeviceHidGeneric.speed))
             {
@@ -158,18 +176,24 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
-            if (param)
+            if (0U == (*temp8))
+            {
+                g_UsbDeviceHidGeneric.attach = 0U;
+                g_UsbDeviceHidGeneric.currentConfiguration = 0U;
+            }
+            else if (USB_HID_GENERIC_CONFIGURE_INDEX == (*temp8))
             {
                 /* Set device configuration request */
                 g_UsbDeviceHidGeneric.attach = 1U;
                 g_UsbDeviceHidGeneric.currentConfiguration = *temp8;
-                if (USB_HID_GENERIC_CONFIGURE_INDEX == (*temp8))
-                {
-                    error = USB_DeviceHidRecv(
-                        g_UsbDeviceHidGeneric.hidHandle, USB_HID_GENERIC_ENDPOINT_OUT,
-                        (uint8_t *)&g_UsbDeviceHidGeneric.buffer[g_UsbDeviceHidGeneric.bufferIndex][0],
-                        USB_HID_GENERIC_OUT_BUFFER_LENGTH);
-                }
+                error = USB_DeviceHidRecv(
+                    g_UsbDeviceHidGeneric.hidHandle, USB_HID_GENERIC_ENDPOINT_OUT,
+                    (uint8_t *)&g_UsbDeviceHidGeneric.buffer[g_UsbDeviceHidGeneric.bufferIndex][0],
+                    USB_HID_GENERIC_OUT_BUFFER_LENGTH);
+            }
+            else
+            {
+                error = kStatus_USB_InvalidRequest;
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -230,6 +254,16 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                                                              (usb_device_get_configuration_descriptor_struct_t *)param);
             }
             break;
+#if (defined(USB_DEVICE_CONFIG_CV_TEST) && (USB_DEVICE_CONFIG_CV_TEST > 0U))
+        case kUSB_DeviceEventGetDeviceQualifierDescriptor:
+            if (param)
+            {
+                /* Get device descriptor request */
+                error = USB_DeviceGetDeviceQualifierDescriptor(
+                    handle, (usb_device_get_device_qualifier_descriptor_struct_t *)param);
+            }
+            break;
+#endif
         case kUSB_DeviceEventGetStringDescriptor:
             if (param)
             {
@@ -267,64 +301,20 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
     return error;
 }
 
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
-void USBHS_IRQHandler(void)
-{
-    USB_DeviceEhciIsrFunction(g_UsbDeviceHidGeneric.deviceHandle);
-}
-#endif
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
-void USB0_IRQHandler(void)
-{
-    USB_DeviceKhciIsrFunction(g_UsbDeviceHidGeneric.deviceHandle);
-}
-#endif
-
 static void USB_DeviceApplicationInit(void)
 {
-    uint8_t irqNumber;
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
-    uint8_t usbDeviceEhciIrq[] = USBHS_IRQS;
-    irqNumber = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
-
-    CLOCK_EnableUsbhs0Clock(kCLOCK_UsbSrcPll0, CLOCK_GetFreq(kCLOCK_PllFllSelClk));
-    USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ);
-#endif
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
-    uint8_t usbDeviceKhciIrq[] = USB_IRQS;
-    irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
-
-    SystemCoreClockUpdate();
-
-#if ((defined FSL_FEATURE_USB_KHCI_IRC48M_MODULE_CLOCK_ENABLED) && (FSL_FEATURE_USB_KHCI_IRC48M_MODULE_CLOCK_ENABLED))
-    CLOCK_EnableUsbfs0Clock(kCLOCK_UsbSrcIrc48M, 48000000U);
-#else
-    CLOCK_EnableUsbfs0Clock(kCLOCK_UsbSrcPll0, CLOCK_GetFreq(kCLOCK_PllFllSelClk));
-#endif /* FSL_FEATURE_USB_KHCI_IRC48M_MODULE_CLOCK_ENABLED */
-#endif
-#if (defined(FSL_FEATURE_SOC_MPU_COUNT) && (FSL_FEATURE_SOC_MPU_COUNT > 0U))
-    MPU_Enable(MPU, 0);
-#endif /* FSL_FEATURE_SOC_MPU_COUNT */
-
-/*
- * If the SOC has USB KHCI dedicated RAM, the RAM memory needs to be clear after
- * the KHCI clock is enabled. When the demo uses USB EHCI IP, the USB KHCI dedicated
- * RAM can not be used and the memory can't be accessed.
- */
-#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U))
-#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS) && (FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS > 0U))
-    for (int i = 0; i < FSL_FEATURE_USB_KHCI_USB_RAM; i++)
-    {
-        ((uint8_t *)FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS)[i] = 0x00U;
-    }
-#endif /* FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS */
-#endif /* FSL_FEATURE_USB_KHCI_USB_RAM */
+    USB_DeviceClockInit();
+#if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
+    SYSMPU_Enable(SYSMPU, 0);
+#endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
     /* Set HID generic to default state */
     g_UsbDeviceHidGeneric.speed = USB_SPEED_FULL;
     g_UsbDeviceHidGeneric.attach = 0U;
     g_UsbDeviceHidGeneric.hidHandle = (class_handle_t)NULL;
     g_UsbDeviceHidGeneric.deviceHandle = NULL;
+    g_UsbDeviceHidGeneric.buffer[0] = (uint8_t *)&s_GenericBuffer0[0];
+    g_UsbDeviceHidGeneric.buffer[1] = (uint8_t *)&s_GenericBuffer1[0];
 
     /* Initialize the usb stack and class drivers */
     if (kStatus_USB_Success !=
@@ -340,25 +330,18 @@ static void USB_DeviceApplicationInit(void)
         g_UsbDeviceHidGeneric.hidHandle = g_UsbDeviceHidConfigList.config->classHandle;
     }
 
-    /* Install isr, set priority, and enable IRQ. */
-    NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-    NVIC_EnableIRQ((IRQn_Type)irqNumber);
+    USB_DeviceIsrEnable();
 
     /* Start USB device HID generic */
     USB_DeviceRun(g_UsbDeviceHidGeneric.deviceHandle);
 }
 
-#if USB_DEVICE_CONFIG_USE_TASK
+#if defined(USB_DEVICE_CONFIG_USE_TASK) && (USB_DEVICE_CONFIG_USE_TASK > 0)
 void USB_DeviceTask(void *handle)
 {
     while (1U)
     {
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
-        USB_DeviceEhciTaskFunction(handle);
-#endif
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
-        USB_DeviceKhciTaskFunction(handle);
-#endif
+        USB_DeviceTaskFn(handle);
     }
 }
 #endif
@@ -389,7 +372,7 @@ void APP_task(void *handle)
     }
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)
@@ -408,7 +391,7 @@ void main(void)
                     ) != pdPASS)
     {
         usb_echo("app task create failed!\r\n");
-#if (defined(__CC_ARM) || defined(__GNUC__))
+#if (defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__))
         return 1U;
 #else
         return;
@@ -417,7 +400,7 @@ void main(void)
 
     vTaskStartScheduler();
 
-#if (defined(__CC_ARM) || defined(__GNUC__))
+#if (defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__))
     return 1U;
 #endif
 }

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -18,6 +18,10 @@
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 #include "app.h"
 #include "board.h"
+#if (defined(USB_HOST_CONFIG_BATTERY_CHARGER) && (USB_HOST_CONFIG_BATTERY_CHARGER > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+#include "usb_charger_detect.h"
+#endif
 
 #if ((!USB_HOST_CONFIG_KHCI) && (!USB_HOST_CONFIG_EHCI) && (!USB_HOST_CONFIG_OHCI) && (!USB_HOST_CONFIG_IP3516HS))
 #error Please enable USB_HOST_CONFIG_KHCI, USB_HOST_CONFIG_EHCI, USB_HOST_CONFIG_OHCI, or USB_HOST_CONFIG_IP3516HS in file usb_host_config.
@@ -28,7 +32,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
+#if (defined(USB_HOST_CONFIG_BATTERY_CHARGER) && (USB_HOST_CONFIG_BATTERY_CHARGER > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+char *SW_GetName(void);
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -89,7 +96,7 @@ void USB_HostIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbHOSTKhciIrq[] = USB_IRQS;
-    irqNumber = usbHOSTKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+    irqNumber                = usbHOSTKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 
 /* Install isr, set priority, and enable IRQ. */
 #if defined(__GIC_PRIO_BITS)
@@ -115,7 +122,7 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
 {
     usb_status_t status = kStatus_USB_Success;
 
-    switch (eventCode)
+    switch (eventCode & 0x0000FFFFU)
     {
         case kUSB_HostEventAttach:
             status = USB_HostHidMouseEvent(deviceHandle, configurationHandle, eventCode);
@@ -131,6 +138,10 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
 
         case kUSB_HostEventDetach:
             status = USB_HostHidMouseEvent(deviceHandle, configurationHandle, eventCode);
+            break;
+
+        case kUSB_HostEventEnumerationFail:
+            usb_echo("enumeration failed\r\n");
             break;
 
         default:
@@ -156,11 +167,23 @@ static void USB_HostApplicationInit(void)
         usb_echo("host init error\r\n");
         return;
     }
+#if (defined(USB_HOST_CONFIG_BATTERY_CHARGER) && (USB_HOST_CONFIG_BATTERY_CHARGER > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+    USB_HostSetChargerType(g_HostHandle, kUSB_DcdSDP);
+    g_HostHidMouse.switchChargerTypeTriggered = 0U;
+    g_HostHidMouse.chargerType                = 0;
+    g_HostHidMouse.vbusState                  = 1;
+#endif
     USB_HostIsrEnable();
 
     USB_HostGetVersion(&usbHostVersion);
     usb_echo("host init done, the host stack version is %d.%d.%d.\r\n", ((uint8_t)(usbHostVersion >> 16)),
              ((uint8_t)(usbHostVersion >> 8)), ((uint8_t)(usbHostVersion)));
+
+#if (defined(USB_HOST_CONFIG_BATTERY_CHARGER) && (USB_HOST_CONFIG_BATTERY_CHARGER > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+    usb_echo("Please Press the switch(%s) to change the charge type.\r\n", SW_GetName());
+#endif
 }
 
 int main(void)

@@ -6,13 +6,17 @@ In this example, qspi will send data and operate the external flash connected wi
 be executed, such as Write Enable, Erase sector, Program page.
 Example will first erase the sector and programe a page into the flash, at last check if the data in flash is correct.
 
+Notice: While do program, it is not suggested to make the flash write frequency bigger than the core clock frequency.
+In some tool chain's Debug version, this may cause core do not have enough speed to send data to flash.
+The flash write frequency equals to QSPI working frequency plus data line number. For example, if QSPI working in 48MHz,
+program command uses quad mode, the write frequency is 48MHz * 4 = 192MHz.
+
 Toolchain supported
 ===================
-- IAR embedded Workbench 8.11.3
-- Keil MDK 5.23
-- GCC ARM Embedded 6-2017-q2
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso10.1.0
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================

@@ -45,7 +45,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define OVER_SAMPLE_RATE (256U)
 #define DEMO_SAI_BITWIDTH (kSAI_WordWidth16bits)
 #define SAI_TxIRQHandler I2S0_Tx_IRQHandler
 #define SAI_RxIRQHandler I2S0_Rx_IRQHandler
@@ -80,9 +79,18 @@
 #define BOARD_SW_NAME BOARD_SW3_NAME
 
 #define AUDIO_DMA_EDMA_MODE (1U)
+
+/* demo audio data channel */
+#define DEMO_AUDIO_DATA_CHANNEL (2U)
+/* demo audio bit width */
+#define DEMO_AUDIO_BIT_WIDTH kSAI_WordWidth16bits
+
+#define OVER_SAMPLE_RATE (256U)
+#define DEMO_AUDIO_SAMPLE_RATE (kSAI_SampleRate48KHz)
+#define DEMO_AUDIO_SAI_MASTER_CLOCK OVER_SAMPLE_RATE *DEMO_AUDIO_SAMPLE_RATE
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 void BOARD_I2C_ReleaseBus(void);
 void BOARD_InitHardware(void);
 void USB_DeviceClockInit(void);
@@ -92,7 +100,7 @@ void USB_DeviceTaskFn(void *deviceHandle);
 #endif
 
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param);
-extern void Init_Board_Sai_Codec(void);
+extern void Init_Board_Audio(void);
 extern usb_status_t USB_DeviceHidKeyboardAction(void);
 extern char *SW_GetName(void);
 extern void USB_AudioCodecTask(void);
@@ -104,11 +112,10 @@ extern usb_status_t USB_DeviceAudioRecorderSetInterface(usb_device_handle handle
 extern usb_status_t USB_DeviceAudioSpeakerSetInterface(usb_device_handle handle,
                                                        uint8_t interface,
                                                        uint8_t alternateSetting);
-extern void Init_Board_Sai_Codec(void);
 extern void USB_AudioSpeakerResetTask(void);
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 extern usb_device_composite_struct_t g_composite;
 extern uint8_t audioPlayDataBuff[AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_OUT_ENDP_PACKET_SIZE];
 extern uint8_t audioRecDataBuff[AUDIO_RECORDER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_IN_ENDP_PACKET_SIZE];
@@ -129,9 +136,19 @@ static uint8_t audioPlayDMATempBuff[FS_ISO_OUT_ENDP_PACKET_SIZE];
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 static uint8_t audioRecDMATempBuff[FS_ISO_IN_ENDP_PACKET_SIZE];
 #endif
-uint8_t codecHandleBuffer[CODEC_HANDLE_SIZE] = {0U};
-codec_handle_t *codecHandle                  = (codec_handle_t *)codecHandleBuffer;
-da7212_config_t da7212Config                 = {
+codec_handle_t codecHandle;
+#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
+    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
+sai_master_clock_t mclkConfig = {
+#if defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)
+    .mclkOutputEnable = true,
+#if !(defined(FSL_FEATURE_SAI_HAS_NO_MCR_MICS) && (FSL_FEATURE_SAI_HAS_NO_MCR_MICS))
+    .mclkSource = kSAI_MclkSourceSysclk,
+#endif
+#endif
+};
+#endif
+da7212_config_t da7212Config = {
     .i2cConfig    = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE, .codecI2CSourceClock = 60000000},
     .dacSource    = kDA7212_DACSourceInputStream,
     .slaveAddress = DA7212_ADDRESS,
@@ -141,12 +158,14 @@ da7212_config_t da7212Config                 = {
 };
 codec_config_t boardCodecConfig = {.codecDevType = kCODEC_DA7212, .codecDevConfig = &da7212Config};
 /* Composite device structure. */
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 usb_device_composite_struct_t g_composite;
 extern volatile bool g_ButtonPress;
 extern usb_device_composite_struct_t *g_UsbDeviceComposite;
 extern usb_device_composite_struct_t *g_deviceComposite;
 extern uint8_t g_UsbDeviceInterface[USB_COMPOSITE_INTERFACE_COUNT];
 extern uint32_t totalCount;
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_SetupOutBuffer[8];
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -192,48 +211,12 @@ char *SW_GetName(void)
 
 void BOARD_Codec_Init()
 {
-    CODEC_Init(codecHandle, &boardCodecConfig);
+    CODEC_Init(&codecHandle, &boardCodecConfig);
 }
 
 void BOARD_SetCodecMuteUnmute(bool mute)
 {
-    CODEC_SetMute(codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, mute);
-}
-
-void SAI_USB_Audio_TxInit(I2S_Type *SAIBase)
-{
-    SAI_TxGetDefaultConfig(&saiTxConfig);
-
-    SAI_TxInit(SAIBase, &saiTxConfig);
-}
-
-void SAI_USB_Audio_RxInit(I2S_Type *SAIBase)
-{
-    SAI_RxGetDefaultConfig(&saiRxConfig);
-
-    SAI_RxInit(SAIBase, &saiRxConfig);
-}
-
-void DA7212_Config_Audio_Formats(uint32_t samplingRate)
-{
-    /* Configure the audio audioFormat */
-    audioFormat.bitWidth      = kSAI_WordWidth16bits;
-    audioFormat.channel       = 0U;
-    audioFormat.sampleRate_Hz = samplingRate;
-
-    audioFormat.masterClockHz = OVER_SAMPLE_RATE * audioFormat.sampleRate_Hz;
-    audioFormat.protocol      = saiTxConfig.protocol;
-    audioFormat.stereo        = kSAI_Stereo;
-#if defined(FSL_FEATURE_SAI_FIFO_COUNT) && (FSL_FEATURE_SAI_FIFO_COUNT > 1)
-    audioFormat.watermark = FSL_FEATURE_SAI_FIFO_COUNT / 2U;
-#endif
-}
-
-void BOARD_USB_Audio_TxRxInit(uint32_t samplingRate)
-{
-    SAI_USB_Audio_TxInit(BOARD_DEMO_SAI);
-    SAI_USB_Audio_RxInit(BOARD_DEMO_SAI);
-    DA7212_Config_Audio_Formats(samplingRate);
+    CODEC_SetMute(&codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, mute);
 }
 
 #if AUDIO_DMA_EDMA_MODE
@@ -289,7 +272,34 @@ static void rxCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t statu
     }
     SAI_TransferReceiveEDMA(base, handle, &xfer);
 }
+void BOARD_USB_Audio_TxRxInit(uint32_t samplingRate)
+{
+    sai_transceiver_t config;
+    SAI_Init(BOARD_DEMO_SAI);
+    SAI_TransferTxCreateHandleEDMA(BOARD_DEMO_SAI, &txHandle, txCallback, NULL, &dmaTxHandle);
+    SAI_TransferRxCreateHandleEDMA(BOARD_DEMO_SAI, &rxHandle, rxCallback, NULL, &dmaRxHandle);
+    /* I2S mode configurations */
+    SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, kSAI_Channel0Mask);
+    SAI_TransferTxSetConfigEDMA(BOARD_DEMO_SAI, &txHandle, &config);
+    config.syncMode = kSAI_ModeSync;
+    SAI_TransferRxSetConfigEDMA(BOARD_DEMO_SAI, &rxHandle, &config);
 
+    /* set bit clock divider */
+    SAI_TxSetBitClockRate(BOARD_DEMO_SAI, DEMO_AUDIO_SAI_MASTER_CLOCK, samplingRate, DEMO_AUDIO_BIT_WIDTH,
+                          DEMO_AUDIO_DATA_CHANNEL);
+    SAI_RxSetBitClockRate(BOARD_DEMO_SAI, DEMO_AUDIO_SAI_MASTER_CLOCK, samplingRate, DEMO_AUDIO_BIT_WIDTH,
+                          DEMO_AUDIO_DATA_CHANNEL);
+
+/* master clock configurations */
+#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
+    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
+#if defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER)
+    mclkConfig.mclkHz          = DEMO_AUDIO_SAI_MASTER_CLOCK;
+    mclkConfig.mclkSourceClkHz = CLOCK_GetFreq(kCLOCK_CoreSysClk);
+#endif
+    SAI_SetMasterClockConfig(BOARD_DEMO_SAI, &mclkConfig);
+#endif
+}
 void BOARD_DMA_EDMA_Config()
 {
     edma_config_t dmaConfig = {0};
@@ -303,21 +313,6 @@ void BOARD_DMA_EDMA_Config()
     DMAMUX_EnableChannel(EXAMPLE_DMAMUX, EXAMPLE_TX_CHANNEL);
     DMAMUX_SetSource(EXAMPLE_DMAMUX, EXAMPLE_RX_CHANNEL, (uint8_t)EXAMPLE_SAI_RX_SOURCE);
     DMAMUX_EnableChannel(EXAMPLE_DMAMUX, EXAMPLE_RX_CHANNEL);
-}
-
-void BOARD_Create_Audio_DMA_EDMA_Handle()
-{
-    SAI_TransferTxCreateHandleEDMA(BOARD_DEMO_SAI, &txHandle, txCallback, NULL, &dmaTxHandle);
-    SAI_TransferRxCreateHandleEDMA(BOARD_DEMO_SAI, &rxHandle, rxCallback, NULL, &dmaRxHandle);
-}
-
-void BOARD_DMA_EDMA_Set_AudioFormat()
-{
-    uint32_t mclkSourceClockHz = 0U;
-    mclkSourceClockHz          = CLOCK_GetFreq(BOARD_DEMO_SAI_CLKSRC);
-    BOARD_Create_Audio_DMA_EDMA_Handle();
-    SAI_TransferTxSetFormatEDMA(BOARD_DEMO_SAI, &txHandle, &audioFormat, mclkSourceClockHz, audioFormat.masterClockHz);
-    SAI_TransferRxSetFormatEDMA(BOARD_DEMO_SAI, &rxHandle, &audioFormat, mclkSourceClockHz, audioFormat.masterClockHz);
 }
 
 void BOARD_DMA_EDMA_Enable_Audio_Interrupts()
@@ -342,15 +337,18 @@ void BOARD_DMA_EDMA_Start()
     SAI_TransferReceiveEDMA(BOARD_DEMO_SAI, &rxHandle, &xfer);
 }
 
-void BOARD_Transfer_Mode_Config()
+/*Initialize audio interface and codec.*/
+void Init_Board_Audio(void)
 {
+    usb_echo("Init Audio SAI and CODEC\r\n");
+
+    BOARD_USB_AUDIO_KEYBOARD_Init();
     BOARD_DMA_EDMA_Config();
-    BOARD_Create_Audio_DMA_EDMA_Handle();
-    BOARD_DMA_EDMA_Set_AudioFormat();
+    BOARD_USB_Audio_TxRxInit(AUDIO_SAMPLING_RATE);
+    BOARD_Codec_Init();
     BOARD_DMA_EDMA_Enable_Audio_Interrupts();
     BOARD_DMA_EDMA_Start();
 }
-
 void SAI_UserTxIRQHandler(void)
 {
     /* Clear the FEF flag */
@@ -368,113 +366,6 @@ void SAI_UserRxIRQHandler(void)
     /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
         exception return operation might vector to incorrect interrupt */
     __DSB();
-}
-#endif
-
-#if AUDIO_INTERRUPT_IRQ_MODE
-void BOARD_Interrupt_Set_AudioFormat()
-{
-    uint32_t mclkSourceClockHz = 0U;
-    mclkSourceClockHz          = CLOCK_GetFreq(BOARD_DEMO_SAI_CLKSRC);
-
-    SAI_TxSetFormat(BOARD_DEMO_SAI, &audioFormat, mclkSourceClockHz, audioFormat.masterClockHz);
-    SAI_RxSetFormat(BOARD_DEMO_SAI, &audioFormat, mclkSourceClockHz, audioFormat.masterClockHz);
-}
-
-void BOARD_Enable_Audio_Interrupts()
-{
-    NVIC_SetPriority((IRQn_Type)DEMO_SAI_IRQ_TX, USB_DEVICE_INTERRUPT_PRIORITY - 1);
-    NVIC_SetPriority((IRQn_Type)DEMO_SAI_IRQ_RX, USB_DEVICE_INTERRUPT_PRIORITY - 1);
-    /*  Enable interrupt */
-    EnableIRQ(DEMO_SAI_IRQ_TX);
-    EnableIRQ(DEMO_SAI_IRQ_RX);
-    SAI_TxEnableInterrupts(BOARD_DEMO_SAI, kSAI_FIFOWarningInterruptEnable | kSAI_FIFOErrorInterruptEnable);
-    SAI_RxEnableInterrupts(BOARD_DEMO_SAI, kSAI_FIFOWarningInterruptEnable | kSAI_FIFOErrorInterruptEnable);
-    SAI_TxEnable(BOARD_DEMO_SAI, true);
-    SAI_RxEnable(BOARD_DEMO_SAI, true);
-}
-
-void SAI_TxIRQHandler(void)
-{
-    uint32_t data = 0;
-    uint8_t i, j = 0;
-    uint32_t temp = 0;
-
-    /* Clear the FIFO error flag */
-    if (SAI_TxGetStatusFlag(BOARD_DEMO_SAI) & kSAI_FIFOErrorFlag)
-    {
-        SAI_TxClearStatusFlags(BOARD_DEMO_SAI, kSAI_FIFOErrorFlag);
-    }
-
-    if (SAI_TxGetStatusFlag(BOARD_DEMO_SAI) & kSAI_FIFOWarningFlag)
-    {
-        for (i = 0; i < FSL_FEATURE_SAI_FIFO_COUNT; i++)
-        {
-            data = 0;
-            if (g_composite.audioUnified.startPlayHalfFull)
-            {
-                for (j = 0; j < DEMO_SAI_BITWIDTH / 8U; j++)
-                {
-                    temp = (uint32_t)(audioPlayDataBuff[g_composite.audioUnified.tdWriteNumberPlay]);
-                    data |= (temp << (8U * j));
-                    g_composite.audioUnified.tdWriteNumberPlay++;
-                    g_composite.audioUnified.audioSendCount++;
-                }
-                if (g_composite.audioUnified.tdWriteNumberPlay >=
-                    AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_OUT_ENDP_PACKET_SIZE)
-                {
-                    g_composite.audioUnified.tdWriteNumberPlay = 0;
-                }
-            }
-            else if (g_composite.audioUnified.startPlay)
-            {
-                for (j = 0; j < DEMO_SAI_BITWIDTH / 8U; j++)
-                {
-                    g_composite.audioUnified.audioSendCount++;
-                }
-                data = 0;
-            }
-            else
-            {
-                data = 0;
-            }
-            SAI_WriteData(BOARD_DEMO_SAI, SAI_IRQ_CHANNEL, data);
-        }
-    }
-}
-
-void SAI_RxIRQHandler(void)
-{
-    uint32_t data = 0;
-    uint8_t i, j = 0;
-
-    /* Clear the FIFO error flag */
-    if (SAI_RxGetStatusFlag(BOARD_DEMO_SAI) & kSAI_FIFOErrorFlag)
-    {
-        SAI_RxClearStatusFlags(BOARD_DEMO_SAI, kSAI_FIFOErrorFlag);
-    }
-
-    if (SAI_RxGetStatusFlag(BOARD_DEMO_SAI) & kSAI_FIFOWarningFlag)
-    {
-        for (i = 0; i < FSL_FEATURE_SAI_FIFO_COUNT; i++)
-        {
-            data = SAI_ReadData(BOARD_DEMO_SAI, SAI_IRQ_CHANNEL);
-            if (g_composite.audioUnified.startRec)
-            {
-                for (j = 0; j < DEMO_SAI_BITWIDTH / 8U; j++)
-                {
-                    audioRecDataBuff[g_composite.audioUnified.tdReadNumberRec] = (data >> (8U * j));
-                    g_composite.audioUnified.tdReadNumberRec++;
-                    g_composite.audioUnified.audioRecvCount++;
-                }
-                if (g_composite.audioUnified.tdReadNumberRec >=
-                    AUDIO_RECORDER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_IN_ENDP_PACKET_SIZE)
-                {
-                    g_composite.audioUnified.tdReadNumberRec = 0;
-                }
-            }
-        }
-    }
 }
 #endif
 
@@ -569,7 +460,8 @@ void USB_DeviceTaskFn(void *deviceHandle)
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
     usb_status_t error = kStatus_USB_Error;
-    uint8_t *temp8 = (uint8_t *)param;
+    uint8_t *temp8     = (uint8_t *)param;
+    uint8_t count      = 0U;
 
     switch (event)
     {
@@ -577,8 +469,12 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         {
             /* USB bus reset signal detected */
             /* Initialize the control IN and OUT pipes */
+            for (count = 0U; count < USB_DEVICE_INTERFACE_COUNT; count++)
+            {
+                g_composite.currentInterfaceAlternateSetting[count] = 0U;
+            }
             USB_DeviceControlPipeInit(handle);
-            g_composite.attach = 0U;
+            g_composite.attach               = 0U;
             g_composite.currentConfiguration = 0U;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
@@ -593,12 +489,12 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         case kUSB_DeviceEventSetConfiguration:
             if (0U == (*temp8))
             {
-                g_composite.attach = 0U;
+                g_composite.attach               = 0U;
                 g_composite.currentConfiguration = 0U;
             }
             else if (USB_COMPOSITE_CONFIGURE_INDEX == (*temp8))
             {
-                g_composite.attach = 1U;
+                g_composite.attach               = 1U;
                 g_composite.currentConfiguration = *temp8;
                 USB_DeviceAudioUnifiedSetConfigure(handle, *temp8);
                 USB_DeviceHidKeyboardSetConfigure(handle, *temp8);
@@ -612,7 +508,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         case kUSB_DeviceEventSetInterface:
             if (g_composite.attach)
             {
-                uint8_t interface = (uint8_t)(*temp8);
+                uint8_t interface        = (uint8_t)(*temp8);
                 uint8_t alternateSetting = (uint8_t)g_UsbDeviceInterface[interface];
                 if (USB_AUDIO_RECORDER_STREAM_INTERFACE_INDEX == interface)
                 {
@@ -754,8 +650,8 @@ usb_status_t USB_DeviceConfigureRemoteWakeup(usb_device_handle handle, uint8_t e
 usb_status_t USB_DeviceConfigureEndpointStatus(usb_device_handle handle, uint8_t ep, uint8_t status)
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
-    error = USB_DeviceAudioUnifiedConfigureEndpointStatus(handle, ep, status);
-    error = USB_DeviceHidConfigureEndpointStatus(handle, ep, status);
+    error              = USB_DeviceAudioUnifiedConfigureEndpointStatus(handle, ep, status);
+    error              = USB_DeviceHidConfigureEndpointStatus(handle, ep, status);
 
     return error;
 }
@@ -777,12 +673,11 @@ usb_status_t USB_DeviceGetClassReceiveBuffer(usb_device_handle handle,
                                              uint32_t *length,
                                              uint8_t **buffer)
 {
-    static uint8_t setupOut[8];
-    if ((NULL == buffer) || ((*length) > sizeof(setupOut)))
+    if ((NULL == buffer) || ((*length) > sizeof(s_SetupOutBuffer)))
     {
         return kStatus_USB_InvalidRequest;
     }
-    *buffer = setupOut;
+    *buffer = s_SetupOutBuffer;
     return kStatus_USB_Success;
 }
 
@@ -841,8 +736,8 @@ void APPInit(void)
     SYSMPU_Enable(SYSMPU, 0);
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-    g_composite.speed = USB_SPEED_FULL;
-    g_composite.attach = 0U;
+    g_composite.speed        = USB_SPEED_FULL;
+    g_composite.attach       = 0U;
     g_composite.deviceHandle = NULL;
 
     if (kStatus_USB_Success != USB_DeviceInit(CONTROLLER_ID, USB_DeviceCallback, &g_composite.deviceHandle))
@@ -859,7 +754,7 @@ void APPInit(void)
         USB_DeviceHidKeyboardInit(&g_composite);
     }
 
-    Init_Board_Sai_Codec();
+    Init_Board_Audio();
 
     USB_DeviceIsrEnable();
 

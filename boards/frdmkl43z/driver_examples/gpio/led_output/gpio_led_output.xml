@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MKL43Z4"/>
+    <definition extID="component.lpuart_adapter.MKL43Z4"/>
+    <definition extID="component.serial_manager.MKL43Z4"/>
+    <definition extID="component.serial_manager_uart.MKL43Z4"/>
+    <definition extID="device.MKL43Z4_CMSIS.MKL43Z4"/>
+    <definition extID="device.MKL43Z4_startup.MKL43Z4"/>
+    <definition extID="platform.Include_common.MKL43Z4"/>
+    <definition extID="platform.Include_core_cm0plus.MKL43Z4"/>
+    <definition extID="platform.Include_dsp.MKL43Z4"/>
+    <definition extID="platform.drivers.clock.MKL43Z4"/>
+    <definition extID="platform.drivers.common.MKL43Z4"/>
+    <definition extID="platform.drivers.gpio.MKL43Z4"/>
+    <definition extID="platform.drivers.lpuart.MKL43Z4"/>
+    <definition extID="platform.drivers.port.MKL43Z4"/>
+    <definition extID="platform.drivers.smc.MKL43Z4"/>
+    <definition extID="platform.drivers.uart.MKL43Z4"/>
+    <definition extID="platform.utilities.assert.MKL43Z4"/>
+    <definition extID="platform.utilities.misc_utilities.MKL43Z4"/>
+    <definition extID="utility.debug_console.MKL43Z4"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+  </externalDefinitions>
+  <example id="frdmkl43z_gpio_led_output" name="gpio_led_output" category="driver_examples/gpio" dependency="platform.drivers.port.MKL43Z4 platform.drivers.gpio.MKL43Z4 platform.drivers.clock.MKL43Z4 platform.drivers.common.MKL43Z4 device.MKL43Z4_CMSIS.MKL43Z4 utility.debug_console.MKL43Z4 component.lpuart_adapter.MKL43Z4 component.serial_manager.MKL43Z4 component.lists.MKL43Z4 component.serial_manager_uart.MKL43Z4 platform.drivers.lpuart.MKL43Z4 device.MKL43Z4_startup.MKL43Z4 platform.drivers.uart.MKL43Z4 platform.drivers.smc.MKL43Z4 platform.utilities.assert.MKL43Z4 platform.Include_core_cm0plus.MKL43Z4 platform.Include_common.MKL43Z4 platform.Include_dsp.MKL43Z4 platform.utilities.misc_utilities.MKL43Z4">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.none</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.none</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MKL43Z256VLH4</value>
+          <value>FRDM_KL43Z</value>
+          <value>FREEDOM</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.none</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <source path="boards/frdmkl43z/driver_examples/gpio/led_output/armgcc" target_path="MKL43Z4/gcc" type="linker" toolchain="armgcc">
+      <files mask="MKL43Z256xxx4_flash.ld"/>
+    </source>
+    <source path="boards/frdmkl43z/driver_examples/gpio/led_output/iar" target_path="MKL43Z4/iar" type="linker" toolchain="iar">
+      <files mask="MKL43Z256xxx4_flash.icf"/>
+    </source>
+    <source path="boards/frdmkl43z/driver_examples/gpio/led_output/iar" target_path="frdmkl43z" type="configuration" toolchain="iar">
+      <files mask="FlashKLxx256KROM_with_config_write_enabled.board"/>
+    </source>
+    <source path="boards/frdmkl43z/driver_examples/gpio/led_output/mdk" target_path="MKL43Z4/arm" type="linker" toolchain="mdk">
+      <files mask="MKL43Z256xxx4_flash.scf"/>
+    </source>
+    <source path="boards/frdmkl43z/driver_examples/gpio/led_output" target_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/frdmkl43z/driver_examples/gpio/led_output" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/frdmkl43z/driver_examples/gpio/led_output" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/frdmkl43z/driver_examples/gpio/led_output" target_path="source" type="src">
+      <files mask="gpio_led_output.c"/>
+    </source>
+  </example>
+</ksdk:examples>

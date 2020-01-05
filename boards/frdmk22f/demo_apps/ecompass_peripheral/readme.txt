@@ -3,7 +3,16 @@ Overview
 
 The code of this demo has been prepared and updated for use with the MCUXpresso Configuration Tools (Pins/Clocks/Peripherals).
 The E-Compass demo application demonstrates the use of the FXOS8700 sensor. The tilt-compensated algorithm calculates
-all three angles (pitch, roll, and yaw or compass heading).
+all three angles (pitch, roll, and yaw or compass heading). You can open the mex file with MCUXpresso Config Tool to do further
+configuration of pin, clock and peripheral.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -41,11 +50,6 @@ Calibrate magnetometer successfully!
 Magnetometer offset Mx: 313 - My: 432 - Mz: 494
 Compass Angle: xxxx
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

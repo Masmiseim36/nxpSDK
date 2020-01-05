@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -35,20 +35,20 @@
  * Prototypes
  ******************************************************************************/
 /*!
-* @brief Initialize the EDMA.
-*/
+ * @brief Initialize the EDMA.
+ */
 static void EDMA_Configuration(void);
 /*!
-* @brief Initialize the DMAMUX.
-*/
+ * @brief Initialize the DMAMUX.
+ */
 static void DMAMUX_Configuration(void);
 /*!
-* @brief Initialize the PDB.
-*/
+ * @brief Initialize the PDB.
+ */
 static void PDB_Configuration(void);
 /*!
-* @brief Initialize the DAC.
-*/
+ * @brief Initialize the DAC.
+ */
 static void DAC_Configuration(void);
 /*!
  * @brief Callback function for EDMA.
@@ -57,9 +57,9 @@ static void Edma_Callback(edma_handle_t *handle, void *userData, bool transferDo
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-edma_handle_t g_EDMA_Handle;             /* Edma handler */
-edma_transfer_config_t g_transferConfig; /* Edma transfer config. */
-volatile uint32_t g_index = 0U;          /* Index of the g_dacDataArray array. */
+edma_handle_t g_EDMA_Handle;                             /* Edma handler */
+edma_transfer_config_t g_transferConfig;                 /* Edma transfer config. */
+volatile uint32_t g_index                          = 0U; /* Index of the g_dacDataArray array. */
 uint16_t g_dacDataArray[DEMO_DAC_USED_BUFFER_SIZE] = {
     0U,    401U,  799U,  1188U, 1567U, 1930U, 2275U, 2598U, 2895U, 3165U, 3405U, 3611U, 3783U, 3918U, 4016U, 4075U,
     4095U, 4075U, 4016U, 3918U, 3783U, 3611U, 3405U, 3165U, 2895U, 2598U, 2275U, 1930U, 1567U, 1188U, 799U,  401U};
@@ -67,8 +67,8 @@ uint16_t g_dacDataArray[DEMO_DAC_USED_BUFFER_SIZE] = {
  * Code
  ******************************************************************************/
 /*!
-* @brief Main function
-*/
+ * @brief Main function
+ */
 int main(void)
 {
     /* Initialize hardware. */
@@ -141,7 +141,7 @@ static void PDB_Configuration(void)
      */
     PDB_GetDefaultConfig(&pdbConfigStruct);
     pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor40;
-    pdbConfigStruct.enableContinuousMode = true;
+    pdbConfigStruct.enableContinuousMode        = true;
     PDB_Init(DEMO_PDB_BASEADDR, &pdbConfigStruct);
     PDB_EnableInterrupts(DEMO_PDB_BASEADDR, kPDB_DelayInterruptEnable);
     PDB_SetModulusValue(DEMO_PDB_BASEADDR, DEMO_PDB_MODULUS_VALUE);
@@ -149,7 +149,7 @@ static void PDB_Configuration(void)
 
     /* Set DAC trigger. */
     pdbDacTriggerConfigStruct.enableExternalTriggerInput = false;
-    pdbDacTriggerConfigStruct.enableIntervalTrigger = true;
+    pdbDacTriggerConfigStruct.enableIntervalTrigger      = true;
     PDB_SetDACTriggerConfig(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, &pdbDacTriggerConfigStruct);
     PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, DEMO_PDB_DAC_INTERVAL_VALUE);
 

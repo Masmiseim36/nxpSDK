@@ -1,0 +1,27 @@
+/*!
+@page middleware_log Middleware Change Log
+
+@section emvl1 EMVL1 for MCUXpresso SDK
+    The current driver version is 2.1.0.
+
+    - 2.1.0
+        - Added abort transfer functionality.
+
+    - 2.0.2
+        - Re-implemented function for sending commands in T=0.
+        - Bug Fix:
+            - Fixed wrong size of response in T=0 (KPSDK-11248).
+            - Fixed problem with command cases 3 in T=1, expected wrong length of response (KPSDK-11335).
+            - Fixed wrong length of response in T=1 (KPSDK-11868).
+            - Fixed usage application buffer for data payload and overhead associated with T=1 protocol (KPSDK-11336).
+		
+    - 2.0.1
+        - Bug fix:
+            - Fixed low level driver protocol timers failures during emvl1 pre-certification tests (KPSDK-9556).
+            - Fixed improper T0 commands response receiving (commands case2, case3 & case4 affected) what causes long commands responses (KPSDK-8707).
+		
+	- 2.0.0
+        - Initial version.
+
+
+*/

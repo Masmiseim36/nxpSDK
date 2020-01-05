@@ -4,7 +4,7 @@
     <definition extID="com.nxp.mcuxpresso"/>
     <definition extID="component.button.MK64F12"/>
     <definition extID="component.ftm_adapter.MK64F12"/>
-    <definition extID="component.gpio_kinetis.MK64F12"/>
+    <definition extID="component.gpio_adapter.MK64F12"/>
     <definition extID="component.led.MK64F12"/>
     <definition extID="component.lists.MK64F12"/>
     <definition extID="component.osa_bm.MK64F12"/>
@@ -17,6 +17,7 @@
     <definition extID="device.MK64F12_startup.MK64F12"/>
     <definition extID="platform.Include_common.MK64F12"/>
     <definition extID="platform.Include_core_cm4.MK64F12"/>
+    <definition extID="platform.Include_dsp.MK64F12"/>
     <definition extID="platform.drivers.clock.MK64F12"/>
     <definition extID="platform.drivers.common.MK64F12"/>
     <definition extID="platform.drivers.flash.MK64F12"/>
@@ -27,6 +28,7 @@
     <definition extID="platform.drivers.sysmpu.MK64F12"/>
     <definition extID="platform.drivers.uart.MK64F12"/>
     <definition extID="platform.utilities.assert.MK64F12"/>
+    <definition extID="platform.utilities.misc_utilities.MK64F12"/>
     <definition extID="utility.debug_console.MK64F12"/>
     <definition extID="utility.shell.MK64F12"/>
     <definition extID="iar"/>
@@ -34,7 +36,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk64f_led_control_bm" name="led_control_bm" category="component_examples" dependency="component.gpio_kinetis.MK64F12 component.ftm_adapter.MK64F12 platform.drivers.ftm.MK64F12 utility.shell.MK64F12 platform.drivers.sysmpu.MK64F12 platform.drivers.gpio.MK64F12 component.led.MK64F12 component.button.MK64F12 component.timer_manager.MK64F12 component.lists.MK64F12 component.panic.MK64F12 component.serial_manager.MK64F12 component.osa_bm.MK64F12 platform.drivers.flash.MK64F12 platform.drivers.clock.MK64F12 utility.debug_console.MK64F12 platform.drivers.port.MK64F12 platform.drivers.uart.MK64F12 platform.drivers.smc.MK64F12 device.MK64F12_CMSIS.MK64F12 component.uart_adapter.MK64F12 component.serial_manager_uart.MK64F12 platform.drivers.common.MK64F12 device.MK64F12_startup.MK64F12 platform.utilities.assert.MK64F12 platform.Include_core_cm4.MK64F12 platform.Include_common.MK64F12">
+  <example id="frdmk64f_led_control_bm" name="led_control_bm" category="component_examples" dependency="platform.drivers.ftm.MK64F12 utility.shell.MK64F12 platform.drivers.sysmpu.MK64F12 component.led.MK64F12 platform.drivers.common.MK64F12 component.timer_manager.MK64F12 component.gpio_adapter.MK64F12 component.button.MK64F12 component.lists.MK64F12 component.ftm_adapter.MK64F12 platform.drivers.gpio.MK64F12 component.panic.MK64F12 component.serial_manager.MK64F12 component.serial_manager_uart.MK64F12 component.osa_bm.MK64F12 platform.drivers.flash.MK64F12 platform.drivers.clock.MK64F12 utility.debug_console.MK64F12 platform.drivers.port.MK64F12 platform.drivers.uart.MK64F12 platform.drivers.smc.MK64F12 device.MK64F12_CMSIS.MK64F12 component.uart_adapter.MK64F12 device.MK64F12_startup.MK64F12 platform.utilities.assert.MK64F12 platform.Include_core_cm4.MK64F12 platform.Include_common.MK64F12 platform.Include_dsp.MK64F12 platform.utilities.misc_utilities.MK64F12">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -52,10 +54,11 @@
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MK64FN1M0VLL12</value>
           <value>USB_STACK_BM=1</value>
-          <value>osCustomStartup=0</value>
+          <value>FSL_OSA_TASK_ENABLE=1</value>
           <value>FRDM_K64F</value>
           <value>FREEDOM</value>
           <value>DEBUG_CONSOLE_RX_ENABLE=0</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -71,13 +74,13 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/frdmk64f/component_examples/led_control/bm/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/frdmk64f/component_examples/led_control/bm/armgcc" target_path="MK64F12/gcc" type="linker" toolchain="armgcc">
       <files mask="MK64FN1M0xxx12_flash.ld"/>
     </source>
-    <source path="boards/frdmk64f/component_examples/led_control/bm/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/frdmk64f/component_examples/led_control/bm/iar" target_path="MK64F12/iar" type="linker" toolchain="iar">
       <files mask="MK64FN1M0xxx12_flash.icf"/>
     </source>
-    <source path="boards/frdmk64f/component_examples/led_control/bm/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/frdmk64f/component_examples/led_control/bm/mdk" target_path="MK64F12/arm" type="linker" toolchain="mdk">
       <files mask="MK64FN1M0xxx12_flash.scf"/>
     </source>
     <source path="boards/frdmk64f/component_examples/led_control/bm" target_path="board" type="c_include">
@@ -93,7 +96,7 @@
       <files mask="pin_mux.c"/>
     </source>
     <source path="boards/frdmk64f/component_examples/led_control/bm" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
-      <files mask="board.readme"/>
+      <files mask="readme.txt"/>
     </source>
     <source path="boards/frdmk64f/component_examples/led_control/bm" target_path="source" type="src">
       <files mask="led_control.c"/>

@@ -1,0 +1,79 @@
+Overview
+========
+The i2c_functional_interrupt example shows how to use I2C functional driver to build a interrupt based application:
+
+In this example , one i2c instance used as I2C master and another i2c instance used as I2C slave .
+1. I2C master send data to I2C slave in interrupt . (I2C Slave using interrupt to receive the data)
+2. I2C master read data from I2C slave in interrupt . (I2C Slave using interrupt to send the data)
+3. The example assumes that the connection is OK between master and slave, so there's NO error handling code.
+Hardware requirements
+=====================
+- Mini/micro USB cable
+- TWR-KL82Z72M board
+- Personal Computer
+- Elevator Tower
+
+Board settings
+==============
+Transfer data from instance0 to instance 1 of I2C interface.
+I2C0 pins are connected with I2C1 pins of board
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INSTANCE0(I2C0)        CONNECTS TO      INSTANCE1(I2C1)
+Pin Name   Primary Elevator             Pin Name  Primary Elevator
+I2C0_SCL   A7                           I2C1_SCL  B50
+I2C0_SDA   A8                           I2C1_SDA  B51
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Prepare the Demo
+================
+1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
+2.  Open a serial terminal with the following settings:
+    - 115200 baud rate
+    - 8 data bits
+    - No parity
+    - One stop bit
+    - No flow control
+3.  Download the program to the target board.
+4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the example.
+
+Running the demo
+================
+When the example runs successfully, the following message is displayed in the terminal:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+I2C example -- MasterFuntionalInterrupt_SlaveInterrupt.
+Master will send data :
+0x 0  0x 1  0x 2  0x 3  0x 4  0x 5  0x 6  0x 7
+0x 8  0x 9  0x a  0x b  0x c  0x d  0x e  0x f
+0x10  0x11  0x12  0x13  0x14  0x15  0x16  0x17
+0x18  0x19  0x1a  0x1b  0x1c  0x1d  0x1e  0x1f
+
+Slave received data :
+0x 0  0x 1  0x 2  0x 3  0x 4  0x 5  0x 6  0x 7
+0x 8  0x 9  0x a  0x b  0x c  0x d  0x e  0x f
+0x10  0x11  0x12  0x13  0x14  0x15  0x16  0x17
+0x18  0x19  0x1a  0x1b  0x1c  0x1d  0x1e  0x1f
+
+This time , slave will send data: :
+0xff  0xfe  0xfd  0xfc  0xfb  0xfa  0xf9  0xf8
+0xf7  0xf6  0xf5  0xf4  0xf3  0xf2  0xf1  0xf0
+0xef  0xee  0xed  0xec  0xeb  0xea  0xe9  0xe8
+0xe7  0xe6  0xe5  0xe4  0xe3  0xe2  0xe1  0xe0
+
+Master received data :
+0xff  0xfe  0xfd  0xfc  0xfb  0xfa  0xf9  0xf8
+0xf7  0xf6  0xf5  0xf4  0xf3  0xf2  0xf1  0xf0
+0xef  0xee  0xed  0xec  0xeb  0xea  0xe9  0xe8
+0xe7  0xe6  0xe5  0xe4  0xe3  0xe2  0xe1  0xe0
+
+
+End of I2C example .
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
+

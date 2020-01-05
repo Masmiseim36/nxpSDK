@@ -60,7 +60,7 @@ int main(void)
     float voltRead;
 
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     BOARD_InitPeripherals();
 #if defined(FSL_FEATURE_ADC16_HAS_CALIBRATION) && FSL_FEATURE_ADC16_HAS_CALIBRATION
@@ -74,8 +74,6 @@ int main(void)
     }
 #endif /* FSL_FEATURE_ADC16_HAS_CALIBRATION */
     PRINTF("\r\nDAC ADC Peripheral Demo!\r\n");
-    PRINTF("\r\nPlease refer to Kinetis SDK Demo Applications User's Guide document,\r\n");
-    PRINTF("\r\nChapter DAC ADC demo, for pins configuration information.\r\n");
     PRINTF("\r\nADC Full Range: %d.\r\n", g_Adc16_12bitFullRange);
 
     PRINTF("\r\nPress any key to start demo.\r\n");

@@ -35,7 +35,7 @@ void led_toggle(uint32_t leds);
 #pragma section = "ramfunc_section"
 #pragma section = "ramfunc_section_init"
 void clock_change(void) @"ramfunc_section";
-#elif defined(__CC_ARM)
+#elif defined(__CC_ARM) || (__ARMCC_VERSION)
 extern uint32_t Load$$EXEC_m_ramfunc$$Base[];   // Base address for loading ram function
 extern uint32_t Load$$EXEC_m_ramfunc$$Length[]; // Size of ram function
 extern uint32_t Image$$EXEC_m_ramfunc$$Base[];
@@ -266,7 +266,7 @@ void copy_to_ram(void)
     codeRelocateRomStart = (uint8_t *)__section_begin("ramfunc_section_init");
     codeRelocateSize = (uint32_t)__section_size("ramfunc_section_init");
     codeReloocateRamStart = (uint8_t *)__section_begin("ramfunc_section");
-#elif defined(__CC_ARM)
+#elif defined(__CC_ARM) || (__ARMCC_VERSION)
     codeRelocateRomStart = (uint8_t *)Load$$EXEC_m_ramfunc$$Base;
     codeRelocateSize = (uint32_t)Load$$EXEC_m_ramfunc$$Length;
     codeReloocateRamStart = (uint8_t *)Image$$EXEC_m_ramfunc$$Base;

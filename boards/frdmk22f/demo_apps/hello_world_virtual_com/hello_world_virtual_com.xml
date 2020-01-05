@@ -3,17 +3,20 @@
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
     <definition extID="component.lists.MK22F51212"/>
+    <definition extID="component.osa.MK22F51212"/>
     <definition extID="component.serial_manager.MK22F51212"/>
     <definition extID="component.serial_manager_uart.MK22F51212"/>
     <definition extID="component.serial_manager_usb_cdc.MK22F51212"/>
-    <definition extID="component.serial_manager_usb_cdc_device_config.MK22F51212"/>
+    <definition extID="component.serial_manager_usb_cdc_device_config.frdmk22f.MK22F51212"/>
     <definition extID="component.uart_adapter.MK22F51212"/>
     <definition extID="device.MK22F51212_CMSIS.MK22F51212"/>
     <definition extID="device.MK22F51212_startup.MK22F51212"/>
     <definition extID="middleware.baremetal.MK22F51212"/>
+    <definition extID="middleware.usb.device.MK22F51212"/>
     <definition extID="middleware.usb.device_controller_khci.MK22F51212"/>
     <definition extID="platform.Include_common.MK22F51212"/>
     <definition extID="platform.Include_core_cm4.MK22F51212"/>
+    <definition extID="platform.Include_dsp.MK22F51212"/>
     <definition extID="platform.drivers.clock.MK22F51212"/>
     <definition extID="platform.drivers.common.MK22F51212"/>
     <definition extID="platform.drivers.gpio.MK22F51212"/>
@@ -22,13 +25,14 @@
     <definition extID="platform.drivers.smc.MK22F51212"/>
     <definition extID="platform.drivers.uart.MK22F51212"/>
     <definition extID="platform.utilities.assert.MK22F51212"/>
+    <definition extID="platform.utilities.misc_utilities.MK22F51212"/>
     <definition extID="utility.debug_console.MK22F51212"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk22f_hello_world_virtual_com" name="hello_world_virtual_com" category="demo_apps" dependency="component.serial_manager.MK22F51212 component.serial_manager_usb_cdc.MK22F51212 middleware.usb.device_controller_khci.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 device.MK22F51212_CMSIS.MK22F51212 utility.debug_console.MK22F51212 component.uart_adapter.MK22F51212 component.serial_manager_uart.MK22F51212 platform.drivers.uart.MK22F51212 component.lists.MK22F51212 device.MK22F51212_startup.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.port.MK22F51212 platform.drivers.smc.MK22F51212 platform.drivers.gpio.MK22F51212 platform.utilities.assert.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.Include_common.MK22F51212 middleware.baremetal.MK22F51212 component.serial_manager_usb_cdc_device_config.MK22F51212" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmk22f_hello_world_virtual_com" name="hello_world_virtual_com" category="demo_apps" dependency="component.serial_manager.MK22F51212 platform.drivers.common.MK22F51212 component.lists.MK22F51212 component.serial_manager_usb_cdc.MK22F51212 component.serial_manager_usb_cdc_device_config.frdmk22f.MK22F51212 middleware.usb.device_controller_khci.MK22F51212 middleware.usb.device.MK22F51212 platform.drivers.clock.MK22F51212 device.MK22F51212_CMSIS.MK22F51212 utility.debug_console.MK22F51212 component.uart_adapter.MK22F51212 component.serial_manager_uart.MK22F51212 platform.drivers.uart.MK22F51212 device.MK22F51212_startup.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.port.MK22F51212 platform.drivers.smc.MK22F51212 platform.drivers.gpio.MK22F51212 platform.utilities.assert.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.Include_common.MK22F51212 platform.Include_dsp.MK22F51212 component.osa.MK22F51212 platform.utilities.misc_utilities.MK22F51212 middleware.baremetal.MK22F51212">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -55,6 +59,8 @@
           <value>BOARD_USE_VIRTUALCOM=1</value>
           <value>FRDM_K22F</value>
           <value>FREEDOM</value>
+          <value>SERIAL_PORT_TYPE_USBCDC=1</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -70,14 +76,17 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/frdmk22f/demo_apps/hello_world_virtual_com/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/frdmk22f/demo_apps/hello_world_virtual_com/armgcc" target_path="MK22F51212/gcc" type="linker" toolchain="armgcc">
       <files mask="MK22FN512xxx12_flash.ld"/>
     </source>
-    <source path="boards/frdmk22f/demo_apps/hello_world_virtual_com/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/frdmk22f/demo_apps/hello_world_virtual_com/iar" target_path="MK22F51212/iar" type="linker" toolchain="iar">
       <files mask="MK22FN512xxx12_flash.icf"/>
     </source>
-    <source path="boards/frdmk22f/demo_apps/hello_world_virtual_com/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/frdmk22f/demo_apps/hello_world_virtual_com/mdk" target_path="MK22F51212/arm" type="linker" toolchain="mdk">
       <files mask="MK22FN512xxx12_flash.scf"/>
+    </source>
+    <source path="boards/frdmk22f/demo_apps/hello_world_virtual_com" target_path="./" type="other" exclude="true">
+      <files mask="hello_world_virtual_com.mex"/>
     </source>
     <source path="boards/frdmk22f/demo_apps/hello_world_virtual_com" target_path="board" type="c_include">
       <files mask="board.h"/>
@@ -90,11 +99,11 @@
     <source path="boards/frdmk22f/demo_apps/hello_world_virtual_com" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>
     </source>
+    <source path="boards/frdmk22f/demo_apps/hello_world_virtual_com" target_path="frdmk22f/demo_apps/hello_world_virtual_com" type="binary" exclude="true">
+      <files mask="hello_world_virtual_com.bin"/>
+    </source>
     <source path="boards/frdmk22f/demo_apps/hello_world_virtual_com" target_path="source" type="src">
       <files mask="hello_world.c"/>
-    </source>
-    <source path="devices/MK22F51212/utilities" target_path="component/serial_manager/usb_cdc_adapter" type="c_include">
-      <files mask="usb_device_config.h"/>
     </source>
   </example>
 </ksdk:examples>

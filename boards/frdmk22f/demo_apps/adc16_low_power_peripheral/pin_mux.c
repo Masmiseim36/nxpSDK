@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -15,11 +14,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v6.0
 processor: MK22FN512xxx12
 package_id: MK22FN512VLH12
 mcu_data: ksdk2_0
-processor_version: 0.0.11
+processor_version: 6.0.1
 board: FRDM-K22F
 pin_labels:
 - {pin_num: '23', pin_signal: PTA1/UART0_RX/FTM0_CH6/JTAG_TDI/EZP_DI, label: 'J2[4]/RED_LED', identifier: LED_RED}

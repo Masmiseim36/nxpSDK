@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 - 2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_device_config.h"
@@ -54,7 +28,7 @@
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #include "usb_phy.h"
 #endif
 
@@ -86,7 +60,7 @@ void USB_DeviceTaskFn(void *deviceHandle);
 /*******************************************************************************
 * Code
 ******************************************************************************/
-#if (defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U))
+
 void USB0_IRQHandler(void)
 {
     USB_DeviceKhciIsrFunction(g_composite.deviceHandle);
@@ -94,48 +68,26 @@ void USB0_IRQHandler(void)
     exception return operation might vector to incorrect interrupt */
     __DSB();
 }
-#endif
 void USB_DeviceClockInit(void)
 {
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
     SystemCoreClockUpdate();
     CLOCK_EnableUsbfs0Clock(kCLOCK_UsbSrcIrc48M, 48000000U);
-/*
- * If the SOC has USB KHCI dedicated RAM, the RAM memory needs to be clear after
- * the KHCI clock is enabled. When the demo uses USB EHCI IP, the USB KHCI dedicated
- * RAM can not be used and the memory can't be accessed.
- */
-#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U))
-#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS) && (FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS > 0U))
-    for (int i = 0; i < FSL_FEATURE_USB_KHCI_USB_RAM; i++)
-    {
-        ((uint8_t *)FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS)[i] = 0x00U;
-    }
-#endif /* FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS */
-#endif /* FSL_FEATURE_USB_KHCI_USB_RAM */
-#endif
 }
 void USB_DeviceIsrEnable(void)
 {
     uint8_t irqNumber;
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
+
     uint8_t usbDeviceKhciIrq[] = USB_IRQS;
-    irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
-#endif
-/* Install isr, set priority, and enable IRQ. */
-#if defined(__GIC_PRIO_BITS)
-    GIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#else
+    irqNumber                  = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+
+    /* Install isr, set priority, and enable IRQ. */
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#endif
     EnableIRQ((IRQn_Type)irqNumber);
 }
 #if USB_DEVICE_CONFIG_USE_TASK
 void USB_DeviceTaskFn(void *deviceHandle)
 {
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
     USB_DeviceKhciTaskFunction(deviceHandle);
-#endif
 }
 #endif
 /*!
@@ -160,6 +112,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         case kUSB_DeviceEventBusReset:
         {
             g_composite.attach = 0;
+            g_composite.currentConfiguration = 0U;
             error = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
@@ -172,13 +125,22 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
-            if (param)
+            if (0U ==(*temp8))
+            {
+                g_composite.attach = 0;
+                g_composite.currentConfiguration = 0U;
+            }
+            else if (USB_COMPOSITE_CONFIGURE_INDEX == (*temp8))
             {
                 g_composite.attach = 1;
                 g_composite.currentConfiguration = *temp8;
                 USB_DeviceCdcVcomSetConfigure(g_composite.cdcVcom.cdcAcmHandle, *temp8);
                 USB_DeviceMscDiskSetConfigure(g_composite.mscDisk.mscHandle, *temp8);
                 error = kStatus_USB_Success;
+            }
+            else
+            {
+                error = kStatus_USB_InvalidRequest;
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -252,7 +214,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
 }
 
 /* USB device class information */
-usb_device_class_config_struct_t g_compositeDevice[2] = {
+usb_device_class_config_struct_t g_CompositeClassConfig[2] = {
     {
         USB_DeviceCdcVcomCallback, (class_handle_t)NULL, &g_UsbDeviceCdcVcomConfig,
     },
@@ -261,8 +223,8 @@ usb_device_class_config_struct_t g_compositeDevice[2] = {
     }};
 
 /* USB device class configuration information */
-usb_device_class_config_list_struct_t g_compositeDeviceConfigList = {
-    g_compositeDevice, USB_DeviceCallback, 2,
+usb_device_class_config_list_struct_t g_UsbDeviceCompositeConfigList = {
+    g_CompositeClassConfig, USB_DeviceCallback, 2,
 };
 
 /*!
@@ -286,7 +248,7 @@ void USB_DeviceApplicationInit(void)
     g_composite.deviceHandle = NULL;
 
     if (kStatus_USB_Success !=
-        USB_DeviceClassInit(CONTROLLER_ID, &g_compositeDeviceConfigList, &g_composite.deviceHandle))
+        USB_DeviceClassInit(CONTROLLER_ID, &g_UsbDeviceCompositeConfigList, &g_composite.deviceHandle))
     {
         usb_echo("USB device composite demo init failed\r\n");
         return;
@@ -294,8 +256,8 @@ void USB_DeviceApplicationInit(void)
     else
     {
         usb_echo("USB device composite demo\r\n");
-        g_composite.cdcVcom.cdcAcmHandle = g_compositeDeviceConfigList.config[0].classHandle;
-        g_composite.mscDisk.mscHandle = g_compositeDeviceConfigList.config[1].classHandle;
+        g_composite.cdcVcom.cdcAcmHandle = g_UsbDeviceCompositeConfigList.config[0].classHandle;
+        g_composite.mscDisk.mscHandle = g_UsbDeviceCompositeConfigList.config[1].classHandle;
 
         USB_DeviceCdcVcomInit(&g_composite);
         USB_DeviceMscDiskInit(&g_composite);
@@ -357,7 +319,7 @@ void APPTask(void *handle)
     }
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)
@@ -376,7 +338,7 @@ void main(void)
                     ) != pdPASS)
     {
         usb_echo("app task create failed!\r\n");
-#if (defined(__CC_ARM) || defined(__GNUC__))
+#if (defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__))
         return 1;
 #else
         return;
@@ -385,7 +347,7 @@ void main(void)
 
     vTaskStartScheduler();
 
-#if (defined(__CC_ARM) || defined(__GNUC__))
+#if (defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__))
     return 1;
 #endif
 }

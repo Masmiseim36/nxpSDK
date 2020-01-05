@@ -1,44 +1,22 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016 - 2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "usb_host_config.h"
 #include "usb_host.h"
-#include "fsl_port.h"
 #include "fsl_device_registers.h"
 #include "usb_host_hid.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "host_mouse.h"
 #include "fsl_common.h"
-#if (defined(FSL_FEATURE_SOC_MPU_COUNT) && (FSL_FEATURE_SOC_MPU_COUNT > 0U))
-#include "fsl_mpu.h"
-#endif /* FSL_FEATURE_SOC_MPU_COUNT */
+#if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
+#include "fsl_sysmpu.h"
+#endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
+#include "app.h"
 #if ((defined USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI))
 #include "usb_phy.h"
 #endif /* USB_HOST_CONFIG_EHCI */
@@ -47,26 +25,21 @@
 #error Please enable USB_HOST_CONFIG_KHCI or USB_HOST_CONFIG_EHCI in file usb_host_config.
 #endif
 
+#include "usb_device_config.h"
+#include "usb.h"
+#include "usb_device.h"
+#include "usb_device_class.h"
+#include "usb_device_ch9.h"
+#include "usb_device_descriptor.h"
 #include "pin_mux.h"
+#include "device_mouse.h"
 #include "fsl_gpio.h"
+#include "fsl_port.h"
 #include <stdbool.h>
 #include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* USB clock source and frequency*/
-#define USB_FS_CLK_SRC kCLOCK_UsbSrcPll0
-#define USB_FS_CLK_FREQ CLOCK_GetFreq(kCLOCK_PllFllSelClk)
-#define USB_HS_PHY_CLK_SRC kCLOCK_UsbPhySrcExt
-#define USB_HS_PHY_CLK_FREQ BOARD_XTAL0_CLK_HZ
-#define USB_HS_CLK_SRC kCLOCK_UsbSrcUnused
-#define USB_HS_CLK_FREQ 0U
-#if ((defined USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI))
-#define CONTROLLER_ID kUSB_ControllerKhci0
-#endif /* USB_HOST_CONFIG_KHCI */
-#if ((defined USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI))
-#define CONTROLLER_ID kUSB_ControllerEhci0
-#endif /* USB_HOST_CONFIG_EHCI */
 
 /*******************************************************************************
  * Prototypes
@@ -83,10 +56,14 @@ extern void USB_DeviceKhciIsr(void);
 extern void USB_DeviceEhciIsr(void);
 extern void USB_HostKhciIsr(void);
 extern void USB_HostEhciIsr(void);
-
+extern void USB_HostClockInit(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+ /* Allocate the memory for the heap. */
+#if defined(configAPPLICATION_ALLOCATED_HEAP) && (configAPPLICATION_ALLOCATED_HEAP)
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t ucHeap[configTOTAL_HEAP_SIZE];
+#endif
 volatile uint32_t g_idPinStatus = 0;
 volatile uint32_t g_idPinStatusChange = 0;
 volatile uint32_t g_deviceMode = 0;
@@ -97,13 +74,154 @@ volatile USBHS_Type *ehciRegisterBase;
 /*!
  * @brief board  pin and gpio init
  */
+void USB_HostClockInit(void)
+{
+#if defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 0U)
+    usb_phy_config_struct_t phyConfig = {
+        BOARD_USB_PHY_D_CAL,
+        BOARD_USB_PHY_TXCAL45DP,
+        BOARD_USB_PHY_TXCAL45DM,
+    };
+#endif
 
+#if defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 0U)
+    CLOCK_EnableUsbhs0PhyPllClock(kCLOCK_UsbPhySrcExt, BOARD_XTAL0_CLK_HZ);
+    CLOCK_EnableUsbhs0Clock(kCLOCK_UsbSrcUnused, 0U);
+    USB_EhciPhyInit(kUSB_ControllerEhci0, BOARD_XTAL0_CLK_HZ, &phyConfig);
+#endif
+}
+
+void USB_HostIsrEnable(void)
+{
+    uint8_t irqNumber;
+#if defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 0U)
+    uint8_t usbHOSTEhciIrq[] = USBHS_IRQS;
+    irqNumber                = usbHOSTEhciIrq[0];
+#endif /* USB_HOST_CONFIG_EHCI */
+#if defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)
+    uint8_t usbHOSTKhciIrq[] = USB_IRQS;
+    irqNumber                = usbHOSTKhciIrq[0];
+#endif /* USB_HOST_CONFIG_KHCI */
+
+/* Install isr, set priority, and enable IRQ. */
+#if defined(__GIC_PRIO_BITS)
+    GIC_SetPriority((IRQn_Type)irqNumber, USB_HOST_INTERRUPT_PRIORITY);
+#else
+    NVIC_SetPriority((IRQn_Type)irqNumber, USB_HOST_INTERRUPT_PRIORITY);
+#endif
+    EnableIRQ((IRQn_Type)irqNumber);
+}
+
+void USB_HostIsrDisable(void)
+{
+    uint8_t irqNumber;
+#if defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 0U)
+    uint8_t usbHOSTEhciIrq[] = USBHS_IRQS;
+    irqNumber                = usbHOSTEhciIrq[0];
+#endif /* USB_HOST_CONFIG_EHCI */
+#if defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)
+    uint8_t usbHOSTKhciIrq[] = USB_IRQS;
+    irqNumber                = usbHOSTKhciIrq[0];
+#endif /* USB_HOST_CONFIG_KHCI */
+
+/* Install isr, set priority, and enable IRQ. */
+#if defined(__GIC_PRIO_BITS)
+    GIC_SetPriority((IRQn_Type)irqNumber, USB_HOST_INTERRUPT_PRIORITY);
+#else
+    NVIC_SetPriority((IRQn_Type)irqNumber, USB_HOST_INTERRUPT_PRIORITY);
+#endif
+    DisableIRQ((IRQn_Type)irqNumber);
+}
+void USB_HostTaskFn(void *param)
+{
+#if defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 0U)
+    USB_HostEhciTaskFunction(param);
+#endif
+#if defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)
+    USB_HostKhciTaskFunction(param);
+#endif
+}
+
+void USB_DeviceClockInit(void)
+{
+#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+    usb_phy_config_struct_t phyConfig = {
+        BOARD_USB_PHY_D_CAL,
+        BOARD_USB_PHY_TXCAL45DP,
+        BOARD_USB_PHY_TXCAL45DM,
+    };
+#endif
+#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+    CLOCK_EnableUsbhs0PhyPllClock(kCLOCK_UsbPhySrcExt, BOARD_XTAL0_CLK_HZ);
+    CLOCK_EnableUsbhs0Clock(kCLOCK_UsbSrcUnused, 0U);
+    USB_EhciPhyInit(kUSB_ControllerEhci0, BOARD_XTAL0_CLK_HZ, &phyConfig);
+#endif
+#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
+    SystemCoreClockUpdate();
+    CLOCK_EnableUsbfs0Clock(kCLOCK_UsbSrcPll0, CLOCK_GetFreq(kCLOCK_PllFllSelClk));
+/*
+ * If the SOC has USB KHCI dedicated RAM, the RAM memory needs to be clear after
+ * the KHCI clock is enabled. When the demo uses USB EHCI IP, the USB KHCI dedicated
+ * RAM can not be used and the memory can't be accessed.
+ */
+#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U))
+#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS) && (FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS > 0U))
+    for (int i = 0; i < FSL_FEATURE_USB_KHCI_USB_RAM; i++)
+    {
+        ((uint8_t *)FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS)[i] = 0x00U;
+    }
+#endif /* FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS */
+#endif /* FSL_FEATURE_USB_KHCI_USB_RAM */
+#endif
+}
+void USB_DeviceIsrEnable(void)
+{
+    uint8_t irqNumber;
+#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+    uint8_t usbDeviceEhciIrq[] = USBHS_IRQS;
+    irqNumber                  = usbDeviceEhciIrq[0];
+#endif
+#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
+    uint8_t usbDeviceKhciIrq[] = USB_IRQS;
+    irqNumber                  = usbDeviceKhciIrq[0];
+#endif
+    /* Install isr, set priority, and enable IRQ. */
+    NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
+    EnableIRQ((IRQn_Type)irqNumber);
+}
+
+void USB_DeviceIsrDisable(void)
+{
+    uint8_t irqNumber;
+#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+    uint8_t usbDeviceEhciIrq[] = USBHS_IRQS;
+    irqNumber                  = usbDeviceEhciIrq[0];
+#endif
+#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
+    uint8_t usbDeviceKhciIrq[] = USB_IRQS;
+    irqNumber                  = usbDeviceKhciIrq[0];
+#endif
+    /* Install isr, set priority, and enable IRQ. */
+    NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
+    DisableIRQ((IRQn_Type)irqNumber);
+}
+#if USB_DEVICE_CONFIG_USE_TASK
+void USB_DeviceTaskFn(void *deviceHandle)
+{
+#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+    USB_DeviceEhciTaskFunction(deviceHandle);
+#endif
+#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
+    USB_DeviceKhciTaskFunction(deviceHandle);
+#endif
+}
+#endif
 /*!
  * @brief  board USB Vbus enable or not
  */
 void BOARD_UsbVbusOn(uint8_t on)
 {
-    GPIO_WritePinOutput(GPIOD, 8U, on);
+    GPIO_PinWrite(GPIOD, 8U, on);
 
     /* Some time delay waitfor power stable */
     for (int i = 0U; i < 1000000U; i++)
@@ -121,23 +239,8 @@ uint8_t USB_GetIdPinStatus(void)
 }
 
 /*!
- * @brief USB isr function.
+ * @brief ehci host isr
  */
-#if ((defined USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI))
-void USB0_IRQHandler(void)
-{
-    if ((g_deviceMode == 0))
-    {
-        USB_HostKhciIsr();
-    }
-    else if ((g_deviceMode == 1))
-    {
-        USB_DeviceKhciIsr();
-    }
-}
-#endif /* USB_HOST_CONFIG_KHCI */
-
-#if ((defined USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI))
 void USBHS_IRQHandler(void)
 {
     if ((ehciRegisterBase->OTGSC & USBHS_OTGSC_IDIS_MASK) && (ehciRegisterBase->OTGSC & USBHS_OTGSC_IDIE_MASK))
@@ -163,9 +266,16 @@ void USBHS_IRQHandler(void)
         {
             USB_DeviceEhciIsr();
         }
+        else
+        {
+        }
     }
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
+#if defined __CORTEX_M && (__CORTEX_M == 4U)
+    __DSB();
+#endif
 }
-#endif /* USB_HOST_CONFIG_EHCI */
 
 /*!
  * @brief host mouse freertos task function.
@@ -215,6 +325,7 @@ void Pin_DetectTaskFunction(void)
         }
         else
         {
+            vTaskDelay(100);
             Host_AppDeinit();
             g_deviceMode = 1;
             BOARD_UsbVbusOn(0);
@@ -241,23 +352,22 @@ void Pin_DetectTask(void *param)
 void APP_init(void)
 {
     uint32_t usbhsBaseAddrs[] = USBHS_BASE_ADDRS;
+
     if (CONTROLLER_ID - kUSB_ControllerEhci0 >= (sizeof(usbhsBaseAddrs) / sizeof(usbhsBaseAddrs[0])))
     {
         usb_echo("Pin detect:controller is not found!\r\n");
         return;
     }
     ehciRegisterBase = (USBHS_Type *)usbhsBaseAddrs[CONTROLLER_ID - kUSB_ControllerEhci0];
-#if ((defined USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI))
-    CLOCK_EnableUsbfs0Clock(USB_FS_CLK_SRC, USB_FS_CLK_FREQ);
-#endif /* USB_HOST_CONFIG_KHCI */
-#if ((defined USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI))
-    CLOCK_EnableUsbhs0PhyPllClock(USB_HS_PHY_CLK_SRC, USB_HS_PHY_CLK_FREQ);
-    CLOCK_EnableUsbhs0Clock(USB_HS_CLK_SRC, USB_HS_CLK_FREQ);
-    USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ);
-#endif /* USB_HOST_CONFIG_EHCI */
-#if ((defined FSL_FEATURE_SOC_MPU_COUNT) && (FSL_FEATURE_SOC_MPU_COUNT))
-    MPU_Enable(MPU, 0);
-#endif /* FSL_FEATURE_SOC_MPU_COUNT */
+    USB_HostClockInit();
+#if ((defined FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT))
+    SYSMPU_Enable(SYSMPU, 0);
+#endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
+    /* Some time delay waitfor phy ID status stable */
+    for (volatile int i = 0U; i < 1000000U; i++)
+    {
+        __ASM("nop");
+    }
 
     if (USB_GetIdPinStatus())
     {
@@ -276,7 +386,7 @@ void APP_init(void)
     ehciRegisterBase->OTGSC |= USBHS_OTGSC_IDIE_MASK;
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)
@@ -290,16 +400,16 @@ void main(void)
     BOARD_InitDebugConsole();
 
     /* Enable USB Host VBUS */
-    gpioConfig.outputLogic = 0;
+    gpioConfig.outputLogic  = 0;
     gpioConfig.pinDirection = kGPIO_DigitalOutput;
     GPIO_PinInit(GPIOD, 8U, &gpioConfig);
 
     /* Enable USB ID PIN */
-    portConfig.pullSelect = kPORT_PullUp;
-    portConfig.openDrainEnable = 1;
-    portConfig.mux = kPORT_MuxAlt7;
-    portConfig.driveStrength = kPORT_LowDriveStrength;
-    portConfig.slewRate = kPORT_SlowSlewRate;
+    portConfig.pullSelect          = kPORT_PullUp;
+    portConfig.openDrainEnable     = 1;
+    portConfig.mux                 = kPORT_MuxAlt7;
+    portConfig.driveStrength       = kPORT_LowDriveStrength;
+    portConfig.slewRate            = kPORT_SlowSlewRate;
     portConfig.passiveFilterEnable = 0;
 #if defined(FSL_FEATURE_PORT_HAS_PIN_CONTROL_LOCK) && FSL_FEATURE_PORT_HAS_PIN_CONTROL_LOCK
     portConfig.lockRegister = 0;

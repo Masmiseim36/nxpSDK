@@ -4,6 +4,7 @@ This example demonstrates how the board can discover Greengrass core and communi
 You will need device (A Mac, Windows PC, or UNIX-like system) for running AWS Greengrass. Example will connect to WiFi network, try to discover your AWS Greengrass device and send Hello World message to AWS IoT cloud through it.
 This demo needs WiFi network with internet access and opened 8883 and 8443 ports.
 
+
 Prepare the AWS Greengrass and AWS IoT
 Please update WiFi firmware to version 3.3.6 using "qca_fwupdate" demo.
 Before running the demo it is needed to configure AWS IoT Console, AWS Greengrass:
@@ -25,6 +26,34 @@ Before running the demo it is needed to configure AWS IoT Console, AWS Greengras
 5.  Go to AWS IoT, find your Greengrass group and deploy it again. You should do new deployment after every configuration change.
 
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
+- Keil MDK  5.29
+- MCUXpresso  11.1.0
+
+Hardware requirements
+=====================
+- Mini/micro USB cable
+- FRDM-K64F board
+- "GT202 Adaptor V1.04" or "Silex SX-ULPAN-2401" or "FRDM-KL64Z click shield with WIFI10CLICK"
+- Personal Computer
+
+Board settings
+==============
+"Plug SX-ULPAN-2401" or "GT202 Adaptor" or "WIFI10CLICK" board to FRDM stackable headers (J1, J2, J3, J4).
+GT202 shield is compatible with FRDM-K64 SCH-REV E and higher.
+Previous revisions cannot provide GPIO mux on J2:2 (WLAN_PWRON).
+
+The default compilation settings are predefined for WIFI10CLICK shield.
+If you want to use "GT202 shield" or "Silex SX-ULPAN-2401", please add following "Compiler define" in project options:
+
+WIFISHIELD_IS=WIFISHIELD_IS_GT202
+WIFISHIELD_IS=WIFISHIELD_IS_SILEX2401
+
+The "wifi_shield.h" then includes specific shield support.
 Prepare the Demo
 ================
 
@@ -34,22 +63,22 @@ Prepare the Demo
         static const char clientcredentialMQTT_BROKER_ENDPOINT[] = "abcdefgh123456.iot.us-west-2.amazonaws.com";
         #define clientcredentialIOT_THING_NAME "HelloWorldDevice"
 
-    Each of device certificates needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h" or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\amazon-freertos\demos\common\devmode_key_provisioning\CertificateConfigurationTool) to generate the "aws_clientcredential_keys.h".
+    The device certificate and private key needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h" or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\amazon-freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
 
-    clientcredentialCLIENT_CERTIFICATE_PEM is stored in <device id>.cert.pem file and clientcredentialCLIENT_PRIVATE_KEY_PEM is stored in <device id>.private.key file.
+    keyCLIENT_CERTIFICATE_PEM is stored in <device id>.cert.pem file and keyCLIENT_PRIVATE_KEY_PEM is stored in <device id>.private.key file.
 
     Example:
-        static const char clientcredentialCLIENT_CERTIFICATE_PEM[] = "Paste client certificate here.";
+        #define keyCLIENT_CERTIFICATE_PEM "Paste client certificate here."
 
         Needs to be changed to:
 
-        static const char clientcredentialCLIENT_CERTIFICATE_PEM[] =
-            "-----BEGIN CERTIFICATE-----\n"
-            "MIIDWTCCAkGgAwIBAgIUPwbiJBIJhO6eF498l1GZ8siO/K0wDQYJKoZIhvcNAQEL\n"
-            .
-            .
-            "KByzyTutxTeI9UKcIPFxK40s4qF50a40/6UFxrGueW+TzZ4iubWzP7eG+47r\n"
-            "-----END CERTIFICATE-----\n";
+        #define keyCLIENT_CERTIFICATE_PEM "-----BEGIN CERTIFICATE-----\n"\
+        "MIIDWTCCAkGgAwIBAgIUfmv3zA+JULlMOxmz+upkAzhEkQ0wDQYJKoZIhvcNAQEL\n"\
+        .
+        .
+        .
+        "mepuT3lKmD0jZupsQ9vLQOA09rMjVMd0YPmI9ozvvWqLpjVvNTKVhsf/3slM\n"\
+        "-----END CERTIFICATE-----\n"
 
     In the same way update the private key array.
 
@@ -81,63 +110,41 @@ You can check connection log in Greengrass device on path: /greengrass/ggc/var/l
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-0 0 [Tmr Svc] Starting key provisioning...
-1 0 [Tmr Svc] Write root certificate...
-2 14 [Tmr Svc] Write device private key...
-3 488 [Tmr Svc] Write device certificate...
-4 506 [Tmr Svc] Key provisioning done...
-5 507 [Tmr Svc] Starting WiFi...
-6 2075 [Tmr Svc] WiFi module initialized.
-7 10233 [Tmr Svc] WiFi connected to AP RedmiAWS.
-8 10234 [Tmr Svc] IP Address acquired 192.168.43.251
-9 10242 [IoT_GGD] Attempting automated selection of Greengrass device
-11 28394 [IoT_GGD] About to close socket.
-12 28437 [IoT_GGD] Socket closed.
-13 28440 [IoT_GGD] Stack high watermark for discovery helper task: 1556.
-14 28479 [IoT_GGD] Looked up 192.168.43.248 as 192.168.43.248
-15 39777 [IoT_GGD] About to close socket.
-16 39826 [IoT_GGD] Socket closed.
-17 39828 [IoT_GGD] Stack high watermark for discovery helper task: 898.
-18 39829 [IoT_GGD] Greengrass device discovered.
-19 39831 [IoT_GGD] Establishing MQTT communication to Greengrass...
-20 39833 [MQTT] Looked up 192.168.43.248 as 192.168.43.248
-21 55890 [IoT_GGD] Disconnecting from broker.
-22 55965 [IoT_GGD] Disconnected from the broker.
-23 55966 [IoT_GGD] Deleted Client.
-24 55970 [IoT_GGD] Heap low watermark: 3632. Stack high watermark: 898.
-25 55972 [IoT_GGD] ----Demo finished----
+0 160 [Tmr Svc] Write certificate...
+1 470 [Tmr Svc] Device credential provisioning succeeded.
+2 473 [iot_thread] [INFO ][INIT][473] SDK successfully initialized.
+3 2343 [iot_thread] [INFO ][DEMO][2343] Successfully initialized the demo. Network type for the demo: 1
+4 2343 [iot_thread] Attempting automated selection of Greengrass device
+6 7785 [iot_thread] About to close socket.
+7 7789 [iot_thread] Socket closed.
+8 7789 [iot_thread] Stack high watermark for discovery helper task: 1411.
+9 7793 [iot_thread] Looked up 10.42.0.1 as 10.42.0.1
+10 12066 [iot_thread] About to close socket.
+11 12069 [iot_thread] Socket closed.
+12 12069 [iot_thread] Stack high watermark for discovery helper task: 761.
+13 12069 [iot_thread] Greengrass device discovered.
+14 12069 [iot_thread] Establishing MQTT communication to Greengrass...
+15 12071 [iot_thread] Looked up 10.42.0.1 as 10.42.0.1
+16 16243 [iot_thread] [INFO ][MQTT][16243] Establishing new MQTT connection.
+17 16245 [iot_thread] [INFO ][MQTT][16245] Anonymous metrics (SDK language, SDK version) will be provided to AWS IoT. Recompile with AWS_IOT_MQTT_ENABLE_METRICS set to 0 to disable.
+18 16246 [iot_thread] [INFO ][MQTT][16246] (MQTT connection 20009c48, CONNECT operation 20009d60) Waiting for operation completion.
+19 16252 [iot_thread] [INFO ][MQTT][16252] (MQTT connection 20009c48, CONNECT operation 20009d60) Wait complete with result SUCCESS.
+20 16253 [iot_thread] [INFO ][MQTT][16253] New MQTT connection 20009760 established.
+21 16255 [iot_thread] [INFO ][MQTT][16253] (MQTT connection 20009c48) MQTT PUBLISH operation queued.
+22 17755 [iot_thread] [INFO ][MQTT][17755] (MQTT connection 20009c48) MQTT PUBLISH operation queued.
+23 19255 [iot_thread] [INFO ][MQTT][19255] (MQTT connection 20009c48) MQTT PUBLISH operation queued.
+24 20755 [iot_thread] Disconnecting from broker.
+25 20755 [iot_thread] [INFO ][MQTT][20755] (MQTT connection 20009c48) Disconnecting connection.
+26 20756 [iot_thread] [INFO ][MQTT][20755] (MQTT connection 20009c48, DISCONNECT operation 20009d60) Waiting for operation completion.
+27 20756 [iot_thread] [INFO ][MQTT][20756] (MQTT connection 20009c48, DISCONNECT operation 20009d60) Wait complete with result SUCCESS.
+28 20756 [iot_thread] [INFO ][MQTT][20756] (MQTT connection 20009c48) Connection disconnected.
+29 20756 [iot_thread] [INFO ][MQTT][20756] (MQTT connection 20009c48) Network connection closed.
+30 20764 [iot_thread] [INFO ][MQTT][20764] (MQTT connection 20009c48) Network connection destroyed.
+31 20764 [iot_thread] Disconnected from the broker.
+32 20764 [iot_thread] Deleted Client.
+33 20764 [iot_thread] Heap low watermark: 4136. Stack high watermark: 761.
+34 20764 [iot_thread] ----Demo finished----
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Hardware requirements
+Customization options
 =====================
-- Mini/micro USB cable
-- FRDM-K64F board
-- GT202 Adaptor V1.04 or Silex SX-ULPAN-2401
-- Personal Computer
-
-Board settings
-==============
-Plug GT202 Adaptor board to FRDM stackable headers (J1, J2, J3, J4).
-GT202 shield is compatible *only* with FRDM-K64 rev_E.
-Previous revisions cannot provide GPIO mux on J2:2 (WLAN_PWRON).
-
-The default shield support is set to GT202 shield. To enable 
-Silex SX-ULPAN-2401, please open "wifi_shield.h" and uncomment
-following lines:
-
-//#define WIFISHIELD_IS_SILEX2041
-
-//#elif defined(WIFISHIELD_IS_SILEX2041)
-//#include "wifi_shield_silex2401.h"
-
-and comment out:
-
-#define WIFISHIELD_IS_GT202
-
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
 

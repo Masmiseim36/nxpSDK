@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_FTM_H_
 #define _FSL_FTM_H_
@@ -33,11 +11,9 @@
 #include "fsl_common.h"
 
 /*!
- * @addtogroup ftm_driver
+ * @addtogroup ftm
  * @{
  */
-
-/*! @file */
 
 /*******************************************************************************
  * Definitions
@@ -45,7 +21,8 @@
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_FTM_DRIVER_VERSION (MAKE_VERSION(2, 0, 0)) /*!< Version 2.0.0 */
+/*! @brief FTM driver version 2.2.1. */
+#define FSL_FTM_DRIVER_VERSION (MAKE_VERSION(2, 2, 1))
 /*@}*/
 
 /*!
@@ -78,7 +55,8 @@ typedef enum _ftm_pwm_mode
 {
     kFTM_EdgeAlignedPwm = 0U, /*!< Edge-aligned PWM */
     kFTM_CenterAlignedPwm,    /*!< Center-aligned PWM */
-    kFTM_CombinedPwm          /*!< Combined PWM */
+    kFTM_CombinedPwm,         /*!< Combined PWM */
+    kFTM_ComplementaryPwm     /*!< Complementary PWM */
 } ftm_pwm_mode_t;
 
 /*! @brief FTM PWM output pulse mode: high-true, low-true or no output */
@@ -102,29 +80,43 @@ typedef struct _ftm_chnl_pwm_signal_param
                                         Specifies the delay to the first edge in a PWM period.
                                         If unsure leave as 0; Should be specified as a
                                         percentage of the PWM period */
+    bool enableDeadtime;           /*!< true: The deadtime insertion in this pair of channels is enabled;
+                                        false: The deadtime insertion in this pair of channels is disabled. */
 } ftm_chnl_pwm_signal_param_t;
+
+/*! @brief Options to configure a FTM channel using precise setting.*/
+typedef struct _ftm_chnl_pwm_config_param
+{
+    ftm_chnl_t chnlNumber;        /*!< The channel/channel pair number.
+                                       In combined mode, this represents the channel pair number. */
+    ftm_pwm_level_select_t level; /*!< PWM output active level select. */
+    uint16_t dutyValue;           /*!< PWM pulse width, the uint of this value is timer ticks. */
+    uint16_t firstEdgeValue;      /*!< Used only in combined PWM mode to generate an asymmetrical PWM.
+                                             Specifies the delay to the first edge in a PWM period.
+                                             If unsure leave as 0, uint of this value is timer ticks. */
+} ftm_chnl_pwm_config_param_t;
 
 /*! @brief FlexTimer output compare mode */
 typedef enum _ftm_output_compare_mode
 {
     kFTM_NoOutputSignal = (1U << FTM_CnSC_MSA_SHIFT), /*!< No channel output when counter reaches CnV  */
-    kFTM_ToggleOnMatch = ((1U << FTM_CnSC_MSA_SHIFT) | (1U << FTM_CnSC_ELSA_SHIFT)), /*!< Toggle output */
-    kFTM_ClearOnMatch = ((1U << FTM_CnSC_MSA_SHIFT) | (2U << FTM_CnSC_ELSA_SHIFT)),  /*!< Clear output */
-    kFTM_SetOnMatch = ((1U << FTM_CnSC_MSA_SHIFT) | (3U << FTM_CnSC_ELSA_SHIFT))     /*!< Set output */
+    kFTM_ToggleOnMatch  = ((1U << FTM_CnSC_MSA_SHIFT) | (1U << FTM_CnSC_ELSA_SHIFT)), /*!< Toggle output */
+    kFTM_ClearOnMatch   = ((1U << FTM_CnSC_MSA_SHIFT) | (2U << FTM_CnSC_ELSA_SHIFT)), /*!< Clear output */
+    kFTM_SetOnMatch     = ((1U << FTM_CnSC_MSA_SHIFT) | (3U << FTM_CnSC_ELSA_SHIFT))  /*!< Set output */
 } ftm_output_compare_mode_t;
 
 /*! @brief FlexTimer input capture edge */
 typedef enum _ftm_input_capture_edge
 {
-    kFTM_RisingEdge = (1U << FTM_CnSC_ELSA_SHIFT),     /*!< Capture on rising edge only*/
-    kFTM_FallingEdge = (2U << FTM_CnSC_ELSA_SHIFT),    /*!< Capture on falling edge only*/
-    kFTM_RiseAndFallEdge = (3U << FTM_CnSC_ELSA_SHIFT) /*!< Capture on rising or falling edge */
+    kFTM_RisingEdge      = (1U << FTM_CnSC_ELSA_SHIFT), /*!< Capture on rising edge only*/
+    kFTM_FallingEdge     = (2U << FTM_CnSC_ELSA_SHIFT), /*!< Capture on falling edge only*/
+    kFTM_RiseAndFallEdge = (3U << FTM_CnSC_ELSA_SHIFT)  /*!< Capture on rising or falling edge */
 } ftm_input_capture_edge_t;
 
 /*! @brief FlexTimer dual edge capture modes */
 typedef enum _ftm_dual_edge_capture_mode
 {
-    kFTM_OneShot = 0U,                           /*!< One-shot capture mode */
+    kFTM_OneShot    = 0U,                        /*!< One-shot capture mode */
     kFTM_Continuous = (1U << FTM_CnSC_MSA_SHIFT) /*!< Continuous capture mode */
 } ftm_dual_edge_capture_mode_t;
 
@@ -162,7 +154,7 @@ typedef struct _ftm_phase_param
 typedef struct _ftm_fault_param
 {
     bool enableFaultInput; /*!< True: Fault input is enabled; false: Fault input is disabled */
-    bool faultLevel;       /*!< True: Fault polarity is active low i.e '0' indicates a fault;
+    bool faultLevel;       /*!< True: Fault polarity is active low; in other words, '0' indicates a fault;
                                 False: Fault polarity is active high */
     bool useFaultFilter;   /*!< True: Use the filtered fault signal;
                                 False: Use the direct path from fault input */
@@ -235,21 +227,27 @@ typedef enum _ftm_external_trigger
     kFTM_Chnl3Trigger = (1U << 1), /*!< Generate trigger when counter equals chnl 3 CnV reg */
     kFTM_Chnl4Trigger = (1U << 2), /*!< Generate trigger when counter equals chnl 4 CnV reg */
     kFTM_Chnl5Trigger = (1U << 3), /*!< Generate trigger when counter equals chnl 5 CnV reg */
+#if defined(FSL_FEATURE_FTM_HAS_CHANNEL6_TRIGGER) && (FSL_FEATURE_FTM_HAS_CHANNEL6_TRIGGER)
     kFTM_Chnl6Trigger =
         (1U << 8), /*!< Available on certain SoC's, generate trigger when counter equals chnl 6 CnV reg */
+#endif
+#if defined(FSL_FEATURE_FTM_HAS_CHANNEL7_TRIGGER) && (FSL_FEATURE_FTM_HAS_CHANNEL7_TRIGGER)
     kFTM_Chnl7Trigger =
         (1U << 9), /*!< Available on certain SoC's, generate trigger when counter equals chnl 7 CnV reg */
-    kFTM_InitTrigger = (1U << 6),      /*!< Generate Trigger when counter is updated with CNTIN */
+#endif
+    kFTM_InitTrigger = (1U << 6), /*!< Generate Trigger when counter is updated with CNTIN */
+#if defined(FSL_FEATURE_FTM_HAS_RELOAD_INITIALIZATION_TRIGGER) && (FSL_FEATURE_FTM_HAS_RELOAD_INITIALIZATION_TRIGGER)
     kFTM_ReloadInitTrigger = (1U << 7) /*!< Available on certain SoC's, trigger on reload point */
+#endif
 } ftm_external_trigger_t;
 
 /*! @brief FlexTimer PWM sync options to update registers with buffer */
 typedef enum _ftm_pwm_sync_method
 {
-    kFTM_SoftwareTrigger = FTM_SYNC_SWSYNC_MASK,  /*!< Software triggers PWM sync */
-    kFTM_HardwareTrigger_0 = FTM_SYNC_TRIG0_MASK, /*!< Hardware trigger 0 causes PWM sync */
-    kFTM_HardwareTrigger_1 = FTM_SYNC_TRIG1_MASK, /*!< Hardware trigger 1 causes PWM sync */
-    kFTM_HardwareTrigger_2 = FTM_SYNC_TRIG2_MASK  /*!< Hardware trigger 2 causes PWM sync */
+    kFTM_SoftwareTrigger   = FTM_SYNC_SWSYNC_MASK, /*!< Software triggers PWM sync */
+    kFTM_HardwareTrigger_0 = FTM_SYNC_TRIG0_MASK,  /*!< Hardware trigger 0 causes PWM sync */
+    kFTM_HardwareTrigger_1 = FTM_SYNC_TRIG1_MASK,  /*!< Hardware trigger 1 causes PWM sync */
+    kFTM_HardwareTrigger_2 = FTM_SYNC_TRIG2_MASK   /*!< Hardware trigger 2 causes PWM sync */
 } ftm_pwm_sync_method_t;
 
 /*!
@@ -258,16 +256,16 @@ typedef enum _ftm_pwm_sync_method
  */
 typedef enum _ftm_reload_point
 {
-    kFTM_Chnl0Match = (1U << 0),   /*!< Channel 0 match included as a reload point */
-    kFTM_Chnl1Match = (1U << 1),   /*!< Channel 1 match included as a reload point */
-    kFTM_Chnl2Match = (1U << 2),   /*!< Channel 2 match included as a reload point */
-    kFTM_Chnl3Match = (1U << 3),   /*!< Channel 3 match included as a reload point */
-    kFTM_Chnl4Match = (1U << 4),   /*!< Channel 4 match included as a reload point */
-    kFTM_Chnl5Match = (1U << 5),   /*!< Channel 5 match included as a reload point */
-    kFTM_Chnl6Match = (1U << 6),   /*!< Channel 6 match included as a reload point */
-    kFTM_Chnl7Match = (1U << 7),   /*!< Channel 7 match included as a reload point */
-    kFTM_CntMax = (1U << 8),       /*!< Use in up-down count mode only, reload when counter reaches the maximum value */
-    kFTM_CntMin = (1U << 9),       /*!< Use in up-down count mode only, reload when counter reaches the minimum value */
+    kFTM_Chnl0Match   = (1U << 0), /*!< Channel 0 match included as a reload point */
+    kFTM_Chnl1Match   = (1U << 1), /*!< Channel 1 match included as a reload point */
+    kFTM_Chnl2Match   = (1U << 2), /*!< Channel 2 match included as a reload point */
+    kFTM_Chnl3Match   = (1U << 3), /*!< Channel 3 match included as a reload point */
+    kFTM_Chnl4Match   = (1U << 4), /*!< Channel 4 match included as a reload point */
+    kFTM_Chnl5Match   = (1U << 5), /*!< Channel 5 match included as a reload point */
+    kFTM_Chnl6Match   = (1U << 6), /*!< Channel 6 match included as a reload point */
+    kFTM_Chnl7Match   = (1U << 7), /*!< Channel 7 match included as a reload point */
+    kFTM_CntMax       = (1U << 8), /*!< Use in up-down count mode only, reload when counter reaches the maximum value */
+    kFTM_CntMin       = (1U << 9), /*!< Use in up-down count mode only, reload when counter reaches the minimum value */
     kFTM_HalfCycMatch = (1U << 10) /*!< Available on certain SoC's, half cycle match reload point */
 } ftm_reload_point_t;
 
@@ -277,17 +275,17 @@ typedef enum _ftm_reload_point
  */
 typedef enum _ftm_interrupt_enable
 {
-    kFTM_Chnl0InterruptEnable = (1U << 0),        /*!< Channel 0 interrupt */
-    kFTM_Chnl1InterruptEnable = (1U << 1),        /*!< Channel 1 interrupt */
-    kFTM_Chnl2InterruptEnable = (1U << 2),        /*!< Channel 2 interrupt */
-    kFTM_Chnl3InterruptEnable = (1U << 3),        /*!< Channel 3 interrupt */
-    kFTM_Chnl4InterruptEnable = (1U << 4),        /*!< Channel 4 interrupt */
-    kFTM_Chnl5InterruptEnable = (1U << 5),        /*!< Channel 5 interrupt */
-    kFTM_Chnl6InterruptEnable = (1U << 6),        /*!< Channel 6 interrupt */
-    kFTM_Chnl7InterruptEnable = (1U << 7),        /*!< Channel 7 interrupt */
-    kFTM_FaultInterruptEnable = (1U << 8),        /*!< Fault interrupt */
+    kFTM_Chnl0InterruptEnable        = (1U << 0), /*!< Channel 0 interrupt */
+    kFTM_Chnl1InterruptEnable        = (1U << 1), /*!< Channel 1 interrupt */
+    kFTM_Chnl2InterruptEnable        = (1U << 2), /*!< Channel 2 interrupt */
+    kFTM_Chnl3InterruptEnable        = (1U << 3), /*!< Channel 3 interrupt */
+    kFTM_Chnl4InterruptEnable        = (1U << 4), /*!< Channel 4 interrupt */
+    kFTM_Chnl5InterruptEnable        = (1U << 5), /*!< Channel 5 interrupt */
+    kFTM_Chnl6InterruptEnable        = (1U << 6), /*!< Channel 6 interrupt */
+    kFTM_Chnl7InterruptEnable        = (1U << 7), /*!< Channel 7 interrupt */
+    kFTM_FaultInterruptEnable        = (1U << 8), /*!< Fault interrupt */
     kFTM_TimeOverflowInterruptEnable = (1U << 9), /*!< Time overflow interrupt */
-    kFTM_ReloadInterruptEnable = (1U << 10)       /*!< Reload interrupt; Available only on certain SoC's */
+    kFTM_ReloadInterruptEnable       = (1U << 10) /*!< Reload interrupt; Available only on certain SoC's */
 } ftm_interrupt_enable_t;
 
 /*!
@@ -296,19 +294,32 @@ typedef enum _ftm_interrupt_enable
  */
 typedef enum _ftm_status_flags
 {
-    kFTM_Chnl0Flag = (1U << 0),        /*!< Channel 0 Flag */
-    kFTM_Chnl1Flag = (1U << 1),        /*!< Channel 1 Flag */
-    kFTM_Chnl2Flag = (1U << 2),        /*!< Channel 2 Flag */
-    kFTM_Chnl3Flag = (1U << 3),        /*!< Channel 3 Flag */
-    kFTM_Chnl4Flag = (1U << 4),        /*!< Channel 4 Flag */
-    kFTM_Chnl5Flag = (1U << 5),        /*!< Channel 5 Flag */
-    kFTM_Chnl6Flag = (1U << 6),        /*!< Channel 6 Flag */
-    kFTM_Chnl7Flag = (1U << 7),        /*!< Channel 7 Flag */
-    kFTM_FaultFlag = (1U << 8),        /*!< Fault Flag */
-    kFTM_TimeOverflowFlag = (1U << 9), /*!< Time overflow Flag */
-    kFTM_ChnlTriggerFlag = (1U << 10), /*!< Channel trigger Flag */
-    kFTM_ReloadFlag = (1U << 11)       /*!< Reload Flag; Available only on certain SoC's */
+    kFTM_Chnl0Flag        = (1U << 0),  /*!< Channel 0 Flag */
+    kFTM_Chnl1Flag        = (1U << 1),  /*!< Channel 1 Flag */
+    kFTM_Chnl2Flag        = (1U << 2),  /*!< Channel 2 Flag */
+    kFTM_Chnl3Flag        = (1U << 3),  /*!< Channel 3 Flag */
+    kFTM_Chnl4Flag        = (1U << 4),  /*!< Channel 4 Flag */
+    kFTM_Chnl5Flag        = (1U << 5),  /*!< Channel 5 Flag */
+    kFTM_Chnl6Flag        = (1U << 6),  /*!< Channel 6 Flag */
+    kFTM_Chnl7Flag        = (1U << 7),  /*!< Channel 7 Flag */
+    kFTM_FaultFlag        = (1U << 8),  /*!< Fault Flag */
+    kFTM_TimeOverflowFlag = (1U << 9),  /*!< Time overflow Flag */
+    kFTM_ChnlTriggerFlag  = (1U << 10), /*!< Channel trigger Flag */
+    kFTM_ReloadFlag       = (1U << 11)  /*!< Reload Flag; Available only on certain SoC's */
 } ftm_status_flags_t;
+
+#if !(defined(FSL_FEATURE_FTM_HAS_NO_QDCTRL) && FSL_FEATURE_FTM_HAS_NO_QDCTRL)
+/*!
+ * @brief List of FTM Quad Decoder flags.
+ */
+enum
+{
+    kFTM_QuadDecoderCountingIncreaseFlag = FTM_QDCTRL_QUADIR_MASK, /*!< Counting direction is increasing (FTM counter
+                                                                        increment), or the direction is decreasing. */
+    kFTM_QuadDecoderCountingOverflowOnTopFlag = FTM_QDCTRL_TOFDIR_MASK, /*!< Indicates if the TOF bit was set on the top
+                                                                             or the bottom of counting. */
+};
+#endif
 
 /*!
  * @brief FTM configuration structure
@@ -333,7 +344,9 @@ typedef struct _ftm_config
     ftm_fault_mode_t faultMode;               /*!< FTM fault control mode */
     uint8_t faultFilterValue;                 /*!< Fault input filter value */
     ftm_deadtime_prescale_t deadTimePrescale; /*!< The dead time prescalar value */
-    uint8_t deadTimeValue;                    /*!< The dead time value */
+    uint32_t deadTimeValue;                   /*!< The dead time value
+                                                   deadTimeValue's available range is 0-1023 when register has DTVALEX,
+                                                   otherwise its available range is 0-63. */
     uint32_t extTriggers;                     /*!< External triggers to enable. Multiple trigger sources can be
                                                    enabled by providing an OR'ed list of options available in
                                                    enumeration ::ftm_external_trigger_t. */
@@ -359,7 +372,7 @@ extern "C" {
 /*!
  * @brief Ungates the FTM clock and configures the peripheral for basic operation.
  *
- * @note This API should be called at the beginning of the application using the FTM driver.
+ * @note This API should be called at the beginning of the application which is using the FTM driver.
  *
  * @param base   FTM peripheral base address
  * @param config Pointer to the user configuration structure.
@@ -454,6 +467,27 @@ void FTM_UpdatePwmDutycycle(FTM_Type *base,
 void FTM_UpdateChnlEdgeLevelSelect(FTM_Type *base, ftm_chnl_t chnlNumber, uint8_t level);
 
 /*!
+ * @brief Configures the PWM mode parameters.
+ *
+ * Call this function to configure the PWM signal mode, duty cycle in ticks, and edge. Use this
+ * function to configure all FTM channels that are used to output a PWM signal.
+ * Please note that: This API is similar with FTM_SetupPwm() API, but will not set the timer period,
+ *                   and this API will set channel match value in timer ticks, not period percent.
+ *
+ * @param base        FTM peripheral base address
+ * @param chnlParams  Array of PWM channel parameters to configure the channel(s)
+ * @param numOfChnls  Number of channels to configure; This should be the size of the array passed in
+ * @param mode        PWM operation mode, options available in enumeration ::ftm_pwm_mode_t
+ *
+ * @return kStatus_Success if the PWM setup was successful
+ *         kStatus_Error on failure
+ */
+status_t FTM_SetupPwmMode(FTM_Type *base,
+                          const ftm_chnl_pwm_config_param_t *chnlParams,
+                          uint8_t numOfChnls,
+                          ftm_pwm_mode_t mode);
+
+/*!
  * @brief Enables capturing an input signal on the channel using the function parameters.
  *
  * When the edge specified in the captureMode argument occurs on the channel, the FTM counter is
@@ -507,19 +541,6 @@ void FTM_SetupDualEdgeCapture(FTM_Type *base,
                               uint32_t filterValue);
 
 /*! @}*/
-
-/*!
- * @brief Configures the parameters and activates the quadrature decoder mode.
- *
- * @param base         FTM peripheral base address
- * @param phaseAParams Phase A configuration parameters
- * @param phaseBParams Phase B configuration parameters
- * @param quadMode     Selects encoding mode used in quadrature decoder mode
- */
-void FTM_SetupQuadDecode(FTM_Type *base,
-                         const ftm_phase_params_t *phaseAParams,
-                         const ftm_phase_params_t *phaseBParams,
-                         ftm_quad_decode_mode_t quadMode);
 
 /*!
  * @brief Sets up the working of the FTM fault protection.
@@ -594,6 +615,48 @@ void FTM_ClearStatusFlags(FTM_Type *base, uint32_t mask);
 /*! @}*/
 
 /*!
+ * @name Read and write the timer period
+ * @{
+ */
+
+/*!
+ * @brief Sets the timer period in units of ticks.
+ *
+ * Timers counts from 0 until it equals the count value set here. The count value is written to
+ * the MOD register.
+ *
+ * @note
+ * 1. This API allows the user to use the FTM module as a timer. Do not mix usage
+ *    of this API with FTM's PWM setup API's.
+ * 2. Call the utility macros provided in the fsl_common.h to convert usec or msec to ticks.
+ *
+ * @param base FTM peripheral base address
+ * @param ticks A timer period in units of ticks, which should be equal or greater than 1.
+ */
+static inline void FTM_SetTimerPeriod(FTM_Type *base, uint32_t ticks)
+{
+    base->MOD = ticks;
+}
+
+/*!
+ * @brief Reads the current timer counting value.
+ *
+ * This function returns the real-time timer counting value in a range from 0 to a
+ * timer period.
+ *
+ * @note Call the utility macros provided in the fsl_common.h to convert ticks to usec or msec.
+ *
+ * @param base FTM peripheral base address
+ *
+ * @return The current counter value in ticks
+ */
+static inline uint32_t FTM_GetCurrentTimerCount(FTM_Type *base)
+{
+    return (uint32_t)((base->CNT & FTM_CNT_COUNT_MASK) >> FTM_CNT_COUNT_SHIFT);
+}
+
+/*! @}*/
+/*!
  * @name Timer Start and Stop
  * @{
  */
@@ -643,11 +706,11 @@ static inline void FTM_SetSoftwareCtrlEnable(FTM_Type *base, ftm_chnl_t chnlNumb
 {
     if (value)
     {
-        base->SWOCTRL |= (1U << chnlNumber);
+        base->SWOCTRL |= (1UL << (uint32_t)chnlNumber);
     }
     else
     {
-        base->SWOCTRL &= ~(1U << chnlNumber);
+        base->SWOCTRL &= ~(1UL << (uint32_t)chnlNumber);
     }
 }
 
@@ -662,11 +725,11 @@ static inline void FTM_SetSoftwareCtrlVal(FTM_Type *base, ftm_chnl_t chnlNumber,
 {
     if (value)
     {
-        base->SWOCTRL |= (1U << (chnlNumber + FTM_SWOCTRL_CH0OCV_SHIFT));
+        base->SWOCTRL |= (1UL << ((uint32_t)chnlNumber + FTM_SWOCTRL_CH0OCV_SHIFT));
     }
     else
     {
-        base->SWOCTRL &= ~(1U << (chnlNumber + FTM_SWOCTRL_CH0OCV_SHIFT));
+        base->SWOCTRL &= ~(1UL << ((uint32_t)chnlNumber + FTM_SWOCTRL_CH0OCV_SHIFT));
     }
 }
 
@@ -701,17 +764,17 @@ static inline void FTM_SetOutputMask(FTM_Type *base, ftm_chnl_t chnlNumber, bool
 {
     if (mask)
     {
-        base->OUTMASK |= (1U << chnlNumber);
+        base->OUTMASK |= (1UL << (uint32_t)chnlNumber);
     }
     else
     {
-        base->OUTMASK &= ~(1U << chnlNumber);
+        base->OUTMASK &= ~(1UL << (uint32_t)chnlNumber);
     }
 }
 
 #if defined(FSL_FEATURE_FTM_HAS_ENABLE_PWM_OUTPUT) && (FSL_FEATURE_FTM_HAS_ENABLE_PWM_OUTPUT)
 /*!
- * @brief Allows user to enable an output on an FTM channel.
+ * @brief Allows users to enable an output on an FTM channel.
  *
  * To enable the PWM channel output call this function with val=true. For input mode,
  * call this function with val=false.
@@ -724,11 +787,11 @@ static inline void FTM_SetPwmOutputEnable(FTM_Type *base, ftm_chnl_t chnlNumber,
 {
     if (value)
     {
-        base->SC |= (1U << (chnlNumber + FTM_SC_PWMEN0_SHIFT));
+        base->SC |= (1UL << ((uint32_t)chnlNumber + FTM_SC_PWMEN0_SHIFT));
     }
     else
     {
-        base->SC &= ~(1U << (chnlNumber + FTM_SC_PWMEN0_SHIFT));
+        base->SC &= ~(1UL << ((uint32_t)chnlNumber + FTM_SC_PWMEN0_SHIFT));
     }
 }
 #endif
@@ -749,11 +812,13 @@ static inline void FTM_SetFaultControlEnable(FTM_Type *base, ftm_chnl_t chnlPair
 {
     if (value)
     {
-        base->COMBINE |= (1U << (FTM_COMBINE_FAULTEN0_SHIFT + (FTM_COMBINE_COMBINE1_SHIFT * chnlPairNumber)));
+        base->COMBINE |=
+            (1UL << (FTM_COMBINE_FAULTEN0_SHIFT + (FTM_COMBINE_COMBINE1_SHIFT * (uint32_t)chnlPairNumber)));
     }
     else
     {
-        base->COMBINE &= ~(1U << (FTM_COMBINE_FAULTEN0_SHIFT + (FTM_COMBINE_COMBINE1_SHIFT * chnlPairNumber)));
+        base->COMBINE &=
+            ~(1UL << (FTM_COMBINE_FAULTEN0_SHIFT + (FTM_COMBINE_COMBINE1_SHIFT * (uint32_t)chnlPairNumber)));
     }
 }
 
@@ -768,11 +833,11 @@ static inline void FTM_SetDeadTimeEnable(FTM_Type *base, ftm_chnl_t chnlPairNumb
 {
     if (value)
     {
-        base->COMBINE |= (1U << (FTM_COMBINE_DTEN0_SHIFT + (FTM_COMBINE_COMBINE1_SHIFT * chnlPairNumber)));
+        base->COMBINE |= (1UL << (FTM_COMBINE_DTEN0_SHIFT + (FTM_COMBINE_COMBINE1_SHIFT * (uint32_t)chnlPairNumber)));
     }
     else
     {
-        base->COMBINE &= ~(1U << (FTM_COMBINE_DTEN0_SHIFT + (FTM_COMBINE_COMBINE1_SHIFT * chnlPairNumber)));
+        base->COMBINE &= ~(1UL << (FTM_COMBINE_DTEN0_SHIFT + (FTM_COMBINE_COMBINE1_SHIFT * (uint32_t)chnlPairNumber)));
     }
 }
 
@@ -787,11 +852,11 @@ static inline void FTM_SetComplementaryEnable(FTM_Type *base, ftm_chnl_t chnlPai
 {
     if (value)
     {
-        base->COMBINE |= (1U << (FTM_COMBINE_COMP0_SHIFT + (FTM_COMBINE_COMBINE1_SHIFT * chnlPairNumber)));
+        base->COMBINE |= (1UL << (FTM_COMBINE_COMP0_SHIFT + (FTM_COMBINE_COMBINE1_SHIFT * (uint32_t)chnlPairNumber)));
     }
     else
     {
-        base->COMBINE &= ~(1U << (FTM_COMBINE_COMP0_SHIFT + (FTM_COMBINE_COMBINE1_SHIFT * chnlPairNumber)));
+        base->COMBINE &= ~(1UL << (FTM_COMBINE_COMP0_SHIFT + (FTM_COMBINE_COMBINE1_SHIFT * (uint32_t)chnlPairNumber)));
     }
 }
 
@@ -806,12 +871,84 @@ static inline void FTM_SetInvertEnable(FTM_Type *base, ftm_chnl_t chnlPairNumber
 {
     if (value)
     {
-        base->INVCTRL |= (1U << chnlPairNumber);
+        base->INVCTRL |= (1UL << (uint32_t)chnlPairNumber);
     }
     else
     {
-        base->INVCTRL &= ~(1U << chnlPairNumber);
+        base->INVCTRL &= ~(1UL << (uint32_t)chnlPairNumber);
     }
+}
+
+/*! @}*/
+
+/*!
+ * @name Quad Decoder
+ * @{
+ */
+
+/*!
+ * @brief Configures the parameters and activates the quadrature decoder mode.
+ *
+ * @param base         FTM peripheral base address
+ * @param phaseAParams Phase A configuration parameters
+ * @param phaseBParams Phase B configuration parameters
+ * @param quadMode     Selects encoding mode used in quadrature decoder mode
+ */
+void FTM_SetupQuadDecode(FTM_Type *base,
+                         const ftm_phase_params_t *phaseAParams,
+                         const ftm_phase_params_t *phaseBParams,
+                         ftm_quad_decode_mode_t quadMode);
+
+#if !(defined(FSL_FEATURE_FTM_HAS_NO_QDCTRL) && FSL_FEATURE_FTM_HAS_NO_QDCTRL)
+/*!
+ * @brief Gets the FTM Quad Decoder flags.
+ *
+ * @param base FTM peripheral base address.
+ * @return Flag mask of FTM Quad Decoder, see #_ftm_quad_decoder_flags.
+ */
+static inline uint32_t FTM_GetQuadDecoderFlags(FTM_Type *base)
+{
+    return base->QDCTRL & (FTM_QDCTRL_QUADIR_MASK | FTM_QDCTRL_TOFDIR_MASK);
+}
+#endif
+
+/*!
+ * @brief Sets the modulo values for Quad Decoder.
+ *
+ * The modulo values configure the minimum and maximum values that the Quad decoder counter can reach. After the
+ * counter goes over, the counter value goes to the other side and decrease/increase again.
+ *
+ * @param base FTM peripheral base address.
+ * @param startValue The low limit value for Quad Decoder counter.
+ * @param overValue The high limit value for Quad Decoder counter.
+ */
+static inline void FTM_SetQuadDecoderModuloValue(FTM_Type *base, uint32_t startValue, uint32_t overValue)
+{
+    base->CNTIN = startValue;
+    base->MOD   = overValue;
+}
+
+/*!
+ * @brief Gets the current Quad Decoder counter value.
+ *
+ * @param base FTM peripheral base address.
+ * @return Current quad Decoder counter value.
+ */
+static inline uint32_t FTM_GetQuadDecoderCounterValue(FTM_Type *base)
+{
+    return base->CNT;
+}
+
+/*!
+ * @brief Clears the current Quad Decoder counter value.
+ *
+ * The counter is set as the initial value.
+ *
+ * @param base FTM peripheral base address.
+ */
+static inline void FTM_ClearQuadDecoderCounterValue(FTM_Type *base)
+{
+    base->CNT = base->CNTIN;
 }
 
 /*! @}*/
@@ -852,6 +989,33 @@ static inline void FTM_SetWriteProtection(FTM_Type *base, bool enable)
         base->MODE |= FTM_MODE_WPDIS_MASK;
     }
 }
+
+#if defined(FSL_FEATURE_FTM_HAS_DMA_SUPPORT) && FSL_FEATURE_FTM_HAS_DMA_SUPPORT
+/*!
+ * @brief Enable DMA transfer or not.
+ *
+ * Note: CHnIE bit needs to be set when calling this API. The channel DMA transfer request
+ * is generated and the channel interrupt is not generated if (CHnF = 1) when DMA and CHnIE
+ * bits are set.
+ *
+ * @param base   FTM peripheral base address.
+ * @param chnlNumber Channel to be configured
+ * @param enable true to enable, false to disable
+ */
+static inline void FTM_EnableDmaTransfer(FTM_Type *base, ftm_chnl_t chnlNumber, bool enable)
+{
+    if (enable)
+    {
+        /* Enable DMA transfer */
+        base->CONTROLS[chnlNumber].CnSC |= FTM_CnSC_DMA_MASK;
+    }
+    else
+    {
+        /* Disable DMA transfer */
+        base->CONTROLS[chnlNumber].CnSC &= ~FTM_CnSC_DMA_MASK;
+    }
+}
+#endif /* FSL_FEATURE_FTM_HAS_DMA_SUPPORT */
 
 #if defined(__cplusplus)
 }

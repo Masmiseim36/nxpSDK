@@ -2,7 +2,7 @@
  * Amazon FreeRTOS V1.0.0
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  * Copyright (c) 2013 - 2014, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -26,9 +26,9 @@
  * http://www.FreeRTOS.org
  */
 
-///////////////////////////////////////////////////////////////////////////////
-//  Includes
-///////////////////////////////////////////////////////////////////////////////
+/*******************************************************************************
+ * Includes
+ ******************************************************************************/
 /* SDK Included Files */
 #include "board.h"
 #include "fsl_debug_console.h"
@@ -38,8 +38,8 @@
 /* Amazon FreeRTOS Demo Includes */
 #include "FreeRTOS.h"
 #include "task.h"
-#include "aws_logging_task.h"
-#include "aws_system_init.h"
+#include "iot_logging_task.h"
+#include "iot_system_init.h"
 
 #include "device_configuration.h"
 
@@ -67,6 +67,11 @@
 
 /* System clock name. */
 #define EXAMPLE_CLOCK_NAME kCLOCK_CoreSysClk
+#ifndef EXAMPLE_NETIF_INIT_FN
+/*! @brief Network interface initialization function. */
+#define EXAMPLE_NETIF_INIT_FN ethernetif0_init
+#endif /* EXAMPLE_NETIF_INIT_FN */
+
 #define INIT_SUCCESS 0
 #define INIT_FAIL 1
 #define LOGGING_TASK_PRIORITY (tskIDLE_PRIORITY + 1)
@@ -82,11 +87,11 @@ extern int initNetwork(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-struct netif fsl_netif0;
+struct netif netif;
 #if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
 mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
 #endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
-extern struct netif fsl_netif0;
+extern struct netif netif;
 const char *clientcredentialJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM = NULL;
 
 /*******************************************************************************
@@ -95,8 +100,8 @@ const char *clientcredentialJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM = NULL;
 
 int initNetwork(void)
 {
-    ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
-    ethernetif_config_t fsl_enet_config0 = {
+    ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
+    ethernetif_config_t enet_config = {
         .phyAddress = EXAMPLE_PHY_ADDRESS,
         .clockName  = EXAMPLE_CLOCK_NAME,
         .macAddress = configMAC_ADDR,
@@ -105,22 +110,22 @@ int initNetwork(void)
 #endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     };
 
-    IP4_ADDR(&fsl_netif0_ipaddr, 0, 0, 0, 0);
-    IP4_ADDR(&fsl_netif0_netmask, 0, 0, 0, 0);
-    IP4_ADDR(&fsl_netif0_gw, 0, 0, 0, 0);
+    IP4_ADDR(&netif_ipaddr, 0, 0, 0, 0);
+    IP4_ADDR(&netif_netmask, 0, 0, 0, 0);
+    IP4_ADDR(&netif_gw, 0, 0, 0, 0);
 
     tcpip_init(NULL, NULL);
 
-    netifapi_netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0,
-                       ethernetif0_init, tcpip_input);
-    netifapi_netif_set_default(&fsl_netif0);
-    netifapi_netif_set_up(&fsl_netif0);
+    netifapi_netif_add(&netif, &netif_ipaddr, &netif_netmask, &netif_gw, &enet_config, EXAMPLE_NETIF_INIT_FN,
+                       tcpip_input);
+    netifapi_netif_set_default(&netif);
+    netifapi_netif_set_up(&netif);
 
     configPRINTF(("Getting IP address from DHCP ...\r\n"));
-    netifapi_dhcp_start(&fsl_netif0);
+    netifapi_dhcp_start(&netif);
 
     struct dhcp *dhcp;
-    dhcp = (struct dhcp *)netif_get_client_data(&fsl_netif0, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP);
+    dhcp = (struct dhcp *)netif_get_client_data(&netif, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP);
 
     while (dhcp->state != DHCP_STATE_BOUND)
     {
@@ -129,9 +134,9 @@ int initNetwork(void)
 
     if (dhcp->state == DHCP_STATE_BOUND)
     {
-        configPRINTF(("IPv4 Address: %u.%u.%u.%u\r\n", ((u8_t *)&fsl_netif0.ip_addr.addr)[0],
-                      ((u8_t *)&fsl_netif0.ip_addr.addr)[1], ((u8_t *)&fsl_netif0.ip_addr.addr)[2],
-                      ((u8_t *)&fsl_netif0.ip_addr.addr)[3]));
+        configPRINTF(("IPv4 Address: %u.%u.%u.%u\r\n", ((u8_t *)&netif.ip_addr.addr)[0],
+                      ((u8_t *)&netif.ip_addr.addr)[1], ((u8_t *)&netif.ip_addr.addr)[2],
+                      ((u8_t *)&netif.ip_addr.addr)[3]));
     }
     configPRINTF(("DHCP OK\r\n"));
 
@@ -157,7 +162,7 @@ void vApplicationDaemonTaskStartupHook(void)
         }
 
         /* Initialize device for configuration by mobile app - start SSL server and mDNS responder */
-        if (dev_cfg_init_config_server(&fsl_netif0, kDEV_CFG_ENET) != 0)
+        if (dev_cfg_init_config_server(&netif, kDEV_CFG_ENET) != 0)
         {
             PRINTF("Failed to initialze device for configuration\r\n");
             while (1)
@@ -191,93 +196,6 @@ int main(void)
     xLoggingTaskInitialize(LOGGING_TASK_STACK_SIZE, LOGGING_TASK_PRIORITY, LOGGING_QUEUE_LENGTH);
 
     vTaskStartScheduler();
-    for (;;)
-        ;
-}
-
-/* configUSE_STATIC_ALLOCATION is set to 1, so the application must provide an
- * implementation of vApplicationGetIdleTaskMemory() to provide the memory that is
- * used by the Idle task. */
-void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer,
-                                   StackType_t **ppxIdleTaskStackBuffer,
-                                   uint32_t *pulIdleTaskStackSize)
-{
-    /* If the buffers to be provided to the Idle task are declared inside this
-     * function then they must be declared static - otherwise they will be allocated on
-     * the stack and so not exists after this function exits. */
-    static StaticTask_t xIdleTaskTCB;
-    static StackType_t uxIdleTaskStack[configMINIMAL_STACK_SIZE];
-
-    /* Pass out a pointer to the StaticTask_t structure in which the Idle
-     * task's state will be stored. */
-    *ppxIdleTaskTCBBuffer = &xIdleTaskTCB;
-
-    /* Pass out the array that will be used as the Idle task's stack. */
-    *ppxIdleTaskStackBuffer = uxIdleTaskStack;
-
-    /* Pass out the size of the array pointed to by *ppxIdleTaskStackBuffer.
-     * Note that, as the array is necessarily of type StackType_t,
-     * configMINIMAL_STACK_SIZE is specified in words, not bytes. */
-    *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
-}
-
-/* configUSE_STATIC_ALLOCATION and configUSE_TIMERS are both set to 1, so the
- * application must provide an implementation of vApplicationGetTimerTaskMemory()
- * to provide the memory that is used by the Timer service task. */
-void vApplicationGetTimerTaskMemory(StaticTask_t **ppxTimerTaskTCBBuffer,
-                                    StackType_t **ppxTimerTaskStackBuffer,
-                                    uint32_t *pulTimerTaskStackSize)
-{
-    /* If the buffers to be provided to the Timer task are declared inside this
-     * function then they must be declared static - otherwise they will be allocated on
-     * the stack and so not exists after this function exits. */
-    static StaticTask_t xTimerTaskTCB;
-    static StackType_t uxTimerTaskStack[configTIMER_TASK_STACK_DEPTH];
-
-    /* Pass out a pointer to the StaticTask_t structure in which the Timer
-     * task's state will be stored. */
-    *ppxTimerTaskTCBBuffer = &xTimerTaskTCB;
-
-    /* Pass out the array that will be used as the Timer task's stack. */
-    *ppxTimerTaskStackBuffer = uxTimerTaskStack;
-
-    /* Pass out the size of the array pointed to by *ppxTimerTaskStackBuffer.
-     * Note that, as the array is necessarily of type StackType_t,
-     * configTIMER_TASK_STACK_DEPTH is specified in words, not bytes. */
-    *pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
-}
-/**
- * @brief Warn user if pvPortMalloc fails.
- *
- * Called if a call to pvPortMalloc() fails because there is insufficient
- * free memory available in the FreeRTOS heap.  pvPortMalloc() is called
- * internally by FreeRTOS API functions that create tasks, queues, software
- * timers, and semaphores.  The size of the FreeRTOS heap is set by the
- * configTOTAL_HEAP_SIZE configuration constant in FreeRTOSConfig.h.
- *
- */
-void vApplicationMallocFailedHook()
-{
-    configPRINTF(("ERROR: Malloc failed to allocate memory\r\n"));
-}
-
-/**
- * @brief Loop forever if stack overflow is detected.
- *
- * If configCHECK_FOR_STACK_OVERFLOW is set to 1,
- * this hook provides a location for applications to
- * define a response to a stack overflow.
- *
- * Use this hook to help identify that a stack overflow
- * has occurred.
- *
- */
-void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName)
-{
-    portDISABLE_INTERRUPTS();
-
-    PRINTF("vApplicationStackOverflowHook\n");
-    /* Loop forever */
     for (;;)
         ;
 }

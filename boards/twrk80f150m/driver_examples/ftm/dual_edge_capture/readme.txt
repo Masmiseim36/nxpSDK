@@ -5,18 +5,12 @@ This feature is available only on certain SoC's.
 The example sets up a FTM channel-pair for dual-edge capture. Once the input signal is received,
 this example will print the capture values and period of the input signal on the terminal window.
 
-Note:
-This feature gets a valid pulse width value only in one FTM counting cycle. The dual-edge of input signal must be captured in one FTM counting cycle.
-In other words, The period of the Input cycle is less than the FTM counting cycle. This capture feature don't support FTM counter overflow. 
-If FTM counter overflow when capturing dual-edge of input signal. The pulse width value may be ambiguity.
-
 Toolchain supported
 ===================
-- IAR embedded Workbench 8.11.3
-- Keil MDK 5.23
-- GCC ARM Embedded 6-2017-q2
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso10.1.0
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================

@@ -12,6 +12,14 @@ the callback will be called and user can do something.
  - Disable the function for unnecessary part of a module when other part would keep working in low power mode. At the most time, more powerful function means more power consumption. For example, disable the digital function for the unnecessary pin mux, and so on.
  - Set the proper pin state (direction and logic level) according to the actual application hardware. Otherwise, the pin cirrent would be activied unexpectedly waste some energy.
  - Other low power consideration based on the actual application hardware.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -63,11 +71,6 @@ Press  L for enter: HSRUN    - High Speed RUN mode
 
 Waiting for power mode select..
 ~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

@@ -109,9 +109,9 @@ void USB_DeviceIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbDeviceKhciIrq[] = USB_IRQS;
-    irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+    irqNumber                  = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 
-/* Install isr, set priority, and enable IRQ. */
+    /* Install isr, set priority, and enable IRQ. */
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
     EnableIRQ((IRQn_Type)irqNumber);
 }

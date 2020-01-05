@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_qspi_edma.h"
@@ -37,6 +11,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.qspi_edma"
+#endif
 
 /*<! Structure definition for qspi_edma_private_handle_t. The structure is private. */
 typedef struct _qspi_edma_private_handle
@@ -52,8 +31,17 @@ enum _qspi_edma_tansfer_states
     kQSPI_BusBusy /* RX busy. */
 };
 
+/*!
+ * @brief Used for conversion between `void*` and `uint32_t`.
+ */
+typedef union pvoid_to_u32
+{
+    void *pvoid;
+    uint32_t u32;
+} pvoid_to_u32_t;
+
 /*******************************************************************************
- * Definitions
+ * Variables
  ******************************************************************************/
 
 /*<! Private handle only used for internally. */
@@ -85,14 +73,6 @@ static void QSPI_SendEDMACallback(edma_handle_t *handle, void *param, bool trans
  */
 static void QSPI_ReceiveEDMACallback(edma_handle_t *handle, void *param, bool transferDone, uint32_t tcds);
 
-/*!
- * @brief Get the QSPI instance from peripheral base address.
- *
- * @param base QSPI peripheral base address.
- * @return QSPI instance.
- */
-extern uint32_t QSPI_GetInstance(QuadSPI_Type *base);
-
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -103,13 +83,13 @@ static void QSPI_SendEDMACallback(edma_handle_t *handle, void *param, bool trans
 
     /* Avoid the warning for unused variables. */
     handle = handle;
-    tcds = tcds;
+    tcds   = tcds;
 
     if (transferDone)
     {
         QSPI_TransferAbortSendEDMA(qspiPrivateHandle->base, qspiPrivateHandle->handle);
 
-        if (qspiPrivateHandle->handle->callback)
+        if (NULL != qspiPrivateHandle->handle->callback)
         {
             qspiPrivateHandle->handle->callback(qspiPrivateHandle->base, qspiPrivateHandle->handle, kStatus_QSPI_Idle,
                                                 qspiPrivateHandle->handle->userData);
@@ -123,14 +103,14 @@ static void QSPI_ReceiveEDMACallback(edma_handle_t *handle, void *param, bool tr
 
     /* Avoid warning for unused parameters. */
     handle = handle;
-    tcds = tcds;
+    tcds   = tcds;
 
     if (transferDone)
     {
         /* Disable transfer. */
         QSPI_TransferAbortReceiveEDMA(qspiPrivateHandle->base, qspiPrivateHandle->handle);
 
-        if (qspiPrivateHandle->handle->callback)
+        if (NULL != qspiPrivateHandle->handle->callback)
         {
             qspiPrivateHandle->handle->callback(qspiPrivateHandle->base, qspiPrivateHandle->handle, kStatus_QSPI_Idle,
                                                 qspiPrivateHandle->handle->userData);
@@ -138,6 +118,15 @@ static void QSPI_ReceiveEDMACallback(edma_handle_t *handle, void *param, bool tr
     }
 }
 
+/*!
+ * brief Initializes the QSPI handle for send which is used in transactional functions and set the callback.
+ *
+ * param base QSPI peripheral base address
+ * param handle Pointer to qspi_edma_handle_t structure
+ * param callback QSPI callback, NULL means no callback.
+ * param userData User callback function data.
+ * param rxDmaHandle User requested eDMA handle for eDMA transfer
+ */
 void QSPI_TransferTxCreateHandleEDMA(QuadSPI_Type *base,
                                      qspi_edma_handle_t *handle,
                                      qspi_edma_callback_t callback,
@@ -148,24 +137,33 @@ void QSPI_TransferTxCreateHandleEDMA(QuadSPI_Type *base,
 
     uint32_t instance = QSPI_GetInstance(base);
 
-    s_edmaPrivateHandle[instance][0].base = base;
+    s_edmaPrivateHandle[instance][0].base   = base;
     s_edmaPrivateHandle[instance][0].handle = handle;
 
-    memset(handle, 0, sizeof(*handle));
+    (void)memset(handle, 0, sizeof(*handle));
 
-    handle->state = kQSPI_Idle;
+    handle->state     = (uint32_t)kQSPI_Idle;
     handle->dmaHandle = dmaHandle;
 
     handle->callback = callback;
     handle->userData = userData;
 
     /* Get the watermark value */
-    handle->count = base->TBCT + 1;
+    handle->count = (uint8_t)base->TBCT + 1U;
 
     /* Configure TX edma callback */
     EDMA_SetCallback(handle->dmaHandle, QSPI_SendEDMACallback, &s_edmaPrivateHandle[instance][0]);
 }
 
+/*!
+ * brief Initializes the QSPI handle for receive which is used in transactional functions and set the callback.
+ *
+ * param base QSPI peripheral base address
+ * param handle Pointer to qspi_edma_handle_t structure
+ * param callback QSPI callback, NULL means no callback.
+ * param userData User callback function data.
+ * param rxDmaHandle User requested eDMA handle for eDMA transfer
+ */
 void QSPI_TransferRxCreateHandleEDMA(QuadSPI_Type *base,
                                      qspi_edma_handle_t *handle,
                                      qspi_edma_callback_t callback,
@@ -176,54 +174,67 @@ void QSPI_TransferRxCreateHandleEDMA(QuadSPI_Type *base,
 
     uint32_t instance = QSPI_GetInstance(base);
 
-    s_edmaPrivateHandle[instance][1].base = base;
+    s_edmaPrivateHandle[instance][1].base   = base;
     s_edmaPrivateHandle[instance][1].handle = handle;
 
-    memset(handle, 0, sizeof(*handle));
+    (void)memset(handle, 0, sizeof(*handle));
 
-    handle->state = kQSPI_Idle;
+    handle->state     = (uint32_t)kQSPI_Idle;
     handle->dmaHandle = dmaHandle;
 
     handle->callback = callback;
     handle->userData = userData;
 
     /* Get the watermark value */
-    handle->count = (base->RBCT & QuadSPI_RBCT_WMRK_MASK) + 1;
+    handle->count = ((uint8_t)base->RBCT & QuadSPI_RBCT_WMRK_MASK) + 1U;
 
     /* Configure RX edma callback */
     EDMA_SetCallback(handle->dmaHandle, QSPI_ReceiveEDMACallback, &s_edmaPrivateHandle[instance][1]);
 }
 
+/*!
+ * brief Transfers QSPI data using an eDMA non-blocking method.
+ *
+ * This function writes data to the QSPI transmit FIFO. This function is non-blocking.
+ * param base Pointer to QuadSPI Type.
+ * param handle Pointer to qspi_edma_handle_t structure
+ * param xfer QSPI transfer structure.
+ */
 status_t QSPI_TransferSendEDMA(QuadSPI_Type *base, qspi_edma_handle_t *handle, qspi_transfer_t *xfer)
 {
     assert(handle && (handle->dmaHandle));
 
     edma_transfer_config_t xferConfig;
     status_t status;
+    pvoid_to_u32_t destAddr;
 
     /* If previous TX not finished. */
-    if (kQSPI_BusBusy == handle->state)
+    if ((uint8_t)kQSPI_BusBusy == handle->state)
     {
         status = kStatus_QSPI_Busy;
     }
     else
     {
-        handle->state = kQSPI_BusBusy;
+        handle->state = (uint32_t)kQSPI_BusBusy;
 
+        destAddr.u32 = QSPI_GetTxDataRegisterAddress(base);
         /* Prepare transfer. */
-        EDMA_PrepareTransfer(&xferConfig, xfer->data, sizeof(uint32_t), (void *)QSPI_GetTxDataRegisterAddress(base),
-                             sizeof(uint32_t), (sizeof(uint32_t) * handle->count), xfer->dataSize,
-                             kEDMA_MemoryToPeripheral);
+        EDMA_PrepareTransfer(&xferConfig, xfer->data, sizeof(uint32_t), destAddr.pvoid, sizeof(uint32_t),
+                             (sizeof(uint32_t) * (uint32_t)handle->count), xfer->dataSize, kEDMA_MemoryToPeripheral);
 
         /* Store the initially configured eDMA minor byte transfer count into the QSPI handle */
         handle->nbytes = (sizeof(uint32_t) * handle->count);
 
         /* Submit transfer. */
-        EDMA_SubmitTransfer(handle->dmaHandle, &xferConfig);
+        do
+        {
+            status = EDMA_SubmitTransfer(handle->dmaHandle, &xferConfig);
+        } while (status != kStatus_Success);
+
         EDMA_StartTransfer(handle->dmaHandle);
 
         /* Enable QSPI TX EDMA. */
-        QSPI_EnableDMA(base, kQSPI_TxBufferFillDMAEnable, true);
+        QSPI_EnableDMA(base, (uint32_t)kQSPI_TxBufferFillDMAEnable, true);
 
         status = kStatus_Success;
     }
@@ -231,36 +242,52 @@ status_t QSPI_TransferSendEDMA(QuadSPI_Type *base, qspi_edma_handle_t *handle, q
     return status;
 }
 
+/*!
+ * brief Receives data using an eDMA non-blocking method.
+ *
+ * This function receive data from the QSPI receive buffer/FIFO. This function is non-blocking. Users shall notice that
+ * this receive size shall not bigger than 64 bytes. As this interface is used to read flash status registers.
+ * For flash contents read, please use AHB bus read, this is much more efficiency.
+ *
+ * param base Pointer to QuadSPI Type.
+ * param handle Pointer to qspi_edma_handle_t structure
+ * param xfer QSPI transfer structure.
+ */
 status_t QSPI_TransferReceiveEDMA(QuadSPI_Type *base, qspi_edma_handle_t *handle, qspi_transfer_t *xfer)
 {
     assert(handle && (handle->dmaHandle));
 
     edma_transfer_config_t xferConfig;
     status_t status;
+    pvoid_to_u32_t srcAddr;
 
     /* If previous TX not finished. */
-    if (kQSPI_BusBusy == handle->state)
+    if ((uint32_t)kQSPI_BusBusy == handle->state)
     {
         status = kStatus_QSPI_Busy;
     }
     else
     {
-        handle->state = kQSPI_BusBusy;
+        handle->state = (uint32_t)kQSPI_BusBusy;
 
+        srcAddr.u32 = QSPI_GetRxDataRegisterAddress(base);
         /* Prepare transfer. */
-        EDMA_PrepareTransfer(&xferConfig, (void *)QSPI_GetRxDataRegisterAddress(base), sizeof(uint32_t), xfer->data,
-                             sizeof(uint32_t), (sizeof(uint32_t) * handle->count), xfer->dataSize,
-                             kEDMA_MemoryToMemory);
+        EDMA_PrepareTransfer(&xferConfig, srcAddr.pvoid, sizeof(uint32_t), xfer->data, sizeof(uint32_t),
+                             (sizeof(uint32_t) * (uint32_t)handle->count), xfer->dataSize, kEDMA_MemoryToMemory);
 
         /* Store the initially configured eDMA minor byte transfer count into the QSPI handle */
         handle->nbytes = (sizeof(uint32_t) * handle->count);
         /* Submit transfer. */
-        EDMA_SubmitTransfer(handle->dmaHandle, &xferConfig);
+        do
+        {
+            status = EDMA_SubmitTransfer(handle->dmaHandle, &xferConfig);
+        } while (status != kStatus_Success);
+
         handle->dmaHandle->base->TCD[handle->dmaHandle->channel].ATTR |= DMA_ATTR_SMOD(0x5U);
         EDMA_StartTransfer(handle->dmaHandle);
 
         /* Enable QSPI TX EDMA. */
-        QSPI_EnableDMA(base, kQSPI_RxBufferDrainDMAEnable, true);
+        QSPI_EnableDMA(base, (uint32_t)kQSPI_RxBufferDrainDMAEnable, true);
 
         status = kStatus_Success;
     }
@@ -268,39 +295,64 @@ status_t QSPI_TransferReceiveEDMA(QuadSPI_Type *base, qspi_edma_handle_t *handle
     return status;
 }
 
+/*!
+ * brief Aborts the sent data using eDMA.
+ *
+ * This function aborts the sent data using eDMA.
+ *
+ * param base QSPI peripheral base address.
+ * param handle Pointer to qspi_edma_handle_t structure
+ */
 void QSPI_TransferAbortSendEDMA(QuadSPI_Type *base, qspi_edma_handle_t *handle)
 {
     assert(handle && (handle->dmaHandle));
 
     /* Disable QSPI TX EDMA. */
-    QSPI_EnableDMA(base, kQSPI_TxBufferFillDMAEnable, false);
+    QSPI_EnableDMA(base, (uint32_t)kQSPI_TxBufferFillDMAEnable, false);
 
     /* Stop transfer. */
     EDMA_AbortTransfer(handle->dmaHandle);
 
-    handle->state = kQSPI_Idle;
+    handle->state = (uint32_t)kQSPI_Idle;
 }
 
+/*!
+ * brief Aborts the receive data using eDMA.
+ *
+ * This function abort receive data which using eDMA.
+ *
+ * param base QSPI peripheral base address.
+ * param handle Pointer to qspi_edma_handle_t structure
+ */
 void QSPI_TransferAbortReceiveEDMA(QuadSPI_Type *base, qspi_edma_handle_t *handle)
 {
     assert(handle && (handle->dmaHandle));
 
     /* Disable QSPI RX EDMA. */
-    QSPI_EnableDMA(base, kQSPI_RxBufferDrainDMAEnable, false);
+    QSPI_EnableDMA(base, (uint32_t)kQSPI_RxBufferDrainDMAEnable, false);
 
     /* Stop transfer. */
     EDMA_AbortTransfer(handle->dmaHandle);
 
-    handle->state = kQSPI_Idle;
+    handle->state = (uint32_t)kQSPI_Idle;
 }
 
+/*!
+ * brief Gets the transferred counts of send.
+ *
+ * param base Pointer to QuadSPI Type.
+ * param handle Pointer to qspi_edma_handle_t structure.
+ * param count Bytes sent.
+ * retval kStatus_Success Succeed get the transfer count.
+ * retval kStatus_NoTransferInProgress There is not a non-blocking transaction currently in progress.
+ */
 status_t QSPI_TransferGetSendCountEDMA(QuadSPI_Type *base, qspi_edma_handle_t *handle, size_t *count)
 {
     assert(handle);
 
     status_t status = kStatus_Success;
 
-    if (handle->state != kQSPI_BusBusy)
+    if (handle->state != (uint32_t)kQSPI_BusBusy)
     {
         status = kStatus_NoTransferInProgress;
     }
@@ -314,13 +366,22 @@ status_t QSPI_TransferGetSendCountEDMA(QuadSPI_Type *base, qspi_edma_handle_t *h
     return status;
 }
 
+/*!
+ * brief Gets the status of the receive transfer.
+ *
+ * param base Pointer to QuadSPI Type.
+ * param handle Pointer to qspi_edma_handle_t structure
+ * param count Bytes received.
+ * retval kStatus_Success Succeed get the transfer count.
+ * retval kStatus_NoTransferInProgress There is not a non-blocking transaction currently in progress.
+ */
 status_t QSPI_TransferGetReceiveCountEDMA(QuadSPI_Type *base, qspi_edma_handle_t *handle, size_t *count)
 {
     assert(handle);
 
     status_t status = kStatus_Success;
 
-    if (handle->state != kQSPI_BusBusy)
+    if (handle->state != (uint32_t)kQSPI_BusBusy)
     {
         status = kStatus_NoTransferInProgress;
     }

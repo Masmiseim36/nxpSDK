@@ -3,18 +3,22 @@
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
     <definition extID="component.lists.MK22F51212"/>
+    <definition extID="component.osa.MK22F51212"/>
     <definition extID="component.serial_manager.MK22F51212"/>
     <definition extID="component.serial_manager_uart.MK22F51212"/>
     <definition extID="component.uart_adapter.MK22F51212"/>
     <definition extID="device.MK22F51212_CMSIS.MK22F51212"/>
     <definition extID="device.MK22F51212_startup.MK22F51212"/>
-    <definition extID="middleware.freertos.MK22F51212"/>
-    <definition extID="middleware.freertos.heap.heap_4.MK22F51212"/>
+    <definition extID="middleware.amazon_freertos-kernel.MK22F51212"/>
+    <definition extID="middleware.amazon_freertos-kernel.extension.MK22F51212"/>
+    <definition extID="middleware.amazon_freertos-kernel.heap_4.MK22F51212"/>
+    <definition extID="middleware.usb.host.MK22F51212"/>
     <definition extID="middleware.usb.host_cdc.MK22F51212"/>
     <definition extID="middleware.usb.host_controller_khci.MK22F51212"/>
     <definition extID="middleware.usb.host_hub.MK22F51212"/>
     <definition extID="platform.Include_common.MK22F51212"/>
     <definition extID="platform.Include_core_cm4.MK22F51212"/>
+    <definition extID="platform.Include_dsp.MK22F51212"/>
     <definition extID="platform.drivers.clock.MK22F51212"/>
     <definition extID="platform.drivers.common.MK22F51212"/>
     <definition extID="platform.drivers.gpio.MK22F51212"/>
@@ -23,13 +27,14 @@
     <definition extID="platform.drivers.smc.MK22F51212"/>
     <definition extID="platform.drivers.uart.MK22F51212"/>
     <definition extID="platform.utilities.assert.MK22F51212"/>
+    <definition extID="platform.utilities.misc_utilities.MK22F51212"/>
     <definition extID="utility.debug_console.MK22F51212"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk22f_host_cdc_freertos" name="host_cdc_freertos" category="usb_examples" dependency="middleware.usb.host_controller_khci.MK22F51212 middleware.freertos.heap.heap_4.MK22F51212 middleware.freertos.MK22F51212 middleware.usb.host_hub.MK22F51212 middleware.usb.host_cdc.MK22F51212 platform.drivers.smc.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 device.MK22F51212_CMSIS.MK22F51212 device.MK22F51212_startup.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.drivers.gpio.MK22F51212 platform.utilities.assert.MK22F51212 utility.debug_console.MK22F51212 component.uart_adapter.MK22F51212 component.serial_manager.MK22F51212 component.serial_manager_uart.MK22F51212 component.lists.MK22F51212 platform.drivers.port.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.Include_common.MK22F51212" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmk22f_host_cdc_freertos" name="host_cdc_freertos" category="usb_examples" dependency="middleware.usb.host_controller_khci.MK22F51212 middleware.usb.host.MK22F51212 middleware.amazon_freertos-kernel.heap_4.MK22F51212 middleware.amazon_freertos-kernel.MK22F51212 middleware.usb.host_hub.MK22F51212 middleware.usb.host_cdc.MK22F51212 platform.drivers.smc.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 device.MK22F51212_CMSIS.MK22F51212 device.MK22F51212_startup.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.drivers.gpio.MK22F51212 platform.utilities.assert.MK22F51212 utility.debug_console.MK22F51212 component.uart_adapter.MK22F51212 component.serial_manager.MK22F51212 component.lists.MK22F51212 component.serial_manager_uart.MK22F51212 platform.drivers.port.MK22F51212 component.osa.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.Include_common.MK22F51212 platform.Include_dsp.MK22F51212 middleware.amazon_freertos-kernel.extension.MK22F51212 platform.utilities.misc_utilities.MK22F51212">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -47,9 +52,16 @@
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>_DEBUG=1</value>
           <value>CPU_MK22FN512VLH12</value>
+          <value>DEBUG_CONSOLE_RX_ENABLE=0</value>
+          <value>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</value>
+          <value>DEBUG_CONSOLE_RECEIVE_BUFFER_LEN=16</value>
+          <value>DEBUG_CONSOLE_TRANSMIT_BUFFER_LEN=64</value>
           <value>USB_STACK_FREERTOS</value>
           <value>USB_STACK_FREERTOS_HEAP_SIZE=32768</value>
           <value>FSL_RTOS_FREE_RTOS</value>
+          <value>FSL_OSA_BM_TASK_ENABLE=0</value>
+          <value>FSL_OSA_BM_TIMER_CONFIG=0</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -68,13 +80,13 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/frdmk22f/usb_examples/usb_host_cdc/freertos/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/frdmk22f/usb_examples/usb_host_cdc/freertos/armgcc" target_path="MK22F51212/gcc" type="linker" toolchain="armgcc">
       <files mask="MK22FN512xxx12_flash.ld"/>
     </source>
-    <source path="boards/frdmk22f/usb_examples/usb_host_cdc/freertos/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/frdmk22f/usb_examples/usb_host_cdc/freertos/iar" target_path="MK22F51212/iar" type="linker" toolchain="iar">
       <files mask="MK22FN512xxx12_flash.icf"/>
     </source>
-    <source path="boards/frdmk22f/usb_examples/usb_host_cdc/freertos/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/frdmk22f/usb_examples/usb_host_cdc/freertos/mdk" target_path="MK22F51212/arm" type="linker" toolchain="mdk">
       <files mask="MK22FN512xxx12_flash.scf"/>
     </source>
     <source path="boards/frdmk22f/usb_examples/usb_host_cdc/freertos" target_path="board" type="c_include">
@@ -90,6 +102,9 @@
     <source path="boards/frdmk22f/usb_examples/usb_host_cdc/freertos" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
       <files mask="readme.txt"/>
     </source>
+    <source path="boards/frdmk22f/usb_examples/usb_host_cdc/freertos" target_path="frdmk22f/usb_examples/usb_host_cdc/freertos" type="doc" exclude="true">
+      <files mask="readme.pdf"/>
+    </source>
     <source path="boards/frdmk22f/usb_examples/usb_host_cdc/freertos" target_path="source" type="c_include">
       <files mask="FreeRTOSConfig.h"/>
       <files mask="app.h"/>
@@ -99,12 +114,6 @@
     <source path="boards/frdmk22f/usb_examples/usb_host_cdc/freertos" target_path="source" type="src">
       <files mask="app.c"/>
       <files mask="host_cdc.c"/>
-    </source>
-    <source path="boards/frdmk22f/usb_examples/usb_host_cdc/freertos" target_path="utility" type="c_include">
-      <files mask="usb_serial_port.h"/>
-    </source>
-    <source path="boards/frdmk22f/usb_examples/usb_host_cdc/freertos" target_path="utility" type="src">
-      <files mask="usb_uart_drv.c"/>
     </source>
   </example>
 </ksdk:examples>

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -122,9 +122,9 @@ void USB_DeviceIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbDeviceKhciIrq[] = USB_IRQS;
-    irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+    irqNumber                  = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 
-/* Install isr, set priority, and enable IRQ. */
+    /* Install isr, set priority, and enable IRQ. */
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
     EnableIRQ((IRQn_Type)irqNumber);
 }
@@ -790,10 +790,12 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 if (USB_SPEED_HIGH == g_cdcVnic.speed)
                 {
                     epInitStruct.maxPacketSize = HS_CDC_VNIC_INTERRUPT_IN_PACKET_SIZE;
+                    epInitStruct.interval = HS_CDC_VNIC_INTERRUPT_IN_INTERVAL;
                 }
                 else
                 {
                     epInitStruct.maxPacketSize = FS_CDC_VNIC_INTERRUPT_IN_PACKET_SIZE;
+                    epInitStruct.interval = FS_CDC_VNIC_INTERRUPT_IN_INTERVAL;
                 }
 
                 USB_DeviceInitEndpoint(g_cdcVnic.deviceHandle, &epInitStruct, &epCallback);
@@ -803,6 +805,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 epCallback.callbackParam = handle;
 
                 epInitStruct.zlt = 0;
+                epInitStruct.interval = 0U;
                 epInitStruct.transferType = USB_ENDPOINT_BULK;
                 epInitStruct.endpointAddress =
                     USB_CDC_VNIC_BULK_IN_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
@@ -821,6 +824,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 epCallback.callbackParam = handle;
 
                 epInitStruct.zlt = 0;
+                epInitStruct.interval = 0U;
                 epInitStruct.transferType = USB_ENDPOINT_BULK;
                 epInitStruct.endpointAddress =
                     USB_CDC_VNIC_BULK_OUT_ENDPOINT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);

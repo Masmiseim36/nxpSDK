@@ -1,32 +1,10 @@
 /*
-* Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without modification,
-* are permitted provided that the following conditions are met:
-*
-* o Redistributions of source code must retain the above copyright notice, this list
-*   of conditions and the following disclaimer.
-*
-* o Redistributions in binary form must reproduce the above copyright notice, this
-*   list of conditions and the following disclaimer in the documentation and/or
-*   other materials provided with the distribution.
-*
-* o Neither the name of Freescale Semiconductor, Inc. nor the names of its
-*   contributors may be used to endorse or promote products derived from this
-*   software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-* ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ * Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
@@ -40,6 +18,7 @@
  ******************************************************************************/
 #define EXAMPLE_DSPI_MASTER_BASEADDR SPI2
 #define EXAMPLE_DSPI_MASTER_CLK_SRC DSPI2_CLK_SRC
+#define EXAMPLE_DSPI_MASTER_CLK_FREQ CLOCK_GetFreq(DSPI2_CLK_SRC)
 #define EXAMPLE_DSPI_MASTER_IRQ SPI2_IRQn
 #define EXAMPLE_DSPI_MASTER_PCS kDSPI_Pcs0
 #define EXAMPLE_DSPI_MASTER_IRQHandler SPI2_IRQHandler
@@ -59,8 +38,8 @@
  ******************************************************************************/
 uint8_t masterRxData[TRANSFER_SIZE] = {0U};
 uint8_t masterTxData[TRANSFER_SIZE] = {0U};
-uint8_t slaveRxData[TRANSFER_SIZE] = {0U};
-uint8_t slaveTxData[TRANSFER_SIZE] = {0U};
+uint8_t slaveRxData[TRANSFER_SIZE]  = {0U};
+uint8_t slaveTxData[TRANSFER_SIZE]  = {0U};
 
 volatile uint32_t slaveTxCount;
 volatile uint32_t slaveRxCount;
@@ -124,6 +103,11 @@ void EXAMPLE_DSPI_MASTER_IRQHandler(void)
         DSPI_DisableInterrupts(EXAMPLE_DSPI_MASTER_BASEADDR,
                                kDSPI_RxFifoDrainRequestInterruptEnable | kDSPI_TxFifoFillRequestInterruptEnable);
     }
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
+#if defined __CORTEX_M && (__CORTEX_M == 4U)
+    __DSB();
+#endif
 }
 
 void EXAMPLE_DSPI_SLAVE_IRQHandler(void)
@@ -160,6 +144,11 @@ void EXAMPLE_DSPI_SLAVE_IRQHandler(void)
         /* Disable interrupt requests */
         DSPI_DisableInterrupts(EXAMPLE_DSPI_SLAVE_BASEADDR, kDSPI_RxFifoDrainRequestInterruptEnable);
     }
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
+#if defined __CORTEX_M && (__CORTEX_M == 4U)
+    __DSB();
+#endif
 }
 
 /*!
@@ -188,36 +177,36 @@ int main(void)
     dspi_slave_config_t slaveConfig;
 
     /* Master config */
-    masterConfig.whichCtar = kDSPI_Ctar0;
-    masterConfig.ctarConfig.baudRate = TRANSFER_BAUDRATE;
-    masterConfig.ctarConfig.bitsPerFrame = 8;
-    masterConfig.ctarConfig.cpol = kDSPI_ClockPolarityActiveHigh;
-    masterConfig.ctarConfig.cpha = kDSPI_ClockPhaseFirstEdge;
-    masterConfig.ctarConfig.direction = kDSPI_MsbFirst;
-    masterConfig.ctarConfig.pcsToSckDelayInNanoSec = 1000000000U / TRANSFER_BAUDRATE;
-    masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec = 1000000000U / TRANSFER_BAUDRATE;
+    masterConfig.whichCtar                                = kDSPI_Ctar0;
+    masterConfig.ctarConfig.baudRate                      = TRANSFER_BAUDRATE;
+    masterConfig.ctarConfig.bitsPerFrame                  = 8;
+    masterConfig.ctarConfig.cpol                          = kDSPI_ClockPolarityActiveHigh;
+    masterConfig.ctarConfig.cpha                          = kDSPI_ClockPhaseFirstEdge;
+    masterConfig.ctarConfig.direction                     = kDSPI_MsbFirst;
+    masterConfig.ctarConfig.pcsToSckDelayInNanoSec        = 1000000000U / TRANSFER_BAUDRATE;
+    masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec    = 1000000000U / TRANSFER_BAUDRATE;
     masterConfig.ctarConfig.betweenTransferDelayInNanoSec = 1000000000U / TRANSFER_BAUDRATE;
 
-    masterConfig.whichPcs = EXAMPLE_DSPI_MASTER_PCS;
+    masterConfig.whichPcs           = EXAMPLE_DSPI_MASTER_PCS;
     masterConfig.pcsActiveHighOrLow = kDSPI_PcsActiveLow;
 
-    masterConfig.enableContinuousSCK = false;
-    masterConfig.enableRxFifoOverWrite = false;
+    masterConfig.enableContinuousSCK        = false;
+    masterConfig.enableRxFifoOverWrite      = false;
     masterConfig.enableModifiedTimingFormat = false;
-    masterConfig.samplePoint = kDSPI_SckToSin0Clock;
+    masterConfig.samplePoint                = kDSPI_SckToSin0Clock;
 
-    srcClock_Hz = CLOCK_GetFreq(EXAMPLE_DSPI_MASTER_CLK_SRC);
+    srcClock_Hz = EXAMPLE_DSPI_MASTER_CLK_FREQ;
     DSPI_MasterInit(EXAMPLE_DSPI_MASTER_BASEADDR, &masterConfig, srcClock_Hz);
 
     /* Slave config */
-    slaveConfig.whichCtar = kDSPI_Ctar0;
-    slaveConfig.ctarConfig.bitsPerFrame = masterConfig.ctarConfig.bitsPerFrame;
-    slaveConfig.ctarConfig.cpol = masterConfig.ctarConfig.cpol;
-    slaveConfig.ctarConfig.cpha = masterConfig.ctarConfig.cpha;
-    slaveConfig.enableContinuousSCK = masterConfig.enableContinuousSCK;
-    slaveConfig.enableRxFifoOverWrite = masterConfig.enableRxFifoOverWrite;
+    slaveConfig.whichCtar                  = kDSPI_Ctar0;
+    slaveConfig.ctarConfig.bitsPerFrame    = masterConfig.ctarConfig.bitsPerFrame;
+    slaveConfig.ctarConfig.cpol            = masterConfig.ctarConfig.cpol;
+    slaveConfig.ctarConfig.cpha            = masterConfig.ctarConfig.cpha;
+    slaveConfig.enableContinuousSCK        = masterConfig.enableContinuousSCK;
+    slaveConfig.enableRxFifoOverWrite      = masterConfig.enableRxFifoOverWrite;
     slaveConfig.enableModifiedTimingFormat = masterConfig.enableModifiedTimingFormat;
-    slaveConfig.samplePoint = masterConfig.samplePoint;
+    slaveConfig.samplePoint                = masterConfig.samplePoint;
 
     DSPI_SlaveInit(EXAMPLE_DSPI_SLAVE_BASEADDR, &slaveConfig);
 
@@ -247,8 +236,7 @@ int main(void)
 
     DSPI_StopTransfer(EXAMPLE_DSPI_SLAVE_BASEADDR);
     DSPI_FlushFifo(EXAMPLE_DSPI_SLAVE_BASEADDR, true, true);
-    DSPI_ClearStatusFlags(EXAMPLE_DSPI_SLAVE_BASEADDR, kDSPI_AllStatusFlag);
-    DSPI_StartTransfer(EXAMPLE_DSPI_SLAVE_BASEADDR);
+    DSPI_ClearStatusFlags(EXAMPLE_DSPI_SLAVE_BASEADDR, (uint32_t)kDSPI_AllStatusFlag);
 
     /*Fill up the slave Tx data*/
     while (DSPI_GetStatusFlags(EXAMPLE_DSPI_SLAVE_BASEADDR) & kDSPI_TxFifoFillRequestFlag)
@@ -272,25 +260,29 @@ int main(void)
 
     /*Enable slave RX interrupt*/
     DSPI_EnableInterrupts(EXAMPLE_DSPI_SLAVE_BASEADDR, kDSPI_RxFifoDrainRequestInterruptEnable);
+    /* Start transfer. */
+    DSPI_StartTransfer(EXAMPLE_DSPI_SLAVE_BASEADDR);
 
     /* Start master transfer*/
     dspi_command_data_config_t commandData;
-    commandData.isPcsContinuous = false;
-    commandData.whichCtar = kDSPI_Ctar0;
-    commandData.whichPcs = EXAMPLE_DSPI_MASTER_PCS;
-    commandData.isEndOfQueue = false;
+    commandData.isPcsContinuous    = false;
+    commandData.whichCtar          = kDSPI_Ctar0;
+    commandData.whichPcs           = EXAMPLE_DSPI_MASTER_PCS;
+    commandData.isEndOfQueue       = false;
     commandData.clearTransferCount = false;
 
     masterCommand = DSPI_MasterGetFormattedCommand(&commandData);
 
     masterFifoSize = FSL_FEATURE_DSPI_FIFO_SIZEn(EXAMPLE_DSPI_MASTER_BASEADDR);
-    masterTxCount = 0;
-    masterRxCount = 0;
+    masterTxCount  = 0;
+    masterRxCount  = 0;
 
     DSPI_StopTransfer(EXAMPLE_DSPI_MASTER_BASEADDR);
     DSPI_FlushFifo(EXAMPLE_DSPI_MASTER_BASEADDR, true, true);
-    DSPI_ClearStatusFlags(EXAMPLE_DSPI_MASTER_BASEADDR, kDSPI_AllStatusFlag);
-    DSPI_StartTransfer(EXAMPLE_DSPI_MASTER_BASEADDR);
+    DSPI_ClearStatusFlags(EXAMPLE_DSPI_MASTER_BASEADDR, (uint32_t)kDSPI_AllStatusFlag);
+
+    /*Enable master RX interrupt*/
+    DSPI_EnableInterrupts(EXAMPLE_DSPI_MASTER_BASEADDR, kDSPI_RxFifoDrainRequestInterruptEnable);
 
     /*Fill up the master Tx data*/
     while (DSPI_GetStatusFlags(EXAMPLE_DSPI_MASTER_BASEADDR) & kDSPI_TxFifoFillRequestFlag)
@@ -309,8 +301,8 @@ int main(void)
         DSPI_ClearStatusFlags(EXAMPLE_DSPI_MASTER_BASEADDR, kDSPI_TxFifoFillRequestFlag);
     }
 
-    /*Enable master RX interrupt*/
-    DSPI_EnableInterrupts(EXAMPLE_DSPI_MASTER_BASEADDR, kDSPI_RxFifoDrainRequestInterruptEnable);
+    /* Start DSPI transafer.*/
+    DSPI_StartTransfer(EXAMPLE_DSPI_MASTER_BASEADDR);
 
     /* Wait slave received all data. */
     while (!isTransferCompleted)
@@ -336,7 +328,7 @@ int main(void)
     }
     else
     {
-        PRINTF(" \r\nError occured in DSPI transfer ! \r\n");
+        PRINTF(" \r\nError occurred in DSPI transfer ! \r\n");
     }
 
     DSPI_Deinit(EXAMPLE_DSPI_MASTER_BASEADDR);

@@ -10,11 +10,10 @@ the virtual serial port on board.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.70.1
-- Keil MDK 5.20
-- GCC ARM Embedded 2015-4.9-q3
-- Kinetis Development Studio IDE 3.2.0
-- Atollic TrueSTUDIO 5.5.2
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -43,7 +42,7 @@ Running the demo
 When the example runs successfully, you can see the similar information from the terminal as below.
 
 I2C example -- Read Accelerometer Value
-Found a MMA8451 on board , the device address is 0x1d .
+Found an MMA8451 on board , the device address is 0x1d .
 The accel values:
 status_reg = 0xff , x =   -10 , y =    31 , z =  2025
 status_reg = 0xff , x =    -6 , y =    32 , z =  2022

@@ -3,8 +3,35 @@ Overview
 This example demonstrates how the board can be controlled by Android mobile application with usage the AWS IoT.
 User LEDs on the board can be controlled and also an action can be invoked to read data from accelerometer and report it to AWS IoT device shadow.
 Please take look into section "Board settings" if there are some board limitations to control LEDs or read data from accelerometer.
-===================================================================================================================================
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
+- Keil MDK  5.29
+- MCUXpresso  11.1.0
+
+Hardware requirements
+=====================
+- Mini/micro USB cable
+- FRDM-K64F board
+- "GT202 Adaptor V1.04" or "Silex SX-ULPAN-2401" or "FRDM-KL64Z click shield with WIFI10CLICK"
+- Personal Computer
+
+Board settings
+==============
+"Plug SX-ULPAN-2401" or "GT202 Adaptor" or "WIFI10CLICK" board to FRDM stackable headers (J1, J2, J3, J4).
+GT202 shield is compatible with FRDM-K64 SCH-REV E and higher.
+Previous revisions cannot provide GPIO mux on J2:2 (WLAN_PWRON).
+
+The default compilation settings are predefined for WIFI10CLICK shield.
+If you want to use "GT202 shield" or "Silex SX-ULPAN-2401", please add following "Compiler define" in project options:
+
+WIFISHIELD_IS=WIFISHIELD_IS_GT202
+WIFISHIELD_IS=WIFISHIELD_IS_SILEX2401
+
+The "wifi_shield.h" then includes specific shield support.
 Prepare the Demo
 ================
 Please update WiFi firmware to version 3.3.6 using "qca_fwupdate" demo.
@@ -20,21 +47,21 @@ Before running the demo it is need to configure AWS IoT Console and update some 
         static const char clientcredentialMQTT_BROKER_ENDPOINT[] = "abcdefgh123456.iot.us-west-2.amazonaws.com";
         #define clientcredentialIOT_THING_NAME "MyExample"
 
-    In the next step you will get the "device certificate" and the "primary key". Each of the certificates needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h".
-    Or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\amazon-freertos\demos\common\devmode_key_provisioning\CertificateConfigurationTool) to generate the "aws_clientcredential_keys.h".
+    In the next step you will get the "device certificate" and the "primary key". The device certificate and private key needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h".
+    Or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\amazon-freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
 
     Example:
-        static const char clientcredentialCLIENT_CERTIFICATE_PEM[] = "Paste client certificate here.";
+        #define keyCLIENT_CERTIFICATE_PEM "Paste client certificate here."
 
         Needs to be changed to:
 
-        static const char clientcredentialCLIENT_CERTIFICATE_PEM[] =
-            "-----BEGIN CERTIFICATE-----\n"
-            "MIIDWTCCAkGgAwIBAgIUPwbiJBIJhO6eF498l1GZ8siO/K0wDQYJKoZIhvcNAQEL\n"
-            .
-            .
-            "KByzyTutxTeI9UKcIPFxK40s4qF50a40/6UFxrGueW+TzZ4iubWzP7eG+47r\n"
-            "-----END CERTIFICATE-----\n";
+        #define keyCLIENT_CERTIFICATE_PEM "-----BEGIN CERTIFICATE-----\n"\
+        "MIIDWTCCAkGgAwIBAgIUfmv3zA+JULlMOxmz+upkAzhEkQ0wDQYJKoZIhvcNAQEL\n"\
+        .
+        .
+        .
+        "mepuT3lKmD0jZupsQ9vLQOA09rMjVMd0YPmI9ozvvWqLpjVvNTKVhsf/3slM\n"\
+        "-----END CERTIFICATE-----\n"
 
     In the same way update the private key array.
 
@@ -144,75 +171,82 @@ Android application displays Accelerometer data for all three axis and status of
 Every mentioned action takes approximately 1-3 seconds.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-0 0 [Tmr Svc] Starting key provisioning...
-1 0 [Tmr Svc] Write root certificate...
-2 14 [Tmr Svc] Write device private key...
-3 448 [Tmr Svc] Write device certificate...
-4 467 [Tmr Svc] Key provisioning done...
-5 468 [Tmr Svc] Starting WiFi...
-6 2037 [Tmr Svc] WiFi module initialized.
-7 6195 [Tmr Svc] WiFi connected to AP External-Internet.
-8 6196 [Tmr Svc] IP Address acquired 192.168.0.245
-9 6214 [AWS-RemoteCtrl] [Shadow 0] MQTT: Creation of dedicated MQTT client succeeded.
-10 6578 [MQTT] Looked up a39m6stfia5skz.iot.us-west-2.amazonaws.com as 35.164.107.11
-11 19375 [AWS-RemoteCtrl] [Shadow 0] MQTT: Connect succeeded.
-12 19700 [AWS-RemoteCtrl] [Shadow 0] MQTT: Subscribe to accepted topic succeeded.
-13 20027 [AWS-RemoteCtrl] [Shadow 0] MQTT: Subscribe to rejected topic succeeded.
-14 20048 [AWS-RemoteCtrl] [Shadow 0] MQTT: Publish to operation topic succeeded.
-15 20682 [AWS-RemoteCtrl] [Shadow 0] MQTT: Unsubscribe from rejected topic succeeded.
-16 21010 [AWS-RemoteCtrl] [Shadow 0] MQTT: Subscribe to callback topic succeeded.
-17 21338 [AWS-RemoteCtrl] [Shadow 0] MQTT: Subscribe to accepted topic succeeded.
-18 21665 [AWS-RemoteCtrl] [Shadow 0] MQTT: Subscribe to rejected topic succeeded.
-19 21686 [AWS-RemoteCtrl] [Shadow 0] MQTT: Publish to operation topic succeeded.
-20 22009 [AWS-RemoteCtrl] AWS Remote Control Demo initialized.
-21 22017 [AWS-RemoteCtrl] Use mobile application to control the remote device.
-22 29514 [AWS-RemoteCtrl] Turn on LED1
-23 29531 [AWS-RemoteCtrl] [Shadow 0] MQTT: Publish to operation topic succeeded.
-24 29850 [AWS-RemoteCtrl] Successfully performed update.
-25 29858 [AWS-RemoteCtrl] [Shadow 0] MQTT: Return MQTT buffer succeeded.
-26 39678 [AWS-RemoteCtrl] Turn off LED1
-27 39696 [AWS-RemoteCtrl] [Shadow 0] MQTT: Publish to operation topic succeeded.
-28 41022 [AWS-RemoteCtrl] Successfully performed update.
-29 41030 [AWS-RemoteCtrl] [Shadow 0] MQTT: Return MQTT buffer succeeded.
-30 41962 [AWS-RemoteCtrl] Update accelerometer.
-31 41984 [AWS-RemoteCtrl] [Shadow 0] MQTT: Publish to operation topic succeeded.
-32 42303 [AWS-RemoteCtrl] Successfully performed update.
-33 42310 [AWS-RemoteCtrl] [Shadow 0] MQTT: Return MQTT buffer succeeded.
+0 160 [Tmr Svc] Write certificate...
+1 463 [Tmr Svc] Device credential provisioning succeeded.
+2 463 [Tmr Svc] Starting WiFi...
+3 1718 [Tmr Svc] WiFi module initialized.
+4 7731 [Tmr Svc] WiFi connected to AP Guest.
+5 7731 [Tmr Svc] IP Address acquired 192.168.2.101
+6 7740 [AWS-RemoteCtrl] [INFO ][INIT][7740] SDK successfully initialized.
+7 7747 [AWS-RemoteCtrl] [INFO ][Shadow][7747] Shadow library successfully initialized.
+9 12554 [AWS-RemoteCtrl] [INFO ][MQTT][12554] Establishing new MQTT connection.
+10 12562 [AWS-RemoteCtrl] [INFO ][MQTT][12562] Anonymous metrics (SDK language, SDK version) will be provided to AWS IoT. Recompile with AWS_IOT_MQTT_ENABLE_METRICS set to 0 to disable.
+11 12580 [AWS-RemoteCtrl] [INFO ][MQTT][12579] (MQTT connection 20009320, CONNECT operation 200094a0) Waiting for operation completion.
+12 12777 [AWS-RemoteCtrl] [INFO ][MQTT][12777] (MQTT connection 20009320, CONNECT operation 200094a0) Wait complete with result SUCCESS.
+13 12789 [AWS-RemoteCtrl] [INFO ][MQTT][12789] New MQTT connection 20008900 established.
+14 12797 [AWS-RemoteCtrl] [INFO ][MQTT][12797] (MQTT connection 20009320) SUBSCRIBE operation scheduled.
+15 12798 [AWS-RemoteCtrl] [INFO ][MQTT][12798] (MQTT connection 20009320, SUBSCRIBE operation 2000a438) Waiting for operation completion.
+16 12957 [AWS-RemoteCtrl] [INFO ][MQTT][12957] (MQTT connection 20009320, SUBSCRIBE operation 2000a438) Wait complete with result SUCCESS.
+17 12957 [AWS-RemoteCtrl] [INFO ][MQTT][12957] (MQTT connection 20009320) SUBSCRIBE operation scheduled.
+18 12957 [AWS-RemoteCtrl] [INFO ][MQTT][12957] (MQTT connection 20009320, SUBSCRIBE operation 2000a438) Waiting for operation completion.
+19 13131 [AWS-RemoteCtrl] [INFO ][MQTT][13131] (MQTT connection 20009320, SUBSCRIBE operation 2000a438) Wait complete with result SUCCESS.
+20 13144 [AWS-RemoteCtrl] [INFO ][MQTT][13144] (MQTT connection 20009320) MQTT PUBLISH operation queued.
+21 13354 [iot_thread] [WARN ][Shadow][13354] Shadow DELETE of aws_rpr_michal was REJECTED.
+22 13354 [iot_thread] [WARN ][Shadow][13354] Code 404: "No shadow exists with name: 'aws_rpr_michal'".
+23 13371 [AWS-RemoteCtrl] [INFO ][MQTT][13371] (MQTT connection 20009320) UNSUBSCRIBE operation scheduled.
+24 13372 [AWS-RemoteCtrl] [INFO ][MQTT][13372] (MQTT connection 20009320, UNSUBSCRIBE operation 2000a438) Waiting for operation completion.
+25 13558 [AWS-RemoteCtrl] [INFO ][MQTT][13557] (MQTT connection 20009320, UNSUBSCRIBE operation 2000a438) Wait complete with result SUCCESS.
+26 13558 [AWS-RemoteCtrl] [INFO ][MQTT][13558] (MQTT connection 20009320) UNSUBSCRIBE operation scheduled.
+27 13558 [AWS-RemoteCtrl] [INFO ][MQTT][13558] (MQTT connection 20009320, UNSUBSCRIBE operation 2000a438) Waiting for operation completion.
+28 13720 [AWS-RemoteCtrl] [INFO ][MQTT][13720] (MQTT connection 20009320, UNSUBSCRIBE operation 2000a438) Wait complete with result SUCCESS.
+29 13733 [AWS-RemoteCtrl] [INFO ][Shadow][13733] (aws_rpr_michal) Modifying Shadow DELTA callback.
+30 13742 [AWS-RemoteCtrl] [INFO ][Shadow][13741] (aws_rpr_michal) Adding new DELTA callback.
+31 13750 [AWS-RemoteCtrl] [INFO ][MQTT][13750] (MQTT connection 20009320) SUBSCRIBE operation scheduled.
+32 13750 [AWS-RemoteCtrl] [INFO ][MQTT][13750] (MQTT connection 20009320, SUBSCRIBE operation 20009528) Waiting for operation completion.
+33 13943 [AWS-RemoteCtrl] [INFO ][MQTT][13942] (MQTT connection 20009320, SUBSCRIBE operation 20009528) Wait complete with result SUCCESS.
+34 13955 [AWS-RemoteCtrl] [INFO ][Shadow][13955] (aws_rpr_michal) Shadow DELTA callback operation complete with result SUCCESS.
+35 13967 [AWS-RemoteCtrl] [INFO ][Shadow][13967] (aws_rpr_michal) Modifying Shadow UPDATED callback.
+36 13976 [AWS-RemoteCtrl] [INFO ][Shadow][13976] (aws_rpr_michal) Shadow UPDATED callback operation complete with result SUCCESS.
+37 13988 [AWS-RemoteCtrl] [INFO ][MQTT][13988] (MQTT connection 20009320) SUBSCRIBE operation scheduled.
+38 13988 [AWS-RemoteCtrl] [INFO ][MQTT][13988] (MQTT connection 20009320, SUBSCRIBE operation 2000a6e0) Waiting for operation completion.
+39 14148 [AWS-RemoteCtrl] [INFO ][MQTT][14148] (MQTT connection 20009320, SUBSCRIBE operation 2000a6e0) Wait complete with result SUCCESS.
+40 14148 [AWS-RemoteCtrl] [INFO ][MQTT][14148] (MQTT connection 20009320) SUBSCRIBE operation scheduled.
+41 14148 [AWS-RemoteCtrl] [INFO ][MQTT][14148] (MQTT connection 20009320, SUBSCRIBE operation 2000a6e0) Waiting for operation completion.
+42 14310 [AWS-RemoteCtrl] [INFO ][MQTT][14310] (MQTT connection 20009320, SUBSCRIBE operation 2000a6e0) Wait complete with result SUCCESS.
+43 14323 [AWS-RemoteCtrl] [INFO ][MQTT][14323] (MQTT connection 20009320) MQTT PUBLISH operation queued.
+44 14563 [iot_thread] [INFO ][Shadow][14563] Shadow UPDATE of aws_rpr_michal was ACCEPTED.
+45 14572 [AWS-RemoteCtrl] AWS Remote Control Demo initialized.
+46 14577 [AWS-RemoteCtrl] Use mobile application to control the remote device.
+47 26245 [AWS-RemoteCtrl] Turn on LED Red
+48 26250 [AWS-RemoteCtrl] [INFO ][MQTT][26249] (MQTT connection 20009320) MQTT PUBLISH operation queued.
+49 26288 [iot_thread] [WARN ][Shadow][26288] Received a Shadow UPDATE response with no client token. This is possibly a response to a bad JSON document:
+{"state":{"desired":{"LEDstate":1}},"metadata":{"desired":{"LEDstate":{"timestamp":1570799264}}},"vers50 26289 [iot_thread] [WARN ][Shadow][26288] Shadow UPDATE callback received an unknown operation.
+51 26441 [iot_thread] [INFO ][Shadow][26441] Shadow UPDATE of aws_rpr_michal was ACCEPTED.
+52 26449 [AWS-RemoteCtrl] Successfully performed update.
+53 29042 [iot_thread] [WARN ][Shadow][29042] Shadow UPDATE callback received an unknown operation.
+54 29052 [AWS-RemoteCtrl] Turn off LED Red
+55 29057 [AWS-RemoteCtrl] [INFO ][MQTT][29056] (MQTT connection 20009320) MQTT PUBLISH operation queued.
+56 29255 [iot_thread] [INFO ][Shadow][29255] Shadow UPDATE of aws_rpr_michal was ACCEPTED.
+57 29263 [AWS-RemoteCtrl] Successfully performed update.
+58 32304 [iot_thread] [WARN ][Shadow][32304] Shadow UPDATE callback received an unknown operation.
+59 32313 [AWS-RemoteCtrl] Turn on LED Red
+60 32317 [AWS-RemoteCtrl] [INFO ][MQTT][32317] (MQTT connection 20009320) MQTT PUBLISH operation queued.
+61 32545 [iot_thread] [INFO ][Shadow][32545] Shadow UPDATE of aws_rpr_michal was ACCEPTED.
+62 32553 [AWS-RemoteCtrl] Successfully performed update.
+63 36180 [iot_thread] [WARN ][Shadow][36180] Shadow UPDATE callback received an unknown operation.
+64 36189 [AWS-RemoteCtrl] Turn off LED Red
+65 36194 [AWS-RemoteCtrl] [INFO ][MQTT][36194] (MQTT connection 20009320) MQTT PUBLISH operation queued.
+66 36385 [iot_thread] [INFO ][Shadow][36385] Shadow UPDATE of aws_rpr_michal was ACCEPTED.
+67 36393 [AWS-RemoteCtrl] Successfully performed update.
+68 38163 [iot_thread] [WARN ][Shadow][38163] Shadow UPDATE callback received an unknown operation.
+69 38173 [AWS-RemoteCtrl] Update accelerometer.
+70 38180 [AWS-RemoteCtrl] [INFO ][MQTT][38180] (MQTT connection 20009320) MQTT PUBLISH operation queued.
+71 38371 [iot_thread] [INFO ][Shadow][38371] Shadow UPDATE of aws_rpr_michal was ACCEPTED.
+72 38379 [AWS-RemoteCtrl] Successfully performed update.
 .
 .
 .
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Hardware requirements
+Customization options
 =====================
-- Mini/micro USB cable
-- FRDM-K64F board
-- GT202 Adaptor V1.04 or Silex SX-ULPAN-2401
-- Personal Computer
-
-Board settings
-==============
-Plug GT202 Adaptor board to FRDM stackable headers (J1, J2, J3, J4).
-GT202 shield is compatible *only* with FRDM-K64 rev_E.
-Previous revisions cannot provide GPIO mux on J2:2 (WLAN_PWRON).
-
-The default shield support is set to GT202 shield. To enable 
-Silex SX-ULPAN-2401, please open "wifi_shield.h" and uncomment
-following lines:
-
-//#define WIFISHIELD_IS_SILEX2041
-
-//#elif defined(WIFISHIELD_IS_SILEX2041)
-//#include "wifi_shield_silex2401.h"
-
-and comment out:
-
-#define WIFISHIELD_IS_GT202
-
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
 

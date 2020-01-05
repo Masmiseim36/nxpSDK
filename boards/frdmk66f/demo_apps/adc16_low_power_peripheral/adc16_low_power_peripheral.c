@@ -305,7 +305,7 @@ int main(void)
 
     /* Init board hardware */
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     BOARD_InitPeripherals();
 
@@ -357,6 +357,8 @@ int main(void)
     boundaries              = TempSensorCalibration(updateBoundariesCounter, tempArray);
     updateBoundariesCounter = 0;
 
+    LPTMR_StopTimer(LPTMR0);
+
     /* GREEN LED is turned on indicating that initial measurement is finished */
     LED_GREEN_ON();
 
@@ -364,6 +366,8 @@ int main(void)
     PRINTF("\r Enter any character to begin the demo...\n");
     GETCHAR();
     PRINTF("\r ---> OK! Main process is running...!\n");
+
+    LPTMR_StartTimer(LPTMR0);
 
     while (1)
     {

@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -32,10 +32,10 @@
  ******************************************************************************/
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 volatile bool ewmIsrFlag = false;
-static EWM_Type *base = EWM;
+static EWM_Type *base    = EWM;
 
 /*******************************************************************************
  * Code
@@ -48,7 +48,8 @@ static EWM_Type *base = EWM;
 void gpio_configure(void)
 {
     gpio_pin_config_t sw_config = {
-        kGPIO_DigitalInput, 0,
+        kGPIO_DigitalInput,
+        0,
     };
     GPIO_PinInit(SW_GPIO, SW_GPIO_PIN, &sw_config);
 }
@@ -79,14 +80,6 @@ void WDOG_EWM_IRQHandler(void)
 #if defined __CORTEX_M && (__CORTEX_M == 4U)
     __DSB();
 #endif
-}
-
-void delay(void)
-{
-    for (uint32_t i = 0; i < 0x7fffffU; i++)
-    {
-        __NOP();
-    }
 }
 
 /*!
@@ -124,6 +117,7 @@ int main(void)
     {
         /* Restart counter*/
         EWM_Refresh(base);
+
         /* Check for SW button push*/
         if (is_key_pressed())
         {
@@ -132,14 +126,16 @@ int main(void)
             {
             }
             PRINTF("\r\n EWM interrupt is occurred");
+            PRINTF("\r\n Press %s to expire EWM again", SW_NAME);
 
+            /*Wait for the key to release*/
+            while (is_key_pressed())
+            {
+            }
             /* Clear interrupt flag*/
             ewmIsrFlag = false;
-            PRINTF("\r\n Press %s to expire EWM again", SW_NAME);
             /*Restart counter and enable interrupt for next run*/
             EWM_Refresh(base);
-            /* Delay for a while in order to press button, interrrupt occurred only once*/
-            delay();
             /*Enable EWM interrupt*/
             EWM_EnableInterrupts(base, kEWM_InterruptEnable);
         }

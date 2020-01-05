@@ -7,11 +7,13 @@
     <definition extID="middleware.mcu-boot.src_startup.MK66F18"/>
     <definition extID="platform.Include_common.MK66F18"/>
     <definition extID="platform.Include_core_cm4.MK66F18"/>
+    <definition extID="platform.Include_dsp.MK66F18"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
+    <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk66f_led_demo_freedom_0000" name="led_demo_freedom_0000" category="bootloader_examples/demo_apps" dependency="device.MK66F18_CMSIS.MK66F18 middleware.mcu-boot.MK66F18_startup.MK66F18 middleware.mcu-boot.src_startup.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18">
+  <example id="frdmk66f_led_demo_freedom_0000" name="led_demo_freedom_0000" category="bootloader_examples/demo_apps" dependency="device.MK66F18_CMSIS.MK66F18 middleware.mcu-boot.MK66F18_startup.MK66F18 middleware.mcu-boot.src_startup.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 platform.Include_dsp.MK66F18">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -39,8 +41,8 @@
           <value>gnu.c.optimization.level.size</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
-          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
           <value>CPU_MK66FN2M0VMD18</value>
+          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
           <value>FREEDOM</value>
           <value>FRDM_K66F</value>
         </option>
@@ -82,6 +84,9 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <source path="boards/frdmk66f/bootloader_examples/demo_apps/led_demo_freedom_0000/armgcc" target_path="middleware/mcu-boot" type="linker" toolchain="armgcc">
+      <files mask="MK66FN2M0xxx18_application_0x0000.ld"/>
+    </source>
     <source path="boards/frdmk66f/bootloader_examples/demo_apps/led_demo_freedom_0000/iar" target_path="middleware/mcu-boot" type="linker" toolchain="iar">
       <files mask="MK66FN2M0xxx18_application_0x0000.icf"/>
     </source>

@@ -11,20 +11,20 @@
 #include "board.h"
 
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 fxos_handle_t g_fxosHandle;
 uint8_t g_sensor_address[] = {0x1CU, 0x1EU, 0x1DU, 0x1FU};
-uint8_t g_sensorRange = 0;
-uint8_t g_dataScale = 0;
+uint8_t g_sensorRange      = 0;
+uint8_t g_dataScale        = 0;
 
 /*******************************************************************************
  * Code
-******************************************************************************/
+ ******************************************************************************/
 
 void Sensor_ReadData(int16_t *Ax, int16_t *Ay, int16_t *Az, int16_t *Mx, int16_t *My, int16_t *Mz)
 {
@@ -48,13 +48,13 @@ void Sensor_ReadData(int16_t *Ax, int16_t *Ay, int16_t *Az, int16_t *Mx, int16_t
 
 int32_t init_mag_accel(void)
 {
-    fxos_config_t config = {0};
-    status_t result = kStatus_Fail;
-    uint16_t i = 0;
+    fxos_config_t config     = {0};
+    status_t result          = kStatus_Fail;
+    uint16_t i               = 0;
     uint16_t array_addr_size = 0;
 
     /* Configure the I2C function */
-    config.I2C_SendFunc = BOARD_Accel_I2C_Send;
+    config.I2C_SendFunc    = BOARD_Accel_I2C_Send;
     config.I2C_ReceiveFunc = BOARD_Accel_I2C_Receive;
 
     /* Initialize sensor devices */

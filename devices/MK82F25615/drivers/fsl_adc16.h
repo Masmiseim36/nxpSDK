@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _FSL_ADC16_H_
@@ -38,16 +16,14 @@
  * @{
  */
 
-/*! @file */
-
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief ADC16 driver version 2.0.0. */
-#define FSL_ADC16_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+/*! @brief ADC16 driver version 2.0.3. */
+#define FSL_ADC16_DRIVER_VERSION (MAKE_VERSION(2, 0, 3))
 /*@}*/
 
 /*!
@@ -74,7 +50,7 @@ enum _adc16_status_flags
  * @brief Channel multiplexer mode for each channel.
  *
  * For some ADC16 channels, there are two pin selections in channel multiplexer. For example, ADC0_SE4a and ADC0_SE4b
- * are the different channels but share the same channel number.
+ * are the different channels that share the same channel number.
  */
 typedef enum _adc_channel_mux_mode
 {
@@ -100,23 +76,23 @@ typedef enum _adc16_clock_divider
 typedef enum _adc16_resolution
 {
     /* This group of enumeration is for internal use which is related to register setting. */
-    kADC16_Resolution8or9Bit = 0U,   /*!< Single End 8-bit or Differential Sample 9-bit. */
+    kADC16_Resolution8or9Bit   = 0U, /*!< Single End 8-bit or Differential Sample 9-bit. */
     kADC16_Resolution12or13Bit = 1U, /*!< Single End 12-bit or Differential Sample 13-bit. */
     kADC16_Resolution10or11Bit = 2U, /*!< Single End 10-bit or Differential Sample 11-bit. */
 
-    /* This group of enumeration is for public user. */
-    kADC16_ResolutionSE8Bit = kADC16_Resolution8or9Bit,    /*!< Single End 8-bit. */
+    /* This group of enumeration is for a public user. */
+    kADC16_ResolutionSE8Bit  = kADC16_Resolution8or9Bit,   /*!< Single End 8-bit. */
     kADC16_ResolutionSE12Bit = kADC16_Resolution12or13Bit, /*!< Single End 12-bit. */
     kADC16_ResolutionSE10Bit = kADC16_Resolution10or11Bit, /*!< Single End 10-bit. */
 #if defined(FSL_FEATURE_ADC16_HAS_DIFF_MODE) && FSL_FEATURE_ADC16_HAS_DIFF_MODE
-    kADC16_ResolutionDF9Bit = kADC16_Resolution8or9Bit,    /*!< Differential Sample 9-bit. */
+    kADC16_ResolutionDF9Bit  = kADC16_Resolution8or9Bit,   /*!< Differential Sample 9-bit. */
     kADC16_ResolutionDF13Bit = kADC16_Resolution12or13Bit, /*!< Differential Sample 13-bit. */
     kADC16_ResolutionDF11Bit = kADC16_Resolution10or11Bit, /*!< Differential Sample 11-bit. */
 #endif                                                     /* FSL_FEATURE_ADC16_HAS_DIFF_MODE */
 
 #if defined(FSL_FEATURE_ADC16_MAX_RESOLUTION) && (FSL_FEATURE_ADC16_MAX_RESOLUTION >= 16U)
     /* 16-bit is supported by default. */
-    kADC16_Resolution16Bit = 3U,                       /*!< Single End 16-bit or Differential Sample 16-bit. */
+    kADC16_Resolution16Bit   = 3U,                     /*!< Single End 16-bit or Differential Sample 16-bit. */
     kADC16_ResolutionSE16Bit = kADC16_Resolution16Bit, /*!< Single End 16-bit. */
 #if defined(FSL_FEATURE_ADC16_HAS_DIFF_MODE) && FSL_FEATURE_ADC16_HAS_DIFF_MODE
     kADC16_ResolutionDF16Bit = kADC16_Resolution16Bit, /*!< Differential Sample 16-bit. */
@@ -143,10 +119,10 @@ typedef enum _adc16_clock_source
  */
 typedef enum _adc16_long_sample_mode
 {
-    kADC16_LongSampleCycle24 = 0U,  /*!< 20 extra ADCK cycles, 24 ADCK cycles total. */
-    kADC16_LongSampleCycle16 = 1U,  /*!< 12 extra ADCK cycles, 16 ADCK cycles total. */
-    kADC16_LongSampleCycle10 = 2U,  /*!< 6 extra ADCK cycles, 10 ADCK cycles total. */
-    kADC16_LongSampleCycle6 = 3U,   /*!< 2 extra ADCK cycles, 6 ADCK cycles total. */
+    kADC16_LongSampleCycle24  = 0U, /*!< 20 extra ADCK cycles, 24 ADCK cycles total. */
+    kADC16_LongSampleCycle16  = 1U, /*!< 12 extra ADCK cycles, 16 ADCK cycles total. */
+    kADC16_LongSampleCycle10  = 2U, /*!< 6 extra ADCK cycles, 10 ADCK cycles total. */
+    kADC16_LongSampleCycle6   = 3U, /*!< 2 extra ADCK cycles, 6 ADCK cycles total. */
     kADC16_LongSampleDisabled = 4U, /*!< Disable the long sample feature. */
 } adc16_long_sample_mode_t;
 
@@ -165,10 +141,10 @@ typedef enum _adc16_reference_voltage_source
  */
 typedef enum _adc16_hardware_average_mode
 {
-    kADC16_HardwareAverageCount4 = 0U,   /*!< For hardware average with 4 samples. */
-    kADC16_HardwareAverageCount8 = 1U,   /*!< For hardware average with 8 samples. */
-    kADC16_HardwareAverageCount16 = 2U,  /*!< For hardware average with 16 samples. */
-    kADC16_HardwareAverageCount32 = 3U,  /*!< For hardware average with 32 samples. */
+    kADC16_HardwareAverageCount4   = 0U, /*!< For hardware average with 4 samples. */
+    kADC16_HardwareAverageCount8   = 1U, /*!< For hardware average with 8 samples. */
+    kADC16_HardwareAverageCount16  = 2U, /*!< For hardware average with 16 samples. */
+    kADC16_HardwareAverageCount32  = 3U, /*!< For hardware average with 32 samples. */
     kADC16_HardwareAverageDisabled = 4U, /*!< Disable the hardware average feature.*/
 } adc16_hardware_average_mode_t;
 #endif /* FSL_FEATURE_ADC16_HAS_HW_AVERAGE */
@@ -192,10 +168,10 @@ typedef enum _adc16_hardware_compare_mode
  */
 typedef enum _adc16_pga_gain
 {
-    kADC16_PGAGainValueOf1 = 0U,  /*!< For amplifier gain of 1.  */
-    kADC16_PGAGainValueOf2 = 1U,  /*!< For amplifier gain of 2.  */
-    kADC16_PGAGainValueOf4 = 2U,  /*!< For amplifier gain of 4.  */
-    kADC16_PGAGainValueOf8 = 3U,  /*!< For amplifier gain of 8.  */
+    kADC16_PGAGainValueOf1  = 0U, /*!< For amplifier gain of 1.  */
+    kADC16_PGAGainValueOf2  = 1U, /*!< For amplifier gain of 2.  */
+    kADC16_PGAGainValueOf4  = 2U, /*!< For amplifier gain of 4.  */
+    kADC16_PGAGainValueOf8  = 3U, /*!< For amplifier gain of 8.  */
     kADC16_PGAGainValueOf16 = 4U, /*!< For amplifier gain of 16. */
     kADC16_PGAGainValueOf32 = 5U, /*!< For amplifier gain of 32. */
     kADC16_PGAGainValueOf64 = 6U, /*!< For amplifier gain of 64. */
@@ -203,7 +179,7 @@ typedef enum _adc16_pga_gain
 #endif /* FSL_FEATURE_ADC16_HAS_PGA */
 
 /*!
- * @brief ADC16 converter configuration .
+ * @brief ADC16 converter configuration.
  */
 typedef struct _adc16_config
 {
@@ -219,7 +195,7 @@ typedef struct _adc16_config
 } adc16_config_t;
 
 /*!
- * @brief ADC16 Hardware compare configuration.
+ * @brief ADC16 Hardware comparison configuration.
  */
 typedef struct _adc16_hardware_compare_config
 {
@@ -237,7 +213,7 @@ typedef struct _adc16_channel_config
     uint32_t channelNumber;                    /*!< Setting the conversion channel number. The available range is 0-31.
                                                     See channel connection information for each chip in Reference
                                                     Manual document. */
-    bool enableInterruptOnConversionCompleted; /*!< Generate a interrupt request once the conversion is completed. */
+    bool enableInterruptOnConversionCompleted; /*!< Generate an interrupt request once the conversion is completed. */
 #if defined(FSL_FEATURE_ADC16_HAS_DIFF_MODE) && FSL_FEATURE_ADC16_HAS_DIFF_MODE
     bool enableDifferentialConversion; /*!< Using Differential sample mode. */
 #endif                                 /* FSL_FEATURE_ADC16_HAS_DIFF_MODE */
@@ -296,9 +272,10 @@ void ADC16_Init(ADC_Type *base, const adc16_config_t *config);
 void ADC16_Deinit(ADC_Type *base);
 
 /*!
- * @brief Gets an available pre-defined settings for converter's configuration.
+ * @brief Gets an available pre-defined settings for the converter's configuration.
  *
- * This function initializes the converter configuration structure with an available settings. The default values are:
+ * This function initializes the converter configuration structure with available settings. The default values are as
+ * follows.
  * @code
  *   config->referenceVoltageSource     = kADC16_ReferenceVoltageSourceVref;
  *   config->clockSource                = kADC16_ClockSourceAsynchronousClock;
@@ -310,7 +287,7 @@ void ADC16_Deinit(ADC_Type *base);
  *   config->enableLowPower             = false;
  *   config->enableContinuousConversion = false;
  * @endcode
- * @param config Pointer to configuration structure.
+ * @param config Pointer to the configuration structure.
  */
 void ADC16_GetDefaultConfig(adc16_config_t *config);
 
@@ -318,15 +295,15 @@ void ADC16_GetDefaultConfig(adc16_config_t *config);
 /*!
  * @brief  Automates the hardware calibration.
  *
- * This auto calibration helps to adjust the plus/minus side gain automatically on the converter's working situation.
+ * This auto calibration helps to adjust the plus/minus side gain automatically.
  * Execute the calibration before using the converter. Note that the hardware trigger should be used
- * during calibration.
+ * during the calibration.
  *
  * @param  base ADC16 peripheral base address.
  *
  * @return                 Execution status.
  * @retval kStatus_Success Calibration is done successfully.
- * @retval kStatus_Fail    Calibration is failed.
+ * @retval kStatus_Fail    Calibration has failed.
  */
 status_t ADC16_DoAutoCalibration(ADC_Type *base);
 #endif /* FSL_FEATURE_ADC16_HAS_CALIBRATION */
@@ -350,16 +327,16 @@ static inline void ADC16_SetOffsetValue(ADC_Type *base, int16_t value)
 /* @} */
 
 /*!
- * @name Advanced Feature
+ * @name Advanced Features
  * @{
  */
 
 #if defined(FSL_FEATURE_ADC16_HAS_DMA) && FSL_FEATURE_ADC16_HAS_DMA
 /*!
- * @brief Enables generating the DMA trigger when conversion is completed.
+ * @brief Enables generating the DMA trigger when the conversion is complete.
  *
  * @param base   ADC16 peripheral base address.
- * @param enable Switcher of DMA feature. "true" means to enable, "false" means not.
+ * @param enable Switcher of the DMA feature. "true" means enabled, "false" means not enabled.
  */
 static inline void ADC16_EnableDMA(ADC_Type *base, bool enable)
 {
@@ -378,7 +355,7 @@ static inline void ADC16_EnableDMA(ADC_Type *base, bool enable)
  * @brief Enables the hardware trigger mode.
  *
  * @param base   ADC16 peripheral base address.
- * @param enable Switcher of hardware trigger feature. "true" means to enable, "false" means not.
+ * @param enable Switcher of the hardware trigger feature. "true" means enabled, "false" means not enabled.
  */
 static inline void ADC16_EnableHardwareTrigger(ADC_Type *base, bool enable)
 {
@@ -408,13 +385,14 @@ void ADC16_SetChannelMuxMode(ADC_Type *base, adc16_channel_mux_mode_t mode);
 /*!
  * @brief Configures the hardware compare mode.
  *
- * The hardware compare mode provides a way to process the conversion result automatically by hardware. Only the result
- * in
- * compare range is available. To compare the range, see "adc16_hardware_compare_mode_t", or the reference
- * manual document for more detailed information.
+ * The hardware compare mode provides a way to process the conversion result automatically by using hardware. Only the
+ * result
+ * in the compare range is available. To compare the range, see "adc16_hardware_compare_mode_t" or the appopriate
+ * reference
+ * manual for more information.
  *
  * @param base     ADC16 peripheral base address.
- * @param config   Pointer to "adc16_hardware_compare_config_t" structure. Passing "NULL" is to disable the feature.
+ * @param config   Pointer to the "adc16_hardware_compare_config_t" structure. Passing "NULL" disables the feature.
  */
 void ADC16_SetHardwareCompareConfig(ADC_Type *base, const adc16_hardware_compare_config_t *config);
 
@@ -422,21 +400,22 @@ void ADC16_SetHardwareCompareConfig(ADC_Type *base, const adc16_hardware_compare
 /*!
  * @brief Sets the hardware average mode.
  *
- * Hardware average mode provides a way to process the conversion result automatically by hardware. The multiple
- * conversion results are accumulated and averaged internally. This aids  reading results.
+ * The hardware average mode provides a way to process the conversion result automatically by using hardware. The
+ * multiple
+ * conversion results are accumulated and averaged internally making them easier to read.
  *
  * @param base  ADC16 peripheral base address.
- * @param mode  Setting hardware average mode. See "adc16_hardware_average_mode_t".
+ * @param mode  Setting the hardware average mode. See "adc16_hardware_average_mode_t".
  */
 void ADC16_SetHardwareAverage(ADC_Type *base, adc16_hardware_average_mode_t mode);
 #endif /* FSL_FEATURE_ADC16_HAS_HW_AVERAGE */
 
 #if defined(FSL_FEATURE_ADC16_HAS_PGA) && FSL_FEATURE_ADC16_HAS_PGA
 /*!
- * @brief Configures the PGA for converter's front end.
+ * @brief Configures the PGA for the converter's front end.
  *
  * @param base    ADC16 peripheral base address.
- * @param config  Pointer to "adc16_pga_config_t" structure. Passing "NULL" is to disable the feature.
+ * @param config  Pointer to the "adc16_pga_config_t" structure. Passing "NULL" disables the feature.
  */
 void ADC16_SetPGAConfig(ADC_Type *base, const adc16_pga_config_t *config);
 #endif /* FSL_FEATURE_ADC16_HAS_PGA */
@@ -468,26 +447,29 @@ void ADC16_ClearStatusFlags(ADC_Type *base, uint32_t mask);
 /*!
  * @brief Configures the conversion channel.
  *
- * This operation triggers the conversion if in software trigger mode. When in hardware trigger mode, this API
+ * This operation triggers the conversion when in software trigger mode. When in hardware trigger mode, this API
  * configures the channel while the external trigger source helps to trigger the conversion.
  *
  * Note that the "Channel Group" has a detailed description.
- * To allow sequential conversions of the ADC to be triggered by internal peripherals, the ADC can have more than one
- * group of status and control register, one for each conversion. The channel group parameter indicates which group of
- * registers are used channel group 0 is for Group A registers and channel group 1 is for Group B registers.  The
+ * To allow sequential conversions of the ADC to be triggered by internal peripherals, the ADC has more than one
+ * group of status and control registers, one for each conversion. The channel group parameter indicates which group of
+ * registers are used, for example, channel group 0 is for Group A registers and channel group 1 is for Group B
+ * registers. The
  * channel groups are used in a "ping-pong" approach to control the ADC operation.  At any point, only one of
- * the channel groups is actively controlling ADC conversions. Channel group 0 is used for both software and hardware
- * trigger modes of operation. Channel groups 1 and greater indicate potentially multiple channel group registers for
- * use only in hardware trigger mode. See the chip configuration information in the MCU reference manual about the
- * number of SC1n registers (channel groups) specific to this device.  None of the channel groups 1 or greater are used
- * for software trigger operation and therefore writes to these channel groups do not initiate a new conversion.
- * Updating channel group 0 while a different channel group is actively controlling a conversion is allowed and
+ * the channel groups is actively controlling ADC conversions. The channel group 0 is used for both software and
+ * hardware
+ * trigger modes. Channel group 1 and greater indicates multiple channel group registers for
+ * use only in hardware trigger mode. See the chip configuration information in the appropriate MCU reference manual for
+ * the
+ * number of SC1n registers (channel groups) specific to this device.  Channel group 1 or greater are not used
+ * for software trigger operation. Therefore, writing to these channel groups does not initiate a new conversion.
+ * Updating the channel group 0 while a different channel group is actively controlling a conversion is allowed and
  * vice versa. Writing any of the channel group registers while that specific channel group is actively controlling a
  * conversion aborts the current conversion.
  *
  * @param base          ADC16 peripheral base address.
  * @param channelGroup  Channel group index.
- * @param config        Pointer to "adc16_channel_config_t" structure for conversion channel.
+ * @param config        Pointer to the "adc16_channel_config_t" structure for the conversion channel.
  */
 void ADC16_SetChannelConfig(ADC_Type *base, uint32_t channelGroup, const adc16_channel_config_t *config);
 
@@ -501,7 +483,7 @@ void ADC16_SetChannelConfig(ADC_Type *base, uint32_t channelGroup, const adc16_c
  */
 static inline uint32_t ADC16_GetChannelConversionValue(ADC_Type *base, uint32_t channelGroup)
 {
-    assert(channelGroup < ADC_R_COUNT);
+    assert(channelGroup < (uint32_t)FSL_FEATURE_ADC16_CONVERSION_CONTROL_COUNT);
 
     return base->R[channelGroup];
 }

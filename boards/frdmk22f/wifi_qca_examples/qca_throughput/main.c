@@ -37,16 +37,13 @@
  * Definitions
  ******************************************************************************/
 
-
-//#define GT202_GPIO_POWER_PORT   
+//#define GT202_GPIO_POWER_PORT
 //#define GT202_GPIO_POWER_PIN
 //
 //#define GT202_SPI SPI1
 //
 //#define GT202_SPI_MOSI
 //#define GT202_SPI_MISO
-
-
 
 
 /*******************************************************************************

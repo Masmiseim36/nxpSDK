@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "board.h"
@@ -40,7 +18,9 @@
 #define EXAMPLE_I2C_MASTER_BASEADDR I2C0
 #define EXAMPLE_I2C_SLAVE_BASEADDR I2C1
 #define I2C_MASTER_CLK_SRC I2C0_CLK_SRC
+#define I2C_MASTER_CLK_FREQ CLOCK_GetFreq(I2C0_CLK_SRC)
 #define I2C_SLAVE_CLK_SRC I2C1_CLK_SRC
+#define I2C_SLAVE_CLK_FREQ CLOCK_GetFreq(I2C1_CLK_SRC)
 #define I2C_MASTER_IRQ I2C0_IRQn
 #define I2C_SLAVE_IRQ I2C1_IRQn
 #define I2C_MASTER_IRQHandler I2C0_IRQHandler
@@ -62,9 +42,9 @@ volatile uint8_t g_slave_buff[I2C_DATA_LENGTH];
 volatile uint8_t g_master_buff[I2C_DATA_LENGTH];
 volatile uint8_t g_masterTxIndex = 0;
 volatile uint8_t g_masterRxIndex = 0xFFU;
-volatile uint8_t g_slaveTxIndex = 0xFFU;
-volatile uint8_t g_slaveRxIndex = 0;
-volatile bool g_masterReadBegin = false;
+volatile uint8_t g_slaveTxIndex  = 0xFFU;
+volatile uint8_t g_slaveRxIndex  = 0;
+volatile bool g_masterReadBegin  = false;
 
 /*******************************************************************************
  * Code
@@ -72,6 +52,7 @@ volatile bool g_masterReadBegin = false;
 
 void I2C_MASTER_IRQHandler(void)
 {
+    uint8_t tmpdata;
     /* Clear pending flag. */
     EXAMPLE_I2C_MASTER_BASEADDR->S = kI2C_IntPendingFlag;
 
@@ -104,7 +85,8 @@ void I2C_MASTER_IRQHandler(void)
             I2C_MasterStop(EXAMPLE_I2C_MASTER_BASEADDR);
         }
 
-        g_master_buff[g_masterRxIndex] = EXAMPLE_I2C_MASTER_BASEADDR->D;
+        tmpdata                        = EXAMPLE_I2C_MASTER_BASEADDR->D;
+        g_master_buff[g_masterRxIndex] = tmpdata;
         g_masterRxIndex++;
 
         /* Send NAK at the last byte. */
@@ -113,10 +95,16 @@ void I2C_MASTER_IRQHandler(void)
             EXAMPLE_I2C_MASTER_BASEADDR->C1 |= I2C_C1_TXAK_MASK;
         }
     }
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
+#if defined __CORTEX_M && (__CORTEX_M == 4U)
+    __DSB();
+#endif
 }
 
 void I2C_SLAVE_IRQHandler(void)
 {
+    uint8_t tmpdata;
     uint8_t status = I2C_SlaveGetStatusFlags(EXAMPLE_I2C_SLAVE_BASEADDR);
 
     /* Clear pending flag. */
@@ -170,9 +158,15 @@ void I2C_SLAVE_IRQHandler(void)
             EXAMPLE_I2C_SLAVE_BASEADDR->C1 |= I2C_C1_TXAK_MASK;
         }
 
-        g_slave_buff[g_slaveRxIndex] = EXAMPLE_I2C_SLAVE_BASEADDR->D;
+        tmpdata                      = EXAMPLE_I2C_SLAVE_BASEADDR->D;
+        g_slave_buff[g_slaveRxIndex] = tmpdata;
         g_slaveRxIndex++;
     }
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
+#if defined __CORTEX_M && (__CORTEX_M == 4U)
+    __DSB();
+#endif
 }
 
 /*!
@@ -180,6 +174,8 @@ void I2C_SLAVE_IRQHandler(void)
  */
 int main(void)
 {
+    uint8_t tmpmasterdata;
+    uint8_t tmpslavedata;
     i2c_slave_config_t slaveConfig;
 
     i2c_master_config_t masterConfig;
@@ -204,16 +200,15 @@ int main(void)
      * slaveConfig.addressingMode = kI2C_Address7bit;
      * slaveConfig.enableGeneralCall = false;
      * slaveConfig.enableWakeUp = false;
-     * slaveConfig.enableHighDrive = false;
      * slaveConfig.enableBaudRateCtl = false;
      * slaveConfig.enableSlave = true;
      */
     I2C_SlaveGetDefaultConfig(&slaveConfig);
 
     slaveConfig.addressingMode = kI2C_Address7bit;
-    slaveConfig.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;
+    slaveConfig.slaveAddress   = I2C_MASTER_SLAVE_ADDR_7BIT;
 
-    I2C_SlaveInit(EXAMPLE_I2C_SLAVE_BASEADDR, &slaveConfig, CLOCK_GetFreq(I2C_SLAVE_CLK_SRC));
+    I2C_SlaveInit(EXAMPLE_I2C_SLAVE_BASEADDR, &slaveConfig, I2C_SLAVE_CLK_FREQ);
 
     for (uint32_t i = 0U; i < I2C_DATA_LENGTH; i++)
     {
@@ -239,7 +234,6 @@ int main(void)
 
     /*
      * masterConfig.baudRate_Bps = 100000U;
-     * masterConfig.enableHighDrive = false;
      * masterConfig.enableStopHold = false;
      * masterConfig.glitchFilterWidth = 0U;
      * masterConfig.enableMaster = true;
@@ -247,7 +241,7 @@ int main(void)
     I2C_MasterGetDefaultConfig(&masterConfig);
     masterConfig.baudRate_Bps = I2C_BAUDRATE;
 
-    sourceClock = CLOCK_GetFreq(I2C_MASTER_CLK_SRC);
+    sourceClock = I2C_MASTER_CLK_FREQ;
 
     I2C_MasterInit(EXAMPLE_I2C_MASTER_BASEADDR, &masterConfig, sourceClock);
 
@@ -273,9 +267,11 @@ int main(void)
     /*3.Transfer completed. Check the data.*/
     for (uint32_t i = 0U; i < I2C_DATA_LENGTH; i++)
     {
-        if (g_slave_buff[i] != g_master_buff[i])
+        tmpmasterdata = g_master_buff[i];
+        tmpslavedata  = g_slave_buff[i];
+        if (tmpslavedata != tmpmasterdata)
         {
-            PRINTF("\r\nError occured in this transfer ! \r\n");
+            PRINTF("\r\nError occurred in this transfer ! \r\n");
             break;
         }
     }
@@ -341,9 +337,11 @@ int main(void)
     /*6.Transfer completed. Check the data.*/
     for (uint32_t i = 0U; i < I2C_DATA_LENGTH; i++)
     {
-        if (g_slave_buff[i] != g_master_buff[i])
+        tmpmasterdata = g_master_buff[i];
+        tmpslavedata  = g_slave_buff[i];
+        if (tmpslavedata != tmpmasterdata)
         {
-            PRINTF("\r\nError occured in the transfer ! \r\n");
+            PRINTF("\r\nError occurred in the transfer ! \r\n");
             break;
         }
     }

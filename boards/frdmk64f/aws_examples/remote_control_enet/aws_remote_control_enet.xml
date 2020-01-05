@@ -10,20 +10,32 @@
     <definition extID="device.MK64F12_startup.MK64F12"/>
     <definition extID="driver.fxos8700cq.MK64F12"/>
     <definition extID="driver.phyksz8081.MK64F12"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.MK64F12"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.drivers_frdmk64f.MK64F12"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.jsmn.MK64F12"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.secure_sockets_lwip.MK64F12"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.shadow.MK64F12"/>
-    <definition extID="middleware.amazon_freertos.aws_iot_demos.MK64F12"/>
-    <definition extID="middleware.freertos.MK64F12"/>
-    <definition extID="middleware.freertos.heap.heap_4.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.demos.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.demos.dev_mode_key_provisioning.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.3rdparty.jsmn.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.3rdparty.pkcs11.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.pkcs11.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.platform.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.secure_sockets.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.crypto.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.tls.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.utils.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.mflash.frdmk64f.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.pkcs11.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-kernel.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-kernel.extension.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-kernel.heap_4.MK64F12"/>
+    <definition extID="middleware.lwip.MK64F12"/>
+    <definition extID="middleware.lwip.enet_ethernetif.MK64F12"/>
+    <definition extID="middleware.lwip.enet_ethernetif_kinetis.MK64F12"/>
     <definition extID="middleware.mbedtls.MK64F12"/>
-    <definition extID="middleware.mmcau_cm4_cm7.MK64F12"/>
-    <definition extID="middleware.tcpip.lwip.MK64F12"/>
-    <definition extID="middleware.tcpip.lwip.ethernetif.MK64F12"/>
+    <definition extID="middleware.mmcau.cm4_cm7.MK64F12"/>
     <definition extID="platform.Include_common.MK64F12"/>
     <definition extID="platform.Include_core_cm4.MK64F12"/>
+    <definition extID="platform.Include_dsp.MK64F12"/>
     <definition extID="platform.drivers.clock.MK64F12"/>
     <definition extID="platform.drivers.common.MK64F12"/>
     <definition extID="platform.drivers.enet.MK64F12"/>
@@ -32,17 +44,17 @@
     <definition extID="platform.drivers.i2c.MK64F12"/>
     <definition extID="platform.drivers.port.MK64F12"/>
     <definition extID="platform.drivers.rnga.MK64F12"/>
-    <definition extID="platform.drivers.sim.MK64F12"/>
     <definition extID="platform.drivers.smc.MK64F12"/>
     <definition extID="platform.drivers.uart.MK64F12"/>
     <definition extID="platform.utilities.assert.MK64F12"/>
+    <definition extID="platform.utilities.misc_utilities.MK64F12"/>
     <definition extID="utility.debug_console.MK64F12"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk64f_aws_remote_control_enet" name="aws_remote_control_enet" category="aws_examples" dependency="driver.phyksz8081.MK64F12 platform.drivers.rnga.MK64F12 middleware.mmcau_cm4_cm7.MK64F12 driver.fxos8700cq.MK64F12 platform.drivers.i2c.MK64F12 middleware.amazon_freertos.aws_iot.drivers_frdmk64f.MK64F12 middleware.freertos.MK64F12 middleware.freertos.heap.heap_4.MK64F12 middleware.amazon_freertos.aws_iot.MK64F12 middleware.amazon_freertos.aws_iot.jsmn.MK64F12 middleware.amazon_freertos.aws_iot.shadow.MK64F12 middleware.amazon_freertos.aws_iot.secure_sockets_lwip.MK64F12 middleware.tcpip.lwip.ethernetif.MK64F12 platform.drivers.port.MK64F12 platform.drivers.sim.MK64F12 platform.drivers.clock.MK64F12 platform.drivers.enet.MK64F12 middleware.mbedtls.MK64F12 middleware.amazon_freertos.aws_iot_demos.MK64F12 platform.drivers.flash.MK64F12 platform.drivers.gpio.MK64F12 utility.debug_console.MK64F12 platform.drivers.uart.MK64F12 platform.drivers.smc.MK64F12 device.MK64F12_CMSIS.MK64F12 component.uart_adapter.MK64F12 component.serial_manager.MK64F12 component.serial_manager_uart.MK64F12 component.lists.MK64F12 platform.drivers.common.MK64F12 device.MK64F12_startup.MK64F12 platform.utilities.assert.MK64F12 platform.Include_core_cm4.MK64F12 platform.Include_common.MK64F12 middleware.tcpip.lwip.MK64F12" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmk64f_aws_remote_control_enet" name="aws_remote_control_enet" category="aws_examples" dependency="driver.phyksz8081.MK64F12 platform.drivers.rnga.MK64F12 middleware.mmcau.cm4_cm7.MK64F12 driver.fxos8700cq.MK64F12 platform.drivers.i2c.MK64F12 middleware.lwip.MK64F12 middleware.lwip.enet_ethernetif_kinetis.MK64F12 middleware.amazon_freertos-aws_iot.vendor.nxp.mflash.frdmk64f.MK64F12 platform.drivers.port.MK64F12 middleware.amazon_freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MK64F12 middleware.amazon_freertos-aws_iot.demos.MK64F12 middleware.amazon_freertos-aws_iot.demos.dev_mode_key_provisioning.MK64F12 middleware.amazon_freertos-kernel.MK64F12 middleware.amazon_freertos-kernel.heap_4.MK64F12 middleware.amazon_freertos-aws_iot.libraries.abstractions.platform.MK64F12 middleware.amazon_freertos-aws_iot.MK64F12 middleware.amazon_freertos-aws_iot.libraries.abstractions.secure_sockets.MK64F12 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.crypto.MK64F12 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MK64F12 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.utils.MK64F12 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.tls.MK64F12 middleware.amazon_freertos-aws_iot.libraries.abstractions.pkcs11.MK64F12 middleware.amazon_freertos-aws_iot.libraries.3rdparty.pkcs11.MK64F12 middleware.amazon_freertos-aws_iot.libraries.3rdparty.jsmn.MK64F12 middleware.amazon_freertos-aws_iot.vendor.nxp.pkcs11.MK64F12 middleware.mbedtls.MK64F12 platform.drivers.flash.MK64F12 platform.drivers.gpio.MK64F12 platform.drivers.clock.MK64F12 utility.debug_console.MK64F12 platform.drivers.uart.MK64F12 platform.drivers.smc.MK64F12 device.MK64F12_CMSIS.MK64F12 component.uart_adapter.MK64F12 component.serial_manager.MK64F12 platform.drivers.common.MK64F12 component.lists.MK64F12 component.serial_manager_uart.MK64F12 device.MK64F12_startup.MK64F12 platform.utilities.assert.MK64F12 platform.drivers.enet.MK64F12 platform.Include_core_cm4.MK64F12 platform.Include_common.MK64F12 platform.Include_dsp.MK64F12 middleware.lwip.enet_ethernetif.MK64F12 middleware.amazon_freertos-kernel.extension.MK64F12 platform.utilities.misc_utilities.MK64F12">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -58,7 +70,6 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
-          <value>_POSIX_SOURCE</value>
           <value>CPU_MK64FN1M0VLL12</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
@@ -68,12 +79,13 @@
           <value>FRDM_K64F</value>
           <value>FREEDOM</value>
           <value>FSL_RTOS_FREE_RTOS</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin  -fomit-frame-pointer</value>
+          <value>-fomit-frame-pointer  -c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
         </option>
         <option id="com.crt.advproject.link.fpu" type="enum">
           <value>com.crt.advproject.link.fpu.fpv4.hard</value>
@@ -87,34 +99,142 @@
       </toolchainSetting>
     </toolchainSettings>
     <include_paths>
-      <include_path path="amazon-freertos/third_party"/>
+      <include_path path="amazon-freertos/libraries/abstractions/platform/freertos/include"/>
+      <include_path path="amazon-freertos/libraries/abstractions/platform/include"/>
+      <include_path path="amazon-freertos/libraries/c_sdk/standard/mqtt/src"/>
       <include_path path="lwip/port"/>
       <include_path path="lwip/src"/>
       <include_path path="lwip/src/include"/>
       <include_path path="mbedtls/include"/>
     </include_paths>
-    <source path="boards/frdmk64f/aws_examples/remote_control_enet/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/frdmk64f/aws_examples/remote_control_android/.idea" target_path="source" type="xml" exclude="true">
+      <files mask="gradle.xml"/>
+      <files mask="misc.xml"/>
+      <files mask="modules.xml"/>
+      <files mask="runConfigurations.xml"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_android/app/src/main/java/com/nxp/awsremotecontrol/iot" target_path="source" type="other" exclude="true">
+      <files mask="AwsConstants.java"/>
+      <files mask="AwsShadow.java"/>
+      <files mask="IPreferencesListener.java"/>
+      <files mask="RgbLed.java"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_android/app/src/main/java/com/nxp/awsremotecontrol/mqtt" target_path="source" type="other" exclude="true">
+      <files mask="Connection.java"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_android/app/src/main/java/com/nxp/awsremotecontrol" target_path="source" type="other" exclude="true">
+      <files mask="AboutActivity.java"/>
+      <files mask="MainActivity.java"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_android/app/src/main/res/drawable-hdpi" target_path="source" type="image" exclude="true">
+      <files mask="ic_action_refresh.png"/>
+      <files mask="ic_led.png"/>
+      <files mask="ic_led_filled.png"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_android/app/src/main/res/drawable-mdpi" target_path="source" type="image" exclude="true">
+      <files mask="ic_action_refresh.png"/>
+      <files mask="ic_led.png"/>
+      <files mask="ic_led_filled.png"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_android/app/src/main/res/drawable-xhdpi" target_path="source" type="image" exclude="true">
+      <files mask="ic_action_refresh.png"/>
+      <files mask="ic_led.png"/>
+      <files mask="ic_led_filled.png"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_android/app/src/main/res/drawable-xxhdpi" target_path="source" type="image" exclude="true">
+      <files mask="ic_action_refresh.png"/>
+      <files mask="ic_led.png"/>
+      <files mask="ic_led_filled.png"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_android/app/src/main/res/drawable" target_path="source" type="image" exclude="true">
+      <files mask="nxp.png"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_android/app/src/main/res/layout" target_path="source" type="xml" exclude="true">
+      <files mask="activity_about.xml"/>
+      <files mask="activity_main.xml"/>
+      <files mask="content_about.xml"/>
+      <files mask="content_main.xml"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_android/app/src/main/res/menu" target_path="source" type="xml" exclude="true">
+      <files mask="main.xml"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_android/app/src/main/res/mipmap-hdpi" target_path="source" type="image" exclude="true">
+      <files mask="ic_launcher.png"/>
+      <files mask="ic_launcher_round.png"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_android/app/src/main/res/mipmap-mdpi" target_path="source" type="image" exclude="true">
+      <files mask="ic_launcher.png"/>
+      <files mask="ic_launcher_round.png"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_android/app/src/main/res/mipmap-xhdpi" target_path="source" type="image" exclude="true">
+      <files mask="ic_launcher.png"/>
+      <files mask="ic_launcher_round.png"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_android/app/src/main/res/mipmap-xxhdpi" target_path="source" type="image" exclude="true">
+      <files mask="ic_launcher.png"/>
+      <files mask="ic_launcher_round.png"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_android/app/src/main/res/mipmap-xxxhdpi" target_path="source" type="image" exclude="true">
+      <files mask="ic_launcher.png"/>
+      <files mask="ic_launcher_round.png"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_android/app/src/main/res/values" target_path="source" type="xml" exclude="true">
+      <files mask="colors.xml"/>
+      <files mask="dimens.xml"/>
+      <files mask="drawables.xml"/>
+      <files mask="strings.xml"/>
+      <files mask="styles.xml"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_android/app/src/main" target_path="source" type="image" exclude="true">
+      <files mask="ic_launcher-web.png"/>
+      <files mask="ic_launcher_round-web.png"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_android/app/src/main" target_path="source" type="xml" exclude="true">
+      <files mask="AndroidManifest.xml"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_android/app" target_path="source" type="other" exclude="true">
+      <files mask="build.gradle"/>
+      <files mask="proguard-rules.pro"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_android/gradle/wrapper" target_path="source" type="other" exclude="true">
+      <files mask="gradle-wrapper.jar"/>
+      <files mask="gradle-wrapper.properties"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_android" target_path="source" type="other" exclude="true">
+      <files mask="AwsRemoteControl.apk"/>
+      <files mask="AwsRemoteControlPreferences.properties"/>
+      <files mask="build.gradle"/>
+      <files mask="gradle.properties"/>
+      <files mask="gradlew"/>
+      <files mask="settings.gradle"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_android" target_path="source" type="script" exclude="true">
+      <files mask="gradlew.bat"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_enet/armgcc" target_path="frdmk64f/aws_examples/remote_control_enet/linker" type="linker" toolchain="armgcc">
       <files mask="MK64FN1M0xxx12_flash_data.ld"/>
     </source>
     <source path="boards/frdmk64f/aws_examples/remote_control_enet/config_files" target_path="amazon-freertos/config_files" type="c_include">
+      <files mask="FreeRTOSConfig.h"/>
       <files mask="FreeRTOSIPConfig.h"/>
       <files mask="aws_bufferpool_config.h"/>
       <files mask="aws_demo_config.h"/>
-      <files mask="aws_mqtt_agent_config.h"/>
+      <files mask="aws_iot_network_config.h"/>
       <files mask="aws_mqtt_config.h"/>
-      <files mask="aws_pkcs11_config.h"/>
       <files mask="aws_secure_sockets_config.h"/>
       <files mask="aws_shadow_config.h"/>
-      <files mask="aws_wifi_config.h"/>
+      <files mask="iot_config.h"/>
+      <files mask="iot_mqtt_agent_config.h"/>
+      <files mask="iot_pkcs11_config.h"/>
     </source>
-    <source path="boards/frdmk64f/aws_examples/remote_control_enet/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/frdmk64f/aws_examples/remote_control_enet/config_files" target_path="source" type="c_include">
+      <files mask="aws_mbedtls_config.h"/>
+    </source>
+    <source path="boards/frdmk64f/aws_examples/remote_control_enet/iar" target_path="frdmk64f/aws_examples/remote_control_enet/linker" type="linker" toolchain="iar">
       <files mask="MK64FN1M0xxx12_flash_data.icf"/>
     </source>
-    <source path="boards/frdmk64f/aws_examples/remote_control_enet/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/frdmk64f/aws_examples/remote_control_enet/mdk" target_path="frdmk64f/aws_examples/remote_control_enet/linker" type="linker" toolchain="mdk">
       <files mask="MK64FN1M0xxx12_flash_data.scf"/>
-    </source>
-    <source path="boards/frdmk64f/aws_examples/remote_control_enet" target_path="amazon-freertos/config_files" type="c_include">
-      <files mask="FreeRTOSConfig.h"/>
     </source>
     <source path="boards/frdmk64f/aws_examples/remote_control_enet" target_path="board" type="c_include">
       <files mask="board.h"/>
@@ -130,11 +250,10 @@
       <files mask="readme.txt"/>
     </source>
     <source path="boards/frdmk64f/aws_examples/remote_control_enet" target_path="source" type="c_include">
-      <files mask="aws_mbedtls_config.h"/>
       <files mask="lwipopts.h"/>
     </source>
     <source path="boards/frdmk64f/aws_examples/remote_control_enet" target_path="source" type="src">
-      <files mask="main_enet.c"/>
+      <files mask="main.c"/>
       <files mask="remote_control.c"/>
     </source>
   </example>

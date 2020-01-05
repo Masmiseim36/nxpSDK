@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -39,8 +39,8 @@ static void uart_task(void *pvParameters);
 /*******************************************************************************
  * Code
  ******************************************************************************/
-const char *to_send = "FreeRTOS LPUART driver example!\r\n";
-const char *send_ring_overrun = "\r\nRing buffer overrun!\r\n";
+const char *to_send               = "FreeRTOS LPUART driver example!\r\n";
+const char *send_ring_overrun     = "\r\nRing buffer overrun!\r\n";
 const char *send_hardware_overrun = "\r\nHardware buffer overrun!\r\n";
 uint8_t background_buffer[32];
 uint8_t recv_buffer[4];
@@ -49,10 +49,10 @@ lpuart_rtos_handle_t handle;
 struct _lpuart_handle t_handle;
 
 lpuart_rtos_config_t lpuart_config = {
-    .baudrate = 115200,
-    .parity = kLPUART_ParityDisabled,
-    .stopbits = kLPUART_OneStopBit,
-    .buffer = background_buffer,
+    .baudrate    = 115200,
+    .parity      = kLPUART_ParityDisabled,
+    .stopbits    = kLPUART_OneStopBit,
+    .buffer      = background_buffer,
     .buffer_size = sizeof(background_buffer),
 };
 
@@ -66,7 +66,7 @@ int main(void)
     BOARD_BootClockRUN();
     SIM->SOPT2 = ((SIM->SOPT2 & ~SIM_SOPT2_LPUARTSRC_MASK) | SIM_SOPT2_LPUARTSRC(0x2U));
     NVIC_SetPriority(DEMO_LPUART_RX_TX_IRQn, 5);
-    if (xTaskCreate(uart_task, "Uart_task", configMINIMAL_STACK_SIZE + 10, NULL, uart_task_PRIORITY, NULL) != pdPASS)
+    if (xTaskCreate(uart_task, "Uart_task", configMINIMAL_STACK_SIZE + 100, NULL, uart_task_PRIORITY, NULL) != pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
         while (1)
@@ -83,10 +83,10 @@ int main(void)
 static void uart_task(void *pvParameters)
 {
     int error;
-    size_t n;
+    size_t n = 0;
 
     lpuart_config.srcclk = DEMO_LPUART_CLK_FREQ;
-    lpuart_config.base = DEMO_LPUART;
+    lpuart_config.base   = DEMO_LPUART;
 
     if (0 > LPUART_RTOS_Init(&handle, &t_handle, &lpuart_config))
     {
@@ -123,7 +123,10 @@ static void uart_task(void *pvParameters)
         if (n > 0)
         {
             /* send back the received data */
-            LPUART_RTOS_Send(&handle, (uint8_t *)recv_buffer, n);
+            if (kStatus_Success != LPUART_RTOS_Send(&handle, (uint8_t *)recv_buffer, n))
+            {
+                vTaskSuspend(NULL);
+            }
         }
     } while (kStatus_Success == error);
 

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2017, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -151,10 +151,10 @@ usb_status_t USB_DeviceMscUfiThirteenCasesCheck(usb_device_msc_struct_t *mscHand
                 if (ufi->thirteenCase.lbaSendRecvSelect == 1)
                 {
                     mscCheckEvent->lbaInformation.transferNumber =
-                        mscCheckEvent->hostExpectedDataLength / mscHandle->lengthOfEachLba;
+                        mscCheckEvent->hostExpectedDataLength / mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].lengthOfEachLba;
                     mscHandle->mscCsw->dataResidue =
                         mscCheckEvent->hostExpectedDataLength -
-                        mscCheckEvent->lbaInformation.transferNumber * mscHandle->lengthOfEachLba;
+                        mscCheckEvent->lbaInformation.transferNumber * mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].lengthOfEachLba;
                     error = USB_DeviceMscLbaTransfer(mscHandle, USB_IN, &mscCheckEvent->lbaInformation);
                 }
                 else
@@ -268,10 +268,10 @@ usb_status_t USB_DeviceMscUfiThirteenCasesCheck(usb_device_msc_struct_t *mscHand
                 if (ufi->thirteenCase.lbaSendRecvSelect == 1)
                 {
                     mscCheckEvent->lbaInformation.transferNumber =
-                        mscCheckEvent->hostExpectedDataLength / mscHandle->lengthOfEachLba;
+                        mscCheckEvent->hostExpectedDataLength / mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].lengthOfEachLba;
                     mscHandle->mscCsw->dataResidue =
                         mscCheckEvent->hostExpectedDataLength -
-                        mscCheckEvent->lbaInformation.transferNumber * mscHandle->lengthOfEachLba;
+                        mscCheckEvent->lbaInformation.transferNumber * mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].lengthOfEachLba;
                     error = USB_DeviceMscLbaTransfer(mscHandle, USB_OUT, &mscCheckEvent->lbaInformation);
                 }
                 else
@@ -404,7 +404,7 @@ usb_status_t USB_DeviceMscUfiReadCommand(usb_device_msc_struct_t *mscHandle)
     }
 
     ufi->thirteenCase.deviceExpectedDirection = USB_IN;
-    ufi->thirteenCase.deviceExpectedDataLength = mscHandle->lengthOfEachLba * lbaTransferLength;
+    ufi->thirteenCase.deviceExpectedDataLength = mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].lengthOfEachLba * lbaTransferLength;
     ufi->thirteenCase.buffer = NULL;
 
     ufi->thirteenCase.lbaSendRecvSelect = 1;
@@ -454,7 +454,7 @@ usb_status_t USB_DeviceMscUfiWriteCommand(usb_device_msc_struct_t *mscHandle)
     {
     }
     ufi->thirteenCase.deviceExpectedDirection = USB_OUT;
-    ufi->thirteenCase.deviceExpectedDataLength = mscHandle->lengthOfEachLba * lbaTransferLength;
+    ufi->thirteenCase.deviceExpectedDataLength = mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].lengthOfEachLba * lbaTransferLength;
     ufi->thirteenCase.buffer = NULL;
 
     ufi->thirteenCase.lbaSendRecvSelect = 1;
@@ -627,11 +627,15 @@ usb_status_t USB_DeviceMscUfiReadCapacityCommand(usb_device_msc_struct_t *mscHan
     if (mscHandle->mscCbw->cbwcb[0] == USB_DEVICE_MSC_READ_CAPACITY_10_COMMAND)
     {
         ufi->thirteenCase.deviceExpectedDataLength = USB_DEVICE_MSC_UFI_READ_CAPACITY_DATA_LENGTH;
+        ufi->readCapacity->lastLogicalBlockAddress = USB_LONG_TO_BIG_ENDIAN(mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].totalLbaNumberSupports - 1);
+        ufi->readCapacity->blockSize = USB_LONG_TO_BIG_ENDIAN((uint32_t)mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].lengthOfEachLba);
         ufi->thirteenCase.buffer = (uint8_t *)(ufi->readCapacity);
     }
     else
     {
         ufi->thirteenCase.deviceExpectedDataLength = USB_DEVICE_MSC_UFI_READ_CAPACITY16_DATA_LENGTH;
+        ufi->readCapacity16->lastLogicalBlockAddress1 = USB_LONG_TO_BIG_ENDIAN(mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].totalLbaNumberSupports - 1);
+        ufi->readCapacity16->blockSize = USB_LONG_TO_BIG_ENDIAN((uint32_t)mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].lengthOfEachLba);
         ufi->thirteenCase.buffer = (uint8_t *)(ufi->readCapacity16);
     }
     ufi->thirteenCase.deviceExpectedDirection = USB_IN;
@@ -672,15 +676,15 @@ usb_status_t   USB_DeviceMscUfiReadFormatCapacityCommand(usb_device_msc_struct_t
     /*reference ufi command spec table-33 Descriptor Code definition*/
     num_formattable_cap_desc = (uint8_t)(ufi->formattedDisk ? (mscHandle->implementingDiskDrive ? 0x02 : 0x03) : 0x00);
 
-    formattable_capacity_head.blockNumber = USB_LONG_TO_BIG_ENDIAN(mscHandle->totalLogicalBlockNumber);
-    formattable_capacity_head.blockLength = USB_LONG_TO_BIG_ENDIAN(mscHandle->lengthOfEachLba);
+    formattable_capacity_head.blockNumber = USB_LONG_TO_BIG_ENDIAN(mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].totalLbaNumberSupports);
+    formattable_capacity_head.blockLength = USB_LONG_TO_BIG_ENDIAN(mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].lengthOfEachLba);
 
     descriptor_code =
         (uint8_t)(ufi->formattedDisk ? USB_DEVICE_MSC_UFI_FORMATTED_MEDIA : USB_DEVICE_MSC_UFI_UNFORMATTED_MEDIA);
     capacityListHead.capacityListLength = num_formattable_cap_desc * 8;
-    current_max_head.blockNumber = USB_LONG_TO_BIG_ENDIAN(mscHandle->totalLogicalBlockNumber);
+    current_max_head.blockNumber = USB_LONG_TO_BIG_ENDIAN(mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].totalLbaNumberSupports);
     current_max_head.descriptorCodeBlockLength =
-        USB_LONG_TO_BIG_ENDIAN(((uint8_t)(descriptor_code << 24) | mscHandle->lengthOfEachLba));
+        USB_LONG_TO_BIG_ENDIAN(((uint8_t)(descriptor_code << 24) | mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].lengthOfEachLba));
 
     response_size = sizeof(usb_device_capacity_list_header_struct_t) +
                     sizeof(usb_device_current_max_capacity_descriptor_struct_t) +
@@ -689,12 +693,6 @@ usb_status_t   USB_DeviceMscUfiReadFormatCapacityCommand(usb_device_msc_struct_t
     if (response_size > allocation_length)
     {
         response_size = allocation_length;
-    }
-    if (sizeof(ufi->formatCapacityData) < response_size)
-    {
-#if (defined(_USB_DEBUG) && _USB_DEBUG)
-        usb_echo("format_capacity_response_data buff size less than need\n");
-#endif
     }
 
     ptr = (uint8_t *)&capacityListHead;

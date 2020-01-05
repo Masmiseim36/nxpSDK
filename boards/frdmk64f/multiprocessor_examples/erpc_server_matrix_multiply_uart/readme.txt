@@ -33,6 +33,14 @@ Either server or client has to be selected to run
 Example:
 To run PC side as a client with a board connected as a server to COM3 execute:
 "run_uart.py --client --port COM3"
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.40.2
+- MCUXpresso  11.1.0
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+
 Hardware requirements
 =====================
 - Mini USB cable
@@ -82,11 +90,6 @@ Result matrix
 1428 2907 2715 3051 2015
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- MCUXpresso 10.3.0
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
+Customization options
+=====================
 

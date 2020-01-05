@@ -50,31 +50,37 @@ volatile bool isTransferCompleted = false;
 
 void EXAMPLE_DSPI_MASTER_IRQHandler(void)
 {
-    if (masterRxCount < TRANSFER_SIZE)
+    uint32_t tmpmasterTxCount = masterTxCount;
+    uint32_t tmpmasterRxCount = masterRxCount;
+    uint32_t tmpmasterCommand = masterCommand;
+
+    if (tmpmasterRxCount < TRANSFER_SIZE)
     {
         while (DSPI_GetStatusFlags(EXAMPLE_DSPI_MASTER_BASEADDR) & kDSPI_RxFifoDrainRequestFlag)
         {
-            masterRxData[masterRxCount] = DSPI_ReadData(EXAMPLE_DSPI_MASTER_BASEADDR);
+            masterRxData[tmpmasterRxCount] = DSPI_ReadData(EXAMPLE_DSPI_MASTER_BASEADDR);
             ++masterRxCount;
+            tmpmasterRxCount = masterRxCount;
 
             DSPI_ClearStatusFlags(EXAMPLE_DSPI_MASTER_BASEADDR, kDSPI_RxFifoDrainRequestFlag);
 
-            if (masterRxCount == TRANSFER_SIZE)
+            if (tmpmasterRxCount == TRANSFER_SIZE)
             {
                 break;
             }
         }
     }
 
-    if (masterTxCount < TRANSFER_SIZE)
+    if (tmpmasterTxCount < TRANSFER_SIZE)
     {
         while ((DSPI_GetStatusFlags(EXAMPLE_DSPI_MASTER_BASEADDR) & kDSPI_TxFifoFillRequestFlag) &&
-               ((masterTxCount - masterRxCount) < masterFifoSize))
+               ((tmpmasterTxCount - tmpmasterRxCount) < masterFifoSize))
         {
-            if (masterTxCount < TRANSFER_SIZE)
+            if (tmpmasterTxCount < TRANSFER_SIZE)
             {
-                EXAMPLE_DSPI_MASTER_BASEADDR->PUSHR = masterCommand | masterTxData[masterTxCount];
+                EXAMPLE_DSPI_MASTER_BASEADDR->PUSHR = tmpmasterCommand | masterTxData[tmpmasterTxCount];
                 ++masterTxCount;
+                tmpmasterTxCount = masterTxCount;
             }
             else
             {
@@ -87,7 +93,7 @@ void EXAMPLE_DSPI_MASTER_IRQHandler(void)
     }
 
     /* Check if we're done with this transfer.*/
-    if ((masterTxCount == TRANSFER_SIZE) && (masterRxCount == TRANSFER_SIZE))
+    if ((tmpmasterTxCount == TRANSFER_SIZE) && (tmpmasterRxCount == TRANSFER_SIZE))
     {
         isTransferCompleted = true;
         /* Complete the transfer and disable the interrupts */

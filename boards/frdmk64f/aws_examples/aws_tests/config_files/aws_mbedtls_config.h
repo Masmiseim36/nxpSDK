@@ -1619,7 +1619,7 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  *
  * Uncomment this to allow your own alternate threading implementation.
  */
-//#define MBEDTLS_THREADING_ALT
+#define MBEDTLS_THREADING_ALT
 
 /**
  * \def MBEDTLS_THREADING_PTHREAD
@@ -2428,7 +2428,7 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  *
  * Uncomment to enable generic public key write functions.
  */
-//#define MBEDTLS_PK_WRITE_C
+#define MBEDTLS_PK_WRITE_C
 
 /**
  * \def MBEDTLS_PKCS5_C
@@ -2670,7 +2670,7 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  *
  * Enable this layer to allow use of mutexes within mbed TLS
  */
-//#define MBEDTLS_THREADING_C
+#define MBEDTLS_THREADING_C
 
 /**
  * \def MBEDTLS_TIMING_C

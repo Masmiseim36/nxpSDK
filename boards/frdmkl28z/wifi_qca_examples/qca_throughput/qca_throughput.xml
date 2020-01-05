@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MKL28Z7"/>
+    <definition extID="component.lpuart_adapter.MKL28Z7"/>
+    <definition extID="component.serial_manager.MKL28Z7"/>
+    <definition extID="component.serial_manager_uart.MKL28Z7"/>
+    <definition extID="device.MKL28Z7_CMSIS.MKL28Z7"/>
+    <definition extID="device.MKL28Z7_startup.MKL28Z7"/>
+    <definition extID="middleware.freertos.MKL28Z7"/>
+    <definition extID="middleware.freertos.heap.heap_4.MKL28Z7"/>
+    <definition extID="middleware.wifi_qca.MKL28Z7"/>
+    <definition extID="middleware.wifi_qca.frdmkl28z.freertos.shields.MKL28Z7"/>
+    <definition extID="middleware.wifi_qca.frdmkl28z.freertos.shields.gt202.MKL28Z7"/>
+    <definition extID="middleware.wifi_qca.frdmkl28z.freertos.shields.silex2401.MKL28Z7"/>
+    <definition extID="middleware.wifi_qca.freertos.MKL28Z7"/>
+    <definition extID="middleware.wifi_qca.freertos.drivers.lpspi_edma.MKL28Z7"/>
+    <definition extID="platform.Include_common.MKL28Z7"/>
+    <definition extID="platform.Include_core_cm0plus.MKL28Z7"/>
+    <definition extID="platform.drivers.clock.MKL28Z7"/>
+    <definition extID="platform.drivers.common.MKL28Z7"/>
+    <definition extID="platform.drivers.dmamux.MKL28Z7"/>
+    <definition extID="platform.drivers.edma.MKL28Z7"/>
+    <definition extID="platform.drivers.gpio.MKL28Z7"/>
+    <definition extID="platform.drivers.intmux.MKL28Z7"/>
+    <definition extID="platform.drivers.lpspi.MKL28Z7"/>
+    <definition extID="platform.drivers.lpspi_edma.MKL28Z7"/>
+    <definition extID="platform.drivers.lpuart.MKL28Z7"/>
+    <definition extID="platform.drivers.port.MKL28Z7"/>
+    <definition extID="platform.drivers.smc.MKL28Z7"/>
+    <definition extID="platform.utilities.assert.MKL28Z7"/>
+    <definition extID="utility.debug_console.MKL28Z7"/>
+    <definition extID="utility.shell.MKL28Z7"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+  </externalDefinitions>
+  <example id="frdmkl28z_qca_throughput" name="qca_throughput" category="wifi_qca_examples" dependency="middleware.wifi_qca.frdmkl28z.freertos.shields.gt202.MKL28Z7 middleware.wifi_qca.frdmkl28z.freertos.shields.silex2401.MKL28Z7 middleware.freertos.heap.heap_4.MKL28Z7 middleware.wifi_qca.MKL28Z7 utility.shell.MKL28Z7 middleware.freertos.MKL28Z7 platform.drivers.clock.MKL28Z7 platform.drivers.common.MKL28Z7 device.MKL28Z7_CMSIS.MKL28Z7 utility.debug_console.MKL28Z7 component.lpuart_adapter.MKL28Z7 component.serial_manager.MKL28Z7 component.serial_manager_uart.MKL28Z7 platform.drivers.lpuart.MKL28Z7 component.lists.MKL28Z7 device.MKL28Z7_startup.MKL28Z7 platform.drivers.port.MKL28Z7 platform.drivers.smc.MKL28Z7 platform.drivers.gpio.MKL28Z7 platform.utilities.assert.MKL28Z7 middleware.wifi_qca.frdmkl28z.freertos.shields.MKL28Z7 middleware.wifi_qca.freertos.MKL28Z7 middleware.wifi_qca.freertos.drivers.lpspi_edma.MKL28Z7 platform.drivers.lpspi.MKL28Z7 platform.Include_core_cm0plus.MKL28Z7 platform.Include_common.MKL28Z7 platform.drivers.lpspi_edma.MKL28Z7 platform.drivers.edma.MKL28Z7 platform.drivers.dmamux.MKL28Z7 platform.drivers.intmux.MKL28Z7" toolchain="iar mdk armgcc mcuxpresso">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.none</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.none</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MKL28Z512VLL7</value>
+          <value>SHELL_MAX_CMD=24</value>
+          <value>FRDM_KL28Z</value>
+          <value>FREEDOM</value>
+          <value>A_LITTLE_ENDIAN</value>
+          <value>DEBUG_CONSOLE_RX_ENABLE=0</value>
+          <value>FSL_RTOS_FREE_RTOS</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.none</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
+          <value>&amp;Heap:Default;Default;0x200&amp;Stack:Default;Default;0x100</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <source path="boards/frdmkl28z/wifi_qca_examples/qca_throughput/armgcc" target_path="src" type="linker" toolchain="armgcc">
+      <files mask="MKL28Z512xxx7_flash.ld"/>
+    </source>
+    <source path="boards/frdmkl28z/wifi_qca_examples/qca_throughput/common" target_path="source/common" type="src">
+      <files mask="wmiconfig_qapi.c"/>
+    </source>
+    <source path="boards/frdmkl28z/wifi_qca_examples/qca_throughput/custom" target_path="source/custom" type="c_include">
+      <files mask="calist-kingfisher-inc.h"/>
+      <files mask="cert-kingfisher-inc.h"/>
+      <files mask="https.h"/>
+      <files mask="main.h"/>
+      <files mask="shell_config.h"/>
+      <files mask="throughput.h"/>
+      <files mask="usb_classes.h"/>
+      <files mask="worker_shell.h"/>
+    </source>
+    <source path="boards/frdmkl28z/wifi_qca_examples/qca_throughput/custom" target_path="source/custom" type="src">
+      <files mask="Command_Lists.c"/>
+      <files mask="https.c"/>
+      <files mask="task_manager.c"/>
+      <files mask="throughput_qapi.c"/>
+      <files mask="utils.c"/>
+      <files mask="wmiconfig_custom_qapi.c"/>
+    </source>
+    <source path="boards/frdmkl28z/wifi_qca_examples/qca_throughput/driver_plugin" target_path="source/driver_plugin" type="src">
+      <files mask="atheros_wifi_mediactl_ext.c"/>
+    </source>
+    <source path="boards/frdmkl28z/wifi_qca_examples/qca_throughput/iar" target_path="src" type="linker" toolchain="iar">
+      <files mask="MKL28Z512xxx7_flash.icf"/>
+    </source>
+    <source path="boards/frdmkl28z/wifi_qca_examples/qca_throughput/mdk" target_path="src" type="linker" toolchain="mdk">
+      <files mask="MKL28Z512xxx7_flash.scf"/>
+    </source>
+    <source path="boards/frdmkl28z/wifi_qca_examples/qca_throughput" target_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/frdmkl28z/wifi_qca_examples/qca_throughput" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/frdmkl28z/wifi_qca_examples/qca_throughput" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/frdmkl28z/wifi_qca_examples/qca_throughput" target_path="source" type="c_include">
+      <files mask="FreeRTOSConfig.h"/>
+      <files mask="wlan_qcom.h"/>
+    </source>
+    <source path="boards/frdmkl28z/wifi_qca_examples/qca_throughput" target_path="source" type="src">
+      <files mask="main.c"/>
+      <files mask="wlan_qca400x.c"/>
+    </source>
+  </example>
+</ksdk:examples>

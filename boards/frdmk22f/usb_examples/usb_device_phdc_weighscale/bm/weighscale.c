@@ -29,7 +29,7 @@
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #include "usb_phy.h"
 #endif
 
@@ -49,10 +49,10 @@ void USB_DeviceTaskFn(void *deviceHandle);
 #endif
 
 static void USB_DeviceApplicationInit(void);
-static void APP_WeightScaleSendData(uint32_t handle, weightscale_measurement_struct_t *measurementData);
+static void APP_WeightScaleSendData(void *handle, weightscale_measurement_struct_t *measurementData);
 static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param);
-static usb_status_t USB_DeviceWeightScaleCallback(uint32_t handle, uint32_t event, void *param);
-static void USB_DeviceApplicationTask(uint32_t handle);
+static usb_status_t USB_DeviceWeightScaleCallback(void *handle, uint32_t event, void *param);
+static void USB_DeviceApplicationTask(void *handle);
 
 /*******************************************************************************
  * Variables
@@ -292,9 +292,9 @@ void USB_DeviceIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbDeviceKhciIrq[] = USB_IRQS;
-    irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+    irqNumber                  = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 
-/* Install isr, set priority, and enable IRQ. */
+    /* Install isr, set priority, and enable IRQ. */
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
     EnableIRQ((IRQn_Type)irqNumber);
 }
@@ -315,7 +315,7 @@ void USB_DeviceTaskFn(void *deviceHandle)
  *
  * @return None.
  */
-void AGENT_MedicalCallback(uint32_t handle, uint8_t eventType, uint8_t *data)
+void AGENT_MedicalCallback(void *handle, uint8_t eventType, uint8_t *data)
 {
     switch (eventType)
     {
@@ -371,7 +371,7 @@ void AGENT_MedicalCallback(uint32_t handle, uint8_t eventType, uint8_t *data)
  * @param handle           the handle points to agent handle.
  * @param measurement      measurement data to send.
  */
-static void APP_WeightScaleSendData(uint32_t handle, weightscale_measurement_struct_t *measurementData)
+static void APP_WeightScaleSendData(void *handle, weightscale_measurement_struct_t *measurementData)
 {
     /* second offset */
     static uint8_t secondOffset = 0U;
@@ -610,7 +610,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
  *
  * @return kStatus_USB_Success or error.
  */
-static usb_status_t USB_DeviceWeightScaleCallback(uint32_t handle, uint32_t event, void *param)
+static usb_status_t USB_DeviceWeightScaleCallback(void *handle, uint32_t event, void *param)
 {
     usb_device_control_request_struct_t *request = (usb_device_control_request_struct_t *)param;
     usb_status_t error = kStatus_USB_Success;
@@ -702,7 +702,7 @@ static void USB_DeviceApplicationInit(void)
     USB_DeviceRun(g_shimAgent.deviceHandle);
 }
 
-static void USB_DeviceApplicationTask(uint32_t handle)
+static void USB_DeviceApplicationTask(void *handle)
 {
     switch (appEvent)
     {

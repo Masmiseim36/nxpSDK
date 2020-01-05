@@ -8,9 +8,10 @@
     <definition extID="component.uart_adapter.MK22F51212"/>
     <definition extID="device.MK22F51212_CMSIS.MK22F51212"/>
     <definition extID="device.MK22F51212_startup.MK22F51212"/>
-    <definition extID="middleware.freertos.MK22F51212"/>
-    <definition extID="middleware.freertos.heap.heap_4.MK22F51212"/>
-    <definition extID="middleware.wifi_qca.MK22F51212"/>
+    <definition extID="middleware.amazon_freertos-kernel.MK22F51212"/>
+    <definition extID="middleware.amazon_freertos-kernel.extension.MK22F51212"/>
+    <definition extID="middleware.amazon_freertos-kernel.heap_4.MK22F51212"/>
+    <definition extID="middleware.wifi_qca.common.MK22F51212"/>
     <definition extID="middleware.wifi_qca.frdmk22f.freertos.shields.MK22F51212"/>
     <definition extID="middleware.wifi_qca.frdmk22f.freertos.shields.gt202.MK22F51212"/>
     <definition extID="middleware.wifi_qca.frdmk22f.freertos.shields.silex2401.MK22F51212"/>
@@ -18,6 +19,7 @@
     <definition extID="middleware.wifi_qca.freertos.drivers.dspi_edma.MK22F51212"/>
     <definition extID="platform.Include_common.MK22F51212"/>
     <definition extID="platform.Include_core_cm4.MK22F51212"/>
+    <definition extID="platform.Include_dsp.MK22F51212"/>
     <definition extID="platform.drivers.clock.MK22F51212"/>
     <definition extID="platform.drivers.common.MK22F51212"/>
     <definition extID="platform.drivers.dmamux.MK22F51212"/>
@@ -30,6 +32,7 @@
     <definition extID="platform.drivers.smc.MK22F51212"/>
     <definition extID="platform.drivers.uart.MK22F51212"/>
     <definition extID="platform.utilities.assert.MK22F51212"/>
+    <definition extID="platform.utilities.misc_utilities.MK22F51212"/>
     <definition extID="utility.debug_console.MK22F51212"/>
     <definition extID="utility.shell.MK22F51212"/>
     <definition extID="iar"/>
@@ -37,7 +40,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk22f_qca_throughput" name="qca_throughput" category="wifi_qca_examples" dependency="middleware.wifi_qca.frdmk22f.freertos.shields.gt202.MK22F51212 middleware.wifi_qca.frdmk22f.freertos.shields.silex2401.MK22F51212 middleware.freertos.heap.heap_4.MK22F51212 middleware.wifi_qca.MK22F51212 utility.shell.MK22F51212 middleware.freertos.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 device.MK22F51212_CMSIS.MK22F51212 utility.debug_console.MK22F51212 component.uart_adapter.MK22F51212 component.serial_manager.MK22F51212 component.serial_manager_uart.MK22F51212 platform.drivers.uart.MK22F51212 component.lists.MK22F51212 device.MK22F51212_startup.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.port.MK22F51212 platform.drivers.smc.MK22F51212 platform.drivers.gpio.MK22F51212 platform.utilities.assert.MK22F51212 middleware.wifi_qca.frdmk22f.freertos.shields.MK22F51212 middleware.wifi_qca.freertos.MK22F51212 middleware.wifi_qca.freertos.drivers.dspi_edma.MK22F51212 platform.drivers.dspi.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.Include_common.MK22F51212 platform.drivers.dspi_edma.MK22F51212 platform.drivers.edma.MK22F51212 platform.drivers.dmamux.MK22F51212" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmk22f_qca_throughput" name="qca_throughput" category="wifi_qca_examples" dependency="middleware.wifi_qca.frdmk22f.freertos.shields.gt202.MK22F51212 middleware.wifi_qca.frdmk22f.freertos.shields.silex2401.MK22F51212 middleware.amazon_freertos-kernel.heap_4.MK22F51212 middleware.wifi_qca.common.MK22F51212 utility.shell.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 device.MK22F51212_CMSIS.MK22F51212 utility.debug_console.MK22F51212 component.uart_adapter.MK22F51212 component.serial_manager.MK22F51212 component.lists.MK22F51212 component.serial_manager_uart.MK22F51212 platform.drivers.uart.MK22F51212 device.MK22F51212_startup.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.port.MK22F51212 platform.drivers.smc.MK22F51212 platform.drivers.gpio.MK22F51212 platform.utilities.assert.MK22F51212 middleware.wifi_qca.frdmk22f.freertos.shields.MK22F51212 middleware.wifi_qca.freertos.MK22F51212 middleware.amazon_freertos-kernel.MK22F51212 middleware.amazon_freertos-kernel.extension.MK22F51212 middleware.wifi_qca.freertos.drivers.dspi_edma.MK22F51212 platform.drivers.dspi.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.Include_common.MK22F51212 platform.Include_dsp.MK22F51212 platform.drivers.dspi_edma.MK22F51212 platform.drivers.edma.MK22F51212 platform.drivers.dmamux.MK22F51212 platform.utilities.misc_utilities.MK22F51212">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -52,13 +55,20 @@
         <option id="com.crt.advproject.c.misc.dialect" type="enum">
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.size</value>
+        </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MK22FN512VLH12</value>
           <value>SHELL_MAX_CMD=24</value>
+          <value>SHELL_NON_BLOCKING_MODE=0</value>
+          <value>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING=1</value>
           <value>FRDM_K22F</value>
           <value>FREEDOM</value>
           <value>A_LITTLE_ENDIAN</value>
+          <value>SDK_DEBUGCONSOLE_UART</value>
           <value>DEBUG_CONSOLE_RX_ENABLE=0</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>FSL_RTOS_FREE_RTOS</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
@@ -76,9 +86,12 @@
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
           <value>&amp;Heap:Default;Default;0x200&amp;Stack:Default;Default;0x100</value>
         </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.size</value>
+        </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/frdmk22f/wifi_qca_examples/qca_throughput/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/frdmk22f/wifi_qca_examples/qca_throughput/armgcc" target_path="MK22F51212/gcc" type="linker" toolchain="armgcc">
       <files mask="MK22FN512xxx12_flash.ld"/>
     </source>
     <source path="boards/frdmk22f/wifi_qca_examples/qca_throughput/common" target_path="source/common" type="src">
@@ -105,10 +118,10 @@
     <source path="boards/frdmk22f/wifi_qca_examples/qca_throughput/driver_plugin" target_path="source/driver_plugin" type="src">
       <files mask="atheros_wifi_mediactl_ext.c"/>
     </source>
-    <source path="boards/frdmk22f/wifi_qca_examples/qca_throughput/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/frdmk22f/wifi_qca_examples/qca_throughput/iar" target_path="MK22F51212/iar" type="linker" toolchain="iar">
       <files mask="MK22FN512xxx12_flash.icf"/>
     </source>
-    <source path="boards/frdmk22f/wifi_qca_examples/qca_throughput/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/frdmk22f/wifi_qca_examples/qca_throughput/mdk" target_path="MK22F51212/arm" type="linker" toolchain="mdk">
       <files mask="MK22FN512xxx12_flash.scf"/>
     </source>
     <source path="boards/frdmk22f/wifi_qca_examples/qca_throughput" target_path="board" type="c_include">

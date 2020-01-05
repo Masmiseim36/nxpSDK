@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_FLEXIO_SPI_EDMA_H_
@@ -149,7 +149,7 @@ static inline void FLEXIO_SPI_SlaveTransferCreateHandleEDMA(FLEXIO_SPI_Type *bas
                                                             edma_handle_t *txHandle,
                                                             edma_handle_t *rxHandle)
 {
-    FLEXIO_SPI_MasterTransferCreateHandleEDMA(base, handle, callback, userData, txHandle, rxHandle);
+    (void)FLEXIO_SPI_MasterTransferCreateHandleEDMA(base, handle, callback, userData, txHandle, rxHandle);
 }
 
 /*!

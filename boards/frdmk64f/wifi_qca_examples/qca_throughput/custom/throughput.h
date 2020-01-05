@@ -48,24 +48,23 @@ typedef struct time_struct
 
 #define BSP_ENET_DEVICE_COUNT 1
 
-
 #if defined(A_BIG_ENDIAN)
-#   define htons(x) (x)
-#   define htonl(x) (x)
-#   define ntohs(x) (x)
-#   define ntohl(x) (x)
-#   define HOST_TO_LE_LONG(x)                                                                                        \
+#define htons(x) (x)
+#define htonl(x) (x)
+#define ntohs(x) (x)
+#define ntohl(x) (x)
+#define HOST_TO_LE_LONG(x)                                                                                        \
     ((((uint32_t)(x)&0xff000000) >> 24) | (((uint32_t)(x)&0x00ff0000) >> 8) | (((uint32_t)(x)&0x0000ff00) << 8) | \
      (((uint32_t)(x)&0x000000ff) << 24))
 #endif
 #if defined(A_LITTLE_ENDIAN)
-#   define htons(x) ((((uint16_t)(x)&0xff00) >> 8) | (((uint16_t)(x)&0x00ff) << 8))
-#   define htonl(x)                                                                                                  \
+#define htons(x) ((((uint16_t)(x)&0xff00) >> 8) | (((uint16_t)(x)&0x00ff) << 8))
+#define htonl(x)                                                                                                  \
     ((((uint32_t)(x)&0xff000000) >> 24) | (((uint32_t)(x)&0x00ff0000) >> 8) | (((uint32_t)(x)&0x0000ff00) << 8) | \
      (((uint32_t)(x)&0x000000ff) << 24))
-#   define ntohs htons
-#   define ntohl htonl
-#   define HOST_TO_LE_LONG(x) (x)
+#define ntohs htons
+#define ntohl htonl
+#define HOST_TO_LE_LONG(x) (x)
 #endif
 
 #define SHELL_EXIT_SUCCESS 0
@@ -140,8 +139,8 @@ typedef PREPACK struct ipheader_s
 } POSTPACK ip_header;
 
 /**************************************************************************/ /*!
- * TX/RX Test parameters
- ******************************************************************************/
+                                                                              * TX/RX Test parameters
+                                                                              ******************************************************************************/
 typedef struct transmit_params
 {
     _ip_address ip_address;
@@ -187,18 +186,18 @@ typedef struct httpc_params
 #endif /* ENABLE_HTTP_CLIENT */
 
 /************************************************************************
-*    Benchmark server control structure.
-*************************************************************************/
+ *    Benchmark server control structure.
+ *************************************************************************/
 
 typedef struct throughput_cxt
 {
     uint32_t sock_local; /* Listening socket.*/
     uint32_t sock_peer;  /* Foreign socket.*/
     char *buffer;
-    TIME_STRUCT first_time; // Test start time
-    TIME_STRUCT last_time; // Current time
+    TIME_STRUCT first_time;   // Test start time
+    TIME_STRUCT last_time;    // Current time
     unsigned long long bytes; // Number of bytes received in current test
-    unsigned long kbytes; // Number of kilo bytes received in current test
+    unsigned long kbytes;     // Number of kilo bytes received in current test
     unsigned long last_bytes; // Number of bytes received in the previous test
     unsigned long last_kbytes;
     unsigned long sent_bytes;
@@ -228,7 +227,7 @@ enum test_type
     RAW_TX, // RAW Transmit (Uplink Test)
     RAW_RX, // RAW Receive (Downlink Test)
     SSL_TX, // SSL Transmit (Uplink Test)
-    SSL_RX // SSL Receive (Downlink Test)
+    SSL_RX  // SSL Receive (Downlink Test)
 };
 
 enum Test_Mode
@@ -263,7 +262,7 @@ int32_t ath_inet_aton(const char *name,
                       /* [IN] dotted decimal IP address */
                       uint32_t *ipaddr_ptr
                       /* [OUT] binary IP address */
-                      );
+);
 int32_t parse_ipv4_ad(unsigned long *ip_addr, uint32_t *sbits, char *ip_addr_str);
 
 #if ENABLE_STACK_OFFLOAD

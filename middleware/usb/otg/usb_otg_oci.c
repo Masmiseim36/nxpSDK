@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2017,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -1591,16 +1591,17 @@ usb_status_t USB_OtgInit(uint8_t controllerId,
     }
 
     /* 1. initialize otg stack */
-    otgInstance = (usb_otg_instance_t *)USB_OsaMemoryAllocate(sizeof(usb_otg_instance_t));
+    otgInstance = (usb_otg_instance_t *)OSA_MemoryAllocate(sizeof(usb_otg_instance_t));
     if (otgInstance == NULL)
     {
         return kStatus_USB_AllocFail;
     }
     /* initialize msg queue */
-    if (kStatus_USB_OSA_Success !=
-        USB_OsaMsgqCreate(&otgInstance->otgMsgHandle, USB_OTG_MSG_COUNT, sizeof(usb_otg_msg_t) / 4))
+    otgInstance->otgMsgHandle = (osa_msgq_handle_t)&otgInstance->otgMsgHandleBuffer[0];
+    if (KOSA_StatusSuccess !=
+        OSA_MsgQCreate(otgInstance->otgMsgHandle, USB_OTG_MSG_COUNT, USB_OTG_MESSAGES_SIZE))
     {
-        USB_OsaMemoryFree(otgInstance);
+        OSA_MemoryFree(otgInstance);
         return kStatus_USB_Error;
     }
     /* otg instance structure filed initialization */
@@ -1615,15 +1616,15 @@ usb_status_t USB_OtgInit(uint8_t controllerId,
         (otgInstance->controllerInterface->controllerDeinit == NULL) ||
         (otgInstance->controllerInterface->controllerControl == NULL))
     {
-        USB_OsaMsgqDestroy(otgInstance->otgMsgHandle);
-        USB_OsaMemoryFree(otgInstance);
+        OSA_MsgQDestroy(otgInstance->otgMsgHandle);
+        OSA_MemoryFree(otgInstance);
         return kStatus_USB_Error;
     }
     if (otgInstance->controllerInterface->controllerInit(controllerId, otgInstance, &otgInstance->controllerHandle) !=
         kStatus_USB_Success)
     {
-        USB_OsaMsgqDestroy(otgInstance->otgMsgHandle);
-        USB_OsaMemoryFree(otgInstance);
+        OSA_MsgQDestroy(otgInstance->otgMsgHandle);
+        OSA_MemoryFree(otgInstance);
         return kStatus_USB_Error;
     }
 
@@ -1646,8 +1647,8 @@ usb_status_t USB_OtgDeinit(usb_otg_handle otgHandle)
     otgInstance->controllerInterface->controllerDeinit(otgInstance->controllerHandle);
 
     /* 2. de-initialize otg stack */
-    USB_OsaMsgqDestroy(otgInstance->otgMsgHandle);
-    USB_OsaMemoryFree(otgInstance);
+    OSA_MsgQDestroy(otgInstance->otgMsgHandle);
+    OSA_MemoryFree(otgInstance);
 
     return kStatus_USB_Success;
 }
@@ -1663,7 +1664,7 @@ void USB_OtgTaskFunction(usb_otg_handle otgHandle)
     }
 
     /* wait forever for one message */
-    if (USB_OsaMsgqRecv(otgInstance->otgMsgHandle, &otgMsg, 0) == kStatus_USB_OSA_Success)
+    if (OSA_MsgQGet(otgInstance->otgMsgHandle, (osa_msg_handle_t)&otgMsg, USB_OSA_WAIT_TIMEOUT) == KOSA_StatusSuccess)
     {
         if (otgMsg.otgStatusType == (uint32_t)kOtg_StatusChange)
         {
@@ -1855,7 +1856,7 @@ usb_status_t USB_OtgNotifyChange(usb_otg_handle otgHandle, uint32_t statusType, 
 
     otgMsg.otgStatusType = statusType;
     otgMsg.otgStatusValue = statusValue;
-    if (USB_OsaMsgqSend(otgInstance->otgMsgHandle, &otgMsg) == kStatus_USB_OSA_Success)
+    if (OSA_MsgQPut(otgInstance->otgMsgHandle, (osa_msg_handle_t)&otgMsg) == KOSA_StatusSuccess)
     {
         if (statusType == (uint32_t)kOtg_StatusChange)
         {

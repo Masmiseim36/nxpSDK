@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP.
+ * Copyright 2019 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,14 +13,13 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Peripherals v5.0
+product: Peripherals v6.0
 processor: MK27FN2M0Axxx15
 mcu_data: ksdk2_0
-processor_version: 0.0.5
+processor_version: 0.0.8
 functionalGroups:
 - name: BOARD_InitPeripherals
   called_from_default_init: true
-  selectedCore: core0
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************

@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _IEEE_11073_AGENT_H_
 #define _IEEE_11073_AGENT_H_
@@ -96,7 +70,7 @@ typedef struct _ieee11073_timer_struct
 /*! @brief agent structure */
 typedef struct _agent_struct
 {
-    uint32_t agentHandle; /*!< the agent handle */
+    void *agentHandle;    /*!< the agent handle */
     uint8_t agentState;   /*!< the agent state */
 #if IEEE_MAX_TIMER_OBJECTS
     ieee11073_timer_struct_t agentTimer[2U]; /*!< timer to implement timeout functionalities */
@@ -120,7 +94,7 @@ extern "C" {
  *
  * @param handle            the agent handle.
  */
-void AGENT_Init(uint32_t handle);
+void AGENT_Init(void *handle);
 
 /*!
  * @brief medical callback.
@@ -132,7 +106,7 @@ void AGENT_Init(uint32_t handle);
  *
  * @return None.
  */
-void AGENT_MedicalCallback(uint32_t handle, uint8_t eventType, uint8_t *data);
+void AGENT_MedicalCallback(void *handle, uint8_t eventType, uint8_t *data);
 
 /*!
  * @brief send association request.
@@ -145,7 +119,7 @@ void AGENT_MedicalCallback(uint32_t handle, uint8_t eventType, uint8_t *data);
  * @param associationData     the association request data.
  * @param size          the association request data size.
  */
-void AGENT_SendAssociationRequest(uint32_t handle, uint8_t *associationData, uint32_t size);
+void AGENT_SendAssociationRequest(void *handle, uint8_t *associationData, uint32_t size);
 
 #if AGENT_SUPPORT_FULL_FEATURE
 /*!
@@ -157,7 +131,7 @@ void AGENT_SendAssociationRequest(uint32_t handle, uint8_t *associationData, uin
  * @param handle        the agent handle.
  * @param abortReason   the abort reason.
  */
-void AGENT_SendAssociationAbortRequest(uint32_t handle, abort_reason_t abortReason);
+void AGENT_SendAssociationAbortRequest(void *handle, abort_reason_t abortReason);
 
 /*!
  * @brief send association release request.
@@ -168,7 +142,7 @@ void AGENT_SendAssociationAbortRequest(uint32_t handle, abort_reason_t abortReas
  * @param handle            the agent handle.
  * @param releaseReason     the release reason.
  */
-void AGENT_SendAssociationRleaseRequest(uint32_t handle, release_request_reason_t releaseReason);
+void AGENT_SendAssociationRleaseRequest(void *handle, release_request_reason_t releaseReason);
 #endif
 
 /*!
@@ -179,7 +153,7 @@ void AGENT_SendAssociationRleaseRequest(uint32_t handle, release_request_reason_
  * @param handle            the agent handle.
  * @param state             the state of Agent.
  */
-void AGENT_SetAgentState(uint32_t handle, uint8_t state);
+void AGENT_SetAgentState(void *handle, uint8_t state);
 
 /*!
  * @brief send agent configuration.
@@ -191,7 +165,7 @@ void AGENT_SetAgentState(uint32_t handle, uint8_t state);
  * @param config    the agent configuration data.
  * @param size          the agent configuration data size.
  */
-void AGENT_SendConfig(uint32_t handle, uint8_t *config, uint32_t size);
+void AGENT_SendConfig(void *handle, uint8_t *config, uint32_t size);
 #if defined(__cplusplus)
 }
 #endif

@@ -1,71 +1,29 @@
 /*
-    FreeRTOS V9.0.0 - Copyright (C) 2016 Real Time Engineers Ltd.
-    All rights reserved
-
-    VISIT http://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
-
-    This file is part of the FreeRTOS distribution.
-
-    FreeRTOS is free software; you can redistribute it and/or modify it under
-    the terms of the GNU General Public License (version 2) as published by the
-    Free Software Foundation >>>> AND MODIFIED BY <<<< the FreeRTOS exception.
-
-    ***************************************************************************
-    >>!   NOTE: The modification to the GPL is included to allow you to     !<<
-    >>!   distribute a combined work that includes FreeRTOS without being   !<<
-    >>!   obliged to provide the source code for proprietary components     !<<
-    >>!   outside of the FreeRTOS kernel.                                   !<<
-    ***************************************************************************
-
-    FreeRTOS is distributed in the hope that it will be useful, but WITHOUT ANY
-    WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-    FOR A PARTICULAR PURPOSE.  Full license text is available on the following
-    link: http://www.freertos.org/a00114.html
-
-    ***************************************************************************
-     *                                                                       *
-     *    FreeRTOS provides completely free yet professionally developed,    *
-     *    robust, strictly quality controlled, supported, and cross          *
-     *    platform software that is more than just the market leader, it     *
-     *    is the industry's de facto standard.                               *
-     *                                                                       *
-     *    Help yourself get started quickly while simultaneously helping     *
-     *    to support the FreeRTOS project by purchasing a FreeRTOS           *
-     *    tutorial book, reference manual, or both:                          *
-     *    http://www.FreeRTOS.org/Documentation                              *
-     *                                                                       *
-    ***************************************************************************
-
-    http://www.FreeRTOS.org/FAQHelp.html - Having a problem?  Start by reading
-    the FAQ page "My application does not run, what could be wrong?".  Have you
-    defined configASSERT()?
-
-    http://www.FreeRTOS.org/support - In return for receiving this top quality
-    embedded software for free we request you assist our global community by
-    participating in the support forum.
-
-    http://www.FreeRTOS.org/training - Investing in training allows your team to
-    be as productive as possible as early as possible.  Now you can receive
-    FreeRTOS training directly from Richard Barry, CEO of Real Time Engineers
-    Ltd, and the world's leading authority on the world's leading RTOS.
-
-    http://www.FreeRTOS.org/plus - A selection of FreeRTOS ecosystem products,
-    including FreeRTOS+Trace - an indispensable productivity tool, a DOS
-    compatible FAT file system, and our tiny thread aware UDP/IP stack.
-
-    http://www.FreeRTOS.org/labs - Where new FreeRTOS products go to incubate.
-    Come and try FreeRTOS+TCP, our new open source TCP/IP stack for FreeRTOS.
-
-    http://www.OpenRTOS.com - Real Time Engineers ltd. license FreeRTOS to High
-    Integrity Systems ltd. to sell under the OpenRTOS brand.  Low cost OpenRTOS
-    licenses offer ticketed support, indemnification and commercial middleware.
-
-    http://www.SafeRTOS.com - High Integrity Systems also provide a safety
-    engineered and independently SIL3 certified version for use in safety and
-    mission critical applications that require provable dependability.
-
-    1 tab == 4 spaces!
-*/
+ * FreeRTOS Kernel V10.2.0
+ * Copyright (C) 2019 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * http://www.FreeRTOS.org
+ * http://aws.amazon.com/freertos
+ *
+ * 1 tab == 4 spaces!
+ */
 
 /* FreeRTOS includes. */
 #include "FreeRTOS.h"
@@ -92,8 +50,8 @@ SemaphoreHandle_t xSemaphore_producer;
 SemaphoreHandle_t xSemaphore_consumer;
 
 /* Static memory size definitions */
-#define PRODUCER_TASK_STACK_SIZE (configMINIMAL_STACK_SIZE)
-#define CONSUMER_TASK_STACK_SIZE (configMINIMAL_STACK_SIZE)
+#define PRODUCER_TASK_STACK_SIZE (configMINIMAL_STACK_SIZE + 166)
+#define CONSUMER_TASK_STACK_SIZE (configMINIMAL_STACK_SIZE + 166)
 
 /*******************************************************************************
  * Prototypes
@@ -109,13 +67,13 @@ static StackType_t ProducerTaskStack[PRODUCER_TASK_STACK_SIZE];
 /* Statically allocated memory for producer_task task control block */
 static StaticTask_t ProducerTaskTCB;
 /* Statically allocated memory for consumer task stacks */
+static StackType_t ConsumerTaskStack0[PRODUCER_TASK_STACK_SIZE];
 static StackType_t ConsumerTaskStack1[PRODUCER_TASK_STACK_SIZE];
 static StackType_t ConsumerTaskStack2[PRODUCER_TASK_STACK_SIZE];
-static StackType_t ConsumerTaskStack3[PRODUCER_TASK_STACK_SIZE];
 /* Statically allocated memory for consumer_task task control block */
+static StaticTask_t ConsumerTaskTCB0;
 static StaticTask_t ConsumerTaskTCB1;
 static StaticTask_t ConsumerTaskTCB2;
-static StaticTask_t ConsumerTaskTCB3;
 /* Statically allocated memory for producer semaphore structure */
 static StaticSemaphore_t ProducerSemaphoreBuffer;
 /* Statically allocated memory for consumer semaphore structure */
@@ -136,12 +94,16 @@ int main(void)
     BOARD_InitDebugConsole();
     TaskHandle = xTaskCreateStatic(producer_task, "PRODUCER_TASK", PRODUCER_TASK_STACK_SIZE, NULL, TASK_PRIO,
                                    &(ProducerTaskStack[0]), &ProducerTaskTCB);
-    if (TaskHandle == NULL)
+    if (TaskHandle != NULL)
+    {
+        PRINTF("Producer_task created.\r\n");
+    }
+    else
     {
         PRINTF("Failed to create producer task");
-        vTaskSuspend(NULL);
+        while (1)
+            ;
     }
-    PRINTF("Producer_task created.\r\n");
     /* Start scheduling. */
     vTaskStartScheduler();
     for (;;)
@@ -167,37 +129,40 @@ static void producer_task(void *pvParameters)
         vTaskSuspend(NULL);
     }
 
+    TaskHandle = xTaskCreateStatic(consumer_task, "CONSUMER_TASK_0", CONSUMER_TASK_STACK_SIZE, (void *)0, TASK_PRIO,
+                                   &(ConsumerTaskStack0[0]), &ConsumerTaskTCB0);
+    if (TaskHandle != NULL)
+    {
+        PRINTF("Consumer_task 0 created.\r\n");
+    }
+    else
+    {
+        PRINTF("Failed to create consumer_task 0.\r\n");
+        vTaskSuspend(NULL);
+    }
+
     TaskHandle = xTaskCreateStatic(consumer_task, "CONSUMER_TASK_1", CONSUMER_TASK_STACK_SIZE, (void *)1, TASK_PRIO,
                                    &(ConsumerTaskStack1[0]), &ConsumerTaskTCB1);
     if (TaskHandle != NULL)
     {
-        PRINTF("Consumer_task 1 created.");
+        PRINTF("Consumer_task 1 created.\r\n");
     }
     else
     {
-        PRINTF("Failed to create consumer_task 1");
+        PRINTF("Failed to create consumer_task 1.\r\n");
+        vTaskSuspend(NULL);
     }
 
     TaskHandle = xTaskCreateStatic(consumer_task, "CONSUMER_TASK_2", CONSUMER_TASK_STACK_SIZE, (void *)2, TASK_PRIO,
                                    &(ConsumerTaskStack2[0]), &ConsumerTaskTCB2);
     if (TaskHandle != NULL)
     {
-        PRINTF("Consumer_task 2 created.");
+        PRINTF("Consumer_task 2 created.\r\n");
     }
     else
     {
-        PRINTF("Failed to create consumer_task 2");
-    }
-
-    TaskHandle = xTaskCreateStatic(consumer_task, "CONSUMER_TASK_3", CONSUMER_TASK_STACK_SIZE, (void *)3, TASK_PRIO,
-                                   &(ConsumerTaskStack3[0]), &ConsumerTaskTCB3);
-    if (TaskHandle != NULL)
-    {
-        PRINTF("Consumer_task 3 created.\r\n");
-    }
-    else
-    {
-        PRINTF("Failed to create consumer_task 3");
+        PRINTF("Failed to create consumer_task 2.\r\n");
+        vTaskSuspend(NULL);
     }
 
     while (1)

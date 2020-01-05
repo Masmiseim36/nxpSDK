@@ -35,8 +35,7 @@
 #include "fsl_pit.h"
 #include "fsl_port.h"
 #include "fsl_smc.h"
-#include "usb_io.h"
-#include "usb_timer.h"
+#include "timer.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -72,7 +71,9 @@ void USB_WaitClockLocked(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+#define TIMER_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_BusClk)
 extern usb_hid_mouse_struct_t g_UsbDeviceHidMouse;
+uint32_t g_halTimerHandle[(HAL_TIMER_HANDLE_SIZE + 3) / 4];
 
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_MouseBuffer[USB_HID_MOUSE_REPORT_LENGTH];
 usb_hid_mouse_struct_t g_UsbDeviceHidMouse;
@@ -112,13 +113,13 @@ void BOARD_DeinitPins(void)
     /* Gate the port clock */
     CLOCK_DisableClock(kCLOCK_PortB);
 }
-void LLWU_SW_IRQ_HANDLER(void)
+void BOARD_SW3_IRQ_HANDLER(void)
 {
-    if ((1U << LLWU_SW_GPIO_PIN) & PORT_GetPinsInterruptFlags(LLWU_SW_PORT))
+    if ((1U << BOARD_SW3_GPIO_PIN) & PORT_GetPinsInterruptFlags(BOARD_SW3_PORT))
     {
         /* Disable interrupt. */
-        PORT_SetPinInterruptConfig(LLWU_SW_PORT, LLWU_SW_GPIO_PIN, kPORT_InterruptOrDMADisabled);
-        PORT_ClearPinsInterruptFlags(LLWU_SW_PORT, (1U << LLWU_SW_GPIO_PIN));
+        PORT_SetPinInterruptConfig(BOARD_SW3_PORT, BOARD_SW3_GPIO_PIN, kPORT_InterruptOrDMADisabled);
+        PORT_ClearPinsInterruptFlags(BOARD_SW3_PORT, (1U << BOARD_SW3_GPIO_PIN));
         g_UsbDeviceHidMouse.selfWakeup = 1U;
     }
     /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
@@ -130,39 +131,52 @@ void SW_IntControl(uint8_t enable)
     if (enable)
     {
         g_UsbDeviceHidMouse.selfWakeup = 0U;
-        PORT_SetPinInterruptConfig(LLWU_SW_PORT, LLWU_SW_GPIO_PIN, kPORT_InterruptFallingEdge);
+        PORT_SetPinInterruptConfig(BOARD_SW3_PORT, BOARD_SW3_GPIO_PIN, kPORT_InterruptFallingEdge);
     }
     else
     {
-        PORT_SetPinInterruptConfig(LLWU_SW_PORT, LLWU_SW_GPIO_PIN, kPORT_InterruptOrDMADisabled);
+        PORT_SetPinInterruptConfig(BOARD_SW3_PORT, BOARD_SW3_GPIO_PIN, kPORT_InterruptOrDMADisabled);
     }
 }
-void SW_Callback(void)
+void SW_Callback(void *param)
 {
     g_UsbDeviceHidMouse.selfWakeup = 1U;
     SW_IntControl(0);
 }
 void SW_Init(void)
 {
-    NVIC_SetPriority(LLWU_SW_IRQ, 1U);
-    NVIC_EnableIRQ(LLWU_SW_IRQ);
+    NVIC_SetPriority(BOARD_SW3_IRQ, 1U);
+    NVIC_EnableIRQ(BOARD_SW3_IRQ);
 }
 char *SW_GetName(void)
 {
-    return LLWU_SW_NAME;
+    return BOARD_SW3_NAME;
 }
-void HW_TimerCallback(void)
+void HW_TimerCallback(void *param)
 {
     g_UsbDeviceHidMouse.hwTick++;
     USB_DeviceUpdateHwTick(g_UsbDeviceHidMouse.deviceHandle, g_UsbDeviceHidMouse.hwTick);
 }
 void HW_TimerInit(void)
 {
-    USB_TimerInit(0, 1000U, CLOCK_GetFreq(kCLOCK_BusClk), HW_TimerCallback);
+    hal_timer_config_t halTimerConfig;
+    halTimerConfig.timeout            = 1000;
+    halTimerConfig.srcClock_Hz        = TIMER_SOURCE_CLOCK;
+    halTimerConfig.instance           = 0U;
+    hal_timer_handle_t halTimerHandle = &g_halTimerHandle[0];
+    HAL_TimerInit(halTimerHandle, &halTimerConfig);
+    HAL_TimerInstallCallback(halTimerHandle, HW_TimerCallback, NULL);
 }
 void HW_TimerControl(uint8_t enable)
 {
-    USB_TimerInt(0, enable);
+    if (enable)
+    {
+        HAL_TimerEnable(g_halTimerHandle);
+    }
+    else
+    {
+        HAL_TimerDisable(g_halTimerHandle);
+    }
 }
 void USB_LowpowerModeInit(void)
 {
@@ -754,7 +768,7 @@ void main(void)
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
     /* Set the LLWU pin */
-    GPIO_PinInit(LLWU_SW_GPIO, LLWU_SW_GPIO_PIN, &pinConfig);
+    GPIO_PinInit(BOARD_SW3_GPIO, BOARD_SW3_GPIO_PIN, &pinConfig);
 
 #if ((defined(USB_DEVICE_CONFIG_LOW_POWER_MODE)) && (USB_DEVICE_CONFIG_LOW_POWER_MODE > 0U))
     USB_LowpowerModeInit();

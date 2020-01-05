@@ -4,6 +4,14 @@ The EWM Example project is to demonstrate usage of the KSDK EWM driver.
 In the example, EWM counter is continuously refreshed until button is pressed.
 Once the button is pressed, EWM counter will expire and interrupt will be generated.
 After the first pressing, another interrupt can be triggered by pressing button again.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
+
 Hardware requirements
 =====================
 - J-Link ARM
@@ -38,11 +46,6 @@ Press SW3 to expire EWM
 EWM interrupt is occurred
 Press SW3 to expire EWM again
 ~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

@@ -1,31 +1,9 @@
 /*
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _FSL_FLEXIO_UART_H_
@@ -39,26 +17,24 @@
  * @{
  */
 
-/*! @file */
-
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief FlexIO UART driver version 2.1.0. */
-#define FSL_FLEXIO_UART_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
+/*! @brief FlexIO UART driver version 2.1.6. */
+#define FSL_FLEXIO_UART_DRIVER_VERSION (MAKE_VERSION(2, 1, 6))
 /*@}*/
 
 /*! @brief Error codes for the UART driver. */
-enum _flexio_uart_status
+enum
 {
     kStatus_FLEXIO_UART_TxBusy = MAKE_STATUS(kStatusGroup_FLEXIO_UART, 0), /*!< Transmitter is busy. */
     kStatus_FLEXIO_UART_RxBusy = MAKE_STATUS(kStatusGroup_FLEXIO_UART, 1), /*!< Receiver is busy. */
     kStatus_FLEXIO_UART_TxIdle = MAKE_STATUS(kStatusGroup_FLEXIO_UART, 2), /*!< UART transmitter is idle. */
     kStatus_FLEXIO_UART_RxIdle = MAKE_STATUS(kStatusGroup_FLEXIO_UART, 3), /*!< UART receiver is idle. */
-    kStatus_FLEXIO_UART_ERROR = MAKE_STATUS(kStatusGroup_FLEXIO_UART, 4),  /*!< ERROR happens on UART. */
+    kStatus_FLEXIO_UART_ERROR  = MAKE_STATUS(kStatusGroup_FLEXIO_UART, 4), /*!< ERROR happens on UART. */
     kStatus_FLEXIO_UART_RxRingBufferOverrun =
         MAKE_STATUS(kStatusGroup_FLEXIO_UART, 5), /*!< UART RX software ring buffer overrun. */
     kStatus_FLEXIO_UART_RxHardwareOverrun = MAKE_STATUS(kStatusGroup_FLEXIO_UART, 6) /*!< UART RX receiver overrun. */
@@ -76,15 +52,15 @@ typedef enum _flexio_uart_bit_count_per_char
 enum _flexio_uart_interrupt_enable
 {
     kFLEXIO_UART_TxDataRegEmptyInterruptEnable = 0x1U, /*!< Transmit buffer empty interrupt enable. */
-    kFLEXIO_UART_RxDataRegFullInterruptEnable = 0x2U,  /*!< Receive buffer full interrupt enable. */
+    kFLEXIO_UART_RxDataRegFullInterruptEnable  = 0x2U, /*!< Receive buffer full interrupt enable. */
 };
 
 /*! @brief Define FlexIO UART status mask. */
 enum _flexio_uart_status_flags
 {
     kFLEXIO_UART_TxDataRegEmptyFlag = 0x1U, /*!< Transmit buffer empty flag. */
-    kFLEXIO_UART_RxDataRegFullFlag = 0x2U,  /*!< Receive buffer full flag. */
-    kFLEXIO_UART_RxOverRunFlag = 0x4U,      /*!< Receive buffer over run flag. */
+    kFLEXIO_UART_RxDataRegFullFlag  = 0x2U, /*!< Receive buffer full flag. */
+    kFLEXIO_UART_RxOverRunFlag      = 0x4U, /*!< Receive buffer over run flag. */
 };
 
 /*! @brief Define FlexIO UART access structure typedef. */
@@ -133,8 +109,8 @@ struct _flexio_uart_handle
     volatile size_t txDataSize; /*!< Size of the remaining data to send. */
     uint8_t *volatile rxData;   /*!< Address of remaining data to receive. */
     volatile size_t rxDataSize; /*!< Size of the remaining data to receive. */
-    size_t txSize;              /*!< Total bytes to be sent. */
-    size_t rxSize;              /*!< Total bytes to be received. */
+    size_t txDataSizeAll;       /*!< Total bytes to be sent. */
+    size_t rxDataSizeAll;       /*!< Total bytes to be received. */
 
     uint8_t *rxRingBuffer;              /*!< Start address of the receiver ring buffer. */
     size_t rxRingBufferSize;            /*!< Size of the ring buffer. */
@@ -164,7 +140,7 @@ extern "C" {
 /*!
  * @brief Ungates the FlexIO clock, resets the FlexIO module, configures FlexIO UART
  * hardware, and configures the FlexIO UART with FlexIO UART configuration.
- * The configuration structure can be filled by the user, or be set with
+ * The configuration structure can be filled by the user or be set with
  * default values by FLEXIO_UART_GetDefaultConfig().
  *
  * Example
@@ -189,16 +165,18 @@ extern "C" {
  * @param base Pointer to the FLEXIO_UART_Type structure.
  * @param userConfig Pointer to the flexio_uart_config_t structure.
  * @param srcClock_Hz FlexIO source clock in Hz.
+ * @retval kStatus_Success Configuration success
+ * @retval kStatus_InvalidArgument Buadrate configuration out of range
 */
-void FLEXIO_UART_Init(FLEXIO_UART_Type *base, const flexio_uart_config_t *userConfig, uint32_t srcClock_Hz);
+status_t FLEXIO_UART_Init(FLEXIO_UART_Type *base, const flexio_uart_config_t *userConfig, uint32_t srcClock_Hz);
 
 /*!
- * @brief Disables the FlexIO UART and gates the FlexIO clock.
+ * @brief Resets the FlexIO UART shifter and timer config.
  *
  * @note After calling this API, call the FLEXO_UART_Init to use the FlexIO UART module.
  *
- * @param base pointer to FLEXIO_UART_Type structure
-*/
+ * @param base Pointer to FLEXIO_UART_Type structure
+ */
 void FLEXIO_UART_Deinit(FLEXIO_UART_Type *base);
 
 /*!
@@ -225,7 +203,7 @@ void FLEXIO_UART_GetDefaultConfig(flexio_uart_config_t *userConfig);
  *
  * @param base Pointer to the FLEXIO_UART_Type structure.
  * @return FlexIO UART status flags.
-*/
+ */
 
 uint32_t FLEXIO_UART_GetStatusFlags(FLEXIO_UART_Type *base);
 
@@ -238,7 +216,7 @@ uint32_t FLEXIO_UART_GetStatusFlags(FLEXIO_UART_Type *base);
  *          @arg kFLEXIO_UART_TxDataRegEmptyFlag
  *          @arg kFLEXIO_UART_RxEmptyFlag
  *          @arg kFLEXIO_UART_RxOverRunFlag
-*/
+ */
 
 void FLEXIO_UART_ClearStatusFlags(FLEXIO_UART_Type *base, uint32_t mask);
 
@@ -312,7 +290,7 @@ static inline uint32_t FLEXIO_UART_GetRxDataRegisterAddress(FLEXIO_UART_Type *ba
  */
 static inline void FLEXIO_UART_EnableTxDMA(FLEXIO_UART_Type *base, bool enable)
 {
-    FLEXIO_EnableShifterStatusDMA(base->flexioBase, 1 << base->shifterIndex[0], enable);
+    FLEXIO_EnableShifterStatusDMA(base->flexioBase, 1UL << base->shifterIndex[0], enable);
 }
 
 /*!
@@ -325,7 +303,7 @@ static inline void FLEXIO_UART_EnableTxDMA(FLEXIO_UART_Type *base, bool enable)
  */
 static inline void FLEXIO_UART_EnableRxDMA(FLEXIO_UART_Type *base, bool enable)
 {
-    FLEXIO_EnableShifterStatusDMA(base->flexioBase, 1 << base->shifterIndex[1], enable);
+    FLEXIO_EnableShifterStatusDMA(base->flexioBase, 1UL << base->shifterIndex[1], enable);
 }
 
 /* @} */
@@ -339,17 +317,13 @@ static inline void FLEXIO_UART_EnableRxDMA(FLEXIO_UART_Type *base, bool enable)
  * @brief Enables/disables the FlexIO UART module operation.
  *
  * @param base Pointer to the FLEXIO_UART_Type.
- * @param enable True to enable, false to disable.
-*/
+ * @param enable True to enable, false does not have any effect.
+ */
 static inline void FLEXIO_UART_Enable(FLEXIO_UART_Type *base, bool enable)
 {
     if (enable)
     {
         base->flexioBase->CTRL |= FLEXIO_CTRL_FLEXEN_MASK;
-    }
-    else
-    {
-        base->flexioBase->CTRL &= ~FLEXIO_CTRL_FLEXEN_MASK;
     }
 }
 
@@ -379,7 +353,7 @@ static inline void FLEXIO_UART_WriteByte(FLEXIO_UART_Type *base, const uint8_t *
  */
 static inline void FLEXIO_UART_ReadByte(FLEXIO_UART_Type *base, uint8_t *buffer)
 {
-    *buffer = base->flexioBase->SHIFTBUFBYS[base->shifterIndex[1]];
+    *buffer = (uint8_t)(base->flexioBase->SHIFTBUFBYS[base->shifterIndex[1]]);
 }
 
 /*!
@@ -418,10 +392,10 @@ void FLEXIO_UART_ReadBlocking(FLEXIO_UART_Type *base, uint8_t *rxData, size_t rx
  * UART transactional APIs. Call this API once to get the
  * initialized handle.
  *
- * The UART driver supports the "background" receiving, which means that user can set up
+ * The UART driver supports the "background" receiving, which means that users can set up
  * a RX ring buffer optionally. Data received is stored into the ring buffer even when
  * the user doesn't call the FLEXIO_UART_TransferReceiveNonBlocking() API. If there is already data
- * received in the ring buffer, user can get the received data from the ring buffer
+ * received in the ring buffer, users can get the received data from the ring buffer
  * directly. The ring buffer is disabled if passing NULL as @p ringBuffer.
  *
  * @param base to FLEXIO_UART_Type structure.
@@ -442,8 +416,8 @@ status_t FLEXIO_UART_TransferCreateHandle(FLEXIO_UART_Type *base,
  * This function sets up the RX ring buffer to a specific UART handle.
  *
  * When the RX ring buffer is used, data received is stored into the ring buffer even when
- * the user doesn't call the UART_ReceiveNonBlocking() API. If there are already data received
- * in the ring buffer, user can get the received data from the ring buffer directly.
+ * the user doesn't call the UART_ReceiveNonBlocking() API. If there is already data received
+ * in the ring buffer, users can get the received data from the ring buffer directly.
  *
  * @note When using the RX ring buffer, one byte is reserved for internal use. In other
  * words, if @p ringBufferSize is 32, only 31 bytes are used for saving data.
@@ -466,14 +440,14 @@ void FLEXIO_UART_TransferStartRingBuffer(FLEXIO_UART_Type *base,
  * @param base Pointer to the FLEXIO_UART_Type structure.
  * @param handle Pointer to the flexio_uart_handle_t structure to store the transfer state.
  */
-void FLEXIO_UART_StopRingBuffer(FLEXIO_UART_Type *base, flexio_uart_handle_t *handle);
+void FLEXIO_UART_TransferStopRingBuffer(FLEXIO_UART_Type *base, flexio_uart_handle_t *handle);
 
 /*!
  * @brief Transmits a buffer of data using the interrupt method.
  *
  * This function sends data using an interrupt method. This is a non-blocking function,
  * which returns directly without waiting for all data to be written to the TX register. When
- * all data are written to TX register in ISR, the FlexIO UART driver calls the callback
+ * all data is written to the TX register in ISR, the FlexIO UART driver calls the callback
  * function and passes the @ref kStatus_FLEXIO_UART_TxIdle as status parameter.
  *
  * @note The kStatus_FLEXIO_UART_TxIdle is passed to the upper layer when all data is written
@@ -492,7 +466,7 @@ status_t FLEXIO_UART_TransferSendNonBlocking(FLEXIO_UART_Type *base,
 /*!
  * @brief Aborts the interrupt-driven data transmit.
  *
- * This function aborts the interrupt-driven data sending. Get the remainBytes to know
+ * This function aborts the interrupt-driven data sending. Get the remainBytes to find out
  * how many bytes are still not sent out.
  *
  * @param base Pointer to the FLEXIO_UART_Type structure.
@@ -501,14 +475,14 @@ status_t FLEXIO_UART_TransferSendNonBlocking(FLEXIO_UART_Type *base,
 void FLEXIO_UART_TransferAbortSend(FLEXIO_UART_Type *base, flexio_uart_handle_t *handle);
 
 /*!
- * @brief Gets the number of remaining bytes not sent.
+ * @brief Gets the number of bytes sent.
  *
- * This function gets the number of remaining bytes not sent driven by interrupt.
+ * This function gets the number of bytes sent driven by interrupt.
  *
  * @param base Pointer to the FLEXIO_UART_Type structure.
  * @param handle Pointer to the flexio_uart_handle_t structure to store the transfer state.
  * @param count Number of bytes sent so far by the non-blocking transaction.
- * @retval kStatus_InvalidArgument count is Invalid.
+ * @retval kStatus_NoTransferInProgress transfer has finished or no transfer in progress.
  * @retval kStatus_Success Successfully return the count.
  */
 status_t FLEXIO_UART_TransferGetSendCount(FLEXIO_UART_Type *base, flexio_uart_handle_t *handle, size_t *count);
@@ -554,14 +528,14 @@ status_t FLEXIO_UART_TransferReceiveNonBlocking(FLEXIO_UART_Type *base,
 void FLEXIO_UART_TransferAbortReceive(FLEXIO_UART_Type *base, flexio_uart_handle_t *handle);
 
 /*!
- * @brief Gets the number of remaining bytes not received.
+ * @brief Gets the number of bytes received.
  *
- * This function gets the number of remaining bytes not received driven by interrupt.
+ * This function gets the number of bytes received driven by interrupt.
  *
  * @param base Pointer to the FLEXIO_UART_Type structure.
  * @param handle Pointer to the flexio_uart_handle_t structure to store the transfer state.
  * @param count Number of bytes received so far by the non-blocking transaction.
- * @retval kStatus_InvalidArgument count is Invalid.
+ * @retval kStatus_NoTransferInProgress transfer has finished or no transfer in progress.
  * @retval kStatus_Success Successfully return the count.
  */
 status_t FLEXIO_UART_TransferGetReceiveCount(FLEXIO_UART_Type *base, flexio_uart_handle_t *handle, size_t *count);

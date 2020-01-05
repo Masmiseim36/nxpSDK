@@ -13,6 +13,14 @@ the configuration structure's setting in application to fit the special requirem
 
 The auto-calibration is not essential but strongly recommended. It can help to adjust the converter itself and improve
 the ADC16's performance.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
+
 Hardware requirements
 =====================
 - Mini/Micro USB cable
@@ -50,11 +58,6 @@ ADC Value: 1355
 ADC Value: 1625
 ADC Value: 1575
 ADC Value: 1471
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

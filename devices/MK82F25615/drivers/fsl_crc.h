@@ -1,31 +1,9 @@
 /*
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _FSL_CRC_H_
@@ -34,11 +12,9 @@
 #include "fsl_common.h"
 
 /*!
- * @addtogroup crc_driver
+ * @addtogroup crc
  * @{
  */
-
-/*! @file */
 
 /*******************************************************************************
  * Definitions
@@ -46,15 +22,18 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief CRC driver version. Version 2.0.0. */
-#define FSL_CRC_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+/*! @brief CRC driver version. Version 2.0.1.
+ *
+ * Current version: 2.0.1
+ *
+ * Change log:
+ * - Version 2.0.1
+ *   - move DATA and DATALL macro definition from header file to source file
+ * - Version 2.0.2
+ *   - Fix MISRA issues
+ */
+#define FSL_CRC_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
 /*@}*/
-
-/*! @internal @brief Has data register with name CRC. */
-#if defined(FSL_FEATURE_CRC_HAS_CRC_REG) && FSL_FEATURE_CRC_HAS_CRC_REG
-#define DATA CRC
-#define DATALL CRCLL
-#endif
 
 #ifndef CRC_DRIVER_CUSTOM_DEFAULTS
 /*! @brief Default configuration structure filled by CRC_GetDefaultConfig(). Use CRC16-CCIT-FALSE as defeault. */
@@ -80,11 +59,11 @@ typedef enum _crc_result
 } crc_result_t;
 
 /*!
-* @brief CRC protocol configuration.
-*
-* This structure holds the configuration for the CRC protocol.
-*
-*/
+ * @brief CRC protocol configuration.
+ *
+ * This structure holds the configuration for the CRC protocol.
+ *
+ */
 typedef struct _crc_config
 {
     uint32_t polynomial;     /*!< CRC Polynomial, MSBit first.
@@ -108,31 +87,33 @@ extern "C" {
 /*!
  * @brief Enables and configures the CRC peripheral module.
  *
- * This functions enables the clock gate in the Kinetis SIM module for the CRC peripheral.
- * It also configures the CRC module and starts checksum computation by writing the seed.
+ * This function enables the clock gate in the SIM module for the CRC peripheral.
+ * It also configures the CRC module and starts a checksum computation by writing the seed.
  *
  * @param base CRC peripheral address.
- * @param config CRC module configuration structure
+ * @param config CRC module configuration structure.
  */
 void CRC_Init(CRC_Type *base, const crc_config_t *config);
 
 /*!
  * @brief Disables the CRC peripheral module.
  *
- * This functions disables the clock gate in the Kinetis SIM module for the CRC peripheral.
+ * This function disables the clock gate in the SIM module for the CRC peripheral.
  *
  * @param base CRC peripheral address.
  */
 static inline void CRC_Deinit(CRC_Type *base)
 {
+#if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* gate clock */
     CLOCK_DisableClock(kCLOCK_Crc0);
+#endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 }
 
 /*!
- * @brief Loads default values to CRC protocol configuration structure.
+ * @brief Loads default values to the CRC protocol configuration structure.
  *
- * Loads default values to CRC protocol configuration structure. The default values are:
+ * Loads default values to the CRC protocol configuration structure. The default values are as follows.
  * @code
  *   config->polynomial = 0x1021;
  *   config->seed = 0xFFFF;
@@ -143,14 +124,14 @@ static inline void CRC_Deinit(CRC_Type *base)
  *   config->crcResult = kCrcFinalChecksum;
  * @endcode
  *
- * @param config CRC protocol configuration structure
+ * @param config CRC protocol configuration structure.
  */
 void CRC_GetDefaultConfig(crc_config_t *config);
 
 /*!
  * @brief Writes data to the CRC module.
  *
- * Writes input data buffer bytes to CRC data register.
+ * Writes input data buffer bytes to the CRC data register.
  * The configured type of transpose is applied.
  *
  * @param base CRC peripheral address.
@@ -160,27 +141,24 @@ void CRC_GetDefaultConfig(crc_config_t *config);
 void CRC_WriteData(CRC_Type *base, const uint8_t *data, size_t dataSize);
 
 /*!
- * @brief Reads 32-bit checksum from the CRC module.
+ * @brief Reads the 32-bit checksum from the CRC module.
  *
- * Reads CRC data register (intermediate or final checksum).
- * The configured type of transpose and complement are applied.
+ * Reads the CRC data register (either an intermediate or the final checksum).
+ * The configured type of transpose and complement is applied.
  *
  * @param base CRC peripheral address.
- * @return intermediate or final 32-bit checksum, after configured transpose and complement operations.
+ * @return An intermediate or the final 32-bit checksum, after configured transpose and complement operations.
  */
-static inline uint32_t CRC_Get32bitResult(CRC_Type *base)
-{
-    return base->DATA;
-}
+uint32_t CRC_Get32bitResult(CRC_Type *base);
 
 /*!
- * @brief Reads 16-bit checksum from the CRC module.
+ * @brief Reads a 16-bit checksum from the CRC module.
  *
- * Reads CRC data register (intermediate or final checksum).
- * The configured type of transpose and complement are applied.
+ * Reads the CRC data register (either an intermediate or the final checksum).
+ * The configured type of transpose and complement is applied.
  *
  * @param base CRC peripheral address.
- * @return intermediate or final 16-bit checksum, after configured transpose and complement operations.
+ * @return An intermediate or the final 16-bit checksum, after configured transpose and complement operations.
  */
 uint16_t CRC_Get16bitResult(CRC_Type *base);
 

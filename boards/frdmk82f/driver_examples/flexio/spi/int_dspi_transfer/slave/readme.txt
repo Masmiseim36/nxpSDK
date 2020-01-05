@@ -6,11 +6,10 @@ In this example, a flexio simulated slave connect to a dspi master.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.50.1
-- Keil MDK 5.17
-- GCC ARM Embedded 2015-4.9-q3
-- Kinetis Development Studio IDE 3.0.0
-- Atollic TrueSTUDIO 5.4.0
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -42,21 +41,30 @@ Prepare the Demo
 Running the demo
 ================
 When the demo runs successfully, the log would be seen on the OpenSDA terminal like:
+
 ~~~~~~~~~~~~~~~~~~~~~
 DSPI Master interrupt - FLEXIO SPI Slave interrupt example start.
+
 This example use one dspi instance as master and one flexio spi slave on one board.
+
 Master and slave are both use interrupt way.
+
 Please make sure you make the correct line connection. Basically, the connection is:
+
 DSPI_master -- FLEXIO_SPI_slave
+
    CLK      --    CLK
+
    PCS      --    PCS
+
    SOUT     --    SIN
+
    SIN      --    SOUT
+
 This is FLEXIO SPI slave call back.
+
 DSPI master <-> FLEXIO SPI slave transfer all data matched!
 ~~~~~~~~~~~~~~~~~~~~~
-
 Customization options
 =====================
-
 

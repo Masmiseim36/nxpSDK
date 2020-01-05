@@ -1,41 +1,16 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2018 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_host_config.h"
 #include "usb_host.h"
 #include "usb_host_msd.h"
 #include "host_msd_command.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
@@ -122,10 +97,10 @@ static void USB_HostMsdControlCallback(void *param, uint8_t *data, uint32_t data
 {
     usb_host_msd_command_instance_t *msdCommandInstance = (usb_host_msd_command_instance_t *)param;
 
-    if (msdCommandInstance->runWaitState == kRunWaitSetInterface) /* set interface finish */
+    if (msdCommandInstance->runWaitState == kUSB_HostMsdRunWaitSetInterface) /* set interface finish */
     {
-        msdCommandInstance->runWaitState = kRunIdle;
-        msdCommandInstance->runState = kRunMassStorageTest;
+        msdCommandInstance->runWaitState = kUSB_HostMsdRunIdle;
+        msdCommandInstance->runState = kUSB_HostMsdRunMassStorageTest;
     }
 }
 
@@ -505,12 +480,12 @@ void USB_HostMsdTask(void *arg)
                     usb_echo("usb host msd init fail\r\n");
                     return;
                 }
-                msdCommandInstance->runState = kRunSetInterface;
+                msdCommandInstance->runState = kUSB_HostMsdRunSetInterface;
                 break;
 
             case kStatus_DEV_Detached: /* device is detached */
                 msdCommandInstance->deviceState = kStatus_DEV_Idle;
-                msdCommandInstance->runState = kRunIdle;
+                msdCommandInstance->runState = kUSB_HostMsdRunIdle;
                 USB_HostMsdDeinit(msdCommandInstance->deviceHandle,
                                   msdCommandInstance->classHandle); /* msd class de-initialization */
                 msdCommandInstance->classHandle = NULL;
@@ -526,12 +501,12 @@ void USB_HostMsdTask(void *arg)
     /* run state */
     switch (msdCommandInstance->runState)
     {
-        case kRunIdle:
+        case kUSB_HostMsdRunIdle:
             break;
 
-        case kRunSetInterface: /* set msd interface */
-            msdCommandInstance->runState = kRunIdle;
-            msdCommandInstance->runWaitState = kRunWaitSetInterface;
+        case kUSB_HostMsdRunSetInterface: /* set msd interface */
+            msdCommandInstance->runState = kUSB_HostMsdRunIdle;
+            msdCommandInstance->runWaitState = kUSB_HostMsdRunWaitSetInterface;
             status = USB_HostMsdSetInterface(msdCommandInstance->classHandle, msdCommandInstance->interfaceHandle, 0,
                                              USB_HostMsdControlCallback, msdCommandInstance);
             if (status != kStatus_USB_Success)
@@ -540,9 +515,9 @@ void USB_HostMsdTask(void *arg)
             }
             break;
 
-        case kRunMassStorageTest:                       /* set interface succeed */
+        case kUSB_HostMsdRunMassStorageTest:            /* set interface succeed */
             USB_HostMsdCommandTest(msdCommandInstance); /* test msd device */
-            msdCommandInstance->runState = kRunIdle;
+            msdCommandInstance->runState = kUSB_HostMsdRunIdle;
             break;
 
         default:

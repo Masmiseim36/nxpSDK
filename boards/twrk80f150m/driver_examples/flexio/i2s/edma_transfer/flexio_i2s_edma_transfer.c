@@ -1,45 +1,20 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "board.h"
 #include "fsl_dmamux.h"
 #include "fsl_flexio_i2s_edma.h"
 #include "fsl_debug_console.h"
-
+#include "fsl_codec_common.h"
 #include "fsl_sgtl5000.h"
 #include "clock_config.h"
 #include "pin_mux.h"
+#include "fsl_codec_adapter.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -61,7 +36,23 @@
 #define TX_DATA_PIN 1U
 #define RX_DATA_PIN 0U
 #define OVER_SAMPLE_RATE (384)
-#define BUFFER_SIZE (256)
+#define BUFFER_SIZE (128)
+#define BUFFER_NUM (4)
+#define PLAY_COUNT (5000 * 2U)
+#define ZERO_BUFFER_SIZE (BUFFER_SIZE * 2U)
+/* demo audio sample rate */
+#define DEMO_AUDIO_SAMPLE_RATE (kFLEXIO_I2S_SampleRate16KHz)
+/* demo audio master clock */
+#if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) || \
+    (defined FSL_FEATURE_PCC_HAS_SAI_DIVIDER && FSL_FEATURE_PCC_HAS_SAI_DIVIDER)
+#define DEMO_AUDIO_MASTER_CLOCK OVER_SAMPLE_RATE *DEMO_AUDIO_SAMPLE_RATE
+#else
+#define DEMO_AUDIO_MASTER_CLOCK DEMO_SAI_CLK_FREQ
+#endif
+/* demo audio data channel */
+#define DEMO_AUDIO_DATA_CHANNEL (2U)
+/* demo audio bit width */
+#define DEMO_AUDIO_BIT_WIDTH (kFLEXIO_I2S_WordWidth32bits)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -69,40 +60,80 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-AT_NONCACHEABLE_SECTION_INIT(flexio_i2s_edma_handle_t txHandle) = {0};
-AT_NONCACHEABLE_SECTION_INIT(flexio_i2s_edma_handle_t rxHandle) = {0};
-edma_handle_t txDmaHandle = {0};
-edma_handle_t rxDmaHandle = {0};
-AT_NONCACHEABLE_SECTION_ALIGN_INIT(static uint8_t txBuff[BUFFER_SIZE], 4) = {0};
-AT_NONCACHEABLE_SECTION_ALIGN_INIT(static uint8_t rxBuff[BUFFER_SIZE], 4) = {0};
-#if defined(DEMO_CODEC_WM8960)
-wm8960_handle_t codecHandle = {0};
-#elif defined(DEMO_CODEC_DA7212)
-da7212_handle_t codecHandle = {0};
-#else
-sgtl_handle_t codecHandle = {0};
-#endif
+sgtl_config_t sgtlConfig = {
+    .i2cConfig    = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE, .codecI2CSourceClock = 60000000},
+    .route        = kSGTL_RoutePlaybackandRecord,
+    .slaveAddress = SGTL5000_I2C_ADDR,
+    .bus          = kSGTL_BusI2S,
+    .format = {.mclk_HZ = 24576000U, .sampleRate = 16000U, .bitWidth = 32, .sclkEdge = kSGTL_SclkValidEdgeFailling},
+    .master_slave = false,
+};
+codec_config_t boardCodecConfig = {.codecDevType = kCODEC_SGTL5000, .codecDevConfig = &sgtlConfig};
+AT_NONCACHEABLE_SECTION_INIT(flexio_i2s_edma_handle_t txHandle)                           = {0};
+AT_NONCACHEABLE_SECTION_INIT(flexio_i2s_edma_handle_t rxHandle)                           = {0};
+edma_handle_t txDmaHandle                                                                 = {0};
+edma_handle_t rxDmaHandle                                                                 = {0};
+AT_NONCACHEABLE_SECTION_ALIGN_INIT(static uint8_t audioBuff[BUFFER_SIZE * BUFFER_NUM], 4) = {0};
+AT_NONCACHEABLE_SECTION_ALIGN_INIT(static uint8_t zeroBuff[ZERO_BUFFER_SIZE], 4)          = {0};
 
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-lpi2c_master_handle_t i2cHandle = {0};
-#else
-i2c_master_handle_t i2cHandle = {{0, 0, kI2C_Write, 0, 0, NULL, 0}, 0, 0, NULL, NULL};
-#endif
+extern codec_config_t boardCodecConfig;
 FLEXIO_I2S_Type base;
-static volatile bool istxFinished = false;
-static volatile bool isrxFinished = false;
+static volatile bool isTxFinished     = false;
+static volatile bool isRxFinished     = false;
+static volatile uint32_t beginCount   = 0;
+static volatile uint32_t sendCount    = 0;
+static volatile uint32_t receiveCount = 0;
+static volatile uint8_t emptyBlock    = 0;
+static volatile bool isZeroBuffer     = true;
+#if defined(DEMO_CODEC_WM8960) || defined(DEMO_CODEC_DA7212)
+#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
+    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
+sai_master_clock_t mclkConfig = {
+#if defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)
+    .mclkOutputEnable = true,
+#if !(defined(FSL_FEATURE_SAI_HAS_NO_MCR_MICS) && (FSL_FEATURE_SAI_HAS_NO_MCR_MICS))
+    .mclkSource = kSAI_MclkSourceSysclk,
+#endif
+#endif
+};
+#endif
+#endif
+codec_handle_t codecHandle;
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
 static void txCallback(FLEXIO_I2S_Type *i2sBase, flexio_i2s_edma_handle_t *handle, status_t status, void *userData)
 {
-    istxFinished = true;
+    if ((emptyBlock < BUFFER_NUM) && (!isZeroBuffer))
+    {
+        emptyBlock++;
+        sendCount++;
+    }
+
+    if (isZeroBuffer)
+    {
+        isZeroBuffer = false;
+    }
+
+    if (sendCount == beginCount)
+    {
+        isTxFinished = true;
+    }
 }
 
 static void rxCallback(FLEXIO_I2S_Type *i2sBase, flexio_i2s_edma_handle_t *handle, status_t status, void *userData)
 {
-    isrxFinished = true;
+    if (emptyBlock > 0)
+    {
+        emptyBlock--;
+        receiveCount++;
+    }
+
+    if (receiveCount == beginCount)
+    {
+        isRxFinished = true;
+    }
 }
 
 /*!
@@ -112,18 +143,10 @@ int main(void)
 {
     DMAMUX_Type *dmamuxBase = NULL;
     flexio_i2s_config_t config;
-    uint32_t sourceClockHz = 0U;
     flexio_i2s_format_t format;
-    flexio_i2s_transfer_t xferTx, xferRx;
+    flexio_i2s_transfer_t txXfer, rxXfer;
+    uint8_t txIndex = 0, rxIndex = 0;
     edma_config_t dmaConfig = {0};
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-    lpi2c_master_config_t i2cConfig = {0};
-#else
-    i2c_master_config_t i2cConfig = {0};
-#endif
-    uint32_t i2cSourceClock;
-    uint32_t i = 0;
-    status_t status = kStatus_Success;
 
     BOARD_InitPins();
     BOARD_BootClockRUN();
@@ -131,47 +154,51 @@ int main(void)
 
     CLOCK_SetFlexio0Clock(1U);
     CLOCK_SetPllFllSelClock(3, 0, 0);
-
+    BOARD_Codec_I2C_Init();
     PRINTF("FLEXIO I2S EDMA example started!\n\r");
 
     /* Set flexio i2s pin, shifter and timer */
     base.bclkPinIndex = BCLK_PIN;
-    base.fsPinIndex = FRAME_SYNC_PIN;
-    base.txPinIndex = TX_DATA_PIN;
-    base.rxPinIndex = RX_DATA_PIN;
+    base.fsPinIndex   = FRAME_SYNC_PIN;
+    base.txPinIndex   = TX_DATA_PIN;
+    base.rxPinIndex   = RX_DATA_PIN;
+#if defined FLEXIO_TX_SHIFTER_INDEX
+    base.txShifterIndex = FLEXIO_TX_SHIFTER_INDEX;
+#else
     base.txShifterIndex = 0;
+#endif
+#if defined FLEXIO_RX_SHIFTER_INDEX
+    base.rxShifterIndex = FLEXIO_RX_SHIFTER_INDEX;
+#else
     base.rxShifterIndex = 1;
+#endif
     base.bclkTimerIndex = 0;
-    base.fsTimerIndex = 1;
-    base.flexioBase = DEMO_FLEXIO_BASE;
+    base.fsTimerIndex   = 1;
+    base.flexioBase     = DEMO_FLEXIO_BASE;
 
 #if defined(DEMO_CODEC_WM8960) || defined(DEMO_CODEC_DA7212)
-    /* Use SAI to do master clock if using WM8960 codec */
-    sai_config_t saiConfig;
-    /*
-     * saiConfig.masterSlave = kSAI_Master;
-     * saiConfig.mclkSource = kSAI_MclkSourceSysclk;
-     * saiConfig.protocol = kSAI_BusLeftJustified;
-     * saiConfig.syncMode = kSAI_ModeAsync;
-     * saiConfig.mclkOutputEnable = true;
-     */
-    SAI_TxGetDefaultConfig(&saiConfig);
-    SAI_TxInit(DEMO_SAI, &saiConfig);
+    /* SAI init */
+    SAI_Init(DEMO_SAI);
 
-    /* Configure the audio format */
-    sai_transfer_format_t saiFormat = {0};
-    saiFormat.bitWidth = kSAI_WordWidth16bits;
-    saiFormat.channel = 0U;
-    saiFormat.sampleRate_Hz = kSAI_SampleRate16KHz;
+    /* I2S mode configurations */
+    sai_transceiver_t saiConfig;
+    SAI_GetClassicI2SConfig(&saiConfig, (sai_word_width_t)DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, kSAI_Channel0Mask);
+    SAI_TxSetConfig(DEMO_SAI, &saiConfig);
+
+    /* set bit clock divider */
+    SAI_TxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
+                          DEMO_AUDIO_DATA_CHANNEL);
+
+    /* master clock configurations */
+#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
+    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
 #if defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER)
-    saiFormat.masterClockHz = OVER_SAMPLE_RATE * saiFormat.sampleRate_Hz;
-#else
-    saiFormat.masterClockHz = DEMO_SAI_CLK_FREQ;
+    mclkConfig.mclkHz          = DEMO_AUDIO_MASTER_CLOCK;
+    mclkConfig.mclkSourceClkHz = DEMO_SAI_CLK_FREQ;
 #endif
-    saiFormat.protocol = saiConfig.protocol;
+    SAI_SetMasterClockConfig(DEMO_SAI, &mclkConfig);
+#endif
 
-    uint32_t masterClockSrc = DEMO_SAI_CLK_FREQ;
-    SAI_TxSetFormat(DEMO_SAI, &saiFormat, masterClockSrc, saiFormat.masterClockHz);
     SAI_TxEnable(DEMO_SAI, true);
 #endif
     /* Create EDMA handle */
@@ -189,7 +216,7 @@ int main(void)
 #if defined EXAMPLE_DMAMUX
     dmamuxBase = EXAMPLE_DMAMUX;
 #else
-    dmamuxBase = DMAMUX0;
+    dmamuxBase          = DMAMUX0;
 #endif
     DMAMUX_Init(dmamuxBase);
     DMAMUX_SetSource(dmamuxBase, EXAMPLE_TX_CHANNEL, EXAMPLE_TX_DMA_SOURCE);
@@ -205,111 +232,49 @@ int main(void)
     FLEXIO_I2S_Init(&base, &config);
 
     /* Configure the audio format */
-    format.bitWidth = kFLEXIO_I2S_WordWidth16bits;
-    format.sampleRate_Hz = kFLEXIO_I2S_SampleRate16KHz;
+    format.bitWidth      = DEMO_AUDIO_BIT_WIDTH;
+    format.sampleRate_Hz = DEMO_AUDIO_SAMPLE_RATE;
 
-    /* Configure Sgtl5000 I2C */
-    codecHandle.base = DEMO_I2C;
-    codecHandle.i2cHandle = &i2cHandle;
-    i2cSourceClock = DEMO_I2C_CLK_FREQ;
-
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-    /*
-     * i2cConfig.debugEnable = false;
-     * i2cConfig.ignoreAck = false;
-     * i2cConfig.pinConfig = kLPI2C_2PinOpenDrain;
-     * i2cConfig.baudRate_Hz = 100000U;
-     * i2cConfig.busIdleTimeout_ns = 0;
-     * i2cConfig.pinLowTimeout_ns = 0;
-     * i2cConfig.sdaGlitchFilterWidth_ns = 0;
-     * i2cConfig.sclGlitchFilterWidth_ns = 0;
-     */
-    LPI2C_MasterGetDefaultConfig(&i2cConfig);
-    LPI2C_MasterInit(DEMO_I2C, &i2cConfig, i2cSourceClock);
-    LPI2C_MasterTransferCreateHandle(DEMO_I2C, &i2cHandle, NULL, NULL);
-#else
-    /*
-     * i2cConfig.baudRate_Bps = 100000U;
-     * i2cConfig.enableStopHold = false;
-     * i2cConfig.glitchFilterWidth = 0U;
-     * i2cConfig.enableMaster = true;
-     */
-    I2C_MasterGetDefaultConfig(&i2cConfig);
-    I2C_MasterInit(DEMO_I2C, &i2cConfig, i2cSourceClock);
-#endif
-
-#if defined(DEMO_CODEC_WM8960)
-    WM8960_Init(&codecHandle, NULL);
-    WM8960_SetProtocol(&codecHandle, kWM8960_BusI2S);
-    WM8960_ConfigDataFormat(&codecHandle, OVER_SAMPLE_RATE * format.sampleRate_Hz, format.sampleRate_Hz,
-                            format.bitWidth);
-#elif defined(DEMO_CODEC_DA7212)
-    DA7212_Init(&codecHandle, NULL);
-    DA7212_ConfigAudioFormat(&codecHandle, format.sampleRate_Hz, DEMO_SAI_CLK_FREQ, format.bitWidth);
-    DA7212_ChangeOutput(&codecHandle, kDA7212_Output_HP);
-    DA7212_WriteRegister(&codecHandle, DIALOG7212_DAI_CTRL,
-                         (DIALOG7212_DAI_EN_MASK | DIALOG7212_DAI_OE_MASK | DIALOG7212_DAI_WORD_LENGTH_16B |
-                          DIALOG7212_DAI_FORMAT_I2S_MODE));
-    /* Set the polarity of BCLK */
-    DA7212_WriteRegister(&codecHandle, DIALOG7212_DAI_CLK_MODE,
-                         DIALOG7212_DAI_BCLKS_PER_WCLK_BCLK64 | DIALOG7212_DAI_CLK_POL_MASK);
-#else
-    /* configure sgtl5000 */
-    sgtl_config_t codecConfig;
-    codecConfig.bus = kSGTL_BusI2S;
-    codecConfig.master_slave = false;
-    codecConfig.route = kSGTL_RoutePlaybackandRecord;
-    SGTL_Init(&codecHandle, &codecConfig);
-    SGTL_ModifyReg(&codecHandle, CHIP_I2S_CTRL, SGTL5000_I2S_SCLK_INV_CLR_MASK, SGTL5000_I2S_VAILD_FALLING_EDGE);
-    /* Configure codec format */
-    SGTL_ConfigDataFormat(&codecHandle, OVER_SAMPLE_RATE * format.sampleRate_Hz, format.sampleRate_Hz, format.bitWidth);
-#endif
+    /* Use default setting to init codec */
+    CODEC_Init(&codecHandle, &boardCodecConfig);
 
     FLEXIO_I2S_TransferTxCreateHandleEDMA(&base, &txHandle, txCallback, NULL, &txDmaHandle);
     FLEXIO_I2S_TransferRxCreateHandleEDMA(&base, &rxHandle, rxCallback, NULL, &rxDmaHandle);
 
-    sourceClockHz = DEMO_FLEXIO_CLK_FREQ;
-    FLEXIO_I2S_TransferSetFormatEDMA(&base, &txHandle, &format, sourceClockHz);
-    FLEXIO_I2S_TransferSetFormatEDMA(&base, &rxHandle, &format, sourceClockHz);
+    FLEXIO_I2S_TransferSetFormatEDMA(&base, &txHandle, &format, DEMO_FLEXIO_CLK_FREQ);
+    FLEXIO_I2S_TransferSetFormatEDMA(&base, &rxHandle, &format, DEMO_FLEXIO_CLK_FREQ);
 
-    /*  xfer structure */
-    xferTx.data = txBuff;
-    xferTx.dataSize = BUFFER_SIZE;
-    xferRx.data = rxBuff;
-    xferRx.dataSize = BUFFER_SIZE;
-    /* Add a transfer to trigger bit clock */
-    FLEXIO_I2S_TransferSendEDMA(&base, &txHandle, &xferTx);
-    /* First record a piece of data */
-    for (i = 0; i < 5000; i++)
+    emptyBlock = BUFFER_NUM;
+    beginCount = PLAY_COUNT;
+    /* send zero buffer fistly to make sure RX data is put into TX queue */
+    txXfer.dataSize = ZERO_BUFFER_SIZE;
+    txXfer.data     = zeroBuff;
+    FLEXIO_I2S_TransferSendEDMA(&base, &txHandle, &txXfer);
+
+    /* Wait until finished */
+    while ((isTxFinished != true) || (isRxFinished != true))
     {
-        isrxFinished = false;
-        /* Fill the queue to full */
-        status = kStatus_Success;
-        while (status != kStatus_FLEXIO_I2S_QueueFull)
+        if (emptyBlock > 0)
         {
-            status = FLEXIO_I2S_TransferReceiveEDMA(&base, &rxHandle, &xferRx);
+            rxXfer.data     = audioBuff + rxIndex * BUFFER_SIZE;
+            rxXfer.dataSize = BUFFER_SIZE;
+            if (FLEXIO_I2S_TransferReceiveEDMA(&base, &rxHandle, &rxXfer) == kStatus_Success)
+            {
+                rxIndex = (rxIndex + 1) % BUFFER_NUM;
+            }
         }
-        /* Wait for data record finished */
-        while (isrxFinished != true)
+
+        if (emptyBlock < BUFFER_NUM)
         {
+            txXfer.dataSize = BUFFER_SIZE;
+            txXfer.data     = audioBuff + txIndex * BUFFER_SIZE;
+            if (FLEXIO_I2S_TransferSendEDMA(&base, &txHandle, &txXfer) == kStatus_Success)
+            {
+                txIndex = (txIndex + 1) % BUFFER_NUM;
+            }
         }
-        /* Copy data from RX buffer to tx buffer */
-        memcpy(txBuff, rxBuff, BUFFER_SIZE);
-        FLEXIO_I2S_TransferSendEDMA(&base, &txHandle, &xferTx);
     }
 
-#if defined(DEMO_CODEC_WM8960)
-    WM8960_Deinit(&codecHandle);
-#elif defined(DEMO_CODEC_DA7212)
-#else
-    SGTL_Deinit(&codecHandle);
-#endif
-
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-    LPI2C_MasterDeinit(DEMO_I2C);
-#else
-    I2C_MasterDeinit(DEMO_I2C);
-#endif
     PRINTF("\n\r FLEXIO I2S EDMA example finished!\n\r ");
 
     while (1)

@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -25,7 +25,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#include "FreeRTOSConfig.h"
 /* UART instance and clock */
 #define DEMO_UART UART0
 #define DEMO_UART_CLKSRC UART0_CLK_SRC
@@ -41,8 +40,8 @@ static void uart_task(void *pvParameters);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-const char *to_send = "FreeRTOS UART driver example!\r\n";
-const char *send_ring_overrun = "\r\nRing buffer overrun!\r\n";
+const char *to_send               = "FreeRTOS UART driver example!\r\n";
+const char *send_ring_overrun     = "\r\nRing buffer overrun!\r\n";
 const char *send_hardware_overrun = "\r\nHardware buffer overrun!\r\n";
 uint8_t background_buffer[32];
 uint8_t recv_buffer[4];
@@ -51,10 +50,10 @@ uart_rtos_handle_t handle;
 struct _uart_handle t_handle;
 
 uart_rtos_config_t uart_config = {
-    .baudrate = 115200,
-    .parity = kUART_ParityDisabled,
-    .stopbits = kUART_OneStopBit,
-    .buffer = background_buffer,
+    .baudrate    = 115200,
+    .parity      = kUART_ParityDisabled,
+    .stopbits    = kUART_OneStopBit,
+    .buffer      = background_buffer,
     .buffer_size = sizeof(background_buffer),
 };
 
@@ -70,7 +69,7 @@ int main(void)
     BOARD_InitPins();
     BOARD_BootClockRUN();
     NVIC_SetPriority(DEMO_UART_RX_TX_IRQn, 5);
-    if (xTaskCreate(uart_task, "Uart_task", configMINIMAL_STACK_SIZE + 10, NULL, uart_task_PRIORITY, NULL) != pdPASS)
+    if (xTaskCreate(uart_task, "Uart_task", configMINIMAL_STACK_SIZE + 100, NULL, uart_task_PRIORITY, NULL) != pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
         while (1)
@@ -87,10 +86,10 @@ int main(void)
 static void uart_task(void *pvParameters)
 {
     int error;
-    size_t n;
+    size_t n = 0;
 
     uart_config.srcclk = DEMO_UART_CLK_FREQ;
-    uart_config.base = DEMO_UART;
+    uart_config.base   = DEMO_UART;
 
     if (0 > UART_RTOS_Init(&handle, &t_handle, &uart_config))
     {

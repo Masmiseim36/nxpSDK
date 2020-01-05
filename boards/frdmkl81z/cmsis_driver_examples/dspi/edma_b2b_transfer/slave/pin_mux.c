@@ -1,0 +1,221 @@
+/*
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+!!GlobalInfo
+product: Pins v3.0
+processor: MKL81Z128xxx7
+package_id: MKL81Z128VLK7
+mcu_data: ksdk2_0
+processor_version: 0.0.8
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+#include "fsl_common.h"
+#include "fsl_port.h"
+#include "pin_mux.h"
+
+
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitPins:
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: '51', peripheral: LPUART0, signal: RX, pin_signal: TSI0_CH9/PTB16/SPI1_SOUT/LPUART0_RX/TPM_CLKIN0/EWM_IN}
+  - {pin_num: '52', peripheral: LPUART0, signal: TX, pin_signal: TSI0_CH10/PTB17/SPI1_SIN/LPUART0_TX/TPM_CLKIN1/EWM_OUT_b}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void BOARD_InitPins(void)
+{
+    /* PTB Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortB);
+
+    /* PORTB16 (pin 51) is configured as LPUART0_RX */
+    PORT_SetPinMux(PORTB, 16U, kPORT_MuxAlt3);
+
+    /* PORTB17 (pin 52) is configured as LPUART0_TX */
+    PORT_SetPinMux(PORTB, 17U, kPORT_MuxAlt3);
+
+    SIM->SOPT5 = ((SIM->SOPT5 &
+                   /* Mask bits to zero which are setting */
+                   (~(SIM_SOPT5_LPUART0TXSRC_MASK | SIM_SOPT5_LPUART0RXSRC_MASK)))
+
+                  /* LPUART0 transmit data source select: LPUART0_TX pin. */
+                  | SIM_SOPT5_LPUART0TXSRC(SOPT5_LPUART0TXSRC_LPUART_TX)
+
+                  /* LPUART 0 receive data source select: LPUART0_RX pin. */
+                  | SIM_SOPT5_LPUART0RXSRC(SOPT5_LPUART0RXSRC_LPUART_RX));
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+DSPI0_InitPins:
+- options: {coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: '61', peripheral: SPI0, signal: PCS0_SS, pin_signal: PTC4/LLWU_P8/SPI0_PCS0/LPUART1_TX/TPM0_CH3}
+  - {pin_num: '62', peripheral: SPI0, signal: SCK, pin_signal: PTC5/LLWU_P9/SPI0_SCK/LPTMR0_ALT2/LPTMR1_ALT2/CMP0_OUT/TPM0_CH2}
+  - {pin_num: '63', peripheral: SPI0, signal: SOUT, pin_signal: CMP0_IN0/PTC6/LLWU_P10/SPI0_SOUT/EXTRG_IN/FXIO0_D14}
+  - {pin_num: '64', peripheral: SPI0, signal: SIN, pin_signal: CMP0_IN1/PTC7/SPI0_SIN/USB0_SOF_OUT/FXIO0_D15}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : DSPI0_InitPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void DSPI0_InitPins(void)
+{
+    /* PTC Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortC);
+
+    /* PORTC4 (pin 61) is configured as SPI0_PCS0 */
+    PORT_SetPinMux(PORTC, 4U, kPORT_MuxAlt2);
+
+    /* PORTC5 (pin 62) is configured as SPI0_SCK */
+    PORT_SetPinMux(PORTC, 5U, kPORT_MuxAlt2);
+
+    /* PORTC6 (pin 63) is configured as SPI0_SOUT */
+    PORT_SetPinMux(PORTC, 6U, kPORT_MuxAlt2);
+
+    /* PORTC7 (pin 64) is configured as SPI0_SIN */
+    PORT_SetPinMux(PORTC, 7U, kPORT_MuxAlt2);
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+DSPI0_DeinitPins:
+- options: {coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: '61', peripheral: n/a, signal: disabled, pin_signal: PTC4/LLWU_P8/SPI0_PCS0/LPUART1_TX/TPM0_CH3}
+  - {pin_num: '62', peripheral: n/a, signal: disabled, pin_signal: PTC5/LLWU_P9/SPI0_SCK/LPTMR0_ALT2/LPTMR1_ALT2/CMP0_OUT/TPM0_CH2}
+  - {pin_num: '63', peripheral: CMP0, signal: 'IN, 0', pin_signal: CMP0_IN0/PTC6/LLWU_P10/SPI0_SOUT/EXTRG_IN/FXIO0_D14}
+  - {pin_num: '64', peripheral: CMP0, signal: 'IN, 1', pin_signal: CMP0_IN1/PTC7/SPI0_SIN/USB0_SOF_OUT/FXIO0_D15}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : DSPI0_DeinitPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void DSPI0_DeinitPins(void)
+{
+    /* PTC Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortC);
+
+    /* PORTC4 (pin 61) is disabled */
+    PORT_SetPinMux(PORTC, 4U, kPORT_PinDisabledOrAnalog);
+
+    /* PORTC5 (pin 62) is disabled */
+    PORT_SetPinMux(PORTC, 5U, kPORT_PinDisabledOrAnalog);
+
+    /* PORTC6 (pin 63) is configured as CMP0_IN0 */
+    PORT_SetPinMux(PORTC, 6U, kPORT_PinDisabledOrAnalog);
+
+    /* PORTC7 (pin 64) is configured as CMP0_IN1 */
+    PORT_SetPinMux(PORTC, 7U, kPORT_PinDisabledOrAnalog);
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+DSPI1_InitPins:
+- options: {coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: '77', peripheral: SPI1, signal: PCS0_SS, pin_signal: PTD4/LLWU_P14/SPI0_PCS1/LPUART0_RTS_b/TPM0_CH4/EWM_IN/SPI1_PCS0}
+  - {pin_num: '78', peripheral: SPI1, signal: SCK, pin_signal: ADC0_SE6b/PTD5/SPI0_PCS2/LPUART0_CTS_b/TPM0_CH5/EWM_OUT_b/SPI1_SCK}
+  - {pin_num: '79', peripheral: SPI1, signal: SOUT, pin_signal: ADC0_SE7b/PTD6/LLWU_P15/SPI0_PCS3/LPUART0_RX/SPI1_SOUT}
+  - {pin_num: '80', peripheral: SPI1, signal: SIN, pin_signal: PTD7/LPUART0_TX/SPI1_SIN}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : DSPI1_InitPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void DSPI1_InitPins(void)
+{
+    /* PTD Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortD);
+
+    /* PORTD4 (pin 77) is configured as SPI1_PCS0 */
+    PORT_SetPinMux(PORTD, 4U, kPORT_MuxAlt7);
+
+    /* PORTD5 (pin 78) is configured as SPI1_SCK */
+    PORT_SetPinMux(PORTD, 5U, kPORT_MuxAlt7);
+
+    /* PORTD6 (pin 79) is configured as SPI1_SOUT */
+    PORT_SetPinMux(PORTD, 6U, kPORT_MuxAlt7);
+
+    /* PORTD7 (pin 80) is configured as SPI1_SIN */
+    PORT_SetPinMux(PORTD, 7U, kPORT_MuxAlt7);
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+DSPI1_DeinitPins:
+- options: {coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: '77', peripheral: n/a, signal: disabled, pin_signal: PTD4/LLWU_P14/SPI0_PCS1/LPUART0_RTS_b/TPM0_CH4/EWM_IN/SPI1_PCS0}
+  - {pin_num: '78', peripheral: ADC0, signal: 'SE, 6b', pin_signal: ADC0_SE6b/PTD5/SPI0_PCS2/LPUART0_CTS_b/TPM0_CH5/EWM_OUT_b/SPI1_SCK}
+  - {pin_num: '79', peripheral: ADC0, signal: 'SE, 7b', pin_signal: ADC0_SE7b/PTD6/LLWU_P15/SPI0_PCS3/LPUART0_RX/SPI1_SOUT}
+  - {pin_num: '80', peripheral: n/a, signal: disabled, pin_signal: PTD7/LPUART0_TX/SPI1_SIN}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : DSPI1_DeinitPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void DSPI1_DeinitPins(void)
+{
+    /* PTD Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortD);
+
+    /* PORTD4 (pin 77) is disabled */
+    PORT_SetPinMux(PORTD, 4U, kPORT_PinDisabledOrAnalog);
+
+    /* PORTD5 (pin 78) is configured as ADC0_SE6b */
+    PORT_SetPinMux(PORTD, 5U, kPORT_PinDisabledOrAnalog);
+
+    /* PORTD6 (pin 79) is configured as ADC0_SE7b */
+    PORT_SetPinMux(PORTD, 6U, kPORT_PinDisabledOrAnalog);
+
+    /* PORTD7 (pin 80) is disabled */
+    PORT_SetPinMux(PORTD, 7U, kPORT_PinDisabledOrAnalog);
+}
+/***********************************************************************************************************************
+ * EOF
+ **********************************************************************************************************************/

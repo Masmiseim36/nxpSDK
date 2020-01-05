@@ -2,7 +2,7 @@
  * Amazon FreeRTOS V1.0.0
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  * Copyright (c) 2013 - 2014, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -29,22 +29,21 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  Includes
 ///////////////////////////////////////////////////////////////////////////////
-
 /* SDK Included Files */
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "ksdk_mbedtls.h"
-
 #include "pin_mux.h"
 
 /* Amazon FreeRTOS Demo Includes */
 #include "FreeRTOS.h"
 #include "task.h"
-#include "aws_clientcredential.h"
-#include "aws_logging_task.h"
-#include "aws_wifi.h"
-#include "aws_system_init.h"
+#include "iot_logging_task.h"
+#include "iot_system_init.h"
 #include "aws_dev_mode_key_provisioning.h"
+#include "platform/iot_threads.h"
+#include "types/iot_network_types.h"
+#include "aws_demo.h"
 
 /* Board specific accelerometer driver include */
 #if defined(BOARD_ACCEL_FXOS)
@@ -53,12 +52,16 @@
 #include "fsl_mma.h"
 #endif
 
+#include "aws_clientcredential.h"
+#include "iot_wifi.h"
 #include "fsl_device_registers.h"
 #include "fsl_port.h"
 #include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define INIT_SUCCESS 0
+#define INIT_FAIL 1
 
 /* LPI2C */
 #define ACCEL_I2C_BASEADDR I2C0
@@ -92,13 +95,13 @@
 
 /* Accelerometer and magnetometer */
 #if defined(BOARD_ACCEL_FXOS)
-fxos_handle_t accelHandle = {0};
+fxos_handle_t accelHandle           = {0};
 static const uint8_t accelAddress[] = {0x1CU, 0x1EU, 0x1DU, 0x1FU};
-fxos_config_t config = {0};
+fxos_config_t config                = {0};
 #elif defined(BOARD_ACCEL_MMA)
-mma_handle_t accelHandle = {0};
+mma_handle_t accelHandle            = {0};
 static const uint8_t accelAddress[] = {0x1CU, 0x1DU, 0x1EU, 0x1FU};
-mma_config_t config = {0};
+mma_config_t config                 = {0};
 #endif
 
 /* Accelerometer data scale */
@@ -113,11 +116,18 @@ void BOARD_I2C_ReleaseBus(void);
 void BOARD_InitLEDs(void);
 void BOARD_InitSwitch(void);
 extern void vStartLedDemoTask(void);
-static int prvWifiConnect(void);
+extern int initNetwork(void);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+const WIFINetworkParams_t pxNetworkParams = {
+    .pcSSID           = clientcredentialWIFI_SSID,
+    .ucSSIDLength     = sizeof(clientcredentialWIFI_SSID) - 1,
+    .pcPassword       = clientcredentialWIFI_PASSWORD,
+    .ucPasswordLength = sizeof(clientcredentialWIFI_PASSWORD) - 1,
+    .xSecurity        = clientcredentialWIFI_SECURITY,
+};
 /* Count of LED which can be controlled */
 uint8_t ledCount = 3;
 /* Array of LED names */
@@ -128,6 +138,43 @@ char ledColors[] = "[\"red\", \"green\", \"blue\"]";
 /*******************************************************************************
  * Code
  ******************************************************************************/
+int initNetwork(void)
+{
+    WIFIReturnCode_t result;
+
+    configPRINTF(("Starting WiFi...\r\n"));
+
+    result = WIFI_On();
+    if (result != eWiFiSuccess)
+    {
+        configPRINTF(("Could not enable WiFi, reason %d.\r\n", result));
+        return INIT_FAIL;
+    }
+
+    configPRINTF(("WiFi module initialized.\r\n"));
+
+    result = WIFI_ConnectAP(&pxNetworkParams);
+    if (result != eWiFiSuccess)
+    {
+        configPRINTF(("Could not connect to WiFi, reason %d.\r\n", result));
+        return INIT_FAIL;
+    }
+
+    configPRINTF(("WiFi connected to AP %s.\r\n", pxNetworkParams.pcSSID));
+
+    uint8_t tmp_ip[4] = {0};
+    result            = WIFI_GetIP(tmp_ip);
+
+    if (result != eWiFiSuccess)
+    {
+        configPRINTF(("Could not get IP address, reason %d.\r\n", result));
+        return INIT_FAIL;
+    }
+
+    configPRINTF(("IP Address acquired %d.%d.%d.%d\r\n", tmp_ip[0], tmp_ip[1], tmp_ip[2], tmp_ip[3]));
+
+    return INIT_SUCCESS;
+}
 void turnOnLed(uint8_t id)
 {
     if (id == 0)
@@ -188,10 +235,10 @@ void BOARD_I2C_ReleaseBus(void)
 
     /* Config pin mux as gpio */
     i2c_pin_config.pullSelect = kPORT_PullUp;
-    i2c_pin_config.mux = kPORT_MuxAsGpio;
+    i2c_pin_config.mux        = kPORT_MuxAsGpio;
 
     pin_config.pinDirection = kGPIO_DigitalOutput;
-    pin_config.outputLogic = 1U;
+    pin_config.outputLogic  = 1U;
     CLOCK_EnableClock(kCLOCK_PortE);
     PORT_SetPinConfig(I2C_RELEASE_SCL_PORT, I2C_RELEASE_SCL_PIN, &i2c_pin_config);
     PORT_SetPinConfig(I2C_RELEASE_SDA_PORT, I2C_RELEASE_SDA_PIN, &i2c_pin_config);
@@ -230,11 +277,10 @@ void BOARD_I2C_ReleaseBus(void)
     GPIO_PinWrite(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 1U);
     i2c_release_bus_delay();
 }
-const WIFINetworkParams_t pxNetworkParams = {
-    .pcSSID = clientcredentialWIFI_SSID,
-    .pcPassword = clientcredentialWIFI_PASSWORD,
-    .xSecurity = clientcredentialWIFI_SECURITY,
-};
+void print_string(const char *string)
+{
+    PRINTF(string);
+}
 
 #if defined(BOARD_ACCEL_FXOS) || defined(BOARD_ACCEL_MMA)
 /*!
@@ -243,12 +289,12 @@ const WIFINetworkParams_t pxNetworkParams = {
 status_t init_mag_accel(uint8_t *accelDataScale, uint8_t *accelResolution)
 {
     uint8_t arrayAddrSize = 0;
-    uint8_t sensorRange = 0;
-    uint16_t i = 0;
-    status_t result = kStatus_Fail;
+    uint8_t sensorRange   = 0;
+    uint16_t i            = 0;
+    status_t result       = kStatus_Fail;
 
     /* Configure the I2C function */
-    config.I2C_SendFunc = BOARD_Accel_I2C_Send;
+    config.I2C_SendFunc    = BOARD_Accel_I2C_Send;
     config.I2C_ReceiveFunc = BOARD_Accel_I2C_Receive;
 
     /* Initialize sensor devices */
@@ -304,9 +350,9 @@ void vApplicationDaemonTaskStartupHook(void)
 
     if (SYSTEM_Init() == pdPASS)
     {
-        if (prvWifiConnect())
+        if (initNetwork() != 0)
         {
-            configPRINTF(("Failed to connect to wifi, stopping demo.\r\n"));
+            configPRINTF(("Network init failed, stopping demo.\r\n"));
             vTaskDelete(NULL);
         }
         else
@@ -344,130 +390,6 @@ int main(void)
     xLoggingTaskInitialize(LOGGING_TASK_STACK_SIZE, LOGGING_TASK_PRIORITY, LOGGING_QUEUE_LENGTH);
 
     vTaskStartScheduler();
-    for (;;)
-        ;
-}
-
-static int prvWifiConnect(void)
-{
-    WIFIReturnCode_t result;
-
-    configPRINTF(("Starting WiFi...\r\n"));
-
-    result = WIFI_On();
-    if (result != eWiFiSuccess)
-    {
-        configPRINTF(("Could not enable WiFi, reason %d.\r\n", result));
-        return result;
-    }
-
-    configPRINTF(("WiFi module initialized.\r\n"));
-
-    result = WIFI_ConnectAP(&pxNetworkParams);
-    if (result != eWiFiSuccess)
-    {
-        configPRINTF(("Could not connect to WiFi, reason %d.\r\n", result));
-        return result;
-    }
-
-    configPRINTF(("WiFi connected to AP %s.\r\n", pxNetworkParams.pcSSID));
-
-    uint8_t tmp_ip[4] = {0};
-    result = WIFI_GetIP(tmp_ip);
-
-    if (result != eWiFiSuccess)
-    {
-        configPRINTF(("Could not get IP address, reason %d.\r\n", result));
-        return result;
-    }
-
-    configPRINTF(("IP Address acquired %d.%d.%d.%d\r\n", tmp_ip[0], tmp_ip[1], tmp_ip[2], tmp_ip[3]));
-
-    return result;
-}
-
-/* configUSE_STATIC_ALLOCATION is set to 1, so the application must provide an
- * implementation of vApplicationGetIdleTaskMemory() to provide the memory that is
- * used by the Idle task. */
-void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer,
-                                   StackType_t **ppxIdleTaskStackBuffer,
-                                   uint32_t *pulIdleTaskStackSize)
-{
-    /* If the buffers to be provided to the Idle task are declared inside this
-     * function then they must be declared static - otherwise they will be allocated on
-     * the stack and so not exists after this function exits. */
-    static StaticTask_t xIdleTaskTCB;
-    static StackType_t uxIdleTaskStack[configMINIMAL_STACK_SIZE];
-
-    /* Pass out a pointer to the StaticTask_t structure in which the Idle
-     * task's state will be stored. */
-    *ppxIdleTaskTCBBuffer = &xIdleTaskTCB;
-
-    /* Pass out the array that will be used as the Idle task's stack. */
-    *ppxIdleTaskStackBuffer = uxIdleTaskStack;
-
-    /* Pass out the size of the array pointed to by *ppxIdleTaskStackBuffer.
-     * Note that, as the array is necessarily of type StackType_t,
-     * configMINIMAL_STACK_SIZE is specified in words, not bytes. */
-    *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
-}
-
-/* configUSE_STATIC_ALLOCATION and configUSE_TIMERS are both set to 1, so the
- * application must provide an implementation of vApplicationGetTimerTaskMemory()
- * to provide the memory that is used by the Timer service task. */
-void vApplicationGetTimerTaskMemory(StaticTask_t **ppxTimerTaskTCBBuffer,
-                                    StackType_t **ppxTimerTaskStackBuffer,
-                                    uint32_t *pulTimerTaskStackSize)
-{
-    /* If the buffers to be provided to the Timer task are declared inside this
-     * function then they must be declared static - otherwise they will be allocated on
-     * the stack and so not exists after this function exits. */
-    static StaticTask_t xTimerTaskTCB;
-    static StackType_t uxTimerTaskStack[configTIMER_TASK_STACK_DEPTH];
-
-    /* Pass out a pointer to the StaticTask_t structure in which the Timer
-     * task's state will be stored. */
-    *ppxTimerTaskTCBBuffer = &xTimerTaskTCB;
-
-    /* Pass out the array that will be used as the Timer task's stack. */
-    *ppxTimerTaskStackBuffer = uxTimerTaskStack;
-
-    /* Pass out the size of the array pointed to by *ppxTimerTaskStackBuffer.
-     * Note that, as the array is necessarily of type StackType_t,
-     * configTIMER_TASK_STACK_DEPTH is specified in words, not bytes. */
-    *pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
-}
-/**
- * @brief Warn user if pvPortMalloc fails.
- *
- * Called if a call to pvPortMalloc() fails because there is insufficient
- * free memory available in the FreeRTOS heap.  pvPortMalloc() is called
- * internally by FreeRTOS API functions that create tasks, queues, software
- * timers, and semaphores.  The size of the FreeRTOS heap is set by the
- * configTOTAL_HEAP_SIZE configuration constant in FreeRTOSConfig.h.
- *
- */
-void vApplicationMallocFailedHook()
-{
-    configPRINTF(("ERROR: Malloc failed to allocate memory\r\n"));
-}
-
-/**
- * @brief Loop forever if stack overflow is detected.
- *
- * If configCHECK_FOR_STACK_OVERFLOW is set to 1,
- * this hook provides a location for applications to
- * define a response to a stack overflow.
- *
- * Use this hook to help identify that a stack overflow
- * has occurred.
- *
- */
-void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName)
-{
-    portDISABLE_INTERRUPTS();
-
-    /* Loop forever */
     for (;;)
         ;
 }

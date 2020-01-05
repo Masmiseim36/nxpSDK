@@ -1,12 +1,11 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "board.h"
-#include "fsl_gpio.h"
 
 #include "pin_mux.h"
 #include "clock_config.h"
@@ -14,7 +13,7 @@
  * Definitions
  ******************************************************************************/
 #define BOARD_LED_GPIO BOARD_LED_RED_GPIO
-#define BOARD_LED_GPIO_PIN BOARD_LED_RED_GPIO_PIN
+#define BOARD_LED_GPIO_PIN BOARD_LED_RED_PIN
 
 /*******************************************************************************
  * Prototypes
@@ -49,19 +48,9 @@ void SysTick_DelayTicks(uint32_t n)
  */
 int main(void)
 {
-    /* Define the init structure for the output LED pin*/
-    gpio_pin_config_t led_config = {
-        kGPIO_DigitalOutput,
-        0,
-    };
-
     /* Board pin init */
     BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-    /* Init output LED GPIO. */
-    GPIO_PinInit(BOARD_LED_GPIO, BOARD_LED_GPIO_PIN, &led_config);
+    BOARD_InitBootClocks();
 
     /* Set systick reload value to generate 1ms interrupt */
     if (SysTick_Config(SystemCoreClock / 1000U))

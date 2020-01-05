@@ -5,6 +5,25 @@ The lwip_httpsrv demo application demonstrates an HTTPServer on the lwIP TCP/IP 
 The user uses an Internet browser to send a request for connection. The board acts as an HTTP server and sends a Web
 page back to the PC.
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
+
+Hardware requirements
+=====================
+- Mini/micro USB cable
+- RJ45 Network cable
+- FRDM-K64F board
+- Personal Computer
+
+Board settings
+==============
+No special settings are required.
+Note, The RMII mode is used for default setting to initialize the ENET interface between MAC and the external PHY.
 Prepare the Demo
 ================
 1.  Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.
@@ -23,6 +42,8 @@ Prepare the Demo
 Running the demo
 ================
 1.  When the demo runs successfully, the terminal will display the following:
+        Initializing PHY...
+
         ************************************************
          HTTP Server example
         ************************************************
@@ -49,22 +70,6 @@ Running the demo
 		More information about lwIP can be found at the lwIP homepage at http://savannah.nongnu.org/projects/lwip/ or at
 		the lwIP wiki at http://lwip.wikia.com/.
 
-Hardware requirements
+Customization options
 =====================
-- Mini/micro USB cable
-- RJ45 Network cable
-- FRDM-K64F board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-Note, The RMII mode is used for default setting to initialize the ENET interface between MAC and the external PHY.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
 

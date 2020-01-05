@@ -171,6 +171,7 @@
           <state>CPU_MK22FN512VLH12</state>
           <state>FRDM_K22F</state>
           <state>FREEDOM</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -315,9 +316,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MK22F51212/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra</state>
@@ -325,6 +326,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK22F51212/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -770,6 +772,9 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
+          <state> --redirect __iar_dlmalloc=malloc </state>
+          <state> --redirect __iar_dlcalloc=calloc </state>
+          <state> --redirect __iar_dlfree=free </state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1138,6 +1143,7 @@
           <state>CPU_MK22FN512VLH12</state>
           <state>FRDM_K22F</state>
           <state>FREEDOM</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1198,7 +1204,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>11101110</state>
+          <state>11111110</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -1282,9 +1288,9 @@
           <state>$PROJ_DIR$/../../../../../devices/MK22F51212/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra</state>
@@ -1292,6 +1298,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK22F51212/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1737,6 +1744,9 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
+          <state> --redirect __iar_dlmalloc=malloc </state>
+          <state> --redirect __iar_dlcalloc=calloc </state>
+          <state> --redirect __iar_dlfree=free </state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1934,6 +1944,12 @@
   <group>
     <name>source</name>
     <file>
+      <name>$PROJ_DIR$/../../erpc_common/erpc_error_handler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../erpc_common/erpc_error_handler.cpp</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../main_client.c</name>
     </file>
     <file>
@@ -1942,12 +1958,6 @@
   </group>
   <group>
     <name>erpc</name>
-    <file>
-      <name>$PROJ_DIR$/../../erpc_common/erpc_error_handler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../erpc_common/erpc_error_handler.cpp</name>
-    </file>
     <group>
       <name>service</name>
       <file>
@@ -1961,66 +1971,57 @@
       </file>
     </group>
     <group>
-      <name>transports</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_dspi_master_transport.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_dspi_master_transport.cpp</name>
-      </file>
-    </group>
-    <group>
       <name>infra</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.h</name>
-      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.cpp</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_manager.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_manager.cpp</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_manager.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.cpp</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.cpp</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</name>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h</name>
       </file>
     </group>
     <group>
@@ -2032,28 +2033,37 @@
         <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_setup_dspi_master.cpp</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_client_setup.cpp</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_client_setup.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_client_setup.cpp</name>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_mbf_setup.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_transport_setup.h</name>
       </file>
+    </group>
+    <group>
+      <name>transports</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_mbf_setup.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_dspi_master_transport.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_dspi_master_transport.h</name>
       </file>
     </group>
     <group>
       <name>port</name>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_config_internal.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_port.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_port_stdlib.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_config_internal.h</name>
       </file>
     </group>
   </group>
@@ -2087,61 +2097,61 @@
   <group>
     <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_dspi.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_dspi.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_gpio.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_dspi.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_gpio.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_port.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_gpio.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_clock.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_port.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_clock.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_common.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_clock.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_common.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_uart.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_common.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_uart.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_lpuart.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_uart.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_lpuart.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_smc.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_lpuart.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_smc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_smc.h</name>
     </file>
   </group>
   <group>
     <name>device</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/fsl_device_registers.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/MK22F51212.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/MK22F51212_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/system_MK22F51212.c</name>
@@ -2153,12 +2163,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -2166,6 +2170,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console_conf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/utilities/str/fsl_str.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/utilities/fsl_assert.c</name>
@@ -2185,25 +2195,28 @@
     <group>
       <name>serial_manager</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_internal.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
       </file>
     </group>
   </group>
@@ -2225,22 +2238,34 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
@@ -2250,12 +2275,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
   </group>
 </project>

@@ -31,7 +31,7 @@
 #define BL_CONFIG_USB_HID (1)
 #endif
 #if !defined(BL_CONFIG_USB_MSC)
-#define BL_CONFIG_USB_MSC (1)
+#define BL_CONFIG_USB_MSC (0)
 #endif
 
 //@}

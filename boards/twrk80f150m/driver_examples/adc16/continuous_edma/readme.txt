@@ -8,11 +8,10 @@ ADC16 results to memory and if users press any key, demo will average ADC16 resu
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 8.11.3
-- Keil MDK 5.23
-- GCC ARM Embedded 6-2017-q2
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso10.1.0
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -43,6 +42,7 @@ When the demo runs successfully, the log would be seen on the OpenSDA terminal l
 
 ADC16 CONTINUOUS EDMA DEMO
 ADC16_DoAutoCalibration() Done.
+ADC Full Range: XXXX
 Press any key to get user channel's ADC value ...
 ADC value: 14085
 ADC value: 13060

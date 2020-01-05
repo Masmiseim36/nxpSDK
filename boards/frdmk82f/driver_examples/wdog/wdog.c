@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*******************************************************************************
@@ -51,10 +29,10 @@
  ******************************************************************************/
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 static WDOG_Type *wdog_base = WDOG;
-static RCM_Type *rcm_base = RCM;
+static RCM_Type *rcm_base   = RCM;
 
 /*******************************************************************************
  * Code
@@ -103,7 +81,7 @@ int main(void)
     if (wdog_reset_count == 0)
     {
         /*quick test*/
-        test_config.testMode = kWDOG_QuickTest;
+        test_config.testMode     = kWDOG_QuickTest;
         test_config.timeoutValue = 0xfffffu;
         /*Not necessary to configure tested byte for quick test, just to get rid of using uninitialized value check*/
         test_config.testedByte = kWDOG_TestByte0;
@@ -119,16 +97,16 @@ int main(void)
     else if (wdog_reset_count == 1)
     {
         PRINTF("--- Quick test done ---\r\n");
-    /*
-     * config.enableWdog = true;
-     * config.clockSource = kWDOG_LpoClockSource;
-     * config.prescaler = kWDOG_ClockPrescalerDivide1;
-     * config.enableUpdate = true;
-     * config.enableInterrupt = false;
-     * config.enableWindowMode = false;
-     * config.windowValue = 0U;
-     * config.timeoutValue = 0xFFFFU;
-     */
+        /*
+         * config.enableWdog = true;
+         * config.clockSource = kWDOG_LpoClockSource;
+         * config.prescaler = kWDOG_ClockPrescalerDivide1;
+         * config.enableUpdate = true;
+         * config.enableInterrupt = false;
+         * config.enableWindowMode = false;
+         * config.windowValue = 0U;
+         * config.timeoutValue = 0xFFFFU;
+         */
         WDOG_GetDefaultConfig(&config);
         config.timeoutValue = 0x7ffU;
         /* wdog refresh test in none-window mode */
@@ -152,20 +130,20 @@ int main(void)
     else if (wdog_reset_count == 2)
     {
         PRINTF("--- None-window mode refresh test done ---\r\n");
-    /*
-     * config.enableWdog = true;
-     * config.clockSource = kWDOG_LpoClockSource;
-     * config.prescaler = kWDOG_ClockPrescalerDivide1;
-     * config.enableUpdate = true;
-     * config.enableInterrupt = false;
-     * config.enableWindowMode = false;
-     * config.windowValue = 0U;
-     * config.timeoutValue = 0xFFFFU;
-     */
+        /*
+         * config.enableWdog = true;
+         * config.clockSource = kWDOG_LpoClockSource;
+         * config.prescaler = kWDOG_ClockPrescalerDivide1;
+         * config.enableUpdate = true;
+         * config.enableInterrupt = false;
+         * config.enableWindowMode = false;
+         * config.windowValue = 0U;
+         * config.timeoutValue = 0xFFFFU;
+         */
         WDOG_GetDefaultConfig(&config);
-        config.timeoutValue = 0x7ffU;
+        config.timeoutValue     = 0x7ffU;
         config.enableWindowMode = true;
-        config.windowValue = 0x1ffU;
+        config.windowValue      = 0x1ffU;
         /* wdog refresh test in window mode */
         PRINTF("\r\n--- Window mode refresh test start---\r\n");
         WDOG_Init(wdog_base, &config);

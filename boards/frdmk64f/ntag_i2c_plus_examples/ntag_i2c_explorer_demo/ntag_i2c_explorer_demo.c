@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2018, NXP Semiconductor
+ * Copyright 2016-2018, NXP
  * All rights reserved.
  *
  *
@@ -234,8 +234,8 @@ int main(void)
  */
 void LED_Demo(void)
 {
-    uint8_t err = 0;
-    static LED led_state = LEDOFF;
+    uint8_t err                 = 0;
+    static LED led_state        = LEDOFF;
     static uint8_t button_state = 0;
     /* make a init only one time */
     if (!init_led_demo)
@@ -317,7 +317,7 @@ void ADC_Init(void)
     }
 #endif /* FSL_FEATURE_ADC16_HAS_CALIBRATION */
 
-    adc16ChannelConfigStruct.channelNumber = DEMO_ADC16_USER_CHANNEL;
+    adc16ChannelConfigStruct.channelNumber                        = DEMO_ADC16_USER_CHANNEL;
     adc16ChannelConfigStruct.enableInterruptOnConversionCompleted = false;
 #if defined(FSL_FEATURE_ADC16_HAS_DIFF_MODE) && FSL_FEATURE_ADC16_HAS_DIFF_MODE
     adc16ChannelConfigStruct.enableDifferentialConversion = false;
@@ -335,10 +335,10 @@ void Get_Volt(uint8_t *volt)
            (kADC16_ChannelConversionDoneFlag & ADC16_GetChannelStatusFlags(DEMO_ADC16_BASE, DEMO_ADC16_CHANNEL_GROUP)))
     {
     }
-    uint16_t ADCValue = ADC16_GetChannelConversionValue(DEMO_ADC16_BASE, DEMO_ADC16_CHANNEL_GROUP);
+    uint16_t ADCValue  = ADC16_GetChannelConversionValue(DEMO_ADC16_BASE, DEMO_ADC16_CHANNEL_GROUP);
     uint16_t ADCresult = 0x27FD80 / ADCValue; /* 0x280 {=3,3V on display} * 0xFFF {=3,3V ADCValue} = 0x27FD80 */
-    volt[0] = ADCresult & 0x00FF;
-    volt[1] = (ADCresult & 0xFF00) >> 8;
+    volt[0]            = ADCresult & 0x00FF;
+    volt[1]            = (ADCresult & 0xFF00) >> 8;
     /*    PRINTF("\r\nADC value : 0x%04X, ADC result : 0x%04X", ADCValue, ADCresult); */
 }
 void HW_getTemp(uint8_t Buffer[])
@@ -445,7 +445,7 @@ void send_VersionInfo(void)
     memset(sram_buf, 0, NFC_MEM_SRAM_SIZE);
     int index = 0;
     memcpy(&sram_buf[index], "Board Ver.: ", 12);
-    index = 12;
+    index             = 12;
     sram_buf[index++] = CHAR_BOARD_1;
     sram_buf[index++] = CHAR_BOARD_2;
     sram_buf[index++] = CHAR_BOARD_3;
@@ -498,7 +498,7 @@ short int speedTest(void)
     start_reader = HAL_Timer_getTime_ms();
 
     /* Reset the seed to its initial value for the CRC32 calculation */
-    uint32_t seed = 0xFFFFFFFF;
+    uint32_t seed  = 0xFFFFFFFF;
     uint32_t crcRx = 0;
 
     int lastBlock = true;
@@ -526,7 +526,7 @@ short int speedTest(void)
         if (lastBlock != 0)
         {
             crcRx = calculateCRC(seed, sram_buf, NFC_MEM_SRAM_SIZE);
-            seed = crcRx;
+            seed  = crcRx;
         }
         else
         {
@@ -554,7 +554,7 @@ short int speedTest(void)
     start_tag = HAL_Timer_getTime_ms();
 
     /* Reset the seed to its initial value for the CRC32 calculation */
-    seed = 0xFFFFFFFF;
+    seed           = 0xFFFFFFFF;
     uint32_t crcTx = 0;
 
     /* Begin to Write Data */
@@ -589,7 +589,7 @@ short int speedTest(void)
         {
             /* Update content for the CRC32 calculation */
             crcTx = calculateCRC(seed, sram_buf, NFC_MEM_SRAM_SIZE);
-            seed = crcTx;
+            seed  = crcTx;
         }
 
         /* Write Data to SRAM */
@@ -703,7 +703,7 @@ static void Green()
 
 /*
  * Switches only blue LED on
-*/
+ */
 static void Blue()
 {
     /*#if defined FRDM_K82F || defined FRDM_K64F*/
@@ -801,7 +801,7 @@ void inttoa(int n, char s[])
     s[i] = '\0';
     for (i = 0, j = strlen(s) - 1; i < j; i++, j--)
     {
-        c = s[i];
+        c    = s[i];
         s[i] = s[j];
         s[j] = c;
     }
@@ -933,7 +933,7 @@ static void createCRCTableList(void)
     for (uint16_t index = 0U; index < 256U; index++)
     {
         uint32_t crcElement = index;
-        uint32_t topBit = 0x00000001U;
+        uint32_t topBit     = 0x00000001U;
         for (uint8_t i = 0U; i < 8U; i++)
         {
             if (crcElement & topBit)
@@ -958,11 +958,11 @@ static void createCRCTableList(void)
  */
 static uint32_t calculateCRC(uint32_t crc, uint8_t *data, uint32_t length)
 {
-    uint8_t crcIndex = 0U;
+    uint8_t crcIndex   = 0U;
     uint32_t crcReturn = crc;
     for (uint32_t i = 0U; i < length; i++)
     {
-        crcIndex = (uint8_t)((crcReturn & 0x000000FFU) ^ data[i]);
+        crcIndex  = (uint8_t)((crcReturn & 0x000000FFU) ^ data[i]);
         crcReturn = s_CRCTableList[crcIndex] ^ (crcReturn >> 8U);
     }
     return (crcReturn);

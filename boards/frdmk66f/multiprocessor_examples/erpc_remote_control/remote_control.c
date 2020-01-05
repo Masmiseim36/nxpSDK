@@ -601,8 +601,8 @@ static void server_task(void *pvParameters)
     erpc_server_init(transportArbitrator, message_buffer_factory);
 
     /* Add service to the server */
-    erpc_service_t app_0 = create_remote_control_app_0_service();
-    erpc_add_service_to_server(app_0);
+    erpc_service_t service = create_remote_control_app_0_service();
+    erpc_add_service_to_server(service);
 
     while (1)
     {
@@ -618,8 +618,15 @@ static void server_task(void *pvParameters)
             /* Error occurred */
             erpc_error_handler(status, 0);
 
+            /* removing the service from the server */
+            erpc_remove_service_from_server(service);
+            destroy_remote_control_app_0_service();
+
             /* stop erpc server */
             erpc_server_stop();
+
+            /* print error description */
+            erpc_server_deinit();
 
             /* exit program loop */
             break;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -46,19 +46,19 @@ static status_t SetupSigfoxDriver(sf_drv_data_t *drvData)
     /* GPIOs initialization.
      * Note: GPIO settings are place in pin_mux.h file. */
     /* ACK pin. */
-    drvData->gpioConfig.ackPin.gpioInstance = SF_ACK_INST;
-    drvData->gpioConfig.ackPin.gpioPinNumber = SF_ACK_PIN;
+    drvData->gpioConfig.ackPin.gpioInstance = instanceC;
+    drvData->gpioConfig.ackPin.gpioPinNumber = 4U;
 
     /* CS pin. */
-    drvData->gpioConfig.csPin.gpioInstance = SF_CS_INST;
-    drvData->gpioConfig.csPin.gpioPinNumber = SF_CS_PIN;
+    drvData->gpioConfig.csPin.gpioInstance = instanceD;
+    drvData->gpioConfig.csPin.gpioPinNumber = 0U;
 
     SF_SetupGPIOs(&(drvData->gpioConfig));
 
     /* SPI initialization. */
     drvData->spiConfig.baudRate = 125000U;
     drvData->spiConfig.sourceClkHz = GET_SPI_MODULE_CLK();
-    drvData->spiConfig.spiInstance = SF_SPI_INST;
+    drvData->spiConfig.spiInstance = 0U;
 
     SF_SetupSPI(&(drvData->spiConfig), NULL);
 

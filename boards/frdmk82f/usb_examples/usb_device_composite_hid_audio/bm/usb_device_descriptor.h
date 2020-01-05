@@ -1,31 +1,9 @@
 /*
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016 - 2017,2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef __USB_DEVICE_DESCRIPTOR_H__
@@ -40,11 +18,11 @@
 
 #define USB_DEVICE_MAX_POWER (0x32U)
 
-/* usb descritpor length */
-#define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (143U)
+/* usb descriptor length */
+#define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (sizeof(g_UsbDeviceConfigurationDescriptor))
 #define USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH (9)
 #define USB_DESCRIPTOR_LENGTH_HID (9U)
-#define USB_DESCRIPTOR_LENGTH_HID_MOUSE_REPORT (52)
+#define USB_DESCRIPTOR_LENGTH_HID_MOUSE_REPORT (sizeof(g_UsbDeviceHidMouseReportDescriptor))
 #define USB_DESCRIPTOR_LENGTH_AC_INTERRUPT_ENDPOINT (9)
 #define USB_AUDIO_CONTROL_INTERFACE_HEADER_LENGTH (9)
 #define USB_AUDIO_INPUT_TERMINAL_ONLY_DESC_SIZE (12)
@@ -86,16 +64,21 @@
 #define FS_INTERRUPT_IN_PACKET_SIZE (8)
 #define HS_INTERRUPT_IN_INTERVAL (0x07)
 #define FS_INTERRUPT_IN_INTERVAL (0x08)
+#if defined(AUDIO_DATA_SOURCE_DMIC) && (AUDIO_DATA_SOURCE_DMIC > 0U)
+#define HS_ISO_IN_ENDP_PACKET_SIZE (32)
+#define FS_ISO_IN_ENDP_PACKET_SIZE (32)
+#else
 #define HS_ISO_IN_ENDP_PACKET_SIZE (8)
 #define FS_ISO_IN_ENDP_PACKET_SIZE (8)
+#endif
 #define HS_ISO_IN_ENDP_INTERVAL (0x04)
 #define FS_ISO_IN_ENDP_INTERVAL (0x01)
 #define ISO_IN_ENDP_INTERVAL (0x01)
 
 /* String descriptor length. */
-#define USB_DESCRIPTOR_LENGTH_STRING0 (4)
-#define USB_DESCRIPTOR_LENGTH_STRING1 (58)
-#define USB_DESCRIPTOR_LENGTH_STRING2 (38)
+#define USB_DESCRIPTOR_LENGTH_STRING0 (sizeof(g_UsbDeviceString0))
+#define USB_DESCRIPTOR_LENGTH_STRING1 (sizeof(g_UsbDeviceString1))
+#define USB_DESCRIPTOR_LENGTH_STRING2 (sizeof(g_UsbDeviceString2))
 
 /* Class code. */
 #define USB_DEVICE_CLASS (0x00)
@@ -125,7 +108,7 @@
 /*!
  * @brief USB device set speed function.
  *
- * This function sets the speed of the USB devcie.
+ * This function sets the speed of the USB device.
  *
  * @param handle The USB device handle.
  * @param speed Speed type. USB_SPEED_HIGH/USB_SPEED_FULL/USB_SPEED_LOW.
@@ -136,7 +119,7 @@ extern usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed);
 /*!
  * @brief USB device get device descriptor function.
  *
- * This function gets the device descriptor of the USB devcie.
+ * This function gets the device descriptor of the USB device.
  *
  * @param handle The USB device handle.
  * @param deviceDescriptor The pointer to the device descriptor structure.
@@ -148,7 +131,7 @@ usb_status_t USB_DeviceGetDeviceDescriptor(usb_device_handle handle,
 /*!
  * @brief USB device get configuration descriptor function.
  *
- * This function gets the configuration descriptor of the USB devcie.
+ * This function gets the configuration descriptor of the USB device.
  *
  * @param handle The USB device handle.
  * @param configurationDescriptor The pointer to the configuration descriptor structure.
@@ -163,5 +146,10 @@ usb_status_t USB_DeviceGetStringDescriptor(usb_device_handle handle,
 
 usb_status_t USB_DeviceGetHidReportDescriptor(usb_device_handle handle,
                                               usb_device_get_hid_report_descriptor_struct_t *hidReportDescriptor);
+#if (defined(USB_DEVICE_CONFIG_CV_TEST) && (USB_DEVICE_CONFIG_CV_TEST > 0U))
+/* Get device qualifier descriptor request */
+usb_status_t USB_DeviceGetDeviceQualifierDescriptor(
+    usb_device_handle handle, usb_device_get_device_qualifier_descriptor_struct_t *deviceQualifierDescriptor);
+#endif
 
 #endif

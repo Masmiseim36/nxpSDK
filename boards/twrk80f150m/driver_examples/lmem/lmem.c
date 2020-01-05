@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #include <stdio.h>
 #include "fsl_device_registers.h"
@@ -69,7 +43,7 @@ void EDMA_Callback(edma_handle_t *handle, void *param, bool transferDone, uint32
  ******************************************************************************/
 
 edma_handle_t g_EDMA_Handle;
-uint32_t g_count = 0;
+uint32_t g_count              = 0;
 volatile bool g_Transfer_Done = false;
 
 /*******************************************************************************
@@ -93,11 +67,11 @@ int main(void)
     uint32_t count;
     uint32_t clockSrc;
     uint32_t sdramAddr = SDRAM_START_ADDRESS;
-    bool transferDone = false;
+    bool transferDone  = false;
     edma_config_t config;
     edma_transfer_config_t transferConfig;
     bool invalidateResult = false;
-    bool pushResult = false;
+    bool pushResult       = false;
 
     uint32_t soptReg;
     uint32_t fbReg;
@@ -109,19 +83,19 @@ int main(void)
     CLOCK_SetClkOutClock(0);
 
     /* Sets the Flexbus security level*/
-    soptReg = SIM->SOPT2 & ~SIM_SOPT2_FBSL_MASK;
+    soptReg    = SIM->SOPT2 & ~SIM_SOPT2_FBSL_MASK;
     SIM->SOPT2 = soptReg | SIM_SOPT2_FBSL(3);
 
     /* Enable the FB_BE_xx_yy signal in Flexbus */
     CLOCK_EnableClock(kCLOCK_Flexbus0);
 
-    fbReg = FB->CSPMCR & ~FB_CSPMCR_GROUP2_MASK;
+    fbReg      = FB->CSPMCR & ~FB_CSPMCR_GROUP2_MASK;
     FB->CSPMCR = fbReg | FB_CSPMCR_GROUP2(2);
-    fbReg = FB->CSPMCR & ~FB_CSPMCR_GROUP3_MASK;
+    fbReg      = FB->CSPMCR & ~FB_CSPMCR_GROUP3_MASK;
     FB->CSPMCR = fbReg | FB_CSPMCR_GROUP3(2);
-    fbReg = FB->CSPMCR & ~FB_CSPMCR_GROUP4_MASK;
+    fbReg      = FB->CSPMCR & ~FB_CSPMCR_GROUP4_MASK;
     FB->CSPMCR = fbReg | FB_CSPMCR_GROUP4(2);
-    fbReg = FB->CSPMCR & ~FB_CSPMCR_GROUP5_MASK;
+    fbReg      = FB->CSPMCR & ~FB_CSPMCR_GROUP5_MASK;
     FB->CSPMCR = fbReg | FB_CSPMCR_GROUP5(2);
     /* Due to the uart/sdram pin mux multiplex. so enable uart first for log. */
     BOARD_InitPinsForUart();
@@ -191,7 +165,7 @@ int main(void)
 
         /* Transfer from the sdram to data[]. */
         g_Transfer_Done = false;
-        g_count = 0;
+        g_count         = 0;
         EDMA_PrepareTransfer(&transferConfig, (void *)sdramAddr, sizeof(data[0]), &data[0], sizeof(data[0]),
                              sizeof(data[0]), sizeof(data), kEDMA_MemoryToMemory);
 

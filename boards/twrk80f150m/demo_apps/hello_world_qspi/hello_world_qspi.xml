@@ -2,45 +2,48 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
-    <definition extID="platform.devices.MK80F25615_CMSIS.MK80F25615"/>
+    <definition extID="component.lists.MK80F25615"/>
+    <definition extID="component.lpuart_adapter.MK80F25615"/>
+    <definition extID="component.serial_manager.MK80F25615"/>
+    <definition extID="component.serial_manager_uart.MK80F25615"/>
+    <definition extID="device.MK80F25615_CMSIS.MK80F25615"/>
+    <definition extID="platform.Include_common.MK80F25615"/>
+    <definition extID="platform.Include_core_cm4.MK80F25615"/>
+    <definition extID="platform.Include_dsp.MK80F25615"/>
     <definition extID="platform.drivers.clock.MK80F25615"/>
     <definition extID="platform.drivers.common.MK80F25615"/>
-    <definition extID="platform.drivers.flash.MK80F25615"/>
     <definition extID="platform.drivers.gpio.MK80F25615"/>
     <definition extID="platform.drivers.lpuart.MK80F25615"/>
     <definition extID="platform.drivers.port.MK80F25615"/>
     <definition extID="platform.drivers.smc.MK80F25615"/>
     <definition extID="platform.utilities.assert.MK80F25615"/>
-    <definition extID="platform.utilities.debug_console.MK80F25615"/>
-    <definition extID="mcuxpresso"/>
+    <definition extID="platform.utilities.misc_utilities.MK80F25615"/>
+    <definition extID="utility.debug_console.MK80F25615"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
-    <definition extID="kds"/>
     <definition extID="armgcc"/>
-    <definition extID="atl"/>
+    <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="twrk80f150m_hello_world_qspi" name="hello_world_qspi" category="demo_apps" dependency="platform.drivers.clock.MK80F25615 platform.drivers.flash.MK80F25615 platform.drivers.common.MK80F25615 platform.devices.MK80F25615_CMSIS.MK80F25615 platform.drivers.lpuart.MK80F25615 platform.drivers.port.MK80F25615 platform.drivers.smc.MK80F25615 platform.utilities.debug_console.MK80F25615 platform.drivers.gpio.MK80F25615 platform.utilities.assert.MK80F25615" toolchain="iar mdk armgcc kds mcuxpresso">
+  <example id="twrk80f150m_hello_world_qspi" name="hello_world_qspi" category="demo_apps" dependency="platform.drivers.port.MK80F25615 platform.drivers.clock.MK80F25615 platform.drivers.common.MK80F25615 device.MK80F25615_CMSIS.MK80F25615 utility.debug_console.MK80F25615 component.lpuart_adapter.MK80F25615 component.serial_manager.MK80F25615 component.lists.MK80F25615 component.serial_manager_uart.MK80F25615 platform.drivers.lpuart.MK80F25615 platform.drivers.smc.MK80F25615 platform.drivers.gpio.MK80F25615 platform.utilities.assert.MK80F25615 platform.Include_core_cm4.MK80F25615 platform.Include_common.MK80F25615 platform.Include_dsp.MK80F25615 platform.utilities.misc_utilities.MK80F25615">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
     <toolchainSettings>
-      <!-- Curently, mcux just supports one common settings set for both debug and release -->
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
-        <!-- asm compiler -->
-        <!-- gcc compiler -->
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv4.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv4.hard</value>
+        </option>
         <option id="com.crt.advproject.c.misc.dialect" type="enum">
           <value>com.crt.advproject.misc.dialect.gnu99</value>
-        </option>
-        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.default</value>
-        </option>
-        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.default</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MK80FN256VDC15</value>
           <value>TWR_K80F150M</value>
           <value>TOWER</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -48,20 +51,50 @@
         <option id="gnu.c.compiler.option.misc.other" type="string">
           <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
         </option>
-        <!-- gcc linker -->
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv4.hard</value>
+        </option>
         <option id="gnu.c.link.option.nostdlibs" type="boolean">
           <value>true</value>
         </option>
-        <option id="gnu.c.link.option.other" type="stringList">
-          <value>--gc-sections</value>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=RAM2;type=.data</value>
+          <value>isd=*(NonCacheable);region=RAM2;type=.bss</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/linker" target_path="source" type="linker">
+    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/armgcc" target_path="twrk80f150m/demo_apps/hello_world_qspi/linker" type="linker" toolchain="armgcc">
+      <files mask="MK80FN256xxx15_qspi.ld"/>
+    </source>
+    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/iar" target_path="twrk80f150m/demo_apps/hello_world_qspi/linker" type="linker" toolchain="iar">
+      <files mask="MK80FN256xxx15_qspi.icf"/>
+    </source>
+    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/mcux" target_path="twrk80f150m/demo_apps/hello_world_qspi/linker" type="linker" toolchain="mcuxpresso">
       <files mask="MK80FN256xxx15_qspi_mcux.ld"/>
+    </source>
+    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/mdk" target_path="twrk80f150m/demo_apps/hello_world_qspi/linker" type="linker" toolchain="mdk">
+      <files mask="MK80FN256xxx15_qspi.scf"/>
+    </source>
+    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/startup/arm" target_path="startup" type="asm_include" toolchain="mdk">
+      <files mask="startup_MK80F25615.s"/>
+    </source>
+    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/startup/gcc" target_path="startup" type="asm_include" toolchain="armgcc">
+      <files mask="startup_MK80F25615.S"/>
+    </source>
+    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/startup/iar" target_path="startup" type="asm_include" toolchain="iar">
+      <files mask="startup_MK80F25615.s"/>
     </source>
     <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/startup/mcuxpresso" target_path="startup" type="src" toolchain="mcuxpresso">
       <files mask="startup_mk80f25615.c"/>
+    </source>
+    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/startup" target_path="startup" type="c_include">
+      <files mask="system_MK80F25615.h"/>
+    </source>
+    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/startup" target_path="startup" type="src">
+      <files mask="system_MK80F25615.c"/>
+    </source>
+    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi" target_path="./" type="other" exclude="true">
+      <files mask="hello_world_qspi.mex"/>
     </source>
     <source path="boards/twrk80f150m/demo_apps/hello_world_qspi" target_path="board" type="c_include">
       <files mask="board.h"/>
@@ -73,56 +106,17 @@
       <files mask="clock_config.c"/>
       <files mask="pin_mux.c"/>
     </source>
-    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi" target_path="doc" type="doc" toolchain="iar mdk kds mcuxpresso">
+    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>
     </source>
     <source path="boards/twrk80f150m/demo_apps/hello_world_qspi" target_path="source" type="src">
       <files mask="hello_world_qspi.c"/>
     </source>
-    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/startup/arm" target_path="startup" type="src" toolchain="mdk">
-      <files mask="startup_MK80F25615.s"/>
+    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi" target_path="twrk80f150m/demo_apps/hello_world_qspi" type="binary" exclude="true">
+      <files mask="qspi_config_block.bin"/>
     </source>
-    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/startup/gcc" target_path="startup" type="src" toolchain="armgcc">
-      <files mask="startup_MK80F25615.S"/>
-    </source>
-    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/startup/gcc" target_path="startup" type="src" toolchain="atl">
-      <files mask="startup_MK80F25615.S"/>
-    </source>
-    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/startup/gcc" target_path="startup" type="src" toolchain="kds">
-      <files mask="startup_MK80F25615.S"/>
-    </source>
-    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/startup/iar" target_path="startup" type="src" toolchain="iar">
-      <files mask="startup_MK80F25615.s"/>
-    </source>
-    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/startup" target_path="startup" type="c_include" toolchain="armgcc">
-      <files mask="system_MK80F25615.h"/>
-    </source>
-    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/startup" target_path="startup" type="c_include" toolchain="atl">
-      <files mask="system_MK80F25615.h"/>
-    </source>
-    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/startup" target_path="startup" type="c_include" toolchain="iar">
-      <files mask="system_MK80F25615.h"/>
-    </source>
-    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/startup" target_path="startup" type="c_include" toolchain="kds">
-      <files mask="system_MK80F25615.h"/>
-    </source>
-    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/startup" target_path="startup" type="c_include" toolchain="mdk">
-      <files mask="system_MK80F25615.h"/>
-    </source>
-    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/startup" target_path="startup" type="src" toolchain="armgcc">
-      <files mask="system_MK80F25615.c"/>
-    </source>
-    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/startup" target_path="startup" type="src" toolchain="atl">
-      <files mask="system_MK80F25615.c"/>
-    </source>
-    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/startup" target_path="startup" type="src" toolchain="iar">
-      <files mask="system_MK80F25615.c"/>
-    </source>
-    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/startup" target_path="startup" type="src" toolchain="kds">
-      <files mask="system_MK80F25615.c"/>
-    </source>
-    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi/startup" target_path="startup" type="src" toolchain="mdk">
-      <files mask="system_MK80F25615.c"/>
+    <source path="boards/twrk80f150m/demo_apps/hello_world_qspi" target_path="twrk80f150m/demo_apps/hello_world_qspi" type="other" exclude="true">
+      <files mask="hello_world_qspi.bd"/>
     </source>
   </example>
 </ksdk:examples>

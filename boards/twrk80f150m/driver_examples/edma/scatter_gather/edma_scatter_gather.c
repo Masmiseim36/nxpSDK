@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "board.h"
@@ -60,7 +34,7 @@
 edma_handle_t g_EDMA_Handle;
 volatile bool g_Transfer_Done = false;
 
-AT_NONCACHEABLE_SECTION_INIT(uint32_t srcAddr[BUFFER_LENGTH]) = {0x01U, 0x02U, 0x03U, 0x04U,
+AT_NONCACHEABLE_SECTION_INIT(uint32_t srcAddr[BUFFER_LENGTH])  = {0x01U, 0x02U, 0x03U, 0x04U,
                                                                  0x05U, 0x06U, 0x07U, 0x08U};
 AT_NONCACHEABLE_SECTION_INIT(uint32_t destAddr[BUFFER_LENGTH]) = {0x00U, 0x00U, 0x00U, 0x00U,
                                                                   0x00U, 0x00U, 0x00U, 0x00U};
@@ -119,19 +93,15 @@ int main(void)
     EDMA_CreateHandle(&g_EDMA_Handle, EXAMPLE_DMA, 0);
     EDMA_SetCallback(&g_EDMA_Handle, EDMA_Callback, NULL);
     EDMA_ResetChannel(g_EDMA_Handle.base, g_EDMA_Handle.channel);
-
-    if (tcdMemoryPoolPtr != NULL)
-    {
-        EDMA_InstallTCDMemory(&g_EDMA_Handle, tcdMemoryPoolPtr, TCD_QUEUE_SIZE);
-        /* Configure and submit transfer structure 1 */
-        EDMA_PrepareTransfer(&transferConfig, srcAddr, sizeof(srcAddr[0]), destAddr, sizeof(destAddr[0]),
-                             sizeof(srcAddr[0]), sizeof(srcAddr[0]) * HALF_BUFFER_LENGTH, kEDMA_MemoryToMemory);
-        EDMA_SubmitTransfer(&g_EDMA_Handle, &transferConfig);
-        /* Configure and submit transfer structure 2 */
-        EDMA_PrepareTransfer(&transferConfig, &srcAddr[4], sizeof(srcAddr[0]), &destAddr[4], sizeof(destAddr[0]),
-                             sizeof(srcAddr[0]), sizeof(srcAddr[0]) * HALF_BUFFER_LENGTH, kEDMA_MemoryToMemory);
-        EDMA_SubmitTransfer(&g_EDMA_Handle, &transferConfig);
-    }
+    EDMA_InstallTCDMemory(&g_EDMA_Handle, tcdMemoryPoolPtr, TCD_QUEUE_SIZE);
+    /* Configure and submit transfer structure 1 */
+    EDMA_PrepareTransfer(&transferConfig, srcAddr, sizeof(srcAddr[0]), destAddr, sizeof(destAddr[0]),
+                         sizeof(srcAddr[0]), sizeof(srcAddr[0]) * HALF_BUFFER_LENGTH, kEDMA_MemoryToMemory);
+    EDMA_SubmitTransfer(&g_EDMA_Handle, &transferConfig);
+    /* Configure and submit transfer structure 2 */
+    EDMA_PrepareTransfer(&transferConfig, &srcAddr[4], sizeof(srcAddr[0]), &destAddr[4], sizeof(destAddr[0]),
+                         sizeof(srcAddr[0]), sizeof(srcAddr[0]) * HALF_BUFFER_LENGTH, kEDMA_MemoryToMemory);
+    EDMA_SubmitTransfer(&g_EDMA_Handle, &transferConfig);
     EDMA_StartTransfer(&g_EDMA_Handle);
     /* Wait for EDMA transfer finish */
     while (g_Transfer_Done != true)

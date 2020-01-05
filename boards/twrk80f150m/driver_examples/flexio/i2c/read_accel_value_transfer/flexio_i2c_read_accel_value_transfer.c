@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*  Standard C Included Files */
@@ -79,9 +53,9 @@ const uint8_t g_accel_address[] = {0x1CU, 0x1DU, 0x1EU, 0x1FU};
 
 flexio_i2c_master_handle_t g_m_handle;
 FLEXIO_I2C_Type i2cDev;
-uint8_t g_accel_addr_found = 0x00;
+uint8_t g_accel_addr_found   = 0x00;
 volatile bool completionFlag = false;
-volatile bool nakFlag = false;
+volatile bool nakFlag        = false;
 
 /*******************************************************************************
  * Code
@@ -111,13 +85,13 @@ static bool I2C_example_readAccelWhoAmI(void)
     Start + Device_address_Write , who_am_I_register;
     Repeart_Start + Device_address_Read , who_am_I_value.
     */
-    uint8_t who_am_i_reg = ACCEL_WHOAMI_REG;
-    uint8_t who_am_i_value = 0x00;
+    uint8_t who_am_i_reg          = ACCEL_WHOAMI_REG;
+    uint8_t who_am_i_value        = 0x00;
     uint8_t accel_addr_array_size = 0x00;
-    bool find_device = false;
-    bool result = false;
-    uint8_t i = 0;
-    uint32_t j = 0;
+    bool find_device              = false;
+    bool result                   = false;
+    uint8_t i                     = 0;
+    uint32_t j                    = 0;
 
     flexio_i2c_master_config_t masterConfig;
 
@@ -133,26 +107,28 @@ static bool I2C_example_readAccelWhoAmI(void)
 
     if (FLEXIO_I2C_MasterInit(&i2cDev, &masterConfig, FLEXIO_CLOCK_FREQUENCY) != kStatus_Success)
     {
-        PRINTF("FlexIO clock freqency exceeded upper range. \r\n");
+        PRINTF("FlexIO clock frequency exceeded upper range. \r\n");
         return false;
     }
+
+    FLEXIO_I2C_MasterTransferCreateHandle(&i2cDev, &g_m_handle, flexio_i2c_master_callback, NULL);
 
     flexio_i2c_master_transfer_t masterXfer;
     memset(&masterXfer, 0, sizeof(masterXfer));
 
-    masterXfer.slaveAddress = g_accel_address[0];
-    masterXfer.direction = kFLEXIO_I2C_Read;
-    masterXfer.subaddress = who_am_i_reg;
+    masterXfer.slaveAddress   = g_accel_address[0];
+    masterXfer.direction      = kFLEXIO_I2C_Read;
+    masterXfer.subaddress     = who_am_i_reg;
     masterXfer.subaddressSize = 1;
-    masterXfer.data = &who_am_i_value;
-    masterXfer.dataSize = 1;
+    masterXfer.data           = &who_am_i_value;
+    masterXfer.dataSize       = 1;
 
     accel_addr_array_size = sizeof(g_accel_address) / sizeof(g_accel_address[0]);
 
     for (i = 0; i < accel_addr_array_size; i++)
     {
         masterXfer.slaveAddress = g_accel_address[i];
-        completionFlag = false;
+        completionFlag          = false;
         FLEXIO_I2C_MasterTransferNonBlocking(&i2cDev, &g_m_handle, &masterXfer);
 
         /*  wait for transfer completed. */
@@ -162,7 +138,7 @@ static bool I2C_example_readAccelWhoAmI(void)
         if (nakFlag == true)
         {
             nakFlag = false;
-            for (j = 0; j < 0xFFF; j++)
+            for (j = 0; j < 0x1FFF; j++)
             {
                 __NOP();
             }
@@ -170,8 +146,8 @@ static bool I2C_example_readAccelWhoAmI(void)
         }
         if (completionFlag == true)
         {
-            completionFlag = false;
-            find_device = true;
+            completionFlag     = false;
+            find_device        = true;
             g_accel_addr_found = masterXfer.slaveAddress;
             break;
         }
@@ -216,12 +192,12 @@ static bool I2C_write_accel_reg(FLEXIO_I2C_Type *base, uint8_t device_addr, uint
     flexio_i2c_master_transfer_t masterXfer;
     memset(&masterXfer, 0, sizeof(masterXfer));
 
-    masterXfer.slaveAddress = device_addr;
-    masterXfer.direction = kFLEXIO_I2C_Write;
-    masterXfer.subaddress = reg_addr;
+    masterXfer.slaveAddress   = device_addr;
+    masterXfer.direction      = kFLEXIO_I2C_Write;
+    masterXfer.subaddress     = reg_addr;
     masterXfer.subaddressSize = 1;
-    masterXfer.data = &value;
-    masterXfer.dataSize = 1;
+    masterXfer.data           = &value;
+    masterXfer.dataSize       = 1;
 
     /*  direction=write : start+device_write;cmdbuff;xBuff; */
     /*  direction=recive : start+device_write;cmdbuff;repeatStart+device_read;xBuff; */
@@ -251,12 +227,12 @@ static bool I2C_read_accel_regs(
 {
     flexio_i2c_master_transfer_t masterXfer;
     memset(&masterXfer, 0, sizeof(masterXfer));
-    masterXfer.slaveAddress = device_addr;
-    masterXfer.direction = kFLEXIO_I2C_Read;
-    masterXfer.subaddress = reg_addr;
+    masterXfer.slaveAddress   = device_addr;
+    masterXfer.direction      = kFLEXIO_I2C_Read;
+    masterXfer.subaddress     = reg_addr;
     masterXfer.subaddressSize = 1;
-    masterXfer.data = rxBuff;
-    masterXfer.dataSize = rxSize;
+    masterXfer.data           = rxBuff;
+    masterXfer.dataSize       = rxSize;
 
     /*  direction=write : start+device_write;cmdbuff;xBuff; */
     /*  direction=recive : start+device_write;cmdbuff;repeatStart+device_read;xBuff; */
@@ -289,13 +265,13 @@ int main(void)
     bool isThereAccel = false;
 
     /*do hardware configuration*/
-    i2cDev.flexioBase = BOARD_FLEXIO_BASE;
-    i2cDev.SDAPinIndex = FLEXIO_I2C_SDA_PIN;
-    i2cDev.SCLPinIndex = FLEXIO_I2C_SCL_PIN;
+    i2cDev.flexioBase      = BOARD_FLEXIO_BASE;
+    i2cDev.SDAPinIndex     = FLEXIO_I2C_SDA_PIN;
+    i2cDev.SCLPinIndex     = FLEXIO_I2C_SCL_PIN;
     i2cDev.shifterIndex[0] = 0U;
     i2cDev.shifterIndex[1] = 1U;
-    i2cDev.timerIndex[0] = 0U;
-    i2cDev.timerIndex[1] = 1U;
+    i2cDev.timerIndex[0]   = 0U;
+    i2cDev.timerIndex[1]   = 1U;
 
     BOARD_InitPins();
     BOARD_BootClockRUN();
@@ -305,18 +281,17 @@ int main(void)
 
     PRINTF("\r\nFlexIO I2C example read accelerometer value\r\n");
 
-    FLEXIO_I2C_MasterTransferCreateHandle(&i2cDev, &g_m_handle, flexio_i2c_master_callback, NULL);
     isThereAccel = I2C_example_readAccelWhoAmI();
 
     /*  read the accel xyz value if there is accel device on board */
     if (true == isThereAccel)
     {
-        uint8_t databyte = 0;
+        uint8_t databyte  = 0;
         uint8_t write_reg = 0;
         uint8_t readBuff[7];
         int16_t x, y, z;
         uint8_t status0_value = 0;
-        uint32_t i = 0;
+        uint32_t i            = 0;
 
         /*  please refer to the "example FXOS8700CQ Driver Code" in FXOS8700 datasheet. */
         /*  write 0000 0000 = 0x00 to accelerometer control register 1 */
@@ -324,7 +299,7 @@ int main(void)
         /*  [7-1] = 0000 000 */
         /*  [0]: active=0 */
         write_reg = ACCEL_CTRL_REG1;
-        databyte = 0;
+        databyte  = 0;
         I2C_write_accel_reg(&i2cDev, g_accel_addr_found, write_reg, databyte);
 
         /*  write 0000 0001= 0x01 to XYZ_DATA_CFG register */
@@ -337,7 +312,7 @@ int main(void)
         /*  [1-0]: fs=01 for accelerometer range of +/-4g range with 0.488mg/LSB */
         /*  databyte = 0x01; */
         write_reg = ACCEL_XYZ_DATA_CFG;
-        databyte = 0x01;
+        databyte  = 0x01;
         I2C_write_accel_reg(&i2cDev, g_accel_addr_found, write_reg, databyte);
 
         /*  write 0000 1101 = 0x0D to accelerometer control register 1 */
@@ -348,7 +323,7 @@ int main(void)
         /*  [0]: active=1 to take the part out of standby and enable sampling */
         /*   databyte = 0x0D; */
         write_reg = ACCEL_CTRL_REG1;
-        databyte = 0x0d;
+        databyte  = 0x0d;
         I2C_write_accel_reg(&i2cDev, g_accel_addr_found, write_reg, databyte);
         PRINTF("The accel values:\r\n");
         for (i = 0; i < ACCEL_READ_TIMES; i++)
@@ -364,9 +339,9 @@ int main(void)
             I2C_read_accel_regs(&i2cDev, g_accel_addr_found, ACCEL_STATUS, readBuff, 7);
 
             status0_value = readBuff[0];
-            x = ((int16_t)(((readBuff[1] * 256U) | readBuff[2]))) / 4U;
-            y = ((int16_t)(((readBuff[3] * 256U) | readBuff[4]))) / 4U;
-            z = ((int16_t)(((readBuff[5] * 256U) | readBuff[6]))) / 4U;
+            x             = ((int16_t)(((readBuff[1] * 256U) | readBuff[2]))) / 4U;
+            y             = ((int16_t)(((readBuff[3] * 256U) | readBuff[4]))) / 4U;
+            z             = ((int16_t)(((readBuff[5] * 256U) | readBuff[6]))) / 4U;
 
             PRINTF("status_reg = 0x%x , x = %5d , y = %5d , z = %5d \r\n", status0_value, x, y, z);
         }

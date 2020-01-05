@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include <inttypes.h>
 
 #include "a71ch_ex.h"
 #include "a71_debug.h"
@@ -35,13 +36,14 @@
 #include "ax_util.h"
 #include "app_boot.h"
 
-#if defined(I2C)
+#if defined(SCI2C)
 #include "sci2c.h"
 #endif
 
-/// @cond
+#if defined(SCI2C)
 static U8 writeStateToFile(char *szFilename, SmCommState_t *commState, Scp03SessionState_t *scp03State);
 static U8 readStateFromFile(char *szFilename, SmCommState_t *commState, Scp03SessionState_t *scp03State);
+#endif
 
 char* axExBootGetBootModeAsString(U8 bootMode)
 {
@@ -137,14 +139,14 @@ U8 exBoot(U8 bootMode)
     U16 packetSize;
 
     U16 connectStatus;
-    U8 Atr[64];
+    U8 Atr[64] = {0};
     U16 AtrLen = sizeof(Atr);
 
-    SmCommState_t commState;
+    SmCommState_t commState = {0};
     Scp03SessionState_t sessionState;
 
     U16 sw = SW_OK;
-#if defined(I2C)
+#if defined(SCI2C)
     char szFilename[] = "sessionState";
 #endif
 
@@ -161,22 +163,22 @@ U8 exBoot(U8 bootMode)
         // Installing Callback (this step is optional)
         SCP_Subscribe(signalFunctionCallback, NULL);
         DEV_ClearChannelState();
-#if defined(I2C)
+#if defined(SCI2C)|| defined(T1oI2C)
         SM_Close(SMCOM_CLOSE_MODE_TERMINATE);
 #endif
         connectStatus = SM_Connect(&commState, Atr, &AtrLen);
         if (connectStatus != SW_OK)
         {
-            sm_printf(CONSOLE, "Failed to establish connection to Secure Module: 0x%04X\r\n", connectStatus);
+            sm_printf(CONSOLE, "Failed to establish connection to Secure Module: 0x%04" PRIX32 "\r\n", connectStatus);
             result = 0;
             return result;
         }
         else
         {
-#ifndef RJCT_SOCKET
+#ifndef SMCOM_JRCP_V1
             int i=0;
             sm_printf(CONSOLE, "ATR=0x");
-            for (i=0; i<AtrLen; i++) sm_printf(CONSOLE, "%02X.", Atr[i]);
+            for (i=0; i<AtrLen; i++) sm_printf(CONSOLE, "%02" PRIX16 ".", Atr[i]);
             sm_printf(CONSOLE, "\r\n");
 #endif
         }
@@ -209,7 +211,7 @@ U8 exBoot(U8 bootMode)
         // - Retrieve and store SCI2C communication state
         SCP_GetScpSessionState(&sessionState);
         // At this stage the System Integrator must store Session State in Mailbox for HostOS
-#if defined(I2C)
+#if defined(SCI2C)
         commState.param1 = sci2c_GetSequenceCounter();
         // At this stage the System Integrator must store communication state in Mailbox for HostOS
         SM_Close(SMCOM_CLOSE_MODE_STD);
@@ -235,7 +237,7 @@ U8 exBoot(U8 bootMode)
         result &= AX_COMPARE_BYTE_ARRAY("dataRef", dataRef, dataRefLen,
             "dataFetch", dataFetch, dataRefLen, AX_COLON_32);
     }
-#if defined(I2C)
+#if defined(SCI2C)
     else if (bootMode == BOOT_BOOTLOADER_ROLE)
     {
         initMode = INIT_MODE_RESET;
@@ -247,7 +249,7 @@ U8 exBoot(U8 bootMode)
         connectStatus = SM_Connect(&commState, Atr, &AtrLen);
         if (connectStatus != SW_OK)
         {
-            sm_printf(CONSOLE, "Failed to establish connection to Secure Module: 0x%04X\r\n", connectStatus);
+            sm_printf(CONSOLE, "Failed to establish connection to Secure Module: 0x%04" PRIX32 "\r\n", connectStatus);
             result = 0;
             return result;
         }
@@ -255,7 +257,7 @@ U8 exBoot(U8 bootMode)
         {
             int i=0;
             sm_printf(CONSOLE, "ATR=0x");
-            for (i=0; i<AtrLen; i++) sm_printf(CONSOLE, "%02X.", Atr[i]);
+            for (i=0; i<AtrLen; i++) sm_printf(CONSOLE, "%02" PRIX16 ".", Atr[i]);
             sm_printf(CONSOLE, "\r\n");
         }
 
@@ -308,9 +310,9 @@ U8 exBoot(U8 bootMode)
         Scp03SessionState_t retrScp03State;
 
         readStateFromFile(szFilename, &retrCommState, &retrScp03State);
-        PRINTF("retrCommState.param1         : 0x%04X\r\n", retrCommState.param1);
-        PRINTF("retrCommState.hostLibVersion : 0x%04X\r\n", retrCommState.hostLibVersion);
-        PRINTF("retrCommState.appletVersion  : 0x%04X\r\n", retrCommState.appletVersion);
+        PRINTF("retrCommState.param1         : 0x%02" PRIX16 "\r\n", retrCommState.param1);
+        PRINTF("retrCommState.hostLibVersion : 0x%02" PRIX16 "\r\n", retrCommState.hostLibVersion);
+        PRINTF("retrCommState.appletVersion  : 0x%04" PRIX32 "\r\n", retrCommState.appletVersion);
 
         DEV_ClearChannelState();
 
@@ -333,10 +335,10 @@ U8 exBoot(U8 bootMode)
         result &= AX_COMPARE_BYTE_ARRAY("dataRef", dataRef, dataRefLen,
             "dataFetch", dataFetch, dataRefLen, AX_COLON_32);
     }
-#endif // defined(I2C)
+#endif // defined(SCI2C)
     else
     {
-        PRINTF("bootMode (0x%02X) is not defined.\r\n", bootMode);
+        PRINTF("bootMode (0x%02" PRIX16 ") is not defined.\r\n", (uint16_t)bootMode);
         result = 0;
     }
 
@@ -381,7 +383,7 @@ U8 axExCreateAndSetInitialHostScpKeys(U8 *keyEnc, U8 *keyMac, U8 *keyDek)
     memcpy(keyDek, random + (2*SCP_KEY_SIZE), SCP_KEY_SIZE);
 
     keyVersion = (U8) (SST_HOST_SCP_KEYSET >> 8);
-    sm_printf(CONSOLE, "\r\nSCP_GP_PutKeys(keyVersion=0x%02X)\r\n", keyVersion);
+    sm_printf(CONSOLE, "\r\nSCP_GP_PutKeys(keyVersion=0x%02" PRIX16 ")\r\n", keyVersion);
     err = SCP_GP_PutKeys(keyVersion, keyEnc, keyMac, keyDek, currentKeyDek, AES_KEY_LEN_nBYTE);
     result &= AX_CHECK_SW(err, SW_OK, "err");
 
@@ -421,7 +423,7 @@ U8 axExAuthenticate(U8 *keyEnc, U8 *keyMac, U8 *keyDek)
     return result;
 }
 
-/// @cond
+#if defined(SCI2C)
 static U8 writeStateToFile(char *szFilename, SmCommState_t *commState, Scp03SessionState_t *scp03State)
 {
     U8 result = 1;
@@ -465,4 +467,4 @@ static U8 readStateFromFile(char *szFilename, SmCommState_t *commState, Scp03Ses
 #endif
     return result;
 }
-/// @endcond
+#endif

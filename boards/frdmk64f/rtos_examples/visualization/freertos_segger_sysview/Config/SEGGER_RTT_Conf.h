@@ -72,11 +72,11 @@ Revision: $Rev: 3892 $
 #endif
 
 /*********************************************************************
-*
-*       Defines, configurable
-*
-**********************************************************************
-*/
+ *
+ *       Defines, configurable
+ *
+ **********************************************************************
+ */
 
 #define SEGGER_RTT_MAX_NUM_UP_BUFFERS (3)   // Max. number of up-buffers (T->H) available on this target    (Default: 3)
 #define SEGGER_RTT_MAX_NUM_DOWN_BUFFERS (3) // Max. number of down-buffers (H->T) available on this target  (Default: 3)
@@ -112,10 +112,10 @@ Revision: $Rev: 3892 $
     (0x20) // Interrupt priority to lock on SEGGER_RTT_LOCK on Cortex-M3/4 (Default: 0x20)
 
 /*********************************************************************
-*
-*       RTT lock configuration for SEGGER Embedded Studio,
-*       Rowley CrossStudio and GCC
-*/
+ *
+ *       RTT lock configuration for SEGGER Embedded Studio,
+ *       Rowley CrossStudio and GCC
+ */
 #if (defined __SES_ARM) || (defined __CROSSWORKS_ARM) || (defined __GNUC__)
 #ifdef __ARM_ARCH_6M__
 #define SEGGER_RTT_LOCK()             \
@@ -133,7 +133,7 @@ Revision: $Rev: 3892 $
     __asm volatile("msr   primask, %0  \n\t" : : "r"(LockState) :); \
     }
 
-#elif(defined(__ARM_ARCH_7M__) || defined(__ARM_ARCH_7EM__))
+#elif (defined(__ARM_ARCH_7M__) || defined(__ARM_ARCH_7EM__))
 #ifndef SEGGER_RTT_MAX_INTERRUPT_PRIORITY
 #define SEGGER_RTT_MAX_INTERRUPT_PRIORITY (0x20)
 #endif
@@ -184,9 +184,9 @@ Revision: $Rev: 3892 $
 #endif
 
 /*********************************************************************
-*
-*       RTT lock configuration for IAR EWARM
-*/
+ *
+ *       RTT lock configuration for IAR EWARM
+ */
 #ifdef __ICCARM__
 #if (defined(__ARM6M__) && (__CORE__ == __ARM6M__))
 #define SEGGER_RTT_LOCK()            \
@@ -198,7 +198,7 @@ Revision: $Rev: 3892 $
 #define SEGGER_RTT_UNLOCK()   \
     __set_PRIMASK(LockState); \
     }
-#elif((defined(__ARM7EM__) && (__CORE__ == __ARM7EM__)) || (defined(__ARM7M__) && (__CORE__ == __ARM7M__)))
+#elif ((defined(__ARM7EM__) && (__CORE__ == __ARM7EM__)) || (defined(__ARM7M__) && (__CORE__ == __ARM7M__)))
 #ifndef SEGGER_RTT_MAX_INTERRUPT_PRIORITY
 #define SEGGER_RTT_MAX_INTERRUPT_PRIORITY (0x20)
 #endif
@@ -215,9 +215,9 @@ Revision: $Rev: 3892 $
 #endif
 
 /*********************************************************************
-*
-*       RTT lock configuration for IAR RX
-*/
+ *
+ *       RTT lock configuration for IAR RX
+ */
 #ifdef __ICCRX__
 #define SEGGER_RTT_LOCK()                    \
     {                                        \
@@ -231,9 +231,9 @@ Revision: $Rev: 3892 $
 #endif
 
 /*********************************************************************
-*
-*       RTT lock configuration for KEIL ARM
-*/
+ *
+ *       RTT lock configuration for KEIL ARM
+ */
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 #if (defined __TARGET_ARCH_6S_M)
 #define SEGGER_RTT_LOCK()                                \
@@ -241,14 +241,14 @@ Revision: $Rev: 3892 $
         unsigned int LockState;                          \
         register unsigned char PRIMASK __asm("primask"); \
         LockState = PRIMASK;                             \
-        PRIMASK = 1u;                                    \
+        PRIMASK   = 1u;                                  \
         __schedule_barrier();
 
 #define SEGGER_RTT_UNLOCK() \
     PRIMASK = LockState;    \
     __schedule_barrier();   \
     }
-#elif(defined(__TARGET_ARCH_7_M) || defined(__TARGET_ARCH_7E_M))
+#elif (defined(__TARGET_ARCH_7_M) || defined(__TARGET_ARCH_7E_M))
 #ifndef SEGGER_RTT_MAX_INTERRUPT_PRIORITY
 #define SEGGER_RTT_MAX_INTERRUPT_PRIORITY (0x20)
 #endif
@@ -257,7 +257,7 @@ Revision: $Rev: 3892 $
         unsigned int LockState;                          \
         register unsigned char BASEPRI __asm("basepri"); \
         LockState = BASEPRI;                             \
-        BASEPRI = SEGGER_RTT_MAX_INTERRUPT_PRIORITY;     \
+        BASEPRI   = SEGGER_RTT_MAX_INTERRUPT_PRIORITY;   \
         __schedule_barrier();
 
 #define SEGGER_RTT_UNLOCK() \
@@ -268,9 +268,9 @@ Revision: $Rev: 3892 $
 #endif
 
 /*********************************************************************
-*
-*       RTT lock configuration fallback
-*/
+ *
+ *       RTT lock configuration fallback
+ */
 #ifndef SEGGER_RTT_LOCK
 #define SEGGER_RTT_LOCK() // Lock RTT (nestable)   (i.e. disable interrupts)
 #endif

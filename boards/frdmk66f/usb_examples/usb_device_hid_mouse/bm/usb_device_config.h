@@ -152,7 +152,7 @@
 #define USB_DEVICE_CONFIG_ERROR_HANDLING (0U)
 
 /*! @brief Whether the device charger detect feature is enabled or not. */
-#define USB_DEVICE_CHARGER_DETECT_ENABLE (0U)
+#define USB_DEVICE_CONFIG_CHARGER_DETECT (0U)
 
 /* @} */
 

@@ -1,0 +1,143 @@
+/*
+ * Copyright (c) 2013 - 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+ 
+ #header h1 {
+	POSITION: relative; 
+	LEFT: 60px;
+}
+
+body {
+	background-color:#c0c0c0;
+	font-family:Arial, Helvetica, sans-serif;
+	
+}
+
+#pagebody {
+	background: transparent url("images/bodyl.png") repeat-y top left;
+	font-weight: bolder;
+	width: 900px;
+	top: 135px;
+	height: 900px;
+	font-size:100%;
+}
+
+#bottom-level {
+	background: transparent url("images/bottoml.png") no-repeat top left;
+	width: 900px;
+	height: 32px;
+}
+
+#topbuttons {
+	background: transparent url("images/topl.png") repeat-x top left;
+	width: 900px;
+	height: 50px;
+	font-size:15px;
+}
+
+ul#nav {
+	width:80%;
+	float:left;
+	height:34px;
+	margin:0;
+	padding:0px 0 0 30px;
+}
+ul#nav li {
+	display:block;
+	float:left;
+	background-image:url('images/menu-item-right.jpg');
+	background-repeat:no-repeat;
+	background-position:top right;
+	margin-left:5px;
+}
+ul#nav li a {
+	float:left;
+	border:none;
+	padding:9px 15px;
+	height:34px;
+	font-size:0.8em;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	color:#888888;
+	text-decoration:none;
+	display:block;
+	background-image:url('images/menu-item-left.jpg');
+	background-repeat:no-repeat;
+	background-position:top left;
+}
+ul#nav li.selected {
+	background-image:url('images/menu-item-right-selected.jpg');
+}
+ul#nav li.selected a {
+	color:#333333;
+	background-image:url('images/menu-item-left-selected.jpg');
+}
+ul#nav li a:hover {
+	background-color:transparent;
+}
+
+
+ul.list {
+    width:98%;
+    float:left;
+    margin:0;
+    padding:0px 0 0 30px;
+}
+
+ul.list li {
+    display:block;
+    float:left;
+    background-image:url('images/menu-item-right.jpg');
+    background-repeat:no-repeat;
+    background-position:top right;
+    margin-left:5px;
+}
+ul.list li a {
+    float:left;
+    border:none;
+    padding:9px 15px;
+    height:14x;
+    font-size:0.8em;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:bold;
+    color:#888888;
+    text-decoration:none;
+    display:block;
+    background-image:url('images/menu-item-left.jpg');
+    background-repeat:no-repeat;
+    background-position:top left;
+}
+ul.list li.selected {
+    background-image:url('images/menu-item-right-selected.jpg');
+}
+ul.list li.selected a {
+    color:#333333;
+    background-image:url('images/menu-item-left-selected.jpg');
+}
+ul.list li a:hover {
+    background-color:transparent;
+}
+
+
+th {
+    background-color: #808080;
+    color: black;
+}
+
+table {
+	background-color: #E0E0E0;
+    color: black;
+    /*width: 100%;*/
+}
+
+table, th, td {
+    border: 1px outset #c0c0c0;
+    padding-left: 5px;
+    padding-right: 5px;
+	padding-top: 2px;
+    padding-bottom: 2px;
+}

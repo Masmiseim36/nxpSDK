@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_I2C_DMA_H_
@@ -22,9 +22,14 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief I2C EDMA driver version 2.0.5. */
-#define FSL_I2C_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 0, 5))
+/*! @brief I2C EDMA driver version 2.0.8. */
+#define FSL_I2C_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 0, 8))
 /*@}*/
+
+/*! @brief Retry times for waiting flag. */
+#ifndef I2C_RETRY_TIMES
+#define I2C_RETRY_TIMES 0U /* Define to zero means keep waiting until the flag is assert/deassert. */
+#endif
 
 /*! @brief I2C master eDMA handle typedef. */
 typedef struct _i2c_master_edma_handle i2c_master_edma_handle_t;
@@ -62,7 +67,7 @@ extern "C" {
  */
 
 /*!
- * @brief Initializes the I2C handle which is used in transcational functions.
+ * @brief Initializes the I2C handle which is used in transactional functions.
  *
  * @param base I2C peripheral base address.
  * @param handle A pointer to the i2c_master_edma_handle_t structure.
@@ -82,7 +87,7 @@ void I2C_MasterCreateEDMAHandle(I2C_Type *base,
  * @param base I2C peripheral base address.
  * @param handle A pointer to the i2c_master_edma_handle_t structure.
  * @param xfer A pointer to the transfer structure of i2c_master_transfer_t.
- * @retval kStatus_Success Sucessfully completed the data transmission.
+ * @retval kStatus_Success Successfully completed the data transmission.
  * @retval kStatus_I2C_Busy A previous transmission is still not finished.
  * @retval kStatus_I2C_Timeout Transfer error, waits for a signal timeout.
  * @retval kStatus_I2C_ArbitrationLost Transfer error, arbitration lost.

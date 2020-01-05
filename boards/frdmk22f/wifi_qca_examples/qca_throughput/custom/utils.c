@@ -32,12 +32,12 @@ char hextoa(int val);
 #define isdigit(c) (((c) >= '0' && (c) <= '9'))
 
 /*FUNCTION*-----------------------------------------------------------------
-*
-* Function Name  : mystrtoul
-* Returned Value : unsigned long
-* Comments       : coverts string to unsigned long
-*
-*END------------------------------------------------------------------*/
+ *
+ * Function Name  : mystrtoul
+ * Returned Value : unsigned long
+ * Comments       : coverts string to unsigned long
+ *
+ *END------------------------------------------------------------------*/
 
 uint32_t mystrtoul(const char *arg, const char *endptr, int base)
 {
@@ -84,7 +84,7 @@ int32_t ath_inet_aton(const char *name,
                       /* [IN] dotted decimal IP address */
                       uint32_t *ipaddr_ptr
                       /* [OUT] binary IP address */
-                      )
+)
 { /* Body */
     bool ipok = false;
     uint32_t dots;
@@ -145,11 +145,11 @@ int32_t ath_inet_aton(const char *name,
 } /* Endbody */
 
 /************************************************************************
-* NAME: inet_ntoa
-*
-* DESCRIPTION:The function converts an (IPv4) Internet network address
-*             into a string in Internet standard dotted format.
-*************************************************************************/
+ * NAME: inet_ntoa
+ *
+ * DESCRIPTION:The function converts an (IPv4) Internet network address
+ *             into a string in Internet standard dotted format.
+ *************************************************************************/
 char *inet_ntoa(uint32_t /*struct in_addr*/ addr, char *res_str)
 {
     unsigned char *ptr;
@@ -301,8 +301,8 @@ unsigned int atoh(char *buf)
 // a simple call of OSA_TimeGetMsec() it would make a lot of code much simpler
 void app_time_get_elapsed(TIME_STRUCT *time)
 {
-    uint32_t now = A_TIME_GET_MSEC();
-    time->SECONDS = now / 1000;
+    uint32_t now       = A_TIME_GET_MSEC();
+    time->SECONDS      = now / 1000;
     time->MILLISECONDS = now - (time->SECONDS * 1000);
 }
 
@@ -367,7 +367,7 @@ char *print_ip6(IP6_ADDR_T *addr, char *str)
     if (skip == 1) /* were we skipping trailing zeros? */
     {
         *cp++ = ':';
-        *cp = 0;
+        *cp   = 0;
     }
     else
         *--cp = 0; /* turn trailing colon into null */
@@ -430,7 +430,7 @@ char *inet6_ntoa(char *addr, char *str)
     if (skip == 1) /* were we skipping trailing zeros? */
     {
         *cp++ = ':';
-        *cp = 0;
+        *cp   = 0;
     }
     else
         *--cp = 0; /* turn trailing colon into null */
@@ -443,10 +443,10 @@ int Inet6Pton(char *src, IP6_ADDR_T *ipv6)
     uint16_t *dest; /* word pointer to dst */
     int colons;     /* number of colons in src */
     int words;      /* count of words written to dest */
-    char *dst = (char*)ipv6;
+    char *dst = (char *)ipv6;
 
     /* count the number of colons in the address */
-    cp = src;
+    cp     = src;
     colons = 0;
     while (*cp)
     {
@@ -461,8 +461,8 @@ int Inet6Pton(char *src, IP6_ADDR_T *ipv6)
     }
 
     /* loop through address text, parseing 16-bit chunks */
-    cp = src;
-    dest = (uint16_t*)dst;
+    cp    = src;
+    dest  = (uint16_t *)dst;
     words = 0;
 
     if (*cp == ':') /* leading colon has implied zero, e.g. "::1" */
@@ -499,7 +499,7 @@ int Inet6Pton(char *src, IP6_ADDR_T *ipv6)
             uint16_t wordval;
             uint16_t temp;
             wordval = atoh(cp);
-            temp = wordval;
+            temp    = wordval;
             wordval = htons(temp); /* get next 16 bit word */
 
             if ((wordval == 0) && (*cp != '0')) /* check format */

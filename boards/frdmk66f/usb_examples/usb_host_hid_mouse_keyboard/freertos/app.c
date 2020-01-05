@@ -78,7 +78,10 @@ void BOARD_InitHardware(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-
+/* Allocate the memory for the heap. */
+#if defined(configAPPLICATION_ALLOCATED_HEAP) && (configAPPLICATION_ALLOCATED_HEAP)
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t ucHeap[configTOTAL_HEAP_SIZE];
+#endif
 /*! @brief USB host mouse instance global variable */
 extern usb_host_mouse_instance_t g_HostHidMouse;
 /*! @brief USB host keyboard instance global variable */
@@ -172,7 +175,7 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
     usb_status_t status2;
     usb_status_t status = kStatus_USB_Success;
 
-    switch (eventCode)
+    switch (eventCode & 0x0000FFFFU)
     {
         case kUSB_HostEventAttach:
             status1 = USB_HostHidKeyboardEvent(deviceHandle, configurationHandle, eventCode);
@@ -203,6 +206,10 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
             {
                 status = kStatus_USB_Error;
             }
+            break;
+
+        case kUSB_HostEventEnumerationFail:
+            usb_echo("enumeration failed\r\n");
             break;
 
         default:

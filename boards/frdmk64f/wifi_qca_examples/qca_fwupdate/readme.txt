@@ -1,3 +1,29 @@
+Overview
+========
+
+
+Toolchain supported
+===================
+- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+
+Hardware requirements
+=====================
+- Mini/micro USB cable
+- FRDM-K64F board
+- GT202 Adaptor V1.04
+- Personal Computer
+
+Board settings
+==============
+Plug GT202 Adaptor board to FRDM stackable headers (J1, J2, J3, J4).
+GT202 shield is compatible with FRDM-K64 SCH-REV E and higher.
+Previous revisions cannot provide GPIO mux on J2:2 (WLAN_PWRON).
+
+The default compilation settings are predefined for GT202 shield.
+Do not try to update a firmware on Silex shield !
 Prepare the Demo
 ================
 No special requirements
@@ -24,41 +50,12 @@ NOTES:
  - host.exe cannot resolve COM port with number greater than 99
  - An issue has been discovered when using Jlink CMSIS-DAP Serial on FRDMK64 Rev.E.
    If the transmission stops after few kBytes, we recommend to use DAPLink.
+ - After a successful update, the host.exe always shows a dummy firmware version 
+   "3.3.1.256.116". To verify the current firmware version, run "qca_demo". 
 
 IMPORTANT:
  - Do not try to update firmware on Silex shield !!!
 
-Hardware requirements
+Customization options
 =====================
-- Mini/micro USB cable
-- FRDM-K64F board
-- GT202 Adaptor V1.04 or Silex SX-ULPAN-2401
-- Personal Computer
-
-Board settings
-==============
-Plug GT202 Adaptor board to FRDM stackable headers (J1, J2, J3, J4).
-GT202 shield is compatible *only* with FRDM-K64 rev_E.
-Previous revisions cannot provide GPIO mux on J2:2 (WLAN_PWRON).
-
-The default shield support is set to GT202 shield. To enable 
-Silex SX-ULPAN-2401, please open "wifi_shield.h" and uncomment
-following lines:
-
-//#define WIFISHIELD_IS_SILEX2041
-
-//#elif defined(WIFISHIELD_IS_SILEX2041)
-//#include "wifi_shield_silex2401.h"
-
-and comment out:
-
-#define WIFISHIELD_IS_GT202
-
-
-Toolchain supported
-===================
-- MCUXpresso 10.3.0
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
 

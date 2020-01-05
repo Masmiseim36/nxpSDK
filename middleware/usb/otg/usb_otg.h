@@ -21,16 +21,16 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/*! @brief USB otg task message queue count */
+/*! @brief USB OTG task message queue count */
 #define USB_OTG_MSG_COUNT (8)
 
-/*! @brief USB otg host request flag */
+/*! @brief USB OTG host request flag */
 #define USB_OTG_STATUS_HOST_REQUEST_FLAG (0x01U)
 
-/*! @brief USB otg controller handle type define */
+/*! @brief USB OTG controller handle type define */
 typedef void *usb_otg_controller_handle;
 
-/*! @brief please reference to 7.4 in otg spec */
+/*! @brief please reference to 7.4 in OTG spec */
 typedef enum _usb_otg_status_type
 {
     kOtg_StatusId = 0x0001U,                       /*! id */
@@ -63,7 +63,7 @@ typedef enum _usb_otg_status_type
                                            (kOtg_ControlUpdateStatus) to update status */
 } usb_otg_status_type_t;
 
-/*! @brief Please reference to charpter 7 in otg spec */
+/*! @brief Please reference to chapter 7 in OTG spec */
 typedef enum _usb_otg_device_state
 {
     kOtg_State_Start = 0U,  /*! state state */
@@ -99,13 +99,13 @@ typedef enum _usb_otg_stack_init_type
 /*! @brief The event types for callback to applcation */
 typedef enum _usb_otg_event_type
 {
-    /*! otg state change event, the event values are #usb_otg_device_state_t */
+    /*! OTG state change event, the event values are #usb_otg_device_state_t */
     kOtg_EventStateChange = 0U,
     /*! host/device stack handle event, the event values are #usb_otg_stack_init_type_t */
     kOtg_EventStackInit,
 } usb_otg_event_type_t;
 
-/*! @brief usb otg descriptor */
+/*! @brief USB OTG descriptor */
 typedef struct _usb_otg_descriptor
 {
     /*! Size of Descriptor */
@@ -151,14 +151,14 @@ extern "C" {
 /*!
  * @brief Initializes the USB OTG stack.
  *
- * This function initializes the USB otg module specified by the controllerId.
+ * This function initializes the USB OTG module specified by the controllerId.
  *
  * @param[in] controllerId      The controller ID of the USB IP. See the enumeration #usb_controller_index_t.
- * @param[out] otgHandle        Return the otg handle.
- * @param[in] otgCallbackFn     Otg callback function, it is #usb_otg_callback_t.
+ * @param[out] otgHandle        Return the OTG handle.
+ * @param[in] otgCallbackFn     OTG callback function, it is #usb_otg_callback_t.
  * @param[in] callbackParameter The callback parameter.
  *
- * @retval kStatus_USB_Success              The otg is initialized successfully.
+ * @retval kStatus_USB_Success              The OTG is initialized successfully.
  * @retval kStatus_USB_InvalidHandle        The otgHandle is a NULL pointer.
  * @retval kStatus_USB_AllocFail            Allocation memory fail.
  * @retval kStatus_USB_Error                message queue create fail, controller is not fount, controller initialize
@@ -170,11 +170,11 @@ usb_status_t USB_OtgInit(uint8_t controllerId,
                          void *callbackParameter);
 
 /*!
- * @brief Deinitializes the USB otg stack.
+ * @brief Deinitializes the USB OTG stack.
  *
- * This function deinitializes the USB otg module specified by the otgHandle.
+ * This function deinitializes the USB OTG module specified by the otgHandle.
  *
- * @param[in] otgHandle  the otg handle.
+ * @param[in] otgHandle  the OTG handle.
  *
  * @retval kStatus_USB_Success              The OTG is initialized successfully.
  * @retval kStatus_USB_InvalidHandle        The otgHandle is a NULL pointer.
@@ -189,7 +189,7 @@ usb_status_t USB_OtgDeinit(usb_otg_handle otgHandle);
  * In bare metal environment, this function should be called periodically in the main function.
  * In the RTOS environment, this function should be used as a function entry to create a task.
  *
- * @param[in] otgHandle The otg handle.
+ * @param[in] otgHandle The OTG handle.
  */
 void USB_OtgTaskFunction(usb_otg_handle otgHandle);
 
@@ -198,7 +198,7 @@ void USB_OtgTaskFunction(usb_otg_handle otgHandle);
  *
  * The function is the KHCI interrupt service routine.
  *
- * @param[in] otgHandle The otg handle.
+ * @param[in] otgHandle The OTG handle.
  */
 void USB_OtgKhciIsrFunction(usb_otg_handle otgHandle);
 
@@ -207,7 +207,7 @@ void USB_OtgKhciIsrFunction(usb_otg_handle otgHandle);
  *
  * This function drop the bus.
  *
- * @param[in] otgHandle  the otg handle.
+ * @param[in] otgHandle  the OTG handle.
  * @param[in] drop       1 or 0.
  *
  * @retval kStatus_USB_Success              Success.
@@ -226,7 +226,7 @@ usb_status_t USB_OtgBusDrop(usb_otg_handle otgHandle, uint8_t drop);
  * 4. B-device request bus (SRP), change from b_idle to b_srp_init
  * 5. Poll device status, "host request flag" is set.
  *
- * @param[in] otgHandle  the otg handle.
+ * @param[in] otgHandle  the OTG handle.
  *
  * @retval kStatus_USB_Success              Success.
  * @retval kStatus_USB_InvalidHandle        The otgHandle is a NULL pointer.
@@ -242,7 +242,7 @@ usb_status_t USB_OtgBusRequest(usb_otg_handle otgHandle);
  * 2. A-device release bus when A-device is host (a_host).
  * 3. B-device release bus when B-device is host (b_host).
  *
- * @param[in] otgHandle  the otg handle.
+ * @param[in] otgHandle  the OTG handle.
  *
  * @retval kStatus_USB_Success              Success.
  * @retval kStatus_USB_InvalidHandle        The otgHandle is a NULL pointer.
@@ -253,9 +253,9 @@ usb_status_t USB_OtgBusRelease(usb_otg_handle otgHandle);
 /*!
  * @brief clear error.
  *
- * This function clear the error.
+ * This function clears the error.
  *
- * @param[in] otgHandle  the otg handle.
+ * @param[in] otgHandle  the OTG handle.
  *
  * @retval kStatus_USB_Success              Success.
  * @retval kStatus_USB_InvalidHandle        The otgHandle is a NULL pointer.
@@ -264,11 +264,11 @@ usb_status_t USB_OtgBusRelease(usb_otg_handle otgHandle);
 usb_status_t USB_OtgClearError(usb_otg_handle otgHandle);
 
 /*!
- * @brief Notify otg stack the status changes.
+ * @brief Notify OTG stack about the status changes.
  *
  * This function notify the #usb_otg_status_type_t and values.
  *
- * @param[in] otgHandle   the otg handle.
+ * @param[in] otgHandle   the OTG handle.
  * @param[in] statusType  please reference to #usb_otg_status_type_t
  * @param[in] statusValue the value is 1 or 0
  *

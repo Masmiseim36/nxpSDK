@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  *
@@ -21,7 +21,7 @@
 #include "lwip/prot/dhcp.h"
 #include "lwip/tcpip.h"
 #include "lwip/sys.h"
-#include "ethernetif.h"
+#include "enet_ethernetif.h"
 
 #include "board.h"
 
@@ -54,6 +54,11 @@
 #define BOARD_SW_IRQ_HANDLER BOARD_SW3_IRQ_HANDLER
 
 
+#ifndef EXAMPLE_NETIF_INIT_FN
+/*! @brief Network interface initialization function. */
+#define EXAMPLE_NETIF_INIT_FN ethernetif0_init
+#endif /* EXAMPLE_NETIF_INIT_FN */
+
 /*! @brief Stack size of the thread which prints DHCP info. */
 #define PRINT_THREAD_STACKSIZE 512
 
@@ -61,12 +66,12 @@
 #define PRINT_THREAD_PRIO DEFAULT_THREAD_PRIO
 
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 
 /*******************************************************************************
  * Code
@@ -157,10 +162,18 @@ static void print_dhcp_state(void *arg)
  */
 int main(void)
 {
-    static struct netif fsl_netif0;
-    ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
-    ethernetif_config_t fsl_enet_config0 = {
-        .phyAddress = EXAMPLE_PHY_ADDRESS, .clockName = EXAMPLE_CLOCK_NAME, .macAddress = configMAC_ADDR,
+    static struct netif netif;
+#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
+    static mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
+#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
+    ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
+    ethernetif_config_t enet_config = {
+        .phyAddress = EXAMPLE_PHY_ADDRESS,
+        .clockName  = EXAMPLE_CLOCK_NAME,
+        .macAddress = configMAC_ADDR,
+#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
+        .non_dma_memory = non_dma_memory,
+#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     };
 
     SYSMPU_Type *base = SYSMPU;
@@ -170,24 +183,24 @@ int main(void)
     /* Disable SYSMPU. */
     base->CESR &= ~SYSMPU_CESR_VLD_MASK;
 
-    IP4_ADDR(&fsl_netif0_ipaddr, 0U, 0U, 0U, 0U);
-    IP4_ADDR(&fsl_netif0_netmask, 0U, 0U, 0U, 0U);
-    IP4_ADDR(&fsl_netif0_gw, 0U, 0U, 0U, 0U);
+    IP4_ADDR(&netif_ipaddr, 0U, 0U, 0U, 0U);
+    IP4_ADDR(&netif_netmask, 0U, 0U, 0U, 0U);
+    IP4_ADDR(&netif_gw, 0U, 0U, 0U, 0U);
 
     tcpip_init(NULL, NULL);
 
-    netifapi_netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0,
-                       ethernetif0_init, tcpip_input);
-    netifapi_netif_set_default(&fsl_netif0);
-    netifapi_netif_set_up(&fsl_netif0);
+    netifapi_netif_add(&netif, &netif_ipaddr, &netif_netmask, &netif_gw, &enet_config, EXAMPLE_NETIF_INIT_FN,
+                       tcpip_input);
+    netifapi_netif_set_default(&netif);
+    netifapi_netif_set_up(&netif);
 
-    netifapi_dhcp_start(&fsl_netif0);
+    netifapi_dhcp_start(&netif);
 
     PRINTF("\r\n************************************************\r\n");
     PRINTF(" DHCP example\r\n");
     PRINTF("************************************************\r\n");
 
-    if (sys_thread_new("print_dhcp", print_dhcp_state, &fsl_netif0, PRINT_THREAD_STACKSIZE, PRINT_THREAD_PRIO) == NULL)
+    if (sys_thread_new("print_dhcp", print_dhcp_state, &netif, PRINT_THREAD_STACKSIZE, PRINT_THREAD_PRIO) == NULL)
     {
         LWIP_ASSERT("stack_init(): Task creation failed.", 0);
     }

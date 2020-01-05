@@ -2,7 +2,7 @@
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -29,8 +29,10 @@
  * Change log:
  * - Version 2.0.1
  *   - move DATA and DATALL macro definition from header file to source file
+ * - Version 2.0.2
+ *   - Fix MISRA issues
  */
-#define FSL_CRC_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
+#define FSL_CRC_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
 /*@}*/
 
 #ifndef CRC_DRIVER_CUSTOM_DEFAULTS
@@ -57,11 +59,11 @@ typedef enum _crc_result
 } crc_result_t;
 
 /*!
-* @brief CRC protocol configuration.
-*
-* This structure holds the configuration for the CRC protocol.
-*
-*/
+ * @brief CRC protocol configuration.
+ *
+ * This structure holds the configuration for the CRC protocol.
+ *
+ */
 typedef struct _crc_config
 {
     uint32_t polynomial;     /*!< CRC Polynomial, MSBit first.

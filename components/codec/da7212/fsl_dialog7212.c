@@ -274,8 +274,7 @@ status_t DA7212_WriteRegister(da7212_handle_t *handle, uint8_t u8Register, uint8
 
     uint8_t writeValue = u8RegisterData;
 
-    return CODEC_I2C_Send(&(handle->i2cHandle), handle->config->slaveAddress, u8Register, 1U, (uint8_t *)&writeValue,
-                          1U);
+    return CODEC_I2C_Send(handle->i2cHandle, handle->config->slaveAddress, u8Register, 1U, (uint8_t *)&writeValue, 1U);
 }
 
 status_t DA7212_ReadRegister(da7212_handle_t *handle, uint8_t u8Register, uint8_t *pu8RegisterData)
@@ -283,7 +282,7 @@ status_t DA7212_ReadRegister(da7212_handle_t *handle, uint8_t u8Register, uint8_
     assert(handle->config);
     assert(handle->config->slaveAddress != 0U);
 
-    return CODEC_I2C_Receive(&(handle->i2cHandle), handle->config->slaveAddress, u8Register, 1U,
+    return CODEC_I2C_Receive(handle->i2cHandle, handle->config->slaveAddress, u8Register, 1U,
                              (uint8_t *)pu8RegisterData, 1U);
     ;
 }
@@ -315,7 +314,7 @@ status_t DA7212_Init(da7212_handle_t *handle, da7212_config_t *codecConfig)
     handle->config          = config;
 
     /* i2c bus initialization */
-    if (CODEC_I2C_Init(&(handle->i2cHandle), config->i2cConfig.codecI2CInstance, DA7212_I2C_BAUDRATE,
+    if (CODEC_I2C_Init(handle->i2cHandle, config->i2cConfig.codecI2CInstance, DA7212_I2C_BAUDRATE,
                        config->i2cConfig.codecI2CSourceClock) != kStatus_HAL_I2cSuccess)
     {
         return kStatus_Fail;

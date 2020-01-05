@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP.
+ * Copyright 2019 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,10 +14,10 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v5.0
+product: Pins v6.0
 processor: MK22FN128xxx10
 mcu_data: ksdk2_0
-processor_version: 0.0.16
+processor_version: 0.0.19
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -40,7 +40,7 @@ void BOARD_InitBootPins(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins:
-- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', enableClock: 'true'}
 - pin_list: []
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */

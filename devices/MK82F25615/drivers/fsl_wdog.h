@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_WDOG_H_
 #define _FSL_WDOG_H_
@@ -33,11 +11,9 @@
 #include "fsl_common.h"
 
 /*!
- * @addtogroup wdog_driver
+ * @addtogroup wdog
  * @{
  */
-
-/*! @file */
 
 /*******************************************************************************
  * Definitions
@@ -45,8 +21,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief Defines WDOG driver version 2.0.0. */
-#define FSL_WDOG_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+/*! @brief Defines WDOG driver version 2.0.1. */
+#define FSL_WDOG_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
 /*@}*/
 
 /*! @name Unlock sequence */
@@ -64,7 +40,7 @@
 /*! @brief Describes WDOG clock source. */
 typedef enum _wdog_clock_source
 {
-    kWDOG_LpoClockSource = 0U,       /*!< WDOG clock sourced from LPO*/
+    kWDOG_LpoClockSource       = 0U, /*!< WDOG clock sourced from LPO*/
     kWDOG_AlternateClockSource = 1U, /*!< WDOG clock sourced from alternate clock source*/
 } wdog_clock_source_t;
 
@@ -109,7 +85,7 @@ typedef struct _wdog_config
 typedef enum _wdog_test_mode
 {
     kWDOG_QuickTest = 0U, /*!< Selects quick test */
-    kWDOG_ByteTest = 1U,  /*!< Selects byte test */
+    kWDOG_ByteTest  = 1U, /*!< Selects byte test */
 } wdog_test_mode_t;
 
 /*! @brief Describes WDOG tested byte selection in byte test mode. */
@@ -136,7 +112,7 @@ typedef struct _wdog_test_config
  */
 enum _wdog_interrupt_enable_t
 {
-    kWDOG_InterruptEnable = WDOG_STCTRLH_IRQRSTEN_MASK, /*!< WDOG timeout will generate interrupt before reset*/
+    kWDOG_InterruptEnable = WDOG_STCTRLH_IRQRSTEN_MASK, /*!< WDOG timeout generates an interrupt before reset*/
 };
 
 /*!
@@ -164,10 +140,10 @@ extern "C" {
  */
 
 /*!
- * @brief Initializes WDOG configure sturcture.
+ * @brief Initializes the WDOG configuration structure.
  *
- * This function initializes the WDOG configure structure to default value. The default
- * value are:
+ * This function initializes the WDOG configuration structure to default values. The default
+ * values are as follows.
  * @code
  *   wdogConfig->enableWdog = true;
  *   wdogConfig->clockSource = kWDOG_LpoClockSource;
@@ -182,7 +158,7 @@ extern "C" {
  *   wdogConfig->timeoutValue = 0xFFFFU;
  * @endcode
  *
- * @param config Pointer to WDOG config structure.
+ * @param config Pointer to the WDOG configuration structure.
  * @see wdog_config_t
  */
 void WDOG_GetDefaultConfig(wdog_config_t *config);
@@ -191,10 +167,10 @@ void WDOG_GetDefaultConfig(wdog_config_t *config);
  * @brief Initializes the WDOG.
  *
  * This function initializes the WDOG. When called, the WDOG runs according to the configuration.
- * If user wants to reconfigure WDOG without forcing a reset first, enableUpdate must be set to true
- * in configuration.
+ * To reconfigure WDOG without forcing a reset first, enableUpdate must be set to true
+ * in the configuration.
  *
- * Example:
+ * This is an example.
  * @code
  *   wdog_config_t config;
  *   WDOG_GetDefaultConfig(&config);
@@ -212,18 +188,18 @@ void WDOG_Init(WDOG_Type *base, const wdog_config_t *config);
  * @brief Shuts down the WDOG.
  *
  * This function shuts down the WDOG.
- * Make sure that the WDOG_STCTRLH.ALLOWUPDATE is 1 which means that the register update is enabled.
+ * Ensure that the WDOG_STCTRLH.ALLOWUPDATE is 1 which indicates that the register update is enabled.
  */
 void WDOG_Deinit(WDOG_Type *base);
 
 /*!
- * @brief Configures WDOG functional test.
+ * @brief Configures the WDOG functional test.
  *
  * This function is used to configure the WDOG functional test. When called, the WDOG goes into test mode
  * and runs according to the configuration.
- * Make sure that the WDOG_STCTRLH.ALLOWUPDATE is 1 which means that the register update is enabled.
+ * Ensure that the WDOG_STCTRLH.ALLOWUPDATE is 1 which means that the register update is enabled.
  *
- * Example:
+ * This is an example.
  * @code
  *   wdog_test_config_t test_config;
  *   test_config.testMode = kWDOG_QuickTest;
@@ -259,96 +235,98 @@ static inline void WDOG_Enable(WDOG_Type *base)
 /*!
  * @brief Disables the WDOG module.
  *
- * This function write value into WDOG_STCTRLH register to disable the WDOG, it is a write-once register,
- * make sure that the WCT window is still open and this register has not been written in this WCT
- * while this function is called.
+ * This function writes a value into the WDOG_STCTRLH register to disable the WDOG. It is a write-once register.
+ * Ensure that the WCT window is still open and that register has not been written to in this WCT
+ * while the function is called.
  *
  * @param base WDOG peripheral base address
  */
 static inline void WDOG_Disable(WDOG_Type *base)
 {
-    base->STCTRLH &= ~WDOG_STCTRLH_WDOGEN_MASK;
+    base->STCTRLH &= ~(uint16_t)WDOG_STCTRLH_WDOGEN_MASK;
 }
 
 /*!
- * @brief Enable WDOG interrupt.
+ * @brief Enables the WDOG interrupt.
  *
- * This function write value into WDOG_STCTRLH register to enable WDOG interrupt, it is a write-once register,
- * make sure that the WCT window is still open and this register has not been written in this WCT
- * while this function is called.
+ * This function writes a value into the WDOG_STCTRLH register to enable the WDOG interrupt. It is a write-once
+ * register.
+ * Ensure that the WCT window is still open and the register has not been written to in this WCT
+ * while the function is called.
  *
  * @param base WDOG peripheral base address
  * @param mask The interrupts to enable
- *        The parameter can be combination of the following source if defined:
+ *        The parameter can be combination of the following source if defined.
  *        @arg kWDOG_InterruptEnable
  */
 static inline void WDOG_EnableInterrupts(WDOG_Type *base, uint32_t mask)
 {
-    base->STCTRLH |= mask;
+    base->STCTRLH |= (uint16_t)mask;
 }
 
 /*!
- * @brief Disable WDOG interrupt.
+ * @brief Disables the WDOG interrupt.
  *
- * This function write value into WDOG_STCTRLH register to disable WDOG interrupt, it is a write-once register,
- * make sure that the WCT window is still open and this register has not been written in this WCT
- * while this function is called.
+ * This function writes a value into the WDOG_STCTRLH register to disable the WDOG interrupt. It is a write-once
+ * register.
+ * Ensure that the WCT window is still open and the register has not been written to in this WCT
+ * while the function is called.
  *
  * @param base WDOG peripheral base address
  * @param mask The interrupts to disable
- *        The parameter can be combination of the following source if defined:
+ *        The parameter can be combination of the following source if defined.
  *        @arg kWDOG_InterruptEnable
  */
 static inline void WDOG_DisableInterrupts(WDOG_Type *base, uint32_t mask)
 {
-    base->STCTRLH &= ~mask;
+    base->STCTRLH &= (uint16_t)~mask;
 }
 
 /*!
- * @brief Gets WDOG all status flags.
+ * @brief Gets the WDOG all status flags.
  *
  * This function gets all status flags.
  *
- * Example for getting Running Flag:
+ * This is an example for getting the Running Flag.
  * @code
  *   uint32_t status;
- *   status = WDOG_GetStatusFlags(wdog_base) & kWDOG_RunningFlag;
+ *   status = WDOG_GetStatusFlags (wdog_base) & kWDOG_RunningFlag;
  * @endcode
  * @param base        WDOG peripheral base address
  * @return            State of the status flag: asserted (true) or not-asserted (false).@see _wdog_status_flags_t
- *                    - true: related status flag has been set.
- *                    - false: related status flag is not set.
+ *                    - true: a related status flag has been set.
+ *                    - false: a related status flag is not set.
  */
 uint32_t WDOG_GetStatusFlags(WDOG_Type *base);
 
 /*!
- * @brief Clear WDOG flag.
+ * @brief Clears the WDOG flag.
  *
- * This function clears WDOG status flag.
+ * This function clears the WDOG status flag.
  *
- * Example for clearing timeout(interrupt) flag:
+ * This is an example for clearing the timeout (interrupt) flag.
  * @code
  *   WDOG_ClearStatusFlags(wdog_base,kWDOG_TimeoutFlag);
  * @endcode
  * @param base        WDOG peripheral base address
  * @param mask        The status flags to clear.
- *                    The parameter could be any combination of the following values:
+ *                    The parameter could be any combination of the following values.
  *                    kWDOG_TimeoutFlag
  */
 void WDOG_ClearStatusFlags(WDOG_Type *base, uint32_t mask);
 
 /*!
- * @brief Set the WDOG timeout value.
+ * @brief Sets the WDOG timeout value.
  *
  * This function sets the timeout value.
  * It should be ensured that the time-out value for the WDOG is always greater than
  * 2xWCT time + 20 bus clock cycles.
- * This function write value into WDOG_TOVALH and WDOG_TOVALL registers which are wirte-once.
- * Make sure the WCT window is still open and these two registers have not been written in this WCT
- * while this function is called.
+ * This function writes a value into WDOG_TOVALH and WDOG_TOVALL registers which are wirte-once.
+ * Ensure the WCT window is still open and the two registers have not been written to in this WCT
+ * while the function is called.
  *
  * @param base WDOG peripheral base address
- * @param timeoutCount WDOG timeout value, count of WDOG clock tick.
+ * @param timeoutCount WDOG timeout value; count of WDOG clock tick.
  */
 static inline void WDOG_SetTimeoutValue(WDOG_Type *base, uint32_t timeoutCount)
 {
@@ -360,9 +338,9 @@ static inline void WDOG_SetTimeoutValue(WDOG_Type *base, uint32_t timeoutCount)
  * @brief Sets the WDOG window value.
  *
  * This function sets the WDOG window value.
- * This function write value into WDOG_WINH and WDOG_WINL registers which are wirte-once.
- * Make sure the WCT window is still open and these two registers have not been written in this WCT
- * while this function is called.
+ * This function writes a value into WDOG_WINH and WDOG_WINL registers which are wirte-once.
+ * Ensure the WCT window is still open and the two registers have not been written to in this WCT
+ * while the function is called.
  *
  * @param base WDOG peripheral base address
  * @param windowValue WDOG window value.
@@ -377,8 +355,8 @@ static inline void WDOG_SetWindowValue(WDOG_Type *base, uint32_t windowValue)
  * @brief Unlocks the WDOG register written.
  *
  * This function unlocks the WDOG register written.
- * Before starting the unlock sequence and following congfiguration, disable the global interrupts.
- * Otherwise, an interrupt could effectively invalidate the unlock sequence and the WCT may expire,
+ * Before starting the unlock sequence and following configuration, disable the global interrupts.
+ * Otherwise, an interrupt may invalidate the unlocking sequence and the WCT may expire.
  * After the configuration finishes, re-enable the global interrupts.
  *
  * @param base WDOG peripheral base address
@@ -393,7 +371,7 @@ static inline void WDOG_Unlock(WDOG_Type *base)
  * @brief Refreshes the WDOG timer.
  *
  * This function feeds the WDOG.
- * This function should be called before WDOG timer is in timeout. Otherwise, a reset is asserted.
+ * This function should be called before the WDOG timer is in timeout. Otherwise, a reset is asserted.
  *
  * @param base WDOG peripheral base address
  */
@@ -405,7 +383,7 @@ void WDOG_Refresh(WDOG_Type *base);
  * This function gets the WDOG reset count value.
  *
  * @param base WDOG peripheral base address
- * @return     WDOG reset count value
+ * @return     WDOG reset count value.
  */
 static inline uint16_t WDOG_GetResetCount(WDOG_Type *base)
 {
@@ -420,7 +398,7 @@ static inline uint16_t WDOG_GetResetCount(WDOG_Type *base)
  */
 static inline void WDOG_ClearResetCount(WDOG_Type *base)
 {
-    base->RSTCNT |= UINT16_MAX;
+    base->RSTCNT |= (uint16_t)UINT16_MAX;
 }
 
 /*@}*/

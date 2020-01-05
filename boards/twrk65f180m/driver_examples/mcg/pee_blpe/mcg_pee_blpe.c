@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "board.h"
@@ -41,6 +19,7 @@
 #define APP_MCGOUTCLK_FREQ 120000000U
 #define LED_INIT() LED_ORANGE_INIT(LOGIC_LED_ON)
 #define LED_TOGGLE() LED_ORANGE_TOGGLE()
+#define CORE_CLK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
 
 /*******************************************************************************
  * Prototypes
@@ -63,8 +42,7 @@ uint32_t g_frdivValue = 0U;   /* The FRDIV value.*/
  */
 bool APP_GetAvailableFrdiv(void)
 {
-    const uint32_t allowedRefFreq[][2U] =
-    {
+    const uint32_t allowedRefFreq[][2U] = {
         /*  Min          Max   */
         {1000000U, 1250000U},
         {2000000U, 2500000U},
@@ -110,7 +88,7 @@ bool APP_GetAvailablePllConfig(mcg_pll_config_t *pllConfig)
 
 #if (defined(FSL_FEATURE_MCG_HAS_PLL_INTERNAL_MODE) && FSL_FEATURE_MCG_HAS_PLL_INTERNAL_MODE)
     pllConfig->refSrc = kMCG_PllRefFllRef;
-#elif(defined(FSL_FEATURE_MCG_USE_PLLREFSEL) && FSL_FEATURE_MCG_USE_PLLREFSEL)
+#elif (defined(FSL_FEATURE_MCG_USE_PLLREFSEL) && FSL_FEATURE_MCG_USE_PLLREFSEL)
     pllConfig->refSrc = kMCG_PllRefOsc0;
 #endif /* FSL_FEATURE_MCG_HAS_PLL_INTERNAL_MODE || FSL_FEATURE_MCG_USE_PLLREFSEL */
 #if (defined(FSL_FEATURE_MCG_HAS_PLL_INTERNAL_MODE) && FSL_FEATURE_MCG_HAS_PLL_INTERNAL_MODE)
@@ -158,7 +136,14 @@ void APP_ChangeBlpeToPeeExample(void)
 
 void APP_BootToPeeExample(void)
 {
+#if (!defined(BOARD_XTAL0_CLK_HZ))
+    /* alternative clock's source */
+#if defined BOARD_IRC48M_CLK_HZ
+    CLOCK_BootToPeeMode(kMCG_OscselIrc, kMCG_PllClkSelPll0, &g_pllConfig);
+#endif
+#else
     CLOCK_BootToPeeMode(kMCG_OscselOsc, kMCG_PllClkSelPll0, &g_pllConfig);
+#endif
     assert(kMCG_ModePEE == CLOCK_GetMode());
 }
 
@@ -172,9 +157,9 @@ int main(void)
 
     /* Structure for OSC configuration */
     osc_config_t oscConfig;
-    oscConfig.freq = BOARD_XTAL0_CLK_HZ;
-    oscConfig.capLoad = 0U;
-    oscConfig.workMode = kOSC_ModeOscLowPower;
+    oscConfig.freq                   = BOARD_XTAL0_CLK_HZ;
+    oscConfig.capLoad                = 0U;
+    oscConfig.workMode               = kOSC_ModeOscLowPower;
     oscConfig.oscerConfig.enableMode = kOSC_ErClkEnable;
 
     BOARD_InitPins();
@@ -212,7 +197,7 @@ int main(void)
     APP_ChangeBlpeToPeeExample();
 
     /* Get System clock to blink a LED */
-    sysFreq = CLOCK_GetFreq(kCLOCK_CoreSysClk) / 20U;
+    sysFreq = CORE_CLK_FREQ / 20U;
     /* Enable a LED */
     LED_INIT();
     /* Blink a LED */

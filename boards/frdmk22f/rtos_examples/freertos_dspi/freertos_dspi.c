@@ -2,7 +2,7 @@
  * Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -22,8 +22,8 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 #define EXAMPLE_DSPI_MASTER_BASE (SPI0_BASE)
 #define EXAMPLE_DSPI_MASTER_IRQN (SPI0_IRQn)
 #define DSPI_MASTER_CLK_SRC (DSPI0_CLK_SRC)
@@ -48,12 +48,12 @@
 #define TRANSFER_BAUDRATE (500000U) /*! Transfer baudrate - 500k */
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 uint8_t masterReceiveBuffer[TRANSFER_SIZE] = {0};
-uint8_t masterSendBuffer[TRANSFER_SIZE] = {0};
-uint8_t slaveReceiveBuffer[TRANSFER_SIZE] = {0};
-uint8_t slaveSendBuffer[TRANSFER_SIZE] = {0};
+uint8_t masterSendBuffer[TRANSFER_SIZE]    = {0};
+uint8_t slaveReceiveBuffer[TRANSFER_SIZE]  = {0};
+uint8_t slaveSendBuffer[TRANSFER_SIZE]     = {0};
 
 dspi_slave_handle_t g_s_handle;
 SemaphoreHandle_t dspi_sem;
@@ -95,7 +95,7 @@ int main(void)
     PRINTF("FreeRTOS DSPI example start.\r\n");
 #if (EXAMPLE_CONNECT_DSPI == SINGLE_BOARD)
     PRINTF("This example use one dspi instance as master and another as slave on one board.\r\n");
-#elif(EXAMPLE_CONNECT_DSPI == BOARD_TO_BOARD)
+#elif (EXAMPLE_CONNECT_DSPI == BOARD_TO_BOARD)
     PRINTF("This example use two boards to connect with one as master and anohter as slave.\r\n");
 #endif
     PRINTF("Master and slave are both use interrupt way.\r\n");
@@ -109,7 +109,8 @@ int main(void)
     PRINTF("   GND      --    GND \r\n");
 #endif
 
-    if (xTaskCreate(slave_task, "Slave_task", configMINIMAL_STACK_SIZE + 64, NULL, slave_task_PRIORITY, NULL) != pdPASS)
+    if (xTaskCreate(slave_task, "Slave_task", configMINIMAL_STACK_SIZE + 100, NULL, slave_task_PRIORITY, NULL) !=
+        pdPASS)
     {
         PRINTF("Failed to create slave task");
         while (1)
@@ -134,7 +135,7 @@ typedef struct _callback_message_t
 void DSPI_SlaveUserCallback(SPI_Type *base, dspi_slave_handle_t *handle, status_t status, void *userData)
 {
     callback_message_t *cb_msg = (callback_message_t *)userData;
-    BaseType_t reschedule;
+    BaseType_t reschedule      = 0;
 
     cb_msg->async_status = status;
     xSemaphoreGiveFromISR(cb_msg->sem, &reschedule);
@@ -155,7 +156,7 @@ static void slave_task(void *pvParameters)
     callback_message_t cb_msg;
 
     cb_msg.sem = xSemaphoreCreateBinary();
-    dspi_sem = cb_msg.sem;
+    dspi_sem   = cb_msg.sem;
     if (cb_msg.sem == NULL)
     {
         PRINTF("DSPI slave: Error creating semaphore\r\n");
@@ -164,22 +165,22 @@ static void slave_task(void *pvParameters)
     /*Set up the transfer data*/
     for (i = 0; i < TRANSFER_SIZE; i++)
     {
-        masterSendBuffer[i] = i % 256;
+        masterSendBuffer[i]    = i % 256;
         masterReceiveBuffer[i] = 0;
 
-        slaveSendBuffer[i] = ~masterSendBuffer[i];
+        slaveSendBuffer[i]    = ~masterSendBuffer[i];
         slaveReceiveBuffer[i] = 0;
     }
 #if ((SPI_MASTER_SLAVE == isSLAVE) || (EXAMPLE_CONNECT_DSPI == SINGLE_BOARD))
     /*Slave config*/
-    slaveConfig.whichCtar = kDSPI_Ctar0;
-    slaveConfig.ctarConfig.bitsPerFrame = 8;
-    slaveConfig.ctarConfig.cpol = kDSPI_ClockPolarityActiveHigh;
-    slaveConfig.ctarConfig.cpha = kDSPI_ClockPhaseFirstEdge;
-    slaveConfig.enableContinuousSCK = false;
-    slaveConfig.enableRxFifoOverWrite = false;
+    slaveConfig.whichCtar                  = kDSPI_Ctar0;
+    slaveConfig.ctarConfig.bitsPerFrame    = 8;
+    slaveConfig.ctarConfig.cpol            = kDSPI_ClockPolarityActiveHigh;
+    slaveConfig.ctarConfig.cpha            = kDSPI_ClockPhaseFirstEdge;
+    slaveConfig.enableContinuousSCK        = false;
+    slaveConfig.enableRxFifoOverWrite      = false;
     slaveConfig.enableModifiedTimingFormat = false;
-    slaveConfig.samplePoint = kDSPI_SckToSin0Clock;
+    slaveConfig.samplePoint                = kDSPI_SckToSin0Clock;
 
     DSPI_SlaveInit(EXAMPLE_DSPI_SLAVE_BASEADDR, &slaveConfig);
 
@@ -187,16 +188,16 @@ static void slave_task(void *pvParameters)
     DSPI_SlaveTransferCreateHandle(EXAMPLE_DSPI_SLAVE_BASEADDR, &g_s_handle, DSPI_SlaveUserCallback, &cb_msg);
 
     /*Set slave transfer ready to receive/send data*/
-    slaveXfer.txData = slaveSendBuffer;
-    slaveXfer.rxData = slaveReceiveBuffer;
-    slaveXfer.dataSize = TRANSFER_SIZE;
+    slaveXfer.txData      = slaveSendBuffer;
+    slaveXfer.rxData      = slaveReceiveBuffer;
+    slaveXfer.dataSize    = TRANSFER_SIZE;
     slaveXfer.configFlags = kDSPI_SlaveCtar0;
 
     DSPI_SlaveTransferNonBlocking(EXAMPLE_DSPI_SLAVE_BASEADDR, &g_s_handle, &slaveXfer);
 #endif /* ((SPI_MASTER_SLAVE == isSLAVE) ||  (EXAMPLE_CONNECT_DSPI == SINGLE_BOARD)) */
 
 #if ((SPI_MASTER_SLAVE == isMASTER) || (EXAMPLE_CONNECT_DSPI == SINGLE_BOARD))
-    if (xTaskCreate(master_task, "Master_task", configMINIMAL_STACK_SIZE + 64, NULL, master_task_PRIORITY, NULL) !=
+    if (xTaskCreate(master_task, "Master_task", configMINIMAL_STACK_SIZE + 100, NULL, master_task_PRIORITY, NULL) !=
         pdPASS)
     {
         PRINTF("Failed to create master task");
@@ -225,13 +226,13 @@ static void slave_task(void *pvParameters)
         {
             errorCount++;
         }
-#elif(SPI_MASTER_SLAVE == isSLAVE)
+#elif (SPI_MASTER_SLAVE == isSLAVE)
         if (masterSendBuffer[i] != slaveReceiveBuffer[i])
         {
             errorCount++;
         }
 #endif
-#elif(EXAMPLE_CONNECT_DSPI == SINGLE_BOARD)
+#elif (EXAMPLE_CONNECT_DSPI == SINGLE_BOARD)
         if (masterSendBuffer[i] != slaveReceiveBuffer[i])
         {
             errorCount++;
@@ -249,7 +250,7 @@ static void slave_task(void *pvParameters)
     }
     else
     {
-        PRINTF("Error occured in DSPI transfer ! \r\n");
+        PRINTF("Error occurred in DSPI transfer ! \r\n");
     }
 
     vTaskSuspend(NULL);
@@ -268,26 +269,26 @@ static void master_task(void *pvParameters)
     status_t status;
 
     /*Master config*/
-    masterConfig.whichCtar = kDSPI_Ctar0;
-    masterConfig.ctarConfig.baudRate = TRANSFER_BAUDRATE;
-    masterConfig.ctarConfig.bitsPerFrame = 8;
-    masterConfig.ctarConfig.cpol = kDSPI_ClockPolarityActiveHigh;
-    masterConfig.ctarConfig.cpha = kDSPI_ClockPhaseFirstEdge;
-    masterConfig.ctarConfig.direction = kDSPI_MsbFirst;
-    masterConfig.ctarConfig.pcsToSckDelayInNanoSec = 2000;
-    masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec = 2000;
+    masterConfig.whichCtar                                = kDSPI_Ctar0;
+    masterConfig.ctarConfig.baudRate                      = TRANSFER_BAUDRATE;
+    masterConfig.ctarConfig.bitsPerFrame                  = 8;
+    masterConfig.ctarConfig.cpol                          = kDSPI_ClockPolarityActiveHigh;
+    masterConfig.ctarConfig.cpha                          = kDSPI_ClockPhaseFirstEdge;
+    masterConfig.ctarConfig.direction                     = kDSPI_MsbFirst;
+    masterConfig.ctarConfig.pcsToSckDelayInNanoSec        = 2000;
+    masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec    = 2000;
     masterConfig.ctarConfig.betweenTransferDelayInNanoSec = 1000;
 
-    masterConfig.whichPcs = kDSPI_Pcs0;
+    masterConfig.whichPcs           = kDSPI_Pcs0;
     masterConfig.pcsActiveHighOrLow = kDSPI_PcsActiveLow;
 
-    masterConfig.enableContinuousSCK = false;
-    masterConfig.enableRxFifoOverWrite = false;
+    masterConfig.enableContinuousSCK        = false;
+    masterConfig.enableRxFifoOverWrite      = false;
     masterConfig.enableModifiedTimingFormat = false;
-    masterConfig.samplePoint = kDSPI_SckToSin0Clock;
+    masterConfig.samplePoint                = kDSPI_SckToSin0Clock;
 
     sourceClock = DSPI_MASTER_CLK_FREQ;
-    status = DSPI_RTOS_Init(&master_rtos_handle, EXAMPLE_DSPI_MASTER_BASEADDR, &masterConfig, sourceClock);
+    status      = DSPI_RTOS_Init(&master_rtos_handle, EXAMPLE_DSPI_MASTER_BASEADDR, &masterConfig, sourceClock);
 
     if (status != kStatus_Success)
     {
@@ -295,9 +296,9 @@ static void master_task(void *pvParameters)
         vTaskSuspend(NULL);
     }
     /*Start master transfer*/
-    masterXfer.txData = masterSendBuffer;
-    masterXfer.rxData = masterReceiveBuffer;
-    masterXfer.dataSize = TRANSFER_SIZE;
+    masterXfer.txData      = masterSendBuffer;
+    masterXfer.rxData      = masterReceiveBuffer;
+    masterXfer.dataSize    = TRANSFER_SIZE;
     masterXfer.configFlags = kDSPI_MasterCtar0 | kDSPI_MasterPcs0 | kDSPI_MasterPcsContinuous;
 
     status = DSPI_RTOS_Transfer(&master_rtos_handle, &masterXfer);

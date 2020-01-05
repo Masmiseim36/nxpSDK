@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*******************************************************************************
@@ -37,7 +15,6 @@
 #include "clock_config.h"
 #include "pin_mux.h"
 #include "fsl_flash.h"
-
 #include <stdbool.h>
 /*******************************************************************************
  * Definitions
@@ -75,10 +52,10 @@ uint32_t pflashBaseAddr;
  ******************************************************************************/
 
 /*
-* @brief Gets called when an error occurs.
-*
-* @details Print error message and trap forever.
-*/
+ * @brief Gets called when an error occurs.
+ *
+ * @details Print error message and trap forever.
+ */
 void error_trap(void)
 {
     PRINTF("\r\n\r\n\r\n\t---- HALTED DUE TO FLASH ERROR! ----");
@@ -88,10 +65,10 @@ void error_trap(void)
 }
 
 /*
-* @brief Gets called when the app is complete.
-*
-* @details Print finshed message and trap forever.
-*/
+ * @brief Gets called when the app is complete.
+ *
+ * @details Print finshed message and trap forever.
+ */
 void app_finalize(void)
 {
     /* Print finished message. */
@@ -112,10 +89,10 @@ void app_finalize(void)
  */
 int main(void)
 {
-    flash_security_state_t securityStatus = kFLASH_SecurityStateNotSecure; /* Return protection status */
+    ftfx_security_state_t securityStatus = kFTFx_SecurityStateNotSecure; /* Return protection status */
     status_t result; /* Return code from each flash driver function */
 
-    uint32_t pflashTotalSize = 0;
+    uint32_t pflashTotalSize  = 0;
     uint32_t pflashBlockCount = 0;
     uint32_t pflashSectorSize = 0;
 
@@ -129,14 +106,14 @@ int main(void)
 
     /* Setup flash driver structure for device and initialize variables. */
     result = FLASH_Init(&s_flashDriver);
-    if (kStatus_FLASH_Success != result)
+    if (kStatus_FTFx_Success != result)
     {
         error_trap();
     }
     /* Get flash properties*/
-    FLASH_GetProperty(&s_flashDriver, kFLASH_PropertyPflashTotalSize, &pflashTotalSize);
-    FLASH_GetProperty(&s_flashDriver, kFLASH_PropertyPflashBlockCount, &pflashBlockCount);
-    FLASH_GetProperty(&s_flashDriver, kFLASH_PropertyPflashSectorSize, &pflashSectorSize);
+    FLASH_GetProperty(&s_flashDriver, kFLASH_PropertyPflash0TotalSize, &pflashTotalSize);
+    FLASH_GetProperty(&s_flashDriver, kFLASH_PropertyPflash0BlockCount, &pflashBlockCount);
+    FLASH_GetProperty(&s_flashDriver, kFLASH_PropertyPflash0SectorSize, &pflashSectorSize);
 
     /* Erase all blocks to clear the swap system back to uninitialized */
     /*
@@ -158,20 +135,20 @@ int main(void)
 
     /* Check security status. */
     result = FLASH_GetSecurityState(&s_flashDriver, &securityStatus);
-    if (kStatus_FLASH_Success != result)
+    if (kStatus_FTFx_Success != result)
     {
         error_trap();
     }
     /* Print security status. */
     switch (securityStatus)
     {
-        case kFLASH_SecurityStateNotSecure:
+        case kFTFx_SecurityStateNotSecure:
             PRINTF("\r\n Flash is UNSECURE!");
             break;
-        case kFLASH_SecurityStateBackdoorEnabled:
+        case kFTFx_SecurityStateBackdoorEnabled:
             PRINTF("\r\n Flash is SECURE, BACKDOOR is ENABLED!");
             break;
-        case kFLASH_SecurityStateBackdoorDisabled:
+        case kFTFx_SecurityStateBackdoorDisabled:
             PRINTF("\r\n Flash is SECURE, BACKDOOR is DISABLED!");
             break;
         default:
@@ -183,34 +160,42 @@ int main(void)
 
     /* Debug message for user. */
     /* Test pflash swap feature only if flash is unsecure. */
-    if (kFLASH_SecurityStateNotSecure != securityStatus)
+    if (kFTFx_SecurityStateNotSecure != securityStatus)
     {
         PRINTF("\r\n Flash swap opeation will not be executed, as Flash is SECURE!");
         app_finalize();
     }
     else
     {
-        flash_swap_ifr_field_data_t flashSwapIfrFieldData;
+        struct _flash_swap_ifr_field_config
+        {
+            uint16_t swapIndicatorAddress; /*!< A Swap indicator address field.*/
+            uint16_t swapEnableWord;       /*!< A Swap enable word field.*/
+            uint8_t reserved0[4];          /*!< A reserved field.*/
+            uint8_t reserved1[2];          /*!< A reserved field.*/
+            uint16_t swapDisableWord;      /*!< A Swap disable word field.*/
+            uint8_t reserved2[4];          /*!< A reserved field.*/
+        } flashSwapIfrFieldData;
         uint32_t swapIndicatorAddress;
-        flash_swap_state_config_t returnSwapInfo;
+        ftfx_swap_state_config_t returnSwapInfo;
         uint32_t failedAddress;
         uint32_t failedData;
         uint32_t tempData[2];
 
         /* Clean up structures*/
-        memset(&flashSwapIfrFieldData, 0, sizeof(flash_swap_ifr_field_data_t));
-        memset(&returnSwapInfo, 0, sizeof(flash_swap_state_config_t));
+        memset(&flashSwapIfrFieldData, 0, sizeof(flashSwapIfrFieldData));
+        memset(&returnSwapInfo, 0, sizeof(ftfx_swap_state_config_t));
 
         /* Get original swap indicator address */
-        result = FLASH_ReadResource(&s_flashDriver, kFLASH_ResourceRangePflashSwapIfrStart,
-                                    flashSwapIfrFieldData.flashSwapIfrData,
-                                    sizeof(flashSwapIfrFieldData.flashSwapIfrData), kFLASH_ResourceOptionFlashIfr);
+        result = FLASH_ReadResource(&s_flashDriver, s_flashDriver.ftfxConfig[0].ifrDesc.resRange.pflashSwapIfrStart,
+                                    (uint8_t *)&flashSwapIfrFieldData, sizeof(flashSwapIfrFieldData),
+                                    kFTFx_ResourceOptionFlashIfr);
 
         /* The high bits value of Swap Indicator Address is stored in Program Flash Swap IFR Field,
          * the low severval bit value of Swap Indicator Address is always 1'b0 */
-        swapIndicatorAddress = (uint32_t)flashSwapIfrFieldData.flashSwapIfrField.swapIndicatorAddress *
-                               FSL_FEATURE_FLASH_PFLASH_SWAP_CONTROL_CMD_ADDRESS_ALIGMENT;
-        if (kStatus_FLASH_Success != result)
+        swapIndicatorAddress = (uint32_t)flashSwapIfrFieldData.swapIndicatorAddress *
+                               s_flashDriver.ftfxConfig[0].opsConfig.addrAligment.swapCtrlCmd;
+        if (kStatus_FTFx_Success != result)
         {
             error_trap();
         }
@@ -220,33 +205,34 @@ int main(void)
         }
 
         /* It doesn't matter what the provided address is, when option is kFlashSwap_ReportStatus*/
-        result = FLASH_SwapControl(&s_flashDriver, FSL_FEATURE_FLASH_PFLASH_SWAP_CONTROL_CMD_ADDRESS_ALIGMENT,
-                                   kFLASH_SwapControlOptionReportStatus, &returnSwapInfo);
-        if (kStatus_FLASH_Success != result)
+        result = FTFx_CMD_SwapControl(&s_flashDriver.ftfxConfig[0],
+                                      FSL_FEATURE_FLASH_PFLASH_SWAP_CONTROL_CMD_ADDRESS_ALIGMENT,
+                                      kFTFx_SwapControlOptionReportStatus, &returnSwapInfo);
+        if (kStatus_FTFx_Success != result)
         {
             error_trap();
         }
         /* Check current flash swap status*/
         switch (returnSwapInfo.flashSwapState)
         {
-            case kFLASH_SwapStateUninitialized:
+            case kFTFx_SwapStateUninitialized:
                 PRINTF("\r\n Current swap system status: Uninitialized \r\n");
                 swapIndicatorAddress = UPPER_PFLASH_BASE - pflashSectorSize;
                 PRINTF("\r\n Set swap indicator address as 0x%x \r\n", swapIndicatorAddress);
                 break;
-            case kFLASH_SwapStateReady:
+            case kFTFx_SwapStateReady:
                 PRINTF("\r\n Current swap system status: Ready \r\n");
                 break;
-            case kFLASH_SwapStateUpdate:
+            case kFTFx_SwapStateUpdate:
                 PRINTF("\r\n Current swap system status: Update \r\n");
                 break;
-            case kFLASH_SwapStateUpdateErased:
+            case kFTFx_SwapStateUpdateErased:
                 PRINTF("\r\n Current swap system status: UpdateErased \r\n");
                 break;
-            case kFLASH_SwapStateComplete:
+            case kFTFx_SwapStateComplete:
                 PRINTF("\r\n Current swap system status: Complete \r\n");
                 break;
-            case kFLASH_SwapStateDisabled:
+            case kFTFx_SwapStateDisabled:
                 PRINTF("\r\n Current swap system status: Disabled \r\n");
                 app_finalize();
                 break;
@@ -256,7 +242,7 @@ int main(void)
         }
 
         /* Check if the original indicator address is valid */
-        if (returnSwapInfo.flashSwapState != kFLASH_SwapStateUninitialized)
+        if (returnSwapInfo.flashSwapState != kFTFx_SwapStateUninitialized)
         /* if (flashSwapIfrField.swapIndicatorAddress != (uint16_t)(~0)) */
         {
             if ((swapIndicatorAddress < EXAMPLE_IMAGE_SIZE) || (swapIndicatorAddress >= UPPER_PFLASH_BASE))
@@ -279,13 +265,13 @@ int main(void)
             PRINTF("\r\n Backup example image is invalid \r\n");
             PRINTF("\r\n Start to program backup example image \r\n");
             /* Need to program the backup image */
-            result = FLASH_Erase(&s_flashDriver, UPPER_PFLASH_BASE, EXAMPLE_IMAGE_SIZE, kFLASH_ApiEraseKey);
-            if (kStatus_FLASH_Success != result)
+            result = FLASH_Erase(&s_flashDriver, UPPER_PFLASH_BASE, EXAMPLE_IMAGE_SIZE, kFTFx_ApiEraseKey);
+            if (kStatus_FTFx_Success != result)
             {
                 error_trap();
             }
-            result = FLASH_Program(&s_flashDriver, UPPER_PFLASH_BASE, tempData, sizeof(tempData));
-            if (kStatus_FLASH_Success != result)
+            result = FLASH_Program(&s_flashDriver, UPPER_PFLASH_BASE, (uint8_t *)tempData, sizeof(tempData));
+            if (kStatus_FTFx_Success != result)
             {
                 error_trap();
             }
@@ -293,18 +279,17 @@ int main(void)
             {
                 error_trap();
             }
-            result = FLASH_Program(&s_flashDriver, UPPER_PFLASH_BASE + sizeof(tempData),
-                                   (uint32_t *)(LOWER_PFLASH_BASE + sizeof(tempData)),
-                                   EXAMPLE_IMAGE_SIZE - sizeof(tempData));
-            if (kStatus_FLASH_Success != result)
+            result =
+                FLASH_Program(&s_flashDriver, UPPER_PFLASH_BASE + sizeof(tempData),
+                              (uint8_t *)(LOWER_PFLASH_BASE + sizeof(tempData)), EXAMPLE_IMAGE_SIZE - sizeof(tempData));
+            if (kStatus_FTFx_Success != result)
             {
                 error_trap();
             }
-            result = FLASH_VerifyProgram(&s_flashDriver, UPPER_PFLASH_BASE + sizeof(tempData),
-                                         EXAMPLE_IMAGE_SIZE - sizeof(tempData),
-                                         (uint32_t *)(LOWER_PFLASH_BASE + sizeof(tempData)), kFLASH_MarginValueUser,
-                                         &failedAddress, &failedData);
-            if (kStatus_FLASH_Success != result)
+            result = FLASH_VerifyProgram(
+                &s_flashDriver, UPPER_PFLASH_BASE + sizeof(tempData), EXAMPLE_IMAGE_SIZE - sizeof(tempData),
+                (uint8_t *)(LOWER_PFLASH_BASE + sizeof(tempData)), kFTFx_MarginValueUser, &failedAddress, &failedData);
+            if (kStatus_FTFx_Success != result)
             {
                 error_trap();
             }
@@ -322,8 +307,8 @@ int main(void)
             PRINTF("\r\n The system has been swapped successfully \r\n");
             PRINTF("\r\n Start to erase test data on lower pflash before exiting this example\r\n");
             result = FLASH_Erase(&s_flashDriver, LOWER_PFLASH_BASE + EXAMPLE_IMAGE_SIZE, sizeof(swapTestData),
-                                 kFLASH_ApiEraseKey);
-            if (kStatus_FLASH_Success != result)
+                                 kFTFx_ApiEraseKey);
+            if (kStatus_FTFx_Success != result)
             {
                 error_trap();
             }
@@ -355,29 +340,28 @@ int main(void)
             PRINTF("\r\n It is first swap for the system \r\n");
             PRINTF("\r\n Start to erase test data on lower pflash before swapping system \r\n");
             result = FLASH_Erase(&s_flashDriver, LOWER_PFLASH_BASE + EXAMPLE_IMAGE_SIZE, sizeof(swapTestData),
-                                 kFLASH_ApiEraseKey);
-            if (kStatus_FLASH_Success != result)
+                                 kFTFx_ApiEraseKey);
+            if (kStatus_FTFx_Success != result)
             {
                 error_trap();
             }
             PRINTF("\r\n Finish erasing test data \r\n");
             PRINTF("\r\n Start to program backup test data on upper pflash \r\n");
             result = FLASH_Erase(&s_flashDriver, UPPER_PFLASH_BASE + EXAMPLE_IMAGE_SIZE, sizeof(swapTestData),
-                                 kFLASH_ApiEraseKey);
-            if (kStatus_FLASH_Success != result)
+                                 kFTFx_ApiEraseKey);
+            if (kStatus_FTFx_Success != result)
             {
                 error_trap();
             }
-            result = FLASH_Program(&s_flashDriver, UPPER_PFLASH_BASE + EXAMPLE_IMAGE_SIZE, (uint32_t *)&swapTestData[0],
+            result = FLASH_Program(&s_flashDriver, UPPER_PFLASH_BASE + EXAMPLE_IMAGE_SIZE, &swapTestData[0],
                                    sizeof(swapTestData));
-            if (kStatus_FLASH_Success != result)
+            if (kStatus_FTFx_Success != result)
             {
                 error_trap();
             }
-            result =
-                FLASH_VerifyProgram(&s_flashDriver, UPPER_PFLASH_BASE + EXAMPLE_IMAGE_SIZE, sizeof(swapTestData),
-                                    (uint32_t *)&swapTestData[0], kFLASH_MarginValueUser, &failedAddress, &failedData);
-            if (kStatus_FLASH_Success != result)
+            result = FLASH_VerifyProgram(&s_flashDriver, UPPER_PFLASH_BASE + EXAMPLE_IMAGE_SIZE, sizeof(swapTestData),
+                                         &swapTestData[0], kFTFx_MarginValueUser, &failedAddress, &failedData);
+            if (kStatus_FTFx_Success != result)
             {
                 error_trap();
             }
@@ -386,8 +370,8 @@ int main(void)
 
         /* Enable swap system*/
         PRINTF("\r\n Start to swap the system \r\n");
-        result = FLASH_Swap(&s_flashDriver, swapIndicatorAddress, kFLASH_SwapFunctionOptionEnable);
-        if (kStatus_FLASH_Success != result)
+        result = FLASH_Swap(&s_flashDriver, swapIndicatorAddress, true);
+        if (kStatus_FTFx_Success != result)
         {
             error_trap();
         }

@@ -70,7 +70,9 @@ int main(void)
     GUI_SetBkColor(GUI_WHITE);
     GUI_Clear();
 
-    WM_Exec();
+    GUI_MULTIBUF_Begin();
+    GUI_Exec();
+    GUI_MULTIBUF_End();
 
     GUI_SetColor(GUI_BLACK);
 
@@ -90,6 +92,7 @@ int main(void)
         GUI_DispChar('_');
         GUI_GotoX(GUI_GetDispPosX() - charWidth);
         GUI_MULTIBUF_End();
+
         c = GETCHAR();
         if (c == '\r')
         {

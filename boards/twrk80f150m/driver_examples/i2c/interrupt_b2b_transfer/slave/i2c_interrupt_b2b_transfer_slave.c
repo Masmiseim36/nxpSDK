@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*  Standard C Included Files */
@@ -73,28 +47,28 @@ static void i2c_slave_callback(I2C_Type *base, i2c_slave_transfer_t *xfer, void 
     {
         /*  Address match event */
         case kI2C_SlaveAddressMatchEvent:
-            xfer->data = NULL;
+            xfer->data     = NULL;
             xfer->dataSize = 0;
             break;
         /*  Transmit request */
         case kI2C_SlaveTransmitEvent:
             /*  Update information for transmit process */
-            xfer->data = &g_slave_buff[2];
+            xfer->data     = &g_slave_buff[2];
             xfer->dataSize = g_slave_buff[1];
             break;
 
         /*  Receive request */
         case kI2C_SlaveReceiveEvent:
             /*  Update information for received process */
-            xfer->data = g_slave_buff;
+            xfer->data     = g_slave_buff;
             xfer->dataSize = I2C_DATA_LENGTH;
             break;
 
         /*  Transfer done */
         case kI2C_SlaveCompletionEvent:
             g_SlaveCompletionFlag = true;
-            xfer->data = NULL;
-            xfer->dataSize = 0;
+            xfer->data            = NULL;
+            xfer->dataSize        = 0;
             break;
 
         default:
@@ -127,8 +101,8 @@ int main(void)
     I2C_SlaveGetDefaultConfig(&slaveConfig);
 
     slaveConfig.addressingMode = kI2C_Address7bit;
-    slaveConfig.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;
-    slaveConfig.upperAddress = 0; /*  not used for this example */
+    slaveConfig.slaveAddress   = I2C_MASTER_SLAVE_ADDR_7BIT;
+    slaveConfig.upperAddress   = 0; /*  not used for this example */
 
     I2C_SlaveInit(EXAMPLE_I2C_SLAVE_BASEADDR, &slaveConfig, I2C_SLAVE_CLK_FREQ);
 

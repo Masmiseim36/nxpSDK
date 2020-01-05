@@ -31,6 +31,7 @@
 #include "tst_sm_util.h"
 #include "tst_a71ch_util.h"
 #include "tstHostCrypto.h"
+#include "nxLog_hostLib.h"
 
 
 
@@ -46,7 +47,7 @@
 U8 exAes()
 {
     U8 result = 1;
-    PRINTF( "\r\n-----------\r\nStart exAes()\r\n------------\r\n");
+    LOG_I( "-----------Start exAes()------------");
 
     DEV_ClearChannelState();
 
@@ -77,7 +78,7 @@ U8 exAes()
     result &= exSymHmacSha256(INIT_MODE_RESET_DO_SCP03);
 
     // overall result
-    PRINTF( "\r\n-----------\r\nEnd exAes(), result = %s\r\n------------\r\n", ((result == 1)? "OK": "FAILED"));
+    LOG_I( "-----------End exAes(), result = %s------------", ((result == 1)? "OK": "FAILED"));
 
     return result;
 }
@@ -159,7 +160,7 @@ U8 exAesRfc3394Precooked(U8 initMode)
     U16 derivedDataLen  = sizeof(derivedData);
     U8 nBlock = 0x01;
 
-    PRINTF("\r\n-----------\r\nStart exAesRfc3394Precooked(%s)\r\n------------\r\n", getInitModeAsString(initMode));
+    LOG_I("-----------Start exAesRfc3394Precooked(%s)------------", getInitModeAsString(initMode));
 
     // Initialize the A71CH (Debug mode restrictions may apply)
     result &= a71chInitModule(initMode);
@@ -167,7 +168,7 @@ U8 exAesRfc3394Precooked(U8 initMode)
     for (indexAesKey=0; indexAesKey<A71CH_SYM_KEY_MAX; indexAesKey++)
     {
         // Write the key (unwrapped)
-        PRINTF( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
+        LOG_I( "A71_SetSymKey(0x%02x)", indexAesKey);
         err = A71_SetSymKey((SST_Index_t)indexAesKey, aesRef[indexAesKey], sizeof(aesRef[indexAesKey]));
         result &= AX_CHECK_SW(err, SW_OK, "err");
         axPrintByteArray("aesRef[indexAesKey]", aesRef[indexAesKey], sizeof(aesRef[indexAesKey]), AX_COLON_32);
@@ -176,7 +177,7 @@ U8 exAesRfc3394Precooked(U8 initMode)
     // To demonstrate the slots are filled up with keys, do a KDF
     for (indexAesKey=0; indexAesKey<A71CH_SYM_KEY_MAX; indexAesKey++)
     {
-        PRINTF( "\r\nA71_HkdfExpandSymKey(0x%02x)\r\n", indexAesKey);
+        LOG_I( "A71_HkdfExpandSymKey(0x%02x)", indexAesKey);
         derivedDataLen = sizeof(derivedData);
         err = A71_HkdfExpandSymKey((SST_Index_t)indexAesKey, nBlock, info, infoLen, derivedData, derivedDataLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -188,7 +189,7 @@ U8 exAesRfc3394Precooked(U8 initMode)
     // Inserting a wrapped key must succeed (inserting the same key value)
     for (indexAesKey=0; indexAesKey<A71CH_SYM_KEY_MAX; indexAesKey++)
     {
-        PRINTF("\r\nA71_SetRfc3394WrappedAesKey(0x%02X)\r\n", indexAesKey);
+        LOG_I("A71_SetRfc3394WrappedAesKey(0x%02x)", indexAesKey);
         err = A71_SetRfc3394WrappedAesKey(indexAesKey, aesRefWrapped[indexAesKey], 24);
         result &= AX_CHECK_SW(err, SW_OK, "err");
         assert(result);
@@ -197,7 +198,7 @@ U8 exAesRfc3394Precooked(U8 initMode)
     // To demonstrate the slots are filled up with the same keys, do a KDF
     for (indexAesKey=0; indexAesKey<A71CH_SYM_KEY_MAX; indexAesKey++)
     {
-        PRINTF( "\r\nA71_HkdfExpandSymKey(0x%02x)\r\n", indexAesKey);
+        LOG_I( "A71_HkdfExpandSymKey(0x%02x)", indexAesKey);
         derivedDataLen = sizeof(derivedData);
         err = A71_HkdfExpandSymKey((SST_Index_t)indexAesKey, nBlock, info, infoLen, derivedData, derivedDataLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -209,7 +210,7 @@ U8 exAesRfc3394Precooked(U8 initMode)
     // Now replace the key at index 0, with the value of the key at index A71CH_SYM_KEY_MAX-1
     indexWriteKey = A71CH_SYM_KEY_0;
     indexWrapKey = A71CH_SYM_KEY_0;
-    PRINTF("\r\nA71_SetRfc3394WrappedAesKey(0x%02X, wrapId=0x%02X)\r\n", indexWriteKey, indexWrapKey);
+    LOG_I("A71_SetRfc3394WrappedAesKey(0x%02x, wrapId=0x%02x)", indexWriteKey, indexWrapKey);
     err = A71_SetRfc3394WrappedAesKey((SST_Index_t)indexWriteKey, aesRefIdxLastWrappedByIdx0, aesRefIdxLastWrappedByIdx0Len);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     assert(result);
@@ -217,7 +218,7 @@ U8 exAesRfc3394Precooked(U8 initMode)
     // Now do a KDF on the newly stored key at index A71CH_SYM_KEY_0
     // The resulting derived data must match the reference data stored on index A71CH_SYM_KEY_MAX-1
     indexAesKey = indexWriteKey;
-    PRINTF( "\r\nA71_HkdfExpandSymKey(0x%02x)\r\n", indexAesKey);
+    LOG_I( "A71_HkdfExpandSymKey(0x%02x)", indexAesKey);
     derivedDataLen = sizeof(derivedData);
     err = A71_HkdfExpandSymKey((SST_Index_t)indexAesKey, nBlock, info, infoLen, derivedData, derivedDataLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -225,7 +226,7 @@ U8 exAesRfc3394Precooked(U8 initMode)
     result &= AX_COMPARE_BYTE_ARRAY("derivedDataRef[A71CH_SYM_KEY_MAX-1]", derivedDataRef[A71CH_SYM_KEY_MAX-1], sizeof(derivedDataRef[A71CH_SYM_KEY_MAX-1]),
         "derivedData", derivedData, derivedDataLen, AX_COLON_32);
 
-    PRINTF( "\r\n-----------\r\nEnd exAesRfc3394Precooked(), result = %s\r\n------------\r\n", ((result == 1)? "OK": "FAILED"));
+    LOG_I( "-----------End exAesRfc3394Precooked(), result = %s------------", ((result == 1)? "OK": "FAILED"));
 
     return result;
 }
@@ -260,7 +261,7 @@ U8 exAesRfc3394(U8 initMode)
     U16 derivedDataLen  = sizeof(derivedData);
     U8 nBlock = 0x01;
 
-    PRINTF("\r\n-----------\r\nStart exAesRfc3394(%s)\r\n------------\r\n", getInitModeAsString(initMode));
+    LOG_I("-----------Start exAesRfc3394(%s)------------", getInitModeAsString(initMode));
 
     // Initialize the A71CH (Debug mode restrictions may apply)
     result &= a71chInitModule(initMode);
@@ -269,7 +270,7 @@ U8 exAesRfc3394(U8 initMode)
     for (indexAesKey=0; indexAesKey<A71CH_SYM_KEY_MAX; indexAesKey++)
     {
         U8 randomLen = 16;
-        sm_printf(CONSOLE, "A71_GetRandom(%d)\r\n", randomLen);
+        LOG_D(CONSOLE, "A71_GetRandom(%d)", randomLen);
         err = A71_GetRandom(aesRef[indexAesKey], randomLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
         axPrintByteArray("aesRef[indexAesKey]", aesRef[indexAesKey], randomLen, AX_COLON_32);
@@ -278,7 +279,7 @@ U8 exAesRfc3394(U8 initMode)
     // Write the key (unwrapped)
     for (indexAesKey=0; indexAesKey<A71CH_SYM_KEY_MAX; indexAesKey++)
     {
-        PRINTF( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
+        LOG_I( "A71_SetSymKey(0x%02x)", indexAesKey);
         err = A71_SetSymKey((SST_Index_t)indexAesKey, aesRef[indexAesKey], sizeof(aesRef[indexAesKey]));
         result &= AX_CHECK_SW(err, SW_OK, "err");
         axPrintByteArray("aesRef[indexAesKey]", aesRef[indexAesKey], sizeof(aesRef[indexAesKey]), AX_COLON_32);
@@ -288,7 +289,7 @@ U8 exAesRfc3394(U8 initMode)
     // and store the value for reference
     for (indexAesKey=0; indexAesKey<A71CH_SYM_KEY_MAX; indexAesKey++)
     {
-        PRINTF( "\r\nA71_HkdfExpandSymKey(0x%02x)\r\n", indexAesKey);
+        LOG_I( "A71_HkdfExpandSymKey(0x%02x)", indexAesKey);
         derivedDataLen = sizeof(derivedData);
         err = A71_HkdfExpandSymKey((SST_Index_t)indexAesKey, nBlock, info, infoLen, derivedDataRef[indexAesKey], derivedDataLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -318,7 +319,7 @@ U8 exAesRfc3394(U8 initMode)
                 result &= AX_CHECK_SW(err, SW_OK, "err");
         result &= AX_CHECK_SW(err, SW_OK, "err");
 
-        PRINTF("\r\nA71_SetRfc3394WrappedAesKey(0x%02X, ..., wrappedKeyLen=%d)\r\n", indexWriteKey, wrappedKeyLen);
+        LOG_I("A71_SetRfc3394WrappedAesKey(0x%02x, ..., wrappedKeyLen=%d)", indexWriteKey, wrappedKeyLen);
         err = A71_SetRfc3394WrappedAesKey((SST_Index_t)indexWriteKey, wrappedKey, wrappedKeyLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
         assert(result);
@@ -331,13 +332,13 @@ U8 exAesRfc3394(U8 initMode)
     {
         indexCompareKey--;
 
-        PRINTF( "\r\nA71_HkdfExpandSymKey(0x%02x)\r\n", indexAesKey);
+        LOG_I( "A71_HkdfExpandSymKey(0x%02x)", indexAesKey);
         derivedDataLen = sizeof(derivedData);
         err = A71_HkdfExpandSymKey((SST_Index_t)indexAesKey, nBlock, info, infoLen, derivedData, derivedDataLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
         axPrintByteArray("derivedData", derivedData, derivedDataLen, AX_COLON_32);
 
-        PRINTF("indexCompareKey: 0x%02X\r\n", indexCompareKey);
+        LOG_I("indexCompareKey: 0x%02x", indexCompareKey);
         axPrintByteArray("derivedDataRef[indexCompareKey]", derivedDataRef[indexCompareKey], sizeof(derivedDataRef[indexCompareKey]), AX_COLON_32);
         axPrintByteArray("derivedData", derivedData, derivedDataLen, AX_COLON_32);
 
@@ -346,22 +347,23 @@ U8 exAesRfc3394(U8 initMode)
             "derivedData", derivedData, derivedDataLen, AX_COLON_32);
     }
 
-    PRINTF( "\r\n-----------\r\nEnd exAesRfc3394(), result = %s\r\n------------\r\n", ((result == 1)? "OK": "FAILED"));
+    LOG_I( "-----------End exAesRfc3394(), result = %s------------", ((result == 1)? "OK": "FAILED"));
 
     return result;
 }
 
-U8 hostPsk[A71CH_SYM_KEY_MAX*16];
+U8 hostPskg[A71CH_SYM_KEY_MAX*16];
 
-#ifdef __ARMCC_VERSION
-#pragma O0
-#endif
+
+//for ARM6 taken care at file level
+// #ifdef __ARMCC_VERSION
+// #pragma O0
+// #endif
 
 #ifdef __ICCARM__
 #pragma optimize=none
 #endif
-
-#ifdef __GNUC__
+#if defined(__GNUC__) && !defined(__ARMCC_VERSION)
 __attribute__((optimize("O0")))
 #endif
 
@@ -413,7 +415,7 @@ U8 exSymHkdf(U8 initMode)
 
     int i;
 
-    PRINTF( "\r\n-----------\r\nStart exSymHkdf(%s)\r\n------------\r\n", getInitModeAsString(initMode));
+    LOG_I( "-----------Start exSymHkdf(%s)------------", getInitModeAsString(initMode));
 
     // Initialize the A71CH (Debug mode restrictions may apply)
     result &= a71chInitModule(initMode);
@@ -428,7 +430,7 @@ U8 exSymHkdf(U8 initMode)
     for (indexAesKey=0; indexAesKey<A71CH_SYM_KEY_MAX; indexAesKey++)
     {
         // Write the key (unwrapped)
-        PRINTF( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
+        LOG_I( "A71_SetSymKey(0x%02x)", indexAesKey);
         err = A71_SetSymKey((SST_Index_t)indexAesKey, aesRef[indexAesKey], sizeof(aesRef[indexAesKey]));
         result &= AX_CHECK_SW(err, SW_OK, "err");
         axPrintByteArray("aesRef[indexAesKey]", aesRef[indexAesKey], sizeof(aesRef[indexAesKey]), AX_COLON_32);
@@ -441,21 +443,21 @@ U8 exSymHkdf(U8 initMode)
     // derivedDataLen = sizeof(derivedData);
     indexAesKey = A71CH_SYM_KEY_0;
     nBlock = 0x01;
-    PRINTF("\r\nA71_HkdfExpandSymKey(0x%02x(nBlock=%d), infoLen=%d, derivedDataLen=%d)\r\n", indexAesKey, nBlock, infoLen, derivedDataLen);
+    LOG_I("A71_HkdfExpandSymKey(0x%02x(nBlock=%d), infoLen=%d, derivedDataLen=%d)", indexAesKey, nBlock, infoLen, derivedDataLen);
     err = A71_HkdfExpandSymKey(indexAesKey, nBlock, info, infoLen, derivedData, derivedDataLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
 
     // ** Derive data on Host
     infoLen = sizeof(info);
     // derivedDataOnHostLen = sizeof(derivedDataOnHost);
-    PRINTF("\r\nHOSTCRYPTO_HkdfExpandSha256(KeyLen=%d, infoLen=%d, derivedDataLen=%d)\r\n", sizeof(aesRef[indexAesKey]), infoLen, derivedDataOnHostLen);
+    LOG_I("HOSTCRYPTO_HkdfExpandSha256(KeyLen=%d, infoLen=%d, derivedDataLen=%d)", sizeof(aesRef[indexAesKey]), infoLen, derivedDataOnHostLen);
     err = HOSTCRYPTO_HkdfExpandSha256(aesRef[indexAesKey], sizeof(aesRef[indexAesKey]), info, infoLen, derivedDataOnHost, derivedDataOnHostLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     // Compare both values
     if (memcmp(derivedDataOnHost, derivedData, derivedDataLen) != 0)
     {
         result = 0;
-        PRINTF("Calculated HKDF fails to compare with test vector.\r\n");
+        LOG_I("Calculated HKDF fails to compare with test vector.");
         axPrintByteArray("derivedDataOnHost", derivedDataOnHost, derivedDataLen, AX_COLON_32);
         axPrintByteArray("derivedData", derivedData, derivedDataLen, AX_COLON_32);
     }
@@ -467,20 +469,20 @@ U8 exSymHkdf(U8 initMode)
     nReqData = 72;
     indexAesKey = A71CH_SYM_KEY_0;
     nBlock = 0x01;
-    PRINTF("\r\nA71_HkdfExpandSymKey(0x%02x(nBlock=%d), infoLen=%d, derivedDataLen=%d)\r\n", indexAesKey, nBlock, infoLen, derivedDataLen);
+    LOG_I("A71_HkdfExpandSymKey(0x%02x(nBlock=%d), infoLen=%d, derivedDataLen=%d)", indexAesKey, nBlock, infoLen, derivedDataLen);
     err = A71_HkdfExpandSymKey(indexAesKey, nBlock, info, infoLen, derivedData, derivedDataLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
 
     // ** Derive data on Host
     // Re-use infoLen and nReqData values just set
-    PRINTF("\r\nHOSTCRYPTO_HkdfExpandSha256(KeyLen=%d, infoLen=%d, derivedDataLen=%d)\r\n", sizeof(aesRef[indexAesKey]), infoLen, nReqData);
+    LOG_I("HOSTCRYPTO_HkdfExpandSha256(KeyLen=%d, infoLen=%d, derivedDataLen=%d)", sizeof(aesRef[indexAesKey]), infoLen, nReqData);
     err = HOSTCRYPTO_HkdfExpandSha256(aesRef[indexAesKey], sizeof(aesRef[indexAesKey]), info, infoLen, derivedDataOnHost, nReqData);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     // Compare both values
     if (memcmp(derivedDataOnHost, derivedData, nReqData) != 0)
     {
         result = 0;
-        PRINTF("Calculated HKDF fails to compare with test vector.\r\n");
+        LOG_I("Calculated HKDF fails to compare with test vector.");
         axPrintByteArray("derivedDataOnHost", derivedDataOnHost, nReqData, AX_COLON_32);
         axPrintByteArray("derivedData", derivedData, nReqData, AX_COLON_32);
     }
@@ -496,7 +498,7 @@ U8 exSymHkdf(U8 initMode)
             // ** Shared secret is nBlock * 16 byte long and located in (starts at) AES-STORE @ [A71CH_SYM_KEY_0 + indexOffset]
             indexAesKey = A71CH_SYM_KEY_0 + indexOffset;
             // derivedDataLen = sizeof(derivedData);
-            PRINTF("\r\nA71_HkdfExpandSymKey(0x%02x(nBlock=%d), infoLen=%d, derivedDataLen=%d)\r\n", indexAesKey, nBlock, infoLen, derivedDataLen);
+            LOG_I("A71_HkdfExpandSymKey(0x%02x(nBlock=%d), infoLen=%d, derivedDataLen=%d)", indexAesKey, nBlock, infoLen, derivedDataLen);
             err = A71_HkdfExpandSymKey(indexAesKey, nBlock, info, infoLen, derivedData, derivedDataLen);
             result &= AX_CHECK_SW(err, SW_OK, "err");
 
@@ -504,20 +506,20 @@ U8 exSymHkdf(U8 initMode)
             // *** First create pre-master secret based upon PSK
             for (j=0; j<nBlock; j++)
             {
-                memcpy(&hostPsk[j*16], &aesRef[indexAesKey+j], sizeof(aesRef[indexAesKey+j]));
+                memcpy(&hostPskg[j*16], &aesRef[indexAesKey+j], sizeof(aesRef[indexAesKey+j]));
             }
             hostPskLen = nBlock*sizeof(aesRef[indexAesKey]);
-            axPrintByteArray("hostPsk", hostPsk, nBlock*sizeof(aesRef[indexAesKey]), AX_COLON_32);
+            axPrintByteArray("hostPsk", hostPskg, nBlock*sizeof(aesRef[indexAesKey]), AX_COLON_32);
             // derivedDataOnHostLen = sizeof(derivedDataOnHost);
-            PRINTF("\r\nHOSTCRYPTO_HkdfExpandSha256(KeyLen=%d, infoLen=%d, derivedDataLen=%d)\r\n", hostPskLen, infoLen, derivedDataOnHostLen);
-            err = HOSTCRYPTO_HkdfExpandSha256(hostPsk, hostPskLen, info, infoLen, derivedDataOnHost, derivedDataOnHostLen);
+            LOG_I("HOSTCRYPTO_HkdfExpandSha256(KeyLen=%d, infoLen=%d, derivedDataLen=%d)", hostPskLen, infoLen, derivedDataOnHostLen);
+            err = HOSTCRYPTO_HkdfExpandSha256(hostPskg, hostPskLen, info, infoLen, derivedDataOnHost, derivedDataOnHostLen);
             result &= AX_CHECK_SW(err, SW_OK, "err");
 
             // Compare both values
             if (memcmp(derivedDataOnHost, derivedData, derivedDataLen) != 0)
             {
                 result = 0;
-                PRINTF("Calculated HKDF fails to compare with test vector.\r\n");
+                LOG_I("Calculated HKDF fails to compare with test vector.");
                 axPrintByteArray("derivedDataOnHost", derivedDataOnHost, derivedDataLen, AX_COLON_32);
                 axPrintByteArray("derivedData", derivedData, derivedDataLen, AX_COLON_32);
                 break;
@@ -536,7 +538,7 @@ U8 exSymHkdf(U8 initMode)
             // ** Shared secret is nBlock * 16 byte long and located in (starts at) AES-STORE @ [A71CH_SYM_KEY_0 + indexOffset]
             indexAesKey = A71CH_SYM_KEY_0 + indexOffset;
             // derivedDataLen = sizeof(derivedData);
-            PRINTF("\r\nA71_HkdfSymKey(0x%02x(nBlock=%d), saltLen=%d, infoLen=%d, derivedDataLen=%d)\r\n", indexAesKey, nBlock,
+            LOG_I("A71_HkdfSymKey(0x%02x(nBlock=%d), saltLen=%d, infoLen=%d, derivedDataLen=%d)", indexAesKey, nBlock,
                 saltLen, infoLen, derivedDataLen);
             err = A71_HkdfSymKey(indexAesKey, nBlock, salt, saltLen, info, infoLen, derivedData, derivedDataLen);
             result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -545,20 +547,20 @@ U8 exSymHkdf(U8 initMode)
             // *** First create pre-master secret based upon PSK
             for (j=0; j<nBlock; j++)
             {
-                memcpy(&hostPsk[j*16], &aesRef[indexAesKey+j], sizeof(aesRef[indexAesKey+j]));
+                memcpy(&hostPskg[j*16], &aesRef[indexAesKey+j], sizeof(aesRef[indexAesKey+j]));
             }
             hostPskLen = nBlock*sizeof(aesRef[indexAesKey]);
-            axPrintByteArray("hostPsk", hostPsk, nBlock*sizeof(aesRef[indexAesKey]), AX_COLON_32);
+            axPrintByteArray("hostPsk", hostPskg, nBlock*sizeof(aesRef[indexAesKey]), AX_COLON_32);
             // derivedDataOnHostLen = sizeof(derivedDataOnHost);
-            PRINTF("\r\nHOSTCRYPTO_HkdfFullSha256(KeyLen=%d, infoLen=%d, derivedDataLen=%d)\r\n", hostPskLen, infoLen, derivedDataOnHostLen);
-            err = HOSTCRYPTO_HkdfFullSha256(salt, saltLen, hostPsk, hostPskLen, info, infoLen, derivedDataOnHost, derivedDataOnHostLen);
+            LOG_I("HOSTCRYPTO_HkdfFullSha256(KeyLen=%d, infoLen=%d, derivedDataLen=%d)", hostPskLen, infoLen, derivedDataOnHostLen);
+            err = HOSTCRYPTO_HkdfFullSha256(salt, saltLen, hostPskg, hostPskLen, info, infoLen, derivedDataOnHost, derivedDataOnHostLen);
             result &= AX_CHECK_SW(err, SW_OK, "err");
 
             // Compare both values
             if (memcmp(derivedDataOnHost, derivedData, derivedDataLen) != 0)
             {
                 result = 0;
-                PRINTF("Calculated HKDF fails to compare with test vector.\r\n");
+                LOG_E("Calculated HKDF fails to compare with test vector.");
                 axPrintByteArray("derivedDataOnHost", derivedDataOnHost, derivedDataLen, AX_COLON_32);
                 axPrintByteArray("derivedData", derivedData, derivedDataLen, AX_COLON_32);
                 break;
@@ -619,7 +621,7 @@ U8 exSymHmacSha256(U8 initMode)
 
     int i;
 
-    PRINTF( "\r\n-----------\r\nStart exSymHmacSha256(%s)\r\n------------\r\n", getInitModeAsString(initMode));
+    LOG_I( "-----------Start exSymHmacSha256(%s)------------", getInitModeAsString(initMode));
 
     // Initialize the A71CH (Debug mode restrictions may apply)
     result &= a71chInitModule(initMode);
@@ -627,7 +629,7 @@ U8 exSymHmacSha256(U8 initMode)
     for (indexAesKey=0; indexAesKey<A71CH_SYM_KEY_MAX; indexAesKey++)
     {
         // Write the key (unwrapped)
-        PRINTF( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
+        LOG_I( "A71_SetSymKey(0x%02x)", indexAesKey);
         err = A71_SetSymKey((SST_Index_t)indexAesKey, aesRef[indexAesKey], sizeof(aesRef[indexAesKey]));
         result &= AX_CHECK_SW(err, SW_OK, "err");
         axPrintByteArray("aesRef[indexAesKey]", aesRef[indexAesKey], sizeof(aesRef[indexAesKey]), AX_COLON_32);
@@ -643,7 +645,7 @@ U8 exSymHmacSha256(U8 initMode)
     for (nReqData = 0; nReqData < nReqDataMax; nReqData++)
     {
         reqDataLen = reqDataLenArray[nReqData];
-        PRINTF( "\r\nA71_GetHmacSha256(0x%02x (nBlock=%d) dataLen=%d)\r\n", indexAesKey, nBlock, reqDataLen);
+        LOG_I( "A71_GetHmacSha256(0x%02x (nBlock=%d) dataLen=%d)", indexAesKey, nBlock, reqDataLen);
         err = A71_GetHmacSha256(indexAesKey, nBlock, data, reqDataLen, hmac, &hmacLen);
         result &= AX_CHECK_SW(err, SW_OK, "A71_GetHmacSha256 failed");
         if (err == SW_OK)
@@ -663,7 +665,7 @@ U8 exSymHmacSha256(U8 initMode)
             if (memcmp(hmacOnHost, hmac, hmacOnHostLen) != 0)
             {
                 result = 0;
-                PRINTF("Calculated HMAC's fail to compare.\r\n");
+                LOG_E("Calculated HMAC's fail to compare.");
                 axPrintByteArray("hmacOnHost", hmacOnHost, hmacOnHostLen, AX_COLON_32);
                 axPrintByteArray("hmac", hmac, hmacLen, AX_COLON_32);
             }
@@ -682,7 +684,7 @@ U8 exSymHmacSha256(U8 initMode)
             // ** Shared secret is nBlock * 16 byte long and located in (starts at) AES-STORE @ [A71CH_SYM_KEY_0 + indexOffset]
             reqDataLen = 100;
             indexAesKey = A71CH_SYM_KEY_0 + indexOffset;
-            PRINTF( "\r\nA71_GetHmacSha256(0x%02x (nBlock=%d))\r\n", indexAesKey, nBlock);
+            LOG_I( "A71_GetHmacSha256(0x%02x (nBlock=%d))", indexAesKey, nBlock);
             err = A71_GetHmacSha256(indexAesKey, nBlock, data, reqDataLen, hmac, &hmacLen);
             result &= AX_CHECK_SW(err, SW_OK, "A71_GetHmacSha256 failed");
 
@@ -703,7 +705,7 @@ U8 exSymHmacSha256(U8 initMode)
                 if (memcmp(hmacOnHost, hmac, hmacOnHostLen) != 0)
                 {
                     result = 0;
-                    PRINTF("Calculated HMAC's fail to compare.\r\n");
+                    LOG_E("Calculated HMAC's fail to compare.");
                     axPrintByteArray("hmacOnHost", hmacOnHost, hmacOnHostLen, AX_COLON_32);
                     axPrintByteArray("hmac", hmac, hmacLen, AX_COLON_32);
                 }

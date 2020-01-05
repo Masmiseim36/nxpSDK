@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2019 NXP
  * All rights reserved.
  *
  *
@@ -10,7 +10,9 @@
 #define _DEVICE_CONFIGURATION_H_
 
 #include "fnet_mdns_port.h"
-#include "aws_wifi.h"
+#ifdef DEMO_DEVICE_CONFIGURATION_WIFI
+#include "iot_wifi.h"
+#endif
 
 /*! @brief Network connection type. */
 typedef enum
@@ -112,6 +114,8 @@ response_t dev_cfg_process_cmd(request_cmd_t cmd, void *data, int data_len);
  * @retval 0 The reading and parsing of wifi network parameters was successful.
  * @retval -1 The reading or parsing of wifi network parameters failed.
  */
+#ifdef DEMO_DEVICE_CONFIGURATION_WIFI
 int dev_cfg_get_wifi_params(WIFINetworkParams_t *network_params);
+#endif
 
 #endif /* _DEVICE_CONFIGURATION_H_ */

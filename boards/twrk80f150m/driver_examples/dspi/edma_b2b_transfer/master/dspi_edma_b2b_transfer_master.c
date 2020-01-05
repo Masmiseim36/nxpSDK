@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_device_registers.h"
@@ -155,23 +129,23 @@ int main(void)
     dspi_transfer_t masterXfer;
 
     /* Master config */
-    masterConfig.whichCtar = kDSPI_Ctar0;
-    masterConfig.ctarConfig.baudRate = TRANSFER_BAUDRATE;
-    masterConfig.ctarConfig.bitsPerFrame = 8;
-    masterConfig.ctarConfig.cpol = kDSPI_ClockPolarityActiveHigh;
-    masterConfig.ctarConfig.cpha = kDSPI_ClockPhaseFirstEdge;
-    masterConfig.ctarConfig.direction = kDSPI_MsbFirst;
-    masterConfig.ctarConfig.pcsToSckDelayInNanoSec = 1000000000U / TRANSFER_BAUDRATE;
-    masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec = 1000000000U / TRANSFER_BAUDRATE;
+    masterConfig.whichCtar                                = kDSPI_Ctar0;
+    masterConfig.ctarConfig.baudRate                      = TRANSFER_BAUDRATE;
+    masterConfig.ctarConfig.bitsPerFrame                  = 8;
+    masterConfig.ctarConfig.cpol                          = kDSPI_ClockPolarityActiveHigh;
+    masterConfig.ctarConfig.cpha                          = kDSPI_ClockPhaseFirstEdge;
+    masterConfig.ctarConfig.direction                     = kDSPI_MsbFirst;
+    masterConfig.ctarConfig.pcsToSckDelayInNanoSec        = 1000000000U / TRANSFER_BAUDRATE;
+    masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec    = 1000000000U / TRANSFER_BAUDRATE;
     masterConfig.ctarConfig.betweenTransferDelayInNanoSec = 1000000000U / TRANSFER_BAUDRATE;
 
-    masterConfig.whichPcs = EXAMPLE_DSPI_MASTER_PCS_FOR_INIT;
+    masterConfig.whichPcs           = EXAMPLE_DSPI_MASTER_PCS_FOR_INIT;
     masterConfig.pcsActiveHighOrLow = kDSPI_PcsActiveLow;
 
-    masterConfig.enableContinuousSCK = false;
-    masterConfig.enableRxFifoOverWrite = false;
+    masterConfig.enableContinuousSCK        = false;
+    masterConfig.enableRxFifoOverWrite      = false;
     masterConfig.enableModifiedTimingFormat = false;
-    masterConfig.samplePoint = kDSPI_SckToSin0Clock;
+    masterConfig.samplePoint                = kDSPI_SckToSin0Clock;
 
     srcClock_Hz = DSPI_MASTER_CLK_FREQ;
     DSPI_MasterInit(EXAMPLE_DSPI_MASTER_BASEADDR, &masterConfig, srcClock_Hz);
@@ -223,10 +197,10 @@ int main(void)
         PRINTF("\r\n");
 
         /* Start master transfer, send data to slave */
-        isTransferCompleted = false;
-        masterXfer.txData = masterTxData;
-        masterXfer.rxData = NULL;
-        masterXfer.dataSize = TRANSFER_SIZE;
+        isTransferCompleted    = false;
+        masterXfer.txData      = masterTxData;
+        masterXfer.rxData      = NULL;
+        masterXfer.dataSize    = TRANSFER_SIZE;
         masterXfer.configFlags = kDSPI_MasterCtar0 | EXAMPLE_DSPI_MASTER_PCS_FOR_TRANSFER | kDSPI_MasterPcsContinuous;
         if (kStatus_Success !=
             DSPI_MasterTransferEDMA(EXAMPLE_DSPI_MASTER_BASEADDR, &g_dspi_edma_m_handle, &masterXfer))
@@ -246,10 +220,10 @@ int main(void)
         }
 
         /* Start master transfer, receive data from slave */
-        isTransferCompleted = false;
-        masterXfer.txData = NULL;
-        masterXfer.rxData = masterRxData;
-        masterXfer.dataSize = TRANSFER_SIZE;
+        isTransferCompleted    = false;
+        masterXfer.txData      = NULL;
+        masterXfer.rxData      = masterRxData;
+        masterXfer.dataSize    = TRANSFER_SIZE;
         masterXfer.configFlags = kDSPI_MasterCtar0 | EXAMPLE_DSPI_MASTER_PCS_FOR_TRANSFER | kDSPI_MasterPcsContinuous;
         if (kStatus_Success !=
             DSPI_MasterTransferEDMA(EXAMPLE_DSPI_MASTER_BASEADDR, &g_dspi_edma_m_handle, &masterXfer))
@@ -288,7 +262,7 @@ int main(void)
         }
         else
         {
-            PRINTF(" \r\nError occured in DSPI transfer ! \r\n");
+            PRINTF(" \r\nError occurred in DSPI transfer ! \r\n");
         }
 
         /* Wait for press any key */

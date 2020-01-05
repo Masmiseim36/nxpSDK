@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MKL81Z7"/>
+    <definition extID="component.lpuart_adapter.MKL81Z7"/>
+    <definition extID="component.serial_manager.MKL81Z7"/>
+    <definition extID="component.serial_manager_uart.MKL81Z7"/>
+    <definition extID="device.MKL81Z7_CMSIS.MKL81Z7"/>
+    <definition extID="device.MKL81Z7_startup.MKL81Z7"/>
+    <definition extID="platform.Include_common.MKL81Z7"/>
+    <definition extID="platform.Include_core_cm0plus.MKL81Z7"/>
+    <definition extID="platform.drivers.clock.MKL81Z7"/>
+    <definition extID="platform.drivers.common.MKL81Z7"/>
+    <definition extID="platform.drivers.dspi.MKL81Z7"/>
+    <definition extID="platform.drivers.gpio.MKL81Z7"/>
+    <definition extID="platform.drivers.lpuart.MKL81Z7"/>
+    <definition extID="platform.drivers.port.MKL81Z7"/>
+    <definition extID="platform.drivers.smc.MKL81Z7"/>
+    <definition extID="platform.utilities.assert.MKL81Z7"/>
+    <definition extID="utility.debug_console.MKL81Z7"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+  </externalDefinitions>
+  <example id="frdmkl81z_dspi_interrupt_b2b_slave" name="dspi_interrupt_b2b_slave" category="driver_examples/dspi" dependency="platform.drivers.port.MKL81Z7 platform.drivers.dspi.MKL81Z7 platform.drivers.clock.MKL81Z7 platform.drivers.common.MKL81Z7 device.MKL81Z7_CMSIS.MKL81Z7 utility.debug_console.MKL81Z7 component.lpuart_adapter.MKL81Z7 component.serial_manager.MKL81Z7 component.serial_manager_uart.MKL81Z7 platform.drivers.lpuart.MKL81Z7 component.lists.MKL81Z7 device.MKL81Z7_startup.MKL81Z7 platform.drivers.smc.MKL81Z7 platform.drivers.gpio.MKL81Z7 platform.utilities.assert.MKL81Z7 platform.Include_core_cm0plus.MKL81Z7 platform.Include_common.MKL81Z7" toolchain="iar mdk armgcc mcuxpresso">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.none</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.none</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MKL81Z128VLK7</value>
+          <value>FRDM_KL81Z</value>
+          <value>FREEDOM</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.none</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <source path="boards/frdmkl81z/driver_examples/dspi/interrupt_b2b/slave/armgcc" target_path="src" type="linker" toolchain="armgcc">
+      <files mask="MKL81Z128xxx7_flash.ld"/>
+    </source>
+    <source path="boards/frdmkl81z/driver_examples/dspi/interrupt_b2b/slave/iar" target_path="src" type="linker" toolchain="iar">
+      <files mask="MKL81Z128xxx7_flash.icf"/>
+    </source>
+    <source path="boards/frdmkl81z/driver_examples/dspi/interrupt_b2b/slave/mdk" target_path="src" type="linker" toolchain="mdk">
+      <files mask="MKL81Z128xxx7_flash.scf"/>
+    </source>
+    <source path="boards/frdmkl81z/driver_examples/dspi/interrupt_b2b/slave" target_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/frdmkl81z/driver_examples/dspi/interrupt_b2b/slave" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/frdmkl81z/driver_examples/dspi/interrupt_b2b/slave" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/frdmkl81z/driver_examples/dspi/interrupt_b2b/slave" target_path="source" type="src">
+      <files mask="dspi_interrupt_b2b_slave.c"/>
+    </source>
+  </example>
+</ksdk:examples>

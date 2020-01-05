@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MK65F18"/>
+    <definition extID="component.osa.MK65F18"/>
+    <definition extID="component.serial_manager.MK65F18"/>
+    <definition extID="component.serial_manager_uart.MK65F18"/>
+    <definition extID="component.uart_adapter.MK65F18"/>
+    <definition extID="device.MK65F18_CMSIS.MK65F18"/>
+    <definition extID="device.MK65F18_startup.MK65F18"/>
+    <definition extID="middleware.amazon_freertos-kernel.MK65F18"/>
+    <definition extID="middleware.amazon_freertos-kernel.extension.MK65F18"/>
+    <definition extID="middleware.amazon_freertos-kernel.heap_3.MK65F18"/>
+    <definition extID="middleware.lwip.MK65F18"/>
+    <definition extID="middleware.lwip.contrib.ping.MK65F18"/>
+    <definition extID="middleware.lwip.usb_ethernetif.MK65F18"/>
+    <definition extID="middleware.usb.host.MK65F18"/>
+    <definition extID="middleware.usb.host_cdc.MK65F18"/>
+    <definition extID="middleware.usb.host_cdc_rndis.MK65F18"/>
+    <definition extID="middleware.usb.host_controller_ehci.MK65F18"/>
+    <definition extID="middleware.usb.host_controller_khci.MK65F18"/>
+    <definition extID="middleware.usb.host_hub.MK65F18"/>
+    <definition extID="middleware.usb.phy.MK65F18"/>
+    <definition extID="platform.Include_common.MK65F18"/>
+    <definition extID="platform.Include_core_cm4.MK65F18"/>
+    <definition extID="platform.Include_dsp.MK65F18"/>
+    <definition extID="platform.drivers.clock.MK65F18"/>
+    <definition extID="platform.drivers.common.MK65F18"/>
+    <definition extID="platform.drivers.gpio.MK65F18"/>
+    <definition extID="platform.drivers.lpuart.MK65F18"/>
+    <definition extID="platform.drivers.port.MK65F18"/>
+    <definition extID="platform.drivers.sim.MK65F18"/>
+    <definition extID="platform.drivers.smc.MK65F18"/>
+    <definition extID="platform.drivers.sysmpu.MK65F18"/>
+    <definition extID="platform.drivers.uart.MK65F18"/>
+    <definition extID="platform.utilities.assert.MK65F18"/>
+    <definition extID="platform.utilities.misc_utilities.MK65F18"/>
+    <definition extID="utility.debug_console.MK65F18"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+  </externalDefinitions>
+  <example id="twrk65f180m_lwip_dhcp_usb_freertos" name="lwip_dhcp_usb_freertos" category="lwip_examples" dependency="middleware.usb.host_controller_khci.MK65F18 middleware.usb.host_controller_ehci.MK65F18 middleware.usb.phy.MK65F18 middleware.lwip.MK65F18 middleware.lwip.usb_ethernetif.MK65F18 platform.drivers.port.MK65F18 platform.drivers.sim.MK65F18 platform.drivers.clock.MK65F18 middleware.amazon_freertos-kernel.heap_3.MK65F18 platform.drivers.sysmpu.MK65F18 middleware.lwip.contrib.ping.MK65F18 middleware.usb.host.MK65F18 middleware.usb.host_hub.MK65F18 middleware.usb.host_cdc_rndis.MK65F18 middleware.usb.host_cdc.MK65F18 platform.drivers.common.MK65F18 device.MK65F18_CMSIS.MK65F18 utility.debug_console.MK65F18 component.uart_adapter.MK65F18 component.serial_manager.MK65F18 component.lists.MK65F18 component.serial_manager_uart.MK65F18 platform.drivers.uart.MK65F18 device.MK65F18_startup.MK65F18 platform.drivers.lpuart.MK65F18 platform.drivers.smc.MK65F18 platform.drivers.gpio.MK65F18 platform.utilities.assert.MK65F18 component.osa.MK65F18 platform.Include_core_cm4.MK65F18 platform.Include_common.MK65F18 platform.Include_dsp.MK65F18 middleware.amazon_freertos-kernel.MK65F18 middleware.amazon_freertos-kernel.extension.MK65F18 platform.utilities.misc_utilities.MK65F18">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv4.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv4.hard</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MK65FN2M0VMI18</value>
+          <value>USE_RTOS=1</value>
+          <value>USB_STACK_FREERTOS</value>
+          <value>PRINTF_ADVANCED_ENABLE=1</value>
+          <value>TWR_K65F180M</value>
+          <value>TOWER</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>FSL_RTOS_FREE_RTOS</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv4.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
+          <value>&amp;Heap:Default;Default;0x6400&amp;Stack:Default;Default;0x800</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=RAM2;type=.data</value>
+          <value>isd=*(NonCacheable);region=RAM2;type=.bss</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <include_paths>
+      <include_path path="lwip/port"/>
+      <include_path path="lwip/src"/>
+      <include_path path="lwip/src/include"/>
+    </include_paths>
+    <source path="boards/twrk65f180m/lwip_examples/lwip_dhcp_usb/freertos/armgcc" target_path="MK65F18/gcc" type="linker" toolchain="armgcc">
+      <files mask="MK65FN2M0xxx18_flash.ld"/>
+    </source>
+    <source path="boards/twrk65f180m/lwip_examples/lwip_dhcp_usb/freertos/iar" target_path="MK65F18/iar" type="linker" toolchain="iar">
+      <files mask="MK65FN2M0xxx18_flash.icf"/>
+    </source>
+    <source path="boards/twrk65f180m/lwip_examples/lwip_dhcp_usb/freertos/mdk" target_path="MK65F18/arm" type="linker" toolchain="mdk">
+      <files mask="MK65FN2M0xxx18_flash.scf"/>
+    </source>
+    <source path="boards/twrk65f180m/lwip_examples/lwip_dhcp_usb/freertos" target_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/twrk65f180m/lwip_examples/lwip_dhcp_usb/freertos" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/twrk65f180m/lwip_examples/lwip_dhcp_usb/freertos" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/twrk65f180m/lwip_examples/lwip_dhcp_usb/freertos" target_path="source" type="c_include">
+      <files mask="FreeRTOSConfig.h"/>
+      <files mask="lwipopts.h"/>
+      <files mask="usb_host_config.h"/>
+    </source>
+    <source path="boards/twrk65f180m/lwip_examples/lwip_dhcp_usb/freertos" target_path="source" type="src">
+      <files mask="lwip_dhcp_usb_freertos.c"/>
+    </source>
+    <source path="boards/twrk65f180m/lwip_examples/lwip_dhcp_usb/freertos" target_path="src/lwip_examples/lwip_dhcp_usb/freertos" type="doc" exclude="true">
+      <files mask="MCUXpresso SDK USB RNDIS &amp; LWIP User Guide.pdf"/>
+    </source>
+  </example>
+</ksdk:examples>

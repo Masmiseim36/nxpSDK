@@ -11,6 +11,14 @@ When running the project, change the input voltage of user-defined channel, then
 between logic one and zero when the user's voltage crosses the internal DAC's value. The endless loop in main() function
 would detect the logic value of comparator's output, and change the LED. The LED would be turned on when the compare
 output is logic one, or turned off when zero.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -44,11 +52,6 @@ When the demo runs successfully, the log would be seen on the OpenSDA terminal l
 Then change CMP analog input, and watch the change of LED.
     - CMP0_IN0 (Jump A58 on Elevator Tower) connected to VCC =3.3V (Jump B3 on Elevator Tower): LED GREEN on
     - CMP0_IN0 (Jump A58 on Elevator Tower) connected to GND (Jump B2 on Elevator Tower): LED GREEN off
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

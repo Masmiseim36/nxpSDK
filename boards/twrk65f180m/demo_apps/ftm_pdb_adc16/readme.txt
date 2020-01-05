@@ -8,11 +8,10 @@ The ADC0 uses channel 1 and channel 5, and ADC1 uses channel 1 and channel 7.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.70.1
-- Keil MDK 5.20
-- GCC ARM Embedded 2015-4.9-q3
-- Kinetis Development Studio IDE 3.2.0
-- Atollic TrueSTUDIO 5.5.2
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -42,6 +41,7 @@ The ADC PDB demo application will print the following message to the terminal:
 
 ~~~~~~~~~~~~~~~~~
 Run pdb trig adc with flextimer demo.
+ADC Full Range: XXXX
 Input any character to start demo.
 ~~~~~~~~~~~~~~~~~~
 Input a character to the serial console to start the ADC PDB demo.

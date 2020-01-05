@@ -38,18 +38,7 @@
 #undef SF_MODEL
 #define SF_MODEL SF_MODEL_OL2385
 #endif
-
-#if (SF_MODEL == SF_MODEL_OL2361)
-    #if defined(__CC_ARM)                                       /* For ARM Compiler */
-    #else
-        #pragma message("Model OL2361 is selected.")
-    #endif
-#elif (SF_MODEL == SF_MODEL_OL2385)
-    #if defined(__CC_ARM)                                       /* For ARM Compiler */
-    #else
-        #pragma message("Model OL2385 is selected.")
-    #endif
-#endif /* END of model check. */
+/* END of model check. */
 
 /*! @} */
 #endif /* SOURCE_SF_MODEL_H_ */

@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 - 2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_device_config.h"
@@ -57,7 +31,7 @@
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #include "usb_phy.h"
 #endif
 
@@ -112,7 +86,7 @@ usb_device_class_config_list_struct_t g_UsbDeviceVideoConfigList = {
 /*******************************************************************************
  * Code
  ******************************************************************************/
-#if (defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U))
+
 void USB0_IRQHandler(void)
 {
     USB_DeviceKhciIsrFunction(g_UsbDeviceVideoVirtualCamera.deviceHandle);
@@ -120,48 +94,26 @@ void USB0_IRQHandler(void)
     exception return operation might vector to incorrect interrupt */
     __DSB();
 }
-#endif
 void USB_DeviceClockInit(void)
 {
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
     SystemCoreClockUpdate();
     CLOCK_EnableUsbfs0Clock(kCLOCK_UsbSrcIrc48M, 48000000U);
-/*
- * If the SOC has USB KHCI dedicated RAM, the RAM memory needs to be clear after
- * the KHCI clock is enabled. When the demo uses USB EHCI IP, the USB KHCI dedicated
- * RAM can not be used and the memory can't be accessed.
- */
-#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U))
-#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS) && (FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS > 0U))
-    for (int i = 0; i < FSL_FEATURE_USB_KHCI_USB_RAM; i++)
-    {
-        ((uint8_t *)FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS)[i] = 0x00U;
-    }
-#endif /* FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS */
-#endif /* FSL_FEATURE_USB_KHCI_USB_RAM */
-#endif
 }
 void USB_DeviceIsrEnable(void)
 {
     uint8_t irqNumber;
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
+
     uint8_t usbDeviceKhciIrq[] = USB_IRQS;
-    irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
-#endif
-/* Install isr, set priority, and enable IRQ. */
-#if defined(__GIC_PRIO_BITS)
-    GIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#else
+    irqNumber                  = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+
+    /* Install isr, set priority, and enable IRQ. */
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#endif
     EnableIRQ((IRQn_Type)irqNumber);
 }
 #if USB_DEVICE_CONFIG_USE_TASK
 void USB_DeviceTaskFn(void *deviceHandle)
 {
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
     USB_DeviceKhciTaskFunction(deviceHandle);
-#endif
 }
 #endif
 
@@ -464,7 +416,11 @@ static void USB_DeviceVideoApplicationSetDefault(void)
     g_UsbDeviceVideoVirtualCamera.stillProbeStruct = &s_StillProbeStruct;
     g_UsbDeviceVideoVirtualCamera.stillCommitStruct = &s_StillCommitStruct;
     g_UsbDeviceVideoVirtualCamera.classRequestBuffer = &s_ClassRequestBuffer[0];
-
+    for(uint8_t i = 0; i < USB_VIDEO_VIRTUAL_CAMERA_INTERFACE_COUNT; i++)
+    {
+        g_UsbDeviceVideoVirtualCamera.currentInterfaceAlternateSetting[i] = 0;
+    }
+    
     g_UsbDeviceVideoVirtualCamera.probeStruct->bFormatIndex = USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FORMAT_INDEX;
     g_UsbDeviceVideoVirtualCamera.probeStruct->bFrameIndex = USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FRAME_INDEX;
     USB_LONG_TO_LITTLE_ENDIAN_DATA(USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FRAME_DEFAULT_INTERVAL,
@@ -532,6 +488,8 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
         {
             /* The device BUS reset signal detected */
             USB_DeviceVideoApplicationSetDefault();
+            g_UsbDeviceVideoVirtualCamera.attach = 0U;
+            g_UsbDeviceVideoVirtualCamera.currentConfiguration = 0U;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -550,11 +508,20 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
-            if (USB_VIDEO_VIRTUAL_CAMERA_CONFIGURE_INDEX == (*temp8))
+            if (0 == (*temp8))
+            {
+                g_UsbDeviceVideoVirtualCamera.attach = 0U; 
+                g_UsbDeviceVideoVirtualCamera.currentConfiguration = 0U;
+            }
+            else if (USB_VIDEO_VIRTUAL_CAMERA_CONFIGURE_INDEX == (*temp8))
             {
                 /* Set the configuration request */
                 g_UsbDeviceVideoVirtualCamera.attach = 1U;
                 g_UsbDeviceVideoVirtualCamera.currentConfiguration = *temp8;
+            }
+            else
+            {
+                error = kStatus_USB_InvalidRequest;
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -697,7 +664,7 @@ void APP_task(void *handle)
     }
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)
@@ -716,7 +683,7 @@ void main(void)
                     ) != pdPASS)
     {
         usb_echo("app task create failed!\r\n");
-#if (defined(__CC_ARM) || defined(__GNUC__))
+#if (defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__))
         return 1U;
 #else
         return;
@@ -725,7 +692,7 @@ void main(void)
 
     vTaskStartScheduler();
 
-#if (defined(__CC_ARM) || defined(__GNUC__))
+#if (defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__))
     return 1U;
 #endif
 }

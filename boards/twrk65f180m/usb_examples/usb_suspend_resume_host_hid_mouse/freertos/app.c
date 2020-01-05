@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016 - 2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_host_config.h"
@@ -36,47 +14,31 @@
 #include "host_mouse.h"
 #include "pin_mux.h"
 #include "fsl_common.h"
-#if (defined(FSL_FEATURE_SOC_MPU_COUNT) && (FSL_FEATURE_SOC_MPU_COUNT > 0U))
-#include "fsl_mpu.h"
-#endif /* FSL_FEATURE_SOC_MPU_COUNT */
-#if ((defined USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI))
-#include "usb_phy.h"
-#endif /* USB_HOST_CONFIG_EHCI */
+#if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
+#include "fsl_sysmpu.h"
+#endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
+#include "app.h"
+#include "board.h"
 
+#include "fsl_debug_console.h"
+#if ((!USB_HOST_CONFIG_KHCI) && (!USB_HOST_CONFIG_EHCI) && (!USB_HOST_CONFIG_OHCI) && (!USB_HOST_CONFIG_IP3516HS))
+#error Please enable USB_HOST_CONFIG_KHCI, USB_HOST_CONFIG_EHCI, USB_HOST_CONFIG_OHCI, or USB_HOST_CONFIG_IP3516HS in file usb_host_config.
+#endif
+
+#include <stdbool.h>
+#include "usb_phy.h"
+#include "clock_config.h"
 #include "fsl_pit.h"
 #include "fsl_port.h"
 #include "fsl_smc.h"
-
-#if ((!USB_HOST_CONFIG_KHCI) && (!USB_HOST_CONFIG_EHCI))
-#error Please enable USB_HOST_CONFIG_KHCI or USB_HOST_CONFIG_EHCI in file usb_host_config.
-#endif
-
-#include "fsl_gpio.h"
-#include <stdbool.h>
-#include "clock_config.h"
+#include "timer.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* USB clock source and frequency*/
-#define USB_FS_CLK_SRC kCLOCK_UsbSrcPll0
-#define USB_FS_CLK_FREQ CLOCK_GetFreq(kCLOCK_PllFllSelClk)
-#define USB_HS_PHY_CLK_SRC kCLOCK_UsbPhySrcExt
-#define USB_HS_PHY_CLK_FREQ BOARD_XTAL0_CLK_HZ
-#define USB_HS_CLK_SRC kCLOCK_UsbSrcUnused
-#define USB_HS_CLK_FREQ 0U
-#if ((defined USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI))
-#define CONTROLLER_ID kUSB_ControllerKhci0
-#endif /* USB_HOST_CONFIG_KHCI */
-#if ((defined USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI))
-#define CONTROLLER_ID kUSB_ControllerEhci0
-#endif /* USB_HOST_CONFIG_EHCI */
-
-#define USB_HOST_INTERRUPT_PRIORITY (3U)
-
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void HW_TIMER_IRQ_HANDLER(void);
+void USB_WaitClockLocked(void);
 
 /*!
  * @brief host callback function.
@@ -113,28 +75,49 @@ static void USB_HostTask(void *param);
  */
 static void USB_HostApplicationTask(void *param);
 
+extern void USB_HostClockInit(void);
+extern void USB_HostIsrEnable(void);
+extern void USB_HostTaskFn(void *param);
 void BOARD_InitHardware(void);
 
 status_t DbgConsole_Deinit(void);
 
 void BOARD_InitPins(void);
 void BOARD_DeinitPins(void);
+void SW_IntControl(uint8_t enable);
+char *SW_GetName(void);
+void HW_TimerControl(uint8_t enable);
+void USB_LowpowerModeInit(void);
+void USB_PreLowpowerMode(void);
+uint8_t USB_EnterLowpowerMode(void);
+void USB_PostLowpowerMode(void);
+void USB_ControllerSuspended(void);
+void USB_WaitClockLocked(void);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+#define TIMER_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_BusClk)
+extern usb_host_mouse_instance_t g_HostHidMouse;
+extern usb_host_handle g_HostHandle;
+uint32_t g_halTimerHandle[(HAL_TIMER_HANDLE_SIZE + 3) / 4];
+/* Allocate the memory for the heap. */
+#if defined(configAPPLICATION_ALLOCATED_HEAP) && (configAPPLICATION_ALLOCATED_HEAP)
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t ucHeap[configTOTAL_HEAP_SIZE];
+#endif
 /*! @brief USB host mouse instance global variable */
 extern usb_host_mouse_instance_t g_HostHidMouse;
 usb_host_handle g_HostHandle;
 
+#if defined(configUSE_TICKLESS_IDLE) && (configUSE_TICKLESS_IDLE == 1U)
+SemaphoreHandle_t s_wakeupSig;
+SemaphoreHandle_t s_wakeupSig1;
+extern uint8_t s_suspendResumeState;
+#endif
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-void PIT0_IRQHandler(void)
-{
-    HW_TIMER_IRQ_HANDLER();
-}
 
 /*!
  * @brief De-initialize all pins used in this example
@@ -153,44 +136,200 @@ void BOARD_DeinitPins(void)
     CLOCK_DisableClock(kCLOCK_PortE);
 }
 
-void LLWU_SW_IRQ_HANDLER(void)
+void BOARD_SW3_IRQ_HANDLER(void)
 {
-    if ((1U << LLWU_SW_GPIO_PIN) & PORT_GetPinsInterruptFlags(LLWU_SW_PORT))
+    if ((1U << BOARD_SW3_GPIO_PIN) & PORT_GetPinsInterruptFlags(BOARD_SW3_PORT))
     {
         /* Disable interrupt. */
-        PORT_SetPinInterruptConfig(LLWU_SW_PORT, LLWU_SW_GPIO_PIN, kPORT_InterruptOrDMADisabled);
-        PORT_ClearPinsInterruptFlags(LLWU_SW_PORT, (1U << LLWU_SW_GPIO_PIN));
+        PORT_SetPinInterruptConfig(BOARD_SW3_PORT, BOARD_SW3_GPIO_PIN, kPORT_InterruptOrDMADisabled);
+        PORT_ClearPinsInterruptFlags(BOARD_SW3_PORT, (1U << BOARD_SW3_GPIO_PIN));
         g_HostHidMouse.selfWakeup = 1U;
+    }
+    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+    exception return operation might vector to incorrect interrupt */
+    __DSB();
+}
+
+void SW_IntControl(uint8_t enable)
+{
+    if (enable)
+    {
+        g_HostHidMouse.selfWakeup = 0U;
+        PORT_SetPinInterruptConfig(BOARD_SW3_PORT, BOARD_SW3_GPIO_PIN, kPORT_InterruptFallingEdge);
+    }
+    else
+    {
+        PORT_SetPinInterruptConfig(BOARD_SW3_PORT, BOARD_SW3_GPIO_PIN, kPORT_InterruptOrDMADisabled);
     }
 }
 
-#if ((defined(USB_HOST_CONFIG_LOW_POWER_MODE)) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U))
-
-void HW_TIMER_IRQ_HANDLER(void)
+void SW_Callback(void *param)
 {
-    /* Clear interrupt flag.*/
-    PIT_ClearStatusFlags(PIT, kPIT_Chnl_0, PIT_TFLG_TIF_MASK);
+    g_HostHidMouse.selfWakeup = 1U;
+    SW_IntControl(0);
+}
+
+void SW_Init(void)
+{
+    NVIC_SetPriority(BOARD_SW3_IRQ, 1U);
+    NVIC_EnableIRQ(BOARD_SW3_IRQ);
+}
+
+char *SW_GetName(void)
+{
+    return BOARD_SW3_NAME;
+}
+
+void HW_TimerCallback(void *param)
+{
     g_HostHidMouse.hwTick++;
     USB_HostUpdateHwTick(g_HostHandle, g_HostHidMouse.hwTick);
 }
 
+void HW_TimerInit(void)
+{
+    hal_timer_config_t halTimerConfig;
+    halTimerConfig.timeout            = 1000;
+    halTimerConfig.srcClock_Hz        = TIMER_SOURCE_CLOCK;
+    halTimerConfig.instance           = 0U;
+    hal_timer_handle_t halTimerHandle = &g_halTimerHandle[0];
+    HAL_TimerInit(halTimerHandle, &halTimerConfig);
+    HAL_TimerInstallCallback(halTimerHandle, HW_TimerCallback, NULL);
+}
+
+void HW_TimerControl(uint8_t enable)
+{
+    if (enable)
+    {
+        HAL_TimerEnable(g_halTimerHandle);
+    }
+    else
+    {
+        HAL_TimerDisable(g_halTimerHandle);
+    }
+}
+
+void USB_LowpowerModeInit(void)
+{
+    /* Set to allow entering vlps mode */
+    SMC_SetPowerModeProtection(SMC, kSMC_AllowPowerModeVlp);
+    SIM->SCGC6 |= SIM_SCGC6_RTC_MASK;
+    RTC->CR |= RTC_CR_OSCE_MASK;
+#if (defined(FSL_FEATURE_SIM_OPT_HAS_USB_PHY) && (FSL_FEATURE_SIM_OPT_HAS_USB_PHY > 0))
+    SIM->SOPT2 |= SIM_SOPT2_USBSLSRC_MASK;
 #endif
+    SW_Init();
+    HW_TimerInit();
+}
+
+void USB_PreLowpowerMode(void)
+{
+    SMC_PreEnterStopModes();
+    SIM->SOPT1 |= SIM_SOPT1_USBSSTBY_MASK;
+}
+
+uint8_t USB_EnterLowpowerMode(void)
+{
+    /* Enter Deep Sleep mode */
+    return SMC_SetPowerModeVlps(SMC);
+}
+
+void USB_PostLowpowerMode(void)
+{
+    USB_WaitClockLocked();
+    SMC_PostExitStopModes();
+}
+
+void USB_ControllerSuspended(void)
+{
+}
+
+void USB_WaitClockLocked(void)
+{
+#if (defined(FSL_FEATURE_SOC_MCG_COUNT) && (FSL_FEATURE_SOC_MCG_COUNT > 0U))
+    /* Wait for PLL lock. */
+    while (!(kMCG_Pll0LockFlag & CLOCK_GetStatusFlags()))
+    {
+    }
+    CLOCK_SetPeeMode();
+#endif
+}
+
+#if defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 0U)
+void USBHS_IRQHandler(void)
+{
+    USB_HostEhciIsrFunction(g_HostHandle);
+    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+    exception return operation might vector to incorrect interrupt */
+    __DSB();
+}
+#endif /* USB_HOST_CONFIG_EHCI */
+#if defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)
+void USB0_IRQHandler(void)
+{
+    USB_HostKhciIsrFunction(g_HostHandle);
+    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+    exception return operation might vector to incorrect interrupt */
+    __DSB();
+}
+#endif /* USB_HOST_CONFIG_KHCI */
+
+void USB_HostClockInit(void)
+{
+#if defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 0U)
+    usb_phy_config_struct_t phyConfig = {
+        BOARD_USB_PHY_D_CAL,
+        BOARD_USB_PHY_TXCAL45DP,
+        BOARD_USB_PHY_TXCAL45DM,
+    };
+#endif
+
+#if defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 0U)
+    CLOCK_EnableUsbhs0PhyPllClock(kCLOCK_UsbPhySrcExt, BOARD_XTAL0_CLK_HZ);
+    CLOCK_EnableUsbhs0Clock(kCLOCK_UsbSrcUnused, 0U);
+    USB_EhciLowPowerPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ, &phyConfig);
+#endif
+
+#if defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)
+    SystemCoreClockUpdate();
+    CLOCK_EnableUsbfs0Clock(kCLOCK_UsbSrcPll0, CLOCK_GetFreq(kCLOCK_PllFllSelClk));
+#endif
+}
+
+void USB_HostIsrEnable(void)
+{
+    uint8_t irqNumber;
+#if defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 0U)
+    uint8_t usbHOSTEhciIrq[] = USBHS_IRQS;
+    irqNumber                = usbHOSTEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
+#endif /* USB_HOST_CONFIG_EHCI */
+#if defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)
+    uint8_t usbHOSTKhciIrq[] = USB_IRQS;
+    irqNumber                = usbHOSTKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+#endif /* USB_HOST_CONFIG_KHCI */
+
+/* Install isr, set priority, and enable IRQ. */
+#if defined(__GIC_PRIO_BITS)
+    GIC_SetPriority((IRQn_Type)irqNumber, USB_HOST_INTERRUPT_PRIORITY);
+#else
+    NVIC_SetPriority((IRQn_Type)irqNumber, USB_HOST_INTERRUPT_PRIORITY);
+#endif
+    EnableIRQ((IRQn_Type)irqNumber);
+}
+
+void USB_HostTaskFn(void *param)
+{
+#if defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 0U)
+    USB_HostEhciTaskFunction(param);
+#endif
+#if defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)
+    USB_HostKhciTaskFunction(param);
+#endif
+}
 
 /*!
  * @brief USB isr function.
  */
-#if ((defined USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI))
-void USB0_IRQHandler(void)
-{
-    USB_HostKhciIsrFunction(g_HostHandle);
-}
-#endif /* USB_HOST_CONFIG_KHCI */
-#if ((defined USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI))
-void USBHS_IRQHandler(void)
-{
-    USB_HostEhciIsrFunction(g_HostHandle);
-}
-#endif /* USB_HOST_CONFIG_EHCI */
 
 static void USB_HostRemoteWarkupCallback(void *param, usb_host_transfer_t *transfer, usb_status_t status)
 {
@@ -205,13 +344,13 @@ static void USB_HostRemoteWarkupCallback(void *param, usb_host_transfer_t *trans
         if (kStatus_SuspendWaitClearRemoteWakeup == g_HostHidMouse.suspendResumeState)
         {
             usb_echo("Remote wakeup feature cleared.\r\n");
-            g_HostHidMouse.isSetRemoteWakeup = 0U;
+            g_HostHidMouse.isSetRemoteWakeup  = 0U;
             g_HostHidMouse.suspendResumeState = kStatus_Suspending;
         }
         else if (kStatus_SuspendWaitSetRemoteWakeup == g_HostHidMouse.suspendResumeState)
         {
             usb_echo("Remote wakeup feature set.\r\n");
-            g_HostHidMouse.isSetRemoteWakeup = 1U;
+            g_HostHidMouse.isSetRemoteWakeup  = 1U;
             g_HostHidMouse.suspendResumeState = kStatus_Suspending;
         }
         else
@@ -225,6 +364,7 @@ static void USB_HostRemoteWarkupCallback(void *param, usb_host_transfer_t *trans
             "\tSend clear remote wakeup feature request failed. \r\nWhether need to continue? "
             "Please ENTER y(es) or n(o): ");
     }
+    DbgConsole_Flush();
 }
 
 usb_status_t USB_HostControlRemoteWakeup(usb_host_handle hostHandle,
@@ -252,14 +392,15 @@ usb_status_t USB_HostControlRemoteWakeup(usb_host_handle hostHandle,
     /* initialize transfer */
     transfer->transferBuffer = NULL;
     transfer->transferLength = 0;
-    transfer->callbackFn = callbackFn;
-    transfer->callbackParam = callbackParam;
-    transfer->setupPacket.bmRequestType =
+    transfer->callbackFn     = callbackFn;
+    transfer->callbackParam  = callbackParam;
+    transfer->setupPacket->bmRequestType =
         USB_REQUEST_TYPE_RECIPIENT_DEVICE | USB_REQUEST_TYPE_DIR_OUT | USB_REQUEST_TYPE_TYPE_STANDARD;
-    transfer->setupPacket.bRequest = (enable ? USB_REQUEST_STANDARD_SET_FEATURE : USB_REQUEST_STANDARD_CLEAR_FEATURE);
-    transfer->setupPacket.wValue = (USB_REQUEST_STANDARD_FEATURE_SELECTOR_DEVICE_REMOTE_WAKEUP);
-    transfer->setupPacket.wIndex = USB_SHORT_TO_LITTLE_ENDIAN(0x00U);
-    transfer->setupPacket.wLength = USB_SHORT_TO_LITTLE_ENDIAN(0x00U);
+    transfer->setupPacket->bRequest = (enable ? USB_REQUEST_STANDARD_SET_FEATURE : USB_REQUEST_STANDARD_CLEAR_FEATURE);
+    transfer->setupPacket->wValue =
+        USB_SHORT_TO_LITTLE_ENDIAN(USB_REQUEST_STANDARD_FEATURE_SELECTOR_DEVICE_REMOTE_WAKEUP);
+    transfer->setupPacket->wIndex  = USB_SHORT_TO_LITTLE_ENDIAN(0x00U);
+    transfer->setupPacket->wLength = USB_SHORT_TO_LITTLE_ENDIAN(0x00U);
 
     USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetDeviceControlPipe, &infoValue);
 
@@ -281,7 +422,7 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
 {
     usb_status_t status = kStatus_USB_Success;
 
-    switch (eventCode)
+    switch (eventCode & 0x0000FFFFU)
     {
         case kUSB_HostEventAttach:
             status = USB_HostHidMouseEvent(deviceHandle, configurationHandle, eventCode);
@@ -313,8 +454,9 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
             g_HostHidMouse.suspendResumeState = kStatus_Idle;
             break;
         case kUSB_HostEventSuspended:
-            if (kStatus_SuspendRequest == g_HostHidMouse.suspendResumeState)
+            if (kStatus_Idle != g_HostHidMouse.suspendResumeState)
             {
+                USB_ControllerSuspended();
                 g_HostHidMouse.suspendResumeState = kStatus_Suspended;
             }
             else
@@ -325,11 +467,7 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
         case kUSB_HostEventDetectResume:
             if (kStatus_Idle != g_HostHidMouse.suspendResumeState)
             {
-                /* Wait for PLL lock. */
-                while (!(kMCG_Pll0LockFlag & CLOCK_GetStatusFlags()))
-                {
-                }
-                CLOCK_SetPeeMode();
+                USB_WaitClockLocked();
             }
             break;
         case kUSB_HostEventResumed:
@@ -343,9 +481,14 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
                 {
                     usb_echo("Device has been resumed.\r\n");
                 }
+                DbgConsole_Flush();
             }
             g_HostHidMouse.suspendResumeState = kStatus_Idle;
             break;
+        case kUSB_HostEventEnumerationFail:
+            usb_echo("enumeration failed\r\n");
+            break;
+
         default:
             break;
     }
@@ -355,23 +498,12 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
 static void USB_HostApplicationInit(void)
 {
     usb_status_t status = kStatus_USB_Success;
-    IRQn_Type usbIrq;
 
-#if ((defined USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI))
-    IRQn_Type usbFsIrqs[] = USB_IRQS;
-    usbIrq = usbFsIrqs[CONTROLLER_ID - kUSB_ControllerKhci0];
-    CLOCK_EnableUsbfs0Clock(USB_FS_CLK_SRC, USB_FS_CLK_FREQ);
-#endif /* USB_HOST_CONFIG_KHCI */
-#if ((defined USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI))
-    IRQn_Type usbHsIrqs[] = USBHS_IRQS;
-    usbIrq = usbHsIrqs[CONTROLLER_ID - kUSB_ControllerEhci0];
-    CLOCK_EnableUsbhs0PhyPllClock(USB_HS_PHY_CLK_SRC, USB_HS_PHY_CLK_FREQ);
-    CLOCK_EnableUsbhs0Clock(USB_HS_CLK_SRC, USB_HS_CLK_FREQ);
-    USB_EhciLowPowerPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ);
-#endif /* USB_HOST_CONFIG_EHCI */
-#if ((defined FSL_FEATURE_SOC_MPU_COUNT) && (FSL_FEATURE_SOC_MPU_COUNT))
-    MPU_Enable(MPU, 0);
-#endif /* FSL_FEATURE_SOC_MPU_COUNT */
+    USB_HostClockInit();
+
+#if ((defined FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT))
+    SYSMPU_Enable(SYSMPU, 0);
+#endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
     status = USB_HostInit(CONTROLLER_ID, &g_HostHandle, USB_HostEvent);
     if (status != kStatus_USB_Success)
@@ -379,88 +511,32 @@ static void USB_HostApplicationInit(void)
         usb_echo("host init error\r\n");
         return;
     }
-    NVIC_SetPriority(usbIrq, USB_HOST_INTERRUPT_PRIORITY);
-    NVIC_EnableIRQ(usbIrq);
+    USB_HostIsrEnable();
 
     usb_echo("host init done\r\n");
 }
 
-#ifdef BOARD_DEBUG_UART_TYPE
-
-usb_status_t getCharFormDebugConsle(uint8_t *c)
-{
-    if (NULL == c)
-    {
-        return kStatus_USB_Error;
-    }
-#if (BOARD_DEBUG_UART_TYPE == DEBUG_CONSOLE_DEVICE_TYPE_UART)
-
-#if defined(FSL_FEATURE_UART_HAS_FIFO) && FSL_FEATURE_UART_HAS_FIFO
-    if (((UART_Type *)BOARD_DEBUG_UART_BASEADDR)->RCFIFO)
-#else
-    if (((UART_Type *)BOARD_DEBUG_UART_BASEADDR)->S1 & UART_S1_RDRF_MASK)
-#endif
-    {
-        *(c) = ((UART_Type *)BOARD_DEBUG_UART_BASEADDR)->D;
-        return kStatus_USB_Success;
-    }
-
-#elif(BOARD_DEBUG_UART_TYPE == DEBUG_CONSOLE_DEVICE_TYPE_LPUART)
-
-#if defined(FSL_FEATURE_LPUART_HAS_FIFO) && FSL_FEATURE_LPUART_HAS_FIFO
-    if ((((LPUART_Type *)BOARD_DEBUG_UART_BASEADDR)->WATER & LPUART_WATER_RXCOUNT_MASK) >> LPUART_WATER_RXCOUNT_SHIFT)
-#else
-    if (((LPUART_Type *)BOARD_DEBUG_UART_BASEADDR)->STAT & LPUART_STAT_RDRF_MASK)
-#endif
-    {
-        *(c) = ((LPUART_Type *)BOARD_DEBUG_UART_BASEADDR)->DATA;
-        return kStatus_USB_Success;
-    }
-
-#elif(BOARD_DEBUG_UART_TYPE == DEBUG_CONSOLE_DEVICE_TYPE_LPSCI)
-
-#if defined(FSL_FEATURE_LPUART_HAS_FIFO) && FSL_FEATURE_LPUART_HAS_FIFO
-    if ((((LPUART_Type *)BOARD_DEBUG_UART_BASEADDR)->WATER & LPUART_WATER_RXCOUNT_MASK) >> LPUART_WATER_RXCOUNT_SHIFT)
-#else
-    if (((LPUART_Type *)BOARD_DEBUG_UART_BASEADDR)->STAT & LPUART_STAT_RDRF_MASK)
-#endif
-    {
-        *(c) = ((LPUART_Type *)BOARD_DEBUG_UART_BASEADDR)->DATA;
-        return kStatus_USB_Success;
-    }
-
-#elif(BOARD_DEBUG_UART_TYPE == DEBUG_CONSOLE_DEVICE_TYPE_USBCDC)
-#error This example can not support debug consle type : USBCDC.
-#else
-#endif
-    return kStatus_USB_Error;
-}
-
-#endif
-
 void USB_PowerPreSwitchHook(void)
 {
-    PIT_StopTimer(PIT, kPIT_Chnl_0);
+    HW_TimerControl(0U);
 
     DbgConsole_Deinit();
 
     BOARD_DeinitPins();
-    SMC_PreEnterStopModes();
+
+    USB_PreLowpowerMode();
+
+    vTaskSuspendAll();
 }
 
 void USB_PowerPostSwitchHook(void)
 {
-#if (defined(FSL_FEATURE_SOC_MCG_COUNT) && (FSL_FEATURE_SOC_MCG_COUNT > 0U))
-    /* Wait for PLL lock. */
-    while (!(kMCG_Pll0LockFlag & CLOCK_GetStatusFlags()))
-    {
-    }
-    CLOCK_SetPeeMode();
-#endif
-    SMC_PostExitStopModes();
+    USB_WaitClockLocked();
+    USB_PostLowpowerMode();
     BOARD_InitPins();
     BOARD_InitDebugConsole();
-    PIT_StartTimer(PIT, kPIT_Chnl_0);
+    HW_TimerControl(1U);
+    xTaskResumeAll();
 }
 
 void USB_HostSuspendResumeTask(void)
@@ -468,7 +544,7 @@ void USB_HostSuspendResumeTask(void)
     usb_status_t usb_error;
     uint8_t command;
 
-    if (kStatus_USB_Success != getCharFormDebugConsle(&command))
+    if (kStatus_USB_Success != DbgConsole_TryGetchar((char *)&command))
     {
         command = 0;
     }
@@ -540,6 +616,7 @@ void USB_HostSuspendResumeTask(void)
             else
             {
             }
+            DbgConsole_Flush();
             break;
         case kStatus_SuspendWaitSetRemoteWakeup:
         case kStatus_SuspendWaitClearRemoteWakeup:
@@ -560,11 +637,11 @@ void USB_HostSuspendResumeTask(void)
             }
             break;
         case kStatus_Suspending:
+            g_HostHidMouse.suspendResumeState = kStatus_SuspendRequest;
             if (kStatus_USB_Success ==
                 USB_HostSuspendDeviceResquest(g_HostHandle,
                                               g_HostHidMouse.suspendBus ? NULL : g_HostHidMouse.deviceHandle))
             {
-                g_HostHidMouse.suspendResumeState = kStatus_SuspendRequest;
             }
             else
             {
@@ -575,6 +652,7 @@ void USB_HostSuspendResumeTask(void)
         case kStatus_SuspendRequest:
             break;
         case kStatus_Suspended:
+            DbgConsole_Flush();
             if (g_HostHidMouse.suspendBus)
             {
                 usb_echo("BUS has been suspended.\r\n");
@@ -583,15 +661,23 @@ void USB_HostSuspendResumeTask(void)
             {
                 usb_echo("Device has been suspended.\r\n");
             }
-            usb_echo("Please Press wakeup switch(%s) to start resume test.\r\n", LLWU_SW_NAME);
+            DbgConsole_Flush();
+            usb_echo("Please Press wakeup switch(%s) to start resume test.\r\n", SW_GetName());
             if (g_HostHidMouse.isSetRemoteWakeup)
             {
                 usb_echo("Or, wait for device sends resume signal.\r\n");
             }
+            /*flush the output befor enter lowpower*/
+            DbgConsole_Flush();
             USB_PowerPreSwitchHook();
-            PORT_SetPinInterruptConfig(LLWU_SW_PORT, LLWU_SW_GPIO_PIN, kPORT_InterruptFallingEdge);
-            SIM->SOPT1 |= SIM_SOPT1_USBSSTBY_MASK;
-            if (kStatus_Success != SMC_SetPowerModeVlps(SMC))
+            SW_IntControl(1);
+
+            g_HostHidMouse.suspendResumeState = kStatus_WaitResume;
+#if defined(configUSE_TICKLESS_IDLE) && (configUSE_TICKLESS_IDLE == 1U)
+#else
+            vTaskSuspendAll();
+#endif
+            if (kStatus_Success != USB_EnterLowpowerMode())
             {
                 g_HostHidMouse.selfWakeup = 1U;
                 USB_PowerPostSwitchHook();
@@ -601,25 +687,29 @@ void USB_HostSuspendResumeTask(void)
             {
                 USB_PowerPostSwitchHook();
             }
+#if defined(configUSE_TICKLESS_IDLE) && (configUSE_TICKLESS_IDLE == 1U)
+#else
+            xTaskResumeAll();
+#endif
 
             if (g_HostHidMouse.isSetRemoteWakeup)
             {
             }
-            g_HostHidMouse.suspendResumeState = kStatus_WaitResume;
             break;
         case kStatus_WaitResume:
             if (g_HostHidMouse.selfWakeup)
             {
                 g_HostHidMouse.selfWakeup = 0U;
                 usb_echo("Start resume the device.\r\n");
+                g_HostHidMouse.suspendResumeState = kStatus_ResumeRequest;
                 if (kStatus_USB_Success ==
                     USB_HostResumeDeviceResquest(g_HostHandle,
                                                  g_HostHidMouse.suspendBus ? NULL : g_HostHidMouse.deviceHandle))
                 {
-                    g_HostHidMouse.suspendResumeState = kStatus_ResumeRequest;
                 }
                 else
                 {
+                    g_HostHidMouse.suspendResumeState = kStatus_Idle;
                     usb_echo("Send resume signal failed.\r\n");
                 }
             }
@@ -636,12 +726,7 @@ static void USB_HostTask(void *param)
 {
     while (1)
     {
-#if ((defined USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI))
-        USB_HostKhciTaskFunction(param);
-#endif /* USB_HOST_CONFIG_KHCI */
-#if ((defined USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI))
-        USB_HostEhciTaskFunction(param);
-#endif /* USB_HOST_CONFIG_EHCI */
+        USB_HostTaskFn(param);
     }
 }
 
@@ -657,47 +742,13 @@ static void USB_HostSuspendResume(void *param)
 static void USB_HostApplicationTask(void *param)
 {
 #if ((defined(USB_HOST_CONFIG_LOW_POWER_MODE)) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U))
-    /* Structure of initialize PIT */
-    pit_config_t pitConfig;
-#endif
-
-    /* Set to allow entering vlps mode */
-    SMC_SetPowerModeProtection(SMC, kSMC_AllowPowerModeVlp);
-
-    SIM->SCGC6 |= SIM_SCGC6_RTC_MASK;
-    RTC->CR |= RTC_CR_OSCE_MASK;
-#if (defined(FSL_FEATURE_SIM_OPT_HAS_USB_PHY) && (FSL_FEATURE_SIM_OPT_HAS_USB_PHY > 0))
-    SIM->SOPT2 |= SIM_SOPT2_USBSLSRC_MASK;
-#endif
-
-#if ((defined(USB_HOST_CONFIG_LOW_POWER_MODE)) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U))
-    /*
-     * pitConfig.enableRunInDebug = false;
-     */
-    PIT_GetDefaultConfig(&pitConfig);
-
-    /* Init pit module */
-    PIT_Init(PIT, &pitConfig);
-
-    /* Set timer period for channel 0 */
-    PIT_SetTimerPeriod(PIT, kPIT_Chnl_0, USEC_TO_COUNT(1000U, CLOCK_GetFreq(kCLOCK_BusClk)));
-
-    /* Enable timer interrupts for channel 0 */
-    PIT_EnableInterrupts(PIT, kPIT_Chnl_0, kPIT_TimerInterruptEnable);
+    USB_LowpowerModeInit();
 #endif
 
     USB_HostApplicationInit();
 
 #if ((defined(USB_HOST_CONFIG_LOW_POWER_MODE)) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U))
-    /* Enable at the NVIC */
-    EnableIRQ(PIT0_IRQn);
-
-    /* Start counting */
-    PIT_StartTimer(PIT, kPIT_Chnl_0);
-
-    NVIC_SetPriority(LLWU_SW_IRQ, 1U);
-    NVIC_EnableIRQ(LLWU_SW_IRQ);
-
+    HW_TimerControl(1);
     usb_echo("Please Enter 's' to start suspend test\r\n");
 #endif
 
@@ -716,7 +767,19 @@ static void USB_HostApplicationTask(void *param)
 
     while (1)
     {
+#if defined(configUSE_TICKLESS_IDLE) && (configUSE_TICKLESS_IDLE == 1U)
+        if (!s_suspendResumeState)
+        {
+            USB_HostHidMouseTask(param);
+        }
+        else
+        {
+            xSemaphoreTake(s_wakeupSig1, portMAX_DELAY);
+            s_suspendResumeState = 0;
+        }
+#else
         USB_HostHidMouseTask(param);
+#endif
     }
 }
 
@@ -726,15 +789,15 @@ int main(void)
 
     BOARD_InitPins();
     BOARD_BootClockRUN();
-    CLOCK_SetXtal32Freq(BOARD_XTAL32K_CLK_HZ);
+
     BOARD_InitDebugConsole();
 
     /* Set the LLWU pin */
-    GPIO_PinInit(LLWU_SW_GPIO, LLWU_SW_GPIO_PIN, &pinConfig);
+    GPIO_PinInit(BOARD_SW3_GPIO, BOARD_SW3_GPIO_PIN, &pinConfig);
 
     /* enable usb host vbus */
     pinConfig.pinDirection = kGPIO_DigitalOutput;
-    pinConfig.outputLogic = 1U;
+    pinConfig.outputLogic  = 1U;
 
     GPIO_PinInit(PTD, 8U, &pinConfig);
 

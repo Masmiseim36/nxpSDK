@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2018 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_host_config.h"
@@ -40,6 +14,7 @@
 #include "diskio.h"
 #include "stdio.h"
 #include "fsl_device_registers.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
@@ -131,7 +106,7 @@ volatile usb_status_t controlStatus;
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint32_t testThroughputBuffer[THROUGHPUT_BUFFER_SIZE / 4]; /* the buffer for throughput test */
 uint32_t testSizeArray[] = {20 * 1024, 20 * 1024}; /* test time and test size (uint: K)*/
 #else
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t testBuffer[(_MAX_SS > 256) ? _MAX_SS : 256]; /* normal test buffer */
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t testBuffer[(FF_MAX_SS > 256) ? FF_MAX_SS : 256]; /* normal test buffer */
 #endif /* MSD_FATFS_THROUGHPUT_TEST_ENABLE */
 
 /*******************************************************************************
@@ -142,10 +117,10 @@ void USB_HostMsdControlCallback(void *param, uint8_t *data, uint32_t dataLength,
 {
     usb_host_msd_fatfs_instance_t *msdFatfsInstance = (usb_host_msd_fatfs_instance_t *)param;
 
-    if (msdFatfsInstance->runWaitState == kRunWaitSetInterface) /* set interface finish */
+    if (msdFatfsInstance->runWaitState == kUSB_HostMsdRunWaitSetInterface) /* set interface finish */
     {
-        msdFatfsInstance->runWaitState = kRunIdle;
-        msdFatfsInstance->runState = kRunMassStorageTest;
+        msdFatfsInstance->runWaitState = kUSB_HostMsdRunIdle;
+        msdFatfsInstance->runState = kUSB_HostMsdRunMassStorageTest;
     }
     controlIng = 0;
     controlStatus = status;
@@ -401,7 +376,7 @@ static void USB_HostMsdFatfsTest(usb_host_msd_fatfs_instance_t *msdFatfsInstance
     }
     usb_echo("success\r\n");
 
-#if (_FS_RPATH >= 2)
+#if (FF_FS_RPATH >= 2)
     fatfsCode = f_chdrive((char const *)&driverNumberBuffer[0]);
     if (fatfsCode)
     {
@@ -411,9 +386,9 @@ static void USB_HostMsdFatfsTest(usb_host_msd_fatfs_instance_t *msdFatfsInstance
     }
 #endif
 
-#if _USE_MKFS
+#if FF_USE_MKFS
     usb_echo("test f_mkfs......");
-    fatfsCode = f_mkfs((char const *)&driverNumberBuffer[0], FM_SFD | FM_ANY, 0U, testBuffer, _MAX_SS);
+    fatfsCode = f_mkfs((char const *)&driverNumberBuffer[0], FM_SFD | FM_ANY, 0U, testBuffer, FF_MAX_SS);
     if (fatfsCode)
     {
         usb_echo("error\r\n");
@@ -421,7 +396,7 @@ static void USB_HostMsdFatfsTest(usb_host_msd_fatfs_instance_t *msdFatfsInstance
         return;
     }
     usb_echo("success\r\n");
-#endif /* _USE_MKFS */
+#endif /* FF_USE_MKFS */
 
     usb_echo("test f_getfree:\r\n");
     fatfsCode = f_getfree((char const *)&driverNumberBuffer[0], (DWORD *)&freeClusterNumber, &fs);
@@ -545,7 +520,7 @@ static void USB_HostMsdFatfsTest(usb_host_msd_fatfs_instance_t *msdFatfsInstance
     }
     usb_echo("success\r\n");
 
-#if (_FS_RPATH >= 2)
+#if (FF_FS_RPATH >= 2)
     usb_echo("get current directory......");
     fatfsCode = f_getcwd((TCHAR *)&testBuffer[0], 256);
     if (fatfsCode)
@@ -879,12 +854,12 @@ void USB_HostMsdTask(void *arg)
                     usb_echo("usb host msd init fail\r\n");
                     return;
                 }
-                msdFatfsInstance->runState = kRunSetInterface;
+                msdFatfsInstance->runState = kUSB_HostMsdRunSetInterface;
                 break;
 
             case kStatus_DEV_Detached: /* device is detached */
                 msdFatfsInstance->deviceState = kStatus_DEV_Idle;
-                msdFatfsInstance->runState = kRunIdle;
+                msdFatfsInstance->runState = kUSB_HostMsdRunIdle;
                 USB_HostMsdDeinit(msdFatfsInstance->deviceHandle,
                                   msdFatfsInstance->classHandle); /* msd class de-initialization */
                 msdFatfsInstance->classHandle = NULL;
@@ -900,12 +875,12 @@ void USB_HostMsdTask(void *arg)
     /* run state */
     switch (msdFatfsInstance->runState)
     {
-        case kRunIdle:
+        case kUSB_HostMsdRunIdle:
             break;
 
-        case kRunSetInterface: /* set msd interface */
-            msdFatfsInstance->runState = kRunIdle;
-            msdFatfsInstance->runWaitState = kRunWaitSetInterface;
+        case kUSB_HostMsdRunSetInterface: /* set msd interface */
+            msdFatfsInstance->runState = kUSB_HostMsdRunIdle;
+            msdFatfsInstance->runWaitState = kUSB_HostMsdRunWaitSetInterface;
             status = USB_HostMsdSetInterface(msdFatfsInstance->classHandle, msdFatfsInstance->interfaceHandle, 0,
                                              USB_HostMsdControlCallback, msdFatfsInstance);
             if (status != kStatus_USB_Success)
@@ -914,13 +889,13 @@ void USB_HostMsdTask(void *arg)
             }
             break;
 
-        case kRunMassStorageTest: /* set interface succeed */
+        case kUSB_HostMsdRunMassStorageTest: /* set interface succeed */
 #if ((defined MSD_FATFS_THROUGHPUT_TEST_ENABLE) && (MSD_FATFS_THROUGHPUT_TEST_ENABLE))
             USB_HostMsdFatfsThroughputTest(msdFatfsInstance); /* test throughput */
 #else
             USB_HostMsdFatfsTest(msdFatfsInstance); /* test msd device */
 #endif /* MSD_FATFS_THROUGHPUT_TEST_ENABLE */
-            msdFatfsInstance->runState = kRunIdle;
+            msdFatfsInstance->runState = kUSB_HostMsdRunIdle;
             break;
 
         default:

@@ -1,12 +1,12 @@
 /*
-* Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2017 NXP
+ * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
  * All rights reserved.
-*
-* SPDX-License-Identifier: BSD-3-Clause
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
-/** 
+/**
  * @file frdm_stbc_agm01_shield.h
  * @brief The frdm_stbc_agm01_shield.h file declares mapping of the Kinetis
          Device peripherals to the frmd-k64f and frmd-stbc-agm01 shield

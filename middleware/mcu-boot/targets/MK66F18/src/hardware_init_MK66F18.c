@@ -49,6 +49,9 @@ void init_hardware(void)
 
     // Enable flash access for crossbar swicth master 4 (USB FS/LS)
     FMC->PFAPR |= FMC_PFAPR_M4AP_MASK;
+    
+    // Load the user configuration data so that we can configure the clocks
+    g_bootloaderContext.propertyInterface->load_user_config();
 }
 
 void deinit_hardware(void)

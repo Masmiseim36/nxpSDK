@@ -1,17 +1,16 @@
 Overview
 ========
-The FTM pwm tow channgel Example project is a demonstration program that uses the KSDK software to generate a square 
+The FTM pwm two channel Example project is a demonstration program that uses the KSDK software to generate a square 
 pulse PWM on 2 channel to control the LED brightness.
 - FTM generates a PWM with the increasing and decreasing duty cycle.
 - LED brightness is increasing and then dimming. This is a continuous process.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.50.1
-- Keil MDK 5.17
-- GCC ARM Embedded 2015-4.9-q3
-- Kinetis Development Studio IDE 3.0.0
-- Atollic TrueSTUDIO 5.4.0
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -45,8 +44,6 @@ FTM example to output PWM on 2 channels
 You will see a change in LED brightness if an LED is connected to the FTM pin
 If no LED is connected to the FTM pin, then probe the signal using an oscilloscope
 ~~~~~~~~~~~~~~~~~~~~~~~
-
 Customization options
 =====================
-
 

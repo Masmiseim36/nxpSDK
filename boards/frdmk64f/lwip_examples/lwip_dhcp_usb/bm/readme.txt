@@ -6,6 +6,24 @@ The application acts as a DHCP client and prints the status as it is progressing
 Once the interface is being bound to an IP address obtained from DHCP server, address information is printed.
 The application will get ip adress www.nxp.com and ping the ip address.
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
+
+Hardware requirements
+=====================
+- Mini/micro USB cable
+- RJ45 Network cable
+- FRDM-K64F board
+- Personal Computer
+
+Board settings
+==============
+- The Jumper settings:\n J21 1-2.
 Prepare the Demo
 ================
 1.  Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.
@@ -21,21 +39,6 @@ Prepare the Demo
 Running the demo
 ================
 refer to MCUXpresso SDK USB RNDIS & LWIP User Guide
-Hardware requirements
+Customization options
 =====================
-- Mini/micro USB cable
-- RJ45 Network cable
-- FRDM-K64F board
-- Personal Computer
-
-Board settings
-==============
-- The Jumper settings:\n J21 1-2.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
 

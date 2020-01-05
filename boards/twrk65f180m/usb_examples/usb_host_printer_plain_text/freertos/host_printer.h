@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016 - 2018 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef __HOST_PRINTER_H__
@@ -36,32 +14,24 @@
  ******************************************************************************/
 
 #define USB_HOST_PRINTER_APP_RECEIVE_TRY_DELAY (500)
-#define USB_HOST_PRINTER_APP_BUFFER_SIZE (200)
-
-/*! @brief host app device attach/detach status */
-typedef enum _usb_host_printer_app_state
-{
-    kStatus_DEV_Idle = 0, /*!< there is no device attach/detach */
-    kStatus_DEV_Attached, /*!< device is attached */
-    kStatus_DEV_Detached, /*!< device is detached */
-} usb_host_printer_app_state_t;
+#define USB_HOST_PRINTER_APP_BUFFER_SIZE (300)
 
 /*! @brief host app run status */
 typedef enum _usb_host_printer_run_state
 {
-    kRunIdle = 0,            /*!< idle */
-    kRunSetInterface,        /*!< execute set interface code */
-    kRunWaitSetInterface,    /*!< wait set interface done */
-    kRunGetDeviceId,         /*!< get device id, get all the string */
-    kRunWaitGetDeviceId,     /*!< wait get device id callback */
-    kRunGetDeviceIdDone,     /*!< get device id success */
-    kRunWaitGetDeviceIdAll,  /*!< get whole device id */
-    kRunGetDeviceIdAllDone,  /*!< get whole device id done */
-    kRunGetDeviceIdAllError, /*!< get whole device id error */
-    kRunPrinterTest,         /*!< test the device printer */
-    kRunPrimeReceive,        /*!< prime receive */
-    kRunDataReceived,        /*!< receive data done */
-    kRunParseDeviceId,       /*!< parse device id */
+    kUSB_HostPrinterRunIdle = 0,            /*!< idle */
+    kUSB_HostPrinterRunSetInterface,        /*!< execute set interface code */
+    kUSB_HostPrinterRunWaitSetInterface,    /*!< wait set interface done */
+    kUSB_HostPrinterRunGetDeviceId,         /*!< get device id, get all the string */
+    kUSB_HostPrinterRunWaitGetDeviceId,     /*!< wait get device id callback */
+    kUSB_HostPrinterRunGetDeviceIdDone,     /*!< get device id success */
+    kUSB_HostPrinterRunWaitGetDeviceIdAll,  /*!< get whole device id */
+    kUSB_HostPrinterRunGetDeviceIdAllDone,  /*!< get whole device id done */
+    kUSB_HostPrinterRunGetDeviceIdAllError, /*!< get whole device id error */
+    kUSB_HostPrinterRunPrinterTest,         /*!< test the device printer */
+    kUSB_HostPrinterRunPrimeReceive,        /*!< prime receive */
+    kUSB_HostPrinterRunDataReceived,        /*!< receive data done */
+    kUSB_HostPrinterRunParseDeviceId,       /*!< parse device id */
 } usb_host_printer_run_state_t;
 
 typedef enum _usb_host_printer_device_type
@@ -76,16 +46,15 @@ typedef struct _usb_host_printer_app
     usb_device_handle deviceHandle;             /*!< the printer's device handle */
     usb_host_class_handle classHandle;          /*!< the printer's class handle */
     usb_host_interface_handle interfaceHandle;  /*!< the printer's interface handle */
-    xSemaphoreHandle commandSemaphore;          /*!< semaphore for waiting printer command callback */
+    SemaphoreHandle_t commandSemaphore;         /*!< semaphore for waiting printer command callback */
     usb_status_t callbackStatus;                /*!< keep the callback status */
     uint8_t *deviceIdBuffer;                    /*!< get device id */
     uint32_t receiveLength;                     /*!< received data length */
     uint32_t receiveDelay;                      /*!< receive periodical delay */
-    uint8_t printerAppBuffer[USB_HOST_PRINTER_APP_BUFFER_SIZE +
-                             1]; /*!< get device id and receive buffer, increasing 1 for \0 character */
-    uint8_t deviceState;         /*!< device attach/detach status */
-    uint8_t prevState;           /*!< device attach/detach previous status */
-    uint8_t runState;            /*!< printer application run status */
+    uint8_t *printerAppBuffer;                  /*!< get device id and receive buffer, increasing 1 for \0 character */
+    uint8_t deviceState;                        /*!< device attach/detach status */
+    uint8_t prevState;                          /*!< device attach/detach previous status */
+    uint8_t runState;                           /*!< printer application run status */
     uint8_t runWaitState; /*!< printer application wait status, go to next run status when the wait status success */
     uint8_t selectAlternateSetting; /*!< the supported alternate setting interface */
     uint8_t deviceLanguageType;     /*!< reference to #usb_host_printer_device_type_t */

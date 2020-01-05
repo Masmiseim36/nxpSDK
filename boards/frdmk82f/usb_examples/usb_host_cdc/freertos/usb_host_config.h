@@ -1,31 +1,9 @@
 /*
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _USB_HOST_CONFIG_H_
@@ -46,13 +24,28 @@
  */
 #define USB_HOST_CONFIG_EHCI (0U)
 
+/*!
+ * @brief host ohci instance count, meantime it indicates ohci enable or disable.
+ *        - if 0, host ohci driver is disable.
+ *        - if greater than 0, host ohci driver is enable.
+ */
+#define USB_HOST_CONFIG_OHCI (0U)
+
+/*!
+ * @brief host ip3516hs instance count, meantime it indicates ohci enable or disable.
+ *        - if 0, host ip3516hs driver is disable.
+ *        - if greater than 0, host ip3516hs driver is enable.
+ */
+#define USB_HOST_CONFIG_IP3516HS (0U)
+
 /* Common configuration macros for all controllers */
 
 /*!
  * @brief host driver instance max count.
  * for example: 2 - one for khci, one for ehci.
  */
-#define USB_HOST_CONFIG_MAX_HOST (2U)
+#define USB_HOST_CONFIG_MAX_HOST \
+    (USB_HOST_CONFIG_KHCI + USB_HOST_CONFIG_EHCI + USB_HOST_CONFIG_OHCI + USB_HOST_CONFIG_IP3516HS)
 
 /*!
  * @brief host pipe max count.
@@ -68,7 +61,7 @@
 
 /*!
  * @brief the max endpoint for one interface.
- * the max endpointer descriptor number that one interface descriptor contain.
+ * the max endpoint descriptor number that one interface descriptor contain.
  */
 #define USB_HOST_CONFIG_INTERFACE_MAX_EP (4U)
 
@@ -103,10 +96,14 @@
 #define USB_HOST_CONFIG_MAX_NAK (3000U)
 
 /*! @brief Whether the transfer buffer is cache-enabled or not. */
+#ifndef USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE
 #define USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE (0U)
-
+#endif
 /*! @brief if 1, enable usb compliance test codes; if 0, disable usb compliance test codes. */
 #define USB_HOST_CONFIG_COMPLIANCE_TEST (0U)
+
+/*! @brief if 1, class driver clear stall automatically; if 0, class driver don't clear stall. */
+#define USB_HOST_CONFIG_CLASS_AUTO_CLEAR_STALL (0U)
 
 /* KHCI configuration */
 #if ((defined USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI))
@@ -146,6 +143,48 @@
  * @brief ehci SITD max count.
  */
 #define USB_HOST_CONFIG_EHCI_MAX_SITD (0U)
+
+#endif
+
+/* OHCI configuration */
+#if ((defined USB_HOST_CONFIG_OHCI) && (USB_HOST_CONFIG_OHCI))
+
+/*!
+ * @brief ohci ED max count.
+ */
+#define USB_HOST_CONFIG_OHCI_MAX_ED (8U)
+
+/*!
+ * @brief ohci GTD max count.
+ */
+#define USB_HOST_CONFIG_OHCI_MAX_GTD (8U)
+
+/*!
+ * @brief ohci ITD max count.
+ */
+#define USB_HOST_CONFIG_OHCI_MAX_ITD (8U)
+
+#endif
+
+/* OHCI configuration */
+#if ((defined USB_HOST_CONFIG_IP3516HS) && (USB_HOST_CONFIG_IP3516HS))
+
+#define USB_HOST_CONFIG_IP3516HS_MAX_PIPE (32U)
+
+/*!
+ * @brief ohci ED max count.
+ */
+#define USB_HOST_CONFIG_IP3516HS_MAX_ATL (32U)
+
+/*!
+ * @brief ohci GTD max count.
+ */
+#define USB_HOST_CONFIG_IP3516HS_MAX_INT (32U)
+
+/*!
+ * @brief ohci ITD max count.
+ */
+#define USB_HOST_CONFIG_IP3516HS_MAX_ISO (0U)
 
 #endif
 
@@ -190,5 +229,12 @@
  *        - if greater than 0, host PHDC class driver is enable.
  */
 #define USB_HOST_CONFIG_PHDC (1U)
+
+/*!
+ * @brief host printer class instance count, meantime it indicates printer class enable or disable.
+ *        - if 0, host printer class driver is disable.
+ *        - if greater than 0, host printer class driver is enable.
+ */
+#define USB_HOST_CONFIG_PRINTER (1U)
 
 #endif /* _USB_HOST_CONFIG_H_ */

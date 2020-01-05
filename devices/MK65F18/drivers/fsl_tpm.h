@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_TPM_H_
 #define _FSL_TPM_H_
@@ -37,15 +15,14 @@
  * @{
  */
 
-
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_TPM_DRIVER_VERSION (MAKE_VERSION(2, 0, 2)) /*!< Version 2.0.2 */
-/*@}*/
+#define FSL_TPM_DRIVER_VERSION (MAKE_VERSION(2, 0, 6)) /*!< Version 2.0.6 */
+                                                       /*@}*/
 
 /*!
  * @brief List of TPM channels.
@@ -99,6 +76,7 @@ typedef struct _tpm_chnl_pwm_signal_param
 #endif
 } tpm_chnl_pwm_signal_param_t;
 
+#if !(defined(FSL_FEATURE_TPM_HAS_NO_CONF) && FSL_FEATURE_TPM_HAS_NO_CONF)
 /*!
  * @brief Trigger options available.
  *
@@ -139,24 +117,25 @@ typedef enum _tpm_trigger_source
     kTPM_TriggerSource_Internal       /*!< Use internal trigger */
 } tpm_trigger_source_t;
 #endif
+#endif
 
 /*! @brief TPM output compare modes */
 typedef enum _tpm_output_compare_mode
 {
-    kTPM_NoOutputSignal = (1U << TPM_CnSC_MSA_SHIFT), /*!< No channel output when counter reaches CnV  */
-    kTPM_ToggleOnMatch = ((1U << TPM_CnSC_MSA_SHIFT) | (1U << TPM_CnSC_ELSA_SHIFT)),   /*!< Toggle output */
-    kTPM_ClearOnMatch = ((1U << TPM_CnSC_MSA_SHIFT) | (2U << TPM_CnSC_ELSA_SHIFT)),    /*!< Clear output */
-    kTPM_SetOnMatch = ((1U << TPM_CnSC_MSA_SHIFT) | (3U << TPM_CnSC_ELSA_SHIFT)),      /*!< Set output */
+    kTPM_NoOutputSignal  = (1U << TPM_CnSC_MSA_SHIFT), /*!< No channel output when counter reaches CnV  */
+    kTPM_ToggleOnMatch   = ((1U << TPM_CnSC_MSA_SHIFT) | (1U << TPM_CnSC_ELSA_SHIFT)), /*!< Toggle output */
+    kTPM_ClearOnMatch    = ((1U << TPM_CnSC_MSA_SHIFT) | (2U << TPM_CnSC_ELSA_SHIFT)), /*!< Clear output */
+    kTPM_SetOnMatch      = ((1U << TPM_CnSC_MSA_SHIFT) | (3U << TPM_CnSC_ELSA_SHIFT)), /*!< Set output */
     kTPM_HighPulseOutput = ((3U << TPM_CnSC_MSA_SHIFT) | (1U << TPM_CnSC_ELSA_SHIFT)), /*!< Pulse output high */
-    kTPM_LowPulseOutput = ((3U << TPM_CnSC_MSA_SHIFT) | (2U << TPM_CnSC_ELSA_SHIFT))   /*!< Pulse output low */
+    kTPM_LowPulseOutput  = ((3U << TPM_CnSC_MSA_SHIFT) | (2U << TPM_CnSC_ELSA_SHIFT))  /*!< Pulse output low */
 } tpm_output_compare_mode_t;
 
 /*! @brief TPM input capture edge */
 typedef enum _tpm_input_capture_edge
 {
-    kTPM_RisingEdge = (1U << TPM_CnSC_ELSA_SHIFT),     /*!< Capture on rising edge only */
-    kTPM_FallingEdge = (2U << TPM_CnSC_ELSA_SHIFT),    /*!< Capture on falling edge only */
-    kTPM_RiseAndFallEdge = (3U << TPM_CnSC_ELSA_SHIFT) /*!< Capture on rising or falling edge */
+    kTPM_RisingEdge      = (1U << TPM_CnSC_ELSA_SHIFT), /*!< Capture on rising edge only */
+    kTPM_FallingEdge     = (2U << TPM_CnSC_ELSA_SHIFT), /*!< Capture on falling edge only */
+    kTPM_RiseAndFallEdge = (3U << TPM_CnSC_ELSA_SHIFT)  /*!< Capture on rising or falling edge */
 } tpm_input_capture_edge_t;
 
 #if defined(FSL_FEATURE_TPM_HAS_COMBINE) && FSL_FEATURE_TPM_HAS_COMBINE
@@ -205,7 +184,10 @@ typedef struct _tpm_phase_param
 typedef enum _tpm_clock_source
 {
     kTPM_SystemClock = 1U, /*!< System clock */
-    kTPM_ExternalClock     /*!< External clock */
+#if defined(FSL_FEATURE_TPM_HAS_SC_CLKS) && FSL_FEATURE_TPM_HAS_SC_CLKS
+    kTPM_FixedClock, /*!< Fixed frequency clock */
+#endif
+    kTPM_ExternalClock /*!< External clock */
 } tpm_clock_source_t;
 
 /*! @brief TPM prescale value selection for the clock source*/
@@ -232,7 +214,8 @@ typedef enum _tpm_clock_prescale
  */
 typedef struct _tpm_config
 {
-    tpm_clock_prescale_t prescale;      /*!< Select TPM clock prescale value */
+    tpm_clock_prescale_t prescale; /*!< Select TPM clock prescale value */
+#if !(defined(FSL_FEATURE_TPM_HAS_NO_CONF) && FSL_FEATURE_TPM_HAS_NO_CONF)
     bool useGlobalTimeBase;             /*!< true: Use of an external global time base is enabled;
                                              false: disabled */
     tpm_trigger_select_t triggerSelect; /*!< Input trigger to use for controlling the counter operation */
@@ -253,34 +236,35 @@ typedef struct _tpm_config
     bool enablePauseOnTrigger; /*!< true: TPM counter will pause while trigger remains asserted;
                                     false: TPM counter continues running */
 #endif
+#endif
 } tpm_config_t;
 
 /*! @brief List of TPM interrupts */
 typedef enum _tpm_interrupt_enable
 {
-    kTPM_Chnl0InterruptEnable = (1U << 0),       /*!< Channel 0 interrupt.*/
-    kTPM_Chnl1InterruptEnable = (1U << 1),       /*!< Channel 1 interrupt.*/
-    kTPM_Chnl2InterruptEnable = (1U << 2),       /*!< Channel 2 interrupt.*/
-    kTPM_Chnl3InterruptEnable = (1U << 3),       /*!< Channel 3 interrupt.*/
-    kTPM_Chnl4InterruptEnable = (1U << 4),       /*!< Channel 4 interrupt.*/
-    kTPM_Chnl5InterruptEnable = (1U << 5),       /*!< Channel 5 interrupt.*/
-    kTPM_Chnl6InterruptEnable = (1U << 6),       /*!< Channel 6 interrupt.*/
-    kTPM_Chnl7InterruptEnable = (1U << 7),       /*!< Channel 7 interrupt.*/
-    kTPM_TimeOverflowInterruptEnable = (1U << 8) /*!< Time overflow interrupt.*/
+    kTPM_Chnl0InterruptEnable        = (1U << 0), /*!< Channel 0 interrupt.*/
+    kTPM_Chnl1InterruptEnable        = (1U << 1), /*!< Channel 1 interrupt.*/
+    kTPM_Chnl2InterruptEnable        = (1U << 2), /*!< Channel 2 interrupt.*/
+    kTPM_Chnl3InterruptEnable        = (1U << 3), /*!< Channel 3 interrupt.*/
+    kTPM_Chnl4InterruptEnable        = (1U << 4), /*!< Channel 4 interrupt.*/
+    kTPM_Chnl5InterruptEnable        = (1U << 5), /*!< Channel 5 interrupt.*/
+    kTPM_Chnl6InterruptEnable        = (1U << 6), /*!< Channel 6 interrupt.*/
+    kTPM_Chnl7InterruptEnable        = (1U << 7), /*!< Channel 7 interrupt.*/
+    kTPM_TimeOverflowInterruptEnable = (1U << 8)  /*!< Time overflow interrupt.*/
 } tpm_interrupt_enable_t;
 
 /*! @brief List of TPM flags */
 typedef enum _tpm_status_flags
 {
-    kTPM_Chnl0Flag = (1U << 0),       /*!< Channel 0 flag */
-    kTPM_Chnl1Flag = (1U << 1),       /*!< Channel 1 flag */
-    kTPM_Chnl2Flag = (1U << 2),       /*!< Channel 2 flag */
-    kTPM_Chnl3Flag = (1U << 3),       /*!< Channel 3 flag */
-    kTPM_Chnl4Flag = (1U << 4),       /*!< Channel 4 flag */
-    kTPM_Chnl5Flag = (1U << 5),       /*!< Channel 5 flag */
-    kTPM_Chnl6Flag = (1U << 6),       /*!< Channel 6 flag */
-    kTPM_Chnl7Flag = (1U << 7),       /*!< Channel 7 flag */
-    kTPM_TimeOverflowFlag = (1U << 8) /*!< Time overflow flag */
+    kTPM_Chnl0Flag        = (1U << 0), /*!< Channel 0 flag */
+    kTPM_Chnl1Flag        = (1U << 1), /*!< Channel 1 flag */
+    kTPM_Chnl2Flag        = (1U << 2), /*!< Channel 2 flag */
+    kTPM_Chnl3Flag        = (1U << 3), /*!< Channel 3 flag */
+    kTPM_Chnl4Flag        = (1U << 4), /*!< Channel 4 flag */
+    kTPM_Chnl5Flag        = (1U << 5), /*!< Channel 5 flag */
+    kTPM_Chnl6Flag        = (1U << 6), /*!< Channel 6 flag */
+    kTPM_Chnl7Flag        = (1U << 7), /*!< Channel 7 flag */
+    kTPM_TimeOverflowFlag = (1U << 8)  /*!< Time overflow flag */
 } tpm_status_flags_t;
 
 /*******************************************************************************
@@ -506,7 +490,30 @@ uint32_t TPM_GetEnabledInterrupts(TPM_Type *base);
  */
 static inline uint32_t TPM_GetStatusFlags(TPM_Type *base)
 {
-    return base->STATUS;
+    uint32_t statusFlags = 0;
+
+#if defined(FSL_FEATURE_TPM_HAS_NO_STATUS) && FSL_FEATURE_TPM_HAS_NO_STATUS
+    uint8_t chanlNumber = 0;
+
+    /* Check the timer flag */
+    if (base->SC & TPM_SC_TOF_MASK)
+    {
+        statusFlags |= kTPM_TimeOverflowFlag;
+    }
+
+    for (chanlNumber = 0; chanlNumber < FSL_FEATURE_TPM_CHANNEL_COUNTn(base); chanlNumber++)
+    {
+        /* Check the channel flag */
+        if (base->CONTROLS[chanlNumber].CnSC & TPM_CnSC_CHF_MASK)
+        {
+            statusFlags |= (1U << chanlNumber);
+        }
+    }
+#else
+    statusFlags = base->STATUS;
+#endif
+
+    return statusFlags;
 }
 
 /*!
@@ -518,11 +525,73 @@ static inline uint32_t TPM_GetStatusFlags(TPM_Type *base)
  */
 static inline void TPM_ClearStatusFlags(TPM_Type *base, uint32_t mask)
 {
+#if defined(FSL_FEATURE_TPM_HAS_NO_STATUS) && FSL_FEATURE_TPM_HAS_NO_STATUS
+    uint32_t chnlStatusFlags = (mask & 0xFF);
+    uint8_t chnlNumber       = 0;
+
+    /* Clear the timer overflow flag by writing a 0 to the bit while it is set */
+    if (mask & kTPM_TimeOverflowFlag)
+    {
+        base->SC &= ~TPM_SC_TOF_MASK;
+    }
+    /* Clear the channel flag */
+    while (chnlStatusFlags)
+    {
+        if (chnlStatusFlags & 0x1)
+        {
+            base->CONTROLS[chnlNumber].CnSC &= ~TPM_CnSC_CHF_MASK;
+        }
+        chnlNumber++;
+        chnlStatusFlags = chnlStatusFlags >> 1U;
+    }
+#else
     /* Clear the status flags */
     base->STATUS = mask;
+#endif
 }
 
 /*! @}*/
+
+/*!
+ * @name Read and write the timer period
+ * @{
+ */
+
+/*!
+ * @brief Sets the timer period in units of ticks.
+ *
+ * Timers counts from 0 until it equals the count value set here. The count value is written to
+ * the MOD register.
+ *
+ * @note
+ * 1. This API allows the user to use the TPM module as a timer. Do not mix usage
+ *    of this API with TPM's PWM setup API's.
+ * 2. Call the utility macros provided in the fsl_common.h to convert usec or msec to ticks.
+ *
+ * @param base TPM peripheral base address
+ * @param ticks A timer period in units of ticks, which should be equal or greater than 1.
+ */
+static inline void TPM_SetTimerPeriod(TPM_Type *base, uint32_t ticks)
+{
+    base->MOD = ticks;
+}
+
+/*!
+ * @brief Reads the current timer counting value.
+ *
+ * This function returns the real-time timer counting value in a range from 0 to a
+ * timer period.
+ *
+ * @note Call the utility macros provided in the fsl_common.h to convert ticks to usec or msec.
+ *
+ * @param base TPM peripheral base address
+ *
+ * @return The current counter value in ticks
+ */
+static inline uint32_t TPM_GetCurrentTimerCount(TPM_Type *base)
+{
+    return (uint32_t)((base->CNT & TPM_CNT_COUNT_MASK) >> TPM_CNT_COUNT_SHIFT);
+}
 
 /*!
  * @name Timer Start and Stop
@@ -539,9 +608,13 @@ static inline void TPM_ClearStatusFlags(TPM_Type *base, uint32_t mask)
 static inline void TPM_StartTimer(TPM_Type *base, tpm_clock_source_t clockSource)
 {
     uint32_t reg = base->SC;
-
+#if defined(FSL_FEATURE_TPM_HAS_SC_CLKS) && FSL_FEATURE_TPM_HAS_SC_CLKS
+    reg &= ~(TPM_SC_CLKS_MASK);
+    reg |= TPM_SC_CLKS(clockSource);
+#else
     reg &= ~(TPM_SC_CMOD_MASK);
     reg |= TPM_SC_CMOD(clockSource);
+#endif
     base->SC = reg;
 }
 
@@ -552,13 +625,23 @@ static inline void TPM_StartTimer(TPM_Type *base, tpm_clock_source_t clockSource
  */
 static inline void TPM_StopTimer(TPM_Type *base)
 {
+#if defined(FSL_FEATURE_TPM_HAS_SC_CLKS) && FSL_FEATURE_TPM_HAS_SC_CLKS
+    /* Set clock source to none to disable counter */
+    base->SC &= ~(TPM_SC_CLKS_MASK);
+
+    /* Wait till this reads as zero acknowledging the counter is disabled */
+    while (base->SC & TPM_SC_CLKS_MASK)
+    {
+    }
+#else
     /* Set clock source to none to disable counter */
     base->SC &= ~(TPM_SC_CMOD_MASK);
 
     /* Wait till this reads as zero acknowledging the counter is disabled */
-    while (base->SC & TPM_SC_CMOD_MASK)
+    while (0U != (base->SC & TPM_SC_CMOD_MASK))
     {
     }
+#endif
 }
 
 /*! @}*/
@@ -567,7 +650,7 @@ static inline void TPM_StopTimer(TPM_Type *base)
 /*!
  * @brief Performs a software reset on the TPM module.
  *
- * Reset all internal logic and registers, except the Global Register. Remains set until cleared by software..
+ * Reset all internal logic and registers, except the Global Register. Remains set until cleared by software.
  *
  * @note TPM software reset is available on certain SoC's only
  *

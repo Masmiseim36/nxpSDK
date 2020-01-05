@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
@@ -55,8 +33,8 @@
 #define DEMO_ADC_IRQ_HANDLER1 ADC1_IRQHandler
 
 #define DEMO_PDB_BASE PDB0
-#define DEMO_PDB_TRIGGER_CHANNEL0 0U
-#define DEMO_PDB_TRIGGER_CHANNEL1 1U
+#define DEMO_PDB_TRIGGER_CHANNEL0 kPDB_ADCTriggerChannel0
+#define DEMO_PDB_TRIGGER_CHANNEL1 kPDB_ADCTriggerChannel1
 #define DEMO_PDB_PRETRIGGER_CHANNEL0_MASK 1U
 #define DEMO_PDB_PRETRIGGER_CHANNEL1_MASK 2U
 
@@ -80,11 +58,12 @@ static void DEMO_Init_FTM(void);
  * Variables
  ******************************************************************************/
 
-volatile uint16_t u16Result0A[256] = {0};
-volatile uint16_t u16Result0B[256] = {0};
-volatile uint16_t u16Result1A[256] = {0};
-volatile uint16_t u16Result1B[256] = {0};
-volatile uint16_t u16CycleTimes = 0;
+volatile uint16_t u16Result0A[256]    = {0};
+volatile uint16_t u16Result0B[256]    = {0};
+volatile uint16_t u16Result1A[256]    = {0};
+volatile uint16_t u16Result1B[256]    = {0};
+volatile uint16_t u16CycleTimes       = 0;
+const uint32_t g_Adc16_12bitFullRange = 4096U;
 
 /*******************************************************************************
  * Code
@@ -107,10 +86,10 @@ void static DEMO_Init_ADC(void)
      */
     ADC16_GetDefaultConfig(&adc16ConfigStruct);
     /* Config ADC */
-    adc16ConfigStruct.clockSource = DEMO_ADC_CLOCK_SOURCE;
-    adc16ConfigStruct.clockDivider = DEMO_ADC_CLOCK_DIVIDER;
+    adc16ConfigStruct.clockSource             = DEMO_ADC_CLOCK_SOURCE;
+    adc16ConfigStruct.clockDivider            = DEMO_ADC_CLOCK_DIVIDER;
     adc16ConfigStruct.enableAsynchronousClock = false;
-    adc16ConfigStruct.enableHighSpeed = true;
+    adc16ConfigStruct.enableHighSpeed         = true;
 
     /* Init ADC */
     ADC16_Init(DEMO_ADC_BASE0, &adc16ConfigStruct);
@@ -129,7 +108,7 @@ void static DEMO_Init_ADC(void)
 #endif /* FSL_FEATURE_ADC16_HAS_DIFF_MODE */
 
     adc16ChannelConfigStruct.enableInterruptOnConversionCompleted = true;
-    adc16ChannelConfigStruct.channelNumber = DEMO_ADC_USER_CHANNEL1;
+    adc16ChannelConfigStruct.channelNumber                        = DEMO_ADC_USER_CHANNEL1;
     ADC16_SetChannelConfig(DEMO_ADC_BASE0, DEMO_ADC_CHANNEL_GROUP0, &adc16ChannelConfigStruct);
 
     adc16ChannelConfigStruct.channelNumber = DEMO_ADC_USER_CHANNEL26;
@@ -168,8 +147,8 @@ static void DEMO_Init_PDB(void)
     PDB_SetCounterDelayValue(DEMO_PDB_BASE, PDB_INT_VALUE);
 
     /* Configure the ADC Pre-Trigger. */
-    PDB_SetADCPreTriggerDelayValue(DEMO_PDB_BASE, DEMO_PDB_TRIGGER_CHANNEL0, DEMO_PDB_PRETRIGGER_CHANNEL0_MASK,
-                                   PRETRIGGER_DELAY_VALUE);
+    PDB_SetADCPreTriggerDelayValue(DEMO_PDB_BASE, DEMO_PDB_TRIGGER_CHANNEL0,
+                                   (pdb_adc_pretrigger_t)DEMO_PDB_PRETRIGGER_CHANNEL0_MASK, PRETRIGGER_DELAY_VALUE);
 
     pdbAdcPreTriggerConfigStruct.enableBackToBackOperationMask = DEMO_PDB_PRETRIGGER_CHANNEL1_MASK;
     pdbAdcPreTriggerConfigStruct.enablePreTriggerMask =
@@ -208,14 +187,15 @@ static void DEMO_Init_FTM(void)
      */
     FTM_GetDefaultConfig(&ftmConfigStruct);
     ftmConfigStruct.deadTimePrescale = kFTM_Deadtime_Prescale_4;
-    ftmConfigStruct.deadTimeValue = 19U;
+    ftmConfigStruct.deadTimeValue    = 19U;
     FTM_Init(DEMO_FTM_BASE, &ftmConfigStruct);
 
     /* FTM config */
-    ftmParam.chnlNumber = kFTM_Chnl_0;
+    ftmParam.chnlNumber            = kFTM_Chnl_0;
     ftmParam.firstEdgeDelayPercent = 20U;
-    ftmParam.dutyCyclePercent = 50U;
-    ftmParam.level = kFTM_LowTrue;
+    ftmParam.dutyCyclePercent      = 50U;
+    ftmParam.level                 = kFTM_LowTrue;
+    ftmParam.enableDeadtime        = false;
 
     /* Configure FTM0 channel ouput period is 16KHz complementary waveform (channel n and n+1) */
     FTM_SetupPwm(DEMO_FTM_BASE, &ftmParam, 1U, kFTM_CombinedPwm, 16000U, FTM_SOURCE_CLOCK);
@@ -251,6 +231,7 @@ void DEMO_ADC_IRQ_HANDLER0(void)
     {
         u16Result0B[u16CycleTimes] = ADC16_GetChannelConversionValue(DEMO_ADC_BASE0, DEMO_ADC_CHANNEL_GROUP1);
     }
+    __DSB();
 }
 
 void DEMO_ADC_IRQ_HANDLER1(void)
@@ -274,6 +255,7 @@ void DEMO_ADC_IRQ_HANDLER1(void)
             u16CycleTimes = 0;
         }
     }
+    __DSB();
 }
 
 /*!
@@ -284,7 +266,7 @@ int main(void)
     uint32_t i = 0U;
 
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     PRINTF("\r\nRun pdb trig adc with flextimer demo.\r\n");
     EnableIRQ(DEMO_ADC_IRQ_ID0);
@@ -294,6 +276,7 @@ int main(void)
     DEMO_Init_PDB();
     DEMO_Init_FTM();
 
+    PRINTF("ADC Full Range: %d\r\n", g_Adc16_12bitFullRange);
     while (1)
     {
         PRINTF("\r\nInput any character to start demo.\r\n");

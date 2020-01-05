@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_sdramc.h"
@@ -33,6 +11,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.sdramc"
+#endif
 
 /*! @brief Define macros for SDRAM driver. */
 #define SDRAMC_ONEMILLSEC_NANOSECONDS (1000000U)
@@ -68,7 +51,7 @@ static uint32_t SDRAMC_GetInstance(SDRAM_Type *base)
     uint32_t instance;
 
     /* Find the instance index from base address mappings. */
-    for (instance = 0; instance < FSL_FEATURE_SOC_SDRAM_COUNT; instance++)
+    for (instance = 0; instance < ARRAY_SIZE(s_sdramcBases); instance++)
     {
         if (s_sdramcBases[instance] == base)
         {
@@ -76,11 +59,42 @@ static uint32_t SDRAMC_GetInstance(SDRAM_Type *base)
         }
     }
 
-    assert(instance < FSL_FEATURE_SOC_SDRAM_COUNT);
+    assert(instance < ARRAY_SIZE(s_sdramcBases));
 
     return instance;
 }
 
+/*!
+ * brief Initializes the SDRAM controller.
+ * This function ungates the SDRAM controller clock and initializes the SDRAM controller.
+ * This function must be called before calling any other SDRAM controller driver functions.
+ * Example
+   code
+    sdramc_refresh_config_t refreshConfig;
+    sdramc_blockctl_config_t blockConfig;
+    sdramc_config_t config;
+
+    refreshConfig.refreshTime  = kSDRAM_RefreshThreeClocks;
+    refreshConfig.sdramRefreshRow = 15625;
+    refreshConfig.busClock = 60000000;
+
+    blockConfig.block = kSDRAMC_Block0;
+    blockConfig.portSize = kSDRAMC_PortSize16Bit;
+    blockConfig.location = kSDRAMC_Commandbit19;
+    blockConfig.latency = kSDRAMC_RefreshThreeClocks;
+    blockConfig.address = SDRAM_START_ADDRESS;
+    blockConfig.addressMask = 0x7c0000;
+
+    config.refreshConfig = &refreshConfig,
+    config.blockConfig = &blockConfig,
+    config.totalBlocks = 1;
+
+    SDRAMC_Init(SDRAM, &config);
+   endcode
+ *
+ * param base SDRAM controller peripheral base address.
+ * param configure The SDRAM configuration structure pointer.
+ */
 void SDRAMC_Init(SDRAM_Type *base, sdramc_config_t *configure)
 {
     assert(configure);
@@ -88,7 +102,7 @@ void SDRAMC_Init(SDRAM_Type *base, sdramc_config_t *configure)
     assert(configure->blockConfig);
     assert(configure->refreshConfig->busClock_Hz);
 
-    sdramc_blockctl_config_t *bctlConfig = configure->blockConfig;
+    sdramc_blockctl_config_t *bctlConfig   = configure->blockConfig;
     sdramc_refresh_config_t *refreshConfig = configure->refreshConfig;
     uint32_t count;
     uint32_t index;
@@ -99,8 +113,8 @@ void SDRAMC_Init(SDRAM_Type *base, sdramc_config_t *configure)
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 
     /* Initialize sdram Auto refresh timing. */
-    count = refreshConfig->sdramRefreshRow * (refreshConfig->busClock_Hz / SDRAMC_ONESECOND_MILLISECONDS);
-    count = (count / SDRAMC_ONEMILLSEC_NANOSECONDS) / 16 - 1;
+    count      = refreshConfig->sdramRefreshRow * (refreshConfig->busClock_Hz / SDRAMC_ONESECOND_MILLISECONDS);
+    count      = (count / SDRAMC_ONEMILLSEC_NANOSECONDS) / 16U - 1U;
     base->CTRL = SDRAM_CTRL_RC(count) | SDRAM_CTRL_RTIM(refreshConfig->refreshTime);
 
     for (index = 0; index < configure->numBlockConfig; index++)
@@ -116,6 +130,13 @@ void SDRAMC_Init(SDRAM_Type *base, sdramc_config_t *configure)
     }
 }
 
+/*!
+ * brief Deinitializes the SDRAM controller module and gates the clock.
+ * This function gates the SDRAM controller clock. As a result, the SDRAM
+ * controller module doesn't work after calling this function.
+ *
+ * param base SDRAM controller peripheral base address.
+ */
 void SDRAMC_Deinit(SDRAM_Type *base)
 {
     /* Set the SDRAMC invalid, do not decode DRAM accesses. */
@@ -128,6 +149,23 @@ void SDRAMC_Deinit(SDRAM_Type *base)
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 }
 
+/*!
+ * brief Sends the SDRAM command.
+ * This function sends commands to SDRAM. The commands are precharge command, initialization MRS command,
+ * auto-refresh enable/disable command, and self-refresh enter/exit commands.
+ * Note that the self-refresh enter/exit commands are all blocks setting and "block"
+ * is ignored. Ensure to set the correct "block" when send other commands.
+ *
+ * param base SDRAM controller peripheral base address.
+ * param block The block selection.
+ * param command The SDRAM command, see "sdramc_command_t".
+ *        kSDRAMC_ImrsCommand -  Initialize MRS command   \n
+ *        kSDRAMC_PrechargeCommand  - Initialize precharge command   \n
+ *        kSDRAMC_SelfrefreshEnterCommand - Enter self-refresh command \n
+ *        kSDRAMC_SelfrefreshExitCommand  -  Exit self-refresh command \n
+ *        kSDRAMC_AutoRefreshEnableCommand  - Enable auto refresh command \n
+ *        kSDRAMC_AutoRefreshDisableCommand  - Disable auto refresh command
+ */
 void SDRAMC_SendCommand(SDRAM_Type *base, sdramc_block_selection_t block, sdramc_command_t command)
 {
     switch (command)
@@ -135,7 +173,7 @@ void SDRAMC_SendCommand(SDRAM_Type *base, sdramc_block_selection_t block, sdramc
         /* Initiate mrs command. */
         case kSDRAMC_ImrsCommand:
             base->BLOCK[block].AC |= SDRAM_AC_IMRS_MASK;
-            break;            
+            break;
         /* Initiate precharge command. */
         case kSDRAMC_PrechargeCommand:
             base->BLOCK[block].AC |= SDRAM_AC_IP_MASK;
@@ -154,9 +192,10 @@ void SDRAMC_SendCommand(SDRAM_Type *base, sdramc_block_selection_t block, sdramc
             break;
         /* Exit self-refresh command. */
         case kSDRAMC_SelfrefreshExitCommand:
-            base->CTRL &= ~SDRAM_CTRL_IS_MASK;
+            base->CTRL &= ~(uint16_t)SDRAM_CTRL_IS_MASK;
             break;
         default:
+            assert(false);
             break;
     }
 }

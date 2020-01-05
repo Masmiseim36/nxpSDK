@@ -8,14 +8,16 @@
     <definition extID="middleware.mcu-boot.src_startup.MK22F51212"/>
     <definition extID="platform.Include_common.MK22F51212"/>
     <definition extID="platform.Include_core_cm4.MK22F51212"/>
+    <definition extID="platform.Include_dsp.MK22F51212"/>
     <definition extID="platform.drivers.clock.MK22F51212"/>
     <definition extID="platform.drivers.common.MK22F51212"/>
     <definition extID="platform.drivers.uart.MK22F51212"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
+    <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk22f_flashloader_loader" name="flashloader_loader" category="bootloader_examples" dependency="platform.drivers.clock.MK22F51212 device.MK22F51212_CMSIS.MK22F51212 middleware.mcu-boot.MK22F51212_startup.MK22F51212 middleware.mcu-boot.loadersources.MK22F51212 platform.drivers.uart.MK22F51212 middleware.mcu-boot.src_startup.MK22F51212 platform.drivers.common.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.Include_common.MK22F51212" toolchain="iar mdk mcuxpresso">
+  <example id="frdmk22f_flashloader_loader" name="flashloader_loader" category="bootloader_examples" dependency="platform.drivers.clock.MK22F51212 device.MK22F51212_CMSIS.MK22F51212 middleware.mcu-boot.MK22F51212_startup.MK22F51212 middleware.mcu-boot.loadersources.MK22F51212 platform.drivers.uart.MK22F51212 middleware.mcu-boot.src_startup.MK22F51212 platform.drivers.common.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.Include_common.MK22F51212 platform.Include_dsp.MK22F51212">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -43,8 +45,8 @@
           <value>gnu.c.optimization.level.size</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
-          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
           <value>CPU_MK22FN512VLH12</value>
+          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
           <value>BL_TARGET_FLASH</value>
           <value>FRDM_K22F</value>
         </option>
@@ -56,7 +58,7 @@
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>
-          <value>true</value>
+          <value>false</value>
         </option>
         <option id="com.crt.advproject.link.fpu" type="enum">
           <value>com.crt.advproject.link.fpu.fpv4.hard</value>
@@ -85,6 +87,9 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <source path="boards/frdmk22f/bootloader_examples/flashloader_loader/armgcc" target_path="middleware/mcu-boot" type="linker" toolchain="armgcc">
+      <files mask="MK22FN512xxx12_flashloader_loader.ld"/>
+    </source>
     <source path="boards/frdmk22f/bootloader_examples/flashloader_loader/iar" target_path="middleware/mcu-boot" type="linker" toolchain="iar">
       <files mask="MK22FN512xxx12_flashloader_loader.icf"/>
     </source>

@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
@@ -81,14 +55,14 @@ static void i2c_slave_callback(I2C_Type *base, i2c_slave_transfer_t *xfer, void 
         /*  Transmit request */
         case kI2C_SlaveTransmitEvent:
             /*  Update information for transmit process */
-            xfer->data = g_slave_buff;
+            xfer->data     = g_slave_buff;
             xfer->dataSize = I2C_DATA_LENGTH;
             break;
 
         /*  Receive request */
         case kI2C_SlaveReceiveEvent:
             /*  Update information for received process */
-            xfer->data = g_slave_buff;
+            xfer->data     = g_slave_buff;
             xfer->dataSize = I2C_DATA_LENGTH;
             break;
 
@@ -134,8 +108,8 @@ int main(void)
     I2C_SlaveGetDefaultConfig(&slaveConfig);
 
     slaveConfig.addressingMode = kI2C_Address7bit;
-    slaveConfig.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;
-    slaveConfig.upperAddress = 0;
+    slaveConfig.slaveAddress   = I2C_MASTER_SLAVE_ADDR_7BIT;
+    slaveConfig.upperAddress   = 0;
 
     I2C_SlaveInit(BOARD_I2C_SLAVE_BASE, &slaveConfig, I2C_SLAVE_CLOCK_FREQUENCY);
 
@@ -169,13 +143,13 @@ int main(void)
     flexio_i2c_master_config_t masterConfig;
 
     /* Do hardware configuration. */
-    i2cDev.flexioBase = BOARD_FLEXIO_BASE;
-    i2cDev.SDAPinIndex = FLEXIO_I2C_SDA_PIN;
-    i2cDev.SCLPinIndex = FLEXIO_I2C_SCL_PIN;
+    i2cDev.flexioBase      = BOARD_FLEXIO_BASE;
+    i2cDev.SDAPinIndex     = FLEXIO_I2C_SDA_PIN;
+    i2cDev.SCLPinIndex     = FLEXIO_I2C_SCL_PIN;
     i2cDev.shifterIndex[0] = 0U;
     i2cDev.shifterIndex[1] = 1U;
-    i2cDev.timerIndex[0] = 0U;
-    i2cDev.timerIndex[1] = 1U;
+    i2cDev.timerIndex[0]   = 0U;
+    i2cDev.timerIndex[1]   = 1U;
 
     /*
      * masterConfig.enableMaster = true;
@@ -191,12 +165,12 @@ int main(void)
     memset(&g_m_handle, 0, sizeof(g_m_handle));
     memset(&masterXfer, 0, sizeof(masterXfer));
 
-    masterXfer.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;
-    masterXfer.direction = kFLEXIO_I2C_Write;
-    masterXfer.subaddress = 0;
+    masterXfer.slaveAddress   = I2C_MASTER_SLAVE_ADDR_7BIT;
+    masterXfer.direction      = kFLEXIO_I2C_Write;
+    masterXfer.subaddress     = 0;
     masterXfer.subaddressSize = 0;
-    masterXfer.data = g_master_buff;
-    masterXfer.dataSize = I2C_DATA_LENGTH;
+    masterXfer.data           = g_master_buff;
+    masterXfer.dataSize       = I2C_DATA_LENGTH;
 
     FLEXIO_I2C_MasterTransferCreateHandle(&i2cDev, &g_m_handle, NULL, NULL);
     FLEXIO_I2C_MasterTransferNonBlocking(&i2cDev, &g_m_handle, &masterXfer);
@@ -212,7 +186,7 @@ int main(void)
     {
         if (g_slave_buff[i] != g_master_buff[i])
         {
-            PRINTF("\r\nError occured in this transfer !\r\n");
+            PRINTF("\r\nError occurred in this transfer !\r\n");
             break;
         }
     }

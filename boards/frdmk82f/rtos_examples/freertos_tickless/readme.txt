@@ -1,25 +1,28 @@
 Overview
 ========
-This document explains the freertos_tickless example. It shows the CPU enter at sleep mode and then 
-it is waked up by expired time delay that using LPTMR module or occur any a hardware interrupt.
+This document explains the freertos_tickless example. It shows how the CPU enters the sleep mode and then
+it is woken up either by expired time delay using low power timer module or by external interrupt caused by a
+user defined button.
 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.50.1
-- Keil MDK 5.17
-- GCC ARM Embedded 2015-4.9-q3
-- Kinetis Development Studio IDE 3.0.0
-- Atollic TrueSTUDIO 5.4.0
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
-
+- Mini/micro USB cable
+- FRDM-K82F board
+- Personal Computer
 
 Board settings
 ==============
-
-
+This example project does not call for any special hardware configurations.
+Although not required, the recommendation is to leave the development board's jumper settings
+and configurations in default state when running this example.
 Prepare the Demo
 ================
 Connect a serial cable from the debug UART port of the board to the PC. Start Tera Term
@@ -27,7 +30,7 @@ Connect a serial cable from the debug UART port of the board to the PC. Start Te
 
 1. Start Tera Term
 2. New connection -> Serial
-3. Set apropriate COMx port (x is port number) in Port context menu. Number is provided by operation
+3. Set appropriate COMx port (x is port number) in Port context menu. Number is provided by operation
    system and could be different from computer to computer. Select COM number related to virtual
    serial port. Confirm selected port by OK button.
 4. Set following connection parameters in menu Setup->Serial port...
@@ -35,47 +38,40 @@ Connect a serial cable from the debug UART port of the board to the PC. Start Te
         Data:         8
         Parity:       none
         Stop:         1
-        Flow control: one
+        Flow control: none
 5.  Confirm selected parameters by OK button.
-
-
 
 Running the demo
 ================
-After the board is flashed the Tera Term will start periodically printing number tick count when the CPU 
-is running.
-
-When the CPU is running and get tick count number, press button on board that suggest message display on 
-console screen ("eg:Press SW3 <or SW1,SW2> to wake up the CPU") to wake up CPU then Tera Term 
-will printing “CPU waked up by EXT interrupt” message.
+After flashing the example to the board the console will start printing the number of tick count periodically
+when the CPU is running.
+To wake up the CPU by external interrupt, press the button, that is specified at the beginning of the
+example (SWx where x is the number of the user defined button). When the button is pressed, the console prints
+out the "CPU woken up by external interrupt" message.
 
 Example output:
 
+Press any key to start the example
 Tickless Demo example
-Press SW3 to wake up the CPU
+Press or turn on SWx to wake up the CPU
+
 Tick count :
-1
-5001
-CPU waked up by EXT interrupt
-10001
-CPU waked up by EXT interrupt
-15001
-CPU waked up by EXT interrupt
-CPU waked up by EXT interrupt
-20001
-25001
-30001
+0
+5000
+10000
+CPU woken up by external interrupt
+15000
+20000
+25000
 
 Explanation of the example
-The example application will get tick count number after every period time delay vTaskDelay(time)
-When this function called the CPU enter to sleep mode a period of time that called by vTaskDelay 
-function.
+The example application prints the actual tick count number every time after the specified
+delay. When the vTaskDelay() is called, the CPU enters the sleep mode for that defined period
+of time.
 
-While the CPU is sleeping, if press SW3 button once or several time on board then CPU waked up 
-by external interrupt and continuous enter sleep mode after complete interrupt service.
-The period of time delay is not change after occur external interrupt.
-
+While the CPU is in sleep mode and the user defined button is pressed, the CPU is woken up
+by the external interrupt and continues to sleep after the interrupt is handled.
+The period of time delay is not changed after the external interrupt occurs.
 Customization options
 =====================
-
 

@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*******************************************************************************
@@ -46,16 +24,18 @@
 #define SW_GPIO BOARD_SW3_GPIO
 #define SW_GPIO_PIN BOARD_SW3_GPIO_PIN
 #define SW_NAME BOARD_SW3_NAME
+/* GPIO port input low-logic level when SW is pressed */
+#define SW_GPIO_PRESSED_VALUE 0U
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 volatile bool ewmIsrFlag = false;
-static EWM_Type *base = EWM;
+static EWM_Type *base    = EWM;
 
 /*******************************************************************************
  * Code
@@ -68,7 +48,8 @@ static EWM_Type *base = EWM;
 void gpio_configure(void)
 {
     gpio_pin_config_t sw_config = {
-        kGPIO_DigitalInput, 0,
+        kGPIO_DigitalInput,
+        0,
     };
     GPIO_PinInit(SW_GPIO, SW_GPIO_PIN, &sw_config);
 }
@@ -83,7 +64,7 @@ void gpio_configure(void)
  */
 static uint32_t is_key_pressed(void)
 {
-    return !(GPIO_ReadPinInput(SW_GPIO, SW_GPIO_PIN));
+    return (GPIO_PinRead(SW_GPIO, SW_GPIO_PIN) == SW_GPIO_PRESSED_VALUE);
 }
 
 /*!
@@ -94,14 +75,11 @@ void WDOG_EWM_IRQHandler(void)
 {
     EWM_DisableInterrupts(base, kEWM_InterruptEnable); /*!< de-assert interrupt request */
     ewmIsrFlag = true;
-}
-
-void delay(void)
-{
-    for (uint32_t i = 0; i < 0x7fffffU; i++)
-    {
-        __NOP();
-    }
+    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+      exception return operation might vector to incorrect interrupt */
+#if defined __CORTEX_M && (__CORTEX_M == 4U)
+    __DSB();
+#endif
 }
 
 /*!
@@ -139,6 +117,7 @@ int main(void)
     {
         /* Restart counter*/
         EWM_Refresh(base);
+
         /* Check for SW button push*/
         if (is_key_pressed())
         {
@@ -147,14 +126,16 @@ int main(void)
             {
             }
             PRINTF("\r\n EWM interrupt is occurred");
+            PRINTF("\r\n Press %s to expire EWM again", SW_NAME);
 
+            /*Wait for the key to release*/
+            while (is_key_pressed())
+            {
+            }
             /* Clear interrupt flag*/
             ewmIsrFlag = false;
-            PRINTF("\r\n Press %s to expire EWM again", SW_NAME);
             /*Restart counter and enable interrupt for next run*/
             EWM_Refresh(base);
-            /* Delay for a while in order to press button, interrrupt occurred only once*/
-            delay();
             /*Enable EWM interrupt*/
             EWM_EnableInterrupts(base, kEWM_InterruptEnable);
         }

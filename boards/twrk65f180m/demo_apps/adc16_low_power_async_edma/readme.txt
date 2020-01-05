@@ -7,11 +7,10 @@ user and toggle LED.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.70.1
-- Keil MDK 5.20
-- GCC ARM Embedded 2015-4.9-q3
-- Kinetis Development Studio IDE 3.2.0
-- Atollic TrueSTUDIO 5.5.2
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -44,6 +43,7 @@ When the demo runs successfully, the log would be seen on the OpenSDA terminal l
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ADC LOW POWER ASYNC DMA DEMO
+ADC16_DoAutoCalibration() Done.
 ADC value: 15670
 ADC value: 16634
 ADC value: 16686

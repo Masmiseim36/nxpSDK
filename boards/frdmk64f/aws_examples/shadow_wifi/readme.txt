@@ -2,6 +2,34 @@ Overview
 ========
 The simple Shadow lightbulb example to illustrate how client application and things communicate with the Shadow service.
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
+- Keil MDK  5.29
+- MCUXpresso  11.1.0
+
+Hardware requirements
+=====================
+- Mini/micro USB cable
+- FRDM-K64F board
+- "GT202 Adaptor V1.04" or "Silex SX-ULPAN-2401" or "FRDM-KL64Z click shield with WIFI10CLICK"
+- Personal Computer
+
+Board settings
+==============
+"Plug SX-ULPAN-2401" or "GT202 Adaptor" or "WIFI10CLICK" board to FRDM stackable headers (J1, J2, J3, J4).
+GT202 shield is compatible with FRDM-K64 SCH-REV E and higher.
+Previous revisions cannot provide GPIO mux on J2:2 (WLAN_PWRON).
+
+The default compilation settings are predefined for WIFI10CLICK shield.
+If you want to use "GT202 shield" or "Silex SX-ULPAN-2401", please add following "Compiler define" in project options:
+
+WIFISHIELD_IS=WIFISHIELD_IS_GT202
+WIFISHIELD_IS=WIFISHIELD_IS_SILEX2401
+
+The "wifi_shield.h" then includes specific shield support.
 Prepare the Demo
 ================
 Please update WiFi firmware to version 3.3.6 using "qca_fwupdate" demo.
@@ -13,25 +41,25 @@ Before running the demo it is need to configure AWS IoT Console and update some 
 
     Make note of example's "Thing name" and "REST API endpoint". These strings need to be set in the "aws_clientcredential.h".
 
-	Example:
-		static const char clientcredentialMQTT_BROKER_ENDPOINT[] = "abcdefgh123456.iot.us-west-2.amazonaws.com";
-		#define clientcredentialIOT_THING_NAME "MyExample"
+    Example:
+        static const char clientcredentialMQTT_BROKER_ENDPOINT[] = "abcdefgh123456.iot.us-west-2.amazonaws.com";
+        #define clientcredentialIOT_THING_NAME "MyExample"
 
-    In the next step you will get the "device certificate" and the "primary key". Each of the certificates needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h".
-    Or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\amazon-freertos\demos\common\devmode_key_provisioning\CertificateConfigurationTool) to generate the "aws_clientcredential_keys.h".
+    In the next step you will get the "device certificate" and the "primary key". The device certificate and private key needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h".
+    Or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\amazon-freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
 
     Example:
-        static const char clientcredentialCLIENT_CERTIFICATE_PEM[] = "Paste client certificate here.";
+        #define keyCLIENT_CERTIFICATE_PEM "Paste client certificate here."
 
         Needs to be changed to:
 
-        static const char clientcredentialCLIENT_CERTIFICATE_PEM[] =
-            "-----BEGIN CERTIFICATE-----\n"
-            "MIIDWTCCAkGgAwIBAgIUPwbiJBIJhO6eF498l1GZ8siO/K0wDQYJKoZIhvcNAQEL\n"
-            .
-            .
-            "KByzyTutxTeI9UKcIPFxK40s4qF50a40/6UFxrGueW+TzZ4iubWzP7eG+47r\n"
-            "-----END CERTIFICATE-----\n";
+        #define keyCLIENT_CERTIFICATE_PEM "-----BEGIN CERTIFICATE-----\n"\
+        "MIIDWTCCAkGgAwIBAgIUfmv3zA+JULlMOxmz+upkAzhEkQ0wDQYJKoZIhvcNAQEL\n"\
+        .
+        .
+        .
+        "mepuT3lKmD0jZupsQ9vLQOA09rMjVMd0YPmI9ozvvWqLpjVvNTKVhsf/3slM\n"\
+        "-----END CERTIFICATE-----\n"
 
     In the same way update the private key array.
 
@@ -60,101 +88,87 @@ Running the demo
 The log below shows the output of the demo in the terminal window. The log can be different based on your WiFi network configuration.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-0 0 [Tmr Svc] Starting key provisioning...
-1 0 [Tmr Svc] Write root certificate...
-2 15 [Tmr Svc] Write device private key...
-3 488 [Tmr Svc] Write device certificate...
-4 508 [Tmr Svc] Key provisioning done...
-5 509 [Tmr Svc] Starting WiFi...
-6 2086 [Tmr Svc] WiFi module initialized.
-7 5237 [Tmr Svc] WiFi connected to AP External-Internet.
-8 5238 [Tmr Svc] IP Address acquired 192.168.0.245
-9 5248 [MainDemoTask] [Shadow 0] MQTT: Creation of dedicated MQTT client succeeded.
-10 5511 [MQTT] Looked up ah7mkbw0r336-ats.iot.us-west-2.amazonaws.com as 54.69.21.148
-11 18642 [MainDemoTask] [Shadow 0] MQTT: Connect succeeded.
-12 18963 [MainDemoTask] [Shadow 0] MQTT: Subscribe to accepted topic succeeded.
-13 19283 [MainDemoTask] [Shadow 0] MQTT: Subscribe to rejected topic succeeded.
-14 19297 [MainDemoTask] [Shadow 0] MQTT: Publish to operation topic succeeded.
-15 19931 [MainDemoTask] [Shadow 0] MQTT: Unsubscribe from rejected topic succeeded.
-16 20252 [MainDemoTask] [Shadow 0] MQTT: Subscribe to callback topic succeeded.
-17 20255 [MainDemoTask] Shadow client initialized.
-18 20260 [ShDemoUpdt] Performing Thing Shadow update.
-19 20579 [ShDemoUpdt] [Shadow 0] MQTT: Subscribe to accepted topic succeeded.
-20 20899 [ShDemoUpdt] [Shadow 0] MQTT: Subscribe to rejected topic succeeded.
-21 20913 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
-22 21231 [ShDemoUpdt] Successfully performed update.
-23 21234 [Shd-IOT-0] Shd-IOT-0 changing desired state.
-24 21237 [ShDemoUpdt] Performing Thing Shadow update.
-25 21251 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
-26 21669 [ShDemoUpdt] Successfully performed update.
-27 21672 [Shd-IOT-0] Shd-IOT-0 done changing desired state.
-28 26234 [Shd-IOT-0] Shd-IOT-0 changing desired state.
-29 26237 [ShDemoUpdt] Performing Thing Shadow update.
-30 26250 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
-31 26589 [MQTT] Successfully added new reported state to update queue.
-32 26592 [ShDemoUpdt] Successfully performed update.
-34 26596 [ShDemoUpdt] Performing Thing Shadow update.
-33 26595 [Shd-IOT-0] Shd-IOT-0 done changing desired state.
-35 26611 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
-36 26927 [ShDemoUpdt] Successfully performed update.
-37 31234 [Shd-IOT-0] Shd-IOT-0 changing desired state.
-38 31237 [ShDemoUpdt] Performing Thing Shadow update.
-39 31250 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
-40 31583 [MQTT] Successfully added new reported state to update queue.
-41 31587 [ShDemoUpdt] Successfully performed update.
-42 31589 [ShDemoUpdt] Performing Thing Shadow update.
-43 31591 [Shd-IOT-0] Shd-IOT-0 done changing desired state.
-44 31603 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
-45 31931 [ShDemoUpdt] Successfully performed update.
-46 36234 [Shd-IOT-0] Shd-IOT-0 changing desired state.
-47 36237 [ShDemoUpdt] Performing Thing Shadow update.
-48 36250 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
-49 36584 [MQTT] Successfully added new reported state to update queue.
-50 36588 [ShDemoUpdt] Successfully performed update.
-51 36590 [ShDemoUpdt] Performing Thing Shadow update.
-52 36592 [Shd-IOT-0] Shd-IOT-0 done changing desired state.
-53 36604 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
-54 36922 [ShDemoUpdt] Successfully performed update.
-55 41234 [Shd-IOT-0] Shd-IOT-0 changing desired state.
-56 41237 [ShDemoUpdt] Performing Thing Shadow update.
-57 41250 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
-58 41585 [MQTT] Successfully added new reported state to update queue.
-59 41588 [ShDemoUpdt] Successfully performed update.
+0 160 [Tmr Svc] Write certificate...
+1 463 [Tmr Svc] Device credential provisioning succeeded.
+2 466 [iot_thread] [INFO ][INIT][466] SDK successfully initialized.
+3 2344 [iot_thread] [INFO ][DEMO][2344] Successfully initialized the demo. Network type for the demo: 1
+4 2344 [iot_thread] [INFO ][MQTT][2344] MQTT library successfully initialized.
+5 2344 [iot_thread] [INFO ][Shadow][2344] Shadow library successfully initialized.
+6 2344 [iot_thread] [INFO ][DEMO][2344] Shadow Thing Name is aws_rpr_michal (length 14).
+8 7133 [iot_thread] [INFO ][MQTT][7133] Establishing new MQTT connection.
+9 7135 [iot_thread] [INFO ][MQTT][7135] Anonymous metrics (SDK language, SDK version) will be provided to AWS IoT. Recompile with AWS_IOT_MQTT_ENABLE_METRICS set to 0 to disable.
+10 7136 [iot_thread] [INFO ][MQTT][7136] (MQTT connection 20008910, CONNECT operation 20008a28) Waiting for operation completion.
+11 7351 [iot_thread] [INFO ][MQTT][7351] (MQTT connection 20008910, CONNECT operation 20008a28) Wait complete with result SUCCESS.
+12 7352 [iot_thread] [INFO ][MQTT][7352] New MQTT connection 20003914 established.
+13 7352 [iot_thread] [INFO ][Shadow][7352] (aws_rpr_michal) Modifying Shadow DELTA callback.
+14 7352 [iot_thread] [INFO ][Shadow][7352] (aws_rpr_michal) Adding new DELTA callback.
+15 7352 [iot_thread] [INFO ][MQTT][7352] (MQTT connection 20008910) SUBSCRIBE operation scheduled.
+16 7352 [iot_thread] [INFO ][MQTT][7352] (MQTT connection 20008910, SUBSCRIBE operation 200082b0) Waiting for operation completion.
+17 7514 [iot_thread] [INFO ][MQTT][7514] (MQTT connection 20008910, SUBSCRIBE operation 200082b0) Wait complete with result SUCCESS.
+18 7515 [iot_thread] [INFO ][Shadow][7515] (aws_rpr_michal) Shadow DELTA callback operation complete with result SUCCESS.
+19 7515 [iot_thread] [INFO ][Shadow][7515] (aws_rpr_michal) Modifying Shadow UPDATED callback.
+20 7515 [iot_thread] [INFO ][Shadow][7515] (aws_rpr_michal) Adding new UPDATED callback.
+21 7515 [iot_thread] [INFO ][MQTT][7515] (MQTT connection 20008910) SUBSCRIBE operation scheduled.
+22 7515 [iot_thread] [INFO ][MQTT][7515] (MQTT connection 20008910, SUBSCRIBE operation 200082b0) Waiting for operation completion.
+23 7677 [iot_thread] [INFO ][MQTT][7677] (MQTT connection 20008910, SUBSCRIBE operation 200082b0) Wait complete with result SUCCESS.
+24 7678 [iot_thread] [INFO ][Shadow][7678] (aws_rpr_michal) Shadow UPDATED callback operation complete with result SUCCESS.
+25 7678 [iot_thread] [INFO ][MQTT][7678] (MQTT connection 20008910) SUBSCRIBE operation scheduled.
+26 7678 [iot_thread] [INFO ][MQTT][7678] (MQTT connection 20008910, SUBSCRIBE operation 20008d68) Waiting for operation completion.
+27 7846 [iot_thread] [INFO ][MQTT][7846] (MQTT connection 20008910, SUBSCRIBE operation 20008d68) Wait complete with result SUCCESS.
+28 7846 [iot_thread] [INFO ][MQTT][7846] (MQTT connection 20008910) SUBSCRIBE operation scheduled.
+29 7846 [iot_thread] [INFO ][MQTT][7846] (MQTT connection 20008910, SUBSCRIBE operation 20008a28) Waiting for operation completion.
+30 8008 [iot_thread] [INFO ][MQTT][8008] (MQTT connection 20008910, SUBSCRIBE operation 20008a28) Wait complete with result SUCCESS.
+31 8009 [iot_thread] [INFO ][MQTT][8009] (MQTT connection 20008910) MQTT PUBLISH operation queued.
+32 8201 [iot_thread] [INFO ][Shadow][8201] Shadow DELETE of aws_rpr_michal was ACCEPTED.
+33 8202 [iot_thread] [INFO ][MQTT][8202] (MQTT connection 20008910) UNSUBSCRIBE operation scheduled.
+34 8202 [iot_thread] [INFO ][MQTT][8202] (MQTT connection 20008910, UNSUBSCRIBE operation 20008a28) Waiting for operation completion.
+35 8363 [iot_thread] [INFO ][MQTT][8363] (MQTT connection 20008910, UNSUBSCRIBE operation 20008a28) Wait complete with result SUCCESS.
+36 8363 [iot_thread] [INFO ][MQTT][8363] (MQTT connection 20008910) UNSUBSCRIBE operation scheduled.
+37 8363 [iot_thread] [INFO ][MQTT][8363] (MQTT connection 20008910, UNSUBSCRIBE operation 20008a28) Waiting for operation completion.
+38 8525 [iot_thread] [INFO ][MQTT][8525] (MQTT connection 20008910, UNSUBSCRIBE operation 20008a28) Wait complete with result SUCCESS.
+39 8526 [iot_thread] [INFO ][DEMO][8526] Successfully cleared Shadow of aws_rpr_michal.
+40 8526 [iot_thread] [INFO ][DEMO][8526] Sending Shadow update 1 of 20: {"state":{"desired":{"powerOn":1}},"clientToken":"008526"}
+41 8526 [iot_thread] [INFO ][MQTT][8526] (MQTT connection 20008910) SUBSCRIBE operation scheduled.
+42 8526 [iot_thread] [INFO ][MQTT][8526] (MQTT connection 20008910, SUBSCRIBE operation 20008a68) Waiting for operation completion.
+43 8682 [iot_thread] [INFO ][MQTT][8682] (MQTT connection 20008910, SUBSCRIBE operation 20008a68) Wait complete with result SUCCESS.
+44 8682 [iot_thread] [INFO ][MQTT][8682] (MQTT connection 20008910) SUBSCRIBE operation scheduled.
+45 8682 [iot_thread] [INFO ][MQTT][8682] (MQTT connection 20008910, SUBSCRIBE operation 20008a68) Waiting for operation completion.
+46 8838 [iot_thread] [INFO ][MQTT][8838] (MQTT connection 20008910, SUBSCRIBE operation 20008a68) Wait complete with result SUCCESS.
+47 8839 [iot_thread] [INFO ][MQTT][8839] (MQTT connection 20008910) MQTT PUBLISH operation queued.
+48 9032 [iot_thread] [INFO ][DEMO][9032] aws_rpr_michal changing state from 0 to 1.
+49 9032 [iot_thread] [INFO ][MQTT][9032] (MQTT connection 20008910) MQTT PUBLISH operation queued.
+50 9033 [iot_thread] [INFO ][DEMO][9033] aws_rpr_michal sent new state report.
+51 9040 [iot_thread] [INFO ][Shadow][9040] Shadow UPDATE of aws_rpr_michal was ACCEPTED.
+52 9043 [iot_thread] [INFO ][DEMO][9043] Shadow was updated!
+Previous: {"state":{}}
+Current:  {"state":{"desired":{"powerOn":1}}}
+53 9043 [iot_thread] [INFO ][DEMO][9043] Successfully sent Shadow update 1 of 20.
+54 9224 [iot_thread] [INFO ][Shadow][9224] Shadow UPDATE of aws_rpr_michal was ACCEPTED.
+55 9228 [iot_thread] [INFO ][DEMO][9228] Shadow was updated!
+Previous: {"state":{"desired":{"powerOn":1}}}
+Current:  {"state":{"desired":{"powerOn":1},"reported":{"powerOn":1}}}
+56 12043 [iot_thread] [INFO ][DEMO][12043] Sending Shadow update 2 of 20: {"state":{"desired":{"powerOn":0}},"clientToken":"012043"}
+57 12045 [iot_thread] [INFO ][MQTT][12043] (MQTT connection 20008910) MQTT PUBLISH operation queued.
+58 12232 [iot_thread] [INFO ][Shadow][12232] Shadow UPDATE of aws_rpr_michal was ACCEPTED.
+59 12233 [iot_thread] [INFO ][DEMO][12233] Successfully sent Shadow update 2 of 20.
+60 12235 [iot_thread] [INFO ][DEMO][12235] Shadow was updated!
+Previous: {"state":{"desired":{"powerOn":1},"reported":{"powerOn":1}}}
+Current:  {"state":{"desired":{"powerOn":0},"reported":{"powerOn":1}}}
+61 12238 [iot_thread] [INFO ][DEMO][12238] aws_rpr_michal changing state from 1 to 0.
+62 12238 [iot_thread] [INFO ][MQTT][12238] (MQTT connection 20008910) MQTT PUBLISH operation queued.
+63 12238 [iot_thread] [INFO ][DEMO][12238] aws_rpr_michal sent new state report.
+64 12431 [iot_thread] [INFO ][DEMO][12431] Shadow was updated!
+Previous: {"state":{"desired":{"powerOn":0},"reported":{"powerOn":1}}}
+Current:  {"state":{"desired":{"powerOn":0},"reported":{"powerOn":0}}}
+65 12445 [iot_thread] [INFO ][Shadow][12445] Shadow UPDATE of aws_rpr_michal was ACCEPTED.
+66 15239 [iot_thread] [INFO ][DEMO][15239] Sending Shadow update 3 of 20: {"state":{"desired":{"powerOn":1}},"clientToken":"015239"}
+67 15241 [iot_thread] [INFO ][MQTT][15239] (MQTT connection 20008910) MQTT PUBLISH operation queued.
+68 15431 [iot_thread] [INFO ][Shadow][15431] Shadow UPDATE of aws_rpr_michal was ACCEPTED.
+69 15432 [iot_thread] [INFO ][DEMO][15432] Successfully sent Shadow update 3 of 20.
 .
 .
 .
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Hardware requirements
+Customization options
 =====================
-- Mini/micro USB cable
-- FRDM-K64F board
-- GT202 Adaptor V1.04 or Silex SX-ULPAN-2401
-- Personal Computer
-
-Board settings
-==============
-Plug GT202 Adaptor board to FRDM stackable headers (J1, J2, J3, J4).
-GT202 shield is compatible *only* with FRDM-K64 rev_E.
-Previous revisions cannot provide GPIO mux on J2:2 (WLAN_PWRON).
-
-The default shield support is set to GT202 shield. To enable 
-Silex SX-ULPAN-2401, please open "wifi_shield.h" and uncomment
-following lines:
-
-//#define WIFISHIELD_IS_SILEX2041
-
-//#elif defined(WIFISHIELD_IS_SILEX2041)
-//#include "wifi_shield_silex2401.h"
-
-and comment out:
-
-#define WIFISHIELD_IS_GT202
-
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
 

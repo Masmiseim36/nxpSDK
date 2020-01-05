@@ -48,7 +48,10 @@ void sslsrv_server_task(void *arg)
         int new_sock;
 
         /* limit number of opened sessions */
-        xSemaphoreTake(server->ses_cnt, portMAX_DELAY);
+        if (xSemaphoreTake(server->ses_cnt, portMAX_DELAY) != pdTRUE)
+        {
+            break;
+        }
         SSL_SRV_PRINTF("waiting for client connection ...\n");
         /* Get socket with incoming connection (IPv4 or IPv6) */
         int connsock = sslsrv_wait_for_conn(server->sock);

@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016 - 2017 NXP
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_device_config.h"
@@ -53,9 +31,6 @@
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
-#include "usb_phy.h"
-#endif
 
 #if (USB_DEVICE_CONFIG_HID < 2U)
 #error USB_DEVICE_CONFIG_HID need to > 1U, Please change the MARCO USB_DEVICE_CONFIG_HID in file "usb_device_config.h".
@@ -66,14 +41,16 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* USB clock source and frequency*/
-#define USB_FS_CLK_SRC kCLOCK_UsbSrcIrc48M
-#define USB_FS_CLK_FREQ 48000000U
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 void BOARD_InitHardware(void);
+void USB_DeviceClockInit(void);
+void USB_DeviceIsrEnable(void);
+#if USB_DEVICE_CONFIG_USE_TASK
+void USB_DeviceTaskFn(void *deviceHandle);
+#endif
 
 static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param);
 static void USB_DeviceApplicationInit(void);
@@ -85,7 +62,7 @@ static void USB_DeviceApplicationInit(void);
 extern usb_device_class_struct_t g_UsbDeviceHidMouseConfig;
 extern usb_device_class_struct_t g_UsbDeviceHidKeyboardConfig;
 
-static usb_device_composite_struct_t g_UsbDeviceComposite;
+usb_device_composite_struct_t g_UsbDeviceComposite;
 
 /* Set class configurations */
 usb_device_class_config_struct_t g_CompositeClassConfig[USB_COMPOSITE_INTERFACE_COUNT] = {
@@ -115,6 +92,36 @@ usb_device_class_config_list_struct_t g_UsbDeviceCompositeConfigList = {
  * Code
  ******************************************************************************/
 
+void USB0_IRQHandler(void)
+{
+    USB_DeviceKhciIsrFunction(g_UsbDeviceComposite.deviceHandle);
+    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+    exception return operation might vector to incorrect interrupt */
+    __DSB();
+}
+void USB_DeviceClockInit(void)
+{
+    SystemCoreClockUpdate();
+    CLOCK_EnableUsbfs0Clock(kCLOCK_UsbSrcIrc48M, 48000000U);
+}
+void USB_DeviceIsrEnable(void)
+{
+    uint8_t irqNumber;
+
+    uint8_t usbDeviceKhciIrq[] = USB_IRQS;
+    irqNumber                  = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+
+    /* Install isr, set priority, and enable IRQ. */
+    NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
+    EnableIRQ((IRQn_Type)irqNumber);
+}
+#if USB_DEVICE_CONFIG_USE_TASK
+void USB_DeviceTaskFn(void *deviceHandle)
+{
+    USB_DeviceKhciTaskFunction(deviceHandle);
+}
+#endif
+
 /* The Device callback */
 static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
@@ -128,6 +135,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
         {
             /* USB bus reset signal detected */
             g_UsbDeviceComposite.attach = 0U;
+            g_UsbDeviceComposite.currentConfiguration = 0U;
             error = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
@@ -140,14 +148,23 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
-            if (param)
+            if (0U == (*temp8))
+            {
+                g_UsbDeviceComposite.attach = 0U;
+                g_UsbDeviceComposite.currentConfiguration = 0U;
+            }
+            else if (USB_COMPOSITE_CONFIGURE_INDEX == (*temp8))
             {
                 /* Set device configuration request */
                 g_UsbDeviceComposite.attach = 1U;
-                g_UsbDeviceComposite.currentConfiguration = *temp8;
                 USB_DeviceHidMouseSetConfigure(g_UsbDeviceComposite.hidMouseHandle, *temp8);
                 USB_DeviceHidKeyboardSetConfigure(g_UsbDeviceComposite.hidKeyboardHandle, *temp8);
+                g_UsbDeviceComposite.currentConfiguration = *temp8;
                 error = kStatus_USB_Success;
+            }
+            else
+            {
+                error = kStatus_USB_InvalidRequest;
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -227,6 +244,16 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                     USB_DeviceGetHidReportDescriptor(handle, (usb_device_get_hid_report_descriptor_struct_t *)param);
             }
             break;
+#if (defined(USB_DEVICE_CONFIG_CV_TEST) && (USB_DEVICE_CONFIG_CV_TEST > 0U))
+        case kUSB_DeviceEventGetDeviceQualifierDescriptor:
+            if (param)
+            {
+                /* Get Qualifier descriptor request */
+                error = USB_DeviceGetDeviceQualifierDescriptor(
+                    handle, (usb_device_get_device_qualifier_descriptor_struct_t *)param);
+            }
+            break;
+#endif
         case kUSB_DeviceEventGetHidPhysicalDescriptor:
             if (param)
             {
@@ -242,116 +269,13 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
     return error;
 }
 
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
-void USBHS_IRQHandler(void)
-{
-    USB_DeviceEhciIsrFunction(g_UsbDeviceComposite.deviceHandle);
-}
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 1U)
-#if defined(FSL_FEATURE_SOC_USBNC_COUNT) && (FSL_FEATURE_SOC_USBNC_COUNT > 1U)
-void USB1_IRQHandler(void)
-{
-    USB_DeviceEhciIsrFunction(g_UsbDeviceComposite.deviceHandle);
-}
-#endif
-#endif
-#endif
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
-void USB0_IRQHandler(void)
-{
-    USB_DeviceKhciIsrFunction(g_UsbDeviceComposite.deviceHandle);
-}
-#endif
-#if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
-void USB0_IRQHandler(void)
-{
-    USB_DeviceLpcIp3511IsrFunction(g_UsbDeviceComposite.deviceHandle);
-}
-#endif
-#if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
-void USB1_IRQHandler(void)
-{
-    USB_DeviceLpcIp3511IsrFunction(g_UsbDeviceComposite.deviceHandle);
-}
-#endif
-
 /* Application initialization */
 static void USB_DeviceApplicationInit(void)
 {
-    uint8_t irqNumber;
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
-    uint8_t usbDeviceEhciIrq[] = USBHS_IRQS;
-    irqNumber = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
-
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 1U)
-    if (CONTROLLER_ID == kUSB_ControllerEhci0)
-    {
-        CLOCK_EnableUsbhs0PhyPllClock(USB_HS_PHY_CLK_SRC, USB_HS_PHY_CLK_FREQ);
-        CLOCK_EnableUsbhs0Clock(USB_HS_CLK_SRC, USB_HS_CLK_FREQ);
-    }
-    else
-    {
-        CLOCK_EnableUsbhs1PhyPllClock(USB_HS_PHY_CLK_SRC, USB_HS_PHY_CLK_FREQ);
-        CLOCK_EnableUsbhs1Clock(USB_HS_CLK_SRC, USB_HS_CLK_FREQ);
-    }
-#else
-    CLOCK_EnableUsbhs0PhyPllClock(USB_HS_PHY_CLK_SRC, USB_HS_PHY_CLK_FREQ);
-    CLOCK_EnableUsbhs0Clock(USB_HS_CLK_SRC, USB_HS_CLK_FREQ);
-#endif
-
-    USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ);
-#endif
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
-    uint8_t usbDeviceKhciIrq[] = USB_IRQS;
-    irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
-
-    SystemCoreClockUpdate();
-
-    CLOCK_EnableUsbfs0Clock(USB_FS_CLK_SRC, USB_FS_CLK_FREQ);
-#endif
-
-#if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
-    uint8_t usbDeviceIP3511Irq[] = USB_IRQS;
-    irqNumber = usbDeviceIP3511Irq[CONTROLLER_ID - kUSB_ControllerLpcIp3511Fs0];
-
-    /* enable USB IP clock */
-    CLOCK_EnableUsbfs0DeviceClock(USB_FS_CLK_SRC, USB_FS_CLK_FREQ);
-#endif
-
-#if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
-    uint8_t usbDeviceIP3511Irq[] = USBHSD_IRQS;
-    irqNumber = usbDeviceIP3511Irq[CONTROLLER_ID - kUSB_ControllerLpcIp3511Hs0];
-    /* enable USB IP clock */
-    CLOCK_EnableUsbhs0DeviceClock(USB_HS_CLK_SRC, USB_HS_CLK_FREQ);
-#endif
-
-#if (((defined(USB_DEVICE_CONFIG_LPCIP3511FS)) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)) || \
-     ((defined(USB_DEVICE_CONFIG_LPCIP3511HS)) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)))
-#if defined(FSL_FEATURE_USBHSD_USB_RAM) && (FSL_FEATURE_USBHSD_USB_RAM)
-    for (int i = 0; i < FSL_FEATURE_USBHSD_USB_RAM; i++)
-    {
-        ((uint8_t *)FSL_FEATURE_USBHSD_USB_RAM_BASE_ADDRESS)[i] = 0x00U;
-    }
-#endif
-#endif
-
+    USB_DeviceClockInit();
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
     SYSMPU_Enable(SYSMPU, 0);
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
-
-/*
- * If the SOC has USB KHCI dedicated RAM, the RAM memory needs to be clear after
- * the KHCI clock is enabled. When the demo uses USB EHCI IP, the USB KHCI dedicated
- * RAM can not be used and the memory can't be accessed.
- */
-#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U))
-#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS) && (FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS > 0U))
-    for (int i = 0; i < FSL_FEATURE_USB_KHCI_USB_RAM; i++)
-    {
-        ((uint8_t *)FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS)[i] = 0x00U;
-    }
-#endif /* FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS */
-#endif /* FSL_FEATURE_USB_KHCI_USB_RAM */
 
     /* Set composite device to default state */
     g_UsbDeviceComposite.speed = USB_SPEED_FULL;
@@ -378,19 +302,13 @@ static void USB_DeviceApplicationInit(void)
         USB_DeviceHidMouseInit(&g_UsbDeviceComposite);
     }
 
-/* Install isr, set priority, and enable IRQ. */
-#if defined(__GIC_PRIO_BITS)
-    GIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#else
-    NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#endif
-    EnableIRQ((IRQn_Type)irqNumber);
+    USB_DeviceIsrEnable();
 
     /* Start the device function */
     USB_DeviceRun(g_UsbDeviceComposite.deviceHandle);
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)
@@ -405,18 +323,7 @@ void main(void)
     while (1U)
     {
 #if USB_DEVICE_CONFIG_USE_TASK
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
-        USB_DeviceEhciTaskFunction(g_UsbDeviceComposite.deviceHandle);
-#endif
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
-        USB_DeviceKhciTaskFunction(g_UsbDeviceComposite.deviceHandle);
-#endif
-#if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
-        USB_DeviceLpcIp3511TaskFunction(g_UsbDeviceComposite.deviceHandle);
-#endif
-#if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
-        USB_DeviceLpcIp3511TaskFunction(g_UsbDeviceComposite.deviceHandle);
-#endif
+        USB_DeviceTaskFn(g_UsbDeviceComposite.deviceHandle);
 #endif
     }
 }

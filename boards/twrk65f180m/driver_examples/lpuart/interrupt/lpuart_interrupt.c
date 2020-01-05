@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "board.h"
@@ -38,6 +16,7 @@
  ******************************************************************************/
 #define DEMO_LPUART LPUART0
 #define DEMO_LPUART_CLKSRC kCLOCK_PllFllSelClk
+#define DEMO_LPUART_CLK_FREQ CLOCK_GetFreq(kCLOCK_PllFllSelClk)
 #define DEMO_LPUART_IRQn LPUART0_IRQn
 #define DEMO_LPUART_IRQHandler LPUART0_IRQHandler
 
@@ -75,6 +54,8 @@ volatile uint16_t rxIndex; /* Index of the memory to save new arrived data. */
 void DEMO_LPUART_IRQHandler(void)
 {
     uint8_t data;
+    uint16_t tmprxIndex = rxIndex;
+    uint16_t tmptxIndex = txIndex;
 
     /* If new data arrived. */
     if ((kLPUART_RxDataRegFullFlag)&LPUART_GetStatusFlags(DEMO_LPUART))
@@ -82,13 +63,18 @@ void DEMO_LPUART_IRQHandler(void)
         data = LPUART_ReadByte(DEMO_LPUART);
 
         /* If ring buffer is not full, add data to ring buffer. */
-        if (((rxIndex + 1) % DEMO_RING_BUFFER_SIZE) != txIndex)
+        if (((tmprxIndex + 1) % DEMO_RING_BUFFER_SIZE) != tmptxIndex)
         {
             demoRingBuffer[rxIndex] = data;
             rxIndex++;
             rxIndex %= DEMO_RING_BUFFER_SIZE;
         }
     }
+    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+      exception return operation might vector to incorrect interrupt */
+#if defined __CORTEX_M && (__CORTEX_M == 4U)
+    __DSB();
+#endif
 }
 
 /*!
@@ -97,6 +83,8 @@ void DEMO_LPUART_IRQHandler(void)
 int main(void)
 {
     lpuart_config_t config;
+    uint16_t tmprxIndex = rxIndex;
+    uint16_t tmptxIndex = txIndex;
 
     BOARD_InitPins();
     BOARD_BootClockRUN();
@@ -113,10 +101,10 @@ int main(void)
      */
     LPUART_GetDefaultConfig(&config);
     config.baudRate_Bps = BOARD_DEBUG_UART_BAUDRATE;
-    config.enableTx = true;
-    config.enableRx = true;
+    config.enableTx     = true;
+    config.enableRx     = true;
 
-    LPUART_Init(DEMO_LPUART, &config, CLOCK_GetFreq(DEMO_LPUART_CLKSRC));
+    LPUART_Init(DEMO_LPUART, &config, DEMO_LPUART_CLK_FREQ);
 
     /* Send g_tipString out. */
     LPUART_WriteBlocking(DEMO_LPUART, g_tipString, sizeof(g_tipString) / sizeof(g_tipString[0]));
@@ -128,11 +116,16 @@ int main(void)
     while (1)
     {
         /* Send data only when LPUART TX register is empty and ring buffer has data to send out. */
-        while ((kLPUART_TxDataRegEmptyFlag & LPUART_GetStatusFlags(DEMO_LPUART)) && (rxIndex != txIndex))
+        while (kLPUART_TxDataRegEmptyFlag & LPUART_GetStatusFlags(DEMO_LPUART))
         {
-            LPUART_WriteByte(DEMO_LPUART, demoRingBuffer[txIndex]);
-            txIndex++;
-            txIndex %= DEMO_RING_BUFFER_SIZE;
+            tmprxIndex = rxIndex;
+            tmptxIndex = txIndex;
+            if (tmprxIndex != tmptxIndex)
+            {
+                LPUART_WriteByte(DEMO_LPUART, demoRingBuffer[txIndex]);
+                txIndex++;
+                txIndex %= DEMO_RING_BUFFER_SIZE;
+            }
         }
     }
 }

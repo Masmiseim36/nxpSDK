@@ -63,7 +63,7 @@
 #endif
 
 #if FNET_CFG_COMP_UV
-
+    #if __CC_ARM
     /* To use anonimous unions.*/
     #pragma anon_unions
 
@@ -75,6 +75,14 @@
 
     /* Inline assembler */
     #define FNET_COMP_ASM(x)        __asm(x)
+    #else
+    /* To use _Pragma(), enable C99 Extensions. */
+    #define FNET_COMP_PACKED_BEGIN  _Pragma("pack(push,1)")
+    #define FNET_COMP_PACKED_END    _Pragma("pack(pop)")
+
+    /* Inline assembler */
+    #define FNET_COMP_ASM(x)        __asm(x)
+	#endif
 #endif
 
 #if FNET_CFG_COMP_GNUC

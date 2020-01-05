@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016 - 2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "fsl_device_registers.h"
 #include "clock_config.h"
@@ -47,26 +25,19 @@
 #include "virtual_nic_enetif.h"
 #include "virtual_nic.h"
 #include "virtual_nic_enet_adapter.h"
+#if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
+#include "fsl_sysmpu.h"
+#endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-#if (defined(FSL_FEATURE_SOC_MPU_COUNT) && (FSL_FEATURE_SOC_MPU_COUNT > 0U))
-#include "fsl_mpu.h"
-#endif /* FSL_FEATURE_SOC_MPU_COUNT */
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
-#include "usb_phy.h"
-#endif
 
 #include "pin_mux.h"
 #include "fsl_common.h"
+#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
+#include "usb_phy.h"
+#endif
 /*******************************************************************************
 * Definitions
 ******************************************************************************/
-/* USB clock source and frequency*/
-#define USB_FS_CLK_SRC kCLOCK_UsbSrcIrc48M
-#define USB_FS_CLK_FREQ 48000000U
-#define USB_HS_PHY_CLK_SRC kCLOCK_UsbPhySrcExt
-#define USB_HS_PHY_CLK_FREQ BOARD_XTAL0_CLK_HZ
-#define USB_HS_CLK_SRC kCLOCK_UsbSrcUnused
-#define USB_HS_CLK_FREQ 0U
 /* Base unit for ENIT layer is 1Mbps while for RNDIS its 100bps*/
 #define ENET_CONVERT_FACTOR (10000)
 
@@ -74,34 +45,146 @@
  * Prototypes
  ******************************************************************************/
 void BOARD_InitHardware(void);
-void VNIC_EnetPBufFree(pbuf_t *pbuf);
+void USB_DeviceClockInit(void);
+void USB_DeviceIsrEnable(void);
+#if USB_DEVICE_CONFIG_USE_TASK
+void USB_DeviceTaskFn(void *deviceHandle);
+#endif
+void VNIC_EnetRxBufFree(pbuf_t *pbuf);
+void VNIC_EnetTxBufFree(pbuf_t *pbuf);
 bool VNIC_EnetGetLinkStatus(void);
 uint32_t VNIC_EnetGetSpeed(void);
-enet_err_t VNIC_EnetSend(uint8_t *buf, uint32_t len);
+uint8_t *VNIC_EnetTxBufAlloc(void);
+usb_status_t VNIC_EnetSend(uint8_t *buf, uint32_t len);
+usb_status_t VNIC_EnetTxDone(void);
 /*******************************************************************************
 * Variables
 ******************************************************************************/
-extern queue_t g_enetServiceQueue;
+extern queue_t g_enetRxServiceQueue;
+extern queue_t g_enetTxServiceQueue;
 extern uint8_t g_hwaddr[ENET_MAC_ADDR_SIZE];
 /* Data structure of virtual nic device. */
 usb_cdc_vnic_t g_cdcVnic;
 /* Buffer to receive data. */
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
-static uint8_t s_currRecvBuf[HS_CDC_VNIC_BULK_OUT_PACKET_SIZE];
-#else
-static uint8_t s_currRecvBuf[FS_CDC_VNIC_BULK_OUT_PACKET_SIZE];
-#endif
+#if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)) || \
+    (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0))
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_currRecvBuf[HS_CDC_VNIC_BULK_OUT_PACKET_SIZE];
 static uint32_t s_usbBulkMaxPacketSize = HS_CDC_VNIC_BULK_OUT_PACKET_SIZE;
-/* Pointer of part 1 of usb transmit buffer. */
-static uint8_t *s_usbTxPartOneBuffer;
-/* Pointer of usb receive buffer to store the rndis packet. */
-static uint8_t *s_usbRxRndisPacketBuffer;
+#else
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_currRecvBuf[FS_CDC_VNIC_BULK_OUT_PACKET_SIZE];
+static uint32_t s_usbBulkMaxPacketSize = FS_CDC_VNIC_BULK_OUT_PACKET_SIZE;
+#endif
+
+/* Part 1 of usb transmit buffer. */
+#if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)) || \
+    (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0))
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_usbTxPartOneBuffer[HS_CDC_VNIC_BULK_OUT_PACKET_SIZE];
+#else
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_usbTxPartOneBuffer[FS_CDC_VNIC_BULK_OUT_PACKET_SIZE];
+#endif
+
+/* USB receive buffer to store the rndis packet. size is calculated as
+ * ENET_FRAME_MAX_FRAMELEN + sizeof(enet_header_t) + RNDIS_USB_HEADER_SIZE.
+ */
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_usbRxRndisPacketBuffer[1581];
+/* USB receive buffer to store the rndis packet. size is calculated as
+ * ENET_FRAME_MAX_FRAMELEN + sizeof(enet_header_t).
+ */
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_usbTxRndisPacketBuffer[1536];
+
 /* Append byte for zero length packet. */
-static uint8_t s_zeroSend = 0x00;
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_zeroSend = 0x00;
 
 /*******************************************************************************
 * Code
 ******************************************************************************/
+ENET_Type *BOARD_GetExampleEnetBase(void)
+{
+    return ENET;
+}
+
+uint32_t BOARD_GetPhySysClock(void)
+{
+    return CLOCK_GetFreq(kCLOCK_CoreSysClk);
+}
+
+#if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U))
+void USBHS_IRQHandler(void)
+{
+    USB_DeviceEhciIsrFunction(g_cdcVnic.deviceHandle);
+    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+    exception return operation might vector to incorrect interrupt */
+    __DSB();
+}
+#endif
+#if (defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U))
+void USB0_IRQHandler(void)
+{
+    USB_DeviceKhciIsrFunction(g_cdcVnic.deviceHandle);
+    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+    exception return operation might vector to incorrect interrupt */
+    __DSB();
+}
+#endif
+void USB_DeviceClockInit(void)
+{
+#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+    usb_phy_config_struct_t phyConfig = {
+        BOARD_USB_PHY_D_CAL,
+        BOARD_USB_PHY_TXCAL45DP,
+        BOARD_USB_PHY_TXCAL45DM,
+    };
+#endif
+#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+    CLOCK_EnableUsbhs0PhyPllClock(kCLOCK_UsbPhySrcExt, BOARD_XTAL0_CLK_HZ);
+    CLOCK_EnableUsbhs0Clock(kCLOCK_UsbSrcUnused, 0U);
+    USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ, &phyConfig);
+#endif
+#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
+    SystemCoreClockUpdate();
+    CLOCK_EnableUsbfs0Clock(kCLOCK_UsbSrcIrc48M, 48000000U);
+/*
+ * If the SOC has USB KHCI dedicated RAM, the RAM memory needs to be clear after
+ * the KHCI clock is enabled. When the demo uses USB EHCI IP, the USB KHCI dedicated
+ * RAM can not be used and the memory can't be accessed.
+ */
+#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U))
+#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS) && (FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS > 0U))
+    for (int i = 0; i < FSL_FEATURE_USB_KHCI_USB_RAM; i++)
+    {
+        ((uint8_t *)FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS)[i] = 0x00U;
+    }
+#endif /* FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS */
+#endif /* FSL_FEATURE_USB_KHCI_USB_RAM */
+#endif
+}
+void USB_DeviceIsrEnable(void)
+{
+    uint8_t irqNumber;
+#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+    uint8_t usbDeviceEhciIrq[] = USBHS_IRQS;
+    irqNumber                  = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
+#endif
+#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
+    uint8_t usbDeviceKhciIrq[] = USB_IRQS;
+    irqNumber                  = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+#endif
+    /* Install isr, set priority, and enable IRQ. */
+    NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
+    EnableIRQ((IRQn_Type)irqNumber);
+}
+#if USB_DEVICE_CONFIG_USE_TASK
+void USB_DeviceTaskFn(void *deviceHandle)
+{
+#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+    USB_DeviceEhciTaskFunction(deviceHandle);
+#endif
+#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
+    USB_DeviceKhciTaskFunction(deviceHandle);
+#endif
+}
+#endif
+
 /*!
  * @brief Set the state of the usb transmit direction
  *
@@ -110,6 +193,7 @@ static uint8_t s_zeroSend = 0x00;
  */
 static inline usb_status_t USB_DeviceVnicTransmitSetState(usb_cdc_vnic_tx_state_t state)
 {
+    USB_DEVICE_VNIC_CRITICAL_ALLOC();
     USB_DEVICE_VNIC_ENTER_CRITICAL();
     g_cdcVnic.nicTrafficInfo.usbTxState = state;
     USB_DEVICE_VNIC_EXIT_CRITICAL();
@@ -124,6 +208,7 @@ static inline usb_status_t USB_DeviceVnicTransmitSetState(usb_cdc_vnic_tx_state_
  */
 static inline usb_status_t USB_DeviceVnicReceiveSetState(usb_cdc_vnic_rx_state_t state)
 {
+    USB_DEVICE_VNIC_CRITICAL_ALLOC();
     USB_DEVICE_VNIC_ENTER_CRITICAL();
     g_cdcVnic.nicTrafficInfo.usbRxState = state;
     USB_DEVICE_VNIC_EXIT_CRITICAL();
@@ -319,7 +404,6 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
     {
         return error;
     }
-
     switch (setup->bRequest)
     {
         case USB_DEVICE_CDC_REQUEST_SEND_ENCAPSULATED_COMMAND:
@@ -353,6 +437,7 @@ usb_status_t USB_DeviceVnicTransmit(void)
     uint32_t usbTxPart_1Len;
     uint8_t *nicData;
     uint32_t length;
+    USB_DEVICE_VNIC_CRITICAL_ALLOC();
     uint8_t *firstSendBuff = s_usbTxPartOneBuffer;
     switch (g_cdcVnic.nicTrafficInfo.usbTxState)
     {
@@ -366,7 +451,7 @@ usb_status_t USB_DeviceVnicTransmit(void)
             g_cdcVnic.nicTrafficInfo.usbTxPart_1Len = 0;
 
             /* Get a transfer request from the enet queue */
-            error = VNIC_EnetQueueGet(&g_enetServiceQueue, &cdcAcmTransfer);
+            error = VNIC_EnetQueueGet(&g_enetRxServiceQueue, &cdcAcmTransfer);
             if (kStatus_USB_Success == error)
             {
                 enetPbuf = &(g_cdcVnic.nicTrafficInfo.usbTxEnetPcb);
@@ -418,7 +503,7 @@ usb_status_t USB_DeviceVnicTransmit(void)
                 else
                 {
                     usb_echo("Part One of RNDIS packet send failed, 0x%x\n", error);
-                    VNIC_EnetPBufFree(enetPbuf);
+                    VNIC_EnetRxBufFree(enetPbuf);
                 }
                 USB_DEVICE_VNIC_EXIT_CRITICAL();
             }
@@ -438,9 +523,10 @@ usb_status_t USB_DeviceVnicTransmit(void)
             {
                 /* Send the part 2 of the RNDIS packet */
                 USB_DEVICE_VNIC_ENTER_CRITICAL();
+                memcpy(s_usbTxRndisPacketBuffer, nicData + (usbTxPart_1Len - RNDIS_USB_OVERHEAD_SIZE),
+                       usbTxLen - usbTxPart_1Len);
                 error = USB_DeviceSendRequest(g_cdcVnic.deviceHandle, USB_CDC_VNIC_BULK_IN_ENDPOINT,
-                                              nicData + (usbTxPart_1Len - RNDIS_USB_OVERHEAD_SIZE),
-                                              usbTxLen - usbTxPart_1Len);
+                                              s_usbTxRndisPacketBuffer, usbTxLen - usbTxPart_1Len);
                 if (kStatus_USB_Error != error)
                 {
                     USB_DeviceVnicTransmitSetState(TX_PART_TWO_PROCESS);
@@ -448,7 +534,7 @@ usb_status_t USB_DeviceVnicTransmit(void)
                 else
                 {
                     usb_echo("Part Two of RNDIS packet send failed, 0x%x\n", returnStatus);
-                    VNIC_EnetPBufFree(enetPbuf);
+                    VNIC_EnetRxBufFree(enetPbuf);
                 }
                 USB_DEVICE_VNIC_EXIT_CRITICAL();
             }
@@ -481,7 +567,7 @@ usb_status_t USB_DeviceVnicTransmit(void)
             }
             else
             {
-                VNIC_EnetPBufFree(enetPbuf);
+                VNIC_EnetRxBufFree(enetPbuf);
                 g_cdcVnic.nicTrafficInfo.enetRxUsb2host++;
                 USB_DeviceVnicTransmitSetState(TX_IDLE);
             }
@@ -492,7 +578,7 @@ usb_status_t USB_DeviceVnicTransmit(void)
         case TX_ZLP_DONE:
         {
             enetPbuf = &(g_cdcVnic.nicTrafficInfo.usbTxEnetPcb);
-            VNIC_EnetPBufFree(enetPbuf);
+            VNIC_EnetRxBufFree(enetPbuf);
             g_cdcVnic.nicTrafficInfo.enetRxUsb2host++;
             USB_DeviceVnicTransmitSetState(TX_IDLE);
         }
@@ -511,12 +597,12 @@ usb_status_t USB_DeviceVnicTransmit(void)
 usb_status_t USB_DeviceVnicReceive(void)
 {
     usb_status_t error = kStatus_USB_Error;
-    enet_err_t enetErr = ENET_OK;
     uint8_t *rndisPktMsgData = NULL;
     uint32_t frameRemainingLen = 0;
     uint32_t messageLen = 0;
     uint8_t *buffer;
     uint32_t len;
+    USB_DEVICE_VNIC_CRITICAL_ALLOC();
     switch (g_cdcVnic.nicTrafficInfo.usbRxState)
     {
         case RX_IDLE:
@@ -580,20 +666,14 @@ usb_status_t USB_DeviceVnicReceive(void)
             else
             {
                 /* Send the ethernet packet */
-                USB_DEVICE_VNIC_ENTER_CRITICAL();
                 USB_DeviceVnicReceiveSetState(RX_USB2ENET_PROCESS);
-                enetErr = VNIC_EnetSend((uint8_t *)(rndisPktMsgData + RNDIS_USB_OVERHEAD_SIZE),
-                                        messageLen - RNDIS_USB_OVERHEAD_SIZE);
+                error = VNIC_EnetSend((uint8_t *)(rndisPktMsgData + RNDIS_USB_OVERHEAD_SIZE),
+                                      messageLen - RNDIS_USB_OVERHEAD_SIZE);
 
-                if (ENET_OK == enetErr)
-                {
-                    g_cdcVnic.nicTrafficInfo.enetTxHost2usb++;
-                }
-                else
+                if (kStatus_USB_Success != error)
                 {
                     usb_echo("RX_PART_ONE_DONE, VNIC_EnetSend failed\n");
                 }
-                USB_DEVICE_VNIC_EXIT_CRITICAL();
             }
         }
         break;
@@ -615,24 +695,21 @@ usb_status_t USB_DeviceVnicReceive(void)
             messageLen = USB_LONG_TO_LITTLE_ENDIAN(*((uint32_t *)rndisPktMsgData + 1));
 
             /* Send the ethernet packet */
-            USB_DEVICE_VNIC_ENTER_CRITICAL();
             USB_DeviceVnicReceiveSetState(RX_USB2ENET_PROCESS);
-            enetErr = VNIC_EnetSend((uint8_t *)(rndisPktMsgData + RNDIS_USB_OVERHEAD_SIZE),
-                                    messageLen - RNDIS_USB_OVERHEAD_SIZE);
+            error = VNIC_EnetSend((uint8_t *)(rndisPktMsgData + RNDIS_USB_OVERHEAD_SIZE),
+                                  messageLen - RNDIS_USB_OVERHEAD_SIZE);
 
-            if (ENET_OK == enetErr)
-            {
-                g_cdcVnic.nicTrafficInfo.enetTxHost2usb++;
-            }
-            else
+            if (kStatus_USB_Success != error)
             {
                 usb_echo("RX_PART_TWO_DONE, VNIC_EnetSend failed\n");
             }
-            USB_DEVICE_VNIC_EXIT_CRITICAL();
         }
         break;
         case RX_USB2ENET_PROCESS:
-            g_cdcVnic.nicTrafficInfo.enetTxUsb2enet++;
+#if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)) || \
+    (defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0))
+            VNIC_EnetTxDone();
+#endif
             USB_DeviceVnicReceiveSetState(RX_USB2ENET_DONE);
             break;
         case RX_USB2ENET_DONE:
@@ -679,7 +756,7 @@ usb_status_t USB_DeviceCdcRndisCallback(usb_device_cdc_rndis_struct_t *handle, u
             memcpy(rndisParam->buffer, &g_hwaddr[0], ENET_MAC_ADDR_SIZE);
             break;
         case kUSB_DeviceCdcEventAppGetMaxFrameSize:
-            *((uint32_t *)rndisParam->buffer) = (ENET_FRAME_MAX_FRAMELEN + sizeof(enet_header_t));
+            *((uint32_t *)rndisParam->buffer) = (ENET_FRAME_MAX_FRAMELEN + RNDIS_USB_HEADER_SIZE);
             break;
         case kUSB_DeviceCdcEventAppGetLinkStatus:
             if (1 == g_cdcVnic.attach)
@@ -717,7 +794,10 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             uint32_t len;
             USB_DeviceControlPipeInit(g_cdcVnic.deviceHandle);
             g_cdcVnic.attach = 0;
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
+            g_cdcVnic.currentConfiguration = 0U;
+#if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
+    (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
+            /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
             if (kStatus_USB_Success ==
                 USB_DeviceGetStatus(g_cdcVnic.deviceHandle, kUSB_DeviceStatusSpeed, &g_cdcVnic.speed))
             {
@@ -729,90 +809,101 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             VNIC_EnetClearEnetQueue();
             if ((g_cdcVnic.nicTrafficInfo.usbTxEnetPcb.payload != NULL))
             {
-                VNIC_EnetPBufFree(&(g_cdcVnic.nicTrafficInfo.usbTxEnetPcb));
+                VNIC_EnetRxBufFree(&(g_cdcVnic.nicTrafficInfo.usbTxEnetPcb));
             }
             USB_DeviceVnicTransmitSetState(TX_IDLE);
             USB_DeviceVnicReceiveSetState(RX_PART_ONE_PROCESS);
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
-            if (param)
+            if (0U ==(*temp8))
             {
+                g_cdcVnic.attach = 0;
+                g_cdcVnic.currentConfiguration = 0U;
+            }
+            else if (USB_CDC_VNIC_CONFIGURE_INDEX == (*temp8))
+            {
+                usb_device_endpoint_init_struct_t epInitStruct;
+                usb_device_endpoint_callback_struct_t epCallback;
+
                 g_cdcVnic.attach = 1;
                 g_cdcVnic.currentConfiguration = *temp8;
-                if (USB_CDC_VNIC_CONFIGURE_INDEX == (*temp8))
+            
+                /* Initiailize endpoint for interrupt pipe */
+                epCallback.callbackFn = USB_DeviceCdcAcmInterruptIn;
+                epCallback.callbackParam = handle;
+
+                epInitStruct.zlt = 0;
+                epInitStruct.transferType = USB_ENDPOINT_INTERRUPT;
+                epInitStruct.endpointAddress = USB_CDC_VNIC_INTERRUPT_IN_ENDPOINT |
+                                               (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
+                if (USB_SPEED_HIGH == g_cdcVnic.speed)
                 {
-                    usb_device_endpoint_init_struct_t epInitStruct;
-                    usb_device_endpoint_callback_struct_t endpointCallback;
-
-                    /* Initiailize endpoint for interrupt pipe */
-                    endpointCallback.callbackFn = USB_DeviceCdcAcmInterruptIn;
-                    endpointCallback.callbackParam = handle;
-
-                    epInitStruct.zlt = 0;
-                    epInitStruct.transferType = USB_ENDPOINT_INTERRUPT;
-                    epInitStruct.endpointAddress = USB_CDC_VNIC_INTERRUPT_IN_ENDPOINT |
-                                                   (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
-                    if (USB_SPEED_HIGH == g_cdcVnic.speed)
-                    {
-                        epInitStruct.maxPacketSize = HS_CDC_VNIC_INTERRUPT_IN_PACKET_SIZE;
-                    }
-                    else
-                    {
-                        epInitStruct.maxPacketSize = FS_CDC_VNIC_INTERRUPT_IN_PACKET_SIZE;
-                    }
-
-                    USB_DeviceInitEndpoint(g_cdcVnic.deviceHandle, &epInitStruct, &endpointCallback);
-
-                    /* Initiailize endpoints for bulk pipe */
-                    endpointCallback.callbackFn = USB_DeviceCdcAcmBulkIn;
-                    endpointCallback.callbackParam = handle;
-
-                    epInitStruct.zlt = 0;
-                    epInitStruct.transferType = USB_ENDPOINT_BULK;
-                    epInitStruct.endpointAddress =
-                        USB_CDC_VNIC_BULK_IN_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
-                    if (USB_SPEED_HIGH == g_cdcVnic.speed)
-                    {
-                        epInitStruct.maxPacketSize = HS_CDC_VNIC_BULK_IN_PACKET_SIZE;
-                    }
-                    else
-                    {
-                        epInitStruct.maxPacketSize = FS_CDC_VNIC_BULK_IN_PACKET_SIZE;
-                    }
-
-                    USB_DeviceInitEndpoint(g_cdcVnic.deviceHandle, &epInitStruct, &endpointCallback);
-
-                    endpointCallback.callbackFn = USB_DeviceCdcAcmBulkOut;
-                    endpointCallback.callbackParam = handle;
-
-                    epInitStruct.zlt = 0;
-                    epInitStruct.transferType = USB_ENDPOINT_BULK;
-                    epInitStruct.endpointAddress =
-                        USB_CDC_VNIC_BULK_OUT_ENDPOINT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
-                    if (USB_SPEED_HIGH == g_cdcVnic.speed)
-                    {
-                        epInitStruct.maxPacketSize = HS_CDC_VNIC_BULK_OUT_PACKET_SIZE;
-                    }
-                    else
-                    {
-                        epInitStruct.maxPacketSize = FS_CDC_VNIC_BULK_OUT_PACKET_SIZE;
-                    }
-
-                    USB_DeviceInitEndpoint(g_cdcVnic.deviceHandle, &epInitStruct, &endpointCallback);
-
-                    if (USB_SPEED_HIGH == g_cdcVnic.speed)
-                    {
-                        s_usbBulkMaxPacketSize = HS_CDC_VNIC_BULK_OUT_PACKET_SIZE;
-                    }
-                    else
-                    {
-                        s_usbBulkMaxPacketSize = FS_CDC_VNIC_BULK_OUT_PACKET_SIZE;
-                    }
-                    /* Schedule buffer for receive */
-                    USB_DeviceRecvRequest(handle, USB_CDC_VNIC_BULK_OUT_ENDPOINT, s_currRecvBuf,
-                                          s_usbBulkMaxPacketSize);
+                    epInitStruct.maxPacketSize = HS_CDC_VNIC_INTERRUPT_IN_PACKET_SIZE;
+                    epInitStruct.interval = HS_CDC_VNIC_INTERRUPT_IN_INTERVAL;
                 }
+                else
+                {
+                    epInitStruct.maxPacketSize = FS_CDC_VNIC_INTERRUPT_IN_PACKET_SIZE;
+                    epInitStruct.interval = FS_CDC_VNIC_INTERRUPT_IN_INTERVAL;
+                }
+
+                USB_DeviceInitEndpoint(g_cdcVnic.deviceHandle, &epInitStruct, &epCallback);
+
+                /* Initiailize endpoints for bulk pipe */
+                epCallback.callbackFn = USB_DeviceCdcAcmBulkIn;
+                epCallback.callbackParam = handle;
+
+                epInitStruct.zlt = 0;
+                epInitStruct.interval = 0U;
+                epInitStruct.transferType = USB_ENDPOINT_BULK;
+                epInitStruct.endpointAddress =
+                    USB_CDC_VNIC_BULK_IN_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
+                if (USB_SPEED_HIGH == g_cdcVnic.speed)
+                {
+                    epInitStruct.maxPacketSize = HS_CDC_VNIC_BULK_IN_PACKET_SIZE;
+                }
+                else
+                {
+                    epInitStruct.maxPacketSize = FS_CDC_VNIC_BULK_IN_PACKET_SIZE;
+                }
+
+                USB_DeviceInitEndpoint(g_cdcVnic.deviceHandle, &epInitStruct, &epCallback);
+
+                epCallback.callbackFn = USB_DeviceCdcAcmBulkOut;
+                epCallback.callbackParam = handle;
+
+                epInitStruct.zlt = 0;
+                epInitStruct.interval = 0U;
+                epInitStruct.transferType = USB_ENDPOINT_BULK;
+                epInitStruct.endpointAddress =
+                    USB_CDC_VNIC_BULK_OUT_ENDPOINT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
+                if (USB_SPEED_HIGH == g_cdcVnic.speed)
+                {
+                    epInitStruct.maxPacketSize = HS_CDC_VNIC_BULK_OUT_PACKET_SIZE;
+                }
+                else
+                {
+                    epInitStruct.maxPacketSize = FS_CDC_VNIC_BULK_OUT_PACKET_SIZE;
+                }
+
+                USB_DeviceInitEndpoint(g_cdcVnic.deviceHandle, &epInitStruct, &epCallback);
+
+                if (USB_SPEED_HIGH == g_cdcVnic.speed)
+                {
+                    s_usbBulkMaxPacketSize = HS_CDC_VNIC_BULK_OUT_PACKET_SIZE;
+                }
+                else
+                {
+                    s_usbBulkMaxPacketSize = FS_CDC_VNIC_BULK_OUT_PACKET_SIZE;
+                }
+                /* Schedule buffer for receive */
+                USB_DeviceRecvRequest(handle, USB_CDC_VNIC_BULK_OUT_ENDPOINT, s_currRecvBuf,
+                                      s_usbBulkMaxPacketSize);
+            }
+            else
+            {
+                error = kStatus_USB_InvalidRequest;
             }
             break;
         default:
@@ -846,26 +937,6 @@ usb_status_t USB_DeviceConfigureEndpointStatus(usb_device_handle handle, uint8_t
 }
 
 /*!
- * @brief USB Interrupt service routine.
- *
- * This function serves as the USB interrupt service routine.
- *
- * @return None.
- */
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
-void USBHS_IRQHandler(void)
-{
-    USB_DeviceEhciIsrFunction(g_cdcVnic.deviceHandle);
-}
-#endif
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
-void USB0_IRQHandler(void)
-{
-    USB_DeviceKhciIsrFunction(g_cdcVnic.deviceHandle);
-}
-#endif
-
-/*!
  * @brief Application initialization function.
  *
  * This function initializes the application.
@@ -875,40 +946,11 @@ void USB0_IRQHandler(void)
 void APPInit(void)
 {
     usb_device_cdc_rndis_config_struct_t rndisConfig;
-    uint8_t irqNo;
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
-    uint8_t ehciIrq[] = USBHS_IRQS;
-    irqNo = ehciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
 
-    CLOCK_EnableUsbhs0PhyPllClock(USB_HS_PHY_CLK_SRC, USB_HS_PHY_CLK_FREQ);
-    CLOCK_EnableUsbhs0Clock(USB_HS_CLK_SRC, USB_HS_CLK_FREQ);
-    USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ);
-#endif
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0)
-    uint8_t khciIrq[] = USB_IRQS;
-    irqNo = khciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
-
-    SystemCoreClockUpdate();
-
-    CLOCK_EnableUsbfs0Clock(USB_FS_CLK_SRC, USB_FS_CLK_FREQ);
-#endif
-#if (defined(FSL_FEATURE_SOC_MPU_COUNT) && (FSL_FEATURE_SOC_MPU_COUNT > 0U))
-    MPU_Enable(MPU, 0);
-#endif /* FSL_FEATURE_SOC_MPU_COUNT */
-
-/*
- * If the SOC has USB KHCI dedicated RAM, the RAM memory needs to be clear after
- * the KHCI clock is enabled. When the demo uses USB EHCI IP, the USB KHCI dedicated
- * RAM can not be used and the memory can't be accessed.
- */
-#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U))
-#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS) && (FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS > 0U))
-    for (int i = 0; i < FSL_FEATURE_USB_KHCI_USB_RAM; i++)
-    {
-        ((uint8_t *)FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS)[i] = 0x00U;
-    }
-#endif /* FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS */
-#endif /* FSL_FEATURE_USB_KHCI_USB_RAM */
+    USB_DeviceClockInit();
+#if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
+    SYSMPU_Enable(SYSMPU, 0);
+#endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
     /* Initialize the FEC interface */
     if (ENET_OK != VNIC_EnetInit())
@@ -932,30 +974,14 @@ void APPInit(void)
         usb_echo("USB device CDC virtual nic demo\r\n");
     }
 
-    rndisConfig.devMaxTxSize = ENET_FRAME_MAX_FRAMELEN + sizeof(enet_header_t) + RNDIS_USB_HEADER_SIZE;
+    rndisConfig.devMaxTxSize = ENET_FRAME_MAX_FRAMELEN + RNDIS_USB_HEADER_SIZE;
     rndisConfig.rndisCallback = USB_DeviceCdcRndisCallback;
     if (kStatus_USB_Success != USB_DeviceCdcRndisInit(&rndisConfig, &(g_cdcVnic.rndisHandle)))
     {
         usb_echo("USB_DeviceCdcRndisInit failed\r\n");
     }
 
-    s_usbRxRndisPacketBuffer = USB_OsaMemoryAllocate(rndisConfig.devMaxTxSize + 1);
-    if (NULL == s_usbRxRndisPacketBuffer)
-    {
-        usb_echo("s_usbRxRndisPacketBuffer alloc failed\r\n");
-    }
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
-    s_usbTxPartOneBuffer = USB_OsaMemoryAllocate(HS_CDC_VNIC_BULK_OUT_PACKET_SIZE);
-#else
-    s_usbTxPartOneBuffer = USB_OsaMemoryAllocate(FS_CDC_VNIC_BULK_OUT_PACKET_SIZE);
-#endif
-    if (NULL == s_usbTxPartOneBuffer)
-    {
-        usb_echo("s_usbTxPartOneBuffer alloc failed\r\n");
-    }
-
-    NVIC_SetPriority((IRQn_Type)irqNo, USB_DEVICE_INTERRUPT_PRIORITY);
-    NVIC_EnableIRQ((IRQn_Type)irqNo);
+    USB_DeviceIsrEnable();
 
     USB_DeviceRun(g_cdcVnic.deviceHandle);
 }
@@ -975,12 +1001,9 @@ void APPTask(void)
         USB_DeviceVnicTransmit();
         USB_DeviceVnicReceive();
     }
-#if USB_DEVICE_CONFIG_USE_TASK
-    USB_DeviceKhciTaskFunction(g_cdcVnic.deviceHandle);
-#endif
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)
@@ -989,10 +1012,16 @@ void main(void)
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
-    /* Disable MPU. */
-    MPU_Enable(MPU, false);
+    /* Disable SYSMPU. */
+    SYSMPU_Enable(SYSMPU, false);
     /* Set RMII clock src. */
     CLOCK_SetRmii0Clock(1);
+
+    NVIC_SetPriority((IRQn_Type)ENET_Receive_IRQn, 6U);
+#ifdef ENET_ENHANCEDBUFFERDESCRIPTOR_MODE
+    NVIC_SetPriority(ENET_Transmit_IRQn, 6U);
+    NVIC_SetPriority(ENET_1588_Timer_IRQn, 6U);
+#endif
 
     APPInit();
 
@@ -1001,7 +1030,7 @@ void main(void)
         APPTask();
 
 #if USB_DEVICE_CONFIG_USE_TASK
-        USB_DeviceKhciTaskFunction(g_cdcVnic.deviceHandle);
+        USB_DeviceTaskFn(g_cdcVnic.deviceHandle);
 #endif
     }
 }

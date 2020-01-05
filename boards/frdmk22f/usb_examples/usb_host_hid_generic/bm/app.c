@@ -26,8 +26,8 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -89,7 +89,7 @@ void USB_HostIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbHOSTKhciIrq[] = USB_IRQS;
-    irqNumber = usbHOSTKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+    irqNumber                = usbHOSTKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 
 /* Install isr, set priority, and enable IRQ. */
 #if defined(__GIC_PRIO_BITS)
@@ -115,7 +115,7 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
 {
     usb_status_t status = kStatus_USB_Success;
 
-    switch (eventCode)
+    switch (eventCode & 0x0000FFFFU)
     {
         case kUSB_HostEventAttach:
             status = USB_HostHidGenericEvent(deviceHandle, configurationHandle, eventCode);
@@ -131,6 +131,10 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
 
         case kUSB_HostEventDetach:
             status = USB_HostHidGenericEvent(deviceHandle, configurationHandle, eventCode);
+            break;
+
+        case kUSB_HostEventEnumerationFail:
+            usb_echo("enumeration failed\r\n");
             break;
 
         default:

@@ -1,0 +1,169 @@
+<!DOCTYPE CrossStudio_Project_File>
+<solution Name="i2c_edma_b2b_transfer_master" target="8" version="2">
+  <project Name="i2c_edma_b2b_transfer_master">
+    <configuration
+      CMSIS_CORE="Yes"
+      Name="Common"
+      Placement="Flash"
+      Target="MK64FN1M0xxx12"
+      arm_architecture="v7EM"
+      arm_core_type="Cortex-M4"
+      arm_fpu_type="FPv4-SP-D16"
+      arm_gcc_target="arm-unknown-eabi"
+      arm_linker_heap_size="128"
+      arm_linker_stack_size="1024"
+      arm_simulator_memory_simulation_filename="$(TargetsDir)/Kinetis/KinetisSimulatorMemory$(HostDLL)"
+      arm_simulator_memory_simulation_parameter="MK64FN1M0xxx12;0x100000;0x0;0x0;0x40000;4"
+      arm_target_debug_interface_type="ADIv5"
+      arm_target_loader_applicable_loaders="Flash"
+      arm_target_loader_default_loader="Flash"
+      arm_target_restrict_memory_accesses="Yes"
+      c_additional_options="-fms-extensions"
+      c_preprocessor_definitions="NDEBUG;CPU_MK64FN1M0VLL12;FRDM_K64F;FREEDOM"
+      c_user_include_directories=";./..;./../../../../..;./../../../../../../../CMSIS/Include;./../../../../../../../devices;./../../../../../../../devices/MK64F12/drivers;./../../../../../../../devices/MK64F12/drivers;./../../../../../../../devices/MK64F12/drivers;./../../../../../../../devices/MK64F12/drivers;./../../../../../../../devices/MK64F12/drivers;./../../../../../../../devices/MK64F12/drivers;./../../../../../../../devices/MK64F12/drivers;./../../../../../../../devices/MK64F12/drivers;./../../../../../../../devices/MK64F12/utilities/str;./../../../../../../../devices/MK64F12/utilities/debug_console;./../../../../../../../devices/MK64F12/drivers;./../../../../../../../devices/MK64F12/drivers;./../../../../../../../devices/MK64F12;./../../../../../../../components/uart;./../../../../../../../components/serial_manager;./../../../../../../../components/serial_manager;./../../../../../../../components/lists;./../../../../../../../devices/MK64F12/drivers"
+      debug_register_definition_file="$(TargetsDir)/Kinetis/MK64F12_Peripherals.xml"
+      linker_memory_map_file="$(TargetsDir)/Kinetis/MK64FN1M0xxx12_MemoryMap.xml"
+      linker_section_placement_file="$(StudioDir)/targets/Cortex_M/flash_placement.xml"
+      macros="DeviceName=MK64F12"
+      project_directory=""
+      project_type="Executable"
+      property_groups_file_path="$(TargetsDir)/Kinetis/propertyGroups.xml"
+      target_connect_script="Connect()"
+      target_get_partname_script="GetPartName()"
+      target_match_partname_script="MatchPartName(&quot;$(Target)&quot;)"
+      target_reset_script="Reset()"
+      target_script_file="$(TargetsDir)/Kinetis/Kinetis_Target.js"
+      target_trace_initialize_script="EnableTrace(&quot;$(TraceInterfaceType)&quot;)" />
+    <configuration
+      Name="Flash"
+      arm_target_flash_loader_file_path="$(TargetsDir)/Kinetis/Release/Loader.elf"
+      arm_target_flash_loader_type="LIBMEM RPC Loader"
+      arm_target_loader_can_lock_all="No"
+      arm_target_loader_can_lock_range="No"
+      arm_target_loader_can_unlock_all="No"
+      arm_target_loader_can_unlock_range="No"
+      arm_target_loader_parameter="4" />
+    <folder Name="System Files">
+      <file file_name="$(StudioDir)/source/thumb_crt0.s" />
+      <file file_name="$(TargetsDir)/Kinetis/Kinetis_Startup.s" />
+      <file file_name="$(TargetsDir)/Kinetis/$(DeviceName).vec" />
+      <file file_name="$(TargetsDir)/Kinetis/CMSIS/system_$(DeviceName).h" />
+      <file file_name="$(TargetsDir)/Kinetis/CMSIS/system_$(DeviceName).c" />
+      <file file_name="$(TargetsDir)/Kinetis/CMSIS/$(DeviceName).h" />
+      <file file_name="$(TargetsDir)/Kinetis/Kinetis.h" />
+    </folder>
+    <folder Name="source">
+      <file file_name="./../i2c_edma_b2b_transfer_master.c" />
+    </folder>
+    <folder Name="board">
+      <file file_name="./../pin_mux.c" />
+      <file file_name="./../pin_mux.h" />
+      <file file_name="./../board.c" />
+      <file file_name="./../board.h" />
+      <file file_name="./../clock_config.c" />
+      <file file_name="./../clock_config.h" />
+    </folder>
+    <folder Name="doc">
+      <file file_name="./../readme.txt" />
+    </folder>
+    <folder Name="drivers">
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_edma.c" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_edma.h" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_dmamux.c" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_dmamux.h" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_port.h" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_i2c.c" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_i2c.h" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_i2c_edma.c" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_i2c_edma.h" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_flash.h" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_ftfx_adapter.h" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.c" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.h" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.c" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.h" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_ftfx_features.h" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.c" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.h" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.c" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.h" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_ftfx_utilities.h" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_gpio.c" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_gpio.h" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_clock.c" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_clock.h" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_uart.c" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_uart.h" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_smc.c" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_smc.h" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_common.c" />
+      <file file_name="./../../../../../../../devices/MK64F12/drivers/fsl_common.h" />
+    </folder>
+    <folder Name="utilities">
+      <file file_name="./../../../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.c" />
+      <file file_name="./../../../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.h" />
+      <file file_name="./../../../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console_conf.h" />
+      <file file_name="./../../../../../../../devices/MK64F12/utilities/str/fsl_str.c" />
+      <file file_name="./../../../../../../../devices/MK64F12/utilities/str/fsl_str.h" />
+      <file file_name="./../../../../../../../devices/MK64F12/utilities/fsl_assert.c" />
+    </folder>
+    <folder Name="component">
+      <folder Name="uart">
+        <file file_name="./../../../../../../../components/uart/uart.h" />
+        <file file_name="./../../../../../../../components/uart/uart_adapter.c" />
+      </folder>
+      <folder Name="serial_manager">
+        <file file_name="./../../../../../../../components/serial_manager/serial_manager.c" />
+        <file file_name="./../../../../../../../components/serial_manager/serial_manager.h" />
+        <file file_name="./../../../../../../../components/serial_manager/serial_port_internal.h" />
+        <file file_name="./../../../../../../../components/serial_manager/serial_port_uart.c" />
+        <file file_name="./../../../../../../../components/serial_manager/serial_port_uart.h" />
+      </folder>
+      <folder Name="lists">
+        <file file_name="./../../../../../../../components/lists/generic_list.c" />
+        <file file_name="./../../../../../../../components/lists/generic_list.h" />
+      </folder>
+    </folder>
+    <folder Name="CMSIS">
+      <file file_name="./../../../../../../../CMSIS/Include/core_cm4.h" />
+      <file file_name="./../../../../../../../CMSIS/Include/arm_common_tables.h" />
+      <file file_name="./../../../../../../../CMSIS/Include/arm_const_structs.h" />
+      <file file_name="./../../../../../../../CMSIS/Include/arm_math.h" />
+      <file file_name="./../../../../../../../CMSIS/Include/cmsis_armcc.h" />
+      <file file_name="./../../../../../../../CMSIS/Include/cmsis_armclang.h" />
+      <file file_name="./../../../../../../../CMSIS/Include/cmsis_compiler.h" />
+      <file file_name="./../../../../../../../CMSIS/Include/cmsis_gcc.h" />
+      <file file_name="./../../../../../../../CMSIS/Include/cmsis_iccarm.h" />
+      <file file_name="./../../../../../../../CMSIS/Include/cmsis_version.h" />
+      <file file_name="./../../../../../../../CMSIS/Include/core_armv8mbl.h" />
+      <file file_name="./../../../../../../../CMSIS/Include/core_armv8mml.h" />
+      <file file_name="./../../../../../../../CMSIS/Include/mpu_armv7.h" />
+      <file file_name="./../../../../../../../CMSIS/Include/mpu_armv8.h" />
+    </folder>
+  </project>
+  <configuration Name="THUMB Debug" inherited_configurations="THUMB;Debug" />
+  <configuration
+    Name="THUMB"
+    Platform="ARM"
+    arm_instruction_set="Thumb"
+    arm_library_instruction_set="Thumb"
+    c_preprocessor_definitions="__THUMB"
+    hidden="Yes" />
+  <configuration
+    Name="Debug"
+    c_preprocessor_definitions="DEBUG"
+    gcc_debugging_level="Level 3"
+    gcc_omit_frame_pointer="Yes"
+    gcc_optimization_level="None"
+    hidden="Yes" />
+  <configuration
+    Name="THUMB Release"
+    inherited_configurations="THUMB;Release" />
+  <configuration
+    Name="Release"
+    c_preprocessor_definitions="NDEBUG"
+    gcc_debugging_level="None"
+    gcc_omit_frame_pointer="Yes"
+    gcc_optimization_level="Level 1"
+    hidden="Yes" />
+</solution>

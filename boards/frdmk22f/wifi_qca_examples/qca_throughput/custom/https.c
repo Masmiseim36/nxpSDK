@@ -162,14 +162,14 @@ static int32_t read_http_response(SSL *ssl, uint32_t socketHandle)
 
 static int32_t https_client_get(char *host, char *path, uint32_t port, uint32_t inputBufSize, uint32_t outputBufSize)
 {
-    int32_t res = A_ERROR;
-    SSL_CTX *sslCtx = NULL;
-    SSL *ssl = NULL;
+    int32_t res           = A_ERROR;
+    SSL_CTX *sslCtx       = NULL;
+    SSL *ssl              = NULL;
     uint32_t socketHandle = 0;
     DNC_CFG_CMD dnsCfg;
     DNC_RESP_INFO dnsRespInfo;
     SOCKADDR_T hostAddr;
-    uint8_t *caList = ssl_cert_data_buf;
+    uint8_t *caList    = ssl_cert_data_buf;
     uint16_t caListLen = ssl_cert_data_buf_len;
 
     if (port == 0)
@@ -199,7 +199,7 @@ static int32_t https_client_get(char *host, char *path, uint32_t port, uint32_t 
             }
             strcpy((char *)dnsCfg.ahostname, host);
             dnsCfg.domain = ATH_AF_INET;
-            dnsCfg.mode = RESOLVEHOSTNAME;
+            dnsCfg.mode   = RESOLVEHOSTNAME;
             if (A_OK != custom_ip_resolve_hostname(handle, &dnsCfg, &dnsRespInfo))
             {
                 PRINTF("GetERROR: Unable to resolve host name" NL);
@@ -240,9 +240,9 @@ static int32_t https_client_get(char *host, char *path, uint32_t port, uint32_t 
         // Connect to the HTTPS server
         memset(&hostAddr, 0, sizeof(hostAddr));
         hostAddr.sin_addr.s_addr = dnsRespInfo.ipaddrs_list[0];
-        hostAddr.sin_port = port;
-        hostAddr.sin_family = ATH_AF_INET;
-        res = t_connect((void *)handle, socketHandle, (&hostAddr), sizeof(hostAddr));
+        hostAddr.sin_port        = port;
+        hostAddr.sin_family      = ATH_AF_INET;
+        res                      = t_connect((void *)handle, socketHandle, (&hostAddr), sizeof(hostAddr));
         if (res != A_OK)
         {
             PRINTF("GetERROR: Connection failed." NL);
@@ -342,12 +342,12 @@ int32_t https_client_handler(int32_t argc, char *argv[])
 
     if (ATH_STRCMP(argv[1], "get") == 0)
     {
-        char *host = argv[2];
-        char *path = argv[3];
-        uint32_t port = 0;
-        uint32_t inputBufSize = 0;
+        char *host             = argv[2];
+        char *path             = argv[3];
+        uint32_t port          = 0;
+        uint32_t inputBufSize  = 0;
         uint32_t outputBufSize = 0;
-        int argn = 4;
+        int argn               = 4;
 
         // Handle optional arguments
         while (argn < argc)
@@ -421,7 +421,7 @@ static int32_t process_http_request(char *buf, int size)
     const char *content;
     int contentLen;
     const char *respCode = HTTPD_RESP_200;
-    int len = 0;
+    int len              = 0;
 
     if (strncmp(buf, "GET ", 4) == 0)
     {
@@ -454,7 +454,7 @@ static int32_t process_http_request(char *buf, int size)
     else
     {
         respCode = HTTPD_RESP_404;
-        content = notfound_html;
+        content  = notfound_html;
     }
     contentLen = strlen(content);
 
@@ -507,7 +507,7 @@ static void handle_client(void)
             {
                 PRINTF("ERROR: Out of memory error" NL);
                 received = -1;
-                res = A_ERROR;
+                res      = A_ERROR;
             }
             else
             {
@@ -557,7 +557,7 @@ static void https_server_close_all(void)
     }
     if (HttpsServerData.serverSocket != 0)
     {
-        uint32_t socket = HttpsServerData.serverSocket;
+        uint32_t socket              = HttpsServerData.serverSocket;
         HttpsServerData.serverSocket = 0;
         if (socket > 0)
         {
@@ -570,7 +570,7 @@ static int32_t https_server_start(uint16_t Port, uint32_t InputBufSize, uint32_t
 {
     int32_t res = A_ERROR;
     SOCKADDR_T addr;
-    uint8_t *cert = ssl_cert_data_buf;
+    uint8_t *cert     = ssl_cert_data_buf;
     uint16_t cert_len = ssl_cert_data_buf_len;
 
     if (HttpsServerData.serverSocket)
@@ -605,9 +605,9 @@ static int32_t https_server_start(uint16_t Port, uint32_t InputBufSize, uint32_t
 
         // Bind
         memset(&addr, 0, sizeof(addr));
-        addr.sin_port = Port;
+        addr.sin_port   = Port;
         addr.sin_family = ATH_AF_INET;
-        res = t_bind(handle, HttpsServerData.serverSocket, &addr, sizeof(addr));
+        res             = t_bind(handle, HttpsServerData.serverSocket, &addr, sizeof(addr));
         if (res != A_OK)
         {
             PRINTF("ERROR: Socket bind error" NL);
@@ -626,7 +626,7 @@ static int32_t https_server_start(uint16_t Port, uint32_t InputBufSize, uint32_t
         if (cert_len == 0)
         {
             // Load the default certificate
-            cert = (uint8_t *)sharkSslRSACertKingfisher;
+            cert     = (uint8_t *)sharkSslRSACertKingfisher;
             cert_len = sizeof(sharkSslRSACertKingfisher);
             PRINTF("Using the default  certificate" NL);
         }
@@ -738,10 +738,10 @@ int32_t https_server_handler(int32_t argc, char *argv[])
 
     if (ATH_STRCMP(argv[1], "start") == 0)
     {
-        uint32_t port = 0;
-        uint32_t inputBufSize = 0;
+        uint32_t port          = 0;
+        uint32_t inputBufSize  = 0;
         uint32_t outputBufSize = 0;
-        int argn = 2;
+        int argn               = 2;
 
         // Handle optional arguments
         while (argn < argc)

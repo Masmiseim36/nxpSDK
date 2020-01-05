@@ -54,7 +54,7 @@ Used by an A-device to determine when the B-device has finished being host, 155m
 #define USB_OTG_TIME_WAIT_DEVICE_INIT (200U)
 /*! @brief delay this time before check idle in a_peripheral state, wait another device initialize host stack */
 #define USB_OTG_TIME_WAIT_BHOST (1000U)
-
+#define USB_OTG_MESSAGES_SIZE (sizeof(uint32_t)*(1U + (sizeof(usb_otg_msg_t) - 1U) / sizeof(uint32_t)))
 /*! @brief The control types */
 typedef enum _usb_otg_control
 {
@@ -114,7 +114,8 @@ typedef struct _usb_otg_instance
     usb_otg_controller_handle controllerHandle;                /*!< The low level controller handle */
     usb_otg_callback_t otgCallback;                            /*!< OTG callback function*/
     void *otgCallbackParameter;                                /*!< OTG callback function parameter */
-    usb_osa_msgq_handle otgMsgHandle;                          /*!< OTG task message queue handle */
+    MSGQ_HANDLE_BUFFER_DEFINE(otgMsgHandleBuffer,USB_OTG_MSG_COUNT, (USB_OTG_MESSAGES_SIZE)); /*!< OTG task message queue handle */
+    osa_msgq_handle_t otgMsgHandle;
     const usb_otg_controller_interface_t *controllerInterface; /*!< controller interface APIs */
     uint32_t otgControllerStatus;                              /*!< please reference to #usb_otg_status_type_t */
     uint8_t otgDeviceState;                                    /*!< please reference to #usb_otg_device_state_t */

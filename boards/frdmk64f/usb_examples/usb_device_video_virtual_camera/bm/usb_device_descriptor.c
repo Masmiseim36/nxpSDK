@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 , 2018 NXP
+ * Copyright 2016 , 2018 - 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -32,7 +32,9 @@
 usb_device_endpoint_struct_t g_UsbDeviceVideoControlEndpoints[USB_VIDEO_VIRTUAL_CAMERA_CONTROL_ENDPOINT_COUNT] = {
     {
         USB_VIDEO_VIRTUAL_CAMERA_CONTROL_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
-        USB_ENDPOINT_INTERRUPT, FS_INTERRUPT_IN_PACKET_SIZE,
+        USB_ENDPOINT_INTERRUPT,
+        FS_INTERRUPT_IN_PACKET_SIZE,
+        FS_INTERRUPT_IN_INTERVAL,
     },
 };
 
@@ -57,7 +59,8 @@ usb_device_video_entity_struct_t g_UsbDeviceVideoEntity[] = {
 
 /* Video device enetitis list */
 usb_device_video_entities_struct_t g_UsbDeviceVideoEntities = {
-    g_UsbDeviceVideoEntity, sizeof(g_UsbDeviceVideoEntity) / sizeof(usb_device_video_entity_struct_t),
+    g_UsbDeviceVideoEntity,
+    sizeof(g_UsbDeviceVideoEntity) / sizeof(usb_device_video_entity_struct_t),
 };
 
 /* Video device control interface */
@@ -74,7 +77,9 @@ usb_device_interface_struct_t g_UsbDeviceVideoControlInterface[] = {{
 usb_device_endpoint_struct_t g_UsbDeviceVideoStreamEndpoints[USB_VIDEO_VIRTUAL_CAMERA_STREAM_ENDPOINT_COUNT] = {
     {
         USB_VIDEO_VIRTUAL_CAMERA_STREAM_ENDPOINT_IN | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
-        USB_ENDPOINT_ISOCHRONOUS, FS_STREAM_IN_PACKET_SIZE,
+        USB_ENDPOINT_ISOCHRONOUS,
+        FS_STREAM_IN_PACKET_SIZE,
+        FS_STREAM_IN_INTERVAL,
     },
 };
 
@@ -106,7 +111,7 @@ usb_device_interfaces_struct_t g_UsbDeviceVideoInterfaces[USB_VIDEO_VIRTUAL_CAME
         USB_DEVICE_VIDEO_PC_PROTOCOL_UNDEFINED,           /* Protocol code */
         USB_VIDEO_VIRTUAL_CAMERA_CONTROL_INTERFACE_INDEX, /* The control interface index */
         g_UsbDeviceVideoControlInterface,                 /* control interface list */
-        sizeof(g_UsbDeviceVideoControlInterface) / sizeof(usb_device_interfaces_struct_t),
+        sizeof(g_UsbDeviceVideoControlInterface) / sizeof(usb_device_interface_struct_t),
     },
     {
         USB_DEVICE_VIDEO_CC_VIDEO,                       /* Class code */
@@ -114,7 +119,7 @@ usb_device_interfaces_struct_t g_UsbDeviceVideoInterfaces[USB_VIDEO_VIRTUAL_CAME
         USB_DEVICE_VIDEO_PC_PROTOCOL_UNDEFINED,          /* Protocol code */
         USB_VIDEO_VIRTUAL_CAMERA_STREAM_INTERFACE_INDEX, /* The stream interface index */
         g_UsbDeviceVideoStreamInterface,                 /* stream interface list */
-        sizeof(g_UsbDeviceVideoStreamInterface) / sizeof(usb_device_interfaces_struct_t),
+        sizeof(g_UsbDeviceVideoStreamInterface) / sizeof(usb_device_interface_struct_t),
     },
 };
 
@@ -128,7 +133,9 @@ usb_device_interface_list_t g_UsbDeviceVideoInterfaceList[USB_DEVICE_CONFIGURATI
 
 /* The video device all interface list */
 usb_device_class_struct_t g_UsbDeviceVideoVirtualCameraConfig = {
-    g_UsbDeviceVideoInterfaceList, kUSB_DeviceClassTypeVideo, USB_DEVICE_CONFIGURATION_COUNT,
+    g_UsbDeviceVideoInterfaceList,
+    kUSB_DeviceClassTypeVideo,
+    USB_DEVICE_CONFIGURATION_COUNT,
 };
 
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
@@ -143,8 +150,10 @@ uint8_t g_UsbDeviceDescriptor[] = {
     USB_DEVICE_PROTOCOL,                                 /* Protocol code (assigned by the USB-IF). */
     USB_CONTROL_MAX_PACKET_SIZE,                         /* Maximum packet size for endpoint zero
                                                             (only 8, 16, 32, or 64 are valid) */
-    0xC9U, 0x1FU,                                        /* Vendor ID (assigned by the USB-IF) */
-    0x99U, 0x00U,                                        /* Product ID (assigned by the manufacturer) */
+    0xC9U,
+    0x1FU, /* Vendor ID (assigned by the USB-IF) */
+    0x99U,
+    0x00U, /* Product ID (assigned by the manufacturer) */
     USB_SHORT_GET_LOW(USB_DEVICE_DEMO_BCD_VERSION),
     USB_SHORT_GET_HIGH(USB_DEVICE_DEMO_BCD_VERSION), /* Device release number in binary-coded decimal */
     0x01U,                                           /* Index of string descriptor describing manufacturer */
@@ -293,8 +302,8 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     0x00U, 0x00U, /* Not control supported */
 #endif     /* USB_DEVICE_VIDEO_CLASS_VERSION_1_5 */
     0x00U, /* Index of a string descriptor */
-#if defined(USB_DEVICE_VIDEO_CLASS_VERSION_1_1) && (USB_DEVICE_VIDEO_CLASS_VERSION_1_1 > 0U) \
-|| defined(USB_DEVICE_VIDEO_CLASS_VERSION_1_5) && (USB_DEVICE_VIDEO_CLASS_VERSION_1_5 > 0U)
+#if defined(USB_DEVICE_VIDEO_CLASS_VERSION_1_1) && (USB_DEVICE_VIDEO_CLASS_VERSION_1_1 > 0U) || \
+    defined(USB_DEVICE_VIDEO_CLASS_VERSION_1_5) && (USB_DEVICE_VIDEO_CLASS_VERSION_1_5 > 0U)
     0x00U, /* A bitmap of all analog video standards supported by the Processing Unit */
 #endif     /* USB_DEVICE_VIDEO_CLASS_VERSION_1_1 || USB_DEVICE_VIDEO_CLASS_VERSION_1_5 */
     /* Standard VC Interrupt Endpoint Descriptor */
@@ -303,8 +312,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_VIDEO_VIRTUAL_CAMERA_CONTROL_ENDPOINT |
         (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT), /* Endpoint address */
     USB_ENDPOINT_INTERRUPT,                                          /* Transfer type */
-    USB_SHORT_GET_LOW(FS_INTERRUPT_IN_PACKET_SIZE),
-    USB_SHORT_GET_HIGH(FS_INTERRUPT_IN_PACKET_SIZE),
+    USB_SHORT_GET_LOW(FS_INTERRUPT_IN_PACKET_SIZE), USB_SHORT_GET_HIGH(FS_INTERRUPT_IN_PACKET_SIZE),
     /* Max Packet Size */
     FS_INTERRUPT_IN_INTERVAL, /* Interval */
 
@@ -459,7 +467,10 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
 
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 uint8_t g_UsbDeviceString0[] = {
-    2U + 2U, USB_DESCRIPTOR_TYPE_STRING, 0x09U, 0x04U,
+    2U + 2U,
+    USB_DESCRIPTOR_TYPE_STRING,
+    0x09U,
+    0x04U,
 };
 
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
@@ -527,19 +538,30 @@ uint8_t g_UsbDeviceString3[] = {
 };
 
 uint32_t g_UsbDeviceStringDescriptorLength[USB_DEVICE_STRING_COUNT] = {
-    sizeof(g_UsbDeviceString0), sizeof(g_UsbDeviceString1), sizeof(g_UsbDeviceString2), sizeof(g_UsbDeviceString3),
+    sizeof(g_UsbDeviceString0),
+    sizeof(g_UsbDeviceString1),
+    sizeof(g_UsbDeviceString2),
+    sizeof(g_UsbDeviceString3),
 };
 
 uint8_t *g_UsbDeviceStringDescriptorArray[USB_DEVICE_STRING_COUNT] = {
-    g_UsbDeviceString0, g_UsbDeviceString1, g_UsbDeviceString2, g_UsbDeviceString3,
+    g_UsbDeviceString0,
+    g_UsbDeviceString1,
+    g_UsbDeviceString2,
+    g_UsbDeviceString3,
 };
 
 usb_language_t g_UsbDeviceLanguage[USB_DEVICE_LANGUAGE_COUNT] = {{
-    g_UsbDeviceStringDescriptorArray, g_UsbDeviceStringDescriptorLength, (uint16_t)0x0409U,
+    g_UsbDeviceStringDescriptorArray,
+    g_UsbDeviceStringDescriptorLength,
+    (uint16_t)0x0409U,
 }};
 
 usb_language_list_t g_UsbDeviceLanguageList = {
-    g_UsbDeviceString0, sizeof(g_UsbDeviceString0), g_UsbDeviceLanguage, USB_DEVICE_LANGUAGE_COUNT,
+    g_UsbDeviceString0,
+    sizeof(g_UsbDeviceString0),
+    g_UsbDeviceLanguage,
+    USB_DEVICE_LANGUAGE_COUNT,
 };
 
 /*******************************************************************************
@@ -579,7 +601,7 @@ usb_status_t USB_DeviceGetStringDescriptor(usb_device_handle handle,
     }
     else
     {
-        uint8_t languageId = 0U;
+        uint8_t languageId    = 0U;
         uint8_t languageIndex = USB_DEVICE_STRING_COUNT;
 
         for (; languageId < USB_DEVICE_LANGUAGE_COUNT; languageId++)
@@ -626,7 +648,7 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
             if (USB_SPEED_HIGH == speed)
             {
                 if ((USB_VIDEO_VIRTUAL_CAMERA_STREAM_ENDPOINT_IN ==
-                    (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                     (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
                     ((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                      USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN))
                 {
@@ -644,7 +666,7 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
             else
             {
                 if ((USB_VIDEO_VIRTUAL_CAMERA_STREAM_ENDPOINT_IN ==
-                    (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                     (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
                     ((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                      USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN))
                 {
@@ -666,12 +688,18 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
     if (USB_SPEED_HIGH == speed)
     {
         g_UsbDeviceVideoControlEndpoints[0].maxPacketSize = HS_INTERRUPT_IN_PACKET_SIZE;
-        g_UsbDeviceVideoStreamEndpoints[0].maxPacketSize = HS_STREAM_IN_PACKET_SIZE;
+        g_UsbDeviceVideoStreamEndpoints[0].maxPacketSize  = HS_STREAM_IN_PACKET_SIZE;
+
+        g_UsbDeviceVideoControlEndpoints[0].interval = HS_INTERRUPT_IN_INTERVAL;
+        g_UsbDeviceVideoStreamEndpoints[0].interval  = HS_STREAM_IN_INTERVAL;
     }
     else
     {
         g_UsbDeviceVideoControlEndpoints[0].maxPacketSize = FS_INTERRUPT_IN_PACKET_SIZE;
-        g_UsbDeviceVideoStreamEndpoints[0].maxPacketSize = FS_STREAM_IN_PACKET_SIZE;
+        g_UsbDeviceVideoStreamEndpoints[0].maxPacketSize  = FS_STREAM_IN_PACKET_SIZE;
+
+        g_UsbDeviceVideoControlEndpoints[0].interval = FS_INTERRUPT_IN_INTERVAL;
+        g_UsbDeviceVideoStreamEndpoints[0].interval  = FS_STREAM_IN_INTERVAL;
     }
 
     return kStatus_USB_Success;

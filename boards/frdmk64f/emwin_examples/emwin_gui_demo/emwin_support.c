@@ -32,7 +32,7 @@ static volatile bool spi_event_received;
 
 static void SPI_MasterSignalEvent(uint32_t event)
 {
-    spi_event = event;
+    spi_event          = event;
     spi_event_received = true;
 }
 
@@ -43,7 +43,7 @@ static uint32_t SPI_WaitEvent(void)
     while (!spi_event_received)
         ;
 
-    event = spi_event;
+    event              = spi_event;
     spi_event_received = false;
 
     return event;
@@ -98,7 +98,8 @@ static void BOARD_LCD_InterfaceInit(void)
 {
     /* Define the init structure for the data/command output pin */
     gpio_pin_config_t dc_config = {
-        kGPIO_DigitalOutput, 1,
+        kGPIO_DigitalOutput,
+        1,
     };
 
     /* Init data/command GPIO output . */
@@ -170,10 +171,10 @@ int BOARD_Touch_Poll(void)
     }
     else if (touch_event != kTouch_Reserved)
     {
-        pid_state.x = LCD_WIDTH - touch_y;
-        pid_state.y = touch_x;
+        pid_state.x       = LCD_WIDTH - touch_y;
+        pid_state.y       = touch_x;
         pid_state.Pressed = ((touch_event == kTouch_Down) || (touch_event == kTouch_Contact));
-        pid_state.Layer = 0;
+        pid_state.Layer   = 0;
         GUI_TOUCH_StoreStateEx(&pid_state);
         return 1;
     }
@@ -195,11 +196,11 @@ void LCD_X_Config(void)
     LCD_SetSizeEx(0, LCD_WIDTH, LCD_HEIGHT);
     LCD_SetVSizeEx(0, LCD_WIDTH, LCD_HEIGHT);
 
-    PortAPI.pfWrite8_A0 = APP_pfWrite8_A0;
-    PortAPI.pfWrite8_A1 = APP_pfWrite8_A1;
+    PortAPI.pfWrite8_A0  = APP_pfWrite8_A0;
+    PortAPI.pfWrite8_A1  = APP_pfWrite8_A1;
     PortAPI.pfWriteM8_A1 = APP_pfWriteM8_A1;
-    PortAPI.pfRead8_A1 = APP_pfRead8_A1;
-    PortAPI.pfReadM8_A1 = APP_pfReadM8_A1;
+    PortAPI.pfRead8_A1   = APP_pfRead8_A1;
+    PortAPI.pfReadM8_A1  = APP_pfReadM8_A1;
     GUIDRV_FlexColor_SetFunc(pDevice, &PortAPI, GUIDRV_FLEXCOLOR_F66709, GUIDRV_FLEXCOLOR_M16C0B8);
 
     BOARD_Touch_InterfaceInit();

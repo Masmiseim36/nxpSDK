@@ -3,20 +3,24 @@
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
     <definition extID="component.lists.MK66F18"/>
+    <definition extID="component.osa.MK66F18"/>
     <definition extID="component.serial_manager.MK66F18"/>
     <definition extID="component.serial_manager_uart.MK66F18"/>
     <definition extID="component.uart_adapter.MK66F18"/>
     <definition extID="device.MK66F18_CMSIS.MK66F18"/>
     <definition extID="device.MK66F18_startup.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.freertos.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.freertos.heap_4.MK66F18"/>
+    <definition extID="middleware.amazon_freertos-kernel.MK66F18"/>
+    <definition extID="middleware.amazon_freertos-kernel.extension.MK66F18"/>
+    <definition extID="middleware.amazon_freertos-kernel.heap_4.MK66F18"/>
     <definition extID="middleware.sdmmc.common.MK66F18"/>
     <definition extID="middleware.sdmmc.sd.MK66F18"/>
+    <definition extID="middleware.usb.device.MK66F18"/>
     <definition extID="middleware.usb.device_controller_ehci.MK66F18"/>
     <definition extID="middleware.usb.device_controller_khci.MK66F18"/>
     <definition extID="middleware.usb.phy.MK66F18"/>
     <definition extID="platform.Include_common.MK66F18"/>
     <definition extID="platform.Include_core_cm4.MK66F18"/>
+    <definition extID="platform.Include_dsp.MK66F18"/>
     <definition extID="platform.drivers.clock.MK66F18"/>
     <definition extID="platform.drivers.common.MK66F18"/>
     <definition extID="platform.drivers.gpio.MK66F18"/>
@@ -27,13 +31,14 @@
     <definition extID="platform.drivers.sysmpu.MK66F18"/>
     <definition extID="platform.drivers.uart.MK66F18"/>
     <definition extID="platform.utilities.assert.MK66F18"/>
+    <definition extID="platform.utilities.misc_utilities.MK66F18"/>
     <definition extID="utility.debug_console.MK66F18"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk66f_dev_msc_sdcard_freertos" name="dev_msc_sdcard_freertos" category="usb_examples" dependency="middleware.usb.device_controller_khci.MK66F18 middleware.usb.device_controller_ehci.MK66F18 middleware.usb.phy.MK66F18 platform.drivers.sdhc.MK66F18 middleware.amazon_freertos.freertos.heap_4.MK66F18 middleware.amazon_freertos.freertos.MK66F18 middleware.sdmmc.sd.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.uart.MK66F18 platform.drivers.gpio.MK66F18 platform.drivers.sysmpu.MK66F18 platform.utilities.assert.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.serial_manager_uart.MK66F18 component.lists.MK66F18 platform.drivers.port.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 middleware.sdmmc.common.MK66F18">
+  <example id="frdmk66f_dev_msc_sdcard_freertos" name="dev_msc_sdcard_freertos" category="usb_examples" dependency="middleware.usb.device_controller_khci.MK66F18 middleware.usb.device_controller_ehci.MK66F18 middleware.usb.phy.MK66F18 platform.drivers.sdhc.MK66F18 middleware.usb.device.MK66F18 middleware.amazon_freertos-kernel.heap_4.MK66F18 middleware.amazon_freertos-kernel.MK66F18 middleware.sdmmc.sd.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.uart.MK66F18 platform.drivers.gpio.MK66F18 platform.drivers.sysmpu.MK66F18 platform.utilities.assert.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.lists.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.port.MK66F18 component.osa.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 platform.Include_dsp.MK66F18 middleware.amazon_freertos-kernel.extension.MK66F18 middleware.sdmmc.common.MK66F18 platform.utilities.misc_utilities.MK66F18">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -54,6 +59,9 @@
           <value>USB_STACK_FREERTOS</value>
           <value>USB_STACK_FREERTOS_HEAP_SIZE=32768</value>
           <value>FSL_RTOS_FREE_RTOS</value>
+          <value>FSL_OSA_BM_TASK_ENABLE=0</value>
+          <value>FSL_OSA_BM_TIMER_CONFIG=0</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -72,13 +80,13 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/frdmk66f/usb_examples/usb_device_msc_sdcard/freertos/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/frdmk66f/usb_examples/usb_device_msc_sdcard/freertos/armgcc" target_path="frdmk66f/usb_examples/usb_device_msc_sdcard/freertos/linker/gcc" type="linker" toolchain="armgcc">
       <files mask="MK66FN2M0xxx18_flash.ld"/>
     </source>
-    <source path="boards/frdmk66f/usb_examples/usb_device_msc_sdcard/freertos/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/frdmk66f/usb_examples/usb_device_msc_sdcard/freertos/iar" target_path="MK66F18/iar" type="linker" toolchain="iar">
       <files mask="MK66FN2M0xxx18_flash.icf"/>
     </source>
-    <source path="boards/frdmk66f/usb_examples/usb_device_msc_sdcard/freertos/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/frdmk66f/usb_examples/usb_device_msc_sdcard/freertos/mdk" target_path="MK66F18/arm" type="linker" toolchain="mdk">
       <files mask="MK66FN2M0xxx18_flash.scf"/>
     </source>
     <source path="boards/frdmk66f/usb_examples/usb_device_msc_sdcard/freertos" target_path="board" type="c_include">
@@ -93,6 +101,9 @@
     </source>
     <source path="boards/frdmk66f/usb_examples/usb_device_msc_sdcard/freertos" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
       <files mask="readme.txt"/>
+    </source>
+    <source path="boards/frdmk66f/usb_examples/usb_device_msc_sdcard/freertos" target_path="frdmk66f/usb_examples/usb_device_msc_sdcard/freertos" type="doc" exclude="true">
+      <files mask="readme.pdf"/>
     </source>
     <source path="boards/frdmk66f/usb_examples/usb_device_msc_sdcard/freertos" target_path="sdmmc/port" type="c_include">
       <files mask="fsl_sdmmc_event.h"/>
@@ -110,9 +121,6 @@
     <source path="boards/frdmk66f/usb_examples/usb_device_msc_sdcard/freertos" target_path="source" type="src">
       <files mask="disk_sdcard.c"/>
       <files mask="usb_device_descriptor.c"/>
-    </source>
-    <source path="boards/frdmk66f/usb_examples/usb_device_msc_sdcard/freertos" target_path="src" type="doc" exclude="true">
-      <files mask="readme.pdf"/>
     </source>
     <source path="boards/frdmk66f/usb_examples/usb_device_msc_sdcard/freertos" target_path="usb/device/class/msc" type="c_include">
       <files mask="usb_device_msc.h"/>

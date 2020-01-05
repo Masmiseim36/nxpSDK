@@ -2,6 +2,15 @@ Overview
 ========
 The bubble level demo demonstrates basic usage of the on-board accelerometer to implement a bubble level. A bubble
 level utilizes two axes to visually show deviation from a level plane (0 degrees) on a given axis.
+You can open the mex file with MCUXpresso Config Tool to do further configuration of pin, clock and peripheral.
+
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -42,11 +51,6 @@ x= 10 y = 28
 x= 10 y = 28
 x= 11 y = 29
 x= 11 y = 29
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

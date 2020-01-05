@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016 , 2018 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_device_config.h"
@@ -280,7 +254,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     0x00U,                                        /* The X dimension of the picture aspect ratio */
     0x00U,                                        /* The Y dimension of the picture aspect ratio */
     0x00U,                                        /* Specifies interlace information */
-    0x00U,                                        /* Not uesd */
+    0x00U,                                        /* Not used */
 
     /* Motion-JPEG Video Frame Descriptor */
     USB_VIDEO_MJPEG_FRAME_DESCRIPTOR_LENGTH,     /* Size of this Descriptor */
@@ -579,7 +553,7 @@ usb_status_t USB_DeviceGetInterface(usb_device_handle handle, uint8_t interface,
  * current speed.
  * As the default, the device descriptors and configurations are configured by using FS parameters for both EHCI and
  * KHCI.
- * When the EHCI is enabled, the application needs to call this fucntion to update device by using current speed.
+ * When the EHCI is enabled, the application needs to call this function to update device by using current speed.
  * The updated information includes endpoint max packet size, endpoint interval, etc. */
 usb_status_t USB_DeviceSetSpeed(uint8_t speed)
 {
@@ -596,8 +570,10 @@ usb_status_t USB_DeviceSetSpeed(uint8_t speed)
         {
             if (USB_SPEED_HIGH == speed)
             {
-                if (USB_VIDEO_VIRTUAL_CAMERA_STREAM_ENDPOINT_IN ==
-                    (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK))
+                if ((USB_VIDEO_VIRTUAL_CAMERA_STREAM_ENDPOINT_IN ==
+                    (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                    ((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
+                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN))
                 {
                     descriptorHead->endpoint.bInterval = HS_STREAM_IN_INTERVAL;
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(HS_STREAM_IN_PACKET_SIZE,
@@ -612,8 +588,10 @@ usb_status_t USB_DeviceSetSpeed(uint8_t speed)
             }
             else
             {
-                if (USB_VIDEO_VIRTUAL_CAMERA_STREAM_ENDPOINT_IN ==
-                    (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK))
+                if ((USB_VIDEO_VIRTUAL_CAMERA_STREAM_ENDPOINT_IN ==
+                    (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                    ((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
+                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN))
                 {
                     descriptorHead->endpoint.bInterval = FS_STREAM_IN_INTERVAL;
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(FS_STREAM_IN_PACKET_SIZE,

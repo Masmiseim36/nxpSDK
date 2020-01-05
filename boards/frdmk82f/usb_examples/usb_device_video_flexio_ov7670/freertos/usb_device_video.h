@@ -1,31 +1,9 @@
 /*
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef __USB_DEVICE_VIDEO_H__
@@ -251,12 +229,12 @@
  */
 
 /*! @brief Video device class setup request set type */
-#define USB_DEVICE_VIDEO_SET_REQUSET_INTERFACE (0x21U)
-#define USB_DEVICE_VIDEO_SET_REQUSET_ENDPOINT (0x22U)
+#define USB_DEVICE_VIDEO_SET_REQUEST_INTERFACE (0x21U)
+#define USB_DEVICE_VIDEO_SET_REQUEST_ENDPOINT (0x22U)
 
 /*! @brief Video device class setup request get type */
-#define USB_DEVICE_VIDEO_GET_REQUSET_INTERFACE (0xA1U)
-#define USB_DEVICE_VIDEO_GET_REQUSET_ENDPOINT (0xA2U)
+#define USB_DEVICE_VIDEO_GET_REQUEST_INTERFACE (0xA1U)
+#define USB_DEVICE_VIDEO_GET_REQUEST_ENDPOINT (0xA2U)
 
 /*! @}*/
 
@@ -789,7 +767,7 @@ struct _usb_device_video_probe_and_commit_controls_struct
 {
     union
     {
-        uint16_t bmHint; /*!< Bit-field control indicating to the function what fields shall be kept fixed. */
+        uint8_t bmHint; /*!< Bit-field control indicating to the function what fields shall be kept fixed. */
         struct
         {
             uint8_t dwFrameInterval : 1U; /*!< dwFrameInterval field.*/
@@ -797,8 +775,17 @@ struct _usb_device_video_probe_and_commit_controls_struct
             uint8_t wPFrameRate : 1U;     /*!< wPFrameRate field.*/
             uint8_t wCompQuality : 1U;    /*!< wCompQuality field.*/
             uint8_t wCompWindowSize : 1U; /*!< wCompWindowSize field.*/
+            uint8_t reserved : 3U;        /*!< Reserved field.*/
         } hintBitmap;
     } hintUnion;
+    union
+    {
+        uint8_t bmHint; /*!< Bit-field control indicating to the function what fields shall be kept fixed. */
+        struct
+        {
+            uint8_t reserved : 8U; /*!< Reserved field.*/
+        } hintBitmap;
+    } hintUnion1;
     uint8_t bFormatIndex;     /*!< Video format index from a format descriptor.*/
     uint8_t bFrameIndex;      /*!< Video frame index from a frame descriptor.*/
     uint32_t dwFrameInterval; /*!< Frame interval in 100ns units.*/
@@ -811,7 +798,7 @@ struct _usb_device_video_probe_and_commit_controls_struct
     uint32_t dwMaxVideoFrameSize;      /*!< Maximum video frame or codec-specific segment size in bytes.*/
     uint32_t dwMaxPayloadTransferSize; /*!< Specifies the maximum number of bytes that the device can transmit or
                                           receive in a single payload transfer.*/
-    uint32_t dwClockFrequency; /*!< The device clock frequency in Hz for the specified format. This will specify the
+    uint32_t dwClockFrequency; /*!< The device clock frequency in Hz for the specified format. This specifies the
                                   units used for the time information fields in the Video Payload Headers in the data
                                   stream.*/
     uint8_t bmFramingInfo;     /*!< Bit-field control supporting the following values: D0 Frame ID, D1 EOF.*/
@@ -852,9 +839,9 @@ typedef struct _usb_device_video_still_probe_and_commit_controls_struct
 /*! @brief Available common event types in video class callback */
 typedef enum _usb_device_video_event
 {
-    kUSB_DeviceVideoEventStreamSendResponse = 0x01U, /*!< Send data completed in stream pipe */
-    kUSB_DeviceVideoEventStreamRecvResponse,         /*!< Data received in stream pipe */
-    kUSB_DeviceVideoEventControlSendResponse,        /*!< Send data completed in video control pipe */
+    kUSB_DeviceVideoEventStreamSendResponse = 0x01U, /*!< Send data completed or cancelled in stream pipe */
+    kUSB_DeviceVideoEventStreamRecvResponse,         /*!< Data received or cancelled in stream pipe */
+    kUSB_DeviceVideoEventControlSendResponse,        /*!< Send data completed or cancelled etc in video control pipe */
     kUSB_DeviceVideoEventClassRequestBuffer, /*!< Get buffer to save the data of the video class-specific request. */
 } usb_device_video_event_t;
 
@@ -940,7 +927,8 @@ extern usb_status_t USB_DeviceVideoDeinit(class_handle_t handle);
 /*!
  * @brief Handles the event passed to the video class.
  *
- * This function handles the event passed to the video class. This function can only be called by the #USB_DeviceClassEvent.
+ * This function handles the event passed to the video class. This function can only be called by the
+ * #USB_DeviceClassEvent.
  *
  * @param[in] handle          The video class handle received from the usb_device_class_config_struct_t::classHandle.
  * @param[in] event           The event codes. See the enumeration #usb_device_class_event_t.
@@ -971,12 +959,15 @@ extern usb_status_t USB_DeviceVideoEvent(void *handle, uint32_t event, void *par
  *
  * @return A USB error code or kStatus_USB_Success.
  *
+ * @note The function can only be called in the same context. 
+ *
  * @note The return value indicates whether the sending request is successful or not. The transfer done is notified by
  * USB_DeviceVideoStreamIn or USB_DeviceVideoControlIn.
  * Currently, only one transfer request can be supported for a specific endpoint.
  * If there is a specific requirement to support multiple transfer requests for a specific endpoint, the application
  * should implement a queue in the application level.
- * The subsequent transfer can begin only when the previous transfer is done (a notification is received through the endpoint
+ * The subsequent transfer can begin only when the previous transfer is done (a notification is received through the
+ * endpoint
  * callback).
  */
 extern usb_status_t USB_DeviceVideoSend(class_handle_t handle, uint8_t ep, uint8_t *buffer, uint32_t length);
@@ -994,12 +985,15 @@ extern usb_status_t USB_DeviceVideoSend(class_handle_t handle, uint8_t ep, uint8
  *
  * @return A USB error code or kStatus_USB_Success.
  *
+ * @note The function can only be called in the same context. 
+ *
  * @note The return value indicates whether the receiving request is successful or not. The transfer done is notified by
  * USB_DeviceVideoStreamOut.
  * Currently, only one transfer request can be supported for a specific endpoint.
  * If there is a specific requirement to support multiple transfer requests for a specific endpoint. The application
  * should implement a queue in the application level.
- * The subsequent transfer can begin only when the previous transfer is done (a notification is received through the endpoint
+ * The subsequent transfer can begin only when the previous transfer is done (a notification is received through the
+ * endpoint
  * callback).
  */
 extern usb_status_t USB_DeviceVideoRecv(class_handle_t handle, uint8_t ep, uint8_t *buffer, uint32_t length);

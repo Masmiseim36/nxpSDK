@@ -1,0 +1,516 @@
+/*
+ * The Clear BSD License
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
+ *
+ * o Redistributions of source code must retain the above copyright notice, this list
+ *   of conditions and the following disclaimer.
+ *
+ * o Redistributions in binary form must reproduce the above copyright notice, this
+ *   list of conditions and the following disclaimer in the documentation and/or
+ *   other materials provided with the distribution.
+ *
+ * o Neither the name of the copyright holder nor the names of its
+ *   contributors may be used to endorse or promote products derived from this
+ *   software without specific prior written permission.
+ *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+!!GlobalInfo
+product: Pins v3.0
+processor: MKL02Z32xxx4
+package_id: MKL02Z32VFM4
+mcu_data: ksdk2_0
+processor_version: 0.0.9
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+#include "fsl_common.h"
+#include "fsl_port.h"
+#include "pin_mux.h"
+
+
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitPins:
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: '26', peripheral: GPIOA, signal: 'GPIO, 12', pin_signal: ADC0_SE0/CMP0_IN0/PTA12/IRQ_13/LPTMR0_ALT2/TPM1_CH0/TPM_CLKIN0, direction: INPUT, drive_strength: low,
+    pull_enable: enable}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void BOARD_InitPins(void)
+{
+    /* Port A Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortA);
+
+    const port_pin_config_t porta12_pin26_config = {/* Internal pull-up resistor is enabled */
+                                                    kPORT_PullUp,
+                                                    /* Passive filter is disabled */
+                                                    kPORT_PassiveFilterDisable,
+                                                    /* Low drive strength is configured */
+                                                    kPORT_LowDriveStrength,
+                                                    /* Pin is configured as PTA12 */
+                                                    kPORT_MuxAsGpio};
+    /* PORTA12 (pin 26) is configured as PTA12 */
+    PORT_SetPinConfig(PORTA, 12U, &porta12_pin26_config);
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitOSC:
+- options: {coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: '7', peripheral: OSC0, signal: EXTAL, pin_signal: EXTAL0/PTA3/I2C0_SCL/I2C1_SDA, pull_enable: disable}
+  - {pin_num: '8', peripheral: OSC0, signal: XTAL, pin_signal: XTAL0/PTA4/I2C0_SDA/I2C1_SCL, pull_enable: disable}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitOSC
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void BOARD_InitOSC(void)
+{
+    /* Port A Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortA);
+
+    const port_pin_config_t porta3_pin7_config = {/* Internal pull-up/down resistor is disabled */
+                                                  kPORT_PullDisable,
+                                                  /* Passive filter is disabled */
+                                                  kPORT_PassiveFilterDisable,
+                                                  /* Low drive strength is configured */
+                                                  kPORT_LowDriveStrength,
+                                                  /* Pin is configured as EXTAL0 */
+                                                  kPORT_PinDisabledOrAnalog};
+    /* PORTA3 (pin 7) is configured as EXTAL0 */
+    PORT_SetPinConfig(PORTA, 3U, &porta3_pin7_config);
+
+    const port_pin_config_t porta4_pin8_config = {/* Internal pull-up/down resistor is disabled */
+                                                  kPORT_PullDisable,
+                                                  /* Passive filter is disabled */
+                                                  kPORT_PassiveFilterDisable,
+                                                  /* Low drive strength is configured */
+                                                  kPORT_LowDriveStrength,
+                                                  /* Pin is configured as XTAL0 */
+                                                  kPORT_PinDisabledOrAnalog};
+    /* PORTA4 (pin 8) is configured as XTAL0 */
+    PORT_SetPinConfig(PORTA, 4U, &porta4_pin8_config);
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitButtons:
+- options: {coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: '31', peripheral: GPIOA, signal: 'GPIO, 1', pin_signal: PTA1/IRQ_1/LPTMR0_ALT1/TPM_CLKIN0/RESET_b, direction: INPUT, pull_enable: enable}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitButtons
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void BOARD_InitButtons(void)
+{
+    /* Port A Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortA);
+
+    const port_pin_config_t porta1_pin31_config = {/* Internal pull-up resistor is enabled */
+                                                   kPORT_PullUp,
+                                                   /* Passive filter is disabled */
+                                                   kPORT_PassiveFilterDisable,
+                                                   /* Low drive strength is configured */
+                                                   kPORT_LowDriveStrength,
+                                                   /* Pin is configured as PTA1 */
+                                                   kPORT_MuxAsGpio};
+    /* PORTA1 (pin 31) is configured as PTA1 */
+    PORT_SetPinConfig(PORTA, 1U, &porta1_pin31_config);
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitDEBUG_UART:
+- options: {coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: '17', peripheral: UART0, signal: TX, pin_signal: ADC0_SE5/CMP0_IN3/PTB1/IRQ_6/UART0_TX/UART0_RX, direction: OUTPUT, open_drain: disable, drive_strength: low,
+    pull_enable: disable}
+  - {pin_num: '18', peripheral: UART0, signal: RX, pin_signal: ADC0_SE4/PTB2/IRQ_7/UART0_RX/UART0_TX, pull_enable: disable}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitDEBUG_UART
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void BOARD_InitDEBUG_UART(void)
+{
+    /* Port B Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortB);
+
+    const port_pin_config_t portb1_pin17_config = {/* Internal pull-up/down resistor is disabled */
+                                                   kPORT_PullDisable,
+                                                   /* Passive filter is disabled */
+                                                   kPORT_PassiveFilterDisable,
+                                                   /* Low drive strength is configured */
+                                                   kPORT_LowDriveStrength,
+                                                   /* Pin is configured as UART0_TX */
+                                                   kPORT_MuxAlt2};
+    /* PORTB1 (pin 17) is configured as UART0_TX */
+    PORT_SetPinConfig(PORTB, 1U, &portb1_pin17_config);
+
+    const port_pin_config_t portb2_pin18_config = {/* Internal pull-up/down resistor is disabled */
+                                                   kPORT_PullDisable,
+                                                   /* Passive filter is disabled */
+                                                   kPORT_PassiveFilterDisable,
+                                                   /* Low drive strength is configured */
+                                                   kPORT_LowDriveStrength,
+                                                   /* Pin is configured as UART0_RX */
+                                                   kPORT_MuxAlt2};
+    /* PORTB2 (pin 18) is configured as UART0_RX */
+    PORT_SetPinConfig(PORTB, 2U, &portb2_pin18_config);
+
+    SIM->SOPT5 = ((SIM->SOPT5 &
+                   /* Mask bits to zero which are setting */
+                   (~(SIM_SOPT5_UART0TXSRC_MASK | SIM_SOPT5_UART0RXSRC_MASK | SIM_SOPT5_UART0ODE_MASK)))
+
+                  /* UART0 transmit data source select: UART0_TX pin. */
+                  | SIM_SOPT5_UART0TXSRC(SOPT5_UART0TXSRC_UART_TX)
+
+                  /* UART0 receive data source select: UART0_RX pin. */
+                  | SIM_SOPT5_UART0RXSRC(SOPT5_UART0RXSRC_UART_RX)
+
+                  /* UART0 Open Drain Enable: Open drain is disabled on UART0. */
+                  | SIM_SOPT5_UART0ODE(SOPT5_UART0ODE_DISABLED));
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitLEDs:
+- options: {coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: '1', peripheral: GPIOB, signal: 'GPIO, 6', pin_signal: PTB6/IRQ_2/LPTMR0_ALT3/TPM1_CH1/TPM_CLKIN1, direction: OUTPUT, pull_enable: enable}
+  - {pin_num: '2', peripheral: GPIOB, signal: 'GPIO, 7', pin_signal: PTB7/IRQ_3/TPM1_CH0, direction: OUTPUT, pull_enable: enable}
+  - {pin_num: '13', peripheral: GPIOB, signal: 'GPIO, 10', pin_signal: ADC0_SE9/PTB10/TPM0_CH1, direction: OUTPUT, pull_enable: enable}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitLEDs
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void BOARD_InitLEDs(void)
+{
+    /* Port B Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortB);
+
+    const port_pin_config_t portb10_pin13_config = {/* Internal pull-up resistor is enabled */
+                                                    kPORT_PullUp,
+                                                    /* Passive filter is disabled */
+                                                    kPORT_PassiveFilterDisable,
+                                                    /* Low drive strength is configured */
+                                                    kPORT_LowDriveStrength,
+                                                    /* Pin is configured as PTB10 */
+                                                    kPORT_MuxAsGpio};
+    /* PORTB10 (pin 13) is configured as PTB10 */
+    PORT_SetPinConfig(PORTB, 10U, &portb10_pin13_config);
+
+    const port_pin_config_t portb6_pin1_config = {/* Internal pull-up resistor is enabled */
+                                                  kPORT_PullUp,
+                                                  /* Passive filter is disabled */
+                                                  kPORT_PassiveFilterDisable,
+                                                  /* Low drive strength is configured */
+                                                  kPORT_LowDriveStrength,
+                                                  /* Pin is configured as PTB6 */
+                                                  kPORT_MuxAsGpio};
+    /* PORTB6 (pin 1) is configured as PTB6 */
+    PORT_SetPinConfig(PORTB, 6U, &portb6_pin1_config);
+
+    const port_pin_config_t portb7_pin2_config = {/* Internal pull-up resistor is enabled */
+                                                  kPORT_PullUp,
+                                                  /* Passive filter is disabled */
+                                                  kPORT_PassiveFilterDisable,
+                                                  /* Low drive strength is configured */
+                                                  kPORT_LowDriveStrength,
+                                                  /* Pin is configured as PTB7 */
+                                                  kPORT_MuxAsGpio};
+    /* PORTB7 (pin 2) is configured as PTB7 */
+    PORT_SetPinConfig(PORTB, 7U, &portb7_pin2_config);
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitACCEL:
+- options: {coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: '23', peripheral: I2C0, signal: SCL, pin_signal: PTB3/IRQ_10/I2C0_SCL/UART0_TX, pull_enable: disable}
+  - {pin_num: '24', peripheral: I2C0, signal: SDA, pin_signal: PTB4/IRQ_11/I2C0_SDA/UART0_RX, pull_enable: disable}
+  - {pin_num: '21', peripheral: GPIOA, signal: 'GPIO, 10', pin_signal: PTA10/IRQ_8, direction: INPUT, pull_enable: disable}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitACCEL
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void BOARD_InitACCEL(void)
+{
+    /* Port A Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortA);
+    /* Port B Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortB);
+
+    const port_pin_config_t porta10_pin21_config = {/* Internal pull-up/down resistor is disabled */
+                                                    kPORT_PullDisable,
+                                                    /* Passive filter is disabled */
+                                                    kPORT_PassiveFilterDisable,
+                                                    /* Low drive strength is configured */
+                                                    kPORT_LowDriveStrength,
+                                                    /* Pin is configured as PTA10 */
+                                                    kPORT_MuxAsGpio};
+    /* PORTA10 (pin 21) is configured as PTA10 */
+    PORT_SetPinConfig(PORTA, 10U, &porta10_pin21_config);
+
+    const port_pin_config_t portb3_pin23_config = {/* Internal pull-up/down resistor is disabled */
+                                                   kPORT_PullDisable,
+                                                   /* Passive filter is disabled */
+                                                   kPORT_PassiveFilterDisable,
+                                                   /* Low drive strength is configured */
+                                                   kPORT_LowDriveStrength,
+                                                   /* Pin is configured as I2C0_SCL */
+                                                   kPORT_MuxAlt2};
+    /* PORTB3 (pin 23) is configured as I2C0_SCL */
+    PORT_SetPinConfig(PORTB, 3U, &portb3_pin23_config);
+
+    const port_pin_config_t portb4_pin24_config = {/* Internal pull-up/down resistor is disabled */
+                                                   kPORT_PullDisable,
+                                                   /* Passive filter is disabled */
+                                                   kPORT_PassiveFilterDisable,
+                                                   /* Low drive strength is configured */
+                                                   kPORT_LowDriveStrength,
+                                                   /* Pin is configured as I2C0_SDA */
+                                                   kPORT_MuxAlt2};
+    /* PORTB4 (pin 24) is configured as I2C0_SDA */
+    PORT_SetPinConfig(PORTB, 4U, &portb4_pin24_config);
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitTOUCH:
+- options: {coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: '27', peripheral: GPIOA, signal: 'GPIO, 13', pin_signal: PTA13, direction: INPUT, drive_strength: low, pull_enable: enable}
+  - {pin_num: '28', peripheral: GPIOB, signal: 'GPIO, 12', pin_signal: PTB12, direction: INPUT, pull_enable: enable}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitTOUCH
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void BOARD_InitTOUCH(void)
+{
+    /* Port A Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortA);
+    /* Port B Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortB);
+
+    const port_pin_config_t porta13_pin27_config = {/* Internal pull-up resistor is enabled */
+                                                    kPORT_PullUp,
+                                                    /* Passive filter is disabled */
+                                                    kPORT_PassiveFilterDisable,
+                                                    /* Low drive strength is configured */
+                                                    kPORT_LowDriveStrength,
+                                                    /* Pin is configured as PTA13 */
+                                                    kPORT_MuxAsGpio};
+    /* PORTA13 (pin 27) is configured as PTA13 */
+    PORT_SetPinConfig(PORTA, 13U, &porta13_pin27_config);
+
+    const port_pin_config_t portb12_pin28_config = {/* Internal pull-up resistor is enabled */
+                                                    kPORT_PullUp,
+                                                    /* Passive filter is disabled */
+                                                    kPORT_PassiveFilterDisable,
+                                                    /* Low drive strength is configured */
+                                                    kPORT_LowDriveStrength,
+                                                    /* Pin is configured as PTB12 */
+                                                    kPORT_MuxAsGpio};
+    /* PORTB12 (pin 28) is configured as PTB12 */
+    PORT_SetPinConfig(PORTB, 12U, &portb12_pin28_config);
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+I2C0_InitPins:
+- options: {coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: '23', peripheral: I2C0, signal: SCL, pin_signal: PTB3/IRQ_10/I2C0_SCL/UART0_TX}
+  - {pin_num: '24', peripheral: I2C0, signal: SDA, pin_signal: PTB4/IRQ_11/I2C0_SDA/UART0_RX}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : I2C0_InitPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void I2C0_InitPins(void)
+{
+    /* Port B Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortB);
+
+    /* PORTB3 (pin 23) is configured as I2C0_SCL */
+    PORT_SetPinMux(PORTB, 3U, kPORT_MuxAlt2);
+
+    /* PORTB4 (pin 24) is configured as I2C0_SDA */
+    PORT_SetPinMux(PORTB, 4U, kPORT_MuxAlt2);
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+I2C0_DeinitPins:
+- options: {coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: '23', peripheral: n/a, signal: disabled, pin_signal: PTB3/IRQ_10/I2C0_SCL/UART0_TX}
+  - {pin_num: '24', peripheral: n/a, signal: disabled, pin_signal: PTB4/IRQ_11/I2C0_SDA/UART0_RX}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : I2C0_DeinitPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void I2C0_DeinitPins(void)
+{
+    /* Port B Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortB);
+
+    /* PORTB3 (pin 23) is disabled */
+    PORT_SetPinMux(PORTB, 3U, kPORT_PinDisabledOrAnalog);
+
+    /* PORTB4 (pin 24) is disabled */
+    PORT_SetPinMux(PORTB, 4U, kPORT_PinDisabledOrAnalog);
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+I2C1_InitPins:
+- options: {coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: '19', peripheral: I2C1, signal: SCL, pin_signal: ADC0_SE3/PTA8/I2C1_SCL}
+  - {pin_num: '20', peripheral: I2C1, signal: SDA, pin_signal: ADC0_SE2/PTA9/I2C1_SDA}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : I2C1_InitPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void I2C1_InitPins(void)
+{
+    /* Port A Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortA);
+
+    /* PORTA8 (pin 19) is configured as I2C1_SCL */
+    PORT_SetPinMux(PORTA, 8U, kPORT_MuxAlt2);
+
+    /* PORTA9 (pin 20) is configured as I2C1_SDA */
+    PORT_SetPinMux(PORTA, 9U, kPORT_MuxAlt2);
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+I2C1_DeinitPins:
+- options: {coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: '19', peripheral: ADC0, signal: 'SE, 3', pin_signal: ADC0_SE3/PTA8/I2C1_SCL}
+  - {pin_num: '20', peripheral: ADC0, signal: 'SE, 2', pin_signal: ADC0_SE2/PTA9/I2C1_SDA}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : I2C1_DeinitPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void I2C1_DeinitPins(void)
+{
+    /* Port A Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortA);
+
+    /* PORTA8 (pin 19) is configured as ADC0_SE3 */
+    PORT_SetPinMux(PORTA, 8U, kPORT_PinDisabledOrAnalog);
+
+    /* PORTA9 (pin 20) is configured as ADC0_SE2 */
+    PORT_SetPinMux(PORTA, 9U, kPORT_PinDisabledOrAnalog);
+}
+/***********************************************************************************************************************
+ * EOF
+ **********************************************************************************************************************/

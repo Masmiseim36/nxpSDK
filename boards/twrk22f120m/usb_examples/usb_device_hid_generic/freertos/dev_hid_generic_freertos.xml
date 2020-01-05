@@ -2,114 +2,87 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
-    <definition extID="middleware.freertos.MK22F51212"/>
-    <definition extID="middleware.freertos.heap_4.MK22F51212"/>
-    <definition extID="platform.devices.MK22F51212_CMSIS.MK22F51212"/>
-    <definition extID="platform.devices.MK22F51212_startup.MK22F51212"/>
+    <definition extID="component.lists.MK22F51212"/>
+    <definition extID="component.osa.MK22F51212"/>
+    <definition extID="component.serial_manager.MK22F51212"/>
+    <definition extID="component.serial_manager_uart.MK22F51212"/>
+    <definition extID="component.uart_adapter.MK22F51212"/>
+    <definition extID="device.MK22F51212_CMSIS.MK22F51212"/>
+    <definition extID="device.MK22F51212_startup.MK22F51212"/>
+    <definition extID="middleware.amazon_freertos-kernel.MK22F51212"/>
+    <definition extID="middleware.amazon_freertos-kernel.extension.MK22F51212"/>
+    <definition extID="middleware.amazon_freertos-kernel.heap_4.MK22F51212"/>
+    <definition extID="middleware.usb.device.MK22F51212"/>
+    <definition extID="middleware.usb.device_controller_khci.MK22F51212"/>
+    <definition extID="platform.Include_common.MK22F51212"/>
+    <definition extID="platform.Include_core_cm4.MK22F51212"/>
+    <definition extID="platform.Include_dsp.MK22F51212"/>
     <definition extID="platform.drivers.clock.MK22F51212"/>
     <definition extID="platform.drivers.common.MK22F51212"/>
-    <definition extID="platform.drivers.flash.MK22F51212"/>
     <definition extID="platform.drivers.gpio.MK22F51212"/>
     <definition extID="platform.drivers.lpuart.MK22F51212"/>
     <definition extID="platform.drivers.port.MK22F51212"/>
-    <definition extID="platform.drivers.sim.MK22F51212"/>
     <definition extID="platform.drivers.smc.MK22F51212"/>
     <definition extID="platform.drivers.uart.MK22F51212"/>
-    <definition extID="platform.utilities.debug_console.MK22F51212"/>
+    <definition extID="platform.utilities.assert.MK22F51212"/>
+    <definition extID="platform.utilities.misc_utilities.MK22F51212"/>
+    <definition extID="utility.debug_console.MK22F51212"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
-    <definition extID="kds"/>
     <definition extID="mcuxpresso"/>
-    <definition extID="drt"/>
   </externalDefinitions>
-  <example id="twrk22f120m_usb_examples_usb_device_hid_generic_freertos" name="freertos" category="usb_examples/usb_device_hid_generic" dependency="platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 middleware.freertos.heap_4.MK22F51212 middleware.freertos.MK22F51212 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.utilities.debug_console.MK22F51212 platform.drivers.port.MK22F51212 platform.drivers.sim.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.gpio.MK22F51212 platform.drivers.smc.MK22F51212 platform.drivers.flash.MK22F51212 platform.devices.MK22F51212_startup.MK22F51212" toolchain="iar mdk armgcc kds mcuxpresso drt">
+  <example id="twrk22f120m_dev_hid_generic_freertos" name="dev_hid_generic_freertos" category="usb_examples" dependency="middleware.usb.device_controller_khci.MK22F51212 middleware.usb.device.MK22F51212 middleware.amazon_freertos-kernel.heap_4.MK22F51212 middleware.amazon_freertos-kernel.MK22F51212 platform.drivers.smc.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 device.MK22F51212_CMSIS.MK22F51212 device.MK22F51212_startup.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.drivers.gpio.MK22F51212 platform.utilities.assert.MK22F51212 utility.debug_console.MK22F51212 component.uart_adapter.MK22F51212 component.serial_manager.MK22F51212 component.lists.MK22F51212 component.serial_manager_uart.MK22F51212 platform.drivers.port.MK22F51212 component.osa.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.Include_common.MK22F51212 platform.Include_dsp.MK22F51212 middleware.amazon_freertos-kernel.extension.MK22F51212 platform.utilities.misc_utilities.MK22F51212">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
     <toolchainSettings>
-      <!-- Curently, mcux just supports one common settings set for both debug and release -->
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
-        <!-- asm compiler -->
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv4.hard</value>
         </option>
-        <option id="gnu.both.asm.option.warnings.nowarn" type="boolean">
-          <value>false</value>
-        </option>
-        <!-- gcc compiler -->
-        <option id="com.crt.advproject.gcc.fpu" type="string">
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
           <value>com.crt.advproject.gcc.fpu.fpv4.hard</value>
         </option>
         <option id="com.crt.advproject.c.misc.dialect" type="enum">
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
-        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.default</value>
-        </option>
-        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.default</value>
-        </option>
-        <option id="gnu.c.compiler.option.warnings.nowarn" type="boolean">
-          <value>false</value>
-        </option>
-        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
-          <value>true</value>
-        </option>
-        <option id="gnu.c.compiler.option.warnings.extrawarn" type="boolean">
-          <value>false</value>
-        </option>
-        <option id="gnu.c.compiler.option.warnings.wconversion" type="boolean">
-          <value>false</value>
-        </option>
-        <option id="gnu.c.compiler.option.warnings.toerrors" type="boolean">
-          <value>false</value>
-        </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>_DEBUG=1</value>
           <value>CPU_MK22FN512VDC12</value>
-          <value>USB_STACK_FREERTOS_HEAP_SIZE=32768</value>
           <value>USB_STACK_FREERTOS</value>
+          <value>USB_STACK_FREERTOS_HEAP_SIZE=32768</value>
           <value>FSL_RTOS_FREE_RTOS</value>
-          <value>TWR_K22F120M</value>
-          <value>TOWER</value>
+          <value>FSL_OSA_BM_TASK_ENABLE=0</value>
+          <value>FSL_OSA_BM_TIMER_CONFIG=0</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
         </option>
-        <option id="gnu.c.compiler.option.misc.other" type="enum">
+        <option id="gnu.c.compiler.option.misc.other" type="string">
           <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
         </option>
-        <option id="gnu.c.compiler.option.preprocessor.nostdinc" type="boolean">
-          <value>false</value>
-        </option>
-        <!-- gcc linker -->
         <option id="com.crt.advproject.link.fpu" type="enum">
           <value>com.crt.advproject.link.fpu.fpv4.hard</value>
         </option>
-        <option id="gnu.c.link.option.nostart" type="boolean">
-          <value>false</value>
-        </option>
-        <option id="gnu.c.link.option.nodeflibs" type="boolean">
-          <value>false</value>
-        </option>
         <option id="gnu.c.link.option.nostdlibs" type="boolean">
           <value>true</value>
-        </option>
-        <option id="gnu.c.link.option.strip" type="boolean">
-          <value>false</value>
-        </option>
-        <option id="gnu.c.link.option.noshared" type="boolean">
-          <value>false</value>
-        </option>
-        <option id="gnu.c.link.option.other" type="stringList">
-          <value>--gc-sections</value>
         </option>
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
           <value>&amp;Heap:Default;Default;0x100&amp;Stack:Default;Default;0x2000</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <source path="boards/twrk22f120m/usb_examples/usb_device_hid_generic/freertos/armgcc" target_path="MK22F51212/gcc" type="linker" toolchain="armgcc">
+      <files mask="MK22FN512xxx12_flash.ld"/>
+    </source>
+    <source path="boards/twrk22f120m/usb_examples/usb_device_hid_generic/freertos/iar" target_path="MK22F51212/iar" type="linker" toolchain="iar">
+      <files mask="MK22FN512xxx12_flash.icf"/>
+    </source>
+    <source path="boards/twrk22f120m/usb_examples/usb_device_hid_generic/freertos/mdk" target_path="MK22F51212/arm" type="linker" toolchain="mdk">
+      <files mask="MK22FN512xxx12_flash.scf"/>
+    </source>
     <source path="boards/twrk22f120m/usb_examples/usb_device_hid_generic/freertos" target_path="board" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
@@ -120,15 +93,21 @@
       <files mask="clock_config.c"/>
       <files mask="pin_mux.c"/>
     </source>
-    <source path="boards/twrk22f120m/usb_examples/usb_device_hid_generic/freertos" target_path="sources" type="c_include">
+    <source path="boards/twrk22f120m/usb_examples/usb_device_hid_generic/freertos" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/twrk22f120m/usb_examples/usb_device_hid_generic/freertos" target_path="source" type="c_include">
       <files mask="FreeRTOSConfig.h"/>
       <files mask="hid_generic.h"/>
       <files mask="usb_device_config.h"/>
       <files mask="usb_device_descriptor.h"/>
     </source>
-    <source path="boards/twrk22f120m/usb_examples/usb_device_hid_generic/freertos" target_path="sources" type="src">
+    <source path="boards/twrk22f120m/usb_examples/usb_device_hid_generic/freertos" target_path="source" type="src">
       <files mask="hid_generic.c"/>
       <files mask="usb_device_descriptor.c"/>
+    </source>
+    <source path="boards/twrk22f120m/usb_examples/usb_device_hid_generic/freertos" target_path="twrk22f120m/usb_examples/usb_device_hid_generic/freertos" type="doc" exclude="true">
+      <files mask="readme.pdf"/>
     </source>
     <source path="boards/twrk22f120m/usb_examples/usb_device_hid_generic/freertos" target_path="usb/device/class/hid" type="c_include">
       <files mask="usb_device_hid.h"/>
@@ -147,36 +126,6 @@
     </source>
     <source path="boards/twrk22f120m/usb_examples/usb_device_hid_generic/freertos" target_path="usb/device/source" type="src">
       <files mask="usb_device_ch9.c"/>
-    </source>
-    <source path="middleware/usb_1.6.3/device" target_path="usb/device/include" type="c_include">
-      <files mask="usb_device.h"/>
-    </source>
-    <source path="middleware/usb_1.6.3/device" target_path="usb/device/source/khci" type="c_include">
-      <files mask="usb_device_khci.h"/>
-    </source>
-    <source path="middleware/usb_1.6.3/device" target_path="usb/device/source/khci" type="src">
-      <files mask="usb_device_khci.c"/>
-    </source>
-    <source path="middleware/usb_1.6.3/device" target_path="usb/device/source" type="c_include">
-      <files mask="usb_device_dci.h"/>
-    </source>
-    <source path="middleware/usb_1.6.3/device" target_path="usb/device/source" type="src">
-      <files mask="usb_device_dci.c"/>
-    </source>
-    <source path="middleware/usb_1.6.3/include" target_path="usb/device/source/khci" type="c_include">
-      <files mask="usb_khci.h"/>
-    </source>
-    <source path="middleware/usb_1.6.3/include" target_path="usb/include" type="c_include">
-      <files mask="usb.h"/>
-      <files mask="usb_misc.h"/>
-      <files mask="usb_spec.h"/>
-    </source>
-    <source path="middleware/usb_1.6.3/osa" target_path="osa" type="c_include">
-      <files mask="usb_osa.h"/>
-      <files mask="usb_osa_freertos.h"/>
-    </source>
-    <source path="middleware/usb_1.6.3/osa" target_path="osa" type="src">
-      <files mask="usb_osa_freertos.c"/>
     </source>
   </example>
 </ksdk:examples>

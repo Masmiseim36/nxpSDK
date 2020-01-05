@@ -11,6 +11,14 @@ with a EDMA master:
 In this example, one i2c instance as slave and another i2c instance on the other board as master. Master sends a 
 piece of data to slave, and receive a piece of data from slave. This example checks if the data received from 
 slave is correct.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -58,11 +66,6 @@ Slave received data :
 
 End of I2C example .   
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

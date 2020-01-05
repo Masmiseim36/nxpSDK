@@ -100,5 +100,5 @@ void SHIELD_InitSDHCPeripheral(void)
  **********************************************************************************************************************/
 void BOARD_InitBootPeripherals(void)
 {
-  SHIELD_InitPeripherals();
+    SHIELD_InitPeripherals();
 }

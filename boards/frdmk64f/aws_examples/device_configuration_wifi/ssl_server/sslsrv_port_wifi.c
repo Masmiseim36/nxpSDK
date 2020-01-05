@@ -66,7 +66,7 @@ int sslsrv_init_socket(volatile int *sock, uint32_t max_ses)
     SOCKADDR_T address;
     memset(&address, 0, sizeof(address));
     address.sin_family = ATH_AF_INET;
-    address.sin_port = SSLSRV_CFG_DEFAULT_PORT;
+    address.sin_port   = SSLSRV_CFG_DEFAULT_PORT;
 
     if ((*sock = qcom_socket(ATH_AF_INET, SOCK_STREAM_TYPE, 0)) < 0)
     {

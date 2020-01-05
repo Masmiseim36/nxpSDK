@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 NXP
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,11 +14,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v5.0
+product: Pins v6.0
 processor: MK66FN2M0xxx18
 package_id: MK66FN2M0VMD18
 mcu_data: ksdk2_0
-processor_version: 0.0.19
+processor_version: 6.0.1
 board: FRDM-K66F
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -120,7 +120,7 @@ void BOARD_InitPins(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_ConfigTriggerSource:
-- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
+- options: {callFromInitBoot: 'false', prefix: BOARD_, coreID: core0, enableClock: 'true'}
 - pin_list:
   - {peripheral: ADC0, signal: 'TRG, A', pin_signal: Low_power_timer}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********

@@ -31,14 +31,15 @@
 #include "sm_apdu.h"
 #include "tst_sm_util.h"
 #include "tst_a71ch_util.h"
+#include "nxLog_hostLib.h"
 
 #include "axHostCrypto.h"
 #include "tstHostCrypto.h"
 #include "HostCryptoAPI.h"
 static U8 exWtSetConfigKeys(U8 *moduleConfigKey, U8 *privateKeyConfigKey, U8 *publicKeyConfigKey);
 static U8 exWtProvision(void);
-static U8 exWtPrepareShipment(U16 appletVersion);
-static U8 exWtUseCrypto(U16 appletVersion);
+static U8 exWtPrepareShipment(void);
+static U8 exWtUseCrypto(void);
 
 static EC_KEY *eccKeyRootCA_0 = NULL; //!< OpenSSL specific datastructure to contain keypair, whose public key is stored at index 0
 static EC_KEY *eccKeyRootCA_1 = NULL; //!< OpenSSL specific datastructure to contain keypair, whose public key is stored at index 1
@@ -78,7 +79,7 @@ static U8 gpProductData[] = {
 * into its initial state.
 *
 */
-U8 exWalkthrough(U16 appletVersion)
+U8 exWalkthrough()
 {
     U8 result = 1;
     U8 initMode = INIT_MODE_RESET;
@@ -89,11 +90,11 @@ U8 exWalkthrough(U16 appletVersion)
     U8 scpKeyDekBase[SCP_KEY_SIZE];
 #endif
 
-    PRINTF("\r\n-----------\r\nStart exWalkthrough(%s)\r\n------------\r\n", getInitModeAsString(initMode));
+    LOG_I("-----------Start exWalkthrough(%s)------------", getInitModeAsString(initMode));
 
     DEV_ClearChannelState();
 
-    sm_printf(CONSOLE, "Initialize Secure Module\r\n");
+    LOG_I("Initialize Secure Module");
     result &= a71chInitModule(initMode);
     // STAGE-0:
     // - The A71CH has been forced into the initial state through the DBG Interface
@@ -115,18 +116,23 @@ U8 exWalkthrough(U16 appletVersion)
     result &= exWtProvision();
 
     // Prepare for end-product shipment
-    result &= exWtPrepareShipment(appletVersion);
+    result &= exWtPrepareShipment();
 
     // Use provisioned credentials
-    result &= exWtUseCrypto(appletVersion);
+    result &= exWtUseCrypto();
 
     HOSTCRYPTO_FreeEccKey(&eccKeyRootCA_0);
     HOSTCRYPTO_FreeEccKey(&eccKeyRootCA_1);
 
     // overall result
-    PRINTF("\r\n-----------\r\nEnd exWalkthrough(%s), result = %s\r\n------------\r\n",
-        getInitModeAsString(initMode), ((result == 1)? "OK": "FAILED"));
-
+    if (result == 1){
+        LOG_I("-----------End exWalkthrough(%s), result = %s------------",
+            getInitModeAsString(initMode),"OK");
+    }
+    else {
+    	LOG_E("-----------End exWalkthrough(%s), result = %s------------",
+    	            getInitModeAsString(initMode), "FAILED");
+    }
     return result;
 }
 
@@ -140,27 +146,27 @@ static U8 exWtSetConfigKeys(U8 *moduleConfigKey, U8 *privateKeyConfigKey, U8 *pu
 
     U8 indexCfgKey = A71CH_CFG_KEY_IDX_MODULE_LOCK;
 
-    PRINTF("\r\n-----------\r\nStart exWtSetConfigKeys()\r\n------------\r\n");
+    LOG_I("-----------Start exWtSetConfigKeys()------------");
     // Store all configure keys (value is stored in variables with module scope)
     indexCfgKey = A71CH_CFG_KEY_IDX_MODULE_LOCK;
-    PRINTF("\r\nA71_SetConfigKey(0x%02x)\r\n", indexCfgKey);
+    LOG_I("A71_SetConfigKey(0x%02x)", indexCfgKey);
     err = A71_SetConfigKey((SST_Index_t)indexCfgKey, moduleConfigKey, 16);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     axPrintByteArray("configKeyModuleLock", moduleConfigKey, 16, AX_COLON_32);
 
     indexCfgKey = A71CH_CFG_KEY_IDX_PRIVATE_KEYS;
-    PRINTF("\r\nA71_SetConfigKey(0x%02x)\r\n", indexCfgKey);
+    LOG_I("A71_SetConfigKey(0x%02x)", indexCfgKey);
     err = A71_SetConfigKey((SST_Index_t)indexCfgKey, privateKeyConfigKey, 16);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     axPrintByteArray("configKeyPrivateKey", privateKeyConfigKey, 16, AX_COLON_32);
 
     indexCfgKey = A71CH_CFG_KEY_IDX_PUBLIC_KEYS;
-    PRINTF("\r\nA71_SetConfigKey(0x%02x)\r\n", indexCfgKey);
+    LOG_I("A71_SetConfigKey(0x%02x)", indexCfgKey);
     err = A71_SetConfigKey((SST_Index_t)indexCfgKey, publicKeyConfigKey, 16);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     axPrintByteArray("configKeyPublicKey", publicKeyConfigKey, 16, AX_COLON_32);
 
-    PRINTF( "\r\n-----------\r\nEnd exWtSetConfigKeys(), result = %s\r\n------------\r\n", ((result == 1)? "OK": "FAILED"));
+    LOG_I( "-----------End exWtSetConfigKeys(), result = %s------------", ((result == 1)? "OK": "FAILED"));
 
     return result;
 }
@@ -168,7 +174,7 @@ static U8 exWtSetConfigKeys(U8 *moduleConfigKey, U8 *privateKeyConfigKey, U8 *pu
 /**
 * Demonstrate crypto operations using the provisioned key material
 */
-static U8 exWtUseCrypto(U16 appletVersion)
+static U8 exWtUseCrypto()
 {
     U8 result = 1;
     U16 err;
@@ -228,26 +234,17 @@ static U8 exWtUseCrypto(U16 appletVersion)
     U16 derivedDataLen = sizeof(derivedData);
     U8 derivedDataOnHost[128];
 
-    U8 uid[A71CH_MODULE_UNIQUE_ID_LEN];
+    U8 uid[A71CH_MODULE_UNIQUE_ID_LEN] = {0};
     U16 uidLen = sizeof(uid);
 
-    PRINTF( "\r\n-----------\r\nStart exWtUseCrypto()\r\n------------\r\n");
+    LOG_I( "-----------Start exWtUseCrypto()------------");
 
     // Sign a precooked hash on the A71CH with the first key pair, do the subsequent verification on the Host
     // ------------------------------------------------------------------------------------------------------
     index = A71CH_KEY_PAIR_0;
-    if (appletVersion >= 0x0130)
-    {
-        PRINTF("\r\nA71_EccSign(0x%02x) on A71CH.\r\n", index);
-        signatureLen = sizeof(signature);
-        err = A71_EccSign(index, preCookedSha256, sizeof(preCookedSha256), signature, &signatureLen);
-    }
-    else
-    {
-        PRINTF("\r\nA71_EccSign(0x%02x) on A71CH.\r\n", index);
-        signatureLen = sizeof(signature);
-        err = A71_EccSign(index, preCookedSha256, sizeof(preCookedSha256), signature, &signatureLen);
-    }
+    LOG_I("A71_EccSign(0x%02x) on A71CH.", index);
+    signatureLen = sizeof(signature);
+    err = A71_EccSign(index, preCookedSha256, sizeof(preCookedSha256), signature, &signatureLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     axPrintByteArray("signature", signature, signatureLen, AX_COLON_32);
 
@@ -256,17 +253,17 @@ static U8 exWtUseCrypto(U16 appletVersion)
     // We've already built the eccKcTls_0 data structure while provisioning the A71CH.
     err = HOSTCRYPTO_EccCreateOpenSslEccFromComponents(&eccKeyTls_0, &eccKcTls_0);
     result &= AX_CHECK_SW(err, SW_OK, "err");
-    PRINTF("\r\n(Host)ECDSA_verify API with eccKeyTls_0 (verify signature created on A71CH).\r\n");
+    LOG_I("(Host)ECDSA_verify API with eccKeyTls_0 (verify signature created on A71CH).");
     memset(&mechInfo, 0, sizeof(mechInfo));
     mechInfo.mechanism = HLSE_ECDSA_VERIFY;
     retcode = HLCRYPT_Verify(&mechInfo,(U8 *)eccKeyTls_0,0,preCookedSha256,sizeof(preCookedSha256),signature,signatureLen);
     if (retcode == HLSE_SW_OK)
     {
-        PRINTF("Verification OK for eccKeyTls_0.\r\n");
+        LOG_I("Verification OK for eccKeyTls_0.");
     }
     else
     {
-        PRINTF("Return value: %d, Verification Not OK for eccKeyTls_0. Test Failed!\r\n", retcode);
+        LOG_E("Return value: %d, Verification Not OK for eccKeyTls_0. Test Failed!", retcode);
         result &= 0;
     }
 
@@ -277,17 +274,17 @@ static U8 exWtUseCrypto(U16 appletVersion)
     nRet = HOST_SHA256_Get(dataToSign, dataToSignLen, hashSha256);
     assert(nRet == HOST_CRYPTO_OK);
     if (nRet != HOST_CRYPTO_OK) {
-        PRINTF("HOST_SHA256_Get operation failed.\r\n");
+        LOG_E("HOST_SHA256_Get operation failed.");
         result &= 0;
     }
-    PRINTF("\r\n(Host)ECDSA_sign API with eccKeyRootCA_0.\r\n");
+    LOG_I("(Host)ECDSA_sign API with eccKeyRootCA_0.");
     memset(&mechInfo, 0, sizeof(mechInfo));
     mechInfo.mechanism = HLSE_ECDSA_SIGN;
     retcode = HLCRYPT_Sign(&mechInfo, (U8 *)eccKeyRootCA_0, 0,hashSha256, hashSha256Len, signatureOnHost, &nSigLen);
-    PRINTF("ECDSA_sign returned: 0x%02X, Siglen is %ld\r\n", retcode, nSigLen);
+    LOG_I("ECDSA_sign returned: 0x%02X, Siglen is %ld", retcode, nSigLen);
     if (retcode != HLSE_SW_OK)
     {
-        PRINTF("ECDSA_sign operation failed.\r\n");
+        LOG_E("ECDSA_sign operation failed.");
         result &= 0;
     }
     else
@@ -297,7 +294,7 @@ static U8 exWtUseCrypto(U16 appletVersion)
 
     // ... do the subsequent verification on the A71CH with the matching public key object.
     index = A71CH_PUBLIC_KEY_0;
-    PRINTF("\r\nA71_EccVerify(0x%02x) on A71CH.\r\n", index);
+    LOG_I("A71_EccVerify(0x%02x) on A71CH.", index);
     signatureOnHostLen = (U16)nSigLen;
     isOk = 0x00;
     err = A71_EccVerify(index, hashSha256, sizeof(hashSha256), signatureOnHost, signatureOnHostLen, &isOk);
@@ -305,12 +302,12 @@ static U8 exWtUseCrypto(U16 appletVersion)
     result &= AX_CHECK_U8(isOk, 1, "Signature verification failed");
     if (isOk == 1)
     {
-        PRINTF("Verification on A71CH is OK, Test Passed\r\n");
+        LOG_I("Verification on A71CH is OK, Test Passed");
     }
 
     // NEGATIVE TEST: verifying the signature with the wrong public key must fail
     index = A71CH_PUBLIC_KEY_1;
-    PRINTF("\r\nA71_EccVerify(0x%02x) on A71CH.\r\n", index);
+    LOG_I("A71_EccVerify(0x%02x) on A71CH.", index);
     signatureOnHostLen = (U16)nSigLen;
     isOk = 0x00;
     err = A71_EccVerify(index, hashSha256, sizeof(hashSha256), signatureOnHost, signatureOnHostLen, &isOk);
@@ -318,7 +315,7 @@ static U8 exWtUseCrypto(U16 appletVersion)
     result &= AX_CHECK_U8(isOk, 0, "Negative test: Signature verification must fail");
     if (isOk == 0)
     {
-        PRINTF("Negative Test Passed\r\n");
+        LOG_I("Negative Test Passed");
     }
 
     // Create and compare a shared secret on A71CH and Host
@@ -338,13 +335,13 @@ static U8 exWtUseCrypto(U16 appletVersion)
     eccKcTls_Host.curve = eccCurve;
 
     index = A71CH_KEY_PAIR_1;
-    PRINTF("\r\nA71_EcdhGetSharedSecret(0x%02x) on A71CH\r\n", index);
+    LOG_I("A71_EcdhGetSharedSecret(0x%02x) on A71CH", index);
     sharedSecretOnA71CHLen = sizeof(sharedSecretOnA71CH);
     err = A71_EcdhGetSharedSecret(index, eccKcTls_Host.pub, eccKcTls_Host.pubLen, sharedSecretOnA71CH, &sharedSecretOnA71CHLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     axPrintByteArray("sharedSecretOnA71CH", sharedSecretOnA71CH, sharedSecretOnA71CHLen, AX_COLON_32);
 
-    PRINTF("\r\nA71_EcdhGetSharedSecret() on Host\r\n");
+    LOG_I("A71_EcdhGetSharedSecret() on Host");
     sharedSecretOnHostLen = sizeof(sharedSecretOnHost);
     err = HOSTCRYPTO_ECC_ComputeSharedSecret(eccKeyTls_Host, eccKcTls_1.pub, eccKcTls_1.pubLen, sharedSecretOnHost, &sharedSecretOnHostLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -368,7 +365,7 @@ static U8 exWtUseCrypto(U16 appletVersion)
     nBlock = 1;
     derivedDataLen = 16;
 
-    PRINTF("\r\nA71_HkdfSymKey() on Host\r\n");
+    LOG_I("A71_HkdfSymKey() on Host");
     err = A71_HkdfSymKey(A71CH_SYM_KEY_0, nBlock,
         salt, saltLen,
         info,  infoLen,
@@ -380,7 +377,7 @@ static U8 exWtUseCrypto(U16 appletVersion)
     // calculate the same derived data and use this
     memcpy(symSecret, aesBasePattern, 16);
     symSecret[0] = 0x00;
-    PRINTF("\r\nHOSTCRYPTO_HkdfFullSha256(KeyLen=%d, infoLen=%d, derivedDataLen=%d)\r\n", 16, infoLen, derivedDataLen);
+    LOG_I("HOSTCRYPTO_HkdfFullSha256(KeyLen=%d, infoLen=%d, derivedDataLen=%d)", 16, infoLen, derivedDataLen);
     err = HOSTCRYPTO_HkdfFullSha256(salt, saltLen, symSecret, 16, info, infoLen, derivedDataOnHost, derivedDataLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
 
@@ -390,7 +387,7 @@ static U8 exWtUseCrypto(U16 appletVersion)
     HOSTCRYPTO_FreeEccKey(&eccKeyTls_Host);
     HOSTCRYPTO_FreeEccKey(&eccKeyTls_0);
 
-    PRINTF( "\r\n-----------\r\nEnd exWtUseCrypto(), result = %s\r\n------------\r\n",
+    LOG_I( "-----------End exWtUseCrypto(), result = %s------------",
         ((result == 1)? "OK": "FAILED"));
 
     return result;
@@ -414,10 +411,10 @@ static U8 exWtProvision()
 
     SST_Index_t index;
 
-    U8 uid[A71CH_MODULE_UNIQUE_ID_LEN];
+    U8 uid[A71CH_MODULE_UNIQUE_ID_LEN] = {0};
     U16 uidLen = sizeof(uid);
 
-    PRINTF( "\r\n-----------\r\nStart exWtProvision()\r\n------------\r\n");
+    LOG_I( "-----------Start exWtProvision()------------");
 
     // In a typical provisioning scenario the keypair matching the public key
     // to be inserted would be created and stored securely on a back-end system.
@@ -446,19 +443,19 @@ static U8 exWtProvision()
 
     // Generate the first ECC keyPair (Extract the public key)
     index = A71CH_KEY_PAIR_0;
-    PRINTF("\r\nA71_GenerateEccKeyPair(0x%02x)\r\n", index);
+    LOG_I("A71_GenerateEccKeyPair(0x%02x)", index);
     err = A71_GenerateEccKeyPair(index);
     result &= AX_CHECK_SW(err, SW_OK, "err");
 
     // Generate the second ECC keyPair (Extract the public key)
     index = A71CH_KEY_PAIR_1;
-    PRINTF("\r\nA71_GenerateEccKeyPair(0x%02x)\r\n", index);
+    LOG_I("A71_GenerateEccKeyPair(0x%02x)", index);
     err = A71_GenerateEccKeyPair(index);
     result &= AX_CHECK_SW(err, SW_OK, "err");
 
     // Both ECC Key pairs have been created, now extract the value of the public key
     index = A71CH_KEY_PAIR_0;
-    PRINTF( "\r\nSST_GetPublicKeyECCKeyPair(0x%02x)\r\n", index);
+    LOG_I( "SST_GetPublicKeyECCKeyPair(0x%02x)", index);
     eccKcTls_0.pubLen = sizeof(eccKcTls_0.pub);
     err = A71_GetPublicKeyEccKeyPair(index, eccKcTls_0.pub, &(eccKcTls_0.pubLen));
     result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -472,7 +469,7 @@ static U8 exWtProvision()
     }
 
     index = A71CH_KEY_PAIR_1;
-    PRINTF( "\r\nSST_GetPublicKeyECCKeyPair(0x%02x)\r\n", index);
+    LOG_I( "SST_GetPublicKeyECCKeyPair(0x%02x)", index);
     eccKcTls_1.pubLen = sizeof(eccKcTls_1.pub);
     err = A71_GetPublicKeyEccKeyPair(index, eccKcTls_1.pub, &(eccKcTls_1.pubLen));
     result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -487,13 +484,13 @@ static U8 exWtProvision()
 
     // Set the public key of eccKcRootCA_0 on the A71CH (index=0)
     index = A71CH_PUBLIC_KEY_0;
-    PRINTF("\r\nA71_SetEccPublicKey(0x%02x)\r\n", index);
+    LOG_I("A71_SetEccPublicKey(0x%02x)", index);
     err = A71_SetEccPublicKey(index, eccKcRootCA_0.pub, eccKcRootCA_0.pubLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
 
     // Set the public key of eccKcRootCA_1 on the A71CH (index=1)
     index = A71CH_PUBLIC_KEY_1;
-    PRINTF("\r\nA71_SetEccPublicKey(0x%02x)\r\n", index);
+    LOG_I("A71_SetEccPublicKey(0x%02x)", index);
     err = A71_SetEccPublicKey(index, eccKcRootCA_1.pub, eccKcRootCA_1.pubLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
 
@@ -510,7 +507,7 @@ static U8 exWtProvision()
         // Put the 0x00 marker
         aesRef[indexAesKey][indexAesKey] = (U8)0x00;
         // Write the key (unwrapped)
-        PRINTF( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
+        LOG_I( "A71_SetSymKey(0x%02x)", indexAesKey);
         err = A71_SetSymKey((SST_Index_t)indexAesKey, aesRef[indexAesKey], sizeof(aesRef[indexAesKey]));
         result &= AX_CHECK_SW(err, SW_OK, "err");
         axPrintByteArray("aesRef[indexAesKey]", aesRef[indexAesKey], sizeof(aesRef[indexAesKey]), AX_COLON_32);
@@ -532,7 +529,7 @@ static U8 exWtProvision()
     // - Store a certificate (or the hash of a certificate) in GP storage
     // - Store public keys in GP storage
 
-    PRINTF( "\r\n-----------\r\nEnd exWtProvision(), result = %s\r\n------------\r\n",
+    LOG_I( "-----------End exWtProvision(), result = %s------------",
         ((result == 1)? "OK": "FAILED"));
 
     return result;
@@ -541,14 +538,14 @@ static U8 exWtProvision()
 /**
 * Before shipping the end-product partially disable provisioning capabilities
 */
-static U8 exWtPrepareShipment(U16 appletVersion)
+static U8 exWtPrepareShipment()
 {
     U8 result = 1;
     U16 sw = 0;
 
     SST_Index_t index;
 
-    PRINTF( "\r\n-----------\r\nStart exWtPrepareShipment()\r\n------------\r\n");
+    LOG_I( "-----------Start exWtPrepareShipment()------------");
 
     sw = A71_InjectLock();
     result &= AX_CHECK_SW(sw, SW_OK, "Unable to lock");
@@ -557,32 +554,15 @@ static U8 exWtPrepareShipment(U16 appletVersion)
     // - Freeze the first keypair
     // - Freeze the first public key
     // - Freeze the first symmetric secret (Only for applet < 0x0130)
-    if (appletVersion >= 0x0130)
-    {
-        index = A71CH_KEY_PAIR_0;
-        sw = A71_FreezeEccKeyPairWithChallenge(index, configKeyPrivateKey, sizeof(configKeyPrivateKey));
-        result &= AX_CHECK_SW(sw, SW_OK, "Unable to freeze key pair");
+    index = A71CH_KEY_PAIR_0;
+    sw = A71_FreezeEccKeyPairWithChallenge(index, configKeyPrivateKey, sizeof(configKeyPrivateKey));
+    result &= AX_CHECK_SW(sw, SW_OK, "Unable to freeze key pair");
 
-        index = A71CH_PUBLIC_KEY_0;
-        sw = A71_FreezeEccPublicKeyWithChallenge(index, configKeyPublicKey, sizeof(configKeyPublicKey));
-        result &= AX_CHECK_SW(sw, SW_OK, "Unable to freeze public key");
-    }
-    else
-    {
-        index = A71CH_KEY_PAIR_0;
-        sw = A71_FreezeEccKeyPair(index);
-        result &= AX_CHECK_SW(sw, SW_OK, "Unable to freeze key pair");
+    index = A71CH_PUBLIC_KEY_0;
+    sw = A71_FreezeEccPublicKeyWithChallenge(index, configKeyPublicKey, sizeof(configKeyPublicKey));
+    result &= AX_CHECK_SW(sw, SW_OK, "Unable to freeze public key");
 
-        index = A71CH_PUBLIC_KEY_0;
-        sw = A71_FreezeEccPublicKey(index);
-        result &= AX_CHECK_SW(sw, SW_OK, "Unable to freeze public key");
-
-        index = A71CH_SYM_KEY_0;
-        sw = A71_FreezeSymKey(index);
-        result &= AX_CHECK_SW(sw, SW_OK, "Unable to freeze symmetric key/secret");
-    }
-
-    PRINTF( "\r\n-----------\r\nEnd exWtPrepareShipment(), result = %s\r\n------------\r\n",
+    LOG_I( "-----------End exWtPrepareShipment(), result = %s------------",
         ((result == 1)? "OK": "FAILED"));
 
     return result;

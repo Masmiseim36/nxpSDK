@@ -45,7 +45,7 @@
 #define configCPU_CLOCK_HZ                      (SystemCoreClock)
 #define configTICK_RATE_HZ                      ((TickType_t)200)
 #define configMAX_PRIORITIES                    5
-#define configMINIMAL_STACK_SIZE                ((unsigned short)256)
+#define configMINIMAL_STACK_SIZE                ((unsigned short)90)
 #define configMAX_TASK_NAME_LEN                 20
 #define configUSE_16_BIT_TICKS                  0
 #define configIDLE_SHOULD_YIELD                 1
@@ -117,6 +117,13 @@
 #define INCLUDE_xTaskGetHandle                  0
 #define INCLUDE_xTaskResumeFromISR              1
 
+
+
+#if defined(__ICCARM__)||defined(__CC_ARM)||defined(__GNUC__)
+    /* Clock manager provides in this variable system core clock frequency */
+    #include <stdint.h>
+    extern uint32_t SystemCoreClock;
+#endif
 
 /* Interrupt nesting behaviour configuration. Cortex-M specific. */
 #ifdef __NVIC_PRIO_BITS

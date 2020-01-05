@@ -3,6 +3,14 @@ Overview
 The Hello World demo application provides a sanity check for the new SDK build environments and board bring up. The Hello
 World demo prints the "Hello World" string to the terminal using the SDK UART drivers. The purpose of this demo is to
 show how to use the UART, and to provide a simple project for debugging and further development.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -32,11 +40,6 @@ The log below shows the output of the security-subsystem_digest demo in the term
 hello world.
 SHA-256 Test pass
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

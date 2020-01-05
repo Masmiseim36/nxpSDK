@@ -12,11 +12,10 @@ Program boot from QSPI alias region (if the chip supports QSPI alias region).
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.50.1
-- Keil MDK 5.17
-- GCC ARM Embedded 2015-4.9-q3
-- Kinetis Development Studio IDE 3.0.0
-- Atollic TrueSTUDIO 5.4.0
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -26,12 +25,13 @@ Hardware requirements
 
 Board settings
 ==============
-No special settings are required.
+K82 TO1.1 or higher chip.
 
 Prepare the Demo
 ================
 On the FRDMK-82 board, the user can use the USB port to download the demo program through blhost. At step 1, press the
 SW2 button and connect to the USB cable to the target hardware.
+
 
 Running the demo
 ================
@@ -63,6 +63,11 @@ The project can generate the srec file directly. If you want to generate the src
   - ARMGCC: Use the command "objcopy -O srec hello_world_qspi.elf hello_world_qspi.srec"
     to generate the srec output file.
 
+  - MCUxpresso: open "Property" for demo project C/C++ Build -> Settings -> Build steps -> Post-build steps, choose "Edit...".
+    Change the line # arm-none-eabi-objcopy -v -O binary "${BuildArtifactFileName}" "${BuildArtifactFileBaseName}.bin" to
+    arm-none-eabi-objcopy -v -O srec "${BuildArtifactFileName}" "$/hello_world_qspi.srec"
+    Notice you shall remove the "#" at line begin.
+
 3. Prepare the QSPI config block for BootROM.
 
     -  Generate qspi_config_block.bin using tools QCBGenerator in Kinetis Bootloader for the K8x devices, the path of
@@ -84,7 +89,7 @@ The project can generate the srec file directly. If you want to generate the src
     When changing to another demo, change the srec file name in .bd file. Move the qspi_config_block.bin to the same
     folder with hello_world_qspi.bd, or change the path of qspi_config_block.bin in hello_world_qspi.bd file. 
 
-    - On the command line, use the command "./elftosb.exe -V -c hello_world_qspi.bd -o hello_world_qspi.sb" to generate an
+    -Rename file "frdmk82f_hello_world_qspi.srec" to "hello_world_qspi.srec", On the command line, use the command "./elftosb.exe -V -c hello_world_qspi.bd -o hello_world_qspi.sb" to generate an
     sb file.
 
 5. Use blhost to configure the bootloader and download the image.
@@ -98,6 +103,8 @@ The project can generate the srec file directly. If you want to generate the src
       - Some platforms can only use the USB port for hardware reasons, i.e., the Freescale Freedom FRDM-K82 development board. To use the USB interface, the command
       should be "./blhost.exe -u -- receive-sb-file hello_world_qspi.sb".
 
+      - While use mcuxpresso, while you import this SDK example, please choose UART as output, not semihost. Mcux will have semihost as default output. 
+
 6. Open a serial terminal with the following settings:
     - 115200 baud rate
     - 8 data bits
@@ -108,8 +115,6 @@ The project can generate the srec file directly. If you want to generate the src
 7. Press the reset button on your board.
 
 8. You should see the "Hello World" string printed to your terminal.
-
 Customization options
 =====================
-
 

@@ -58,7 +58,7 @@ int main(void)
     char ch;
 
     /* Init board hardware. */
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     USB_DeviceClockInit();
     DbgConsole_Init((uint8_t)kSerialManager_UsbControllerKhci0, (uint32_t)NULL, kSerialPort_UsbCdc, (uint32_t)NULL);
 

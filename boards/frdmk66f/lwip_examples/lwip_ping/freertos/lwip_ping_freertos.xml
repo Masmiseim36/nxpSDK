@@ -9,14 +9,16 @@
     <definition extID="device.MK66F18_CMSIS.MK66F18"/>
     <definition extID="device.MK66F18_startup.MK66F18"/>
     <definition extID="driver.phyksz8081.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.freertos.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.freertos.heap_3.MK66F18"/>
-    <definition extID="middleware.tcpip.lwip.MK66F18"/>
-    <definition extID="middleware.tcpip.lwip.contrib.ping.MK66F18"/>
-    <definition extID="middleware.tcpip.lwip.enet_ethernetif.MK66F18"/>
-    <definition extID="middleware.tcpip.lwip.enet_ethernetif_kinetis.MK66F18"/>
+    <definition extID="middleware.amazon_freertos-kernel.MK66F18"/>
+    <definition extID="middleware.amazon_freertos-kernel.extension.MK66F18"/>
+    <definition extID="middleware.amazon_freertos-kernel.heap_3.MK66F18"/>
+    <definition extID="middleware.lwip.MK66F18"/>
+    <definition extID="middleware.lwip.contrib.ping.MK66F18"/>
+    <definition extID="middleware.lwip.enet_ethernetif.MK66F18"/>
+    <definition extID="middleware.lwip.enet_ethernetif_kinetis.MK66F18"/>
     <definition extID="platform.Include_common.MK66F18"/>
     <definition extID="platform.Include_core_cm4.MK66F18"/>
+    <definition extID="platform.Include_dsp.MK66F18"/>
     <definition extID="platform.drivers.clock.MK66F18"/>
     <definition extID="platform.drivers.common.MK66F18"/>
     <definition extID="platform.drivers.enet.MK66F18"/>
@@ -35,7 +37,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk66f_lwip_ping_freertos" name="lwip_ping_freertos" category="lwip_examples" dependency="driver.phyksz8081.MK66F18 middleware.tcpip.lwip.contrib.ping.MK66F18 middleware.tcpip.lwip.enet_ethernetif_kinetis.MK66F18 platform.drivers.port.MK66F18 platform.drivers.sim.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.enet.MK66F18 middleware.amazon_freertos.freertos.heap_3.MK66F18 middleware.amazon_freertos.freertos.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 component.lists.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 middleware.tcpip.lwip.MK66F18 middleware.tcpip.lwip.enet_ethernetif.MK66F18 platform.utilities.misc_utilities.MK66F18">
+  <example id="frdmk66f_lwip_ping_freertos" name="lwip_ping_freertos" category="lwip_examples" dependency="driver.phyksz8081.MK66F18 middleware.lwip.contrib.ping.MK66F18 middleware.lwip.MK66F18 middleware.lwip.enet_ethernetif_kinetis.MK66F18 platform.drivers.port.MK66F18 platform.drivers.sim.MK66F18 platform.drivers.clock.MK66F18 middleware.amazon_freertos-kernel.heap_3.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.lists.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18 platform.drivers.enet.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 platform.Include_dsp.MK66F18 middleware.lwip.enet_ethernetif.MK66F18 middleware.amazon_freertos-kernel.MK66F18 middleware.amazon_freertos-kernel.extension.MK66F18 platform.utilities.misc_utilities.MK66F18">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -57,6 +59,7 @@
           <value>PRINTF_ADVANCED_ENABLE=1</value>
           <value>FRDM_K66F</value>
           <value>FREEDOM</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>FSL_RTOS_FREE_RTOS</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
@@ -74,6 +77,10 @@
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
           <value>&amp;Heap:Default;Default;0x6400&amp;Stack:Default;Default;0x800</value>
         </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=RAM2;type=.data</value>
+          <value>isd=*(NonCacheable);region=RAM2;type=.bss</value>
+        </option>
       </toolchainSetting>
     </toolchainSettings>
     <include_paths>
@@ -81,13 +88,13 @@
       <include_path path="lwip/src"/>
       <include_path path="lwip/src/include"/>
     </include_paths>
-    <source path="boards/frdmk66f/lwip_examples/lwip_ping/freertos/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/frdmk66f/lwip_examples/lwip_ping/freertos/armgcc" target_path="MK66F18/gcc" type="linker" toolchain="armgcc">
       <files mask="MK66FN2M0xxx18_flash.ld"/>
     </source>
-    <source path="boards/frdmk66f/lwip_examples/lwip_ping/freertos/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/frdmk66f/lwip_examples/lwip_ping/freertos/iar" target_path="MK66F18/iar" type="linker" toolchain="iar">
       <files mask="MK66FN2M0xxx18_flash.icf"/>
     </source>
-    <source path="boards/frdmk66f/lwip_examples/lwip_ping/freertos/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/frdmk66f/lwip_examples/lwip_ping/freertos/mdk" target_path="MK66F18/arm" type="linker" toolchain="mdk">
       <files mask="MK66FN2M0xxx18_flash.scf"/>
     </source>
     <source path="boards/frdmk66f/lwip_examples/lwip_ping/freertos" target_path="board" type="c_include">

@@ -1,16 +1,15 @@
 Overview
 ========
-The sai_interrupt example shows how to use sai fucntional API to implement interrupt playback:
+The sai_interrupt example shows how to use sai functional API to implement interrupt playback:
 
-In this example, one sai instance playbacks the audio data stored in flash using interrupt.
+In this example, one sai instance playbacks the audio data stored in flash/SRAM using interrupt.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.70.1
-- Keil MDK 5.20
-- GCC ARM Embedded 2015-4.9-q3
-- Kinetis Development Studio IDE 3.2.0
-- Atollic TrueSTUDIO 5.5.2
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================

@@ -7,11 +7,10 @@ example uses the software button to control/toggle the LED.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.50.1
-- Keil MDK 5.17
-- GCC ARM Embedded 2015-4.9-q3
-- Kinetis Development Studio IDE 3.0.0
-- Atollic TrueSTUDIO 5.4.0
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -45,8 +44,6 @@ GPIO Driver example
 Press SW2 to turn on/off a LED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 If you press the SW2, the LED will be toggled, and "SW2 is pressed" is shown on the terminal window.
-
 Customization options
 =====================
-
 

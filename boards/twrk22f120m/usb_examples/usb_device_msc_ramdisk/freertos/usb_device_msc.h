@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016 - 2017£¬2019  NXP
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef __USB_DEVICE_MSC_H__
@@ -87,6 +65,8 @@
 #define USB_DEVICE_MSC_MAX_RECV_TRANSFER_LENGTH (65536U)
 #define USB_DEVICE_MSC_MAX_SEND_TRANSFER_LENGTH (65536U)
 
+#define USB_DEVICE_MSC_MAX_LUN (3)
+
 /*! @brief Command Block Wrapper(CBW) */
 typedef struct _usb_device_msc_cbw
 {
@@ -113,13 +93,18 @@ typedef struct _usb_lba_transfer_information_struct
     uint32_t transferNumber; /*!< The number of contiguous logical blocks of data that shall be transferred*/
 } usb_lba_transfer_information_struct_t;
 /*! @brief device information */
-typedef struct _usb_device_lba_information_struct
+typedef struct _usb_device_logical_unit_information_struct
 {
     uint32_t totalLbaNumberSupports;    /*!< Total blocks number supported*/
     uint32_t lengthOfEachLba;           /*!< Length of each block*/
     uint32_t bulkInBufferSize;          /*!< Bulk in buffer size*/
     uint32_t bulkOutBufferSize;         /*!< Bulk out buffer size*/
-    uint8_t logicalUnitNumberSupported; /*!< Number of LUN*/
+} usb_device_logical_unit_information_struct_t;
+/*! @brief device information */
+typedef struct _usb_device_lba_information_struct
+{
+    uint32_t logicalUnitNumberSupported; /*!< Number of LUN*/
+    usb_device_logical_unit_information_struct_t logicalUnitInformations[USB_DEVICE_MSC_MAX_LUN];
 } usb_device_lba_information_struct_t;
 
 /*! @brief Data transfer information */
@@ -128,6 +113,7 @@ typedef struct _usb_device_lba_app_struct
     uint32_t offset; /*!< Offset of the block need to access*/
     uint32_t size;   /*!< Size of the transferred data*/
     uint8_t *buffer; /*!< Buffer address of the transferred data*/
+    uint8_t lun;
 } usb_device_lba_app_struct_t;
 /*! @brief command and Data transfer information for UFI command*/
 typedef struct _usb_device_ufi_app_struct
@@ -159,15 +145,17 @@ typedef enum
 /*! @brief Available common EVENT types in MSC class callback */
 typedef enum
 {
-    kUSB_DeviceMscEventReadResponse = 0x01U, /*!< host has already read the whole data from device */
-    kUSB_DeviceMscEventWriteResponse,        /*!< devcie has already received the data from host. */
-    kUSB_DeviceMscEventWriteRequest,         /*!< Host want to write data to device through write command, devcie need prepare one buffer to store the data from host*/
-    kUSB_DeviceMscEventReadRequest,          /*!< Host want to read data from device through read command, device need prepare one buffer containing data pending for transfer*/
-    kUSB_DeviceMscEventGetLbaInformation,    /*!< Get device information */
-    kUSB_DeviceMscEventFormatComplete,       /*!< Format complete */
-    kUSB_DeviceMscEventTestUnitReady,        /*!<  Test Unit Ready command*/
-    kUSB_DeviceMscEventInquiry,              /*!<  Inquiry Command command*/
-    kUSB_DeviceMscEventModeSense,            /*!<  mode sense command*/
+    kUSB_DeviceMscEventReadResponse = 0x01U, /*!< host has already read the whole data from device or device send is cancelled etc*/
+    kUSB_DeviceMscEventWriteResponse,        /*!< devcie has already received the data from host or device receive is cancelled etc. */
+    kUSB_DeviceMscEventWriteRequest, /*!< Host want to write data to device through write command, devcie need prepare
+                                        one buffer to store the data from host*/
+    kUSB_DeviceMscEventReadRequest,  /*!< Host want to read data from device through read command, device need prepare
+                                        one buffer containing data pending for transfer*/
+    kUSB_DeviceMscEventGetLbaInformation, /*!< Get device information */
+    kUSB_DeviceMscEventFormatComplete,    /*!< Format complete */
+    kUSB_DeviceMscEventTestUnitReady,     /*!<  Test Unit Ready command*/
+    kUSB_DeviceMscEventInquiry,           /*!<  Inquiry Command command*/
+    kUSB_DeviceMscEventModeSense,         /*!<  mode sense command*/
     kUSB_DeviceMscEventModeSelect, /*!<  mode select command, prepare data buffer and buffer length to store data for
                                       mode select*/
     kUSB_DeviceMscEventModeSelectResponse, /*!<  got data of mode select command*/
@@ -179,16 +167,13 @@ typedef enum
 /*! @brief The MSC device UFI command status structure */
 typedef struct _usb_device_msc_ufi_struct
 {
-    usb_device_request_sense_data_struct_t requestSense;             /*!< Request Sense Standard Data*/
+    usb_device_request_sense_data_struct_t *requestSense;            /*!< Request Sense Standard Data*/
     usb_device_msc_thirteen_case_struct_t thirteenCase;              /*!< Thirteen possible cases*/
-    usb_device_read_capacity_struct_t readCapacity;                  /*!< READ CAPACITY Data*/
-    usb_device_read_capacity16_data_struct_t readCapacity16;         /*!< READ CAPACITY Data*/
-    usb_device_inquiry_data_fromat_struct_t InquiryInfo;             /*!< Standard INQUIRY Data*/
+    usb_device_read_capacity_struct_t *readCapacity;                 /*!< READ CAPACITY Data*/
+    usb_device_read_capacity16_data_struct_t *readCapacity16;        /*!< READ CAPACITY Data*/
     usb_device_mode_parameters_header_struct_t ModeParametersHeader; /*!< Mode Parameter Header*/
     uint8_t formattedDisk;                                           /*!< *Formatted or unformatted media*/
-    uint8_t formatCapacityData[sizeof(usb_device_capacity_list_header_struct_t) +
-                               sizeof(usb_device_current_max_capacity_descriptor_struct_t) +
-                               sizeof(usb_device_formattable_capacity_descriptor_struct_t) * 3];
+    uint8_t *formatCapacityData;
     /*!< Capacity List*/
 } usb_device_msc_ufi_struct_t;
 /*! @brief The MSC device structure */
@@ -199,19 +184,14 @@ typedef struct _usb_device_msc_struct
     usb_device_interface_struct_t *interfaceHandle;        /*!< Current interface handle */
     uint32_t transferRemaining;                            /*!< Transfer remaining data */
     uint32_t currentOffset;                                /*!< Current address offset */
-    uint32_t totalLogicalBlockNumber;                      /*!< Total logical block number of device */
-    uint32_t lengthOfEachLba;                              /*!< Length of logical block */
     uint32_t implementingDiskDrive;                        /*!< Disk drive*/
-    uint32_t bulkInBufferSize;                             /*!< Bulk in buffer size*/
-    uint32_t bulkOutBufferSize;                            /*!< Bulk out buffer size*/
-#if ((defined(USB_DEVICE_CONFIG_LPCIP3511FS)) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U))
-    uint8_t *ufiAlignBuffer;
-#endif
 
     usb_device_msc_cbw_t *mscCbw; /*!< CBW structure */
     usb_device_msc_csw_t *mscCsw; /*!< CSW structure */
 
     usb_device_msc_ufi_struct_t mscUfi; /*!< UFI command information structure*/
+    
+    usb_device_logical_unit_information_struct_t luInformations[USB_DEVICE_MSC_MAX_LUN];
 
     uint8_t dataOutFlag;          /*!< CBW indicating bulk out transfer, clear this flag when data transfer done*/
     uint8_t dataInFlag;           /*!< CBW indicating bulk in transfer, clear this flag when data transfer done*/
@@ -229,15 +209,19 @@ typedef struct _usb_device_msc_struct
                              endpoint has got the prepared buffer*/
     uint8_t stallStatus;  /*!< Stall status*/
 
-    uint8_t logicalUnitNumber; /*!< Supported logical units number of device. See bulk only specification 3.2 Get
-                                  Maximum LUN
-                                  (class-specific request)*/
-    uint8_t bulkInEndpoint;    /*!< Bulk in endpoint number*/
-    uint8_t bulkOutEndpoint;   /*!< Bulk out endpoint number*/
-    uint8_t alternate;         /*!< Current alternate setting of the interface */
-    uint8_t configuration;     /*!< Current configuration */
-    uint8_t interfaceNumber;   /*!< The interface number of the class */
+    uint8_t logicalUnitNumber;       /*!< Supported logical units number of device. See bulk only specification 3.2 Get
+                                        Maximum LUN
+                                        (class-specific request)*/
+    uint8_t bulkInEndpoint;          /*!< Bulk in endpoint number*/
+    uint8_t bulkOutEndpoint;         /*!< Bulk out endpoint number*/
+    uint8_t alternate;               /*!< Current alternate setting of the interface */
+    uint8_t configuration;           /*!< Current configuration */
+    uint8_t interfaceNumber;         /*!< The interface number of the class */
+    uint8_t inEndpointCswCancelFlag; /*!< the state when calcel function happens, and need send the csw after cancel*/
 } usb_device_msc_struct_t;
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*!
  * @name USB device MSC class APIs
@@ -275,26 +259,8 @@ extern usb_status_t USB_DeviceMscLbaTransfer(usb_device_msc_struct_t *mscHandle,
                                              uint8_t direction,
                                              usb_lba_transfer_information_struct_t *lba_info_ptr);
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
-extern usb_status_t USB_DeviceMscUfiThirteenCasesCheck(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiRequestSenseCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiInquiryCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiReadCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiWriteCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiTestUnitReadyCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiVerifyCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiModeSenseCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiModeSelectCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiReadCapacityCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiReadFormatCapacityCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiFormatUnitCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiPreventAllowMediumCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiSendDiagnosticCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiStartStopUnitCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiUnsupportCommand(usb_device_msc_struct_t *mscHandle);
+
 #ifdef __cplusplus
 }
 #endif

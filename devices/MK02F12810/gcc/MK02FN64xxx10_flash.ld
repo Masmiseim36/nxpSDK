@@ -7,13 +7,13 @@
 **     Compiler:            GNU C Compiler
 **     Reference manual:    K02P64M100SFARM, Rev. 0, February 14, 2014
 **     Version:             rev. 0.5, 2015-02-19
-**     Build:               b180911
+**     Build:               b190916
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2018 NXP
+**     Copyright 2016-2019 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause

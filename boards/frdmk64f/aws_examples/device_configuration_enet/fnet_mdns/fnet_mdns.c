@@ -1139,7 +1139,7 @@ static void _fnet_mdns_print_qe_name(const fnet_char_t *prefix, const fnet_char_
 }
 #endif
 
-#if defined(__ARMCC_VERSION)
+#if defined(__CC_ARM)
 #pragma diag_suppress 1293
 #endif
 

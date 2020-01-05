@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_uart_freertos.h"
@@ -33,13 +11,18 @@
 #include <event_groups.h>
 #include <semphr.h>
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.uart_freertos"
+#endif
+
 static void UART_RTOS_Callback(UART_Type *base, uart_handle_t *state, status_t status, void *param)
 {
     uart_rtos_handle_t *handle = (uart_rtos_handle_t *)param;
     BaseType_t xHigherPriorityTaskWoken, xResult;
 
     xHigherPriorityTaskWoken = pdFALSE;
-    xResult = pdFAIL;
+    xResult                  = pdFAIL;
 
     if (status == kStatus_UART_RxIdle)
     {
@@ -73,6 +56,14 @@ static void UART_RTOS_Callback(UART_Type *base, uart_handle_t *state, status_t s
  * Description   : Initializes the UART instance for application
  *
  *END**************************************************************************/
+/*!
+ * brief Initializes a UART instance for operation in RTOS.
+ *
+ * param handle The RTOS UART handle, the pointer to an allocated space for RTOS context.
+ * param t_handle The pointer to the allocated space to store the transactional layer internal state.
+ * param cfg The pointer to the parameters required to configure the UART after initialization.
+ * return 0 succeed; otherwise fail.
+ */
 int UART_RTOS_Init(uart_rtos_handle_t *handle, uart_handle_t *t_handle, const uart_rtos_config_t *cfg)
 {
     uart_config_t defcfg;
@@ -102,7 +93,7 @@ int UART_RTOS_Init(uart_rtos_handle_t *handle, uart_handle_t *t_handle, const ua
         return kStatus_InvalidArgument;
     }
 
-    handle->base = cfg->base;
+    handle->base    = cfg->base;
     handle->t_state = t_handle;
 #if (configSUPPORT_STATIC_ALLOCATION == 1)
     handle->txSemaphore = xSemaphoreCreateMutexStatic(&handle->txSemaphoreBuffer);
@@ -126,7 +117,7 @@ int UART_RTOS_Init(uart_rtos_handle_t *handle, uart_handle_t *t_handle, const ua
 #if (configSUPPORT_STATIC_ALLOCATION == 1)
     handle->txEvent = xEventGroupCreateStatic(&handle->txEventBuffer);
 #else
-    handle->txEvent = xEventGroupCreate();
+    handle->txEvent     = xEventGroupCreate();
 #endif
     if (NULL == handle->txEvent)
     {
@@ -137,11 +128,11 @@ int UART_RTOS_Init(uart_rtos_handle_t *handle, uart_handle_t *t_handle, const ua
 #if (configSUPPORT_STATIC_ALLOCATION == 1)
     handle->rxEvent = xEventGroupCreateStatic(&handle->rxEventBuffer);
 #else
-    handle->rxEvent = xEventGroupCreate();
+    handle->rxEvent     = xEventGroupCreate();
 #endif
     if (NULL == handle->rxEvent)
     {
-        vEventGroupDelete(handle->rxEvent);
+        vEventGroupDelete(handle->txEvent);
         vSemaphoreDelete(handle->rxSemaphore);
         vSemaphoreDelete(handle->txSemaphore);
         return kStatus_Fail;
@@ -149,7 +140,7 @@ int UART_RTOS_Init(uart_rtos_handle_t *handle, uart_handle_t *t_handle, const ua
     UART_GetDefaultConfig(&defcfg);
 
     defcfg.baudRate_Bps = cfg->baudrate;
-    defcfg.parityMode = cfg->parity;
+    defcfg.parityMode   = cfg->parity;
 #if defined(FSL_FEATURE_UART_HAS_STOP_BIT_CONFIG_SUPPORT) && FSL_FEATURE_UART_HAS_STOP_BIT_CONFIG_SUPPORT
     defcfg.stopBitCount = cfg->stopbits;
 #endif
@@ -170,6 +161,14 @@ int UART_RTOS_Init(uart_rtos_handle_t *handle, uart_handle_t *t_handle, const ua
  * Description   : Deinitializes the UART instance and frees resources
  *
  *END**************************************************************************/
+/*!
+ * brief Deinitializes a UART instance for operation.
+ *
+ * This function deinitializes the UART module, sets all register values to reset value,
+ * and frees the resources.
+ *
+ * param handle The RTOS UART handle.
+ */
 int UART_RTOS_Deinit(uart_rtos_handle_t *handle)
 {
     UART_Deinit(handle->base);
@@ -185,7 +184,7 @@ int UART_RTOS_Deinit(uart_rtos_handle_t *handle)
     vSemaphoreDelete(handle->rxSemaphore);
 
     /* Invalidate the handle */
-    handle->base = NULL;
+    handle->base    = NULL;
     handle->t_state = NULL;
 
     return 0;
@@ -197,6 +196,16 @@ int UART_RTOS_Deinit(uart_rtos_handle_t *handle)
  * Description   : Initializes the UART instance for application
  *
  *END**************************************************************************/
+/*!
+ * brief Sends data in the background.
+ *
+ * This function sends data. It is a synchronous API.
+ * If the hardware buffer is full, the task is in the blocked state.
+ *
+ * param handle The RTOS UART handle.
+ * param buffer The pointer to the buffer to send.
+ * param length The number of bytes to send.
+ */
 int UART_RTOS_Send(uart_rtos_handle_t *handle, const uint8_t *buffer, uint32_t length)
 {
     EventBits_t ev;
@@ -222,7 +231,7 @@ int UART_RTOS_Send(uart_rtos_handle_t *handle, const uint8_t *buffer, uint32_t l
         return kStatus_Fail;
     }
 
-    handle->txTransfer.data = (uint8_t *)buffer;
+    handle->txTransfer.data     = (uint8_t *)buffer;
     handle->txTransfer.dataSize = (uint32_t)length;
 
     /* Non-blocking call */
@@ -249,11 +258,22 @@ int UART_RTOS_Send(uart_rtos_handle_t *handle, const uint8_t *buffer, uint32_t l
  * Description   : Receives chars for the application
  *
  *END**************************************************************************/
+/*!
+ * brief Receives data.
+ *
+ * This function receives data from UART. It is a synchronous API. If data is immediately available,
+ * it is returned immediately and the number of bytes received.
+ *
+ * param handle The RTOS UART handle.
+ * param buffer The pointer to the buffer to write received data.
+ * param length The number of bytes to receive.
+ * param received The pointer to a variable of size_t where the number of received data is filled.
+ */
 int UART_RTOS_Receive(uart_rtos_handle_t *handle, uint8_t *buffer, uint32_t length, size_t *received)
 {
     EventBits_t ev;
-    size_t n = 0;
-    int retval = kStatus_Fail;
+    size_t n              = 0;
+    int retval            = kStatus_Fail;
     size_t local_received = 0;
 
     if (NULL == handle->base)
@@ -281,7 +301,7 @@ int UART_RTOS_Receive(uart_rtos_handle_t *handle, uint8_t *buffer, uint32_t leng
         return kStatus_Fail;
     }
 
-    handle->rxTransfer.data = buffer;
+    handle->rxTransfer.data     = buffer;
     handle->rxTransfer.dataSize = (uint32_t)length;
 
     /* Non-blocking call */
@@ -297,7 +317,7 @@ int UART_RTOS_Receive(uart_rtos_handle_t *handle, uint8_t *buffer, uint32_t leng
         /* Prevent false indication of successful transfer in next call of UART_RTOS_Receive.
            RTOS_UART_COMPLETE flag could be set meanwhile overrun is handled */
         xEventGroupClearBits(handle->rxEvent, RTOS_UART_COMPLETE);
-        retval = kStatus_UART_RxHardwareOverrun;
+        retval         = kStatus_UART_RxHardwareOverrun;
         local_received = 0;
     }
     else if (ev & RTOS_UART_RING_BUFFER_OVERRUN)
@@ -307,12 +327,12 @@ int UART_RTOS_Receive(uart_rtos_handle_t *handle, uint8_t *buffer, uint32_t leng
         /* Prevent false indication of successful transfer in next call of UART_RTOS_Receive.
            RTOS_UART_COMPLETE flag could be set meanwhile overrun is handled */
         xEventGroupClearBits(handle->rxEvent, RTOS_UART_COMPLETE);
-        retval = kStatus_UART_RxRingBufferOverrun;
+        retval         = kStatus_UART_RxRingBufferOverrun;
         local_received = 0;
     }
     else if (ev & RTOS_UART_COMPLETE)
     {
-        retval = kStatus_Success;
+        retval         = kStatus_Success;
         local_received = length;
     }
 

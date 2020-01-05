@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2107 NXP
+ * Copyright 2016 - 2017, 2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "fsl_device_registers.h"
 #include "clock_config.h"
@@ -55,7 +29,7 @@
 /*******************************************************************************
 * Variables
 ******************************************************************************/
-/* Line codinig of cdc device */
+/* Line coding of cdc device */
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_lineCoding[LINE_CODING_SIZE] = {
     /* E.g. 0x00,0xC2,0x01,0x00 : 0x0001C200 is 115200 bits per second */
     (LINE_CODING_DTERATE >> 0U) & 0x000000FFU,
@@ -313,11 +287,12 @@ usb_status_t USB_DeviceCdcVcomClassRequest(usb_device_handle handle,
                 acmInfo->uartState &= (uint16_t)~USB_DEVICE_CDC_UART_STATE_TX_CARRIER;
             }
 
-            /* activate carrier and DTE */
+            /* activate carrier and DTE. Com port of terminal tool running on PC is open now */
             if (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_DTE_PRESENCE)
             {
                 acmInfo->uartState |= USB_DEVICE_CDC_UART_STATE_RX_CARRIER;
             }
+            /* Com port of terminal tool running on PC is closed now */
             else
             {
                 acmInfo->uartState &= (uint16_t)~USB_DEVICE_CDC_UART_STATE_RX_CARRIER;
@@ -335,7 +310,7 @@ usb_status_t USB_DeviceCdcVcomClassRequest(usb_device_handle handle,
             acmInfo->serialStateBuf[5] = 0x00;
             acmInfo->serialStateBuf[6] = UART_BITMAP_SIZE; /* wLength */
             acmInfo->serialStateBuf[7] = 0x00;
-            /* Notifiy to host the line state */
+            /* Notify to host the line state */
             acmInfo->serialStateBuf[4] = setup->wIndex;
             /* Lower byte of UART BITMAP */
             uartBitmap = (uint8_t *)&acmInfo->serialStateBuf[NOTIF_PACKET_SIZE + UART_BITMAP_SIZE - 2];
@@ -476,10 +451,12 @@ usb_status_t USB_DeviceCdcVcomSetConfigure(usb_device_handle handle, uint8_t con
         if (USB_SPEED_HIGH == g_deviceComposite->speed)
         {
             epInitStruct.maxPacketSize = HS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE;
+            epInitStruct.interval = HS_CDC_VCOM_INTERRUPT_IN_INTERVAL;
         }
         else
         {
             epInitStruct.maxPacketSize = FS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE;
+            epInitStruct.interval = FS_CDC_VCOM_INTERRUPT_IN_INTERVAL;
         }
 
         USB_DeviceInitEndpoint(handle, &epInitStruct, &epCallback);
@@ -489,6 +466,7 @@ usb_status_t USB_DeviceCdcVcomSetConfigure(usb_device_handle handle, uint8_t con
         epCallback.callbackParam = handle;
 
         epInitStruct.zlt = 0;
+        epInitStruct.interval = 0;
         epInitStruct.transferType = USB_ENDPOINT_BULK;
         epInitStruct.endpointAddress =
             USB_CDC_VCOM_DIC_BULK_IN_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
@@ -506,7 +484,8 @@ usb_status_t USB_DeviceCdcVcomSetConfigure(usb_device_handle handle, uint8_t con
         epCallback.callbackFn = USB_DeviceCdcAcmBulkOut;
         epCallback.callbackParam = handle;
 
-        epInitStruct.zlt = 0;
+        epInitStruct.zlt = 0; 
+        epInitStruct.interval = 0U;
         epInitStruct.transferType = USB_ENDPOINT_BULK;
         epInitStruct.endpointAddress =
             USB_CDC_VCOM_DIC_BULK_OUT_ENDPOINT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);

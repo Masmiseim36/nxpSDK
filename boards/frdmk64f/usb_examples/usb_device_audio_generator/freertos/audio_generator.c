@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2017,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #include "usb_phy.h"
 #endif
 
@@ -50,11 +50,13 @@ void USB_DeviceTaskFn(void *deviceHandle);
 
 usb_status_t USB_DeviceAudioCallback(class_handle_t handle, uint32_t event, void *param);
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param);
-extern void USB_PrepareData(void);
+extern void USB_AudioRecorderGetBuffer(uint8_t *buffer, uint32_t size);
 #if defined(AUDIO_DATA_SOURCE_DMIC) && (AUDIO_DATA_SOURCE_DMIC > 0U)
 extern void Board_DMIC_DMA_Init(void);
 #endif
-
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+extern void SCTIMER_CaptureInit(void);
+#endif
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -98,6 +100,14 @@ usb_audio_generator_struct_t s_audioGenerator = {
     .resSamplingFrequency = {0x00U, 0x00U, 0x01U},
     .speed = USB_SPEED_FULL,
     .attach = 0U,
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+    .generatorIntervalCount = 0,
+    .audioPllTicksPrev = 0,
+    .audioPllTicksDiff = 0,
+    .audioPllTicksEma = AUDIO_PLL_USB1_SOF_INTERVAL_COUNT,
+    .audioPllTickEmaFrac = 0,
+    .audioPllStep = AUDIO_PLL_FRACTIONAL_CHANGE_STEP,
+#endif
 };
 
 /* USB device class information */
@@ -131,9 +141,9 @@ void USB_DeviceIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbDeviceKhciIrq[] = USB_IRQS;
-    irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+    irqNumber                  = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 
-/* Install isr, set priority, and enable IRQ. */
+    /* Install isr, set priority, and enable IRQ. */
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
     EnableIRQ((IRQn_Type)irqNumber);
 }
@@ -275,7 +285,6 @@ usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void 
             {
                 uint16_t volume = (uint16_t)((uint16_t)s_audioGenerator.curVolume[1] << 8U);
                 volume |= (uint8_t)(s_audioGenerator.curVolume[0]);
-                usb_echo("Set Cur Volume : %x\r\n", volume);
             }
             break;
         case USB_DEVICE_AUDIO_SET_CUR_MUTE_CONTROL:
@@ -285,7 +294,6 @@ usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void 
             }
             else
             {
-                usb_echo("Set Cur Mute : %x\r\n", s_audioGenerator.curMute);
             }
             break;
         case USB_DEVICE_AUDIO_SET_CUR_BASS_CONTROL:
@@ -463,7 +471,8 @@ usb_status_t USB_DeviceAudioCallback(class_handle_t handle, uint32_t event, void
                 (ep_cb_param->length == ((USB_SPEED_HIGH == s_audioGenerator.speed) ? HS_ISO_IN_ENDP_PACKET_SIZE :
                                                                                       FS_ISO_IN_ENDP_PACKET_SIZE)))
             {
-                USB_PrepareData();
+                USB_AudioRecorderGetBuffer(s_wavBuff, (USB_SPEED_HIGH == s_audioGenerator.speed) ? HS_ISO_IN_ENDP_PACKET_SIZE :
+                                                                                         FS_ISO_IN_ENDP_PACKET_SIZE);
                 error = USB_DeviceAudioSend(handle, USB_AUDIO_STREAM_ENDPOINT, s_wavBuff,
                                             (USB_SPEED_HIGH == s_audioGenerator.speed) ? HS_ISO_IN_ENDP_PACKET_SIZE :
                                                                                          FS_ISO_IN_ENDP_PACKET_SIZE);
@@ -496,12 +505,17 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
     usb_status_t error = kStatus_USB_Error;
     uint8_t *temp8 = (uint8_t *)param;
     uint16_t *temp16 = (uint16_t *)param;
+    uint8_t count = 0U;
 
     switch (event)
     {
         case kUSB_DeviceEventBusReset:
         {
             /* The device BUS reset signal detected */
+            for(count = 0U; count < USB_AUDIO_GENERATOR_INTERFACE_COUNT; count++)
+            {
+                s_audioGenerator.currentInterfaceAlternateSetting[count] = 0U;
+            }
             s_audioGenerator.attach = 0U;
             s_audioGenerator.currentConfiguration = 0U;
             error = kStatus_USB_Success;
@@ -545,7 +559,8 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                     s_audioGenerator.currentInterfaceAlternateSetting[interface] = alternateSetting;
                     if (alternateSetting == 1U)
                     {
-                        USB_PrepareData();
+                        USB_AudioRecorderGetBuffer(s_wavBuff, (USB_SPEED_HIGH == s_audioGenerator.speed) ? HS_ISO_IN_ENDP_PACKET_SIZE :
+                                                                                         FS_ISO_IN_ENDP_PACKET_SIZE);
                         USB_DeviceAudioSend(s_audioGenerator.audioHandle, USB_AUDIO_STREAM_ENDPOINT, s_wavBuff,
                                             (USB_SPEED_HIGH == s_audioGenerator.speed) ? HS_ISO_IN_ENDP_PACKET_SIZE :
                                                                                          FS_ISO_IN_ENDP_PACKET_SIZE);
@@ -618,6 +633,10 @@ void USB_DeviceApplicationInit(void)
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
     SYSMPU_Enable(SYSMPU, 0);
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
+
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+    SCTIMER_CaptureInit();
+#endif
 
     if (kStatus_USB_Success != USB_DeviceClassInit(CONTROLLER_ID, &s_audioConfigList, &s_audioGenerator.deviceHandle))
     {

@@ -22,6 +22,7 @@
 #include "timer_manager.h"
 
 #include "app.h"
+#include "fsl_os_abstraction.h"
 
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
 #include "fsl_sysmpu.h"
@@ -133,13 +134,13 @@ static shell_status_t SHELL_DimCommand(shell_handle_t shellHandle, int32_t argc,
 
 static int StringToInt(char *buffer, int length, uint32_t *num)
 {
-    uint8_t isHex = 0;
+    uint8_t isHex      = 0;
     uint8_t startIndex = 0;
 
     *num = 0;
     if ((length > 2) && ('0' == buffer[0]) && (('X' == buffer[1]) || ('x' == buffer[1])))
     {
-        isHex = 1;
+        isHex      = 1;
         startIndex = 2;
     }
 
@@ -224,7 +225,7 @@ void main_task(void *param)
 
         initialized = 1;
 
-        timerConfig.instance = 0U;
+        timerConfig.instance    = 0U;
         timerConfig.srcClock_Hz = TIMER_SOURCE_CLOCK;
         TM_Init(&timerConfig);
 
@@ -286,7 +287,12 @@ void main_task(void *param)
             BUTTON_InstallCallback(buttonHandle[i], button_callback, NULL);
         }
 #endif
+    }
 
+#if USE_RTOS
+    while (1)
+#endif
+    {
 #if !(defined(SHELL_NON_BLOCKING_MODE) && (SHELL_NON_BLOCKING_MODE > 0U))
         SHELL_Task(s_shellHandle);
 #endif

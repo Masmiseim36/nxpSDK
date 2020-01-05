@@ -19,6 +19,9 @@
 /*
  * Change log:
  *
+ *   1.1.1
+ *     - Support RGB565/RGB888/BGR565/BGR888.
+ *
  *   1.1.0
  *     - Add 8-bit data bus support. Currently support 8-bit and 16bit data bus,
  *       configured by the macro SSD1963_DATA_WITDH.
@@ -160,9 +163,15 @@ typedef enum _ssd1963_panel_data_width
 typedef enum _ssd1963_pixel_interface
 {
 #if (8 == SSD1963_DATA_WITDH)
-    kSSD1963_PixelInterface8BitBGR888 = 0, /*!< 8-bits interface, pixel format BGR888. */
+    kSSD1963_PixelInterface8BitBGR888 = 0,               /*!< 8-bits interface, pixel format BGR888, deprecated.
+                                                              Use kSSD1963_BGR888 instead. */
+    kSSD1963_BGR888 = kSSD1963_PixelInterface8BitBGR888, /*!< 8-bits interface, pixel format BGR888. */
+    kSSD1963_RGB888 = 1,                                 /*!< 8-bits interface, pixel format BGR888. */
 #else
-    kSSD1963_PixelInterface16Bit565 = 3, /*!< 16-bits interface, pixel format BGR565. */
+    kSSD1963_PixelInterface16Bit565 = 0,               /*!< 16-bits interface, pixel format BGR565, deprecated.
+                                                     Use kSSD1963_RGB565 instead  */
+    kSSD1963_RGB565 = kSSD1963_PixelInterface16Bit565, /*!< 16-bits interface, pixel format RGB565. */
+    kSSD1963_BGR565 = 1,                               /*!< 16-bits interface, pixel format BGR565. */
 #endif
 } ssd1963_pixel_interface_t;
 
@@ -378,6 +387,14 @@ void SSD1963_WriteMemory(ssd1963_handle_t *handle, const uint8_t *data, uint32_t
  * @param enable Pass in true to enable, false to disable.
  */
 void SSD1963_EnableTearEffect(ssd1963_handle_t *handle, bool enable);
+
+/*!
+ * @brief Set the pixel format.
+ *
+ * @param handle SSD1963 handle structure.
+ * @param pixelFormat Pixel format to set.
+ */
+void SSD1963_SetPixelFormat(ssd1963_handle_t *handle, ssd1963_pixel_interface_t pixelFormat);
 
 #if defined(__cplusplus)
 }

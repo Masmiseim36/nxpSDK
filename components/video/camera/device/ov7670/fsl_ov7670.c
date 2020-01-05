@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -47,42 +47,42 @@ status_t OV7670_InitExt(camera_device_handle_t *handle, const camera_config_t *c
  * Variables
  ******************************************************************************/
 /*! @brief OV7670 resolution options                                          */
-ov7670_window_start_point_t OV7670_WINDOW_START_POINT_VGA_DEFAULT = {140, 16};
-ov7670_window_start_point_t OV7670_WINDOW_START_POINT_QVGA_DEFAULT = {272, 16};
+ov7670_window_start_point_t OV7670_WINDOW_START_POINT_VGA_DEFAULT   = {140, 16};
+ov7670_window_start_point_t OV7670_WINDOW_START_POINT_QVGA_DEFAULT  = {272, 16};
 ov7670_window_start_point_t OV7670_WINDOW_START_POINT_QQVGA_DEFAULT = {140, 16};
-ov7670_window_start_point_t OV7670_WINDOW_START_POINT_CIF_DEFAULT = {140, 16};
-ov7670_window_start_point_t OV7670_WINDOW_START_POINT_QCIF_DEFAULT = {140, 16};
+ov7670_window_start_point_t OV7670_WINDOW_START_POINT_CIF_DEFAULT   = {140, 16};
+ov7670_window_start_point_t OV7670_WINDOW_START_POINT_QCIF_DEFAULT  = {140, 16};
 ov7670_window_start_point_t OV7670_WINDOW_START_POINT_QQCIF_DEFAULT = {140, 16};
 
 /*! @brief Night mode initialization structure data                           */
-ov7670_output_format_config_t OV7670_FORMAT_RawBayerRGB = {0x01, 0x00, 0x00};
+ov7670_output_format_config_t OV7670_FORMAT_RawBayerRGB       = {0x01, 0x00, 0x00};
 ov7670_output_format_config_t OV7670_FORMAT_ProcessedBayerRGB = {0x05, 0x00, 0x00};
-ov7670_output_format_config_t OV7670_FORMAT_YUV422 = {0x00, 0x00, 0x00};
-ov7670_output_format_config_t OV7670_FORMAT_GRB422 = {0x04, 0x00, 0x00};
-ov7670_output_format_config_t OV7670_FORMAT_RGB565 = {0x04, 0xd0, 0x00};
-ov7670_output_format_config_t OV7670_FORMAT_RGB555 = {0x04, 0xf0, 0x00};
-ov7670_output_format_config_t OV7670_FORMAT_xRGB444 = {0x04, 0xd0, 0x2};
-ov7670_output_format_config_t OV7670_FORMAT_RGBx444 = {0x04, 0xd0, 0x3};
+ov7670_output_format_config_t OV7670_FORMAT_YUV422            = {0x00, 0x00, 0x00};
+ov7670_output_format_config_t OV7670_FORMAT_GRB422            = {0x04, 0x00, 0x00};
+ov7670_output_format_config_t OV7670_FORMAT_RGB565            = {0x04, 0xd0, 0x00};
+ov7670_output_format_config_t OV7670_FORMAT_RGB555            = {0x04, 0xf0, 0x00};
+ov7670_output_format_config_t OV7670_FORMAT_xRGB444           = {0x04, 0xd0, 0x2};
+ov7670_output_format_config_t OV7670_FORMAT_RGBx444           = {0x04, 0xd0, 0x3};
 
 /*! @brief resolution initialization structure data                           */
 ov7670_resolution_config_t OV7670_RESOLUTION_VGA = {0x00, 0x00, 0x00, 0x3a, 0x35, 0x11, 0xf0, 0x02}; /*!< 640 x 480 */
 ov7670_resolution_config_t OV7670_RESOLUTION_QVGA_ORIGINAL = {0x10, 0x00, 0x00, 0x3a,
                                                               0x35, 0x11, 0xf0, 0x02};                 /*!< 320 x 240 */
-ov7670_resolution_config_t OV7670_RESOLUTION_QVGA = {0x10, 0x04, 0x19, 0x3a, 0x35, 0x11, 0xf1, 0x02};  /*!< 320 x 240 */
+ov7670_resolution_config_t OV7670_RESOLUTION_QVGA  = {0x10, 0x04, 0x19, 0x3a, 0x35, 0x11, 0xf1, 0x02}; /*!< 320 x 240 */
 ov7670_resolution_config_t OV7670_RESOLUTION_QQVGA = {0x10, 0x04, 0x1A, 0x3a, 0x35, 0x22, 0xf2, 0x02}; /*!< 160 x 120 */
 
 ov7670_resolution_config_t OV7670_RESOLUTION_CIF = {0x20, 0x08, 0x11, 0x3a, 0x35, 0x11, 0xf1, 0x02}; /*!< 352 x 288 */
 ov7670_resolution_config_t OV7670_RESOLUTION_QCIF_ORIGINAL = {0x21, 0x08, 0x11, 0x3a,
                                                               0x35, 0x11, 0xf1, 0x02};                 /*!< 176 x 144 */
-ov7670_resolution_config_t OV7670_RESOLUTION_QCIF = {0x28, 0x00, 0x11, 0x3a, 0x35, 0x11, 0xf1, 0x02};  /*!< 176 x 144 */
+ov7670_resolution_config_t OV7670_RESOLUTION_QCIF  = {0x28, 0x00, 0x11, 0x3a, 0x35, 0x11, 0xf1, 0x02}; /*!< 176 x 144 */
 ov7670_resolution_config_t OV7670_RESOLUTION_QQCIF = {0x28, 0x0c, 0x12, 0x3a, 0x35, 0x22, 0xf2, 0x02}; /*!< 88 x 72 */
 
 /*! @brief Special effects configuration initialization structure data       */
-ov7670_windowing_config_t OV7670_WINDOW_VGA = {0x36, 0x13, 0x01, 0x0a, 0x02, 0x7a};
-ov7670_windowing_config_t OV7670_WINDOW_QVGA = {0x80, 0x15, 0x03, 0x00, 0x03, 0x7b};
+ov7670_windowing_config_t OV7670_WINDOW_VGA   = {0x36, 0x13, 0x01, 0x0a, 0x02, 0x7a};
+ov7670_windowing_config_t OV7670_WINDOW_QVGA  = {0x80, 0x15, 0x03, 0x00, 0x03, 0x7b};
 ov7670_windowing_config_t OV7670_WINDOW_QQVGA = {0x64, 0x16, 0x04, 0x0a, 0x03, 0x7b};
-ov7670_windowing_config_t OV7670_WINDOW_CIF = {0x12, 0x15, 0x0b, 0x0a, 0x03, 0x7b};
-ov7670_windowing_config_t OV7670_WINDOW_QCIF = {0x80, 0x39, 0x03, 0x0a, 0x03, 0x7b};
+ov7670_windowing_config_t OV7670_WINDOW_CIF   = {0x12, 0x15, 0x0b, 0x0a, 0x03, 0x7b};
+ov7670_windowing_config_t OV7670_WINDOW_QCIF  = {0x80, 0x39, 0x03, 0x0a, 0x03, 0x7b};
 ov7670_windowing_config_t OV7670_WINDOW_QQCIF = {0x64, 0x3a, 0x03, 0x06, 0x03, 0x7b};
 
 /*! @brief Frame rate initialization structure data                           */
@@ -107,72 +107,72 @@ ov7670_frame_rate_config_t OV7670_15FPS_12MHZ_XCLK = {0x01, 0x4a, 0x00, 0x00, 0x
 ov7670_frame_rate_config_t OV7670_14FPS_12MHZ_XCLK = {0x01, 0x4a, 0x00, 0x00, 0x46, 0x00};
 
 /*! @brief Night mode initialization structure data                           */
-ov7670_night_mode_config_t OV7670_NIGHT_MODE_DISABLED = {0x00};
+ov7670_night_mode_config_t OV7670_NIGHT_MODE_DISABLED       = {0x00};
 ov7670_night_mode_config_t OV7670_NIGHT_MODE_AUTO_FR_DIVBY2 = {0xa0};
 ov7670_night_mode_config_t OV7670_NIGHT_MODE_AUTO_FR_DIVBY4 = {0xc0};
 ov7670_night_mode_config_t OV7670_NIGHT_MODE_AUTO_FR_DIVBY8 = {0xe0};
 
 /*! @brief Banding filter initialization structure data                       */
-ov7670_filter_config_t OV7670_FILTER_DISABLED = {0x00, 0x98, 0x7f, 0x02, 0x03, 0x02};
-ov7670_filter_config_t OV7670_FILTER_30FPS_60HZ = {0x20, 0x98, 0x7f, 0x02, 0x03, 0x02};
-ov7670_filter_config_t OV7670_FILTER_15FPS_60HZ = {0x20, 0x4c, 0x3f, 0x05, 0x07, 0x02};
-ov7670_filter_config_t OV7670_FILTER_25FPS_50HZ = {0x20, 0x98, 0x7f, 0x03, 0x03, 0x0a};
-ov7670_filter_config_t OV7670_FILTER_14FPS_50HZ = {0x20, 0x4c, 0x3f, 0x06, 0x07, 0x0a};
+ov7670_filter_config_t OV7670_FILTER_DISABLED                          = {0x00, 0x98, 0x7f, 0x02, 0x03, 0x02};
+ov7670_filter_config_t OV7670_FILTER_30FPS_60HZ                        = {0x20, 0x98, 0x7f, 0x02, 0x03, 0x02};
+ov7670_filter_config_t OV7670_FILTER_15FPS_60HZ                        = {0x20, 0x4c, 0x3f, 0x05, 0x07, 0x02};
+ov7670_filter_config_t OV7670_FILTER_25FPS_50HZ                        = {0x20, 0x98, 0x7f, 0x03, 0x03, 0x0a};
+ov7670_filter_config_t OV7670_FILTER_14FPS_50HZ                        = {0x20, 0x4c, 0x3f, 0x06, 0x07, 0x0a};
 ov7670_filter_config_t OV7670_FILTER_30FPS_60HZ_AUTO_LIGHT_FREQ_DETECT = {0x20, 0x98, 0x7f, 0x02, 0x03, 0x12};
 ov7670_filter_config_t OV7670_FILTER_15FPS_60HZ_AUTO_LIGHT_FREQ_DETECT = {0x20, 0x4c, 0x3f, 0x05, 0x07, 0x12};
 ov7670_filter_config_t OV7670_FILTER_25FPS_50HZ_AUTO_LIGHT_FREQ_DETECT = {0x20, 0x98, 0x7f, 0x03, 0x03, 0x1a};
 ov7670_filter_config_t OV7670_FILTER_14FPS_50HZ_AUTO_LIGHT_FREQ_DETECT = {0x20, 0x4c, 0x3f, 0x06, 0x07, 0x1a};
 
 /*! @brief White balance initialization structure data                        */
-ov7670_white_balance_config_t OV7670_WHITE_BALANCE_DEFAULT = {0x02, 0x9a, 0xc0, 0x55, 0x02, 0x14,
+ov7670_white_balance_config_t OV7670_WHITE_BALANCE_DEFAULT  = {0x02, 0x9a, 0xc0, 0x55, 0x02, 0x14,
                                                               0xf0, 0x45, 0x61, 0x51, 0x79, 0x08};
 ov7670_white_balance_config_t OV7670_WHITE_BALANCE_DISABLED = {0x00, 0x9a, 0xc0, 0x55, 0x02, 0x14,
                                                                0xf0, 0x45, 0x61, 0x51, 0x79, 0x00};
-ov7670_white_balance_config_t OV7670_WHITE_BALANCE_SIMPLE = {0x02, 0x9f, 0x10, 0x55, 0x02, 0x14,
+ov7670_white_balance_config_t OV7670_WHITE_BALANCE_SIMPLE   = {0x02, 0x9f, 0x10, 0x55, 0x02, 0x14,
                                                              0xf0, 0x45, 0x61, 0x51, 0x79, 0x08};
 
 /*! @brief Light mode configuration initialization structure data             */
 ov7670_light_mode_config_t OV7670_LIGHT_MODE_DISABLED = {0x05, 0x0a, 0x08, 0x00, 0x08};
-ov7670_light_mode_config_t OV7670_LIGHT_MODE_AUTO = {0xc5, 0x3a, 0x08, 0x00, 0x08};
-ov7670_light_mode_config_t OV7670_LIGHT_MODE_SUNNY = {0xc5, 0x6a, 0x5a, 0x00, 0x5c};
-ov7670_light_mode_config_t OV7670_LIGHT_MODE_CLOUDY = {0xc5, 0x0a, 0x58, 0x00, 0x60};
-ov7670_light_mode_config_t OV7670_LIGHT_MODE_OFFICE = {0xc5, 0x2a, 0x84, 0x00, 0x4c};
-ov7670_light_mode_config_t OV7670_LIGHT_MODE_HOME = {0xc5, 0x1a, 0x96, 0x00, 0x40};
+ov7670_light_mode_config_t OV7670_LIGHT_MODE_AUTO     = {0xc5, 0x3a, 0x08, 0x00, 0x08};
+ov7670_light_mode_config_t OV7670_LIGHT_MODE_SUNNY    = {0xc5, 0x6a, 0x5a, 0x00, 0x5c};
+ov7670_light_mode_config_t OV7670_LIGHT_MODE_CLOUDY   = {0xc5, 0x0a, 0x58, 0x00, 0x60};
+ov7670_light_mode_config_t OV7670_LIGHT_MODE_OFFICE   = {0xc5, 0x2a, 0x84, 0x00, 0x4c};
+ov7670_light_mode_config_t OV7670_LIGHT_MODE_HOME     = {0xc5, 0x1a, 0x96, 0x00, 0x40};
 
 /*! @brief Color saturation configuration initialization structure data       */
-ov7670_color_saturation_config_t OV7670_COLOR_SATURATION_4PLUS = {0xc0, 0xc0, 0x00, 0x33, 0x8d, 0xc0, 0x9e, 0x02};
-ov7670_color_saturation_config_t OV7670_COLOR_SATURATION_3PLUS = {0x99, 0x99, 0x00, 0x28, 0x71, 0x99, 0x9e, 0x02};
-ov7670_color_saturation_config_t OV7670_COLOR_SATURATION_2PLUS = {0xc0, 0xc0, 0x00, 0x33, 0x8d, 0xc0, 0x9e, 0x00};
-ov7670_color_saturation_config_t OV7670_COLOR_SATURATION_1PLUS = {0x99, 0x99, 0x00, 0x28, 0x71, 0x99, 0x9e, 0x00};
-ov7670_color_saturation_config_t OV7670_COLOR_SATURATION_0 = {0x80, 0x80, 0x00, 0x22, 0x5e, 0x80, 0x9e, 0x00};
+ov7670_color_saturation_config_t OV7670_COLOR_SATURATION_4PLUS   = {0xc0, 0xc0, 0x00, 0x33, 0x8d, 0xc0, 0x9e, 0x02};
+ov7670_color_saturation_config_t OV7670_COLOR_SATURATION_3PLUS   = {0x99, 0x99, 0x00, 0x28, 0x71, 0x99, 0x9e, 0x02};
+ov7670_color_saturation_config_t OV7670_COLOR_SATURATION_2PLUS   = {0xc0, 0xc0, 0x00, 0x33, 0x8d, 0xc0, 0x9e, 0x00};
+ov7670_color_saturation_config_t OV7670_COLOR_SATURATION_1PLUS   = {0x99, 0x99, 0x00, 0x28, 0x71, 0x99, 0x9e, 0x00};
+ov7670_color_saturation_config_t OV7670_COLOR_SATURATION_0       = {0x80, 0x80, 0x00, 0x22, 0x5e, 0x80, 0x9e, 0x00};
 ov7670_color_saturation_config_t OV7670_COLOR_SATURATION_DEFAULT = {0x40, 0x34, 0x0c, 0x17, 0x29, 0x40, 0x1e, 0x00};
-ov7670_color_saturation_config_t OV7670_COLOR_SATURATION_1MINUS = {0x66, 0x66, 0x00, 0x1b, 0x4b, 0x66, 0x9e, 0x00};
-ov7670_color_saturation_config_t OV7670_COLOR_SATURATION_2MINUS = {0x40, 0x40, 0x00, 0x11, 0x2f, 0x40, 0x9e, 0x00};
+ov7670_color_saturation_config_t OV7670_COLOR_SATURATION_1MINUS  = {0x66, 0x66, 0x00, 0x1b, 0x4b, 0x66, 0x9e, 0x00};
+ov7670_color_saturation_config_t OV7670_COLOR_SATURATION_2MINUS  = {0x40, 0x40, 0x00, 0x11, 0x2f, 0x40, 0x9e, 0x00};
 
 /*! @brief Special effects configuration initialization structure data       */
-ov7670_special_effect_config_t OV7670_SPECIAL_EFFECT_ANTIQUE = {0x18, 0, 255};
-ov7670_special_effect_config_t OV7670_SPECIAL_EFFECT_SEPHIA = {0x18, 16, 146};
-ov7670_special_effect_config_t OV7670_SPECIAL_EFFECT_BLUISH = {0x18, 240, 146};
-ov7670_special_effect_config_t OV7670_SPECIAL_EFFECT_GREENISH = {0x18, 0, 30};
-ov7670_special_effect_config_t OV7670_SPECIAL_EFFECT_REDISH = {0x18, 90, 240};
-ov7670_special_effect_config_t OV7670_SPECIAL_EFFECT_BW = {0x18, 110, 110};
-ov7670_special_effect_config_t OV7670_SPECIAL_EFFECT_NEGATIVE = {0x28, 0x80, 0x80};
+ov7670_special_effect_config_t OV7670_SPECIAL_EFFECT_ANTIQUE     = {0x18, 0, 255};
+ov7670_special_effect_config_t OV7670_SPECIAL_EFFECT_SEPHIA      = {0x18, 16, 146};
+ov7670_special_effect_config_t OV7670_SPECIAL_EFFECT_BLUISH      = {0x18, 240, 146};
+ov7670_special_effect_config_t OV7670_SPECIAL_EFFECT_GREENISH    = {0x18, 0, 30};
+ov7670_special_effect_config_t OV7670_SPECIAL_EFFECT_REDISH      = {0x18, 90, 240};
+ov7670_special_effect_config_t OV7670_SPECIAL_EFFECT_BW          = {0x18, 110, 110};
+ov7670_special_effect_config_t OV7670_SPECIAL_EFFECT_NEGATIVE    = {0x28, 0x80, 0x80};
 ov7670_special_effect_config_t OV7670_SPECIAL_EFFECT_BW_NEGATIVE = {0x38, 110, 110};
-ov7670_special_effect_config_t OV7670_SPECIAL_EFFECT_NORMAL = {0x0c, 0x80, 0x80};
-ov7670_special_effect_config_t OV7670_SPECIAL_EFFECT_DISABLED = {0x08, 0x80, 0x80};
+ov7670_special_effect_config_t OV7670_SPECIAL_EFFECT_NORMAL      = {0x0c, 0x80, 0x80};
+ov7670_special_effect_config_t OV7670_SPECIAL_EFFECT_DISABLED    = {0x08, 0x80, 0x80};
 
 /*! @brief Special effects configuration initialization structure data       */
 ov7670_gamma_curve_slope_config_t OV7670_GAMMA_CURVE_SLOPE_DEFAULT = {0x24, 0x04, 0x07, 0x10, 0x28, 0x36, 0x44, 0x52,
                                                                       0x60, 0x6c, 0x78, 0x8c, 0x9e, 0xbb, 0xd2, 0xe5};
-ov7670_gamma_curve_slope_config_t OV7670_GAMMA_CURVE_SLOPE1 = {0x20, 0x10, 0x1e, 0x35, 0x5a, 0x69, 0x76, 0x80,
+ov7670_gamma_curve_slope_config_t OV7670_GAMMA_CURVE_SLOPE1        = {0x20, 0x10, 0x1e, 0x35, 0x5a, 0x69, 0x76, 0x80,
                                                                0x88, 0x8f, 0x96, 0xa3, 0xaf, 0xc4, 0xd7, 0xe8};
 
 const camera_device_operations_t ov7670_ops = {
-    .init = OV7670_Init,
-    .deinit = OV7670_Deinit,
-    .start = OV7670_Start,
-    .stop = OV7670_Stop,
-    .control = OV7670_Control,
+    .init     = OV7670_Init,
+    .deinit   = OV7670_Deinit,
+    .start    = OV7670_Start,
+    .stop     = OV7670_Stop,
+    .control  = OV7670_Control,
     .init_ext = OV7670_InitExt,
 };
 /*******************************************************************************
@@ -410,10 +410,10 @@ status_t OV7670_NightMode(camera_device_handle_t *handle, const ov7670_night_mod
 
 status_t OV7670_BandingFilterSelection(camera_device_handle_t *handle, const ov7670_filter_config_t *filterConfig)
 {
-    OV7670_WriteReg(handle, OV7670_BD50ST_REG, filterConfig->bd50st);    /*!< 50Hz banding filter */
-    OV7670_WriteReg(handle, OV7670_BD60ST_REG, filterConfig->bd60st);    /*!< 60Hz banding filter */
-    OV7670_WriteReg(handle, OV7670_BD50MAX_REG, filterConfig->bd50max);  /*!< x step for 50hz */
-    OV7670_WriteReg(handle, OV7670_BD60MAX_REG, filterConfig->bd60max);  /*!< y step for 60hz */
+    OV7670_WriteReg(handle, OV7670_BD50ST_REG, filterConfig->bd50st);      /*!< 50Hz banding filter */
+    OV7670_WriteReg(handle, OV7670_BD60ST_REG, filterConfig->bd60st);      /*!< 60Hz banding filter */
+    OV7670_WriteReg(handle, OV7670_BD50MAX_REG, filterConfig->bd50max);    /*!< x step for 50hz */
+    OV7670_WriteReg(handle, OV7670_BD60MAX_REG, filterConfig->bd60max);    /*!< y step for 60hz */
     OV7670_ModifyReg(handle, OV7670_COM11_REG, 0x1a, filterConfig->com11); /*!< Automatic Detect banding filter */
     OV7670_ModifyReg(handle, OV7670_COM8_REG, 0x20, filterConfig->com8);   /*!< banding filter enable */
 
@@ -559,9 +559,9 @@ status_t OV7670_GammaCurveSlope(camera_device_handle_t *handle,
 void OV7670_GetDefaultConfig(ov7670_config_t *config)
 {
     config->outputFormat = (ov7670_output_format_config_t *)&OV7670_FORMAT_RGB565;
-    config->resolution = kVIDEO_ResolutionQQVGA;
+    config->resolution   = kVIDEO_ResolutionQQVGA;
     config->frameRate = (ov7670_frame_rate_config_t *)&OV7670_25FPS_12MHZ_XCLK, config->contrast = 0x30;
-    config->brightness = 0x10;
+    config->brightness     = 0x10;
     config->advancedConfig = NULL;
 }
 

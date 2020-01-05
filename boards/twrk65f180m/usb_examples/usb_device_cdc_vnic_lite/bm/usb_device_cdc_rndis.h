@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _USB_DEVICE_CDC_RNDIS_H_
 #define _USB_DEVICE_CDC_RNDIS_H_
@@ -568,7 +546,6 @@ typedef enum _rndis_state_enum
 /*! @brief Define structure for CDC RNDIS device. */
 typedef struct _usb_device_cdc_rndis_struct
 {
-    bool isBusy;
     uint8_t *rndisCommand;                /*!< The pointer to the buffer of the RNDIS request. */
     uint8_t *responseData;                /*!< The pointer to the buffer of the RNDIS response. */
     uint32_t rndisHostMaxTxSize;          /*!< The maximum transmit size in byte of the host. */
@@ -584,10 +561,12 @@ typedef struct _usb_device_cdc_rndis_struct
     uint32_t numRecvFramesAlignmentError; /*!< The number of the frames received that has alignment error. */
     uint32_t numFramesTxOneCollision;     /*!< The number of the frames sent that has one collision. */
     uint32_t numFramesTxManyCollision;    /*!< The number of the frames sent that has many collision. */
-    uint8_t rndisDeviceState;             /*!< The RNDIS device state. */
-    usb_osa_mutex_handle statusMutex;     /*!< The mutex to guarantee the consistent access to the device state. */
+    osa_mutex_handle_t statusMutex;     /*!< The mutex to guarantee the consistent access to the device state. */
+    uint32_t mutexBuffer[(OSA_MUTEX_HANDLE_SIZE + 3)/4]; /*!< The mutex buffer. */
     /*! The callback function provided by application for the RNDIS request. */
     usb_status_t (*rndisCallback)(struct _usb_device_cdc_rndis_struct *handle, uint32_t event, void *param);
+    bool isBusy;
+    uint8_t rndisDeviceState;             /*!< The RNDIS device state. */
 } usb_device_cdc_rndis_struct_t;
 
 /*! @brief Define structure for CDC RNDIS device. */

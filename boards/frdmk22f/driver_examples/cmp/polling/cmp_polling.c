@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -65,7 +65,7 @@ int main(void)
 
     /* Configure the DAC channel. */
     mCmpDacConfigStruct.referenceVoltageSource = kCMP_VrefSourceVin2; /* VCC. */
-    mCmpDacConfigStruct.DACValue = 32U;                               /* Half voltage of logic high level. */
+    mCmpDacConfigStruct.DACValue               = 32U;                 /* Half voltage of logic high level. */
     CMP_SetDACConfig(DEMO_CMP_BASE, &mCmpDacConfigStruct);
     CMP_SetInputChannels(DEMO_CMP_BASE, DEMO_CMP_USER_CHANNEL, DEMO_CMP_DAC_CHANNEL);
 

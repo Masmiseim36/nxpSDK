@@ -77,6 +77,10 @@ void BOARD_InitHardware(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+/* Allocate the memory for the heap. */
+#if defined(configAPPLICATION_ALLOCATED_HEAP) && (configAPPLICATION_ALLOCATED_HEAP)
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t ucHeap[configTOTAL_HEAP_SIZE];
+#endif
 /*! @brief USB host printer instance global variable */
 extern usb_host_printer_app_t g_HostPrinterApp;
 usb_host_handle g_HostHandle;
@@ -104,7 +108,7 @@ void USB_HostIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbHOSTKhciIrq[] = USB_IRQS;
-    irqNumber = usbHOSTKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+    irqNumber                = usbHOSTKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 
 /* Install isr, set priority, and enable IRQ. */
 #if defined(__GIC_PRIO_BITS)
@@ -130,7 +134,7 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
 {
     usb_status_t status = kStatus_USB_Success;
 
-    switch (eventCode)
+    switch (eventCode & 0x0000FFFFU)
     {
         case kUSB_HostEventAttach:
             status = USB_HostPrinterAppEvent(deviceHandle, configurationHandle, eventCode);
@@ -148,6 +152,10 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
             status = USB_HostPrinterAppEvent(deviceHandle, configurationHandle, eventCode);
             break;
 
+        case kUSB_HostEventEnumerationFail:
+            usb_echo("enumeration failed\r\n");
+            break;
+
         default:
             break;
     }
@@ -160,7 +168,7 @@ static void USB_HostApplicationInit(void)
     usb_status_t status = kStatus_USB_Success;
 
     /* application init */
-    g_HostPrinterApp.deviceIdBuffer = NULL;
+    g_HostPrinterApp.deviceIdBuffer         = NULL;
     g_HostPrinterApp.selectAlternateSetting = 0;
 
     USB_HostClockInit();

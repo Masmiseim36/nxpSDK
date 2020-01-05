@@ -22,13 +22,13 @@
 // Author(s): ="Atheros"
 //==============================================================================
 /*
-* $FileName: wmiconfig.c$
-* $Version : $
-* $Date    : May-20-2011$
-*
-* Comments: Handles all Atheros defined wmiconfig command implementations.
-*
-*END************************************************************************/
+ * $FileName: wmiconfig.c$
+ * $Version : $
+ * $Date    : May-20-2011$
+ *
+ * Comments: Handles all Atheros defined wmiconfig command implementations.
+ *
+ *END************************************************************************/
 
 #include <main.h>
 #include "throughput.h"
@@ -57,26 +57,26 @@ QCOM_SSID ssid_str_concurrent = {0};
 
 /* Set defaults for Base & range on AUtoIP address pool */
 unsigned long dBASE_AUTO_IP_ADDRESS = AUTOIP_BASE_ADDR; /* 169.254.1.0 */
-unsigned long dMAX_AUTO_IP_ADDRESS = AUTOIP_MAX_ADDR;   /* 169.254.254.255 */
+unsigned long dMAX_AUTO_IP_ADDRESS  = AUTOIP_MAX_ADDR;  /* 169.254.254.255 */
 
 /**************************Globals ************************************************/
 uint8_t pmk_flag = 0, hidden_flag = 0, wps_flag = 0;
 AP_CFG_CMD ap_config_param;
-wifimode_t mode_flag = MODE_STATION;
+wifimode_t mode_flag      = MODE_STATION;
 WMI_POWER_MODE power_mode = REC_POWER;
-QCOM_SSID ssid = {0};
+QCOM_SSID ssid            = {0};
 wps_context_t wps_context;
 uint32_t wifi_connected_flag = 0, concurrent_connect_flag = 0;
 bool p2pMode = FALSE;
 #if ENABLE_P2P_MODE
-int32_t task2_msec = 100;
+int32_t task2_msec             = 100;
 uint8_t p2p_connection_default = 0, p2p_persistent_done = 0, p2p_cancel_enable = 0, p2p_session_in_progress = 0; /*
                                        0 - Allow other P2P Device to connect(Accept connection)
                                        1 - Allow IOE Device to connect(Issue connect)
                                     */
-char p2p_wps_pin[WPS_PIN_LEN + 1];
-uint8_t p2p_intent = 0;
-bool autogo_newpp = false;
+char p2p_wps_pin[WPS_PIN_LEN + 1] = {0};
+uint8_t p2p_intent                = 0;
+bool autogo_newpp                 = false;
 WMI_PERSISTENT_MAC_LIST p2p_pers_data[MAX_LIST_COUNT];
 uint8_t invitation_index = 0, p2p_join_mac_addr[ATH_MAC_LEN] = {0}, p2p_join_session_active = 0;
 WMI_P2P_FW_CONNECT_CMD_STRUCT p2p_join_profile;
@@ -91,7 +91,9 @@ uint8_t default_pattern[WOW_DEFAULT_FILTER_SIZE] = {0x22, 0x33, 0x44, 0x55, 0x66
 QCOM_WOW_GPIO default_wow_gpio_config = {.gpio = 17, .isActiveLow = 0, .triggerMechanism = GPIO_LEVEL_TRIGGER};
 
 QCOM_WOW_PATTERN default_wow_pattern = {
-    .pattern_size = WOW_DEFAULT_FILTER_SIZE, .offset = 0, .pattern_index = 0,
+    .pattern_size  = WOW_DEFAULT_FILTER_SIZE,
+    .offset        = 0,
+    .pattern_index = 0,
 };
 
 static int security_mode = 0;
@@ -99,9 +101,9 @@ WLAN_CRYPT_TYPE cipher;
 WLAN_AUTH_MODE wpa_ver;
 wepkey_t key[MAX_NUM_WEP_KEYS];
 uint32_t wep_keyindex;
-char wpsPin[MAX_WPS_PIN_SIZE];
-QCOM_PASSPHRASE wpa_passphrase = {0};
-volatile uint8_t wifi_state = 0;
+char wpsPin[MAX_WPS_PIN_SIZE + 1] = {0};
+QCOM_PASSPHRASE wpa_passphrase    = {0};
+volatile uint8_t wifi_state       = 0;
 int32_t block_on_dhcp(int32_t argc, char *argv[]);
 int active_device = 0;
 /************ Function Prototypes *********************************************/
@@ -267,12 +269,12 @@ A_STATUS set_power_mode(bool pwr_mode, uint8_t pwr_module)
 }
 
 /*FUNCTION*-----------------------------------------------------------------
-*
-* Function Name  : mystrtobyte
-* Returned Value : NA
-* Comments       : converts a string to a bianry bytes.
-*
-*END------------------------------------------------------------------*/
+ *
+ * Function Name  : mystrtobyte
+ * Returned Value : NA
+ * Comments       : converts a string to a bianry bytes.
+ *
+ *END------------------------------------------------------------------*/
 static int mystrtobyte(const char *arg, unsigned char *ret_byte)
 {
     int i = 0;
@@ -308,16 +310,16 @@ static int mystrtobyte(const char *arg, unsigned char *ret_byte)
 }
 
 /*FUNCTION*-----------------------------------------------------------------
-*
-* Function Name  : mystrtomac
-* Returned Value : NA
-* Comments       : converts a string to a 6 byte MAC address.
-*
-*END------------------------------------------------------------------*/
+ *
+ * Function Name  : mystrtomac
+ * Returned Value : NA
+ * Comments       : converts a string to a 6 byte MAC address.
+ *
+ *END------------------------------------------------------------------*/
 static int mystrtomac(const char *arg, unsigned char *dst)
 {
-    int i = 0;
-    int j = 0;
+    int i           = 0;
+    int j           = 0;
     int left_nibble = 1;
     char base_char;
     unsigned char base_val;
@@ -334,7 +336,7 @@ static int mystrtomac(const char *arg, unsigned char *dst)
         if (arg[i] >= '0' && arg[i] <= '9')
         {
             base_char = '0';
-            base_val = 0x00;
+            base_val  = 0x00;
         }
         else if (arg[i] == ':')
         {
@@ -343,12 +345,12 @@ static int mystrtomac(const char *arg, unsigned char *dst)
         else if (arg[i] >= 'a' && arg[i] <= 'f')
         {
             base_char = 'a';
-            base_val = 0x0a;
+            base_val  = 0x0a;
         }
         else if (arg[i] >= 'A' && arg[i] <= 'F')
         {
             base_char = 'A';
-            base_val = 0x0a;
+            base_val  = 0x0a;
         }
         else
         {
@@ -378,17 +380,17 @@ static int mystrtomac(const char *arg, unsigned char *dst)
 }
 
 /*FUNCTION*-----------------------------------------------------------------
-*
-* Function Name  : wmiconfig_handler
-* Returned Value : ERROR code on error else success
-* Comments       : 1st stop for all wmiconfig commands
-*
-*END------------------------------------------------------------------*/
+ *
+ * Function Name  : wmiconfig_handler
+ * Returned Value : ERROR code on error else success
+ * Comments       : 1st stop for all wmiconfig commands
+ *
+ *END------------------------------------------------------------------*/
 
 int32_t wmiconfig_handler(int32_t argc, char *argv[])
 { /* Body */
-    bool shorthelp = FALSE;
-    uint8_t printhelp = 0;
+    bool shorthelp      = FALSE;
+    uint8_t printhelp   = 0;
     int32_t return_code = A_OK;
     uint32_t enet_device, index = 1;
     QCOM_WLAN_DEV_MODE wifimode = QCOM_WLAN_DEV_MODE_INVALID;
@@ -633,7 +635,7 @@ int32_t wmiconfig_handler(int32_t argc, char *argv[])
         else if (ATH_STRCMP(argv[index], "--rssi") == 0)
         {
             uint8_t rssi = 0;
-            return_code = qcom_sta_get_rssi(enet_device, &rssi);
+            return_code  = qcom_sta_get_rssi(enet_device, &rssi);
             PRINTF(NL "indicator = %d dB" NL, rssi);
         }
         else if (ATH_STRCMP(argv[index], "--gettxstat") == 0)
@@ -1061,14 +1063,14 @@ int32_t wmiconfig_handler(int32_t argc, char *argv[])
     }
     else if (argc == 1)
     {
-        QCOM_SSID tmp_ssid = {0};
+        QCOM_SSID tmp_ssid   = {0};
         QCOM_BSSID tmp_bssid = {0};
-        char *phy_mode = NULL;
+        char *phy_mode       = NULL;
         int32_t error;
-        uint16_t channel_val = 0;
-        uint32_t mode = 0;
+        uint16_t channel_val         = 0;
+        uint32_t mode                = 0;
         QCOM_WLAN_DEV_MODE wifi_mode = QCOM_WLAN_DEV_MODE_INVALID;
-        error = qcom_get_ssid(enet_device, &tmp_ssid);
+        error                        = qcom_get_ssid(enet_device, &tmp_ssid);
 
         if (error != A_OK)
             return_code = A_ERROR;
@@ -1390,12 +1392,12 @@ int32_t wmiconfig_handler(int32_t argc, char *argv[])
 } /* Endbody */
 
 /*FUNCTION*-----------------------------------------------------------------
-*
-* Function Name  : wifiCallback
-* Returned Value : N/A
-* Comments       : Called from driver on a WiFI connection event
-*
-*END------------------------------------------------------------------*/
+ *
+ * Function Name  : wifiCallback
+ * Returned Value : N/A
+ * Comments       : Called from driver on a WiFI connection event
+ *
+ *END------------------------------------------------------------------*/
 void wifiCallback(int val, uint8_t devId, uint8_t *mac, bool bssConn)
 {
     wifi_state = val;
@@ -1442,12 +1444,12 @@ void wifiCallback(int val, uint8_t devId, uint8_t *mac, bool bssConn)
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : ascii_to_hex()
-* Returned Value  : hex counterpart for ascii
-* Comments	: Converts ascii character to correesponding hex value
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : ascii_to_hex()
+ * Returned Value  : hex counterpart for ascii
+ * Comments	: Converts ascii character to correesponding hex value
+ *
+ *END*-----------------------------------------------------------------*/
 static unsigned char ascii_to_hex(char val)
 {
     if ('0' <= val && '9' >= val)
@@ -1467,12 +1469,12 @@ static unsigned char ascii_to_hex(char val)
 }
 
 /*FUNCTION*-----------------------------------------------------------------
-*
-* Function Name  : set_passphrase
-* Returned Value : A_OK
-* Comments       : Store WPA Passphrase for later use
-*
-*END------------------------------------------------------------------*/
+ *
+ * Function Name  : set_passphrase
+ * Returned Value : A_OK
+ * Comments       : Store WPA Passphrase for later use
+ *
+ *END------------------------------------------------------------------*/
 static int32_t set_passphrase(char *passphrase)
 {
     strncpy((char *)&wpa_passphrase, passphrase, sizeof(wpa_passphrase));
@@ -1480,13 +1482,13 @@ static int32_t set_passphrase(char *passphrase)
 }
 
 /*FUNCTION*-----------------------------------------------------------------
-*
-* Function Name  : set_wep_key
-* Returned Value : A_ERROR on error else A_OK
-* Comments       : Store WEP key for later use. Size of Key must be 10 or 26
-*                  Hex characters
-*
-*END------------------------------------------------------------------*/
+ *
+ * Function Name  : set_wep_key
+ * Returned Value : A_ERROR on error else A_OK
+ * Comments       : Store WEP key for later use. Size of Key must be 10 or 26
+ *                  Hex characters
+ *
+ *END------------------------------------------------------------------*/
 static int32_t set_wep_key(char *key_index, char *key_val)
 {
     int key_idx = atoi(key_index);
@@ -1527,30 +1529,30 @@ static int32_t set_wep_key(char *key_index, char *key_val)
 }
 
 /*FUNCTION*-----------------------------------------------------------------
-*
-* Function Name  : clear_wep_keys
-* Returned Value : Success
-* Comments       : Clear wep keys
-*
-*END------------------------------------------------------------------*/
+ *
+ * Function Name  : clear_wep_keys
+ * Returned Value : Success
+ * Comments       : Clear wep keys
+ *
+ *END------------------------------------------------------------------*/
 int32_t clear_wep_keys(void)
 {
     int i;
     for (i = 0; i < 4; i++)
     {
         key[i].key_index = 0;
-        key[i].key[0] = '\0';
+        key[i].key[0]    = '\0';
     }
     return A_OK;
 }
 
 /*FUNCTION*-----------------------------------------------------------------
-*
-* Function Name  : set_callback
-* Returned Value : A_ERROR on error else A_OK
-* Comments       : Sets callback function for WiFi connect/disconnect event
-*
-*END------------------------------------------------------------------*/
+ *
+ * Function Name  : set_callback
+ * Returned Value : A_ERROR on error else A_OK
+ * Comments       : Sets callback function for WiFi connect/disconnect event
+ *
+ *END------------------------------------------------------------------*/
 int32_t set_callback(void)
 {
     int enet_device = get_active_device();
@@ -1584,12 +1586,12 @@ void probe_req_handler(void *buf, int len, int freq)
 }
 
 /*FUNCTION*-----------------------------------------------------------------
-*
-* Function Name  : set_callback
-* Returned Value : A_ERROR on error else A_OK
-* Comments       : Sets callback function for WiFi connect/disconnect event
-*
-*END------------------------------------------------------------------*/
+ *
+ * Function Name  : set_callback
+ * Returned Value : A_ERROR on error else A_OK
+ * Comments       : Sets callback function for WiFi connect/disconnect event
+ *
+ *END------------------------------------------------------------------*/
 A_STATUS set_probe_req_callback(void)
 {
     int enet_device = get_active_device();
@@ -1600,7 +1602,7 @@ A_STATUS enable_probe_req_event(int argc, char *argv[])
 {
     uint32_t enable = atoi(argv[2]);
     int enet_device = get_active_device();
-    A_STATUS ret = set_probe_req_callback();
+    A_STATUS ret    = set_probe_req_callback();
     if (ret == A_OK)
     {
         return qcom_enable_probe_req_event(enet_device, enable);
@@ -1609,12 +1611,12 @@ A_STATUS enable_probe_req_event(int argc, char *argv[])
 }
 
 /*FUNCTION*-----------------------------------------------------------------
-*
-* Function Name  : deviceid_handler
-* Returned Value : A_ERROR on error else A_OK
-* Comments       : Sets the Device ID in the driver
-*
-*END------------------------------------------------------------------*/
+ *
+ * Function Name  : deviceid_handler
+ * Returned Value : A_ERROR on error else A_OK
+ * Comments       : Sets the Device ID in the driver
+ *
+ *END------------------------------------------------------------------*/
 static int32_t deviceid_handler(int32_t index, int32_t argc, char *argv[])
 {
     ATH_IOCTL_PARAM_STRUCT inout_param;
@@ -1626,7 +1628,7 @@ static int32_t deviceid_handler(int32_t index, int32_t argc, char *argv[])
         return A_ERROR;
     }
     inout_param.cmd_id = ATH_SET_DEVICE_ID;
-    inout_param.data = (void *)&deviceid;
+    inout_param.data   = (void *)&deviceid;
     inout_param.length = sizeof(uint16_t);
 
     if (IS_DRIVER_READY != A_OK)
@@ -1649,7 +1651,7 @@ static int32_t set_active_deviceid(uint16_t device_index)
         return A_ERROR;
     }
     inout_param.cmd_id = ATH_SET_DEVICE_ID;
-    inout_param.data = (void *)&deviceid;
+    inout_param.data   = (void *)&deviceid;
     inout_param.length = sizeof(uint16_t);
 
     if (IS_DRIVER_READY != A_OK)
@@ -1704,7 +1706,7 @@ static int32_t handle_connect_for_concurrent(uint32_t enet_device, char *ssid)
         return A_ERROR;
     }
 
-    ap_channel_hint = 0;
+    ap_channel_hint         = 0;
     concurrent_connect_flag = 0x0F;
     /*Do the actual scan*/
     wmi_set_scan(enet_device, NULL);
@@ -1729,18 +1731,18 @@ static int32_t handle_connect_for_concurrent(uint32_t enet_device, char *ssid)
 #endif
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : connect_handler()
-* Returned Value  : A_OK - successful completion or
-*					A_ERROR - failed.
-* Comments		  : Handles Connect commands for infrastructure mode, Open
-*                   WEP,WPA/WPA2 security is supported
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : connect_handler()
+ * Returned Value  : A_OK - successful completion or
+ *					A_ERROR - failed.
+ * Comments		  : Handles Connect commands for infrastructure mode, Open
+ *                   WEP,WPA/WPA2 security is supported
+ *
+ *END*-----------------------------------------------------------------*/
 
 static int32_t connect_handler(int32_t index, int32_t argc, char *argv[])
 {
-    int32_t error = A_OK;
+    int32_t error  = A_OK;
     QCOM_SSID ssid = {0};
     uint32_t enet_device;
     QCOM_WLAN_DEV_MODE temp_mode = QCOM_WLAN_DEV_MODE_INVALID;
@@ -1809,7 +1811,7 @@ static int32_t connect_handler(int32_t index, int32_t argc, char *argv[])
     if (SEC_MODE_WEP == security_mode)
     {
         cipher = WLAN_CRYPT_WEP_CRYPT;
-        error = qcom_sec_set_encrypt_mode(enet_device, cipher);
+        error  = qcom_sec_set_encrypt_mode(enet_device, cipher);
 
         if (error != A_OK)
         {
@@ -1868,7 +1870,7 @@ static int32_t connect_handler(int32_t index, int32_t argc, char *argv[])
             }
 
             security_mode = SEC_MODE_OPEN;
-            pmk_flag = 0;
+            pmk_flag      = 0;
         }
 #endif
         return A_ERROR;
@@ -1889,8 +1891,8 @@ static int32_t connect_handler(int32_t index, int32_t argc, char *argv[])
         uint32_t error;
         IPCFG_IP_ADDRESS_DATA ip_data;
 
-        ip_data.ip = AP_IPADDR;
-        ip_data.mask = AP_IPMASK;
+        ip_data.ip      = AP_IPADDR;
+        ip_data.mask    = AP_IPMASK;
         ip_data.gateway = AP_IPGATEWAY;
 
         error = ipcfg_bind_staticip(enet_device, &ip_data);
@@ -1907,19 +1909,19 @@ static int32_t connect_handler(int32_t index, int32_t argc, char *argv[])
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : ad_hoc_connect_handler()
-* Returned Value  : 1 - successful completion or
-*					0 - failed.
-* Comments		  : Handles Connect commands for ad-hoc mode, Open
-*                   & WEP security is supported
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : ad_hoc_connect_handler()
+ * Returned Value  : 1 - successful completion or
+ *					0 - failed.
+ * Comments		  : Handles Connect commands for ad-hoc mode, Open
+ *                   & WEP security is supported
+ *
+ *END*-----------------------------------------------------------------*/
 
 static int32_t ad_hoc_connect_handler(int32_t index, int32_t argc, char *argv[])
 {
     int32_t error = A_OK, i;
-    int key_idx = 0;
+    int key_idx   = 0;
     uint32_t enet_device;
 
     enet_device = get_active_device();
@@ -2028,14 +2030,14 @@ static int32_t ad_hoc_connect_handler(int32_t index, int32_t argc, char *argv[])
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : qcom_roaming_ctrl()
-* Parames:
-* Returned Value  : A_OK - on successful completion
-*					A_ERROR - on any failure.
-* Comments        : Sample function to depict IPv6 ping functionality
-*                   Not supported on RTCS
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : qcom_roaming_ctrl()
+ * Parames:
+ * Returned Value  : A_OK - on successful completion
+ *					A_ERROR - on any failure.
+ * Comments        : Sample function to depict IPv6 ping functionality
+ *                   Not supported on RTCS
+ *END*-----------------------------------------------------------------*/
 int qcom_roaming_ctrl(WMI_SET_ROAM_CTRL_CMD *roam_ctrl)
 {
     ATH_IOCTL_PARAM_STRUCT inout_param;
@@ -2046,8 +2048,8 @@ int qcom_roaming_ctrl(WMI_SET_ROAM_CTRL_CMD *roam_ctrl)
         return A_ERROR;
     }
     inout_param.cmd_id = ATH_ROAM_CTRL;
-    inout_param.data = &roam_ctrl;
-    error = HANDLE_IOCTL(&inout_param);
+    inout_param.data   = &roam_ctrl;
+    error              = HANDLE_IOCTL(&inout_param);
     if (A_OK != error)
     {
         PRINTF("roam ctrl Failed" NL);
@@ -2058,15 +2060,15 @@ int qcom_roaming_ctrl(WMI_SET_ROAM_CTRL_CMD *roam_ctrl)
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : qcom_get_temperature()
-* Parames:
-*       regval  ---  register value for KingFisher
-*       tempval ---  physical temperature value after caculation
-* Returned Value  : A_OK - on successful completion
-*					A_ERROR - on any failure. * Comments        : Sample function to depict IPv6 ping functionality
-*                   Not supported on RTCS
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : qcom_get_temperature()
+ * Parames:
+ *       regval  ---  register value for KingFisher
+ *       tempval ---  physical temperature value after caculation
+ * Returned Value  : A_OK - on successful completion
+ *					A_ERROR - on any failure. * Comments        : Sample function to depict IPv6 ping functionality
+ *                   Not supported on RTCS
+ *END*-----------------------------------------------------------------*/
 int qcom_get_temperature(uint32_t *regval, float *tempval)
 {
     ATH_IOCTL_PARAM_STRUCT inout_param;
@@ -2080,7 +2082,7 @@ int qcom_get_temperature(uint32_t *regval, float *tempval)
     }
 
     inout_param.cmd_id = ATH_GET_TEMPERATURE;
-    inout_param.data = &temperature;
+    inout_param.data   = &temperature;
     // inout_param.length = 1;
 
     error = HANDLE_IOCTL(&inout_param);
@@ -2089,7 +2091,7 @@ int qcom_get_temperature(uint32_t *regval, float *tempval)
         PRINTF("Get temperature Failed" NL);
         return error;
     }
-    *regval = temperature.tempRegVal;
+    *regval  = temperature.tempRegVal;
     *tempval = ((float)temperature.tempDegree) / 10;
 
     return A_OK;
@@ -2097,12 +2099,12 @@ int qcom_get_temperature(uint32_t *regval, float *tempval)
 
 #if ENABLE_P2P_MODE
 /*FUNCTION*-----------------------------------------------------------------
-*
-* Function Name  : P2PCallbackfn
-* Returned Value : N/A
-* Comments       : Called from driver on a WiFI connection event
-*
-*END------------------------------------------------------------------*/
+ *
+ * Function Name  : P2PCallbackfn
+ * Returned Value : N/A
+ * Comments       : Called from driver on a WiFI connection event
+ *
+ *END------------------------------------------------------------------*/
 void P2PCallBackfn(uint8_t *ptr)
 {
     uint8_t *local_ptr2 = ptr, inv_response_evt_index = 0;
@@ -2247,14 +2249,14 @@ void P2PCallBackfn(uint8_t *ptr)
         temp_ptr = local_ptr2;
         // local_ptr2 += sizeof(uint8_t);
         p2p_session_in_progress = 1;
-        enet_device = get_active_device();
+        enet_device             = get_active_device();
         if (enet_device != 0)
         {
             /* P2P device should always send/receive events/commands on dev 0 if
             the app has switched to dev 1 while event is in dev 0 send command
             via dev 0 and then switch to dev 1*/
             temp_device_id = enet_device;
-            enet_device = 0;
+            enet_device    = 0;
             set_active_deviceid(enet_device);
         }
         if (temp_val > 0)
@@ -2311,7 +2313,7 @@ void P2PCallBackfn(uint8_t *ptr)
             }
             if (p2p_join_session_active)
             {
-                p2p_join_session_active = 0;
+                p2p_join_session_active                = 0;
                 stkP2p.p2p_set_params.val.mode.p2pmode = P2P_CLIENT;
                 if (qcom_p2p_set(enet_device, P2P_CONFIG_P2P_OPMODE, &stkP2p.p2p_set_params.val,
                                  sizeof(stkP2p.p2p_set_params.val.mode)) != A_OK)
@@ -2360,14 +2362,14 @@ void P2PCallBackfn(uint8_t *ptr)
             (((WMI_P2P_INVITE_SENT_RESULT_EVENT *)(local_ptr2))->status == 0))
         {
             p2p_session_in_progress = 1;
-            enet_device = get_active_device();
+            enet_device             = get_active_device();
             if (enet_device != 0)
             {
                 /* P2P device should always send/receive events/commands on dev 0 if
             the app has switched to dev 1 while event is in dev 0 send command
             via dev 0 and then switch to dev 1*/
                 temp_device_id = enet_device;
-                enet_device = 0;
+                enet_device    = 0;
                 set_active_deviceid(enet_device);
             }
             wps_flag = 0x01;
@@ -2412,14 +2414,14 @@ void P2PCallBackfn(uint8_t *ptr)
             // make AP Mode and WPS default settings for P2P GO
             //
             p2p_session_in_progress = 1;
-            enet_device = get_active_device();
+            enet_device             = get_active_device();
             if (enet_device != 0)
             {
                 /* P2P device should always send/receive events/commands on dev 0 if
                 the app has switched to dev 1 while event is in dev 0 send command
                 via dev 0 and then switch to dev 1*/
                 temp_device_id = enet_device;
-                enet_device = 0;
+                enet_device    = 0;
                 set_active_deviceid(enet_device);
             }
 
@@ -2427,7 +2429,7 @@ void P2PCallBackfn(uint8_t *ptr)
             PRINTF("Starting Autonomous GO" NL);
 
             QCOM_PASSPHRASE tmp_pass = {0};
-            QCOM_SSID tmp_ssid = {0};
+            QCOM_SSID tmp_ssid       = {0};
             strncpy((char *)&tmp_pass, (char const *)p2p_pers_data[inv_response_evt_index].passphrase,
                     sizeof(tmp_pass));
             strncpy((char *)&tmp_ssid, (char const *)p2p_pers_data[inv_response_evt_index].ssid, sizeof(tmp_ssid));
@@ -2438,7 +2440,7 @@ void P2PCallBackfn(uint8_t *ptr)
                 return;
             }
 
-            p2p_persistent_done = 1;
+            p2p_persistent_done    = 1;
             inv_response_evt_index = 0;
 
             if (temp_device_id != 0)
@@ -2471,7 +2473,7 @@ void P2PCallBackfn(uint8_t *ptr)
                 if (A_MEMCMP(((WMI_P2P_FW_INVITE_REQ_EVENT *)(local_ptr2))->sa, p2p_pers_data[i].macaddr,
                              ATH_MAC_LEN) == 0)
                 {
-                    invite_rsp_cmd.status = 0;
+                    invite_rsp_cmd.status  = 0;
                     inv_response_evt_index = i;
                     A_MEMCPY(invite_rsp_cmd.group_bssid, p2p_pers_data[i].macaddr, ATH_MAC_LEN);
                     break;
@@ -2481,7 +2483,7 @@ void P2PCallBackfn(uint8_t *ptr)
             if (i == MAX_LIST_COUNT)
             {
                 invite_rsp_cmd.status = 1;
-                i = 0;
+                i                     = 0;
             }
         }
         else
@@ -2490,14 +2492,14 @@ void P2PCallBackfn(uint8_t *ptr)
             A_MEMCPY(invite_rsp_cmd.group_bssid, ((WMI_P2P_FW_INVITE_REQ_EVENT *)(local_ptr2))->sa, ATH_MAC_LEN);
         }
         p2p_session_in_progress = 1;
-        enet_device = get_active_device();
+        enet_device             = get_active_device();
         if (enet_device != 0)
         {
             /* P2P device should always send/receive events/commands on dev 0 if
             the app has switched to dev 1 while event is in dev 0 send command
             via dev 0 and then switch to dev 1*/
             temp_device_id = enet_device;
-            enet_device = 0;
+            enet_device    = 0;
             set_active_deviceid(enet_device);
         }
         /* send invite auth event */
@@ -2516,7 +2518,7 @@ void P2PCallBackfn(uint8_t *ptr)
     else if (((WMI_EVT_TO_APP *)ptr)->EVENT_ID == WMI_P2P_GO_NEG_RESULT_EVENTID)
     {
         local_ptr2 += sizeof(uint32_t);
-        p2pNeg = (WMI_P2P_GO_NEG_RESULT_EVENT *)local_ptr2;
+        p2pNeg     = (WMI_P2P_GO_NEG_RESULT_EVENT *)local_ptr2;
         task2_msec = 100;
         PRINTF("P2P GO Negotion Result :" NL);
         PRINTF("Status       :%s" NL, (p2pNeg->status) ? "FAILURE" : "SUCCESS");
@@ -2525,14 +2527,14 @@ void P2PCallBackfn(uint8_t *ptr)
         PRINTF("Channel      :%d" NL, p2pNeg->freq);
         PRINTF("WPS Method   :%s" NL, (p2pNeg->wps_method == WPS_PBC) ? "PBC" : "PIN");
         p2p_session_in_progress = 1;
-        enet_device = get_active_device();
+        enet_device             = get_active_device();
         if (enet_device != 0)
         {
             /* P2P device should always send/receive events/commands on dev 0 if
          the app has switched to dev 1 while event is in dev 0 send command
          via dev 0 and then switch to dev 1*/
             temp_device_id = enet_device;
-            enet_device = 0;
+            enet_device    = 0;
             set_active_deviceid(enet_device);
         }
         if (p2pNeg->status != 0)
@@ -2542,13 +2544,13 @@ void P2PCallBackfn(uint8_t *ptr)
         }
         if ((p2pNeg->status == 0) && (p2pNeg->role_go == 1))
         {
-            wps_flag = 0x01;
-            chnl = (p2pNeg->freq - 2412) / 5 + 1;
+            wps_flag                        = 0x01;
+            chnl                            = (p2pNeg->freq - 2412) / 5 + 1;
             stkP2p.grpInit.persistent_group = p2p_persistent_go;
 
             /* Reset global p2p_persistent_go variable */
-            p2p_persistent_go = 0;
-            QCOM_SSID tmp_ssid = {0};
+            p2p_persistent_go        = 0;
+            QCOM_SSID tmp_ssid       = {0};
             QCOM_PASSPHRASE tmp_pass = {0};
             strncpy((char *)&tmp_ssid, (const char *)p2pNeg->ssid, sizeof(tmp_ssid));
             strncpy((char *)&tmp_pass, (const char *)p2pNeg->pass_phrase, sizeof(tmp_pass));
@@ -2595,7 +2597,7 @@ void P2PCallBackfn(uint8_t *ptr)
 
             if (p2pNeg->wps_method != WPS_PBC)
             {
-                wps_start.wps_mode = 0;
+                wps_start.wps_mode   = 0;
                 wps_start.pin_length = 8;
                 // FIXME: This hardcoded pin value needs to be changed
                 // for production to reflect what is on a sticker/label
@@ -2611,7 +2613,7 @@ void P2PCallBackfn(uint8_t *ptr)
             // memcpy(wpsCreden.mac_addr,p2pNeg->peer_device_addr,ATH_MAC_LEN);
             memcpy(wpsCreden.mac_addr, p2pNeg->peer_interface_addr, ATH_MAC_LEN);
             wpsCreden.ap_channel = p2pNeg->freq;
-            wpsCreden.ssid_len = p2pNeg->ssid_len;
+            wpsCreden.ssid_len   = p2pNeg->ssid_len;
 
             qcom_wps_set_credentials(enet_device, &wpsCreden);
             /* this starts WPS on the Aheros wifi */
@@ -2631,12 +2633,12 @@ void P2PCallBackfn(uint8_t *ptr)
 }
 
 /*FUNCTION*-----------------------------------------------------------------
-*
-* Function Name  : p2p_callback
-* Returned Value : A_ERROR on error else A_OK
-* Comments       : Sets callback function for WiFi P2P events
-*
-*END------------------------------------------------------------------*/
+ *
+ * Function Name  : p2p_callback
+ * Returned Value : A_ERROR on error else A_OK
+ * Comments       : Sets callback function for WiFi P2P events
+ *
+ *END------------------------------------------------------------------*/
 int32_t p2p_callback(uint8_t evt_flag)
 {
     ATH_IOCTL_PARAM_STRUCT inout_param;
@@ -2651,7 +2653,7 @@ int32_t p2p_callback(uint8_t evt_flag)
         inout_param.cmd_id = ATH_SET_P2P_CALLBACK;
     }
     A_MEMZERO(&p2p_evt, sizeof(WMI_EVT_TO_APP));
-    inout_param.data = (void *)&p2p_evt;
+    inout_param.data   = (void *)&p2p_evt;
     inout_param.length = sizeof(WMI_EVT_TO_APP);
     if (IS_DRIVER_READY != A_OK)
     {
@@ -2670,13 +2672,13 @@ int32_t p2p_callback(uint8_t evt_flag)
 #endif
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : set_wpa()
-* Returned Value  : A_OK - successful completion or
-*		    A_ERROR - failed.
-* Comments	: Sets WPA mode
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : set_wpa()
+ * Returned Value  : A_OK - successful completion or
+ *		    A_ERROR - failed.
+ * Comments	: Sets WPA mode
+ *
+ *END*-----------------------------------------------------------------*/
 static int32_t set_wpa(int32_t index, int32_t argc, char *argv[])
 {
     int i = index;
@@ -2745,17 +2747,17 @@ static int32_t set_wpa(int32_t index, int32_t argc, char *argv[])
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : set_wep()
-* Returned Value  : A_OK - successful completion or
-*		    A_ERROR - failed.
-* Comments	: Sets WEP parameters
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : set_wep()
+ * Returned Value  : A_OK - successful completion or
+ *		    A_ERROR - failed.
+ * Comments	: Sets WEP parameters
+ *
+ *END*-----------------------------------------------------------------*/
 static int32_t set_wep(int32_t index, int32_t argc, char *argv[])
 {
-    int i = index;
-    int key_idx = 0;
+    int i         = index;
+    int key_idx   = 0;
     int32_t error = A_OK;
     uint32_t enet_device;
 
@@ -2802,16 +2804,16 @@ static int32_t set_wep(int32_t index, int32_t argc, char *argv[])
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : wps_query()
-* Returned Value  : 0 - success, 1 - failure
-* Comments	: Queries WPS status
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : wps_query()
+ * Returned Value  : 0 - success, 1 - failure
+ * Comments	: Queries WPS status
+ *
+ *END*-----------------------------------------------------------------*/
 int32_t wps_query(uint8_t block)
 {
     ATH_NETPARAMS netparams = {0};
-    int32_t status = 1;
+    int32_t status          = 1;
     uint32_t enet_device;
     QCOM_WLAN_DEV_MODE wifimode = QCOM_WLAN_DEV_MODE_INVALID;
 
@@ -2920,19 +2922,19 @@ static int32_t allow_aggr(int32_t argc, char *argv[])
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : test_promiscuous()
-* Returned Value  : A_OK - success
-* Comments	: Tests promiscuous mode
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : test_promiscuous()
+ * Returned Value  : A_OK - success
+ * Comments	: Tests promiscuous mode
+ *
+ *END*-----------------------------------------------------------------*/
 static int32_t test_promiscuous(int32_t argc, char *argv[])
 {
     ATH_IOCTL_PARAM_STRUCT param;
     ATH_PROMISCUOUS_MODE prom_mode_details;
 
     param.cmd_id = ATH_SET_PROMISCUOUS_MODE;
-    param.data = &prom_mode_details;
+    param.data   = &prom_mode_details;
     param.length = sizeof(prom_mode_details);
 
     A_MEMZERO(&prom_mode_details, sizeof(ATH_PROMISCUOUS_MODE));
@@ -2994,10 +2996,10 @@ static int32_t test_raw(int32_t argc, char *argv[])
         goto raw_usage;
     }
 
-    rate_index = atoi(argv[0]);
-    tries = atoi(argv[1]);
-    size = atoi(argv[2]);
-    chan = atoi(argv[3]);
+    rate_index  = atoi(argv[0]);
+    tries       = atoi(argv[1]);
+    size        = atoi(argv[2]);
+    chan        = atoi(argv[3]);
     header_type = atoi(argv[4]);
     A_MEMZERO(&addr[0][0], sizeof(addr));
 
@@ -3051,18 +3053,18 @@ static int32_t test_raw(int32_t argc, char *argv[])
         }
     }
 
-    para.rate_index = rate_index;
-    para.tries = tries;
-    para.size = size;
-    para.chan = chan;
+    para.rate_index  = rate_index;
+    para.tries       = tries;
+    para.size        = size;
+    para.chan        = chan;
     para.header_type = header_type;
-    para.seq = 0;
+    para.seq         = 0;
     A_MEMCPY(&para.addr1.addr[0], addr[0], ATH_MAC_LEN);
     A_MEMCPY(&para.addr2.addr[0], addr[1], ATH_MAC_LEN);
     A_MEMCPY(&para.addr3.addr[0], addr[2], ATH_MAC_LEN);
     A_MEMCPY(&para.addr4.addr[0], addr[3], ATH_MAC_LEN);
     para.pdatabuf = NULL;
-    para.buflen = 0;
+    para.buflen   = 0;
 
     status = qcom_raw_mode_send_pkt(&para);
     if (status != A_OK)
@@ -3086,13 +3088,13 @@ static int32_t test_raw(int32_t argc, char *argv[])
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : wps_handler()
-* Returned Value  : 1 - successful completion or
-*					0 - failed.
-* Comments		  : Handles WPS related functionality
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : wps_handler()
+ * Returned Value  : 1 - successful completion or
+ *					0 - failed.
+ * Comments		  : Handles WPS related functionality
+ *
+ *END*-----------------------------------------------------------------*/
 static int32_t wps_handler(int32_t index, int32_t argc, char *argv[])
 {
     uint32_t i;
@@ -3100,7 +3102,7 @@ static int32_t wps_handler(int32_t index, int32_t argc, char *argv[])
     uint8_t wps_mode = 0;
     ATH_NETPARAMS netparams;
     char delimter[] = "-#";
-    char *result = NULL;
+    char *result    = NULL;
     qcom_wps_credentials_t wpsScan, *wpsScan_p = NULL;
     int j;
     uint32_t enet_device;
@@ -3108,12 +3110,12 @@ static int32_t wps_handler(int32_t index, int32_t argc, char *argv[])
 
     // init context
     wps_context.wps_in_progress = 0;
-    wps_context.connect_flag = 0;
+    wps_context.connect_flag    = 0;
     A_MEMZERO(&netparams, sizeof(ATH_NETPARAMS));
-    A_MEMZERO(wpsPin, MAX_WPS_PIN_SIZE);
+    A_MEMZERO(wpsPin, sizeof(wpsPin));
     if (index + 1 < argc)
     {
-        i = index;
+        i                        = index;
         wps_context.connect_flag = atoi(argv[i]);
 
         i++;
@@ -3135,7 +3137,7 @@ static int32_t wps_handler(int32_t index, int32_t argc, char *argv[])
             result = strtok(argv[i], delimter);
             if (result == NULL)
             {
-                strncpy(wpsPin, argv[i], sizeof(wpsPin));
+                strncpy(wpsPin, argv[i], sizeof(wpsPin) - 1);
             }
             else
             {
@@ -3268,21 +3270,21 @@ static A_STATUS wmic_ether_aton(const char *orig, uint8_t *eth)
 #endif
 
 /*FUNCTION*--------------------------------------------------------------------
-*
-* Function Name   : ath_assert_dump()
-* Returned Value  : A_OK - on successful completion
-*					A_ERROR - on any failure.
-* Comments        : causes assert information to be collected from chip and
-*				    printed to stdout.
-*
-*END*------------------------------------------------------------------------*/
+ *
+ * Function Name   : ath_assert_dump()
+ * Returned Value  : A_OK - on successful completion
+ *					A_ERROR - on any failure.
+ * Comments        : causes assert information to be collected from chip and
+ *				    printed to stdout.
+ *
+ *END*------------------------------------------------------------------------*/
 static int32_t ath_assert_dump(int32_t argc, char *argv[])
 {
     ATH_IOCTL_PARAM_STRUCT ath_param;
     int32_t error;
 
     ath_param.cmd_id = ATH_ASSERT_DUMP;
-    ath_param.data = NULL;
+    ath_param.data   = NULL;
     ath_param.length = 0;
 
     error = HANDLE_IOCTL(&ath_param);
@@ -3290,19 +3292,19 @@ static int32_t ath_assert_dump(int32_t argc, char *argv[])
 }
 
 /*FUNCTION*--------------------------------------------------------------------
-*
-* Function Name   : scan_control()
-* Returned Value  : A_OK - on successful completion
-*					A_ERROR - on any failure.
-* Comments        : Disables/Enables foreground and background scan operations
-*					in the Atheros device.  Both params must be provided where
-*					foreground param is first followed by background param. a
-*					'0' param disables the scan type while a '1' enables the
-*					scan type.  Background scan -- firmware occasionally scans
-*					while connected to a network. Foreground scan -- firmware
-*					occasionally scans while disconnected to a network.
-*
-*END*------------------------------------------------------------------------*/
+ *
+ * Function Name   : scan_control()
+ * Returned Value  : A_OK - on successful completion
+ *					A_ERROR - on any failure.
+ * Comments        : Disables/Enables foreground and background scan operations
+ *					in the Atheros device.  Both params must be provided where
+ *					foreground param is first followed by background param. a
+ *					'0' param disables the scan type while a '1' enables the
+ *					scan type.  Background scan -- firmware occasionally scans
+ *					while connected to a network. Foreground scan -- firmware
+ *					occasionally scans while disconnected to a network.
+ *
+ *END*------------------------------------------------------------------------*/
 static int32_t scan_control(int32_t argc, char *argv[])
 {
     int32_t error;
@@ -3324,12 +3326,12 @@ static int32_t scan_control(int32_t argc, char *argv[])
         if (fg == 1)
         {
             scanParam.fgStartPeriod = 0;
-            scanParam.fgEndPeriod = 0;
+            scanParam.fgEndPeriod   = 0;
         }
         else
         {
             scanParam.fgStartPeriod = 0xffff;
-            scanParam.fgEndPeriod = 0xffff;
+            scanParam.fgEndPeriod   = 0xffff;
         }
 
         if (bg == 1)
@@ -3342,15 +3344,15 @@ static int32_t scan_control(int32_t argc, char *argv[])
         }
 
         scanParam.maxActChDwellTimeInMs = 0;
-        scanParam.pasChDwellTimeInMs = 0;
-        scanParam.shortScanRatio = WMI_SHORTSCANRATIO_DEFAULT;
-        scanParam.scanCtrlFlags = DEFAULT_SCAN_CTRL_FLAGS;
+        scanParam.pasChDwellTimeInMs    = 0;
+        scanParam.shortScanRatio        = WMI_SHORTSCANRATIO_DEFAULT;
+        scanParam.scanCtrlFlags         = DEFAULT_SCAN_CTRL_FLAGS;
         scanParam.minActChDwellTimeInMs = 0;
-        scanParam.maxActScanPerSsid = 0;
-        scanParam.maxDfsChActTimeInMs = 0;
+        scanParam.maxActScanPerSsid     = 0;
+        scanParam.maxDfsChActTimeInMs   = 0;
 
         enet_device = get_active_device();
-        error = qcom_scan_params_set(enet_device, &scanParam);
+        error       = qcom_scan_params_set(enet_device, &scanParam);
         if (error == A_ERROR)
         {
             PRINTF("driver ioctl error" NL);
@@ -3364,13 +3366,13 @@ static int32_t scan_control(int32_t argc, char *argv[])
 }
 
 /*FUNCTION*--------------------------------------------------------------------
-*
-* Function Name   : set_scan_para()
-* Returned Value  : A_OK - on successful completion
-*					A_ERROR - on any failure.
-* Comments        : set scan parameters
-*
-*END*------------------------------------------------------------------------*/
+ *
+ * Function Name   : set_scan_para()
+ * Returned Value  : A_OK - on successful completion
+ *					A_ERROR - on any failure.
+ * Comments        : set scan parameters
+ *
+ *END*------------------------------------------------------------------------*/
 static int32_t set_scan_para(int32_t argc, char *argv[])
 {
     int32_t error;
@@ -3382,44 +3384,44 @@ static int32_t set_scan_para(int32_t argc, char *argv[])
     {
         if ((argc != 2) && (argc != 10))
             break;
-        data = atoi(argv[0]);
+        data                              = atoi(argv[0]);
         scan_params.maxActChDwellTimeInMs = (uint16_t)data;
-        data = atoi(argv[1]);
-        scan_params.pasChDwellTimeInMs = (uint16_t)data;
+        data                              = atoi(argv[1]);
+        scan_params.pasChDwellTimeInMs    = (uint16_t)data;
 
         if (argc == 2)
         {
-            scan_params.fgStartPeriod = 0;
-            scan_params.fgEndPeriod = 0;
-            scan_params.bgPeriod = 0;
-            scan_params.shortScanRatio = WMI_SHORTSCANRATIO_DEFAULT;
-            scan_params.scanCtrlFlags = DEFAULT_SCAN_CTRL_FLAGS;
+            scan_params.fgStartPeriod         = 0;
+            scan_params.fgEndPeriod           = 0;
+            scan_params.bgPeriod              = 0;
+            scan_params.shortScanRatio        = WMI_SHORTSCANRATIO_DEFAULT;
+            scan_params.scanCtrlFlags         = DEFAULT_SCAN_CTRL_FLAGS;
             scan_params.minActChDwellTimeInMs = 0;
-            scan_params.maxActScanPerSsid = 0;
-            scan_params.maxDfsChActTimeInMs = 0;
+            scan_params.maxActScanPerSsid     = 0;
+            scan_params.maxDfsChActTimeInMs   = 0;
         }
         else
         {
-            data = atoi(argv[2]);
-            scan_params.fgStartPeriod = (uint16_t)data;
-            data = atoi(argv[3]);
-            scan_params.fgEndPeriod = (uint16_t)data;
-            data = atoi(argv[4]);
-            scan_params.bgPeriod = (uint16_t)data;
-            data = atoi(argv[5]);
-            scan_params.shortScanRatio = (uint8_t)data;
-            data = atoi(argv[6]);
-            scan_params.scanCtrlFlags = (uint8_t)data;
-            data = atoi(argv[7]);
+            data                              = atoi(argv[2]);
+            scan_params.fgStartPeriod         = (uint16_t)data;
+            data                              = atoi(argv[3]);
+            scan_params.fgEndPeriod           = (uint16_t)data;
+            data                              = atoi(argv[4]);
+            scan_params.bgPeriod              = (uint16_t)data;
+            data                              = atoi(argv[5]);
+            scan_params.shortScanRatio        = (uint8_t)data;
+            data                              = atoi(argv[6]);
+            scan_params.scanCtrlFlags         = (uint8_t)data;
+            data                              = atoi(argv[7]);
             scan_params.minActChDwellTimeInMs = (uint16_t)data;
-            data = atoi(argv[8]);
-            scan_params.maxActScanPerSsid = (uint16_t)data;
-            data = atoi(argv[9]);
-            scan_params.maxDfsChActTimeInMs = (uint32_t)data;
+            data                              = atoi(argv[8]);
+            scan_params.maxActScanPerSsid     = (uint16_t)data;
+            data                              = atoi(argv[9]);
+            scan_params.maxDfsChActTimeInMs   = (uint32_t)data;
         }
 
         enet_device = get_active_device();
-        error = qcom_scan_params_set(enet_device, &scan_params);
+        error       = qcom_scan_params_set(enet_device, &scan_params);
         if (error == A_ERROR)
         {
             PRINTF("driver ioctl error" NL);
@@ -3436,13 +3438,13 @@ static int32_t set_scan_para(int32_t argc, char *argv[])
 }
 
 /*FUNCTION*--------------------------------------------------------------------
-*
-* Function Name   : start_scan()
-* Returned Value  : A_OK - on successful completion
-*					A_ERROR - on any failure.
-* Comments        : set scan --- do real scan
-*
-*END*------------------------------------------------------------------------*/
+ *
+ * Function Name   : start_scan()
+ * Returned Value  : A_OK - on successful completion
+ *					A_ERROR - on any failure.
+ * Comments        : set scan --- do real scan
+ *
+ *END*------------------------------------------------------------------------*/
 static int32_t start_scan(int32_t argc, char *argv[])
 {
     int32_t error;
@@ -3451,7 +3453,7 @@ static int32_t start_scan(int32_t argc, char *argv[])
     uint16_t maxArgCount = 0, argI = 0;
     uint32_t enet_device;
     QCOM_WLAN_DEV_MODE wifimode = QCOM_WLAN_DEV_MODE_INVALID;
-    QCOM_SSID orig_ssid = {0};
+    QCOM_SSID orig_ssid         = {0};
 
 #if ENABLE_P2P_MODE
     if (p2p_session_in_progress)
@@ -3478,23 +3480,23 @@ static int32_t start_scan(int32_t argc, char *argv[])
     {
         if (argc < 5)
             break;
-        data = atoi(argv[0]);
-        scan_params.forceFgScan = (bool)data;
-        data = atoi(argv[1]);
-        scan_params.homeDwellTimeInMs = (uint32_t)data;
-        data = atoi(argv[2]);
+        data                              = atoi(argv[0]);
+        scan_params.forceFgScan           = (bool)data;
+        data                              = atoi(argv[1]);
+        scan_params.homeDwellTimeInMs     = (uint32_t)data;
+        data                              = atoi(argv[2]);
         scan_params.forceScanIntervalInMs = (uint32_t)data;
-        data = atoi(argv[3]);
-        scan_params.scanType = (uint8_t)data;
-        data = atoi(argv[4]);
-        scan_params.numChannels = (uint8_t)data;
+        data                              = atoi(argv[3]);
+        scan_params.scanType              = (uint8_t)data;
+        data                              = atoi(argv[4]);
+        scan_params.numChannels           = (uint8_t)data;
         if (scan_params.numChannels > QCOM_START_SCAN_PARAMS_CHANNEL_LIST_MAX)
         {
             PRINTF("cannot set more than 12 channels to scan" NL);
             break;
         }
         maxArgCount = scan_params.numChannels + 5;
-        argI = 5;
+        argI        = 5;
         if (argc != maxArgCount)
         {
             PRINTF(
@@ -3504,13 +3506,13 @@ static int32_t start_scan(int32_t argc, char *argv[])
         }
         while (argI < maxArgCount)
         {
-            data = atoi(argv[argI]);
+            data                              = atoi(argv[argI]);
             scan_params.channelList[argI - 5] = (uint16_t)data;
             argI++;
         }
 
         QCOM_SSID tmp_ssid = QCOM_SSID_FROM_STR("");
-        error = qcom_set_ssid(enet_device, &tmp_ssid);
+        error              = qcom_set_ssid(enet_device, &tmp_ssid);
         if (error != A_OK)
         {
             PRINTF("Unable to set SSID" NL);
@@ -3536,13 +3538,13 @@ static int32_t start_scan(int32_t argc, char *argv[])
 }
 
 /*FUNCTION*--------------------------------------------------------------------
-*
-* Function Name   : get_rate()
-* Returned Value  : A_OK - on successful completion
-*					A_ERROR - on any failure.
-* Comments        : gets TX rate from chip
-*
-*END*------------------------------------------------------------------------*/
+ *
+ * Function Name   : get_rate()
+ * Returned Value  : A_OK - on successful completion
+ *					A_ERROR - on any failure.
+ * Comments        : gets TX rate from chip
+ *
+ *END*------------------------------------------------------------------------*/
 int32_t get_rate(void)
 {
     ATH_IOCTL_PARAM_STRUCT ath_param;
@@ -3555,9 +3557,9 @@ int32_t get_rate(void)
     }
 
     ath_param.cmd_id = ATH_GET_RATE;
-    ath_param.data = NULL;
+    ath_param.data   = NULL;
     ath_param.length = 0;
-    error = HANDLE_IOCTL(&ath_param);
+    error            = HANDLE_IOCTL(&ath_param);
 
     if (error != A_OK)
     {
@@ -3567,13 +3569,13 @@ int32_t get_rate(void)
 }
 
 /*FUNCTION*--------------------------------------------------------------------
-*
-* Function Name   : set_tx_power_scale()
-* Returned Value  : A_OK - on successful completion
-*					A_ERROR - on any failure.
-* Comments        : sets TX power scale
-*
-*END*------------------------------------------------------------------------*/
+ *
+ * Function Name   : set_tx_power_scale()
+ * Returned Value  : A_OK - on successful completion
+ *					A_ERROR - on any failure.
+ * Comments        : sets TX power scale
+ *
+ *END*------------------------------------------------------------------------*/
 static int32_t set_tx_power_scale(int32_t index, int32_t argc, char *argv[])
 {
     ATH_IOCTL_PARAM_STRUCT ath_param;
@@ -3600,9 +3602,9 @@ static int32_t set_tx_power_scale(int32_t index, int32_t argc, char *argv[])
     pwr_scale.param_val = atoi(argv[index]);
 
     ath_param.cmd_id = ATH_SET_TX_PWR_SCALE;
-    ath_param.data = &pwr_scale;
+    ath_param.data   = &pwr_scale;
     ath_param.length = sizeof(pwr_scale);
-    error = HANDLE_IOCTL(&ath_param);
+    error            = HANDLE_IOCTL(&ath_param);
 
     if (error != A_OK)
     {
@@ -3612,13 +3614,13 @@ static int32_t set_tx_power_scale(int32_t index, int32_t argc, char *argv[])
 }
 
 /*FUNCTION*--------------------------------------------------------------------
-*
-* Function Name   : set_rate()
-* Returned Value  : A_OK - on successful completion
-*					A_ERROR - on any failure.
-* Comments        : sets TX data rate
-*
-*END*------------------------------------------------------------------------*/
+ *
+ * Function Name   : set_rate()
+ * Returned Value  : A_OK - on successful completion
+ *					A_ERROR - on any failure.
+ * Comments        : sets TX data rate
+ *
+ *END*------------------------------------------------------------------------*/
 static int32_t set_rate(int32_t index, int32_t argc, char *argv[])
 {
     ATH_IOCTL_PARAM_STRUCT ath_param;
@@ -3736,9 +3738,9 @@ static int32_t set_rate(int32_t index, int32_t argc, char *argv[])
     }
 
     ath_param.cmd_id = ATH_SET_RATE;
-    ath_param.data = &bitrate;
+    ath_param.data   = &bitrate;
     ath_param.length = sizeof(bitrate);
-    error = HANDLE_IOCTL(&ath_param);
+    error            = HANDLE_IOCTL(&ath_param);
 
     if (error != A_OK)
     {
@@ -3748,13 +3750,13 @@ static int32_t set_rate(int32_t index, int32_t argc, char *argv[])
 }
 
 /*FUNCTION*--------------------------------------------------------------------
-*
-* Function Name   : get_tx_status()
-* Returned Value  : A_OK - on successful completion
-*					A_ERROR - on any failure.
-* Comments        : gets TX status from driver
-*
-*END*------------------------------------------------------------------------*/
+ *
+ * Function Name   : get_tx_status()
+ * Returned Value  : A_OK - on successful completion
+ *					A_ERROR - on any failure.
+ * Comments        : gets TX status from driver
+ *
+ *END*------------------------------------------------------------------------*/
 int32_t get_tx_status(void)
 {
     ATH_IOCTL_PARAM_STRUCT ath_param;
@@ -3768,7 +3770,7 @@ int32_t get_tx_status(void)
     }
 
     ath_param.cmd_id = ATH_GET_TX_STATUS;
-    ath_param.data = &result;
+    ath_param.data   = &result;
     ath_param.length = 4;
 
     error = HANDLE_IOCTL(&ath_param);
@@ -3801,13 +3803,13 @@ int32_t get_tx_status(void)
 
 #if ENABLE_P2P_MODE
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : p2p_handler()
-* Returned Value  : 1 - successful completion or
-*                   0 - failed.
-* Comments        : Handles P2P related functionality
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : p2p_handler()
+ * Returned Value  : 1 - successful completion or
+ *                   0 - failed.
+ * Comments        : Handles P2P related functionality
+ *
+ *END*-----------------------------------------------------------------*/
 static int32_t p2p_handler(int32_t index, int32_t argc, char_ptr argv[])
 {
 #define P2P_STANDARD_TIMEOUT (300)
@@ -3830,7 +3832,7 @@ static int32_t p2p_handler(int32_t index, int32_t argc, char_ptr argv[])
     uint32_t enet_device;
     QCOM_WLAN_DEV_MODE wifimode = QCOM_WLAN_DEV_MODE_INVALID;
 
-    enet_device = get_active_device();
+    enet_device          = get_active_device();
     uint32_t timeout_val = 0;
     uint8_t p2p_invite_role;
     uint32_t error = SHELL_EXIT_SUCCESS, i, k, len = 0; //, val;
@@ -3907,8 +3909,8 @@ static int32_t p2p_handler(int32_t index, int32_t argc, char_ptr argv[])
 #if 1
                 if (p2p_join_profile.wps_method == WPS_PIN_DISPLAY || p2p_join_profile.wps_method == WPS_PIN_KEYPAD)
                 {
-                    strncpy(stack_p2p.p2p_info.wps_pin, argv[i + 2], sizeof(stack_p2p.p2p_info.wps_pin));
-                    strncpy(p2p_wps_pin, argv[i + 2], sizeof(p2p_wps_pin));
+                    strncpy(p2p_wps_pin, argv[i + 2], sizeof(p2p_wps_pin) - 1);
+                    memcpy(stack_p2p.p2p_info.wps_pin, p2p_wps_pin, sizeof(stack_p2p.p2p_info.wps_pin));
                     wmi_save_key_info(&stack_p2p.p2p_info);
                 }
 #endif
@@ -3949,15 +3951,15 @@ static int32_t p2p_handler(int32_t index, int32_t argc, char_ptr argv[])
                 }
                 if ((wifimode == QCOM_WLAN_DEV_MODE_STATION) && (wifi_connected_flag == 1))
                 {
-                    p2p_invite_role = WMI_P2P_INVITE_ROLE_CLIENT;
+                    p2p_invite_role                   = WMI_P2P_INVITE_ROLE_CLIENT;
                     stack_p2p.p2pInvite.is_persistent = 0;
                 }
                 k = 0;
             }
             else
             {
-                invitation_index = k;
-                p2p_invite_role = p2p_pers_data[k].role;
+                invitation_index                  = k;
+                p2p_invite_role                   = p2p_pers_data[k].role;
                 stack_p2p.p2pInvite.is_persistent = 1;
             }
 
@@ -4010,7 +4012,7 @@ static int32_t p2p_handler(int32_t index, int32_t argc, char_ptr argv[])
                 }
 
                 QCOM_PASSPHRASE tmp_pass = {0};
-                QCOM_SSID tmp_ssid = {0};
+                QCOM_SSID tmp_ssid       = {0};
                 strncpy((char *)&tmp_pass, (char *)p2p_pers_data[k].passphrase, sizeof(tmp_pass));
                 strncpy((char *)&tmp_ssid, (char *)p2p_pers_data[k].ssid, sizeof(tmp_ssid));
                 if (qcom_p2p_func_set_pass_ssid(enet_device, &tmp_pass, &tmp_ssid) != A_OK)
@@ -4034,17 +4036,17 @@ static int32_t p2p_handler(int32_t index, int32_t argc, char_ptr argv[])
             {
                 if (ATH_STRCMP(argv[i], "1") == 0)
                 {
-                    stack_p2p.find_params.type = (WMI_P2P_FIND_START_WITH_FULL);
+                    stack_p2p.find_params.type    = (WMI_P2P_FIND_START_WITH_FULL);
                     stack_p2p.find_params.timeout = (P2P_STANDARD_TIMEOUT);
                 }
                 else if (ATH_STRCMP(argv[i], "2") == 0)
                 {
-                    stack_p2p.find_params.type = (WMI_P2P_FIND_ONLY_SOCIAL);
+                    stack_p2p.find_params.type    = (WMI_P2P_FIND_ONLY_SOCIAL);
                     stack_p2p.find_params.timeout = (P2P_STANDARD_TIMEOUT);
                 }
                 else if (ATH_STRCMP(argv[i], "3") == 0)
                 {
-                    stack_p2p.find_params.type = (WMI_P2P_FIND_PROGRESSIVE);
+                    stack_p2p.find_params.type    = (WMI_P2P_FIND_PROGRESSIVE);
                     stack_p2p.find_params.timeout = (P2P_STANDARD_TIMEOUT);
                 }
                 else
@@ -4057,17 +4059,17 @@ static int32_t p2p_handler(int32_t index, int32_t argc, char_ptr argv[])
             {
                 if (ATH_STRCMP(argv[i], "1") == 0)
                 {
-                    stack_p2p.find_params.type = (WMI_P2P_FIND_START_WITH_FULL);
+                    stack_p2p.find_params.type    = (WMI_P2P_FIND_START_WITH_FULL);
                     stack_p2p.find_params.timeout = (atoi(argv[i + 1]));
                 }
                 else if (ATH_STRCMP(argv[i], "2") == 0)
                 {
-                    stack_p2p.find_params.type = (WMI_P2P_FIND_ONLY_SOCIAL);
+                    stack_p2p.find_params.type    = (WMI_P2P_FIND_ONLY_SOCIAL);
                     stack_p2p.find_params.timeout = (atoi(argv[i + 1]));
                 }
                 else if (ATH_STRCMP(argv[i], "3") == 0)
                 {
-                    stack_p2p.find_params.type = (WMI_P2P_FIND_PROGRESSIVE);
+                    stack_p2p.find_params.type    = (WMI_P2P_FIND_PROGRESSIVE);
                     stack_p2p.find_params.timeout = (atoi(argv[i + 1]));
                 }
                 else
@@ -4078,7 +4080,7 @@ static int32_t p2p_handler(int32_t index, int32_t argc, char_ptr argv[])
             }
             else
             {
-                stack_p2p.find_params.type = (WMI_P2P_FIND_ONLY_SOCIAL);
+                stack_p2p.find_params.type    = (WMI_P2P_FIND_ONLY_SOCIAL);
                 stack_p2p.find_params.timeout = (P2P_STANDARD_TIMEOUT);
             }
 
@@ -4143,21 +4145,21 @@ static int32_t p2p_handler(int32_t index, int32_t argc, char_ptr argv[])
             }
             else if (ATH_STRCMP(argv[i], "intrabss") == 0)
             {
-                stack_p2p.p2p_set_params.config_id = P2P_CONFIG_INTRA_BSS;
+                stack_p2p.p2p_set_params.config_id          = P2P_CONFIG_INTRA_BSS;
                 stack_p2p.p2p_set_params.val.intra_bss.flag = atoi(argv[i + 1]);
-                len = sizeof(stack_p2p.p2p_set_params.val.intra_bss);
+                len                                         = sizeof(stack_p2p.p2p_set_params.val.intra_bss);
             }
             else if (ATH_STRCMP(argv[i], "gointent") == 0)
             {
-                stack_p2p.p2p_set_params.config_id = P2P_CONFIG_GO_INTENT;
+                stack_p2p.p2p_set_params.config_id           = P2P_CONFIG_GO_INTENT;
                 stack_p2p.p2p_set_params.val.go_intent.value = atoi(argv[i + 1]);
-                len = sizeof(stack_p2p.p2p_set_params.val.go_intent);
+                len                                          = sizeof(stack_p2p.p2p_set_params.val.go_intent);
             }
             else if (ATH_STRCMP(argv[i], "cckrates") == 0)
             {
-                stack_p2p.p2p_set_params.config_id = P2P_CONFIG_CCK_RATES;
+                stack_p2p.p2p_set_params.config_id            = P2P_CONFIG_CCK_RATES;
                 stack_p2p.p2p_set_params.val.cck_rates.enable = atoi(argv[i + 1]);
-                len = sizeof(stack_p2p.p2p_set_params.val.cck_rates);
+                len                                           = sizeof(stack_p2p.p2p_set_params.val.cck_rates);
             }
             if (qcom_p2p_set(enet_device, (P2P_CONF_ID)stack_p2p.p2p_set_params.config_id,
                              &stack_p2p.p2p_set_params.val, len) != A_OK)
@@ -4284,8 +4286,8 @@ static int32_t p2p_handler(int32_t index, int32_t argc, char_ptr argv[])
             {
                 if (strlen(argv[i + 2]) == 8)
                 {
-                    strncpy(stack_p2p.p2p_info.wps_pin, argv[i + 2], sizeof(stack_p2p.p2p_info.wps_pin));
-                    strncpy(p2p_wps_pin, argv[i + 2], sizeof(p2p_wps_pin));
+                    strncpy(p2p_wps_pin, argv[i + 2], sizeof(p2p_wps_pin) - 1);
+                    memcpy(stack_p2p.p2p_info.wps_pin, p2p_wps_pin, sizeof(stack_p2p.p2p_info.wps_pin));
                     wmi_save_key_info(&stack_p2p.p2p_info);
                     PRINTF("WPS Pin %s" NL, p2p_wps_pin);
                     if (ATH_STRCMP(argv[i + 3], "persistent") == 0)
@@ -4391,8 +4393,8 @@ static int32_t p2p_handler(int32_t index, int32_t argc, char_ptr argv[])
 
                 if (strlen(argv[i + 2]) == 8)
                 {
-                    strncpy(stack_p2p.p2p_info.wps_pin, argv[i + 2], sizeof(stack_p2p.p2p_info.wps_pin));
-                    strncpy(p2p_wps_pin, argv[i + 2], sizeof(p2p_wps_pin));
+                    strncpy(p2p_wps_pin, argv[i + 2], sizeof(p2p_wps_pin) - 1);
+                    memcpy(stack_p2p.p2p_info.wps_pin, p2p_wps_pin, sizeof(stack_p2p.p2p_info.wps_pin));
                     wmi_save_key_info(&stack_p2p.p2p_info);
                     PRINTF("WPS Pin %s" NL, p2p_wps_pin);
 
@@ -4469,7 +4471,7 @@ static int32_t p2p_handler(int32_t index, int32_t argc, char_ptr argv[])
                 PRINTF(NL "Usage : wmiconfig --p2p autogo [persistent]" NL);
                 return SHELL_EXIT_ERROR;
             }
-            p2pMode = TRUE;
+            p2pMode  = TRUE;
             wps_flag = 0x01;
 
             PRINTF("Starting Autonomous GO" NL);
@@ -4520,8 +4522,8 @@ static int32_t p2p_handler(int32_t index, int32_t argc, char_ptr argv[])
                 p2p_intent = 0;
                 A_MEMCPY(set_channel_p2p, "6", 1);
                 A_MEMZERO(&stack_p2p.p2p_info, sizeof(WMI_P2P_PROV_INFO));
-                strncpy(stack_p2p.p2p_info.wps_pin, "12345670", sizeof(stack_p2p.p2p_info.wps_pin));
-                strncpy(p2p_wps_pin, "12345670", sizeof(p2p_wps_pin));
+                strncpy(p2p_wps_pin, "12345670", sizeof(p2p_wps_pin) - 1);
+                memcpy(stack_p2p.p2p_info.wps_pin, p2p_wps_pin, sizeof(stack_p2p.p2p_info.wps_pin));
                 wmi_save_key_info(&stack_p2p.p2p_info);
 
                 /* Autonomous GO configurations */
@@ -4612,9 +4614,9 @@ static int32_t p2p_handler(int32_t index, int32_t argc, char_ptr argv[])
                     return A_ERROR;
                 }
 
-                autogo_newpp = true;
+                autogo_newpp             = true;
                 QCOM_PASSPHRASE tmp_pass = {0};
-                QCOM_SSID tmp_ssid = {0};
+                QCOM_SSID tmp_ssid       = {0};
                 strncpy((char *)&tmp_pass, argv[index + 1], sizeof(tmp_pass));
                 strncpy((char *)&tmp_ssid, argv[index + 2], sizeof(tmp_ssid));
                 if (qcom_p2p_func_set_pass_ssid(enet_device, &tmp_pass, &tmp_ssid) != A_OK)
@@ -4652,10 +4654,10 @@ static int32_t p2p_handler(int32_t index, int32_t argc, char_ptr argv[])
             }
             else
             {
-                stack_p2p.p2p_desc.count_or_type = atoi(argv[i++]);
+                stack_p2p.p2p_desc.count_or_type   = atoi(argv[i++]);
                 stack_p2p.p2p_desc.start_or_offset = A_CPU2LE32(atoi(argv[i++]) * 1000);
-                stack_p2p.p2p_desc.duration = A_CPU2LE32(atoi(argv[i++]) * 1000);
-                stack_p2p.p2p_desc.interval = A_CPU2LE32(atoi(argv[i++]) * 1000);
+                stack_p2p.p2p_desc.duration        = A_CPU2LE32(atoi(argv[i++]) * 1000);
+                stack_p2p.p2p_desc.interval        = A_CPU2LE32(atoi(argv[i++]) * 1000);
                 if (qcom_p2p_func_set_noa(enet_device, stack_p2p.p2p_desc.count_or_type,
                                           stack_p2p.p2p_desc.start_or_offset, stack_p2p.p2p_desc.duration,
                                           stack_p2p.p2p_desc.interval) != A_OK)
@@ -4681,13 +4683,13 @@ static int32_t p2p_handler(int32_t index, int32_t argc, char_ptr argv[])
 #endif
 
 /*FUNCTION*--------------------------------------------------------------------
-*
-* Function Name   : get_reg_domain()
-* Returned Value  : A_OK - on successful completion
-*		    A_ERROR - on any failure.
-* Comments        : gets Regulatory domain from driver
-*
-*END*------------------------------------------------------------------------*/
+ *
+ * Function Name   : get_reg_domain()
+ * Returned Value  : A_OK - on successful completion
+ *		    A_ERROR - on any failure.
+ * Comments        : gets Regulatory domain from driver
+ *
+ *END*------------------------------------------------------------------------*/
 static int32_t get_reg_domain(void)
 {
     ATH_IOCTL_PARAM_STRUCT ath_param;
@@ -4701,7 +4703,7 @@ static int32_t get_reg_domain(void)
     }
 
     ath_param.cmd_id = ATH_GET_REG_DOMAIN;
-    ath_param.data = &result;
+    ath_param.data   = &result;
     ath_param.length = 0;
 
     error = HANDLE_IOCTL(&ath_param);
@@ -4731,11 +4733,11 @@ static int32_t set_pmparams(int32_t index, int32_t argc, char *argv[])
 
     enet_device = get_active_device();
     /*Fill in default values */
-    pm.idle_period = 0;
-    pm.pspoll_number = 10;
-    pm.dtim_policy = 3;
-    pm.tx_wakeup_policy = 2;
-    pm.num_tx_to_wakeup = 1;
+    pm.idle_period          = 0;
+    pm.pspoll_number        = 10;
+    pm.dtim_policy          = 3;
+    pm.tx_wakeup_policy     = 2;
+    pm.num_tx_to_wakeup     = 1;
     pm.ps_fail_event_policy = 2;
 
     for (i = index; i < argc; i++)
@@ -4816,12 +4818,12 @@ static int32_t set_pmparams(int32_t index, int32_t argc, char *argv[])
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : get_phy_mode()
-* Returned Value  : A_OK if phy_mode set successfully else ERROR CODE
-* Comments        : Gets the phy_mode.
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : get_phy_mode()
+ * Returned Value  : A_OK if phy_mode set successfully else ERROR CODE
+ * Comments        : Gets the phy_mode.
+ *
+ *END*-----------------------------------------------------------------*/
 
 int32_t get_phy_mode(uint32_t dev_num, char *phy_mode)
 {
@@ -4836,7 +4838,7 @@ int32_t get_phy_mode(uint32_t dev_num, char *phy_mode)
     }
 
     inout_param.cmd_id = ATH_GET_PHY_MODE;
-    inout_param.data = &value;
+    inout_param.data   = &value;
 
     error = HANDLE_IOCTL(&inout_param);
     if (A_OK != error)
@@ -4864,12 +4866,12 @@ int32_t get_phy_mode(uint32_t dev_num, char *phy_mode)
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : get_version()
-* Returned Value  : A_OK version is retrieved successfully else ERROR CODE
-* Comments        : gets driver,firmware version.
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : get_version()
+ * Returned Value  : A_OK version is retrieved successfully else ERROR CODE
+ * Comments        : gets driver,firmware version.
+ *
+ *END*-----------------------------------------------------------------*/
 int32_t get_version(void)
 {
     ATH_IOCTL_PARAM_STRUCT inout_param;
@@ -4883,7 +4885,7 @@ int32_t get_version(void)
     }
 
     inout_param.cmd_id = ATH_GET_VERSION_STR;
-    inout_param.data = &versionstr;
+    inout_param.data   = &versionstr;
     inout_param.length = sizeof(versionstr);
 
     error = HANDLE_IOCTL(&inout_param);
@@ -4901,12 +4903,12 @@ int32_t get_version(void)
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : get_last_error()
-* Returned Value  : A_OK if phy_mode set successfully else ERROR CODE
-* Comments        : Gets the last error in the host driver
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : get_last_error()
+ * Returned Value  : A_OK if phy_mode set successfully else ERROR CODE
+ * Comments        : Gets the last error in the host driver
+ *
+ *END*-----------------------------------------------------------------*/
 
 int32_t get_last_error(void)
 {
@@ -4921,7 +4923,7 @@ int32_t get_last_error(void)
     }
 
     inout_param.cmd_id = ATH_GET_LAST_ERROR;
-    inout_param.data = &result;
+    inout_param.data   = &result;
     inout_param.length = 0;
 
     error = HANDLE_IOCTL(&inout_param);
@@ -4935,13 +4937,13 @@ int32_t get_last_error(void)
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : dev_susp_start()
-* Returned Value  : A_OK if device suspend is started
-*                   successfully else ERROR CODE
-* Comments        : Suspends device for requested time period
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : dev_susp_start()
+ * Returned Value  : A_OK if device suspend is started
+ *                   successfully else ERROR CODE
+ * Comments        : Suspends device for requested time period
+ *
+ *END*-----------------------------------------------------------------*/
 int32_t dev_susp_start(char *susp_time)
 {
     int suspend_time;
@@ -4985,21 +4987,21 @@ int32_t dev_susp_start(char *susp_time)
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : wmi_iwconfig()
-* Returned Value  : A_OK if success else ERROR
-*
-* Comments        : Setup for scan command
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : wmi_iwconfig()
+ * Returned Value  : A_OK if success else ERROR
+ *
+ * Comments        : Setup for scan command
+ *
+ *END*-----------------------------------------------------------------*/
 int32_t wmi_iwconfig(int32_t argc, char *argv[])
 {
     uint8_t scan_ssid_flag = 0; // Flag to decide whether to scan all ssid/channels
-    int32_t error = A_OK;
+    int32_t error          = A_OK;
     uint32_t enet_device;
     QCOM_WLAN_DEV_MODE wifimode = QCOM_WLAN_DEV_MODE_INVALID;
-    QCOM_SSID scan_ssid = {0};
-    QCOM_SSID orig_ssid = {0};
+    QCOM_SSID scan_ssid         = {0};
+    QCOM_SSID orig_ssid         = {0};
 
 #if ENABLE_P2P_MODE
     if (p2p_session_in_progress)
@@ -5064,7 +5066,7 @@ int32_t wmi_iwconfig(int32_t argc, char *argv[])
     else
     {
         QCOM_SSID tmp_ssid = QCOM_SSID_FROM_STR("");
-        error = qcom_set_ssid(enet_device, &tmp_ssid);
+        error              = qcom_set_ssid(enet_device, &tmp_ssid);
         if (error != A_OK)
         {
             PRINTF("Unable to set SSID" NL);
@@ -5089,10 +5091,10 @@ int32_t wmi_iwconfig(int32_t argc, char *argv[])
 static int32_t ap_handler(int32_t index, int32_t argc, char_ptr argv[])
 {
     uint32_t error = A_OK, i, ret_val;
-    char *p = 0;
+    char *p        = 0;
     uint32_t enet_device;
     QCOM_WLAN_DEV_MODE wifimode = QCOM_WLAN_DEV_MODE_INVALID;
-    enet_device = get_active_device();
+    enet_device                 = get_active_device();
 
     if (A_ERROR == qcom_op_get_mode(enet_device, &wifimode))
     {
@@ -5216,10 +5218,10 @@ static int32_t set_ap_params(uint16_t param_cmd, uint8_t *data_val)
     ATH_AP_PARAM_STRUCT ap_param;
     uint32_t error;
 
-    inout_param.cmd_id = ATH_CONFIG_AP;
+    inout_param.cmd_id  = ATH_CONFIG_AP;
     ap_param.cmd_subset = param_cmd;
-    ap_param.data = data_val;
-    inout_param.data = &ap_param;
+    ap_param.data       = data_val;
+    inout_param.data    = &ap_param;
 
     /*Check if driver is loaded*/
     if (IS_DRIVER_READY != A_OK)
@@ -5240,14 +5242,14 @@ static int32_t set_ap_params(uint16_t param_cmd, uint8_t *data_val)
 #if ENABLE_STACK_OFFLOAD
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : ipconfig_query()
-* Returned Value  : A_OK if success else A_ERROR
-*
-* Comments        : Sample function to depict ipconfig functionality.
-*                   Queries IP parameters from target.
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : ipconfig_query()
+ * Returned Value  : A_OK if success else A_ERROR
+ *
+ * Comments        : Sample function to depict ipconfig functionality.
+ *                   Queries IP parameters from target.
+ *
+ *END*-----------------------------------------------------------------*/
 int ipconfig_query(shell_handle_t context, int argc, char **argv)
 {
     uint32_t enet_device, addr = 0, mask = 0, gw = 0, num;
@@ -5255,12 +5257,12 @@ int ipconfig_query(shell_handle_t context, int argc, char **argv)
     IP6_ADDR_T v6GlobalExtd;
     IP6_ADDR_T v6LinkLocal;
     IP6_ADDR_T v6DefGw;
-    char ip6buf[48] = {0};
-    char mac_data[6] = {0};
-    char *ip6ptr = NULL;
-    int32_t LinkPrefix = 0;
-    int32_t GlobalPrefix = 0;
-    int32_t DefGwPrefix = 0;
+    char ip6buf[48]          = {0};
+    char mac_data[6]         = {0};
+    char *ip6ptr             = NULL;
+    int32_t LinkPrefix       = 0;
+    int32_t GlobalPrefix     = 0;
+    int32_t DefGwPrefix      = 0;
     int32_t GlobalPrefixExtd = 0;
     uint32_t dnsaddr[MAX_DNSADDRS];
     int i = 0;
@@ -5336,14 +5338,14 @@ int ipconfig_query(shell_handle_t context, int argc, char **argv)
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : ipconfig_static()
-* Returned Value  : A_OK if success else A_ERROR
-*
-* Comments        : Sample function to depict ipconfig functionality.
-*                   Sets static IPv4 parameters.
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : ipconfig_static()
+ * Returned Value  : A_OK if success else A_ERROR
+ *
+ * Comments        : Sample function to depict ipconfig functionality.
+ *                   Sets static IPv4 parameters.
+ *
+ *END*-----------------------------------------------------------------*/
 int32_t ipconfig_static(int32_t argc, char *argv[])
 {
     uint32_t addr, mask, gw;
@@ -5364,8 +5366,8 @@ int32_t ipconfig_static(int32_t argc, char *argv[])
         return A_ERROR;
     }
     ip_addr_string = argv[2];
-    mask_string = argv[3];
-    gw_string = argv[4];
+    mask_string    = argv[3];
+    gw_string      = argv[4];
 
     error = parse_ipv4_ad((unsigned long *)&addr, &sbits, ip_addr_string);
     if (error != 0)
@@ -5373,14 +5375,14 @@ int32_t ipconfig_static(int32_t argc, char *argv[])
         PRINTF("Invalid IP address" NL);
         return error;
     }
-    addr = A_BE2CPU32(addr);
+    addr  = A_BE2CPU32(addr);
     error = parse_ipv4_ad((unsigned long *)&mask, &sbits, mask_string);
     if (error != 0)
     {
         PRINTF("Invalid Mask address" NL);
         return error;
     }
-    mask = A_BE2CPU32(mask);
+    mask  = A_BE2CPU32(mask);
     error = parse_ipv4_ad((unsigned long *)&gw, &sbits, gw_string);
     if (error != 0)
     {
@@ -5408,8 +5410,8 @@ void configure_auto_ipv4_addr(void)
     uint32_t enet_device = get_active_device();
 
     ip_addr_string = "169.254.1.1";
-    mask_string = "255.255.0.0";
-    gw_string = "0.0.0.0";
+    mask_string    = "255.255.0.0";
+    gw_string      = "0.0.0.0";
 
     error = parse_ipv4_ad((unsigned long *)&addr, &sbits, ip_addr_string);
     if (error != 0)
@@ -5417,14 +5419,14 @@ void configure_auto_ipv4_addr(void)
         PRINTF("Invalid IP address" NL);
         return;
     }
-    addr = A_BE2CPU32(addr);
+    addr  = A_BE2CPU32(addr);
     error = parse_ipv4_ad((unsigned long *)&mask, &sbits, mask_string);
     if (error != 0)
     {
         PRINTF("Invalid Mask address" NL);
         return;
     }
-    mask = A_BE2CPU32(mask);
+    mask  = A_BE2CPU32(mask);
     error = parse_ipv4_ad((unsigned long *)&gw, &sbits, gw_string);
     if (error != 0)
     {
@@ -5443,14 +5445,14 @@ void configure_auto_ipv4_addr(void)
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : ipconfig_dhcp()
-* Returned Value  : A_OK if success else A_ERROR
-*
-* Comments        : Sample function to depict ipconfig functionality.
-*                   Runs DHCP on target (only IPv4).
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : ipconfig_dhcp()
+ * Returned Value  : A_OK if success else A_ERROR
+ *
+ * Comments        : Sample function to depict ipconfig functionality.
+ *                   Runs DHCP on target (only IPv4).
+ *
+ *END*-----------------------------------------------------------------*/
 int32_t ipconfig_dhcp(int32_t argc, char *argv[])
 {
     uint32_t addr, mask, gw;
@@ -5524,7 +5526,7 @@ int32_t ipconfig_auto_ipv4(int32_t argc, char *argv[], QCOM_IPCONFIG_MODE mode)
     if (argc == 3)
     {
         ip_addr_string = argv[2];
-        err = parse_ipv4_ad((unsigned long *)&addr, &sbits, ip_addr_string);
+        err            = parse_ipv4_ad((unsigned long *)&addr, &sbits, ip_addr_string);
         if (err != 0)
         {
             PRINTF("Invalid IP address" NL);
@@ -5583,13 +5585,13 @@ int32_t block_on_dhcp(int32_t argc, char *argv[])
 }
 
 /*FUNCTION*--------------------------------------------------------------------
-*
-* Function Name   : set_tcp_connection_timeout()
-* Returned Value  : A_OK - on successful completion
-*					A_ERROR - on any failure.
-* Comments        : sets TCP Connection Time out
-*
-*END*------------------------------------------------------------------------*/
+ *
+ * Function Name   : set_tcp_connection_timeout()
+ * Returned Value  : A_OK - on successful completion
+ *					A_ERROR - on any failure.
+ * Comments        : sets TCP Connection Time out
+ *
+ *END*------------------------------------------------------------------------*/
 static int32_t set_tcp_connection_timeout(int32_t argc, char *argv[])
 {
     uint32_t timeout_val;
@@ -5615,13 +5617,13 @@ static int32_t set_tcp_connection_timeout(int32_t argc, char *argv[])
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : ip_set_bridgemode()
-* Returned Value  : A_OK if success else A_ERROR
-*
-* Comments        : Fucntion to enable bridge mode.
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : ip_set_bridgemode()
+ * Returned Value  : A_OK if success else A_ERROR
+ *
+ * Comments        : Function to enable bridge mode.
+ *
+ *END*-----------------------------------------------------------------*/
 
 int32_t ip_set_bridgemode(int32_t argc, char *argv[])
 {
@@ -5651,13 +5653,13 @@ int32_t ip_set_bridgemode(int32_t argc, char *argv[])
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : ipconfig_dhcp_pool()
-* Returned Value  : A_OK if success else A_ERROR
-*
-* Comments        : Sample function to configure dhcp pool.
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : ipconfig_dhcp_pool()
+ * Returned Value  : A_OK if success else A_ERROR
+ *
+ * Comments        : Sample function to configure dhcp pool.
+ *
+ *END*-----------------------------------------------------------------*/
 int32_t ipconfig_dhcp_pool(int32_t argc, char *argv[])
 {
     uint32_t startaddr, endaddr;
@@ -5680,8 +5682,8 @@ int32_t ipconfig_dhcp_pool(int32_t argc, char *argv[])
         return A_ERROR;
     }
     start_ip_addr_string = argv[2];
-    end_ip_addr_string = argv[3];
-    leasetime = atoi(argv[4]);
+    end_ip_addr_string   = argv[3];
+    leasetime            = atoi(argv[4]);
 
     error = parse_ipv4_ad((unsigned long *)&startaddr, &sbits, start_ip_addr_string);
     if (error != 0)
@@ -5690,7 +5692,7 @@ int32_t ipconfig_dhcp_pool(int32_t argc, char *argv[])
         return error;
     }
     startaddr = A_BE2CPU32(startaddr);
-    error = parse_ipv4_ad((unsigned long *)&endaddr, &sbits, end_ip_addr_string);
+    error     = parse_ipv4_ad((unsigned long *)&endaddr, &sbits, end_ip_addr_string);
     if (error != 0)
     {
         PRINTF("Invalid end ip address" NL);
@@ -5723,16 +5725,16 @@ int32_t ipconfig_dhcp_pool(int32_t argc, char *argv[])
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : ipconfig_dhcps_success_cb()
-* Returned Value  : A_OK if success else A_ERROR
-*
-* Comments        : Sample callback function that is invoked on DHCP Server
-*                   issuing a DHCP client a successful IP.
-*		    The callback is invoked with the client's HW address and the
-*	            IP Address issued to the client.
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : ipconfig_dhcps_success_cb()
+ * Returned Value  : A_OK if success else A_ERROR
+ *
+ * Comments        : Sample callback function that is invoked on DHCP Server
+ *                   issuing a DHCP client a successful IP.
+ *		    The callback is invoked with the client's HW address and the
+ *	            IP Address issued to the client.
+ *
+ *END*-----------------------------------------------------------------*/
 uint32_t ipconfig_dhcps_success_cb(uint8_t *mac, uint32_t addr)
 {
     PRINTF("DHCP Server issued Client MAC:%02x:%02x:%02x:%02x:%02x:%02x,IP Addr:%d.%d.%d.%d" NL, mac[0], mac[1], mac[2],
@@ -5741,14 +5743,14 @@ uint32_t ipconfig_dhcps_success_cb(uint8_t *mac, uint32_t addr)
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : ipconfig_dhcps_cb_enable()
-* Returned Value  : A_OK if success else A_ERROR
-*
-* Comments        : Sample function to configure dhcp server callback
-*                   registration.
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : ipconfig_dhcps_cb_enable()
+ * Returned Value  : A_OK if success else A_ERROR
+ *
+ * Comments        : Sample function to configure dhcp server callback
+ *                   registration.
+ *
+ *END*-----------------------------------------------------------------*/
 int32_t ipconfig_dhcps_cb_enable(int32_t argc, char *argv[])
 {
     uint32_t enet_device = get_active_device();
@@ -5782,16 +5784,16 @@ int32_t ipconfig_dhcps_cb_enable(int32_t argc, char *argv[])
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : ipconfig_dhcpc_success_cb()
-* Returned Value  : A_OK if success else A_ERROR
-*
-* Comments        : Sample callback function that is invoked on DHCP Client
-*                   issuing a DHCP client a successful IP.
-*		    		The callback is invoked with the IP Address,Mask,Gateway address assigned
-*                   to the client.
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : ipconfig_dhcpc_success_cb()
+ * Returned Value  : A_OK if success else A_ERROR
+ *
+ * Comments        : Sample callback function that is invoked on DHCP Client
+ *                   issuing a DHCP client a successful IP.
+ *		    		The callback is invoked with the IP Address,Mask,Gateway address assigned
+ *                   to the client.
+ *
+ *END*-----------------------------------------------------------------*/
 uint32_t ipconfig_dhcpc_success_cb(uint32_t addr, uint32_t mask, uint32_t gw)
 {
     PRINTF("IP Addr:%d.%d.%d.%d" NL, getByte(3, addr), getByte(2, addr), getByte(1, addr), getByte(0, addr));
@@ -5801,14 +5803,14 @@ uint32_t ipconfig_dhcpc_success_cb(uint32_t addr, uint32_t mask, uint32_t gw)
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : ipconfig_dhcpc_cb_enable()
-* Returned Value  : A_OK if success else A_ERROR
-*
-* Comments        : Sample function to configure dhcp client callback
-*                   registration.
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : ipconfig_dhcpc_cb_enable()
+ * Returned Value  : A_OK if success else A_ERROR
+ *
+ * Comments        : Sample function to configure dhcp client callback
+ *                   registration.
+ *
+ *END*-----------------------------------------------------------------*/
 int32_t ipconfig_dhcpc_cb_enable(int32_t argc, char *argv[])
 {
     uint32_t enet_device = get_active_device();
@@ -5843,11 +5845,11 @@ int32_t ipconfig_dhcpc_cb_enable(int32_t argc, char *argv[])
 
 int32_t ip6_set_router_prefix(int32_t argc, char *argv[])
 {
-    IP6_ADDR_T v6addr = {0};
-    int32_t retval = -1;
-    int prefixlen = 0;
+    IP6_ADDR_T v6addr   = {0};
+    int32_t retval      = -1;
+    int prefixlen       = 0;
     int prefix_lifetime = 0;
-    int valid_lifetime = 0;
+    int valid_lifetime  = 0;
     uint32_t enet_device;
     QCOM_WLAN_DEV_MODE wifimode = QCOM_WLAN_DEV_MODE_INVALID;
 
@@ -5881,16 +5883,16 @@ int32_t ip6_set_router_prefix(int32_t argc, char *argv[])
         return (A_ERROR);
     }
 
-    prefixlen = atoi(argv[3]);
+    prefixlen       = atoi(argv[3]);
     prefix_lifetime = atoi(argv[4]);
-    valid_lifetime = atoi(argv[5]);
+    valid_lifetime  = atoi(argv[5]);
     qcom_ip6config_router_prefix(enet_device, &v6addr, prefixlen, prefix_lifetime, valid_lifetime);
     return 0;
 }
 
 static int32_t ip_set_tcp_exponential_backoff_retry(int32_t argc, char *argv[])
 {
-    int32_t retry = 0;
+    int32_t retry        = 0;
     uint32_t enet_device = get_active_device();
 
     /*Check if driver is loaded*/
@@ -6014,11 +6016,11 @@ static int32_t ip_dns_client(int32_t argc, char *argv[])
 }
 static int32_t ip_dns_server_addr(int32_t argc, char *argv[])
 {
-    uint32_t addr = 0;
+    uint32_t addr        = 0;
     char *ip_addr_string = NULL;
     int32_t error;
     uint32_t sbits;
-    int32_t retval = -1;
+    int32_t retval    = -1;
     IP6_ADDR_T v6addr = {0};
 
     /*Check if driver is loaded*/
@@ -6064,11 +6066,11 @@ static int32_t ip_dns_server_addr(int32_t argc, char *argv[])
 
 static int32_t ip_dns_delete_server_addr(int32_t argc, char *argv[])
 {
-    uint32_t addr = 0;
+    uint32_t addr        = 0;
     char *ip_addr_string = NULL;
     int32_t error;
     uint32_t sbits;
-    int32_t retval = -1;
+    int32_t retval    = -1;
     IP6_ADDR_T v6addr = {0};
 
     /*Check if driver is loaded*/
@@ -6146,7 +6148,7 @@ void swat_http_post_callback(void *cxt, void *buf)
         return;
 
     numTLV = ev->numTLV;
-    data = ev->data;
+    data   = ev->data;
 
     while (numTLV)
     {
@@ -6266,7 +6268,7 @@ static int32_t ip_http_server_post(int32_t argc, char *argv[])
     }
 
     objtype = atoi(argv[4]);
-    objlen = atoi(argv[5]);
+    objlen  = atoi(argv[5]);
     if ((objtype != 1) && (objtype != 2) && (objtype != 3))
     {
         PRINTF("Error: <objtype> can be 1 ,2 or 3" NL);
@@ -6299,7 +6301,7 @@ static int32_t ip_http_server_get(int32_t argc, char *argv[])
         return A_ERROR;
     }
     objtype = 0;
-    objlen = 0;
+    objlen  = 0;
 #if 0
     if((objtype != 1) && (objtype != 2) && (objtype != 3))
     {
@@ -6358,7 +6360,7 @@ static int32_t ip_resolve_hostname(int32_t argc, char *argv[])
     {
         // TODO: need to rewrite !
         uint32_t *tmp = (uint32_t *)&ip6addr[0];
-        addr = A_CPU2BE32((uint32_t)*tmp);
+        addr          = A_CPU2BE32((uint32_t)*tmp);
         PRINTF("resolved IP:%d.%d.%d.%d" NL, getByte(3, addr), getByte(2, addr), getByte(1, addr), getByte(0, addr));
     }
     if (domain == 3)
@@ -6384,7 +6386,7 @@ int32_t ip_get_addr_for_host_name(char *hostname, uint32_t *v4addr, IP6_ADDR_T *
     {
         // TODO: rewrite !!
         uint32_t *tmp = (uint32_t *)&ip6address[0];
-        *v4addr = *tmp;
+        *v4addr       = *tmp;
         uint32_t addr = A_CPU2BE32(*v4addr);
         PRINTF("resolved IP:%d.%d.%d.%d" NL, getByte(3, addr), getByte(2, addr), getByte(1, addr), getByte(0, addr));
     }
@@ -6461,7 +6463,7 @@ static int32_t ip_gethostbyname2(int32_t argc, char *argv[])
     {
         // TODO: rewrite !
         uint32_t *tmp = (uint32_t *)&ip6addr[0];
-        addr = A_CPU2BE32(*tmp);
+        addr          = A_CPU2BE32(*tmp);
         PRINTF("addr:%d.%d.%d.%d" NL, getByte(3, addr), getByte(2, addr), getByte(1, addr), getByte(0, addr));
     }
     else if (domain == 3)
@@ -6526,14 +6528,14 @@ static int32_t ip_dns_local_domain(int32_t argc, char *argv[])
 
 static int32_t ipdns(int32_t argc, char *argv[])
 {
-    uint32_t addr = 0;
+    uint32_t addr        = 0;
     char *ip_addr_string = NULL;
     int32_t error;
     uint32_t sbits;
     IP46ADDR dnsaddr;
-    int32_t retval = -1;
+    int32_t retval    = -1;
     IP6_ADDR_T v6addr = {0};
-    int32_t command = 0;
+    int32_t command   = 0;
     A_STATUS rtn;
 
     if (IS_DRIVER_READY != A_OK)
@@ -6561,7 +6563,7 @@ static int32_t ipdns(int32_t argc, char *argv[])
     }
     memset(&dnsaddr, 0, sizeof(IP46ADDR));
     ip_addr_string = argv[4];
-    error = parse_ipv4_ad((unsigned long *)&addr, &sbits, ip_addr_string);
+    error          = parse_ipv4_ad((unsigned long *)&addr, &sbits, ip_addr_string);
     if (error == 0)
     {
         if (command == 1)
@@ -6598,7 +6600,7 @@ static int32_t ip_dns_server_enable(int32_t argc, char *argv[])
 {
     uint32_t enet_device;
     QCOM_WLAN_DEV_MODE wifimode = QCOM_WLAN_DEV_MODE_INVALID;
-    int32_t command = -1;
+    int32_t command             = -1;
 
     /*Check if driver is loaded*/
     if (IS_DRIVER_READY != A_OK)
@@ -6686,7 +6688,7 @@ static int32_t ip_sntp_get_time(int32_t argc, char *argv[])
     uint32_t enet_device;
     tSntpTime SntpTime;
     char *months[12] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-    char *Day[7] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+    char *Day[7]     = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
     uint8_t m[4];
 
     memset(&SntpTime, 0, sizeof(tSntpTime));
@@ -6762,7 +6764,7 @@ static int32_t ip_sntp_modify_timezone_dse(int32_t argc, char *argv[])
         return A_ERROR;
     }
 
-    strncpy(parsing_hour_min, argv[2], sizeof(parsing_hour_min));
+    strncpy(parsing_hour_min, argv[2], sizeof(parsing_hour_min) - 1);
 
     if (parsing_hour_min[3] == '+')
     {
@@ -6922,12 +6924,12 @@ static int32_t ssl_start(int32_t argc, char *argv[])
 
     if (0 == strcmp(argv[2], "server"))
     {
-        ssl = &ssl_inst[SSL_SERVER_INST];
+        ssl  = &ssl_inst[SSL_SERVER_INST];
         role = SSL_SERVER;
     }
     else if (0 == strcmp(argv[2], "client"))
     {
-        ssl = &ssl_inst[SSL_CLIENT_INST];
+        ssl  = &ssl_inst[SSL_CLIENT_INST];
         role = SSL_CLIENT;
     }
     else
@@ -6944,7 +6946,7 @@ static int32_t ssl_start(int32_t argc, char *argv[])
 
     // Create SSL context
     memset(ssl, 0, sizeof(SSL_INST));
-    ssl->role = role;
+    ssl->role   = role;
     ssl->sslCtx = qcom_SSL_ctx_new(role, SSL_INBUF_SIZE, SSL_OUTBUF_SIZE, 0);
     if (ssl->sslCtx == NULL)
     {
@@ -6980,12 +6982,12 @@ static int32_t ssl_stop(int32_t argc, char *argv[])
 
     if (0 == strcmp(argv[2], "server"))
     {
-        ssl = &ssl_inst[SSL_SERVER_INST];
+        ssl  = &ssl_inst[SSL_SERVER_INST];
         role = SSL_SERVER;
     }
     else if (0 == strcmp(argv[2], "client"))
     {
-        ssl = &ssl_inst[SSL_CLIENT_INST];
+        ssl  = &ssl_inst[SSL_CLIENT_INST];
         role = SSL_CLIENT;
     }
     else
@@ -7053,7 +7055,7 @@ static int32_t ssl_config(int32_t argc, char *argv[])
         return A_ERROR;
     }
 
-    argn = 3;
+    argn            = 3;
     ssl->config_set = 0;
     while (argn < argc)
     {
@@ -7137,7 +7139,7 @@ static int32_t ssl_config(int32_t argc, char *argv[])
             if (0 == strcmp("0", argv[argn]))
             {
                 ssl->config.verify.domain = 0;
-                ssl->config.matchName[0] = '\0';
+                ssl->config.matchName[0]  = '\0';
             }
             else
             {
@@ -7147,7 +7149,7 @@ static int32_t ssl_config(int32_t argc, char *argv[])
                     PRINTF("ERROR: %s too long (max %d chars)" NL, argv[argn], sizeof(ssl->config.matchName));
                     return A_ERROR;
                 }
-                strncpy(ssl->config.matchName, argv[argn], sizeof(ssl->config.matchName));
+                strncpy(ssl->config.matchName, argv[argn], sizeof(ssl->config.matchName) - 1);
             }
         }
 
@@ -7216,7 +7218,7 @@ static int32_t ssl_config(int32_t argc, char *argv[])
 
     // configure the SSL connection
     ssl->config_set = 1;
-    res = qcom_SSL_configure(ssl->ssl, &ssl->config);
+    res             = qcom_SSL_configure(ssl->ssl, &ssl->config);
     if (res < A_OK)
     {
         PRINTF("ERROR: SSL configure failed (%d)" NL, res);
@@ -7299,7 +7301,7 @@ static int32_t ssl_add_cert(int32_t argc, char *argv[])
     }
     else
     {
-        uint8_t *cert = ssl_cert_data_buf;
+        uint8_t *cert     = ssl_cert_data_buf;
         uint16_t cert_len = ssl_cert_data_buf_len;
         if (type == SSL_CERTIFICATE)
         {
@@ -7307,7 +7309,7 @@ static int32_t ssl_add_cert(int32_t argc, char *argv[])
             {
                 // Load the default certificate
                 PRINTF("Note: using the default certificate" NL);
-                cert = (uint8_t *)ssl_default_cert;
+                cert     = (uint8_t *)ssl_default_cert;
                 cert_len = ssl_default_cert_len;
             }
             if (qcom_SSL_addCert(ssl->sslCtx, cert, cert_len) < A_OK)
@@ -7323,7 +7325,7 @@ static int32_t ssl_add_cert(int32_t argc, char *argv[])
             {
                 // Load the default CA list
                 PRINTF("Note: using the default CA list" NL);
-                cert = (uint8_t *)ssl_default_calist;
+                cert     = (uint8_t *)ssl_default_calist;
                 cert_len = ssl_default_calist_len;
             }
             if (qcom_SSL_setCaList(ssl->sslCtx, cert, cert_len) < A_OK)
@@ -7439,20 +7441,27 @@ static int32_t ssl_list_cert(int32_t argc, char *argv[])
             PRINTF("%s" NL, str);
         }
     }
+
+    if (NULL != fileNames)
+    {
+        A_FREE(fileNames, MALLOC_ID_TEMPORARY);
+        fileNames = NULL;
+    }
+
     return A_OK;
 }
 #endif // ENABLE_SSL
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : qcom_get_wps_net_info()
-* Parames:
-*        void
-* Returned Value  : ATH_NETPARAMS * - the structure point to netinfo
-*		    NULL - on any failure.
-* Comments        :
-*                   Not supported on RTCS
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : qcom_get_wps_net_info()
+ * Parames:
+ *        void
+ * Returned Value  : ATH_NETPARAMS * - the structure point to netinfo
+ *		    NULL - on any failure.
+ * Comments        :
+ *                   Not supported on RTCS
+ *END*-----------------------------------------------------------------*/
 ATH_NETPARAMS *qcom_get_wps_net_info(void)
 {
     ATH_NETPARAMS *pNetparams = &wps_context.netparams;
@@ -7467,10 +7476,10 @@ Command will be
 httpc get 192.1.168.1.10 /index.html
 */
 /************************************************************************
-* NAME: httpc_get_page
-*
-* DESCRIPTION:
-************************************************************************/
+ * NAME: httpc_get_page
+ *
+ * DESCRIPTION:
+ ************************************************************************/
 HTTPC_PARAMS httpc; // Since stack size is less
 
 static int32_t httpc_command_parser(int32_t argc, char_ptr argv[])
@@ -7494,7 +7503,7 @@ static int32_t httpc_command_parser(int32_t argc, char_ptr argv[])
 
         if (argc >= 4)
         {
-            strncpy((char *)httpc.url, argv[3], sizeof(httpc.url));
+            strncpy((char *)httpc.url, argv[3], sizeof(httpc.url) - 1);
         }
 
         if (argc >= 5)
@@ -7566,10 +7575,10 @@ static int32_t httpc_command_parser(int32_t argc, char_ptr argv[])
 } /* Endbody */
 
 /************************************************************************
-* NAME: httpc_connect
-*
-* DESCRIPTION: Process a HTTP connect request.
-************************************************************************/
+ * NAME: httpc_connect
+ *
+ * DESCRIPTION: Process a HTTP connect request.
+ ************************************************************************/
 
 static void httpc_connect(HTTPC_PARAMS *p_httpc)
 {
@@ -7583,21 +7592,21 @@ static void httpc_connect(HTTPC_PARAMS *p_httpc)
 
 #define MAX_HTTP_BUF_SIZE 1500
 /************************************************************************
-* NAME: httpc_method
-*
-* DESCRIPTION: Process a HTTP connect request.
-*              For request, output will come as last argument
-*              Application must free the buffer using zero_copy_http_free
-************************************************************************/
+ * NAME: httpc_method
+ *
+ * DESCRIPTION: Process a HTTP connect request.
+ *              For request, output will come as last argument
+ *              Application must free the buffer using zero_copy_http_free
+ ************************************************************************/
 static void httpc_method(HTTPC_PARAMS *p_httpc)
 {
-    uint8_t *output = NULL;
-    uint32_t error = A_OK;
+    uint8_t *output      = NULL;
+    uint32_t error       = A_OK;
     HTTPC_RESPONSE *temp = NULL;
     int i;
 
     output = malloc(MAX_HTTP_BUF_SIZE);
-    error = qcom_http_client_method(p_httpc->command, p_httpc->url, p_httpc->data, output);
+    error  = qcom_http_client_method(p_httpc->command, p_httpc->url, p_httpc->data, output);
 
     if (error != A_OK)
     {
@@ -7633,20 +7642,20 @@ static void httpc_method(HTTPC_PARAMS *p_httpc)
 
 #if ENABLE_ROUTING_CMDS
 /************************************************************************
-* NAME: ipv4_route
-*
-* DESCRIPTION: Add, delete or show IPv4 route table
-*               wmiconfig --ipv4route add <addr> <mask> <gw>
-*               wmiconfig --ipv4route del <addr> <mask> <ifindex>
-*               wmiconfig --ipv4route show
-************************************************************************/
+ * NAME: ipv4_route
+ *
+ * DESCRIPTION: Add, delete or show IPv4 route table
+ *               wmiconfig --ipv4route add <addr> <mask> <gw>
+ *               wmiconfig --ipv4route del <addr> <mask> <ifindex>
+ *               wmiconfig --ipv4route show
+ ************************************************************************/
 int32_t ipv4_route(int32_t argc, char_ptr argv[])
 { /* Body */
-    int32_t error = A_OK;
+    int32_t error    = A_OK;
     uint32_t ifIndex = 0;
-    IP_ADDR_T addr = {0};
-    IP_ADDR_T mask = {0};
-    IP_ADDR_T gw = {0};
+    IP_ADDR_T addr   = {0};
+    IP_ADDR_T mask   = {0};
+    IP_ADDR_T gw     = {0};
     uint32_t sbits;
     uint32_t command;
     IPV4_ROUTE_LIST_T routelist;
@@ -7676,7 +7685,7 @@ int32_t ipv4_route(int32_t argc, char_ptr argv[])
                 break;
             }
             addr.s_addr = A_BE2CPU32(addr.s_addr);
-            error = parse_ipv4_ad((unsigned long *)&mask, &sbits, argv[4]);
+            error       = parse_ipv4_ad((unsigned long *)&mask, &sbits, argv[4]);
             if (error != 0)
             {
                 PRINTF("Invalid Mask address" NL);
@@ -7688,7 +7697,7 @@ int32_t ipv4_route(int32_t argc, char_ptr argv[])
         if (ATH_STRCMP(argv[2], "add") == 0)
         {
             command = ROUTE_ADD;
-            error = parse_ipv4_ad((unsigned long *)&gw, &sbits, argv[5]);
+            error   = parse_ipv4_ad((unsigned long *)&gw, &sbits, argv[5]);
             if (error != 0)
             {
                 PRINTF("Invalid Gateway address" NL);
@@ -7717,7 +7726,7 @@ int32_t ipv4_route(int32_t argc, char_ptr argv[])
         {
             if (command == ROUTE_SHOW)
             {
-                int i = 0;
+                int i        = 0;
                 char *ip_str = A_MALLOC(sizeof(uint8_t) * 48, MALLOC_ID_TEMPORARY);
                 if (NULL == ip_str)
                 {
@@ -7734,6 +7743,8 @@ int32_t ipv4_route(int32_t argc, char_ptr argv[])
                                inet_ntoa(*(uint32_t *)(&routelist.route[i].gateway), (char *)&ip_str[32]),
                                routelist.route[i].ifIndex);
                     }
+                    A_FREE(ip_str, MALLOC_ID_TEMPORARY);
+                    ip_str = NULL;
                 }
             }
         }
@@ -7752,16 +7763,16 @@ int32_t ipv4_route(int32_t argc, char_ptr argv[])
 } /* Endbody */
 
 /************************************************************************
-* NAME: ipv6_route
-*
-* DESCRIPTION: Add, delete or show IPv4 route table
-*               wmiconfig --ipv4route add <addr> <prfx len> <gw>
-*               wmiconfig --ipv4route del <addr> <ifindex>
-*               wmiconfig --ipv4route show
-************************************************************************/
+ * NAME: ipv6_route
+ *
+ * DESCRIPTION: Add, delete or show IPv4 route table
+ *               wmiconfig --ipv4route add <addr> <prfx len> <gw>
+ *               wmiconfig --ipv4route del <addr> <ifindex>
+ *               wmiconfig --ipv4route show
+ ************************************************************************/
 int32_t ipv6_route(int32_t argc, char_ptr argv[])
 { /* Body */
-    int32_t error = A_OK;
+    int32_t error    = A_OK;
     uint32_t ifIndex = 0, prefixLen = 0;
     IP6_ADDR_T ip6addr = {0};
     IP6_ADDR_T gateway = {0};
@@ -7828,7 +7839,7 @@ int32_t ipv6_route(int32_t argc, char_ptr argv[])
         {
             if (command == ROUTE_SHOW)
             {
-                int i = 0;
+                int i        = 0;
                 char *ip_str = A_MALLOC(sizeof(uint8_t) * 48, MALLOC_ID_TEMPORARY);
                 if (NULL == ip_str)
                 {
@@ -7844,6 +7855,8 @@ int32_t ipv6_route(int32_t argc, char_ptr argv[])
                         PRINTF("%s  %d" NL, inet6_ntoa((char *)(&routelist.route[i].nexthop), (char *)ip_str),
                                routelist.route[i].ifindex);
                     }
+                    A_FREE(ip_str, MALLOC_ID_TEMPORARY);
+                    ip_str = NULL;
                 }
             }
         }
@@ -8037,9 +8050,9 @@ int32_t ota_cust(int32_t argc, char *argv[])
                     PRINTF("Invalid Params" NL "Usage: wmiconfig --ota_cust 0 <flags> <partition_index>" NL);
                     return A_ERROR;
                 }
-                flags = atoi(argv[3]);
+                flags          = atoi(argv[3]);
                 partition_indx = atoi(argv[4]);
-                rtn = qcom_ota_session_start(flags, partition_indx);
+                rtn            = qcom_ota_session_start(flags, partition_indx);
             }
             break;
         case 1:
@@ -8085,7 +8098,7 @@ int32_t ota_cust(int32_t argc, char *argv[])
                 }
 
                 offset = atoi(argv[3]);
-                len = atoi(argv[4]);
+                len    = atoi(argv[4]);
                 if (len > BUF_LEN)
                 {
                     PRINTF("data must be less than 50 bytes here" NL);
@@ -8142,7 +8155,7 @@ int32_t ota_cust(int32_t argc, char *argv[])
                 }
 
                 offset = atoi(argv[3]);
-                len = atoi(argv[4]);
+                len    = atoi(argv[4]);
 
                 PRINTF("Partition data:" NL);
 
@@ -8183,7 +8196,7 @@ int32_t ota_cust(int32_t argc, char *argv[])
                 A_FREE(data, MALLOC_ID_TEMPORARY);
                 return A_OK;
             }
-        // break;
+            // break;
 
         case 7:
             // ota session end
@@ -8195,7 +8208,7 @@ int32_t ota_cust(int32_t argc, char *argv[])
                     return A_ERROR;
                 }
                 good_image = atoi(argv[3]);
-                rtn = qcom_ota_session_end(good_image ? 1 : 00);
+                rtn        = qcom_ota_session_end(good_image ? 1 : 00);
             }
             break;
     }
@@ -8216,7 +8229,7 @@ int32_t ota_format(int32_t argc, char *argv[])
     }
 
     indx = atoi(argv[2]);
-    rtn = qcom_ota_partition_format(indx);
+    rtn  = qcom_ota_partition_format(indx);
     if (rtn == QCOM_OTA_OK)
     {
         PRINTF("OTA Success");
@@ -8325,8 +8338,8 @@ uint32_t ota_cmd, ota_resp, ota_result;
 void ota_response_callback(uint32_t cmd, uint32_t resp_code, uint32_t result)
 {
     OTA_FTP_D_PRINTF("ota_cb cmd:%d,resp:%d, result:%d" NL, cmd, resp_code, result);
-    ota_cmd = cmd;
-    ota_resp = resp_code;
+    ota_cmd    = cmd;
+    ota_resp   = resp_code;
     ota_result = result;
     if (ota_ftp_sess != NULL)
     {
@@ -8358,12 +8371,12 @@ int32_t ota_ftp_init(void)
     memset(ota_ftp_sess, '\0', sizeof(QCOM_OTA_FTP_SESSION_INFO));
 
     ota_ftp_sess->control_sock = (uint32_t)A_ERROR;
-    ota_ftp_sess->peer_sock = (uint32_t)A_ERROR;
-    ota_ftp_sess->data_sock = (uint32_t)A_ERROR;
+    ota_ftp_sess->peer_sock    = (uint32_t)A_ERROR;
+    ota_ftp_sess->data_sock    = (uint32_t)A_ERROR;
 
     ota_ftp_sess->first = NULL;
-    ota_ftp_sess->last = NULL;
-    ota_ftp_sess->cur = NULL;
+    ota_ftp_sess->last  = NULL;
+    ota_ftp_sess->cur   = NULL;
 
     enet_device = get_active_device();
     qcom_ipconfig(enet_device, QCOM_IPCONFIG_QUERY, &addr, &mask, &gw);
@@ -8437,20 +8450,20 @@ int32_t ota_ftp_append_pkt(uint8_t *buf, uint32_t len)
         return A_ERROR;
     }
 
-    tmp->len = len;
+    tmp->len    = len;
     tmp->offset = 0;
-    tmp->next = NULL;
-    tmp->buf = (uint8_t *)tmp + sizeof(QCOM_OTA_MEM);
+    tmp->next   = NULL;
+    tmp->buf    = (uint8_t *)tmp + sizeof(QCOM_OTA_MEM);
     A_MEMCPY(tmp->buf, buf, len);
     if (ota_ftp_sess->last == NULL)
     {
         ota_ftp_sess->first = tmp;
-        ota_ftp_sess->last = tmp;
+        ota_ftp_sess->last  = tmp;
     }
     else
     {
         ota_ftp_sess->last->next = tmp;
-        ota_ftp_sess->last = tmp;
+        ota_ftp_sess->last       = tmp;
     }
 
     return A_OK;
@@ -8467,7 +8480,7 @@ int32_t ota_ftp_clear_pkt(void)
     QCOM_OTA_MEM *tmp;
     while (ota_ftp_sess->first != NULL)
     {
-        tmp = ota_ftp_sess->first;
+        tmp                 = ota_ftp_sess->first;
         ota_ftp_sess->first = tmp->next;
         A_FREE(tmp, MALLOC_ID_CONTEXT);
     }
@@ -8492,8 +8505,8 @@ int32_t ota_ftp_open_data_sock(_ip_address ip_addr, uint16_t port)
 
     memset(&local_addr, 0, sizeof(local_addr));
     local_addr.sin_addr.s_addr = ip_addr;
-    local_addr.sin_port = port;
-    local_addr.sin_family = ATH_AF_INET;
+    local_addr.sin_port        = port;
+    local_addr.sin_family      = ATH_AF_INET;
 
     OTA_FTP_D_PRINTF("connect ftp data port ip:%xh port:%d" NL, ip_addr, port);
 
@@ -8527,12 +8540,12 @@ int32_t ota_ftp_open_control_sock(_ip_address ip_addr, uint16_t port)
     OTA_FTP_D_PRINTF("FTP Connecting ip:%xh port:%d" NL, ip_addr, port);
 
     ota_ftp_sess->remote_ip_address = ip_addr;
-    ota_ftp_sess->cmd_port = port;
+    ota_ftp_sess->cmd_port          = port;
 
     memset(&foreign_addr, 0, sizeof(foreign_addr));
     foreign_addr.sin_addr.s_addr = ip_addr;
-    foreign_addr.sin_port = port;
-    foreign_addr.sin_family = ATH_AF_INET;
+    foreign_addr.sin_port        = port;
+    foreign_addr.sin_family      = ATH_AF_INET;
 
     /* Connect to the server.*/
     if (qcom_connect(ota_ftp_sess->control_sock, (struct sockaddr *)(&foreign_addr), sizeof(foreign_addr)) == A_ERROR)
@@ -8612,7 +8625,7 @@ int32_t ota_ftp_recv_cmd(int *resp_code)
         buffer[received] = '\0';
         OTA_FTP_D_PRINTF("recv: %s", buffer);
 
-        buffer[3] = '\0';
+        buffer[3]  = '\0';
         *resp_code = strtol(buffer, NULL, 10);
     }
 
@@ -8691,8 +8704,8 @@ int32_t ota_ftp_program_ota(uint32_t *size)
 
     /*Accept incoming connection*/
     OTA_FTP_D_PRINTF("Accept incoming data connection" NL);
-    addr_len = sizeof(foreign_addr);
-    ota_ftp_sess->peer_sock = qcom_accept(ota_ftp_sess->data_sock, (struct sockaddr *)&foreign_addr, &addr_len);
+    addr_len                = sizeof(foreign_addr);
+    ota_ftp_sess->peer_sock = qcom_accept(ota_ftp_sess->data_sock, (void *)&foreign_addr, &addr_len);
 
     if (ota_ftp_sess->peer_sock == (uint32_t)A_ERROR)
     {
@@ -8705,15 +8718,15 @@ int32_t ota_ftp_program_ota(uint32_t *size)
     /* -----------------------------------------------------*/
     PRINTF("FTP Transfer File" NL);
 
-    count = 0;
-    is_first = 1;
-    img_offset = 0;
-    ota_ftp_sess->write_flag = 0;
-    ota_ftp_sess->total_write = 0;
-    ota_ftp_sess->total_write_rsp = 0;
-    ota_ftp_sess->cur = NULL;
+    count                           = 0;
+    is_first                        = 1;
+    img_offset                      = 0;
+    ota_ftp_sess->write_flag        = 0;
+    ota_ftp_sess->total_write       = 0;
+    ota_ftp_sess->total_write_rsp   = 0;
+    ota_ftp_sess->cur               = NULL;
     ota_ftp_sess->parse_hdr_pending = 0;
-    ota_ftp_sess->write_pending = 0;
+    ota_ftp_sess->write_pending     = 0;
 
     while (count < (OTA_FTP_INCOMING_CONNECT_TIMEOUT / OTA_FTP_WAIT_TIME))
     {
@@ -8745,8 +8758,8 @@ int32_t ota_ftp_program_ota(uint32_t *size)
                 if (is_first == 1)
                 {
                     // send ota parse image hdr command
-                    is_first = 0;
-                    ota_cmd = 0;
+                    is_first                        = 0;
+                    ota_cmd                         = 0;
                     ota_ftp_sess->parse_hdr_pending = 1;
                     qcom_ota_parse_image_hdr(ota_ftp_sess->cur->buf, &offset);
                     OTA_FTP_D_PRINTF("send OTA Parse Image Hdr" NL);
@@ -8773,8 +8786,8 @@ int32_t ota_ftp_program_ota(uint32_t *size)
                 if (ota_ftp_sess->write_pending != 0) // write data
                 {
                     count = 0;
-                    ptr = ota_ftp_sess->cur->buf;
-                    rtn = qcom_ota_partition_write_data(img_offset, &ptr[ota_ftp_sess->cur->offset],
+                    ptr   = ota_ftp_sess->cur->buf;
+                    rtn   = qcom_ota_partition_write_data(img_offset, &ptr[ota_ftp_sess->cur->offset],
                                                         ota_ftp_sess->cur->len, &ret_size);
 
                     if (rtn == A_PENDING)
@@ -8866,7 +8879,7 @@ int32_t ota_ftp_program_ota(uint32_t *size)
                 OTA_FTP_D_PRINTF("recv: %s", buffer);
 
                 buffer[3] = '\0';
-                resp_num = strtol(buffer, NULL, 10);
+                resp_num  = strtol(buffer, NULL, 10);
 
 #if ZERO_COPY
                 if (received > 0)
@@ -8874,7 +8887,7 @@ int32_t ota_ftp_program_ota(uint32_t *size)
 #endif
                 // we have received the whole file
                 complete = 1;
-                count = 0;
+                count    = 0;
                 if (resp_num == 226) // recv 226 Transfer complete
                 {
                     rtn = QCOM_OTA_OK;
@@ -8940,7 +8953,7 @@ error_2:
                 OTA_FTP_D_PRINTF("recv: %s", buffer);
 
                 buffer[3] = '\0';
-                resp_num = strtol(buffer, NULL, 10);
+                resp_num  = strtol(buffer, NULL, 10);
             }
 
 #if ZERO_COPY
@@ -9157,8 +9170,8 @@ static int32_t ota_ftp_upgrade(int32_t argc, char *argv[])
     }
 
     ath_inet_aton(argv[2], (uint32_t *)&ip_addr);
-    port = strtol(argv[3], NULL, 10);
-    flags = strtol(argv[7], NULL, 10);
+    port            = strtol(argv[3], NULL, 10);
+    flags           = strtol(argv[7], NULL, 10);
     partition_index = strtol(argv[8], NULL, 10);
 
     resp_code = qcom_ota_ftp_upgrade(ip_addr, port, argv[4], argv[5], argv[6], flags, partition_index, &size);
@@ -9178,7 +9191,7 @@ static int32_t ota_ftp_upgrade(int32_t argc, char *argv[])
 static int32_t get_temperature(int32_t argc, char *argv[])
 {
     uint32_t temp_reg = 0;
-    float temp_val = 0;
+    float temp_val    = 0;
     qcom_get_temperature(&temp_reg, &temp_val);
     PRINTF(NL "RegVal = %x  Degree = %f deg C" NL, temp_reg, temp_val);
     return A_OK;
@@ -9246,9 +9259,9 @@ static int32_t wow_set_mode(int32_t argc, char *argv[])
 
         /*Pattern*/
         QCOM_WOW_PATTERN wow_pattern;
-        wow_pattern.offset = default_wow_pattern.offset;
+        wow_pattern.offset        = default_wow_pattern.offset;
         wow_pattern.pattern_index = default_wow_pattern.pattern_index;
-        wow_pattern.pattern_size = default_wow_pattern.pattern_size;
+        wow_pattern.pattern_size  = default_wow_pattern.pattern_size;
         memcpy(wow_pattern.pattern, default_pattern, default_wow_pattern.pattern_size);
         if (qcom_param_set(enet_device, QCOM_PARAM_GROUP_WLAN, QCOM_PARAM_GROUP_WLAN_WOW_PATTERN, &wow_pattern,
                            sizeof(wow_pattern), TRUE) != A_OK)
@@ -9295,12 +9308,12 @@ static int32_t wow_host_sleep(int32_t argc, char *argv[])
 }
 
 /*FUNCTION*-----------------------------------------------------------------
-*
-* Function Name  : set_gtx
-* Returned Value : A_OK
-* Comments       : Enable/Disable GTX
-*
-*END------------------------------------------------------------------*/
+ *
+ * Function Name  : set_gtx
+ * Returned Value : A_OK
+ * Comments       : Enable/Disable GTX
+ *
+ *END------------------------------------------------------------------*/
 static int32_t set_gtx(char *gtx)
 {
     uint8_t b_gtx = atoi(gtx);
@@ -9313,19 +9326,19 @@ static int32_t set_gtx(char *gtx)
     }
 
     inout_param.cmd_id = ATH_ONOFF_GTX;
-    inout_param.data = &b_gtx;
+    inout_param.data   = &b_gtx;
     inout_param.length = sizeof(bool);
 
     return HANDLE_IOCTL(&inout_param);
 }
 
 /*FUNCTION*-----------------------------------------------------------------
-*
-* Function Name  : set_lpl
-* Returned Value : A_OK
-* Comments       : Enable/Disable LPL
-*
-*END------------------------------------------------------------------*/
+ *
+ * Function Name  : set_lpl
+ * Returned Value : A_OK
+ * Comments       : Enable/Disable LPL
+ *
+ *END------------------------------------------------------------------*/
 static int32_t set_lpl(char *lpl)
 {
     uint8_t b_lpl = atoi(lpl);
@@ -9338,19 +9351,19 @@ static int32_t set_lpl(char *lpl)
     }
 
     inout_param.cmd_id = ATH_ONOFF_LPL;
-    inout_param.data = &b_lpl;
+    inout_param.data   = &b_lpl;
     inout_param.length = sizeof(bool);
 
     return HANDLE_IOCTL(&inout_param);
 }
 
 /*FUNCTION*-----------------------------------------------------------
-*
-* Function Name  : get_active_device
-* Returned Value : A_OK
-* Comments       : Return the current active device in the application
-*
-*END------------------------------------------------------------------*/
+ *
+ * Function Name  : get_active_device
+ * Returned Value : A_OK
+ * Comments       : Return the current active device in the application
+ *
+ *END------------------------------------------------------------------*/
 
 int32_t get_active_device(void)
 {
@@ -9427,13 +9440,13 @@ static int32_t mac_store(char *argv[])
 }
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : gpio_handler()
-* Returned Value  : 1 - successful completion or
-*                   0 - failed.
-* Comments        : Handles GPIO related functionality
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : gpio_handler()
+ * Returned Value  : 1 - successful completion or
+ *                   0 - failed.
+ * Comments        : Handles GPIO related functionality
+ *
+ *END*-----------------------------------------------------------------*/
 static int32_t gpio_handle(int32_t argc, char *argv[])
 {
     ATH_IOCTL_PARAM_STRUCT inout_param;
@@ -9455,14 +9468,14 @@ static int32_t gpio_handle(int32_t argc, char *argv[])
             return A_ERROR;
         }
 
-        gpio_output_set.cmd.commandId = WMIX_GPIO_OUTPUT_SET_CMDID;
-        gpio_output_set.setting.set_mask = strtol(argv[3], NULL, 16);
-        gpio_output_set.setting.clear_mask = strtol(argv[4], NULL, 16);
-        gpio_output_set.setting.enable_mask = strtol(argv[5], NULL, 16);
+        gpio_output_set.cmd.commandId        = WMIX_GPIO_OUTPUT_SET_CMDID;
+        gpio_output_set.setting.set_mask     = strtol(argv[3], NULL, 16);
+        gpio_output_set.setting.clear_mask   = strtol(argv[4], NULL, 16);
+        gpio_output_set.setting.enable_mask  = strtol(argv[5], NULL, 16);
         gpio_output_set.setting.disable_mask = strtol(argv[6], NULL, 16);
 
         inout_param.cmd_id = ATH_GPIO_CMD;
-        inout_param.data = (void *)&gpio_output_set;
+        inout_param.data   = (void *)&gpio_output_set;
         inout_param.length = sizeof(gpio_output_set);
 
         error = HANDLE_IOCTL(&inout_param);
@@ -9474,7 +9487,7 @@ static int32_t gpio_handle(int32_t argc, char *argv[])
         cmd.commandId = WMIX_GPIO_INPUT_GET_CMDID;
 
         inout_param.cmd_id = ATH_GPIO_CMD;
-        inout_param.data = (void *)&cmd;
+        inout_param.data   = (void *)&cmd;
         inout_param.length = sizeof(cmd);
 
         error = HANDLE_IOCTL(&inout_param);
@@ -9495,12 +9508,12 @@ static int32_t gpio_handle(int32_t argc, char *argv[])
             return A_ERROR;
         }
 
-        gpio_register_set.cmd.commandId = WMIX_GPIO_REGISTER_SET_CMDID;
+        gpio_register_set.cmd.commandId      = WMIX_GPIO_REGISTER_SET_CMDID;
         gpio_register_set.setting.gpioreg_id = strtol(argv[3], NULL, 16);
-        gpio_register_set.setting.value = strtol(argv[4], NULL, 16);
+        gpio_register_set.setting.value      = strtol(argv[4], NULL, 16);
 
         inout_param.cmd_id = ATH_GPIO_CMD;
-        inout_param.data = (void *)&gpio_register_set;
+        inout_param.data   = (void *)&gpio_register_set;
         inout_param.length = sizeof(gpio_register_set);
 
         error = HANDLE_IOCTL(&inout_param);
@@ -9521,11 +9534,11 @@ static int32_t gpio_handle(int32_t argc, char *argv[])
             return A_ERROR;
         }
 
-        gpio_register_get.cmd.commandId = WMIX_GPIO_REGISTER_GET_CMDID;
+        gpio_register_get.cmd.commandId      = WMIX_GPIO_REGISTER_GET_CMDID;
         gpio_register_get.setting.gpioreg_id = strtol(argv[3], NULL, 16);
 
         inout_param.cmd_id = ATH_GPIO_CMD;
-        inout_param.data = (void *)&gpio_register_get;
+        inout_param.data   = (void *)&gpio_register_get;
         inout_param.length = sizeof(gpio_register_get);
 
         error = HANDLE_IOCTL(&inout_param);
@@ -9541,13 +9554,13 @@ static int32_t gpio_handle(int32_t argc, char *argv[])
 #if ENABLE_KF_PERFORMANCE
 
 /*FUNCTION*-------------------------------------------------------------
-*
-* Function Name   : pfm_handler()
-* Returned Value  : 1 - successful completion or
-*                   0 - failed.
-* Comments        : Handles performance measure related functionality
-*
-*END*-----------------------------------------------------------------*/
+ *
+ * Function Name   : pfm_handler()
+ * Returned Value  : 1 - successful completion or
+ *                   0 - failed.
+ * Comments        : Handles performance measure related functionality
+ *
+ *END*-----------------------------------------------------------------*/
 static int32_t pfm_handler(int32_t argc, char *argv[])
 {
     ATH_IOCTL_PARAM_STRUCT inout_param;
@@ -9557,7 +9570,7 @@ static int32_t pfm_handler(int32_t argc, char *argv[])
     clear_kf_profile();
 
     inout_param.cmd_id = ATH_PFM_CMD;
-    inout_param.data = (void *)&param;
+    inout_param.data   = (void *)&param;
     inout_param.length = sizeof(param);
 
     error = HANDLE_IOCTL(&inout_param);
@@ -9584,7 +9597,7 @@ static int32_t diag_handler(int32_t argc, char *argv[])
     data.setting.enable = 1;
 
     inout_param.cmd_id = ATH_DIAG_CMD;
-    inout_param.data = (void *)&data;
+    inout_param.data   = (void *)&data;
     inout_param.length = sizeof(data);
 
     error = HANDLE_IOCTL(&inout_param);
@@ -9607,7 +9620,7 @@ A_STATUS ath_setpmu(int argc, char *argv[])
     }
     if (strcmp(argv[2], "timer") == 0)
     {
-        param.options = WAKE_MGR_WAKE_EVENT_TIMER;
+        param.options   = WAKE_MGR_WAKE_EVENT_TIMER;
         param.wake_msec = atoi(argv[3]);
     }
     else if (strcmp(argv[2], "gpio30") == 0)
@@ -9626,7 +9639,7 @@ A_STATUS ath_setpmu(int argc, char *argv[])
     }
 
     inout_param.cmd_id = ATH_PMU_SET_PARAMS;
-    inout_param.data = &param;
+    inout_param.data   = &param;
     inout_param.length = sizeof(ATH_PMU_PARAM);
 
     return HANDLE_IOCTL(&inout_param);
@@ -9644,20 +9657,20 @@ A_STATUS ath_dset(int argc, char *argv[])
     }
     if (strcmp(argv[2], "write") == 0)
     {
-        param.dset_id = atoi(argv[3]);
-        param.offset = atoi(argv[4]);
-        param.length = atoi(argv[5]);
+        param.dset_id      = atoi(argv[3]);
+        param.offset       = atoi(argv[4]);
+        param.length       = atoi(argv[5]);
         inout_param.cmd_id = ATH_DSET_WRITE_CMD;
     }
     else if (strcmp(argv[2], "read") == 0)
     {
-        param.dset_id = atoi(argv[3]);
-        param.offset = atoi(argv[4]);
-        param.length = atoi(argv[5]);
+        param.dset_id      = atoi(argv[3]);
+        param.offset       = atoi(argv[4]);
+        param.length       = atoi(argv[5]);
         inout_param.cmd_id = ATH_DSET_READ_CMD;
     }
 
-    inout_param.data = &param;
+    inout_param.data   = &param;
     inout_param.length = sizeof(param);
 
     return HANDLE_IOCTL(&inout_param);
@@ -9690,31 +9703,31 @@ uint32_t remote_dset_op(DSET_OP op, HOST_DSET_HANDLE *pDsetHandle)
             dset_op.cmd.commandId = WMIX_DSET_CREATE_CMDID;
 
             dset_op.u.op_create.dset_id = pDsetHandle->dset_id;
-            dset_op.u.op_create.flags = pDsetHandle->flags | pDsetHandle->media_id;
-            dset_op.u.op_create.length = pDsetHandle->length;
+            dset_op.u.op_create.flags   = pDsetHandle->flags | pDsetHandle->media_id;
+            dset_op.u.op_create.length  = pDsetHandle->length;
 
-            inout_param.data = (void *)&dset_op;
+            inout_param.data   = (void *)&dset_op;
             inout_param.length = sizeof(dset_op);
 
             break;
 
         case DSET_OP_OPEN:
-            dset_op.cmd.commandId = WMIX_DSET_OPEN_CMDID;
+            dset_op.cmd.commandId     = WMIX_DSET_OPEN_CMDID;
             dset_op.u.op_open.dset_id = pDsetHandle->dset_id;
-            dset_op.u.op_open.flags = pDsetHandle->flags;
+            dset_op.u.op_open.flags   = pDsetHandle->flags;
 
-            inout_param.data = (void *)&dset_op;
+            inout_param.data   = (void *)&dset_op;
             inout_param.length = sizeof(WMIX_DSET_CMD_HDR) + sizeof(WMIX_DSET_OP_OPEN_PARAM_CMD);
             break;
 
         case DSET_OP_READ:
-            dset_op.cmd.commandId = WMIX_DSET_READ_CMDID;
+            dset_op.cmd.commandId     = WMIX_DSET_READ_CMDID;
             dset_op.u.op_read.dset_id = pDsetHandle->dset_id;
-            dset_op.u.op_read.offset = pDsetHandle->offset;
-            dset_op.u.op_read.length = pDsetHandle->length;
-            pDsetHandle->left_len = pDsetHandle->length;
+            dset_op.u.op_read.offset  = pDsetHandle->offset;
+            dset_op.u.op_read.length  = pDsetHandle->length;
+            pDsetHandle->left_len     = pDsetHandle->length;
 
-            inout_param.data = (void *)&dset_op;
+            inout_param.data   = (void *)&dset_op;
             inout_param.length = sizeof(WMIX_DSET_CMD_HDR) + sizeof(WMIX_DSET_OP_READ_PARAM_CMD);
             break;
         case DSET_OP_WRITE:
@@ -9727,42 +9740,42 @@ uint32_t remote_dset_op(DSET_OP op, HOST_DSET_HANDLE *pDsetHandle)
             pCmd->commandId = WMIX_DSET_WRITE_CMDID;
 
             pDsetWrite->dset_id = pDsetHandle->dset_id;
-            pDsetWrite->flags = pDsetHandle->flags;
-            pDsetWrite->offset = pDsetHandle->offset;
-            pDsetWrite->length = pDsetHandle->length;
+            pDsetWrite->flags   = pDsetHandle->flags;
+            pDsetWrite->offset  = pDsetHandle->offset;
+            pDsetWrite->length  = pDsetHandle->length;
 
             pDsetHandle->left_len = pDsetHandle->length;
 
-            inout_param.data = (void *)pDsetHandle->data_ptr;
+            inout_param.data   = (void *)pDsetHandle->data_ptr;
             inout_param.length = sizeof(WMIX_DSET_CMD_HDR) + sizeof(WMIX_DSET_OP_WRITE_PARAM_CMD) + pDsetHandle->length;
 
             break;
         }
         case DSET_OP_COMMIT:
         {
-            dset_op.cmd.commandId = WMIX_DSET_COMMIT_CMDID;
+            dset_op.cmd.commandId       = WMIX_DSET_COMMIT_CMDID;
             dset_op.u.op_commit.dset_id = pDsetHandle->dset_id;
 
-            inout_param.data = (void *)&dset_op;
+            inout_param.data   = (void *)&dset_op;
             inout_param.length = sizeof(WMIX_DSET_CMD_HDR) + sizeof(WMIX_DSET_OP_COMMIT_PARAM_CMD);
             break;
         }
         case DSET_OP_CLOSE:
         {
-            dset_op.cmd.commandId = WMIX_DSET_CLOSE_CMDID;
+            dset_op.cmd.commandId      = WMIX_DSET_CLOSE_CMDID;
             dset_op.u.op_close.dset_id = pDsetHandle->dset_id;
 
-            inout_param.data = (void *)&dset_op;
+            inout_param.data   = (void *)&dset_op;
             inout_param.length = sizeof(WMIX_DSET_CMD_HDR) + sizeof(WMIX_DSET_OP_CLOSE_PARAM_CMD);
             break;
         }
         case DSET_OP_DELETE:
         {
-            dset_op.cmd.commandId = WMIX_DSET_DELETE_CMDID;
+            dset_op.cmd.commandId       = WMIX_DSET_DELETE_CMDID;
             dset_op.u.op_delete.dset_id = pDsetHandle->dset_id;
-            dset_op.u.op_delete.flags = pDsetHandle->flags;
+            dset_op.u.op_delete.flags   = pDsetHandle->flags;
 
-            inout_param.data = (void *)&dset_op;
+            inout_param.data   = (void *)&dset_op;
             inout_param.length = sizeof(WMIX_DSET_CMD_HDR) + sizeof(WMIX_DSET_OP_DELETE_PARAM_CMD);
             break;
         }
@@ -9791,17 +9804,17 @@ A_STATUS ath_dset_api(int argc, char *argv[])
 
     if (strcmp(argv[2], "create") == 0)
     {
-        dset_id = atoi(argv[3]);
+        dset_id  = atoi(argv[3]);
         media_id = atoi(argv[4]);
-        flags = atoi(argv[5]);
-        length = atoi(argv[6]);
-        status = qcom_dset_create(&pDsetHandle, dset_id, media_id, length, flags, NULL, NULL);
+        flags    = atoi(argv[5]);
+        length   = atoi(argv[6]);
+        status   = qcom_dset_create(&pDsetHandle, dset_id, media_id, length, flags, NULL, NULL);
     }
     if (strcmp(argv[2], "open") == 0)
     {
         dset_id = atoi(argv[3]);
-        flags = atoi(argv[4]);
-        status = qcom_dset_open(&pDsetHandle, dset_id, flags, NULL, NULL);
+        flags   = atoi(argv[4]);
+        status  = qcom_dset_open(&pDsetHandle, dset_id, flags, NULL, NULL);
     }
     else if (strcmp(argv[2], "read") == 0 && argc >= 5)
     {
@@ -9818,7 +9831,7 @@ A_STATUS ath_dset_api(int argc, char *argv[])
     }
     else if (strcmp(argv[2], "write") == 0 && argc >= 6)
     {
-        flags = atoi(argv[3]);
+        flags  = atoi(argv[3]);
         offset = atoi(argv[4]);
         length = atoi(argv[5]);
 
@@ -9845,8 +9858,8 @@ A_STATUS ath_dset_api(int argc, char *argv[])
     else if (strcmp(argv[2], "delete") == 0 && argc > 4)
     {
         dset_id = atoi(argv[3]);
-        flags = atoi(argv[4]);
-        status = qcom_dset_delete(dset_id, flags, NULL, NULL);
+        flags   = atoi(argv[4]);
+        status  = qcom_dset_delete(dset_id, flags, NULL, NULL);
     }
 
     // TODO: fixme
@@ -9861,18 +9874,18 @@ A_STATUS ath_scratch_dset(int argc, char *argv[])
 
     if (strcmp(argv[2], "create") == 0)
     {
-        dset_id = atoi(argv[3]);
+        dset_id  = atoi(argv[3]);
         media_id = atoi(argv[4]);
-        flags = atoi(argv[5]);
-        length = atoi(argv[6]);
+        flags    = atoi(argv[5]);
+        length   = atoi(argv[6]);
         flags |= 0x20; // scratch dset
         status = qcom_dset_create(&pDsetHandle, dset_id, media_id, length, flags, NULL, NULL);
     }
     else if (strcmp(argv[2], "open") == 0)
     {
         dset_id = atoi(argv[3]);
-        flags = atoi(argv[4]);
-        status = qcom_dset_open(&pDsetHandle, dset_id, flags, NULL, NULL);
+        flags   = atoi(argv[4]);
+        status  = qcom_dset_open(&pDsetHandle, dset_id, flags, NULL, NULL);
     }
     else if (strcmp(argv[2], "read") == 0 && argc >= 5)
     {
@@ -9895,7 +9908,7 @@ A_STATUS ath_scratch_dset(int argc, char *argv[])
     }
     else if (strcmp(argv[2], "write") == 0 && argc >= 6)
     {
-        flags = atoi(argv[3]);
+        flags  = atoi(argv[3]);
         offset = atoi(argv[4]);
         length = atoi(argv[5]);
 
@@ -9922,8 +9935,8 @@ A_STATUS ath_scratch_dset(int argc, char *argv[])
     else if (strcmp(argv[2], "delete") == 0 && argc > 4)
     {
         dset_id = atoi(argv[3]);
-        flags = atoi(argv[4]);
-        status = qcom_dset_delete(dset_id, flags, NULL, NULL);
+        flags   = atoi(argv[4]);
+        status  = qcom_dset_delete(dset_id, flags, NULL, NULL);
     }
 
     PRINTF("status :%d" NL, status);

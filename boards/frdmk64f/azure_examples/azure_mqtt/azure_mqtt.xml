@@ -9,22 +9,29 @@
     <definition extID="device.MK64F12_CMSIS.MK64F12"/>
     <definition extID="device.MK64F12_startup.MK64F12"/>
     <definition extID="driver.phyksz8081.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-kernel.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-kernel.extension.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-kernel.heap_3.MK64F12"/>
     <definition extID="middleware.azure_iot.MK64F12"/>
     <definition extID="middleware.azure_iot.adapters.MK64F12"/>
+    <definition extID="middleware.azure_iot.adapters.freertos.MK64F12"/>
+    <definition extID="middleware.azure_iot.azure_macro_utils.MK64F12"/>
     <definition extID="middleware.azure_iot.certs.MK64F12"/>
     <definition extID="middleware.azure_iot.iothub_client.MK64F12"/>
+    <definition extID="middleware.azure_iot.iothub_client.mqtt.MK64F12"/>
     <definition extID="middleware.azure_iot.mbedtls.MK64F12"/>
     <definition extID="middleware.azure_iot.mqtt.MK64F12"/>
     <definition extID="middleware.azure_iot.parson.MK64F12"/>
-    <definition extID="middleware.freertos.MK64F12"/>
-    <definition extID="middleware.freertos.heap.heap_3.MK64F12"/>
+    <definition extID="middleware.azure_iot.umock_c.MK64F12"/>
+    <definition extID="middleware.lwip.MK64F12"/>
+    <definition extID="middleware.lwip.apps.sntp.MK64F12"/>
+    <definition extID="middleware.lwip.enet_ethernetif.MK64F12"/>
+    <definition extID="middleware.lwip.enet_ethernetif_kinetis.MK64F12"/>
     <definition extID="middleware.mbedtls.MK64F12"/>
-    <definition extID="middleware.mmcau_cm4_cm7.MK64F12"/>
-    <definition extID="middleware.tcpip.lwip.MK64F12"/>
-    <definition extID="middleware.tcpip.lwip.apps.sntp.MK64F12"/>
-    <definition extID="middleware.tcpip.lwip.ethernetif.MK64F12"/>
+    <definition extID="middleware.mmcau.cm4_cm7.MK64F12"/>
     <definition extID="platform.Include_common.MK64F12"/>
     <definition extID="platform.Include_core_cm4.MK64F12"/>
+    <definition extID="platform.Include_dsp.MK64F12"/>
     <definition extID="platform.drivers.clock.MK64F12"/>
     <definition extID="platform.drivers.common.MK64F12"/>
     <definition extID="platform.drivers.enet.MK64F12"/>
@@ -43,7 +50,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk64f_azure_mqtt" name="azure_mqtt" category="azure_examples" dependency="driver.phyksz8081.MK64F12 middleware.mmcau_cm4_cm7.MK64F12 platform.drivers.rnga.MK64F12 platform.drivers.port.MK64F12 platform.drivers.sim.MK64F12 platform.drivers.clock.MK64F12 platform.drivers.enet.MK64F12 middleware.freertos.MK64F12 middleware.freertos.heap.heap_3.MK64F12 middleware.tcpip.lwip.MK64F12 middleware.mbedtls.MK64F12 middleware.tcpip.lwip.apps.sntp.MK64F12 middleware.tcpip.lwip.ethernetif.MK64F12 middleware.azure_iot.MK64F12 middleware.azure_iot.mqtt.MK64F12 middleware.azure_iot.adapters.MK64F12 middleware.azure_iot.iothub_client.MK64F12 middleware.azure_iot.certs.MK64F12 middleware.azure_iot.parson.MK64F12 middleware.azure_iot.mbedtls.MK64F12 platform.drivers.flash.MK64F12 platform.drivers.gpio.MK64F12 utility.debug_console.MK64F12 platform.drivers.uart.MK64F12 platform.drivers.smc.MK64F12 device.MK64F12_CMSIS.MK64F12 component.uart_adapter.MK64F12 component.serial_manager.MK64F12 component.serial_manager_uart.MK64F12 component.lists.MK64F12 platform.drivers.common.MK64F12 device.MK64F12_startup.MK64F12 platform.utilities.assert.MK64F12 platform.Include_core_cm4.MK64F12 platform.Include_common.MK64F12 platform.utilities.misc_utilities.MK64F12" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmk64f_azure_mqtt" name="azure_mqtt" category="azure_examples" dependency="driver.phyksz8081.MK64F12 middleware.mmcau.cm4_cm7.MK64F12 platform.drivers.rnga.MK64F12 platform.drivers.port.MK64F12 platform.drivers.sim.MK64F12 platform.drivers.clock.MK64F12 middleware.amazon_freertos-kernel.heap_3.MK64F12 middleware.mbedtls.MK64F12 middleware.lwip.apps.sntp.MK64F12 middleware.lwip.MK64F12 middleware.lwip.enet_ethernetif_kinetis.MK64F12 middleware.azure_iot.MK64F12 middleware.azure_iot.mqtt.MK64F12 middleware.azure_iot.adapters.MK64F12 middleware.azure_iot.adapters.freertos.MK64F12 middleware.azure_iot.iothub_client.MK64F12 middleware.azure_iot.iothub_client.mqtt.MK64F12 middleware.azure_iot.certs.MK64F12 middleware.azure_iot.parson.MK64F12 middleware.azure_iot.umock_c.MK64F12 middleware.azure_iot.azure_macro_utils.MK64F12 middleware.azure_iot.mbedtls.MK64F12 platform.drivers.flash.MK64F12 platform.drivers.gpio.MK64F12 utility.debug_console.MK64F12 platform.drivers.uart.MK64F12 platform.drivers.smc.MK64F12 device.MK64F12_CMSIS.MK64F12 component.uart_adapter.MK64F12 component.serial_manager.MK64F12 platform.drivers.common.MK64F12 component.lists.MK64F12 component.serial_manager_uart.MK64F12 device.MK64F12_startup.MK64F12 platform.utilities.assert.MK64F12 platform.drivers.enet.MK64F12 platform.Include_core_cm4.MK64F12 platform.Include_common.MK64F12 platform.Include_dsp.MK64F12 middleware.amazon_freertos-kernel.MK64F12 middleware.amazon_freertos-kernel.extension.MK64F12 middleware.lwip.enet_ethernetif.MK64F12 platform.utilities.misc_utilities.MK64F12">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -72,13 +79,14 @@
           <value>MBEDTLS_CONFIG_FILE='"azure_mbedtls_config.h"'</value>
           <value>FRDM_K64F</value>
           <value>FREEDOM</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>FSL_RTOS_FREE_RTOS</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin  -fomit-frame-pointer</value>
+          <value>-fomit-frame-pointer  -c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
         </option>
         <option id="com.crt.advproject.link.fpu" type="enum">
           <value>com.crt.advproject.link.fpu.none</value>
@@ -113,12 +121,13 @@
       <include_path path="azure_iot/c-utility/adapters"/>
       <include_path path="azure_iot/c-utility/inc"/>
       <include_path path="azure_iot/c-utility/pal"/>
-      <include_path path="azure_iot/c-utility/pal/freertos"/>
       <include_path path="azure_iot/c-utility/pal/generic"/>
       <include_path path="azure_iot/c-utility/pal/inc"/>
       <include_path path="azure_iot/c-utility/pal/lwip"/>
       <include_path path="azure_iot/certs"/>
+      <include_path path="azure_iot/deps/azure-macro-utils-c/inc"/>
       <include_path path="azure_iot/deps/parson"/>
+      <include_path path="azure_iot/deps/umock-c/inc"/>
       <include_path path="azure_iot/iothub_client/inc"/>
       <include_path path="azure_iot/iothub_client/inc/internal"/>
       <include_path path="azure_iot/umqtt/inc"/>
@@ -127,13 +136,13 @@
       <include_path path="lwip/src/include"/>
       <include_path path="mbedtls/include"/>
     </include_paths>
-    <source path="boards/frdmk64f/azure_examples/azure_mqtt/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/frdmk64f/azure_examples/azure_mqtt/armgcc" target_path="MK64F12/gcc" type="linker" toolchain="armgcc">
       <files mask="MK64FN1M0xxx12_flash.ld"/>
     </source>
-    <source path="boards/frdmk64f/azure_examples/azure_mqtt/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/frdmk64f/azure_examples/azure_mqtt/iar" target_path="MK64F12/iar" type="linker" toolchain="iar">
       <files mask="MK64FN1M0xxx12_flash.icf"/>
     </source>
-    <source path="boards/frdmk64f/azure_examples/azure_mqtt/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/frdmk64f/azure_examples/azure_mqtt/mdk" target_path="MK64F12/arm" type="linker" toolchain="mdk">
       <files mask="MK64FN1M0xxx12_flash.scf"/>
     </source>
     <source path="boards/frdmk64f/azure_examples/azure_mqtt" target_path="board" type="c_include">
@@ -152,11 +161,11 @@
     <source path="boards/frdmk64f/azure_examples/azure_mqtt" target_path="source" type="c_include">
       <files mask="FreeRTOSConfig.h"/>
       <files mask="azure_mbedtls_config.h"/>
-      <files mask="iothub_client_sample_mqtt.h"/>
+      <files mask="azure_mqtt.h"/>
       <files mask="lwipopts.h"/>
     </source>
     <source path="boards/frdmk64f/azure_examples/azure_mqtt" target_path="source" type="src">
-      <files mask="iothub_client_sample_mqtt.c"/>
+      <files mask="azure_mqtt.c"/>
     </source>
   </example>
 </ksdk:examples>

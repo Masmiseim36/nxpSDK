@@ -1,21 +1,23 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "board.h"
-#include "music.h"
-#include "fsl_sai.h"
 #include "fsl_debug_console.h"
+#include "fsl_sai.h"
+#include "music.h"
+#include "fsl_codec_common.h"
 
 #include "fsl_sgtl5000.h"
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_port.h"
+#include "fsl_codec_adapter.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -26,7 +28,7 @@
 #define DEMO_SAI_CLK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
 #define DEMO_I2C_CLKSRC kCLOCK_BusClk
 #define DEMO_I2C_CLK_FREQ CLOCK_GetFreq(kCLOCK_BusClk)
-
+#define DEMO_CODEC_I2C_INSTANCE 0
 
 #define I2C_RELEASE_SDA_PORT PORTE
 #define I2C_RELEASE_SCL_PORT PORTE
@@ -37,6 +39,25 @@
 #define I2C_RELEASE_BUS_COUNT 100U
 #define OVER_SAMPLE_RATE (384U)
 
+#define DEMO_AUDIO_SAMPLE_RATE (kSAI_SampleRate16KHz)
+
+#if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) || \
+    (defined FSL_FEATURE_PCC_HAS_SAI_DIVIDER && FSL_FEATURE_PCC_HAS_SAI_DIVIDER)
+#define DEMO_AUDIO_MASTER_CLOCK OVER_SAMPLE_RATE *DEMO_AUDIO_SAMPLE_RATE
+#else
+#define DEMO_AUDIO_MASTER_CLOCK DEMO_SAI_CLK_FREQ
+#endif
+/* demo audio data channel */
+#define DEMO_AUDIO_DATA_CHANNEL (2U)
+/* demo audio bit width */
+#define DEMO_AUDIO_BIT_WIDTH kSAI_WordWidth16bits
+
+#ifndef DEMO_SAI_TX_SYNC_MODE
+#define DEMO_SAI_TX_SYNC_MODE kSAI_ModeAsync
+#endif
+#ifndef DEMO_SAI_RX_SYNC_MODE
+#define DEMO_SAI_RX_SYNC_MODE kSAI_ModeSync
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -45,12 +66,31 @@ void BOARD_I2C_ReleaseBus(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-sai_handle_t txHandle = {0};
+sgtl_config_t sgtlConfig = {
+    .i2cConfig    = {.codecI2CInstance = DEMO_CODEC_I2C_INSTANCE, .codecI2CSourceClock = 60000000},
+    .route        = kSGTL_RoutePlaybackandRecord,
+    .slaveAddress = SGTL5000_I2C_ADDR,
+    .bus          = kSGTL_BusI2S,
+    .format       = {.mclk_HZ = 6144000U, .sampleRate = 16000U, .bitWidth = 16},
+    .master_slave = false,
+};
+codec_config_t boardCodecConfig = {.codecDevType = kCODEC_SGTL5000, .codecDevConfig = &sgtlConfig};
+sai_handle_t txHandle           = {0};
 static volatile bool isFinished = false;
-#if !defined(DEMO_CODEC_WM8524)
-codec_handle_t codecHandle = {0};
 extern codec_config_t boardCodecConfig;
+#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
+    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
+sai_master_clock_t mclkConfig = {
+#if defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)
+    .mclkOutputEnable = true,
+#if !(defined(FSL_FEATURE_SAI_HAS_NO_MCR_MICS) && (FSL_FEATURE_SAI_HAS_NO_MCR_MICS))
+    .mclkSource = kSAI_MclkSourceSysclk,
 #endif
+#endif
+};
+#endif
+codec_handle_t codecHandle;
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -72,10 +112,10 @@ void BOARD_I2C_ReleaseBus(void)
 
     /* Config pin mux as gpio */
     i2c_pin_config.pullSelect = kPORT_PullUp;
-    i2c_pin_config.mux = kPORT_MuxAsGpio;
+    i2c_pin_config.mux        = kPORT_MuxAsGpio;
 
     pin_config.pinDirection = kGPIO_DigitalOutput;
-    pin_config.outputLogic = 1U;
+    pin_config.outputLogic  = 1U;
     CLOCK_EnableClock(kCLOCK_PortE);
     PORT_SetPinConfig(I2C_RELEASE_SCL_PORT, I2C_RELEASE_SCL_PIN, &i2c_pin_config);
     PORT_SetPinConfig(I2C_RELEASE_SCL_PORT, I2C_RELEASE_SDA_PIN, &i2c_pin_config);
@@ -124,91 +164,53 @@ static void callback(I2S_Type *base, sai_handle_t *handle, status_t status, void
  */
 int main(void)
 {
-    sai_config_t config;
-    uint32_t mclkSourceClockHz = 0U;
-    sai_transfer_format_t format;
     sai_transfer_t xfer;
     uint32_t temp = 0;
-    uint32_t delayCycle = 500000;
+    sai_transceiver_t config;
 
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_I2C_ReleaseBus();
     BOARD_I2C_ConfigurePins();
     BOARD_InitDebugConsole();
-#if !defined DEMO_CODEC_WM8524
-    BOARD_Codec_I2C_Init();
-#endif
-
-    memset(&format, 0U, sizeof(sai_transfer_format_t));
 
     PRINTF("SAI example started!\n\r");
 
-    /*
-     * config.masterSlave = kSAI_Master;
-     * config.mclkSource = kSAI_MclkSourceSysclk;
-     * config.protocol = kSAI_BusLeftJustified;
-     * config.syncMode = kSAI_ModeAsync;
-     * config.mclkOutputEnable = true;
-     */
-    SAI_TxGetDefaultConfig(&config);
-#if defined DEMO_SAI_CLOCK_SOURCE
-    config.bclkSource = (sai_bclk_source_t)DEMO_SAI_CLOCK_SOURCE;
+    /* SAI init */
+    SAI_Init(DEMO_SAI);
+    SAI_TransferTxCreateHandle(DEMO_SAI, &txHandle, callback, NULL);
+    /* I2S mode configurations */
+    SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, kSAI_Channel0Mask);
+    config.syncMode = DEMO_SAI_TX_SYNC_MODE;
+    SAI_TransferTxSetConfig(DEMO_SAI, &txHandle, &config);
+
+#if DEMO_SAI_RX_SYNC_MODE == kSAI_ModeAsync
+    config.syncMode = DEMO_SAI_RX_SYNC_MODE;
+    SAI_RxSetConfig(DEMO_SAI, &config);
+    SAI_RxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
+                          DEMO_AUDIO_DATA_CHANNEL);
 #endif
 
-#if defined DEMO_CODEC_WM8524
-    config.protocol = kSAI_BusI2S;
-#endif
-    SAI_TxInit(DEMO_SAI, &config);
+    /* set bit clock divider */
+    SAI_TxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
+                          DEMO_AUDIO_DATA_CHANNEL);
 
-    /* Configure the audio format */
-    format.bitWidth = kSAI_WordWidth16bits;
-    format.channel = 0U;
-    format.sampleRate_Hz = kSAI_SampleRate16KHz;
-#if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) || \
-    (defined FSL_FEATURE_PCC_HAS_SAI_DIVIDER && FSL_FEATURE_PCC_HAS_SAI_DIVIDER)
-    format.masterClockHz = OVER_SAMPLE_RATE * format.sampleRate_Hz;
-#else
-    format.masterClockHz = DEMO_SAI_CLK_FREQ;
+    /* master clock configurations */
+#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
+    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
+#if defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER)
+    mclkConfig.mclkHz          = DEMO_AUDIO_MASTER_CLOCK;
+    mclkConfig.mclkSourceClkHz = DEMO_SAI_CLK_FREQ;
 #endif
-    format.protocol = config.protocol;
-    format.stereo = kSAI_Stereo;
-    format.isFrameSyncCompact = true;
-#if defined(FSL_FEATURE_SAI_FIFO_COUNT) && (FSL_FEATURE_SAI_FIFO_COUNT > 1)
-    format.watermark = FSL_FEATURE_SAI_FIFO_COUNT / 2U;
+    SAI_SetMasterClockConfig(DEMO_SAI, &mclkConfig);
 #endif
 
-#if defined(DEMO_CODEC_WM8524)
-    wm8524_config_t codecConfig = {0};
-    wm8524_handle_t codecHandle = {0};
-    codecConfig.busPinNum = CODEC_BUS_PIN_NUM;
-    codecConfig.busPin = CODEC_BUS_PIN;
-    codecConfig.mutePin = CODEC_MUTE_PIN;
-    codecConfig.mutePinNum = CODEC_MUTE_PIN_NUM;
-    codecConfig.protocol = kWM8524_ProtocolI2S;
-    WM8524_Init(&codecHandle, &codecConfig);
-#else
     /* Use default setting to init codec */
     CODEC_Init(&codecHandle, &boardCodecConfig);
-    CODEC_SetFormat(&codecHandle, format.masterClockHz, format.sampleRate_Hz, format.bitWidth);
-#endif
-
-#if defined(CODEC_CYCLE)
-    delayCycle = CODEC_CYCLE;
-#endif
-    while (delayCycle)
-    {
-        __ASM("nop");
-        delayCycle--;
-    }
-
-    SAI_TransferTxCreateHandle(DEMO_SAI, &txHandle, callback, NULL);
-    mclkSourceClockHz = DEMO_SAI_CLK_FREQ;
-    SAI_TransferTxSetFormat(DEMO_SAI, &txHandle, &format, mclkSourceClockHz, format.masterClockHz);
 
     /*  xfer structure */
-    temp = (uint32_t)music;
-    xfer.data = (uint8_t *)temp;
+    temp          = (uint32_t)music;
+    xfer.data     = (uint8_t *)temp;
     xfer.dataSize = MUSIC_LEN;
     SAI_TransferSendNonBlocking(DEMO_SAI, &txHandle, &xfer);
     /* Wait until finished */

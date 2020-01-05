@@ -1,4 +1,4 @@
-#! armcc -E
+#!armclang --target=arm-arm-none-eabi -mcpu=cortex-m4 -E -x c
 /*
 ** ###################################################################
 **     Processors:          MK22FN512CAP12
@@ -37,8 +37,10 @@
 #define m_flash_config_start           0x00000400
 #define m_flash_config_size            0x00000010
 
-#define m_text_start                   0x00000410
-#define m_text_size                    0x0007FBF0
+//#define m_text_start                   0x00000410
+//#define m_text_size                    0x0007FBF0
+#define m_text_start                   0x00000600
+#define m_text_size                    0x0007FA00
 
 #define m_interrupts_ram_start         0x1FFF0000
 #define m_interrupts_ram_size          __ram_vector_table_size__
@@ -82,13 +84,13 @@ LR_m_interrupts m_interrupts_start m_interrupts_size {
   }
 #endif
   VECTOR_ROM m_interrupts_start m_interrupts_size { ; load address = execution address
-    * (RESET,+FIRST)
+    * (.isr_vector,+FIRST)
   }
 }
 
 LR_m_flash_config m_flash_config_start m_flash_config_size {
   ER_m_flash_config m_flash_config_start m_flash_config_size { ; load address = execution address
-    * (FlashConfig)
+    * (.FlashConfig)
   }
 }
 

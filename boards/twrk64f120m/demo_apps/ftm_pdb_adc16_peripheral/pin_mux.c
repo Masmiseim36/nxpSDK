@@ -1,0 +1,122 @@
+/*
+ * Copyright 2019 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+!!GlobalInfo
+product: Pins v6.0
+processor: MK64FN1M0xxx12
+package_id: MK64FN1M0VMD12
+mcu_data: ksdk2_0
+processor_version: 0.2.2
+board: TWR-K64F120M
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+#include "fsl_common.h"
+#include "fsl_port.h"
+#include "pin_mux.h"
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitBootPins
+ * Description   : Calls initialization functions.
+ *
+ * END ****************************************************************************************************************/
+void BOARD_InitBootPins(void)
+{
+    BOARD_InitPins();
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitPins:
+- options: {callFromInitBoot: 'true', prefix: BOARD_, coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: A11, peripheral: UART1, signal: RX, pin_signal: CMP1_IN1/PTC3/LLWU_P7/SPI0_PCS1/UART1_RX/FTM0_CH2/CLKOUT/I2S0_TX_BCLK}
+  - {pin_num: A9, peripheral: UART1, signal: TX, pin_signal: PTC4/LLWU_P8/SPI0_PCS0/UART1_TX/FTM0_CH3/FB_AD11/CMP1_OUT}
+  - {pin_num: B11, peripheral: FTM0, signal: 'CH, 0', pin_signal: ADC0_SE15/PTC1/LLWU_P6/SPI0_PCS3/UART1_RTS_b/FTM0_CH0/FB_AD13/I2S0_TXD0}
+  - {pin_num: A12, peripheral: FTM0, signal: 'CH, 1', pin_signal: ADC0_SE4b/CMP1_IN0/PTC2/SPI0_PCS2/UART1_CTS_b/FTM0_CH1/FB_AD12/I2S0_TX_FS}
+  - {pin_num: M8, peripheral: FTM0, signal: 'CH, 2', pin_signal: PTA5/USB_CLKIN/FTM0_CH2/RMII0_RXER/MII0_RXER/CMP2_OUT/I2S0_TX_BCLK/JTAG_TRST_b}
+  - {pin_num: J7, peripheral: FTM0, signal: 'CH, 3', pin_signal: PTA6/FTM0_CH3/CLKOUT/TRACE_CLKOUT}
+  - {pin_num: J8, peripheral: FTM0, signal: 'CH, 4', pin_signal: ADC0_SE10/PTA7/FTM0_CH4/TRACE_D3}
+  - {pin_num: A3, peripheral: FTM0, signal: 'CH, 5', pin_signal: ADC0_SE6b/PTD5/SPI0_PCS2/UART0_CTS_b/UART0_COL_b/FTM0_CH5/FB_AD1/EWM_OUT_b/SPI1_SCK}
+  - {pin_num: K6, peripheral: TPIU, signal: SWO, pin_signal: PTA2/UART0_TX/FTM0_CH7/JTAG_TDO/TRACE_SWO/EZP_DO, drive_strength: low, pull_select: down, pull_enable: disable}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void BOARD_InitPins(void)
+{
+    /* Port A Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortA);
+    /* Port C Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortC);
+    /* Port D Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortD);
+
+    /* PORTA2 (pin K6) is configured as TRACE_SWO */
+    PORT_SetPinMux(PORTA, 2U, kPORT_MuxAlt7);
+
+    PORTA->PCR[2] = ((PORTA->PCR[2] &
+                      /* Mask bits to zero which are setting */
+                      (~(PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_DSE_MASK | PORT_PCR_ISF_MASK)))
+
+                     /* Pull Select: Internal pulldown resistor is enabled on the corresponding pin, if the
+                      * corresponding PE field is set. */
+                     | PORT_PCR_PS(kPORT_PullDown)
+
+                     /* Pull Enable: Internal pullup or pulldown resistor is not enabled on the corresponding pin. */
+                     | PORT_PCR_PE(kPORT_PullDisable)
+
+                     /* Drive Strength Enable: Low drive strength is configured on the corresponding pin, if pin
+                      * is configured as a digital output. */
+                     | PORT_PCR_DSE(kPORT_LowDriveStrength));
+
+    /* PORTA5 (pin M8) is configured as FTM0_CH2 */
+    PORT_SetPinMux(PORTA, 5U, kPORT_MuxAlt3);
+
+    /* PORTA6 (pin J7) is configured as FTM0_CH3 */
+    PORT_SetPinMux(BOARD_ACCEL_INT1_PORT, BOARD_ACCEL_INT1_PIN, kPORT_MuxAlt3);
+
+    /* PORTA7 (pin J8) is configured as FTM0_CH4 */
+    PORT_SetPinMux(BOARD_FTM0_CH4_PORT, BOARD_FTM0_CH4_PIN, kPORT_MuxAlt3);
+
+    /* PORTC1 (pin B11) is configured as FTM0_CH0 */
+    PORT_SetPinMux(PORTC, 1U, kPORT_MuxAlt4);
+
+    /* PORTC2 (pin A12) is configured as FTM0_CH1 */
+    PORT_SetPinMux(PORTC, 2U, kPORT_MuxAlt4);
+
+    /* PORTC3 (pin A11) is configured as UART1_RX */
+    PORT_SetPinMux(BOARD_DEBUG_UART_RX_PORT, BOARD_DEBUG_UART_RX_PIN, kPORT_MuxAlt3);
+
+    /* PORTC4 (pin A9) is configured as UART1_TX */
+    PORT_SetPinMux(BOARD_DEBUG_UART_TX_PORT, BOARD_DEBUG_UART_TX_PIN, kPORT_MuxAlt3);
+
+    /* PORTD5 (pin A3) is configured as FTM0_CH5 */
+    PORT_SetPinMux(PORTD, 5U, kPORT_MuxAlt4);
+
+    SIM->SOPT5 = ((SIM->SOPT5 &
+                   /* Mask bits to zero which are setting */
+                   (~(SIM_SOPT5_UART1TXSRC_MASK)))
+
+                  /* UART 1 transmit data source select: UART1_TX pin. */
+                  | SIM_SOPT5_UART1TXSRC(SOPT5_UART1TXSRC_UART_TX));
+}
+/***********************************************************************************************************************
+ * EOF
+ **********************************************************************************************************************/

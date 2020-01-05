@@ -2,49 +2,56 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MK80F25615"/>
+    <definition extID="component.lpuart_adapter.MK80F25615"/>
+    <definition extID="component.osa.MK80F25615"/>
+    <definition extID="component.serial_manager.MK80F25615"/>
+    <definition extID="component.serial_manager_uart.MK80F25615"/>
+    <definition extID="device.MK80F25615_CMSIS.MK80F25615"/>
+    <definition extID="device.MK80F25615_startup.MK80F25615"/>
     <definition extID="middleware.baremetal.MK80F25615"/>
+    <definition extID="middleware.usb.device.MK80F25615"/>
     <definition extID="middleware.usb.device_controller_khci.MK80F25615"/>
-    <definition extID="platform.devices.MK80F25615_CMSIS.MK80F25615"/>
-    <definition extID="platform.devices.MK80F25615_startup.MK80F25615"/>
+    <definition extID="platform.Include_common.MK80F25615"/>
+    <definition extID="platform.Include_core_cm4.MK80F25615"/>
+    <definition extID="platform.Include_dsp.MK80F25615"/>
     <definition extID="platform.drivers.clock.MK80F25615"/>
     <definition extID="platform.drivers.common.MK80F25615"/>
-    <definition extID="platform.drivers.flash.MK80F25615"/>
     <definition extID="platform.drivers.gpio.MK80F25615"/>
     <definition extID="platform.drivers.lpuart.MK80F25615"/>
     <definition extID="platform.drivers.port.MK80F25615"/>
-    <definition extID="platform.drivers.sim.MK80F25615"/>
     <definition extID="platform.drivers.smc.MK80F25615"/>
     <definition extID="platform.drivers.sysmpu.MK80F25615"/>
     <definition extID="platform.utilities.assert.MK80F25615"/>
-    <definition extID="platform.utilities.debug_console.MK80F25615"/>
+    <definition extID="platform.utilities.misc_utilities.MK80F25615"/>
+    <definition extID="utility.debug_console.MK80F25615"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
-    <definition extID="kds"/>
-    <definition extID="mcuxpresso"/>
     <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="twrk80f150m_dev_hid_generic_lite_bm" name="dev_hid_generic_lite_bm" category="usb_examples" dependency="middleware.usb.device_controller_khci.MK80F25615 middleware.baremetal.MK80F25615 platform.drivers.port.MK80F25615 platform.drivers.common.MK80F25615 platform.drivers.clock.MK80F25615 platform.drivers.sim.MK80F25615 platform.utilities.debug_console.MK80F25615 platform.drivers.smc.MK80F25615 platform.drivers.flash.MK80F25615 platform.devices.MK80F25615_CMSIS.MK80F25615 platform.devices.MK80F25615_startup.MK80F25615 platform.drivers.lpuart.MK80F25615 platform.drivers.gpio.MK80F25615 platform.drivers.sysmpu.MK80F25615 platform.utilities.assert.MK80F25615" toolchain="iar mdk armgcc kds mcuxpresso">
+  <example id="twrk80f150m_dev_hid_generic_lite_bm" name="dev_hid_generic_lite_bm" category="usb_examples" dependency="middleware.usb.device_controller_khci.MK80F25615 middleware.usb.device.MK80F25615 platform.drivers.smc.MK80F25615 platform.drivers.clock.MK80F25615 platform.drivers.common.MK80F25615 device.MK80F25615_CMSIS.MK80F25615 device.MK80F25615_startup.MK80F25615 platform.drivers.lpuart.MK80F25615 platform.drivers.gpio.MK80F25615 platform.drivers.sysmpu.MK80F25615 platform.utilities.assert.MK80F25615 utility.debug_console.MK80F25615 component.lpuart_adapter.MK80F25615 component.serial_manager.MK80F25615 component.lists.MK80F25615 component.serial_manager_uart.MK80F25615 platform.drivers.port.MK80F25615 component.osa.MK80F25615 platform.Include_core_cm4.MK80F25615 platform.Include_common.MK80F25615 platform.Include_dsp.MK80F25615 platform.utilities.misc_utilities.MK80F25615 middleware.baremetal.MK80F25615">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
     <toolchainSettings>
-      <!-- Curently, mcux just supports one common settings set for both debug and release -->
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
-        <!-- asm compiler -->
-        <!-- gcc compiler -->
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv4.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv4.hard</value>
+        </option>
         <option id="com.crt.advproject.c.misc.dialect" type="enum">
           <value>com.crt.advproject.misc.dialect.gnu99</value>
-        </option>
-        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.default</value>
-        </option>
-        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.default</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>_DEBUG=1</value>
           <value>CPU_MK80FN256VDC15</value>
           <value>USB_STACK_BM</value>
+          <value>FSL_OSA_BM_TASK_ENABLE=0</value>
+          <value>FSL_OSA_BM_TIMER_CONFIG=0</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -52,18 +59,26 @@
         <option id="gnu.c.compiler.option.misc.other" type="string">
           <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
         </option>
-        <!-- gcc linker -->
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv4.hard</value>
+        </option>
         <option id="gnu.c.link.option.nostdlibs" type="boolean">
           <value>true</value>
-        </option>
-        <option id="gnu.c.link.option.other" type="stringList">
-          <value>--gc-sections</value>
         </option>
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
           <value>&amp;Heap:Default;Default;0x2000&amp;Stack:Default;Default;0x2000</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <source path="boards/twrk80f150m/usb_examples/usb_device_hid_generic_lite/bm/armgcc" target_path="MK80F25615/gcc" type="linker" toolchain="armgcc">
+      <files mask="MK80FN256xxx15_flash.ld"/>
+    </source>
+    <source path="boards/twrk80f150m/usb_examples/usb_device_hid_generic_lite/bm/iar" target_path="MK80F25615/iar" type="linker" toolchain="iar">
+      <files mask="MK80FN256xxx15_flash.icf"/>
+    </source>
+    <source path="boards/twrk80f150m/usb_examples/usb_device_hid_generic_lite/bm/mdk" target_path="MK80F25615/arm" type="linker" toolchain="mdk">
+      <files mask="MK80FN256xxx15_flash.scf"/>
+    </source>
     <source path="boards/twrk80f150m/usb_examples/usb_device_hid_generic_lite/bm" target_path="board" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
@@ -74,30 +89,27 @@
       <files mask="clock_config.c"/>
       <files mask="pin_mux.c"/>
     </source>
-    <source path="boards/twrk80f150m/usb_examples/usb_device_hid_generic_lite/bm" target_path="doc" type="doc" toolchain="iar mdk kds mcuxpresso">
+    <source path="boards/twrk80f150m/usb_examples/usb_device_hid_generic_lite/bm" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
       <files mask="readme.txt"/>
     </source>
-    <source path="boards/twrk80f150m/usb_examples/usb_device_hid_generic_lite/bm" target_path="sources" type="c_include">
+    <source path="boards/twrk80f150m/usb_examples/usb_device_hid_generic_lite/bm" target_path="source" type="c_include">
       <files mask="hid_generic.h"/>
       <files mask="usb_device_ch9.h"/>
       <files mask="usb_device_config.h"/>
       <files mask="usb_device_descriptor.h"/>
       <files mask="usb_device_hid.h"/>
     </source>
-    <source path="boards/twrk80f150m/usb_examples/usb_device_hid_generic_lite/bm" target_path="sources" type="src">
+    <source path="boards/twrk80f150m/usb_examples/usb_device_hid_generic_lite/bm" target_path="source" type="src">
       <files mask="hid_generic.c"/>
       <files mask="usb_device_ch9.c"/>
       <files mask="usb_device_descriptor.c"/>
       <files mask="usb_device_hid.c"/>
     </source>
-    <source path="middleware/usb/device" target_path="usb/device/include" type="c_include">
-      <files mask="usb_device.h"/>
+    <source path="boards/twrk80f150m/usb_examples/usb_device_hid_generic_lite/bm" target_path="twrk80f150m/usb_examples/usb_device_hid_generic_lite/bm" type="binary" exclude="true">
+      <files mask="dev_hid_generic_lite_bm.bin"/>
     </source>
-    <source path="middleware/usb/device" target_path="usb/device/source" type="c_include">
-      <files mask="usb_device_dci.h"/>
-    </source>
-    <source path="middleware/usb/device" target_path="usb/device/source" type="src">
-      <files mask="usb_device_dci.c"/>
+    <source path="boards/twrk80f150m/usb_examples/usb_device_hid_generic_lite/bm" target_path="twrk80f150m/usb_examples/usb_device_hid_generic_lite/bm" type="doc" exclude="true">
+      <files mask="readme.pdf"/>
     </source>
   </example>
 </ksdk:examples>

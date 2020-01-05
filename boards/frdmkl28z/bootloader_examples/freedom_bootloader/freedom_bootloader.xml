@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="device.MKL28Z7_CMSIS.MKL28Z7"/>
+    <definition extID="middleware.baremetal.MKL28Z7"/>
+    <definition extID="middleware.mcu-boot.MKL28Z7_sources.MKL28Z7"/>
+    <definition extID="middleware.mcu-boot.MKL28Z7_startup.MKL28Z7"/>
+    <definition extID="middleware.mcu-boot.bootsources.MKL28Z7"/>
+    <definition extID="middleware.mcu-boot.bootsources_kinetis.MKL28Z7"/>
+    <definition extID="middleware.mcu-boot.drv_microseconds.MKL28Z7"/>
+    <definition extID="middleware.mcu-boot.drv_mmcau.MKL28Z7"/>
+    <definition extID="middleware.mcu-boot.src_bm_usb.MKL28Z7"/>
+    <definition extID="middleware.mcu-boot.src_security.MKL28Z7"/>
+    <definition extID="middleware.mcu-boot.src_startup.MKL28Z7"/>
+    <definition extID="middleware.usb.device_controller_khci.MKL28Z7"/>
+    <definition extID="platform.Include_common.MKL28Z7"/>
+    <definition extID="platform.Include_core_cm0plus.MKL28Z7"/>
+    <definition extID="platform.drivers.clock.MKL28Z7"/>
+    <definition extID="platform.drivers.common.MKL28Z7"/>
+    <definition extID="platform.drivers.crc.MKL28Z7"/>
+    <definition extID="platform.drivers.flash.MKL28Z7"/>
+    <definition extID="platform.drivers.gpio.MKL28Z7"/>
+    <definition extID="platform.drivers.intmux.MKL28Z7"/>
+    <definition extID="platform.drivers.lpi2c.MKL28Z7"/>
+    <definition extID="platform.drivers.lpspi.MKL28Z7"/>
+    <definition extID="platform.drivers.lpuart.MKL28Z7"/>
+    <definition extID="platform.drivers.port.MKL28Z7"/>
+    <definition extID="platform.drivers.smc.MKL28Z7"/>
+    <definition extID="platform.drivers.wdog32.MKL28Z7"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="mcuxpresso"/>
+  </externalDefinitions>
+  <example id="frdmkl28z_freedom_bootloader" name="freedom_bootloader" category="bootloader_examples" dependency="platform.drivers.clock.MKL28Z7 platform.drivers.flash.MKL28Z7 device.MKL28Z7_CMSIS.MKL28Z7 platform.drivers.lpuart.MKL28Z7 platform.drivers.gpio.MKL28Z7 platform.drivers.lpi2c.MKL28Z7 platform.drivers.port.MKL28Z7 platform.drivers.lpspi.MKL28Z7 platform.drivers.crc.MKL28Z7 platform.drivers.intmux.MKL28Z7 platform.drivers.smc.MKL28Z7 platform.drivers.wdog32.MKL28Z7 middleware.usb.device_controller_khci.MKL28Z7 middleware.mcu-boot.MKL28Z7_startup.MKL28Z7 middleware.mcu-boot.bootsources.MKL28Z7 middleware.mcu-boot.bootsources_kinetis.MKL28Z7 middleware.mcu-boot.MKL28Z7_sources.MKL28Z7 middleware.mcu-boot.src_bm_usb.MKL28Z7 middleware.mcu-boot.drv_mmcau.MKL28Z7 middleware.mcu-boot.src_security.MKL28Z7 middleware.mcu-boot.src_startup.MKL28Z7 middleware.mcu-boot.drv_microseconds.MKL28Z7 platform.drivers.common.MKL28Z7 platform.Include_core_cm0plus.MKL28Z7 platform.Include_common.MKL28Z7 middleware.baremetal.MKL28Z7" toolchain="iar mdk mcuxpresso">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.none</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.none</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.size</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.size</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
+          <value>CPU_MKL28Z512VLL7</value>
+          <value>FREEDOM</value>
+          <value>BL_TARGET_FLASH</value>
+          <value>FRDM_KL28Z</value>
+          <value>USB_STACK_BM</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>false</value>
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.none</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="gnu.c.link.option.other" type="stringList">
+          <value>--gc-sections</value>
+          <value>-Map=${BuildArtifactFileBaseName}.map</value>
+          <value>--defsym=__ram_vector_table__=1</value>
+        </option>
+        <option id="com.crt.advproject.gas.hdrlib" type="enum">
+          <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gas.specs" type="enum">
+          <value>com.crt.advproject.gas.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.specs" type="enum">
+          <value>com.crt.advproject.gcc.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.link.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.link.hdrlib.newlibnano.none</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <source path="boards/frdmkl28z/bootloader_examples/freedom_bootloader/iar" target_path="middleware/mcu-boot" type="linker" toolchain="iar">
+      <files mask="MKL28Z512xxx7_application_0x0000.icf"/>
+    </source>
+    <source path="boards/frdmkl28z/bootloader_examples/freedom_bootloader/mcux" target_path="middleware/mcu-boot" type="linker" toolchain="mcuxpresso">
+      <files mask="MKL28Z512xxx7_application_0x0000.ld"/>
+    </source>
+    <source path="boards/frdmkl28z/bootloader_examples/freedom_bootloader/mdk" target_path="middleware/mcu-boot" type="linker" toolchain="mdk">
+      <files mask="MKL28Z512xxx7_application_0x0000.scf"/>
+    </source>
+    <source path="boards/frdmkl28z/bootloader_examples/freedom_bootloader" target_path="usb/device/class/hid" type="c_include">
+      <files mask="usb_device_hid.h"/>
+    </source>
+    <source path="boards/frdmkl28z/bootloader_examples/freedom_bootloader" target_path="usb/device/class/hid" type="src">
+      <files mask="usb_device_hid.c"/>
+    </source>
+    <source path="boards/frdmkl28z/bootloader_examples/freedom_bootloader" target_path="usb/device/class/msc" type="c_include">
+      <files mask="usb_device_msc.h"/>
+      <files mask="usb_device_msc_ufi.h"/>
+    </source>
+    <source path="boards/frdmkl28z/bootloader_examples/freedom_bootloader" target_path="usb/device/class/msc" type="src">
+      <files mask="usb_device_msc.c"/>
+      <files mask="usb_device_msc_ufi.c"/>
+    </source>
+    <source path="boards/frdmkl28z/bootloader_examples/freedom_bootloader" target_path="usb/device/class" type="c_include">
+      <files mask="usb_device_class.h"/>
+    </source>
+    <source path="boards/frdmkl28z/bootloader_examples/freedom_bootloader" target_path="usb/device/class" type="src">
+      <files mask="usb_device_class.c"/>
+    </source>
+    <source path="boards/frdmkl28z/bootloader_examples/freedom_bootloader" target_path="usb/device/source" type="c_include">
+      <files mask="usb_device_ch9.h"/>
+    </source>
+    <source path="boards/frdmkl28z/bootloader_examples/freedom_bootloader" target_path="usb/device/source" type="src">
+      <files mask="usb_device_ch9.c"/>
+    </source>
+  </example>
+</ksdk:examples>

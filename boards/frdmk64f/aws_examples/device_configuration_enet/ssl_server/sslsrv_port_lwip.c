@@ -34,7 +34,7 @@ int sslsrv_mbedtls_recv(void *ctx, unsigned char *buf, size_t len)
     FD_SET((int)ctx, &read_set);
 
     struct timeval timeout;
-    timeout.tv_sec = 30;
+    timeout.tv_sec  = 30;
     timeout.tv_usec = 0;
 
     result = lwip_select((int)ctx + 1, &read_set, NULL, NULL, &timeout);
@@ -56,8 +56,8 @@ int sslsrv_init_socket(volatile int *sock, uint32_t max_ses)
     int error;
 
     struct sockaddr address;
-    address.sa_family = AF_INET;
-    ((struct sockaddr_in *)(&address))->sin_port = PP_HTONS(SSLSRV_CFG_DEFAULT_PORT);
+    address.sa_family                                   = AF_INET;
+    ((struct sockaddr_in *)(&address))->sin_port        = PP_HTONS(SSLSRV_CFG_DEFAULT_PORT);
     ((struct sockaddr_in *)(&address))->sin_addr.s_addr = INADDR_ANY;
 
     if ((*sock = lwip_socket(AF_INET, SOCK_STREAM, 0)) < 0)

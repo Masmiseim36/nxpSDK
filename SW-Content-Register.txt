@@ -317,6 +317,7 @@ sdmmc                      name: SD MMC SDIO Card middleware
                            Author: Freescale                                 
                            version: 2.2.7                                    
                            Format: source code                               
+
 wifi_qca                   version: 2.0.0                                    
                            Location: middleware/wifi_qca                     
                            Description: Qualcomm Wi-Fi stack                 

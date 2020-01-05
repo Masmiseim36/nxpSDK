@@ -1,27 +1,29 @@
 /*
-FreeRTOS Kernel V10.0.1
-Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
- http://aws.amazon.com/freertos
- http://www.FreeRTOS.org
-*/
+ * FreeRTOS Kernel V10.2.0
+ * Copyright (C) 2019 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * http://www.FreeRTOS.org
+ * http://aws.amazon.com/freertos
+ *
+ * 1 tab == 4 spaces!
+ */
 
 
 #ifndef FREERTOS_CONFIG_H
@@ -73,7 +75,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define configUSE_APPLICATION_TASK_TAG               0
 #define configUSE_COUNTING_SEMAPHORES                1
 #define configGENERATE_RUN_TIME_STATS                0
-#define configOVERRIDE_DEFAULT_TICK_CONFIGURATION    1
 #define configRECORD_STACK_HIGH_ADDRESS              1
 
 /* Co-routine definitions. */
@@ -84,7 +85,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define configUSE_TIMERS                             1
 #define configTIMER_TASK_PRIORITY                    ( configMAX_PRIORITIES - 3 )
 #define configTIMER_QUEUE_LENGTH                     10
-#define configTIMER_TASK_STACK_DEPTH                 ( configMINIMAL_STACK_SIZE * 2 )
+#define configTIMER_TASK_STACK_DEPTH                 ( configMINIMAL_STACK_SIZE * 8 )
 
 /* Set the following definitions to 1 to include the API function, or zero
  * to exclude the API function. */
@@ -106,7 +107,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /* Map the FreeRTOS printf() to the logging task printf. */
 #define configPRINTF( x )          vLoggingPrintf x
-      
+
 /* Non-format version print. */
 #define configPRINT( X )     vLoggingPrint( X )
 
@@ -170,6 +171,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	#define configRAND32()    iMainRand32()
 #endif
 
+
+
+#if defined(__ICCARM__)||defined(__CC_ARM)||defined(__GNUC__)
+    /* Clock manager provides in this variable system core clock frequency */
+    #include <stdint.h>
+    extern uint32_t SystemCoreClock;
+#endif
 
 /* Interrupt nesting behaviour configuration. Cortex-M specific. */
 #ifdef __NVIC_PRIO_BITS

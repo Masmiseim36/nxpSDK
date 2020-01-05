@@ -36,21 +36,21 @@ void BOARD_InitBootPins(void);
 
 /*! @name PORTB16 (coord E10), U7[4]/UART0_RX
   @{ */
-#define BOARD_INITPINS_DEBUG_UART_RX_PORT PORTB /*!<@brief PORT device name: PORTB */
-#define BOARD_INITPINS_DEBUG_UART_RX_PIN 16U    /*!<@brief PORTB pin index: 16 */
-                                                /* @} */
+#define BOARD_DEBUG_UART_RX_PORT PORTB /*!<@brief PORT device name: PORTB */
+#define BOARD_DEBUG_UART_RX_PIN 16U    /*!<@brief PORTB pin index: 16 */
+                                       /* @} */
 
 /*! @name PORTB17 (coord E9), U10[1]/UART0_TX
   @{ */
-#define BOARD_INITPINS_DEBUG_UART_TX_PORT PORTB /*!<@brief PORT device name: PORTB */
-#define BOARD_INITPINS_DEBUG_UART_TX_PIN 17U    /*!<@brief PORTB pin index: 17 */
-                                                /* @} */
+#define BOARD_DEBUG_UART_TX_PORT PORTB /*!<@brief PORT device name: PORTB */
+#define BOARD_DEBUG_UART_TX_PIN 17U    /*!<@brief PORTB pin index: 17 */
+                                       /* @} */
 
 /*! @name PORTB2 (coord G12), J4[12]/ADC0_SE12/I2C0_SCL
   @{ */
-#define BOARD_INITPINS_ADC0_SE12_PORT PORTB /*!<@brief PORT device name: PORTB */
-#define BOARD_INITPINS_ADC0_SE12_PIN 2U     /*!<@brief PORTB pin index: 2 */
-                                            /* @} */
+#define BOARD_ADC0_SE12_PORT PORTB /*!<@brief PORT device name: PORTB */
+#define BOARD_ADC0_SE12_PIN 2U     /*!<@brief PORTB pin index: 2 */
+                                   /* @} */
 
 /*! @name DAC0_OUT (coord L3), J4[11]/DAC_OUT
   @{ */

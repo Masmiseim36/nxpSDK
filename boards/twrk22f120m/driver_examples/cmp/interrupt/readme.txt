@@ -12,6 +12,14 @@ between logic one and zero when the user-defined channel's voltage crosses the i
 comparator's output would generate the falling and rising edge events with their interrupts enabled. When any CMP 
 interrupt happens, the CMP's ISR would turn on the LED light if detecting the output's rising edge, or turn off it when
 detecting the output's falling edge.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -47,11 +55,6 @@ CMP interrupt Example
 Then change CMP analog input, and watch the change of LED.
     - CMP0_IN0 (Jump A58 on Elevator Tower) connected to VCC =3.3V (Jump B3 on Elevator Tower): LED GREEN on
     - CMP0_IN0 (Jump A58 on Elevator Tower) connected to GND (Jump B2 on Elevator Tower): LED GREEN off
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

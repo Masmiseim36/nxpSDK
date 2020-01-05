@@ -195,6 +195,7 @@ static void DEMO_Init_FTM(void)
     ftmParam.firstEdgeDelayPercent = 20U;
     ftmParam.dutyCyclePercent      = 50U;
     ftmParam.level                 = kFTM_LowTrue;
+    ftmParam.enableDeadtime        = false;
 
     /* Configure FTM0 channel ouput period is 16KHz complementary waveform (channel n and n+1) */
     FTM_SetupPwm(DEMO_FTM_BASE, &ftmParam, 1U, kFTM_CombinedPwm, 16000U, FTM_SOURCE_CLOCK);
@@ -265,7 +266,7 @@ int main(void)
     uint32_t i = 0U;
 
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     PRINTF("\r\nRun pdb trig adc with flextimer demo.\r\n");
     EnableIRQ(DEMO_ADC_IRQ_ID0);

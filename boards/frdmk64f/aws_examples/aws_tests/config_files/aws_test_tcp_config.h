@@ -34,7 +34,11 @@
  * @brief The number of sockets that can be open at one time on a port.
  *
  */
+#ifdef MEMP_NUM_NETCONN
+#define integrationtestportableMAX_NUM_UNSECURE_SOCKETS (MEMP_NUM_NETCONN)
+#else
 #define integrationtestportableMAX_NUM_UNSECURE_SOCKETS 8
+#endif
 
 /**
  * @brief Indicates how much longer than the specified timeout is acceptable for

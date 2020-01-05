@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include <stdio.h>
@@ -81,7 +55,7 @@ static void ReceiveFromConsole(char *buf, uint32_t size);
  * Variables
  ******************************************************************************/
 volatile uint8_t g_AlarmPending = 0U;
-volatile bool g_SecsFlag = false;
+volatile bool g_SecsFlag        = false;
 
 static char g_StrMenu[] =
     "\r\n"
@@ -251,7 +225,7 @@ int main(void)
 
     /* Board pin, clock, debug console init */
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /* Init RTC */
@@ -264,14 +238,17 @@ int main(void)
      */
     RTC_GetDefaultConfig(&rtcConfig);
     RTC_Init(RTC, &rtcConfig);
+#if !(defined(FSL_FEATURE_RTC_HAS_NO_CR_OSCE) && FSL_FEATURE_RTC_HAS_NO_CR_OSCE)
+
     /* Select RTC clock source */
     RTC_SetClockSource(RTC);
+#endif /* FSL_FEATURE_RTC_HAS_NO_CR_OSCE */
 
     /* Set a start date time and start RTC */
-    date.year = 2015U;
-    date.month = 11U;
-    date.day = 11U;
-    date.hour = 11U;
+    date.year   = 2015U;
+    date.month  = 11U;
+    date.day    = 11U;
+    date.hour   = 11U;
     date.minute = 11U;
     date.second = 11U;
 
@@ -317,10 +294,10 @@ int main(void)
                     PRINTF(g_StrInvalid);
                     break;
                 }
-                date.year = (uint16_t)year;
-                date.month = (uint8_t)month;
-                date.day = (uint8_t)day;
-                date.hour = (uint8_t)hour;
+                date.year   = (uint16_t)year;
+                date.month  = (uint8_t)month;
+                date.day    = (uint8_t)day;
+                date.hour   = (uint8_t)hour;
                 date.minute = (uint8_t)minute;
                 date.second = (uint8_t)second;
 

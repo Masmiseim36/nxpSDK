@@ -2,6 +2,8 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MK22F51212"/>
+    <definition extID="component.osa.MK22F51212"/>
     <definition extID="device.MK22F51212_CMSIS.MK22F51212"/>
     <definition extID="middleware.baremetal.MK22F51212"/>
     <definition extID="middleware.mcu-boot.MK22F51212_sources.MK22F51212"/>
@@ -11,9 +13,11 @@
     <definition extID="middleware.mcu-boot.drv_microseconds.MK22F51212"/>
     <definition extID="middleware.mcu-boot.src_bm_usb.MK22F51212"/>
     <definition extID="middleware.mcu-boot.src_startup.MK22F51212"/>
+    <definition extID="middleware.usb.device.MK22F51212"/>
     <definition extID="middleware.usb.device_controller_khci.MK22F51212"/>
     <definition extID="platform.Include_common.MK22F51212"/>
     <definition extID="platform.Include_core_cm4.MK22F51212"/>
+    <definition extID="platform.Include_dsp.MK22F51212"/>
     <definition extID="platform.drivers.clock.MK22F51212"/>
     <definition extID="platform.drivers.common.MK22F51212"/>
     <definition extID="platform.drivers.crc.MK22F51212"/>
@@ -25,9 +29,10 @@
     <definition extID="platform.drivers.uart.MK22F51212"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
+    <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk22f_freedom_bootloader" name="freedom_bootloader" category="bootloader_examples" dependency="platform.drivers.clock.MK22F51212 platform.drivers.flash.MK22F51212 device.MK22F51212_CMSIS.MK22F51212 platform.drivers.uart.MK22F51212 platform.drivers.gpio.MK22F51212 platform.drivers.i2c.MK22F51212 platform.drivers.port.MK22F51212 platform.drivers.dspi.MK22F51212 platform.drivers.crc.MK22F51212 middleware.usb.device_controller_khci.MK22F51212 middleware.mcu-boot.MK22F51212_startup.MK22F51212 middleware.mcu-boot.bootsources.MK22F51212 middleware.mcu-boot.bootsources_kinetis.MK22F51212 middleware.mcu-boot.MK22F51212_sources.MK22F51212 middleware.mcu-boot.src_bm_usb.MK22F51212 middleware.mcu-boot.src_startup.MK22F51212 middleware.mcu-boot.drv_microseconds.MK22F51212 platform.drivers.common.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.Include_common.MK22F51212 middleware.baremetal.MK22F51212" toolchain="iar mdk mcuxpresso">
+  <example id="frdmk22f_freedom_bootloader" name="freedom_bootloader" category="bootloader_examples" dependency="platform.drivers.clock.MK22F51212 platform.drivers.flash.MK22F51212 device.MK22F51212_CMSIS.MK22F51212 platform.drivers.uart.MK22F51212 platform.drivers.gpio.MK22F51212 platform.drivers.i2c.MK22F51212 platform.drivers.port.MK22F51212 platform.drivers.dspi.MK22F51212 platform.drivers.crc.MK22F51212 middleware.usb.device_controller_khci.MK22F51212 middleware.usb.device.MK22F51212 middleware.mcu-boot.MK22F51212_startup.MK22F51212 middleware.mcu-boot.bootsources.MK22F51212 middleware.mcu-boot.bootsources_kinetis.MK22F51212 middleware.mcu-boot.MK22F51212_sources.MK22F51212 middleware.mcu-boot.src_bm_usb.MK22F51212 middleware.mcu-boot.src_startup.MK22F51212 middleware.mcu-boot.drv_microseconds.MK22F51212 platform.drivers.common.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.Include_common.MK22F51212 platform.Include_dsp.MK22F51212 component.osa.MK22F51212 component.lists.MK22F51212 middleware.baremetal.MK22F51212">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -55,12 +60,13 @@
           <value>gnu.c.optimization.level.size</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
-          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
           <value>CPU_MK22FN512VLH12</value>
+          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
           <value>FREEDOM</value>
           <value>BL_TARGET_FLASH</value>
           <value>FRDM_K22F</value>
           <value>USB_STACK_BM</value>
+          <value>FSL_OSA_BM_TIMER_CONFIG=FSL_OSA_BM_TIMER_NONE</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -70,7 +76,7 @@
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>
-          <value>true</value>
+          <value>false</value>
         </option>
         <option id="com.crt.advproject.link.fpu" type="enum">
           <value>com.crt.advproject.link.fpu.fpv4.hard</value>
@@ -100,6 +106,9 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <source path="boards/frdmk22f/bootloader_examples/freedom_bootloader/armgcc" target_path="middleware/mcu-boot" type="linker" toolchain="armgcc">
+      <files mask="MK22FN512xxx12_application_0x0000.ld"/>
+    </source>
     <source path="boards/frdmk22f/bootloader_examples/freedom_bootloader/iar" target_path="middleware/mcu-boot" type="linker" toolchain="iar">
       <files mask="MK22FN512xxx12_application_0x0000.icf"/>
     </source>

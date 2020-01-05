@@ -40,6 +40,12 @@
  *
  * See http://www.freertos.org/a00110.html.
  *----------------------------------------------------------*/
+ 
+#if defined(__ICCARM__)||defined(__CC_ARM)||defined(__GNUC__)
+    /* in Kinetis SDK, this contains the system core clock frequency */
+    #include <stdint.h>
+    extern uint32_t SystemCoreClock;
+#endif
 
 #define configUSE_PREEMPTION 1
 #define configUSE_IDLE_HOOK 0

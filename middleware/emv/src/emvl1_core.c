@@ -1,36 +1,10 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
  * All rights reserved.
  *
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -39,12 +13,12 @@
 #include "emvl1_adapter_sdk.h"
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 static smartcard_core_error_t ttl_send_cmd(smartcard_core_params_t *coreParams,
                                            smartcard_ttl_cmd_t *ttlCmd,
                                            smartcard_ttl_resp_t *ttlRespPtr);
@@ -59,8 +33,8 @@ static void receive_data(smartcard_core_params_t *coreParams, uint8_t *rxBuff, u
 static inline void reset_smartcard(smartcard_core_params_t *coreParams, smartcard_reset_type_t resetType);
 static inline void wait_for_card_reset(smartcard_core_params_t *coreParams);
 /*******************************************************************************
-* Code
-******************************************************************************/
+ * Code
+ ******************************************************************************/
 
 /*!
  * @brief This function calls SMARTCARD driver transfer function.
@@ -77,8 +51,8 @@ static void send_data(smartcard_core_params_t *coreParams, uint8_t *txBuff, uint
         return;
     }
 
-    coreParams->xfer.size = txSize;
-    coreParams->xfer.buff = txBuff;
+    coreParams->xfer.size      = txSize;
+    coreParams->xfer.buff      = txBuff;
     coreParams->xfer.direction = kSMARTCARD_Transmit;
     /* Receive ATR bytes using non-blocking API */
     SMARTCARD_TRANSFER(coreParams->x_context, &coreParams->xfer);
@@ -110,8 +84,8 @@ static void receive_data(smartcard_core_params_t *coreParams, uint8_t *rxBuff, u
     }
 
     /* Set the correct state */
-    coreParams->xfer.size = rxSize;
-    coreParams->xfer.buff = rxBuff;
+    coreParams->xfer.size      = rxSize;
+    coreParams->xfer.buff      = rxBuff;
     coreParams->xfer.direction = kSMARTCARD_Receive;
     /* Receive ATR bytes using non-blocking API */
     SMARTCARD_TRANSFER(coreParams->x_context, &coreParams->xfer);
@@ -128,7 +102,7 @@ static void receive_data(smartcard_core_params_t *coreParams, uint8_t *rxBuff, u
 #if defined(FSL_RTOS_FREE_RTOS) || defined(FSL_RTOS_UCOSII) || defined(FSL_RTOS_UCOSIII)
     *receivedSize = rxSize - ((rtos_smartcard_context_t *)coreParams->x_context)->x_context.xSize;
 #else
-    *receivedSize = rxSize - ((smartcard_context_t *)coreParams->x_context)->xSize;
+    *receivedSize                         = rxSize - ((smartcard_context_t *)coreParams->x_context)->xSize;
 #endif
 }
 
@@ -216,17 +190,17 @@ static smartcard_core_error_t ttl_send_cmd_t1(smartcard_core_params_t *coreParam
     assert((NULL != ttlRespPtr));
 
     int16_t j;
-    uint32_t rcvLength = 0u;
-    uint16_t ttlCurrentInfLengh = 0u;
+    uint32_t rcvLength            = 0u;
+    uint16_t ttlCurrentInfLengh   = 0u;
     uint16_t ttlRemainingInfBytes = 0u;
-    uint16_t gTxBufInfOffset = 0u;
+    uint16_t gTxBufInfOffset      = 0u;
     uint16_t expectedRxLength;
     uint16_t ttlRxLength = 0u;
-    uint8_t mWTX = 0u;
+    uint8_t mWTX         = 0u;
     uint8_t txRetryCount = 0u;
     uint8_t rxErrorCount = 0u;
-    uint8_t edc = 0u;
-    uint8_t blkTypeSent = 0u;
+    uint8_t edc          = 0u;
+    uint8_t blkTypeSent  = 0u;
     uint8_t localBuf[5u];
 
     uint8_t localRxBuf[EMVL1_MAX_TRANSFER_SIZE];
@@ -277,12 +251,12 @@ static smartcard_core_error_t ttl_send_cmd_t1(smartcard_core_params_t *coreParam
         coreParams->localTxBuf[0u] = 0x00u;
 
         /*
-        * PCB: I block
-        * b8 = 0,
-        * b7 = Sequence number
-        * b6 = Chaining (more data)
-        * b5-b1 = 0(RFU)
-        */
+         * PCB: I block
+         * b8 = 0,
+         * b7 = Sequence number
+         * b6 = Chaining (more data)
+         * b5-b1 = 0(RFU)
+         */
 
         /* Currently the terminal supports max IFSD = 0xFE so no need to maintain more bit during I-block transmission
          */
@@ -302,10 +276,10 @@ static smartcard_core_error_t ttl_send_cmd_t1(smartcard_core_params_t *coreParam
         coreParams->localTxBuf[2u] = ttlCurrentInfLengh;
 
         /*
-        * The LRC is one byte in length and is calculated as the exclusive-OR
-        * of all the bytes starting with the NAD and including the last byte
-        * of INF, if present.
-        */
+         * The LRC is one byte in length and is calculated as the exclusive-OR
+         * of all the bytes starting with the NAD and including the last byte
+         * of INF, if present.
+         */
         coreParams->localTxBuf[3u + ttlCurrentInfLengh] = 0x00u;
         for (j = 0u; j < (3u + ttlCurrentInfLengh); j++)
         {
@@ -367,14 +341,14 @@ static smartcard_core_error_t ttl_send_cmd_t1(smartcard_core_params_t *coreParam
                     (smartcardContext->parityError == 0u))
                 {
                     /* Nothing was received;break as of now TBD set relevant error flags */
-                    rxErrorCount = 0u;
+                    rxErrorCount        = 0u;
                     coreParams->errCode = kSCCoreIOError;
                     return kSCCoreFail;
                 }
 
                 if (localRxBuf[2u] == 0xFFu)
                 {
-                    rxErrorCount = 0;
+                    rxErrorCount        = 0;
                     coreParams->errCode = kSCCoreT1INFLengthInvalid;
                     return kSCCoreFail;
                 }
@@ -391,7 +365,7 @@ static smartcard_core_error_t ttl_send_cmd_t1(smartcard_core_params_t *coreParam
                     if (++rxErrorCount > EMVL1_T1_BLOCK_RECEIVE_ERROR_MAX)
                     {
                         /*Maximum no. of continuous erroneous block reception done;now deactivate the card*/
-                        rxErrorCount = 0u;
+                        rxErrorCount        = 0u;
                         coreParams->errCode = kSCCoreT1RxErrorExceeded;
                         return kSCCoreFail;
                     }
@@ -450,7 +424,7 @@ static smartcard_core_error_t ttl_send_cmd_t1(smartcard_core_params_t *coreParam
                         else
                         {
                             /* Limit crossed */
-                            txRetryCount = 0u;
+                            txRetryCount        = 0u;
                             coreParams->errCode = kSCCoreT1TxRetryExceeded;
                             return kSCCoreFail;
                         }
@@ -488,7 +462,7 @@ static smartcard_core_error_t ttl_send_cmd_t1(smartcard_core_params_t *coreParam
                             else
                             {
                                 /* Limit Crossed */
-                                txRetryCount = 0;
+                                txRetryCount        = 0;
                                 coreParams->errCode = kSCCoreT1TxRetryExceeded;
                                 return kSCCoreFail;
                             }
@@ -572,7 +546,7 @@ static smartcard_core_error_t ttl_send_cmd_t1(smartcard_core_params_t *coreParam
                             else
                             {
                                 /* Limit Crossed */
-                                txRetryCount = 0u;
+                                txRetryCount        = 0u;
                                 coreParams->errCode = kSCCoreT1TxRetryExceeded;
                                 return kSCCoreFail;
                             }
@@ -590,7 +564,7 @@ static smartcard_core_error_t ttl_send_cmd_t1(smartcard_core_params_t *coreParam
                     else if ((localRxBuf[1u] & 0x1Fu) == 0x02u)
                     {
                         /* Abort request */
-                        rxErrorCount = 0u;
+                        rxErrorCount        = 0u;
                         coreParams->errCode = kSCCoreT1AbortRequestReceived;
                         return kSCCoreFail;
                     }
@@ -678,7 +652,7 @@ static smartcard_core_error_t ttl_send_cmd_t1(smartcard_core_params_t *coreParam
                     {
                         /* It is a good condition */
                         ttlRemainingInfBytes -= ttlCurrentInfLengh;
-                        coreParams->errCode = kSCCoreSuccess;
+                        coreParams->errCode               = kSCCoreSuccess;
                         smartcardContext->statusBytes[0u] = localRxBuf[expectedRxLength - 3u];
                         smartcardContext->statusBytes[1u] = localRxBuf[expectedRxLength - 2u];
 
@@ -708,7 +682,7 @@ static smartcard_core_error_t ttl_send_cmd_t1(smartcard_core_params_t *coreParam
                             return kSCCoreTransferAborted;
                         }
 
-                        blkTypeSent = kSCRBlock;
+                        blkTypeSent                    = kSCRBlock;
                         coreParams->ttlParamsT1.moreRx = 1u;
 
                         /* copy local buff to app buff */
@@ -728,7 +702,7 @@ static smartcard_core_error_t ttl_send_cmd_t1(smartcard_core_params_t *coreParam
                     coreParams->ttlParamsT1.txRSSN = (coreParams->ttlParamsT1.txRSSN == 0u) ? 1u : 0u;
 
                     ttlRemainingInfBytes -= ttlCurrentInfLengh;
-                    coreParams->errCode = kSCCoreSuccess;
+                    coreParams->errCode               = kSCCoreSuccess;
                     smartcardContext->statusBytes[0u] = localRxBuf[expectedRxLength - 3u];
                     smartcardContext->statusBytes[1u] = localRxBuf[expectedRxLength - 2u];
 
@@ -748,7 +722,7 @@ static smartcard_core_error_t ttl_send_cmd_t1(smartcard_core_params_t *coreParam
                     if (++rxErrorCount > EMVL1_T1_BLOCK_RECEIVE_ERROR_MAX)
                     {
                         /* Maximum no. of continuous erroneous block reception done;now deactivate the card */
-                        rxErrorCount = 0u;
+                        rxErrorCount        = 0u;
                         coreParams->errCode = kSCCoreT1RxErrorExceeded;
                         return kSCCoreFail;
                     }
@@ -796,7 +770,7 @@ static smartcard_core_error_t ttl_send_cmd_t1(smartcard_core_params_t *coreParam
                         else
                         {
                             /* Limit crossed */
-                            txRetryCount = 0u;
+                            txRetryCount        = 0u;
                             coreParams->errCode = kSCCoreT1TxRetryExceeded;
                             return kSCCoreFail;
                         }
@@ -867,7 +841,7 @@ smartcard_core_error_t smartcard_tal_send_cmd(smartcard_core_params_t *coreParam
         return kSCCoreFail;
     }
 
-    ttlResp.resp = talResp->resp;
+    ttlResp.resp   = talResp->resp;
     ttlResp.length = 0u;
 
 #if !defined(ISO7816_CARD_SUPPORT)
@@ -891,7 +865,7 @@ smartcard_core_error_t smartcard_tal_send_cmd(smartcard_core_params_t *coreParam
         /* Do C-APDU to TAL mapping */
         if (coreParams->Case == kSCCommandCase1)
         {
-            talCmd->header = talCmd->apdu;
+            talCmd->header         = talCmd->apdu;
             *(talCmd->header + 4u) = 0u;
         }
         else if ((coreParams->Case == kSCCommandCase2) || (coreParams->Case == kSCCommandCase3) ||
@@ -913,7 +887,7 @@ smartcard_core_error_t smartcard_tal_send_cmd(smartcard_core_params_t *coreParam
         /* kSMARTCARD_T1Transport */
 
         /* Do C-APDU to TAL mapping */
-        ttlCmd.inf = talCmd->apdu;
+        ttlCmd.inf    = talCmd->apdu;
         ttlCmd.length = talCmd->length;
 
         errCode = ttl_send_cmd(coreParams, &ttlCmd, &ttlResp);
@@ -944,7 +918,7 @@ smartcard_core_error_t smartcard_reset_handle_atr(
         return kSCCoreInvalidInputParameter;
     }
 
-    uint16_t length = EMVL1_MAX_TRANSFER_SIZE;
+    uint16_t length     = EMVL1_MAX_TRANSFER_SIZE;
     bool deactivateCard = 0u;
 #if defined(FSL_RTOS_FREE_RTOS) || defined(FSL_RTOS_UCOSII) || defined(FSL_RTOS_UCOSIII)
     smartcard_context_t *smartcardContext = &((rtos_smartcard_context_t *)coreParams->x_context)->x_context;
@@ -973,15 +947,15 @@ smartcard_core_error_t smartcard_reset_handle_atr(
         /*Start proceedings for cold ATR*/
         reset_smartcard(coreParams, kSMARTCARD_ColdReset);
 
-        smartcardContext->timersState.adtExpired = false;
-        smartcardContext->timersState.wwtExpired = false;
+        smartcardContext->timersState.adtExpired           = false;
+        smartcardContext->timersState.wwtExpired           = false;
         smartcardContext->timersState.initCharTimerExpired = false;
         SMARTCARD_RESET_WWT(coreParams->x_context);
         SMARTCARD_ENABLE_ADT(coreParams->x_context);
         SMARTCARD_DISABLE_WWT(coreParams->x_context);
 
         smartcardContext->transferState = kSMARTCARD_WaitingForTSState;
-        smartcardContext->xIsBusy = true;
+        smartcardContext->xIsBusy       = true;
         /*Wait for Init char.In case wrong Init char comes, reject the card
         In case, Init char comes after 42000 clock cycles of RST , reject the card*/
         /* Wait until all the data is received or for timeout.*/
@@ -1032,7 +1006,7 @@ smartcard_core_error_t smartcard_reset_handle_atr(
             if (smartcardContext->rxtCrossed || smartcardContext->parityError)
             {
                 smartcardContext->rxtCrossed = false;
-                deactivateCard = true;
+                deactivateCard               = true;
                 break;
             }
             else
@@ -1047,7 +1021,7 @@ smartcard_core_error_t smartcard_reset_handle_atr(
                         {
                             /*Card has to be rejected as WT expired while full ATR was not received*/
                             smartcardContext->timersState.wwtExpired = false;
-                            deactivateCard = true;
+                            deactivateCard                           = true;
                             break;
                         }
                         else if (!cardParams->atrValid)
@@ -1064,7 +1038,7 @@ smartcard_core_error_t smartcard_reset_handle_atr(
                         {
                             /*Card has to be rejected as ADT expired while full ATR was not received*/
                             smartcardContext->timersState.wwtExpired = false;
-                            deactivateCard = true;
+                            deactivateCard                           = true;
                             break;
                         }
                         else if (!cardParams->atrValid)
@@ -1116,7 +1090,7 @@ smartcard_core_error_t smartcard_reset_handle_atr(
         SMARTCARD_DISABLE_WWT(coreParams->x_context);
 
         smartcardContext->transferState = kSMARTCARD_WaitingForTSState;
-        smartcardContext->xIsBusy = true;
+        smartcardContext->xIsBusy       = true;
         /*Wait for Init char.In case wrong Init char comes, reject the card
         In case, Init char comes after 42000 clock cycles of RST , reject the card*/
         /* Wait until all the data is received or for timeout.*/
@@ -1165,7 +1139,7 @@ smartcard_core_error_t smartcard_reset_handle_atr(
             if (smartcardContext->rxtCrossed || smartcardContext->parityError)
             {
                 smartcardContext->rxtCrossed = false;
-                deactivateCard = true;
+                deactivateCard               = true;
                 break;
             }
             else
@@ -1215,13 +1189,13 @@ smartcard_core_error_t smartcard_parse_atr(smartcard_core_params_t *coreParams, 
     uint8_t ch;
     uint16_t i;
     uint8_t TCK = 0u;
-    uint8_t Yi = 0u;
+    uint8_t Yi  = 0u;
     uint8_t Y1;
     uint8_t Y2;
     uint8_t historicalBytes = 0u;
-    uint8_t searchTA3 = 1u;
-    uint8_t searchTB3 = 1u;
-    uint8_t searchTC3 = 1u;
+    uint8_t searchTA3       = 1u;
+    uint8_t searchTB3       = 1u;
+    uint8_t searchTC3       = 1u;
 
 #if defined(FSL_RTOS_FREE_RTOS) || defined(FSL_RTOS_UCOSII) || defined(FSL_RTOS_UCOSIII)
     smartcard_context_t *smartcardContext = &((rtos_smartcard_context_t *)coreParams->x_context)->x_context;
@@ -1231,8 +1205,8 @@ smartcard_core_error_t smartcard_parse_atr(smartcard_core_params_t *coreParams, 
     smartcard_card_params_t *cardParams = &smartcardContext->cardParams;
 
     cardParams->modeNegotiable = true;
-    cardParams->atrComplete = true;
-    cardParams->atrValid = true;
+    cardParams->atrComplete    = true;
+    cardParams->atrValid       = true;
 
     for (i = 0u; i < length; i++)
     {
@@ -1249,8 +1223,8 @@ smartcard_core_error_t smartcard_parse_atr(smartcard_core_params_t *coreParams, 
     i = 0u;
 
     /*STORING y1 TO CHECK WHICH COMPONENTS ARE AVAILABLE*/
-    ch = buff[i];
-    Y1 = ch >> 4u;
+    ch              = buff[i];
+    Y1              = ch >> 4u;
     historicalBytes = ch & 0x0fu;
     length -= historicalBytes;
     i++;
@@ -1273,59 +1247,59 @@ smartcard_core_error_t smartcard_parse_atr(smartcard_core_params_t *coreParams, 
 /*Fi = 1 is only allowed value*/
 #if defined(ISO7816_CARD_SUPPORT)
             case 0u:
-                cardParams->Fi = 372u;
+                cardParams->Fi   = 372u;
                 cardParams->fMax = 4u;
                 break;
 #endif
             case 1u:
-                cardParams->Fi = 372u;
+                cardParams->Fi   = 372u;
                 cardParams->fMax = 5u;
                 break;
 #if defined(ISO7816_CARD_SUPPORT)
             case 2u:
-                cardParams->Fi = 558u;
+                cardParams->Fi   = 558u;
                 cardParams->fMax = 6u;
                 break;
             case 3u:
-                cardParams->Fi = 744u;
+                cardParams->Fi   = 744u;
                 cardParams->fMax = 8u;
                 break;
             case 4u:
-                cardParams->Fi = 1116u;
+                cardParams->Fi   = 1116u;
                 cardParams->fMax = 12u;
                 break;
             case 5u:
-                cardParams->Fi = 1488u;
+                cardParams->Fi   = 1488u;
                 cardParams->fMax = 16u;
                 break;
             case 6u:
-                cardParams->Fi = 1860u;
+                cardParams->Fi   = 1860u;
                 cardParams->fMax = 20u;
                 break;
             case 9u:
-                cardParams->Fi = 512u;
+                cardParams->Fi   = 512u;
                 cardParams->fMax = 5u;
                 break;
             case 10u:
-                cardParams->Fi = 768u;
+                cardParams->Fi   = 768u;
                 cardParams->fMax = 7u;
                 break;
             case 11u:
-                cardParams->Fi = 1024u;
+                cardParams->Fi   = 1024u;
                 cardParams->fMax = 10u;
                 break;
             case 12u:
-                cardParams->Fi = 1536u;
+                cardParams->Fi   = 1536u;
                 cardParams->fMax = 15u;
                 break;
             case 13u:
-                cardParams->Fi = 2048u;
+                cardParams->Fi   = 2048u;
                 cardParams->fMax = 20u;
                 break;
 #endif
             default:
-                cardParams->Fi = 372u;
-                cardParams->fMax = 5u;
+                cardParams->Fi       = 372u;
+                cardParams->fMax     = 5u;
                 cardParams->atrValid = false;
                 return kSCCoreFail;
         }
@@ -1364,7 +1338,7 @@ smartcard_core_error_t smartcard_parse_atr(smartcard_core_params_t *coreParams, 
                 break;
 #endif
             default:
-                cardParams->Di = 1;
+                cardParams->Di       = 1;
                 cardParams->atrValid = false;
                 return kSCCoreFail;
         }
@@ -1372,9 +1346,9 @@ smartcard_core_error_t smartcard_parse_atr(smartcard_core_params_t *coreParams, 
     }
     else
     {
-        cardParams->Fi = 372u;
+        cardParams->Fi   = 372u;
         cardParams->fMax = 5u;
-        cardParams->Di = 1u;
+        cardParams->Di   = 1u;
     }
 
     if (Y1 & 0x2u)
@@ -1462,7 +1436,7 @@ smartcard_core_error_t smartcard_parse_atr(smartcard_core_params_t *coreParams, 
     { /* TD1 absent,meaning only T= 0 has to be used */
         cardParams->t0Indicated = true;
         cardParams->t1Indicated = false;
-        Y2 = 0u;
+        Y2                      = 0u;
     }
     if (Y2 & 0x1u)
     { /* TA2 present */
@@ -1472,7 +1446,7 @@ smartcard_core_error_t smartcard_parse_atr(smartcard_core_params_t *coreParams, 
             return kSCCoreFail;
         }
         cardParams->modeNegotiable = false;
-        ch = buff[i];
+        ch                         = buff[i];
         if ((ch & 0x0fu) == 0u)
         { /* T = 0 specific mode */
             cardParams->t0Indicated = true;
@@ -1622,7 +1596,7 @@ smartcard_core_error_t smartcard_parse_atr(smartcard_core_params_t *coreParams, 
             if (searchTA3)
             { /* Default value of TA3 */
                 cardParams->IFSC = 0x20u;
-                searchTA3 = 0u;
+                searchTA3        = 0u;
             }
         }
         if (Yi & 0x2u)
@@ -1829,7 +1803,7 @@ smartcard_core_error_t smartcard_send_ifs(smartcard_core_params_t *coreParams, u
         return kSCCoreInvalidInputParameter;
     }
 
-    uint8_t localCmdBuf[5] = {0};
+    uint8_t localCmdBuf[5]   = {0};
     uint8_t localRespBuf[20] = {0};
     uint8_t j;
 #if defined(FSL_RTOS_FREE_RTOS) || defined(FSL_RTOS_UCOSII) || defined(FSL_RTOS_UCOSIII)
@@ -1843,7 +1817,7 @@ smartcard_core_error_t smartcard_send_ifs(smartcard_core_params_t *coreParams, u
     smartcardContext->timersState.wwtExpired = false;
     smartcardContext->timersState.cwtExpired = false;
     smartcardContext->timersState.bwtExpired = false;
-    smartcardContext->parityError = 0;
+    smartcardContext->parityError            = 0;
 
     SMARTCARD_DISABLE_WWT(coreParams->x_context);
     SMARTCARD_RESET_BWT(coreParams->x_context);
@@ -1921,7 +1895,7 @@ smartcard_core_error_t smartcard_check_status(smartcard_core_params_t *coreParam
 
     if (statusBytes[0u] == 0x90u) /* SW1 */
     {
-        coreParams->errCode = kSCCoreSuccess;
+        coreParams->errCode              = kSCCoreSuccess;
         smartcardContext->statusBytes[0] = statusBytes[0];
         smartcardContext->statusBytes[1] = statusBytes[1];
 
@@ -1930,7 +1904,7 @@ smartcard_core_error_t smartcard_check_status(smartcard_core_params_t *coreParam
     /* SW1 SW2 = '9XYZ', except for '9000' */
     else if ((statusBytes[0u] & 0xF0u) == 0x90u)
     {
-        coreParams->errCode = kSCCoreSuccess;
+        coreParams->errCode               = kSCCoreSuccess;
         smartcardContext->statusBytes[0u] = statusBytes[0u];
         smartcardContext->statusBytes[1u] = statusBytes[1u];
     }
@@ -2032,7 +2006,7 @@ static int write_bytes(smartcard_core_params_t *coreParams, uint8_t *buff, uint8
 #if defined(FSL_RTOS_FREE_RTOS) || defined(FSL_RTOS_UCOSII) || defined(FSL_RTOS_UCOSIII)
     smartcard_context_t *drvContext = &((rtos_smartcard_context_t *)coreParams->x_context)->x_context;
 #else
-    smartcard_context_t *drvContext = (smartcard_context_t *)coreParams->x_context;
+    smartcard_context_t *drvContext       = (smartcard_context_t *)coreParams->x_context;
 #endif
     send_data(coreParams, buff, len);
 
@@ -2050,7 +2024,7 @@ static int read_bytes(smartcard_core_params_t *coreParams, uint8_t *buff, uint8_
 #if defined(FSL_RTOS_FREE_RTOS) || defined(FSL_RTOS_UCOSII) || defined(FSL_RTOS_UCOSIII)
     smartcard_context_t *drvContext = &((rtos_smartcard_context_t *)coreParams->x_context)->x_context;
 #else
-    smartcard_context_t *drvContext = (smartcard_context_t *)coreParams->x_context;
+    smartcard_context_t *drvContext       = (smartcard_context_t *)coreParams->x_context;
 #endif
 
     receive_data(coreParams, buff, len, &tmp32); /* receive max buff  size */
@@ -2086,23 +2060,23 @@ static smartcard_core_error_t ttl_send_cmd_t0(smartcard_core_params_t *coreParam
     uint32_t num_bytes;
     uint8_t case_3and4;
     uint8_t case_2and4;
-    uint8_t warning = 0;
-    uint8_t DataToSend = 1;
+    uint8_t warning          = 0;
+    uint8_t DataToSend       = 1;
     uint32_t remain_tx_bytes = 0; /* ttlCmd->length; */
-    uint32_t resp_bytes = 0;
+    uint32_t resp_bytes      = 0;
 
     t0_session_t *session = &session_t0;
 
 #if defined(FSL_RTOS_FREE_RTOS) || defined(FSL_RTOS_UCOSII) || defined(FSL_RTOS_UCOSIII)
     smartcard_context_t *drvCtx = &((rtos_smartcard_context_t *)coreParams->x_context)->x_context;
 #else
-    smartcard_context_t *drvCtx = (smartcard_context_t *)coreParams->x_context;
+    smartcard_context_t *drvCtx           = (smartcard_context_t *)coreParams->x_context;
 #endif
 
     /* init t0 session */
     memset(session, 0x0, sizeof(t0_session_t));
     session->exchange_buf = coreParams->localTxBuf;
-    session->apdu_case = 0xff;
+    session->apdu_case    = 0xff;
 
     memcpy(session->exchange_buf, ttlCmd->inf, ttlCmd->length);
 
@@ -2119,7 +2093,7 @@ static smartcard_core_error_t ttl_send_cmd_t0(smartcard_core_params_t *coreParam
     if (ttlCmd->length == 4)
     {                                           /* CASE 1 : 4 bytes header */
         session->exchange_buf[P3_OFFSET] = 0x0; /* transforme into 5 bytes (P3=0) */
-        session->apdu_case = APDU_case1S;
+        session->apdu_case               = APDU_case1S;
     }
 
     /* emvl1 P122 : READ RECORD commands issued during application selection and all case 2 commands issued according to
@@ -2145,7 +2119,7 @@ static smartcard_core_error_t ttl_send_cmd_t0(smartcard_core_params_t *coreParam
         return kSCCoreFail;
     }
 #else /* do it by tal function */
-    session->apdu_case = coreParams->Case - 1; /* kSCCommandCase1; */
+    session->apdu_case                    = coreParams->Case - 1; /* kSCCommandCase1; */
 #endif
 
     /* timing init */
@@ -2160,12 +2134,12 @@ static smartcard_core_error_t ttl_send_cmd_t0(smartcard_core_params_t *coreParam
 
     /* send instruction and exchange using T=0 */
     num_bytes = 0;
-    resp_off = 0;
+    resp_off  = 0;
 
-    session->CLA = session->exchange_buf[0];
-    session->INS = session->exchange_buf[1];
-    session->P1 = session->exchange_buf[2];
-    session->P2 = session->exchange_buf[3];
+    session->CLA    = session->exchange_buf[0];
+    session->INS    = session->exchange_buf[1];
+    session->P1     = session->exchange_buf[2];
+    session->P2     = session->exchange_buf[3];
     session->P3_LEN = session->exchange_buf[4];
 
     if (write_bytes(coreParams, session->exchange_buf, 5u))
@@ -2232,7 +2206,7 @@ static smartcard_core_error_t ttl_send_cmd_t0(smartcard_core_params_t *coreParam
             }
 
             remain_tx_bytes = 0;
-            DataToSend = 0;
+            DataToSend      = 0;
         }
         else if ((case_3and4) &&
                  ((ch == (0xFF - session->INS)) || (!coreParams->EMVL1 && (ch == (session->INS ^ 0xFE)))))
@@ -2275,7 +2249,7 @@ static smartcard_core_error_t ttl_send_cmd_t0(smartcard_core_params_t *coreParam
             }
 
             session->exchange_buf[resp_off + 4] = session->exchange_buf[resp_off + 1];
-            resp_bytes = session->exchange_buf[resp_off + 1];
+            resp_bytes                          = session->exchange_buf[resp_off + 1];
 
             session->exchange_buf[resp_off] = 0x00;
             if (!coreParams->EMVL1)
@@ -2287,10 +2261,10 @@ static smartcard_core_error_t ttl_send_cmd_t0(smartcard_core_params_t *coreParam
             session->exchange_buf[resp_off + 3] = 0x00;
 
             /* save cmd to sesion */
-            session->CLA = session->exchange_buf[resp_off];
-            session->INS = session->exchange_buf[resp_off + 1];
-            session->P1 = session->exchange_buf[resp_off + 2];
-            session->P2 = session->exchange_buf[resp_off + 3];
+            session->CLA    = session->exchange_buf[resp_off];
+            session->INS    = session->exchange_buf[resp_off + 1];
+            session->P1     = session->exchange_buf[resp_off + 2];
+            session->P2     = session->exchange_buf[resp_off + 3];
             session->P3_LEN = session->exchange_buf[resp_off + 4];
 
             if (write_bytes(coreParams, session->exchange_buf + resp_off, 5))
@@ -2402,8 +2376,8 @@ static smartcard_core_error_t ttl_send_cmd_t0(smartcard_core_params_t *coreParam
                 return kSCCoreTransferAborted;
             }
 
-            sw1 = ch;
-            sw2 = session->exchange_buf[1];
+            sw1                      = ch;
+            sw2                      = session->exchange_buf[1];
             session->exchange_buf[0] = 0x00;
             if (!coreParams->EMVL1)
             {
@@ -2414,10 +2388,10 @@ static smartcard_core_error_t ttl_send_cmd_t0(smartcard_core_params_t *coreParam
             session->exchange_buf[3] = 0x00;
             session->exchange_buf[4] = 0x00;
 
-            session->CLA = session->exchange_buf[0];
-            session->INS = session->exchange_buf[1];
-            session->P1 = session->exchange_buf[2];
-            session->P2 = session->exchange_buf[3];
+            session->CLA    = session->exchange_buf[0];
+            session->INS    = session->exchange_buf[1];
+            session->P1     = session->exchange_buf[2];
+            session->P2     = session->exchange_buf[3];
             session->P3_LEN = session->exchange_buf[4];
 
             if (write_bytes(coreParams, session->exchange_buf + 0, 5))
@@ -2454,9 +2428,9 @@ static smartcard_core_error_t ttl_send_cmd_t0(smartcard_core_params_t *coreParam
             }
 
             /* discard bytes to transmit ??? */
-            DataToSend = 0;
+            DataToSend                          = 0;
             session->exchange_buf[resp_off + 4] = session->exchange_buf[1 + resp_off];
-            session->exchange_buf[resp_off] = 0x00;
+            session->exchange_buf[resp_off]     = 0x00;
             if (!coreParams->EMVL1)
             {
                 session->exchange_buf[resp_off] = session->CLA;
@@ -2465,10 +2439,10 @@ static smartcard_core_error_t ttl_send_cmd_t0(smartcard_core_params_t *coreParam
             session->exchange_buf[resp_off + 2] = 0x00;
             session->exchange_buf[resp_off + 3] = 0x00;
 
-            session->CLA = session->exchange_buf[resp_off];
-            session->INS = session->exchange_buf[resp_off + 1];
-            session->P1 = session->exchange_buf[resp_off + 2];
-            session->P2 = session->exchange_buf[resp_off + 3];
+            session->CLA    = session->exchange_buf[resp_off];
+            session->INS    = session->exchange_buf[resp_off + 1];
+            session->P1     = session->exchange_buf[resp_off + 2];
+            session->P2     = session->exchange_buf[resp_off + 3];
             session->P3_LEN = session->exchange_buf[resp_off + 4];
 
             if (write_bytes(coreParams, session->exchange_buf + resp_off, 5))
@@ -2504,7 +2478,7 @@ static smartcard_core_error_t ttl_send_cmd_t0(smartcard_core_params_t *coreParam
                 /* Case 4 with warnings */
                 /* sending a RAPDU of Data[Licc] + sw1sw2 (initial warning status) */
                 /* PRINTF("waring\n"); */
-                session->exchange_buf[resp_off] = sw1;
+                session->exchange_buf[resp_off]     = sw1;
                 session->exchange_buf[resp_off + 1] = sw2;
             }
             drvCtx->statusBytes[0u] = ch;

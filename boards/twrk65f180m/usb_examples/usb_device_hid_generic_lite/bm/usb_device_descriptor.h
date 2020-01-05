@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016 - 2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef __USB_DEVICE_DESCRIPTOR_H__
@@ -44,12 +22,12 @@
 
 #define USB_DEVICE_MAX_POWER (0x32U)
 
-#define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (41U)
-#define USB_DESCRIPTOR_LENGTH_HID_GENERIC_REPORT (33U)
+#define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (sizeof(g_UsbDeviceConfigurationDescriptor))
+#define USB_DESCRIPTOR_LENGTH_HID_GENERIC_REPORT (sizeof(g_UsbDeviceHidGenericReportDescriptor))
 #define USB_DESCRIPTOR_LENGTH_HID (9U)
-#define USB_DESCRIPTOR_LENGTH_STRING0 (4U)
-#define USB_DESCRIPTOR_LENGTH_STRING1 (38U)
-#define USB_DESCRIPTOR_LENGTH_STRING2 (38U)
+#define USB_DESCRIPTOR_LENGTH_STRING0 (sizeof(g_UsbDeviceString0))
+#define USB_DESCRIPTOR_LENGTH_STRING1 (sizeof(g_UsbDeviceString1))
+#define USB_DESCRIPTOR_LENGTH_STRING2 (sizeof(g_UsbDeviceString2))
 
 #define USB_DEVICE_CONFIGURATION_COUNT (1U)
 #define USB_DEVICE_STRING_COUNT (3U)
@@ -57,7 +35,8 @@
 
 #define USB_HID_GENERIC_CONFIGURE_INDEX (1U)
 #define USB_HID_GENERIC_INTERFACE_COUNT (1U)
-
+/*IN lenght is same with out lenght, in case in length is not equal to out length, pleae check*/
+/*USB_DeviceHidSend/Recv to make sure the length parameter is right*/
 #define USB_HID_GENERIC_IN_BUFFER_LENGTH (8U)
 #define USB_HID_GENERIC_OUT_BUFFER_LENGTH (8U)
 #define USB_HID_GENERIC_ENDPOINT_COUNT (2U)

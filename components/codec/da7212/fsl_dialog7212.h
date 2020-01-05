@@ -20,8 +20,8 @@
 /*@}*/
 
 /*! @brief da7212 handle size */
-#ifndef DA7212_HANDLE_SIZE
-#define DA7212_HANDLE_SIZE (100U)
+#ifndef DA7212_I2C_HANDLER_SIZE
+#define DA7212_I2C_HANDLER_SIZE CODEC_I2C_MASTER_HANDLER_SIZE
 #endif
 
 #define DA7212_INIT_SIZE (35)
@@ -1063,14 +1063,11 @@ typedef struct da7212_config
 } da7212_config_t;
 
 /*! @brief da7212 codec handler
- * Applicationi should allocate a buffer with DA7212_HANDLE_SIZE for handle definition, such as
- * uint8_t da7212HandleBuffer[DA7212_HANDLE_SIZE];
- * da7212_handle_t *da7212Handle = da7212HandleBuffer;
  */
 typedef struct _da7212_handle
 {
-    da7212_config_t *config; /*!< da7212 config pointer */
-    void *i2cHandle;         /*!< i2c handle */
+    da7212_config_t *config;                    /*!< da7212 config pointer */
+    uint8_t i2cHandle[DA7212_I2C_HANDLER_SIZE]; /*!< i2c handle */
 } da7212_handle_t;
 
 /*******************************************************************************

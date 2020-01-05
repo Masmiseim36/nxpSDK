@@ -49,9 +49,9 @@ sss_status_t sss_digest_context_init(sss_digest_t *context,
                                      sss_algorithm_t algorithm,
                                      sss_mode_t mode)
 {
-    context->session = session;
+    context->session   = session;
     context->algorithm = algorithm;
-    context->mode = mode;
+    context->mode      = mode;
     return kStatus_SSS_Success;
 }
 
@@ -85,7 +85,7 @@ sss_status_t test_digest(void)
 {
     sss_status_t status = kStatus_SSS_Fail;
 
-    sss_session_t mySession = {kType_SSS_SubSystem_NONE};
+    sss_session_t mySession  = {kType_SSS_SubSystem_NONE};
     sss_digest_t myDigestCtx = {0};
 
     static const uint8_t message[] =
@@ -116,9 +116,9 @@ sss_status_t test_digest(void)
     }
 
     /* hash */
-    size_t digestLen = 32u;
+    size_t digestLen   = 32u;
     uint8_t digest[32] = {0};
-    status = sss_digest_one_go(&myDigestCtx, message, sizeof(message) - 1u, digest, &digestLen);
+    status             = sss_digest_one_go(&myDigestCtx, message, sizeof(message) - 1u, digest, &digestLen);
     if (status != kStatus_SSS_Success)
     {
         return status;

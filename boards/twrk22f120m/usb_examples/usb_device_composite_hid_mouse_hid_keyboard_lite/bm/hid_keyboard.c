@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_device_config.h"
@@ -57,7 +35,7 @@ static usb_status_t USB_DeviceHidKeyboardInterruptIn(usb_device_handle handle,
  * Variables
  ******************************************************************************/
 
-USB_DATA_ALIGNMENT static uint8_t s_KeyboardBuffer[USB_HID_KEYBOARD_REPORT_LENGTH];
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_KeyboardBuffer[USB_HID_KEYBOARD_REPORT_LENGTH];
 static usb_device_composite_struct_t *s_UsbDeviceComposite;
 static usb_device_hid_keyboard_struct_t s_UsbDeviceHidKeyboard;
 
@@ -116,12 +94,12 @@ static usb_status_t USB_DeviceHidKeyboardInterruptIn(usb_device_handle handle,
 usb_status_t USB_DeviceHidKeyboardSetConfigure(usb_device_handle handle, uint8_t configure)
 {
     usb_device_endpoint_init_struct_t epInitStruct;
-    usb_device_endpoint_callback_struct_t endpointCallback;
+    usb_device_endpoint_callback_struct_t epCallback;
 
     if (USB_COMPOSITE_CONFIGURE_INDEX == configure)
     {
-        endpointCallback.callbackFn = USB_DeviceHidKeyboardInterruptIn;
-        endpointCallback.callbackParam = handle;
+        epCallback.callbackFn = USB_DeviceHidKeyboardInterruptIn;
+        epCallback.callbackParam = handle;
 
         epInitStruct.zlt = 0U;
         epInitStruct.transferType = USB_ENDPOINT_INTERRUPT;
@@ -136,7 +114,7 @@ usb_status_t USB_DeviceHidKeyboardSetConfigure(usb_device_handle handle, uint8_t
             epInitStruct.maxPacketSize = FS_HID_KEYBOARD_INTERRUPT_IN_PACKET_SIZE;
         }
 
-        USB_DeviceInitEndpoint(handle, &epInitStruct, &endpointCallback);
+        USB_DeviceInitEndpoint(handle, &epInitStruct, &epCallback);
 
         return USB_DeviceHidKeyboardAction(); /* run the cursor movement code */
     }

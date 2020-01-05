@@ -4,6 +4,14 @@ The ntag_i2c_explorer_blink demo application show use of NT3H2111_2211 NTAG I2C 
 This demo is intended to demonstrate basic communication with the device, just reading the state of one register which tells user about NFC field presence.
 When the field is detected, the application switches LED on the board between ON and OFF state. Also, if UART communication thru some terminal is made, 
 there are some text messages on the terminal. 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
+
 Hardware requirements
 =====================
 - Mini/Micro USB cable
@@ -65,11 +73,6 @@ FIELD LOST!
 FIELD DETECTED!   
 
  
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

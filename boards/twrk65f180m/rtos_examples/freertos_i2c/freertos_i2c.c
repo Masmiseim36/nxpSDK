@@ -1,32 +1,10 @@
 /*
-* Copyright (c) 2015, Freescale Semiconductor, Inc.
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without modification,
-* are permitted provided that the following conditions are met:
-*
-* o Redistributions of source code must retain the above copyright notice, this list
-*   of conditions and the following disclaimer.
-*
-* o Redistributions in binary form must reproduce the above copyright notice, this
-*   list of conditions and the following disclaimer in the documentation and/or
-*   other materials provided with the distribution.
-*
-* o Neither the name of Freescale Semiconductor, Inc. nor the names of its
-*   contributors may be used to endorse or promote products derived from this
-*   software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-* ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 /*  Standard C Included Files */
 #include <string.h>
@@ -44,21 +22,20 @@
 #include "fsl_i2c.h"
 #include "fsl_i2c_freertos.h"
 
-#if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
-#include "fsl_intmux.h"
-#endif
-
 #include "pin_mux.h"
 #include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_I2C_MASTER_BASE I2C0_BASE
-#define EXAMPLE_I2C_SLAVE_BASE I2C1_BASE
-
+#define EXAMPLE_I2C_MASTER_BASE (I2C0_BASE)
 #define EXAMPLE_I2C_MASTER_IRQN (I2C0_IRQn)
+#define EXAMPLE_I2C_MASTER_CLK_SRC (I2C0_CLK_SRC)
+#define EXAMPLE_I2C_MASTER_CLK_FREQ CLOCK_GetFreq((I2C0_CLK_SRC))
+
+#define EXAMPLE_I2C_SLAVE_BASE (I2C1_BASE)
 #define EXAMPLE_I2C_SLAVE_IRQN (I2C1_IRQn)
 #define EXAMPLE_I2C_SLAVE_CLK_SRC (I2C1_CLK_SRC)
+#define EXAMPLE_I2C_SLAVE_CLK_FREQ CLOCK_GetFreq((I2C1_CLK_SRC))
 
 #define SINGLE_BOARD 0
 #define BOARD_TO_BOARD 1
@@ -69,19 +46,12 @@
 #define isSLAVE 1
 #define I2C_MASTER_SLAVE isMASTER
 #endif
+#if (EXAMPLE_CONNECT_I2C == BOARD_TO_BOARD)
+#define EXAMPLE_I2C_DEALY_COUNT 1000u
+#endif
 
 #define EXAMPLE_I2C_MASTER ((I2C_Type *)EXAMPLE_I2C_MASTER_BASE)
 #define EXAMPLE_I2C_SLAVE ((I2C_Type *)EXAMPLE_I2C_SLAVE_BASE)
-
-#if (EXAMPLE_I2C_MASTER_BASE == I2C0_BASE)
-#define I2C_MASTER_CLK_SRC (I2C0_CLK_SRC)
-#elif(EXAMPLE_I2C_MASTER_BASE == I2C1_BASE)
-#define I2C_MASTER_CLK_SRC (I2C1_CLK_SRC)
-#elif(EXAMPLE_I2C_MASTER_BASE == I2C2_BASE)
-#define I2C_MASTER_CLK_SRC (I2C2_CLK_SRC)
-#else
-#error Should define the I2C_MASTER_CLK_SRC!
-#endif
 
 #define I2C_MASTER_SLAVE_ADDR_7BIT (0x7EU)
 #define I2C_BAUDRATE (100000) /* 100K */
@@ -128,21 +98,23 @@ int main(void)
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
 
-#if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
-    INTMUX_Init(INTMUX0);
-    INTMUX_SetChannelMode(INTMUX0, EXAMPLE_I2C_INTMUX_CHANNEL, kINTMUX_ChannelLogicOR);
-#endif
+    /* Set interrupt priorities */
+    NVIC_SetPriority(EXAMPLE_I2C_SLAVE_IRQN, 2);
+    NVIC_SetPriority(EXAMPLE_I2C_MASTER_IRQN, 3);
 
     PRINTF("\r\n==FreeRTOS I2C example start.==\r\n");
 #if (EXAMPLE_CONNECT_I2C == SINGLE_BOARD)
     PRINTF("This example use one i2c instance as master and another as slave on one board.\r\n");
-#elif(EXAMPLE_CONNECT_I2C == BOARD_TO_BOARD)
+#elif (EXAMPLE_CONNECT_I2C == BOARD_TO_BOARD)
     PRINTF("This example use two boards to connect with one as master and another as slave.\r\n");
 #endif
 
-    if (xTaskCreate(slave_task, "Slave_task", configMINIMAL_STACK_SIZE + 60, NULL, slave_task_PRIORITY, NULL) != pdPASS)
+    if (xTaskCreate(slave_task, "Slave_task", configMINIMAL_STACK_SIZE + 100, NULL, slave_task_PRIORITY, NULL) !=
+        pdPASS)
     {
         PRINTF("Failed to create slave task");
+        while (1)
+            ;
     }
 
     vTaskStartScheduler();
@@ -164,21 +136,21 @@ typedef struct _callback_message_t
 static void i2c_slave_callback(I2C_Type *base, i2c_slave_transfer_t *xfer, void *userData)
 {
     callback_message_t *cb_msg = (callback_message_t *)userData;
-    BaseType_t reschedule;
+    BaseType_t reschedule      = 0;
 
     switch (xfer->event)
     {
         /*  Transmit request */
         case kI2C_SlaveTransmitEvent:
             /*  Update information for transmit process */
-            xfer->data = g_slave_buff;
+            xfer->data     = g_slave_buff;
             xfer->dataSize = I2C_DATA_LENGTH;
             break;
 
         /*  Receive request */
         case kI2C_SlaveReceiveEvent:
             /*  Update information for received process */
-            xfer->data = g_slave_buff;
+            xfer->data     = g_slave_buff;
             xfer->dataSize = I2C_DATA_LENGTH;
             break;
 
@@ -216,74 +188,24 @@ static void slave_task(void *pvParameters)
     i2c_sem = cb_msg.sem;
 
 #if ((I2C_MASTER_SLAVE == isSLAVE) || (EXAMPLE_CONNECT_I2C == SINGLE_BOARD))
-/*  Set i2c slave interrupt priority higher. */
-#if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
-    if (EXAMPLE_I2C_SLAVE_IRQN > FSL_FEATURE_INTERRUPT_IRQ_MAX)
-    {
-        INTMUX_EnableInterrupt(INTMUX0, EXAMPLE_I2C_INTMUX_CHANNEL, EXAMPLE_I2C_SLAVE_IRQN);
-        if (__CORTEX_M >= 0x03)
-            NVIC_SetPriority(INTMUX0_0_IRQn, 5);
-        else
-            NVIC_SetPriority(INTMUX0_0_IRQn, 2);
-    }
-    else
-    {
-        if (__CORTEX_M >= 0x03)
-            NVIC_SetPriority(EXAMPLE_I2C_SLAVE_IRQN, 5);
-        else
-            NVIC_SetPriority(EXAMPLE_I2C_SLAVE_IRQN, 2);
-    }
-#else
-#if (EXAMPLE_I2C_SLAVE_BASE == LPI2C0_BASE)
-    if (__CORTEX_M >= 0x03)
-        NVIC_SetPriority(EXAMPLE_I2C_SLAVE_IRQN, 5);
-    else
-        NVIC_SetPriority(EXAMPLE_I2C_SLAVE_IRQN, 2);
-#elif(EXAMPLE_I2C_SLAVE_BASE == LPI2C1_BASE)
-    if (__CORTEX_M >= 0x03)
-        NVIC_SetPriority(EXAMPLE_I2C_SLAVE_IRQN, 5);
-    else
-        NVIC_SetPriority(EXAMPLE_I2C_SLAVE_IRQN, 2);
-#elif(EXAMPLE_I2C_SLAVE_BASE == LPI2C2_BASE)
-    if (__CORTEX_M >= 0x03)
-        NVIC_SetPriority(EXAMPLE_I2C_SLAVE_IRQN, 5);
-    else
-        NVIC_SetPriority(EXAMPLE_I2C_SLAVE_IRQN, 2);
-#elif(EXAMPLE_I2C_SLAVE_BASE == I2C0_BASE)
-    if (__CORTEX_M >= 0x03)
-        NVIC_SetPriority(EXAMPLE_I2C_SLAVE_IRQN, 5);
-    else
-        NVIC_SetPriority(EXAMPLE_I2C_SLAVE_IRQN, 2);
-#elif(EXAMPLE_I2C_SLAVE_BASE == I2C1_BASE)
-    if (__CORTEX_M >= 0x03)
-        NVIC_SetPriority(EXAMPLE_I2C_SLAVE_IRQN, 5);
-    else
-        NVIC_SetPriority(EXAMPLE_I2C_SLAVE_IRQN, 2);
-#elif(EXAMPLE_I2C_SLAVE_BASE == I2C2_BASE)
-    if (__CORTEX_M >= 0x03)
-        NVIC_SetPriority(EXAMPLE_I2C_SLAVE_IRQN, 5);
-    else
-        NVIC_SetPriority(EXAMPLE_I2C_SLAVE_IRQN, 2);
-#endif
-#endif
-
     /* Set up I2C slave */
     /*
      * slaveConfig.addressingMode = kI2C_Address7bit;
      * slaveConfig.enableGeneralCall = false;
      * slaveConfig.enableWakeUp = false;
-     * slaveConfig.enableHighDrive = false;
      * slaveConfig.enableBaudRateCtl = false;
      * slaveConfig.enableSlave = true;
      */
     I2C_SlaveGetDefaultConfig(&slaveConfig);
-
-    slaveConfig.addressingMode = kI2C_Address7bit;
     slaveConfig.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;
-    slaveConfig.upperAddress = 0; /*  not used for this example */
-
-    I2C_SlaveInit(EXAMPLE_I2C_SLAVE, &slaveConfig, CLOCK_GetFreq(EXAMPLE_I2C_SLAVE_CLK_SRC));
-
+#if defined(FSL_FEATURE_SOC_I2C_COUNT) && FSL_FEATURE_SOC_I2C_COUNT
+    slaveConfig.addressingMode = kI2C_Address7bit;
+    slaveConfig.upperAddress   = 0; /*  not used for this example */
+    I2C_SlaveInit(EXAMPLE_I2C_SLAVE, &slaveConfig, EXAMPLE_I2C_SLAVE_CLK_FREQ);
+#endif
+#if defined(FSL_FEATURE_SOC_II2C_COUNT) && FSL_FEATURE_SOC_II2C_COUNT
+    I2C_SlaveInit(EXAMPLE_I2C_SLAVE, &slaveConfig);
+#endif
     for (uint32_t i = 0; i < I2C_DATA_LENGTH; i++)
     {
         g_slave_buff[i] = 0;
@@ -322,7 +244,7 @@ static void slave_task(void *pvParameters)
     {
         if (g_slave_buff[i] != g_master_buff[i])
         {
-            PRINTF("\r\nError occured in this transfer ! \r\n");
+            PRINTF("\r\nError occurred in this transfer ! \r\n");
             break;
         }
     }
@@ -377,56 +299,6 @@ static void master_task(void *pvParameters)
     uint32_t sourceClock;
     status_t status;
 
-#if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
-    if (EXAMPLE_I2C_MASTER_IRQN > FSL_FEATURE_INTERRUPT_IRQ_MAX)
-    {
-        INTMUX_EnableInterrupt(INTMUX0, EXAMPLE_I2C_INTMUX_CHANNEL, EXAMPLE_I2C_MASTER_IRQN);
-        if (__CORTEX_M >= 0x03)
-            NVIC_SetPriority(INTMUX0_0_IRQn, 6);
-        else
-            NVIC_SetPriority(INTMUX0_0_IRQn, 3);
-    }
-    else
-    {
-        if (__CORTEX_M >= 0x03)
-            NVIC_SetPriority(EXAMPLE_I2C_MASTER_IRQN, 6);
-        else
-            NVIC_SetPriority(EXAMPLE_I2C_MASTER_IRQN, 3);
-    }
-#else
-#if (EXAMPLE_I2C_MASTER_BASE == LPI2C0_BASE)
-    if (__CORTEX_M >= 0x03)
-        NVIC_SetPriority(EXAMPLE_I2C_MASTER_IRQN, 6);
-    else
-        NVIC_SetPriority(EXAMPLE_I2C_MASTER_IRQN, 3);
-#elif(EXAMPLE_I2C_MASTER_BASE == LPI2C1_BASE)
-    if (__CORTEX_M >= 0x03)
-        NVIC_SetPriority(EXAMPLE_I2C_MASTER_IRQN, 6);
-    else
-        NVIC_SetPriority(EXAMPLE_I2C_MASTER_IRQN, 3);
-#elif(EXAMPLE_I2C_MASTER_BASE == LPI2C2_BASE)
-    if (__CORTEX_M >= 0x03)
-        NVIC_SetPriority(EXAMPLE_I2C_MASTER_IRQN, 6);
-    else
-        NVIC_SetPriority(EXAMPLE_I2C_MASTER_IRQN, 3);
-#elif(EXAMPLE_I2C_MASTER_BASE == I2C0_BASE)
-    if (__CORTEX_M >= 0x03)
-        NVIC_SetPriority(EXAMPLE_I2C_MASTER_IRQN, 6);
-    else
-        NVIC_SetPriority(EXAMPLE_I2C_MASTER_IRQN, 3);
-#elif(EXAMPLE_I2C_MASTER_BASE == I2C1_BASE)
-    if (__CORTEX_M >= 0x03)
-        NVIC_SetPriority(EXAMPLE_I2C_MASTER_IRQN, 6);
-    else
-        NVIC_SetPriority(EXAMPLE_I2C_MASTER_IRQN, 3);
-#elif(EXAMPLE_I2C_MASTER_BASE == I2C2_BASE)
-    if (__CORTEX_M >= 0x03)
-        NVIC_SetPriority(EXAMPLE_I2C_MASTER_IRQN, 6);
-    else
-        NVIC_SetPriority(EXAMPLE_I2C_MASTER_IRQN, 3);
-#endif
-#endif
-
     /* Set up i2c master to send data to slave */
     for (uint32_t i = 0; i < I2C_DATA_LENGTH; i++)
     {
@@ -446,14 +318,13 @@ static void master_task(void *pvParameters)
 
     /*
      * masterConfig.baudRate_Bps = 100000U;
-     * masterConfig.enableHighDrive = false;
      * masterConfig.enableStopHold = false;
      * masterConfig.glitchFilterWidth = 0U;
      * masterConfig.enableMaster = true;
      */
     I2C_MasterGetDefaultConfig(&masterConfig);
     masterConfig.baudRate_Bps = I2C_BAUDRATE;
-    sourceClock = CLOCK_GetFreq(I2C_MASTER_CLK_SRC);
+    sourceClock               = EXAMPLE_I2C_MASTER_CLK_FREQ;
 
     status = I2C_RTOS_Init(&master_rtos_handle, EXAMPLE_I2C_MASTER, &masterConfig, sourceClock);
     if (status != kStatus_Success)
@@ -464,20 +335,23 @@ static void master_task(void *pvParameters)
     g_m_handle = &master_rtos_handle.drv_handle;
 
     memset(&masterXfer, 0, sizeof(masterXfer));
-    masterXfer.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;
-    masterXfer.direction = kI2C_Write;
-    masterXfer.subaddress = 0;
+    masterXfer.slaveAddress   = I2C_MASTER_SLAVE_ADDR_7BIT;
+    masterXfer.direction      = kI2C_Write;
+    masterXfer.subaddress     = 0;
     masterXfer.subaddressSize = 0;
-    masterXfer.data = g_master_buff;
-    masterXfer.dataSize = I2C_DATA_LENGTH;
-    masterXfer.flags = kI2C_TransferDefaultFlag;
+    masterXfer.data           = g_master_buff;
+    masterXfer.dataSize       = I2C_DATA_LENGTH;
+    masterXfer.flags          = kI2C_TransferDefaultFlag;
 
     status = I2C_RTOS_Transfer(&master_rtos_handle, &masterXfer);
     if (status != kStatus_Success)
     {
         PRINTF("I2C master: error during write transaction, %d", status);
     }
-
+#if (EXAMPLE_CONNECT_I2C == BOARD_TO_BOARD)
+    /* Delay to wait slave is ready */
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+#endif
     /* Set up master to receive data from slave. */
 
     for (uint32_t i = 0; i < I2C_DATA_LENGTH; i++)
@@ -485,13 +359,13 @@ static void master_task(void *pvParameters)
         g_master_buff[i] = 0;
     }
 
-    masterXfer.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;
-    masterXfer.direction = kI2C_Read;
-    masterXfer.subaddress = 0;
+    masterXfer.slaveAddress   = I2C_MASTER_SLAVE_ADDR_7BIT;
+    masterXfer.direction      = kI2C_Read;
+    masterXfer.subaddress     = 0;
     masterXfer.subaddressSize = 0;
-    masterXfer.data = g_master_buff;
-    masterXfer.dataSize = I2C_DATA_LENGTH;
-    masterXfer.flags = kI2C_TransferDefaultFlag;
+    masterXfer.data           = g_master_buff;
+    masterXfer.dataSize       = I2C_DATA_LENGTH;
+    masterXfer.flags          = kI2C_TransferDefaultFlag;
 
     status = I2C_RTOS_Transfer(&master_rtos_handle, &masterXfer);
     if (status != kStatus_Success)
@@ -511,7 +385,7 @@ static void master_task(void *pvParameters)
     {
         if (g_slave_buff[i] != g_master_buff[i])
         {
-            PRINTF("\r\nError occured in the transfer ! \r\n");
+            PRINTF("\r\nError occurred in the transfer ! \r\n");
             break;
         }
     }

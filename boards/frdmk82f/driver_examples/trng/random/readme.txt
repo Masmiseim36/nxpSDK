@@ -5,14 +5,27 @@ entropy as needed by an entropy consuming module or by other post processing fun
 Example project is a demonstration program that uses the KSDK software to generate random numbers
 and prints them to the terminal.
 
+NOTE:
+
+On i.MXRT1020/1050/1060, the TRNG entropy register is initialized by the ROM boot process
+with 128 entropy bits (read from registers ENT12-ENT15, sampleSize = 128).
+ 
+The TRNG driver version <= 2.0.2 has issue that TRNG_Init() function doesn't flush
+these entropy bits, thus, the first TRNG_GetRandomData(base, data, 64) after TRNG_Init()
+only reads 384 non-random bits followed by 128 random bits. After the first call, next calls
+to TRNG_GetRandomData() return entropy bits collected with new TRNG settings.
+
+The issue is fixed in TRNG driver version 2.0.3, by regenerating entropy bits with new
+TRNG settings already during TRNG_Init().
+
+
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.50.1
-- Keil MDK 5.17
-- GCC ARM Embedded 2015-4.9-q3
-- Kinetis Development Studio IDE 3.0.0
-- Atollic TrueSTUDIO 5.4.0
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -22,33 +35,39 @@ Hardware requirements
 
 Board settings
 ==============
-This example project does not call for any special hardware configurations.
-Although not required, the recommendation is to leave the development board's jumper settings
-and configurations in default state when running this example.
+The RNGA demo does not call for any special hardware configurations.
 
 Prepare the Demo
 ================
-Connect a serial cable from the debug UART port of the board to the PC. Start Tera Term
-(http://ttssh2.osdn.jp) and make a connection to the virtual serial port.
-
-1. Start Tera Term
-2. New connection -> Serial
-3. Set apropriate COMx port (x is port number) in Port context menu. Number is provided by operation
-   system and could be different from computer to computer. Select COM number related to virtual
-   serial port. Confirm selected port by OK button.
-4. Set following connection parameters in menu Setup->Serial port...
-        Baud rate:    115200
-        Data:         8
-        Parity:       none
-        Stop:         1
-        Flow control: one
-5.  Confirm selected parameters by OK button.
+1. Connect a mini USB cable between the PC host and the OpenSDA USB on the board.
+2. Open a serial terminal on PC for OpenSDA serial device with these settings:
+   - 115200 baud rate
+   - 8 data bits
+   - No parity
+   - One stop bit
+   - No flow control
+3. Download the program to the target board.
+4. Either press the reset button on your board or launch the debugger in your IDE to begin running
+   the demo.
 
 Running the demo
 ================
+When the demo runs successfully, from the terminal you can see:
 
+RNGA Peripheral Driver Example
+Generate 10 random numbers:
+Random[0] = 0xE1554295
+Random[1] = 0x827AD456
+Random[2] = 0x9A1CBE1E
+Random[3] = 0x4354CB53
+Random[4] = 0xFE3B2494
+Random[5] = 0xEDAB3F7D
+Random[6] = 0x9AB91722
+Random[7] = 0x4F54D999
+Random[8] = 0x492414D1
+Random[9] = 0x84611992
 
+ Press any key to continue...
 Customization options
 =====================
-
 

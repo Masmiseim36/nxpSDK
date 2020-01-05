@@ -3,6 +3,14 @@ Overview
 The PIT project is a simple demonstration program of the SDK PIT driver. It sets up the PIT
 hardware block to trigger a periodic interrupt after every 1 second. When the PIT interrupt is triggered
 a message a printed on the UART terminal and an LED is toggled on the board.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -32,18 +40,13 @@ Running the demo
 These instructions are displayed/shown on the terminal window:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Starting channel No.0 ...
- Channel No.0 interrupt is occured !
- Channel No.0 interrupt is occured !
- Channel No.0 interrupt is occured !
+ Channel No.0 interrupt is occurred !
+ Channel No.0 interrupt is occurred !
+ Channel No.0 interrupt is occurred !
 ....................
 ....................
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 And you will find the LED ORANGE is taking turns to shine.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

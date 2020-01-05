@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _FSL_QSPI_EDMA_H_
@@ -35,15 +13,19 @@
 #include "fsl_edma.h"
 
 /*!
- * @addtogroup qspi_edma
+ * @addtogroup qspi_edma_driver
  * @{
  */
-
-/*! @file */
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/*! @name Driver version */
+/*@{*/
+/*! @brief QSPI EDMA driver version 2.0.2. */
+#define FSL_QSPI_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
+/*@}*/
 
 typedef struct _qspi_edma_handle qspi_edma_handle_t;
 
@@ -55,6 +37,7 @@ struct _qspi_edma_handle
 {
     edma_handle_t *dmaHandle;      /*!< eDMA handler for QSPI send */
     size_t transferSize;           /*!< Bytes need to transfer. */
+    uint8_t nbytes;                /*!< eDMA minor byte transfer count initially configured. */
     uint8_t count;                 /*!< The transfer data count in a DMA request */
     uint32_t state;                /*!< Internal state for QSPI eDMA transfer */
     qspi_edma_callback_t callback; /*!< Callback for users while transfer finish or error occurred */
@@ -116,7 +99,10 @@ status_t QSPI_TransferSendEDMA(QuadSPI_Type *base, qspi_edma_handle_t *handle, q
 /*!
  * @brief Receives data using an eDMA non-blocking method.
  *
- * This function receive data from the QSPI receive buffer/FIFO. This function is non-blocking.
+ * This function receive data from the QSPI receive buffer/FIFO. This function is non-blocking. Users shall notice that
+ * this receive size shall not bigger than 64 bytes. As this interface is used to read flash status registers.
+ * For flash contents read, please use AHB bus read, this is much more efficiency.
+ *
  * @param base Pointer to QuadSPI Type.
  * @param handle Pointer to qspi_edma_handle_t structure
  * @param xfer QSPI transfer structure.

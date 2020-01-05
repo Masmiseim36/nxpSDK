@@ -2,7 +2,7 @@
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -47,22 +47,22 @@ const registerwritelist_t fxos8700_Config[] = {
 /* Pedometer configuration. These configuration are algorithm and user dependent data. */
 static const pedometer_config_t pedo_config = {
     .sleepcount_threshold = 1,
-    .bits = {.config = 1},
+    .bits                 = {.config = 1},
     .keynetik =
         {
-            .height = 175,
-            .weight = 80,
+            .height      = 175,
+            .weight      = 80,
             .filtersteps = PEDO_FILTER_STEPS_DEFAULT,
             .bits =
                 {
                     .filtertime = PEDO_FILTER_TIME_DEFAULT,
                 },
-            .speedperiod = PEDO_SPEED_PERIOD_DEFAULT,
+            .speedperiod   = PEDO_SPEED_PERIOD_DEFAULT,
             .stepthreshold = PEDO_STEP_THRESHOLD_DEFAULT,
         },
     .stepcoalesce = 1,
-    .oneG = PEDO_ONEG_2G,             // It is the One G representation in 2G scale.
-    .frequency = PEDO_FREQHZ_DEFAULT, // It is 50 HZ
+    .oneG         = PEDO_ONEG_2G,        // It is the One G representation in 2G scale.
+    .frequency    = PEDO_FREQHZ_DEFAULT, // It is 50 HZ
 
 };
 // Command definition to read the WHO_AM_I value.

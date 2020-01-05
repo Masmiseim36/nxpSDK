@@ -1,3 +1,33 @@
+Overview
+========
+The qca_throughput demo tests transfer throughput.
+
+
+
+Toolchain supported
+===================
+- MCUXpresso  11.1.0
+- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+
+Hardware requirements
+=====================
+- Mini/micro USB cable
+- FRDM-K22F board
+- GT202 Adaptor V1.04 or Silex SX-ULPAN-2401
+- Personal Computer
+
+Board settings
+==============
+Plug SX-ULPAN-2401 or GT202 Adaptor board to FRDM stackable headers (J1, J2, J3, J4).
+
+The default compilation settings are predefined for Silex SX-ULPAN-2401 shield.
+If you want to use GT202 shield, please add following "Compiler define" in project options:
+
+WIFISHIELD_IS=WIFISHIELD_IS_GT202
+
+The "wifi_shield.h" then includes specific shield support.
 Prepare the Demo
 ================
 
@@ -82,39 +112,6 @@ Full description of former throughput demo is available at "GT202 Demo Applicati
 GT202 communication is described in "GT202 MQX PDK Demo Applications 1.3.pdf".
 https://static4.arrow.com/-/media/images/part-detail-pages/gt202-kits/gt202-mqx-pdk-demo-applications-user-guide-1-3.pdf
 
-Overview
-========
-The qca_throughput demo tests transfer throughput.
-
-
-Hardware requirements
+Customization options
 =====================
-- Mini/micro USB cable
-- FRDM-K22F board
-- GT202 Adaptor V1.04 or Silex SX-ULPAN-2401
-- Personal Computer
-
-Board settings
-==============
-Plug WiFi shield to FRDM stackable headers (J1, J2, J3, J4).
-The default shield support is set to GT202 shield. To enable 
-Silex SX-ULPAN-2401, please open "wifi_shield.h" and uncomment
-following lines:
-
-//#define WIFISHIELD_IS_SILEX2041
-
-//#elif defined(WIFISHIELD_IS_SILEX2041)
-//#include "wifi_shield_silex2401.h"
-
-and comment out:
-
-#define WIFISHIELD_IS_GT202
-
-
-Toolchain supported
-===================
-- MCUXpresso 10.3.0
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
 

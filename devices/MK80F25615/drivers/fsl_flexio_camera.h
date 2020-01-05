@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _FSL_FLEXIO_CAMERA_H_
@@ -48,15 +22,15 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief FlexIO Camera driver version 2.1.1. */
-#define FSL_FLEXIO_CAMERA_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
+/*! @brief FlexIO Camera driver version 2.1.2. */
+#define FSL_FLEXIO_CAMERA_DRIVER_VERSION (MAKE_VERSION(2, 1, 2))
 /*@}*/
 
 /*! @brief Define the Camera CPI interface is constantly 8-bit width. */
 #define FLEXIO_CAMERA_PARALLEL_DATA_WIDTH (8U)
 
 /*! @brief Error codes for the Camera driver. */
-enum _flexio_camera_status
+enum
 {
     kStatus_FLEXIO_CAMERA_RxBusy = MAKE_STATUS(kStatusGroup_FLEXIO_CAMERA, 0), /*!< Receiver is busy. */
     kStatus_FLEXIO_CAMERA_RxIdle = MAKE_STATUS(kStatusGroup_FLEXIO_CAMERA, 1), /*!< Camera receiver is idle. */
@@ -66,7 +40,7 @@ enum _flexio_camera_status
 enum _flexio_camera_status_flags
 {
     kFLEXIO_CAMERA_RxDataRegFullFlag = 0x1U, /*!< Receive buffer full flag. */
-    kFLEXIO_CAMERA_RxErrorFlag = 0x2U,       /*!< Receive buffer error flag. */
+    kFLEXIO_CAMERA_RxErrorFlag       = 0x2U, /*!< Receive buffer error flag. */
 };
 
 /*!
@@ -122,7 +96,7 @@ extern "C" {
  *
  * @param base Pointer to FLEXIO_CAMERA_Type structure
  * @param config Pointer to flexio_camera_config_t structure
-*/
+ */
 void FLEXIO_CAMERA_Init(FLEXIO_CAMERA_Type *base, const flexio_camera_config_t *config);
 
 /*!
@@ -131,7 +105,7 @@ void FLEXIO_CAMERA_Init(FLEXIO_CAMERA_Type *base, const flexio_camera_config_t *
  * @note After calling this API, call FLEXO_CAMERA_Init to use the FlexIO Camera module.
  *
  * @param base Pointer to FLEXIO_CAMERA_Type structure
-*/
+ */
 void FLEXIO_CAMERA_Deinit(FLEXIO_CAMERA_Type *base);
 
 /*!
@@ -151,7 +125,7 @@ void FLEXIO_CAMERA_GetDefaultConfig(flexio_camera_config_t *config);
  *
  * @param base Pointer to the FLEXIO_CAMERA_Type
  * @param enable True to enable, false does not have any effect.
-*/
+ */
 static inline void FLEXIO_CAMERA_Enable(FLEXIO_CAMERA_Type *base, bool enable)
 {
     if (enable)
@@ -174,7 +148,7 @@ static inline void FLEXIO_CAMERA_Enable(FLEXIO_CAMERA_Type *base, bool enable)
  * @return FlexIO shifter status flags
  *          @arg FLEXIO_SHIFTSTAT_SSF_MASK
  *          @arg 0
-*/
+ */
 uint32_t FLEXIO_CAMERA_GetStatusFlags(FLEXIO_CAMERA_Type *base);
 
 /*!
@@ -231,7 +205,7 @@ void FLEXIO_CAMERA_DisableInterrupt(FLEXIO_CAMERA_Type *base);
  */
 static inline void FLEXIO_CAMERA_EnableRxDMA(FLEXIO_CAMERA_Type *base, bool enable)
 {
-    FLEXIO_EnableShifterStatusDMA(base->flexioBase, 1 << base->shifterStartIdx, enable);
+    FLEXIO_EnableShifterStatusDMA(base->flexioBase, 1UL << base->shifterStartIdx, enable);
 }
 
 /*!
@@ -242,7 +216,7 @@ static inline void FLEXIO_CAMERA_EnableRxDMA(FLEXIO_CAMERA_Type *base, bool enab
  */
 static inline uint32_t FLEXIO_CAMERA_GetRxBufferAddress(FLEXIO_CAMERA_Type *base)
 {
-    return FLEXIO_GetShifterBufferAddress(base->flexioBase, kFLEXIO_ShifterBuffer, base->shifterStartIdx);
+    return FLEXIO_GetShifterBufferAddress(base->flexioBase, kFLEXIO_ShifterBuffer, (uint8_t)base->shifterStartIdx);
 }
 
 /*! @} */

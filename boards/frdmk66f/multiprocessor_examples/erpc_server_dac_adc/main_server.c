@@ -338,7 +338,9 @@ int main(void)
     erpc_init();
 
     /* adding the service to the server */
-    erpc_add_service_to_server(create_dac_adc_service());
+    erpc_service_t service = create_dac_adc_service();
+    erpc_add_service_to_server(service);
+
     while (1)
     {
         /* process message */
@@ -350,8 +352,15 @@ int main(void)
             /* print error description */
             erpc_error_handler(status, 0);
 
+            /* removing the service from the server */
+            erpc_remove_service_from_server(service);
+            destroy_dac_adc_service();
+
             /* stop erpc server */
             erpc_server_stop();
+
+            /* print error description */
+            erpc_server_deinit();
 
             /* exit program loop */
             break;

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2017, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -125,13 +125,13 @@ void PDB_GetDefaultConfig(pdb_config_t *config)
     assert(NULL != config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
-    config->loadValueMode = kPDB_LoadValueImmediately;
-    config->prescalerDivider = kPDB_PrescalerDivider1;
+    config->loadValueMode               = kPDB_LoadValueImmediately;
+    config->prescalerDivider            = kPDB_PrescalerDivider1;
     config->dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
-    config->triggerInputSource = kPDB_TriggerSoftware;
-    config->enableContinuousMode = false;
+    config->triggerInputSource          = kPDB_TriggerSoftware;
+    config->enableContinuousMode        = false;
 }
 
 #if defined(FSL_FEATURE_PDB_HAS_DAC) && FSL_FEATURE_PDB_HAS_DAC
@@ -144,7 +144,7 @@ void PDB_GetDefaultConfig(pdb_config_t *config)
  */
 void PDB_SetDACTriggerConfig(PDB_Type *base, pdb_dac_trigger_channel_t channel, pdb_dac_trigger_config_t *config)
 {
-    assert(channel < PDB_INTC_COUNT);
+    assert(channel < FSL_FEATURE_PDB_DAC_INTERVAL_TRIGGER_COUNT);
     assert(NULL != config);
 
     uint32_t tmp32 = 0U;

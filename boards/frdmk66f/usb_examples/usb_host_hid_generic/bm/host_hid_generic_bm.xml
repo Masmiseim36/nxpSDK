@@ -3,12 +3,14 @@
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
     <definition extID="component.lists.MK66F18"/>
+    <definition extID="component.osa.MK66F18"/>
     <definition extID="component.serial_manager.MK66F18"/>
     <definition extID="component.serial_manager_uart.MK66F18"/>
     <definition extID="component.uart_adapter.MK66F18"/>
     <definition extID="device.MK66F18_CMSIS.MK66F18"/>
     <definition extID="device.MK66F18_startup.MK66F18"/>
     <definition extID="middleware.baremetal.MK66F18"/>
+    <definition extID="middleware.usb.host.MK66F18"/>
     <definition extID="middleware.usb.host_controller_ehci.MK66F18"/>
     <definition extID="middleware.usb.host_controller_khci.MK66F18"/>
     <definition extID="middleware.usb.host_hid.MK66F18"/>
@@ -16,6 +18,7 @@
     <definition extID="middleware.usb.phy.MK66F18"/>
     <definition extID="platform.Include_common.MK66F18"/>
     <definition extID="platform.Include_core_cm4.MK66F18"/>
+    <definition extID="platform.Include_dsp.MK66F18"/>
     <definition extID="platform.drivers.clock.MK66F18"/>
     <definition extID="platform.drivers.common.MK66F18"/>
     <definition extID="platform.drivers.gpio.MK66F18"/>
@@ -25,13 +28,14 @@
     <definition extID="platform.drivers.sysmpu.MK66F18"/>
     <definition extID="platform.drivers.uart.MK66F18"/>
     <definition extID="platform.utilities.assert.MK66F18"/>
+    <definition extID="platform.utilities.misc_utilities.MK66F18"/>
     <definition extID="utility.debug_console.MK66F18"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk66f_host_hid_generic_bm" name="host_hid_generic_bm" category="usb_examples" dependency="middleware.usb.host_controller_khci.MK66F18 middleware.usb.host_controller_ehci.MK66F18 middleware.usb.phy.MK66F18 middleware.usb.host_hid.MK66F18 middleware.usb.host_hub.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.uart.MK66F18 platform.drivers.gpio.MK66F18 platform.drivers.sysmpu.MK66F18 platform.utilities.assert.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.serial_manager_uart.MK66F18 component.lists.MK66F18 platform.drivers.port.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 middleware.baremetal.MK66F18">
+  <example id="frdmk66f_host_hid_generic_bm" name="host_hid_generic_bm" category="usb_examples" dependency="middleware.usb.host_controller_khci.MK66F18 middleware.usb.host_controller_ehci.MK66F18 middleware.usb.phy.MK66F18 middleware.usb.host.MK66F18 middleware.usb.host_hid.MK66F18 middleware.usb.host_hub.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.uart.MK66F18 platform.drivers.gpio.MK66F18 platform.drivers.sysmpu.MK66F18 platform.utilities.assert.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.lists.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.port.MK66F18 component.osa.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 platform.Include_dsp.MK66F18 platform.utilities.misc_utilities.MK66F18 middleware.baremetal.MK66F18">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -50,6 +54,9 @@
           <value>_DEBUG=1</value>
           <value>CPU_MK66FN2M0VMD18</value>
           <value>USB_STACK_BM</value>
+          <value>FSL_OSA_BM_TASK_ENABLE=0</value>
+          <value>FSL_OSA_BM_TIMER_CONFIG=0</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -68,13 +75,13 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/frdmk66f/usb_examples/usb_host_hid_generic/bm/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/frdmk66f/usb_examples/usb_host_hid_generic/bm/armgcc" target_path="MK66F18/gcc" type="linker" toolchain="armgcc">
       <files mask="MK66FN2M0xxx18_flash.ld"/>
     </source>
-    <source path="boards/frdmk66f/usb_examples/usb_host_hid_generic/bm/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/frdmk66f/usb_examples/usb_host_hid_generic/bm/iar" target_path="MK66F18/iar" type="linker" toolchain="iar">
       <files mask="MK66FN2M0xxx18_flash.icf"/>
     </source>
-    <source path="boards/frdmk66f/usb_examples/usb_host_hid_generic/bm/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/frdmk66f/usb_examples/usb_host_hid_generic/bm/mdk" target_path="MK66F18/arm" type="linker" toolchain="mdk">
       <files mask="MK66FN2M0xxx18_flash.scf"/>
     </source>
     <source path="boards/frdmk66f/usb_examples/usb_host_hid_generic/bm" target_path="board" type="c_include">
@@ -90,6 +97,12 @@
     <source path="boards/frdmk66f/usb_examples/usb_host_hid_generic/bm" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
       <files mask="readme.txt"/>
     </source>
+    <source path="boards/frdmk66f/usb_examples/usb_host_hid_generic/bm" target_path="frdmk66f/usb_examples/usb_host_hid_generic/bm" type="binary" exclude="true">
+      <files mask="host_hid_generic_bm.bin"/>
+    </source>
+    <source path="boards/frdmk66f/usb_examples/usb_host_hid_generic/bm" target_path="frdmk66f/usb_examples/usb_host_hid_generic/bm" type="doc" exclude="true">
+      <files mask="readme.pdf"/>
+    </source>
     <source path="boards/frdmk66f/usb_examples/usb_host_hid_generic/bm" target_path="source" type="c_include">
       <files mask="app.h"/>
       <files mask="host_hid_generic.h"/>
@@ -98,12 +111,6 @@
     <source path="boards/frdmk66f/usb_examples/usb_host_hid_generic/bm" target_path="source" type="src">
       <files mask="app.c"/>
       <files mask="host_hid_generic.c"/>
-    </source>
-    <source path="boards/frdmk66f/usb_examples/usb_host_hid_generic/bm" target_path="src" type="binary" exclude="true">
-      <files mask="host_hid_generic_bm.bin"/>
-    </source>
-    <source path="boards/frdmk66f/usb_examples/usb_host_hid_generic/bm" target_path="src" type="doc" exclude="true">
-      <files mask="readme.pdf"/>
     </source>
   </example>
 </ksdk:examples>

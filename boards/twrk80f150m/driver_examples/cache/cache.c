@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "board.h"
 #include "fsl_cache.h"
@@ -46,8 +20,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define SDRAM_START_ADDRESS   (0x70000000U)
-#define MEM_DMATRANSFER_LEN 10U*FSL_FEATURE_L1DCACHE_LINESIZE_BYTE
+#define SDRAM_START_ADDRESS (0x70000000U)
+#define MEM_DMATRANSFER_LEN 10U * FSL_FEATURE_L1DCACHE_LINESIZE_BYTE
 
 /* DMA Timtout. */
 #define DMA_TRANSFER_TIMEOUT 0xFFFFU
@@ -58,8 +32,7 @@
 void APP_CacheConfig(bool enable);
 uint32_t APP_MemoryInit(void);
 void APP_DMAInit(void *userData);
-void APP_DMAMem2memTransfer(uint8_t *srcAddr, uint32_t srcWidth, 
-       uint8_t *dstAddr, uint32_t dstWidth, uint32_t size);
+void APP_DMAMem2memTransfer(uint8_t *srcAddr, uint32_t srcWidth, uint8_t *dstAddr, uint32_t dstWidth, uint32_t size);
 
 /*******************************************************************************
  * Variables
@@ -76,19 +49,19 @@ volatile bool g_Transfer_Done = false;
 
 
 void APP_CacheConfig(bool enable)
-{   
+{
     /* Enable the l1 data cache. */
     if (enable)
     {
-       L1CACHE_EnableSystemCache();        
+        L1CACHE_EnableSystemCache();
     }
     else
     {
         /* uart. */
         BOARD_InitPinsForUart();
         PRINTF("\r\n");
- 
-        L1CACHE_DisableSystemCache(); 
+
+        L1CACHE_DisableSystemCache();
     }
 }
 
@@ -96,7 +69,7 @@ uint32_t APP_MemoryInit(void)
 {
     /* SDRAM Initialize. */
     BOARD_InitPinsForSdram();
-    SDRAM_Init(SDRAM, SDRAM_START_ADDRESS, CLOCK_GetFreq(kCLOCK_BusClk));    
+    SDRAM_Init(SDRAM, SDRAM_START_ADDRESS, CLOCK_GetFreq(kCLOCK_BusClk));
     return (0x70000000U);
 }
 
@@ -123,15 +96,13 @@ void APP_DMAInit(void *userData)
     EDMA_SetCallback(&g_DMA_Handle, EDMA_Callback, userData);
 }
 
-void APP_DMAMem2memTransfer(uint8_t *srcAddr, uint32_t srcWidth, 
-       uint8_t *dstAddr, uint32_t dstWidth, uint32_t size)
+void APP_DMAMem2memTransfer(uint8_t *srcAddr, uint32_t srcWidth, uint8_t *dstAddr, uint32_t dstWidth, uint32_t size)
 {
     edma_transfer_config_t transferConfig;
 
-    EDMA_PrepareTransfer(&transferConfig, srcAddr, srcWidth, dstAddr, dstWidth,
-                        srcWidth, size, kEDMA_MemoryToMemory);
+    EDMA_PrepareTransfer(&transferConfig, srcAddr, srcWidth, dstAddr, dstWidth, srcWidth, size, kEDMA_MemoryToMemory);
     EDMA_SubmitTransfer(&g_DMA_Handle, &transferConfig);
-    EDMA_StartTransfer(&g_DMA_Handle); 
+    EDMA_StartTransfer(&g_DMA_Handle);
 }
 /*!
  * @brief Main function
@@ -140,9 +111,9 @@ int main(void)
 {
     uint32_t count;
     uint32_t startAddr;
-    bool transferDone = false;
+    bool transferDone     = false;
     bool invalidateResult = false;
-    bool pushResult = false;
+    bool pushResult       = false;
     volatile uint32_t readDummy;
 
     uint32_t soptReg;
@@ -155,19 +126,19 @@ int main(void)
     CLOCK_SetClkOutClock(0);
 
     /* Sets the Flexbus security level*/
-    soptReg = SIM->SOPT2 & ~SIM_SOPT2_FBSL_MASK;
+    soptReg    = SIM->SOPT2 & ~SIM_SOPT2_FBSL_MASK;
     SIM->SOPT2 = soptReg | SIM_SOPT2_FBSL(3);
 
     /* Enable the FB_BE_xx_yy signal in Flexbus */
     CLOCK_EnableClock(kCLOCK_Flexbus0);
 
-    fbReg = FB->CSPMCR & ~FB_CSPMCR_GROUP2_MASK;
+    fbReg      = FB->CSPMCR & ~FB_CSPMCR_GROUP2_MASK;
     FB->CSPMCR = fbReg | FB_CSPMCR_GROUP2(2);
-    fbReg = FB->CSPMCR & ~FB_CSPMCR_GROUP3_MASK;
+    fbReg      = FB->CSPMCR & ~FB_CSPMCR_GROUP3_MASK;
     FB->CSPMCR = fbReg | FB_CSPMCR_GROUP3(2);
-    fbReg = FB->CSPMCR & ~FB_CSPMCR_GROUP4_MASK;
+    fbReg      = FB->CSPMCR & ~FB_CSPMCR_GROUP4_MASK;
     FB->CSPMCR = fbReg | FB_CSPMCR_GROUP4(2);
-    fbReg = FB->CSPMCR & ~FB_CSPMCR_GROUP5_MASK;
+    fbReg      = FB->CSPMCR & ~FB_CSPMCR_GROUP5_MASK;
     FB->CSPMCR = fbReg | FB_CSPMCR_GROUP5(2);
     /* Due to the uart/sdram pin mux multiplex. so enable uart first for log. */
     BOARD_InitPinsForUart();
@@ -179,7 +150,7 @@ int main(void)
     /* Data initialize. */
     for (count = 0; count < MEM_DMATRANSFER_LEN; count++)
     {
-        g_data[count] = 0xaa;
+        g_data[count]                   = 0xaa;
         *(uint8_t *)(startAddr + count) = 0;
     }
     /* Configure Cache. */
@@ -236,7 +207,7 @@ int main(void)
 
         /* Reset to zero. */
         g_Transfer_Done = false;
-        g_count = 0;
+        g_count         = 0;
         /* Get the real data in the memory . */
         APP_DMAMem2memTransfer((void *)startAddr, sizeof(g_data[0]), &g_data[0], sizeof(g_data[0]), sizeof(g_data));
 
@@ -266,7 +237,7 @@ int main(void)
 
                 /* Transfer from the sdram to data[]. */
                 g_Transfer_Done = false;
-                g_count = 0;
+                g_count         = 0;
                 APP_DMAMem2memTransfer((void *)startAddr, sizeof(g_data[0]), &g_data[0], sizeof(g_data[0]),
                                        sizeof(g_data));
 

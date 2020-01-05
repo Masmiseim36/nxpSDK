@@ -22,14 +22,14 @@
 // Author(s): ="Atheros"
 //==============================================================================
 /*
-* $FileName: main.h$
-* $Version : 1.0$
-* $Date    :
-*
-* Comments:
-*   The header file for Atheros wmiconfig tool.
-*
-*END************************************************************************/
+ * $FileName: main.h$
+ * $Version : 1.0$
+ * $Date    :
+ *
+ * Comments:
+ *   The header file for Atheros wmiconfig tool.
+ *
+ *END************************************************************************/
 
 #ifndef _main_h_
 #define _main_h_

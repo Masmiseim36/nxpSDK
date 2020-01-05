@@ -26,7 +26,7 @@
 
 #include "tst_sm_time.h"
 
-#ifdef _WIN32
+#ifdef MSC_VER
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
 #include <crtdbg.h>
@@ -40,6 +40,7 @@
 
 #include "global_platf.h"
 #include "app_boot.h"
+#include "nxLog_App.h"
 
 // -----------------------------------
 // Start of END-USER relevant defines
@@ -55,12 +56,12 @@
 
 
 //TODO: to be moved to common Header file later
-#define PRINT_HOSTLIB_VER       (sm_printf(CONSOLE, "HostLib Version  : 0x%04X\r\n", commState.hostLibVersion))
+#define PRINT_HOSTLIB_VER       (sm_printf(CONSOLE, "HostLib Version  : 0x%04X", commState.hostLibVersion))
 
-#define PRINT_APPLET_VER        (sm_printf(CONSOLE, "Applet Version   : 0x%04X\r\n", commState.appletVersion))
-#define PRINT_SECUREBOX_VER       (sm_printf(CONSOLE, "SecureBox Version: 0x%04X\r\n", commState.sbVersion))
+#define PRINT_APPLET_VER        (sm_printf(CONSOLE, "Applet Version   : 0x%04X", commState.appletVersion))
+#define PRINT_SECUREBOX_VER       (sm_printf(CONSOLE, "SecureBox Version: 0x%04X", commState.sbVersion))
 
-#if defined(LINUX) || defined(_WIN32)
+#if defined(__gnu_linux__) || defined(_WIN32)
 #   define SET_TIME(now)         now = time(NULL)
 #   define TIME_TO_STRING(pNow)  ctime((pNow))
 
@@ -77,8 +78,8 @@ int main(int argc, char ** argv)
 {
     U8 result = 1;
     int connectStatus = 0;
-    SmCommState_t commState;
-#if defined(LINUX) || defined(_WIN32)
+    SmCommState_t commState = { 0 };
+#if defined(__gnu_linux__) || defined(_WIN32)
     time_t now;
 #endif
     U8 dbgTstMode = 0x00;
@@ -91,7 +92,7 @@ int main(int argc, char ** argv)
 #endif
     // int i = 0;
 
-#ifdef _WIN32
+#ifdef MSC_VER
     _CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF |
         _CRTDBG_LEAK_CHECK_DF);
     _CrtSetReportMode ( _CRT_ERROR, _CRTDBG_MODE_DEBUG);
@@ -99,9 +100,9 @@ int main(int argc, char ** argv)
 
     app_boot_Init();
 
-    sm_printf(DBGOUT, "a71ch HostLibrary example application (Rev %s)\r\n", EX_APP_VERSION);
-    sm_printf(DBGOUT, "**********************************************\r\n");
-    sm_printf(DBGOUT, "Connect to A71CH-SM. Chunksize at link layer = %d.\r\n", MAX_CHUNK_LENGTH_LINK);
+    LOG_I("a71ch HostLibrary example application (Rev %s)", EX_APP_VERSION);
+    LOG_I("**********************************************");
+    LOG_I("Connect to A71CH-SM. Chunksize at link layer = %d.", MAX_CHUNK_LENGTH_LINK);
 
     APP_BOOT_RESUME_HANDLING(exBoot);
 
@@ -112,7 +113,7 @@ int main(int argc, char ** argv)
 #endif
 
     if (connectStatus != 0) {
-        sm_printf(CONSOLE, "Connection failed. SW = %d\r\n", connectStatus);
+    	LOG_E("Connection failed. SW = %d", connectStatus);
         #if defined(USE_RTOS) && USE_RTOS == 1
             assert(0);
         #else
@@ -122,46 +123,53 @@ int main(int argc, char ** argv)
 
     initMeasurement(&execTime);
 #ifdef WALKTHROUGH_ONLY
-    result &= exWalkthrough(commState.appletVersion);
+    result &= exWalkthrough();
 #else
     result &= exAes();
-    result &= exConfig(commState.appletVersion);
+    result &= exConfig();
     result &= exDebugMode(dbgTstMode);
     result &= exEccNohc();
-    result &= exWalkthrough(commState.appletVersion);
+    result &= exWalkthrough();
     result &= exGPStorage(gpStorageTstMode);
     result &= exMisc();
-    result &= exPsk(commState.appletVersion);
-    result &= exScp(commState.appletVersion);
-    result &= exSst(commState.appletVersion);
+    result &= exPsk();
+    result &= exScp();
+    result &= exSst();
     result &= exBoot(BOOT_SIMULATED_CYCLE);
-    result &= exSstKp(commState.appletVersion);
+    result &= exSstKp();
 #endif
 
-#if defined(TDA8029_UART) || defined(I2C) || defined(PCSC) || defined(SPI) || defined(IPC)
+#if defined(TDA8029_UART) || defined(SCI2C) || defined(PCSC) || defined(SPI) || defined(IPC)
 LBL_REPORT_STATUS:
 #endif
     concludeMeasurement(&execTime);
     SET_TIME(now);
     app_test_status(result);
 
-    sm_printf(CONSOLE, "\r\nCompiled for Device Type %c\r\n", A71CH_DEVICE_TYPE);
-    sm_printf(CONSOLE, "# Key Pairs = %d.\r\n", A71CH_KEY_PAIR_MAX);
-    sm_printf(CONSOLE, "# Pub Key   = %d.\r\n", A71CH_PUBLIC_KEY_MAX);
-    sm_printf(CONSOLE, "# Sym Key   = %d.\r\n", A71CH_SYM_KEY_MAX);
-    sm_printf(CONSOLE, "Gp Storage  = %d byte\r\n", A71CH_GP_STORAGE_SIZE);
-    if (commState.appletVersion < 0x0130)
-    {
-        sm_printf(CONSOLE, "Warning: Please switch to latest A71CH version, attached version is obsolete (attached version=0x%04X)\r\n", commState.appletVersion);
-    }
-    sm_printf(CONSOLE, "\r\n-----------\r\nExample Set A71CH finished (Rev %s) on 0x%04X, overall result = %s\r\n%sExec time: %ld ms\r\n------------\r\n",
-        EX_APP_VERSION,
-        commState.appletVersion,
-        ((result == 1) ? "OK" : "FAILED"),
-        TIME_TO_STRING(&now),
-        getMeasurement(&execTime));
+    LOG_I("Compiled for Device Type %c", A71CH_DEVICE_TYPE);
+    LOG_I("# Key Pairs = %d.", A71CH_KEY_PAIR_MAX);
+    LOG_I("# Pub Key   = %d.", A71CH_PUBLIC_KEY_MAX);
+    LOG_I("# Sym Key   = %d.", A71CH_SYM_KEY_MAX);
+    LOG_I("Gp Storage  = %d byte", A71CH_GP_STORAGE_SIZE);
 
-#ifdef _WIN32
+    if (result == 1) {
+       LOG_I("-----------Example Set A71CH finished (Rev %s) on 0x%04X, overall result = %s\r\n%sExec time: %ld ms------------",
+			EX_APP_VERSION,
+			commState.appletVersion,
+			"OK",
+			TIME_TO_STRING(&now),
+			getMeasurement(&execTime));
+    }
+    else {
+        LOG_E("-----------Example Set A71CH finished (Rev %s) on 0x%04X, overall result = %s\r\n%sExec time: %ld ms------------",
+ 			EX_APP_VERSION,
+ 			commState.appletVersion,
+			"FAILED",
+ 			TIME_TO_STRING(&now),
+ 			getMeasurement(&execTime));
+    }
+
+#if defined(_WIN32) && !defined(__MINGW32__)
     if (IsDebuggerPresent()) {
         PRINTF("Enter/Return to close window.");
         getchar();

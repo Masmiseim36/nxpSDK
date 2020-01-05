@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
@@ -38,10 +16,25 @@
  * Definitions
  ******************************************************************************/
 #define EXAMPLE_CAN CAN0
-#define EXAMPLE_CAN_CLKSRC kCLOCK_BusClk
-#define RX_MESSAGE_BUFFER_NUM (8)
-#define TX_MESSAGE_BUFFER_NUM (9)
+#define EXAMPLE_CAN_CLK_SOURCE (kFLEXCAN_ClkSrc1)
+#define EXAMPLE_CAN_CLK_FREQ CLOCK_GetFreq(kCLOCK_BusClk)
+#define RX_MESSAGE_BUFFER_NUM (9)
+#define TX_MESSAGE_BUFFER_NUM (8)
+#define DLC (8)
 
+/* To get most precise baud rate under some circumstances, users need to set
+   quantum which is composed of PSEG1/PSEG2/PROPSEG. Because CAN clock prescaler
+   = source clock/(baud rate * quantum), for e.g. 84M clock and 1M baud rate, the
+   quantum should be .e.g 14=(6+3+1)+4, so prescaler is 6. By default, quantum
+   is set to 10=(3+2+1)+4, because for most platforms e.g. 120M source clock/(1M
+   baud rate * 10) is an integer. Remember users must ensure the calculated
+   prescaler an integer thus to get precise baud rate. */
+#define SET_CAN_QUANTUM 0
+#define PSEG1 3
+#define PSEG2 2
+#define PROPSEG 1
+/* Fix MISRA_C-2012 Rule 17.7. */
+#define LOG_INFO (void)PRINTF
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -53,7 +46,11 @@ volatile bool txComplete = false;
 volatile bool rxComplete = false;
 flexcan_handle_t flexcanHandle;
 flexcan_mb_transfer_t txXfer, rxXfer;
+#if (defined(USE_CANFD) && USE_CANFD)
+flexcan_fd_frame_t txFrame, rxFrame;
+#else
 flexcan_frame_t txFrame, rxFrame;
+#endif
 
 /*******************************************************************************
  * Code
@@ -99,72 +96,153 @@ int main(void)
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
 
-    PRINTF("\r\n==FlexCAN loopback example -- Start.==\r\n\r\n");
+    LOG_INFO("\r\n==FlexCAN loopback example -- Start.==\r\n\r\n");
 
     /* Init FlexCAN module. */
     /*
-     * flexcanConfig.clkSrc = kFLEXCAN_ClkSrcOsc;
-     * flexcanConfig.baudRate = 125000U;
-     * flexcanConfig.maxMbNum = 16;
-     * flexcanConfig.enableLoopBack = false;
-     * flexcanConfig.enableSelfWakeup = false;
-     * flexcanConfig.enableIndividMask = false;
-     * flexcanConfig.enableDoze = false;
+     * flexcanConfig.clkSrc                 = kFLEXCAN_ClkSrc0;
+     * flexcanConfig.baudRate               = 1000000U;
+     * flexcanConfig.baudRateFD             = 2000000U;
+     * flexcanConfig.maxMbNum               = 16;
+     * flexcanConfig.enableLoopBack         = false;
+     * flexcanConfig.enableSelfWakeup       = false;
+     * flexcanConfig.enableIndividMask      = false;
+     * flexcanConfig.disableSelfReception   = false;
+     * flexcanConfig.enableListenOnlyMode   = false;
+     * flexcanConfig.enableDoze             = false;
      */
     FLEXCAN_GetDefaultConfig(&flexcanConfig);
-    flexcanConfig.clkSrc = kFLEXCAN_ClkSrcPeri;
+
+#if defined(EXAMPLE_CAN_CLK_SOURCE)
+    flexcanConfig.clkSrc = EXAMPLE_CAN_CLK_SOURCE;
+#endif
+
     flexcanConfig.enableLoopBack = true;
-    FLEXCAN_Init(EXAMPLE_CAN, &flexcanConfig, CLOCK_GetFreq(EXAMPLE_CAN_CLKSRC));
+
+#if (defined(USE_IMPROVED_TIMING_CONFIG) && USE_IMPROVED_TIMING_CONFIG)
+    flexcan_timing_config_t timing_config;
+    memset(&timing_config, 0, sizeof(flexcan_timing_config_t));
+#if (defined(USE_CANFD) && USE_CANFD)
+    if (FLEXCAN_FDCalculateImprovedTimingValues(flexcanConfig.baudRate, flexcanConfig.baudRateFD, EXAMPLE_CAN_CLK_FREQ,
+                                                &timing_config))
+    {
+        /* Update the improved timing configuration*/
+        memcpy(&(flexcanConfig.timingConfig), &timing_config, sizeof(flexcan_timing_config_t));
+    }
+    else
+    {
+        LOG_INFO("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
+    }
+#else
+    if (FLEXCAN_CalculateImprovedTimingValues(flexcanConfig.baudRate, EXAMPLE_CAN_CLK_FREQ, &timing_config))
+    {
+        /* Update the improved timing configuration*/
+        memcpy(&(flexcanConfig.timingConfig), &timing_config, sizeof(flexcan_timing_config_t));
+    }
+    else
+    {
+        LOG_INFO("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
+    }
+#endif
+#endif
+
+#if (defined(USE_CANFD) && USE_CANFD)
+    FLEXCAN_FDInit(EXAMPLE_CAN, &flexcanConfig, EXAMPLE_CAN_CLK_FREQ, BYTES_IN_MB, false);
+#else
+    FLEXCAN_Init(EXAMPLE_CAN, &flexcanConfig, EXAMPLE_CAN_CLK_FREQ);
+#endif
 
     /* Setup Rx Message Buffer. */
     mbConfig.format = kFLEXCAN_FrameFormatStandard;
-    mbConfig.type = kFLEXCAN_FrameTypeData;
-    mbConfig.id = FLEXCAN_ID_STD(0x123);
+    mbConfig.type   = kFLEXCAN_FrameTypeData;
+    mbConfig.id     = FLEXCAN_ID_STD(0x123);
+#if (defined(USE_CANFD) && USE_CANFD)
+    FLEXCAN_SetFDRxMbConfig(EXAMPLE_CAN, RX_MESSAGE_BUFFER_NUM, &mbConfig, true);
+#else
     FLEXCAN_SetRxMbConfig(EXAMPLE_CAN, RX_MESSAGE_BUFFER_NUM, &mbConfig, true);
+#endif
 
-    /* Setup Tx Message Buffer. */
+/* Setup Tx Message Buffer. */
+#if (defined(USE_CANFD) && USE_CANFD)
+    FLEXCAN_SetFDTxMbConfig(EXAMPLE_CAN, TX_MESSAGE_BUFFER_NUM, true);
+#else
     FLEXCAN_SetTxMbConfig(EXAMPLE_CAN, TX_MESSAGE_BUFFER_NUM, true);
+#endif
 
     /* Create FlexCAN handle structure and set call back function. */
     FLEXCAN_TransferCreateHandle(EXAMPLE_CAN, &flexcanHandle, flexcan_callback, NULL);
 
     /* Start receive data through Rx Message Buffer. */
+    rxXfer.mbIdx = (uint8_t)RX_MESSAGE_BUFFER_NUM;
+#if (defined(USE_CANFD) && USE_CANFD)
+    rxXfer.framefd = &rxFrame;
+    (void)FLEXCAN_TransferFDReceiveNonBlocking(EXAMPLE_CAN, &flexcanHandle, &rxXfer);
+#else
     rxXfer.frame = &rxFrame;
-    rxXfer.mbIdx = RX_MESSAGE_BUFFER_NUM;
-    FLEXCAN_TransferReceiveNonBlocking(EXAMPLE_CAN, &flexcanHandle, &rxXfer);
+    (void)FLEXCAN_TransferReceiveNonBlocking(EXAMPLE_CAN, &flexcanHandle, &rxXfer);
+#endif
 
     /* Prepare Tx Frame for sending. */
-    txFrame.format = kFLEXCAN_FrameFormatStandard;
-    txFrame.type = kFLEXCAN_FrameTypeData;
-    txFrame.id = FLEXCAN_ID_STD(0x123);
-    txFrame.length = 8;
+    txFrame.format = (uint8_t)kFLEXCAN_FrameFormatStandard;
+    txFrame.type   = (uint8_t)kFLEXCAN_FrameTypeData;
+    txFrame.id     = FLEXCAN_ID_STD(0x123);
+    txFrame.length = (uint8_t)DLC;
+#if (defined(USE_CANFD) && USE_CANFD)
+    txFrame.brs = 1U;
+#endif
+#if (defined(USE_CANFD) && USE_CANFD)
+    uint8_t i = 0;
+    for (i = 0; i < DWORD_IN_MB; i++)
+    {
+        txFrame.dataWord[i] = i;
+    }
+#else
     txFrame.dataWord0 = CAN_WORD0_DATA_BYTE_0(0x11) | CAN_WORD0_DATA_BYTE_1(0x22) | CAN_WORD0_DATA_BYTE_2(0x33) |
                         CAN_WORD0_DATA_BYTE_3(0x44);
     txFrame.dataWord1 = CAN_WORD1_DATA_BYTE_4(0x55) | CAN_WORD1_DATA_BYTE_5(0x66) | CAN_WORD1_DATA_BYTE_6(0x77) |
                         CAN_WORD1_DATA_BYTE_7(0x88);
+#endif
 
-    PRINTF("Send message from MB%d to MB%d\r\n", TX_MESSAGE_BUFFER_NUM, RX_MESSAGE_BUFFER_NUM);
-    PRINTF("tx word0 = 0x%x\r\n", txFrame.dataWord0);
-    PRINTF("tx word1 = 0x%x\r\n", txFrame.dataWord1);
+    LOG_INFO("Send message from MB%d to MB%d\r\n", TX_MESSAGE_BUFFER_NUM, RX_MESSAGE_BUFFER_NUM);
+#if (defined(USE_CANFD) && USE_CANFD)
+    for (i = 0; i < DWORD_IN_MB; i++)
+    {
+        LOG_INFO("tx word%d = 0x%x\r\n", i, txFrame.dataWord[i]);
+    }
+#else
+    LOG_INFO("tx word0 = 0x%x\r\n", txFrame.dataWord0);
+    LOG_INFO("tx word1 = 0x%x\r\n", txFrame.dataWord1);
+#endif
 
     /* Send data through Tx Message Buffer. */
+    txXfer.mbIdx = (uint8_t)TX_MESSAGE_BUFFER_NUM;
+#if (defined(USE_CANFD) && USE_CANFD)
+    txXfer.framefd = &txFrame;
+    (void)FLEXCAN_TransferFDSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
+#else
     txXfer.frame = &txFrame;
-    txXfer.mbIdx = TX_MESSAGE_BUFFER_NUM;
-    FLEXCAN_TransferSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
+    (void)FLEXCAN_TransferSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
+#endif
 
     /* Waiting for Rx Message finish. */
     while ((!rxComplete) || (!txComplete))
     {
     };
 
-    PRINTF("\r\nReceved message from MB%d\r\n", RX_MESSAGE_BUFFER_NUM);
-    PRINTF("rx word0 = 0x%x\r\n", rxFrame.dataWord0);
-    PRINTF("rx word1 = 0x%x\r\n", rxFrame.dataWord1);
-
-    PRINTF("\r\n==FlexCAN loopback example -- Finish.==\r\n");
-
-    while (1)
+    LOG_INFO("\r\nReceived message from MB%d\r\n", RX_MESSAGE_BUFFER_NUM);
+#if (defined(USE_CANFD) && USE_CANFD)
+    for (i = 0; i < DWORD_IN_MB; i++)
     {
-        __WFI();
+        LOG_INFO("rx word%d = 0x%x\r\n", i, rxFrame.dataWord[i]);
+    }
+#else
+    LOG_INFO("rx word0 = 0x%x\r\n", rxFrame.dataWord0);
+    LOG_INFO("rx word1 = 0x%x\r\n", rxFrame.dataWord1);
+#endif
+
+    LOG_INFO("\r\n==FlexCAN loopback example -- Finish.==\r\n");
+
+    while (true)
+    {
     }
 }

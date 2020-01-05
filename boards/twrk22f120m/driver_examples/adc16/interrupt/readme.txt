@@ -13,6 +13,14 @@ The point is that the ADC16 interrupt configuration is set when configuring the 
 software trigger mode, the conversion would be launched by the operation of configuring channel, just like writing a
 conversion command. So if user wants to generate the interrupt every time the conversion is completed, the channel's 
 configuration with enabling interrupt setting would be used for each conversion.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
+
 Hardware requirements
 =====================
 - Mini/Micro USB cable
@@ -56,11 +64,6 @@ ADC Value: 1543
 ADC Interrupt Count: 5
 ADC Value: 1579
 ADC Interrupt Count: 6
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

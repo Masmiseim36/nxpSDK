@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MK82F25615"/>
+    <definition extID="component.lpuart_adapter.MK82F25615"/>
+    <definition extID="component.serial_manager.MK82F25615"/>
+    <definition extID="component.serial_manager_uart.MK82F25615"/>
+    <definition extID="device.MK82F25615_CMSIS.MK82F25615"/>
+    <definition extID="device.MK82F25615_startup.MK82F25615"/>
+    <definition extID="platform.Include_common.MK82F25615"/>
+    <definition extID="platform.Include_core_cm4.MK82F25615"/>
+    <definition extID="platform.Include_dsp.MK82F25615"/>
+    <definition extID="platform.drivers.clock.MK82F25615"/>
+    <definition extID="platform.drivers.common.MK82F25615"/>
+    <definition extID="platform.drivers.dmamux.MK82F25615"/>
+    <definition extID="platform.drivers.dspi.MK82F25615"/>
+    <definition extID="platform.drivers.dspi_edma.MK82F25615"/>
+    <definition extID="platform.drivers.edma.MK82F25615"/>
+    <definition extID="platform.drivers.flash.MK82F25615"/>
+    <definition extID="platform.drivers.gpio.MK82F25615"/>
+    <definition extID="platform.drivers.lpuart.MK82F25615"/>
+    <definition extID="platform.drivers.port.MK82F25615"/>
+    <definition extID="platform.drivers.smc.MK82F25615"/>
+    <definition extID="platform.utilities.assert.MK82F25615"/>
+    <definition extID="platform.utilities.misc_utilities.MK82F25615"/>
+    <definition extID="utility.debug_console.MK82F25615"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+  </externalDefinitions>
+  <example id="frdmk82f_dspi_edma_b2b_transfer_slave" name="dspi_edma_b2b_transfer_slave" category="driver_examples/dspi" dependency="platform.drivers.port.MK82F25615 platform.drivers.dspi.MK82F25615 platform.drivers.dspi_edma.MK82F25615 platform.drivers.edma.MK82F25615 platform.drivers.dmamux.MK82F25615 platform.drivers.clock.MK82F25615 platform.drivers.flash.MK82F25615 platform.drivers.common.MK82F25615 device.MK82F25615_CMSIS.MK82F25615 utility.debug_console.MK82F25615 component.lpuart_adapter.MK82F25615 component.serial_manager.MK82F25615 component.lists.MK82F25615 component.serial_manager_uart.MK82F25615 platform.drivers.lpuart.MK82F25615 device.MK82F25615_startup.MK82F25615 platform.drivers.smc.MK82F25615 platform.drivers.gpio.MK82F25615 platform.utilities.assert.MK82F25615 platform.Include_core_cm4.MK82F25615 platform.Include_common.MK82F25615 platform.Include_dsp.MK82F25615 platform.utilities.misc_utilities.MK82F25615">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv4.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv4.hard</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MK82FN256VLL15</value>
+          <value>FRDM_K82F</value>
+          <value>FREEDOM</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv4.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=RAM2;type=.data</value>
+          <value>isd=*(NonCacheable);region=RAM2;type=.bss</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <source path="boards/frdmk82f/driver_examples/dspi/edma_b2b_transfer/slave/armgcc" target_path="MK82F25615/gcc" type="linker" toolchain="armgcc">
+      <files mask="MK82FN256xxx15_flash.ld"/>
+    </source>
+    <source path="boards/frdmk82f/driver_examples/dspi/edma_b2b_transfer/slave/iar" target_path="MK82F25615/iar" type="linker" toolchain="iar">
+      <files mask="MK82FN256xxx15_flash.icf"/>
+    </source>
+    <source path="boards/frdmk82f/driver_examples/dspi/edma_b2b_transfer/slave/mdk" target_path="MK82F25615/arm" type="linker" toolchain="mdk">
+      <files mask="MK82FN256xxx15_flash.scf"/>
+    </source>
+    <source path="boards/frdmk82f/driver_examples/dspi/edma_b2b_transfer/slave" target_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/frdmk82f/driver_examples/dspi/edma_b2b_transfer/slave" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/frdmk82f/driver_examples/dspi/edma_b2b_transfer/slave" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/frdmk82f/driver_examples/dspi/edma_b2b_transfer/slave" target_path="source" type="src">
+      <files mask="dspi_edma_b2b_transfer_slave.c"/>
+    </source>
+  </example>
+</ksdk:examples>

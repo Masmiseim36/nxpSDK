@@ -1,37 +1,14 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_LPUART_EDMA_H_
 #define _FSL_LPUART_EDMA_H_
 
 #include "fsl_lpuart.h"
-#include "fsl_dmamux.h"
 #include "fsl_edma.h"
 
 /*!
@@ -39,11 +16,15 @@
  * @{
  */
 
-/*! @file*/
-
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/*! @name Driver version */
+/*@{*/
+/*! @brief LPUART EDMA driver version 2.2.8. */
+#define FSL_LPUART_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 2, 8))
+/*@}*/
 
 /* Forward declaration of the handle typedef. */
 typedef struct _lpuart_edma_handle lpuart_edma_handle_t;
@@ -55,8 +36,8 @@ typedef void (*lpuart_edma_transfer_callback_t)(LPUART_Type *base,
                                                 void *userData);
 
 /*!
-* @brief LPUART eDMA handle
-*/
+ * @brief LPUART eDMA handle
+ */
 struct _lpuart_edma_handle
 {
     lpuart_edma_transfer_callback_t callback; /*!< Callback function. */
@@ -66,6 +47,8 @@ struct _lpuart_edma_handle
 
     edma_handle_t *txEdmaHandle; /*!< The eDMA TX channel used. */
     edma_handle_t *rxEdmaHandle; /*!< The eDMA RX channel used. */
+
+    uint8_t nbytes; /*!< eDMA minor byte transfer count initially configured. */
 
     volatile uint8_t txState; /*!< TX transfer state. */
     volatile uint8_t rxState; /*!< RX transfer state */
@@ -94,11 +77,11 @@ extern "C" {
  * @param rxEdmaHandle User requested DMA handle for RX DMA transfer.
  */
 void LPUART_TransferCreateHandleEDMA(LPUART_Type *base,
-                             lpuart_edma_handle_t *handle,
-                             lpuart_edma_transfer_callback_t callback,
-                             void *userData,
-                             edma_handle_t *txEdmaHandle,
-                             edma_handle_t *rxEdmaHandle);
+                                     lpuart_edma_handle_t *handle,
+                                     lpuart_edma_transfer_callback_t callback,
+                                     void *userData,
+                                     edma_handle_t *txEdmaHandle,
+                                     edma_handle_t *rxEdmaHandle);
 
 /*!
  * @brief Sends data using eDMA.
@@ -123,7 +106,7 @@ status_t LPUART_SendEDMA(LPUART_Type *base, lpuart_edma_handle_t *handle, lpuart
  *
  * @param base LPUART peripheral base address.
  * @param handle Pointer to lpuart_edma_handle_t structure.
- * @param xfer LPUART eDMA transfer structure, refer to #lpuart_transfer_t.
+ * @param xfer LPUART eDMA transfer structure, see #lpuart_transfer_t.
  * @retval kStatus_Success if succeed, others fail.
  * @retval kStatus_LPUART_RxBusy Previous transfer ongoing.
  * @retval kStatus_InvalidArgument Invalid argument.
@@ -151,9 +134,9 @@ void LPUART_TransferAbortSendEDMA(LPUART_Type *base, lpuart_edma_handle_t *handl
 void LPUART_TransferAbortReceiveEDMA(LPUART_Type *base, lpuart_edma_handle_t *handle);
 
 /*!
- * @brief Get the number of bytes that have been written to LPUART TX register.
+ * @brief Gets the number of bytes written to the LPUART TX register.
  *
- * This function gets the number of bytes that have been written to LPUART TX
+ * This function gets the number of bytes written to the LPUART TX
  * register by DMA.
  *
  * @param base LPUART peripheral base address.
@@ -166,9 +149,9 @@ void LPUART_TransferAbortReceiveEDMA(LPUART_Type *base, lpuart_edma_handle_t *ha
 status_t LPUART_TransferGetSendCountEDMA(LPUART_Type *base, lpuart_edma_handle_t *handle, uint32_t *count);
 
 /*!
- * @brief Get the number of bytes that have been received.
+ * @brief Gets the number of received bytes.
  *
- * This function gets the number of bytes that have been received.
+ * This function gets the number of received bytes.
  *
  * @param base LPUART peripheral base address.
  * @param handle LPUART handle pointer.

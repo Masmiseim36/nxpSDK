@@ -47,7 +47,6 @@ inline static void WAIT_AML_WaitForMul4Cycles(uint32_t cycles);
  * Description   : Waits for exact number of cycles which can be expressed as multiple of 4.
  *
  *END**************************************************************************/
-//inline static void WAIT_AML_WaitForMul4Cycles(uint32_t cycles)
 inline static void WAIT_AML_WaitForMul4Cycles(uint32_t cycles)
 {
 #if defined(__CC_ARM)                            /* For ARM Compiler */
@@ -57,14 +56,12 @@ inline static void WAIT_AML_WaitForMul4Cycles(uint32_t cycles)
                     nop
                     bne loop};
 #elif defined(__thumb__) && !defined(__thumb2__) /* Thumb instruction set only */
-    __asm("mov r0, %[cycles] \n\t" 
-          "0: \n\t"                
+    __asm("mov r0, %r0 \n\t" 
+          "loop: \n\t"              
           "sub r0, #4 \n\t"      
           "nop \n\t"             
-          "bne 0b \n\t"            
-          :
-          : [cycles] "r" (cycles) 
-          : "r0", "r1", "cc");
+          "bne loop \n\t"            
+          : "+r" (cycles));		  
 #else /* Thumb2 or A32 instruction set */
     __asm("movs r0, %[cycles] \n"
           "0: \n"

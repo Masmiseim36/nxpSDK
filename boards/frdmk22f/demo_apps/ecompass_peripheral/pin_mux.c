@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,16 +14,17 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v6.0
 processor: MK22FN512xxx12
 package_id: MK22FN512VLH12
 mcu_data: ksdk2_0
-processor_version: 4.0.0
+processor_version: 6.0.1
+board: FRDM-K22F
 pin_labels:
-- {pin_num: '2', pin_signal: ADC1_SE5a/PTE1/LLWU_P0/SPI1_SOUT/UART1_RX/I2C1_SCL/SPI1_SIN, label: DEBUG_UART_RX, identifier: DEBUG_UART_RX}
-- {pin_num: '1', pin_signal: ADC1_SE4a/PTE0/CLKOUT32K/SPI1_PCS1/UART1_TX/I2C1_SDA/RTC_CLKOUT, label: DEBUG_UART_TX, identifier: DEBUG_UART_TX}
 - {pin_num: '37', pin_signal: ADC0_SE12/PTB2/I2C0_SCL/UART0_RTS_b/FTM0_FLT3, label: ACCEL_SCL, identifier: ACCEL_SCL}
 - {pin_num: '38', pin_signal: ADC0_SE13/PTB3/I2C0_SDA/UART0_CTS_b/FTM0_FLT0, label: ACCEL_SDA, identifier: ACCEL_SDA}
+- {pin_num: '1', pin_signal: ADC1_SE4a/PTE0/CLKOUT32K/SPI1_PCS1/UART1_TX/I2C1_SDA/RTC_CLKOUT, label: DEBUG_UART_TX, identifier: DEBUG_UART_TX}
+- {pin_num: '2', pin_signal: ADC1_SE5a/PTE1/LLWU_P0/SPI1_SOUT/UART1_RX/I2C1_SCL/SPI1_SIN, label: DEBUG_UART_RX, identifier: DEBUG_UART_RX}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */

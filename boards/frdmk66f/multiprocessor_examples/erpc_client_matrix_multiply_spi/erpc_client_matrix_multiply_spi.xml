@@ -16,6 +16,7 @@
     <definition extID="middleware.multicore.erpc.eRPC_port_stdlib.MK66F18"/>
     <definition extID="platform.Include_common.MK66F18"/>
     <definition extID="platform.Include_core_cm4.MK66F18"/>
+    <definition extID="platform.Include_dsp.MK66F18"/>
     <definition extID="platform.drivers.clock.MK66F18"/>
     <definition extID="platform.drivers.common.MK66F18"/>
     <definition extID="platform.drivers.dspi.MK66F18"/>
@@ -26,13 +27,14 @@
     <definition extID="platform.drivers.smc.MK66F18"/>
     <definition extID="platform.drivers.uart.MK66F18"/>
     <definition extID="platform.utilities.assert.MK66F18"/>
+    <definition extID="platform.utilities.misc_utilities.MK66F18"/>
     <definition extID="utility.debug_console.MK66F18"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk66f_erpc_client_matrix_multiply_spi" name="erpc_client_matrix_multiply_spi" category="multiprocessor_examples" dependency="middleware.multicore.erpc.eRPC_dspi_master_transport.MK66F18 middleware.multicore.erpc.eRPC_dspi_master_c_wrapper.MK66F18 platform.drivers.dspi.MK66F18 platform.drivers.gpio.MK66F18 platform.drivers.port.MK66F18 middleware.multicore.erpc.eRPC_client.MK66F18 middleware.multicore.erpc.eRPC_port_stdlib.MK66F18 middleware.multicore.erpc.doc.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 component.lists.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.utilities.assert.MK66F18 middleware.multicore.erpc.common.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18">
+  <example id="frdmk66f_erpc_client_matrix_multiply_spi" name="erpc_client_matrix_multiply_spi" category="multiprocessor_examples" dependency="middleware.multicore.erpc.eRPC_dspi_master_transport.MK66F18 middleware.multicore.erpc.eRPC_dspi_master_c_wrapper.MK66F18 platform.drivers.dspi.MK66F18 platform.drivers.gpio.MK66F18 platform.drivers.port.MK66F18 middleware.multicore.erpc.eRPC_client.MK66F18 middleware.multicore.erpc.eRPC_port_stdlib.MK66F18 middleware.multicore.erpc.doc.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.lists.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.utilities.assert.MK66F18 middleware.multicore.erpc.common.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 platform.Include_dsp.MK66F18 platform.utilities.misc_utilities.MK66F18">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.ccnature"/>
     </projects>
@@ -51,6 +53,7 @@
           <value>CPU_MK66FN2M0VMD18</value>
           <value>FRDM_K66F</value>
           <value>FREEDOM</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -66,6 +69,7 @@
         </option>
         <option id="gnu.cpp.compiler.option.preprocessor.def" type="stringList">
           <value>CPU_MK66FN2M0VMD18</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.cpp.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -84,13 +88,13 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/frdmk66f/multiprocessor_examples/erpc_client_matrix_multiply_spi/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/frdmk66f/multiprocessor_examples/erpc_client_matrix_multiply_spi/armgcc" target_path="MK66F18/gcc" type="linker" toolchain="armgcc">
       <files mask="MK66FN2M0xxx18_flash.ld"/>
     </source>
-    <source path="boards/frdmk66f/multiprocessor_examples/erpc_client_matrix_multiply_spi/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/frdmk66f/multiprocessor_examples/erpc_client_matrix_multiply_spi/iar" target_path="MK66F18/iar" type="linker" toolchain="iar">
       <files mask="MK66FN2M0xxx18_flash.icf"/>
     </source>
-    <source path="boards/frdmk66f/multiprocessor_examples/erpc_client_matrix_multiply_spi/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/frdmk66f/multiprocessor_examples/erpc_client_matrix_multiply_spi/mdk" target_path="MK66F18/arm" type="linker" toolchain="mdk">
       <files mask="MK66FN2M0xxx18_flash.scf"/>
     </source>
     <source path="boards/frdmk66f/multiprocessor_examples/erpc_client_matrix_multiply_spi" target_path="board" type="c_include">

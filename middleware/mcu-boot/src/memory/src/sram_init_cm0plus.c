@@ -58,7 +58,11 @@ status_t sram_init(void)
             break;
     }
 #else
+#if defined (SIM_SDID_SRAMSIZE_MASK)
     uint32_t tmp = (SIM->SDID & SIM_SDID_SRAMSIZE_MASK) >> SIM_SDID_SRAMSIZE_SHIFT;
+#else
+    uint32_t tmp = (SIM->SDID & SIM_SDID_RAMSIZE_MASK) >> SIM_SDID_RAMSIZE_SHIFT;
+#endif
 
     // for KW41Z4, 1001 - 128KB; 0111 - 64 KB
     if (tmp <= kMaxRamIndex)
@@ -67,7 +71,7 @@ status_t sram_init(void)
     }
     else
     {
-        ram_size = kMinKlRamSize << (tmp - 1);              
+        ram_size = kMinKlRamSize << (tmp - 1);
     }
 #endif
 

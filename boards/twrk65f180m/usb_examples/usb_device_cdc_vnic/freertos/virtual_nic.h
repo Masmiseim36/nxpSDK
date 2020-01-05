@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _USB_CDC_VNIC_H_
 #define _USB_CDC_VNIC_H_ 1
@@ -35,12 +13,32 @@
 ******************************************************************************/
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
 #define CONTROLLER_ID kUSB_ControllerEhci0
+#define DATA_BUFF_SIZE HS_CDC_VCOM_BULK_OUT_PACKET_SIZE
+
 #endif
 #if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0)
 #define CONTROLLER_ID kUSB_ControllerKhci0
+#define DATA_BUFF_SIZE FS_CDC_VCOM_BULK_OUT_PACKET_SIZE
+
+#endif
+#if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
+#define CONTROLLER_ID kUSB_ControllerLpcIp3511Fs0
+#define DATA_BUFF_SIZE FS_CDC_VCOM_BULK_OUT_PACKET_SIZE
+
 #endif
 
+#if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
+#define CONTROLLER_ID kUSB_ControllerLpcIp3511Hs0
+#define DATA_BUFF_SIZE HS_CDC_VCOM_BULK_OUT_PACKET_SIZE
+#endif
+
+#if defined(__GIC_PRIO_BITS)
+#define USB_DEVICE_INTERRUPT_PRIORITY (25U)
+#elif defined(__NVIC_PRIO_BITS) && (__NVIC_PRIO_BITS >= 3)
+#define USB_DEVICE_INTERRUPT_PRIORITY (6U)
+#else
 #define USB_DEVICE_INTERRUPT_PRIORITY (3U)
+#endif
 
 /* Currently configured line coding */
 #define LINE_CODING_SIZE (0x07)
@@ -88,17 +86,21 @@ typedef enum _usb_cdc_vnic_rx_state
 typedef struct _nic_traffic_info
 {
     uint32_t enetTxHost2usb;        /* The count of RNDIS packet that is sent from host to usb device. */
+    uint32_t enetTxHost2usbDiscard; /* The count of Ethernet packet that is discarded by usb device. */
     uint32_t enetTxUsb2enet;        /* The count of Ethernet packet that is sent from usb device to ethernet. */
+    uint32_t enetTxUsb2enetFail; /* The count of Ethernet packet that is failed to sent from usb device to ethernet. */
+    uint32_t enetTxUsb2enetSent; /* The count of Ethernet packet that is sent to sent from usb device to ethernet. */
+    uint32_t enetTxUsb2hostCleared; /* The count of Ethernet packet that is cleared in ethernet packet Tx queue. */
     uint32_t enetRxEnet2usb;        /* The count of Ethernet packet that is received from ethernet to usb device . */
     uint32_t enetRxUsb2host;        /* The count of RNDIS packet that is received from usb device to host. */
     uint32_t enetRxUsb2hostSent;    /* The count of RNDIS packet that is actually sent by usb device. */
     uint32_t enetRxUsb2hostDiscard; /* The count of Ethernet packet that is discarded by usb device. */
-    uint32_t enetRxUsb2hostCleared; /* The count of Ethernet packet that is cleared in ethernet packet queue. */
+    uint32_t enetRxUsb2hostCleared; /* The count of Ethernet packet that is cleared in ethernet packet Rx queue. */
     uint32_t usbTxPart_1Len;        /* The length of the part 1 of the packet sent by usb device. */
     uint8_t *usbTxNicData;          /* The pointer of the ethernet data packet. */
     uint32_t usbTxRndisPkgLength;   /* The length of the RNDIS packet that is sent by the usb devic. */
     uint32_t usbTxZeroSendFlag;     /* The flag which indicates if a zero length packet will be sent. */
-    pbuf_t usbTxEnetPcb; /* The pointer of the ethernet packet control block which contains the ethernet packet. */
+    pbuf_t usbTxEnetPcb; /* The pointer of the ethernet packet control block which contains the ethernet tx packet. */
     volatile uint8_t *usbRxPartOneBuf; /* The buffer pointer of the part 1 packet which is received by usb device. */
     volatile uint32_t usbRxPartOneLen; /* The length of the part 1 of the packet which is received by usb device. */
     volatile uint8_t *usbRxPartTwoBuf; /* The buffer pointer of the part 2 packet which is received by usb device. */
@@ -114,8 +116,8 @@ typedef struct _usb_cdc_vnic
     class_handle_t cdcAcmHandle;
     usb_device_cdc_rndis_struct_t *rndisHandle;
     volatile uint8_t attach;
-    xTaskHandle deviceTaskHandle;      /* USB device task handle. */
-    xTaskHandle applicationTaskHandle; /* Application task handle. */
+    TaskHandle_t deviceTaskHandle;      /* USB device task handle. */
+    TaskHandle_t applicationTaskHandle; /* Application task handle. */
     uint8_t speed;
     nic_traffic_info_t nicTrafficInfo;
     uint8_t currentConfiguration;

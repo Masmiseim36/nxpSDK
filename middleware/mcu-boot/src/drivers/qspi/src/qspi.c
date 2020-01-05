@@ -1153,7 +1153,7 @@ status_t quadspi_cmd_config_all_banks(qspi_config_t *config)
         {
             QuadSPI0->SFAR = baseAddress;
             baseAddress += currentFlashSize;
-            quadspi_perform_config_cmds(config);
+            status = quadspi_perform_config_cmds(config);
             if (status != kStatus_Success)
             {
                 return status;

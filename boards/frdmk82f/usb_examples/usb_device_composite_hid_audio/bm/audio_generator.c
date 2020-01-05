@@ -1,31 +1,9 @@
 /*
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016,2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_device_config.h"
@@ -34,7 +12,7 @@
 
 #include "usb_device_class.h"
 #include "usb_device_audio.h"
-
+#include "usb_audio_config.h"
 #include "usb_device_ch9.h"
 #include "usb_device_descriptor.h"
 
@@ -53,49 +31,18 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
+extern void USB_AudioRecorderGetBuffer(uint8_t *buffer, uint32_t size);
 /*******************************************************************************
-* Variables
-******************************************************************************/
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
-#define AUDIO_ENDPOINT_MAX_PACKET_SIZE \
-    (FS_ISO_IN_ENDP_PACKET_SIZE > HS_ISO_IN_ENDP_PACKET_SIZE ? FS_ISO_IN_ENDP_PACKET_SIZE : HS_ISO_IN_ENDP_PACKET_SIZE)
-#endif
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
-#define AUDIO_ENDPOINT_MAX_PACKET_SIZE (FS_ISO_IN_ENDP_PACKET_SIZE)
-#endif
+ * Variables
+ ******************************************************************************/
 
-uint32_t audioPosition = 0U;
-
-extern const unsigned char wavData[];
-extern const uint16_t wavSize;
-
-static uint8_t s_wavBuff[AUDIO_ENDPOINT_MAX_PACKET_SIZE];
+extern uint8_t s_wavBuff[];
 
 static usb_device_composite_struct_t *g_deviceComposite;
 
 /*******************************************************************************
 * Code
 ******************************************************************************/
-/*!
- * @brief Audio wav data prepare function.
- *
- * This function prepare audio wav data before send.
- */
-void USB_PrepareData(void)
-{
-    uint8_t k;
-    /* copy audio wav data from flash to buffer */
-    for (k = 0U; k < AUDIO_ENDPOINT_MAX_PACKET_SIZE; k++)
-    {
-        if (audioPosition > (wavSize - 1U))
-        {
-            audioPosition = 0U;
-        }
-        s_wavBuff[k] = wavData[audioPosition];
-        audioPosition++;
-    }
-}
-
 /*!
  * @brief Audio class specific request function.
  *
@@ -416,7 +363,9 @@ usb_status_t USB_DeviceAudioGeneratorCallback(class_handle_t handle, uint32_t ev
                                              HS_ISO_IN_ENDP_PACKET_SIZE :
                                              FS_ISO_IN_ENDP_PACKET_SIZE)))
             {
-                USB_PrepareData();
+                USB_AudioRecorderGetBuffer(s_wavBuff, (USB_SPEED_HIGH == g_deviceComposite->audioGenerator.speed) ?
+                                                HS_ISO_IN_ENDP_PACKET_SIZE :
+                                                FS_ISO_IN_ENDP_PACKET_SIZE);
                 error = USB_DeviceAudioSend(handle, USB_AUDIO_STREAM_ENDPOINT, s_wavBuff,
                                             (USB_SPEED_HIGH == g_deviceComposite->audioGenerator.speed) ?
                                                 HS_ISO_IN_ENDP_PACKET_SIZE :
@@ -457,7 +406,9 @@ usb_status_t USB_DeviceAudioGeneratorSetInterface(class_handle_t handle, uint8_t
 {
     if (alternateSetting == 1U)
     {
-        USB_PrepareData();
+        USB_AudioRecorderGetBuffer(s_wavBuff, (USB_SPEED_HIGH == g_deviceComposite->audioGenerator.speed) ?
+                                        HS_ISO_IN_ENDP_PACKET_SIZE :
+                                        FS_ISO_IN_ENDP_PACKET_SIZE);
         USB_DeviceAudioSend(g_deviceComposite->audioGenerator.audioHandle, USB_AUDIO_STREAM_ENDPOINT, s_wavBuff,
                             (USB_SPEED_HIGH == g_deviceComposite->audioGenerator.speed) ? HS_ISO_IN_ENDP_PACKET_SIZE :
                                                                                           FS_ISO_IN_ENDP_PACKET_SIZE);

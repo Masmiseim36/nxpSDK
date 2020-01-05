@@ -4,11 +4,12 @@
 ;            MK02F12810
 ;  @version: 0.5
 ;  @date:    2015-2-19
-;  @build:   b180801
+;  @build:   b190918
 ; -------------------------------------------------------------------------
 ;
 ; Copyright 1997-2016 Freescale Semiconductor, Inc.
-; Copyright 2016-2018 NXP
+; Copyright 2016-2019 NXP
+; All rights reserved.
 ;
 ; SPDX-License-Identifier: BSD-3-Clause
 ;

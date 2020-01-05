@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2017,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -302,7 +302,7 @@ usb_status_t USB_OtgKhciInit(uint8_t controllerId,
         return kStatus_USB_Error;
     }
 
-    otgKhciInstance = (usb_otg_khci_instance_t *)USB_OsaMemoryAllocate(sizeof(usb_otg_khci_instance_t));
+    otgKhciInstance = (usb_otg_khci_instance_t *)OSA_MemoryAllocate(sizeof(usb_otg_khci_instance_t));
     if (otgKhciInstance == NULL)
     {
         return kStatus_USB_AllocFail;
@@ -340,7 +340,7 @@ usb_status_t USB_OtgKhciDeinit(usb_otg_controller_handle controllerHandle)
     otgKhciInstance->usbRegBase->ISTAT = 0xFFU;
     otgKhciInstance->usbRegBase->OTGISTAT = 0xFFU;
 
-    USB_OsaMemoryFree(otgKhciInstance);
+    OSA_MemoryFree(otgKhciInstance);
 
 #if ((defined USB_OTG_KHCI_PERIPHERAL_ENABLE) && (USB_OTG_KHCI_PERIPHERAL_ENABLE))
     return USB_OtgPeripheralDisable();

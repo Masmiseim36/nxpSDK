@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2017, NXP Semiconductors, Inc.
+ * Copyright  2017 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -757,14 +757,16 @@ status_t OV7670_LightMode(camera_device_handle_t *handle, const ov7670_light_mod
  * @param handle Camera device handle.
  * @param colorSaturationConfig #ov7670_color_saturation_config_t structure.
  */
-status_t OV7670_ColorSaturation(camera_device_handle_t *handle, const ov7670_color_saturation_config_t *colorSaturationConfig);
+status_t OV7670_ColorSaturation(camera_device_handle_t *handle,
+                                const ov7670_color_saturation_config_t *colorSaturationConfig);
 
 /*!
  * @brief OV7670 Special effects configuration.
  * @param handle Camera device handle.
  * @param specialEffectConfig #ov7670_special_effect_config_t structure.
  */
-status_t OV7670_SpecialEffects(camera_device_handle_t *handle, const ov7670_special_effect_config_t *specialEffectConfig);
+status_t OV7670_SpecialEffects(camera_device_handle_t *handle,
+                               const ov7670_special_effect_config_t *specialEffectConfig);
 
 /*!
  * @brief OV7670 Windowing configuration.
@@ -780,14 +782,17 @@ status_t OV7670_SetWindow(camera_device_handle_t *handle, const ov7670_windowing
  * @param startPoint #ov7670_window_start_point_t structure.
  * @param resolution #ovideo_resolution_t resolution.
  */
-status_t OV7670_SetWindowByCoordinates(camera_device_handle_t *handle, ov7670_window_start_point_t *startPoint, uint32_t resolution);
+status_t OV7670_SetWindowByCoordinates(camera_device_handle_t *handle,
+                                       ov7670_window_start_point_t *startPoint,
+                                       uint32_t resolution);
 
 /*!
  * @brief OV7670 Gamma curve slope configuration.
  * @param handle Camera device handle.
  * @param gammaCurveSlopeConfig #ov7670_gamma_curve_slope_config_t structure.
  */
-status_t OV7670_GammaCurveSlope(camera_device_handle_t *handle, const ov7670_gamma_curve_slope_config_t *gammaCurveSlopeConfig);
+status_t OV7670_GammaCurveSlope(camera_device_handle_t *handle,
+                                const ov7670_gamma_curve_slope_config_t *gammaCurveSlopeConfig);
 
 #if defined(__cplusplus)
 }

@@ -1,31 +1,9 @@
 /*
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016, 2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_device_config.h"
@@ -34,6 +12,7 @@
 
 #include "usb_device_class.h"
 #include "usb_device_audio.h"
+#include "usb_audio_config.h"
 #include "usb_device_descriptor.h"
 #include "audio_generator.h"
 
@@ -46,14 +25,16 @@
  ******************************************************************************/
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 /* Audio generator stream endpoint information */
 usb_device_endpoint_struct_t g_UsbDeviceAudioGeneratorEndpoints[USB_AUDIO_STREAM_ENDPOINT_COUNT] = {
     /* Audio generator ISO IN pipe */
     {
         USB_AUDIO_STREAM_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
-        USB_ENDPOINT_ISOCHRONOUS, FS_ISO_IN_ENDP_PACKET_SIZE,
+        USB_ENDPOINT_ISOCHRONOUS,
+        FS_ISO_IN_ENDP_PACKET_SIZE,
+        FS_ISO_IN_ENDP_INTERVAL,
     },
 };
 
@@ -61,33 +42,43 @@ usb_device_endpoint_struct_t g_UsbDeviceAudioGeneratorEndpoints[USB_AUDIO_STREAM
 usb_device_endpoint_struct_t g_UsbDeviceAudioControlEndpoints[USB_AUDIO_CONTROL_ENDPOINT_COUNT] = {
     {
         USB_AUDIO_CONTROL_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
-        USB_ENDPOINT_INTERRUPT, FS_INTERRUPT_IN_PACKET_SIZE,
+        USB_ENDPOINT_INTERRUPT,
+        FS_INTERRUPT_IN_PACKET_SIZE,
+        FS_INTERRUPT_IN_INTERVAL,
     },
 };
 
 /* Audio generator entity struct */
 usb_device_audio_entity_struct_t g_UsbDeviceAudioEntity[] = {
     {
-        USB_AUDIO_CONTROL_INPUT_TERMINAL_ID, USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_INPUT_TERMINAL, 0U,
+        USB_AUDIO_CONTROL_INPUT_TERMINAL_ID,
+        USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_INPUT_TERMINAL,
+        0U,
     },
     {
-        USB_AUDIO_CONTROL_FEATURE_UNIT_ID, USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_FEATURE_UNIT, 0U,
+        USB_AUDIO_CONTROL_FEATURE_UNIT_ID,
+        USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_FEATURE_UNIT,
+        0U,
     },
     {
-        USB_AUDIO_CONTROL_OUTPUT_TERMINAL_ID, USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_OUTPUT_TERMINAL, 0U,
+        USB_AUDIO_CONTROL_OUTPUT_TERMINAL_ID,
+        USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_OUTPUT_TERMINAL,
+        0U,
     },
 };
 
 /* Audio generator entity information */
 usb_device_audio_entities_struct_t g_UsbDeviceAudioEntities = {
-    g_UsbDeviceAudioEntity, sizeof(g_UsbDeviceAudioEntity) / sizeof(usb_device_audio_entity_struct_t),
+    g_UsbDeviceAudioEntity,
+    sizeof(g_UsbDeviceAudioEntity) / sizeof(usb_device_audio_entity_struct_t),
 };
 
 /* Audio generator control interface information */
 usb_device_interface_struct_t g_UsbDeviceAudioControInterface[] = {{
     0U,
     {
-        USB_AUDIO_CONTROL_ENDPOINT_COUNT, g_UsbDeviceAudioControlEndpoints,
+        USB_AUDIO_CONTROL_ENDPOINT_COUNT,
+        g_UsbDeviceAudioControlEndpoints,
     },
     &g_UsbDeviceAudioEntities,
 }};
@@ -97,14 +88,16 @@ usb_device_interface_struct_t g_UsbDeviceAudioStreamInterface[] = {
     {
         0U,
         {
-            0U, NULL,
+            0U,
+            NULL,
         },
         NULL,
     },
     {
         1U,
         {
-            USB_AUDIO_STREAM_ENDPOINT_COUNT, g_UsbDeviceAudioGeneratorEndpoints,
+            USB_AUDIO_STREAM_ENDPOINT_COUNT,
+            g_UsbDeviceAudioGeneratorEndpoints,
         },
         NULL,
     },
@@ -118,7 +111,7 @@ usb_device_interfaces_struct_t g_UsbDeviceAudioInterfaces[USB_AUDIO_GENERATOR_IN
         USB_AUDIO_PROTOCOL,                /* Audio protocol code */
         USB_AUDIO_CONTROL_INTERFACE_INDEX, /* The interface number of the Audio control */
         g_UsbDeviceAudioControInterface,   /* The handle of Audio control */
-        sizeof(g_UsbDeviceAudioControInterface) / sizeof(usb_device_interfaces_struct_t),
+        sizeof(g_UsbDeviceAudioControInterface) / sizeof(usb_device_interface_struct_t),
     },
     {
         USB_AUDIO_CLASS,                  /* Audio class code */
@@ -126,7 +119,7 @@ usb_device_interfaces_struct_t g_UsbDeviceAudioInterfaces[USB_AUDIO_GENERATOR_IN
         USB_AUDIO_PROTOCOL,               /* Audio protocol code */
         USB_AUDIO_STREAM_INTERFACE_INDEX, /* The interface number of the Audio control */
         g_UsbDeviceAudioStreamInterface,  /* The handle of Audio stream */
-        sizeof(g_UsbDeviceAudioStreamInterface) / sizeof(usb_device_interfaces_struct_t),
+        sizeof(g_UsbDeviceAudioStreamInterface) / sizeof(usb_device_interface_struct_t),
     }
 
 };
@@ -134,17 +127,21 @@ usb_device_interfaces_struct_t g_UsbDeviceAudioInterfaces[USB_AUDIO_GENERATOR_IN
 /* Define configurations for audio generator */
 usb_device_interface_list_t g_UsbDeviceAudioInterfaceList[USB_DEVICE_CONFIGURATION_COUNT] = {
     {
-        USB_AUDIO_GENERATOR_INTERFACE_COUNT, g_UsbDeviceAudioInterfaces,
+        USB_AUDIO_GENERATOR_INTERFACE_COUNT,
+        g_UsbDeviceAudioInterfaces,
     },
 };
 
 /* Define class information for audio generator */
 usb_device_class_struct_t g_UsbDeviceAudioClass = {
-    g_UsbDeviceAudioInterfaceList, kUSB_DeviceClassTypeAudio, USB_DEVICE_CONFIGURATION_COUNT,
+    g_UsbDeviceAudioInterfaceList,
+    kUSB_DeviceClassTypeAudio,
+    USB_DEVICE_CONFIGURATION_COUNT,
 };
 
 /* Define device descriptor */
-uint8_t g_UsbDeviceDescriptor[USB_DESCRIPTOR_LENGTH_DEVICE] = {
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_DEVICE, /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_DEVICE,   /* DEVICE Descriptor Type */
     USB_SHORT_GET_LOW(USB_DEVICE_SPECIFIC_BCD_VERSION),
@@ -155,8 +152,10 @@ uint8_t g_UsbDeviceDescriptor[USB_DESCRIPTOR_LENGTH_DEVICE] = {
     USB_DEVICE_PROTOCOL,                                 /* Protocol code (assigned by the USB-IF). */
     USB_CONTROL_MAX_PACKET_SIZE,                         /* Maximum packet size for endpoint zero
                                                             (only 8, 16, 32, or 64 are valid) */
-    0x04, 0x25,                                          /* Vendor ID (assigned by the USB-IF) */
-    0x00U, 0x02,                                         /* Product ID (assigned by the manufacturer) */
+    0xC9U,
+    0x1FU, /* Vendor ID (assigned by the USB-IF) */
+    0x97U,
+    0x00U, /* Product ID (assigned by the manufacturer) */
     USB_SHORT_GET_LOW(USB_DEVICE_DEMO_BCD_VERSION),
     USB_SHORT_GET_HIGH(USB_DEVICE_DEMO_BCD_VERSION), /* Device release number in binary-coded decimal */
     0x01U,                                           /* Index of string descriptor describing manufacturer */
@@ -166,16 +165,28 @@ uint8_t g_UsbDeviceDescriptor[USB_DESCRIPTOR_LENGTH_DEVICE] = {
     USB_DEVICE_CONFIGURATION_COUNT,                  /* Number of possible configurations */
 };
 
-uint8_t g_UsbDeviceConfigurationDescriptor[USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL] = {
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_CONFIGURE, /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_CONFIGURE,   /* CONFIGURATION Descriptor Type */
-    USB_SHORT_GET_LOW(USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL),
-    USB_SHORT_GET_HIGH(
-        USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL), /* Total length of data returned for this configuration. */
-    USB_AUDIO_GENERATOR_INTERFACE_COUNT,          /* Number of interfaces supported by this configuration */
-    USB_AUDIO_GENERATOR_CONFIGURE_INDEX,          /* Value to use as an argument to the
-                                                     SetConfiguration() request to select this configuration */
-    0x00U,                                        /* Index of string descriptor describing this configuration */
+    USB_SHORT_GET_LOW(USB_DESCRIPTOR_LENGTH_CONFIGURE + USB_DESCRIPTOR_LENGTH_INTERFACE +
+                      USB_AUDIO_CONTROL_INTERFACE_HEADER_LENGTH + USB_AUDIO_INPUT_TERMINAL_ONLY_DESC_SIZE +
+                      USB_AUDIO_FEATURE_UNIT_ONLY_DESC_SIZE + USB_AUDIO_OUTPUT_TERMINAL_ONLY_DESC_SIZE +
+                      USB_DESCRIPTOR_LENGTH_AC_INTERRUPT_ENDPOINT + USB_DESCRIPTOR_LENGTH_INTERFACE +
+                      USB_DESCRIPTOR_LENGTH_INTERFACE + USB_AUDIO_STREAMING_IFACE_DESC_SIZE +
+                      USB_AUDIO_STREAMING_TYPE_I_DESC_SIZE + USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH +
+                      USB_AUDIO_STREAMING_ENDP_DESC_SIZE),
+    USB_SHORT_GET_HIGH(USB_DESCRIPTOR_LENGTH_CONFIGURE + USB_DESCRIPTOR_LENGTH_INTERFACE +
+                       USB_AUDIO_CONTROL_INTERFACE_HEADER_LENGTH + USB_AUDIO_INPUT_TERMINAL_ONLY_DESC_SIZE +
+                       USB_AUDIO_FEATURE_UNIT_ONLY_DESC_SIZE + USB_AUDIO_OUTPUT_TERMINAL_ONLY_DESC_SIZE +
+                       USB_DESCRIPTOR_LENGTH_AC_INTERRUPT_ENDPOINT + USB_DESCRIPTOR_LENGTH_INTERFACE +
+                       USB_DESCRIPTOR_LENGTH_INTERFACE + USB_AUDIO_STREAMING_IFACE_DESC_SIZE +
+                       USB_AUDIO_STREAMING_TYPE_I_DESC_SIZE + USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH +
+                       USB_AUDIO_STREAMING_ENDP_DESC_SIZE), /* Total length of data returned for this configuration. */
+    USB_AUDIO_GENERATOR_INTERFACE_COUNT,                    /* Number of interfaces supported by this configuration */
+    USB_AUDIO_GENERATOR_CONFIGURE_INDEX,                    /* Value to use as an argument to the
+                                                               SetConfiguration() request to select this configuration */
+    0x00U, /* Index of string descriptor describing this configuration */
     (USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_D7_MASK) |
         (USB_DEVICE_CONFIG_SELF_POWER << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_SELF_POWERED_SHIFT) |
         (USB_DEVICE_CONFIG_REMOTE_WAKEUP << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_REMOTE_WAKEUP_SHIFT),
@@ -299,11 +310,17 @@ uint8_t g_UsbDeviceConfigurationDescriptor[USB_DESCRIPTOR_LENGTH_CONFIGURATION_A
     /* FORMAT_TYPE descriptor subtype  */
     USB_AUDIO_FORMAT_TYPE_I, /* FORMAT_TYPE_I  */
     0x01U,                   /* Indicates the number of physical channels in the audio data stream.  */
-    0x01U,                   /* The number of bytes occupied by one audio subframe. Can be 1, 2, 3 or 4.   */
-    0x08,                    /* The number of effectively used bits from the available bits in an audio subframe.*/
-    0x01U,                   /* Indicates how the sampling frequency can be programmed:   */
-    0x40, 0x1F, 0x00U,       /* Sampling frequency 1 in Hz for this isochronous data endpoint.   */
-
+#if defined(AUDIO_DATA_SOURCE_DMIC) && (AUDIO_DATA_SOURCE_DMIC > 0U)
+    0x02U,             /* The number of bytes occupied by one audio subframe. Can be 1, 2, 3 or 4.   */
+    0x10,              /* The number of effectively used bits from the available bits in an audio subframe.*/
+    0x01U,             /* Indicates how the sampling frequency can be programmed:   */
+    0x80, 0x3E, 0x00U, /* Sampling frequency 1 in Hz for this isochronous data endpoint.   */
+#else
+    0x01U,             /* The number of bytes occupied by one audio subframe. Can be 1, 2, 3 or 4.   */
+    0x08,              /* The number of effectively used bits from the available bits in an audio subframe.*/
+    0x01U,             /* Indicates how the sampling frequency can be programmed:   */
+    0x40, 0x1F, 0x00U, /* Sampling frequency 1 in Hz for this isochronous data endpoint.   */
+#endif
     /* ENDPOINT Descriptor */
     USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH,      /* Descriptor size is 9 bytes  */
     USB_DESCRIPTOR_TYPE_ENDPOINT,              /* ENDPOINT Descriptor Type   */
@@ -328,127 +345,88 @@ uint8_t g_UsbDeviceConfigurationDescriptor[USB_DESCRIPTOR_LENGTH_CONFIGURATION_A
 };
 
 /* Define string descriptor */
-uint8_t g_UsbDeviceString0[USB_DESCRIPTOR_LENGTH_STRING0] = {
-    sizeof(g_UsbDeviceString0), USB_DESCRIPTOR_TYPE_STRING, 0x09U, 0x04U,
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceString0[] = {
+    2U + 2U,
+    USB_DESCRIPTOR_TYPE_STRING,
+    0x09U,
+    0x04U,
 };
 
-uint8_t g_UsbDeviceString1[USB_DESCRIPTOR_LENGTH_STRING1] = {
-    sizeof(g_UsbDeviceString1),
-    USB_DESCRIPTOR_TYPE_STRING,
-    'F',
-    0x00U,
-    'R',
-    0x00U,
-    'E',
-    0x00U,
-    'E',
-    0x00U,
-    'S',
-    0x00U,
-    'C',
-    0x00U,
-    'A',
-    0x00U,
-    'L',
-    0x00U,
-    'E',
-    0x00U,
-    ' ',
-    0x00U,
-    'S',
-    0x00U,
-    'E',
-    0x00U,
-    'M',
-    0x00U,
-    'I',
-    0x00U,
-    'C',
-    0x00U,
-    'O',
-    0x00U,
-    'N',
-    0x00U,
-    'D',
-    0x00U,
-    'U',
-    0x00U,
-    'C',
-    0x00U,
-    'T',
-    0x00U,
-    'O',
-    0x00U,
-    'R',
-    0x00U,
-    ' ',
-    0x00U,
-    'I',
-    0x00U,
-    'N',
-    0x00U,
-    'C',
-    0x00U,
-    '.',
-    0x00U,
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceString1[] = {
+    2U + 2U * 18U, USB_DESCRIPTOR_TYPE_STRING,
+    'N',           0x00U,
+    'X',           0x00U,
+    'P',           0x00U,
+    ' ',           0x00U,
+    'S',           0x00U,
+    'E',           0x00U,
+    'M',           0x00U,
+    'I',           0x00U,
+    'C',           0x00U,
+    'O',           0x00U,
+    'N',           0x00U,
+    'D',           0x00U,
+    'U',           0x00U,
+    'C',           0x00U,
+    'T',           0x00U,
+    'O',           0x00U,
+    'R',           0x00U,
+    'S',           0x00U,
 };
 
-uint8_t g_UsbDeviceString2[USB_DESCRIPTOR_LENGTH_STRING2] = {
-    sizeof(g_UsbDeviceString2),
-    USB_DESCRIPTOR_TYPE_STRING,
-    'U',
-    0x00U,
-    'S',
-    0x00U,
-    'B',
-    0x00U,
-    ' ',
-    0x00U,
-    'A',
-    0x00U,
-    'U',
-    0x00U,
-    'D',
-    0x00U,
-    'I',
-    0x00U,
-    'O',
-    0x00U,
-    ' ',
-    0x00U,
-    'D',
-    0x00U,
-    'E',
-    0x00U,
-    'M',
-    0x00U,
-    'O',
-    0x00U,
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceString2[] = {
+    2U + 2U * 14U, USB_DESCRIPTOR_TYPE_STRING,
+    'U',           0x00U,
+    'S',           0x00U,
+    'B',           0x00U,
+    ' ',           0x00U,
+    'A',           0x00U,
+    'U',           0x00U,
+    'D',           0x00U,
+    'I',           0x00U,
+    'O',           0x00U,
+    ' ',           0x00U,
+    'D',           0x00U,
+    'E',           0x00U,
+    'M',           0x00U,
+    'O',           0x00U,
 };
 
 uint32_t g_UsbDeviceStringDescriptorLength[USB_DEVICE_STRING_COUNT] = {
-    sizeof(g_UsbDeviceString0), sizeof(g_UsbDeviceString1), sizeof(g_UsbDeviceString2),
+    sizeof(g_UsbDeviceString0),
+    sizeof(g_UsbDeviceString1),
+    sizeof(g_UsbDeviceString2),
 };
 
 uint8_t *g_UsbDeviceStringDescriptorArray[USB_DEVICE_STRING_COUNT] = {
-    g_UsbDeviceString0, g_UsbDeviceString1, g_UsbDeviceString2,
+    g_UsbDeviceString0,
+    g_UsbDeviceString1,
+    g_UsbDeviceString2,
 };
 
 usb_language_t g_UsbDeviceLanguage[USB_DEVICE_LANGUAGE_COUNT] = {{
-    g_UsbDeviceStringDescriptorArray, g_UsbDeviceStringDescriptorLength, (uint16_t)0x0409U,
+    g_UsbDeviceStringDescriptorArray,
+    g_UsbDeviceStringDescriptorLength,
+    (uint16_t)0x0409U,
 }};
 
 usb_language_list_t g_UsbDeviceLanguageList = {
-    g_UsbDeviceString0, sizeof(g_UsbDeviceString0), g_UsbDeviceLanguage, USB_DEVICE_LANGUAGE_COUNT,
+    g_UsbDeviceString0,
+    sizeof(g_UsbDeviceString0),
+    g_UsbDeviceLanguage,
+    USB_DEVICE_LANGUAGE_COUNT,
 };
 
 /*******************************************************************************
-* Code
-******************************************************************************/
+ * Code
+ ******************************************************************************/
 /*!
  * @brief USB device get device descriptor function.
  *
- * This function gets the device descriptor of the USB devcie.
+ * This function gets the device descriptor of the USB device.
  *
  * @param handle The USB device handle.
  * @param deviceDescriptor The pointer to the device descriptor structure.
@@ -466,7 +444,7 @@ usb_status_t USB_DeviceGetDeviceDescriptor(usb_device_handle handle,
 /*!
  * @brief USB device get configuration descriptor function.
  *
- * This function gets the configuration descriptor of the USB devcie.
+ * This function gets the configuration descriptor of the USB device.
  *
  * @param handle The USB device handle.
  * @param configurationDescriptor The pointer to the configuration descriptor structure.
@@ -488,7 +466,7 @@ usb_status_t USB_DeviceGetConfigurationDescriptor(
 /*!
  * @brief USB device get string descriptor function.
  *
- * This function gets the string descriptor of the USB devcie.
+ * This function gets the string descriptor of the USB device.
  *
  * @param handle The USB device handle.
  * @param stringDescriptor The pointer to the string descriptor structure.
@@ -505,7 +483,7 @@ usb_status_t USB_DeviceGetStringDescriptor(usb_device_handle handle,
     }
     else
     {
-        uint8_t languageId = 0U;
+        uint8_t languageId    = 0U;
         uint8_t languageIndex = USB_DEVICE_STRING_COUNT;
 
         for (; languageId < USB_DEVICE_LANGUAGE_COUNT; languageId++)
@@ -534,7 +512,7 @@ usb_status_t USB_DeviceGetStringDescriptor(usb_device_handle handle,
  * current speed.
  * As the default, the device descriptors and configurations are configured by using FS parameters for both EHCI and
  * KHCI.
- * When the EHCI is enabled, the application needs to call this fucntion to update device by using current speed.
+ * When the EHCI is enabled, the application needs to call this function to update device by using current speed.
  * The updated information includes endpoint max packet size, endpoint interval, etc. */
 usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
 {
@@ -568,10 +546,12 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
         if (USB_SPEED_HIGH == speed)
         {
             g_UsbDeviceAudioGeneratorEndpoints[i].maxPacketSize = HS_ISO_IN_ENDP_PACKET_SIZE;
+            g_UsbDeviceAudioGeneratorEndpoints[i].interval      = HS_ISO_IN_ENDP_INTERVAL;
         }
         else
         {
             g_UsbDeviceAudioGeneratorEndpoints[i].maxPacketSize = FS_ISO_IN_ENDP_PACKET_SIZE;
+            g_UsbDeviceAudioGeneratorEndpoints[i].interval      = FS_ISO_IN_ENDP_INTERVAL;
         }
     }
 

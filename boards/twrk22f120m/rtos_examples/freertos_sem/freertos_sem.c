@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /* FreeRTOS includes. */
@@ -69,7 +47,12 @@ int main(void)
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
-    xTaskCreate(producer_task, "PRODUCER_TASK", configMINIMAL_STACK_SIZE + 128, NULL, TASK_PRIO, NULL);
+    if (xTaskCreate(producer_task, "PRODUCER_TASK", configMINIMAL_STACK_SIZE + 128, NULL, TASK_PRIO, NULL) != pdPASS)
+    {
+        PRINTF("Task creation failed!.\r\n");
+        while (1)
+            ;
+    }
     /* Start scheduling. */
     vTaskStartScheduler();
     for (;;)
@@ -82,7 +65,7 @@ int main(void)
 static void producer_task(void *pvParameters)
 {
     uint32_t i;
-    
+
     PRINTF("Producer_task created.\r\n");
     xSemaphore_producer = xSemaphoreCreateBinary();
     if (xSemaphore_producer == NULL)
@@ -100,8 +83,16 @@ static void producer_task(void *pvParameters)
 
     for (i = 0; i < CONSUMER_LINE_SIZE; i++)
     {
-        xTaskCreate(consumer_task, "CONSUMER_TASK", configMINIMAL_STACK_SIZE, (void *)i, TASK_PRIO, NULL);
-        PRINTF("Consumer_task %d created.\r\n", i);
+        if (xTaskCreate(consumer_task, "CONSUMER_TASK", configMINIMAL_STACK_SIZE + 128, (void *)i, TASK_PRIO, NULL) !=
+            pdPASS)
+        {
+            PRINTF("Task creation failed!.\r\n");
+            vTaskSuspend(NULL);
+        }
+        else
+        {
+            PRINTF("Consumer_task %d created.\r\n", i);
+        }
     }
 
     while (1)

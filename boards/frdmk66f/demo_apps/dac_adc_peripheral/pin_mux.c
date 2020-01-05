@@ -14,11 +14,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v5.0
+product: Pins v6.0
 processor: MK66FN2M0xxx18
 package_id: MK66FN2M0VMD18
 mcu_data: ksdk2_0
-processor_version: 0.0.19
+processor_version: 6.0.1
 board: FRDM-K66F
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -43,7 +43,7 @@ void BOARD_InitBootPins(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins:
-- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', prefix: BOARD_, coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: E10, peripheral: UART0, signal: RX, pin_signal: TSI0_CH9/PTB16/SPI1_SOUT/UART0_RX/FTM_CLKIN0/FB_AD17/SDRAM_D17/EWM_IN/TPM_CLKIN0}
   - {pin_num: E9, peripheral: UART0, signal: TX, pin_signal: TSI0_CH10/PTB17/SPI1_SIN/UART0_TX/FTM_CLKIN1/FB_AD16/SDRAM_D16/EWM_OUT_b/TPM_CLKIN1}
@@ -66,13 +66,13 @@ void BOARD_InitPins(void)
     CLOCK_EnableClock(kCLOCK_PortB);
 
     /* PORTB16 (pin E10) is configured as UART0_RX */
-    PORT_SetPinMux(BOARD_INITPINS_DEBUG_UART_RX_PORT, BOARD_INITPINS_DEBUG_UART_RX_PIN, kPORT_MuxAlt3);
+    PORT_SetPinMux(BOARD_DEBUG_UART_RX_PORT, BOARD_DEBUG_UART_RX_PIN, kPORT_MuxAlt3);
 
     /* PORTB17 (pin E9) is configured as UART0_TX */
-    PORT_SetPinMux(BOARD_INITPINS_DEBUG_UART_TX_PORT, BOARD_INITPINS_DEBUG_UART_TX_PIN, kPORT_MuxAlt3);
+    PORT_SetPinMux(BOARD_DEBUG_UART_TX_PORT, BOARD_DEBUG_UART_TX_PIN, kPORT_MuxAlt3);
 
     /* PORTB2 (pin G12) is configured as ADC0_SE12 */
-    PORT_SetPinMux(BOARD_INITPINS_ADC0_SE12_PORT, BOARD_INITPINS_ADC0_SE12_PIN, kPORT_PinDisabledOrAnalog);
+    PORT_SetPinMux(BOARD_ADC0_SE12_PORT, BOARD_ADC0_SE12_PIN, kPORT_PinDisabledOrAnalog);
 
     SIM->SOPT5 = ((SIM->SOPT5 &
                    /* Mask bits to zero which are setting */

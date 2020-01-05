@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_WDOG_H_
 #define _FSL_WDOG_H_
@@ -41,15 +15,14 @@
  * @{
  */
 
-
 /*******************************************************************************
  * Definitions
  *******************************************************************************/
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief Defines WDOG driver version 2.0.0. */
-#define FSL_WDOG_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+/*! @brief Defines WDOG driver version 2.0.1. */
+#define FSL_WDOG_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
 /*@}*/
 
 /*! @name Unlock sequence */
@@ -67,7 +40,7 @@
 /*! @brief Describes WDOG clock source. */
 typedef enum _wdog_clock_source
 {
-    kWDOG_LpoClockSource = 0U,       /*!< WDOG clock sourced from LPO*/
+    kWDOG_LpoClockSource       = 0U, /*!< WDOG clock sourced from LPO*/
     kWDOG_AlternateClockSource = 1U, /*!< WDOG clock sourced from alternate clock source*/
 } wdog_clock_source_t;
 
@@ -112,7 +85,7 @@ typedef struct _wdog_config
 typedef enum _wdog_test_mode
 {
     kWDOG_QuickTest = 0U, /*!< Selects quick test */
-    kWDOG_ByteTest = 1U,  /*!< Selects byte test */
+    kWDOG_ByteTest  = 1U, /*!< Selects byte test */
 } wdog_test_mode_t;
 
 /*! @brief Describes WDOG tested byte selection in byte test mode. */
@@ -167,7 +140,7 @@ extern "C" {
  */
 
 /*!
- * @brief Initializes the WDOG configuration sturcture.
+ * @brief Initializes the WDOG configuration structure.
  *
  * This function initializes the WDOG configuration structure to default values. The default
  * values are as follows.
@@ -270,13 +243,14 @@ static inline void WDOG_Enable(WDOG_Type *base)
  */
 static inline void WDOG_Disable(WDOG_Type *base)
 {
-    base->STCTRLH &= ~WDOG_STCTRLH_WDOGEN_MASK;
+    base->STCTRLH &= ~(uint16_t)WDOG_STCTRLH_WDOGEN_MASK;
 }
 
 /*!
  * @brief Enables the WDOG interrupt.
  *
- * This function writes a value into the WDOG_STCTRLH register to enable the WDOG interrupt. It is a write-once register.
+ * This function writes a value into the WDOG_STCTRLH register to enable the WDOG interrupt. It is a write-once
+ * register.
  * Ensure that the WCT window is still open and the register has not been written to in this WCT
  * while the function is called.
  *
@@ -287,13 +261,14 @@ static inline void WDOG_Disable(WDOG_Type *base)
  */
 static inline void WDOG_EnableInterrupts(WDOG_Type *base, uint32_t mask)
 {
-    base->STCTRLH |= mask;
+    base->STCTRLH |= (uint16_t)mask;
 }
 
 /*!
  * @brief Disables the WDOG interrupt.
  *
- * This function writes a value into the WDOG_STCTRLH register to disable the WDOG interrupt. It is a write-once register.
+ * This function writes a value into the WDOG_STCTRLH register to disable the WDOG interrupt. It is a write-once
+ * register.
  * Ensure that the WCT window is still open and the register has not been written to in this WCT
  * while the function is called.
  *
@@ -304,7 +279,7 @@ static inline void WDOG_EnableInterrupts(WDOG_Type *base, uint32_t mask)
  */
 static inline void WDOG_DisableInterrupts(WDOG_Type *base, uint32_t mask)
 {
-    base->STCTRLH &= ~mask;
+    base->STCTRLH &= (uint16_t)~mask;
 }
 
 /*!
@@ -380,7 +355,7 @@ static inline void WDOG_SetWindowValue(WDOG_Type *base, uint32_t windowValue)
  * @brief Unlocks the WDOG register written.
  *
  * This function unlocks the WDOG register written.
- * Before starting the unlock sequence and following congfiguration, disable the global interrupts.
+ * Before starting the unlock sequence and following configuration, disable the global interrupts.
  * Otherwise, an interrupt may invalidate the unlocking sequence and the WCT may expire.
  * After the configuration finishes, re-enable the global interrupts.
  *
@@ -423,7 +398,7 @@ static inline uint16_t WDOG_GetResetCount(WDOG_Type *base)
  */
 static inline void WDOG_ClearResetCount(WDOG_Type *base)
 {
-    base->RSTCNT |= UINT16_MAX;
+    base->RSTCNT |= (uint16_t)UINT16_MAX;
 }
 
 /*@}*/

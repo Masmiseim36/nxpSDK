@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016,2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef __USB_HID_MOUSE_H__
@@ -41,16 +19,45 @@
 #if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
 #define CONTROLLER_ID kUSB_ControllerKhci0
 #endif
+#if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
+#define CONTROLLER_ID kUSB_ControllerLpcIp3511Fs0
+#endif
+#if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
+#define CONTROLLER_ID kUSB_ControllerLpcIp3511Hs0
+#endif
 
 #define USB_DEVICE_INTERRUPT_PRIORITY (3U)
-
 #define USB_HID_MOUSE_REPORT_LENGTH (0x04U)
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U))
+/*! @brief USB DCD charging detect status */
+typedef enum _usb_device_dcd_dev_status
+{
+    kUSB_DeviceDCDDectionInit = 0x0U,
+    kUSB_DeviceDCDDectionError,
+    kUSB_DeviceDCDDectionTimeOut,
+    kUSB_DeviceDCDDectionSDP,
+    kUSB_DeviceDCDDectionCDP,
+    kUSB_DeviceDCDDectionDCP,
+    kUSB_DeviceDCDDectionFinished,
+} usb_device_dcd_dev_status_t;
+#endif
 typedef struct _usb_hid_mouse_struct
 {
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
+    volatile uint64_t hwTick;
+#endif
     usb_device_handle deviceHandle;
-    uint8_t buffer[USB_HID_MOUSE_REPORT_LENGTH];
+    uint8_t *buffer;
     uint8_t speed;
     uint8_t attach;
+#if (defined(USB_DEVICE_CONFIG_DETACH_ENABLE) && (USB_DEVICE_CONFIG_DETACH_ENABLE > 0U))
+    volatile uint8_t connectStateChanged;
+    volatile uint8_t connectState;
+#endif
+#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U))
+    usb_device_dcd_dev_status_t dcdDectionStatus;
+#endif
 } usb_hid_mouse_struct_t;
 
 /*******************************************************************************

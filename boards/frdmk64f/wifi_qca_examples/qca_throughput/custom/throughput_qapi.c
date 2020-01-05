@@ -53,12 +53,12 @@ typedef struct
 } CERT_HEADER_T;
 
 SSL_INST ssl_inst[MAX_SSL_INST];
-uint8_t *ssl_cert_data_buf;
-uint16_t ssl_cert_data_buf_len;
+uint8_t *ssl_cert_data_buf     = NULL;
+uint16_t ssl_cert_data_buf_len = 0;
 
-uint8_t const *ssl_default_cert = (uint8_t *)sharkSslRSACertKingfisher;
-const uint16_t ssl_default_cert_len = sizeof(sharkSslRSACertKingfisher);
-uint8_t const *ssl_default_calist = (uint8_t *)sharkSslCAList;
+uint8_t const *ssl_default_cert       = (uint8_t *)sharkSslRSACertKingfisher;
+const uint16_t ssl_default_cert_len   = sizeof(sharkSslRSACertKingfisher);
+uint8_t const *ssl_default_calist     = (uint8_t *)sharkSslCAList;
 const uint16_t ssl_default_calist_len = sizeof(sharkSslCAList);
 
 SSL_ROLE_T ssl_role;
@@ -66,7 +66,7 @@ SSL_ROLE_T ssl_role;
 
 /**************************Globals *************************************/
 static uint32_t num_traffic_streams = 0; // Counter to monitor simultaneous traffic streams
-static uint32_t port_in_use = 0; // Used to prevent two streams from using same port
+static uint32_t port_in_use         = 0; // Used to prevent two streams from using same port
 
 extern unsigned char v6EnableFlag;
 uint8_t bench_quit = 0;
@@ -76,8 +76,8 @@ const int rx_timeout = ATH_RECV_TIMEOUT;
 
 unsigned char v6EnableFlag = 0;
 /************************************************************************
-*     Definitions.
-*************************************************************************/
+ *     Definitions.
+ *************************************************************************/
 
 #define CFG_COMPLETED_STR "IOT Throughput Test Completed" NL
 #define CFG_REPORT_STR "."
@@ -119,11 +119,11 @@ int32_t wait_for_response(THROUGHPUT_CXT *p_tCxt, SOCKADDR_T foreign_addr, SOCKA
 extern int Inet6Pton(char *src, IP6_ADDR_T *ipv6);
 
 /************************************************************************
-* NAME: test_for_quit
-*
-* DESCRIPTION:
-* Parameters: none
-************************************************************************/
+ * NAME: test_for_quit
+ *
+ * DESCRIPTION:
+ * Parameters: none
+ ************************************************************************/
 int32_t test_for_quit(void)
 {
     return bench_quit;
@@ -167,18 +167,18 @@ static void print_header_end(void)
 }
 
 /************************************************************************
-* NAME: print_test_results
-*
-* DESCRIPTION: Print throughput results
-************************************************************************/
+ * NAME: print_test_results
+ *
+ * DESCRIPTION: Print throughput results
+ ************************************************************************/
 static void print_test_results(THROUGHPUT_CXT *p_tCxt)
 {
     /* Print throughput results.*/
-    uint32_t throughput = 0;
-    uint32_t total_bytes = 0;
-    uint32_t total_kbytes = 0;
-    uint32_t sec_interval = (p_tCxt->last_time.SECONDS - p_tCxt->first_time.SECONDS);
-    uint32_t ms_interval = (p_tCxt->last_time.MILLISECONDS - p_tCxt->first_time.MILLISECONDS);
+    uint32_t throughput     = 0;
+    uint32_t total_bytes    = 0;
+    uint32_t total_kbytes   = 0;
+    uint32_t sec_interval   = (p_tCxt->last_time.SECONDS - p_tCxt->first_time.SECONDS);
+    uint32_t ms_interval    = (p_tCxt->last_time.MILLISECONDS - p_tCxt->first_time.MILLISECONDS);
     uint32_t total_interval = sec_interval * 1000 + ms_interval;
 
     p_tCxt->last_interval = total_interval;
@@ -204,11 +204,11 @@ static void print_test_results(THROUGHPUT_CXT *p_tCxt)
             }
 
             // throughput = (p_tCxt->last_kbytes*1024*8)/(total_interval) + (p_tCxt->last_bytes*8)/(total_interval);
-            total_bytes = p_tCxt->last_bytes;
+            total_bytes  = p_tCxt->last_bytes;
             total_kbytes = p_tCxt->last_kbytes;
 
             /*Reset previous test data*/
-            p_tCxt->last_bytes = 0;
+            p_tCxt->last_bytes  = 0;
             p_tCxt->last_kbytes = 0;
         }
 
@@ -229,9 +229,9 @@ static void print_test_results(THROUGHPUT_CXT *p_tCxt)
             }
 
             // throughput = (p_tCxt->kbytes*1024*8)/(total_interval) + (p_tCxt->bytes*8)/(total_interval);
-            total_bytes = p_tCxt->bytes;
-            total_kbytes = p_tCxt->kbytes;
-            p_tCxt->last_bytes = p_tCxt->bytes;
+            total_bytes         = p_tCxt->bytes;
+            total_kbytes        = p_tCxt->kbytes;
+            p_tCxt->last_bytes  = p_tCxt->bytes;
             p_tCxt->last_kbytes = p_tCxt->kbytes;
         }
     }
@@ -282,16 +282,16 @@ static void print_test_results(THROUGHPUT_CXT *p_tCxt)
 }
 
 /************************************************************************
-* NAME: tx_command_parser
-*
-* DESCRIPTION:
-************************************************************************/
+ * NAME: tx_command_parser
+ *
+ * DESCRIPTION:
+ ************************************************************************/
 int32_t tx_command_parser(int32_t argc, char_ptr argv[])
 { /* Body */
-    bool print_usage = 0;
+    bool print_usage    = 0;
     int32_t return_code = A_OK;
     THROUGHPUT_CXT tCxt;
-    int32_t retval = -1;
+    int32_t retval          = -1;
     int32_t max_packet_size = 0;
 
     memset(&tCxt, 0, sizeof(THROUGHPUT_CXT));
@@ -306,7 +306,7 @@ int32_t tx_command_parser(int32_t argc, char_ptr argv[])
         if (v6EnableFlag)
         {
             /*Get IPv6 address of Peer*/
-            retval = Inet6Pton(argv[1], (IP6_ADDR_T*)tCxt.params.tx_params.v6addr); /* server IP*/
+            retval = Inet6Pton(argv[1], (IP6_ADDR_T *)tCxt.params.tx_params.v6addr); /* server IP*/
             if (retval == 0)
                 retval = -1;
         }
@@ -388,7 +388,7 @@ int32_t tx_command_parser(int32_t argc, char_ptr argv[])
                     if (v6EnableFlag)
                     {
                         /*Get IPv6 address of Peer*/
-                        retval = Inet6Pton(argv[8], (IP6_ADDR_T*)tCxt.params.tx_params.local_v6addr);
+                        retval = Inet6Pton(argv[8], (IP6_ADDR_T *)tCxt.params.tx_params.local_v6addr);
                         if (retval == 0)
                             retval = -1;
                     }
@@ -456,7 +456,7 @@ int32_t tx_command_parser(int32_t argc, char_ptr argv[])
                 }
 
                 tCxt.test_type = SSL_TX;
-                ssl_role = SSL_CLIENT;
+                ssl_role       = SSL_CLIENT;
                 ath_tcp_tx(&tCxt);
                 ssl_role = (SSL_ROLE_T)0;
             }
@@ -505,14 +505,14 @@ ERROR:
 
 #if MULTI_SOCKET_SUPPORT
 /************************************************************************
-* NAME: rx_command_parser_multi_socket
-*
-* DESCRIPTION: parses parameters of rx command for multi sockets (TCP & UDP)
-************************************************************************/
+ * NAME: rx_command_parser_multi_socket
+ *
+ * DESCRIPTION: parses parameters of rx command for multi sockets (TCP & UDP)
+ ************************************************************************/
 
 int32_t rx_command_parser_multi_socket(int32_t argc, char_ptr argv[])
 {
-    bool print_usage = 0;
+    bool print_usage    = 0;
     int32_t return_code = A_OK;
     // THROUGHPUT_CXT     tCxt1, tCxt2, tCxt3, tCxt4;
     int16_t port[UDP_MULTI_SOCKET_MAX] = {0};
@@ -574,16 +574,16 @@ int32_t rx_command_parser_multi_socket(int32_t argc, char_ptr argv[])
 }
 
 /************************************************************************
-* NAME: tx_command_parser_multi_socket
-*
-* DESCRIPTION:
-************************************************************************/
+ * NAME: tx_command_parser_multi_socket
+ *
+ * DESCRIPTION:
+ ************************************************************************/
 int32_t tx_command_parser_multi_socket(int32_t argc, char_ptr argv[])
 { /* Body */
-    bool print_usage = 0;
+    bool print_usage    = 0;
     int32_t return_code = A_OK;
     THROUGHPUT_CXT tCxt;
-    int32_t retval = -1;
+    int32_t retval          = -1;
     int32_t max_packet_size = 0;
     int32_t range;
 
@@ -599,7 +599,7 @@ int32_t tx_command_parser_multi_socket(int32_t argc, char_ptr argv[])
         if (v6EnableFlag)
         {
             /*Get IPv6 address of Peer*/
-            retval = Inet6Pton(argv[1], (IP6_ADDR_T*)tCxt.params.tx_params.v6addr); /* server IP*/
+            retval = Inet6Pton(argv[1], (IP6_ADDR_T *)tCxt.params.tx_params.v6addr); /* server IP*/
             if (retval == 0)
                 retval = -1;
         }
@@ -784,8 +784,8 @@ static void ath_tcp_tx_multi_socket(THROUGHPUT_CXT *p_tCxt, int32_t multi_socket
             }
             memset(&foreign_addr, 0, sizeof(local_addr));
             foreign_addr.sin_addr.s_addr = p_tCxt->params.tx_params.ip_address;
-            foreign_addr.sin_port = p_tCxt->params.tx_params.port + loop;
-            foreign_addr.sin_family = ATH_AF_INET;
+            foreign_addr.sin_port        = p_tCxt->params.tx_params.port + loop;
+            foreign_addr.sin_family      = ATH_AF_INET;
 
             PRINTF("Connecting." NL);
             /* Connect to the server.*/
@@ -805,7 +805,7 @@ static void ath_tcp_tx_multi_socket(THROUGHPUT_CXT *p_tCxt, int32_t multi_socket
             memset(&foreign_addr6, 0, sizeof(foreign_addr6));
             memcpy(&foreign_addr6.sin6_addr, p_tCxt->params.tx_params.v6addr, 16);
             ;
-            foreign_addr6.sin6_port = p_tCxt->params.tx_params.port + loop;
+            foreign_addr6.sin6_port   = p_tCxt->params.tx_params.port + loop;
             foreign_addr6.sin6_family = ATH_AF_INET6;
 
             PRINTF("Connecting." NL);
@@ -822,12 +822,12 @@ static void ath_tcp_tx_multi_socket(THROUGHPUT_CXT *p_tCxt, int32_t multi_socket
     PRINTF("Sending." NL);
 
     /*Reset all counters*/
-    p_tCxt->bytes = 0;
-    p_tCxt->kbytes = 0;
-    p_tCxt->last_bytes = 0;
+    p_tCxt->bytes       = 0;
+    p_tCxt->kbytes      = 0;
+    p_tCxt->last_bytes  = 0;
     p_tCxt->last_kbytes = 0;
-    cur_packet_number = 0;
-    buffer_offset = 0;
+    cur_packet_number   = 0;
+    buffer_offset       = 0;
 
     app_time_get_elapsed(&p_tCxt->first_time);
     app_time_get_elapsed(&p_tCxt->last_time);
@@ -968,8 +968,8 @@ ERROR_2:
 
     for (loop = 0; loop < multi_socket_count; loop++)
     {
-        tCxt[loop].kbytes = tCxt[loop].bytes / 1024;
-        tCxt[loop].bytes = tCxt[loop].bytes % 1024;
+        tCxt[loop].kbytes    = tCxt[loop].bytes / 1024;
+        tCxt[loop].bytes     = tCxt[loop].bytes % 1024;
         tCxt[loop].test_type = TCP_TX;
         print_test_results(&tCxt[loop]);
 
@@ -988,15 +988,16 @@ ERROR_1:
 #endif // MULTI_SOCKET_SUPPORT
 
 /************************************************************************
-* NAME: rx_command_parser
-*
-* DESCRIPTION: parses parameters of receive command (both TCP & UDP)
-************************************************************************/
+ * NAME: rx_command_parser
+ *
+ * DESCRIPTION: parses parameters of receive command (both TCP & UDP)
+ ************************************************************************/
 int32_t rx_command_parser(int32_t argc, char_ptr argv[])
 { /* Body */
     bool print_usage = 0, shorthelp = FALSE;
     int32_t return_code = A_OK;
     THROUGHPUT_CXT tCxt;
+    uint32_t tmp_addr = 0;
 
     memset(&tCxt, 0, sizeof(THROUGHPUT_CXT));
 
@@ -1048,7 +1049,7 @@ int32_t rx_command_parser(int32_t argc, char_ptr argv[])
                     }
                     else
                     {
-                        Inet6Pton(argv[3], (IP6_ADDR_T*)tCxt.params.rx_params.local_v6addr);
+                        Inet6Pton(argv[3], (IP6_ADDR_T *)tCxt.params.rx_params.local_v6addr);
                     }
                     tCxt.params.rx_params.local_if = 1;
                 }
@@ -1067,13 +1068,15 @@ int32_t rx_command_parser(int32_t argc, char_ptr argv[])
                     // Multicast address is provided
                     if (!v6EnableFlag)
                     {
-                        ath_inet_aton(argv[3], (uint32_t *)&tCxt.params.rx_params.group.imr_multiaddr);
-                        ath_inet_aton(argv[4], (uint32_t *)&tCxt.params.rx_params.group.imr_interface);
+                        ath_inet_aton(argv[3], (uint32_t *)&tmp_addr);
+                        tCxt.params.rx_params.group.imr_multiaddr = tmp_addr;
+                        ath_inet_aton(argv[4], (uint32_t *)&tmp_addr);
+                        tCxt.params.rx_params.group.imr_interface = tmp_addr;
                     }
                     else
                     {
-                        Inet6Pton(argv[3], (IP6_ADDR_T*)tCxt.params.rx_params.group6.ipv6mr_multiaddr.s6_addr);
-                        Inet6Pton(argv[4], (IP6_ADDR_T*)tCxt.params.rx_params.group6.ipv6mr_interface.s6_addr);
+                        Inet6Pton(argv[3], (IP6_ADDR_T *)tCxt.params.rx_params.group6.ipv6mr_multiaddr.s6_addr);
+                        Inet6Pton(argv[4], (IP6_ADDR_T *)tCxt.params.rx_params.group6.ipv6mr_interface.s6_addr);
                     }
                     tCxt.params.rx_params.mcastEnabled = 1;
                 }
@@ -1086,7 +1089,7 @@ int32_t rx_command_parser(int32_t argc, char_ptr argv[])
                     }
                     else
                     {
-                        Inet6Pton(argv[3], (IP6_ADDR_T*)tCxt.params.rx_params.local_v6addr);
+                        Inet6Pton(argv[3], (IP6_ADDR_T *)tCxt.params.rx_params.local_v6addr);
                     }
                     tCxt.params.rx_params.local_if = 1;
                 }
@@ -1131,7 +1134,7 @@ int32_t rx_command_parser(int32_t argc, char_ptr argv[])
                 goto ERROR;
             }
             tCxt.test_type = SSL_RX;
-            ssl_role = SSL_SERVER;
+            ssl_role       = SSL_SERVER;
             ath_tcp_rx(&tCxt);
             ssl_role = (SSL_ROLE_T)0;
         }
@@ -1187,10 +1190,10 @@ ERROR:
 ////////////////////////////////////////////// TX //////////////////////////////////////
 
 /************************************************************************
-* NAME: ath_tcp_tx
-*
-* DESCRIPTION: Start TCP Transmit test.
-************************************************************************/
+ * NAME: ath_tcp_tx
+ *
+ * DESCRIPTION: Start TCP Transmit test.
+ ************************************************************************/
 static void ath_tcp_tx(THROUGHPUT_CXT *p_tCxt)
 {
     SOCKADDR_T local_addr;
@@ -1288,8 +1291,8 @@ static void ath_tcp_tx(THROUGHPUT_CXT *p_tCxt)
     {
         memset(&foreign_addr, 0, sizeof(local_addr));
         foreign_addr.sin_addr.s_addr = p_tCxt->params.tx_params.ip_address;
-        foreign_addr.sin_port = p_tCxt->params.tx_params.port;
-        foreign_addr.sin_family = ATH_AF_INET;
+        foreign_addr.sin_port        = p_tCxt->params.tx_params.port;
+        foreign_addr.sin_family      = ATH_AF_INET;
 
         /* Connect to the server.*/
         if (qcom_connect(p_tCxt->sock_peer, (struct sockaddr *)(&foreign_addr), sizeof(foreign_addr)) == A_ERROR)
@@ -1303,7 +1306,7 @@ static void ath_tcp_tx(THROUGHPUT_CXT *p_tCxt)
         memset(&foreign_addr6, 0, sizeof(foreign_addr6));
         memcpy(&foreign_addr6.sin6_addr, p_tCxt->params.tx_params.v6addr, 16);
         ;
-        foreign_addr6.sin6_port = p_tCxt->params.tx_params.port;
+        foreign_addr6.sin6_port   = p_tCxt->params.tx_params.port;
         foreign_addr6.sin6_family = ATH_AF_INET6;
 
         /* Connect to the server.*/
@@ -1391,12 +1394,12 @@ static void ath_tcp_tx(THROUGHPUT_CXT *p_tCxt)
     PRINTF("Sending." NL);
 
     /*Reset all counters*/
-    p_tCxt->bytes = 0;
-    p_tCxt->kbytes = 0;
-    p_tCxt->last_bytes = 0;
+    p_tCxt->bytes       = 0;
+    p_tCxt->kbytes      = 0;
+    p_tCxt->last_bytes  = 0;
     p_tCxt->last_kbytes = 0;
-    cur_packet_number = 0;
-    buffer_offset = 0;
+    cur_packet_number   = 0;
+    buffer_offset       = 0;
 
     app_time_get_elapsed(&p_tCxt->first_time);
     app_time_get_elapsed(&p_tCxt->last_time);
@@ -1526,8 +1529,8 @@ static void ath_tcp_tx(THROUGHPUT_CXT *p_tCxt)
 
 ERROR_2:
     PRINTF(NL); // new line to separate from progress line
-    p_tCxt->kbytes = p_tCxt->bytes / 1024;
-    p_tCxt->bytes = p_tCxt->bytes % 1024;
+    p_tCxt->kbytes    = p_tCxt->bytes / 1024;
+    p_tCxt->bytes     = p_tCxt->bytes % 1024;
     p_tCxt->test_type = TCP_TX;
     print_test_results(p_tCxt);
 
@@ -1549,10 +1552,10 @@ ERROR_1:
 }
 
 /************************************************************************
-* NAME: ath_udp_tx
-*
-* DESCRIPTION: Start TX UDP throughput test.
-************************************************************************/
+ * NAME: ath_udp_tx
+ *
+ * DESCRIPTION: Start TX UDP throughput test.
+ ************************************************************************/
 static void ath_udp_tx(THROUGHPUT_CXT *p_tCxt)
 {
     char ip_str[16];
@@ -1653,8 +1656,8 @@ static void ath_udp_tx(THROUGHPUT_CXT *p_tCxt)
     PRINTF("Connecting." NL);
     memset(&foreign_addr, 0, sizeof(local_addr));
     foreign_addr.sin_addr.s_addr = p_tCxt->params.tx_params.ip_address;
-    foreign_addr.sin_port = p_tCxt->params.tx_params.port;
-    foreign_addr.sin_family = ATH_AF_INET;
+    foreign_addr.sin_port        = p_tCxt->params.tx_params.port;
+    foreign_addr.sin_family      = ATH_AF_INET;
 
     if (test_for_quit())
     {
@@ -1676,7 +1679,7 @@ static void ath_udp_tx(THROUGHPUT_CXT *p_tCxt)
     {
         memset(&foreign_addr6, 0, sizeof(local_addr6));
         memcpy(&foreign_addr6.sin6_addr, p_tCxt->params.tx_params.v6addr, 16);
-        foreign_addr6.sin6_port = p_tCxt->params.tx_params.port;
+        foreign_addr6.sin6_port   = p_tCxt->params.tx_params.port;
         foreign_addr6.sin6_family = ATH_AF_INET6;
         if (qcom_connect(p_tCxt->sock_peer, (struct sockaddr *)(&foreign_addr6), sizeof(foreign_addr6)) == A_ERROR)
         {
@@ -1689,12 +1692,12 @@ static void ath_udp_tx(THROUGHPUT_CXT *p_tCxt)
     PRINTF("Sending." NL);
 
     /*Reset all counters*/
-    p_tCxt->bytes = 0;
-    p_tCxt->kbytes = 0;
-    p_tCxt->last_bytes = 0;
+    p_tCxt->bytes       = 0;
+    p_tCxt->kbytes      = 0;
+    p_tCxt->last_bytes  = 0;
     p_tCxt->last_kbytes = 0;
-    p_tCxt->sent_bytes = 0;
-    cur_packet_number = 0;
+    p_tCxt->sent_bytes  = 0;
+    cur_packet_number   = 0;
 
     app_time_get_elapsed(&p_tCxt->first_time);
     app_time_get_elapsed(&p_tCxt->last_time);
@@ -1824,10 +1827,10 @@ ERROR_1:
 
 #if ENABLE_RAW_SOCKET_DEMO
 /************************************************************************
-* NAME: ath_raw_tx
-*
-* DESCRIPTION: Start TX RAW throughput test.
-************************************************************************/
+ * NAME: ath_raw_tx
+ *
+ * DESCRIPTION: Start TX RAW throughput test.
+ ************************************************************************/
 static void ath_raw_tx(THROUGHPUT_CXT *p_tCxt)
 {
     char ip_str[16];
@@ -1920,7 +1923,7 @@ static void ath_raw_tx(THROUGHPUT_CXT *p_tCxt)
     PRINTF("Connecting." NL);
     memset(&foreign_addr, 0, sizeof(local_addr));
     foreign_addr.sin_addr.s_addr = p_tCxt->params.tx_params.ip_address;
-    foreign_addr.sin_family = ATH_AF_INET;
+    foreign_addr.sin_family      = ATH_AF_INET;
 
     if (test_for_quit())
     {
@@ -1934,12 +1937,12 @@ static void ath_raw_tx(THROUGHPUT_CXT *p_tCxt)
     PRINTF("Sending." NL);
 
     /*Reset all counters*/
-    p_tCxt->bytes = 0;
-    p_tCxt->kbytes = 0;
-    p_tCxt->last_bytes = 0;
+    p_tCxt->bytes       = 0;
+    p_tCxt->kbytes      = 0;
+    p_tCxt->last_bytes  = 0;
     p_tCxt->last_kbytes = 0;
-    p_tCxt->sent_bytes = 0;
-    cur_packet_number = 0;
+    p_tCxt->sent_bytes  = 0;
+    cur_packet_number   = 0;
 
     app_time_get_elapsed(&p_tCxt->first_time);
     app_time_get_elapsed(&p_tCxt->last_time);
@@ -1972,10 +1975,10 @@ static void ath_raw_tx(THROUGHPUT_CXT *p_tCxt)
         {
             iphdr = (ip_header *)p_tCxt->buffer;
 
-            iphdr->iph_ihl = IPV4_HEADER_LENGTH / sizeof(uint32_t);
-            iphdr->iph_ver = 4; /* IPv4 */
-            iphdr->iph_tos = 0;
-            iphdr->iph_len = htons(packet_size);
+            iphdr->iph_ihl   = IPV4_HEADER_LENGTH / sizeof(uint32_t);
+            iphdr->iph_ver   = 4; /* IPv4 */
+            iphdr->iph_tos   = 0;
+            iphdr->iph_len   = htons(packet_size);
             iphdr->iph_ident = htons(0);
             /* Zero (1 bit) */
             ip_flags[0] = 0;
@@ -1995,7 +1998,7 @@ static void ath_raw_tx(THROUGHPUT_CXT *p_tCxt)
             iphdr->iph_protocol = proto;
 
             iphdr->iph_sourceip = htonl(temp_addr);
-            iphdr->iph_destip = htonl(p_tCxt->params.tx_params.ip_address);
+            iphdr->iph_destip   = htonl(p_tCxt->params.tx_params.ip_address);
         }
 
         send_result = qcom_sendto(p_tCxt->sock_peer, (&p_tCxt->buffer[0]), packet_size, 0,
@@ -2090,10 +2093,10 @@ ERROR_1:
 
 #if MULTI_SOCKET_SUPPORT
 /************************************************************************
-* NAME: ath_create_socket_and_bind
-*
-* DESCRIPTION: Create a IPv4 socket and bind a address.
-************************************************************************/
+ * NAME: ath_create_socket_and_bind
+ *
+ * DESCRIPTION: Create a IPv4 socket and bind a address.
+ ************************************************************************/
 static int ath_create_socket_and_bind(uint32_t *socket, int16_t port, int32_t type)
 {
     SOCKADDR_T local_addr;
@@ -2105,7 +2108,7 @@ static int ath_create_socket_and_bind(uint32_t *socket, int16_t port, int32_t ty
     }
 
     memset(&local_addr, 0, sizeof(local_addr));
-    local_addr.sin_port = port;
+    local_addr.sin_port   = port;
     local_addr.sin_family = ATH_AF_INET;
 
     if (qcom_bind(*socket, (struct sockaddr *)(&local_addr), sizeof(local_addr)) != A_OK)
@@ -2117,10 +2120,10 @@ static int ath_create_socket_and_bind(uint32_t *socket, int16_t port, int32_t ty
 }
 
 /************************************************************************
-* NAME: ath_create_socket_and_bind
-*
-* DESCRIPTION: Create a IPv4 socket and bind a address.
-************************************************************************/
+ * NAME: ath_create_socket_and_bind
+ *
+ * DESCRIPTION: Create a IPv4 socket and bind a address.
+ ************************************************************************/
 static int ath_create_socket_and_bind6(uint32_t *socket, int16_t port, int32_t type)
 {
     SOCKADDR_6_T local_addr6;
@@ -2132,7 +2135,7 @@ static int ath_create_socket_and_bind6(uint32_t *socket, int16_t port, int32_t t
     }
 
     memset(&local_addr6, 0, sizeof(local_addr6));
-    local_addr6.sin6_port = port;
+    local_addr6.sin6_port   = port;
     local_addr6.sin6_family = ATH_AF_INET6;
 
     if (qcom_bind(*socket, (struct sockaddr *)(&local_addr6), sizeof(local_addr6)) != A_OK)
@@ -2145,10 +2148,10 @@ static int ath_create_socket_and_bind6(uint32_t *socket, int16_t port, int32_t t
 }
 
 /************************************************************************
-* NAME: ath_udp_rx_multi_socket
-*
-* DESCRIPTION: Start throughput UDP server.
-************************************************************************/
+ * NAME: ath_udp_rx_multi_socket
+ *
+ * DESCRIPTION: Start throughput UDP server.
+ ************************************************************************/
 static void ath_udp_rx_multi_socket(int16_t *port, int32_t multi_socket_count)
 {
     socklen_t addr_len;
@@ -2205,9 +2208,9 @@ static void ath_udp_rx_multi_socket(int16_t *port, int32_t multi_socket_count)
     /*Initialize start, stop times*/
     app_time_get_elapsed(&(tCxt.last_time));
     app_time_get_elapsed(&(tCxt.first_time));
-    tCxt.last_bytes = 0;
+    tCxt.last_bytes  = 0;
     tCxt.last_kbytes = 0;
-    block_time = tCxt.first_time;
+    block_time       = tCxt.first_time;
 
     while (test_for_quit() == 0) /* Main loop */
     {
@@ -2219,14 +2222,14 @@ static void ath_udp_rx_multi_socket(int16_t *port, int32_t multi_socket_count)
             {
                 app_time_get_elapsed(&(tCxt.last_time));
                 app_time_get_elapsed(&(tCxt.first_time));
-                tCxt.last_bytes = 0;
+                tCxt.last_bytes  = 0;
                 tCxt.last_kbytes = 0;
-                block_time = tCxt.first_time;
-                tCxt.bytes = 0;
-                tCxt.kbytes = 0;
-                tCxt.sent_bytes = 0;
-                tCxt.sock_local = sock_local[loop];
-                is_first = 1;
+                block_time       = tCxt.first_time;
+                tCxt.bytes       = 0;
+                tCxt.kbytes      = 0;
+                tCxt.sent_bytes  = 0;
+                tCxt.sock_local  = sock_local[loop];
+                is_first         = 1;
 
                 while (test_for_quit() == 0)
                 {
@@ -2250,9 +2253,8 @@ static void ath_udp_rx_multi_socket(int16_t *port, int32_t multi_socket_count)
 #else
                     if (!v6EnableFlag)
                     {
-                        received = qcom_recvfrom(sock_local[loop],
-                                                 (char *)(&tCxt.buffer[0]), CFG_PACKET_SIZE_MAX_RX, 0, &addr,
-                                                 &addr_len);
+                        received = qcom_recvfrom(sock_local[loop], (char *)(&tCxt.buffer[0]), CFG_PACKET_SIZE_MAX_RX, 0,
+                                                 &addr, &addr_len);
                     }
                     else
                     {
@@ -2275,7 +2277,7 @@ static void ath_udp_rx_multi_socket(int16_t *port, int32_t multi_socket_count)
                             if (received > sizeof(EOT_PACKET))
                             {
                                 temp_addr = ntohl(addr.sin_addr.s_addr);
-                                ip_str = A_MALLOC(sizeof(uint8_t) * 48, MALLOC_ID_TEMPORARY);
+                                ip_str    = A_MALLOC(sizeof(uint8_t) * 48, MALLOC_ID_TEMPORARY);
                                 if (NULL == ip_str)
                                 {
                                     PRINTF("Out of Memory error" NL);
@@ -2322,8 +2324,8 @@ static void ath_udp_rx_multi_socket(int16_t *port, int32_t multi_socket_count)
                                     sendAck(&tCxt, (A_VOID *)&addr6, port[loop]);
                                 }
 
-                                tCxt.kbytes = tCxt.bytes / 1024;
-                                tCxt.bytes = tCxt.bytes % 1024;
+                                tCxt.kbytes    = tCxt.bytes / 1024;
+                                tCxt.bytes     = tCxt.bytes % 1024;
                                 tCxt.test_type = UDP_RX;
                                 print_test_results(&tCxt);
                                 break;
@@ -2359,16 +2361,16 @@ ERROR:
 }
 
 /************************************************************************
-* NAME: ath_tcp_rx_multi_socket
-*
-* DESCRIPTION: Start throughput TCP server.
-************************************************************************/
+ * NAME: ath_tcp_rx_multi_socket
+ *
+ * DESCRIPTION: Start throughput TCP server.
+ ************************************************************************/
 
 #if T_SELECT_VER1
 static void ath_tcp_rx_multi_socket(int16_t *port, int32_t multi_socket_count)
 {
-    uint8_t *ip_str = NULL;
-    int32_t result = 0;
+    uint8_t *ip_str    = NULL;
+    int32_t result     = 0;
     socklen_t addr_len = 0;
     int32_t received = 0, loop = 0, error = A_OK;
     uint8_t is_first[TCP_MULTI_SOCKET_MAX], count;
@@ -2429,9 +2431,9 @@ static void ath_tcp_rx_multi_socket(int16_t *port, int32_t multi_socket_count)
     {
         app_time_get_elapsed(&tCxt[loop].first_time);
         app_time_get_elapsed(&tCxt[loop].last_time);
-        tCxt[loop].last_bytes = 0;
+        tCxt[loop].last_bytes  = 0;
         tCxt[loop].last_kbytes = 0;
-        is_first[loop] = 1;
+        is_first[loop]         = 1;
     }
 
     for (loop = 0; loop < multi_socket_count; loop++)
@@ -2488,8 +2490,8 @@ static void ath_tcp_rx_multi_socket(int16_t *port, int32_t multi_socket_count)
                         // Close the socket.
                         tCxt[loop].sock_peer = 0;
                         /*Test ended, peer closed connection*/
-                        tCxt[loop].kbytes = tCxt[loop].bytes / 1024;
-                        tCxt[loop].bytes = tCxt[loop].bytes % 1024;
+                        tCxt[loop].kbytes    = tCxt[loop].bytes / 1024;
+                        tCxt[loop].bytes     = tCxt[loop].bytes % 1024;
                         tCxt[loop].test_type = TCP_RX;
                         /* Print test results.*/
                         print_test_results(&(tCxt[loop]));
@@ -2504,11 +2506,11 @@ static void ath_tcp_rx_multi_socket(int16_t *port, int32_t multi_socket_count)
                 // listener sockets here
                 if ((tCxt[loop].sock_local) && (FD_IsSet(tCxt[loop].sock_local, r_fd_working_set)))
                 {
-                    tCxt[loop].last_bytes = 0;
+                    tCxt[loop].last_bytes  = 0;
                     tCxt[loop].last_kbytes = 0;
-                    tCxt[loop].bytes = 0;
-                    tCxt[loop].kbytes = 0;
-                    tCxt[loop].sent_bytes = 0;
+                    tCxt[loop].bytes       = 0;
+                    tCxt[loop].kbytes      = 0;
+                    tCxt[loop].sent_bytes  = 0;
 
                     /*Accept incoming connection*/
                     // PRINTF("Doing an accept here" NL);
@@ -2846,10 +2848,10 @@ ERROR:
 #endif // #if MULTI_SOCKET_SUPPORT
 
 /************************************************************************
-* NAME: ath_tcp_rx
-*
-* DESCRIPTION: Start throughput TCP server.
-************************************************************************/
+ * NAME: ath_tcp_rx
+ *
+ * DESCRIPTION: Start throughput TCP server.
+ ************************************************************************/
 static void ath_tcp_rx(THROUGHPUT_CXT *p_tCxt)
 {
     uint8_t ip_str[16];
@@ -2870,8 +2872,8 @@ static void ath_tcp_rx(THROUGHPUT_CXT *p_tCxt)
     TIME_STRUCT block_time;
     int32_t result;
 
-    port = p_tCxt->params.rx_params.port;
-    bench_quit = 0;
+    port              = p_tCxt->params.rx_params.port;
+    bench_quit        = 0;
     p_tCxt->sock_peer = (uint32_t)A_ERROR;
 
     num_traffic_streams++;
@@ -2897,7 +2899,7 @@ static void ath_tcp_rx(THROUGHPUT_CXT *p_tCxt)
         }
 
         memset(&local_addr, 0, sizeof(local_addr));
-        local_addr.sin_port = port;
+        local_addr.sin_port   = port;
         local_addr.sin_family = ATH_AF_INET;
         if (p_tCxt->params.rx_params.local_if == 1)
         {
@@ -2920,7 +2922,7 @@ static void ath_tcp_rx(THROUGHPUT_CXT *p_tCxt)
         }
 
         memset(&local_addr6, 0, sizeof(local_addr6));
-        local_addr6.sin6_port = port;
+        local_addr6.sin6_port   = port;
         local_addr6.sin6_family = ATH_AF_INET6;
         if (p_tCxt->params.rx_params.local_if == 1)
         {
@@ -2949,7 +2951,7 @@ static void ath_tcp_rx(THROUGHPUT_CXT *p_tCxt)
 
     app_time_get_elapsed(&p_tCxt->first_time);
     app_time_get_elapsed(&p_tCxt->last_time);
-    p_tCxt->last_bytes = 0;
+    p_tCxt->last_bytes  = 0;
     p_tCxt->last_kbytes = 0;
 
     while (1)
@@ -2963,8 +2965,8 @@ static void ath_tcp_rx(THROUGHPUT_CXT *p_tCxt)
             goto ERROR_2;
         }
 
-        p_tCxt->bytes = 0;
-        p_tCxt->kbytes = 0;
+        p_tCxt->bytes      = 0;
+        p_tCxt->kbytes     = 0;
         p_tCxt->sent_bytes = 0;
 
         do
@@ -2986,12 +2988,12 @@ static void ath_tcp_rx(THROUGHPUT_CXT *p_tCxt)
         /*Accept incoming connection*/
         if (!v6EnableFlag)
         {
-            addr_len = sizeof(foreign_addr);
+            addr_len          = sizeof(foreign_addr);
             p_tCxt->sock_peer = qcom_accept(p_tCxt->sock_local, (struct sockaddr *)&foreign_addr, &addr_len);
         }
         else
         {
-            addr_len = sizeof(foreign_addr6);
+            addr_len          = sizeof(foreign_addr6);
             p_tCxt->sock_peer = qcom_accept(p_tCxt->sock_local, (struct sockaddr *)&foreign_addr6, &addr_len);
         }
 
@@ -3055,7 +3057,7 @@ static void ath_tcp_rx(THROUGHPUT_CXT *p_tCxt)
             app_time_get_elapsed(&p_tCxt->first_time);
             app_time_get_elapsed(&p_tCxt->last_time);
             block_time = p_tCxt->first_time;
-            isFirst = 1;
+            isFirst    = 1;
 
             while (1) /* Receiving data.*/
             {
@@ -3105,7 +3107,7 @@ static void ath_tcp_rx(THROUGHPUT_CXT *p_tCxt)
                     {
                         /*Test ended, peer closed connection*/
                         p_tCxt->kbytes = p_tCxt->bytes / 1024;
-                        p_tCxt->bytes = p_tCxt->bytes % 1024;
+                        p_tCxt->bytes  = p_tCxt->bytes % 1024;
 #if ENABLE_SSL
                         if (ssl_role == SSL_SERVER && ssl->ssl != NULL)
                         {
@@ -3125,7 +3127,7 @@ static void ath_tcp_rx(THROUGHPUT_CXT *p_tCxt)
                 {
                     /* Test ended, peer closed connection*/
                     p_tCxt->kbytes = p_tCxt->bytes / 1024;
-                    p_tCxt->bytes = p_tCxt->bytes % 1024;
+                    p_tCxt->bytes  = p_tCxt->bytes % 1024;
 #if ENABLE_SSL
                     if (ssl_role == SSL_SERVER && ssl->ssl != NULL)
                     {
@@ -3171,11 +3173,11 @@ static void ath_tcp_rx(THROUGHPUT_CXT *p_tCxt)
 
 tcp_rx_QUIT:
     p_tCxt->kbytes = p_tCxt->bytes / 1024;
-    p_tCxt->bytes = p_tCxt->bytes % 1024;
+    p_tCxt->bytes  = p_tCxt->bytes % 1024;
     /* Print test results.*/
     print_test_results(p_tCxt);
 
-// qcom_socket_close( p_tCxt->sock_peer);
+    // qcom_socket_close( p_tCxt->sock_peer);
 
 ERROR_2:
     qcom_socket_close(p_tCxt->sock_local);
@@ -3223,10 +3225,10 @@ typedef struct ipv6
 } host_ip6;
 
 /************************************************************************
-* NAME: ath_udp_rx
-*
-* DESCRIPTION: Start throughput UDP server.
-************************************************************************/
+ * NAME: ath_udp_rx
+ *
+ * DESCRIPTION: Start throughput UDP server.
+ ************************************************************************/
 static void ath_udp_rx(THROUGHPUT_CXT *p_tCxt)
 {
     uint8_t ip_str[16];
@@ -3272,7 +3274,7 @@ static void ath_udp_rx(THROUGHPUT_CXT *p_tCxt)
 
         /* Bind.*/
         memset(&local_addr, 0, sizeof(local_addr));
-        local_addr.sin_port = port;
+        local_addr.sin_port   = port;
         local_addr.sin_family = ATH_AF_INET;
         if (p_tCxt->params.rx_params.local_if == 1)
         {
@@ -3298,7 +3300,7 @@ static void ath_udp_rx(THROUGHPUT_CXT *p_tCxt)
         }
 
         memset(&local_addr6, 0, sizeof(local_addr6));
-        local_addr6.sin6_port = port;
+        local_addr6.sin6_port   = port;
         local_addr6.sin6_family = ATH_AF_INET6;
         if (p_tCxt->params.rx_params.local_if == 1)
         {
@@ -3325,9 +3327,9 @@ static void ath_udp_rx(THROUGHPUT_CXT *p_tCxt)
 
     app_time_get_elapsed(&p_tCxt->last_time);
     app_time_get_elapsed(&p_tCxt->first_time);
-    p_tCxt->last_bytes = 0;
+    p_tCxt->last_bytes  = 0;
     p_tCxt->last_kbytes = 0;
-    block_time = p_tCxt->first_time;
+    block_time          = p_tCxt->first_time;
 
     if (p_tCxt->params.rx_params.ip_hdr_inc == 1)
     {
@@ -3340,7 +3342,7 @@ static void ath_udp_rx(THROUGHPUT_CXT *p_tCxt)
     {
         PRINTF("Waiting." NL);
 
-        p_tCxt->bytes = 0;
+        p_tCxt->bytes  = 0;
         p_tCxt->kbytes = 0;
 
         p_tCxt->sent_bytes = 0;
@@ -3410,15 +3412,14 @@ static void ath_udp_rx(THROUGHPUT_CXT *p_tCxt)
                             if (!v6EnableFlag)
                             {
                                 host_ip *ip = NULL;
-                                ip = (host_ip *)(&p_tCxt->buffer[0]);
+                                ip          = (host_ip *)(&p_tCxt->buffer[0]);
                                 memset(ip_str, 0, sizeof(ip_str));
-                                PRINTF("Src IP of RX Pkt %s " NL,
-                                       inet_ntoa(*(uint32_t *)(&ip->ip_dest), (char *)ip_str));
+                                PRINTF("Src IP of RX Pkt %s " NL, inet_ntoa((uint32_t)(ip->ip_dest), (char *)ip_str));
                             }
                             else
                             {
                                 host_ip6 *ip = NULL;
-                                ip = (host_ip6 *)(&p_tCxt->buffer[0]);
+                                ip           = (host_ip6 *)(&p_tCxt->buffer[0]);
                                 memset(ip6_str, 0, sizeof(ip6_str));
                                 PRINTF("SrcIP of RX PKT %s " NL, inet6_ntoa((char *)&ip->ip_dest, (char *)ip6_str));
                             }
@@ -3472,8 +3473,8 @@ static void ath_udp_rx(THROUGHPUT_CXT *p_tCxt)
         }
 
     ERROR_3:
-        p_tCxt->kbytes = p_tCxt->bytes / 1024;
-        p_tCxt->bytes = p_tCxt->bytes % 1024;
+        p_tCxt->kbytes    = p_tCxt->bytes / 1024;
+        p_tCxt->bytes     = p_tCxt->bytes % 1024;
         p_tCxt->test_type = UDP_RX;
         print_test_results(p_tCxt);
     }
@@ -3498,10 +3499,10 @@ ERROR_1:
 char eapol_pkt[60];
 
 /************************************************************************
-* NAME: ath_raw_rx
-*
-* DESCRIPTION: Start throughput RAW server.
-************************************************************************/
+ * NAME: ath_raw_rx
+ *
+ * DESCRIPTION: Start throughput RAW server.
+ ************************************************************************/
 static void ath_raw_rx(THROUGHPUT_CXT *p_tCxt)
 {
     uint8_t ip_str[16];
@@ -3532,7 +3533,8 @@ static void ath_raw_rx(THROUGHPUT_CXT *p_tCxt)
         p_tCxt->params.rx_params.port = ATH_ETH_P_PAE;
 
     /* Create socket */
-    if ((p_tCxt->sock_local = qcom_socket(ATH_AF_INET, SOCK_RAW_TYPE, p_tCxt->params.rx_params.port)) == (uint32_t)A_ERROR)
+    if ((p_tCxt->sock_local = qcom_socket(ATH_AF_INET, SOCK_RAW_TYPE, p_tCxt->params.rx_params.port)) ==
+        (uint32_t)A_ERROR)
     {
         PRINTF("ERROR: Socket creation error" NL);
         goto ERROR_1;
@@ -3544,7 +3546,7 @@ static void ath_raw_rx(THROUGHPUT_CXT *p_tCxt)
     if (p_tCxt->params.rx_params.local_if == 1)
     {
         memset(&local_addr, 0, sizeof(local_addr));
-        local_addr.sin_family = ATH_AF_INET;
+        local_addr.sin_family      = ATH_AF_INET;
         local_addr.sin_addr.s_addr = p_tCxt->params.rx_params.local_address;
         if (qcom_bind(p_tCxt->sock_local, (struct sockaddr *)(&local_addr), sizeof(local_addr)) != A_OK)
         {
@@ -3588,15 +3590,15 @@ static void ath_raw_rx(THROUGHPUT_CXT *p_tCxt)
 
     app_time_get_elapsed(&p_tCxt->last_time);
     app_time_get_elapsed(&p_tCxt->first_time);
-    p_tCxt->last_bytes = 0;
+    p_tCxt->last_bytes  = 0;
     p_tCxt->last_kbytes = 0;
-    block_time = p_tCxt->first_time;
+    block_time          = p_tCxt->first_time;
 
     while (test_for_quit() == 0) /* Main loop */
     {
         PRINTF("Waiting." NL);
 
-        p_tCxt->bytes = 0;
+        p_tCxt->bytes  = 0;
         p_tCxt->kbytes = 0;
 
         p_tCxt->sent_bytes = 0;
@@ -3754,8 +3756,8 @@ static void ath_raw_rx(THROUGHPUT_CXT *p_tCxt)
         }
         else
         {
-            p_tCxt->kbytes = p_tCxt->bytes / 1024;
-            p_tCxt->bytes = p_tCxt->bytes % 1024;
+            p_tCxt->kbytes    = p_tCxt->bytes / 1024;
+            p_tCxt->bytes     = p_tCxt->bytes % 1024;
             p_tCxt->test_type = RAW_RX;
             print_test_results(p_tCxt);
         }
@@ -3778,11 +3780,11 @@ ERROR_1:
 #endif
 
 /************************************************************************
-* NAME: ath_udp_echo
-*
-* DESCRIPTION: A reference implementation of UDP Echo server. It will echo
-*              a packet received on specified port.
-************************************************************************/
+ * NAME: ath_udp_echo
+ *
+ * DESCRIPTION: A reference implementation of UDP Echo server. It will echo
+ *              a packet received on specified port.
+ ************************************************************************/
 void ath_udp_echo(int32_t argc, char_ptr argv[])
 {
     socklen_t addr_len;
@@ -3876,14 +3878,14 @@ void ath_udp_echo(int32_t argc, char_ptr argv[])
 
         if (!v6EnableFlag)
         {
-            received = qcom_recvfrom(conn_sock, (&rxBuffer), CFG_PACKET_SIZE_MAX_RX, 0, (struct sockaddr *)&addr,
-                                     &addr_len);
+            received =
+                qcom_recvfrom(conn_sock, (&rxBuffer), CFG_PACKET_SIZE_MAX_RX, 0, (struct sockaddr *)&addr, &addr_len);
         }
         else
         {
             addr_len = sizeof(SOCKADDR_6_T);
-            received = qcom_recvfrom(conn_sock, (&rxBuffer), CFG_PACKET_SIZE_MAX_RX, 0, (struct sockaddr *)&addr6,
-                                     &addr_len);
+            received =
+                qcom_recvfrom(conn_sock, (&rxBuffer), CFG_PACKET_SIZE_MAX_RX, 0, (struct sockaddr *)&addr6, &addr_len);
         }
         if (received > 0)
         {
@@ -3941,12 +3943,12 @@ ERROR_1:
 }
 
 /************************************************************************
-* NAME: test_for_delay
-*
-* DESCRIPTION:  delay for 1% of the time used by this task to give other
-*               tasks an opportunity.
-* Parameters: pointer to current and start time
-************************************************************************/
+ * NAME: test_for_delay
+ *
+ * DESCRIPTION:  delay for 1% of the time used by this task to give other
+ *               tasks an opportunity.
+ * Parameters: pointer to current and start time
+ ************************************************************************/
 int32_t test_for_delay(TIME_STRUCT *pCurr, TIME_STRUCT *pBase)
 {
     uint32_t total = (pCurr->SECONDS - pBase->SECONDS) * 1000;
@@ -3960,12 +3962,12 @@ int32_t test_for_delay(TIME_STRUCT *pCurr, TIME_STRUCT *pBase)
 }
 
 /************************************************************************
-* NAME: check_test_time
-*
-* DESCRIPTION: If test mode is time, check if current time has exceeded
-* test time limit
-* Parameters: pointer to throughput context
-************************************************************************/
+ * NAME: check_test_time
+ *
+ * DESCRIPTION: If test mode is time, check if current time has exceeded
+ * test time limit
+ * Parameters: pointer to throughput context
+ ************************************************************************/
 uint32_t check_test_time(THROUGHPUT_CXT *p_tCxt)
 {
     uint32_t sec_interval = (p_tCxt->last_time.SECONDS - p_tCxt->first_time.SECONDS);
@@ -3975,7 +3977,7 @@ uint32_t check_test_time(THROUGHPUT_CXT *p_tCxt)
     if (sec_interval < p_tCxt->params.tx_params.tx_time)
         return 0;
 
-    ms_interval = (p_tCxt->last_time.MILLISECONDS - p_tCxt->first_time.MILLISECONDS);
+    ms_interval    = (p_tCxt->last_time.MILLISECONDS - p_tCxt->first_time.MILLISECONDS);
     total_interval = sec_interval * 1000 + ms_interval;
 
     if (total_interval > p_tCxt->params.tx_params.tx_time * 1000)
@@ -3985,22 +3987,23 @@ uint32_t check_test_time(THROUGHPUT_CXT *p_tCxt)
 }
 
 /************************************************************************
-* NAME: wait_for_response
-*
-* DESCRIPTION: In UDP uplink test, the test is terminated by transmitting
-* end-mark (single byte packet). We have implemented a feedback mechanism
-* where the Peer will reply with receive stats allowing us to display correct
-* test results.
-* Parameters: pointer to throughput context
-************************************************************************/
+ * NAME: wait_for_response
+ *
+ * DESCRIPTION: In UDP uplink test, the test is terminated by transmitting
+ * end-mark (single byte packet). We have implemented a feedback mechanism
+ * where the Peer will reply with receive stats allowing us to display correct
+ * test results.
+ * Parameters: pointer to throughput context
+ ************************************************************************/
 
 int32_t wait_for_response(THROUGHPUT_CXT *p_tCxt, SOCKADDR_T foreign_addr, SOCKADDR_6_T foreign_addr6)
 {
     uint32_t received = 0;
-    int32_t error = A_ERROR;
+    int32_t error     = A_ERROR;
     SOCKADDR_T local_addr;
     SOCKADDR_T addr;
     socklen_t addr_len;
+    uint32_t addr_len_raw;
     stat_packet_t *stat_packet;
     SOCKADDR_6_T local_addr6;
     SOCKADDR_6_T addr6;
@@ -4022,14 +4025,15 @@ int32_t wait_for_response(THROUGHPUT_CXT *p_tCxt, SOCKADDR_T foreign_addr, SOCKA
         p_tCxt->sock_local = p_tCxt->sock_peer;
         if (p_tCxt->params.tx_params.ip_hdr_inc == 1)
         {
-            addr_len = 0;
+            addr_len_raw = 0;
             /* Set IP_HDRINCL socket option if need to receive the packet with IP header */
-            if (qcom_setsockopt(p_tCxt->sock_peer, ATH_IPPROTO_IP, IP_HDRINCL, (uint8_t *)&addr_len, sizeof(int)) !=
+            if (qcom_setsockopt(p_tCxt->sock_peer, ATH_IPPROTO_IP, IP_HDRINCL, (uint8_t *)&addr_len_raw, sizeof(addr_len_raw)) !=
                 A_OK)
             {
                 PRINTF("SetsockOPT error:IP_HDRINCL" NL);
                 goto ERROR_2;
             }
+            addr_len = (socklen_t)addr_len_raw;
         }
     }
     else
@@ -4045,7 +4049,7 @@ int32_t wait_for_response(THROUGHPUT_CXT *p_tCxt, SOCKADDR_T foreign_addr, SOCKA
             }
 
             memset(&local_addr, 0, sizeof(local_addr));
-            local_addr.sin_port = p_tCxt->params.tx_params.port;
+            local_addr.sin_port   = p_tCxt->params.tx_params.port;
             local_addr.sin_family = ATH_AF_INET;
 
             if (qcom_bind(/*p_tCxt->sock_peer*/ p_tCxt->sock_local, (struct sockaddr *)(&local_addr),
@@ -4064,7 +4068,7 @@ int32_t wait_for_response(THROUGHPUT_CXT *p_tCxt, SOCKADDR_T foreign_addr, SOCKA
             }
 
             memset(&local_addr6, 0, sizeof(local_addr6));
-            local_addr6.sin6_port = p_tCxt->params.tx_params.port;
+            local_addr6.sin6_port   = p_tCxt->params.tx_params.port;
             local_addr6.sin6_family = ATH_AF_INET6;
 
             if (qcom_bind(/*p_tCxt->sock_peer*/ p_tCxt->sock_local, (struct sockaddr *)(&local_addr6),
@@ -4141,16 +4145,16 @@ int32_t wait_for_response(THROUGHPUT_CXT *p_tCxt, SOCKADDR_T foreign_addr, SOCKA
             error = A_OK;
 
             /*Response received from peer, extract test statistics*/
-            stat_packet->msec = HOST_TO_LE_LONG(stat_packet->msec);
-            stat_packet->kbytes = HOST_TO_LE_LONG(stat_packet->kbytes);
-            stat_packet->bytes = HOST_TO_LE_LONG(stat_packet->bytes);
+            stat_packet->msec       = HOST_TO_LE_LONG(stat_packet->msec);
+            stat_packet->kbytes     = HOST_TO_LE_LONG(stat_packet->kbytes);
+            stat_packet->bytes      = HOST_TO_LE_LONG(stat_packet->bytes);
             stat_packet->numPackets = HOST_TO_LE_LONG(stat_packet->numPackets);
 
             p_tCxt->first_time.SECONDS = p_tCxt->last_time.SECONDS = 0;
-            p_tCxt->first_time.MILLISECONDS = 0;
-            p_tCxt->last_time.MILLISECONDS = stat_packet->msec;
-            p_tCxt->bytes = stat_packet->bytes;
-            p_tCxt->kbytes = stat_packet->kbytes;
+            p_tCxt->first_time.MILLISECONDS                        = 0;
+            p_tCxt->last_time.MILLISECONDS                         = stat_packet->msec;
+            p_tCxt->bytes                                          = stat_packet->bytes;
+            p_tCxt->kbytes                                         = stat_packet->kbytes;
             break;
         }
         else
@@ -4196,11 +4200,11 @@ ERROR_1:
 }
 
 /************************************************************************
-* NAME: handle_mcast_param
-*
-* DESCRIPTION: Handler for multicast parameters in UDp Rx test
-* Parameters: pointer to throughput context
-************************************************************************/
+ * NAME: handle_mcast_param
+ *
+ * DESCRIPTION: Handler for multicast parameters in UDp Rx test
+ * Parameters: pointer to throughput context
+ ************************************************************************/
 int32_t handle_mcast_param(THROUGHPUT_CXT *p_tCxt)
 {
     int ip_hdr_inc = 0;
@@ -4245,35 +4249,35 @@ int32_t handle_mcast_param(THROUGHPUT_CXT *p_tCxt)
 }
 
 /************************************************************************
-* NAME: sendAck
-*
-* DESCRIPTION: In UDP receive test, the test is terminated on receiving
-* end-mark (single byte packet). We have implemented a feedback mechanism
-* where the Client will reply with receive stats allowing Peer to display correct
-* test results. The Ack packet will contain time duration and number of bytes
-* received. Implementation details-
-* 1. Peer sends endMark packet, then waits for 500 ms for a response.
-* 2. Client, on receiving endMark, sends ACK (containing RX stats), and waits for
-*    1000 ms to check for more incoming packets.
-* 3. If the Peer receives this ACK, it will stop sending endMark packets.
-* 4. If the client does not see the endMark packet for 1000 ms, it will assume SUCCESS
-*    and exit gracefully.
-* 5. Each side makes 20 attempts.
-* Parameters: pointer to throughput context, specified address, specified port
-************************************************************************/
+ * NAME: sendAck
+ *
+ * DESCRIPTION: In UDP receive test, the test is terminated on receiving
+ * end-mark (single byte packet). We have implemented a feedback mechanism
+ * where the Client will reply with receive stats allowing Peer to display correct
+ * test results. The Ack packet will contain time duration and number of bytes
+ * received. Implementation details-
+ * 1. Peer sends endMark packet, then waits for 500 ms for a response.
+ * 2. Client, on receiving endMark, sends ACK (containing RX stats), and waits for
+ *    1000 ms to check for more incoming packets.
+ * 3. If the Peer receives this ACK, it will stop sending endMark packets.
+ * 4. If the client does not see the endMark packet for 1000 ms, it will assume SUCCESS
+ *    and exit gracefully.
+ * 5. Each side makes 20 attempts.
+ * Parameters: pointer to throughput context, specified address, specified port
+ ************************************************************************/
 
 void sendAck(THROUGHPUT_CXT *p_tCxt, A_VOID *address, uint16_t port)
 {
     int send_result;
-    uint32_t received = 0;
+    uint32_t received  = 0;
     socklen_t addr_len = 0;
-    uint16_t retry = MAX_ACK_RETRY;
+    uint16_t retry     = MAX_ACK_RETRY;
     stat_packet_t *statPacket;
-    uint32_t sec_interval = (p_tCxt->last_time.SECONDS - p_tCxt->first_time.SECONDS);
-    uint32_t ms_interval = (p_tCxt->last_time.MILLISECONDS - p_tCxt->first_time.MILLISECONDS);
+    uint32_t sec_interval   = (p_tCxt->last_time.SECONDS - p_tCxt->first_time.SECONDS);
+    uint32_t ms_interval    = (p_tCxt->last_time.MILLISECONDS - p_tCxt->first_time.MILLISECONDS);
     uint32_t total_interval = sec_interval * 1000 + ms_interval;
-    SOCKADDR_T *addr = (SOCKADDR_T *)address;
-    SOCKADDR_6_T *addr6 = (SOCKADDR_6_T *)address;
+    SOCKADDR_T *addr        = (SOCKADDR_T *)address;
+    SOCKADDR_6_T *addr6     = (SOCKADDR_6_T *)address;
 
     if (!v6EnableFlag)
     {
@@ -4297,19 +4301,19 @@ void sendAck(THROUGHPUT_CXT *p_tCxt, A_VOID *address, uint16_t port)
         }
 
         statPacket->kbytes = HOST_TO_LE_LONG(p_tCxt->kbytes);
-        statPacket->bytes = HOST_TO_LE_LONG(p_tCxt->bytes);
-        statPacket->msec = HOST_TO_LE_LONG(total_interval);
+        statPacket->bytes  = HOST_TO_LE_LONG(p_tCxt->bytes);
+        statPacket->msec   = HOST_TO_LE_LONG(total_interval);
 
         if (!v6EnableFlag)
         {
             addr->sin_port = port;
-            send_result = qcom_sendto(p_tCxt->sock_local, (char *)(statPacket), sizeof(stat_packet_t), 0,
+            send_result    = qcom_sendto(p_tCxt->sock_local, (char *)(statPacket), sizeof(stat_packet_t), 0,
                                       (struct sockaddr *)addr, addr_len);
         }
         else
         {
             addr6->sin6_port = port;
-            send_result = qcom_sendto(p_tCxt->sock_local, (char *)(statPacket), sizeof(stat_packet_t), 0,
+            send_result      = qcom_sendto(p_tCxt->sock_local, (char *)(statPacket), sizeof(stat_packet_t), 0,
                                       (struct sockaddr *)addr6, addr_len);
         }
 
@@ -4365,35 +4369,35 @@ void sendAck(THROUGHPUT_CXT *p_tCxt, A_VOID *address, uint16_t port)
 
 #if ENABLE_RAW_SOCKET_DEMO
 /************************************************************************
-* NAME: sendRawAck
-*
-* DESCRIPTION: In RAW receive test, the test is terminated on receiving
-* end-mark (single byte packet). We have implemented a feedback mechanism
-* where the Client will reply with receive stats allowing Peer to display correct
-* test results. The Ack packet will contain time duration and number of bytes
-* received. Implementation details-
-* 1. Peer sends endMark packet, then waits for 500 ms for a response.
-* 2. Client, on receiving endMark, sends ACK (containing RX stats), and waits for
-*    1000 ms to check for more incoming packets.
-* 3. If the Peer receives this ACK, it will stop sending endMark packets.
-* 4. If the client does not see the endMark packet for 1000 ms, it will assume SUCCESS
-*    and exit gracefully.
-* 5. Each side makes 20 attempts.
-* Parameters: pointer to throughput context, specified address, specified port
-************************************************************************/
+ * NAME: sendRawAck
+ *
+ * DESCRIPTION: In RAW receive test, the test is terminated on receiving
+ * end-mark (single byte packet). We have implemented a feedback mechanism
+ * where the Client will reply with receive stats allowing Peer to display correct
+ * test results. The Ack packet will contain time duration and number of bytes
+ * received. Implementation details-
+ * 1. Peer sends endMark packet, then waits for 500 ms for a response.
+ * 2. Client, on receiving endMark, sends ACK (containing RX stats), and waits for
+ *    1000 ms to check for more incoming packets.
+ * 3. If the Peer receives this ACK, it will stop sending endMark packets.
+ * 4. If the client does not see the endMark packet for 1000 ms, it will assume SUCCESS
+ *    and exit gracefully.
+ * 5. Each side makes 20 attempts.
+ * Parameters: pointer to throughput context, specified address, specified port
+ ************************************************************************/
 void sendRawAck(THROUGHPUT_CXT *p_tCxt, A_VOID *local_address, A_VOID *address, int16_t hdrinc, uint16_t protocol)
 {
     int send_result, size;
-    uint32_t received = 0;
+    uint32_t received  = 0;
     socklen_t addr_len = 0;
-    uint16_t retry = MAX_ACK_RETRY;
+    uint16_t retry     = MAX_ACK_RETRY;
     char *buffer;
     stat_packet_t *statPacket;
-    uint32_t sec_interval = (p_tCxt->last_time.SECONDS - p_tCxt->first_time.SECONDS);
-    uint32_t ms_interval = (p_tCxt->last_time.MILLISECONDS - p_tCxt->first_time.MILLISECONDS);
+    uint32_t sec_interval   = (p_tCxt->last_time.SECONDS - p_tCxt->first_time.SECONDS);
+    uint32_t ms_interval    = (p_tCxt->last_time.MILLISECONDS - p_tCxt->first_time.MILLISECONDS);
     uint32_t total_interval = sec_interval * 1000 + ms_interval;
-    SOCKADDR_T *addr = (SOCKADDR_T *)address;
-    SOCKADDR_T *local_addr = (SOCKADDR_T *)local_address;
+    SOCKADDR_T *addr        = (SOCKADDR_T *)address;
+    SOCKADDR_T *local_addr  = (SOCKADDR_T *)local_address;
     ip_header *iphdr;
 
     // PRINTF("sendRawAck" NL);
@@ -4424,7 +4428,7 @@ void sendRawAck(THROUGHPUT_CXT *p_tCxt, A_VOID *local_address, A_VOID *address, 
             iphdr->iph_ver = 4; /* IPv4 */
             iphdr->iph_tos = 0;
 
-            iphdr->iph_len = htons(size);
+            iphdr->iph_len   = htons(size);
             iphdr->iph_ident = htons(0);
 
             /* Zero (1 bit) */
@@ -4445,7 +4449,7 @@ void sendRawAck(THROUGHPUT_CXT *p_tCxt, A_VOID *local_address, A_VOID *address, 
             iphdr->iph_protocol = protocol;
 
             iphdr->iph_sourceip = htonl(local_addr->sin_addr.s_addr);
-            iphdr->iph_destip = htonl(addr->sin_addr.s_addr);
+            iphdr->iph_destip   = htonl(addr->sin_addr.s_addr);
 
             statPacket = (stat_packet_t *)(buffer + sizeof(ip_header));
         }
@@ -4453,8 +4457,8 @@ void sendRawAck(THROUGHPUT_CXT *p_tCxt, A_VOID *local_address, A_VOID *address, 
             statPacket = (stat_packet_t *)buffer;
 
         statPacket->kbytes = HOST_TO_LE_LONG(p_tCxt->kbytes);
-        statPacket->bytes = HOST_TO_LE_LONG((long)p_tCxt->bytes);
-        statPacket->msec = HOST_TO_LE_LONG(total_interval);
+        statPacket->bytes  = HOST_TO_LE_LONG((long)p_tCxt->bytes);
+        statPacket->msec   = HOST_TO_LE_LONG(total_interval);
 
         send_result = qcom_sendto(p_tCxt->sock_local, buffer, size, 0, (struct sockaddr *)addr, sizeof(*addr));
 
@@ -4497,14 +4501,14 @@ void sendRawAck(THROUGHPUT_CXT *p_tCxt, A_VOID *local_address, A_VOID *address, 
 #endif
 
 /************************************************************************
-* NAME: ath_tcp_rx
-*
-* DESCRIPTION: Start throughput TCP server.
-************************************************************************/
+ * NAME: ath_tcp_rx
+ *
+ * DESCRIPTION: Start throughput TCP server.
+ ************************************************************************/
 void ath_tcp_rx_multi_TCP(int port)
 {
     uint8_t ip_str[16];
-    socklen_t addr_len = 0;
+    socklen_t addr_len        = 0;
     uint16_t open_connections = 0;
     int32_t conn_sock;
     _ip_address temp_addr;
@@ -4512,10 +4516,10 @@ void ath_tcp_rx_multi_TCP(int port)
     SOCKADDR_T foreign_addr;
     int i, call_listen = 1;
     THROUGHPUT_CXT tCxt;
-    THROUGHPUT_CXT *p_tCxt = &tCxt;
+    THROUGHPUT_CXT *p_tCxt     = &tCxt;
     int32_t incoming_socket[3] = {0};
 
-    bench_quit = 0;
+    bench_quit        = 0;
     p_tCxt->sock_peer = (uint32_t)A_ERROR;
 
 #if !ZERO_COPY
@@ -4535,7 +4539,7 @@ void ath_tcp_rx_multi_TCP(int port)
     }
 
     memset(&local_addr, 0, sizeof(local_addr));
-    local_addr.sin_port = port;
+    local_addr.sin_port   = port;
     local_addr.sin_family = ATH_AF_INET;
 
     /* Bind socket.*/
@@ -4552,7 +4556,7 @@ void ath_tcp_rx_multi_TCP(int port)
 
     app_time_get_elapsed(&p_tCxt->first_time);
     app_time_get_elapsed(&p_tCxt->last_time);
-    p_tCxt->last_bytes = 0;
+    p_tCxt->last_bytes  = 0;
     p_tCxt->last_kbytes = 0;
 
     PRINTF("Waiting." NL);
@@ -4626,9 +4630,9 @@ ERROR_1:
 
 int32_t receive_incoming(THROUGHPUT_CXT *p_tCxt, int32_t *incoming_connections, uint16_t *num_connections)
 {
-    int i = 0, conn_sock;
+    int i           = 0, conn_sock;
     A_STATUS result = A_OK;
-    int received = 0;
+    int received    = 0;
 
     for (i = 0; i < 3; i++) /* Receiving data.*/
     {
@@ -4721,7 +4725,7 @@ int32_t ssl_get_cert_handler(int32_t argc, char *argv[])
         return A_ERROR;
     }
     certName = argv[1];
-    host = argv[2];
+    host     = argv[2];
     for (index = 3; index < argc; index++)
     {
         if (argv[index][0] == '-')
@@ -4755,9 +4759,9 @@ int32_t ssl_get_cert_handler(int32_t argc, char *argv[])
                 PRINTF("ERROR: host name too long" NL);
                 break;
             }
-            strncpy((char *)dnsCfg.ahostname, host, sizeof(dnsCfg.ahostname));
+            strncpy((char *)dnsCfg.ahostname, host, sizeof(dnsCfg.ahostname) - 1);
             dnsCfg.domain = ATH_AF_INET;
-            dnsCfg.mode = RESOLVEHOSTNAME;
+            dnsCfg.mode   = RESOLVEHOSTNAME;
 
             assert((void *)handle != NULL);
             if (A_OK != custom_ip_resolve_hostname(handle, &dnsCfg, &dnsRespInfo))
@@ -4777,9 +4781,9 @@ int32_t ssl_get_cert_handler(int32_t argc, char *argv[])
         // Connect to certificate server
         memset(&hostAddr, 0, sizeof(hostAddr));
         hostAddr.sin_addr.s_addr = dnsRespInfo.ipaddrs_list[0];
-        hostAddr.sin_port = port;
-        hostAddr.sin_family = ATH_AF_INET;
-        res = qcom_connect(socketHandle, (struct sockaddr *)(&hostAddr), sizeof(hostAddr));
+        hostAddr.sin_port        = port;
+        hostAddr.sin_family      = ATH_AF_INET;
+        res                      = qcom_connect(socketHandle, (struct sockaddr *)(&hostAddr), sizeof(hostAddr));
         if (res != A_OK)
         {
             PRINTF("ERROR: Connection failed (%d)" NL, res);
@@ -4788,18 +4792,18 @@ int32_t ssl_get_cert_handler(int32_t argc, char *argv[])
 
         // Build and send request
         certNameLen = strlen(certName);
-        reqLen = CERT_HEADER_LEN + certNameLen;
-        req = (CERT_HEADER_T *)CUSTOM_ALLOC(reqLen);
+        reqLen      = CERT_HEADER_LEN + certNameLen;
+        req         = (CERT_HEADER_T *)CUSTOM_ALLOC(reqLen);
 
         if (req == NULL)
         {
             PRINTF("ERROR: Out of memory" NL);
             break;
         }
-        req->id[0] = 'C';
-        req->id[1] = 'R';
-        req->id[2] = 'T';
-        req->id[3] = '0';
+        req->id[0]  = 'C';
+        req->id[1]  = 'R';
+        req->id[2]  = 'T';
+        req->id[3]  = '0';
         req->length = A_CPU2BE32(certNameLen);
         memcpy(&req->data[0], certName, certNameLen);
 
@@ -4840,7 +4844,7 @@ int32_t ssl_get_cert_handler(int32_t argc, char *argv[])
                         PRINTF("ERROR: Bad MAGIC received in header" NL);
                         break;
                     }
-                    header = (CERT_HEADER_T *)buf;
+                    header         = (CERT_HEADER_T *)buf;
                     header->length = A_BE2CPU32(header->length);
                     if (header->length == 0)
                     {

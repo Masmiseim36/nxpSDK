@@ -6,6 +6,7 @@
     <definition extID="component.da7212_adapter.MK66F18"/>
     <definition extID="component.i2c_adapter.MK66F18"/>
     <definition extID="component.lists.MK66F18"/>
+    <definition extID="component.osa.MK66F18"/>
     <definition extID="component.serial_manager.MK66F18"/>
     <definition extID="component.serial_manager_uart.MK66F18"/>
     <definition extID="component.uart_adapter.MK66F18"/>
@@ -14,11 +15,13 @@
     <definition extID="driver.codec.MK66F18"/>
     <definition extID="driver.dialog7212.MK66F18"/>
     <definition extID="middleware.baremetal.MK66F18"/>
+    <definition extID="middleware.usb.device.MK66F18"/>
     <definition extID="middleware.usb.device_controller_ehci.MK66F18"/>
     <definition extID="middleware.usb.device_controller_khci.MK66F18"/>
     <definition extID="middleware.usb.phy.MK66F18"/>
     <definition extID="platform.Include_common.MK66F18"/>
     <definition extID="platform.Include_core_cm4.MK66F18"/>
+    <definition extID="platform.Include_dsp.MK66F18"/>
     <definition extID="platform.drivers.clock.MK66F18"/>
     <definition extID="platform.drivers.common.MK66F18"/>
     <definition extID="platform.drivers.dmamux.MK66F18"/>
@@ -33,13 +36,14 @@
     <definition extID="platform.drivers.sysmpu.MK66F18"/>
     <definition extID="platform.drivers.uart.MK66F18"/>
     <definition extID="platform.utilities.assert.MK66F18"/>
+    <definition extID="platform.utilities.misc_utilities.MK66F18"/>
     <definition extID="utility.debug_console.MK66F18"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk66f_dev_composite_hid_audio_unified_bm" name="dev_composite_hid_audio_unified_bm" category="usb_examples" dependency="middleware.usb.device_controller_khci.MK66F18 middleware.usb.device_controller_ehci.MK66F18 middleware.usb.phy.MK66F18 driver.dialog7212.MK66F18 platform.drivers.sai.MK66F18 platform.drivers.i2c.MK66F18 platform.drivers.sai_edma.MK66F18 platform.drivers.dmamux.MK66F18 platform.drivers.edma.MK66F18 driver.codec.MK66F18 component.da7212_adapter.MK66F18 component.i2c_adapter.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.uart.MK66F18 platform.drivers.gpio.MK66F18 platform.drivers.sysmpu.MK66F18 platform.utilities.assert.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.serial_manager_uart.MK66F18 component.lists.MK66F18 platform.drivers.port.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 component.codec_i2c.MK66F18 middleware.baremetal.MK66F18">
+  <example id="frdmk66f_dev_composite_hid_audio_unified_bm" name="dev_composite_hid_audio_unified_bm" category="usb_examples" dependency="middleware.usb.device_controller_khci.MK66F18 middleware.usb.device_controller_ehci.MK66F18 middleware.usb.phy.MK66F18 driver.dialog7212.MK66F18 platform.drivers.sai.MK66F18 platform.drivers.i2c.MK66F18 platform.drivers.sai_edma.MK66F18 platform.drivers.dmamux.MK66F18 platform.drivers.edma.MK66F18 driver.codec.MK66F18 component.da7212_adapter.MK66F18 component.i2c_adapter.MK66F18 middleware.usb.device.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.uart.MK66F18 platform.drivers.gpio.MK66F18 platform.drivers.sysmpu.MK66F18 platform.utilities.assert.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.lists.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.port.MK66F18 component.osa.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 platform.Include_dsp.MK66F18 component.codec_i2c.MK66F18 platform.utilities.misc_utilities.MK66F18 middleware.baremetal.MK66F18">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -61,6 +65,9 @@
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>BOARD_USE_CODEC=1</value>
           <value>CODEC_DA7212_ENABLE</value>
+          <value>FSL_OSA_BM_TASK_ENABLE=0</value>
+          <value>FSL_OSA_BM_TIMER_CONFIG=0</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -79,13 +86,13 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/frdmk66f/usb_examples/usb_device_composite_hid_audio_unified/bm/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/frdmk66f/usb_examples/usb_device_composite_hid_audio_unified/bm/armgcc" target_path="MK66F18/gcc" type="linker" toolchain="armgcc">
       <files mask="MK66FN2M0xxx18_flash.ld"/>
     </source>
-    <source path="boards/frdmk66f/usb_examples/usb_device_composite_hid_audio_unified/bm/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/frdmk66f/usb_examples/usb_device_composite_hid_audio_unified/bm/iar" target_path="MK66F18/iar" type="linker" toolchain="iar">
       <files mask="MK66FN2M0xxx18_flash.icf"/>
     </source>
-    <source path="boards/frdmk66f/usb_examples/usb_device_composite_hid_audio_unified/bm/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/frdmk66f/usb_examples/usb_device_composite_hid_audio_unified/bm/mdk" target_path="MK66F18/arm" type="linker" toolchain="mdk">
       <files mask="MK66FN2M0xxx18_flash.scf"/>
     </source>
     <source path="boards/frdmk66f/usb_examples/usb_device_composite_hid_audio_unified/bm" target_path="board" type="c_include">
@@ -101,6 +108,9 @@
     <source path="boards/frdmk66f/usb_examples/usb_device_composite_hid_audio_unified/bm" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
       <files mask="readme.txt"/>
     </source>
+    <source path="boards/frdmk66f/usb_examples/usb_device_composite_hid_audio_unified/bm" target_path="frdmk66f/usb_examples/usb_device_composite_hid_audio_unified/bm" type="doc" exclude="true">
+      <files mask="readme.pdf"/>
+    </source>
     <source path="boards/frdmk66f/usb_examples/usb_device_composite_hid_audio_unified/bm" target_path="source" type="c_include">
       <files mask="audio_unified.h"/>
       <files mask="composite.h"/>
@@ -113,9 +123,6 @@
       <files mask="composite.c"/>
       <files mask="hid_keyboard.c"/>
       <files mask="usb_device_descriptor.c"/>
-    </source>
-    <source path="boards/frdmk66f/usb_examples/usb_device_composite_hid_audio_unified/bm" target_path="src" type="doc" exclude="true">
-      <files mask="readme.pdf"/>
     </source>
     <source path="boards/frdmk66f/usb_examples/usb_device_composite_hid_audio_unified/bm" target_path="usb/device/class/audio" type="c_include">
       <files mask="usb_device_audio.h"/>

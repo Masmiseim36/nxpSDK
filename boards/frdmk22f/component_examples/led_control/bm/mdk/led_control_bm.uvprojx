@@ -16,7 +16,6 @@
           <Cpu>CPUTYPE("Cortex-M4") FPU2</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0MK_P512 -FS00 -FL080000 -FP0($$Device:MK22FN512xxx12$Flash\MK_P512.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>$$Device:MK22FN512xxx12$Device\Include\MK22F51212.h</RegisterFile>
           <MemoryEnv/>
@@ -346,7 +345,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -355,22 +354,22 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
             <VariousControls>
-              <MiscControls>--library_interface=armcc 
---diag_suppress=1296,186 
- 
-</MiscControls>
-              <Define>DEBUG, CPU_MK22FN512VLH12, USB_STACK_BM=1, FRDM_K22F, FREEDOM, DEBUG_CONSOLE_RX_ENABLE=0</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>DEBUG, CPU_MK22FN512VLH12, USB_STACK_BM=1, FSL_OSA_TASK_ENABLE=1, FRDM_K22F, FREEDOM, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../devices/MK22F51212/drivers;../../../../../../components/pwm;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/utilities;../../../../../../devices/MK22F51212/drivers;../../../../../../components/led;../../../../../../components/button;../../../../../../components/timer_manager;../../../../../../components/lists;../../../../../../components/panic;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212;../../../../../../devices/MK22F51212/utilities/str;../../../../../../devices/MK22F51212/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MK22F51212/drivers;../../../../../../components/pwm;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/utilities;../../../../../../components/led;../../../../../../devices/MK22F51212/drivers;../../../../../../components/timer_manager;../../../../../../components/gpio;../../../../../../components/button;../../../../../../components/lists;../../../../../../components/timer;../../../../../../devices/MK22F51212/drivers;../../../../../../components/panic;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212;../../../../../../devices/MK22F51212/utilities/str;../../../../../../devices/MK22F51212/utilities/debug_console;../../../../../../components/uart;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/utilities</IncludePath>
             </VariousControls>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
+            <v6Rtti>0</v6Rtti>
           </Cads>
           <Aads>
             <interw>0</interw>
@@ -388,6 +387,7 @@
               <Undefine/>
               <IncludePath/>
             </VariousControls>
+            <uClangAs>1</uClangAs>
           </Aads>
           <LDads>
             <umfTarg>0</umfTarg>
@@ -402,13 +402,13 @@
             <ScatterFile>MK22FN512xxx12_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove 
-</Misc>
+            <Misc>--remove --keep=*(.FlashConfig)</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
+      <uAC6>1</uAC6>
       <Groups>
         <Group>
           <GroupName>source</GroupName>
@@ -476,36 +476,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/gpio</GroupName>
-          <Files>
-            <File>
-              <FileName>gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/gpio/gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>gpio_kinetis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/gpio/gpio_kinetis.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/timer</GroupName>
-          <Files>
-            <File>
-              <FileName>timer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/timer/timer.h</FilePath>
-            </File>
-            <File>
-              <FileName>pit_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/timer/pit_adapter.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>drivers</GroupName>
           <Files>
             <File>
@@ -529,24 +499,9 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -554,14 +509,24 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_uart.h</FileName>
+              <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_uart.h</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
               <FileName>fsl_uart.c</FileName>
@@ -569,9 +534,9 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_uart.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.h</FileName>
+              <FileName>fsl_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_lpuart.h</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_uart.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.c</FileName>
@@ -579,19 +544,24 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_port.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_port.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_smc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_smc.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_smc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_smc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_smc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_smc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -604,9 +574,9 @@
               <FilePath>../../../../../../components/pwm/pwm.h</FilePath>
             </File>
             <File>
-              <FileName>ftm_adapter.c</FileName>
+              <FileName>pwm_ftm_adapter.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/pwm/ftm_adapter.c</FilePath>
+              <FilePath>../../../../../../components/pwm/pwm_ftm_adapter.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -624,16 +594,6 @@
               <FilePath>../../../../../../devices/MK22F51212/utilities/fsl_shell.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -649,6 +609,16 @@
               <FilePath>../../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK22F51212/utilities/fsl_assert.c</FilePath>
@@ -659,29 +629,14 @@
           <GroupName>component/led</GroupName>
           <Files>
             <File>
-              <FileName>led.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/led/led.h</FilePath>
-            </File>
-            <File>
               <FileName>led.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/led/led.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/button</GroupName>
-          <Files>
             <File>
-              <FileName>button.h</FileName>
+              <FileName>led.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/button/button.h</FilePath>
-            </File>
-            <File>
-              <FileName>button.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/button/button.c</FilePath>
+              <FilePath>../../../../../../components/led/led.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -689,29 +644,74 @@
           <GroupName>component/timer_manager</GroupName>
           <Files>
             <File>
-              <FileName>timer_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/timer_manager/timer_manager.h</FilePath>
-            </File>
-            <File>
               <FileName>timer_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/timer_manager/timer_manager.c</FilePath>
             </File>
+            <File>
+              <FileName>timer_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/timer_manager/timer_manager.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component/lists</GroupName>
+          <GroupName>component/gpio</GroupName>
           <Files>
+            <File>
+              <FileName>gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/gpio/gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>gpio_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/gpio/gpio_adapter.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/button</GroupName>
+          <Files>
+            <File>
+              <FileName>button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/button/button.c</FilePath>
+            </File>
+            <File>
+              <FileName>button.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/button/button.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component-lists</GroupName>
+          <Files>
+            <File>
+              <FileName>generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/lists/generic_list.c</FilePath>
+            </File>
             <File>
               <FileName>generic_list.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/lists/generic_list.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/timer</GroupName>
+          <Files>
             <File>
-              <FileName>generic_list.c</FileName>
+              <FileName>pit_adapter.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/lists/generic_list.c</FilePath>
+              <FilePath>../../../../../../components/timer/pit_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/timer/timer.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -719,39 +719,44 @@
           <GroupName>component/panic</GroupName>
           <Files>
             <File>
-              <FileName>panic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/panic/panic.h</FilePath>
-            </File>
-            <File>
               <FileName>panic.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/panic/panic.c</FilePath>
             </File>
+            <File>
+              <FileName>panic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/panic/panic.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component/serial_manager</GroupName>
+          <GroupName>component-serial_manager</GroupName>
           <Files>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
             <File>
               <FileName>serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/serial_manager.c</FilePath>
             </File>
             <File>
-              <FileName>serial_port_uart.h</FileName>
+              <FileName>serial_manager.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_port_internal.h</FilePath>
             </File>
             <File>
               <FileName>serial_port_uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -764,6 +769,11 @@
               <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -773,21 +783,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
             </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>device</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/fsl_device_registers.h</FilePath>
-            </File>
             <File>
               <FileName>MK22F51212.h</FileName>
               <FileType>5</FileType>
@@ -797,6 +797,11 @@
               <FileName>MK22F51212_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK22F51212/MK22F51212_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MK22F51212.c</FileName>
@@ -811,7 +816,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/uart</GroupName>
+          <GroupName>component-uart</GroupName>
           <Files>
             <File>
               <FileName>uart.h</FileName>
@@ -854,9 +859,9 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_gcc.h</FileName>
+              <FileName>cmsis_armclang_ltm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
@@ -864,14 +869,24 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>mpu_armv7.h</FileName>
+              <FileName>core_armv81mml.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
             </File>
             <File>
               <FileName>core_armv8mbl.h</FileName>
@@ -882,6 +897,16 @@
               <FileName>core_armv8mml.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -897,16 +922,6 @@
               <FileName>arm_math.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -925,7 +940,6 @@
           <Cpu>CPUTYPE("Cortex-M4") FPU2</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0MK_P512 -FS00 -FL080000 -FP0($$Device:MK22FN512xxx12$Flash\MK_P512.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>$$Device:MK22FN512xxx12$Device\Include\MK22F51212.h</RegisterFile>
           <MemoryEnv/>
@@ -1255,7 +1269,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>4</Optim>
+            <Optim>7</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -1264,22 +1278,22 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
             <VariousControls>
-              <MiscControls>--library_interface=armcc 
---diag_suppress=1296,186 
- 
-</MiscControls>
-              <Define>NDEBUG, CPU_MK22FN512VLH12, USB_STACK_BM=1, FRDM_K22F, FREEDOM, DEBUG_CONSOLE_RX_ENABLE=0</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>NDEBUG, CPU_MK22FN512VLH12, USB_STACK_BM=1, FSL_OSA_TASK_ENABLE=1, FRDM_K22F, FREEDOM, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../devices/MK22F51212/drivers;../../../../../../components/pwm;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/utilities;../../../../../../devices/MK22F51212/drivers;../../../../../../components/led;../../../../../../components/button;../../../../../../components/timer_manager;../../../../../../components/lists;../../../../../../components/panic;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212;../../../../../../devices/MK22F51212/utilities/str;../../../../../../devices/MK22F51212/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MK22F51212/drivers;../../../../../../components/pwm;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/utilities;../../../../../../components/led;../../../../../../devices/MK22F51212/drivers;../../../../../../components/timer_manager;../../../../../../components/gpio;../../../../../../components/button;../../../../../../components/lists;../../../../../../components/timer;../../../../../../devices/MK22F51212/drivers;../../../../../../components/panic;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212;../../../../../../devices/MK22F51212/utilities/str;../../../../../../devices/MK22F51212/utilities/debug_console;../../../../../../components/uart;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/utilities</IncludePath>
             </VariousControls>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
+            <v6Rtti>0</v6Rtti>
           </Cads>
           <Aads>
             <interw>0</interw>
@@ -1297,6 +1311,7 @@
               <Undefine/>
               <IncludePath/>
             </VariousControls>
+            <uClangAs>1</uClangAs>
           </Aads>
           <LDads>
             <umfTarg>0</umfTarg>
@@ -1311,13 +1326,13 @@
             <ScatterFile>MK22FN512xxx12_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove 
-</Misc>
+            <Misc>--remove --keep=*(.FlashConfig)</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
+      <uAC6>1</uAC6>
       <Groups>
         <Group>
           <GroupName>source</GroupName>
@@ -1385,36 +1400,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/gpio</GroupName>
-          <Files>
-            <File>
-              <FileName>gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/gpio/gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>gpio_kinetis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/gpio/gpio_kinetis.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/timer</GroupName>
-          <Files>
-            <File>
-              <FileName>timer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/timer/timer.h</FilePath>
-            </File>
-            <File>
-              <FileName>pit_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/timer/pit_adapter.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>drivers</GroupName>
           <Files>
             <File>
@@ -1438,24 +1423,9 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -1463,14 +1433,24 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_uart.h</FileName>
+              <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_uart.h</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
               <FileName>fsl_uart.c</FileName>
@@ -1478,9 +1458,9 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_uart.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.h</FileName>
+              <FileName>fsl_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_lpuart.h</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_uart.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.c</FileName>
@@ -1488,19 +1468,24 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_port.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_port.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_smc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_smc.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_smc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_smc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_smc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_smc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1513,9 +1498,9 @@
               <FilePath>../../../../../../components/pwm/pwm.h</FilePath>
             </File>
             <File>
-              <FileName>ftm_adapter.c</FileName>
+              <FileName>pwm_ftm_adapter.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/pwm/ftm_adapter.c</FilePath>
+              <FilePath>../../../../../../components/pwm/pwm_ftm_adapter.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1533,16 +1518,6 @@
               <FilePath>../../../../../../devices/MK22F51212/utilities/fsl_shell.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -1558,6 +1533,16 @@
               <FilePath>../../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK22F51212/utilities/fsl_assert.c</FilePath>
@@ -1568,29 +1553,14 @@
           <GroupName>component/led</GroupName>
           <Files>
             <File>
-              <FileName>led.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/led/led.h</FilePath>
-            </File>
-            <File>
               <FileName>led.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/led/led.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/button</GroupName>
-          <Files>
             <File>
-              <FileName>button.h</FileName>
+              <FileName>led.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/button/button.h</FilePath>
-            </File>
-            <File>
-              <FileName>button.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/button/button.c</FilePath>
+              <FilePath>../../../../../../components/led/led.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1598,29 +1568,74 @@
           <GroupName>component/timer_manager</GroupName>
           <Files>
             <File>
-              <FileName>timer_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/timer_manager/timer_manager.h</FilePath>
-            </File>
-            <File>
               <FileName>timer_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/timer_manager/timer_manager.c</FilePath>
             </File>
+            <File>
+              <FileName>timer_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/timer_manager/timer_manager.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component/lists</GroupName>
+          <GroupName>component/gpio</GroupName>
           <Files>
+            <File>
+              <FileName>gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/gpio/gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>gpio_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/gpio/gpio_adapter.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/button</GroupName>
+          <Files>
+            <File>
+              <FileName>button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/button/button.c</FilePath>
+            </File>
+            <File>
+              <FileName>button.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/button/button.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component-lists</GroupName>
+          <Files>
+            <File>
+              <FileName>generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/lists/generic_list.c</FilePath>
+            </File>
             <File>
               <FileName>generic_list.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/lists/generic_list.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/timer</GroupName>
+          <Files>
             <File>
-              <FileName>generic_list.c</FileName>
+              <FileName>pit_adapter.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/lists/generic_list.c</FilePath>
+              <FilePath>../../../../../../components/timer/pit_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/timer/timer.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1628,39 +1643,44 @@
           <GroupName>component/panic</GroupName>
           <Files>
             <File>
-              <FileName>panic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/panic/panic.h</FilePath>
-            </File>
-            <File>
               <FileName>panic.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/panic/panic.c</FilePath>
             </File>
+            <File>
+              <FileName>panic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/panic/panic.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component/serial_manager</GroupName>
+          <GroupName>component-serial_manager</GroupName>
           <Files>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
             <File>
               <FileName>serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/serial_manager.c</FilePath>
             </File>
             <File>
-              <FileName>serial_port_uart.h</FileName>
+              <FileName>serial_manager.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_port_internal.h</FilePath>
             </File>
             <File>
               <FileName>serial_port_uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1673,6 +1693,11 @@
               <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -1682,21 +1707,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
             </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>device</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/fsl_device_registers.h</FilePath>
-            </File>
             <File>
               <FileName>MK22F51212.h</FileName>
               <FileType>5</FileType>
@@ -1706,6 +1721,11 @@
               <FileName>MK22F51212_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK22F51212/MK22F51212_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MK22F51212.c</FileName>
@@ -1720,7 +1740,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/uart</GroupName>
+          <GroupName>component-uart</GroupName>
           <Files>
             <File>
               <FileName>uart.h</FileName>
@@ -1763,9 +1783,9 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_gcc.h</FileName>
+              <FileName>cmsis_armclang_ltm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
@@ -1773,14 +1793,24 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>mpu_armv7.h</FileName>
+              <FileName>core_armv81mml.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
             </File>
             <File>
               <FileName>core_armv8mbl.h</FileName>
@@ -1791,6 +1821,16 @@
               <FileName>core_armv8mml.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -1806,16 +1846,6 @@
               <FileName>arm_math.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
           </Files>
         </Group>

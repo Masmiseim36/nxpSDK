@@ -7,11 +7,10 @@ debugging and further development.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.70.1
-- Keil MDK 5.20
-- GCC ARM Embedded 2015-4.9-q3
-- Kinetis Development Studio IDE 3.2.0
-- Atollic TrueSTUDIO 5.5.2
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -41,12 +40,12 @@ Running the demo
 When the example runs successfully, you can see the similar information from the terminal as below.
 
 ~~~~~~~~~~~~~~~~~~~~~
-EDMA memory to memory transfer example begin.
+EDMA scatter_gather transfer example begin.
 
 Destination Buffer:
 0       0       0       0       0       0       0       0
 
-EDMA memory to memory transfer example finish.
+EDMA scatter_gather transfer example finish.
 
 Destination Buffer:
 1       2       3       4       5       6       7       8

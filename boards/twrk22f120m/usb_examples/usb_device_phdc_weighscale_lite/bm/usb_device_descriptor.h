@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _USB_DEVICE_DESCRIPTOR_H_
 #define _USB_DEVICE_DESCRIPTOR_H_
@@ -49,16 +27,16 @@
 #define USB_PHDC_PROTOCOL (0x00U)
 
 /*! @brief Size of descriptor in bytes */
-#define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (72U)
+#define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (sizeof(g_UsbDeviceConfigurationDescriptor))
 #define USB_DESCRIPTOR_LENGTH_CLASS_FUNCTION (4U)
 #define USB_DESCRIPTOR_LENGTH_QOS (4U)
 #define USB_DESCRIPTOR_LENGTH_METADATA_BULK_OUT (4U)
 #define USB_DESCRIPTOR_LENGTH_METADATA_BULK_IN (7U)
 #define USB_DESCRIPTOR_LENGTH_FUNCTION_EXTENSION (6U)
-#define USB_DESCRIPTOR_LENGTH_STRING0 (4U)
-#define USB_DESCRIPTOR_LENGTH_STRING1 (38U)
-#define USB_DESCRIPTOR_LENGTH_STRING2 (32U)
-#define USB_DESCRIPTOR_LENGTH_STRING_ERROR (34U)
+#define USB_DESCRIPTOR_LENGTH_STRING0 (sizeof(g_UsbDeviceString0))
+#define USB_DESCRIPTOR_LENGTH_STRING1 (sizeof(g_UsbDeviceString1))
+#define USB_DESCRIPTOR_LENGTH_STRING2 (sizeof(g_UsbDeviceString2))
+#define USB_DESCRIPTOR_LENGTH_STRING_ERROR (sizeof(g_UsbDeviceStringN))
 
 /*! @brief PHDC descriptor types */
 #define USB_DESCRIPTOR_TYPE_CLASS_FUNCTION (0x20U)
@@ -117,7 +95,7 @@ extern "C" {
  * configurations need to be updated to match current speed. As the default,
  * the device descriptors and configurations are configured by using FS parameters
  * for both EHCI and KHCI. When the EHCI is enabled, the application needs to call
- * this fucntion to update device by using current speed. The updated information
+ * this function to update device by using current speed. The updated information
  * includes endpoint max packet size, endpoint interval, etc..
  *
  * @param speed Speed type. USB_SPEED_HIGH/USB_SPEED_FULL/USB_SPEED_LOW.

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,8 +22,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief UART EDMA driver version 2.1.6. */
-#define FSL_UART_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 1, 6))
+/*! @brief UART EDMA driver version 2.2.0. */
+#define FSL_UART_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
 /*@}*/
 
 /* Forward declaration of the handle typedef. */
@@ -36,8 +36,8 @@ typedef void (*uart_edma_transfer_callback_t)(UART_Type *base,
                                               void *userData);
 
 /*!
-* @brief UART eDMA handle
-*/
+ * @brief UART eDMA handle
+ */
 struct _uart_edma_handle
 {
     uart_edma_transfer_callback_t callback; /*!< Callback function. */

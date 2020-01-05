@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_CMT_H_
 #define _FSL_CMT_H_
@@ -37,16 +15,14 @@
  * @{
  */
 
-/*! @file */
-
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief CMT driver version 2.0.0. */
-#define FSL_CMT_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+/*! @brief CMT driver version 2.0.3. */
+#define FSL_CMT_DRIVER_VERSION (MAKE_VERSION(2, 0, 3))
 /*@}*/
 
 /*!
@@ -55,8 +31,8 @@
 typedef enum _cmt_mode
 {
     kCMT_DirectIROCtl = 0x00U, /*!< Carrier modulator is disabled and the IRO signal is directly in software control */
-    kCMT_TimeMode = 0x01U,     /*!< Carrier modulator is enabled in time mode. */
-    kCMT_FSKMode = 0x05U,      /*!< Carrier modulator is enabled in FSK mode. */
+    kCMT_TimeMode     = 0x01U, /*!< Carrier modulator is enabled in time mode. */
+    kCMT_FSKMode      = 0x05U, /*!< Carrier modulator is enabled in FSK mode. */
     kCMT_BasebandMode = 0x09U  /*!< Carrier modulator is enabled in baseband mode. */
 } cmt_mode_t;
 
@@ -68,15 +44,15 @@ typedef enum _cmt_mode
  */
 typedef enum _cmt_primary_clkdiv
 {
-    kCMT_PrimaryClkDiv1 = 0U,   /*!< The intermediate frequency is the bus clock divided by 1. */
-    kCMT_PrimaryClkDiv2 = 1U,   /*!< The intermediate frequency is the bus clock divided by 2. */
-    kCMT_PrimaryClkDiv3 = 2U,   /*!< The intermediate frequency is the bus clock divided by 3. */
-    kCMT_PrimaryClkDiv4 = 3U,   /*!< The intermediate frequency is the bus clock divided by 4. */
-    kCMT_PrimaryClkDiv5 = 4U,   /*!< The intermediate frequency is the bus clock divided by 5. */
-    kCMT_PrimaryClkDiv6 = 5U,   /*!< The intermediate frequency is the bus clock divided by 6. */
-    kCMT_PrimaryClkDiv7 = 6U,   /*!< The intermediate frequency is the bus clock divided by 7. */
-    kCMT_PrimaryClkDiv8 = 7U,   /*!< The intermediate frequency is the bus clock divided by 8. */
-    kCMT_PrimaryClkDiv9 = 8U,   /*!< The intermediate frequency is the bus clock divided by 9. */
+    kCMT_PrimaryClkDiv1  = 0U,  /*!< The intermediate frequency is the bus clock divided by 1. */
+    kCMT_PrimaryClkDiv2  = 1U,  /*!< The intermediate frequency is the bus clock divided by 2. */
+    kCMT_PrimaryClkDiv3  = 2U,  /*!< The intermediate frequency is the bus clock divided by 3. */
+    kCMT_PrimaryClkDiv4  = 3U,  /*!< The intermediate frequency is the bus clock divided by 4. */
+    kCMT_PrimaryClkDiv5  = 4U,  /*!< The intermediate frequency is the bus clock divided by 5. */
+    kCMT_PrimaryClkDiv6  = 5U,  /*!< The intermediate frequency is the bus clock divided by 6. */
+    kCMT_PrimaryClkDiv7  = 6U,  /*!< The intermediate frequency is the bus clock divided by 7. */
+    kCMT_PrimaryClkDiv8  = 7U,  /*!< The intermediate frequency is the bus clock divided by 8. */
+    kCMT_PrimaryClkDiv9  = 8U,  /*!< The intermediate frequency is the bus clock divided by 9. */
     kCMT_PrimaryClkDiv10 = 9U,  /*!< The intermediate frequency is the bus clock divided by 10. */
     kCMT_PrimaryClkDiv11 = 10U, /*!< The intermediate frequency is the bus clock divided by 11. */
     kCMT_PrimaryClkDiv12 = 11U, /*!< The intermediate frequency is the bus clock divided by 12. */
@@ -104,8 +80,8 @@ typedef enum _cmt_second_clkdiv
  */
 typedef enum _cmt_infrared_output_polarity
 {
-    kCMT_IROActiveLow = 0U, /*!< The CMT infrared output signal polarity is active-low. */
-    kCMT_IROActiveHigh = 1U /*!< The CMT infrared output signal polarity is active-high. */
+    kCMT_IROActiveLow  = 0U, /*!< The CMT infrared output signal polarity is active-low. */
+    kCMT_IROActiveHigh = 1U  /*!< The CMT infrared output signal polarity is active-high. */
 } cmt_infrared_output_polarity_t;
 
 /*!
@@ -113,8 +89,8 @@ typedef enum _cmt_infrared_output_polarity
  */
 typedef enum _cmt_infrared_output_state
 {
-    kCMT_IROCtlLow = 0U, /*!< The CMT Infrared output signal state is controlled to low. */
-    kCMT_IROCtlHigh = 1U /*!< The CMT Infrared output signal state is controlled to high. */
+    kCMT_IROCtlLow  = 0U, /*!< The CMT Infrared output signal state is controlled to low. */
+    kCMT_IROCtlHigh = 1U  /*!< The CMT Infrared output signal state is controlled to high. */
 } cmt_infrared_output_state_t;
 
 /*!
@@ -128,15 +104,15 @@ enum _cmt_interrupt_enable
 };
 
 /*!
- * @brief CMT carrier generator and modulator configure structure
+ * @brief CMT carrier generator and modulator configuration structure
  *
  */
 typedef struct _cmt_modulate_config
 {
-    uint8_t highCount1;  /*!< The high time for carrier generator first register. */
-    uint8_t lowCount1;   /*!< The low time for carrier generator first register. */
-    uint8_t highCount2;  /*!< The high time for carrier generator second register for FSK mode. */
-    uint8_t lowCount2;   /*!< The low time for carrier generator second register for FSK mode. */
+    uint8_t highCount1;  /*!< The high-time for carrier generator first register. */
+    uint8_t lowCount1;   /*!< The low-time for carrier generator first register. */
+    uint8_t highCount2;  /*!< The high-time for carrier generator second register for FSK mode. */
+    uint8_t lowCount2;   /*!< The low-time for carrier generator second register for FSK mode. */
     uint16_t markCount;  /*!< The mark time for the modulator gate. */
     uint16_t spaceCount; /*!< The space time for the modulator gate. */
 } cmt_modulate_config_t;
@@ -164,10 +140,10 @@ extern "C" {
  */
 
 /*!
- * @brief Gets the CMT default configuration structure. The purpose
- * of this API is to get the default configuration structure for the CMT_Init().
- * Use the initialized structure unchanged in CMT_Init(), or modify
- * some fields of the structure before calling the CMT_Init().
+ * @brief Gets the CMT default configuration structure. This API
+ * gets the default configuration structure for the CMT_Init().
+ * Use the initialized structure unchanged in CMT_Init() or modify
+ * fields of the structure before calling the CMT_Init().
  *
  * @param config The CMT configuration structure pointer.
  */
@@ -216,7 +192,7 @@ void CMT_SetMode(CMT_Type *base, cmt_mode_t mode, cmt_modulate_config_t *modulat
  *
  * @param base   CMT peripheral base address.
  * @return The CMT mode.
- *     kCMT_DirectIROCtl     Carrier modulator is disabled, the IRO signal is directly in software control.
+ *     kCMT_DirectIROCtl     Carrier modulator is disabled; the IRO signal is directly in software control.
  *     kCMT_TimeMode         Carrier modulator is enabled in time mode.
  *     kCMT_FSKMode          Carrier modulator is enabled in FSK mode.
  *     kCMT_BasebandMode     Carrier modulator is enabled in baseband mode.
@@ -235,11 +211,11 @@ uint32_t CMT_GetCMTFrequency(CMT_Type *base, uint32_t busClock_Hz);
 /*!
  * @brief Sets the primary data set for the CMT carrier generator counter.
  *
- * This function sets the high time and low time of the primary data set for the
+ * This function sets the high-time and low-time of the primary data set for the
  * CMT carrier generator counter to control the period and the duty cycle of the
  * output carrier signal.
- * If the CMT clock period is Tcmt, The period of the carrier generator signal equals
- * (highCount + lowCount) * Tcmt. The duty cycle equals  highCount / (highCount + lowCount).
+ * If the CMT clock period is Tcmt, the period of the carrier generator signal equals
+ * (highCount + lowCount) * Tcmt. The duty cycle equals to highCount / (highCount + lowCount).
  *
  * @param base      CMT peripheral base address.
  * @param highCount The number of CMT clocks for carrier generator signal high time,
@@ -250,21 +226,21 @@ uint32_t CMT_GetCMTFrequency(CMT_Type *base, uint32_t busClock_Hz);
 static inline void CMT_SetCarrirGenerateCountOne(CMT_Type *base, uint32_t highCount, uint32_t lowCount)
 {
     assert(highCount <= CMT_CGH1_PH_MASK);
-    assert(highCount);
+    assert(0U != highCount);
     assert(lowCount <= CMT_CGL1_PL_MASK);
-    assert(lowCount);
+    assert(0U != lowCount);
 
-    base->CGH1 = highCount;
-    base->CGL1 = lowCount;
+    base->CGH1 = (uint8_t)highCount;
+    base->CGL1 = (uint8_t)lowCount;
 }
 
 /*!
  * @brief Sets the secondary data set for the CMT carrier generator counter.
  *
- * This function is used for FSK mode setting the high time and low time of the secondary
+ * This function is used for FSK mode setting the high-time and low-time of the secondary
  * data set CMT carrier generator counter to control the period and the duty cycle
  * of the output carrier signal.
- * If the CMT clock period is Tcmt, The period of the carrier generator signal equals
+ * If the CMT clock period is Tcmt, the period of the carrier generator signal equals
  * (highCount + lowCount) * Tcmt. The duty cycle equals  highCount / (highCount + lowCount).
  *
  * @param base      CMT peripheral base address.
@@ -276,12 +252,12 @@ static inline void CMT_SetCarrirGenerateCountOne(CMT_Type *base, uint32_t highCo
 static inline void CMT_SetCarrirGenerateCountTwo(CMT_Type *base, uint32_t highCount, uint32_t lowCount)
 {
     assert(highCount <= CMT_CGH2_SH_MASK);
-    assert(highCount);
+    assert(0U != highCount);
     assert(lowCount <= CMT_CGL2_SL_MASK);
-    assert(lowCount);
+    assert(0U != lowCount);
 
-    base->CGH2 = highCount;
-    base->CGL2 = lowCount;
+    base->CGH2 = (uint8_t)highCount;
+    base->CGL2 = (uint8_t)lowCount;
 }
 
 /*!
@@ -320,12 +296,12 @@ static inline void CMT_EnableExtendedSpace(CMT_Type *base, bool enable)
     }
     else
     {
-        base->MSC &= ~CMT_MSC_EXSPC_MASK;
+        base->MSC &= ~(uint8_t)CMT_MSC_EXSPC_MASK;
     }
 }
 
 /*!
- * @brief Sets IRO - infrared output signal state.
+ * @brief Sets the IRO (infrared output) signal state.
  *
  * Changes the states of the IRO signal when the kCMT_DirectIROMode mode is set
  * and the IRO signal is enabled.
@@ -338,12 +314,12 @@ void CMT_SetIroState(CMT_Type *base, cmt_infrared_output_state_t state);
 /*!
  * @brief Enables the CMT interrupt.
  *
- * This function enables the CMT interrupts according to the provided maskIf enabled.
+ * This function enables the CMT interrupts according to the provided mask if enabled.
  * The CMT only has the end of the cycle interrupt - an interrupt occurs at the end
  * of the modulator cycle. This interrupt provides a means for the user
  * to reload the new mark/space values into the CMT modulator data registers
  * and verify the modulator mark and space.
- * For example, to enable the end of cycle, do the following:
+ * For example, to enable the end of cycle, do the following.
  * @code
  *     CMT_EnableInterrupts(CMT, kCMT_EndOfCycleInterruptEnable);
  * @endcode
@@ -352,7 +328,7 @@ void CMT_SetIroState(CMT_Type *base, cmt_infrared_output_state_t state);
  */
 static inline void CMT_EnableInterrupts(CMT_Type *base, uint32_t mask)
 {
-    base->MSC |= mask;
+    base->MSC |= (uint8_t)mask;
 }
 
 /*!
@@ -360,7 +336,7 @@ static inline void CMT_EnableInterrupts(CMT_Type *base, uint32_t mask)
  *
  * This function disables the CMT interrupts according to the provided maskIf enabled.
  * The CMT only has the end of the cycle interrupt.
- * For example, to disable the end of cycle, do the following:
+ * For example, to disable the end of cycle, do the following.
  * @code
  *     CMT_DisableInterrupts(CMT, kCMT_EndOfCycleInterruptEnable);
  * @endcode
@@ -370,7 +346,7 @@ static inline void CMT_EnableInterrupts(CMT_Type *base, uint32_t mask)
  */
 static inline void CMT_DisableInterrupts(CMT_Type *base, uint32_t mask)
 {
-    base->MSC &= ~mask;
+    base->MSC &= ~(uint8_t)mask;
 }
 
 /*!
@@ -388,7 +364,7 @@ static inline void CMT_DisableInterrupts(CMT_Type *base, uint32_t mask)
  */
 static inline uint32_t CMT_GetStatusFlags(CMT_Type *base)
 {
-    return base->MSC & CMT_MSC_EOCF_MASK;
+    return (uint32_t)base->MSC & CMT_MSC_EOCF_MASK;
 }
 
 /*! @}*/

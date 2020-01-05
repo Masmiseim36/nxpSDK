@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
@@ -42,11 +16,16 @@
  * Definitions
  ******************************************************************************/
 
+#define EXAMPLE_OSC_WAIT_TIME_MS 1000UL
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 
+#if !(defined(FSL_FEATURE_RTC_HAS_NO_CR_OSCE) && FSL_FEATURE_RTC_HAS_NO_CR_OSCE)
+/* Wait for 32kHz OSC clock start up. */
+static void EXAMPLE_WaitOSCReady(uint32_t delay_ms);
+#endif
 
 /*******************************************************************************
  * Variables
@@ -58,12 +37,49 @@ volatile bool busyWait;
  * Code
  ******************************************************************************/
 
+#if !(defined(FSL_FEATURE_RTC_HAS_NO_CR_OSCE) && FSL_FEATURE_RTC_HAS_NO_CR_OSCE)
+/*!
+ * @brief Waitting for the OSC clock steady.
+ *
+ * Due to the oscillator startup time is depending on the hardware design and usually
+ * take hundreds of milliseconds to make the oscillator stable. Here, we just delay a certain
+ * time to ensure the socillator stable, please use the suitable delay time to adapt
+ * to your real usage if needed.
+ */
+static void EXAMPLE_WaitOSCReady(uint32_t delay_ms)
+{
+    uint32_t ticks = 0UL;
+    uint32_t count = delay_ms;
+
+    /* Make a 1 milliseconds counter. */
+    ticks = SystemCoreClock / 1000UL;
+    assert((ticks - 1UL) <= SysTick_LOAD_RELOAD_Msk);
+
+    /* Enable the SysTick for counting. */
+    SysTick->LOAD = (uint32_t)(ticks - 1UL);
+    SysTick->VAL  = 0UL;
+    SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk;
+
+    for (; count > 0U; count--)
+    {
+        /* Wait for the SysTick counter reach 0. */
+        while (!(SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk))
+        {
+        }
+    }
+
+    /* Disable SysTick. */
+    SysTick->CTRL &= ~(SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk);
+    SysTick->LOAD = 0UL;
+    SysTick->VAL  = 0UL;
+}
+#endif
 
 /*!
-* @brief ISR for Alarm interrupt
-*
-* This function changes the state of busyWait.
-*/
+ * @brief ISR for Alarm interrupt
+ *
+ * This function changes the state of busyWait.
+ */
 void RTC_IRQHandler(void)
 {
     uint32_t status = RTC_GetStatusFlags(RTC);
@@ -115,16 +131,26 @@ int main(void)
      */
     RTC_GetDefaultConfig(&rtcConfig);
     RTC_Init(RTC, &rtcConfig);
-    /* Select RTC clock source */
-    RTC_SetClockSource(RTC);
+
+#if !(defined(FSL_FEATURE_RTC_HAS_NO_CR_OSCE) && FSL_FEATURE_RTC_HAS_NO_CR_OSCE)
+    /* If the oscillator has not been enabled. */
+    if (0U == (RTC->CR & RTC_CR_OSCE_MASK))
+    {
+        /* Select RTC clock source */
+        RTC_SetClockSource(RTC);
+
+        /* Wait for OSC clock steady. */
+        EXAMPLE_WaitOSCReady(EXAMPLE_OSC_WAIT_TIME_MS);
+    }
+#endif /* FSL_FEATURE_RTC_HAS_NO_CR_OSCE */
 
     PRINTF("RTC example: set up time to wake up an alarm\r\n");
 
     /* Set a start date time and start RT */
-    date.year = 2014U;
-    date.month = 12U;
-    date.day = 25U;
-    date.hour = 19U;
+    date.year   = 2014U;
+    date.month  = 12U;
+    date.day    = 25U;
+    date.hour   = 19U;
     date.minute = 0;
     date.second = 0;
 
@@ -147,8 +173,8 @@ int main(void)
     while (1)
     {
         busyWait = true;
-        index = 0;
-        sec = 0;
+        index    = 0;
+        sec      = 0;
         /* Get date time */
         RTC_GetDatetime(RTC, &date);
 

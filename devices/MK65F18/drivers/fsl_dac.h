@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _FSL_DAC_H_
@@ -38,15 +16,14 @@
  * @{
  */
 
-
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief DAC driver version 2.0.1. */
-#define FSL_DAC_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
+/*! @brief DAC driver version 2.0.2. */
+#define FSL_DAC_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
 /*@}*/
 
 /*!
@@ -57,7 +34,7 @@ enum _dac_buffer_status_flags
 #if defined(FSL_FEATURE_DAC_HAS_WATERMARK_DETECTION) && FSL_FEATURE_DAC_HAS_WATERMARK_DETECTION
     kDAC_BufferWatermarkFlag = DAC_SR_DACBFWMF_MASK,                  /*!< DAC Buffer Watermark Flag. */
 #endif                                                                /* FSL_FEATURE_DAC_HAS_WATERMARK_DETECTION */
-    kDAC_BufferReadPointerTopPositionFlag = DAC_SR_DACBFRPTF_MASK,    /*!< DAC Buffer Read Pointer Top Position Flag. */
+    kDAC_BufferReadPointerTopPositionFlag    = DAC_SR_DACBFRPTF_MASK, /*!< DAC Buffer Read Pointer Top Position Flag. */
     kDAC_BufferReadPointerBottomPositionFlag = DAC_SR_DACBFRPBF_MASK, /*!< DAC Buffer Read Pointer Bottom Position
                                                                            Flag. */
 };
@@ -211,11 +188,11 @@ static inline void DAC_Enable(DAC_Type *base, bool enable)
 {
     if (enable)
     {
-        base->C0 |= DAC_C0_DACEN_MASK;
+        base->C0 |= (uint8_t)DAC_C0_DACEN_MASK;
     }
     else
     {
-        base->C0 &= ~DAC_C0_DACEN_MASK;
+        base->C0 &= (uint8_t)(~DAC_C0_DACEN_MASK);
     }
 }
 
@@ -236,11 +213,11 @@ static inline void DAC_EnableBuffer(DAC_Type *base, bool enable)
 {
     if (enable)
     {
-        base->C1 |= DAC_C1_DACBFEN_MASK;
+        base->C1 |= (uint8_t)DAC_C1_DACBFEN_MASK;
     }
     else
     {
-        base->C1 &= ~DAC_C1_DACBFEN_MASK;
+        base->C1 &= (uint8_t)(~DAC_C1_DACBFEN_MASK);
     }
 }
 
@@ -255,7 +232,8 @@ void DAC_SetBufferConfig(DAC_Type *base, const dac_buffer_config_t *config);
 /*!
  * @brief Initializes the DAC buffer configuration structure.
  *
- * This function initializes the DAC buffer configuration structure to default values. The default values are as follows.
+ * This function initializes the DAC buffer configuration structure to default values. The default values are as
+ * follows.
  * @code
  *   config->triggerMode = kDAC_BufferTriggerBySoftwareMode;
  *   config->watermark   = kDAC_BufferWatermark1Word;
@@ -276,11 +254,11 @@ static inline void DAC_EnableBufferDMA(DAC_Type *base, bool enable)
 {
     if (enable)
     {
-        base->C1 |= DAC_C1_DMAEN_MASK;
+        base->C1 |= (uint8_t)DAC_C1_DMAEN_MASK;
     }
     else
     {
-        base->C1 &= ~DAC_C1_DMAEN_MASK;
+        base->C1 &= (uint8_t)(~DAC_C1_DMAEN_MASK);
     }
 }
 
@@ -288,7 +266,8 @@ static inline void DAC_EnableBufferDMA(DAC_Type *base, bool enable)
  * @brief Sets the value for  items in the buffer.
  *
  * @param base  DAC peripheral base address.
- * @param index Setting the index for items in the buffer. The available index should not exceed the size of the DAC buffer.
+ * @param index Setting the index for items in the buffer. The available index should not exceed the size of the DAC
+ * buffer.
  * @param value Setting the value for items in the buffer. 12-bits are available.
  */
 void DAC_SetBufferValue(DAC_Type *base, uint8_t index, uint16_t value);
@@ -357,7 +336,7 @@ void DAC_DisableBufferInterrupts(DAC_Type *base, uint32_t mask);
  *
  * @return      Mask value for the asserted flags. See  "_dac_buffer_status_flags".
  */
-uint32_t DAC_GetBufferStatusFlags(DAC_Type *base);
+uint8_t DAC_GetBufferStatusFlags(DAC_Type *base);
 
 /*!
  * @brief Clears the flags of events for the DAC buffer.

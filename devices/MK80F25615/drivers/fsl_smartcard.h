@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _FSL_SMARTCARD_H_
@@ -48,9 +22,9 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief Smart card driver version 2.2.0.
+/*! @brief Smart card driver version 2.2.1.
  */
-#define FSL_SMARTCARD_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
+#define FSL_SMARTCARD_DRIVER_VERSION (MAKE_VERSION(2, 2, 1))
 /*@}*/
 
 /*! @brief Smart card global define which specify number of clock cycles until initial 'TS' character has to be received
@@ -67,13 +41,13 @@
 #define SMARTCARD_TS_INVERSE_CONVENTION (0x3Fu)
 
 /*! @brief Smart card Error codes. */
-typedef enum _smartcard_status
+enum
 {
-    kStatus_SMARTCARD_Success = MAKE_STATUS(kStatusGroup_SMARTCARD, 0),              /*!< Transfer ends successfully */
-    kStatus_SMARTCARD_TxBusy = MAKE_STATUS(kStatusGroup_SMARTCARD, 1),               /*!< Transmit in progress */
-    kStatus_SMARTCARD_RxBusy = MAKE_STATUS(kStatusGroup_SMARTCARD, 2),               /*!< Receiving in progress */
+    kStatus_SMARTCARD_Success              = MAKE_STATUS(kStatusGroup_SMARTCARD, 0), /*!< Transfer ends successfully */
+    kStatus_SMARTCARD_TxBusy               = MAKE_STATUS(kStatusGroup_SMARTCARD, 1), /*!< Transmit in progress */
+    kStatus_SMARTCARD_RxBusy               = MAKE_STATUS(kStatusGroup_SMARTCARD, 2), /*!< Receiving in progress */
     kStatus_SMARTCARD_NoTransferInProgress = MAKE_STATUS(kStatusGroup_SMARTCARD, 3), /*!< No transfer in progress */
-    kStatus_SMARTCARD_Timeout = MAKE_STATUS(kStatusGroup_SMARTCARD, 4),              /*!< Transfer ends with time-out */
+    kStatus_SMARTCARD_Timeout              = MAKE_STATUS(kStatusGroup_SMARTCARD, 4), /*!< Transfer ends with time-out */
     kStatus_SMARTCARD_Initialized =
         MAKE_STATUS(kStatusGroup_SMARTCARD, 5), /*!< Smart card driver is already initialized */
     kStatus_SMARTCARD_PhyInitialized =
@@ -82,35 +56,35 @@ typedef enum _smartcard_status
     kStatus_SMARTCARD_InvalidInput =
         MAKE_STATUS(kStatusGroup_SMARTCARD, 8), /*!< Function called with invalid input arguments */
     kStatus_SMARTCARD_OtherError = MAKE_STATUS(kStatusGroup_SMARTCARD, 9) /*!< Some other error occur */
-} smartcard_status_t;
+};
 
 /*! @brief Control codes for the Smart card protocol timers and misc. */
 typedef enum _smartcard_control
 {
-    kSMARTCARD_EnableADT = 0x0u,
-    kSMARTCARD_DisableADT = 0x1u,
-    kSMARTCARD_EnableGTV = 0x2u,
-    kSMARTCARD_DisableGTV = 0x3u,
-    kSMARTCARD_ResetWWT = 0x4u,
-    kSMARTCARD_EnableWWT = 0x5u,
-    kSMARTCARD_DisableWWT = 0x6u,
-    kSMARTCARD_ResetCWT = 0x7u,
-    kSMARTCARD_EnableCWT = 0x8u,
-    kSMARTCARD_DisableCWT = 0x9u,
-    kSMARTCARD_ResetBWT = 0xAu,
-    kSMARTCARD_EnableBWT = 0xBu,
-    kSMARTCARD_DisableBWT = 0xCu,
-    kSMARTCARD_EnableInitDetect = 0xDu,
-    kSMARTCARD_EnableAnack = 0xEu,
-    kSMARTCARD_DisableAnack = 0xFu,
-    kSMARTCARD_ConfigureBaudrate = 0x10u,
-    kSMARTCARD_SetupATRMode = 0x11u,
-    kSMARTCARD_SetupT0Mode = 0x12u,
-    kSMARTCARD_SetupT1Mode = 0x13u,
-    kSMARTCARD_EnableReceiverMode = 0x14u,
-    kSMARTCARD_DisableReceiverMode = 0x15u,
-    kSMARTCARD_EnableTransmitterMode = 0x16u,
-    kSMARTCARD_DisableTransmitterMode = 0x17u,
+    kSMARTCARD_EnableADT               = 0x0u,
+    kSMARTCARD_DisableADT              = 0x1u,
+    kSMARTCARD_EnableGTV               = 0x2u,
+    kSMARTCARD_DisableGTV              = 0x3u,
+    kSMARTCARD_ResetWWT                = 0x4u,
+    kSMARTCARD_EnableWWT               = 0x5u,
+    kSMARTCARD_DisableWWT              = 0x6u,
+    kSMARTCARD_ResetCWT                = 0x7u,
+    kSMARTCARD_EnableCWT               = 0x8u,
+    kSMARTCARD_DisableCWT              = 0x9u,
+    kSMARTCARD_ResetBWT                = 0xAu,
+    kSMARTCARD_EnableBWT               = 0xBu,
+    kSMARTCARD_DisableBWT              = 0xCu,
+    kSMARTCARD_EnableInitDetect        = 0xDu,
+    kSMARTCARD_EnableAnack             = 0xEu,
+    kSMARTCARD_DisableAnack            = 0xFu,
+    kSMARTCARD_ConfigureBaudrate       = 0x10u,
+    kSMARTCARD_SetupATRMode            = 0x11u,
+    kSMARTCARD_SetupT0Mode             = 0x12u,
+    kSMARTCARD_SetupT1Mode             = 0x13u,
+    kSMARTCARD_EnableReceiverMode      = 0x14u,
+    kSMARTCARD_DisableReceiverMode     = 0x15u,
+    kSMARTCARD_EnableTransmitterMode   = 0x16u,
+    kSMARTCARD_DisableTransmitterMode  = 0x17u,
     kSMARTCARD_ResetWaitTimeMultiplier = 0x18u,
 } smartcard_control_t;
 
@@ -118,26 +92,26 @@ typedef enum _smartcard_control
 typedef enum _smartcard_card_voltage_class
 {
     kSMARTCARD_VoltageClassUnknown = 0x0u,
-    kSMARTCARD_VoltageClassA5_0V = 0x1u,
-    kSMARTCARD_VoltageClassB3_3V = 0x2u,
-    kSMARTCARD_VoltageClassC1_8V = 0x3u
+    kSMARTCARD_VoltageClassA5_0V   = 0x1u,
+    kSMARTCARD_VoltageClassB3_3V   = 0x2u,
+    kSMARTCARD_VoltageClassC1_8V   = 0x3u
 } smartcard_card_voltage_class_t;
 
 /*! @brief Defines Smart card I/O transfer states */
 typedef enum _smartcard_transfer_state
 {
-    kSMARTCARD_IdleState = 0x0u,
-    kSMARTCARD_WaitingForTSState = 0x1u,
+    kSMARTCARD_IdleState               = 0x0u,
+    kSMARTCARD_WaitingForTSState       = 0x1u,
     kSMARTCARD_InvalidTSDetecetedState = 0x2u,
-    kSMARTCARD_ReceivingState = 0x3u,
-    kSMARTCARD_TransmittingState = 0x4u,
+    kSMARTCARD_ReceivingState          = 0x3u,
+    kSMARTCARD_TransmittingState       = 0x4u,
 } smartcard_transfer_state_t;
 
 /*! @brief Defines Smart card reset types */
 typedef enum _smartcard_reset_type
 {
-    kSMARTCARD_ColdReset = 0x0u,
-    kSMARTCARD_WarmReset = 0x1u,
+    kSMARTCARD_ColdReset   = 0x0u,
+    kSMARTCARD_WarmReset   = 0x1u,
     kSMARTCARD_NoColdReset = 0x2u,
     kSMARTCARD_NoWarmReset = 0x3u,
 } smartcard_reset_type_t;
@@ -153,28 +127,28 @@ typedef enum _smartcard_transport_type
 typedef enum _smartcard_parity_type
 {
     kSMARTCARD_EvenParity = 0x0u,
-    kSMARTCARD_OddParity = 0x1u
+    kSMARTCARD_OddParity  = 0x1u
 } smartcard_parity_type_t;
 
 /*! @brief Defines data Convention format */
 typedef enum _smartcard_card_convention
 {
-    kSMARTCARD_DirectConvention = 0x0u,
+    kSMARTCARD_DirectConvention  = 0x0u,
     kSMARTCARD_InverseConvention = 0x1u
 } smartcard_card_convention_t;
 
 /*! @brief Defines Smart card interface IC control types */
 typedef enum _smartcard_interface_control
 {
-    kSMARTCARD_InterfaceSetVcc = 0x00u,
+    kSMARTCARD_InterfaceSetVcc               = 0x00u,
     kSMARTCARD_InterfaceSetClockToResetDelay = 0x01u,
-    kSMARTCARD_InterfaceReadStatus = 0x02u
+    kSMARTCARD_InterfaceReadStatus           = 0x02u
 } smartcard_interface_control_t;
 
 /*! @brief Defines transfer direction.*/
 typedef enum _smartcard_direction
 {
-    kSMARTCARD_Receive = 0u,
+    kSMARTCARD_Receive  = 0u,
     kSMARTCARD_Transmit = 1u
 } smartcard_direction_t;
 
@@ -293,7 +267,7 @@ typedef struct _smartcard_context
     uint8_t statusBytes[2]; /*!< Used to store Status bytes SW1, SW2 of the last executed card command response */
     /* Configuration part */
     smartcard_interface_config_t interfaceConfig; /*!< Smart card interface configuration structure */
-    bool abortTransfer; /*!< Used to abort transfer. */
+    bool abortTransfer;                           /*!< Used to abort transfer. */
 } smartcard_context_t;
 
 /*! @}*/

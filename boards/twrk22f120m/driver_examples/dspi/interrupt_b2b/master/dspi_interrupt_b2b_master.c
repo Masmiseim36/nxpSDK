@@ -50,31 +50,37 @@ volatile bool isTransferCompleted = false;
 
 void EXAMPLE_DSPI_MASTER_IRQHandler(void)
 {
-    if (masterRxCount < TRANSFER_SIZE)
+    uint32_t tmpmasterTxCount = masterTxCount;
+    uint32_t tmpmasterRxCount = masterRxCount;
+    uint32_t tmpmasterCommand = masterCommand;
+
+    if (tmpmasterRxCount < TRANSFER_SIZE)
     {
         while (DSPI_GetStatusFlags(EXAMPLE_DSPI_MASTER_BASEADDR) & kDSPI_RxFifoDrainRequestFlag)
         {
-            masterRxData[masterRxCount] = DSPI_ReadData(EXAMPLE_DSPI_MASTER_BASEADDR);
+            masterRxData[tmpmasterRxCount] = DSPI_ReadData(EXAMPLE_DSPI_MASTER_BASEADDR);
             ++masterRxCount;
+            tmpmasterRxCount = masterRxCount;
 
             DSPI_ClearStatusFlags(EXAMPLE_DSPI_MASTER_BASEADDR, kDSPI_RxFifoDrainRequestFlag);
 
-            if (masterRxCount == TRANSFER_SIZE)
+            if (tmpmasterRxCount == TRANSFER_SIZE)
             {
                 break;
             }
         }
     }
 
-    if (masterTxCount < TRANSFER_SIZE)
+    if (tmpmasterTxCount < TRANSFER_SIZE)
     {
         while ((DSPI_GetStatusFlags(EXAMPLE_DSPI_MASTER_BASEADDR) & kDSPI_TxFifoFillRequestFlag) &&
-               ((masterTxCount - masterRxCount) < masterFifoSize))
+               ((tmpmasterTxCount - tmpmasterRxCount) < masterFifoSize))
         {
-            if (masterTxCount < TRANSFER_SIZE)
+            if (tmpmasterTxCount < TRANSFER_SIZE)
             {
-                EXAMPLE_DSPI_MASTER_BASEADDR->PUSHR = masterCommand | masterTxData[masterTxCount];
+                EXAMPLE_DSPI_MASTER_BASEADDR->PUSHR = tmpmasterCommand | masterTxData[tmpmasterTxCount];
                 ++masterTxCount;
+                tmpmasterTxCount = masterTxCount;
             }
             else
             {
@@ -87,7 +93,7 @@ void EXAMPLE_DSPI_MASTER_IRQHandler(void)
     }
 
     /* Check if we're done with this transfer.*/
-    if ((masterTxCount == TRANSFER_SIZE) && (masterRxCount == TRANSFER_SIZE))
+    if ((tmpmasterTxCount == TRANSFER_SIZE) && (tmpmasterRxCount == TRANSFER_SIZE))
     {
         isTransferCompleted = true;
         /* Complete the transfer and disable the interrupts */
@@ -128,23 +134,23 @@ int main(void)
     dspi_master_config_t masterConfig;
 
     /* Master config */
-    masterConfig.whichCtar = kDSPI_Ctar0;
-    masterConfig.ctarConfig.baudRate = TRANSFER_BAUDRATE;
-    masterConfig.ctarConfig.bitsPerFrame = 8U;
-    masterConfig.ctarConfig.cpol = kDSPI_ClockPolarityActiveHigh;
-    masterConfig.ctarConfig.cpha = kDSPI_ClockPhaseFirstEdge;
-    masterConfig.ctarConfig.direction = kDSPI_MsbFirst;
-    masterConfig.ctarConfig.pcsToSckDelayInNanoSec = 1000000000U / TRANSFER_BAUDRATE;
-    masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec = 1000000000U / TRANSFER_BAUDRATE;
+    masterConfig.whichCtar                                = kDSPI_Ctar0;
+    masterConfig.ctarConfig.baudRate                      = TRANSFER_BAUDRATE;
+    masterConfig.ctarConfig.bitsPerFrame                  = 8U;
+    masterConfig.ctarConfig.cpol                          = kDSPI_ClockPolarityActiveHigh;
+    masterConfig.ctarConfig.cpha                          = kDSPI_ClockPhaseFirstEdge;
+    masterConfig.ctarConfig.direction                     = kDSPI_MsbFirst;
+    masterConfig.ctarConfig.pcsToSckDelayInNanoSec        = 1000000000U / TRANSFER_BAUDRATE;
+    masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec    = 1000000000U / TRANSFER_BAUDRATE;
     masterConfig.ctarConfig.betweenTransferDelayInNanoSec = 1000000000U / TRANSFER_BAUDRATE;
 
-    masterConfig.whichPcs = EXAMPLE_DSPI_MASTER_PCS;
+    masterConfig.whichPcs           = EXAMPLE_DSPI_MASTER_PCS;
     masterConfig.pcsActiveHighOrLow = kDSPI_PcsActiveLow;
 
-    masterConfig.enableContinuousSCK = false;
-    masterConfig.enableRxFifoOverWrite = false;
+    masterConfig.enableContinuousSCK        = false;
+    masterConfig.enableRxFifoOverWrite      = false;
     masterConfig.enableModifiedTimingFormat = false;
-    masterConfig.samplePoint = kDSPI_SckToSin0Clock;
+    masterConfig.samplePoint                = kDSPI_SckToSin0Clock;
 
     srcClock_Hz = EXAMPLE_DSPI_MASTER_CLK_FREQ;
     DSPI_MasterInit(EXAMPLE_DSPI_MASTER_BASEADDR, &masterConfig, srcClock_Hz);
@@ -153,13 +159,13 @@ int main(void)
     EnableIRQ(EXAMPLE_DSPI_MASTER_IRQ);
 
     dspi_command_data_config_t commandData;
-    commandData.isPcsContinuous = false;
-    commandData.whichCtar = kDSPI_Ctar0;
-    commandData.whichPcs = EXAMPLE_DSPI_MASTER_PCS;
-    commandData.isEndOfQueue = false;
+    commandData.isPcsContinuous    = false;
+    commandData.whichCtar          = kDSPI_Ctar0;
+    commandData.whichPcs           = EXAMPLE_DSPI_MASTER_PCS;
+    commandData.isEndOfQueue       = false;
     commandData.clearTransferCount = false;
 
-    masterCommand = DSPI_MasterGetFormattedCommand(&commandData);
+    masterCommand  = DSPI_MasterGetFormattedCommand(&commandData);
     masterFifoSize = FSL_FEATURE_DSPI_FIFO_SIZEn(EXAMPLE_DSPI_MASTER_BASEADDR);
 
     while (1)
@@ -231,8 +237,8 @@ int main(void)
         }
 
         /* 2nd round , read RX data from slave*/
-        masterTxCount = 0;
-        masterRxCount = 0;
+        masterTxCount       = 0;
+        masterRxCount       = 0;
         isTransferCompleted = false;
         DSPI_StopTransfer(EXAMPLE_DSPI_MASTER_BASEADDR);
         DSPI_FlushFifo(EXAMPLE_DSPI_MASTER_BASEADDR, true, true);
@@ -289,7 +295,7 @@ int main(void)
         }
         else
         {
-            PRINTF(" \r\nError occured in DSPI transfer ! \r\n");
+            PRINTF(" \r\nError occurred in DSPI transfer ! \r\n");
         }
 
         /* Wait for press any key */

@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -48,28 +48,28 @@ static void i2c_slave_callback(I2C_Type *base, i2c_slave_transfer_t *xfer, void 
     {
         /*  Address match event */
         case kI2C_SlaveAddressMatchEvent:
-            xfer->data = NULL;
+            xfer->data     = NULL;
             xfer->dataSize = 0;
             break;
         /*  Transmit request */
         case kI2C_SlaveTransmitEvent:
             /*  Update information for transmit process */
-            xfer->data = &g_slave_buff[2];
+            xfer->data     = &g_slave_buff[2];
             xfer->dataSize = g_slave_buff[1];
             break;
 
         /*  Receive request */
         case kI2C_SlaveReceiveEvent:
             /*  Update information for received process */
-            xfer->data = g_slave_buff;
+            xfer->data     = g_slave_buff;
             xfer->dataSize = I2C_DATA_LENGTH;
             break;
 
         /*  Transfer done */
         case kI2C_SlaveCompletionEvent:
             g_SlaveCompletionFlag = true;
-            xfer->data = NULL;
-            xfer->dataSize = 0;
+            xfer->data            = NULL;
+            xfer->dataSize        = 0;
             break;
 
         default:
@@ -102,8 +102,8 @@ int main(void)
     I2C_SlaveGetDefaultConfig(&slaveConfig);
 
     slaveConfig.addressingMode = kI2C_Address7bit;
-    slaveConfig.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;
-    slaveConfig.upperAddress = 0; /*  not used for this example */
+    slaveConfig.slaveAddress   = I2C_MASTER_SLAVE_ADDR_7BIT;
+    slaveConfig.upperAddress   = 0; /*  not used for this example */
 
     I2C_SlaveInit(EXAMPLE_I2C_SLAVE_BASEADDR, &slaveConfig, I2C_SLAVE_CLK_FREQ);
 

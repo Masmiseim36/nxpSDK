@@ -5,10 +5,10 @@ Azure_mqtt_remote_control demo shows basic communication with iot-hub via mqtt p
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- MCUXpresso  11.0.0
-- GCC ARM Embedded  8.2.1
-- Keil MDK  5.27
+- IAR embedded Workbench  8.40.2
+- MCUXpresso  11.1.0
+- GCC ARM Embedded  8.3.1
+- Keil MDK  5.29
 
 Hardware requirements
 =====================

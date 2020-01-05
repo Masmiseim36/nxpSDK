@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -36,15 +36,15 @@ static const clock_ip_name_t s_fgpioClockName[] = FGPIO_CLOCKS;
 #endif /* FSL_FEATURE_SOC_FGPIO_COUNT */
 
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 #if !(defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
 /*!
-* @brief Gets the GPIO instance according to the GPIO base
-*
-* @param base    GPIO peripheral base pointer(PTA, PTB, PTC, etc.)
-* @retval GPIO instance
-*/
+ * @brief Gets the GPIO instance according to the GPIO base
+ *
+ * @param base    GPIO peripheral base pointer(PTA, PTB, PTC, etc.)
+ * @retval GPIO instance
+ */
 static uint32_t GPIO_GetInstance(GPIO_Type *base);
 #endif
 /*******************************************************************************
@@ -77,13 +77,13 @@ static uint32_t GPIO_GetInstance(GPIO_Type *base)
  *
  * This is an example to define an input pin or an output pin configuration.
  * code
- * // Define a digital input pin configuration,
+ * Define a digital input pin configuration,
  * gpio_pin_config_t config =
  * {
  *   kGPIO_DigitalInput,
  *   0,
  * }
- * //Define a digital output pin configuration,
+ * Define a digital output pin configuration,
  * gpio_pin_config_t config =
  * {
  *   kGPIO_DigitalOutput,
@@ -97,16 +97,18 @@ static uint32_t GPIO_GetInstance(GPIO_Type *base)
  */
 void GPIO_PinInit(GPIO_Type *base, uint32_t pin, const gpio_pin_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
+
+    uint32_t u32flag = 1;
 
     if (config->pinDirection == kGPIO_DigitalInput)
     {
-        base->PDDR &= ~(1U << pin);
+        base->PDDR &= ~(u32flag << pin);
     }
     else
     {
         GPIO_PinWrite(base, pin, config->outputLogic);
-        base->PDDR |= (1U << pin);
+        base->PDDR |= (u32flag << pin);
     }
 }
 
@@ -128,11 +130,12 @@ uint32_t GPIO_PortGetInterruptFlags(GPIO_Type *base)
 {
     uint8_t instance;
     PORT_Type *portBase;
-    instance = GPIO_GetInstance(base);
+    instance = (uint8_t)GPIO_GetInstance(base);
     portBase = s_portBases[instance];
     return portBase->ISFR;
 }
-
+#endif
+#if !(defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
 /*!
  * brief Clears multiple GPIO pin interrupt status flags.
  *
@@ -143,27 +146,42 @@ void GPIO_PortClearInterruptFlags(GPIO_Type *base, uint32_t mask)
 {
     uint8_t instance;
     PORT_Type *portBase;
-    instance = GPIO_GetInstance(base);
-    portBase = s_portBases[instance];
+    instance       = (uint8_t)GPIO_GetInstance(base);
+    portBase       = s_portBases[instance];
     portBase->ISFR = mask;
+}
+#else
+/*!
+ * brief Clears GPIO pin interrupt status flags.
+ *
+ * param base GPIO peripheral base pointer (GPIOA, GPIOB, GPIOC, and so on.)
+ * param mask GPIO pin number macro
+ */
+void GPIO_GpioClearInterruptFlags(GPIO_Type *base, uint32_t mask)
+{
+    base->ISFR[0] = mask;
 }
 #endif
 
 #if defined(FSL_FEATURE_GPIO_HAS_ATTRIBUTE_CHECKER) && FSL_FEATURE_GPIO_HAS_ATTRIBUTE_CHECKER
 /*!
  * brief The GPIO module supports a device-specific number of data ports, organized as 32-bit
- * words. Each 32-bit data port includes a GACR register, which defines the byte-level
- * attributes required for a successful access to the GPIO programming model. The attribute controls for the 4 data
- * bytes in the GACR follow a standard little endian
- * data convention.
+ * words/8-bit Bytes. Each 32-bit/8-bit data port includes a GACR register, which defines the byte-level
+ * attributes required for a successful access to the GPIO programming model. If the GPIO module's GACR register
+ * organized as 32-bit words, the attribute controls for the 4 data bytes in the GACR follow a standard little
+ * endian data convention.
  *
  * param base GPIO peripheral base pointer (GPIOA, GPIOB, GPIOC, and so on.)
  * param mask GPIO pin number macro
  */
 void GPIO_CheckAttributeBytes(GPIO_Type *base, gpio_checker_attribute_t attribute)
 {
+#if defined(FSL_FEATURE_GPIO_ATTRIBUTE_CHECKER_WORD_WIDTH) && FSL_FEATURE_GPIO_ATTRIBUTE_CHECKER_WORD_WIDTH
     base->GACR = ((uint32_t)attribute << GPIO_GACR_ACB0_SHIFT) | ((uint32_t)attribute << GPIO_GACR_ACB1_SHIFT) |
                  ((uint32_t)attribute << GPIO_GACR_ACB2_SHIFT) | ((uint32_t)attribute << GPIO_GACR_ACB3_SHIFT);
+#elif defined(FSL_FEATURE_GPIO_ATTRIBUTE_CHECKER_BYTE_WIDTH) && FSL_FEATURE_GPIO_ATTRIBUTE_CHECKER_BYTE_WIDTH
+    base->GACR = ((uint8_t)attribute << GPIO_GACR_ACB_SHIFT);
+#endif
 }
 #endif
 
@@ -176,15 +194,15 @@ void GPIO_CheckAttributeBytes(GPIO_Type *base, gpio_checker_attribute_t attribut
 static FGPIO_Type *const s_fgpioBases[] = FGPIO_BASE_PTRS;
 #endif
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 #if !(defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
 /*!
-* @brief Gets the FGPIO instance according to the GPIO base
-*
-* @param base    FGPIO peripheral base pointer(PTA, PTB, PTC, etc.)
-* @retval FGPIO instance
-*/
+ * @brief Gets the FGPIO instance according to the GPIO base
+ *
+ * @param base    FGPIO peripheral base pointer(PTA, PTB, PTC, etc.)
+ * @retval FGPIO instance
+ */
 static uint32_t FGPIO_GetInstance(FGPIO_Type *base);
 #endif
 /*******************************************************************************
@@ -234,13 +252,13 @@ void FGPIO_PortInit(FGPIO_Type *base)
  *
  * This is an example to define an input pin or an output pin configuration:
  * code
- * // Define a digital input pin configuration,
+ * Define a digital input pin configuration,
  * gpio_pin_config_t config =
  * {
  *   kGPIO_DigitalInput,
  *   0,
  * }
- * //Define a digital output pin configuration,
+ * Define a digital output pin configuration,
  * gpio_pin_config_t config =
  * {
  *   kGPIO_DigitalOutput,
@@ -254,16 +272,18 @@ void FGPIO_PortInit(FGPIO_Type *base)
  */
 void FGPIO_PinInit(FGPIO_Type *base, uint32_t pin, const gpio_pin_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
+
+    uint32_t u32flag = 1;
 
     if (config->pinDirection == kGPIO_DigitalInput)
     {
-        base->PDDR &= ~(1U << pin);
+        base->PDDR &= ~(u32flag << pin);
     }
     else
     {
         FGPIO_PinWrite(base, pin, config->outputLogic);
-        base->PDDR |= (1U << pin);
+        base->PDDR |= (u32flag << pin);
     }
 }
 #if !(defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
@@ -283,7 +303,7 @@ void FGPIO_PinInit(FGPIO_Type *base, uint32_t pin, const gpio_pin_config_t *conf
 uint32_t FGPIO_PortGetInterruptFlags(FGPIO_Type *base)
 {
     uint8_t instance;
-    instance = FGPIO_GetInstance(base);
+    instance = (uint8_t)FGPIO_GetInstance(base);
     PORT_Type *portBase;
     portBase = s_portBases[instance];
     return portBase->ISFR;
@@ -298,9 +318,9 @@ uint32_t FGPIO_PortGetInterruptFlags(FGPIO_Type *base)
 void FGPIO_PortClearInterruptFlags(FGPIO_Type *base, uint32_t mask)
 {
     uint8_t instance;
-    instance = FGPIO_GetInstance(base);
+    instance = (uint8_t)FGPIO_GetInstance(base);
     PORT_Type *portBase;
-    portBase = s_portBases[instance];
+    portBase       = s_portBases[instance];
     portBase->ISFR = mask;
 }
 #endif

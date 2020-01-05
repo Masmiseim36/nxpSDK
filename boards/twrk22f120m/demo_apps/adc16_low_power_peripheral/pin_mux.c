@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -15,11 +14,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v6.0
 processor: MK22FN512xxx12
 package_id: MK22FN512VDC12
 mcu_data: ksdk2_0
-processor_version: 0.0.11
+processor_version: 6.0.1
 board: TWR-K22F120M
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -72,7 +71,7 @@ void BOARD_InitPins(void)
 
     gpio_pin_config_t LED_GREEN_config = {
         .pinDirection = kGPIO_DigitalOutput,
-        .outputLogic = 0U
+        .outputLogic = 1U
     };
     /* Initialize GPIO functionality on pin PTD4 (pin A3)  */
     GPIO_PinInit(BOARD_LED_GREEN_GPIO, BOARD_LED_GREEN_PIN, &LED_GREEN_config);

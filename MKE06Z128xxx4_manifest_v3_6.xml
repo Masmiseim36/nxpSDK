@@ -1,0 +1,2334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MKE06Z128xxx4" name="MKE06Z128xxx4" brief="This is SDK version 2.7.0 manifest file. It describes the content of the MKE06Z128xxx4 and additional settings for tools that support SDK version 2.7.0" format_version="3.6" api_version="2.0.0" configuration="ccd9db2d219f3413ff6a8fce3eede84d" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.6.xsd">
+  <!--Timestamp (UTC): 2019-12-18 20:18:47.174113-->
+  <defines>
+    <define name="CPU_$|package|" value=""/>
+    <define name="CPU_$|package|_$|core|" value=""/>
+  </defines>
+  <ksdk id="MCUXpresso270" name="MCUXpresso270" version="2.7.0" revision="Stage 736 2019-12-18"/>
+  <compilers>
+    <compiler id="compiler_gcc" name="gcc" type="gcc"/>
+  </compilers>
+  <toolchainSettings>
+    <toolchainSetting id="com.nxp.mcuxpresso" name="mcuxpresso" version="11.1.0" full_name="MCUXpresso IDE" compiler="compiler_gcc" toolchain="mcuxpresso">
+      <option id="gnu.cpp.compiler.option.optimization.flags" type="string" user_name="">
+        <value>-fno-common</value>
+      </option>
+      <option id="gnu.c.compiler.option.optimization.flags" type="string" user_name="">
+        <value>-fno-common</value>
+      </option>
+      <option id="gnu.cpp.link.option.nostdlibs" type="boolean" user_name="">
+        <value>true</value>
+      </option>
+      <option id="com.crt.advproject.link.cpp.flashconfigenable" type="boolean" user_name="">
+        <value>true</value>
+      </option>
+      <option id="com.crt.advproject.link.flashconfigenable" type="boolean" user_name="">
+        <value>true</value>
+      </option>
+      <option id="gnu.c.link.option.nostdlibs" type="boolean" user_name="">
+        <value>true</value>
+      </option>
+    </toolchainSetting>
+  </toolchainSettings>
+  <toolchains>
+    <toolchain id="mcuxpresso" name="MCUXpresso_IDE" version="11.1.0" full_name="MCUXpresso IDE" compiler="compiler_gcc" type="mcuxpresso" vendor="NXP Semiconductors" vendor_url="http://www.nxp.com">
+      <debug>
+        <debug_configuration id="com.crt.advproject.config.exe.release" name="Release Configuration" probe="LinkServer">
+          <scripts>
+            <script type="init" silent="false" emulators="${gdb.stub} -mi -info-emu">
+              <script>
+set remotetimeout 60000
+##target_extended_remote##
+set mem inaccessible-by-default ${mem.access}
+mon ondisconnect ${ondisconnect}
+set arm force-mode thumb
+${load}</script>
+            </script>
+            <script type="run" silent="false" emulators="${gdb.stub} -mi -info-emu">
+              <script>${run}</script>
+            </script>
+          </scripts>
+          <params>
+            <params id="vector.catch.release.mcuxpresso" name="vector.catch" value="false"/>
+            <params id="internal.cache.release.mcuxpresso" name="internal.cache" value="Disable"/>
+          </params>
+        </debug_configuration>
+        <debug_configuration id="com.crt.advproject.config.exe.debug" name="Debug Configuration" probe="LinkServer">
+          <scripts>
+            <script type="init" silent="false" emulators="${gdb.stub} -mi -info-emu">
+              <script>
+set remotetimeout 60000
+##target_extended_remote##
+set mem inaccessible-by-default ${mem.access}
+mon ondisconnect ${ondisconnect}
+set arm force-mode thumb
+${load}</script>
+            </script>
+            <script type="run" silent="false" emulators="${gdb.stub} -mi -info-emu">
+              <script>${run}</script>
+            </script>
+          </scripts>
+          <params>
+            <params id="vector.catch.debug.mcuxpresso" name="vector.catch" value="false"/>
+            <params id="internal.cache.debug.mcuxpresso" name="internal.cache" value="Disable"/>
+          </params>
+        </debug_configuration>
+        <debug_configuration id="com.nxp.mcuxpresso.core.debug.support.segger.debug" name="Debug Configuration" probe="Segger"/>
+        <debug_configuration id="com.nxp.mcuxpresso.core.debug.support.segger.release" name="Release Configuration" probe="Segger"/>
+      </debug>
+    </toolchain>
+  </toolchains>
+  <boards>
+    <board id="frdmke06z" name="FRDM-KE06Z" href="http://www.nxp.com/frdm-ke06z" version="1.0.0" package="MKE06Z128VLK4">
+      <description>FRDM-KE06Z: Freedom Development Platform for Kinetis KE06 MCUs</description>
+      <image path="docs/images" type="image">
+        <files mask="FRDM-KE06Z.gif"/>
+      </image>
+      <metadataSet>
+        <metadata key="html">
+          <specific>
+            <content>The Freedom-KE06Z is an ultra-low-cost development platform for Kinetis KE06 and KE04Z128 MCUs</content>
+          </specific>
+        </metadata>
+      </metadataSet>
+      <examples>
+        <example id="frdmke06z_acmp_1_interrupt" name="acmp_1_interrupt" brief="The ACMP Interrupt project is a simple demonstration program that uses the SDK software. Itcompares the selected analog input with ACMP internal DAC output continuously and toggle the LEDwhen the final comparison result changed. The purpose of this demo is to show how to use theACMP driver in SDK software by interrupt way. The ACMP can be configured based on defaultconfiguration returned by the API ACMP_GetDefaultConfig()." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/acmp" path="boards/frdmke06z/driver_examples/acmp/interrupt">
+          <external path="boards/frdmke06z/driver_examples/acmp/interrupt" type="xml">
+            <files mask="acmp_1_interrupt.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_acmp_1_polling" name="acmp_1_polling" brief="The ACMP Polling project is a simple demonstration program that uses the SDK software. It comparesthe selected analog input with ACMP internal DAC output continuously and toggle the LED when thefinal comparison result changed. The purpose of this demo is to show how to use the ACMP driverin SDK software by polling way. The ACMP can be configured based on default configuration returnedby the API ACMP_GetDefaultConfig(). " toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/acmp" path="boards/frdmke06z/driver_examples/acmp/polling">
+          <external path="boards/frdmke06z/driver_examples/acmp/polling" type="xml">
+            <files mask="acmp_1_polling.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_adc_5v12b_ll18_015_interrupt" name="adc_5v12b_ll18_015_interrupt" brief="The adc_interrupt example shows how to use interrupt with adc driver.In this example, user should indicate a channel to provide a voltage signal (can be controlled by user) as the adc'ssample input. When running the project, typing any key into debug console would trigger the conversion. ADC interrupt would be asserted once the conversion is completed. In ADC ISR, the conversion completed flag would be cleared by reading the conversion result value. Also, the conversion result value is stored, and the ISR counter is increased. These information would be printed when the execution return to the main loop.The point is that the adc interrupt configuration is set when configuring the adc's conversion channel. When in software trigger mode, the conversion would be launched by the operation of configuring channel, just like writing aconversion command. So if user wants to generate the interrupt every time the conversion is completed, the channel's configuration with enabling interrupt setting would be used for each conversion." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/adc" path="boards/frdmke06z/driver_examples/adc/interrupt">
+          <external path="boards/frdmke06z/driver_examples/adc/interrupt" type="xml">
+            <files mask="adc_5v12b_ll18_015_interrupt.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_adc_5v12b_ll18_015_polling" name="adc_5v12b_ll18_015_polling" brief="The adc_polling example shows the simplest way to use adc driver.In this example, user should indicate a channel to provide a voltage signal (can be controlled by user) as the adc'ssample input. When running the project, typing any key into debug console would trigger the conversion. The execution would check the conversion completed flag in loop until the flag is asserted, which means the conversion is completed. Then read the conversion result value and print it to debug console." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/adc" path="boards/frdmke06z/driver_examples/adc/polling">
+          <external path="boards/frdmke06z/driver_examples/adc/polling" type="xml">
+            <files mask="adc_5v12b_ll18_015_polling.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_cmsis_i2c_int_b2b_transfer_master" name="cmsis_i2c_int_b2b_transfer_master" brief="CMSIS-Driver defines generic peripheral driver interfaces for middleware making it reusable across a wide range of supported microcontroller devices. The API connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces. More information and usage methord please refer to http://www.keil.com/pack/doc/cmsis/Driver/html/index.html.The i2c_interrupt_b2b_transfer_master example shows how to use CMSIS i2c driver as master to do board to board transfer with interrupt:In this example, one i2c instance as master and another i2c instance on the other board as slave. Master sends a piece of data to slave, and receive a piece of data from slave. This example checks if the data received from slave is correct." toolchain="mcuxpresso" compiler="compiler_gcc" category="cmsis_driver_examples/i2c" path="boards/frdmke06z/cmsis_driver_examples/i2c/int_b2b_transfer/master">
+          <external path="boards/frdmke06z/cmsis_driver_examples/i2c/int_b2b_transfer/master" type="xml">
+            <files mask="cmsis_i2c_int_b2b_transfer_master.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_cmsis_i2c_int_b2b_transfer_slave" name="cmsis_i2c_int_b2b_transfer_slave" brief="CMSIS-Driver defines generic peripheral driver interfaces for middleware making it reusable across a wide range of supported microcontroller devices. The API connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces. More information and usage methord please refer to http://www.keil.com/pack/doc/cmsis/Driver/html/index.html.The i2c_interrupt_b2b_transfer_master example shows how to use CMSIS i2c driver as master to do board to board transfer with interrupt:In this example, one i2c instance as master and another i2c instance on the other board as slave. Master sends a piece of data to slave, and receive a piece of data from slave. This example checks if the data received from slave is correct." toolchain="mcuxpresso" compiler="compiler_gcc" category="cmsis_driver_examples/i2c" path="boards/frdmke06z/cmsis_driver_examples/i2c/int_b2b_transfer/slave">
+          <external path="boards/frdmke06z/cmsis_driver_examples/i2c/int_b2b_transfer/slave" type="xml">
+            <files mask="cmsis_i2c_int_b2b_transfer_slave.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_cmsis_i2c_read_accel_value_transfer" name="cmsis_i2c_read_accel_value_transfer" brief="CMSIS-Driver defines generic peripheral driver interfaces for middleware making it reusable across a wide range of supported microcontroller devices. The API connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces. More information and usage methord please refer to http://www.keil.com/pack/doc/cmsis/Driver/html/index.html.The cmsis_i2c_read_accel_value example shows how to use CMSIS I2C driver to communicate with an i2c device: 1. How to use the i2c driver to read a i2c device who_am_I register. 2. How to use the i2c driver to write/read the device registers.In this example, the values of three-axis accelerometer print to the serial terminal on PC throughthe virtual serial port on board." toolchain="mcuxpresso" compiler="compiler_gcc" category="cmsis_driver_examples/i2c" path="boards/frdmke06z/cmsis_driver_examples/i2c/read_accel_value_transfer">
+          <external path="boards/frdmke06z/cmsis_driver_examples/i2c/read_accel_value_transfer" type="xml">
+            <files mask="cmsis_i2c_read_accel_value_transfer.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_cmsis_spi_interrupt_b2b_transfer_master" name="cmsis_spi_interrupt_b2b_transfer_master" brief="The spi_interrupt_b2b_transfer example shows how to use spi CMSIS driver in interrupt way:In this example , we need two boards, one board used as spi master and another board used as spi slave.The file 'spi_interrupt_b2b_transfer_master.c' includes the spi master code.This example uses the transactional API in spi driver.1. spi master send/received data to/from spi slave in interrupt . " toolchain="mcuxpresso" compiler="compiler_gcc" category="cmsis_driver_examples/spi" path="boards/frdmke06z/cmsis_driver_examples/spi/interrupt_b2b_transfer/master">
+          <external path="boards/frdmke06z/cmsis_driver_examples/spi/interrupt_b2b_transfer/master" type="xml">
+            <files mask="cmsis_spi_interrupt_b2b_transfer_master.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_cmsis_spi_interrupt_b2b_transfer_slave" name="cmsis_spi_interrupt_b2b_transfer_slave" brief="The spi_interrupt_b2b_transfer example shows how to use SPI CMSIS driver in interrupt way:In this example , we need two boards, one board used as SPI master and another board used as SPI slave.The file 'spi_interrupt_b2b_transfer_slave.c' includes the SPI slave code.This example uses the transactional API in SPI driver.1. SPI master send/received data to/from SPI slave in interrupt . " toolchain="mcuxpresso" compiler="compiler_gcc" category="cmsis_driver_examples/spi" path="boards/frdmke06z/cmsis_driver_examples/spi/interrupt_b2b_transfer/slave">
+          <external path="boards/frdmke06z/cmsis_driver_examples/spi/interrupt_b2b_transfer/slave" type="xml">
+            <files mask="cmsis_spi_interrupt_b2b_transfer_slave.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_cmsis_uart_interrupt_transfer" name="cmsis_uart_interrupt_transfer" brief="CMSIS-Driver defines generic peripheral driver interfaces for middleware making it reusable across a wide range of supported microcontroller devices. The API connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces. More information and usage methord please refer to http://www.keil.com/pack/doc/cmsis/Driver/html/index.html.The cmsis_uart_interrupt_transfer example shows how to use uart cmsis driver in interrupt way:In this example, one uart instance connect to PC through uart, the board willsend back all characters that PC send to the board.Note: The example echo every 8 characters, so input 8 characters every time." toolchain="mcuxpresso" compiler="compiler_gcc" category="cmsis_driver_examples/uart" path="boards/frdmke06z/cmsis_driver_examples/uart/interrupt_transfer">
+          <external path="boards/frdmke06z/cmsis_driver_examples/uart/interrupt_transfer" type="xml">
+            <files mask="cmsis_uart_interrupt_transfer.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_fmstr_example_pdbdm" name="fmstr_example_pdbdm" brief="The example application demonstrating use of FreeMASTER tool to visualize internal variables and control the application flow by modifying variables. The application also show use of advanced FreeMASTER features like TSA tables and Pipes." toolchain="mcuxpresso" compiler="compiler_gcc" category="FreeMASTER_examples" path="boards/frdmke06z/freemaster_examples/fmstr_pdbdm">
+          <external path="boards/frdmke06z/freemaster_examples/fmstr_pdbdm" type="xml">
+            <files mask="fmstr_example_pdbdm.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_fmstr_example_uart" name="fmstr_example_uart" brief="The example application demonstrating use of FreeMASTER tool to visualize internal variables and control the application flow by modifying variables. The application also show use of advanced FreeMASTER features like TSA tables and Pipes." toolchain="mcuxpresso" compiler="compiler_gcc" category="FreeMASTER_examples" path="boards/frdmke06z/freemaster_examples/fmstr_uart">
+          <external path="boards/frdmke06z/freemaster_examples/fmstr_uart" type="xml">
+            <files mask="fmstr_example_uart.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_ftm_combine_pwm" name="ftm_combine_pwm" brief="The FTM project is a demonstration program of generating a combined PWM signal by the SDK FTM driver. It sets up the FTMhardware block to output PWM signals on two TPM channels. The example also shows the complementary mode of operationand deadtime insertion.On boards that have 2 LEDs connected to the FTM pins, the user will see a change in LED brightness.And if the board do not support LEDs to show, the outputs can be observed by oscilloscope." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/ftm" path="boards/frdmke06z/driver_examples/ftm/combine_pwm">
+          <external path="boards/frdmke06z/driver_examples/ftm/combine_pwm" type="xml">
+            <files mask="ftm_combine_pwm.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_ftm_dual_edge_capture" name="ftm_dual_edge_capture" brief="The FTM project is a demonstration program of the SDK FTM driver's dual-edge capture feature.This feature is available only on certain SoC's.The example sets up a FTM channel-pair for dual-edge capture. Once the input signal is received,this example will print the capture values and period of the input signal on the terminal window." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/ftm" path="boards/frdmke06z/driver_examples/ftm/dual_edge_capture">
+          <external path="boards/frdmke06z/driver_examples/ftm/dual_edge_capture" type="xml">
+            <files mask="ftm_dual_edge_capture.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_ftm_input_capture" name="ftm_input_capture" brief="The FTM project is a demonstration program of the SDK FTM driver's input capture feature.The example sets up a FTM channel for dual-edge capture. Once the input signal is received,this example will print the capture value." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/ftm" path="boards/frdmke06z/driver_examples/ftm/input_capture">
+          <external path="boards/frdmke06z/driver_examples/ftm/input_capture" type="xml">
+            <files mask="ftm_input_capture.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_ftm_output_compare" name="ftm_output_compare" brief="The FTM project is a demonstration program of the SDK FTM driver's output compare feature.It sets up one FTM channel to toggle the output when a match occurs with the channel value. The usershould probe the FTM output with a oscilloscope to see the signal toggling." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/ftm" path="boards/frdmke06z/driver_examples/ftm/output_compare">
+          <external path="boards/frdmke06z/driver_examples/ftm/output_compare" type="xml">
+            <files mask="ftm_output_compare.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_ftm_pwm_twochannel" name="ftm_pwm_twochannel" brief="The FTM pwm two channel Example project is a demonstration program that uses the KSDK software to generate a square pulse PWM on 2 channel to control the LED brightness.- FTM generates a PWM with the increasing and decreasing duty cycle.- LED brightness is increasing and then dimming. This is a continuous process." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/ftm" path="boards/frdmke06z/driver_examples/ftm/pwm_twochannel">
+          <external path="boards/frdmke06z/driver_examples/ftm/pwm_twochannel" type="xml">
+            <files mask="ftm_pwm_twochannel.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_ftm_simple_pwm" name="ftm_simple_pwm" brief="The FTM project is a simple demonstration program of the SDK FTM driver. It sets up the FTMhardware block to output a center-aligned PWM signal. The PWM dutycycle is periodically updated.On boards that have an LED connected to the FTM pins, the user will see a change in LED brightness." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/ftm" path="boards/frdmke06z/driver_examples/ftm/simple_pwm">
+          <external path="boards/frdmke06z/driver_examples/ftm/simple_pwm" type="xml">
+            <files mask="ftm_simple_pwm.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_ftm_timer" name="ftm_timer" brief="The FTM project is a simple demonstration program of the SDK FTM driver to use FTM as a timer.It sets up the FTM hardware block to trigger an interrupt every 1 millisecond.When the FTM interrupt is triggered a message a printed on the UART terminal." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/ftm" path="boards/frdmke06z/driver_examples/ftm/timer">
+          <external path="boards/frdmke06z/driver_examples/ftm/timer" type="xml">
+            <files mask="ftm_timer.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_gpio_1_led_output" name="gpio_1_led_output" brief="The GPIO Example project is a demonstration program that uses the KSDK software to manipulate the general-purposeoutputs.The example is supported by the set, clear, and toggle write-only registers for each port output data register. The example take turns to shine the LED." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/gpio_1" path="boards/frdmke06z/driver_examples/gpio_1/led_output">
+          <external path="boards/frdmke06z/driver_examples/gpio_1/led_output" type="xml">
+            <files mask="gpio_1_led_output.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_hello_world" name="hello_world" brief="The Hello World demo application provides a sanity check for the new SDK build environments and board bring up. The HelloWorld demo prints the &quot;Hello World&quot; string to the terminal using the SDK UART drivers. The purpose of this demo is toshow how to use the UART, and to provide a simple project for debugging and further development." toolchain="mcuxpresso" compiler="compiler_gcc" category="demo_apps" path="boards/frdmke06z/demo_apps/hello_world">
+          <external path="boards/frdmke06z/demo_apps/hello_world" type="xml">
+            <files mask="hello_world.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_i2c_interrupt" name="i2c_interrupt" brief="The i2c_functional_interrupt example shows how to use I2C functional driver to build a interrupt based application:In this example , one i2c instance used as I2C master and another i2c instance used as I2C slave .1. I2C master send data to I2C slave in interrupt . (I2C Slave using interrupt to receive the data)2. I2C master read data from I2C slave in interrupt . (I2C Slave using interrupt to send the data)3. The example assumes that the connection is OK between master and slave, so there's NO error handling code." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/i2c" path="boards/frdmke06z/driver_examples/i2c/interrupt">
+          <external path="boards/frdmke06z/driver_examples/i2c/interrupt" type="xml">
+            <files mask="i2c_interrupt.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_i2c_interrupt_b2b_transfer_master" name="i2c_interrupt_b2b_transfer_master" brief="The i2c_interrupt_b2b_transfer_master example shows how to use i2c driver as master to do board to board transfer with interrupt:In this example, one i2c instance as master and another i2c instance on the other board as slave. Master sends a piece of data to slave, and receive a piece of data from slave. This example checks if the data received from slave is correct." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/i2c" path="boards/frdmke06z/driver_examples/i2c/interrupt_b2b_transfer/master">
+          <external path="boards/frdmke06z/driver_examples/i2c/interrupt_b2b_transfer/master" type="xml">
+            <files mask="i2c_interrupt_b2b_transfer_master.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_i2c_interrupt_b2b_transfer_slave" name="i2c_interrupt_b2b_transfer_slave" brief="The i2c_interrupt_b2b_transfer_slave example shows how to use i2c driver as slave to do board to board transfer with interrupt:In this example, one i2c instance as slave and another i2c instance on the other board as master. Master sends a piece of data to slave, and receive a piece of data from slave. This example checks if the data received from slave is correct." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/i2c" path="boards/frdmke06z/driver_examples/i2c/interrupt_b2b_transfer/slave">
+          <external path="boards/frdmke06z/driver_examples/i2c/interrupt_b2b_transfer/slave" type="xml">
+            <files mask="i2c_interrupt_b2b_transfer_slave.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_i2c_polling_b2b_transfer_master" name="i2c_polling_b2b_transfer_master" brief="The i2c_polling_b2b_transfer_master example shows how to use i2c driver as master to do board to board transfer using polling method:In this example, one i2c instance as master and another i2c instance on the other board as slave. Master sends a piece of data to slave, and receive a piece of data from slave. This example checks if the data received from slave is correct." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/i2c" path="boards/frdmke06z/driver_examples/i2c/polling_b2b_transfer/master">
+          <external path="boards/frdmke06z/driver_examples/i2c/polling_b2b_transfer/master" type="xml">
+            <files mask="i2c_polling_b2b_transfer_master.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_i2c_polling_b2b_transfer_slave" name="i2c_polling_b2b_transfer_slave" brief="The i2c_polling_b2b_transfer_slave example shows how to use i2c driver as slave to do board to board transfer with a polling master:In this example, one i2c instance as slave and another i2c instance on the other board as master. Master sends a piece of data to slave, and receive a piece of data from slave. This example checks if the data received from slave is correct." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/i2c" path="boards/frdmke06z/driver_examples/i2c/polling_b2b_transfer/slave">
+          <external path="boards/frdmke06z/driver_examples/i2c/polling_b2b_transfer/slave" type="xml">
+            <files mask="i2c_polling_b2b_transfer_slave.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_i2c_read_accel_value_transfer" name="i2c_read_accel_value_transfer" brief="The i2c_read_accel_value example shows how to use I2C driver to communicate with an i2c device: 1. How to use the i2c driver to read a i2c device who_am_I register. 2. How to use the i2c driver to write/read the device registers.In this example, the values of three-axis accelerometer print to the serial terminal on PC throughthe virtual serial port on board." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/i2c" path="boards/frdmke06z/driver_examples/i2c/read_accel_value_transfer">
+          <external path="boards/frdmke06z/driver_examples/i2c/read_accel_value_transfer" type="xml">
+            <files mask="i2c_read_accel_value_transfer.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_irq" name="irq" brief="The IRQ Example project is a demonstration program that uses the MCUXpresso SDK software to useIRQ pin interrupt.The example uses the IRQ pin to generate a falling edge interrupt to show the example." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples" path="boards/frdmke06z/driver_examples/irq">
+          <external path="boards/frdmke06z/driver_examples/irq" type="xml">
+            <files mask="irq.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_kbi" name="kbi" brief="The KBI Example project is a demonstration program that uses the KSDK software to usekeyboard interrupt.The example uses one KBI pin to generate a raising edge interrupt to show the example." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples" path="boards/frdmke06z/driver_examples/kbi">
+          <external path="boards/frdmke06z/driver_examples/kbi" type="xml">
+            <files mask="kbi.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_led_blinky_1" name="led_blinky_1" brief="The LED Blinky demo application provides a sanity check for the new SDK build environments and board bring up. The LED Blinky demo uses the systick interrupt to realize the function of timing delay. The example takes turns to shine the LED. The purpose of this demo is to provide a simple project for debugging and further development." toolchain="mcuxpresso" compiler="compiler_gcc" category="demo_apps" path="boards/frdmke06z/demo_apps/led_blinky">
+          <external path="boards/frdmke06z/demo_apps/led_blinky" type="xml">
+            <files mask="led_blinky_1.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_mscan_loopback" name="mscan_loopback" brief="The mscan_loopback_functional example shows how to use the loopback test mode to debug your CAN Bus design:To demonstrates this example, only one board is needed. The example will configure one MSCAN Message Txbuffer and Rx buffer with same ID.After that, the example will send a CAN Message from the Tx Buffer to the Rx Bufferthrouth internal loopback interconnect and print out the Message payload to terminal." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/mscan" path="boards/frdmke06z/driver_examples/mscan/loopback">
+          <external path="boards/frdmke06z/driver_examples/mscan/loopback" type="xml">
+            <files mask="mscan_loopback.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_mscan_loopback_transfer" name="mscan_loopback_transfer" brief="The mscan_loopback example shows how to use the loopback test mode to debug your CAN Bus design:To demonstrates this example, only one board is needed. The example will config one MSCAN MessageBuffer to Rx Message Buffer and the other MSCAN Message Buffer to Tx Message Buffer with same ID.After that, the example will send a CAN Message from the Tx Message Buffer to the Rx Message Bufferthrough internal loopback interconnect and print out the Message payload to terminal." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/mscan/loopback_transfer" path="boards/frdmke06z/driver_examples/mscan/loopback_transfer">
+          <external path="boards/frdmke06z/driver_examples/mscan/loopback_transfer" type="xml">
+            <files mask="mscan_loopback_transfer.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_pflash_ftmr" name="pflash_ftmr" brief="The pflash example shows how to use flash driver to operate program flash:" toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/flash" path="boards/frdmke06z/driver_examples/flash/pflash">
+          <external path="boards/frdmke06z/driver_examples/flash/pflash" type="xml">
+            <files mask="pflash_ftmr.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_pit" name="pit" brief="The PIT project is a simple demonstration program of the SDK PIT driver. It sets up the PIThardware block to trigger a periodic interrupt after every 1 second. When the PIT interrupt is triggereda message a printed on the UART terminal and an LED is toggled on the board." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples" path="boards/frdmke06z/driver_examples/pit">
+          <external path="boards/frdmke06z/driver_examples/pit" type="xml">
+            <files mask="pit.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_pwt" name="pwt" brief="The PWT project is a simple demonstration program of the SDK PWT driver. It sets up the PWThardware block to edge detection, capture control part and detects measurement trigger edges andcontrols when and which pulse width register(s) will be updated. Once the input signal is received,this example will print overflow, positive pulse width and negative pulse width." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples" path="boards/frdmke06z/driver_examples/pwt">
+          <external path="boards/frdmke06z/driver_examples/pwt" type="xml">
+            <files mask="pwt.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_rtc_1" name="rtc_1" brief="The RTC project is a simple demonstration program of the SDK RTC driver. It sets up the RTChardware block to trigger an alarm after a user specified time period. The test will set the currentdate and time to a predefined value. The alarm will be set with reference to this predefined dateand time." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples" path="boards/frdmke06z/driver_examples/rtc">
+          <external path="boards/frdmke06z/driver_examples/rtc" type="xml">
+            <files mask="rtc_1.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_spi_interrupt_b2b_master" name="spi_interrupt_b2b_master" brief="The spi_interrupt_b2b_master example shows how to use spi functional API to do interrupt transfer as a master:In this example, the spi instance as master. Master sends a piece of data to slave, receive data from slave,and checkif the data master received is correct. This example needs to work with spi_interrupt_b2b_slave example." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/spi" path="boards/frdmke06z/driver_examples/spi/interrupt_b2b/master">
+          <external path="boards/frdmke06z/driver_examples/spi/interrupt_b2b/master" type="xml">
+            <files mask="spi_interrupt_b2b_master.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_spi_interrupt_b2b_slave" name="spi_interrupt_b2b_slave" brief="The spi_interrupt_b2b_slave example shows how to use spi functional API to do interrupt transfer as a slave:In this example, the spi instance as slave. Slave receives data froma master and send a peiece of data to master,and check if the data slave received is correct. This example needs to work with spi_interrupt_b2b_master example." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/spi" path="boards/frdmke06z/driver_examples/spi/interrupt_b2b/slave">
+          <external path="boards/frdmke06z/driver_examples/spi/interrupt_b2b/slave" type="xml">
+            <files mask="spi_interrupt_b2b_slave.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_spi_interrupt_b2b_transfer_master" name="spi_interrupt_b2b_transfer_master" brief="The spi_interrupt_board2board_master example shows how to use spi driver as master to do board to board transfer withinterrupt:In this example, one spi instance as master and another spi instance on othereboard as slave. Master sends a piece ofdata to slave, and receive a piece of data from slave. This example checks if the data received from slave is correct." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/spi" path="boards/frdmke06z/driver_examples/spi/interrupt_b2b_transfer/master">
+          <external path="boards/frdmke06z/driver_examples/spi/interrupt_b2b_transfer/master" type="xml">
+            <files mask="spi_interrupt_b2b_transfer_master.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_spi_interrupt_b2b_transfer_slave" name="spi_interrupt_b2b_transfer_slave" brief="The spi_interrupt_board2board_slave example shows how to use spi driver as slave to do board to board transfer with interrupt:In this example, one spi instance as slave and another spi instance on other board as master. Master sends a piece ofdata to slave, and receive a piece of data from slave. This example checks if the data received from master is correct." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/spi" path="boards/frdmke06z/driver_examples/spi/interrupt_b2b_transfer/slave">
+          <external path="boards/frdmke06z/driver_examples/spi/interrupt_b2b_transfer/slave" type="xml">
+            <files mask="spi_interrupt_b2b_transfer_slave.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_tpm_input_capture" name="tpm_input_capture" brief="The TPM project is a demonstration program of the SDK TPM driver's input capture feature.The example sets up a TPM channel for dual-edge capture. Once the input signal is received,this example will print the capture value." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/tpm" path="boards/frdmke06z/driver_examples/tpm/input_capture">
+          <external path="boards/frdmke06z/driver_examples/tpm/input_capture" type="xml">
+            <files mask="tpm_input_capture.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_tpm_output_compare" name="tpm_output_compare" brief="The TPM project is a demonstration program of the SDK TPM driver's output compare feature.It sets up one TPM channel to toggle the output when a match occurs with the channel value. The usershould probe the TPM output with a oscilloscope to see the signal toggling." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/tpm" path="boards/frdmke06z/driver_examples/tpm/output_compare">
+          <external path="boards/frdmke06z/driver_examples/tpm/output_compare" type="xml">
+            <files mask="tpm_output_compare.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_tpm_pwm_twochannel" name="tpm_pwm_twochannel" brief="The TPM project is a simple demonstration program of the SDK TPM driver. It sets up the TPMhardware block to output PWM signals on two TPM channels. The PWM dutycycle on both channelsis manually updated. On boards that have an LED connected to the TPM pins, the user will seea change in LED brightness if user enter different values." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/tpm" path="boards/frdmke06z/driver_examples/tpm/pwm_twochannel">
+          <external path="boards/frdmke06z/driver_examples/tpm/pwm_twochannel" type="xml">
+            <files mask="tpm_pwm_twochannel.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_tpm_simple_pwm" name="tpm_simple_pwm" brief="The TPM project is a simple demonstration program of the SDK TPM driver. It sets up the TPMhardware block to output a center-aligned PWM signal. The PWM dutycycle is manually updated.On boards that have an LED connected to the TPM pins, the user will see a change in LEDbrightness if user enter different values." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/tpm" path="boards/frdmke06z/driver_examples/tpm/simple_pwm">
+          <external path="boards/frdmke06z/driver_examples/tpm/simple_pwm" type="xml">
+            <files mask="tpm_simple_pwm.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_tpm_timer" name="tpm_timer" brief="The TPM project is a simple demonstration program of the SDK TPM driver to use TPM as a timer.It sets up the TPM hardware block to trigger an interrupt every 1 millisecond.When the TPM interrupt is triggered a message a printed on the UART terminal." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/tpm" path="boards/frdmke06z/driver_examples/tpm/timer">
+          <external path="boards/frdmke06z/driver_examples/tpm/timer" type="xml">
+            <files mask="tpm_timer.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_uart_interrupt" name="uart_interrupt" brief="The uart_functioncal_interrupt example shows how to use uart driver functionalAPI to receive data with interrupt method:In this example, one uart instance connect to PC through uart, the board willsend back all characters that PC send to the board." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/uart" path="boards/frdmke06z/driver_examples/uart/interrupt">
+          <external path="boards/frdmke06z/driver_examples/uart/interrupt" type="xml">
+            <files mask="uart_interrupt.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_uart_interrupt_rb_transfer" name="uart_interrupt_rb_transfer" brief="The uart_interrupt_ring_buffer example shows how to use uart driver in interrupt way withRX ring buffer enabled:In this example, one uart instance connect to PC through uart, the board willsend back all characters that PC send to the board.Note: The example echo every 8 characters, so input 8 characters every time." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/uart" path="boards/frdmke06z/driver_examples/uart/interrupt_rb_transfer">
+          <external path="boards/frdmke06z/driver_examples/uart/interrupt_rb_transfer" type="xml">
+            <files mask="uart_interrupt_rb_transfer.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_uart_interrupt_transfer" name="uart_interrupt_transfer" brief="The uart_interrupt example shows how to use uart driver in interrupt way:In this example, one uart instance connect to PC through uart, the board willsend back all characters that PC send to the board.Note: The example echo every 8 characters, so input 8 characters every time." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/uart" path="boards/frdmke06z/driver_examples/uart/interrupt_transfer">
+          <external path="boards/frdmke06z/driver_examples/uart/interrupt_transfer" type="xml">
+            <files mask="uart_interrupt_transfer.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_uart_polling" name="uart_polling" brief="The uart_polling example shows how to use uart driver in polling way:In this example, one uart instance connect to PC through uart, the board will send back all characters that PCsend to the board." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/uart" path="boards/frdmke06z/driver_examples/uart/polling">
+          <external path="boards/frdmke06z/driver_examples/uart/polling" type="xml">
+            <files mask="uart_polling.xml"/>
+          </external>
+        </example>
+        <example id="frdmke06z_wdog8" name="wdog8" brief="The WDOG8 Example project is to demonstrate usage of the wdog8 driver.In this example, fast testing is first implemented to test the wdog8.After this, refreshing the watchdog in None-window mode and window mode is executed.Note wdog8 is disabled in SystemInit function which means wdog8 is disabledafter chip emerges from reset." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples" path="boards/frdmke06z/driver_examples/wdog8">
+          <external path="boards/frdmke06z/driver_examples/wdog8" type="xml">
+            <files mask="wdog8.xml"/>
+          </external>
+        </example>
+      </examples>
+    </board>
+  </boards>
+  <devices>
+    <device id="MKE06Z128xxx4" name="MKE06Z4" href="http://www.nxp.com/kinetis" version="1.0.0" full_name="MKE06Z128xxx4" family="KE0x" platform="Kinetis">
+      <description>KE06_48: Kinetis® KE06-48 MHz, mainstream Microcontrollers (MCUs) based on ARM® Cortex®-M0+ Core</description>
+      <image path="docs/images" type="image">
+        <files mask="device.jpg"/>
+      </image>
+      <metadataSet>
+        <metadata key="html">
+          <specific>
+            <content>The Kinetis E series MCU portfolio maintain high-reliability and robustness in harsh electrical noise environments based on the ARM® Cortex®-M0+ core.</content>
+          </specific>
+        </metadata>
+        <metadata key="vendor" value="NXP"/>
+      </metadataSet>
+      <core id="core0_MKE06Z128xxx4" name="core0" fpu="false" type="cm0plus"/>
+      <memory>
+        <memoryBlock id="PROGRAM_FLASH_MKE06Z128xxx4" name="PROGRAM_FLASH" addr="00000000" size="00020000" type="Flash" access="RO"/>
+        <memoryBlock id="SRAM_MKE06Z128xxx4" name="SRAM" addr="1ffff000" size="00004000" type="RAM" access="RW"/>
+      </memory>
+      <total_memory flash_size_kb="128" ram_size_kb="16"/>
+      <package id="MKE06Z128VLD4" name="MKE06Z128VLD4"/>
+      <package id="MKE06Z128VQH4" name="MKE06Z128VQH4"/>
+      <package id="MKE06Z128VLH4" name="MKE06Z128VLH4"/>
+      <package id="MKE06Z128VLK4" name="MKE06Z128VLK4"/>
+      <evaluation_boards>
+        <evaluation_board name="frdmke06z"/>
+      </evaluation_boards>
+      <debug_configurations>
+        <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+          <params>
+            <params id="internal.wiretype.release.MKE06Z128xxx4" name="internal.wiretype" value="SWD"/>
+            <params id="internal.has_swo.release.MKE06Z128xxx4" name="internal.has_swo" value="false"/>
+            <params id="internal.connect.script.debug.mcuxpresso.MKE06Z128xxx4" name="internal.connect.script" value="kinetisconnect.scp"/>
+          </params>
+          <drivers>
+            <driver id_refs="PROGRAM_FLASH_MKE06Z128xxx4">
+              <driverBinary type="binary">
+                <files mask="FTFE_2K_KE.cfx"/>
+              </driverBinary>
+            </driver>
+          </drivers>
+        </debug_configuration>
+      </debug_configurations>
+      <linkerSettings nature="c_nature">
+        <linker property="start_symbol" value="ResetISR"/>
+        <linker property="text_align" value="4"/>
+        <linker property="data_align" value="4"/>
+        <linker property="bss_align" value="4"/>
+        <linker property="flash_security_address" value="0x400"/>
+        <linker property="mtb_supported" value="false"/>
+      </linkerSettings>
+      <linkerSettings nature="cpp_nature">
+        <linker property="start_symbol" value="ResetISR"/>
+        <linker property="text_align" value="4"/>
+        <linker property="data_align" value="4"/>
+        <linker property="bss_align" value="4"/>
+        <linker property="flash_security_address" value="0x400"/>
+        <linker property="mtb_supported" value="false"/>
+      </linkerSettings>
+    </device>
+  </devices>
+  <components>
+    <component id="project_template.frdmke06z.MKE06Z4" name="frdmke06z" version="1.0.0" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" category="Board Support/SDK Project Template" user_visible="true" type="project_template">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.uart.MKE06Z4"/>
+          <component_dependency value="component.uart_adapter.MKE06Z4"/>
+          <component_dependency value="platform.drivers.port_ke06.MKE06Z4"/>
+          <component_dependency value="platform.drivers.common.MKE06Z4"/>
+          <component_dependency value="utility.debug_console.MKE06Z4"/>
+          <component_dependency value="component.serial_manager.MKE06Z4"/>
+          <component_dependency value="platform.drivers.gpio_1.MKE06Z4"/>
+          <component_dependency value="platform.drivers.clock.MKE06Z4"/>
+          <component_dependency value="device.MKE06Z4_startup.MKE06Z4"/>
+        </all>
+      </dependencies>
+      <source path="boards/frdmke06z/project_template" target_path="board" type="src">
+        <files mask="board.c"/>
+        <files mask="clock_config.c"/>
+        <files mask="peripherals.c"/>
+        <files mask="pin_mux.c"/>
+      </source>
+      <source path="boards/frdmke06z/project_template" target_path="board" type="c_include">
+        <files mask="board.h"/>
+        <files mask="clock_config.h"/>
+        <files mask="peripherals.h"/>
+        <files mask="pin_mux.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS.MKE06Z4" name="CMSIS" version="5.5.1" devices="MKE06Z128xxx4" user_visible="true" type="CMSIS">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.Include_common.MKE06Z4"/>
+          <component_dependency value="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE06Z4"/>
+          <component_dependency value="platform.CMSIS_Driver"/>
+          <component_dependency value="platform.CMSIS_Driver_Include.CAN_CMSISInclude.MKE06Z4"/>
+          <component_dependency value="platform.CMSIS_Driver_Include.Ethernet_CMSISInclude.MKE06Z4"/>
+          <component_dependency value="platform.CMSIS_Driver_Include.Ethernet_MAC_CMSISInclude.MKE06Z4"/>
+          <component_dependency value="platform.CMSIS_Driver_Include.Ethernet_PHY_CMSISInclude.MKE06Z4"/>
+          <component_dependency value="platform.CMSIS_Driver_Include.Flash_CMSISInclude.MKE06Z4"/>
+          <component_dependency value="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKE06Z4"/>
+          <component_dependency value="platform.CMSIS_Driver_Include.MCI_CMSISInclude.MKE06Z4"/>
+          <component_dependency value="platform.CMSIS_Driver_Include.NAND_CMSISInclude.MKE06Z4"/>
+          <component_dependency value="platform.CMSIS_Driver_Include.SAI_CMSISInclude.MKE06Z4"/>
+          <component_dependency value="platform.CMSIS_Driver_Include.SPI_CMSISInclude.MKE06Z4"/>
+          <component_dependency value="platform.CMSIS_Driver_Include.USART_CMSISInclude.MKE06Z4"/>
+          <component_dependency value="platform.CMSIS_Driver_Include.USB_CMSISInclude.MKE06Z4"/>
+          <component_dependency value="platform.CMSIS_Driver_Include.USB_Device_CMSISInclude.MKE06Z4"/>
+          <component_dependency value="platform.CMSIS_Driver_Include.USB_Host_CMSISInclude.MKE06Z4"/>
+          <component_dependency value="platform.CMSIS_Driver_Include.WiFi_CMSISInclude.MKE06Z4"/>
+          <component_dependency value="platform.Include_dsp.MKE06Z4"/>
+        </all>
+      </dependencies>
+      <source path="CMSIS/Include" target_path="Include" type="c_include">
+        <files mask="arm_common_tables.h"/>
+        <files mask="arm_const_structs.h"/>
+        <files mask="arm_math.h"/>
+        <files mask="cmsis_armcc.h"/>
+        <files mask="cmsis_armclang.h"/>
+        <files mask="cmsis_armclang_ltm.h"/>
+        <files mask="cmsis_compiler.h"/>
+        <files mask="cmsis_gcc.h"/>
+        <files mask="cmsis_iccarm.h"/>
+        <files mask="cmsis_version.h"/>
+        <files mask="core_armv81mml.h"/>
+        <files mask="core_armv8mbl.h"/>
+        <files mask="core_armv8mml.h"/>
+        <files mask="core_cm0.h"/>
+        <files mask="core_cm0plus.h"/>
+        <files mask="core_cm1.h"/>
+        <files mask="core_cm23.h"/>
+        <files mask="core_cm3.h"/>
+        <files mask="core_cm33.h"/>
+        <files mask="core_cm35p.h"/>
+        <files mask="core_cm4.h"/>
+        <files mask="core_cm7.h"/>
+        <files mask="core_dsp.h"/>
+        <files mask="core_sc000.h"/>
+        <files mask="core_sc300.h"/>
+        <files mask="mpu_armv7.h"/>
+        <files mask="mpu_armv8.h"/>
+        <files mask="tz_context.h"/>
+      </source>
+      <source path="CMSIS" target_path="CMSIS" type="doc">
+        <files mask="LICENSE.txt"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_DSP_Lib.MKE06Z4" name="CMSIS_DSP_Lib" version="1.6.0" devices="MKE06Z128xxx4" user_visible="false" type="CMSIS">
+      <source path="CMSIS/DSP/Examples/ARM/arm_class_marks_example" target_path="DSP/Examples/ARM/arm_class_marks_example" type="doc">
+        <files mask="Abstract.txt"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_class_marks_example/RTE/Device/ARMCM0" target_path="DSP/Examples/ARM/arm_class_marks_example/RTE/Device/ARMCM0" type="asm_include">
+        <files mask="startup_ARMCM0.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_class_marks_example/RTE/Device/ARMCM0" target_path="DSP/Examples/ARM/arm_class_marks_example/RTE/Device/ARMCM0" type="src">
+        <files mask="system_ARMCM0.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_class_marks_example/RTE/Device/ARMCM3" target_path="DSP/Examples/ARM/arm_class_marks_example/RTE/Device/ARMCM3" type="asm_include">
+        <files mask="startup_ARMCM3.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_class_marks_example/RTE/Device/ARMCM3" target_path="DSP/Examples/ARM/arm_class_marks_example/RTE/Device/ARMCM3" type="src">
+        <files mask="system_ARMCM3.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_class_marks_example/RTE/Device/ARMCM4_FP" target_path="DSP/Examples/ARM/arm_class_marks_example/RTE/Device/ARMCM4_FP" type="asm_include">
+        <files mask="startup_ARMCM4.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_class_marks_example/RTE/Device/ARMCM4_FP" target_path="DSP/Examples/ARM/arm_class_marks_example/RTE/Device/ARMCM4_FP" type="src">
+        <files mask="system_ARMCM4.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_class_marks_example/RTE/Device/ARMCM7_SP" target_path="DSP/Examples/ARM/arm_class_marks_example/RTE/Device/ARMCM7_SP" type="asm_include">
+        <files mask="startup_ARMCM7.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_class_marks_example/RTE/Device/ARMCM7_SP" target_path="DSP/Examples/ARM/arm_class_marks_example/RTE/Device/ARMCM7_SP" type="src">
+        <files mask="system_ARMCM7.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_class_marks_example" target_path="DSP/Examples/ARM/arm_class_marks_example" type="configuration">
+        <files mask="arm_class_marks_example.ini"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_class_marks_example" target_path="DSP/Examples/ARM/arm_class_marks_example" type="project">
+        <files mask="arm_class_marks_example.uvoptx"/>
+        <files mask="arm_class_marks_example.uvprojx"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_class_marks_example" target_path="DSP/Examples/ARM/arm_class_marks_example" type="src">
+        <files mask="arm_class_marks_example_f32.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_convolution_example" target_path="DSP/Examples/ARM/arm_convolution_example" type="doc">
+        <files mask="Abstract.txt"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_convolution_example/RTE/Device/ARMCM0" target_path="DSP/Examples/ARM/arm_convolution_example/RTE/Device/ARMCM0" type="asm_include">
+        <files mask="startup_ARMCM0.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_convolution_example/RTE/Device/ARMCM0" target_path="DSP/Examples/ARM/arm_convolution_example/RTE/Device/ARMCM0" type="src">
+        <files mask="system_ARMCM0.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_convolution_example/RTE/Device/ARMCM3" target_path="DSP/Examples/ARM/arm_convolution_example/RTE/Device/ARMCM3" type="asm_include">
+        <files mask="startup_ARMCM3.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_convolution_example/RTE/Device/ARMCM3" target_path="DSP/Examples/ARM/arm_convolution_example/RTE/Device/ARMCM3" type="src">
+        <files mask="system_ARMCM3.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_convolution_example/RTE/Device/ARMCM4_FP" target_path="DSP/Examples/ARM/arm_convolution_example/RTE/Device/ARMCM4_FP" type="asm_include">
+        <files mask="startup_ARMCM4.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_convolution_example/RTE/Device/ARMCM4_FP" target_path="DSP/Examples/ARM/arm_convolution_example/RTE/Device/ARMCM4_FP" type="src">
+        <files mask="system_ARMCM4.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_convolution_example/RTE/Device/ARMCM7_SP" target_path="DSP/Examples/ARM/arm_convolution_example/RTE/Device/ARMCM7_SP" type="asm_include">
+        <files mask="startup_ARMCM7.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_convolution_example/RTE/Device/ARMCM7_SP" target_path="DSP/Examples/ARM/arm_convolution_example/RTE/Device/ARMCM7_SP" type="src">
+        <files mask="system_ARMCM7.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_convolution_example" target_path="DSP/Examples/ARM/arm_convolution_example" type="configuration">
+        <files mask="arm_convolution_example.ini"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_convolution_example" target_path="DSP/Examples/ARM/arm_convolution_example" type="project">
+        <files mask="arm_convolution_example.uvoptx"/>
+        <files mask="arm_convolution_example.uvprojx"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_convolution_example" target_path="DSP/Examples/ARM/arm_convolution_example" type="src">
+        <files mask="arm_convolution_example_f32.c"/>
+        <files mask="math_helper.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_convolution_example" target_path="DSP/Examples/ARM/arm_convolution_example" type="c_include">
+        <files mask="math_helper.h"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_dotproduct_example" target_path="DSP/Examples/ARM/arm_dotproduct_example" type="doc">
+        <files mask="Abstract.txt"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_dotproduct_example/RTE/Device/ARMCM0" target_path="DSP/Examples/ARM/arm_dotproduct_example/RTE/Device/ARMCM0" type="asm_include">
+        <files mask="startup_ARMCM0.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_dotproduct_example/RTE/Device/ARMCM0" target_path="DSP/Examples/ARM/arm_dotproduct_example/RTE/Device/ARMCM0" type="src">
+        <files mask="system_ARMCM0.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_dotproduct_example/RTE/Device/ARMCM3" target_path="DSP/Examples/ARM/arm_dotproduct_example/RTE/Device/ARMCM3" type="asm_include">
+        <files mask="startup_ARMCM3.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_dotproduct_example/RTE/Device/ARMCM3" target_path="DSP/Examples/ARM/arm_dotproduct_example/RTE/Device/ARMCM3" type="src">
+        <files mask="system_ARMCM3.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_dotproduct_example/RTE/Device/ARMCM4_FP" target_path="DSP/Examples/ARM/arm_dotproduct_example/RTE/Device/ARMCM4_FP" type="asm_include">
+        <files mask="startup_ARMCM4.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_dotproduct_example/RTE/Device/ARMCM4_FP" target_path="DSP/Examples/ARM/arm_dotproduct_example/RTE/Device/ARMCM4_FP" type="src">
+        <files mask="system_ARMCM4.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_dotproduct_example/RTE/Device/ARMCM7_SP" target_path="DSP/Examples/ARM/arm_dotproduct_example/RTE/Device/ARMCM7_SP" type="asm_include">
+        <files mask="startup_ARMCM7.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_dotproduct_example/RTE/Device/ARMCM7_SP" target_path="DSP/Examples/ARM/arm_dotproduct_example/RTE/Device/ARMCM7_SP" type="src">
+        <files mask="system_ARMCM7.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_dotproduct_example" target_path="DSP/Examples/ARM/arm_dotproduct_example" type="configuration">
+        <files mask="arm_dotproduct_example.ini"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_dotproduct_example" target_path="DSP/Examples/ARM/arm_dotproduct_example" type="project">
+        <files mask="arm_dotproduct_example.uvoptx"/>
+        <files mask="arm_dotproduct_example.uvprojx"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_dotproduct_example" target_path="DSP/Examples/ARM/arm_dotproduct_example" type="src">
+        <files mask="arm_dotproduct_example_f32.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fft_bin_example" target_path="DSP/Examples/ARM/arm_fft_bin_example" type="doc">
+        <files mask="Abstract.txt"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fft_bin_example/RTE/Device/ARMCM0" target_path="DSP/Examples/ARM/arm_fft_bin_example/RTE/Device/ARMCM0" type="asm_include">
+        <files mask="startup_ARMCM0.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fft_bin_example/RTE/Device/ARMCM0" target_path="DSP/Examples/ARM/arm_fft_bin_example/RTE/Device/ARMCM0" type="src">
+        <files mask="system_ARMCM0.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fft_bin_example/RTE/Device/ARMCM3" target_path="DSP/Examples/ARM/arm_fft_bin_example/RTE/Device/ARMCM3" type="asm_include">
+        <files mask="startup_ARMCM3.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fft_bin_example/RTE/Device/ARMCM3" target_path="DSP/Examples/ARM/arm_fft_bin_example/RTE/Device/ARMCM3" type="src">
+        <files mask="system_ARMCM3.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fft_bin_example/RTE/Device/ARMCM4_FP" target_path="DSP/Examples/ARM/arm_fft_bin_example/RTE/Device/ARMCM4_FP" type="asm_include">
+        <files mask="startup_ARMCM4.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fft_bin_example/RTE/Device/ARMCM4_FP" target_path="DSP/Examples/ARM/arm_fft_bin_example/RTE/Device/ARMCM4_FP" type="src">
+        <files mask="system_ARMCM4.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fft_bin_example/RTE/Device/ARMCM7_SP" target_path="DSP/Examples/ARM/arm_fft_bin_example/RTE/Device/ARMCM7_SP" type="asm_include">
+        <files mask="startup_ARMCM7.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fft_bin_example/RTE/Device/ARMCM7_SP" target_path="DSP/Examples/ARM/arm_fft_bin_example/RTE/Device/ARMCM7_SP" type="src">
+        <files mask="system_ARMCM7.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fft_bin_example" target_path="DSP/Examples/ARM/arm_fft_bin_example" type="src">
+        <files mask="arm_fft_bin_data.c"/>
+        <files mask="arm_fft_bin_example_f32.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fft_bin_example" target_path="DSP/Examples/ARM/arm_fft_bin_example" type="configuration">
+        <files mask="arm_fft_bin_example.ini"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fft_bin_example" target_path="DSP/Examples/ARM/arm_fft_bin_example" type="project">
+        <files mask="arm_fft_bin_example.uvoptx"/>
+        <files mask="arm_fft_bin_example.uvprojx"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fir_example" target_path="DSP/Examples/ARM/arm_fir_example" type="doc">
+        <files mask="Abstract.txt"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fir_example/RTE/Device/ARMCM0" target_path="DSP/Examples/ARM/arm_fir_example/RTE/Device/ARMCM0" type="asm_include">
+        <files mask="startup_ARMCM0.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fir_example/RTE/Device/ARMCM0" target_path="DSP/Examples/ARM/arm_fir_example/RTE/Device/ARMCM0" type="src">
+        <files mask="system_ARMCM0.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fir_example/RTE/Device/ARMCM3" target_path="DSP/Examples/ARM/arm_fir_example/RTE/Device/ARMCM3" type="asm_include">
+        <files mask="startup_ARMCM3.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fir_example/RTE/Device/ARMCM3" target_path="DSP/Examples/ARM/arm_fir_example/RTE/Device/ARMCM3" type="src">
+        <files mask="system_ARMCM3.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fir_example/RTE/Device/ARMCM4_FP" target_path="DSP/Examples/ARM/arm_fir_example/RTE/Device/ARMCM4_FP" type="asm_include">
+        <files mask="startup_ARMCM4.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fir_example/RTE/Device/ARMCM4_FP" target_path="DSP/Examples/ARM/arm_fir_example/RTE/Device/ARMCM4_FP" type="src">
+        <files mask="system_ARMCM4.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fir_example/RTE/Device/ARMCM7_SP" target_path="DSP/Examples/ARM/arm_fir_example/RTE/Device/ARMCM7_SP" type="asm_include">
+        <files mask="startup_ARMCM7.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fir_example/RTE/Device/ARMCM7_SP" target_path="DSP/Examples/ARM/arm_fir_example/RTE/Device/ARMCM7_SP" type="src">
+        <files mask="system_ARMCM7.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fir_example" target_path="DSP/Examples/ARM/arm_fir_example" type="src">
+        <files mask="arm_fir_data.c"/>
+        <files mask="arm_fir_example_f32.c"/>
+        <files mask="math_helper.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fir_example" target_path="DSP/Examples/ARM/arm_fir_example" type="configuration">
+        <files mask="arm_fir_example.ini"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fir_example" target_path="DSP/Examples/ARM/arm_fir_example" type="project">
+        <files mask="arm_fir_example.uvoptx"/>
+        <files mask="arm_fir_example.uvprojx"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_fir_example" target_path="DSP/Examples/ARM/arm_fir_example" type="c_include">
+        <files mask="math_helper.h"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_graphic_equalizer_example" target_path="DSP/Examples/ARM/arm_graphic_equalizer_example" type="doc">
+        <files mask="Abstract.txt"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_graphic_equalizer_example/RTE/Device/ARMCM0" target_path="DSP/Examples/ARM/arm_graphic_equalizer_example/RTE/Device/ARMCM0" type="asm_include">
+        <files mask="startup_ARMCM0.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_graphic_equalizer_example/RTE/Device/ARMCM0" target_path="DSP/Examples/ARM/arm_graphic_equalizer_example/RTE/Device/ARMCM0" type="src">
+        <files mask="system_ARMCM0.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_graphic_equalizer_example/RTE/Device/ARMCM3" target_path="DSP/Examples/ARM/arm_graphic_equalizer_example/RTE/Device/ARMCM3" type="asm_include">
+        <files mask="startup_ARMCM3.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_graphic_equalizer_example/RTE/Device/ARMCM3" target_path="DSP/Examples/ARM/arm_graphic_equalizer_example/RTE/Device/ARMCM3" type="src">
+        <files mask="system_ARMCM3.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_graphic_equalizer_example/RTE/Device/ARMCM4_FP" target_path="DSP/Examples/ARM/arm_graphic_equalizer_example/RTE/Device/ARMCM4_FP" type="asm_include">
+        <files mask="startup_ARMCM4.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_graphic_equalizer_example/RTE/Device/ARMCM4_FP" target_path="DSP/Examples/ARM/arm_graphic_equalizer_example/RTE/Device/ARMCM4_FP" type="src">
+        <files mask="system_ARMCM4.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_graphic_equalizer_example/RTE/Device/ARMCM7_SP" target_path="DSP/Examples/ARM/arm_graphic_equalizer_example/RTE/Device/ARMCM7_SP" type="asm_include">
+        <files mask="startup_ARMCM7.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_graphic_equalizer_example/RTE/Device/ARMCM7_SP" target_path="DSP/Examples/ARM/arm_graphic_equalizer_example/RTE/Device/ARMCM7_SP" type="src">
+        <files mask="system_ARMCM7.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_graphic_equalizer_example" target_path="DSP/Examples/ARM/arm_graphic_equalizer_example" type="src">
+        <files mask="arm_graphic_equalizer_data.c"/>
+        <files mask="arm_graphic_equalizer_example_q31.c"/>
+        <files mask="math_helper.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_graphic_equalizer_example" target_path="DSP/Examples/ARM/arm_graphic_equalizer_example" type="configuration">
+        <files mask="arm_graphic_equalizer_example.ini"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_graphic_equalizer_example" target_path="DSP/Examples/ARM/arm_graphic_equalizer_example" type="project">
+        <files mask="arm_graphic_equalizer_example.uvoptx"/>
+        <files mask="arm_graphic_equalizer_example.uvprojx"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_graphic_equalizer_example" target_path="DSP/Examples/ARM/arm_graphic_equalizer_example" type="c_include">
+        <files mask="math_helper.h"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_linear_interp_example" target_path="DSP/Examples/ARM/arm_linear_interp_example" type="doc">
+        <files mask="Abstract.txt"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_linear_interp_example/RTE/Device/ARMCM0" target_path="DSP/Examples/ARM/arm_linear_interp_example/RTE/Device/ARMCM0" type="asm_include">
+        <files mask="startup_ARMCM0.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_linear_interp_example/RTE/Device/ARMCM0" target_path="DSP/Examples/ARM/arm_linear_interp_example/RTE/Device/ARMCM0" type="src">
+        <files mask="system_ARMCM0.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_linear_interp_example/RTE/Device/ARMCM3" target_path="DSP/Examples/ARM/arm_linear_interp_example/RTE/Device/ARMCM3" type="asm_include">
+        <files mask="startup_ARMCM3.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_linear_interp_example/RTE/Device/ARMCM3" target_path="DSP/Examples/ARM/arm_linear_interp_example/RTE/Device/ARMCM3" type="src">
+        <files mask="system_ARMCM3.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_linear_interp_example/RTE/Device/ARMCM4_FP" target_path="DSP/Examples/ARM/arm_linear_interp_example/RTE/Device/ARMCM4_FP" type="asm_include">
+        <files mask="startup_ARMCM4.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_linear_interp_example/RTE/Device/ARMCM4_FP" target_path="DSP/Examples/ARM/arm_linear_interp_example/RTE/Device/ARMCM4_FP" type="src">
+        <files mask="system_ARMCM4.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_linear_interp_example/RTE/Device/ARMCM7_SP" target_path="DSP/Examples/ARM/arm_linear_interp_example/RTE/Device/ARMCM7_SP" type="asm_include">
+        <files mask="startup_ARMCM7.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_linear_interp_example/RTE/Device/ARMCM7_SP" target_path="DSP/Examples/ARM/arm_linear_interp_example/RTE/Device/ARMCM7_SP" type="src">
+        <files mask="system_ARMCM7.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_linear_interp_example" target_path="DSP/Examples/ARM/arm_linear_interp_example" type="src">
+        <files mask="arm_linear_interp_data.c"/>
+        <files mask="arm_linear_interp_example_f32.c"/>
+        <files mask="math_helper.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_linear_interp_example" target_path="DSP/Examples/ARM/arm_linear_interp_example" type="configuration">
+        <files mask="arm_linear_interp_example.ini"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_linear_interp_example" target_path="DSP/Examples/ARM/arm_linear_interp_example" type="project">
+        <files mask="arm_linear_interp_example.uvoptx"/>
+        <files mask="arm_linear_interp_example.uvprojx"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_linear_interp_example" target_path="DSP/Examples/ARM/arm_linear_interp_example" type="c_include">
+        <files mask="math_helper.h"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_matrix_example" target_path="DSP/Examples/ARM/arm_matrix_example" type="doc">
+        <files mask="Abstract.txt"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_matrix_example/RTE/Device/ARMCM0" target_path="DSP/Examples/ARM/arm_matrix_example/RTE/Device/ARMCM0" type="asm_include">
+        <files mask="startup_ARMCM0.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_matrix_example/RTE/Device/ARMCM0" target_path="DSP/Examples/ARM/arm_matrix_example/RTE/Device/ARMCM0" type="src">
+        <files mask="system_ARMCM0.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_matrix_example/RTE/Device/ARMCM3" target_path="DSP/Examples/ARM/arm_matrix_example/RTE/Device/ARMCM3" type="asm_include">
+        <files mask="startup_ARMCM3.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_matrix_example/RTE/Device/ARMCM3" target_path="DSP/Examples/ARM/arm_matrix_example/RTE/Device/ARMCM3" type="src">
+        <files mask="system_ARMCM3.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_matrix_example/RTE/Device/ARMCM4_FP" target_path="DSP/Examples/ARM/arm_matrix_example/RTE/Device/ARMCM4_FP" type="asm_include">
+        <files mask="startup_ARMCM4.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_matrix_example/RTE/Device/ARMCM4_FP" target_path="DSP/Examples/ARM/arm_matrix_example/RTE/Device/ARMCM4_FP" type="src">
+        <files mask="system_ARMCM4.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_matrix_example/RTE/Device/ARMCM7_SP" target_path="DSP/Examples/ARM/arm_matrix_example/RTE/Device/ARMCM7_SP" type="asm_include">
+        <files mask="startup_ARMCM7.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_matrix_example/RTE/Device/ARMCM7_SP" target_path="DSP/Examples/ARM/arm_matrix_example/RTE/Device/ARMCM7_SP" type="src">
+        <files mask="system_ARMCM7.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_matrix_example" target_path="DSP/Examples/ARM/arm_matrix_example" type="configuration">
+        <files mask="arm_matrix_example.ini"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_matrix_example" target_path="DSP/Examples/ARM/arm_matrix_example" type="project">
+        <files mask="arm_matrix_example.uvoptx"/>
+        <files mask="arm_matrix_example.uvprojx"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_matrix_example" target_path="DSP/Examples/ARM/arm_matrix_example" type="src">
+        <files mask="arm_matrix_example_f32.c"/>
+        <files mask="math_helper.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_matrix_example" target_path="DSP/Examples/ARM/arm_matrix_example" type="c_include">
+        <files mask="math_helper.h"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_signal_converge_example" target_path="DSP/Examples/ARM/arm_signal_converge_example" type="doc">
+        <files mask="Abstract.txt"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_signal_converge_example/RTE/Device/ARMCM0" target_path="DSP/Examples/ARM/arm_signal_converge_example/RTE/Device/ARMCM0" type="asm_include">
+        <files mask="startup_ARMCM0.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_signal_converge_example/RTE/Device/ARMCM0" target_path="DSP/Examples/ARM/arm_signal_converge_example/RTE/Device/ARMCM0" type="src">
+        <files mask="system_ARMCM0.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_signal_converge_example/RTE/Device/ARMCM3" target_path="DSP/Examples/ARM/arm_signal_converge_example/RTE/Device/ARMCM3" type="asm_include">
+        <files mask="startup_ARMCM3.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_signal_converge_example/RTE/Device/ARMCM3" target_path="DSP/Examples/ARM/arm_signal_converge_example/RTE/Device/ARMCM3" type="src">
+        <files mask="system_ARMCM3.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_signal_converge_example/RTE/Device/ARMCM4_FP" target_path="DSP/Examples/ARM/arm_signal_converge_example/RTE/Device/ARMCM4_FP" type="asm_include">
+        <files mask="startup_ARMCM4.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_signal_converge_example/RTE/Device/ARMCM4_FP" target_path="DSP/Examples/ARM/arm_signal_converge_example/RTE/Device/ARMCM4_FP" type="src">
+        <files mask="system_ARMCM4.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_signal_converge_example/RTE/Device/ARMCM7_SP" target_path="DSP/Examples/ARM/arm_signal_converge_example/RTE/Device/ARMCM7_SP" type="asm_include">
+        <files mask="startup_ARMCM7.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_signal_converge_example/RTE/Device/ARMCM7_SP" target_path="DSP/Examples/ARM/arm_signal_converge_example/RTE/Device/ARMCM7_SP" type="src">
+        <files mask="system_ARMCM7.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_signal_converge_example" target_path="DSP/Examples/ARM/arm_signal_converge_example" type="src">
+        <files mask="arm_signal_converge_data.c"/>
+        <files mask="arm_signal_converge_example_f32.c"/>
+        <files mask="math_helper.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_signal_converge_example" target_path="DSP/Examples/ARM/arm_signal_converge_example" type="configuration">
+        <files mask="arm_signal_converge_example.ini"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_signal_converge_example" target_path="DSP/Examples/ARM/arm_signal_converge_example" type="project">
+        <files mask="arm_signal_converge_example.uvoptx"/>
+        <files mask="arm_signal_converge_example.uvprojx"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_signal_converge_example" target_path="DSP/Examples/ARM/arm_signal_converge_example" type="c_include">
+        <files mask="math_helper.h"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_sin_cos_example" target_path="DSP/Examples/ARM/arm_sin_cos_example" type="doc">
+        <files mask="Abstract.txt"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_sin_cos_example/RTE/Device/ARMCM0" target_path="DSP/Examples/ARM/arm_sin_cos_example/RTE/Device/ARMCM0" type="asm_include">
+        <files mask="startup_ARMCM0.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_sin_cos_example/RTE/Device/ARMCM0" target_path="DSP/Examples/ARM/arm_sin_cos_example/RTE/Device/ARMCM0" type="src">
+        <files mask="system_ARMCM0.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_sin_cos_example/RTE/Device/ARMCM3" target_path="DSP/Examples/ARM/arm_sin_cos_example/RTE/Device/ARMCM3" type="asm_include">
+        <files mask="startup_ARMCM3.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_sin_cos_example/RTE/Device/ARMCM3" target_path="DSP/Examples/ARM/arm_sin_cos_example/RTE/Device/ARMCM3" type="src">
+        <files mask="system_ARMCM3.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_sin_cos_example/RTE/Device/ARMCM4_FP" target_path="DSP/Examples/ARM/arm_sin_cos_example/RTE/Device/ARMCM4_FP" type="asm_include">
+        <files mask="startup_ARMCM4.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_sin_cos_example/RTE/Device/ARMCM4_FP" target_path="DSP/Examples/ARM/arm_sin_cos_example/RTE/Device/ARMCM4_FP" type="src">
+        <files mask="system_ARMCM4.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_sin_cos_example/RTE/Device/ARMCM7_SP" target_path="DSP/Examples/ARM/arm_sin_cos_example/RTE/Device/ARMCM7_SP" type="asm_include">
+        <files mask="startup_ARMCM7.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_sin_cos_example/RTE/Device/ARMCM7_SP" target_path="DSP/Examples/ARM/arm_sin_cos_example/RTE/Device/ARMCM7_SP" type="src">
+        <files mask="system_ARMCM7.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_sin_cos_example" target_path="DSP/Examples/ARM/arm_sin_cos_example" type="configuration">
+        <files mask="arm_sin_cos_example.ini"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_sin_cos_example" target_path="DSP/Examples/ARM/arm_sin_cos_example" type="project">
+        <files mask="arm_sin_cos_example.uvoptx"/>
+        <files mask="arm_sin_cos_example.uvprojx"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_sin_cos_example" target_path="DSP/Examples/ARM/arm_sin_cos_example" type="src">
+        <files mask="arm_sin_cos_example_f32.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_variance_example" target_path="DSP/Examples/ARM/arm_variance_example" type="doc">
+        <files mask="Abstract.txt"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_variance_example/RTE/Device/ARMCM0" target_path="DSP/Examples/ARM/arm_variance_example/RTE/Device/ARMCM0" type="asm_include">
+        <files mask="startup_ARMCM0.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_variance_example/RTE/Device/ARMCM0" target_path="DSP/Examples/ARM/arm_variance_example/RTE/Device/ARMCM0" type="src">
+        <files mask="system_ARMCM0.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_variance_example/RTE/Device/ARMCM3" target_path="DSP/Examples/ARM/arm_variance_example/RTE/Device/ARMCM3" type="asm_include">
+        <files mask="startup_ARMCM3.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_variance_example/RTE/Device/ARMCM3" target_path="DSP/Examples/ARM/arm_variance_example/RTE/Device/ARMCM3" type="src">
+        <files mask="system_ARMCM3.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_variance_example/RTE/Device/ARMCM4_FP" target_path="DSP/Examples/ARM/arm_variance_example/RTE/Device/ARMCM4_FP" type="asm_include">
+        <files mask="startup_ARMCM4.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_variance_example/RTE/Device/ARMCM4_FP" target_path="DSP/Examples/ARM/arm_variance_example/RTE/Device/ARMCM4_FP" type="src">
+        <files mask="system_ARMCM4.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_variance_example/RTE/Device/ARMCM7_SP" target_path="DSP/Examples/ARM/arm_variance_example/RTE/Device/ARMCM7_SP" type="asm_include">
+        <files mask="startup_ARMCM7.s"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_variance_example/RTE/Device/ARMCM7_SP" target_path="DSP/Examples/ARM/arm_variance_example/RTE/Device/ARMCM7_SP" type="src">
+        <files mask="system_ARMCM7.c"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_variance_example" target_path="DSP/Examples/ARM/arm_variance_example" type="configuration">
+        <files mask="arm_variance_example.ini"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_variance_example" target_path="DSP/Examples/ARM/arm_variance_example" type="project">
+        <files mask="arm_variance_example.uvoptx"/>
+        <files mask="arm_variance_example.uvprojx"/>
+      </source>
+      <source path="CMSIS/DSP/Examples/ARM/arm_variance_example" target_path="DSP/Examples/ARM/arm_variance_example" type="src">
+        <files mask="arm_variance_example_f32.c"/>
+      </source>
+      <source path="CMSIS/DSP/Projects/ARM" target_path="DSP/Projects/ARM" type="project">
+        <files mask="arm_cortexM_math.uvoptx"/>
+        <files mask="arm_cortexM_math.uvprojx"/>
+      </source>
+      <source path="CMSIS/DSP/Projects/ARM" target_path="DSP/Projects/ARM" type="script">
+        <files mask="arm_cortexM_math_Build.bat"/>
+      </source>
+      <source path="CMSIS/DSP/Projects/ARMCLANG" target_path="DSP/Projects/ARMCLANG" type="project">
+        <files mask="arm_cortexM_math.uvoptx"/>
+        <files mask="arm_cortexM_math.uvprojx"/>
+      </source>
+      <source path="CMSIS/DSP/Projects/ARMCLANG" target_path="DSP/Projects/ARMCLANG" type="script">
+        <files mask="arm_cortexM_math_Build.bat"/>
+      </source>
+      <source path="CMSIS/DSP/Projects/GCC" target_path="DSP/Projects/GCC" type="project">
+        <files mask="arm_cortexM_math.uvoptx"/>
+        <files mask="arm_cortexM_math.uvprojx"/>
+      </source>
+      <source path="CMSIS/DSP/Projects/GCC" target_path="DSP/Projects/GCC" type="script">
+        <files mask="arm_cortexM_math_Build.bat"/>
+      </source>
+      <source path="CMSIS/DSP/Projects/IAR" target_path="DSP/Projects/IAR" type="project">
+        <files mask="arm_cortexM_math.ewp"/>
+      </source>
+      <source path="CMSIS/DSP/Projects/IAR" target_path="DSP/Projects/IAR" type="other">
+        <files mask="arm_cortexM_math.eww"/>
+      </source>
+      <source path="CMSIS/DSP/Projects/IAR" target_path="DSP/Projects/IAR" type="script">
+        <files mask="arm_cortexM_math_Build.bat"/>
+      </source>
+      <source path="CMSIS/DSP/Source/BasicMathFunctions" target_path="DSP/Source/BasicMathFunctions" type="src">
+        <files mask="BasicMathFunctions.c"/>
+        <files mask="arm_abs_f32.c"/>
+        <files mask="arm_abs_q15.c"/>
+        <files mask="arm_abs_q31.c"/>
+        <files mask="arm_abs_q7.c"/>
+        <files mask="arm_add_f32.c"/>
+        <files mask="arm_add_q15.c"/>
+        <files mask="arm_add_q31.c"/>
+        <files mask="arm_add_q7.c"/>
+        <files mask="arm_dot_prod_f32.c"/>
+        <files mask="arm_dot_prod_q15.c"/>
+        <files mask="arm_dot_prod_q31.c"/>
+        <files mask="arm_dot_prod_q7.c"/>
+        <files mask="arm_mult_f32.c"/>
+        <files mask="arm_mult_q15.c"/>
+        <files mask="arm_mult_q31.c"/>
+        <files mask="arm_mult_q7.c"/>
+        <files mask="arm_negate_f32.c"/>
+        <files mask="arm_negate_q15.c"/>
+        <files mask="arm_negate_q31.c"/>
+        <files mask="arm_negate_q7.c"/>
+        <files mask="arm_offset_f32.c"/>
+        <files mask="arm_offset_q15.c"/>
+        <files mask="arm_offset_q31.c"/>
+        <files mask="arm_offset_q7.c"/>
+        <files mask="arm_scale_f32.c"/>
+        <files mask="arm_scale_q15.c"/>
+        <files mask="arm_scale_q31.c"/>
+        <files mask="arm_scale_q7.c"/>
+        <files mask="arm_shift_q15.c"/>
+        <files mask="arm_shift_q31.c"/>
+        <files mask="arm_shift_q7.c"/>
+        <files mask="arm_sub_f32.c"/>
+        <files mask="arm_sub_q15.c"/>
+        <files mask="arm_sub_q31.c"/>
+        <files mask="arm_sub_q7.c"/>
+      </source>
+      <source path="CMSIS/DSP/Source/CommonTables" target_path="DSP/Source/CommonTables" type="src">
+        <files mask="CommonTables.c"/>
+        <files mask="arm_common_tables.c"/>
+        <files mask="arm_const_structs.c"/>
+      </source>
+      <source path="CMSIS/DSP/Source/ComplexMathFunctions" target_path="DSP/Source/ComplexMathFunctions" type="src">
+        <files mask="ComplexMathFunctions.c"/>
+        <files mask="arm_cmplx_conj_f32.c"/>
+        <files mask="arm_cmplx_conj_q15.c"/>
+        <files mask="arm_cmplx_conj_q31.c"/>
+        <files mask="arm_cmplx_dot_prod_f32.c"/>
+        <files mask="arm_cmplx_dot_prod_q15.c"/>
+        <files mask="arm_cmplx_dot_prod_q31.c"/>
+        <files mask="arm_cmplx_mag_f32.c"/>
+        <files mask="arm_cmplx_mag_q15.c"/>
+        <files mask="arm_cmplx_mag_q31.c"/>
+        <files mask="arm_cmplx_mag_squared_f32.c"/>
+        <files mask="arm_cmplx_mag_squared_q15.c"/>
+        <files mask="arm_cmplx_mag_squared_q31.c"/>
+        <files mask="arm_cmplx_mult_cmplx_f32.c"/>
+        <files mask="arm_cmplx_mult_cmplx_q15.c"/>
+        <files mask="arm_cmplx_mult_cmplx_q31.c"/>
+        <files mask="arm_cmplx_mult_real_f32.c"/>
+        <files mask="arm_cmplx_mult_real_q15.c"/>
+        <files mask="arm_cmplx_mult_real_q31.c"/>
+      </source>
+      <source path="CMSIS/DSP/Source/ControllerFunctions" target_path="DSP/Source/ControllerFunctions" type="src">
+        <files mask="ControllerFunctions.c"/>
+        <files mask="arm_pid_init_f32.c"/>
+        <files mask="arm_pid_init_q15.c"/>
+        <files mask="arm_pid_init_q31.c"/>
+        <files mask="arm_pid_reset_f32.c"/>
+        <files mask="arm_pid_reset_q15.c"/>
+        <files mask="arm_pid_reset_q31.c"/>
+        <files mask="arm_sin_cos_f32.c"/>
+        <files mask="arm_sin_cos_q31.c"/>
+      </source>
+      <source path="CMSIS/DSP/Source/FastMathFunctions" target_path="DSP/Source/FastMathFunctions" type="src">
+        <files mask="FastMathFunctions.c"/>
+        <files mask="arm_cos_f32.c"/>
+        <files mask="arm_cos_q15.c"/>
+        <files mask="arm_cos_q31.c"/>
+        <files mask="arm_sin_f32.c"/>
+        <files mask="arm_sin_q15.c"/>
+        <files mask="arm_sin_q31.c"/>
+        <files mask="arm_sqrt_q15.c"/>
+        <files mask="arm_sqrt_q31.c"/>
+      </source>
+      <source path="CMSIS/DSP/Source/FilteringFunctions" target_path="DSP/Source/FilteringFunctions" type="src">
+        <files mask="FilteringFunctions.c"/>
+        <files mask="arm_biquad_cascade_df1_32x64_init_q31.c"/>
+        <files mask="arm_biquad_cascade_df1_32x64_q31.c"/>
+        <files mask="arm_biquad_cascade_df1_f32.c"/>
+        <files mask="arm_biquad_cascade_df1_fast_q15.c"/>
+        <files mask="arm_biquad_cascade_df1_fast_q31.c"/>
+        <files mask="arm_biquad_cascade_df1_init_f32.c"/>
+        <files mask="arm_biquad_cascade_df1_init_q15.c"/>
+        <files mask="arm_biquad_cascade_df1_init_q31.c"/>
+        <files mask="arm_biquad_cascade_df1_q15.c"/>
+        <files mask="arm_biquad_cascade_df1_q31.c"/>
+        <files mask="arm_biquad_cascade_df2T_f32.c"/>
+        <files mask="arm_biquad_cascade_df2T_f64.c"/>
+        <files mask="arm_biquad_cascade_df2T_init_f32.c"/>
+        <files mask="arm_biquad_cascade_df2T_init_f64.c"/>
+        <files mask="arm_biquad_cascade_stereo_df2T_f32.c"/>
+        <files mask="arm_biquad_cascade_stereo_df2T_init_f32.c"/>
+        <files mask="arm_conv_f32.c"/>
+        <files mask="arm_conv_fast_opt_q15.c"/>
+        <files mask="arm_conv_fast_q15.c"/>
+        <files mask="arm_conv_fast_q31.c"/>
+        <files mask="arm_conv_opt_q15.c"/>
+        <files mask="arm_conv_opt_q7.c"/>
+        <files mask="arm_conv_partial_f32.c"/>
+        <files mask="arm_conv_partial_fast_opt_q15.c"/>
+        <files mask="arm_conv_partial_fast_q15.c"/>
+        <files mask="arm_conv_partial_fast_q31.c"/>
+        <files mask="arm_conv_partial_opt_q15.c"/>
+        <files mask="arm_conv_partial_opt_q7.c"/>
+        <files mask="arm_conv_partial_q15.c"/>
+        <files mask="arm_conv_partial_q31.c"/>
+        <files mask="arm_conv_partial_q7.c"/>
+        <files mask="arm_conv_q15.c"/>
+        <files mask="arm_conv_q31.c"/>
+        <files mask="arm_conv_q7.c"/>
+        <files mask="arm_correlate_f32.c"/>
+        <files mask="arm_correlate_fast_opt_q15.c"/>
+        <files mask="arm_correlate_fast_q15.c"/>
+        <files mask="arm_correlate_fast_q31.c"/>
+        <files mask="arm_correlate_opt_q15.c"/>
+        <files mask="arm_correlate_opt_q7.c"/>
+        <files mask="arm_correlate_q15.c"/>
+        <files mask="arm_correlate_q31.c"/>
+        <files mask="arm_correlate_q7.c"/>
+        <files mask="arm_fir_decimate_f32.c"/>
+        <files mask="arm_fir_decimate_fast_q15.c"/>
+        <files mask="arm_fir_decimate_fast_q31.c"/>
+        <files mask="arm_fir_decimate_init_f32.c"/>
+        <files mask="arm_fir_decimate_init_q15.c"/>
+        <files mask="arm_fir_decimate_init_q31.c"/>
+        <files mask="arm_fir_decimate_q15.c"/>
+        <files mask="arm_fir_decimate_q31.c"/>
+        <files mask="arm_fir_f32.c"/>
+        <files mask="arm_fir_fast_q15.c"/>
+        <files mask="arm_fir_fast_q31.c"/>
+        <files mask="arm_fir_init_f32.c"/>
+        <files mask="arm_fir_init_q15.c"/>
+        <files mask="arm_fir_init_q31.c"/>
+        <files mask="arm_fir_init_q7.c"/>
+        <files mask="arm_fir_interpolate_f32.c"/>
+        <files mask="arm_fir_interpolate_init_f32.c"/>
+        <files mask="arm_fir_interpolate_init_q15.c"/>
+        <files mask="arm_fir_interpolate_init_q31.c"/>
+        <files mask="arm_fir_interpolate_q15.c"/>
+        <files mask="arm_fir_interpolate_q31.c"/>
+        <files mask="arm_fir_lattice_f32.c"/>
+        <files mask="arm_fir_lattice_init_f32.c"/>
+        <files mask="arm_fir_lattice_init_q15.c"/>
+        <files mask="arm_fir_lattice_init_q31.c"/>
+        <files mask="arm_fir_lattice_q15.c"/>
+        <files mask="arm_fir_lattice_q31.c"/>
+        <files mask="arm_fir_q15.c"/>
+        <files mask="arm_fir_q31.c"/>
+        <files mask="arm_fir_q7.c"/>
+        <files mask="arm_fir_sparse_f32.c"/>
+        <files mask="arm_fir_sparse_init_f32.c"/>
+        <files mask="arm_fir_sparse_init_q15.c"/>
+        <files mask="arm_fir_sparse_init_q31.c"/>
+        <files mask="arm_fir_sparse_init_q7.c"/>
+        <files mask="arm_fir_sparse_q15.c"/>
+        <files mask="arm_fir_sparse_q31.c"/>
+        <files mask="arm_fir_sparse_q7.c"/>
+        <files mask="arm_iir_lattice_f32.c"/>
+        <files mask="arm_iir_lattice_init_f32.c"/>
+        <files mask="arm_iir_lattice_init_q15.c"/>
+        <files mask="arm_iir_lattice_init_q31.c"/>
+        <files mask="arm_iir_lattice_q15.c"/>
+        <files mask="arm_iir_lattice_q31.c"/>
+        <files mask="arm_lms_f32.c"/>
+        <files mask="arm_lms_init_f32.c"/>
+        <files mask="arm_lms_init_q15.c"/>
+        <files mask="arm_lms_init_q31.c"/>
+        <files mask="arm_lms_norm_f32.c"/>
+        <files mask="arm_lms_norm_init_f32.c"/>
+        <files mask="arm_lms_norm_init_q15.c"/>
+        <files mask="arm_lms_norm_init_q31.c"/>
+        <files mask="arm_lms_norm_q15.c"/>
+        <files mask="arm_lms_norm_q31.c"/>
+        <files mask="arm_lms_q15.c"/>
+        <files mask="arm_lms_q31.c"/>
+      </source>
+      <source path="CMSIS/DSP/Source/MatrixFunctions" target_path="DSP/Source/MatrixFunctions" type="src">
+        <files mask="MatrixFunctions.c"/>
+        <files mask="arm_mat_add_f32.c"/>
+        <files mask="arm_mat_add_q15.c"/>
+        <files mask="arm_mat_add_q31.c"/>
+        <files mask="arm_mat_cmplx_mult_f32.c"/>
+        <files mask="arm_mat_cmplx_mult_q15.c"/>
+        <files mask="arm_mat_cmplx_mult_q31.c"/>
+        <files mask="arm_mat_init_f32.c"/>
+        <files mask="arm_mat_init_q15.c"/>
+        <files mask="arm_mat_init_q31.c"/>
+        <files mask="arm_mat_inverse_f32.c"/>
+        <files mask="arm_mat_inverse_f64.c"/>
+        <files mask="arm_mat_mult_f32.c"/>
+        <files mask="arm_mat_mult_fast_q15.c"/>
+        <files mask="arm_mat_mult_fast_q31.c"/>
+        <files mask="arm_mat_mult_q15.c"/>
+        <files mask="arm_mat_mult_q31.c"/>
+        <files mask="arm_mat_scale_f32.c"/>
+        <files mask="arm_mat_scale_q15.c"/>
+        <files mask="arm_mat_scale_q31.c"/>
+        <files mask="arm_mat_sub_f32.c"/>
+        <files mask="arm_mat_sub_q15.c"/>
+        <files mask="arm_mat_sub_q31.c"/>
+        <files mask="arm_mat_trans_f32.c"/>
+        <files mask="arm_mat_trans_q15.c"/>
+        <files mask="arm_mat_trans_q31.c"/>
+      </source>
+      <source path="CMSIS/DSP/Source/StatisticsFunctions" target_path="DSP/Source/StatisticsFunctions" type="src">
+        <files mask="StatisticsFunctions.c"/>
+        <files mask="arm_max_f32.c"/>
+        <files mask="arm_max_q15.c"/>
+        <files mask="arm_max_q31.c"/>
+        <files mask="arm_max_q7.c"/>
+        <files mask="arm_mean_f32.c"/>
+        <files mask="arm_mean_q15.c"/>
+        <files mask="arm_mean_q31.c"/>
+        <files mask="arm_mean_q7.c"/>
+        <files mask="arm_min_f32.c"/>
+        <files mask="arm_min_q15.c"/>
+        <files mask="arm_min_q31.c"/>
+        <files mask="arm_min_q7.c"/>
+        <files mask="arm_power_f32.c"/>
+        <files mask="arm_power_q15.c"/>
+        <files mask="arm_power_q31.c"/>
+        <files mask="arm_power_q7.c"/>
+        <files mask="arm_rms_f32.c"/>
+        <files mask="arm_rms_q15.c"/>
+        <files mask="arm_rms_q31.c"/>
+        <files mask="arm_std_f32.c"/>
+        <files mask="arm_std_q15.c"/>
+        <files mask="arm_std_q31.c"/>
+        <files mask="arm_var_f32.c"/>
+        <files mask="arm_var_q15.c"/>
+        <files mask="arm_var_q31.c"/>
+      </source>
+      <source path="CMSIS/DSP/Source/SupportFunctions" target_path="DSP/Source/SupportFunctions" type="src">
+        <files mask="SupportFunctions.c"/>
+        <files mask="arm_copy_f32.c"/>
+        <files mask="arm_copy_q15.c"/>
+        <files mask="arm_copy_q31.c"/>
+        <files mask="arm_copy_q7.c"/>
+        <files mask="arm_fill_f32.c"/>
+        <files mask="arm_fill_q15.c"/>
+        <files mask="arm_fill_q31.c"/>
+        <files mask="arm_fill_q7.c"/>
+        <files mask="arm_float_to_q15.c"/>
+        <files mask="arm_float_to_q31.c"/>
+        <files mask="arm_float_to_q7.c"/>
+        <files mask="arm_q15_to_float.c"/>
+        <files mask="arm_q15_to_q31.c"/>
+        <files mask="arm_q15_to_q7.c"/>
+        <files mask="arm_q31_to_float.c"/>
+        <files mask="arm_q31_to_q15.c"/>
+        <files mask="arm_q31_to_q7.c"/>
+        <files mask="arm_q7_to_float.c"/>
+        <files mask="arm_q7_to_q15.c"/>
+        <files mask="arm_q7_to_q31.c"/>
+      </source>
+      <source path="CMSIS/DSP/Source/TransformFunctions" target_path="DSP/Source/TransformFunctions" type="src">
+        <files mask="TransformFunctions.c"/>
+        <files mask="arm_bitreversal.c"/>
+        <files mask="arm_bitreversal2.c"/>
+        <files mask="arm_cfft_f32.c"/>
+        <files mask="arm_cfft_q15.c"/>
+        <files mask="arm_cfft_q31.c"/>
+        <files mask="arm_cfft_radix2_f32.c"/>
+        <files mask="arm_cfft_radix2_init_f32.c"/>
+        <files mask="arm_cfft_radix2_init_q15.c"/>
+        <files mask="arm_cfft_radix2_init_q31.c"/>
+        <files mask="arm_cfft_radix2_q15.c"/>
+        <files mask="arm_cfft_radix2_q31.c"/>
+        <files mask="arm_cfft_radix4_f32.c"/>
+        <files mask="arm_cfft_radix4_init_f32.c"/>
+        <files mask="arm_cfft_radix4_init_q15.c"/>
+        <files mask="arm_cfft_radix4_init_q31.c"/>
+        <files mask="arm_cfft_radix4_q15.c"/>
+        <files mask="arm_cfft_radix4_q31.c"/>
+        <files mask="arm_cfft_radix8_f32.c"/>
+        <files mask="arm_dct4_f32.c"/>
+        <files mask="arm_dct4_init_f32.c"/>
+        <files mask="arm_dct4_init_q15.c"/>
+        <files mask="arm_dct4_init_q31.c"/>
+        <files mask="arm_dct4_q15.c"/>
+        <files mask="arm_dct4_q31.c"/>
+        <files mask="arm_rfft_f32.c"/>
+        <files mask="arm_rfft_fast_f32.c"/>
+        <files mask="arm_rfft_fast_init_f32.c"/>
+        <files mask="arm_rfft_init_f32.c"/>
+        <files mask="arm_rfft_init_q15.c"/>
+        <files mask="arm_rfft_init_q31.c"/>
+        <files mask="arm_rfft_q15.c"/>
+        <files mask="arm_rfft_q31.c"/>
+      </source>
+      <source path="CMSIS/DSP/Source/TransformFunctions" target_path="DSP/Source/TransformFunctions" type="asm_include">
+        <files mask="arm_bitreversal2.S"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_DSP_Lib.arm_cortexM0b_math.MKE06Z4" name="arm_cortexM0b_math" version="1.6.0" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="CMSIS_driver"/>
+    <component id="platform.CMSIS_DSP_Lib.arm_cortexM0l_math.MKE06Z4" name="arm_cortexM0l_math" version="1.6.0" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="CMSIS_driver">
+      <source toolchain="mcuxpresso" path="CMSIS/DSP/Lib/GCC" target_path="libs" type="lib">
+        <files mask="libarm_cortexM0l_math.a"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver" name="CMSIS_Driver" version="2.7.0" user_visible="true" type="CMSIS">
+      <source path="CMSIS/Driver/DriverTemplates" target_path="Driver/DriverTemplates" type="src">
+        <files mask="Driver_CAN.c"/>
+        <files mask="Driver_ETH_MAC.c"/>
+        <files mask="Driver_ETH_PHY.c"/>
+        <files mask="Driver_Flash.c"/>
+        <files mask="Driver_I2C.c"/>
+        <files mask="Driver_MCI.c"/>
+        <files mask="Driver_SAI.c"/>
+        <files mask="Driver_SPI.c"/>
+        <files mask="Driver_Storage.c"/>
+        <files mask="Driver_USART.c"/>
+        <files mask="Driver_USBD.c"/>
+        <files mask="Driver_USBH.c"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.CAN_CMSISInclude.MKE06Z4" name="CAN" version="1.2.0" devices="MKE06Z128xxx4" user_visible="false" type="CMSIS_driver">
+      <dependencies>
+        <component_dependency value="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE06Z4"/>
+      </dependencies>
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_CAN.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE06Z4" name="Common" version="2.7.0" devices="MKE06Z128xxx4" user_visible="false" type="CMSIS_driver">
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_Common.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.Ethernet_CMSISInclude.MKE06Z4" name="Ethernet" version="2.1.0" devices="MKE06Z128xxx4" user_visible="false" type="CMSIS_driver">
+      <dependencies>
+        <component_dependency value="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE06Z4"/>
+      </dependencies>
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_ETH.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.Ethernet_MAC_CMSISInclude.MKE06Z4" name="Ethernet_MAC" version="2.1.0" devices="MKE06Z128xxx4" user_visible="false" type="CMSIS_driver">
+      <dependencies>
+        <component_dependency value="platform.CMSIS_Driver_Include.Ethernet_CMSISInclude.MKE06Z4"/>
+      </dependencies>
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_ETH_MAC.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.Ethernet_PHY_CMSISInclude.MKE06Z4" name="Ethernet_PHY" version="2.1.0" devices="MKE06Z128xxx4" user_visible="false" type="CMSIS_driver">
+      <dependencies>
+        <component_dependency value="platform.CMSIS_Driver_Include.Ethernet_CMSISInclude.MKE06Z4"/>
+      </dependencies>
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_ETH_PHY.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.Flash_CMSISInclude.MKE06Z4" name="Flash" version="2.2.0" devices="MKE06Z128xxx4" user_visible="false" type="CMSIS_driver">
+      <dependencies>
+        <component_dependency value="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE06Z4"/>
+      </dependencies>
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_Flash.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKE06Z4" name="I2C" version="2.3.0" devices="MKE06Z128xxx4" user_visible="false" type="CMSIS_driver">
+      <dependencies>
+        <component_dependency value="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE06Z4"/>
+      </dependencies>
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_I2C.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.MCI_CMSISInclude.MKE06Z4" name="MCI" version="2.3.0" devices="MKE06Z128xxx4" user_visible="false" type="CMSIS_driver">
+      <dependencies>
+        <component_dependency value="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE06Z4"/>
+      </dependencies>
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_MCI.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.NAND_CMSISInclude.MKE06Z4" name="NAND" version="2.3.0" devices="MKE06Z128xxx4" user_visible="false" type="CMSIS_driver">
+      <dependencies>
+        <component_dependency value="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE06Z4"/>
+      </dependencies>
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_NAND.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.SAI_CMSISInclude.MKE06Z4" name="SAI" version="1.1.0" devices="MKE06Z128xxx4" user_visible="false" type="CMSIS_driver">
+      <dependencies>
+        <component_dependency value="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE06Z4"/>
+      </dependencies>
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_SAI.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.SPI_CMSISInclude.MKE06Z4" name="SPI" version="2.2.0" devices="MKE06Z128xxx4" user_visible="false" type="CMSIS_driver">
+      <dependencies>
+        <component_dependency value="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE06Z4"/>
+      </dependencies>
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_SPI.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.USART_CMSISInclude.MKE06Z4" name="USART" version="2.3.0" devices="MKE06Z128xxx4" user_visible="false" type="CMSIS_driver">
+      <dependencies>
+        <component_dependency value="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE06Z4"/>
+      </dependencies>
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_USART.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.USB_CMSISInclude.MKE06Z4" name="USB" version="2.2.0" devices="MKE06Z128xxx4" user_visible="false" type="CMSIS_driver">
+      <dependencies>
+        <component_dependency value="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE06Z4"/>
+      </dependencies>
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_USB.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.USB_Device_CMSISInclude.MKE06Z4" name="USB_Device" version="2.2.0" devices="MKE06Z128xxx4" user_visible="false" type="CMSIS_driver">
+      <dependencies>
+        <component_dependency value="platform.CMSIS_Driver_Include.USB_CMSISInclude.MKE06Z4"/>
+      </dependencies>
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_USBD.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.USB_Host_CMSISInclude.MKE06Z4" name="USB_Host" version="2.2.0" devices="MKE06Z128xxx4" user_visible="false" type="CMSIS_driver">
+      <dependencies>
+        <component_dependency value="platform.CMSIS_Driver_Include.USB_CMSISInclude.MKE06Z4"/>
+      </dependencies>
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_USBH.h"/>
+      </source>
+    </component>
+    <component id="platform.CMSIS_Driver_Include.WiFi_CMSISInclude.MKE06Z4" name="WiFi" version="1.0.0" devices="MKE06Z128xxx4" user_visible="false" type="CMSIS_driver">
+      <dependencies>
+        <component_dependency value="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE06Z4"/>
+      </dependencies>
+      <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
+        <files mask="Driver_WiFi.h"/>
+      </source>
+    </component>
+    <component id="platform.Include_common.MKE06Z4" name="CMSIS_Include_common" version="5.2.1" devices="MKE06Z128xxx4" user_visible="true" type="CMSIS_Include">
+      <source path="CMSIS/Include" target_path="CMSIS" type="c_include">
+        <files mask="cmsis_armcc.h"/>
+        <files mask="cmsis_armclang.h"/>
+        <files mask="cmsis_armclang_ltm.h"/>
+        <files mask="cmsis_compiler.h"/>
+        <files mask="cmsis_gcc.h"/>
+        <files mask="cmsis_iccarm.h"/>
+        <files mask="cmsis_version.h"/>
+        <files mask="core_armv81mml.h"/>
+        <files mask="core_armv8mbl.h"/>
+        <files mask="core_armv8mml.h"/>
+        <files mask="mpu_armv7.h"/>
+        <files mask="mpu_armv8.h"/>
+      </source>
+    </component>
+    <component id="platform.Include_core_cm0plus.MKE06Z4" name="CMSIS_Include_core_cm0plus" version="5.2.1" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="CMSIS_Include">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.Include_common.MKE06Z4"/>
+          <component_dependency value="platform.Include_dsp.MKE06Z4"/>
+        </all>
+      </dependencies>
+      <source path="CMSIS/Include" target_path="CMSIS" type="c_include">
+        <files mask="core_cm0plus.h"/>
+      </source>
+    </component>
+    <component id="platform.Include_dsp.MKE06Z4" name="CMSIS_Include_dsp" version="1.6.0" devices="MKE06Z128xxx4" user_visible="true" type="CMSIS_Include">
+      <source path="CMSIS/Include" target_path="CMSIS" type="c_include">
+        <files mask="arm_common_tables.h"/>
+        <files mask="arm_const_structs.h"/>
+        <files mask="arm_math.h"/>
+      </source>
+    </component>
+    <component id="project_template.MKE06Z4.MKE06Z4" name="MKE06Z4" version="1.0.0" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" category="Board Support/SDK Project Template" user_visible="true" type="project_template">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.uart.MKE06Z4"/>
+          <component_dependency value="component.uart_adapter.MKE06Z4"/>
+          <component_dependency value="platform.drivers.port_ke06.MKE06Z4"/>
+          <component_dependency value="platform.drivers.gpio_1.MKE06Z4"/>
+          <component_dependency value="device.MKE06Z4_startup.MKE06Z4"/>
+          <component_dependency value="platform.drivers.common.MKE06Z4"/>
+          <component_dependency value="utility.debug_console.MKE06Z4"/>
+          <component_dependency value="component.serial_manager.MKE06Z4"/>
+          <component_dependency value="platform.drivers.clock.MKE06Z4"/>
+        </all>
+      </dependencies>
+      <source path="devices/MKE06Z4/project_template" target_path="board" type="src">
+        <files mask="board.c"/>
+        <files mask="clock_config.c"/>
+        <files mask="peripherals.c"/>
+        <files mask="pin_mux.c"/>
+      </source>
+      <source path="devices/MKE06Z4/project_template" target_path="board" type="c_include">
+        <files mask="board.h"/>
+        <files mask="clock_config.h"/>
+        <files mask="peripherals.h"/>
+        <files mask="pin_mux.h"/>
+      </source>
+    </component>
+    <component id="RTE_Device.MKE06Z4" name="RTE_Device" version="1.0.0" devices="MKE06Z128xxx4" category="Device/SDK Project Template" user_visible="true" type="project_template">
+      <source path="devices/MKE06Z4/template" target_path="board" type="c_include">
+        <files mask="RTE_Device.h"/>
+      </source>
+    </component>
+    <component id="tools.MKE06Z4" name="cmake_toolchain" version="1.0.0" devices="MKE06Z128xxx4" user_visible="true" type="other">
+      <source path="tools/cmake_toolchain_files" target_path="cmake_toolchain_files" type="script">
+        <files mask="armgcc.cmake"/>
+        <files mask="armgcc_force_cpp.cmake"/>
+        <files mask="xcc.cmake"/>
+      </source>
+    </component>
+    <component id="component.common_task.MKE06Z4" name="common_task" version="1.0.0" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="software_component">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.common.MKE06Z4"/>
+          <component_dependency value="component.osa.MKE06Z4"/>
+        </all>
+      </dependencies>
+      <source path="components/common_task" target_path="component/common_task" type="src">
+        <files mask="common_task.c"/>
+      </source>
+      <source path="components/common_task" target_path="component/common_task" type="c_include">
+        <files mask="common_task.h"/>
+      </source>
+    </component>
+    <component id="component.ecspi_adapter.MKE06Z4" name="ecspi_adapter" version="1.0.0" devices="MKE06Z128xxx4" user_visible="true" type="abstraction_layer">
+      <source path="components/spi" target_path="component/spi" type="src">
+        <files mask="ecspi_adapter.c"/>
+      </source>
+      <source path="components/spi" target_path="component/spi" type="c_include">
+        <files mask="spi.h"/>
+      </source>
+    </component>
+    <component id="component.ftm_adapter.MKE06Z4" name="ftm_adapter" version="1.0.0" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="abstraction_layer">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.common.MKE06Z4"/>
+          <component_dependency value="platform.drivers.ftm.MKE06Z4"/>
+        </all>
+      </dependencies>
+      <source path="components/timer" target_path="component/timer" type="src">
+        <files mask="ftm_adapter.c"/>
+      </source>
+      <source path="components/timer" target_path="component/timer" type="c_include">
+        <files mask="timer.h"/>
+      </source>
+    </component>
+    <component id="component.lists.MKE06Z4" name="lists" version="1.0.0" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="software_component">
+      <dependencies>
+        <component_dependency value="platform.drivers.common.MKE06Z4"/>
+      </dependencies>
+      <source path="components/lists" target_path="component/lists" type="src">
+        <files mask="generic_list.c"/>
+      </source>
+      <source path="components/lists" target_path="component/lists" type="c_include">
+        <files mask="generic_list.h"/>
+      </source>
+    </component>
+    <component id="component.mem_manager.MKE06Z4" name="mem_manager" version="1.0.0" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="software_component">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.common.MKE06Z4"/>
+          <component_dependency value="component.lists.MKE06Z4"/>
+        </all>
+      </dependencies>
+      <source path="components/mem_manager" target_path="component/mem_manager" type="src">
+        <files mask="mem_manager.c"/>
+      </source>
+      <source path="components/mem_manager" target_path="component/mem_manager" type="c_include">
+        <files mask="mem_manager.h"/>
+      </source>
+    </component>
+    <component id="component.minispi_adapter.MKE06Z4" name="minispi_adapter" version="1.0.0" devices="MKE06Z128xxx4" user_visible="true" type="abstraction_layer">
+      <source path="components/spi" target_path="component/spi" type="src">
+        <files mask="minispi_adapter.c"/>
+      </source>
+      <source path="components/spi" target_path="component/spi" type="c_include">
+        <files mask="spi.h"/>
+      </source>
+    </component>
+    <component id="component.osa.MKE06Z4" name="osa" version="1.0.0" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="software_component">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.common.MKE06Z4"/>
+          <component_dependency value="component.lists.MKE06Z4"/>
+        </all>
+      </dependencies>
+      <source path="components/osa" target_path="component/osa" type="c_include">
+        <files mask="fsl_os_abstraction.h"/>
+        <files mask="fsl_os_abstraction_config.h"/>
+      </source>
+      <source condition="middleware.baremetal.MKE06Z4" path="components/osa" target_path="component/osa" type="src">
+        <files mask="fsl_os_abstraction_bm.c"/>
+      </source>
+      <source condition="middleware.baremetal.MKE06Z4" path="components/osa" target_path="component/osa" type="c_include">
+        <files mask="fsl_os_abstraction_bm.h"/>
+      </source>
+    </component>
+    <component id="component.osa_bm.MKE06Z4" name="osa_bm" version="1.0.0" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="false" type="software_component">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.common.MKE06Z4"/>
+          <component_dependency value="component.lists.MKE06Z4"/>
+        </all>
+      </dependencies>
+      <source path="components/osa" target_path="component/osa" type="c_include">
+        <files mask="fsl_os_abstraction.h"/>
+        <files mask="fsl_os_abstraction_bm.h"/>
+        <files mask="fsl_os_abstraction_config.h"/>
+      </source>
+      <source path="components/osa" target_path="component/osa" type="src">
+        <files mask="fsl_os_abstraction_bm.c"/>
+      </source>
+    </component>
+    <component id="component.panic.MKE06Z4" name="panic" version="1.0.0" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="software_component">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.common.MKE06Z4"/>
+          <component_dependency value="utility.debug_console.MKE06Z4"/>
+        </all>
+      </dependencies>
+      <source path="components/panic" target_path="component/panic" type="src">
+        <files mask="panic.c"/>
+      </source>
+      <source path="components/panic" target_path="component/panic" type="c_include">
+        <files mask="panic.h"/>
+      </source>
+    </component>
+    <component id="component.pit_adapter.MKE06Z4" name="pit_adapter" version="1.0.0" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="abstraction_layer">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.common.MKE06Z4"/>
+          <component_dependency value="platform.drivers.pit.MKE06Z4"/>
+        </all>
+      </dependencies>
+      <source path="components/timer" target_path="component/timer" type="src">
+        <files mask="pit_adapter.c"/>
+      </source>
+      <source path="components/timer" target_path="component/timer" type="c_include">
+        <files mask="timer.h"/>
+      </source>
+    </component>
+    <component id="component.pwm_ftm_adapter.MKE06Z4" name="pwm_ftm_adapter" version="1.0.0" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="abstraction_layer">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.common.MKE06Z4"/>
+          <component_dependency value="platform.drivers.ftm.MKE06Z4"/>
+        </all>
+      </dependencies>
+      <source path="components/pwm" target_path="component/pwm" type="c_include">
+        <files mask="pwm.h"/>
+      </source>
+      <source path="components/pwm" target_path="component/pwm" type="src">
+        <files mask="pwm_ftm_adapter.c"/>
+      </source>
+    </component>
+    <component id="component.pwm_tpm_adapter.MKE06Z4" name="pwm_tpm_adapter" version="1.0.0" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="abstraction_layer">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.common.MKE06Z4"/>
+          <component_dependency value="platform.drivers.tpm.MKE06Z4"/>
+        </all>
+      </dependencies>
+      <source path="components/pwm" target_path="component/pwm" type="c_include">
+        <files mask="pwm.h"/>
+      </source>
+      <source path="components/pwm" target_path="component/pwm" type="src">
+        <files mask="pwm_tpm_adapter.c"/>
+      </source>
+    </component>
+    <component id="component.serial_manager.MKE06Z4" name="serial_manager" version="1.0.0" full_name="Serial Manager" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="utilities">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.common.MKE06Z4"/>
+          <component_dependency value="component.lists.MKE06Z4"/>
+          <any_of>
+            <component_dependency value="component.serial_manager_uart.MKE06Z4"/>
+            <component_dependency value="component.serial_manager_usb_cdc_virtual.MKE06Z4"/>
+          </any_of>
+        </all>
+      </dependencies>
+      <source path="components/serial_manager" target_path="component/serial_manager" type="src">
+        <files mask="serial_manager.c"/>
+      </source>
+      <source path="components/serial_manager" target_path="component/serial_manager" type="c_include">
+        <files mask="serial_manager.h"/>
+        <files mask="serial_port_internal.h"/>
+      </source>
+    </component>
+    <component id="component.serial_manager_uart.MKE06Z4" name="serial_manager_uart" version="1.0.0" full_name="Serial Manager uart" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="utilities">
+      <defines>
+        <define name="SERIAL_PORT_TYPE_UART" value="1"/>
+      </defines>
+      <dependencies>
+        <component_dependency value="platform.drivers.uart.MKE06Z4"/>
+      </dependencies>
+      <source path="components/serial_manager" target_path="component/serial_manager" type="src">
+        <files mask="serial_port_uart.c"/>
+      </source>
+      <source path="components/serial_manager" target_path="component/serial_manager" type="c_include">
+        <files mask="serial_port_uart.h"/>
+      </source>
+    </component>
+    <component id="component.serial_manager_usb_cdc_device_config.frdmke06z.MKE06Z4" name="frdmke06z" version="1.0.0" devices="MKE06Z128xxx4" user_visible="true" type="abstraction_layer">
+      <source path="boards/frdmke06z/component_examples/config" target_path="component/serial_manager/usb_cdc_adapter" type="c_include">
+        <files mask="usb_device_config.h"/>
+      </source>
+    </component>
+    <component id="component.serial_manager_usb_cdc_virtual.MKE06Z4" name="serial_manager_usb_cdc_virtual" version="1.0.0" full_name="Serial Manager USB CDC Virtual" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="false" type="utilities">
+      <defines>
+        <define name="SERIAL_PORT_TYPE_USBCDC_VIRTUAL" value="1"/>
+        <define name="DEBUG_CONSOLE_TRANSFER_NON_BLOCKING" value=""/>
+      </defines>
+      <dependencies>
+        <component_dependency value="platform.drivers.common.MKE06Z4"/>
+      </dependencies>
+      <source path="components/serial_manager" target_path="component/serial_manager" type="src">
+        <files mask="serial_port_usb_virtual.c"/>
+      </source>
+      <source path="components/serial_manager" target_path="component/serial_manager" type="c_include">
+        <files mask="serial_port_usb_virtual.h"/>
+      </source>
+    </component>
+    <component id="component.software_crc_adapter.MKE06Z4" name="software_crc_adapter" version="1.0.0" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="abstraction_layer">
+      <dependencies>
+        <component_dependency value="platform.drivers.common.MKE06Z4"/>
+      </dependencies>
+      <source path="components/crc" target_path="component/crc" type="c_include">
+        <files mask="crc.h"/>
+      </source>
+      <source path="components/crc" target_path="component/crc" type="src">
+        <files mask="software_crc_adapter.c"/>
+      </source>
+    </component>
+    <component id="component.spi_adapter.MKE06Z4" name="spi_adapter" version="1.0.0" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="abstraction_layer">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.common.MKE06Z4"/>
+          <component_dependency value="platform.drivers.spi.MKE06Z4"/>
+        </all>
+      </dependencies>
+      <source path="components/spi" target_path="component/spi" type="c_include">
+        <files mask="spi.h"/>
+      </source>
+      <source path="components/spi" target_path="component/spi" type="src">
+        <files mask="spi_adapter.c"/>
+      </source>
+    </component>
+    <component id="component.timer_manager.MKE06Z4" name="timer_manager" version="1.0.0" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="software_component">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.common.MKE06Z4"/>
+          <component_dependency value="component.lists.MKE06Z4"/>
+          <any_of>
+            <component_dependency value="component.tpm_adapter.MKE06Z4"/>
+            <component_dependency value="component.pit_adapter.MKE06Z4"/>
+            <component_dependency value="component.ftm_adapter.MKE06Z4"/>
+          </any_of>
+        </all>
+      </dependencies>
+      <source path="components/timer_manager" target_path="component/timer_manager" type="src">
+        <files mask="timer_manager.c"/>
+      </source>
+      <source path="components/timer_manager" target_path="component/timer_manager" type="c_include">
+        <files mask="timer_manager.h"/>
+      </source>
+    </component>
+    <component id="component.tpm_adapter.MKE06Z4" name="tpm_adapter" version="1.0.0" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="abstraction_layer">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.common.MKE06Z4"/>
+          <component_dependency value="platform.drivers.tpm.MKE06Z4"/>
+        </all>
+      </dependencies>
+      <source path="components/timer" target_path="component/timer" type="c_include">
+        <files mask="timer.h"/>
+      </source>
+      <source path="components/timer" target_path="component/timer" type="src">
+        <files mask="tpm_adapter.c"/>
+      </source>
+    </component>
+    <component id="component.uart_adapter.MKE06Z4" name="uart_adapter" version="1.0.0" full_name="uart_adapter" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="utilities">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.common.MKE06Z4"/>
+          <component_dependency value="platform.drivers.uart.MKE06Z4"/>
+        </all>
+      </dependencies>
+      <source path="components/uart" target_path="component/uart" type="c_include">
+        <files mask="uart.h"/>
+      </source>
+      <source path="components/uart" target_path="component/uart" type="src">
+        <files mask="uart_adapter.c"/>
+      </source>
+    </component>
+    <component id="component.vspi_adapter.MKE06Z4" name="vspi_adapter" version="1.0.0" devices="MKE06Z128xxx4" user_visible="true" type="abstraction_layer">
+      <source path="components/spi" target_path="component/spi" type="c_include">
+        <files mask="spi.h"/>
+      </source>
+      <source path="components/spi" target_path="component/spi" type="src">
+        <files mask="vspi_adapter.c"/>
+      </source>
+    </component>
+    <component id="device.MKE06Z4_CMSIS.MKE06Z4" name="MKE06Z4_CMSIS" version="1.0.0" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="CMSIS_Include">
+      <dependencies>
+        <component_dependency value="platform.Include_core_cm0plus.MKE06Z4"/>
+      </dependencies>
+      <source path="devices/MKE06Z4" target_path="device" type="c_include">
+        <files mask="MKE06Z4.h"/>
+        <files mask="MKE06Z4_features.h"/>
+        <files mask="fsl_device_registers.h"/>
+      </source>
+    </component>
+    <component id="device.MKE06Z4_debugger.MKE06Z4" name="MKE06Z4_debugger" version="1.0.0" devices="MKE06Z128xxx4" user_visible="true" type="debugger">
+      <source path="devices/MKE06Z4" target_path="MKE06Z4" type="xml">
+        <files mask="MKE06Z4.xml"/>
+      </source>
+    </component>
+    <component id="platform.devices.MKE06Z4_linker.MKE06Z4" name="MKE06Z4_linker" version="1.0.0" devices="MKE06Z128xxx4" user_visible="true" type="linker"/>
+    <component id="device.MKE06Z4_startup.MKE06Z4" name="MKE06Z4_startup" version="1.0.0" devices="MKE06Z128xxx4" category="Device/Startup" user_visible="true" type="startup">
+      <source toolchain="mcuxpresso" path="devices/MKE06Z4/mcuxpresso" target_path="startup" type="src_c">
+        <files mask="startup_mke06z4.c"/>
+      </source>
+      <source toolchain="mcuxpresso" path="devices/MKE06Z4/mcuxpresso" target_path="startup" type="src_cpp">
+        <files mask="startup_mke06z4.cpp"/>
+      </source>
+      <source path="devices/MKE06Z4" target_path="device" type="src">
+        <files mask="system_MKE06Z4.c"/>
+      </source>
+      <source path="devices/MKE06Z4" target_path="device" type="c_include">
+        <files mask="system_MKE06Z4.h"/>
+      </source>
+    </component>
+    <component id="docs.MKE06Z4.MKE06Z4" name="MKE06Z4" version="1.0.0" devices="MKE06Z128xxx4" user_visible="true" type="documentation">
+      <source path="docs" target_path="docs" type="doc">
+        <files mask="Getting Started with MCUXpresso SDK.pdf"/>
+        <files mask="MCUXpresso SDK Release Notes for FRDM-KE06Z.pdf"/>
+      </source>
+    </component>
+    <component id="docs.images.MKE06Z4" name="images" version="1.0.0" devices="MKE06Z128xxx4" user_visible="true" type="documentation">
+      <source path="docs/images" target_path="images" type="image">
+        <files mask="FRDM-KE06Z.gif"/>
+        <files mask="device.jpg"/>
+      </source>
+    </component>
+    <component id="platform.drivers.acmp_1.MKE06Z4" name="acmp" brief="ACMP Driver" version="2.0.2" full_name="ACMP Driver" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="driver">
+      <dependencies>
+        <component_dependency value="platform.drivers.common.MKE06Z4"/>
+      </dependencies>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_acmp.c"/>
+      </source>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_acmp.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.adc.MKE06Z4" name="adc" brief="ADC12 Driver" version="2.0.2" full_name="ADC12 Driver" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="driver">
+      <dependencies>
+        <component_dependency value="platform.drivers.common.MKE06Z4"/>
+      </dependencies>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_adc.c"/>
+      </source>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_adc.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.clock.MKE06Z4" name="clock" brief="Clock Driver" version="2.2.1" full_name="Clock Driver" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="driver">
+      <dependencies>
+        <component_dependency value="platform.drivers.common.MKE06Z4"/>
+      </dependencies>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_clock.c"/>
+      </source>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_clock.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.i2c_cmsis.MKE06Z4" name="i2c_cmsis" brief="I2C CMSIS Driver" version="2.0.2" full_name="I2C CMSIS Driver" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="CMSIS_driver">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.i2c.MKE06Z4"/>
+          <component_dependency value="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKE06Z4"/>
+          <component_dependency value="RTE_Device.MKE06Z4"/>
+        </all>
+      </dependencies>
+      <source path="devices/MKE06Z4/cmsis_drivers" target_path="drivers" type="src">
+        <files mask="fsl_i2c_cmsis.c"/>
+      </source>
+      <source path="devices/MKE06Z4/cmsis_drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_i2c_cmsis.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.spi_cmsis.MKE06Z4" name="spi_cmsis" brief="SPI CMSIS Driver" version="2.0.0" full_name="SPI CMSIS Driver" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="CMSIS_driver">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.spi.MKE06Z4"/>
+          <component_dependency value="platform.CMSIS_Driver_Include.SPI_CMSISInclude.MKE06Z4"/>
+          <component_dependency value="RTE_Device.MKE06Z4"/>
+        </all>
+      </dependencies>
+      <source path="devices/MKE06Z4/cmsis_drivers" target_path="drivers" type="src">
+        <files mask="fsl_spi_cmsis.c"/>
+      </source>
+      <source path="devices/MKE06Z4/cmsis_drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_spi_cmsis.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.uart_cmsis.MKE06Z4" name="uart_cmsis" brief="UART CMSIS Driver" version="2.0.1" full_name="UART CMSIS Driver" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="CMSIS_driver">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.uart.MKE06Z4"/>
+          <component_dependency value="platform.CMSIS_Driver_Include.USART_CMSISInclude.MKE06Z4"/>
+          <component_dependency value="RTE_Device.MKE06Z4"/>
+        </all>
+      </dependencies>
+      <source path="devices/MKE06Z4/cmsis_drivers" target_path="drivers" type="src">
+        <files mask="fsl_uart_cmsis.c"/>
+      </source>
+      <source path="devices/MKE06Z4/cmsis_drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_uart_cmsis.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.common.MKE06Z4" name="common" brief="COMMON Driver" version="2.2.2" full_name="COMMON Driver" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="driver">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.clock.MKE06Z4"/>
+          <component_dependency value="device.MKE06Z4_CMSIS.MKE06Z4"/>
+        </all>
+      </dependencies>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_common.c"/>
+      </source>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_common.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.flash.MKE06Z4" name="flash" brief="Flash Driver" version="2.0.0" full_name="Flash Driver" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="driver">
+      <dependencies>
+        <component_dependency value="platform.drivers.common.MKE06Z4"/>
+      </dependencies>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_flash.c"/>
+      </source>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_flash.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.ftm.MKE06Z4" name="ftm" brief="FTM Driver" version="2.2.1" full_name="FTM Driver" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="driver">
+      <dependencies>
+        <component_dependency value="platform.drivers.common.MKE06Z4"/>
+      </dependencies>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_ftm.c"/>
+      </source>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_ftm.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.gpio_1.MKE06Z4" name="gpio" brief="GPIO Driver" version="2.0.1" full_name="GPIO Driver" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="driver">
+      <dependencies>
+        <component_dependency value="platform.drivers.common.MKE06Z4"/>
+      </dependencies>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_gpio.c"/>
+      </source>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_gpio.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.i2c.MKE06Z4" name="i2c" brief="I2C Driver" version="2.0.8" full_name="I2C Driver" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="driver">
+      <dependencies>
+        <component_dependency value="platform.drivers.common.MKE06Z4"/>
+      </dependencies>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_i2c.c"/>
+      </source>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_i2c.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.irq.MKE06Z4" name="irq" brief="IRQ Driver" version="2.0.2" full_name="IRQ Driver" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="driver">
+      <dependencies>
+        <component_dependency value="platform.drivers.common.MKE06Z4"/>
+      </dependencies>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_irq.c"/>
+      </source>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_irq.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.kbi.MKE06Z4" name="kbi" brief="KBI Driver" version="2.0.1" full_name="KBI Driver" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="driver">
+      <dependencies>
+        <component_dependency value="platform.drivers.common.MKE06Z4"/>
+      </dependencies>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_kbi.c"/>
+      </source>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_kbi.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.mscan.MKE06Z4" name="mscan" brief="MSCAN Driver" version="2.0.3" full_name="MSCAN Driver" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="driver">
+      <dependencies>
+        <component_dependency value="platform.drivers.common.MKE06Z4"/>
+      </dependencies>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_mscan.c"/>
+      </source>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_mscan.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.pit.MKE06Z4" name="pit" brief="PIT Driver" version="2.0.2" full_name="PIT Driver" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="driver">
+      <dependencies>
+        <component_dependency value="platform.drivers.common.MKE06Z4"/>
+      </dependencies>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_pit.c"/>
+      </source>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_pit.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.port_ke06.MKE06Z4" name="port" brief="PORT Driver" version="2.0.3" full_name="port Driver" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="driver">
+      <dependencies>
+        <component_dependency value="platform.drivers.common.MKE06Z4"/>
+      </dependencies>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_port.c"/>
+      </source>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_port.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.pwt_1.MKE06Z4" name="pwt" brief="PWT Driver" version="2.0.1" full_name="PWT Driver" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="driver">
+      <dependencies>
+        <component_dependency value="platform.drivers.common.MKE06Z4"/>
+      </dependencies>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_pwt.c"/>
+      </source>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_pwt.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.rtc_1.MKE06Z4" name="rtc" brief="RTC Driver" version="2.0.1" full_name="RTC Driver" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="driver">
+      <dependencies>
+        <component_dependency value="platform.drivers.common.MKE06Z4"/>
+      </dependencies>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_rtc.c"/>
+      </source>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_rtc.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.spi.MKE06Z4" name="spi" brief="SPI Driver" version="2.0.5" full_name="SPI Driver" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="driver">
+      <dependencies>
+        <component_dependency value="platform.drivers.common.MKE06Z4"/>
+      </dependencies>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_spi.c"/>
+      </source>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_spi.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.tpm.MKE06Z4" name="tpm" brief="TPM Driver" version="2.0.6" full_name="TPM Driver" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="driver">
+      <dependencies>
+        <component_dependency value="platform.drivers.common.MKE06Z4"/>
+      </dependencies>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_tpm.c"/>
+      </source>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_tpm.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.uart.MKE06Z4" name="uart" brief="UART Driver" version="2.2.0" full_name="UART Driver" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="driver">
+      <dependencies>
+        <component_dependency value="platform.drivers.common.MKE06Z4"/>
+      </dependencies>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_uart.c"/>
+      </source>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_uart.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.wdog8.MKE06Z4" name="wdog" brief="WDOG Driver" version="2.0.1" full_name="WDOG Driver" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="driver">
+      <dependencies>
+        <component_dependency value="platform.drivers.common.MKE06Z4"/>
+      </dependencies>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="src">
+        <files mask="fsl_wdog8.c"/>
+      </source>
+      <source path="devices/MKE06Z4/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_wdog8.h"/>
+      </source>
+    </component>
+    <component id="middleware.baremetal.MKE06Z4" name="baremetal" version="1.0.0" full_name="Baremetal" devices="MKE06Z128xxx4" user_visible="true" type="OS">
+      <defines>
+        <define name="FSL_RTOS_BM" value=""/>
+        <define name="SDK_OS_BAREMETAL" value=""/>
+      </defines>
+    </component>
+    <component id="middleware.fmstr.MKE06Z4" name="freemaster" brief="FreeMASTER run-time debugging tool" version="3.0.1" devices="MKE06Z128xxx4" user_visible="true" type="middleware">
+      <dependencies>
+        <all>
+          <component_dependency value="middleware.fmstr.template_app.MKE06Z4"/>
+          <component_dependency value="middleware.fmstr.platform_gen32le.MKE06Z4"/>
+        </all>
+      </dependencies>
+      <source path="middleware/freemaster/src/common" target_path="freemaster" type="c_include">
+        <files mask="freemaster.h"/>
+        <files mask="freemaster_can.h"/>
+        <files mask="freemaster_defcfg.h"/>
+        <files mask="freemaster_private.h"/>
+        <files mask="freemaster_protocol.h"/>
+        <files mask="freemaster_rec.h"/>
+        <files mask="freemaster_serial.h"/>
+        <files mask="freemaster_tsa.h"/>
+        <files mask="freemaster_ures.h"/>
+        <files mask="freemaster_utils.h"/>
+      </source>
+      <source path="middleware/freemaster/src/common" target_path="freemaster" type="src">
+        <files mask="freemaster_appcmd.c"/>
+        <files mask="freemaster_can.c"/>
+        <files mask="freemaster_pdbdm.c"/>
+        <files mask="freemaster_pipes.c"/>
+        <files mask="freemaster_protocol.c"/>
+        <files mask="freemaster_rec.c"/>
+        <files mask="freemaster_scope.c"/>
+        <files mask="freemaster_serial.c"/>
+        <files mask="freemaster_sha.c"/>
+        <files mask="freemaster_tsa.c"/>
+        <files mask="freemaster_ures.c"/>
+        <files mask="freemaster_utils.c"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/mcuxsdk/can" target_path="freemaster/drivers/mcuxsdk/can" type="src">
+        <files mask="freemaster_flexcan.c"/>
+        <files mask="freemaster_mcan.c"/>
+        <files mask="freemaster_mscan.c"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/mcuxsdk/can" target_path="freemaster/drivers/mcuxsdk/can" type="c_include">
+        <files mask="freemaster_flexcan.h"/>
+        <files mask="freemaster_mcan.h"/>
+        <files mask="freemaster_mscan.h"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/mcuxsdk/serial" target_path="freemaster/drivers/mcuxsdk/serial" type="src">
+        <files mask="freemaster_serial_lpsci.c"/>
+        <files mask="freemaster_serial_lpuart.c"/>
+        <files mask="freemaster_serial_miniusart.c"/>
+        <files mask="freemaster_serial_uart.c"/>
+        <files mask="freemaster_serial_usart.c"/>
+        <files mask="freemaster_serial_usb.c"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/mcuxsdk/serial" target_path="freemaster/drivers/mcuxsdk/serial" type="c_include">
+        <files mask="freemaster_serial_lpsci.h"/>
+        <files mask="freemaster_serial_lpuart.h"/>
+        <files mask="freemaster_serial_miniusart.h"/>
+        <files mask="freemaster_serial_uart.h"/>
+        <files mask="freemaster_serial_usart.h"/>
+        <files mask="freemaster_serial_usb.h"/>
+      </source>
+    </component>
+    <component id="middleware.fmstr.files.MKE06Z4" name="fmstr_files" version="1.0.0" devices="MKE06Z128xxx4" user_visible="false" type="other">
+      <source path="middleware/freemaster" target_path="freemaster" type="doc">
+        <files mask="ChangeLogKSDK.txt"/>
+      </source>
+      <source path="middleware/freemaster/doc" target_path="freemaster/doc" type="doc">
+        <files mask="release_notes.txt"/>
+        <files mask="serial_protocol_readme.txt"/>
+        <files mask="serial_protocol_v4.pdf"/>
+        <files mask="user_guide.pdf"/>
+      </source>
+      <source path="middleware/freemaster/license" target_path="freemaster/license" type="doc">
+        <files mask="LA_OPT_NXP_Software_License.pdf"/>
+        <files mask="LA_OPT_NXP_Software_License.txt"/>
+        <files mask="SW-Content-Register.txt"/>
+      </source>
+      <source path="middleware/freemaster/src/common" target_path="freemaster/src/common" type="c_include">
+        <files mask="freemaster.h"/>
+        <files mask="freemaster_can.h"/>
+        <files mask="freemaster_defcfg.h"/>
+        <files mask="freemaster_private.h"/>
+        <files mask="freemaster_protocol.h"/>
+        <files mask="freemaster_rec.h"/>
+        <files mask="freemaster_serial.h"/>
+        <files mask="freemaster_tsa.h"/>
+        <files mask="freemaster_ures.h"/>
+        <files mask="freemaster_utils.h"/>
+      </source>
+      <source path="middleware/freemaster/src/common" target_path="freemaster/src/common" type="src">
+        <files mask="freemaster_appcmd.c"/>
+        <files mask="freemaster_can.c"/>
+        <files mask="freemaster_pdbdm.c"/>
+        <files mask="freemaster_pipes.c"/>
+        <files mask="freemaster_protocol.c"/>
+        <files mask="freemaster_rec.c"/>
+        <files mask="freemaster_scope.c"/>
+        <files mask="freemaster_serial.c"/>
+        <files mask="freemaster_sha.c"/>
+        <files mask="freemaster_tsa.c"/>
+        <files mask="freemaster_ures.c"/>
+        <files mask="freemaster_utils.c"/>
+      </source>
+      <source path="middleware/freemaster/src/common" target_path="freemaster/src/common" type="other">
+        <files mask="freemaster_cfg.h.example"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/ampxsdk/can/S32K1x" target_path="freemaster/src/drivers/ampxsdk/can/S32K1x" type="src">
+        <files mask="freemaster_flexcan.c"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/ampxsdk/can/S32K1x" target_path="freemaster/src/drivers/ampxsdk/can/S32K1x" type="c_include">
+        <files mask="freemaster_flexcan.h"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/ampxsdk/uart/S32K1x" target_path="freemaster/src/drivers/ampxsdk/uart/S32K1x" type="src">
+        <files mask="freemaster_serial_lpuart.c"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/ampxsdk/uart/S32K1x" target_path="freemaster/src/drivers/ampxsdk/uart/S32K1x" type="c_include">
+        <files mask="freemaster_serial_lpuart.h"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/dreg/Kxx" target_path="freemaster/src/drivers/dreg/Kxx" type="src">
+        <files mask="freemaster_kxx_uart.c"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/dreg/Kxx" target_path="freemaster/src/drivers/dreg/Kxx" type="c_include">
+        <files mask="freemaster_kxx_uart.h"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/dreg/MPC" target_path="freemaster/src/drivers/dreg/MPC" type="src">
+        <files mask="freemaster_mpc574xp_linflex.c"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/dreg/MPC" target_path="freemaster/src/drivers/dreg/MPC" type="c_include">
+        <files mask="freemaster_mpc574xp_linflex.h"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/dreg/S12Z" target_path="freemaster/src/drivers/dreg/S12Z" type="src">
+        <files mask="freemaster_s12z_mscan.c"/>
+        <files mask="freemaster_s12z_sci.c"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/dreg/S12Z" target_path="freemaster/src/drivers/dreg/S12Z" type="c_include">
+        <files mask="freemaster_s12z_mscan.h"/>
+        <files mask="freemaster_s12z_sci.h"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/dreg/S32S" target_path="freemaster/src/drivers/dreg/S32S" type="src">
+        <files mask="freemaster_s32s247tv_linflex.c"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/dreg/S32S" target_path="freemaster/src/drivers/dreg/S32S" type="c_include">
+        <files mask="freemaster_s32s247tv_linflex.h"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/mcuxsdk/can" target_path="freemaster/src/drivers/mcuxsdk/can" type="src">
+        <files mask="freemaster_flexcan.c"/>
+        <files mask="freemaster_mcan.c"/>
+        <files mask="freemaster_mscan.c"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/mcuxsdk/can" target_path="freemaster/src/drivers/mcuxsdk/can" type="c_include">
+        <files mask="freemaster_flexcan.h"/>
+        <files mask="freemaster_mcan.h"/>
+        <files mask="freemaster_mscan.h"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/mcuxsdk/serial" target_path="freemaster/src/drivers/mcuxsdk/serial" type="src">
+        <files mask="freemaster_serial_lpsci.c"/>
+        <files mask="freemaster_serial_lpuart.c"/>
+        <files mask="freemaster_serial_miniusart.c"/>
+        <files mask="freemaster_serial_uart.c"/>
+        <files mask="freemaster_serial_usart.c"/>
+        <files mask="freemaster_serial_usb.c"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/mcuxsdk/serial" target_path="freemaster/src/drivers/mcuxsdk/serial" type="c_include">
+        <files mask="freemaster_serial_lpsci.h"/>
+        <files mask="freemaster_serial_lpuart.h"/>
+        <files mask="freemaster_serial_miniusart.h"/>
+        <files mask="freemaster_serial_uart.h"/>
+        <files mask="freemaster_serial_usart.h"/>
+        <files mask="freemaster_serial_usb.h"/>
+      </source>
+      <source path="middleware/freemaster/src/platforms/gen32be" target_path="freemaster/src/platforms/gen32be" type="c_include">
+        <files mask="freemaster_gen32be.h"/>
+      </source>
+      <source path="middleware/freemaster/src/platforms/gen32le" target_path="freemaster/src/platforms/gen32le" type="c_include">
+        <files mask="freemaster_gen32le.h"/>
+      </source>
+      <source path="middleware/freemaster/src/platforms/s12z" target_path="freemaster/src/platforms/s12z" type="c_include">
+        <files mask="freemaster_s12z.h"/>
+      </source>
+    </component>
+    <component id="middleware.fmstr.platform_gen32le.MKE06Z4" name="platform_gen32le" brief="FreeMASTER gen32le platform support" version="1.0.0" devices="MKE06Z128xxx4" user_visible="false" type="other">
+      <source path="middleware/freemaster/src/platforms/gen32le" target_path="freemaster/platforms" type="c_include">
+        <files mask="freemaster_gen32le.h"/>
+      </source>
+    </component>
+    <component id="middleware.fmstr.template_app.MKE06Z4" name="freemaster_template_app" brief="FreeMASTER application template" version="1.0.0" devices="MKE06Z128xxx4" user_visible="false" type="project_template">
+      <source path="middleware/freemaster/src/template" target_path="source" type="c_include">
+        <files mask="freemaster_cfg.h"/>
+      </source>
+    </component>
+    <component id="platform.utilities.misc_utilities.MKE06Z4" name="misc_utilities" brief="Utilities which is needed for particular toolchain like the SBRK function required to address limitation between HEAP and STACK in GCC toolchain library." version="1.0.0" devices="MKE06Z128xxx4" user_visible="true" type="utilities"/>
+    <component id="platform.utilities.assert.MKE06Z4" name="assert" version="1.0.0" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="utilities">
+      <dependencies>
+        <component_dependency value="utility.debug_console.MKE06Z4"/>
+      </dependencies>
+      <source path="devices/MKE06Z4/utilities" target_path="utilities" type="src">
+        <files mask="fsl_assert.c"/>
+      </source>
+    </component>
+    <component id="utility.debug_console.MKE06Z4" name="debug_console" version="1.0.0" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="utilities">
+      <dependencies>
+        <all>
+          <component_dependency value="component.serial_manager.MKE06Z4"/>
+          <component_dependency value="platform.drivers.common.MKE06Z4"/>
+        </all>
+      </dependencies>
+      <source path="devices/MKE06Z4/utilities/debug_console" target_path="utilities" type="src">
+        <files mask="fsl_debug_console.c"/>
+      </source>
+      <source path="devices/MKE06Z4/utilities/debug_console" target_path="utilities" type="c_include">
+        <files mask="fsl_debug_console.h"/>
+        <files mask="fsl_debug_console_conf.h"/>
+      </source>
+      <source path="devices/MKE06Z4/utilities/str" target_path="utilities" type="src">
+        <files mask="fsl_str.c"/>
+      </source>
+      <source path="devices/MKE06Z4/utilities/str" target_path="utilities" type="c_include">
+        <files mask="fsl_str.h"/>
+      </source>
+    </component>
+    <component id="platform.utilities.notifier.MKE06Z4" name="notifier" version="1.0.0" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="utilities">
+      <dependencies>
+        <component_dependency value="platform.drivers.common.MKE06Z4"/>
+      </dependencies>
+      <source path="devices/MKE06Z4/utilities" target_path="utilities/utilities" type="src">
+        <files mask="fsl_notifier.c"/>
+      </source>
+      <source path="devices/MKE06Z4/utilities" target_path="utilities/utilities" type="c_include">
+        <files mask="fsl_notifier.h"/>
+      </source>
+    </component>
+    <component id="utility.shell.MKE06Z4" name="shell" version="1.0.0" devices="MKE06Z128xxx4" device_cores="core0_MKE06Z128xxx4" user_visible="true" type="utilities">
+      <defines>
+        <define name="DEBUG_CONSOLE_RX_ENABLE" value="0"/>
+      </defines>
+      <dependencies>
+        <all>
+          <component_dependency value="utility.debug_console.MKE06Z4"/>
+          <component_dependency value="component.lists.MKE06Z4"/>
+          <component_dependency value="platform.drivers.common.MKE06Z4"/>
+        </all>
+      </dependencies>
+      <source path="devices/MKE06Z4/utilities" target_path="utilities" type="src">
+        <files mask="fsl_shell.c"/>
+      </source>
+      <source path="devices/MKE06Z4/utilities" target_path="utilities" type="c_include">
+        <files mask="fsl_shell.h"/>
+      </source>
+    </component>
+  </components>
+</ksdk:manifest>

@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016 - 2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_otg_config.h"
@@ -56,13 +34,6 @@
 #define BOARD_MAX3353_I2C_SLAVE_ADDR_7BIT (0x2CU)
 #define BOARD_MAX3353_I2C_BAUDRATE (100U)
 
-/* USB clock source and frequency*/
-#define USB_FS_CLK_SRC kCLOCK_UsbSrcPll0
-#define USB_FS_CLK_FREQ CLOCK_GetFreq(kCLOCK_PllFllSelClk)
-#define USB_HS_PHY_CLK_SRC kCLOCK_UsbPhySrcExt
-#define USB_HS_PHY_CLK_FREQ BOARD_XTAL0_CLK_HZ
-#define USB_HS_CLK_SRC kCLOCK_UsbSrcUnused
-#define USB_HS_CLK_FREQ 0U
 #define BOARD_MAX3353_MID (0x6A0B5333)
 #define BOARD_MAX3353_PID (0x485A4200)
 #define USB_MAX3353_GPIO_INTERRUPT_PRIORITY (4)
@@ -90,6 +61,11 @@ extern usb_otg_handle g_OtgHandle;
 void GPIO_IRQHandler(void)
 {
     MAX3353_GPIOIRQHandler(g_OtgHandle);
+   /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping 
+     exception return operation might vector to incorrect interrupt */
+#if defined __CORTEX_M && (__CORTEX_M == 4U)
+    __DSB();
+#endif
 }
 
 static void MAX3353_GPIOIRQHandler(usb_otg_handle otgHandle)
@@ -98,8 +74,13 @@ static void MAX3353_GPIOIRQHandler(usb_otg_handle otgHandle)
     {
         BOARD_MAX3353_GPIO_PORT->ISFR = 1U << BOARD_MAX3353_GPIO_PIN;
 
-        USB_OtgNotifyChange(otgHandle, kOtg_StatusChange, 1);
+        USB_OtgNotifyChange(otgHandle, (uint32_t)kOtg_StatusChange, 1);
     }
+   /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping 
+     exception return operation might vector to incorrect interrupt */
+#if defined __CORTEX_M && (__CORTEX_M == 4U)
+    __DSB();
+#endif
 }
 
 static usb_status_t USB_Max3353ReadByte(uint8_t address, uint8_t *buffer)
@@ -117,6 +98,7 @@ usb_status_t USB_OtgMax3353Init(void)
     uint8_t index;
     uint8_t byteRead;
     uint32_t id;
+    status_t status;
 
     s_Max3353RunParameter.statusRegister = 0x00U;
     s_Max3353RunParameter.control1Register = 0x00U;
@@ -129,7 +111,11 @@ usb_status_t USB_OtgMax3353Init(void)
     id = 0;
     for (index = 0; index < 4; ++index)
     {
-        USB_Max3353ReadByte(index, &byteRead);
+        status = USB_Max3353ReadByte(index, &byteRead);
+        if (kStatus_USB_Success != status)
+        {
+             return kStatus_USB_Error;
+        }
         id <<= 8;
         id |= byteRead;
     }
@@ -140,7 +126,11 @@ usb_status_t USB_OtgMax3353Init(void)
     id = 0;
     for (index = 4; index < 8; ++index)
     {
-        USB_Max3353ReadByte(index, &byteRead);
+        status = USB_Max3353ReadByte(index, &byteRead);
+        if (kStatus_USB_Success != status)
+        {
+             return kStatus_USB_Error;
+        }
         id <<= 8;
         id |= byteRead;
     }
@@ -455,7 +445,7 @@ usb_status_t USB_OtgPeripheralControl(usb_otg_controller_handle controllerHandle
                            kStatus_USB_Success)
                     {
                     }
-                    USB_OtgNotifyChange(g_OtgHandle, kOtg_StatusChange, 1);
+                    USB_OtgNotifyChange(g_OtgHandle, (uint32_t)kOtg_StatusChange, 1);
                 }
             }
             break;

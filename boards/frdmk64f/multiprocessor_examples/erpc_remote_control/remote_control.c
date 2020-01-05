@@ -130,8 +130,8 @@ static void client_task(void *pvParameters);
  ******************************************************************************/
 static adc16_channel_config_t adc16ChannelConfigStruct;
 static erpc_transport_t transportArbitrator = NULL; /*! eRPC transport arbitrator */
-static erpc_mbf_t message_buffer_factory = NULL;    /* MessageBufferFactory */
-static uint8_t swButton = 0;                        /*! Which SW button was pressed */
+static erpc_mbf_t message_buffer_factory    = NULL; /* MessageBufferFactory */
+static uint8_t swButton                     = 0;    /*! Which SW button was pressed */
 extern bool g_erpc_error_occurred;
 
 /* FreeRTOS task handles */
@@ -140,29 +140,31 @@ TaskHandle_t clientTaskHandle = NULL;
 
 /* Accelerometer and magnetometer */
 #if defined(BOARD_ACCEL_FXOS)
-static fxos_handle_t accelHandle = {0};
+static fxos_handle_t accelHandle    = {0};
 static const uint8_t accelAddress[] = {0x1CU, 0x1EU, 0x1DU, 0x1FU};
-fxos_config_t config = {0};
+fxos_config_t config                = {0};
 #elif defined(BOARD_ACCEL_MMA)
-static mma_handle_t accelHandle = {0};
+static mma_handle_t accelHandle     = {0};
 static const uint8_t accelAddress[] = {0x1CU, 0x1DU, 0x1EU, 0x1FU};
-mma_config_t config = {0};
+mma_config_t config                 = {0};
 #endif
 static uint8_t accelDataScale = 0; /*! Accelerometer data scale */
 
 /* GPIO LED configuration */
 gpio_pin_config_t led_config = {
-    kGPIO_DigitalOutput, 0,
+    kGPIO_DigitalOutput,
+    0,
 };
 
 /* GPIO SW buttons configuration */
 gpio_pin_config_t sw_config = {
-    kGPIO_DigitalInput, 0,
+    kGPIO_DigitalInput,
+    0,
 };
 
 /*******************************************************************************
  * Code
-******************************************************************************/
+ ******************************************************************************/
 
 static void i2c_release_bus_delay(void)
 {
@@ -181,10 +183,10 @@ void BOARD_I2C_ReleaseBus(void)
 
     /* Config pin mux as gpio */
     i2c_pin_config.pullSelect = kPORT_PullUp;
-    i2c_pin_config.mux = kPORT_MuxAsGpio;
+    i2c_pin_config.mux        = kPORT_MuxAsGpio;
 
     pin_config.pinDirection = kGPIO_DigitalOutput;
-    pin_config.outputLogic = 1U;
+    pin_config.outputLogic  = 1U;
     CLOCK_EnableClock(kCLOCK_PortE);
     PORT_SetPinConfig(I2C_RELEASE_SCL_PORT, I2C_RELEASE_SCL_PIN, &i2c_pin_config);
     PORT_SetPinConfig(I2C_RELEASE_SDA_PORT, I2C_RELEASE_SDA_PIN, &i2c_pin_config);
@@ -236,8 +238,8 @@ uint32_t UART0_GetFreq(void)
 void get_board_config(BoardConfig *config)
 {
     /* default values */
-    config->DAC = false;
-    config->MAG = false;
+    config->DAC    = false;
+    config->MAG    = false;
     config->RGB[0] = false;
     config->RGB[1] = false;
     config->RGB[2] = false;
@@ -268,7 +270,7 @@ void get_board_config(BoardConfig *config)
  */
 void get_adc_config(AdcConfig *config)
 {
-    config->vref = VREF_BRD;
+    config->vref        = VREF_BRD;
     config->atomicSteps = SE_12BIT;
 }
 
@@ -302,7 +304,7 @@ static void init_dac_adc(void)
 #endif
 
     /* Prepare ADC channel setting */
-    adc16ChannelConfigStruct.channelNumber = DEMO_ADC16_USER_CHANNEL;
+    adc16ChannelConfigStruct.channelNumber                        = DEMO_ADC16_USER_CHANNEL;
     adc16ChannelConfigStruct.enableInterruptOnConversionCompleted = false;
 
 #if defined(FSL_FEATURE_ADC16_HAS_DIFF_MODE) && FSL_FEATURE_ADC16_HAS_DIFF_MODE
@@ -428,12 +430,12 @@ void BOARD_SW3_IRQ_HANDLER(void)
 static status_t init_mag_accel(void)
 {
     uint8_t arrayAddrSize = 0;
-    uint8_t sensorRange = 0;
-    uint16_t i = 0;
-    status_t result = kStatus_Fail;
+    uint8_t sensorRange   = 0;
+    uint16_t i            = 0;
+    status_t result       = kStatus_Fail;
 
     /* Configure the I2C function */
-    config.I2C_SendFunc = BOARD_Accel_I2C_Send;
+    config.I2C_SendFunc    = BOARD_Accel_I2C_Send;
     config.I2C_ReceiveFunc = BOARD_Accel_I2C_Receive;
 
     /* Initialize sensor devices */
@@ -596,8 +598,8 @@ static void server_task(void *pvParameters)
     erpc_server_init(transportArbitrator, message_buffer_factory);
 
     /* Add service to the server */
-    erpc_service_t app_0 = create_remote_control_app_0_service();
-    erpc_add_service_to_server(app_0);
+    erpc_service_t service = create_remote_control_app_0_service();
+    erpc_add_service_to_server(service);
 
     while (1)
     {
@@ -613,8 +615,15 @@ static void server_task(void *pvParameters)
             /* Error occurred */
             erpc_error_handler(status, 0);
 
+            /* removing the service from the server */
+            erpc_remove_service_from_server(service);
+            destroy_remote_control_app_0_service();
+
             /* stop erpc server */
             erpc_server_stop();
+
+            /* print error description */
+            erpc_server_deinit();
 
             /* exit program loop */
             break;
@@ -646,7 +655,7 @@ static void client_task(void *pvParameters)
             /* Call eRPC function for SW button press */
             button_pressed(swButton);
 
-            /* Check if some error occured in eRPC */
+            /* Check if some error occurred in eRPC */
             if (g_erpc_error_occurred)
             {
                 /* Exit program loop */
@@ -691,8 +700,8 @@ int main(void)
     init_dac_adc();
 
     /* Create FreeRTOS tasks */
-    xTaskCreate(client_task, "CLIENT", 256, NULL, tskIDLE_PRIORITY + 3, clientTaskHandle);
-    xTaskCreate(server_task, "SERVER", 256, NULL, tskIDLE_PRIORITY + 2, serverTaskHandle);
+    (void)xTaskCreate(client_task, "CLIENT", 256, NULL, tskIDLE_PRIORITY + 3, &clientTaskHandle);
+    (void)xTaskCreate(server_task, "SERVER", 256, NULL, tskIDLE_PRIORITY + 2, &serverTaskHandle);
 
     /* Start FreeRTOS scheduler */
     vTaskStartScheduler();

@@ -1,5 +1,11 @@
-; Windows Freescale RNDIS Setup File
-; Copyright (c) 2000 Microsoft Corporation
+;
+; Copyright 2016 - 2018 NXP
+; All rights reserved.
+;
+; SPDX-License-Identifier: BSD-3-Clause
+;
+; Copyright(c) 2000 Microsoft Corporation
+;
 
 [Version]
 Signature = "$Windows NT$"
@@ -7,7 +13,7 @@ Class = Net
 ClassGUID = {4d36e972-e325-11ce-bfc1-08002be10318}
 Provider = %COMPANY%
 DriverVer = 06/21/2006,6.0.6000.16384
-;CatalogFile = device.cat
+CatalogFile = rndis.cat
 
 [Manufacturer]
 %COMPANY% = RndisDevices,NTx86,NTamd64,NTia64
@@ -48,6 +54,6 @@ needs = Usb_Rndis.ndi.Services
 
 ; Modify these strings for your device as needed.
 [Strings]
-COMPANY="Freescale"
-RNDISDEV="Freescale USB RNDIS"
+COMPANY="NXP"
+RNDISDEV="NXP USB RNDIS"
 

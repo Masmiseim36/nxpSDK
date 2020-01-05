@@ -1,31 +1,9 @@
 /*
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*******************************************************************************
@@ -35,7 +13,8 @@
 #include "fsl_debug_console.h"
 #include "board.h"
 
-#include "fsl_dma_manager.h"
+#include "fsl_edma.h"
+#include "fsl_dmamux.h"
 #include "fsl_ltc_edma.h"
 
 #include "pin_mux.h"
@@ -43,7 +22,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
+#define LTC_REQUEST_INPUT_FIFO kDmaRequestMux0Group1LTC0InputFIFO
+#define LTC_REQUEST_OUTPUT_FIFO kDmaRequestMux0Group1LTC0OutputFIFO
+#define DMA_CHANNEL_LTC_INPUT_FIFO 16
+#define DMA_CHANNEL_LTC_OUTPUT_FIFO 17
 #define OUTPUT_ARRAY_LEN 512
 #define DES_BLOCK_LENGTH 8
 #define DES_KEY_LENGTH 8
@@ -64,7 +46,7 @@ static uint8_t cipher[OUTPUT_ARRAY_LEN];
 ltc_edma_handle_t g_ltcEdmaHandle;
 edma_handle_t g_ltcInputFifoEdmaHandle;
 edma_handle_t g_ltcOutputFifoEdmaHandle;
-volatile bool g_ltcEdmaDone = false;
+volatile bool g_ltcEdmaDone       = false;
 volatile status_t g_ltcEdmaStatus = kStatus_Success;
 
 /*******************************************************************************
@@ -103,10 +85,10 @@ static void ltc_EdmaUserCallback(LTC_Type *base, ltc_edma_handle_t *handle, stat
 {
     /* Not used.*/
     userData = userData;
-    base = base;
-    handle = handle;
+    base     = base;
+    handle   = handle;
 
-    g_ltcEdmaDone = true;
+    g_ltcEdmaDone   = true;
     g_ltcEdmaStatus = status;
 }
 
@@ -127,6 +109,7 @@ static void ltc_EdmaWait(void)
 static void ltc_example_task(void)
 {
     unsigned int length;
+    edma_config_t config;
 
     /*8 bytes key: "password"*/
     uint8_t key[DES_KEY_LENGTH] = {0x70, 0x61, 0x73, 0x73, 0x77, 0x6F, 0x72, 0x64};
@@ -142,19 +125,19 @@ static void ltc_example_task(void)
      * This enables clocking and resets the module to a known state. */
     LTC_Init(LTC0);
 
-    /* Configure DMA. */
-    DMAMGR_Init();
-    /* Request dma channels from DMA manager. */
-    if (DMAMGR_RequestChannel(kDmaRequestMux0Group1LTC0InputFIFO, DMAMGR_DYNAMIC_ALLOCATE, &g_ltcInputFifoEdmaHandle) !=
-        kStatus_Success)
-    {
-        PRINTF("\r\n DMA RequestChannel Failed!\r\n");
-    }
-    if (DMAMGR_RequestChannel(kDmaRequestMux0Group1LTC0OutputFIFO, DMAMGR_DYNAMIC_ALLOCATE,
-                              &g_ltcOutputFifoEdmaHandle) != kStatus_Success)
-    {
-        PRINTF("\r\n DMA RequestChannel Failed!\r\n");
-    }
+    /* Init DMAMUX */
+    DMAMUX_Init(DMAMUX0);
+    /* Set channel for LTC FIFOs */
+    DMAMUX_SetSource(DMAMUX0, DMA_CHANNEL_LTC_INPUT_FIFO, LTC_REQUEST_INPUT_FIFO);
+    DMAMUX_SetSource(DMAMUX0, DMA_CHANNEL_LTC_OUTPUT_FIFO, LTC_REQUEST_OUTPUT_FIFO);
+    DMAMUX_EnableChannel(DMAMUX0, DMA_CHANNEL_LTC_INPUT_FIFO);
+    DMAMUX_EnableChannel(DMAMUX0, DMA_CHANNEL_LTC_OUTPUT_FIFO);
+
+    /* Init the EDMA module */
+    EDMA_GetDefaultConfig(&config);
+    EDMA_Init(DMA0, &config);
+    EDMA_CreateHandle(&g_ltcInputFifoEdmaHandle, DMA0, DMA_CHANNEL_LTC_INPUT_FIFO);
+    EDMA_CreateHandle(&g_ltcOutputFifoEdmaHandle, DMA0, DMA_CHANNEL_LTC_OUTPUT_FIFO);
 
     /* Create LTC EDMA handle. */
     LTC_CreateHandleEDMA(LTC0, &g_ltcEdmaHandle, ltc_EdmaUserCallback, NULL, &g_ltcInputFifoEdmaHandle,

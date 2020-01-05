@@ -9,27 +9,31 @@
     <definition extID="device.MK66F18_CMSIS.MK66F18"/>
     <definition extID="device.MK66F18_startup.MK66F18"/>
     <definition extID="driver.phyksz8081.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.bufferpool.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.crypto.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.mflash.frdmk66f.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.mqtt.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.pkcs11.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.secure_sockets.lwip.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.shadow.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.tls.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.aws_iot.utils.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.freertos.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.freertos.heap_4.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.third_party.jsmn.MK66F18"/>
-    <definition extID="middleware.amazon_freertos.third_party.pkcs11.MK66F18"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.MK66F18"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.demos.MK66F18"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.3rdparty.jsmn.MK66F18"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.3rdparty.pkcs11.MK66F18"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.pkcs11.MK66F18"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.platform.MK66F18"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.secure_sockets.MK66F18"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.crypto.MK66F18"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MK66F18"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.tls.MK66F18"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.utils.MK66F18"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.mflash.frdmk66f.MK66F18"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.pkcs11.MK66F18"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MK66F18"/>
+    <definition extID="middleware.amazon_freertos-kernel.MK66F18"/>
+    <definition extID="middleware.amazon_freertos-kernel.extension.MK66F18"/>
+    <definition extID="middleware.amazon_freertos-kernel.heap_4.MK66F18"/>
+    <definition extID="middleware.lwip.MK66F18"/>
+    <definition extID="middleware.lwip.enet_ethernetif.MK66F18"/>
+    <definition extID="middleware.lwip.enet_ethernetif_kinetis.MK66F18"/>
     <definition extID="middleware.mbedtls.MK66F18"/>
-    <definition extID="middleware.mmcau_cm4_cm7.MK66F18"/>
-    <definition extID="middleware.tcpip.lwip.MK66F18"/>
-    <definition extID="middleware.tcpip.lwip.enet_ethernetif.MK66F18"/>
-    <definition extID="middleware.tcpip.lwip.enet_ethernetif_kinetis.MK66F18"/>
+    <definition extID="middleware.mmcau.cm4_cm7.MK66F18"/>
     <definition extID="platform.Include_common.MK66F18"/>
     <definition extID="platform.Include_core_cm4.MK66F18"/>
+    <definition extID="platform.Include_dsp.MK66F18"/>
     <definition extID="platform.drivers.clock.MK66F18"/>
     <definition extID="platform.drivers.common.MK66F18"/>
     <definition extID="platform.drivers.enet.MK66F18"/>
@@ -41,13 +45,14 @@
     <definition extID="platform.drivers.smc.MK66F18"/>
     <definition extID="platform.drivers.uart.MK66F18"/>
     <definition extID="platform.utilities.assert.MK66F18"/>
+    <definition extID="platform.utilities.misc_utilities.MK66F18"/>
     <definition extID="utility.debug_console.MK66F18"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk66f_aws_device_configuration_enet" name="aws_device_configuration_enet" category="aws_examples" dependency="driver.phyksz8081.MK66F18 platform.drivers.rnga.MK66F18 middleware.mmcau_cm4_cm7.MK66F18 middleware.amazon_freertos.aws_iot.mflash.frdmk66f.MK66F18 platform.drivers.enet.MK66F18 middleware.tcpip.lwip.enet_ethernetif_kinetis.MK66F18 platform.drivers.port.MK66F18 middleware.amazon_freertos.aws_iot.secure_sockets.lwip.MK66F18 middleware.amazon_freertos.freertos.MK66F18 middleware.amazon_freertos.freertos.heap_4.MK66F18 middleware.amazon_freertos.aws_iot.MK66F18 middleware.amazon_freertos.aws_iot.bufferpool.MK66F18 middleware.amazon_freertos.aws_iot.crypto.MK66F18 middleware.amazon_freertos.aws_iot.mqtt.MK66F18 middleware.amazon_freertos.aws_iot.pkcs11.MK66F18 middleware.amazon_freertos.aws_iot.shadow.MK66F18 middleware.amazon_freertos.aws_iot.tls.MK66F18 middleware.amazon_freertos.aws_iot.utils.MK66F18 middleware.amazon_freertos.third_party.jsmn.MK66F18 middleware.amazon_freertos.third_party.pkcs11.MK66F18 middleware.mbedtls.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 component.lists.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 middleware.tcpip.lwip.enet_ethernetif.MK66F18 middleware.tcpip.lwip.MK66F18">
+  <example id="frdmk66f_aws_device_configuration_enet" name="aws_device_configuration_enet" category="aws_examples" dependency="driver.phyksz8081.MK66F18 platform.drivers.rnga.MK66F18 middleware.mmcau.cm4_cm7.MK66F18 middleware.amazon_freertos-aws_iot.vendor.nxp.mflash.frdmk66f.MK66F18 middleware.lwip.MK66F18 middleware.lwip.enet_ethernetif_kinetis.MK66F18 platform.drivers.port.MK66F18 middleware.amazon_freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MK66F18 middleware.amazon_freertos-aws_iot.demos.MK66F18 middleware.amazon_freertos-kernel.MK66F18 middleware.amazon_freertos-kernel.heap_4.MK66F18 middleware.amazon_freertos-aws_iot.libraries.abstractions.platform.MK66F18 middleware.amazon_freertos-aws_iot.MK66F18 middleware.amazon_freertos-aws_iot.libraries.abstractions.secure_sockets.MK66F18 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.crypto.MK66F18 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MK66F18 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.utils.MK66F18 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.tls.MK66F18 middleware.amazon_freertos-aws_iot.libraries.abstractions.pkcs11.MK66F18 middleware.amazon_freertos-aws_iot.libraries.3rdparty.pkcs11.MK66F18 middleware.amazon_freertos-aws_iot.libraries.3rdparty.jsmn.MK66F18 middleware.amazon_freertos-aws_iot.vendor.nxp.pkcs11.MK66F18 middleware.mbedtls.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.lists.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18 platform.drivers.enet.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 platform.Include_dsp.MK66F18 middleware.lwip.enet_ethernetif.MK66F18 middleware.amazon_freertos-kernel.extension.MK66F18 platform.utilities.misc_utilities.MK66F18">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -72,6 +77,7 @@
           <value>FRDM_K66F</value>
           <value>FREEDOM</value>
           <value>FSL_RTOS_FREE_RTOS</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -87,6 +93,10 @@
         </option>
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
           <value>&amp;Heap:Default;Default;0x200&amp;Stack:Default;Default;0x200</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=RAM2;type=.data</value>
+          <value>isd=*(NonCacheable);region=RAM2;type=.bss</value>
         </option>
         <option id="com.crt.advproject.gas.hdrlib" type="enum">
           <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
@@ -106,6 +116,9 @@
       </toolchainSetting>
     </toolchainSettings>
     <include_paths>
+      <include_path path="amazon-freertos/libraries/abstractions/platform/freertos/include"/>
+      <include_path path="amazon-freertos/libraries/abstractions/platform/include"/>
+      <include_path path="amazon-freertos/libraries/c_sdk/standard/mqtt/src"/>
       <include_path path="lwip/port"/>
       <include_path path="lwip/src"/>
       <include_path path="lwip/src/include"/>
@@ -115,12 +128,10 @@
       <files mask="Project.xml"/>
     </source>
     <source path="boards/frdmk66f/aws_examples/device_configuration_android/.idea" target_path="source" type="xml" exclude="true">
-      <files mask="assetWizardSettings.xml"/>
       <files mask="gradle.xml"/>
       <files mask="misc.xml"/>
       <files mask="modules.xml"/>
       <files mask="runConfigurations.xml"/>
-      <files mask="vcs.xml"/>
     </source>
     <source path="boards/frdmk66f/aws_examples/device_configuration_android/app/src/main/java/com/nxp/awsdeviceconfiguration/activities/about" target_path="source" type="other" exclude="true">
       <files mask="AboutActivity.java"/>
@@ -235,19 +246,22 @@
     <source path="boards/frdmk66f/aws_examples/device_configuration_android" target_path="source" type="script" exclude="true">
       <files mask="gradlew.bat"/>
     </source>
-    <source path="boards/frdmk66f/aws_examples/device_configuration_enet/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/frdmk66f/aws_examples/device_configuration_enet/armgcc" target_path="frdmk66f/aws_examples/device_configuration_enet/linker" type="linker" toolchain="armgcc">
       <files mask="MK66FN2M0xxx18_flash_data.ld"/>
     </source>
     <source path="boards/frdmk66f/aws_examples/device_configuration_enet/config_files" target_path="amazon-freertos/config_files" type="c_include">
+      <files mask="FreeRTOSConfig.h"/>
       <files mask="FreeRTOSIPConfig.h"/>
       <files mask="aws_bufferpool_config.h"/>
       <files mask="aws_demo_config.h"/>
-      <files mask="aws_mqtt_agent_config.h"/>
+      <files mask="aws_iot_network_config.h"/>
       <files mask="aws_mqtt_config.h"/>
-      <files mask="aws_pkcs11_config.h"/>
       <files mask="aws_secure_sockets_config.h"/>
       <files mask="aws_shadow_config.h"/>
       <files mask="aws_wifi_config.h"/>
+      <files mask="iot_config.h"/>
+      <files mask="iot_mqtt_agent_config.h"/>
+      <files mask="iot_pkcs11_config.h"/>
     </source>
     <source path="boards/frdmk66f/aws_examples/device_configuration_enet/fnet_mdns" target_path="source/fnet_mdns" type="c_include">
       <files mask="fnet_comp.h"/>
@@ -261,10 +275,10 @@
       <files mask="fnet_mdns.c"/>
       <files mask="port_lwip.c"/>
     </source>
-    <source path="boards/frdmk66f/aws_examples/device_configuration_enet/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/frdmk66f/aws_examples/device_configuration_enet/iar" target_path="frdmk66f/aws_examples/device_configuration_enet/linker" type="linker" toolchain="iar">
       <files mask="MK66FN2M0xxx18_flash_data.icf"/>
     </source>
-    <source path="boards/frdmk66f/aws_examples/device_configuration_enet/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/frdmk66f/aws_examples/device_configuration_enet/mdk" target_path="frdmk66f/aws_examples/device_configuration_enet/linker" type="linker" toolchain="mdk">
       <files mask="MK66FN2M0xxx18_flash_data.scf"/>
     </source>
     <source path="boards/frdmk66f/aws_examples/device_configuration_enet/ssl_server" target_path="source/ssl_server" type="c_include">
@@ -283,9 +297,6 @@
       <files mask="sslsrv_task.c"/>
       <files mask="sslsrv_tls.c"/>
     </source>
-    <source path="boards/frdmk66f/aws_examples/device_configuration_enet" target_path="amazon-freertos/config_files" type="c_include">
-      <files mask="FreeRTOSConfig.h"/>
-    </source>
     <source path="boards/frdmk66f/aws_examples/device_configuration_enet" target_path="board" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
@@ -301,13 +312,11 @@
     </source>
     <source path="boards/frdmk66f/aws_examples/device_configuration_enet" target_path="source" type="c_include">
       <files mask="aws_clientcredential.h"/>
-      <files mask="aws_logging_task.h"/>
       <files mask="aws_mbedtls_config.h"/>
       <files mask="device_configuration.h"/>
       <files mask="lwipopts.h"/>
     </source>
     <source path="boards/frdmk66f/aws_examples/device_configuration_enet" target_path="source" type="src">
-      <files mask="aws_logging_task_dynamic_buffers.c"/>
       <files mask="aws_shadow_lightbulb_on_off.c"/>
       <files mask="device_configuration.c"/>
       <files mask="main_enet.c"/>

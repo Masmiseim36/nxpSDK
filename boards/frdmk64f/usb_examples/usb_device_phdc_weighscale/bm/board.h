@@ -1,11 +1,11 @@
 /*
-* Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
-* All rights reserved.
-*
-*
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2018 NXP
+ * All rights reserved.
+ *
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 #ifndef _BOARD_H_
 #define _BOARD_H_
@@ -123,10 +123,10 @@
     BOARD_LED_BLUE_GPIO->PDDR |= (1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Enable target LED_BLUE */
 #define LED_BLUE_ON()                                                                                 \
     GPIO_PortClear(BOARD_LED_BLUE_GPIO, 1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Turn on target LED_BLUE \ \
-                                                                           */
+                                                                        */
 #define LED_BLUE_OFF()                                                                               \
     GPIO_PortSet(BOARD_LED_BLUE_GPIO, 1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Turn off target LED_BLUE \ \
-                                                                         */
+                                                                      */
 #define LED_BLUE_TOGGLE() \
     GPIO_PortToggle(BOARD_LED_BLUE_GPIO, 1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Toggle on target LED_BLUE */
 

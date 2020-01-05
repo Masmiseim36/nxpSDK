@@ -1,4 +1,4 @@
-#! armcc -E
+#!armclang --target=arm-arm-none-eabi -mcpu=cortex-m4 -E -x c
 /*
 ** ###################################################################
 **     Processors:          MK02FN64VFM10
@@ -8,13 +8,14 @@
 **     Compiler:            Keil ARM C/C++ Compiler
 **     Reference manual:    K02P64M100SFARM, Rev. 0, February 14, 2014
 **     Version:             rev. 0.5, 2015-02-19
-**     Build:               b180801
+**     Build:               b190916
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2018 NXP
+**     Copyright 2016-2019 NXP
+**     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
 **
@@ -63,7 +64,7 @@ LR_m_text m_text_start m_text_size {   ; load region size_region
 
 LR_m_interrupts m_interrupts_start m_interrupts_size {
   VECTOR_ROM m_interrupts_start m_interrupts_size { ; load address = execution address
-    * (RESET,+FIRST)
+    * (.isr_vector,+FIRST)
   }
 }
 

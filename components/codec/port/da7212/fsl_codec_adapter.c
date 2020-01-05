@@ -37,7 +37,11 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-
+static const codec_capability_t s_da7212_capability = {
+    .codecPlayCapability   = HAL_DA7212_PLAY_CAPABILITY,
+    .codecModuleCapability = HAL_DA7212_MODULE_CAPABILITY,
+    .codecRecordCapability = HAL_DA7212_RECORD_CAPABILITY,
+};
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -51,27 +55,14 @@
 status_t HAL_CODEC_Init(codec_handle_t *handle, void *config)
 {
     assert((config != NULL) && (handle != NULL));
-    assert(CODEC_HANDLE_SIZE >= (sizeof(codec_handle_t) + sizeof(da7212_handle_t)) + HAL_I2C_MASTER_HANDLE_SIZE);
 
     codec_config_t *codecConfig = (codec_config_t *)config;
 
     da7212_config_t *da7212Config = (da7212_config_t *)(codecConfig->codecDevConfig);
-    da7212_handle_t *da7212Handle = (da7212_handle_t *)((uint32_t) & (handle->codecDevHandle));
+    da7212_handle_t *da7212Handle = (da7212_handle_t *)((uint32_t)(handle->codecDevHandle));
 
-    /* load codec capability */
-    handle->codecCapability.codecModuleCapability = HAL_DA7212_MODULE_CAPABILITY;
-    /* add nop to aovid alignment fault, since that the compiler may generate 'strd' instruction to store 64 bit
-    with one instruction, but the address may not word-aligned
-    Will remove the __NOP in next release and use a word align address.
-    */
-    __NOP();
-    handle->codecCapability.codecPlayCapability = HAL_DA7212_PLAY_CAPABILITY;
-    /* add nop to aovid alignment fault, since that the compiler may generate 'strd' instruction to store 64 bit
-    with one instruction, but the address may not word-aligned
-    Will remove the __NOP in next release and use a word align address.
-    */
-    __NOP();
-    handle->codecCapability.codecRecordCapability = HAL_DA7212_RECORD_CAPABILITY;
+    handle->codecCapability = &s_da7212_capability;
+
     /* codec device initialization */
     return DA7212_Init(da7212Handle, da7212Config);
 }
@@ -86,7 +77,7 @@ status_t HAL_CODEC_Deinit(codec_handle_t *handle)
 {
     assert(handle != NULL);
 
-    return DA7212_Deinit((da7212_handle_t *)((uint32_t) & (handle->codecDevHandle)));
+    return DA7212_Deinit((da7212_handle_t *)((uint32_t)(handle->codecDevHandle)));
 }
 
 /*!
@@ -102,7 +93,7 @@ status_t HAL_CODEC_SetFormat(codec_handle_t *handle, uint32_t mclk, uint32_t sam
 {
     assert(handle != NULL);
 
-    return DA7212_ConfigAudioFormat((da7212_handle_t *)((uint32_t) & (handle->codecDevHandle)), mclk, sampleRate,
+    return DA7212_ConfigAudioFormat((da7212_handle_t *)((uint32_t)(handle->codecDevHandle)), mclk, sampleRate,
                                     bitWidth);
 }
 
@@ -118,7 +109,7 @@ status_t HAL_CODEC_SetVolume(codec_handle_t *handle, uint32_t playChannel, uint3
 {
     assert(handle != NULL);
 
-    return DA7212_SetChannelVolume((da7212_handle_t *)((uint32_t) & (handle->codecDevHandle)), playChannel, volume);
+    return DA7212_SetChannelVolume((da7212_handle_t *)((uint32_t)(handle->codecDevHandle)), playChannel, volume);
 }
 
 /*!
@@ -133,7 +124,7 @@ status_t HAL_CODEC_SetMute(codec_handle_t *handle, uint32_t playChannel, bool is
 {
     assert(handle != NULL);
 
-    return DA7212_SetChannelMute((da7212_handle_t *)((uint32_t) & (handle->codecDevHandle)), playChannel, isMute);
+    return DA7212_SetChannelMute((da7212_handle_t *)((uint32_t)(handle->codecDevHandle)), playChannel, isMute);
 }
 
 /*!

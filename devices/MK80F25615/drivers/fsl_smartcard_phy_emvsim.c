@@ -1,39 +1,18 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_smartcard_emvsim.h"
 #include "fsl_smartcard_phy.h"
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.smartcard_phy_emvsim"
+#endif
 
 /*******************************************************************************
  * Variables
@@ -65,7 +44,7 @@ static uint32_t smartcard_phy_emvsim_InterfaceClockInit(EMVSIM_Type *base,
     /* Retrieve EMV SIM clock */
     emvsimClkMhz = srcClock_Hz / 1000000u;
     /* Calculate MOD value */
-    emvsimPRSCValue = (emvsimClkMhz * 1000u) / (config->smartCardClock / 1000u);
+    emvsimPRSCValue = (uint8_t)((emvsimClkMhz * 1000u) / (config->smartCardClock / 1000u));
     /* Set clock prescaler */
     base->CLKCFG = (base->CLKCFG & ~EMVSIM_CLKCFG_CLK_PRSC_MASK) | EMVSIM_CLKCFG_CLK_PRSC(emvsimPRSCValue);
 
@@ -76,8 +55,11 @@ void SMARTCARD_PHY_GetDefaultConfig(smartcard_interface_config_t *config)
 {
     assert((NULL != config));
 
+    /* Initializes the configure structure to zero. */
+    (void)memset(config, 0, sizeof(*config));
+
     config->clockToResetDelay = SMARTCARD_INIT_DELAY_CLOCK_CYCLES;
-    config->vcc = kSMARTCARD_VoltageClassB3_3V;
+    config->vcc               = kSMARTCARD_VoltageClassB3_3V;
 }
 
 status_t SMARTCARD_PHY_Init(void *base, smartcard_interface_config_t const *config, uint32_t srcClock_Hz)
@@ -89,10 +71,10 @@ status_t SMARTCARD_PHY_Init(void *base, smartcard_interface_config_t const *conf
     EMVSIM_Type *emvsimBase = (EMVSIM_Type *)base;
 
     /* SMARTCARD clock initialization. Clock is still not active after this call */
-    smartcard_phy_emvsim_InterfaceClockInit(emvsimBase, config, srcClock_Hz);
+    (void)smartcard_phy_emvsim_InterfaceClockInit(emvsimBase, config, srcClock_Hz);
 
     /* Configure EMVSIM direct interface driver interrupt occur according card presence */
-    if (emvsimBase->PCSR & EMVSIM_PCSR_SPDP_MASK)
+    if ((emvsimBase->PCSR & EMVSIM_PCSR_SPDP_MASK) != 0u)
     {
         emvsimBase->PCSR &= ~EMVSIM_PCSR_SPDES_MASK;
     }
@@ -124,7 +106,7 @@ status_t SMARTCARD_PHY_Activate(void *base, smartcard_context_t *context, smartc
     EMVSIM_Type *emvsimBase = (EMVSIM_Type *)base;
 
     context->timersState.initCharTimerExpired = false;
-    context->resetType = resetType;
+    context->resetType                        = resetType;
 
     /* Disable receiver to deactivate GPC timers trigger */
     emvsimBase->CTRL &= ~EMVSIM_CTRL_RCV_EN_MASK;
@@ -149,8 +131,10 @@ status_t SMARTCARD_PHY_Activate(void *base, smartcard_context_t *context, smartc
     /* Set Reset low */
     emvsimBase->PCSR &= ~EMVSIM_PCSR_SRST_MASK;
     /* Calculate time delay needed for reset */
-    uint32_t temp = (uint32_t)((float)(1 + (float)(((float)(1000u * context->interfaceConfig.clockToResetDelay)) /
-                                                   ((float)context->interfaceConfig.smartCardClock / 1000))));
+    uint32_t temp =
+        ((((uint32_t)10000u * context->interfaceConfig.clockToResetDelay) / context->interfaceConfig.smartCardClock) *
+         100u) +
+        1u;
     context->timeDelay(temp);
     /* Pull reset HIGH Now to mark the end of Activation sequence */
     emvsimBase->PCSR |= EMVSIM_PCSR_SRST_MASK;
@@ -215,6 +199,8 @@ status_t SMARTCARD_PHY_Control(void *base,
         return kStatus_SMARTCARD_InvalidInput;
     }
 
+    status_t status = kStatus_SMARTCARD_Success;
+
     switch (control)
     {
         case kSMARTCARD_InterfaceSetVcc:
@@ -228,13 +214,14 @@ status_t SMARTCARD_PHY_Control(void *base,
             break;
         case kSMARTCARD_InterfaceReadStatus:
             /* Expecting active low present detect */
-            context->cardParams.present =
-                (emvsim_presence_detect_status_t)((((EMVSIM_Type *)base)->PCSR & EMVSIM_PCSR_SPDP_MASK) >>
-                                                  EMVSIM_PCSR_SPDP_SHIFT) == kEMVSIM_DetectPinIsLow;
+            context->cardParams.present = (bool)((emvsim_presence_detect_status_t)(uint32_t)(
+                                                     (((EMVSIM_Type *)base)->PCSR & EMVSIM_PCSR_SPDP_MASK) >>
+                                                     EMVSIM_PCSR_SPDP_SHIFT) == kEMVSIM_DetectPinIsLow);
             break;
         default:
-            return kStatus_SMARTCARD_InvalidInput;
+            status = kStatus_SMARTCARD_InvalidInput;
+            break;
     }
 
-    return kStatus_SMARTCARD_Success;
+    return status;
 }

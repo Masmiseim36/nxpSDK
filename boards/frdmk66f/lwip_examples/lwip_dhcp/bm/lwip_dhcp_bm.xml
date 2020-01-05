@@ -9,11 +9,12 @@
     <definition extID="device.MK66F18_CMSIS.MK66F18"/>
     <definition extID="device.MK66F18_startup.MK66F18"/>
     <definition extID="driver.phyksz8081.MK66F18"/>
-    <definition extID="middleware.tcpip.lwip.MK66F18"/>
-    <definition extID="middleware.tcpip.lwip.enet_ethernetif.MK66F18"/>
-    <definition extID="middleware.tcpip.lwip.enet_ethernetif_kinetis.MK66F18"/>
+    <definition extID="middleware.lwip.MK66F18"/>
+    <definition extID="middleware.lwip.enet_ethernetif.MK66F18"/>
+    <definition extID="middleware.lwip.enet_ethernetif_kinetis.MK66F18"/>
     <definition extID="platform.Include_common.MK66F18"/>
     <definition extID="platform.Include_core_cm4.MK66F18"/>
+    <definition extID="platform.Include_dsp.MK66F18"/>
     <definition extID="platform.drivers.clock.MK66F18"/>
     <definition extID="platform.drivers.common.MK66F18"/>
     <definition extID="platform.drivers.enet.MK66F18"/>
@@ -24,13 +25,14 @@
     <definition extID="platform.drivers.smc.MK66F18"/>
     <definition extID="platform.drivers.uart.MK66F18"/>
     <definition extID="platform.utilities.assert.MK66F18"/>
+    <definition extID="platform.utilities.misc_utilities.MK66F18"/>
     <definition extID="utility.debug_console.MK66F18"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk66f_lwip_dhcp_bm" name="lwip_dhcp_bm" category="lwip_examples" dependency="driver.phyksz8081.MK66F18 platform.drivers.port.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.enet.MK66F18 middleware.tcpip.lwip.enet_ethernetif_kinetis.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 component.lists.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 middleware.tcpip.lwip.enet_ethernetif.MK66F18 middleware.tcpip.lwip.MK66F18">
+  <example id="frdmk66f_lwip_dhcp_bm" name="lwip_dhcp_bm" category="lwip_examples" dependency="driver.phyksz8081.MK66F18 platform.drivers.port.MK66F18 platform.drivers.clock.MK66F18 middleware.lwip.MK66F18 middleware.lwip.enet_ethernetif_kinetis.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.lists.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18 platform.drivers.enet.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 platform.Include_dsp.MK66F18 middleware.lwip.enet_ethernetif.MK66F18 platform.utilities.misc_utilities.MK66F18">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -49,6 +51,7 @@
           <value>CPU_MK66FN2M0VMD18</value>
           <value>FRDM_K66F</value>
           <value>FREEDOM</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -61,9 +64,6 @@
         </option>
         <option id="gnu.c.link.option.nostdlibs" type="boolean">
           <value>true</value>
-        </option>
-        <option id="gnu.c.link.option.other" type="stringList">
-          <value>--defsym=__ram_vector_table__=1</value>
         </option>
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
           <value>&amp;Heap:Default;Default;0x1000&amp;Stack:Default;Default;0x1000</value>
@@ -79,13 +79,13 @@
       <include_path path="lwip/src"/>
       <include_path path="lwip/src/include"/>
     </include_paths>
-    <source path="boards/frdmk66f/lwip_examples/lwip_dhcp/bm/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/frdmk66f/lwip_examples/lwip_dhcp/bm/armgcc" target_path="MK66F18/gcc" type="linker" toolchain="armgcc">
       <files mask="MK66FN2M0xxx18_flash.ld"/>
     </source>
-    <source path="boards/frdmk66f/lwip_examples/lwip_dhcp/bm/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/frdmk66f/lwip_examples/lwip_dhcp/bm/iar" target_path="MK66F18/iar" type="linker" toolchain="iar">
       <files mask="MK66FN2M0xxx18_flash.icf"/>
     </source>
-    <source path="boards/frdmk66f/lwip_examples/lwip_dhcp/bm/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/frdmk66f/lwip_examples/lwip_dhcp/bm/mdk" target_path="MK66F18/arm" type="linker" toolchain="mdk">
       <files mask="MK66FN2M0xxx18_flash.scf"/>
     </source>
     <source path="boards/frdmk66f/lwip_examples/lwip_dhcp/bm" target_path="board" type="c_include">

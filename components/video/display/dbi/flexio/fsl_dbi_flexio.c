@@ -74,7 +74,7 @@ void DBI_FLEXIO_SetMemoryDoneCallback(void *dbiXferHandle, dbi_mem_done_callback
     xferHandle->userData        = userData;
 }
 
-#if !DBI_FLEXIO_USE_EZH
+#if !DBI_FLEXIO_USE_SMARTDMA
 status_t DBI_FLEXIO_CreateXferHandle(dbi_flexio_xfer_handle_t *dbiXferHandle,
                                      FLEXIO_MCULCD_Type *flexioLCD,
                                      dbi_flexio_dma_handle_t *txDmaHandle,
@@ -82,7 +82,7 @@ status_t DBI_FLEXIO_CreateXferHandle(dbi_flexio_xfer_handle_t *dbiXferHandle,
 #else
 status_t DBI_FLEXIO_CreateXferHandle(dbi_flexio_xfer_handle_t *dbiXferHandle,
                                      FLEXIO_MCULCD_Type *flexioLCD,
-                                     const flexio_mculcd_ezh_config_t *config)
+                                     const flexio_mculcd_smartdma_config_t *config)
 
 #endif
 {
@@ -92,14 +92,14 @@ status_t DBI_FLEXIO_CreateXferHandle(dbi_flexio_xfer_handle_t *dbiXferHandle,
 
     memset(xferHandle, 0, sizeof(dbi_flexio_xfer_handle_t));
 
-#if DBI_FLEXIO_USE_EZH
-    status = FLEXIO_MCULCD_TransferCreateHandleEZH(flexioLCD, &xferHandle->flexioHandle, config,
-                                                   DBI_FLEXIO_TransferCompletedCallback, xferHandle);
-#else  /* DBI_FLEXIO_USE_EZH */
+#if DBI_FLEXIO_USE_SMARTDMA
+    status = FLEXIO_MCULCD_TransferCreateHandleSMARTDMA(flexioLCD, &xferHandle->flexioHandle, config,
+                                                        DBI_FLEXIO_TransferCompletedCallback, xferHandle);
+#else  /* DBI_FLEXIO_USE_SMARTDMA */
     status =
         _DBI_FLEXIO_TransferCreateHandleDMA(flexioLCD, &xferHandle->flexioHandle, DBI_FLEXIO_TransferCompletedCallback,
                                             xferHandle, txDmaHandle, rxDmaHandle);
-#endif /* DBI_FLEXIO_USE_EZH */
+#endif /* DBI_FLEXIO_USE_SMARTDMA */
 
     return status;
 }
@@ -141,7 +141,7 @@ status_t DBI_FLEXIO_WriteMemory(void *dbiXferHandle, uint32_t command, const voi
 
     FLEXIO_MCULCD_Type *flexioLCD = xferHandle->flexioHandle.base;
 
-#if !DBI_FLEXIO_USE_EZH
+#if !DBI_FLEXIO_USE_SMARTDMA
     if (NULL != xferHandle->flexioHandle.txDmaHandle)
     {
         xfer.command             = command;
@@ -162,25 +162,25 @@ status_t DBI_FLEXIO_WriteMemory(void *dbiXferHandle, uint32_t command, const voi
         xferHandle->memDoneCallback(kStatus_Success, xferHandle->userData);
     }
 
-#else /* DBI_FLEXIO_USE_EZH */
+#else /* DBI_FLEXIO_USE_SMARTDMA */
 
     xfer.command             = command;
     xfer.mode                = kFLEXIO_MCULCD_WriteArray;
     xfer.dataAddrOrSameValue = (uint32_t)data;
     xfer.dataSize            = len_byte;
 
-    FLEXIO_MCULCD_TransferEZH(flexioLCD, &xferHandle->flexioHandle, &xfer);
+    FLEXIO_MCULCD_TransferSMARTDMA(flexioLCD, &xferHandle->flexioHandle, &xfer);
 
-#endif /* DBI_FLEXIO_USE_EZH */
+#endif /* DBI_FLEXIO_USE_SMARTDMA */
 
     return kStatus_Success;
 }
 
 status_t DBI_FLEXIO_ReadMemory(void *dbiXferHandle, uint32_t command, void *data, uint32_t len_byte)
 {
-#if DBI_FLEXIO_USE_EZH
+#if DBI_FLEXIO_USE_SMARTDMA
 
-    /* FlexIO MCULCD EZH does not support read */
+    /* FlexIO MCULCD SMARTDMA does not support read */
     return kStatus_Fail;
 #else
 

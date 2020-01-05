@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "board.h"
@@ -41,6 +19,8 @@
 #ifndef DMAMUX0
 #define DMAMUX0 DMAMUX
 #endif
+#define EXAMPLE_DMA DMA0
+#define EXAMPLE_DMAMUX DMAMUX0
 #define BUFF_LENGTH 4U
 
 /*******************************************************************************
@@ -66,13 +46,14 @@ void EDMA_Callback(edma_handle_t *handle, void *param, bool transferDone, uint32
     }
 }
 
+AT_NONCACHEABLE_SECTION_INIT(uint32_t srcAddr[BUFF_LENGTH])  = {0x01, 0x02, 0x03, 0x04};
+AT_NONCACHEABLE_SECTION_INIT(uint32_t destAddr[BUFF_LENGTH]) = {0x00, 0x00, 0x00, 0x00};
+
 /*!
  * @brief Main function
  */
 int main(void)
 {
-    uint32_t srcAddr[BUFF_LENGTH] = {0x01, 0x02, 0x03, 0x04};
-    uint32_t destAddr[BUFF_LENGTH] = {0x00, 0x00, 0x00, 0x00};
     uint32_t i = 0;
     edma_transfer_config_t transferConfig;
     edma_config_t userConfig;
@@ -88,9 +69,13 @@ int main(void)
         PRINTF("%d\t", destAddr[i]);
     }
     /* Configure DMAMUX */
-    DMAMUX_Init(DMAMUX0);
-    DMAMUX_SetSource(DMAMUX0, 0, 63);
-    DMAMUX_EnableChannel(DMAMUX0, 0);
+    DMAMUX_Init(EXAMPLE_DMAMUX);
+#if defined(FSL_FEATURE_DMAMUX_HAS_A_ON) && FSL_FEATURE_DMAMUX_HAS_A_ON
+    DMAMUX_EnableAlwaysOn(EXAMPLE_DMAMUX, 0, true);
+#else
+    DMAMUX_SetSource(EXAMPLE_DMAMUX, 0, 63);
+#endif /* FSL_FEATURE_DMAMUX_HAS_A_ON */
+    DMAMUX_EnableChannel(EXAMPLE_DMAMUX, 0);
     /* Configure EDMA one shot transfer */
     /*
      * userConfig.enableRoundRobinArbitration = false;
@@ -99,8 +84,8 @@ int main(void)
      * userConfig.enableDebugMode = false;
      */
     EDMA_GetDefaultConfig(&userConfig);
-    EDMA_Init(DMA0, &userConfig);
-    EDMA_CreateHandle(&g_EDMA_Handle, DMA0, 0);
+    EDMA_Init(EXAMPLE_DMA, &userConfig);
+    EDMA_CreateHandle(&g_EDMA_Handle, EXAMPLE_DMA, 0);
     EDMA_SetCallback(&g_EDMA_Handle, EDMA_Callback, NULL);
     EDMA_PrepareTransfer(&transferConfig, srcAddr, sizeof(srcAddr[0]), destAddr, sizeof(destAddr[0]),
                          sizeof(srcAddr[0]), sizeof(srcAddr), kEDMA_MemoryToMemory);

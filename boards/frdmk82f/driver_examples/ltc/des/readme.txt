@@ -6,11 +6,10 @@ data using DES-cbc and DES3-cbc method.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.50.1
-- Keil MDK 5.17
-- GCC ARM Embedded 2015-4.9-q3
-- Kinetis Development Studio IDE 3.0.0
-- Atollic TrueSTUDIO 5.4.0
+- Keil MDK  5.29
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -23,7 +22,6 @@ Board settings
 This example project does not call for any special hardware configurations.
 Although not required, the recommendation is to leave the development board's jumper settings
 and configurations in default state when running this example.
-
 Prepare the Demo
 ================
 Connect a serial cable from the debug UART port of the board to the PC. Start Tera Term
@@ -41,7 +39,6 @@ Connect a serial cable from the debug UART port of the board to the PC. Start Te
         Stop:         1
         Flow control: one
 5.  Confirm selected parameters by OK button.
-
 
 Running the demo
 ================
@@ -101,8 +98,6 @@ Decrypted string :
            and nothing more.
 
 .............. THE  END  OF  THE  LTC (DES)  DRIVER  EXAMPLE ................................
-
 Customization options
 =====================
-
 

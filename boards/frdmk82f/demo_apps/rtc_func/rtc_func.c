@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include <stdio.h>
@@ -44,7 +22,6 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_SetRtcClockSource(void);
 /*!
  * @brief Set the alarm which will be trigerred x secs later. The alarm trigger
  *        will print a notification on the console.
@@ -76,8 +53,8 @@ static void ReceiveFromConsole(char *buf, uint32_t size);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-static volatile uint8_t g_AlarmPending = 0U;
-static volatile bool g_SecsFlag = false;
+volatile uint8_t g_AlarmPending = 0U;
+volatile bool g_SecsFlag        = false;
 
 static char g_StrMenu[] =
     "\r\n"
@@ -94,11 +71,34 @@ static char g_StrInvalid[] = "Invalid input format\r\n";
  * Code
  ******************************************************************************/
 
-void BOARD_SetRtcClockSource(void)
+/*!
+ * @brief Override the RTC IRQ handler.
+ */
+void RTC_IRQHandler(void)
 {
-    /* Enable the RTC 32KHz oscillator */
-    RTC->CR |= RTC_CR_OSCE_MASK;
+    if (RTC_GetStatusFlags(RTC) & kRTC_AlarmFlag)
+    {
+        g_AlarmPending = 1U;
+
+        /* Clear alarm flag */
+        RTC_ClearStatusFlags(RTC, kRTC_AlarmInterruptEnable);
+    }
+    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+    exception return operation might vector to incorrect interrupt */
+    __DSB();
 }
+
+/*!
+ * @brief Override the RTC Second IRQ handler.
+ */
+void RTC_Seconds_IRQHandler(void)
+{
+    g_SecsFlag = true;
+    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+    exception return operation might vector to incorrect interrupt */
+    __DSB();
+}
+
 static void CommandAlarm(uint8_t offsetSec)
 {
     rtc_datetime_t date;
@@ -204,28 +204,6 @@ static void ReceiveFromConsole(char *buf, uint32_t size)
 }
 
 /*!
- * @brief Override the RTC IRQ handler.
- */
-void RTC_IRQHandler(void)
-{
-    if (RTC_GetStatusFlags(RTC) & kRTC_AlarmFlag)
-    {
-        g_AlarmPending = 1U;
-
-        /* Clear alarm flag */
-        RTC_ClearStatusFlags(RTC, kRTC_AlarmInterruptEnable);
-    }
-}
-
-/*!
- * @brief Override the RTC Second IRQ handler.
- */
-void RTC_Seconds_IRQHandler(void)
-{
-    g_SecsFlag = true;
-}
-
-/*!
  * @brief Main function
  */
 int main(void)
@@ -245,7 +223,7 @@ int main(void)
 
     /* Board pin, clock, debug console init */
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /* Init RTC */
@@ -258,25 +236,28 @@ int main(void)
      */
     RTC_GetDefaultConfig(&rtcConfig);
     RTC_Init(RTC, &rtcConfig);
+#if !(defined(FSL_FEATURE_RTC_HAS_NO_CR_OSCE) && FSL_FEATURE_RTC_HAS_NO_CR_OSCE)
+
     /* Select RTC clock source */
-    BOARD_SetRtcClockSource();
+    RTC_SetClockSource(RTC);
+#endif /* FSL_FEATURE_RTC_HAS_NO_CR_OSCE */
 
     /* Set a start date time and start RTC */
-    date.year = 2015U;
-    date.month = 11U;
-    date.day = 11U;
-    date.hour = 11U;
+    date.year   = 2015U;
+    date.month  = 11U;
+    date.day    = 11U;
+    date.hour   = 11U;
     date.minute = 11U;
     date.second = 11U;
 
     /* RTC time counter has to be stopped before setting the date & time in the TSR register */
     RTC_StopTimer(RTC);
 
-    RTC_SetDatetime(RTC, &date);
-
     /* Enable at the NVIC */
     EnableIRQ(RTC_IRQn);
+#ifdef RTC_SECONDS_IRQS
     EnableIRQ(RTC_Seconds_IRQn);
+#endif /* RTC_SECONDS_IRQS */
 
     /* Start the RTC time counter */
     RTC_StartTimer(RTC);
@@ -300,7 +281,7 @@ int main(void)
                 CommandGetDatetime();
                 break;
             case '2':
-                PRINTF("Input date time like: \"2010-10-10 10:10:10\"\r\n");
+                PRINTF("Input date time like: \"2010-01-31 17:00:11\"\r\n");
                 ReceiveFromConsole(recvBuf, 19U);
                 result = sscanf(recvBuf, "%04hd-%02hd-%02hd %02hd:%02hd:%02hd", &year, &month, &day, &hour, &minute,
                                 &second);
@@ -311,10 +292,10 @@ int main(void)
                     PRINTF(g_StrInvalid);
                     break;
                 }
-                date.year = (uint16_t)year;
-                date.month = (uint8_t)month;
-                date.day = (uint8_t)day;
-                date.hour = (uint8_t)hour;
+                date.year   = (uint16_t)year;
+                date.month  = (uint8_t)month;
+                date.day    = (uint8_t)day;
+                date.hour   = (uint8_t)hour;
                 date.minute = (uint8_t)minute;
                 date.second = (uint8_t)second;
 

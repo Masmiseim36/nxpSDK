@@ -1,34 +1,34 @@
 /**HEADER********************************************************************
-*
-* Copyright (c) 2008 Freescale Semiconductor;
-* All Rights Reserved
-*
-***************************************************************************
-*
-* THIS SOFTWARE IS PROVIDED BY FREESCALE "AS IS" AND ANY EXPRESSED OR
-* IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-* OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-* IN NO EVENT SHALL FREESCALE OR ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-* INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-* SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-* HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-* STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-* IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
-* THE POSSIBILITY OF SUCH DAMAGE.
-*
-**************************************************************************
-*
-* $FileName: wlan_qca400x.c$
-* $Version : $
-* $Date    : $
-*
-* Comments:
-*
-*   This file contains the function that reads the timer and returns
-*   the number of nanoseconds elapsed since the last interrupt.
-*
-*END************************************************************************/
+ *
+ * Copyright (c) 2008 Freescale Semiconductor;
+ * All Rights Reserved
+ *
+ ***************************************************************************
+ *
+ * THIS SOFTWARE IS PROVIDED BY FREESCALE "AS IS" AND ANY EXPRESSED OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL FREESCALE OR ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+ * THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ **************************************************************************
+ *
+ * $FileName: wlan_qca400x.c$
+ * $Version : $
+ * $Date    : $
+ *
+ * Comments:
+ *
+ *   This file contains the function that reads the timer and returns
+ *   the number of nanoseconds elapsed since the last interrupt.
+ *
+ *END************************************************************************/
 
 #include "board.h"
 
@@ -70,13 +70,16 @@ extern const QCA_MAC_IF_STRUCT ATHEROS_WIFI_IF;
 //};
 
 const QCA_IF_STRUCT ENET_0 = {
-    .MAC_IF = &ATHEROS_WIFI_IF, .MAC_NUMBER = 0, .PHY_NUMBER = 0, .PHY_ADDRESS = 0,
+    .MAC_IF      = &ATHEROS_WIFI_IF,
+    .MAC_NUMBER  = 0,
+    .PHY_NUMBER  = 0,
+    .PHY_ADDRESS = 0,
 };
 
 const QCA_PARAM_STRUCT ENET_default_params = {
-    .QCA_IF = &ENET_0,
-    .MODE = Auto_Negotiate,
-    .OPTIONS = 0,
+    .QCA_IF      = &ENET_0,
+    .MODE        = Auto_Negotiate,
+    .OPTIONS     = 0,
     .NUM_RX_PCBS = WLAN_CONFIG_NUM_PRE_ALLOC_RX_BUFFERS, //  # Number of RX PCBs (Packet Control Blocks)
 
     // cust_spi_hcd.c - the QCA hardware specific SPI driver uses this config
@@ -87,7 +90,7 @@ const QCA_PARAM_STRUCT ENET_default_params = {
 // WIFI Interrupt handler and Initialization
 // ============================================================================
 
-int numIrqs = 0;
+int numIrqs  = 0;
 int initTime = 0;
 
 /** Initialize the QCA400x WLAN driver and start the associated driver task
@@ -96,7 +99,7 @@ int initTime = 0;
 int wlan_driver_start(void)
 {
     uint32_t result = A_OK;
-    uint32_t time = 0;
+    uint32_t time   = 0;
 
     // Power off the WLAN and wait 30ms
     CUSTOM_HW_POWER_UP_DOWN(NULL, false);
@@ -110,9 +113,9 @@ int wlan_driver_start(void)
     // Note that this initialization involves the currently running task to wait
     // for the ready signal from the Atheros_Driver_Task() where upon we return
     // from the function call. This process takes approximately 60ms.
-    time = A_TIME_GET_MSEC();
+    time              = A_TIME_GET_MSEC();
     wifiCtx.PARAM_PTR = &ENET_default_params;
-    result = ATHEROS_WIFI_IF.INIT(&wifiCtx);
+    result            = ATHEROS_WIFI_IF.INIT(&wifiCtx);
     if (A_OK != result)
     {
         PRINTF("WLAN driver initialization failed \r\n");

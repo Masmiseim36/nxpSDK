@@ -108,6 +108,7 @@ void SystemInit (void) {
 void SystemCoreClockUpdate (void) {
   uint32_t MCGOUTClock;                                                        /* Variable to store output clock frequency of the MCG module */
   uint16_t Divider;
+  uint8_t tmpC7 = 0;
 
   if ((MCG->C1 & MCG_C1_CLKS_MASK) == 0x00U) {
     /* Output of FLL or PLL is selected */
@@ -127,7 +128,8 @@ void SystemCoreClockUpdate (void) {
           MCGOUTClock = CPU_INT_IRC_CLK_HZ; /* IRC 48MHz oscillator drives MCG clock */
           break;
         }
-        if (((MCG->C2 & MCG_C2_RANGE_MASK) != 0x00U) && ((MCG->C7 & MCG_C7_OSCSEL_MASK) != 0x01U)) {
+        tmpC7 = MCG->C7;
+        if (((MCG->C2 & MCG_C2_RANGE_MASK) != 0x00U) && ((tmpC7 & MCG_C7_OSCSEL_MASK) != 0x01U)) {
           switch (MCG->C1 & MCG_C1_FRDIV_MASK) {
           case 0x38U:
             Divider = 1536U;
@@ -183,7 +185,7 @@ void SystemCoreClockUpdate (void) {
         MCGOUTClock = (uint32_t)(CPU_XTAL_CLK_HZ / Divider); /* Calculate the PLL reference clock */
         Divider = (((uint16_t)MCG->C6 & MCG_C6_VDIV_MASK) + 16U);
         MCGOUTClock *= Divider;        /* Calculate the VCO output clock */
-        MCGOUTClock /= 2;              /* Calculate the MCG output clock */
+        MCGOUTClock /= 2U;             /* Calculate the MCG output clock */
       } else {
         /* External PLL is selected */
         if ((USBPHY->ANACTRL & USBPHY_ANACTRL_PFD_CLK_SEL_MASK) == 0x00U) {
@@ -194,8 +196,10 @@ void SystemCoreClockUpdate (void) {
             Divider *= 0x04U;
           } else if ((USBPHY->ANACTRL & USBPHY_ANACTRL_PFD_CLK_SEL_MASK) == USBPHY_ANACTRL_PFD_CLK_SEL(2)) {
             Divider *= 0x02U;
+          } else {
+            Divider *= 0x01U;
           }
-          MCGOUTClock = (uint32_t)(480000000 / Divider);
+          MCGOUTClock = (uint32_t)(480000000U / Divider);
           MCGOUTClock *= 18;
         }
       }

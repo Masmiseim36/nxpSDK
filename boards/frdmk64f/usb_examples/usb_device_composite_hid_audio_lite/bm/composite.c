@@ -29,7 +29,7 @@
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #include "usb_phy.h"
 #endif
 #include "pin_mux.h"
@@ -38,8 +38,8 @@
  ******************************************************************************/
 
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 void BOARD_InitHardware(void);
 void USB_DeviceClockInit(void);
 void USB_DeviceIsrEnable(void);
@@ -52,18 +52,20 @@ extern void Board_DMIC_DMA_Init(void);
 #endif
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 /* Composite device structure. */
 extern usb_status_t USB_DeviceMouseAction(void);
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 usb_device_composite_struct_t g_composite;
 extern usb_status_t USB_DeviceSetSpeed(uint8_t speed);
 extern uint8_t g_UsbDeviceInterface[USB_COMPOSITE_INTERFACE_COUNT];
 extern uint8_t g_InterfaceIsSet;
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_SetupOutBuffer[8];
 
 /*******************************************************************************
-* Code
-******************************************************************************/
+ * Code
+ ******************************************************************************/
 
 void USB0_IRQHandler(void)
 {
@@ -82,9 +84,9 @@ void USB_DeviceIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbDeviceKhciIrq[] = USB_IRQS;
-    irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+    irqNumber                  = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 
-/* Install isr, set priority, and enable IRQ. */
+    /* Install isr, set priority, and enable IRQ. */
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
     EnableIRQ((IRQn_Type)irqNumber);
 }
@@ -108,7 +110,8 @@ void USB_DeviceTaskFn(void *deviceHandle)
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
     usb_status_t error = kStatus_USB_Error;
-    uint8_t *temp8 = (uint8_t *)param;
+    uint8_t *temp8     = (uint8_t *)param;
+    uint8_t count      = 0U;
 
     switch (event)
     {
@@ -116,10 +119,14 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         {
             /* USB bus reset signal detected */
             /* Initialize the control IN and OUT pipes */
+            for (count = 0U; count < USB_DEVICE_INTERFACE_COUNT; count++)
+            {
+                g_composite.currentInterfaceAlternateSetting[count] = 0U;
+            }
             USB_DeviceControlPipeInit(handle);
-            g_composite.attach = 0U;
+            g_composite.attach               = 0U;
             g_composite.currentConfiguration = 0U;
-            g_InterfaceIsSet = 0U;
+            g_InterfaceIsSet                 = 0U;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -133,7 +140,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         case kUSB_DeviceEventSetConfiguration:
             if (0U == (*temp8))
             {
-                g_composite.attach = 0U;
+                g_composite.attach               = 0U;
                 g_composite.currentConfiguration = 0U;
             }
             else if (USB_COMPOSITE_CONFIGURE_INDEX == (*temp8))
@@ -142,7 +149,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 USB_DeviceAudioGeneratorSetConfigure(handle, *temp8);
                 USB_DeviceHidMouseSetConfigure(handle, *temp8);
                 g_composite.currentConfiguration = *temp8;
-                error = kStatus_USB_Success;
+                error                            = kStatus_USB_Success;
             }
             else
             {
@@ -152,7 +159,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         case kUSB_DeviceEventSetInterface:
             if (g_composite.attach)
             {
-                uint8_t interface = (uint8_t)(*temp8);
+                uint8_t interface        = (uint8_t)(*temp8);
                 uint8_t alternateSetting = (uint8_t)g_UsbDeviceInterface[interface];
                 if (USB_AUDIO_GENERATOR_STREAM_INTERFACE_INDEX == interface)
                 {
@@ -257,8 +264,8 @@ usb_status_t USB_DeviceConfigureRemoteWakeup(usb_device_handle handle, uint8_t e
 usb_status_t USB_DeviceConfigureEndpointStatus(usb_device_handle handle, uint8_t ep, uint8_t status)
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
-    error = USB_DeviceAudioGeneratorConfigureEndpointStatus(handle, ep, status);
-    error = USB_DeviceHidConfigureEndpointStatus(handle, ep, status);
+    error              = USB_DeviceAudioGeneratorConfigureEndpointStatus(handle, ep, status);
+    error              = USB_DeviceHidConfigureEndpointStatus(handle, ep, status);
 
     return error;
 }
@@ -280,12 +287,11 @@ usb_status_t USB_DeviceGetClassReceiveBuffer(usb_device_handle handle,
                                              uint32_t *length,
                                              uint8_t **buffer)
 {
-    static uint8_t setupOut[8];
-    if ((NULL == buffer) || ((*length) > sizeof(setupOut)))
+    if ((NULL == buffer) || ((*length) > sizeof(s_SetupOutBuffer)))
     {
         return kStatus_USB_InvalidRequest;
     }
-    *buffer = setupOut;
+    *buffer = s_SetupOutBuffer;
     return kStatus_USB_Success;
 }
 
@@ -337,8 +343,8 @@ void APPInit(void)
     SYSMPU_Enable(SYSMPU, 0);
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-    g_composite.speed = USB_SPEED_FULL;
-    g_composite.attach = 0U;
+    g_composite.speed        = USB_SPEED_FULL;
+    g_composite.attach       = 0U;
     g_composite.deviceHandle = NULL;
 
     if (kStatus_USB_Success != USB_DeviceInit(CONTROLLER_ID, USB_DeviceCallback, &g_composite.deviceHandle))

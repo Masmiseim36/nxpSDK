@@ -1,12 +1,12 @@
 /*
-* Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2017 NXP
+ * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
  * All rights reserved.
-*
-* SPDX-License-Identifier: BSD-3-Clause
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
-/** 
+/**
  * @file frdm_stbc_agm04_shield.h
  * @brief The frdm_stbc_agm04_shield.h file declares mapping of the Kinetis
          Device peripherals to the frmd-k64f and frmd-stbc-agm04 shield
@@ -19,18 +19,18 @@
 #define SHIELD_NAME "FRDM-STBC-AGM04"
 
 // MAG3110 Sensor Information
-#define MAG3110_I2C_ADDR           0x0E
-#define MAG3110_INT1               D5
+#define MAG3110_I2C_ADDR 0x0E
+#define MAG3110_INT1 D5
 
 // MMA8652 Sensor Information
-#define MMA8652_I2C_ADDR           0x1D
-#define MMA8652_INT1               D2
-#define MMA8652_INT2               D8
+#define MMA8652_I2C_ADDR 0x1D
+#define MMA8652_INT1 D2
+#define MMA8652_INT2 D8
 
 // FXAS21002 Sensor Information
-#define FXAS21002_I2C_ADDR         0x20
-#define FXAS21002_INT1             D4
-#define FXAS21002_INT2             D10
+#define FXAS21002_I2C_ADDR 0x20
+#define FXAS21002_INT1 D4
+#define FXAS21002_INT2 D10
 
 ///@name Shield Parameters
 /// Use this section to define the shield board: 3 bit code 0 to 7 inclusive

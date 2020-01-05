@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef __USB_DEVICE_HID_H__
@@ -59,11 +37,12 @@
 /*! @brief Request code to set protocol of HID class. */
 #define USB_DEVICE_HID_REQUEST_SET_PROTOCOL (0x0BU)
 
+
 /*! @brief Available common EVENT types in HID class callback */
 typedef enum _usb_device_hid_event
 {
-    kUSB_DeviceHidEventSendResponse = 0x01U, /*!< Send data completed */
-    kUSB_DeviceHidEventRecvResponse,         /*!< Data received */
+    kUSB_DeviceHidEventSendResponse = 0x01U, /*!< Send data completed or cancelled etc*/
+    kUSB_DeviceHidEventRecvResponse,         /*!< Data received or cancelled etc*/
     kUSB_DeviceHidEventGetReport,            /*!< Get report request */
     kUSB_DeviceHidEventGetIdle,              /*!< Get idle request */
     kUSB_DeviceHidEventGetProtocol,          /*!< Get protocol request */
@@ -113,6 +92,10 @@ typedef struct _usb_device_hid_struct
     usb_device_handle handle;                       /*!< The device handle */
     usb_device_class_config_struct_t *configStruct; /*!< The configuration of the class. */
     usb_device_interface_struct_t *interfaceHandle; /*!< Current interface handle */
+    uint8_t *interruptInPipeDataBuffer;             /*!< IN pipe data buffer backup when stall */
+    uint32_t interruptInPipeDataLen;                /*!< IN pipe data length backup when stall  */
+    uint8_t *interruptOutPipeDataBuffer;             /*!< OUT pipe data buffer backup when stall */
+    uint32_t interruptOutPipeDataLen;                /*!< OUT pipe data length backup when stall  */
     uint8_t configuration;                          /*!< Current configuration */
     uint8_t interfaceNumber;                        /*!< The interface number of the class */
     uint8_t alternate;                              /*!< Current alternate setting of the interface */
@@ -120,6 +103,8 @@ typedef struct _usb_device_hid_struct
     uint8_t protocol;                               /*!< Current protocol */
     uint8_t interruptInPipeBusy;                    /*!< Interrupt IN pipe busy flag */
     uint8_t interruptOutPipeBusy;                   /*!< Interrupt OUT pipe busy flag */
+    uint8_t interruptInPipeStall;                    /*!< Interrupt IN pipe stall flag */
+    uint8_t interruptOutPipeStall;                   /*!< Interrupt OUT pipe stall flag */
 } usb_device_hid_struct_t;
 
 /*******************************************************************************
@@ -190,12 +175,15 @@ extern usb_status_t USB_DeviceHidEvent(void *handle, uint32_t event, void *param
  *
  * @return A USB error code or kStatus_USB_Success.
  *
+ * @note The function can only be called in the same context.
+ * 
  * @note The return value indicates whether the sending request is successful or not. The transfer done is notified by
  * usb_device_hid_interrupt_in.
  * Currently, only one transfer request can be supported for one specific endpoint.
  * If there is a specific requirement to support multiple transfer requests for a specific endpoint, the application
  * should implement a queue in the application level.
- * The subsequent transfer can begin only when the previous transfer is done (a notification is received through the endpoint
+ * The subsequent transfer can begin only when the previous transfer is done (a notification is received through the
+ * endpoint
  * callback).
  */
 extern usb_status_t USB_DeviceHidSend(class_handle_t handle, uint8_t ep, uint8_t *buffer, uint32_t length);
@@ -213,12 +201,15 @@ extern usb_status_t USB_DeviceHidSend(class_handle_t handle, uint8_t ep, uint8_t
  *
  * @return A USB error code or kStatus_USB_Success.
  *
+ * @note The function can only be called in the same context. 
+ *
  * @note The return value indicates whether the receiving request is successful or not. The transfer done is notified by
  * usb_device_hid_interrupt_out.
  * Currently, only one transfer request can be supported for a specific endpoint.
  * If there is a specific requirement to support multiple transfer requests for a specific endpoint, the application
  * should implement a queue in the application level.
- * The subsequent transfer can begin only when the previous transfer is done (a notification is received through the endpoint
+ * The subsequent transfer can begin only when the previous transfer is done (a notification is received through the
+ * endpoint
  * callback).
  */
 extern usb_status_t USB_DeviceHidRecv(class_handle_t handle, uint8_t ep, uint8_t *buffer, uint32_t length);

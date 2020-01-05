@@ -37,6 +37,9 @@
  *
  * See http://www.freertos.org/a00110.html.
  *----------------------------------------------------------*/
+#define configENABLE_MPU 0
+#define configENABLE_FPU 0
+#define configENABLE_TRUSTZONE 0
 
 #define configUSE_PREEMPTION 1
 #define configUSE_TICKLESS_IDLE 0
@@ -73,7 +76,9 @@
 #else
 #define configTOTAL_HEAP_SIZE ((size_t)(30 * 1024))
 #endif
+#ifndef configAPPLICATION_ALLOCATED_HEAP
 #define configAPPLICATION_ALLOCATED_HEAP 0
+#endif
 
 /* Hook function related definitions. */
 #define configUSE_IDLE_HOOK 0
@@ -124,7 +129,15 @@
 #define INCLUDE_xTaskAbortDelay 0
 #define INCLUDE_xTaskGetHandle 0
 #define INCLUDE_xTaskResumeFromISR 1
+#define INCLUDE_xSemaphoreGetMutexHolder 1
 
+
+
+#if defined(__ICCARM__)||defined(__CC_ARM)||defined(__GNUC__)
+    /* Clock manager provides in this variable system core clock frequency */
+    #include <stdint.h>
+    extern uint32_t SystemCoreClock;
+#endif
 
 /* Interrupt nesting behaviour configuration. Cortex-M specific. */
 #ifdef __NVIC_PRIO_BITS

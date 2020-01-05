@@ -8,8 +8,8 @@
 #ifndef _FSL_SAI_EDMA_H_
 #define _FSL_SAI_EDMA_H_
 
-#include "fsl_sai.h"
 #include "fsl_edma.h"
+#include "fsl_sai.h"
 
 /*!
  * @addtogroup sai_edma
@@ -22,16 +22,16 @@
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_SAI_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 1, 5)) /*!< Version 2.1.5 */
+#define FSL_SAI_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 2, 0)) /*!< Version 2.2.0 */
 /*@}*/
 
-typedef struct _sai_edma_handle sai_edma_handle_t;
+typedef struct sai_edma_handle sai_edma_handle_t;
 
 /*! @brief SAI eDMA transfer callback function for finish and error */
 typedef void (*sai_edma_callback_t)(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData);
 
 /*! @brief SAI DMA transfer handle, users should not touch the content of the handle.*/
-struct _sai_edma_handle
+struct sai_edma_handle
 {
     edma_handle_t *dmaHandle;     /*!< DMA handler for SAI send */
     uint8_t nbytes;               /*!< eDMA minor byte transfer count initially configured. */
@@ -71,10 +71,13 @@ extern "C" {
  * @param base SAI peripheral base address.
  * @param callback Pointer to user callback function.
  * @param userData User parameter passed to the callback function.
- * @param dmaHandle eDMA handle pointer, this handle shall be static allocated by users.
+ * @param txDmaHandle eDMA handle pointer, this handle shall be static allocated by users.
  */
-void SAI_TransferTxCreateHandleEDMA(
-    I2S_Type *base, sai_edma_handle_t *handle, sai_edma_callback_t callback, void *userData, edma_handle_t *dmaHandle);
+void SAI_TransferTxCreateHandleEDMA(I2S_Type *base,
+                                    sai_edma_handle_t *handle,
+                                    sai_edma_callback_t callback,
+                                    void *userData,
+                                    edma_handle_t *txDmaHandle);
 
 /*!
  * @brief Initializes the SAI Rx eDMA handle.
@@ -87,10 +90,13 @@ void SAI_TransferTxCreateHandleEDMA(
  * @param base SAI peripheral base address.
  * @param callback Pointer to user callback function.
  * @param userData User parameter passed to the callback function.
- * @param dmaHandle eDMA handle pointer, this handle shall be static allocated by users.
+ * @param rxDmaHandle eDMA handle pointer, this handle shall be static allocated by users.
  */
-void SAI_TransferRxCreateHandleEDMA(
-    I2S_Type *base, sai_edma_handle_t *handle, sai_edma_callback_t callback, void *userData, edma_handle_t *dmaHandle);
+void SAI_TransferRxCreateHandleEDMA(I2S_Type *base,
+                                    sai_edma_handle_t *handle,
+                                    sai_edma_callback_t callback,
+                                    void *userData,
+                                    edma_handle_t *rxDmaHandle);
 
 /*!
  * @brief Configures the SAI Tx audio format.
@@ -106,7 +112,7 @@ void SAI_TransferRxCreateHandleEDMA(
  * clock, this value should equals to masterClockHz in format.
  * @retval kStatus_Success Audio format set successfully.
  * @retval kStatus_InvalidArgument The input argument is invalid.
-*/
+ */
 void SAI_TransferTxSetFormatEDMA(I2S_Type *base,
                                  sai_edma_handle_t *handle,
                                  sai_transfer_format_t *format,
@@ -127,12 +133,32 @@ void SAI_TransferTxSetFormatEDMA(I2S_Type *base,
  * clock, this value should equal to masterClockHz in format.
  * @retval kStatus_Success Audio format set successfully.
  * @retval kStatus_InvalidArgument The input argument is invalid.
-*/
+ */
 void SAI_TransferRxSetFormatEDMA(I2S_Type *base,
                                  sai_edma_handle_t *handle,
                                  sai_transfer_format_t *format,
                                  uint32_t mclkSourceClockHz,
                                  uint32_t bclkSourceClockHz);
+
+/*!
+ * @brief Configures the SAI Tx.
+ *
+ *
+ * @param base SAI base pointer.
+ * @param handle SAI eDMA handle pointer.
+ * @param saiConfig sai configurations.
+ */
+void SAI_TransferTxSetConfigEDMA(I2S_Type *base, sai_edma_handle_t *handle, sai_transceiver_t *saiConfig);
+
+/*!
+ * @brief Configures the SAI Rx.
+ *
+ *
+ * @param base SAI base pointer.
+ * @param handle SAI eDMA handle pointer.
+ * @param saiConfig sai configurations.
+ */
+void SAI_TransferRxSetConfigEDMA(I2S_Type *base, sai_edma_handle_t *handle, sai_transceiver_t *saiConfig);
 
 /*!
  * @brief Performs a non-blocking SAI transfer using DMA.

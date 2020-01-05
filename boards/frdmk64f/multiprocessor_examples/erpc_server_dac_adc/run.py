@@ -71,7 +71,7 @@ def accel_mag_func(BoardName):
     print("    Accelerometer X axis: %f" %accelResults.value.A_x)
     print("    Accelerometer Y axis: %f" %accelResults.value.A_y)
     print("    Accelerometer Z axis: %f" %accelResults.value.A_z)
-    if BoardName != "FRDM-KL25Z" and BoardName != "FRDM-KL27Z" and BoardName != "FRDM-KL43Z":
+    if BoardName != "FRDM-KL25Z" and BoardName != "FRDM-KL27Z" and BoardName != "FRDM-KL43Z" and BoardName != "FRDM-K32L2B":
         print("    Magnetometer X axis: %f" %accelResults.value.M_x)
         print("    Magnetometer Y axis: %f" %accelResults.value.M_y)
         print("    Magnetometer Z axis: %f" %accelResults.value.M_z)
@@ -82,7 +82,7 @@ def accel_mag_func(BoardName):
 def led_func(BoardName):
     print("->Press '1' for red LED")
     print("->Press '2' for green LED")
-    if BoardName != "FRDM-KL43Z":
+    if BoardName != "FRDM-KL43Z" and BoardName != "FRDM-K32L2B":
         print("->Press '3' for blue LED")
     whichLed = input_fn()
     whichLed = int(whichLed)

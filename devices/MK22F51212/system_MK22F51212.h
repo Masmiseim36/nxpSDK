@@ -7,15 +7,15 @@
 **                          MK22FN512VLL12
 **                          MK22FN512VMP12
 **
-**     Compilers:           Keil ARM C/C++ Compiler
-**                          Freescale C/C++ for Embedded ARM
+**     Compilers:           Freescale C/C++ for Embedded ARM
 **                          GNU C Compiler
 **                          IAR ANSI C/C++ Compiler for ARM
+**                          Keil ARM C/C++ Compiler
 **                          MCUXpresso Compiler
 **
 **     Reference manual:    K22P121M120SF7RM, Rev. 1, March 24, 2014
 **     Version:             rev. 2.9, 2016-03-21
-**     Build:               b180801
+**     Build:               b181105
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
@@ -24,6 +24,7 @@
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
 **     Copyright 2016-2018 NXP
+**     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
 **

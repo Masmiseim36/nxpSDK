@@ -12,11 +12,10 @@ Program boot from QSPI alias region (if the chip supports QSPI alias region).
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 8.11.3
-- Keil MDK 5.23
-- GCC ARM Embedded 6-2017-q2
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso10.1.0
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -33,6 +32,7 @@ Prepare the Demo
 ================
 On the FRDMK-82 board, the user can use the USB port to download the demo program through blhost. At step 1, press the
 SW2 button and connect to the USB cable to the target hardware.
+
 
 Running the demo
 ================
@@ -66,7 +66,7 @@ The project can generate the srec file directly. If you want to generate the src
 
   - MCUxpresso: open "Property" for demo project C/C++ Build -> Settings -> Build steps -> Post-build steps, choose "Edit...".
     Change the line # arm-none-eabi-objcopy -v -O binary "${BuildArtifactFileName}" "${BuildArtifactFileBaseName}.bin" to
-    arm-none-eabi-objcopy -v -O srec "${BuildArtifactFileName}" "${BuildArtifactFileBaseName}.srec"
+    arm-none-eabi-objcopy -v -O srec "${BuildArtifactFileName}" "$/hello_world_qspi.srec"
     Notice you shall remove the "#" at line begin.
 
 3. Prepare the QSPI config block for BootROM.
@@ -90,7 +90,7 @@ The project can generate the srec file directly. If you want to generate the src
     When changing to another demo, change the srec file name in .bd file. Move the qspi_config_block.bin to the same
     folder with hello_world_qspi.bd, or change the path of qspi_config_block.bin in hello_world_qspi.bd file. 
 
-    - On the command line, use the command "./elftosb.exe -V -c hello_world_qspi.bd -o hello_world_qspi.sb" to generate an
+    -Rename file "frdmk82f_hello_world_qspi.srec" to "hello_world_qspi.srec", On the command line, use the command "./elftosb.exe -V -c hello_world_qspi.bd -o hello_world_qspi.sb" to generate an
     sb file.
 
 5. Use blhost to configure the bootloader and download the image.

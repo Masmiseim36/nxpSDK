@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -56,8 +56,8 @@ bool process_host_command(
        * Byte b+s+2 : Payload - Length of SHIELD_NAME (v)
        * Bytes=v    : Payload Shield Name */
 
-        size_t appNameLen = strlen(embAppName);
-        size_t boardNameLen = strlen(boardString);
+        size_t appNameLen    = strlen(embAppName);
+        size_t boardNameLen  = strlen(boardString);
         size_t shieldNameLen = strlen(shieldString);
 
         if (respBufferSize >= boardNameLen + shieldNameLen + appNameLen + 3)
@@ -101,7 +101,7 @@ int main(void)
     int32_t status;
     uint8_t bannerLength, bannerString[128];
 
-    ARM_DRIVER_USART *pUartDriver = &HOST_S_DRIVER;
+    ARM_DRIVER_USART *pUartDriver    = &HOST_S_DRIVER;
     GENERIC_DRIVER_GPIO *pGpioDriver = &Driver_GPIO_KSDK;
 
     /*! Initialize the MCU hardware. */

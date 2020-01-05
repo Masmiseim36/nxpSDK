@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['base',['base',['../group__dma.html#a84d667acc1301d6d56ae52573e4b6b87',1,'dma_handle_t::base()'],['../group__lpsci__dma__driver.html#ab29f24957de7ba621eaa5916724dad03',1,'_lpsci_dma_handle::base()'],['../group__lpsci__freertos__driver.html#a5fba8086b17d2cf4b3e00da1bfa09ffe',1,'lpsci_rtos_config_t::base()'],['../group__uart__dma__driver.html#ac5bbb81df9c93c195d060b5d7d418c60',1,'_uart_dma_handle::base()'],['../group__uart__freertos__driver.html#af93759d3503ab560aef347c02e5f42dd',1,'uart_rtos_config_t::base()']]],
+  ['baudrate',['baudrate',['../group__lpsci__freertos__driver.html#ab587b51ec53c10f4c1fa8063977f1a19',1,'lpsci_rtos_config_t::baudrate()'],['../group__uart__freertos__driver.html#a3a516fb385a59c89720a3dead326df78',1,'uart_rtos_config_t::baudrate()']]],
+  ['baudrate_5fbps',['baudRate_Bps',['../group__i2c__driver.html#a2186844dc87bcde999fc12005f4c550a',1,'i2c_master_config_t::baudRate_Bps()'],['../group__lpsci__driver.html#a9784bc13e2e22e05b90ed54381d044ea',1,'lpsci_config_t::baudRate_Bps()'],['../group__spi__driver.html#ae7695987e044d80983fd98a43812b1ea',1,'spi_master_config_t::baudRate_Bps()'],['../group__uart__driver.html#acc123668836f3432c54ee6a2f6f318f1',1,'uart_config_t::baudRate_Bps()']]],
+  ['bclksource',['bclkSource',['../group__sai.html#a156dc7868da25bfc262bfac4bd4499a1',1,'sai_config_t']]],
+  ['bitwidth',['bitWidth',['../group__sai.html#ad4f8f19e4e01850841127ca7d0920302',1,'sai_transfer_format_t::bitWidth()'],['../group__sai.html#a6031e7b8e826009f5f2964b6a53bb66b',1,'_sai_handle::bitWidth()']]],
+  ['blockcount',['blockCount',['../group__CARD.html#aee36dc7f6472b4efb5c8c00fcaeb8a55',1,'sd_card_t::blockCount()'],['../group__SDSPI.html#a6ee807bcedf1f47a3563b738e7f2571b',1,'sdspi_card_t::blockCount()']]],
+  ['blocksize',['blockSize',['../group__CARD.html#a11f6303b3585dda87da4b8a26763c752',1,'sd_card_t::blockSize()'],['../group__CARD.html#a4cbb05171fc7209226ac22515fcdf365',1,'mmc_card_t::blockSize()'],['../group__SDSPI.html#a223bef1e8979e1f6780365cbfa2772a6',1,'sdspi_card_t::blockSize()']]],
+  ['blockwriteunitsize',['blockWriteUnitSize',['../group__flash__driver.html#ab1a2d9d6cf1d620134f3d668319d56fa',1,'flash_operation_config_t']]],
+  ['bootdatabuswidth',['bootDataBusWidth',['../group__CARD.html#a7bc2fd7e6287ca2146b9b62da8463770',1,'mmc_boot_config_t']]],
+  ['bootpartition',['bootPartition',['../group__CARD.html#a36c7c6813c44857dd094a4f57df0d2ba',1,'mmc_boot_config_t']]],
+  ['bootpartitionblocks',['bootPartitionBlocks',['../group__CARD.html#af76cbe7469a71b0695dae5b8e42088bf',1,'mmc_card_t']]],
+  ['buffer',['buffer',['../group__lpsci__freertos__driver.html#a026ef4828947431b1e135df07e3f2136',1,'lpsci_rtos_config_t::buffer()'],['../group__uart__freertos__driver.html#ad05b4abce6a95baa7ba35eaa57569cfe',1,'uart_rtos_config_t::buffer()']]],
+  ['buffer_5fsize',['buffer_size',['../group__lpsci__freertos__driver.html#af47b03d180d6074494023656b3931364',1,'lpsci_rtos_config_t::buffer_size()'],['../group__uart__freertos__driver.html#a7b7d6d667f6e06c720f506a07869e14d',1,'uart_rtos_config_t::buffer_size()']]],
+  ['busbaudrate',['busBaudRate',['../group__SDSPI.html#a992320fa4e3a64f4f4600bb7e996c193',1,'sdspi_host_t']]],
+  ['busclock_5fhz',['busClock_Hz',['../group__CARD.html#a9ae02a01ec2961f9a2374f40d9818c61',1,'sd_card_t::busClock_Hz()'],['../group__CARD.html#a4efa0a0f8086a31d1cd6d7337ed5ea24',1,'sdio_card_t::busClock_Hz()'],['../group__CARD.html#a70c3243e9802d253fb260c6ee2557c8e',1,'mmc_card_t::busClock_Hz()']]],
+  ['busclockfiltercount',['busClockFilterCount',['../group__rcm.html#ae6a09fe41cad54ed83f90b70287ad061',1,'rcm_reset_pin_filter_config_t']]],
+  ['bypassprescaler',['bypassPrescaler',['../group__lptmr.html#a3cbadd6a666cbd746c5add25fdf8e0ea',1,'lptmr_config_t']]],
+  ['byteperframe',['bytePerFrame',['../group__spi__driver.html#ac5bb58dcd72b94be9f29c8072018cd5c',1,'_spi_master_handle']]],
+  ['bytesperframe',['bytesPerFrame',['../group__sai__dma.html#a49888eef7d2f2d4af5bbd45f04dc737c',1,'_sai_dma_handle::bytesPerFrame()'],['../group__sai__edma.html#a999a7493ad74199568fa0ae9a1daba82',1,'_sai_edma_handle::bytesPerFrame()'],['../group__spi__dma__driver.html#ab83d82c084cba678e9ddb1135f89c29c',1,'_spi_dma_handle::bytesPerFrame()']]]
+];

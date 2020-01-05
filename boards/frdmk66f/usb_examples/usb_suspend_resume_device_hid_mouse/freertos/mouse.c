@@ -33,8 +33,7 @@
 #include "fsl_pit.h"
 #include "fsl_port.h"
 #include "fsl_smc.h"
-#include "usb_io.h"
-#include "usb_timer.h"
+#include "timer.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -70,7 +69,9 @@ void USB_WaitClockLocked(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+#define TIMER_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_BusClk)
 extern usb_hid_mouse_struct_t g_UsbDeviceHidMouse;
+uint32_t g_halTimerHandle[(HAL_TIMER_HANDLE_SIZE + 3) / 4];
 
 #if defined(configUSE_TICKLESS_IDLE) && (configUSE_TICKLESS_IDLE == 1U)
 SemaphoreHandle_t s_wakeupSig;
@@ -114,13 +115,13 @@ void BOARD_DeinitPins(void)
     /* Gate the port clock */
     CLOCK_DisableClock(kCLOCK_PortB);
 }
-void LLWU_SW_IRQ_HANDLER(void)
+void BOARD_SW3_IRQ_HANDLER(void)
 {
-    if ((1U << LLWU_SW_GPIO_PIN) & PORT_GetPinsInterruptFlags(LLWU_SW_PORT))
+    if ((1U << BOARD_SW3_GPIO_PIN) & PORT_GetPinsInterruptFlags(BOARD_SW3_PORT))
     {
         /* Disable interrupt. */
-        PORT_SetPinInterruptConfig(LLWU_SW_PORT, LLWU_SW_GPIO_PIN, kPORT_InterruptOrDMADisabled);
-        PORT_ClearPinsInterruptFlags(LLWU_SW_PORT, (1U << LLWU_SW_GPIO_PIN));
+        PORT_SetPinInterruptConfig(BOARD_SW3_PORT, BOARD_SW3_GPIO_PIN, kPORT_InterruptOrDMADisabled);
+        PORT_ClearPinsInterruptFlags(BOARD_SW3_PORT, (1U << BOARD_SW3_GPIO_PIN));
         g_UsbDeviceHidMouse.selfWakeup = 1U;
     }
     /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
@@ -132,39 +133,52 @@ void SW_IntControl(uint8_t enable)
     if (enable)
     {
         g_UsbDeviceHidMouse.selfWakeup = 0U;
-        PORT_SetPinInterruptConfig(LLWU_SW_PORT, LLWU_SW_GPIO_PIN, kPORT_InterruptFallingEdge);
+        PORT_SetPinInterruptConfig(BOARD_SW3_PORT, BOARD_SW3_GPIO_PIN, kPORT_InterruptFallingEdge);
     }
     else
     {
-        PORT_SetPinInterruptConfig(LLWU_SW_PORT, LLWU_SW_GPIO_PIN, kPORT_InterruptOrDMADisabled);
+        PORT_SetPinInterruptConfig(BOARD_SW3_PORT, BOARD_SW3_GPIO_PIN, kPORT_InterruptOrDMADisabled);
     }
 }
-void SW_Callback(void)
+void SW_Callback(void *param)
 {
     g_UsbDeviceHidMouse.selfWakeup = 1U;
     SW_IntControl(0);
 }
 void SW_Init(void)
 {
-    NVIC_SetPriority(LLWU_SW_IRQ, 1U);
-    NVIC_EnableIRQ(LLWU_SW_IRQ);
+    NVIC_SetPriority(BOARD_SW3_IRQ, 1U);
+    NVIC_EnableIRQ(BOARD_SW3_IRQ);
 }
 char *SW_GetName(void)
 {
-    return LLWU_SW_NAME;
+    return BOARD_SW3_NAME;
 }
-void HW_TimerCallback(void)
+void HW_TimerCallback(void *param)
 {
     g_UsbDeviceHidMouse.hwTick++;
     USB_DeviceUpdateHwTick(g_UsbDeviceHidMouse.deviceHandle, g_UsbDeviceHidMouse.hwTick);
 }
 void HW_TimerInit(void)
 {
-    USB_TimerInit(0, 1000U, CLOCK_GetFreq(kCLOCK_BusClk), HW_TimerCallback);
+    hal_timer_config_t halTimerConfig;
+    halTimerConfig.timeout            = 1000;
+    halTimerConfig.srcClock_Hz        = TIMER_SOURCE_CLOCK;
+    halTimerConfig.instance           = 0U;
+    hal_timer_handle_t halTimerHandle = &g_halTimerHandle[0];
+    HAL_TimerInit(halTimerHandle, &halTimerConfig);
+    HAL_TimerInstallCallback(halTimerHandle, HW_TimerCallback, NULL);
 }
 void HW_TimerControl(uint8_t enable)
 {
-    USB_TimerInt(0, enable);
+    if (enable)
+    {
+        HAL_TimerEnable(g_halTimerHandle);
+    }
+    else
+    {
+        HAL_TimerDisable(g_halTimerHandle);
+    }
 }
 void USB_LowpowerModeInit(void)
 {
@@ -350,7 +364,7 @@ static usb_status_t USB_DeviceHidMouseAction(void)
 /* The hid class callback */
 static usb_status_t USB_DeviceHidMouseCallback(class_handle_t handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error                                     = kStatus_USB_Error;
     usb_device_endpoint_callback_message_struct_t *message = (usb_device_endpoint_callback_message_struct_t *)param;
 
     switch (event)
@@ -390,20 +404,20 @@ static usb_status_t USB_DeviceHidMouseCallback(class_handle_t handle, uint32_t e
 static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
     usb_status_t error = kStatus_USB_Error;
-    uint16_t *temp16 = (uint16_t *)param;
-    uint8_t *temp8 = (uint8_t *)param;
+    uint16_t *temp16   = (uint16_t *)param;
+    uint8_t *temp8     = (uint8_t *)param;
 
     switch (event)
     {
         case kUSB_DeviceEventBusReset:
         {
             /* USB bus reset signal detected */
-            g_UsbDeviceHidMouse.attach = 0U;
+            g_UsbDeviceHidMouse.attach               = 0U;
             g_UsbDeviceHidMouse.currentConfiguration = 0U;
-            g_UsbDeviceHidMouse.remoteWakeup = 0U;
-            g_UsbDeviceHidMouse.suspend = kStatus_MouseIdle;
-            g_UsbDeviceHidMouse.isResume = 0U;
-            error = kStatus_USB_Success;
+            g_UsbDeviceHidMouse.remoteWakeup         = 0U;
+            g_UsbDeviceHidMouse.suspend              = kStatus_MouseIdle;
+            g_UsbDeviceHidMouse.isResume             = 0U;
+            error                                    = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -444,8 +458,8 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                 usb_echo("USB device start suspend\r\n");
                 USB_ControllerSuspended();
                 g_UsbDeviceHidMouse.startTick = g_UsbDeviceHidMouse.hwTick;
-                g_UsbDeviceHidMouse.suspend = kStatus_MouseStartSuspend;
-                error = kStatus_USB_Success;
+                g_UsbDeviceHidMouse.suspend   = kStatus_MouseStartSuspend;
+                error                         = kStatus_USB_Success;
             }
         }
         break;
@@ -472,20 +486,20 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             }
             break;
         case kUSB_DeviceEventSetConfiguration:
-            if (0U ==(*temp8))
+            if (0U == (*temp8))
             {
-                g_UsbDeviceHidMouse.attach = 0;
+                g_UsbDeviceHidMouse.attach               = 0;
                 g_UsbDeviceHidMouse.currentConfiguration = 0U;
-                g_UsbDeviceHidMouse.remoteWakeup = 0U;
-                g_UsbDeviceHidMouse.suspend = kStatus_MouseIdle;
-                g_UsbDeviceHidMouse.isResume = 0U;
+                g_UsbDeviceHidMouse.remoteWakeup         = 0U;
+                g_UsbDeviceHidMouse.suspend              = kStatus_MouseIdle;
+                g_UsbDeviceHidMouse.isResume             = 0U;
             }
             else if (USB_HID_MOUSE_CONFIGURE_INDEX == (*temp8))
             {
                 /* Set device configuration request */
-                g_UsbDeviceHidMouse.attach = 1U;
+                g_UsbDeviceHidMouse.attach               = 1U;
                 g_UsbDeviceHidMouse.currentConfiguration = *temp8;
-                error = USB_DeviceHidMouseAction();
+                error                                    = USB_DeviceHidMouseAction();
             }
             else
             {
@@ -496,7 +510,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             if (g_UsbDeviceHidMouse.attach)
             {
                 /* Set device interface request */
-                uint8_t interface = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
+                uint8_t interface        = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
                 uint8_t alternateSetting = (uint8_t)(*temp16 & 0x00FFU);
                 if (interface < USB_HID_MOUSE_INTERFACE_COUNT)
                 {
@@ -513,7 +527,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             {
                 /* Get current configuration request */
                 *temp8 = g_UsbDeviceHidMouse.currentConfiguration;
-                error = kStatus_USB_Success;
+                error  = kStatus_USB_Success;
             }
             break;
         case kUSB_DeviceEventGetInterface:
@@ -524,7 +538,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                 if (interface < USB_HID_MOUSE_INTERFACE_COUNT)
                 {
                     *temp16 = (*temp16 & 0xFF00U) | g_UsbDeviceHidMouse.currentInterfaceAlternateSetting[interface];
-                    error = kStatus_USB_Success;
+                    error   = kStatus_USB_Success;
                 }
                 else
                 {
@@ -592,15 +606,15 @@ static void USB_DeviceApplicationInit(void)
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
     /* Set HID mouse to default state */
-    g_UsbDeviceHidMouse.speed = USB_SPEED_FULL;
-    g_UsbDeviceHidMouse.attach = 0U;
-    g_UsbDeviceHidMouse.hidHandle = (class_handle_t)NULL;
+    g_UsbDeviceHidMouse.speed        = USB_SPEED_FULL;
+    g_UsbDeviceHidMouse.attach       = 0U;
+    g_UsbDeviceHidMouse.hidHandle    = (class_handle_t)NULL;
     g_UsbDeviceHidMouse.deviceHandle = NULL;
     g_UsbDeviceHidMouse.remoteWakeup = 0U;
-    g_UsbDeviceHidMouse.buffer = s_MouseBuffer;
-    g_UsbDeviceHidMouse.suspend = kStatus_MouseIdle;
-    g_UsbDeviceHidMouse.selfWakeup = 0U;
-    g_UsbDeviceHidMouse.isResume = 0U;
+    g_UsbDeviceHidMouse.buffer       = s_MouseBuffer;
+    g_UsbDeviceHidMouse.suspend      = kStatus_MouseIdle;
+    g_UsbDeviceHidMouse.selfWakeup   = 0U;
+    g_UsbDeviceHidMouse.isResume     = 0U;
 
     /* Initialize the usb stack and class drivers */
     if (kStatus_USB_Success !=
@@ -693,7 +707,7 @@ void USB_DeviceSuspendResumeTask(void)
             }
 #if defined(configUSE_TICKLESS_IDLE) && (configUSE_TICKLESS_IDLE == 1U)
 #else
-            xTaskResumeAll();
+            (void)xTaskResumeAll();
 #endif
             if (g_UsbDeviceHidMouse.remoteWakeup)
             {
@@ -809,7 +823,7 @@ void main(void)
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
     /* Set the LLWU pin */
-    GPIO_PinInit(LLWU_SW_GPIO, LLWU_SW_GPIO_PIN, &pinConfig);
+    GPIO_PinInit(BOARD_SW3_GPIO, BOARD_SW3_GPIO_PIN, &pinConfig);
 
     if (xTaskCreate(APP_task,                                  /* pointer to the task */
                     "app task",                                /* task name for kernel awareness debugging */

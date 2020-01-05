@@ -137,32 +137,48 @@ int main(void)
 
     /* Create the queue receive task as described in the comments at the top
     of this    file. */
-    xTaskCreate(/* The function that implements the task. */
-                prvQueueReceiveTask,
-                /* Text name for the task, just to help debugging. */
-                "Rx",
-                /* The size (in words) of the stack that should be created
-                for the task. */
-                configMINIMAL_STACK_SIZE + 166,
-                /* A parameter that can be passed into the task.  Not used
-                in this simple demo. */
-                NULL,
-                /* The priority to assign to the task.  tskIDLE_PRIORITY
-                (which is 0) is the lowest priority.  configMAX_PRIORITIES - 1
-                is the highest priority. */
-                mainQUEUE_RECEIVE_TASK_PRIORITY,
-                /* Used to obtain a handle to the created task.  Not used in
-                this simple demo, so set to NULL. */
-                NULL);
+    if (xTaskCreate(/* The function that implements the task. */
+                    prvQueueReceiveTask,
+                    /* Text name for the task, just to help debugging. */
+                    "Rx",
+                    /* The size (in words) of the stack that should be created
+                    for the task. */
+                    configMINIMAL_STACK_SIZE + 166,
+                    /* A parameter that can be passed into the task.  Not used
+                    in this simple demo. */
+                    NULL,
+                    /* The priority to assign to the task.  tskIDLE_PRIORITY
+                    (which is 0) is the lowest priority.  configMAX_PRIORITIES - 1
+                    is the highest priority. */
+                    mainQUEUE_RECEIVE_TASK_PRIORITY,
+                    /* Used to obtain a handle to the created task.  Not used in
+                    this simple demo, so set to NULL. */
+                    NULL) != pdPASS)
+    {
+        PRINTF("Task creation failed!.\r\n");
+        while (1)
+            ;
+    }
 
     /* Create the queue send task in exactly the same way.  Again, this is
     described in the comments at the top of the file. */
-    xTaskCreate(prvQueueSendTask, "TX", configMINIMAL_STACK_SIZE + 166, NULL, mainQUEUE_SEND_TASK_PRIORITY, NULL);
+    if (xTaskCreate(prvQueueSendTask, "TX", configMINIMAL_STACK_SIZE + 166, NULL, mainQUEUE_SEND_TASK_PRIORITY, NULL) !=
+        pdPASS)
+    {
+        PRINTF("Task creation failed!.\r\n");
+        while (1)
+            ;
+    }
 
     /* Create the task that is synchronised with an interrupt using the
     xEventSemaphore semaphore. */
-    xTaskCreate(prvEventSemaphoreTask, "Sem", configMINIMAL_STACK_SIZE + 166, NULL, mainEVENT_SEMAPHORE_TASK_PRIORITY,
-                NULL);
+    if (xTaskCreate(prvEventSemaphoreTask, "Sem", configMINIMAL_STACK_SIZE + 166, NULL,
+                    mainEVENT_SEMAPHORE_TASK_PRIORITY, NULL) != pdPASS)
+    {
+        PRINTF("Task creation failed!.\r\n");
+        while (1)
+            ;
+    }
 
     /* Create the software timer as described in the comments at the top of
     this file. */

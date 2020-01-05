@@ -5,7 +5,16 @@ The code of this demo has been prepared and updated for use with the MCUXpresso 
 The ADC Low Power demo application demonstrates the usage of the ADC peripheral while in a low power mode. The
 microcontroller is first set to very low power stop (VLPS) mode. Every 500 ms, an interrupt wakes up the ADC module and
 reads the current temperature of the microcontroller. Increment or decrement the temperature to see the changes, red lights
-for higher and blue one for lower than average counted temperatures.
+for higher and blue one for lower than average counted temperatures. You can open the mex file with MCUXpresso Config Tool to 
+do further configuration of pin, clock and peripheral.
+
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -47,11 +56,6 @@ ADC LOW POWER PERIPHERAL DEMO... ADC16_DoAutoCalibration() Done.
  Enter any character to begin the demo...
  ---> OK! Main process is running...!
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+Customization options
+=====================
 

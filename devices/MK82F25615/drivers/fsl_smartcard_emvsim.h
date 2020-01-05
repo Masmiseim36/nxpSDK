@@ -1,31 +1,9 @@
 /*
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _FSL_SMARTCARD_EMVSIM_H_
@@ -38,8 +16,6 @@
  * @{
  */
 
-/*! @file */
-
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -51,7 +27,7 @@
 #define SMARTCARD_EMV_TX_NACK_THRESHOLD (5u)
 
 /*! @brief Smart card Word Wait Timer adjustment value */
-#define SMARTCARD_WWT_ADJUSTMENT (180u)
+#define SMARTCARD_WWT_ADJUSTMENT (160u)
 
 /*! @brief Smart card Character Wait Timer adjustment value */
 #define SMARTCARD_CWT_ADJUSTMENT (3u)
@@ -59,24 +35,24 @@
 /*! @brief General Purpose Counter clock selections */
 typedef enum _emvsim_gpc_clock_select
 {
-    kEMVSIM_GPCClockDisable = 0u, /*!< disabled */
-    kEMVSIM_GPCCardClock = 1u,    /*!< card clock */
-    kEMVSIM_GPCRxClock = 2u,      /*!< receive clock */
-    kEMVSIM_GPCTxClock = 3u,      /*!< transmit ETU clock */
+    kEMVSIM_GPCClockDisable = 0u, /*!< Disabled */
+    kEMVSIM_GPCCardClock    = 1u, /*!< Card clock */
+    kEMVSIM_GPCRxClock      = 2u, /*!< Receive clock */
+    kEMVSIM_GPCTxClock      = 3u, /*!< Transmit ETU clock */
 } emvsim_gpc_clock_select_t;
 
 /*! @brief EMVSIM card presence detection edge control */
 typedef enum _presence_detect_edge
 {
-    kEMVSIM_DetectOnFallingEdge = 0u, /*!< presence detect on falling edge */
-    kEMVSIM_DetectOnRisingEdge = 1u,  /*!< presence detect on rising edge */
+    kEMVSIM_DetectOnFallingEdge = 0u, /*!< Presence detected on the falling edge */
+    kEMVSIM_DetectOnRisingEdge  = 1u, /*!< Presence detected on the rising edge */
 } emvsim_presence_detect_edge_t;
 
 /*! @brief EMVSIM card presence detection status */
 typedef enum _presence_detect_status
 {
-    kEMVSIM_DetectPinIsLow = 0u,  /*!< presence detect pin is logic low */
-    kEMVSIM_DetectPinIsHigh = 1u, /*!< presence detect pin is logic high */
+    kEMVSIM_DetectPinIsLow  = 0u, /*!< Presence detected pin is logic low */
+    kEMVSIM_DetectPinIsHigh = 1u, /*!< Presence detected pin is logic high */
 } emvsim_presence_detect_status_t;
 
 /*******************************************************************************
@@ -92,7 +68,7 @@ extern "C" {
  */
 
 /*!
- * @brief Fill in smartcard_card_params structure with default values according EMV 4.3 specification.
+ * @brief Fills in the smartcard_card_params structure with default values according to the EMV 4.3 specification.
  *
  * @param cardParams The configuration structure of type smartcard_interface_config_t.
  * Function fill in members:
@@ -106,13 +82,13 @@ extern "C" {
 void SMARTCARD_EMVSIM_GetDefaultConfig(smartcard_card_params_t *cardParams);
 
 /*!
- * @brief Initializes an EMVSIM peripheral for smart card/ISO-7816 operation.
+ * @brief Initializes an EMVSIM peripheral for the Smart card/ISO-7816 operation.
  *
- * This function Un-gate EMVSIM clock, initializes the module to EMV default settings,
- * configures the IRQ, enables the module-level interrupt to the core and initialize driver context.
+ * This function un-gates the EMVSIM clock, initializes the module to EMV default settings,
+ * configures the IRQ, enables the module-level interrupt to the core and, initializes the driver context.
  *
  * @param base The EMVSIM peripheral base address.
- * @param context A pointer to a smart card driver context structure.
+ * @param context A pointer to the smart card driver context structure.
  * @param srcClock_Hz Smart card clock generation module source clock.
  *
  * @return An error code or kStatus_SMARTCARD_Success.
@@ -121,7 +97,7 @@ status_t SMARTCARD_EMVSIM_Init(EMVSIM_Type *base, smartcard_context_t *context, 
 
 /*!
  * @brief This function disables the EMVSIM interrupts, disables the transmitter and receiver,
- * flushes the FIFOs and gates EMVSIM clock in SIM.
+ * flushes the FIFOs, and gates EMVSIM clock in SIM.
  *
  * @param base The EMVSIM module base address.
  */
@@ -160,24 +136,24 @@ status_t SMARTCARD_EMVSIM_AbortTransfer(EMVSIM_Type *base, smartcard_context_t *
  *
  * A non-blocking (also known as asynchronous) function means that the function returns
  * immediately after initiating the transfer function. The application has to get the
- * transfer status to see when the transfer is complete. In other words, after calling non-blocking
- * (asynchronous) transfer function, the application must get the transfer status to check if transmit
+ * transfer status to see when the transfer is complete. In other words, after calling the non-blocking
+ * (asynchronous) transfer function, the application must get the transfer status to check if the transmit
  * is completed or not.
  *
  * @param base The EMVSIM peripheral base address.
  * @param context A pointer to a smart card driver context structure.
- * @param xfer A pointer to smart card transfer structure where are linked buffers and sizes.
+ * @param xfer A pointer to the smart card transfer structure where the linked buffers and sizes are stored.
  *
  * @return An error code or kStatus_SMARTCARD_Success.
  */
 status_t SMARTCARD_EMVSIM_TransferNonBlocking(EMVSIM_Type *base, smartcard_context_t *context, smartcard_xfer_t *xfer);
 
 /*!
- * @brief Controls EMVSIM module as per different user request.
+ * @brief Controls the EMVSIM module per different user request.
  *
  * @param base The EMVSIM peripheral base address.
  * @param context A pointer to a smart card driver context structure.
- * @param control Control type
+ * @param control Control type.
  * @param param Integer value of specific to control command.
  *
  * return kStatus_SMARTCARD_Success in success.

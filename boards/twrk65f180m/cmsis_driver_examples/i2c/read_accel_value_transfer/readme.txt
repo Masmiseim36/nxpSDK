@@ -3,7 +3,7 @@ Overview
 CMSIS-Driver defines generic peripheral driver interfaces for middleware making it reusable across a wide 
 range of supported microcontroller devices. The API connects microcontroller peripherals with middleware 
 that implements for example communication stacks, file systems, or graphic user interfaces. 
-More information and usage methord please refer to http://www.keil.com/pack/doc/cmsis/Driver/html/index.html.
+More information and usage method please refer to http://www.keil.com/pack/doc/cmsis/Driver/html/index.html.
 
 The cmsis_i2c_read_accel_value example shows how to use CMSIS I2C driver to communicate with an i2c device:
 
@@ -15,7 +15,10 @@ the virtual serial port on board.
 
 Toolchain supported
 ===================
-- Keil MDK 5.20
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -44,7 +47,7 @@ Running the demo
 When the example runs successfully, you can see the similar information from the terminal as below.
 
 I2C example -- Read Accelerometer Value
-Found a MMA8451 on board , the device address is 0x1d .
+Found an MMA8451 on board , the device address is 0x1d .
 The accel values:
 status_reg = 0xff , x =   -10 , y =    31 , z =  2025
 status_reg = 0xff , x =    -6 , y =    32 , z =  2022

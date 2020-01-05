@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -78,11 +78,13 @@ int main(void)
     /* DMA MUX init */
     DMAMUX_Init(EXAMPLE_DSPI_SLAVE_DMA_MUX_BASEADDR);
 
-    DMAMUX_SetSource(EXAMPLE_DSPI_SLAVE_DMA_MUX_BASEADDR, slaveRxChannel, (uint8_t)EXAMPLE_DSPI_SLAVE_DMA_RX_REQUEST_SOURCE);
+    DMAMUX_SetSource(EXAMPLE_DSPI_SLAVE_DMA_MUX_BASEADDR, slaveRxChannel,
+                     (uint8_t)EXAMPLE_DSPI_SLAVE_DMA_RX_REQUEST_SOURCE);
     DMAMUX_EnableChannel(EXAMPLE_DSPI_SLAVE_DMA_MUX_BASEADDR, slaveRxChannel);
 
 #if (defined EXAMPLE_DSPI_SLAVE_DMA_TX_REQUEST_SOURCE)
-    DMAMUX_SetSource(EXAMPLE_DSPI_SLAVE_DMA_MUX_BASEADDR, slaveTxChannel, (uint8_t)EXAMPLE_DSPI_SLAVE_DMA_TX_REQUEST_SOURCE);
+    DMAMUX_SetSource(EXAMPLE_DSPI_SLAVE_DMA_MUX_BASEADDR, slaveTxChannel,
+                     (uint8_t)EXAMPLE_DSPI_SLAVE_DMA_TX_REQUEST_SOURCE);
     DMAMUX_EnableChannel(EXAMPLE_DSPI_SLAVE_DMA_MUX_BASEADDR, slaveTxChannel);
 #endif
 
@@ -101,14 +103,14 @@ int main(void)
     dspi_transfer_t slaveXfer;
 
     /* Slave config */
-    slaveConfig.whichCtar = kDSPI_Ctar0;
-    slaveConfig.ctarConfig.bitsPerFrame = 8U;
-    slaveConfig.ctarConfig.cpol = kDSPI_ClockPolarityActiveHigh;
-    slaveConfig.ctarConfig.cpha = kDSPI_ClockPhaseFirstEdge;
-    slaveConfig.enableContinuousSCK = false;
-    slaveConfig.enableRxFifoOverWrite = false;
+    slaveConfig.whichCtar                  = kDSPI_Ctar0;
+    slaveConfig.ctarConfig.bitsPerFrame    = 8U;
+    slaveConfig.ctarConfig.cpol            = kDSPI_ClockPolarityActiveHigh;
+    slaveConfig.ctarConfig.cpha            = kDSPI_ClockPhaseFirstEdge;
+    slaveConfig.enableContinuousSCK        = false;
+    slaveConfig.enableRxFifoOverWrite      = false;
     slaveConfig.enableModifiedTimingFormat = false;
-    slaveConfig.samplePoint = kDSPI_SckToSin0Clock;
+    slaveConfig.samplePoint                = kDSPI_SckToSin0Clock;
 
     DSPI_SlaveInit(EXAMPLE_DSPI_SLAVE_BASEADDR, &slaveConfig);
 
@@ -131,10 +133,10 @@ int main(void)
         }
 
         /* Set slave transfer ready to receive data */
-        isTransferCompleted = false;
-        slaveXfer.txData = NULL;
-        slaveXfer.rxData = slaveRxData;
-        slaveXfer.dataSize = TRANSFER_SIZE;
+        isTransferCompleted   = false;
+        slaveXfer.txData      = NULL;
+        slaveXfer.rxData      = slaveRxData;
+        slaveXfer.dataSize    = TRANSFER_SIZE;
         slaveXfer.configFlags = kDSPI_SlaveCtar0;
 
         /* Slave start receive */
@@ -148,10 +150,10 @@ int main(void)
         }
 
         /* Set slave transfer ready to send back data */
-        isTransferCompleted = false;
-        slaveXfer.txData = slaveRxData;
-        slaveXfer.rxData = NULL;
-        slaveXfer.dataSize = TRANSFER_SIZE;
+        isTransferCompleted   = false;
+        slaveXfer.txData      = slaveRxData;
+        slaveXfer.rxData      = NULL;
+        slaveXfer.dataSize    = TRANSFER_SIZE;
         slaveXfer.configFlags = kDSPI_SlaveCtar0;
 
         /* Slave start send */

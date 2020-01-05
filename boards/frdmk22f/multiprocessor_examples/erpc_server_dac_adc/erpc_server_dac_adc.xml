@@ -2,7 +2,6 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
-    <definition extID="RTE_Device.MK22F51212"/>
     <definition extID="component.lists.MK22F51212"/>
     <definition extID="component.serial_manager.MK22F51212"/>
     <definition extID="component.serial_manager_uart.MK22F51212"/>
@@ -19,6 +18,7 @@
     <definition extID="platform.CMSIS_Driver_Include.USART_CMSISInclude.MK22F51212"/>
     <definition extID="platform.Include_common.MK22F51212"/>
     <definition extID="platform.Include_core_cm4.MK22F51212"/>
+    <definition extID="platform.Include_dsp.MK22F51212"/>
     <definition extID="platform.drivers.adc16.MK22F51212"/>
     <definition extID="platform.drivers.clock.MK22F51212"/>
     <definition extID="platform.drivers.common.MK22F51212"/>
@@ -34,13 +34,14 @@
     <definition extID="platform.drivers.uart_cmsis_edma.MK22F51212"/>
     <definition extID="platform.drivers.uart_edma.MK22F51212"/>
     <definition extID="platform.utilities.assert.MK22F51212"/>
+    <definition extID="platform.utilities.misc_utilities.MK22F51212"/>
     <definition extID="utility.debug_console.MK22F51212"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk22f_erpc_server_dac_adc" name="erpc_server_dac_adc" category="multiprocessor_examples" dependency="platform.drivers.uart.MK22F51212 platform.drivers.uart_edma.MK22F51212 platform.drivers.dac.MK22F51212 driver.fxos8700cq.MK22F51212 platform.drivers.uart_cmsis_edma.MK22F51212 platform.drivers.gpio.MK22F51212 platform.drivers.port.MK22F51212 platform.drivers.i2c.MK22F51212 platform.drivers.adc16.MK22F51212 platform.drivers.edma.MK22F51212 platform.drivers.dmamux.MK22F51212 middleware.multicore.erpc.eRPC_server.MK22F51212 middleware.multicore.erpc.eRPC_uart_cmsis_transport.MK22F51212 middleware.multicore.erpc.eRPC_port_stdlib.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 device.MK22F51212_CMSIS.MK22F51212 utility.debug_console.MK22F51212 component.uart_adapter.MK22F51212 component.serial_manager.MK22F51212 component.serial_manager_uart.MK22F51212 component.lists.MK22F51212 device.MK22F51212_startup.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.smc.MK22F51212 platform.utilities.assert.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.Include_common.MK22F51212 platform.CMSIS_Driver_Include.USART_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.Common_CMSISInclude.MK22F51212 RTE_Device.MK22F51212 middleware.multicore.erpc.common.MK22F51212 middleware.multicore.erpc.doc.MK22F51212" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmk22f_erpc_server_dac_adc" name="erpc_server_dac_adc" category="multiprocessor_examples" dependency="platform.drivers.uart.MK22F51212 platform.drivers.uart_edma.MK22F51212 platform.drivers.dac.MK22F51212 driver.fxos8700cq.MK22F51212 platform.drivers.uart_cmsis_edma.MK22F51212 platform.drivers.gpio.MK22F51212 platform.drivers.port.MK22F51212 platform.drivers.i2c.MK22F51212 platform.drivers.adc16.MK22F51212 platform.drivers.edma.MK22F51212 platform.drivers.dmamux.MK22F51212 middleware.multicore.erpc.eRPC_server.MK22F51212 middleware.multicore.erpc.eRPC_uart_cmsis_transport.MK22F51212 middleware.multicore.erpc.eRPC_port_stdlib.MK22F51212 middleware.multicore.erpc.doc.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 device.MK22F51212_CMSIS.MK22F51212 utility.debug_console.MK22F51212 component.uart_adapter.MK22F51212 component.serial_manager.MK22F51212 component.lists.MK22F51212 component.serial_manager_uart.MK22F51212 device.MK22F51212_startup.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.smc.MK22F51212 platform.utilities.assert.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.Include_common.MK22F51212 platform.Include_dsp.MK22F51212 platform.CMSIS_Driver_Include.USART_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.Common_CMSISInclude.MK22F51212 middleware.multicore.erpc.common.MK22F51212 platform.utilities.misc_utilities.MK22F51212">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.ccnature"/>
     </projects>
@@ -62,6 +63,7 @@
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>FRDM_K22F</value>
           <value>FREEDOM</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -77,6 +79,7 @@
         </option>
         <option id="gnu.cpp.compiler.option.preprocessor.def" type="stringList">
           <value>CPU_MK22FN512VLH12</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.cpp.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -95,28 +98,37 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="CMSIS/Driver/Include" target_path="drivers" type="c_include">
-      <files mask="Driver_Common.h"/>
-      <files mask="Driver_USART.h"/>
-    </source>
-    <source path="boards/frdmk22f/multiprocessor_examples/erpc_common" target_path="erpc" type="c_include">
+    <source path="boards/frdmk22f/multiprocessor_examples/erpc_common" target_path="source" type="c_include">
       <files mask="erpc_error_handler.h"/>
     </source>
-    <source path="boards/frdmk22f/multiprocessor_examples/erpc_common" target_path="erpc" type="src">
+    <source path="boards/frdmk22f/multiprocessor_examples/erpc_common" target_path="source" type="src">
       <files mask="erpc_error_handler.cpp"/>
     </source>
-    <source path="boards/frdmk22f/multiprocessor_examples/erpc_server_dac_adc/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/frdmk22f/multiprocessor_examples/erpc_server_dac_adc/armgcc" target_path="MK22F51212/gcc" type="linker" toolchain="armgcc">
       <files mask="MK22FN512xxx12_flash.ld"/>
     </source>
-    <source path="boards/frdmk22f/multiprocessor_examples/erpc_server_dac_adc/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/frdmk22f/multiprocessor_examples/erpc_server_dac_adc/iar" target_path="MK22F51212/iar" type="linker" toolchain="iar">
       <files mask="MK22FN512xxx12_flash.icf"/>
     </source>
-    <source path="boards/frdmk22f/multiprocessor_examples/erpc_server_dac_adc/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/frdmk22f/multiprocessor_examples/erpc_server_dac_adc/mdk" target_path="MK22F51212/arm" type="linker" toolchain="mdk">
       <files mask="MK22FN512xxx12_flash.scf"/>
+    </source>
+    <source path="boards/frdmk22f/multiprocessor_examples/erpc_server_dac_adc/service/erpc_dac_adc" target_path="erpc/service/erpc_dac_adc" type="script" exclude="true">
+      <files mask="__init__.py"/>
+      <files mask="client.py"/>
+      <files mask="common.py"/>
+      <files mask="interface.py"/>
+      <files mask="server.py"/>
     </source>
     <source path="boards/frdmk22f/multiprocessor_examples/erpc_server_dac_adc/service" target_path="erpc/service" type="c_include">
       <files mask="erpc_dac_adc.h"/>
       <files mask="erpc_dac_adc_server.h"/>
+    </source>
+    <source path="boards/frdmk22f/multiprocessor_examples/erpc_server_dac_adc/service" target_path="erpc/service" type="script">
+      <files mask="erpc_dac_adc.erpc"/>
+    </source>
+    <source path="boards/frdmk22f/multiprocessor_examples/erpc_server_dac_adc/service" target_path="erpc/service" type="script" exclude="true">
+      <files mask="__init__.py"/>
     </source>
     <source path="boards/frdmk22f/multiprocessor_examples/erpc_server_dac_adc/service" target_path="erpc/service" type="src">
       <files mask="erpc_dac_adc_server.cpp"/>
@@ -140,6 +152,9 @@
     </source>
     <source path="boards/frdmk22f/multiprocessor_examples/erpc_server_dac_adc" target_path="source" type="c_include">
       <files mask="erpc_config.h"/>
+    </source>
+    <source path="boards/frdmk22f/multiprocessor_examples/erpc_server_dac_adc" target_path="source" type="script" exclude="true">
+      <files mask="run.py"/>
     </source>
     <source path="boards/frdmk22f/multiprocessor_examples/erpc_server_dac_adc" target_path="source" type="src">
       <files mask="main_server.c"/>

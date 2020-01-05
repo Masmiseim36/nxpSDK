@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,17 +14,19 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.0
+product: Pins v6.0
 processor: MK22FN512xxx12
 package_id: MK22FN512VDC12
 mcu_data: ksdk2_0
-processor_version: 0.0.8
+processor_version: 6.0.1
+board: TWR-K22F120M
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
 
 #include "fsl_common.h"
 #include "fsl_port.h"
+#include "fsl_gpio.h"
 #include "pin_mux.h"
 
 /* FUNCTION ************************************************************************************************************
@@ -42,9 +44,10 @@ void BOARD_InitBootPins(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins:
-- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', prefix: BOARD_, coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: B2, peripheral: GPIOD, signal: 'GPIO, 6', pin_signal: ADC0_SE7b/PTD6/LLWU_P15/SPI0_PCS3/UART0_RX/FTM0_CH6/FB_AD0/FTM0_FLT0/SPI1_SOUT}
+  - {pin_num: B2, peripheral: GPIOD, signal: 'GPIO, 6', pin_signal: ADC0_SE7b/PTD6/LLWU_P15/SPI0_PCS3/UART0_RX/FTM0_CH6/FB_AD0/FTM0_FLT0/SPI1_SOUT, direction: OUTPUT}
+  - {pin_num: J7, peripheral: TPIU, signal: SWO, pin_signal: PTA2/UART0_TX/FTM0_CH7/JTAG_TDO/TRACE_SWO/EZP_DO, pull_select: down, pull_enable: disable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -57,11 +60,34 @@ BOARD_InitPins:
  * END ****************************************************************************************************************/
 void BOARD_InitPins(void)
 {
+    /* Port A Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortA);
     /* Port D Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortD);
 
+    gpio_pin_config_t LED_ORANGE_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PTD6 (pin B2)  */
+    GPIO_PinInit(BOARD_LED_ORANGE_GPIO, BOARD_LED_ORANGE_PIN, &LED_ORANGE_config);
+
+    /* PORTA2 (pin J7) is configured as TRACE_SWO */
+    PORT_SetPinMux(PORTA, 2U, kPORT_MuxAlt7);
+
+    PORTA->PCR[2] = ((PORTA->PCR[2] &
+                      /* Mask bits to zero which are setting */
+                      (~(PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_ISF_MASK)))
+
+                     /* Pull Select: Internal pulldown resistor is enabled on the corresponding pin, if the
+                      * corresponding PE field is set. */
+                     | PORT_PCR_PS(kPORT_PullDown)
+
+                     /* Pull Enable: Internal pullup or pulldown resistor is not enabled on the corresponding pin. */
+                     | PORT_PCR_PE(kPORT_PullDisable));
+
     /* PORTD6 (pin B2) is configured as PTD6 */
-    PORT_SetPinMux(PORTD, 6U, kPORT_MuxAsGpio);
+    PORT_SetPinMux(BOARD_LED_ORANGE_PORT, BOARD_LED_ORANGE_PIN, kPORT_MuxAsGpio);
 }
 /***********************************************************************************************************************
  * EOF

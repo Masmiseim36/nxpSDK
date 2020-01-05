@@ -11,11 +11,10 @@ In this example , we make use of the available electrodes on board to show drive
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 8.11.3
-- Keil MDK 5.23
-- GCC ARM Embedded 6-2017-q2
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso10.1.0
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -40,33 +39,41 @@ Prepare the Demo
 
 Running the demo
 ================
-When running successfully, the log output in terminal shall be similar as below:
+1. Download the code to device flash, do not using debug mode;
+2. Power-off then power-on the board;
+3. Open serial terminal utility with specific COM number, then press "Reset Button" on board.
+4. Do as the message shown in terminal guides;
 
+When the example runs successfully, you can see the similar information from the terminal as below.
+
+Note: The message shown below will different depends on your input character.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 TSI_V4 Low_Power_Modes Example Start!
-Please don't touch the touchpad.
-Press anykey to start TSI low power example.
+Please don't touch the touchpad
+Press anykey to start TSI low power example
 Start calibartion....
-Calibrated counters for channel 0 is: 2772
+Calibrated counters for channel 0 is: 2485
 Calibrated counters for channel 1 is: 65535
 Calibrated counters for channel 2 is: 65535
 Calibrated counters for channel 3 is: 65535
 Calibrated counters for channel 4 is: 65535
 Calibrated counters for channel 5 is: 65535
-Calibrated counters for channel 6 is: 2965
-Calibrated counters for channel 7 is: 2642
-Calibrated counters for channel 8 is: 2682
-Calibrated counters for channel 9 is: 2901
-Calibrated counters for channel 10 is: 65535
-Calibrated counters for channel 11 is: 2708
-Calibrated counters for channel 12 is: 2958
-Calibrated counters for channel 13 is: 5072
-Calibrated counters for channel 14 is: 421
-Calibrated counters for channel 15 is: 5073
+Calibrated counters for channel 6 is: 2836
+Calibrated counters for channel 7 is: 2187
+Calibrated counters for channel 8 is: 2422
+Calibrated counters for channel 9 is: 6237
+Calibrated counters for channel 10 is: 5954
+Calibrated counters for channel 11 is: 2848
+Calibrated counters for channel 12 is: 2532
+Calibrated counters for channel 13 is: 2570
+Calibrated counters for channel 14 is: 3545
+Calibrated counters for channel 15 is: 3539
 
 Let's move to the low power modes world!!!
 
 Press specific key to enter stop mode.
-After enter stop modes, touch PAD XX to wakeup.
+After enter stop modes, touch PAD_9 to wakeup.
 
 Please input the mode you want to enter!
 0 ------>  STOP MODE
@@ -75,47 +82,7 @@ Please input the mode you want to enter!
 3 ------>  VLLS1 MODE
 4 ------>  VLLS2 MODE
 5 ------>  VLLS3 MODE
-About to enter into STOP MODE!
-Great!!! You touched it!!!
-
-Please input the mode you want to enter!
-0 ------>  STOP MODE
-1 ------>  VLPS MODE
-2 ------>  LLS  MODE
-3 ------>  VLLS1 MODE
-4 ------>  VLLS2 MODE
-5 ------>  VLLS3 MODE
-About to enter into VLPS MODE!
-Great!!! You touched it!!!
-
-Please input the mode you want to enter!
-0 ------>  STOP MODE
-1 ------>  VLPS MODE
-2 ------>  LLS  MODE
-3 ------>  VLLS1 MODE
-4 ------>  VLLS2 MODE
-5 ------>  VLLS3 MODE
-About to enter into LLS MODE!
-Wakeup will lead to a interrupt flow, pay attention to it!!!
-Great!!! You touched it!!!
-
-Please input the mode you want to enter!
-0 ------>  STOP MODE
-1 ------>  VLPS MODE
-2 ------>  LLS  MODE
-3 ------>  VLLS1 MODE
-4 ------>  VLLS2 MODE
-5 ------>  VLLS3 MODE
-About to enter into VLLS1 MODE!
-Wakeup will lead to a reset flow, pay attention to it!!!
-
-Wake up from VLLSx modes...
-
-TSI_V4 Low_Power_Modes Example Start!
-Please don't touch the touchpad.
-Press anykey to start TSI low power example.
-......
-......
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Customization options
 =====================
 

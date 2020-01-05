@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2018 NXP
+ * Copyright 2016 - 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -33,12 +33,16 @@ usb_device_endpoint_struct_t g_UsbDeviceHidGenericEndpoints[USB_HID_GENERIC_ENDP
     /* HID generic interrupt IN pipe */
     {
         USB_HID_GENERIC_ENDPOINT_IN | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
-        USB_ENDPOINT_INTERRUPT, FS_HID_GENERIC_INTERRUPT_IN_PACKET_SIZE,
+        USB_ENDPOINT_INTERRUPT,
+        FS_HID_GENERIC_INTERRUPT_IN_PACKET_SIZE,
+        FS_HID_GENERIC_INTERRUPT_IN_INTERVAL,
     },
     /* HID generic interrupt OUT pipe */
     {
         USB_HID_GENERIC_ENDPOINT_OUT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
-        USB_ENDPOINT_INTERRUPT, FS_HID_GENERIC_INTERRUPT_OUT_PACKET_SIZE,
+        USB_ENDPOINT_INTERRUPT,
+        FS_HID_GENERIC_INTERRUPT_OUT_PACKET_SIZE,
+        FS_HID_GENERIC_INTERRUPT_OUT_INTERVAL,
     }};
 
 /* HID generic interface information */
@@ -58,7 +62,7 @@ usb_device_interfaces_struct_t g_UsbDeviceHidGenericInterfaces[USB_HID_GENERIC_I
         USB_HID_GENERIC_PROTOCOL,        /* HID generic protocol code */
         USB_HID_GENERIC_INTERFACE_INDEX, /* The interface number of the HID generic */
         g_UsbDeviceHidGenericInterface,  /* Interfaces handle */
-        sizeof(g_UsbDeviceHidGenericInterface) / sizeof(usb_device_interfaces_struct_t),
+        sizeof(g_UsbDeviceHidGenericInterface) / sizeof(usb_device_interface_struct_t),
     },
 };
 
@@ -110,8 +114,10 @@ uint8_t g_UsbDeviceDescriptor[] = {
     USB_DEVICE_PROTOCOL,                                 /* Protocol code (assigned by the USB-IF). */
     USB_CONTROL_MAX_PACKET_SIZE,                         /* Maximum packet size for endpoint zero
                                                             (only 8, 16, 32, or 64 are valid) */
-    0xC9U, 0x1FU,                                        /* Vendor ID (assigned by the USB-IF) */
-    0xA2U, 0x00U,                                        /* Product ID (assigned by the manufacturer) */
+    0xC9U,
+    0x1FU, /* Vendor ID (assigned by the USB-IF) */
+    0xA2U,
+    0x00U, /* Product ID (assigned by the manufacturer) */
     USB_SHORT_GET_LOW(USB_DEVICE_DEMO_BCD_VERSION),
     USB_SHORT_GET_HIGH(USB_DEVICE_DEMO_BCD_VERSION), /* Device release number in binary-coded decimal */
     0x01U,                                           /* Index of string descriptor describing manufacturer */
@@ -222,7 +228,10 @@ uint8_t g_UsbDeviceQualifierDescriptor[] = {
 #endif
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 uint8_t g_UsbDeviceString0[] = {
-    2U + 2U, USB_DESCRIPTOR_TYPE_STRING, 0x09U, 0x04U,
+    2U + 2U,
+    USB_DESCRIPTOR_TYPE_STRING,
+    0x09U,
+    0x04U,
 };
 
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
@@ -272,19 +281,28 @@ uint8_t g_UsbDeviceString2[] = {
 };
 
 uint32_t g_UsbDeviceStringDescriptorLength[USB_DEVICE_STRING_COUNT] = {
-    sizeof(g_UsbDeviceString0), sizeof(g_UsbDeviceString1), sizeof(g_UsbDeviceString2),
+    sizeof(g_UsbDeviceString0),
+    sizeof(g_UsbDeviceString1),
+    sizeof(g_UsbDeviceString2),
 };
 
 uint8_t *g_UsbDeviceStringDescriptorArray[USB_DEVICE_STRING_COUNT] = {
-    g_UsbDeviceString0, g_UsbDeviceString1, g_UsbDeviceString2,
+    g_UsbDeviceString0,
+    g_UsbDeviceString1,
+    g_UsbDeviceString2,
 };
 
 usb_language_t g_UsbDeviceLanguage[USB_DEVICE_LANGUAGE_COUNT] = {{
-    g_UsbDeviceStringDescriptorArray, g_UsbDeviceStringDescriptorLength, (uint16_t)0x0409U,
+    g_UsbDeviceStringDescriptorArray,
+    g_UsbDeviceStringDescriptorLength,
+    (uint16_t)0x0409U,
 }};
 
 usb_language_list_t g_UsbDeviceLanguageList = {
-    g_UsbDeviceString0, sizeof(g_UsbDeviceString0), g_UsbDeviceLanguage, USB_DEVICE_LANGUAGE_COUNT,
+    g_UsbDeviceString0,
+    sizeof(g_UsbDeviceString0),
+    g_UsbDeviceLanguage,
+    USB_DEVICE_LANGUAGE_COUNT,
 };
 
 /*******************************************************************************
@@ -333,7 +351,7 @@ usb_status_t USB_DeviceGetStringDescriptor(usb_device_handle handle,
     }
     else
     {
-        uint8_t languageId = 0U;
+        uint8_t languageId    = 0U;
         uint8_t languageIndex = USB_DEVICE_STRING_COUNT;
 
         for (; languageId < USB_DEVICE_LANGUAGE_COUNT; languageId++)
@@ -366,7 +384,6 @@ usb_status_t USB_DeviceGetHidDescriptor(usb_device_handle handle, usb_device_get
         hidDescriptor->buffer =
             &g_UsbDeviceConfigurationDescriptor[USB_DESCRIPTOR_LENGTH_CONFIGURE + USB_DESCRIPTOR_LENGTH_INTERFACE];
         hidDescriptor->length = USB_DESCRIPTOR_LENGTH_HID;
-
     }
     else
     {
@@ -428,7 +445,8 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(HS_HID_GENERIC_INTERRUPT_IN_PACKET_SIZE,
                                                        descriptorHead->endpoint.wMaxPacketSize);
                 }
-                else if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
+                else if (((descriptorHead->endpoint.bEndpointAddress &
+                           USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                           USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT) &&
                          (USB_HID_GENERIC_ENDPOINT_OUT ==
                           (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
@@ -452,7 +470,8 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(FS_HID_GENERIC_INTERRUPT_IN_PACKET_SIZE,
                                                        descriptorHead->endpoint.wMaxPacketSize);
                 }
-                else if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
+                else if (((descriptorHead->endpoint.bEndpointAddress &
+                           USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                           USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT) &&
                          (USB_HID_GENERIC_ENDPOINT_OUT ==
                           (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
@@ -476,10 +495,12 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
             if (g_UsbDeviceHidGenericEndpoints[i].endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK)
             {
                 g_UsbDeviceHidGenericEndpoints[i].maxPacketSize = HS_HID_GENERIC_INTERRUPT_IN_PACKET_SIZE;
+                g_UsbDeviceHidGenericEndpoints[i].interval      = HS_HID_GENERIC_INTERRUPT_IN_INTERVAL;
             }
             else
             {
                 g_UsbDeviceHidGenericEndpoints[i].maxPacketSize = HS_HID_GENERIC_INTERRUPT_OUT_PACKET_SIZE;
+                g_UsbDeviceHidGenericEndpoints[i].interval      = HS_HID_GENERIC_INTERRUPT_OUT_INTERVAL;
             }
         }
         else
@@ -487,10 +508,12 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
             if (g_UsbDeviceHidGenericEndpoints[i].endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK)
             {
                 g_UsbDeviceHidGenericEndpoints[i].maxPacketSize = FS_HID_GENERIC_INTERRUPT_IN_PACKET_SIZE;
+                g_UsbDeviceHidGenericEndpoints[i].interval      = FS_HID_GENERIC_INTERRUPT_IN_INTERVAL;
             }
             else
             {
                 g_UsbDeviceHidGenericEndpoints[i].maxPacketSize = FS_HID_GENERIC_INTERRUPT_OUT_PACKET_SIZE;
+                g_UsbDeviceHidGenericEndpoints[i].interval      = FS_HID_GENERIC_INTERRUPT_OUT_INTERVAL;
             }
         }
     }

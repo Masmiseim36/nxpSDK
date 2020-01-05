@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2017£¬2019  NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -65,6 +65,8 @@
 #define USB_DEVICE_MSC_MAX_RECV_TRANSFER_LENGTH (65536U)
 #define USB_DEVICE_MSC_MAX_SEND_TRANSFER_LENGTH (65536U)
 
+#define USB_DEVICE_MSC_MAX_LUN (3)
+
 /*! @brief Command Block Wrapper(CBW) */
 typedef struct _usb_device_msc_cbw
 {
@@ -91,13 +93,18 @@ typedef struct _usb_lba_transfer_information_struct
     uint32_t transferNumber; /*!< The number of contiguous logical blocks of data that shall be transferred*/
 } usb_lba_transfer_information_struct_t;
 /*! @brief device information */
-typedef struct _usb_device_lba_information_struct
+typedef struct _usb_device_logical_unit_information_struct
 {
     uint32_t totalLbaNumberSupports;    /*!< Total blocks number supported*/
     uint32_t lengthOfEachLba;           /*!< Length of each block*/
     uint32_t bulkInBufferSize;          /*!< Bulk in buffer size*/
     uint32_t bulkOutBufferSize;         /*!< Bulk out buffer size*/
-    uint8_t logicalUnitNumberSupported; /*!< Number of LUN*/
+} usb_device_logical_unit_information_struct_t;
+/*! @brief device information */
+typedef struct _usb_device_lba_information_struct
+{
+    uint32_t logicalUnitNumberSupported; /*!< Number of LUN*/
+    usb_device_logical_unit_information_struct_t logicalUnitInformations[USB_DEVICE_MSC_MAX_LUN];
 } usb_device_lba_information_struct_t;
 
 /*! @brief Data transfer information */
@@ -106,6 +113,7 @@ typedef struct _usb_device_lba_app_struct
     uint32_t offset; /*!< Offset of the block need to access*/
     uint32_t size;   /*!< Size of the transferred data*/
     uint8_t *buffer; /*!< Buffer address of the transferred data*/
+    uint8_t lun;
 } usb_device_lba_app_struct_t;
 /*! @brief command and Data transfer information for UFI command*/
 typedef struct _usb_device_ufi_app_struct
@@ -176,16 +184,14 @@ typedef struct _usb_device_msc_struct
     usb_device_interface_struct_t *interfaceHandle;        /*!< Current interface handle */
     uint32_t transferRemaining;                            /*!< Transfer remaining data */
     uint32_t currentOffset;                                /*!< Current address offset */
-    uint32_t totalLogicalBlockNumber;                      /*!< Total logical block number of device */
-    uint32_t lengthOfEachLba;                              /*!< Length of logical block */
     uint32_t implementingDiskDrive;                        /*!< Disk drive*/
-    uint32_t bulkInBufferSize;                             /*!< Bulk in buffer size*/
-    uint32_t bulkOutBufferSize;                            /*!< Bulk out buffer size*/
 
     usb_device_msc_cbw_t *mscCbw; /*!< CBW structure */
     usb_device_msc_csw_t *mscCsw; /*!< CSW structure */
 
     usb_device_msc_ufi_struct_t mscUfi; /*!< UFI command information structure*/
+    
+    usb_device_logical_unit_information_struct_t luInformations[USB_DEVICE_MSC_MAX_LUN];
 
     uint8_t dataOutFlag;          /*!< CBW indicating bulk out transfer, clear this flag when data transfer done*/
     uint8_t dataInFlag;           /*!< CBW indicating bulk in transfer, clear this flag when data transfer done*/

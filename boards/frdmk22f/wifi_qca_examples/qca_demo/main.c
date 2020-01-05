@@ -2,7 +2,7 @@
  * Copyright (c) 2013 - 2014, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -23,16 +23,13 @@
  * Definitions
  ******************************************************************************/
 
-
-//#define GT202_GPIO_POWER_PORT   
+//#define GT202_GPIO_POWER_PORT
 //#define GT202_GPIO_POWER_PIN
 //
 //#define GT202_SPI SPI1
 //
 //#define GT202_SPI_MOSI
 //#define GT202_SPI_MISO
-
-
 
 
 /*******************************************************************************
@@ -44,7 +41,7 @@
  ******************************************************************************/
 
 // 0 is the highest priority and priority 15 is the lowest priority
-const int TASK_MAIN_PRIO = configMAX_PRIORITIES - 3;
+const int TASK_MAIN_PRIO       = configMAX_PRIORITIES - 3;
 const int TASK_MAIN_STACK_SIZE = 800;
 
 portSTACK_TYPE *task_main_stack = NULL;
@@ -55,10 +52,10 @@ TaskHandle_t task_main_task_handler;
 #define AP_SSID "nxp"
 #define AP_PASSPHRASE "NXP0123456789"
 
-QCOM_SSID g_ssid = {.ssid = (AP_SSID)};
+QCOM_SSID g_ssid             = {.ssid = (AP_SSID)};
 QCOM_PASSPHRASE g_passphrase = {.passphrase = (AP_PASSPHRASE)};
 
-WLAN_AUTH_MODE g_auth = WLAN_AUTH_WPA2_PSK;
+WLAN_AUTH_MODE g_auth    = WLAN_AUTH_WPA2_PSK;
 WLAN_CRYPT_TYPE g_cipher = WLAN_CRYPT_AES_CRYPT;
 
 // ============================================================================
@@ -305,6 +302,7 @@ void task_main(void *param)
 
     UBaseType_t numTasks = uxTaskGetNumberOfTasks();
     PRINTF("number of FreeRTOS tasks = %d\r\n", numTasks);
+    DbgConsole_Flush();
     PRINTF("Entering main loop\r\n");
 
     printSeparator();

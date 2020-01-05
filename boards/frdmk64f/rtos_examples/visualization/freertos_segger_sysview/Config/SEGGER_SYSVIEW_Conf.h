@@ -66,11 +66,11 @@ Revision: $Rev: 3734 $
 #define SEGGER_SYSVIEW_CONF_H
 
 /*********************************************************************
-*
-*       Defines, fixed
-*
-**********************************************************************
-*/
+ *
+ *       Defines, fixed
+ *
+ **********************************************************************
+ */
 //
 // Constants for known core configuration
 //
@@ -82,19 +82,19 @@ Revision: $Rev: 3734 $
 #if (defined __SES_ARM) || (defined __CROSSWORKS_ARM) || (defined __GNUC__)
 #ifdef __ARM_ARCH_6M__
 #define SEGGER_SYSVIEW_CORE SEGGER_SYSVIEW_CORE_CM0
-#elif(defined(__ARM_ARCH_7M__) || defined(__ARM_ARCH_7EM__))
+#elif (defined(__ARM_ARCH_7M__) || defined(__ARM_ARCH_7EM__))
 #define SEGGER_SYSVIEW_CORE SEGGER_SYSVIEW_CORE_CM3
 #endif
 #elif defined(__ICCARM__)
 #if (defined(__ARM6M__) && (__CORE__ == __ARM6M__))
 #define SEGGER_SYSVIEW_CORE SEGGER_SYSVIEW_CORE_CM0
-#elif((defined(__ARM7M__) && (__CORE__ == __ARM7M__)) || (defined(__ARM7EM__) && (__CORE__ == __ARM7EM__)))
+#elif ((defined(__ARM7M__) && (__CORE__ == __ARM7M__)) || (defined(__ARM7EM__) && (__CORE__ == __ARM7EM__)))
 #define SEGGER_SYSVIEW_CORE SEGGER_SYSVIEW_CORE_CM3
 #endif
 #elif defined(__CC_ARM) || defined(__ARMCC_VERSION)
 #if (defined(__TARGET_ARCH_6S_M))
 #define SEGGER_SYSVIEW_CORE SEGGER_SYSVIEW_CORE_CM0
-#elif(defined(__TARGET_ARCH_7_M) || defined(__TARGET_ARCH_7E_M))
+#elif (defined(__TARGET_ARCH_7_M) || defined(__TARGET_ARCH_7E_M))
 #define SEGGER_SYSVIEW_CORE SEGGER_SYSVIEW_CORE_CM3
 #endif
 #elif defined(__ICCRX__)
@@ -108,15 +108,15 @@ Revision: $Rev: 3734 $
 #endif
 
 /*********************************************************************
-*
-*       Defines, configurable
-*
-**********************************************************************
-*/
+ *
+ *       Defines, configurable
+ *
+ **********************************************************************
+ */
 /*********************************************************************
-*
-*       SystemView buffer configuration
-*/
+ *
+ *       SystemView buffer configuration
+ */
 #define SEGGER_SYSVIEW_RTT_BUFFER_SIZE 1024 // Number of bytes that SystemView uses for the buffer.
 #define SEGGER_SYSVIEW_RTT_CHANNEL 1        // The RTT channel that SystemView will use. 0: Auto selection
 
@@ -125,9 +125,9 @@ Revision: $Rev: 3734 $
 #define SEGGER_SYSVIEW_POST_MORTEM_MODE 0 // 1: Enable post mortem analysis mode
 
 /*********************************************************************
-*
-*       SystemView timestamp configuration
-*/
+ *
+ *       SystemView timestamp configuration
+ */
 #if SEGGER_SYSVIEW_CORE == SEGGER_SYSVIEW_CORE_CM3
 #define SEGGER_SYSVIEW_GET_TIMESTAMP() (*(U32 *)(0xE0001004)) // Retrieve a system timestamp. Cortex-M cycle counter.
 #define SEGGER_SYSVIEW_TIMESTAMP_BITS 32 // Define number of valid bits low-order delivered by clock source
@@ -139,9 +139,9 @@ Revision: $Rev: 3734 $
 #endif
 
 /*********************************************************************
-*
-*       SystemView Id configuration
-*/
+ *
+ *       SystemView Id configuration
+ */
 #define SEGGER_SYSVIEW_ID_BASE \
     0x10000000 // Default value for the lowest Id reported by the application. Can be overridden by the application via
                // SEGGER_SYSVIEW_SetRAMBase(). (i.e. 0x20000000 when all Ids are an address in this RAM)
@@ -149,9 +149,9 @@ Revision: $Rev: 3734 $
     2 // Number of bits to shift the Id to save bandwidth. (i.e. 2 when Ids are 4 byte aligned)
 
 /*********************************************************************
-*
-*       SystemView interrupt configuration
-*/
+ *
+ *       SystemView interrupt configuration
+ */
 #if SEGGER_SYSVIEW_CORE == SEGGER_SYSVIEW_CORE_CM3
 #define SEGGER_SYSVIEW_GET_INTERRUPT_ID() \
     ((*(U32 *)(0xE000ED04)) &             \

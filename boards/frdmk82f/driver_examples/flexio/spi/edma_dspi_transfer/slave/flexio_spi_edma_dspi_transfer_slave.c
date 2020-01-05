@@ -1,38 +1,16 @@
 /*
-* Copyright (c) 2015, Freescale Semiconductor, Inc.
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without modification,
-* are permitted provided that the following conditions are met:
-*
-* o Redistributions of source code must retain the above copyright notice, this list
-*   of conditions and the following disclaimer.
-*
-* o Redistributions in binary form must reproduce the above copyright notice, this
-*   list of conditions and the following disclaimer in the documentation and/or
-*   other materials provided with the distribution.
-*
-* o Neither the name of Freescale Semiconductor, Inc. nor the names of its
-*   contributors may be used to endorse or promote products derived from this
-*   software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-* ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 #include "fsl_debug_console.h"
 #include "fsl_dspi.h"
 #include "fsl_flexio_spi_edma.h"
-#include "fsl_dma_manager.h"
 #include "board.h"
+#include "fsl_dmamux.h"
 
 #include "clock_config.h"
 #include "pin_mux.h"
@@ -47,11 +25,20 @@
 #define FLEXIO_CLOCK_FREQUENCY CLOCK_GetFreq(kCLOCK_PllFllSelClk)
 #define FLEXIO_DMA_REQUEST_BASE kDmaRequestMux0Group1FlexIO0Channel0
 #define DSPI_MASTER_CLK_SRC DSPI0_CLK_SRC
+#define DSPI_MASTER_CLK_FREQ CLOCK_GetFreq(DSPI0_CLK_SRC)
 #define BOARD_DSPI_MASTER_PCS_FOR_INIT kDSPI_Pcs0
 #define BOARD_DSPI_MASTER_PCS_FOR_TRANSFER kDSPI_MasterPcs0
 #define BOARD_DSPI_MASTER_BASE SPI0
 #define SLAVE_SPI_IRQ FLEXIO0_IRQn
 #define MASTER_SPI_IRQ SPI0_IRQn
+#define EXAMPLE_FLEXIO_SPI_DMAMUX_BASEADDR DMAMUX0
+#define EXAMPLE_FLEXIO_SPI_DMA_DSPI_BASEADDR DMA0
+#define FLEXIO_SPI_TX_DMA_DSPI_CHANNEL 16U
+#define FLEXIO_SPI_RX_DMA_DSPI_CHANNEL 17U
+#define FLEXIO_TX_SHIFTER_INDEX 0U
+#define FLEXIO_RX_SHIFTER_INDEX 1U
+#define EXAMPLE_TX_DMA_SOURCE (FLEXIO_DMA_REQUEST_BASE + FLEXIO_TX_SHIFTER_INDEX)
+#define EXAMPLE_RX_DMA_SOURCE (FLEXIO_DMA_REQUEST_BASE + FLEXIO_RX_SHIFTER_INDEX)
 #define TRANSFER_SIZE 256U        /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /*! Transfer baudrate - 500k */
 
@@ -70,8 +57,8 @@ void FLEXIO_SPI_SlaveUserCallback(FLEXIO_SPI_Type *base,
  ******************************************************************************/
 uint8_t masterRxData[TRANSFER_SIZE] = {0U};
 uint8_t masterTxData[TRANSFER_SIZE] = {0U};
-uint8_t slaveRxData[TRANSFER_SIZE] = {0U};
-uint8_t slaveTxData[TRANSFER_SIZE] = {0U};
+uint8_t slaveRxData[TRANSFER_SIZE]  = {0U};
+uint8_t slaveTxData[TRANSFER_SIZE]  = {0U};
 
 dspi_master_handle_t g_m_handle;
 FLEXIO_SPI_Type spiDev;
@@ -136,27 +123,28 @@ int main(void)
     flexio_spi_transfer_t slaveXfer;
     dma_request_source_t dma_request_source_tx;
     dma_request_source_t dma_request_source_rx;
+    edma_config_t config;
 
     /* Master config */
-    masterConfig.whichCtar = kDSPI_Ctar0;
-    masterConfig.ctarConfig.baudRate = TRANSFER_BAUDRATE;
-    masterConfig.ctarConfig.bitsPerFrame = 8;
-    masterConfig.ctarConfig.cpol = kDSPI_ClockPolarityActiveHigh;
-    masterConfig.ctarConfig.cpha = kDSPI_ClockPhaseFirstEdge;
-    masterConfig.ctarConfig.direction = kDSPI_MsbFirst;
-    masterConfig.ctarConfig.pcsToSckDelayInNanoSec = 1000000000U / TRANSFER_BAUDRATE;
-    masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec = 1000000000U / TRANSFER_BAUDRATE;
+    masterConfig.whichCtar                                = kDSPI_Ctar0;
+    masterConfig.ctarConfig.baudRate                      = TRANSFER_BAUDRATE;
+    masterConfig.ctarConfig.bitsPerFrame                  = 8;
+    masterConfig.ctarConfig.cpol                          = kDSPI_ClockPolarityActiveHigh;
+    masterConfig.ctarConfig.cpha                          = kDSPI_ClockPhaseFirstEdge;
+    masterConfig.ctarConfig.direction                     = kDSPI_MsbFirst;
+    masterConfig.ctarConfig.pcsToSckDelayInNanoSec        = 1000000000U / TRANSFER_BAUDRATE;
+    masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec    = 1000000000U / TRANSFER_BAUDRATE;
     masterConfig.ctarConfig.betweenTransferDelayInNanoSec = 1000000000U / TRANSFER_BAUDRATE;
 
-    masterConfig.whichPcs = BOARD_DSPI_MASTER_PCS_FOR_INIT;
+    masterConfig.whichPcs           = BOARD_DSPI_MASTER_PCS_FOR_INIT;
     masterConfig.pcsActiveHighOrLow = kDSPI_PcsActiveLow;
 
-    masterConfig.enableContinuousSCK = false;
-    masterConfig.enableRxFifoOverWrite = false;
+    masterConfig.enableContinuousSCK        = false;
+    masterConfig.enableRxFifoOverWrite      = false;
     masterConfig.enableModifiedTimingFormat = false;
-    masterConfig.samplePoint = kDSPI_SckToSin0Clock;
+    masterConfig.samplePoint                = kDSPI_SckToSin0Clock;
 
-    srcClock_Hz = CLOCK_GetFreq(DSPI_MASTER_CLK_SRC);
+    srcClock_Hz = DSPI_MASTER_CLK_FREQ;
     DSPI_MasterInit(BOARD_DSPI_MASTER_BASE, &masterConfig, srcClock_Hz);
 
     /* Slave config */
@@ -170,14 +158,14 @@ int main(void)
      */
     FLEXIO_SPI_SlaveGetDefaultConfig(&slaveConfig);
 
-    spiDev.flexioBase = BOARD_FLEXIO_BASE;
-    spiDev.SDOPinIndex = FLEXIO_SPI_SOUT_PIN;
-    spiDev.SDIPinIndex = FLEXIO_SPI_SIN_PIN;
-    spiDev.SCKPinIndex = FLEXIO_SPI_CLK_PIN;
-    spiDev.CSnPinIndex = FLEXIO_SPI_PCS_PIN;
-    spiDev.shifterIndex[0] = 0U;
-    spiDev.shifterIndex[1] = 1U;
-    spiDev.timerIndex[0] = 0U;
+    spiDev.flexioBase      = BOARD_FLEXIO_BASE;
+    spiDev.SDOPinIndex     = FLEXIO_SPI_SOUT_PIN;
+    spiDev.SDIPinIndex     = FLEXIO_SPI_SIN_PIN;
+    spiDev.SCKPinIndex     = FLEXIO_SPI_CLK_PIN;
+    spiDev.CSnPinIndex     = FLEXIO_SPI_PCS_PIN;
+    spiDev.shifterIndex[0] = FLEXIO_TX_SHIFTER_INDEX;
+    spiDev.shifterIndex[1] = FLEXIO_RX_SHIFTER_INDEX;
+    spiDev.timerIndex[0]   = 0U;
     FLEXIO_SPI_SlaveInit(&spiDev, &slaveConfig);
 
     /* Set dspi slave interrupt priority higher. */
@@ -197,32 +185,30 @@ int main(void)
     isTransferCompleted = false;
 
     /*Init DMA for example.*/
-    DMAMGR_Init();
+    DMAMUX_Init(EXAMPLE_FLEXIO_SPI_DMAMUX_BASEADDR);
+    EDMA_GetDefaultConfig(&config);
+    EDMA_Init(EXAMPLE_FLEXIO_SPI_DMA_DSPI_BASEADDR, &config);
 
-    dma_request_source_tx = (dma_request_source_t)(FLEXIO_DMA_REQUEST_BASE + spiDev.shifterIndex[0]);
-    dma_request_source_rx = (dma_request_source_t)(FLEXIO_DMA_REQUEST_BASE + spiDev.shifterIndex[1]);
+    dma_request_source_tx = (dma_request_source_t)EXAMPLE_TX_DMA_SOURCE;
+    dma_request_source_rx = (dma_request_source_t)EXAMPLE_RX_DMA_SOURCE;
 
     /* Request DMA channels for TX & RX. */
-    if (dma_request_source_tx < 0x200)
-    {
-        DMAMGR_RequestChannel((dma_request_source_t)dma_request_source_tx, 0, &txHandle);
-        DMAMGR_RequestChannel((dma_request_source_t)dma_request_source_rx, 1, &rxHandle);
-    }
-    else
-    {
-        DMAMGR_RequestChannel((dma_request_source_t)dma_request_source_tx, 16, &txHandle);
-        DMAMGR_RequestChannel((dma_request_source_t)dma_request_source_rx, 17, &rxHandle);
-    }
+    DMAMUX_SetSource(EXAMPLE_FLEXIO_SPI_DMAMUX_BASEADDR, FLEXIO_SPI_TX_DMA_DSPI_CHANNEL, dma_request_source_tx);
+    DMAMUX_SetSource(EXAMPLE_FLEXIO_SPI_DMAMUX_BASEADDR, FLEXIO_SPI_RX_DMA_DSPI_CHANNEL, dma_request_source_rx);
+    DMAMUX_EnableChannel(EXAMPLE_FLEXIO_SPI_DMAMUX_BASEADDR, FLEXIO_SPI_TX_DMA_DSPI_CHANNEL);
+    DMAMUX_EnableChannel(EXAMPLE_FLEXIO_SPI_DMAMUX_BASEADDR, FLEXIO_SPI_RX_DMA_DSPI_CHANNEL);
+    EDMA_CreateHandle(&txHandle, EXAMPLE_FLEXIO_SPI_DMA_DSPI_BASEADDR, FLEXIO_SPI_TX_DMA_DSPI_CHANNEL);
+    EDMA_CreateHandle(&rxHandle, EXAMPLE_FLEXIO_SPI_DMA_DSPI_BASEADDR, FLEXIO_SPI_RX_DMA_DSPI_CHANNEL);
 
     /* Set up slave first */
     FLEXIO_SPI_SlaveTransferCreateHandleEDMA(&spiDev, &g_s_handle, FLEXIO_SPI_SlaveUserCallback, NULL, &txHandle,
                                              &rxHandle);
 
     /*Set slave transfer ready to receive/send data*/
-    slaveXfer.txData = slaveTxData;
-    slaveXfer.rxData = slaveRxData;
+    slaveXfer.txData   = slaveTxData;
+    slaveXfer.rxData   = slaveRxData;
     slaveXfer.dataSize = TRANSFER_SIZE;
-    slaveXfer.flags = kFLEXIO_SPI_8bitMsb;
+    slaveXfer.flags    = kFLEXIO_SPI_8bitMsb;
 
     FLEXIO_SPI_SlaveTransferEDMA(&spiDev, &g_s_handle, &slaveXfer);
 
@@ -230,9 +216,9 @@ int main(void)
     DSPI_MasterTransferCreateHandle(BOARD_DSPI_MASTER_BASE, &g_m_handle, DSPI_MasterUserCallback, NULL);
 
     /*Start master transfer*/
-    masterXfer.txData = masterTxData;
-    masterXfer.rxData = masterRxData;
-    masterXfer.dataSize = TRANSFER_SIZE;
+    masterXfer.txData      = masterTxData;
+    masterXfer.rxData      = masterRxData;
+    masterXfer.dataSize    = TRANSFER_SIZE;
     masterXfer.configFlags = kDSPI_MasterCtar0 | BOARD_DSPI_MASTER_PCS_FOR_TRANSFER;
 
     DSPI_MasterTransferNonBlocking(BOARD_DSPI_MASTER_BASE, &g_m_handle, &masterXfer);
@@ -261,7 +247,7 @@ int main(void)
     }
     else
     {
-        PRINTF("Error occured in DSPI master <-> FLEXIO SPI slave transfer!\r\n");
+        PRINTF("Error occurred in DSPI master <-> FLEXIO SPI slave transfer!\r\n");
     }
 
     DSPI_Deinit(BOARD_DSPI_MASTER_BASE);

@@ -1,16 +1,16 @@
 Overview
 ========
 The TPM project is a simple demonstration program of the SDK TPM driver. It sets up the TPM
-hardware block to output a center-aligned PWM signal. The PWM dutycycle is periodically updated.
-On boards that have an LED connected to the TPM pins, the user will see a change in LED brightness.
+hardware block to output a center-aligned PWM signal. The PWM dutycycle is manually updated.
+On boards that have an LED connected to the TPM pins, the user will see a change in LED
+brightness if user enter different values.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.70.1
-- Keil MDK 5.20
-- GCC ARM Embedded 2015-4.9-q3
-- Kinetis Development Studio IDE 3.2.0
-- Atollic TrueSTUDIO 5.5.2
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
 
 Hardware requirements
 =====================
@@ -45,8 +45,18 @@ When the example runs successfully, you can see information from the terminal as
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 TPM example to output center-aligned PWM signal
 
-You will see a change in LED brightness if an LED is connected to the TPM pin
+If an LED is connected to the TPM pin, you will see a change in LED brightness if you enter different values
 If no LED is connected to the TPM pin, then probe the signal using an oscilloscope
+Please enter a value to update the Duty cycle:
+Note: The range of value is 0 to 9.
+For example: If enter '5', the duty cycle will be set to 50 percent.
+Value:5
+The duty cycle was successfully updated!
+
+Please enter a value to update the Duty cycle:
+Note: The range of value is 0 to 9.
+For example: If enter '5', the duty cycle will be set to 50 percent.
+Value:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 At this example, you need use oscillooscope to measure and observe the format of output.
 Output is B66 of primary.

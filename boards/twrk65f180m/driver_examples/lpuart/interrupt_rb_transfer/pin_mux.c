@@ -1,75 +1,66 @@
 /*
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
-
+
+/* clang-format off */
 /*
- * TEXT BELOW IS USED AS SETTING FOR THE PINS TOOL *****************************
-PinsProfile:
-- !!product 'Pins v1.0'
-- !!processor 'MK65FN2M0xxx18'
-- !!package 'MK65FN2M0VMI18'
-- !!mcu_data 'ksdk2_0'
-- !!processor_version '1.0.0'
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR THE PINS TOOL ***
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+!!GlobalInfo
+product: Pins v3.0
+processor: MK65FN2M0xxx18
+package_id: MK65FN2M0VMI18
+mcu_data: ksdk2_0
+processor_version: 0.0.10
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
+/* clang-format on */
 
 #include "fsl_common.h"
 #include "fsl_port.h"
 #include "pin_mux.h"
 
-#define PIN8_IDX                         8u   /*!< Pin number for pin 8 in a port */
-#define PIN9_IDX                         9u   /*!< Pin number for pin 9 in a port */
 
+
+/* clang-format off */
 /*
- * TEXT BELOW IS USED AS SETTING FOR THE PINS TOOL *****************************
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins:
-- options: {coreID: singlecore, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: E4, peripheral: SIM, signal: LPUART0_MOD_OUT, pin_signal: PTE8/I2S0_RXD1/I2S0_RX_FS/LPUART0_TX/FTM3_CH3}
+  - {pin_num: E4, peripheral: LPUART0, signal: TX, pin_signal: PTE8/I2S0_RXD1/I2S0_RX_FS/LPUART0_TX/FTM3_CH3}
   - {pin_num: F3, peripheral: LPUART0, signal: RX, pin_signal: PTE9/LLWU_P17/I2S0_TXD1/I2S0_RX_BCLK/LPUART0_RX/FTM3_CH4}
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR THE PINS TOOL ***
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
+/* clang-format on */
 
-/*FUNCTION**********************************************************************
+/* FUNCTION ************************************************************************************************************
  *
  * Function Name : BOARD_InitPins
  * Description   : Configures pin routing and optionally pin electrical features.
  *
- *END**************************************************************************/
-void BOARD_InitPins(void) {
-  CLOCK_EnableClock(kCLOCK_PortE);                           /* Port E Clock Gate Control: Clock enabled */
+ * END ****************************************************************************************************************/
+void BOARD_InitPins(void)
+{
+    /* Port E Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortE);
 
-  PORT_SetPinMux(PORTE, PIN8_IDX, kPORT_MuxAlt5);            /* PORTE8 (pin E4) is configured as LPUART0_TX */
-  PORT_SetPinMux(PORTE, PIN9_IDX, kPORT_MuxAlt5);            /* PORTE9 (pin F3) is configured as LPUART0_RX */
+    /* PORTE8 (pin E4) is configured as LPUART0_TX */
+    PORT_SetPinMux(PORTE, 8U, kPORT_MuxAlt5);
+
+    /* PORTE9 (pin F3) is configured as LPUART0_RX */
+    PORT_SetPinMux(PORTE, 9U, kPORT_MuxAlt5);
+
+    SIM->SOPT5 = ((SIM->SOPT5 &
+                   /* Mask bits to zero which are setting */
+                   (~(SIM_SOPT5_LPUART0TXSRC_MASK)))
+
+                  /* LPUART0 transmit data source select: LPUART0_TX pin. */
+                  | SIM_SOPT5_LPUART0TXSRC(SOPT5_LPUART0TXSRC_LPUART_TX));
 }
-
-/*******************************************************************************
+/***********************************************************************************************************************
  * EOF
- ******************************************************************************/
+ **********************************************************************************************************************/

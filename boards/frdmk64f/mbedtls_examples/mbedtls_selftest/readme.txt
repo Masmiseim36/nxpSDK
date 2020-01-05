@@ -3,6 +3,23 @@ Overview
 The mbdedTLS SelfTest program performs cryptographic algorithm testing and prints results to the
 terminal.
 
+
+Toolchain supported
+===================
+- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+- GCC ARM Embedded  8.3.1
+
+Hardware requirements
+=====================
+- Mini/micro USB cable
+- FRDM-K64F board
+- Personal Computer
+
+Board settings
+==============
+No special settings are required.
 Prepare the Demo
 ================
 Connect a serial cable from the debug UART port of the target board to the PC. Start TeraTerm
@@ -217,20 +234,6 @@ When the demo runs successfully, the terminal will display similar information l
   Executed 18 test suites
 
                            [ All tests PASS ]
-Hardware requirements
+Customization options
 =====================
-- Mini/micro USB cable
-- FRDM-K64F board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Toolchain supported
-===================
-- MCUXpresso 10.3.0
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
 

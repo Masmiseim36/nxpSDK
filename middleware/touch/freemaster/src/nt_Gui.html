@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="cs-CZ">
+
+	<head>
+
+		<link type="text/css" rel="stylesheet" href="touch.min.css" />
+  		<link rel="icon" href="favicon.png" />
+  		<meta name="viewport" content="width=device-width">
+  		<meta charset="utf-8">
+  		<meta name="author" content="ToBeSeen | Grafické studio | www.tobeseen.cz">
+  		<meta name="keywords" content="Touch sensing, GUI, NXP, tool">
+  		<meta name="description" content="Touch GUI Tool NXP">
+
+        <title>NXP Touch GUI Tool | NXP</title>
+        <OBJECT id="pcm" height="0" width="0" classid="clsid:48A185F1-FFDB-11D3-80E3-00C04F176153">
+        </OBJECT>
+        <script src="./js/jquery.min.js"></script>
+        <script src="./js/jquery-ui.min.js"></script>
+        <script src="./js/animations.js"></script>
+        <script type="text/javascript" src="ntinit.js"></script>
+        <script type="text/javascript" src="nt_module.js"></script>
+        <script type="text/javascript" src="nt_electrode.js"></script>
+        <script type="text/javascript" src="nt_electrode_afid.js"></script>
+        <script type="text/javascript" src="nt_electrode_safa.js"></script>
+        <script type="text/javascript" src="nt_electrode_usafa.js"></script>
+        <script type="text/javascript" src="nt_control.js"></script>
+        <script type="text/javascript" src="nt_control_arotary.js"></script>
+        <script type="text/javascript" src="nt_control_aslider.js"></script>
+        <script type="text/javascript" src="nt_control_keypad.js"></script>
+        <script type="text/javascript" src="nt_control_matrix.js"></script>
+        <script type="text/javascript" src="nt_control_rotary.js"></script>
+        <script type="text/javascript" src="nt_control_slider.js"></script>
+        <script type="text/javascript" src="nt_control_proxi.js"></script>
+        <script type="text/javascript" src="gui.js"></script>
+        <script type="text/javascript" src="cmdhandler.js"></script>
+        <script type="text/javascript" src="nt_static_cfg.js"></script>
+        <script type="text/javascript" src="mustache.js"></script>
+        <script type="text/javascript" src="xml_converter.js"></script>
+        <script type="text/javascript" src="html_templates.js"></script>
+        <script type="text/javascript" src="static_cfg_engine.js"></script>
+        <script class="include" type="text/javascript" src="json/json2.js"></script>
+        <script>
+        nt_static_cfg_init();
+        </script>
+
+
+</head>
+
+<body onload="main()">
+
+		<section id="layout">
+
+			<div class="wrap">
+
+				<div class="topbar">
+
+					<p class="topbar-text">Control page</p>
+
+					<div class="topbar-handle">
+
+						<img class="topbar-icon" alt="icon" src="./img/icon-01.svg" />
+						<img class="topbar-icon" alt="icon" src="./img/icon-02.svg" />
+						<img class="topbar-icon" alt="icon" src="./img/icon-03.svg" />
+
+					</div>
+
+				</div>
+
+				<div class="sheet">
+
+					<nav>
+
+			      <ul>
+									<a class="link" onclick="return SetCurrenPageIndex(0)"><li id="touchsw-link" class="active-link">Touch HW Layers</li></a>
+					       	<a class="link" onclick="return SetCurrenPageIndex(0)"><li id="theme-link">Touch SW Layers</li></a>
+					        <a class="link" onclick="return SetCurrenPageIndex(1)"><li id="modules-link">Modules</li></a>
+					        <a class="link" onclick="return SetCurrenPageIndex(2)"><li id="controls-link">Controls</li></a>
+					   			<a class="link" onclick="return SetCurrenPageIndex(3)"><li id="electrodes-link">Electrodes</li></a>
+					   			<a class="link" onclick="return SetCurrenPageIndex(4)"><li id="debug-link">Debug</li></a>
+                  <a class="link" onclick="return SetCurrenPageIndex(5)"><li id="generated-config">Generated configuration</li></a>
+			      </ul>
+
+			    </nav>
+
+					<div class="touchsw">
+<script>
+    obj = {};
+    id = "boardcfg";
+    obj['nodepath'] = id;
+    obj['rndid'] = "";
+    var stricon = Mustache.to_html(templates["sticon"], obj)
+    document.write("<div class=\"table-belt-bottom\">");
+    document.write("<button  style=\"background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;\" type=\"submit\" > </button>");
+    document.write(stricon);
+    document.write("<button class=\"read-config\" type=\"submit\"  onclick=\"LoadCfgBoard('"+id+"-')\" title=\"The actual configuration will be revriten by the configuration from connected Board (requires enabled FreeMASTER communication)\" >Read configuration from Board</button>");
+    document.write("</div>");
+
+</script>
+						<div class="touchsw-table">
+<script>
+tab_li_ids = [];
+tab_li_ids[0] = "touchsw-link";//"theme-link"
+tab_li_ids[1] = "modules-link";
+tab_li_ids[2] = "controls-link";
+tab_li_ids[3] = "electrodes-link";
+tab_li_ids[4] = "debug-link";
+tab_li_ids[5] = "generated-config";
+
+    
+    obj = {};
+    obj['nodepath'] = "modeid";
+    obj['rndid'] = "2";
+    obj['onchange'] = "onchangemode";
+    var modestr = Mustache.to_html(templates["rb_basic_exp"], obj);
+    document.write(modestr);
+
+
+</script>
+
+							<div class="touchsw-table-line touchsw-topline">
+
+<script>
+									 var id = "cfgfile";
+                   document.write("<p class=\"touchsw-table-name\">touch tool configuration (..\\frdm_ke15z.xml):</p>");
+                   document.write("<input class=\"touchsw-table-input\" type=\"text\" name=\"system-period-time\" id=\""+id+"-\" value=\"..\\frdm_ke15z.xml\"></input>");
+                   document.write("<button class=\"touchsw-table-button\" onclick=\"LoadCfgData('"+id+"-')\">Load</button>");
+                   document.write("<button class=\"touchsw-table-button\" onclick=\"SaveCfgData('"+id+"-')\">Save</button>");
+                   var obj = {};
+                   obj['nodepath'] = id;
+                   obj['rndid'] = "";
+                   var stricon = Mustache.to_html(templates["sticon"], obj);
+                   document.write(stricon);
+                   obj = document.getElementById(id+"-");
+                   if((document.cookie)&&(obj))
+                      obj.value = document.cookie;
+</script>
+							</div>
+
+<script>
+									 var label = "paths";
+									 data[label]["rndid"] = GetRandObjId();
+									 var paths = GetWebContentFromObj2(data[label], label, "template", data[label]["rndid"]);
+									 document.write(paths);
+</script>
+<script>
+    
+    var label = "nt_module";
+    data[label]["rndid"] = GetRandObjId();
+    var h = GetWebContentFromObj2(data[label], label, "template", data[label]["rndid"], "nt_module_interface");
+    document.write(h);
+
+</script>
+
+						</div>
+
+						<div class="theme">
+								<div class="tsi-case" style="display:block" id="nt_module.interface.TSI">
+										<div class="theme-item-wrap">
+
+									<div><img class="theme-all" src="./img/theme-all.svg" /></div>
+									<div id="clock" class="clock theme-item"></div>
+									<div id="comparator" class="comparator theme-item"></div>
+									<div id="m-star" class="m-star theme-item"></div>
+									<div id="s-star" class="s-star theme-item"></div>
+									<div id="control" class="control theme-item"></div>
+									<div id="ssc" class="ssc theme-item"></div>
+									<div id="sinc" class="sinc theme-item"></div>
+
+										</div>
+								</div>
+
+								<div class="cs-case" style="display:none" id="nt_module.interface.CS">
+										<div class="cs-theme-item-wrap">
+
+												<div><img class="cs-theme-all" src="./img/theme-all-csi.svg" /></div>
+												<div id="clk" class="clk cs-theme-item"></div>
+												<div id="controller" class="controller cs-theme-item"></div>
+												<div id="counter" class="counter cs-theme-item"></div>
+												<div id="fifo" class="fifo cs-theme-item"></div>
+												<div id="int" class="int cs-theme-item"></div>
+												<div id="register" class="register cs-theme-item"></div>
+												<div id="oscilator" class="oscilator cs-theme-item"></div>
+												<div id="switch" class="switch cs-theme-item"></div>
+												<div id="switch-small" class="switch-small cs-theme-item"></div>
+
+										</div>
+								</div>
+						</div>
+
+						<!-- *************************************************************************- -->
+
+											<div class="popup" id="popup-clock">
+
+												<p class="popup-headline">Main Clock</p>
+
+													<div class="parameter-col">
+<script>
+    var label = "tsi_config_t";
+    data[label]["rndid"] = data["nt_module"]["rndid"];
+    var nt_module = GetWebContentFromObj2(data[label], label, "template", data[label]["rndid"], "Main_Clock");
+    document.write(nt_module);
+</script>
+
+												</div>
+
+
+										</div>
+										<!-- *************************************************************************- -->
+
+															<div class="popup" id="popup-comparator">
+
+																<p class="popup-headline">Comparator</p>
+
+																	<div class="parameter-col">
+
+<script>
+    var label = "tsi_config_t";
+    var nt_module = GetWebContentFromObj2(data[label], label, "template", data[label]["rndid"], "Comparator");
+    document.write(nt_module);
+</script>
+
+																</div>
+
+
+															</div>
+
+										<!-- *************************************************************************- -->
+
+										<!-- *************************************************************************- -->
+
+															<div class="popup" id="popup-control">
+
+																<p class="popup-headline">Prechrg / Dischrg</p>
+
+																	<div class="parameter-col">
+
+<script>
+    var label = "tsi_config_t";
+    var nt_module = GetWebContentFromObj2(data[label], label, "template", data[label]["rndid"], "PrechrgDischrg");
+    document.write(nt_module);
+</script>
+
+																</div>
+
+
+															</div>
+
+
+										<!-- *************************************************************************- -->
+
+															<div class="popup" id="popup-m-star">
+
+																<p class="popup-headline">Analog Front End Mutual-cap sensing</p>
+
+																	<div class="parameter-col">
+
+<script>
+    var label = "tsi_config_t";
+    var nt_module = GetWebContentFromObj2(data[label], label, "template", data[label]["rndid"], "Analog_Front_End_Mutual-cap_sensing");
+    document.write(nt_module);
+</script>
+
+																</div>
+
+															</div>
+
+										<!-- *************************************************************************- -->
+
+
+																			<div class="popup" id="popup-s-star">
+
+																				<p class="popup-headline">Analog Front End Self-cap sensing</p>
+
+																					<div class="parameter-col">
+
+<script>
+    var label = "tsi_config_t";
+    var nt_module = GetWebContentFromObj2(data[label], label, "template", data[label]["rndid"], "Analog_FrontEnd_Self-cap_sensing");
+    document.write(nt_module);
+</script>
+
+																				</div>
+
+																			</div>
+
+
+																		<!-- *************************************************************************- -->
+
+																							<div class="popup" id="popup-sinc">
+
+																								<p class="popup-headline">Digital SINC Filter</p>
+
+																									<div class="parameter-col">
+<script>
+    var label = "tsi_config_t";
+    var nt_module = GetWebContentFromObj2(data[label], label, "template", data[label]["rndid"], "Digital_SINC_Filter");
+    document.write(nt_module);
+</script>
+																								</div>
+
+
+																							</div>
+
+																		<!-- *************************************************************************- -->
+
+
+																											<div class="popup" id="popup-ssc">
+
+																												<p class="popup-headline">SSC Divider</p>
+
+																													<div class="parameter-col">
+<script>
+    var label = "tsi_config_t";
+    var nt_module = GetWebContentFromObj2(data[label], label, "template", data[label]["rndid"], "SSC_Divider");
+    document.write(nt_module);
+</script>
+
+																												</div>
+
+
+																											</div>
+
+                                                      		<!-- *************************************************************************- -->
+
+							<div class="popup" id="popup-clk">
+
+								<p class="popup-headline">CLK_DIV</p>
+
+									<div class="parameter-col">
+<script>
+    var label = "cs_config_t";
+    data[label]["rndid"] = data["tsi_config_t"]["rndid"]
+    var h = GetWebContentFromObj2(data[label], label, "template", data[label]["rndid"], "CLK_DIV");
+    document.write(h);
+</script>
+								</div>
+						</div>
+
+
+<!-- *************************************************************************- -->
+
+					<div class="popup" id="popup-counter">
+						<p class="popup-headline">Counter</p>
+							<div class="parameter-col">
+<script>
+    var label = "cs_config_t";
+    data[label]["rndid"] = data["tsi_config_t"]["rndid"]
+    var h = GetWebContentFromObj2(data[label], label, "template", data[label]["rndid"], "Counter");
+    document.write(h);
+</script>
+							</div>
+						</div>
+
+<!-- *************************************************************************- -->
+
+						<div class="popup" id="popup-int">
+							<p class="popup-headline">INT Generation in LP mode</p>
+								<div class="parameter-col">
+<script>
+    var label = "cs_config_t";
+    data[label]["rndid"] = data["tsi_config_t"]["rndid"]
+    var h = GetWebContentFromObj2(data[label], label, "template", data[label]["rndid"], "INTgeneration");
+    document.write(h);
+</script>
+							</div>
+
+						</div>
+
+<!-- *************************************************************************- -->
+
+						<div class="popup" id="popup-register">
+
+							<p class="popup-headline">Main Register</p>
+
+								<div class="parameter-col">
+<script>
+    var label = "cs_config_t";
+    data[label]["rndid"] = data["tsi_config_t"]["rndid"]
+    var h = GetWebContentFromObj2(data[label], label, "template", data[label]["rndid"], "Registers");
+    document.write(h);
+</script>
+								</div>
+
+							</div>
+
+<!-- *************************************************************************- -->
+
+							<div class="popup" id="popup-oscilator">
+								<p class="popup-headline">Main Oscilator #1</p>
+									<div class="parameter-col">
+<script>
+    var label = "cs_config_t";
+    data[label]["rndid"] = data["tsi_config_t"]["rndid"]
+    var h = GetWebContentFromObj2(data[label], label, "template", data[label]["rndid"], "oscillator");
+    document.write(h);
+</script>
+								</div>
+						</div>
+<!-- *************************************************************************- -->
+
+
+					</div>
+
+<!-- ************************************************************ -->
+
+
+					<div class="tables-ext">
+
+<script>
+	var id = "cfgfile2";
+    var obj = {};
+    obj['nodepath'] = id;
+    obj['rndid'] = "";
+    var stricon = Mustache.to_html(templates["sticon"], obj);
+    document.write("<div class=\"table-ext-belt-bottom\">");
+    document.write(stricon);
+    document.write("<button  style=\"background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;\" type=\"submit\" > </button>");
+    document.write("<button class=\"read-config\" type=\"submit\"  onclick=\"LoadCfgBoard('"+id+"-')\" title=\"The actual configuration will be revriten by the configuration from connected Board (requires enabled FreeMASTER communication)\" >Read configuration from Board</button>");
+    document.write("</div>");
+
+    obj = {};
+    obj['nodepath'] = "modeid";
+    obj['rndid'] = "1";
+    obj['onchange'] = "onchangemode";
+    var modestr = Mustache.to_html(templates["rb_basic_exp"], obj);
+    document.write(modestr);
+    id = "boardcfg2";
+    obj = {};
+    obj['nodepath'] = id;
+    obj['rndid'] = "";
+    var stricon = Mustache.to_html(templates["sticon"], obj)
+
+    var label = "nt_system";
+    data[label]["rndid"] = GetRandObjId();
+    var h = GetWebContentFromObj2(data[label], label, "template", data[label]["rndid"]);
+    document.write(h);
+</script>
+
+<!--                             NT CONTROLS                   * ***-->
+
+<script>
+    var label = "nt_controls";
+    data[label]["rndid"] = GetRandObjId();
+    var h = GetWebContentFromObj2(data[label], label, "template", data[label]["rndid"]);
+    document.write(h);
+</script>
+
+<!-- END OF NT CONTROLS TABLE  -                ------------->
+
+<!--  ELECTRODES                                ------------->
+<script>
+    var label = "nt_electrodes";
+    data[label]["rndid"] = GetRandObjId();
+    var h = GetWebContentFromObj2(data[label], label, "template", data[label]["rndid"]);
+    document.write(h);
+</script>
+
+<!-- END OF NT CONTROLS TABLE  -                ------------->
+
+<!--  MODULE                                ------------->
+<script>
+    var label = "nt_module";
+    var h = GetWebContentFromObj2(data[label], label, "template", data[label]["rndid"], "nt_module");
+    document.write(h);
+</script>
+
+
+
+
+<!-- END OF NT CONTROLS TABLE  -                ------------->
+
+
+					</div>
+
+					<div class="modules" ID = "tab1">
+
+							<div class="top-modal-section">
+
+									<p class="modal-headline">module_tsi_0.</p>
+									<p class="modal-state-ok"><img src="./img/detected.svg" class="icon-detected">detected</p>
+
+							</div>
+
+							<div class="modules-table">
+								<div class="modules-table-headline">
+										<div class="mhl-name"><p>Electrode name</p></div>
+										<div class="mhl-keydetector"><p>Keydetector</p></div>
+										<div class="mhl-raw-cnt"><p>Raw Cnt</p></div>
+										<div class="mhl-baseline-cnt"><p>Baseline Cnt</p></div>
+										<div class="mhl-signal"><p>Signal</p></div>
+										<div class="mhl-touch"><p>Touch</p></div>
+										<div class="mhl-color"><p>Color</p></div>
+										<div class="mhl-flags"><p>Flags</p></div>
+								</div>
+							</div>
+
+					</div>
+
+					<div class="controls" id="tab2">
+					</div>
+
+					<div class="electrodes" id="tab3" >
+
+						<div class="top-modal-section">
+
+								<p class="modal-headline">scope of electrode <span class="grey-text">| measured data</span></p>
+								<p class="modal-state-ok"><img src="./img/detected.svg" class="icon-detected">detected</p>
+
+						</div>
+
+						<div class="modules-table">
+
+							<div class="modules-table-headline">
+
+									<div class="mhl-raw-signal"><p>Raw_Signal</p></div>
+									<div class="mhl-signal"><p>Signal</p></div>
+									<div class="mhl-baseline"><p>Baseline</p></div>
+									<div class="mhl-flags"><p>Flags</p></div>
+									<div class="mhl-statex"><p>State 0</p></div>
+									<div class="mhl-tstamp"><p>T_stamp_0</p></div>
+									<div class="mhl-statex"><p>State 1</p></div>
+									<div class="mhl-tstamp"><p>T_stamp_1</p></div>
+									<div class="mhl-statex"><p>State 2</p></div>
+									<div class="mhl-tstamp"><p>T_stamp_2</p></div>
+									<div class="mhl-statex"><p>State 3</p></div>
+									<div class="mhl-tstamp"><p>T_stamp_3</p></div>
+
+							</div>
+
+							<div class="modules-table-line">
+
+								<div class="mtl-raw-signal"><p>14 562</p></div>
+								<div class="mtl-signal"><p>14 563</p></div>
+								<div class="mtl-baseline"><p>14 567</p></div>
+								<div class="mtl-flags"><p>16</p></div>
+								<div class="mtl-statex"><p>touch</p></div>
+								<div class="mtl-tstamp"><p>10m:56.91s</p></div>
+								<div class="mtl-statex"><p>release</p></div>
+								<div class="mtl-tstamp"><p>10m:57.09s</p></div>
+								<div class="mtl-statex"><p>touch</p></div>
+								<div class="mtl-tstamp"><p>10m:57.36s</p></div>
+								<div class="mtl-statex"><p>release</p></div>
+								<div class="mtl-statex"><p>10m:57.51s</p></div>
+								<div class="cistic"></div>
+							</div>
+
+						</div>
+
+						<div class="top-modal-section">
+
+								<p class="modal-headline">keydetectortype: usafa</p>
+								<p class="modal-state-ok"><img src="./img/detected.svg" class="icon-detected">detected</p>
+
+						</div>
+
+						<div class="modules-table">
+
+							<div class="modules-table-headline modules-table-headline-240">
+
+									<div class="mhl-raw-signal"><p>Raw_Signal</p></div>
+									<div class="mhl-signal"><p>Noise</p></div>
+
+							</div>
+
+							<div class="modules-table-line modules-line-headline-240">
+
+								<div class="mtl-raw-signal"><p>14 932</p></div>
+								<div class="mtl-signal"><p>50</p></div>
+								<div class="cistic"></div>
+							</div>
+
+						</div>
+
+					</div>
+
+					<div class="debug">
+
+						<div class="top-modal-section">
+
+								<p class="modal-headline">NXP Touch symbol parsing log:</p>
+
+						</div>
+
+						<div class="debug-log-wrap" id="msglog">
+
+						</div>
+					</div>
+
+					<div class="genconf">
+
+						<div class="top-modal-section">
+
+								<p class="modal-headline">Generated HW configuration</p>
+
+						</div>
+
+						<div class="debug-log-wrap" id="gencfgid">
+
+
+
+						</div>
+					</div>
+          
+
+					<img src="./img/popup-load.svg" class="rotate180" id="popup-load" />
+					<div id="show-popup"></div>
+
+
+			</div>
+
+		</div>
+
+
+		</section>
+
+
+	</div>
+
+ </body>
+
+</html>

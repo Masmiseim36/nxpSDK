@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['targetconfig',['targetConfig',['../group__notifier.html#a2e0b1d4d7e3ebf8f454b55af953e3ffa',1,'notifier_notification_block_t']]],
+  ['tcd',['tcd',['../group__sai__edma.html#a884f2a9de6029e84bf52c15a9a894bdb',1,'_sai_edma_handle']]],
+  ['thresh',['thresh',['../group__tsi__v4__driver.html#a99d6622a939887d4f2c7f0a8d504c06e',1,'tsi_config_t']]],
+  ['thresl',['thresl',['../group__tsi__v4__driver.html#a894511261adce05725409d3adf1178f3',1,'tsi_config_t']]],
+  ['timeoutcycles',['timeoutCycles',['../group__cop.html#a2a1211496ebabab97cbe3f51f86fa507',1,'cop_config_t']]],
+  ['timermode',['timerMode',['../group__lptmr.html#ae10df9843af6a69d53830c97af9e9abb',1,'lptmr_config_t']]],
+  ['transfer',['transfer',['../group__i2c__driver.html#a6858d3525f762d7aded20e6c95eb19fc',1,'_i2c_master_handle::transfer()'],['../group__i2c__driver.html#a49f6e4eb57b2158f3886f47e6c84d1b9',1,'_i2c_slave_handle::transfer()'],['../group__i2c__dma__driver.html#a2a42954d3ed3c3138a2e0470d10d4485',1,'_i2c_master_dma_handle::transfer()'],['../group__i2c__edma__driver.html#a3766bc4cc29984a5df623edcbe1b9ca9',1,'_i2c_master_edma_handle::transfer()']]],
+  ['transferredcount',['transferredCount',['../group__i2c__driver.html#a0394563c8d0f9eeeecd242a65cee2ad4',1,'i2c_slave_transfer_t']]],
+  ['transfersize',['transferSize',['../group__dma.html#a1a7c8942a628323e89f489a1656d5859',1,'dma_transfer_config_t::transferSize()'],['../group__i2c__driver.html#a5f6e3613a1fe8c3534a31526b1a34647',1,'_i2c_master_handle::transferSize()'],['../group__i2c__dma__driver.html#a2b7048fa97083cb5e44c75755d1331a6',1,'_i2c_master_dma_handle::transferSize()'],['../group__i2c__edma__driver.html#aebd195813157bfa7d42438f90c1055e0',1,'_i2c_master_edma_handle::transferSize()'],['../group__sai.html#a43e75ec27110a0e71ebfbc0be8d69c25',1,'_sai_handle::transferSize()'],['../group__sai__dma.html#a840fe1ff10b5936b370d956387230b9c',1,'_sai_dma_handle::transferSize()'],['../group__sai__edma.html#a28d0ac4b3b16fd68dfbb8ecf303397a3',1,'_sai_edma_handle::transferSize()'],['../group__spi__driver.html#a415306f31fa29b548ee21a0f9aacc096',1,'_spi_master_handle::transferSize()'],['../group__spi__dma__driver.html#a15d678e91bfd1af80576ca0a6b107c74',1,'_spi_dma_handle::transferSize()']]],
+  ['triggermode',['triggerMode',['../group__dac.html#abb44460b37a3d7e80983d9e6745fb00a',1,'dac_buffer_config_t']]],
+  ['triggerselect',['triggerSelect',['../group__tpm.html#a6546b49062c7bf42d02e01803cab91f3',1,'tpm_config_t']]],
+  ['txdata',['txData',['../group__spi__driver.html#addc4f20760a1a62c4d20cdf9443f3af3',1,'spi_transfer_t::txData()'],['../group__spi__driver.html#a6cb4626f6b63c70fa21fe2e3338dc915',1,'_spi_master_handle::txData()'],['../group__uart__driver.html#a046372eac11f58a16f519c0ee264ea9e',1,'_uart_handle::txData()']]],
+  ['txdatasize',['txDataSize',['../group__uart__driver.html#a1e67a92b463ad328646834ea0de4d70d',1,'_uart_handle']]],
+  ['txdatasizeall',['txDataSizeAll',['../group__lpsci__dma__driver.html#a5118f7518d32f0d19511784ce7073294',1,'_lpsci_dma_handle::txDataSizeAll()'],['../group__uart__driver.html#a80361474eb03b3aa30d02bda82adce65',1,'_uart_handle::txDataSizeAll()'],['../group__uart__dma__driver.html#ac258dbe5efc21160ef52285418187f33',1,'_uart_dma_handle::txDataSizeAll()'],['../group__uart__edma__driver.html#a9903cca60c9cc79aaf4b7d6156b3f1ba',1,'_uart_edma_handle::txDataSizeAll()']]],
+  ['txdmahandle',['txDmaHandle',['../group__lpsci__dma__driver.html#aa8ddfeb5420d031ed88fb54c3c2de67c',1,'_lpsci_dma_handle::txDmaHandle()'],['../group__uart__dma__driver.html#af5626cb851f69637fb71eb28da9dae98',1,'_uart_dma_handle::txDmaHandle()']]],
+  ['txedmahandle',['txEdmaHandle',['../group__uart__edma__driver.html#ad339b242805d2cb1d2aff0b12315598d',1,'_uart_edma_handle']]],
+  ['txhandle',['txHandle',['../group__spi__dma__driver.html#ac1c68e2b431fe999805c73a98e147a2f',1,'_spi_dma_handle']]],
+  ['txinprogress',['txInProgress',['../group__spi__dma__driver.html#a0579868b8e152a03bc87fa3e16b44f2a',1,'_spi_dma_handle']]],
+  ['txremainingbytes',['txRemainingBytes',['../group__spi__driver.html#a62fa101ddfc970e7b6bcba0b2eb6b869',1,'_spi_master_handle']]],
+  ['txstate',['txState',['../group__lpsci__dma__driver.html#adb9e6deefd2353d04c33d818255acbbf',1,'_lpsci_dma_handle::txState()'],['../group__uart__driver.html#a9fa8f119b6e0e3a7805fb25edafb1498',1,'_uart_handle::txState()'],['../group__uart__dma__driver.html#a739848198af89237f9506611fb787c78',1,'_uart_dma_handle::txState()'],['../group__uart__edma__driver.html#a0e8aef6bbb90253640829077217256d4',1,'_uart_edma_handle::txState()']]],
+  ['txwatermark',['txWatermark',['../group__spi__driver.html#a63118dfe890616b78343c46c4ea899b1',1,'spi_master_config_t::txWatermark()'],['../group__spi__driver.html#a1a5ea2f93ef1f280d53f821c2f67995a',1,'spi_slave_config_t::txWatermark()']]]
+];

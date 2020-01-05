@@ -1,7 +1,7 @@
 /*
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -21,13 +21,15 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief cache driver version 2.0.1. */
-#define FSL_CACHE_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
+/*! @brief cache driver version 2.0.3. */
+#define FSL_CACHE_DRIVER_VERSION (MAKE_VERSION(2, 0, 3))
 /*@}*/
 
 /*! @brief code bus cache line size is equal to system bus line size, so the unified I/D cache line size equals too. */
-#define L1CODEBUSCACHE_LINESIZE_BYTE FSL_FEATURE_L1ICACHE_LINESIZE_BYTE /*!< The code bus CACHE line size is 16B = 128b. */
-#define L1SYSTEMBUSCACHE_LINESIZE_BYTE L1CODEBUSCACHE_LINESIZE_BYTE /*!< The system bus CACHE line size is 16B = 128b. */
+#define L1CODEBUSCACHE_LINESIZE_BYTE \
+    FSL_FEATURE_L1ICACHE_LINESIZE_BYTE /*!< The code bus CACHE line size is 16B = 128b. */
+#define L1SYSTEMBUSCACHE_LINESIZE_BYTE \
+    L1CODEBUSCACHE_LINESIZE_BYTE /*!< The system bus CACHE line size is 16B = 128b. */
 
 /*******************************************************************************
  * API

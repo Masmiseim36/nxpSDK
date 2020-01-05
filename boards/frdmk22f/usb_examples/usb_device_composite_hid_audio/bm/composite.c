@@ -30,7 +30,7 @@
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #include "usb_phy.h"
 #endif
 
@@ -58,6 +58,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
 * Variables
 ******************************************************************************/
 /* Composite device structure. */
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 usb_device_composite_struct_t g_composite;
 extern usb_device_class_struct_t g_UsbDeviceHidMouseClass;
 extern usb_device_class_struct_t g_UsbDeviceAudioClass;
@@ -99,9 +100,9 @@ void USB_DeviceIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbDeviceKhciIrq[] = USB_IRQS;
-    irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+    irqNumber                  = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 
-/* Install isr, set priority, and enable IRQ. */
+    /* Install isr, set priority, and enable IRQ. */
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
     EnableIRQ((IRQn_Type)irqNumber);
 }
@@ -128,11 +129,16 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
     usb_status_t error = kStatus_USB_Error;
     uint16_t *temp16 = (uint16_t *)param;
     uint8_t *temp8 = (uint8_t *)param;
+    uint8_t count  = 0U;
 
     switch (event)
     {
         case kUSB_DeviceEventBusReset:
         {
+            for(count = 0U; count < USB_DEVICE_INTERFACE_COUNT; count++)
+            {
+                g_composite.currentInterfaceAlternateSetting[count] = 0U;
+            }
             g_composite.attach = 0U;
             g_composite.currentConfiguration = 0U;
             error = kStatus_USB_Success;

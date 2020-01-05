@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2017, 2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_device_config.h"
@@ -53,13 +27,11 @@
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-
 #include <stdbool.h>
 #include "fsl_pit.h"
 #include "fsl_port.h"
 #include "fsl_smc.h"
-#include "usb_io.h"
-#include "usb_timer.h"
+#include "timer.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -96,8 +68,11 @@ void USB_WaitClockLocked(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+#define TIMER_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_BusClk)
 extern usb_hid_mouse_struct_t g_UsbDeviceHidMouse;
+uint32_t g_halTimerHandle[(HAL_TIMER_HANDLE_SIZE + 3) / 4];
 
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_SetupOutBuffer[8];
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_MouseBuffer[USB_HID_MOUSE_REPORT_LENGTH];
 usb_hid_mouse_struct_t g_UsbDeviceHidMouse;
 
@@ -122,13 +97,13 @@ void BOARD_DeinitPins(void)
     /* Gate the port clock */
     CLOCK_DisableClock(kCLOCK_PortC);
 }
-void LLWU_SW_IRQ_HANDLER(void)
+void BOARD_SW3_IRQ_HANDLER(void)
 {
-    if ((1U << LLWU_SW_GPIO_PIN) & PORT_GetPinsInterruptFlags(LLWU_SW_PORT))
+    if ((1U << BOARD_SW3_GPIO_PIN) & PORT_GetPinsInterruptFlags(BOARD_SW3_PORT))
     {
         /* Disable interrupt. */
-        PORT_SetPinInterruptConfig(LLWU_SW_PORT, LLWU_SW_GPIO_PIN, kPORT_InterruptOrDMADisabled);
-        PORT_ClearPinsInterruptFlags(LLWU_SW_PORT, (1U << LLWU_SW_GPIO_PIN));
+        PORT_SetPinInterruptConfig(BOARD_SW3_PORT, BOARD_SW3_GPIO_PIN, kPORT_InterruptOrDMADisabled);
+        PORT_ClearPinsInterruptFlags(BOARD_SW3_PORT, (1U << BOARD_SW3_GPIO_PIN));
         g_UsbDeviceHidMouse.selfWakeup = 1U;
     }
     /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
@@ -140,39 +115,52 @@ void SW_IntControl(uint8_t enable)
     if (enable)
     {
         g_UsbDeviceHidMouse.selfWakeup = 0U;
-        PORT_SetPinInterruptConfig(LLWU_SW_PORT, LLWU_SW_GPIO_PIN, kPORT_InterruptFallingEdge);
+        PORT_SetPinInterruptConfig(BOARD_SW3_PORT, BOARD_SW3_GPIO_PIN, kPORT_InterruptFallingEdge);
     }
     else
     {
-        PORT_SetPinInterruptConfig(LLWU_SW_PORT, LLWU_SW_GPIO_PIN, kPORT_InterruptOrDMADisabled);
+        PORT_SetPinInterruptConfig(BOARD_SW3_PORT, BOARD_SW3_GPIO_PIN, kPORT_InterruptOrDMADisabled);
     }
 }
-void SW_Callback(void)
+void SW_Callback(void *param)
 {
     g_UsbDeviceHidMouse.selfWakeup = 1U;
     SW_IntControl(0);
 }
 void SW_Init(void)
 {
-    NVIC_SetPriority(LLWU_SW_IRQ, 1U);
-    NVIC_EnableIRQ(LLWU_SW_IRQ);
+    NVIC_SetPriority(BOARD_SW3_IRQ, 1U);
+    NVIC_EnableIRQ(BOARD_SW3_IRQ);
 }
 char *SW_GetName(void)
 {
-    return LLWU_SW_NAME;
+    return BOARD_SW3_NAME;
 }
-void HW_TimerCallback(void)
+void HW_TimerCallback(void *param)
 {
     g_UsbDeviceHidMouse.hwTick++;
     USB_DeviceUpdateHwTick(g_UsbDeviceHidMouse.deviceHandle, g_UsbDeviceHidMouse.hwTick);
 }
 void HW_TimerInit(void)
 {
-    USB_TimerInit(0, 1000U, CLOCK_GetFreq(kCLOCK_BusClk), HW_TimerCallback);
+    hal_timer_config_t halTimerConfig;
+    halTimerConfig.timeout            = 1000;
+    halTimerConfig.srcClock_Hz        = TIMER_SOURCE_CLOCK;
+    halTimerConfig.instance           = 0U;
+    hal_timer_handle_t halTimerHandle = &g_halTimerHandle[0];
+    HAL_TimerInit(halTimerHandle, &halTimerConfig);
+    HAL_TimerInstallCallback(halTimerHandle, HW_TimerCallback, NULL);
 }
 void HW_TimerControl(uint8_t enable)
 {
-    USB_TimerInt(0, enable);
+    if (enable)
+    {
+        HAL_TimerEnable(g_halTimerHandle);
+    }
+    else
+    {
+        HAL_TimerDisable(g_halTimerHandle);
+    }
 }
 void USB_LowpowerModeInit(void)
 {
@@ -214,7 +202,7 @@ void USB_WaitClockLocked(void)
     CLOCK_SetPeeMode();
 #endif
 }
-#if (defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U))
+
 void USB0_IRQHandler(void)
 {
     USB_DeviceKhciIsrFunction(g_UsbDeviceHidMouse.deviceHandle);
@@ -222,48 +210,26 @@ void USB0_IRQHandler(void)
     exception return operation might vector to incorrect interrupt */
     __DSB();
 }
-#endif
 void USB_DeviceClockInit(void)
 {
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
     SystemCoreClockUpdate();
     CLOCK_EnableUsbfs0Clock(kCLOCK_UsbSrcIrc48M, 48000000U);
-/*
- * If the SOC has USB KHCI dedicated RAM, the RAM memory needs to be clear after
- * the KHCI clock is enabled. When the demo uses USB EHCI IP, the USB KHCI dedicated
- * RAM can not be used and the memory can't be accessed.
- */
-#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U))
-#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS) && (FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS > 0U))
-    for (int i = 0; i < FSL_FEATURE_USB_KHCI_USB_RAM; i++)
-    {
-        ((uint8_t *)FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS)[i] = 0x00U;
-    }
-#endif /* FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS */
-#endif /* FSL_FEATURE_USB_KHCI_USB_RAM */
-#endif
 }
 void USB_DeviceIsrEnable(void)
 {
     uint8_t irqNumber;
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
+
     uint8_t usbDeviceKhciIrq[] = USB_IRQS;
-    irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
-#endif
-/* Install isr, set priority, and enable IRQ. */
-#if defined(__GIC_PRIO_BITS)
-    GIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#else
+    irqNumber                  = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+
+    /* Install isr, set priority, and enable IRQ. */
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#endif
     EnableIRQ((IRQn_Type)irqNumber);
 }
 #if USB_DEVICE_CONFIG_USE_TASK
 void USB_DeviceTaskFn(void *deviceHandle)
 {
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
     USB_DeviceKhciTaskFunction(deviceHandle);
-#endif
 }
 #endif
 
@@ -352,7 +318,7 @@ static usb_status_t USB_DeviceHidInterruptIn(usb_device_handle deviceHandle,
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
     usb_status_t error = kStatus_USB_Success;
-    uint8_t *temp8 = (uint8_t *)param;
+    uint8_t *temp8     = (uint8_t *)param;
 
     switch (event)
     {
@@ -361,11 +327,11 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             /* USB bus reset signal detected */
             /* Initialize the control IN and OUT pipes */
             USB_DeviceControlPipeInit(g_UsbDeviceHidMouse.deviceHandle);
-            g_UsbDeviceHidMouse.attach = 0U;
+            g_UsbDeviceHidMouse.attach       = 0U;
             g_UsbDeviceHidMouse.remoteWakeup = 0U;
-            g_UsbDeviceHidMouse.suspend = kStatus_MouseIdle;
-            g_UsbDeviceHidMouse.isResume = 0U;
-            error = kStatus_USB_Success;
+            g_UsbDeviceHidMouse.suspend      = kStatus_MouseIdle;
+            g_UsbDeviceHidMouse.isResume     = 0U;
+            error                            = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -407,8 +373,8 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 usb_echo("USB device start suspend\r\n");
                 USB_ControllerSuspended();
                 g_UsbDeviceHidMouse.startTick = g_UsbDeviceHidMouse.hwTick;
-                g_UsbDeviceHidMouse.suspend = kStatus_MouseStartSuspend;
-                error = kStatus_USB_Success;
+                g_UsbDeviceHidMouse.suspend   = kStatus_MouseStartSuspend;
+                error                         = kStatus_USB_Success;
             }
         }
         break;
@@ -430,26 +396,28 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 usb_device_endpoint_init_struct_t epInitStruct;
                 usb_device_endpoint_callback_struct_t epCallback;
 
-                epCallback.callbackFn = USB_DeviceHidInterruptIn;
+                epCallback.callbackFn    = USB_DeviceHidInterruptIn;
                 epCallback.callbackParam = handle;
 
-                epInitStruct.zlt = 0U;
+                epInitStruct.zlt          = 0U;
                 epInitStruct.transferType = USB_ENDPOINT_INTERRUPT;
                 epInitStruct.endpointAddress =
                     USB_HID_MOUSE_ENDPOINT_IN | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
                 if (USB_SPEED_HIGH == g_UsbDeviceHidMouse.speed)
                 {
                     epInitStruct.maxPacketSize = HS_HID_MOUSE_INTERRUPT_IN_PACKET_SIZE;
+                    epInitStruct.interval      = HS_HID_MOUSE_INTERRUPT_IN_INTERVAL;
                 }
                 else
                 {
                     epInitStruct.maxPacketSize = FS_HID_MOUSE_INTERRUPT_IN_PACKET_SIZE;
+                    epInitStruct.interval      = FS_HID_MOUSE_INTERRUPT_IN_INTERVAL;
                 }
 
                 USB_DeviceInitEndpoint(g_UsbDeviceHidMouse.deviceHandle, &epInitStruct, &epCallback);
 
                 g_UsbDeviceHidMouse.attach = 1U;
-                error = USB_DeviceHidMouseAction(); /* run the cursor movement code */
+                error                      = USB_DeviceHidMouseAction(); /* run the cursor movement code */
             }
             break;
         default:
@@ -518,12 +486,11 @@ usb_status_t USB_DeviceGetClassReceiveBuffer(usb_device_handle handle,
                                              uint32_t *length,
                                              uint8_t **buffer)
 {
-    static uint8_t setupOut[8];
-    if ((NULL == buffer) || ((*length) > sizeof(setupOut)))
+    if ((NULL == buffer) || ((*length) > sizeof(s_SetupOutBuffer)))
     {
         return kStatus_USB_InvalidRequest;
     }
-    *buffer = setupOut;
+    *buffer = s_SetupOutBuffer;
     return kStatus_USB_Success;
 }
 
@@ -569,14 +536,14 @@ static void USB_DeviceApplicationInit(void)
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
     /* Set HID mouse default state */
-    g_UsbDeviceHidMouse.speed = USB_SPEED_FULL;
-    g_UsbDeviceHidMouse.attach = 0U;
+    g_UsbDeviceHidMouse.speed        = USB_SPEED_FULL;
+    g_UsbDeviceHidMouse.attach       = 0U;
     g_UsbDeviceHidMouse.deviceHandle = NULL;
-    g_UsbDeviceHidMouse.buffer = s_MouseBuffer;
+    g_UsbDeviceHidMouse.buffer       = s_MouseBuffer;
     g_UsbDeviceHidMouse.remoteWakeup = 0U;
-    g_UsbDeviceHidMouse.suspend = kStatus_MouseIdle;
-    g_UsbDeviceHidMouse.selfWakeup = 0U;
-    g_UsbDeviceHidMouse.isResume = 0U;
+    g_UsbDeviceHidMouse.suspend      = kStatus_MouseIdle;
+    g_UsbDeviceHidMouse.selfWakeup   = 0U;
+    g_UsbDeviceHidMouse.isResume     = 0U;
 
     /* Initialize the usb stack and class drivers */
     if (kStatus_USB_Success != USB_DeviceInit(CONTROLLER_ID, USB_DeviceCallback, &g_UsbDeviceHidMouse.deviceHandle))
@@ -718,7 +685,7 @@ void USB_DeviceSuspendResumeTask(void)
     }
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)
@@ -729,7 +696,7 @@ void main(void)
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
     /* Set the LLWU pin */
-    GPIO_PinInit(LLWU_SW_GPIO, LLWU_SW_GPIO_PIN, &pinConfig);
+    GPIO_PinInit(BOARD_SW3_GPIO, BOARD_SW3_GPIO_PIN, &pinConfig);
 
 #if ((defined(USB_DEVICE_CONFIG_LOW_POWER_MODE)) && (USB_DEVICE_CONFIG_LOW_POWER_MODE > 0U))
     USB_LowpowerModeInit();

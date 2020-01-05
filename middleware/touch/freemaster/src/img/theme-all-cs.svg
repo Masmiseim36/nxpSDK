@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1296 689" style="enable-background:new 0 0 1296 689;" xml:space="preserve">
+<style type="text/css">
+	.st0{display:none;}
+	.st1{fill:none;stroke:#999999;stroke-miterlimit:10;}
+	.st2{fill:#666666;}
+	.st3{font-family:'Lato-Regular';}
+	.st4{font-size:14px;}
+	.st5{fill:none;stroke:#666666;stroke-width:2;stroke-miterlimit:10;}
+	.st6{font-size:12px;}
+	.st7{fill:#999999;}
+</style>
+<g id="Layer_2_1_" class="st0">
+	
+		<image style="display:inline;overflow:visible;opacity:0.4;enable-background:new    ;" width="985" height="443" xlink:href="../../cs.png"  transform="matrix(1.3157 0 0 1.3157 30 55.9542)">
+	</image>
+</g>
+<line class="st1" x1="306" y1="327" x2="250" y2="327"/>
+<polyline class="st1" points="1092,494.2 1006.2,494.2 1006.2,475.5 979.7,475.5 "/>
+<line class="st1" x1="926" y1="465" x2="906" y2="465"/>
+<line class="st1" x1="926" y1="485" x2="906" y2="485"/>
+<line class="st1" x1="1184.5" y1="505" x2="1164.5" y2="505"/>
+<polyline class="st1" points="926,405 766,405 766,347.4 "/>
+<line class="st1" x1="826.4" y1="327" x2="796.4" y2="327"/>
+<line class="st1" x1="887" y1="287" x2="796.4" y2="287"/>
+<line class="st1" x1="926" y1="425" x2="906" y2="425"/>
+<line class="st1" x1="926" y1="525" x2="906" y2="525"/>
+<line class="st1" x1="926" y1="545" x2="906" y2="545"/>
+<line class="st1" x1="926" y1="585" x2="906" y2="585"/>
+<line class="st1" x1="926" y1="605" x2="906" y2="605"/>
+<polyline class="st1" points="1089,474.2 1026.2,474.2 1026.2,415 979.7,415 "/>
+<polyline class="st1" points="979.7,595 1026.2,595 1026.2,535.5 1089,535.5 "/>
+<polyline class="st1" points="979.7,534.5 1006.2,534.5 1006.2,515.8 1092,515.8 "/>
+<g>
+	<line class="st1" x1="181.3" y1="449" x2="160.7" y2="449"/>
+	<line class="st1" x1="176.9" y1="452" x2="165.1" y2="452"/>
+	<line class="st1" x1="173.2" y1="455" x2="168.8" y2="455"/>
+</g>
+<g>
+	<line class="st1" x1="141.3" y1="349" x2="120.7" y2="349"/>
+	<line class="st1" x1="136.9" y1="352" x2="125.1" y2="352"/>
+	<line class="st1" x1="133.2" y1="355" x2="128.8" y2="355"/>
+</g>
+<g>
+	<line class="st1" x1="101.3" y1="329" x2="80.7" y2="329"/>
+	<line class="st1" x1="96.9" y1="332" x2="85.1" y2="332"/>
+	<line class="st1" x1="93.2" y1="335" x2="88.8" y2="335"/>
+</g>
+<g>
+	<line class="st1" x1="61.3" y1="309" x2="40.7" y2="309"/>
+	<line class="st1" x1="56.9" y1="312" x2="45.1" y2="312"/>
+	<line class="st1" x1="53.2" y1="315" x2="48.8" y2="315"/>
+</g>
+<text transform="matrix(1 0 0 1 908.6257 291.9997)" class="st2 st3 st4">CLK_DIV</text>
+<path class="st5" d="M926,395v40h33c11,0,20-9,20-20s-9-20-20-20H926z"/>
+<path class="st5" d="M926,455v40h33c11,0,20-9,20-20s-9-20-20-20H926z"/>
+<path class="st5" d="M926,515v40h33c11,0,20-9,20-20s-9-20-20-20H926z"/>
+<polyline class="st1" points="529,525 509,525 509,486.6 "/>
+<line class="st1" x1="529" y1="545" x2="509" y2="545"/>
+<line class="st1" x1="582.7" y1="534.5" x2="602.2" y2="534.5"/>
+<path class="st5" d="M529,515v40h33c11,0,20-9,20-20s-9-20-20-20H529z"/>
+<path class="st5" d="M926,575v40h33c11,0,20-9,20-20s-9-20-20-20H926z"/>
+<rect x="669" y="266.6" class="st5" width="118" height="80"/>
+<rect x="887.5" y="267.5" class="st5" width="99" height="39"/>
+<text transform="matrix(1 0 0 1 866.7834 171.9997)" class="st2 st3 st4">Registers</text>
+<text transform="matrix(1 0 0 1 696.7804 310.9997)" class="st2 st3 st4">Controller</text>
+<rect x="449" y="266.6" class="st5" width="118" height="80"/>
+<path class="st5" d="M306,327L306,327c0,18.8,15.2,34,34,34l0,0c18.8,0,34-15.2,34-34l0,0c0-18.8-15.2-34-34-34l0,0
+	C321.2,293,306,308.2,306,327z"/>
+<path class="st5" d="M360,327c0,5.5-4.6,9.9-10,10c-6.4,0.1-9.1-4.5-10-10s-3.7-10-10-10c-5.5,0-9.9,4.5-10,10"/>
+<rect x="449" y="126.6" class="st5" width="118" height="80"/>
+<text transform="matrix(1 0 0 1 482.6988 300.9997)" class="st2 st3 st4">Counter</text>
+<text transform="matrix(1 0 0 1 485.2988 317.7997)" class="st2 st3 st4">(16-bit)</text>
+<rect x="449" y="406.6" class="st5" width="118" height="80"/>
+<polygon class="st5" points="211.5,233.4 211.5,420.5 249.5,404.7 249.5,249.3 "/>
+<polygon class="st5" points="291.2,465.4 291.2,522.5 270.6,516.7 270.6,471.3 "/>
+<text transform="matrix(1 0 0 1 461.5235 434.9997)" class="st2 st3 st4">INT generation</text>
+<text transform="matrix(1 0 0 1 473.6235 451.7997)" class="st2 st3 st4">in LP mode</text>
+<text transform="matrix(1 0 0 1 467.0235 468.5997)" class="st2 st3 st4">(if cnt &lt; THR)</text>
+<text transform="matrix(1 0 0 1 492.4249 163.1)" class="st2 st3 st4">FIFO</text>
+<text transform="matrix(1 0 0 1 475.4249 179.9)" class="st2 st3 st4">(8 ×16-bit)</text>
+<text transform="matrix(1 0 0 1 587.568 72.8998)" class="st2 st3 st6">FIFO status indicator</text>
+<text transform="matrix(1 0 0 1 580.4054 111.3998)" class="st2 st3 st6">DATA[18:0] =</text>
+<text transform="matrix(1 0 0 1 688.5557 219.0111)" class="st2 st3 st6">CH. PERIOD</text>
+<text transform="matrix(1 0 0 1 680.5557 233.4111)" class="st2 st3 st6">IDLE_PERIOD</text>
+<text transform="matrix(1 0 0 1 580.4054 133.3998)" class="st2 st3 st6">{ch_idx[2:0].cnt[15:0]}</text>
+<text transform="matrix(1 0 0 1 1038.7124 171.9997)" class="st2 st3 st6">APB bus interface</text>
+<text transform="matrix(1 0 0 1 1039.959 290.9)" class="st2 st3 st6">CLK_CS</text>
+<text transform="matrix(1 0 0 1 806.5436 276.9)" class="st2 st3 st6">CLK_CS_DIV</text>
+<text transform="matrix(1 0 0 1 835.9308 330.9)" class="st2 st3 st6">CLK_32K</text>
+<text transform="matrix(1 0 0 1 833.067 396.3)" class="st2 st3 st6">SCAN_INT</text>
+<text transform="matrix(1 0 0 1 801.9508 430.6333)" class="st2 st3 st6">SCAN_INT_MSK</text>
+<text transform="matrix(1 0 0 1 804.8907 467.6333)" class="st2 st3 st6">FIFO_FULL_INT</text>
+<text transform="matrix(1 0 0 1 773.7814 487.6333)" class="st2 st3 st6">FIFO_FULL_INT_MSK</text>
+<text transform="matrix(1 0 0 1 795.7291 527.6333)" class="st2 st3 st6">FIFO_HFULL_INT</text>
+<text transform="matrix(1 0 0 1 764.6193 547.6333)" class="st2 st3 st6">FIFO_HFULL_INT_MSK</text>
+<text transform="matrix(1 0 0 1 767.1207 587.6333)" class="st2 st3 st6">FIFO_NOTEMPTY_INT</text>
+<text transform="matrix(1 0 0 1 736.0109 607.6333)" class="st2 st3 st6">FIFO_NOTEMPTY_INT_MSK</text>
+<text transform="matrix(1 0 0 1 671.9283 410.2334)" class="st2 st3 st6">ch_idx</text>
+<text transform="matrix(1 0 0 1 613.3333 530.4983)" class="st2 st3 st6">to wake up</text>
+<text transform="matrix(1 0 0 1 613.3333 544.8983)" class="st2 st3 st6">MCU</text>
+<text transform="matrix(1 0 0 1 599.7161 290.8999)" class="st2 st3 st6">cnt_en</text>
+<text transform="matrix(1 0 0 1 441.041 241.1999)" class="st2 st3 st6">cnt</text>
+<text transform="matrix(1 0 0 1 457.741 243.1999)" class="st2 st3 st6">[15:0]</text>
+<text transform="matrix(1 0 0 1 309.7602 249.1999)" class="st2 st3 st6">OSC_FREQ</text>
+<text transform="matrix(1 0 0 1 222.02 259.6999)" class="st2 st3 st6">0</text>
+<text transform="matrix(1 0 0 1 222.02 279.6999)" class="st2 st3 st6">1</text>
+<text transform="matrix(1 0 0 1 276.4366 488)" class="st2 st3 st6">0</text>
+<text transform="matrix(1 0 0 1 276.4366 508)" class="st2 st3 st6">1</text>
+<text transform="matrix(1 0 0 1 222.02 299.6999)" class="st2 st3 st6">2</text>
+<text transform="matrix(1 0 0 1 222.02 319.6999)" class="st2 st3 st6">3</text>
+<text transform="matrix(1 0 0 1 222.02 339.6999)" class="st2 st3 st6">4</text>
+<text transform="matrix(1 0 0 1 222.02 359.6999)" class="st2 st3 st6">5</text>
+<text transform="matrix(1 0 0 1 222.02 379.6999)" class="st2 st3 st6">6</text>
+<text transform="matrix(1 0 0 1 222.02 399.6999)" class="st2 st3 st6">7</text>
+<text transform="matrix(1 0 0 1 312.1684 383.6999)" class="st2 st3 st4">oscillator</text>
+<text transform="matrix(1 0 0 1 240.1844 440.5564)" class="st2 st3 st6">ch_sel</text>
+<text transform="matrix(1 0 0 1 83.6287 380.5564)" class="st2 st3 st6">Cp</text>
+<text transform="matrix(1 0 0 1 261.5159 557.0564)" class="st2 st3 st6">LP_EN</text>
+<text transform="matrix(1 0 0 1 70.9998 214.9997)" class="st2 st3 st4">CS0 - CS7</text>
+<text transform="matrix(1 0 0 1 70.9998 231.7997)" class="st2 st3 st4">8 input channel</text>
+<text transform="matrix(1 0 0 1 320.6844 487.633)" class="st2 st3 st6">ch_sel</text>
+<text transform="matrix(1 0 0 1 320.8065 507.633)" class="st2 st3 st6">LP_CH</text>
+<text transform="matrix(1 0 0 1 395.7421 317.6999)" class="st2 st3 st6">Fosc</text>
+<text transform="matrix(1 0 0 1 441.041 377.3)" class="st2 st3 st6">cnt</text>
+<text transform="matrix(1 0 0 1 457.741 379.3)" class="st2 st3 st6">[15:0]</text>
+<text transform="matrix(1 0 0 1 454.7748 528.8148)" class="st2 st3 st6">LP_INT</text>
+<text transform="matrix(1 0 0 1 425.2197 549.8148)" class="st2 st3 st6">LP_INT_MSK</text>
+<text transform="matrix(1 0 0 1 1201.7065 498)" class="st2 st3 st6">interrupt</text>
+<text transform="matrix(1 0 0 1 1204.0066 512.4)" class="st2 st3 st6">to MCU</text>
+<rect x="845.5" y="127.5" class="st5" width="99" height="79"/>
+<path class="st5" d="M1086,465L1086,465c8.7,26,8.7,54,0,80l0,0c0,0,38.4-11.1,50.8-16.1c15.8-6.4,27.7-14.4,27.7-24
+	c0-9.6-11.9-17.4-27.7-24C1124.5,475.8,1086,465,1086,465z"/>
+<polygon class="st7" points="796.4,283.1 796.4,290.9 787,287 "/>
+<polyline class="st1" points="845.4,188 767,188 767,256.6 "/>
+<polygon class="st7" points="763.1,256.6 770.9,256.6 767,266 "/>
+<polygon class="st7" points="796.4,323.1 796.4,330.9 787,327 "/>
+<line class="st1" x1="688.7" y1="347.3" x2="688.7" y2="377.3"/>
+<polygon class="st7" points="684.8,377.3 692.6,377.3 688.7,386.7 "/>
+<line class="st1" x1="508.7" y1="347.3" x2="508.7" y2="396.3"/>
+<polygon class="st7" points="504.8,396.3 512.6,396.3 508.7,405.7 "/>
+<line class="st1" x1="508.7" y1="265.7" x2="508.7" y2="216.7"/>
+<polygon class="st7" points="512.6,216.7 504.8,216.7 508.7,207.3 "/>
+<polyline class="st1" points="508.7,126.7 508.7,68 558,68 "/>
+<polygon class="st7" points="558,71.9 558,64.1 567.4,68 "/>
+<line class="st1" x1="668.4" y1="307" x2="576.4" y2="307"/>
+<line class="st1" x1="449" y1="327" x2="374" y2="327"/>
+<polygon class="st7" points="576.4,303.1 576.4,310.9 567,307 "/>
+<line class="st1" x1="1026.4" y1="287" x2="996.4" y2="287"/>
+<polygon class="st7" points="996.4,283.1 996.4,290.9 987,287 "/>
+<line class="st1" x1="1003.4" y1="167" x2="953.4" y2="167"/>
+<polygon class="st7" points="953.4,163.1 953.4,170.9 944,167 "/>
+<polygon class="st7" points="996,170.9 996,163.1 1005.4,167 "/>
+<line class="st1" x1="843.4" y1="147" x2="567.4" y2="147"/>
+<polygon class="st7" points="836,150.9 836,143.1 845.4,147 "/>
+<line class="st1" x1="171" y1="449" x2="171" y2="416"/>
+<line class="st1" x1="181.3" y1="416" x2="160.7" y2="416"/>
+<line class="st1" x1="181.3" y1="412" x2="160.7" y2="412"/>
+<line class="st1" x1="131" y1="349" x2="131" y2="316"/>
+<line class="st1" x1="141.3" y1="316" x2="120.7" y2="316"/>
+<line class="st1" x1="141.3" y1="312" x2="120.7" y2="312"/>
+<line class="st1" x1="91" y1="329" x2="91" y2="296"/>
+<line class="st1" x1="101.3" y1="296" x2="80.7" y2="296"/>
+<line class="st1" x1="101.3" y1="292" x2="80.7" y2="292"/>
+<line class="st1" x1="51" y1="309" x2="51" y2="276"/>
+<line class="st1" x1="61.3" y1="276" x2="40.7" y2="276"/>
+<line class="st1" x1="61.3" y1="272" x2="40.7" y2="272"/>
+<line class="st1" x1="194.9" y1="396.3" x2="210.8" y2="396.3"/>
+<line class="st1" x1="194.9" y1="376.3" x2="210.8" y2="376.3"/>
+<line class="st1" x1="194.9" y1="356.3" x2="210.8" y2="356.3"/>
+<line class="st1" x1="194.9" y1="336.3" x2="210.8" y2="336.3"/>
+<line class="st1" x1="194.9" y1="316.3" x2="210.8" y2="316.3"/>
+<polyline class="st1" points="171,412 171,396.3 185.9,396.3 "/>
+<polyline class="st1" points="270.8,493.6 230.1,493.6 230.1,412.7 "/>
+<line class="st1" x1="310.8" y1="483.6" x2="291.2" y2="483.6"/>
+<line class="st1" x1="310.8" y1="503.6" x2="291.2" y2="503.6"/>
+<line class="st1" x1="279" y1="540.4" x2="279" y2="518.8"/>
+<line class="st1" x1="194.9" y1="296.3" x2="210.8" y2="296.3"/>
+<polyline class="st1" points="131,312 131,296.3 185.9,296.3 "/>
+<line class="st1" x1="194.9" y1="276.3" x2="210.8" y2="276.3"/>
+<polyline class="st1" points="91,292 91,276.3 185.9,276.3 "/>
+<line class="st1" x1="194.9" y1="256.3" x2="210.8" y2="256.3"/>
+<polyline class="st1" points="51,272 51,256.3 185.9,256.3 "/>
+<rect x="185.9" y="252.8" class="st1" width="9" height="7"/>
+<rect x="185.9" y="272.8" class="st1" width="9" height="7"/>
+<rect x="185.9" y="292.8" class="st1" width="9" height="7"/>
+<rect x="185.9" y="312.8" class="st1" width="9" height="7"/>
+<rect x="185.9" y="332.8" class="st1" width="9" height="7"/>
+<rect x="185.9" y="352.8" class="st1" width="9" height="7"/>
+<rect x="185.9" y="372.8" class="st1" width="9" height="7"/>
+<rect x="185.9" y="392.8" class="st1" width="9" height="7"/>
+</svg>

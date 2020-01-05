@@ -89,7 +89,7 @@ void USB_HostIsrEnable(void)
     uint8_t irqNumber;
 
     uint8_t usbHOSTKhciIrq[] = USB_IRQS;
-    irqNumber = usbHOSTKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+    irqNumber                = usbHOSTKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 
 /* Install isr, set priority, and enable IRQ. */
 #if defined(__GIC_PRIO_BITS)
@@ -126,7 +126,7 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
     uint8_t interfaceIndex = 0;
 #endif
     usb_status_t status = kStatus_USB_Success;
-    switch (eventCode)
+    switch (eventCode & 0x0000FFFFU)
     {
         case kUSB_HostEventAttach:
 #if ((defined USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
@@ -190,6 +190,10 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
 #else
             status = USB_HostMsdEvent(deviceHandle, configurationHandle, eventCode);
 #endif
+            break;
+
+        case kUSB_HostEventEnumerationFail:
+            usb_echo("enumeration failed\r\n");
             break;
 
         default:

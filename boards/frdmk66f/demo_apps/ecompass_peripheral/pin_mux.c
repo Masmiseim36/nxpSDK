@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 NXP
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,11 +14,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v5.0
+product: Pins v6.0
 processor: MK66FN2M0xxx18
 package_id: MK66FN2M0VMD18
 mcu_data: ksdk2_0
-processor_version: 0.0.19
+processor_version: 6.0.1
 board: FRDM-K66F
 pin_labels:
 - {pin_num: B9, pin_signal: PTD9/I2C0_SDA/LPUART0_TX/FB_A17, label: 'U8[6]/U19[12]/I2C0_SDA', identifier: ACCEL_SDA}

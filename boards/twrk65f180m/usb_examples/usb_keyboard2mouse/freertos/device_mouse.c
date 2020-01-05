@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_device_config.h"
@@ -46,7 +24,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #include "usb_phy.h"
 #endif
 
@@ -124,9 +102,16 @@ usb_status_t USB_DeviceHidMouseAction(uint32_t moveAction)
         x--;
     }
 
-    /* Send mouse report to the host */
-    return USB_DeviceHidSend(g_UsbDeviceHidMouse.hidHandle, USB_HID_MOUSE_ENDPOINT_IN, g_UsbDeviceHidMouse.buffer,
-                             USB_HID_MOUSE_REPORT_LENGTH);
+   if (g_UsbDeviceHidMouse.attach != 0)
+    {
+        /* Send mouse report to the host */
+        return USB_DeviceHidSend(g_UsbDeviceHidMouse.hidHandle, USB_HID_MOUSE_ENDPOINT_IN, g_UsbDeviceHidMouse.buffer,
+                                 USB_HID_MOUSE_REPORT_LENGTH);
+    }
+    else
+    {
+        return kStatus_USB_Error;
+    }
 }
 
 /* The hid class callback */
@@ -170,10 +155,12 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
         {
             /* USB bus reset signal detected */
             g_UsbDeviceHidMouse.attach = 0U;
+            g_UsbDeviceHidMouse.currentConfiguration = 0U;
             error = kStatus_USB_Success;
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+#if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
+    (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
-            if (kStatus_USB_Success == USB_DeviceClassGetSpeed(kUSB_ControllerEhci0, &g_UsbDeviceHidMouse.speed))
+            if (kStatus_USB_Success == USB_DeviceClassGetSpeed(DEVICE_CONTROLLER_ID, &g_UsbDeviceHidMouse.speed))
             {
                 USB_DeviceSetSpeed(handle, g_UsbDeviceHidMouse.speed);
             }
@@ -196,11 +183,20 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
         break;
 #endif
         case kUSB_DeviceEventSetConfiguration:
-            if (param)
+            if (0U ==(*temp8))
+            {
+                g_UsbDeviceHidMouse.attach = 0;
+                g_UsbDeviceHidMouse.currentConfiguration = 0U;
+            }
+            else if (USB_HID_MOUSE_CONFIGURE_INDEX == (*temp8))
             {
                 /* Set device configuration request */
                 g_UsbDeviceHidMouse.attach = 1U;
                 g_UsbDeviceHidMouse.currentConfiguration = *temp8;
+            }
+            else
+            {
+                error = kStatus_USB_InvalidRequest;
             }
             break;
         case kUSB_DeviceEventSetInterface:

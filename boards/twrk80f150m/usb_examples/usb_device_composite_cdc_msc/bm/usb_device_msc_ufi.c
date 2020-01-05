@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016 - 2017, 2019 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_device_config.h"
@@ -177,10 +151,10 @@ usb_status_t USB_DeviceMscUfiThirteenCasesCheck(usb_device_msc_struct_t *mscHand
                 if (ufi->thirteenCase.lbaSendRecvSelect == 1)
                 {
                     mscCheckEvent->lbaInformation.transferNumber =
-                        mscCheckEvent->hostExpectedDataLength / mscHandle->lengthOfEachLba;
+                        mscCheckEvent->hostExpectedDataLength / mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].lengthOfEachLba;
                     mscHandle->mscCsw->dataResidue =
                         mscCheckEvent->hostExpectedDataLength -
-                        mscCheckEvent->lbaInformation.transferNumber * mscHandle->lengthOfEachLba;
+                        mscCheckEvent->lbaInformation.transferNumber * mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].lengthOfEachLba;
                     error = USB_DeviceMscLbaTransfer(mscHandle, USB_IN, &mscCheckEvent->lbaInformation);
                 }
                 else
@@ -294,10 +268,10 @@ usb_status_t USB_DeviceMscUfiThirteenCasesCheck(usb_device_msc_struct_t *mscHand
                 if (ufi->thirteenCase.lbaSendRecvSelect == 1)
                 {
                     mscCheckEvent->lbaInformation.transferNumber =
-                        mscCheckEvent->hostExpectedDataLength / mscHandle->lengthOfEachLba;
+                        mscCheckEvent->hostExpectedDataLength / mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].lengthOfEachLba;
                     mscHandle->mscCsw->dataResidue =
                         mscCheckEvent->hostExpectedDataLength -
-                        mscCheckEvent->lbaInformation.transferNumber * mscHandle->lengthOfEachLba;
+                        mscCheckEvent->lbaInformation.transferNumber * mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].lengthOfEachLba;
                     error = USB_DeviceMscLbaTransfer(mscHandle, USB_OUT, &mscCheckEvent->lbaInformation);
                 }
                 else
@@ -376,6 +350,8 @@ usb_status_t USB_DeviceMscUfiInquiryCommand(usb_device_msc_struct_t *mscHandle)
 
     if (mscHandle->configurationStruct->classCallback != NULL)
     {
+        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
         mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventInquiry,
                                                       (void *)&temp);
     }
@@ -428,7 +404,7 @@ usb_status_t USB_DeviceMscUfiReadCommand(usb_device_msc_struct_t *mscHandle)
     }
 
     ufi->thirteenCase.deviceExpectedDirection = USB_IN;
-    ufi->thirteenCase.deviceExpectedDataLength = mscHandle->lengthOfEachLba * lbaTransferLength;
+    ufi->thirteenCase.deviceExpectedDataLength = mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].lengthOfEachLba * lbaTransferLength;
     ufi->thirteenCase.buffer = NULL;
 
     ufi->thirteenCase.lbaSendRecvSelect = 1;
@@ -478,7 +454,7 @@ usb_status_t USB_DeviceMscUfiWriteCommand(usb_device_msc_struct_t *mscHandle)
     {
     }
     ufi->thirteenCase.deviceExpectedDirection = USB_OUT;
-    ufi->thirteenCase.deviceExpectedDataLength = mscHandle->lengthOfEachLba * lbaTransferLength;
+    ufi->thirteenCase.deviceExpectedDataLength = mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].lengthOfEachLba * lbaTransferLength;
     ufi->thirteenCase.buffer = NULL;
 
     ufi->thirteenCase.lbaSendRecvSelect = 1;
@@ -517,6 +493,8 @@ usb_status_t USB_DeviceMscUfiTestUnitReadyCommand(usb_device_msc_struct_t *mscHa
 
     if (mscHandle->configurationStruct->classCallback != NULL)
     {
+        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
         mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventTestUnitReady,
                                                       (void *)&temp);
     }
@@ -572,6 +550,8 @@ usb_status_t USB_DeviceMscUfiModeSenseCommand(usb_device_msc_struct_t *mscHandle
 
     if (mscHandle->configurationStruct->classCallback != NULL)
     {
+        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
         mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventModeSense,
                                                       (void *)&temp);
     }
@@ -607,7 +587,9 @@ usb_status_t USB_DeviceMscUfiModeSelectCommand(usb_device_msc_struct_t *mscHandl
     temp.size = 0;
     if (mscHandle->configurationStruct->classCallback != NULL)
     {
-        mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventInquiry,
+        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
+        mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventModeSelect,
                                                       (void *)&temp);
     }
 
@@ -645,11 +627,15 @@ usb_status_t USB_DeviceMscUfiReadCapacityCommand(usb_device_msc_struct_t *mscHan
     if (mscHandle->mscCbw->cbwcb[0] == USB_DEVICE_MSC_READ_CAPACITY_10_COMMAND)
     {
         ufi->thirteenCase.deviceExpectedDataLength = USB_DEVICE_MSC_UFI_READ_CAPACITY_DATA_LENGTH;
+        ufi->readCapacity->lastLogicalBlockAddress = USB_LONG_TO_BIG_ENDIAN(mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].totalLbaNumberSupports - 1);
+        ufi->readCapacity->blockSize = USB_LONG_TO_BIG_ENDIAN((uint32_t)mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].lengthOfEachLba);
         ufi->thirteenCase.buffer = (uint8_t *)(ufi->readCapacity);
     }
     else
     {
         ufi->thirteenCase.deviceExpectedDataLength = USB_DEVICE_MSC_UFI_READ_CAPACITY16_DATA_LENGTH;
+        ufi->readCapacity16->lastLogicalBlockAddress1 = USB_LONG_TO_BIG_ENDIAN(mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].totalLbaNumberSupports - 1);
+        ufi->readCapacity16->blockSize = USB_LONG_TO_BIG_ENDIAN((uint32_t)mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].lengthOfEachLba);
         ufi->thirteenCase.buffer = (uint8_t *)(ufi->readCapacity16);
     }
     ufi->thirteenCase.deviceExpectedDirection = USB_IN;
@@ -669,7 +655,7 @@ usb_status_t USB_DeviceMscUfiReadCapacityCommand(usb_device_msc_struct_t *mscHan
  *
  *@return A USB error code or kStatus_USB_Success.
 */
-usb_status_t USB_DeviceMscUfiReadFormatCapacityCommand(usb_device_msc_struct_t *mscHandle)
+usb_status_t   USB_DeviceMscUfiReadFormatCapacityCommand(usb_device_msc_struct_t *mscHandle)
 {
     usb_device_msc_ufi_struct_t *ufi = NULL;
     usb_status_t error = kStatus_USB_TransferFailed;
@@ -690,14 +676,15 @@ usb_status_t USB_DeviceMscUfiReadFormatCapacityCommand(usb_device_msc_struct_t *
     /*reference ufi command spec table-33 Descriptor Code definition*/
     num_formattable_cap_desc = (uint8_t)(ufi->formattedDisk ? (mscHandle->implementingDiskDrive ? 0x02 : 0x03) : 0x00);
 
-    formattable_capacity_head.blockNumber = USB_LONG_TO_BIG_ENDIAN(mscHandle->totalLogicalBlockNumber);
-    formattable_capacity_head.blockLength = USB_LONG_TO_BIG_ENDIAN(mscHandle->lengthOfEachLba);
+    formattable_capacity_head.blockNumber = USB_LONG_TO_BIG_ENDIAN(mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].totalLbaNumberSupports);
+    formattable_capacity_head.blockLength = USB_LONG_TO_BIG_ENDIAN(mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].lengthOfEachLba);
 
     descriptor_code =
         (uint8_t)(ufi->formattedDisk ? USB_DEVICE_MSC_UFI_FORMATTED_MEDIA : USB_DEVICE_MSC_UFI_UNFORMATTED_MEDIA);
     capacityListHead.capacityListLength = num_formattable_cap_desc * 8;
-    current_max_head.blockNumber = USB_LONG_TO_BIG_ENDIAN(mscHandle->totalLogicalBlockNumber);
-    current_max_head.descriptorCodeBlockLength = USB_LONG_TO_BIG_ENDIAN(((uint8_t)(descriptor_code << 24) | mscHandle->lengthOfEachLba));
+    current_max_head.blockNumber = USB_LONG_TO_BIG_ENDIAN(mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].totalLbaNumberSupports);
+    current_max_head.descriptorCodeBlockLength =
+        USB_LONG_TO_BIG_ENDIAN(((uint8_t)(descriptor_code << 24) | mscHandle->luInformations[mscHandle->mscCbw->logicalUnitNumber].lengthOfEachLba));
 
     response_size = sizeof(usb_device_capacity_list_header_struct_t) +
                     sizeof(usb_device_current_max_capacity_descriptor_struct_t) +
@@ -706,12 +693,6 @@ usb_status_t USB_DeviceMscUfiReadFormatCapacityCommand(usb_device_msc_struct_t *
     if (response_size > allocation_length)
     {
         response_size = allocation_length;
-    }
-    if (sizeof(ufi->formatCapacityData) < response_size)
-    {
-#if (defined(_USB_DEBUG) && _USB_DEBUG)
-        usb_echo("format_capacity_response_data buff size less than need\n");
-#endif
     }
 
     ptr = (uint8_t *)&capacityListHead;
@@ -817,6 +798,8 @@ usb_status_t USB_DeviceMscUfiPreventAllowMediumCommand(usb_device_msc_struct_t *
 
     if (mscHandle->configurationStruct->classCallback != NULL)
     {
+        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
         mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventRemovalRequest,
                                                       (void *)&temp);
     }
@@ -851,7 +834,9 @@ usb_status_t USB_DeviceMscUfiSendDiagnosticCommand(usb_device_msc_struct_t *mscH
     error = USB_DeviceMscUfiThirteenCasesCheck(mscHandle);
     if (mscHandle->configurationStruct->classCallback != NULL)
     {
-        mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventRemovalRequest,
+        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
+        mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventSendDiagnostic,
                                                       (void *)&temp);
     }
     return error;
@@ -887,6 +872,8 @@ usb_status_t USB_DeviceMscUfiStartStopUnitCommand(usb_device_msc_struct_t *mscHa
     {
         if (mscHandle->configurationStruct->classCallback != NULL)
         {
+            /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+            it is from the second parameter of classInit */
             mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventStopEjectMedia,
                                                           (void *)&temp);
         }
@@ -907,17 +894,20 @@ usb_status_t USB_DeviceMscUfiStartStopUnitCommand(usb_device_msc_struct_t *mscHa
 usb_status_t USB_DeviceMscUfiUnsupportCommand(usb_device_msc_struct_t *mscHandle)
 {
     usb_device_msc_ufi_struct_t *ufi = NULL;
-
+    usb_status_t error;
     ufi = &mscHandle->mscUfi;
 
     mscHandle->mscCsw->dataResidue = 0;
     mscHandle->mscCsw->cswStatus = USB_DEVICE_MSC_COMMAND_FAILED;
 
+    ufi->thirteenCase.deviceExpectedDataLength = 0;
     ufi->requestSense->senseKey = USB_DEVICE_MSC_UFI_ILLEGAL_REQUEST;
     ufi->requestSense->additionalSenseCode = USB_DEVICE_MSC_UFI_INVALID_COMMAND_OPCODE;
     ufi->requestSense->additionalSenseQualifer = USB_DEVICE_MSC_UFI_NO_SENSE;
 
-    return kStatus_USB_Success;
+    error = USB_DeviceMscUfiThirteenCasesCheck(mscHandle);
+    
+    return error;
 }
 
 #endif

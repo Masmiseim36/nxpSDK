@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,9 +9,9 @@
 #include "board.h"
 #include "math.h"
 #include "fsl_fxos.h"
+#include "peripherals.h"
 
-#include "fsl_port.h"
-#include "fsl_gpio.h"
+#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -94,26 +94,26 @@ static void Board_UpdatePwm(uint16_t x, uint16_t y)
 int main(void)
 {
     fxos_handle_t fxosHandle = {0};
-    fxos_data_t sensorData = {0};
-    fxos_config_t config = {0}; 
-    uint8_t sensorRange = 0;
-    uint8_t dataScale = 0;
-    int16_t xData = 0;
-    int16_t yData = 0;
-    uint8_t i = 0;
-    uint8_t array_addr_size = 0;
-    status_t result = kStatus_Fail;
+    fxos_data_t sensorData   = {0};
+    fxos_config_t config     = {0};
+    uint8_t sensorRange      = 0;
+    uint8_t dataScale        = 0;
+    int16_t xData            = 0;
+    int16_t yData            = 0;
+    uint8_t i                = 0;
+    uint8_t array_addr_size  = 0;
+    status_t result          = kStatus_Fail;
 
     /* Board pin, clock, debug console init */
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     BOARD_I2C_ReleaseBus();
     BOARD_I2C_ConfigurePins();
     BOARD_InitDebugConsole();
     BOARD_InitPeripherals();
 
     /* Configure the I2C function */
-    config.I2C_SendFunc = BOARD_Accel_I2C_Send;
+    config.I2C_SendFunc    = BOARD_Accel_I2C_Send;
     config.I2C_ReceiveFunc = BOARD_Accel_I2C_Receive;
 
     /* Initialize sensor devices */

@@ -35,12 +35,12 @@
  *
  * param base EWM peripheral base address
  * param config The configuration of the EWM
-*/
+ */
 void EWM_Init(EWM_Type *base, const ewm_config_t *config)
 {
     assert(config);
 
-    uint32_t value = 0U;
+    uint8_t value = 0U;
 
 #if !((defined(FSL_FEATURE_SOC_PCC_COUNT) && FSL_FEATURE_SOC_PCC_COUNT) && \
       (defined(FSL_FEATURE_PCC_SUPPORT_EWM_CLOCK_REMOVE) && FSL_FEATURE_PCC_SUPPORT_EWM_CLOCK_REMOVE))
@@ -69,10 +69,10 @@ void EWM_Init(EWM_Type *base, const ewm_config_t *config)
  * This function is used to shut down the EWM.
  *
  * param base EWM peripheral base address
-*/
+ */
 void EWM_Deinit(EWM_Type *base)
 {
-    EWM_DisableInterrupts(base, kEWM_InterruptEnable);
+    EWM_DisableInterrupts(base, (uint32_t)kEWM_InterruptEnable);
 #if !((defined(FSL_FEATURE_SOC_PCC_COUNT) && FSL_FEATURE_SOC_PCC_COUNT) && \
       (defined(FSL_FEATURE_PCC_SUPPORT_EWM_CLOCK_REMOVE) && FSL_FEATURE_PCC_SUPPORT_EWM_CLOCK_REMOVE))
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
@@ -105,19 +105,19 @@ void EWM_GetDefaultConfig(ewm_config_t *config)
     assert(config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
-    config->enableEwm = true;
-    config->enableEwmInput = false;
+    config->enableEwm           = true;
+    config->enableEwmInput      = false;
     config->setInputAssertLogic = false;
-    config->enableInterrupt = false;
+    config->enableInterrupt     = false;
 #if defined(FSL_FEATURE_EWM_HAS_CLOCK_SELECT) && FSL_FEATURE_EWM_HAS_CLOCK_SELECT
     config->clockSource = kEWM_LpoClockSource0;
 #endif /* FSL_FEATURE_EWM_HAS_CLOCK_SELECT*/
 #if defined(FSL_FEATURE_EWM_HAS_PRESCALER) && FSL_FEATURE_EWM_HAS_PRESCALER
     config->prescaler = 0U;
 #endif /* FSL_FEATURE_EWM_HAS_PRESCALER */
-    config->compareLowValue = 0U;
+    config->compareLowValue  = 0U;
     config->compareHighValue = 0xFEU;
 }
 
@@ -127,14 +127,14 @@ void EWM_GetDefaultConfig(ewm_config_t *config)
  * This function resets the EWM counter to zero.
  *
  * param base EWM peripheral base address
-*/
+ */
 void EWM_Refresh(EWM_Type *base)
 {
     uint32_t primaskValue = 0U;
 
     /* Disable the global interrupt to protect refresh sequence */
     primaskValue = DisableGlobalIRQ();
-    base->SERV = (uint8_t)0xB4U;
-    base->SERV = (uint8_t)0x2CU;
+    base->SERV   = (uint8_t)0xB4U;
+    base->SERV   = (uint8_t)0x2CU;
     EnableGlobalIRQ(primaskValue);
 }

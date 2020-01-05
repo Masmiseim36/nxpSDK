@@ -22,7 +22,7 @@
 #define BL_CONFIG_SCUART (1)
 #endif
 #if !defined(BL_CONFIG_I2C)
-#define BL_CONFIG_I2C (1)
+#define BL_CONFIG_I2C (0)
 #endif
 #if !defined(BL_CONFIG_DSPI)
 #define BL_CONFIG_DSPI (1)
@@ -93,31 +93,6 @@
 #if !defined(BL_APP_VECTOR_TABLE_ADDRESS)
 #define BL_APP_VECTOR_TABLE_ADDRESS 0xA000
 #endif
-
-/* Serial Port Info */
-
-/**************************************************************************
- * Note:
- *
- * Because of the changes to the UART modules, we can no longer define
- * the TERM_PORT as a base pointer.  The uart functions have been modified
- * accommodate this change.  Now, TERM_PORT_NUM must be defined as the
- * number of the UART port desired to use
- *
- * TERM_PORT_NUM = 0  -- This allows you to use UART0; default pins are
- *                        PTA14 and PTA15
- *
- * TERM_PORT_NUM = 1  -- This allows you to use UART1; default pins are
- *                        PTC3 and PTC4
- *
- * TERM_PORT_NUM = 2  -- This allows you to use UART2; default pins are
- *                        PTD2 and PTD3
- *
- *************************************************************************/
-#define TERM_PORT_NUM 0
-
-#define TERMINAL_BAUD 19200
-#undef HW_FLOW_CONTROL
 
 #endif // __BOOTLOADER_CONFIG_H__
 ////////////////////////////////////////////////////////////////////////////////

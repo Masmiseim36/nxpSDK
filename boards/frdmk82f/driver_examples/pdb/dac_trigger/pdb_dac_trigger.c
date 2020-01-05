@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
@@ -46,7 +24,7 @@
 #define DEMO_PDB_DAC_INTERVAL_VALUE 800U
 
 #define DEMO_DAC_BASE DAC0
-#define DEMO_DAC_CHANNEL 0U
+#define DEMO_DAC_CHANNEL kPDB_DACTriggerChannel0
 #define DEMO_DAC_IRQ_ID DAC0_IRQn
 #define DEMO_DAC_IRQ_HANDLER DAC0_IRQHandler
 #define DEMO_DAC_USED_BUFFER_SIZE DAC_DATL_COUNT
@@ -88,6 +66,7 @@ void static DEMO_InitPDB_DAC(void)
      */
     DAC_GetDefaultConfig(&dacConfigStruct);
     DAC_Init(DEMO_DAC_BASE, &dacConfigStruct);
+    DAC_Enable(DEMO_DAC_BASE, true);
 
     /* Configure the DAC buffer. */
     DAC_GetDefaultBufferConfig(&dacBufferConfigStruct);
@@ -106,7 +85,7 @@ void static DEMO_InitPDB_DAC(void)
 #if defined(FSL_FEATURE_DAC_HAS_WATERMARK_SELECTION) && FSL_FEATURE_DAC_HAS_WATERMARK_SELECTION
     g_DacBufferWatermarkInterruptFlag = false;
 #endif /* FSL_FEATURE_DAC_HAS_WATERMARK_SELECTION */
-    g_DacBufferReadPointerTopPositionInterruptFlag = false;
+    g_DacBufferReadPointerTopPositionInterruptFlag    = false;
     g_DacBufferReadPointerBottomPositionInterruptFlag = false;
 
     /* Enable interrupts. */
@@ -134,6 +113,11 @@ void DEMO_PDB_IRQ_HANDLER(void)
     PDB_ClearStatusFlags(DEMO_PDB_BASE, kPDB_DelayEventFlag);
     g_PdbDelayInterruptCounter++;
     g_PdbDelayInterruptFlag = true;
+    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+      exception return operation might vector to incorrect interrupt */
+#if defined __CORTEX_M && (__CORTEX_M == 4U)
+    __DSB();
+#endif
 }
 
 /*!
@@ -159,6 +143,11 @@ void DEMO_DAC_IRQ_HANDLER(void)
     }
     /* Clear flags. */
     DAC_ClearBufferStatusFlags(DEMO_DAC_BASE, flags);
+    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+      exception return operation might vector to incorrect interrupt */
+#if defined __CORTEX_M && (__CORTEX_M == 4U)
+    __DSB();
+#endif
 }
 
 /*!
@@ -196,7 +185,7 @@ int main(void)
 
     /* Configure the DAC trigger. */
     pdbDacTriggerConfigStruct.enableExternalTriggerInput = false;
-    pdbDacTriggerConfigStruct.enableIntervalTrigger = true;
+    pdbDacTriggerConfigStruct.enableIntervalTrigger      = true;
     PDB_SetDACTriggerConfig(DEMO_PDB_BASE, DEMO_DAC_CHANNEL, &pdbDacTriggerConfigStruct);
     PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASE, DEMO_DAC_CHANNEL, DEMO_PDB_DAC_INTERVAL_VALUE);
 

@@ -62,11 +62,13 @@ int main(void)
     ftmParam[0].level                 = kFTM_LowTrue;
     ftmParam[0].dutyCyclePercent      = 0U;
     ftmParam[0].firstEdgeDelayPercent = 0U;
+    ftmParam[0].enableDeadtime        = false;
 
     ftmParam[1].chnlNumber            = (ftm_chnl_t)BOARD_SECOND_FTM_CHANNEL;
     ftmParam[1].level                 = kFTM_LowTrue;
     ftmParam[1].dutyCyclePercent      = 0U;
     ftmParam[1].firstEdgeDelayPercent = 0U;
+    ftmParam[1].enableDeadtime        = false;
 
     /* Board pin, clock, debug console init */
     BOARD_InitPins();

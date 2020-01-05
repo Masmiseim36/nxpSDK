@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MK64F12"/>
+    <definition extID="component.serial_manager.MK64F12"/>
+    <definition extID="component.serial_manager_uart.MK64F12"/>
+    <definition extID="component.uart_adapter.MK64F12"/>
+    <definition extID="device.MK64F12_CMSIS.MK64F12"/>
+    <definition extID="device.MK64F12_startup.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.demo_se.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.3rdparty.jsmn.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.3rdparty.pkcs11.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.platform.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.secure_sockets.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.crypto.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.tls.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.utils.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.mflash.se_hostlib.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-kernel.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-kernel.extension.MK64F12"/>
+    <definition extID="middleware.amazon_freertos-kernel.heap_4.MK64F12"/>
+    <definition extID="middleware.lwip.MK64F12"/>
+    <definition extID="middleware.lwip.enet_ethernetif.MK64F12"/>
+    <definition extID="middleware.lwip.enet_ethernetif_kinetis.MK64F12"/>
+    <definition extID="middleware.mbedtls.MK64F12"/>
+    <definition extID="middleware.mmcau.cm4_cm7.MK64F12"/>
+    <definition extID="middleware.se_hostlib.A71CHApisrc.MK64F12"/>
+    <definition extID="middleware.se_hostlib.A71CHhostCrypto.MK64F12"/>
+    <definition extID="middleware.se_hostlib.cloud_enet.MK64F12"/>
+    <definition extID="middleware.se_hostlib.commonA71CHDemo.MK64F12"/>
+    <definition extID="middleware.se_hostlib.commonA71CHsmCom.MK64F12"/>
+    <definition extID="middleware.se_hostlib.commonCloudDemos.MK64F12"/>
+    <definition extID="middleware.se_hostlib.commonInfra.MK64F12"/>
+    <definition extID="middleware.se_hostlib.common_A71CH.MK64F12"/>
+    <definition extID="middleware.se_hostlib.mbedtls_a71ch_demos.MK64F12"/>
+    <definition extID="middleware.se_hostlib.mbedtls_alt_demo_common.MK64F12"/>
+    <definition extID="platform.Include_common.MK64F12"/>
+    <definition extID="platform.Include_core_cm4.MK64F12"/>
+    <definition extID="platform.Include_dsp.MK64F12"/>
+    <definition extID="platform.drivers.clock.MK64F12"/>
+    <definition extID="platform.drivers.common.MK64F12"/>
+    <definition extID="platform.drivers.enet.MK64F12"/>
+    <definition extID="platform.drivers.flash.MK64F12"/>
+    <definition extID="platform.drivers.gpio.MK64F12"/>
+    <definition extID="platform.drivers.i2c.MK64F12"/>
+    <definition extID="platform.drivers.i2c_freertos.MK64F12"/>
+    <definition extID="platform.drivers.pit.MK64F12"/>
+    <definition extID="platform.drivers.port.MK64F12"/>
+    <definition extID="platform.drivers.rnga.MK64F12"/>
+    <definition extID="platform.drivers.sim.MK64F12"/>
+    <definition extID="platform.drivers.smc.MK64F12"/>
+    <definition extID="platform.drivers.uart.MK64F12"/>
+    <definition extID="platform.utilities.assert.MK64F12"/>
+    <definition extID="platform.utilities.misc_utilities.MK64F12"/>
+    <definition extID="utility.debug_console.MK64F12"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+  </externalDefinitions>
+  <example id="frdmk64f_se_A71CH_cloud_azure" name="se_A71CH_cloud_azure" category="se_hostlib_examples" dependency="middleware.mmcau.cm4_cm7.MK64F12 platform.drivers.rnga.MK64F12 platform.drivers.i2c.MK64F12 middleware.amazon_freertos-aws_iot.vendor.nxp.mflash.se_hostlib.MK64F12 middleware.se_hostlib.cloud_enet.MK64F12 middleware.lwip.MK64F12 middleware.lwip.enet_ethernetif_kinetis.MK64F12 middleware.se_hostlib.common_A71CH.MK64F12 middleware.se_hostlib.commonA71CHDemo.MK64F12 platform.drivers.common.MK64F12 platform.drivers.clock.MK64F12 platform.drivers.pit.MK64F12 platform.drivers.flash.MK64F12 platform.drivers.gpio.MK64F12 utility.debug_console.MK64F12 platform.drivers.port.MK64F12 platform.drivers.uart.MK64F12 platform.drivers.smc.MK64F12 device.MK64F12_CMSIS.MK64F12 component.uart_adapter.MK64F12 component.serial_manager.MK64F12 component.lists.MK64F12 component.serial_manager_uart.MK64F12 device.MK64F12_startup.MK64F12 platform.utilities.assert.MK64F12 platform.Include_core_cm4.MK64F12 platform.Include_common.MK64F12 platform.Include_dsp.MK64F12 platform.drivers.enet.MK64F12 middleware.amazon_freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MK64F12 middleware.amazon_freertos-aws_iot.libraries.abstractions.secure_sockets.MK64F12 middleware.lwip.enet_ethernetif.MK64F12 middleware.se_hostlib.A71CHhostCrypto.MK64F12 middleware.se_hostlib.commonA71CHsmCom.MK64F12 middleware.se_hostlib.commonInfra.MK64F12 middleware.se_hostlib.A71CHApisrc.MK64F12 middleware.se_hostlib.commonCloudDemos.MK64F12 middleware.mbedtls.MK64F12 middleware.amazon_freertos-kernel.heap_4.MK64F12 middleware.amazon_freertos-kernel.MK64F12 middleware.amazon_freertos-kernel.extension.MK64F12 middleware.amazon_freertos-aws_iot.libraries.abstractions.platform.MK64F12 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.tls.MK64F12 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MK64F12 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.crypto.MK64F12 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.utils.MK64F12 middleware.amazon_freertos-aws_iot.demo_se.MK64F12 middleware.amazon_freertos-aws_iot.libraries.3rdparty.pkcs11.MK64F12 middleware.amazon_freertos-aws_iot.libraries.3rdparty.jsmn.MK64F12 platform.drivers.i2c_freertos.MK64F12 platform.drivers.sim.MK64F12 middleware.se_hostlib.mbedtls_a71ch_demos.MK64F12 middleware.se_hostlib.mbedtls_alt_demo_common.MK64F12 platform.utilities.misc_utilities.MK64F12">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv4.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv4.hard</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>SDK_DEBUGCONSOLE=1</value>
+          <value>CPU_MK64FN1M0VLL12</value>
+          <value>SDK_DEBUGCONSOLE=0</value>
+          <value>SDK_DEBUGCONSOLE_UART</value>
+          <value>AZURE_IOT</value>
+          <value>PRINTF_ADVANCED_ENABLE=1</value>
+          <value>FRDM_K64F</value>
+          <value>FREEDOM</value>
+          <value>LPC_ENET</value>
+          <value>TGT_A71CH</value>
+          <value>SCI2C</value>
+          <value>SSS_USE_FTR_FILE</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>FSL_RTOS_FREE_RTOS</value>
+          <value>MBEDTLS</value>
+          <value>SDK_OS_FREE_RTOS</value>
+          <value>USE_RTOS</value>
+          <value>mqttconfigENABLE_METRICS=0</value>
+          <value>SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC</value>
+          <value>MBEDTLS_CONFIG_FILE='"a71ch_mbedtls_frdm_config.h"'</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-fomit-frame-pointer  -c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv4.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
+          <value>&amp;Heap:Default;Default;0x8000&amp;Stack:Default;Default;0x2000</value>
+        </option>
+        <option id="com.crt.advproject.gas.hdrlib" type="enum">
+          <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gas.specs" type="enum">
+          <value>com.crt.advproject.gas.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.specs" type="enum">
+          <value>com.crt.advproject.gcc.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.link.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.link.hdrlib.newlibnano.nohost</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <include_paths>
+      <include_path path="amazon-freertos/libraries/abstractions/platform/freertos/include"/>
+      <include_path path="amazon-freertos/libraries/abstractions/platform/include"/>
+      <include_path path="lwip/port"/>
+      <include_path path="lwip/src"/>
+      <include_path path="lwip/src/include"/>
+      <include_path path="mbedtls/include"/>
+    </include_paths>
+    <source path="boards/frdmk64f/se_hostlib_examples/se_A71CH_cloud_azure/armgcc" target_path="frdmk64f/se_hostlib_examples/aws_jitr_demo/linker" type="linker" toolchain="armgcc">
+      <files mask="MK64FN1M0xxx12_flash_heap.ld"/>
+    </source>
+    <source path="boards/frdmk64f/se_hostlib_examples/se_A71CH_cloud_azure/iar" target_path="MK64F12/iar" type="linker" toolchain="iar">
+      <files mask="MK64FN1M0xxx12_flash.icf"/>
+    </source>
+    <source path="boards/frdmk64f/se_hostlib_examples/se_A71CH_cloud_azure/mdk" target_path="MK64F12/arm" type="linker" toolchain="mdk">
+      <files mask="MK64FN1M0xxx12_flash.scf"/>
+    </source>
+    <source path="boards/frdmk64f/se_hostlib_examples/se_A71CH_cloud_azure" target_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+    </source>
+    <source path="boards/frdmk64f/se_hostlib_examples/se_A71CH_cloud_azure" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+    </source>
+    <source path="boards/frdmk64f/se_hostlib_examples/se_A71CH_cloud_azure" target_path="doc" type="doc" exclude="true">
+      <files mask="Readme.rst"/>
+    </source>
+    <source path="boards/frdmk64f/se_hostlib_examples/se_A71CH_cloud_azure" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/frdmk64f/se_hostlib_examples/se_A71CH_cloud_azure" target_path="source" type="c_include">
+      <files mask="FreeRTOSConfig.h"/>
+      <files mask="azureDemo.h"/>
+      <files mask="azure_client_credential_keys.h"/>
+      <files mask="azure_default_root_certificates.h"/>
+      <files mask="azure_iot_config.h"/>
+      <files mask="fsl_sss_ftr.h"/>
+    </source>
+    <source path="boards/frdmk64f/se_hostlib_examples/se_A71CH_cloud_azure" target_path="source" type="src">
+      <files mask="azureDemo_Main_lwip.c"/>
+      <files mask="azurePubSub.c"/>
+      <files mask="azureTask_lwip.c"/>
+    </source>
+    <source path="middleware/se_hostlib/demos/ksdk/common/boards/frdmk64f/se_hostlib_examples/cloud_demo" target_path="se_hostlib/demos/ksdk/common/boards/frdmk64f/se_hostlib_examples/cloud_demo" type="c_include">
+      <files mask="fsl_phy.h"/>
+    </source>
+    <source path="middleware/se_hostlib/demos/ksdk/common/boards/frdmk64f/se_hostlib_examples/cloud_demo" target_path="se_hostlib/demos/ksdk/common/boards/frdmk64f/se_hostlib_examples/cloud_demo" type="src">
+      <files mask="fsl_phy.c"/>
+    </source>
+  </example>
+</ksdk:examples>

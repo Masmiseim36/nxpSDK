@@ -3,6 +3,23 @@ Overview
 The mbdedTLS Benchmark demo application performs cryptographic algorithm benchmarking and prints results to the
 terminal.
 
+
+Toolchain supported
+===================
+- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.40.2
+- Keil MDK  5.29
+
+Hardware requirements
+=====================
+- Mini/micro USB cable
+- FRDM-K64F board
+- Personal Computer
+
+Board settings
+==============
+No special settings are required.
 Prepare the Demo
 ================
 Connect a serial cable from the debug UART port of the target board to the PC. Start TeraTerm (http://ttssh2.osdn.jp)
@@ -80,20 +97,6 @@ Using following implementations:
   ECDH-secp256r1           :    3.00 handshake/s
   ECDH-secp224r1           :    4.67 handshake/s
   ECDH-secp192r1           :    6.00 handshake/s
-Hardware requirements
+Customization options
 =====================
-- Mini/micro USB cable
-- FRDM-K64F board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Toolchain supported
-===================
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
 

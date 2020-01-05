@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_cmt.h"
@@ -33,6 +11,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.cmt"
+#endif
 
 /* The standard intermediate frequency (IF). */
 #define CMT_INTERMEDIATEFREQUENCY_8MHZ (8000000U)
@@ -82,7 +65,7 @@ static uint32_t CMT_GetInstance(CMT_Type *base)
     uint32_t instance;
 
     /* Find the instance index from base address mappings. */
-    for (instance = 0; instance < FSL_FEATURE_SOC_CMT_COUNT; instance++)
+    for (instance = 0; instance < ARRAY_SIZE(s_cmtBases); instance++)
     {
         if (s_cmtBases[instance] == base)
         {
@@ -90,25 +73,46 @@ static uint32_t CMT_GetInstance(CMT_Type *base)
         }
     }
 
-    assert(instance < FSL_FEATURE_SOC_CMT_COUNT);
+    assert(instance < ARRAY_SIZE(s_cmtBases));
 
     return instance;
 }
 
+/*!
+ * brief Gets the CMT default configuration structure. This API
+ * gets the default configuration structure for the CMT_Init().
+ * Use the initialized structure unchanged in CMT_Init() or modify
+ * fields of the structure before calling the CMT_Init().
+ *
+ * param config The CMT configuration structure pointer.
+ */
 void CMT_GetDefaultConfig(cmt_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
+
+    /* Initializes the configure structure to zero. */
+    (void)memset(config, 0, sizeof(*config));
 
     /* Default infrared output is enabled and set with high active, the divider is set to 1. */
     config->isInterruptEnabled = false;
-    config->isIroEnabled = true;
-    config->iroPolarity = kCMT_IROActiveHigh;
-    config->divider = kCMT_SecondClkDiv1;
+    config->isIroEnabled       = true;
+    config->iroPolarity        = kCMT_IROActiveHigh;
+    config->divider            = kCMT_SecondClkDiv1;
 }
 
+/*!
+ * brief Initializes the CMT module.
+ *
+ * This function ungates the module clock and sets the CMT internal clock,
+ * interrupt, and infrared output signal for the CMT module.
+ *
+ * param base            CMT peripheral base address.
+ * param config          The CMT basic configuration structure.
+ * param busClock_Hz     The CMT module input clock - bus clock frequency.
+ */
 void CMT_Init(CMT_Type *base, const cmt_config_t *config, uint32_t busClock_Hz)
 {
-    assert(config);
+    assert(NULL != config);
     assert(busClock_Hz >= CMT_INTERMEDIATEFREQUENCY_8MHZ);
 
     uint8_t divider;
@@ -120,9 +124,9 @@ void CMT_Init(CMT_Type *base, const cmt_config_t *config, uint32_t busClock_Hz)
 
     /* Sets clock divider. The divider set in pps should be set
        to make sycClock_Hz/divder = 8MHz */
-    base->PPS = CMT_PPS_PPSDIV(busClock_Hz / CMT_INTERMEDIATEFREQUENCY_8MHZ - 1);
-    divider = base->MSC;
-    divider &= ~CMT_MSC_CMTDIV_MASK;
+    base->PPS = CMT_PPS_PPSDIV(busClock_Hz / CMT_INTERMEDIATEFREQUENCY_8MHZ - 1U);
+    divider   = base->MSC;
+    divider &= ~(uint8_t)CMT_MSC_CMTDIV_MASK;
     divider |= CMT_MSC_CMTDIV(config->divider);
     base->MSC = divider;
 
@@ -130,21 +134,29 @@ void CMT_Init(CMT_Type *base, const cmt_config_t *config, uint32_t busClock_Hz)
     base->OC = CMT_OC_CMTPOL(config->iroPolarity) | CMT_OC_IROPEN(config->isIroEnabled);
 
     /* Set interrupt. */
-    if (config->isInterruptEnabled)
+    if (true == config->isInterruptEnabled)
     {
-        CMT_EnableInterrupts(base, kCMT_EndOfCycleInterruptEnable);
-        EnableIRQ(s_cmtIrqs[CMT_GetInstance(base)]);
+        CMT_EnableInterrupts(base, (uint32_t)kCMT_EndOfCycleInterruptEnable);
+        (void)EnableIRQ(s_cmtIrqs[CMT_GetInstance(base)]);
     }
 }
 
+/*!
+ * brief Disables the CMT module and gate control.
+ *
+ * This function disables CMT modulator, interrupts, and gates the
+ * CMT clock control. CMT_Init must be called  to use the CMT again.
+ *
+ * param base   CMT peripheral base address.
+ */
 void CMT_Deinit(CMT_Type *base)
 {
     /*Disable the CMT modulator. */
     base->MSC = 0;
 
     /* Disable the interrupt. */
-    CMT_DisableInterrupts(base, kCMT_EndOfCycleInterruptEnable);
-    DisableIRQ(s_cmtIrqs[CMT_GetInstance(base)]);
+    CMT_DisableInterrupts(base, (uint32_t)kCMT_EndOfCycleInterruptEnable);
+    (void)DisableIRQ(s_cmtIrqs[CMT_GetInstance(base)]);
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* Gate the clock. */
@@ -152,6 +164,13 @@ void CMT_Deinit(CMT_Type *base)
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 }
 
+/*!
+ * brief Selects the mode for CMT.
+ *
+ * param base   CMT peripheral base address.
+ * param mode   The CMT feature mode enumeration. See "cmt_mode_t".
+ * param modulateConfig  The carrier generation and modulator configuration.
+ */
 void CMT_SetMode(CMT_Type *base, cmt_mode_t mode, cmt_modulate_config_t *modulateConfig)
 {
     uint8_t mscReg = base->MSC;
@@ -159,7 +178,7 @@ void CMT_SetMode(CMT_Type *base, cmt_mode_t mode, cmt_modulate_config_t *modulat
     /* Judge the mode. */
     if (mode != kCMT_DirectIROCtl)
     {
-        assert(modulateConfig);
+        assert(NULL != modulateConfig);
 
         /* Set carrier generator. */
         CMT_SetCarrirGenerateCountOne(base, modulateConfig->highCount1, modulateConfig->lowCount1);
@@ -170,94 +189,140 @@ void CMT_SetMode(CMT_Type *base, cmt_mode_t mode, cmt_modulate_config_t *modulat
 
         /* Set carrier modulator. */
         CMT_SetModulateMarkSpace(base, modulateConfig->markCount, modulateConfig->spaceCount);
-        mscReg &= ~ (CMT_MSC_FSK_MASK | CMT_MSC_BASE_MASK);
-        mscReg |= mode;
+        mscReg &= ~((uint8_t)CMT_MSC_FSK_MASK | (uint8_t)CMT_MSC_BASE_MASK);
+        mscReg |= (uint8_t)mode;
     }
     else
     {
-        mscReg &= ~CMT_MSC_MCGEN_MASK;
+        mscReg &= ~(uint8_t)CMT_MSC_MCGEN_MASK;
     }
     /* Set the CMT mode. */
     base->MSC = mscReg;
 }
 
+/*!
+ * brief Gets the mode of the CMT module.
+ *
+ * param base   CMT peripheral base address.
+ * return The CMT mode.
+ *     kCMT_DirectIROCtl     Carrier modulator is disabled; the IRO signal is directly in software control.
+ *     kCMT_TimeMode         Carrier modulator is enabled in time mode.
+ *     kCMT_FSKMode          Carrier modulator is enabled in FSK mode.
+ *     kCMT_BasebandMode     Carrier modulator is enabled in baseband mode.
+ */
 cmt_mode_t CMT_GetMode(CMT_Type *base)
 {
     uint8_t mode = base->MSC;
+    cmt_mode_t ret;
 
-    if (!(mode & CMT_MSC_MCGEN_MASK))
+    if (0U == (mode & CMT_MSC_MCGEN_MASK))
     { /* Carrier modulator disabled and the IRO signal is in direct software control. */
-        return kCMT_DirectIROCtl;
+        ret = kCMT_DirectIROCtl;
     }
     else
     {
         /* Carrier modulator is enabled. */
-        if (mode & CMT_MSC_BASE_MASK)
+        if (0U != (mode & CMT_MSC_BASE_MASK))
         {
             /* Base band mode. */
-            return kCMT_BasebandMode;
+            ret = kCMT_BasebandMode;
         }
-        else if (mode & CMT_MSC_FSK_MASK)
+        else if (0U != (mode & CMT_MSC_FSK_MASK))
         {
             /* FSK mode. */
-            return kCMT_FSKMode;
+            ret = kCMT_FSKMode;
         }
         else
         {
             /* Time mode. */
-            return kCMT_TimeMode;
+            ret = kCMT_TimeMode;
         }
     }
+
+    return ret;
 }
 
+/*!
+ * brief Gets the actual CMT clock frequency.
+ *
+ * param base        CMT peripheral base address.
+ * param busClock_Hz CMT module input clock - bus clock frequency.
+ * return The CMT clock frequency.
+ */
 uint32_t CMT_GetCMTFrequency(CMT_Type *base, uint32_t busClock_Hz)
 {
     uint32_t frequency;
     uint32_t divider;
 
     /* Get intermediate frequency. */
-    frequency = busClock_Hz / ((base->PPS & CMT_PPS_PPSDIV_MASK) + 1);
+    frequency = busClock_Hz / (((uint32_t)base->PPS & CMT_PPS_PPSDIV_MASK) + 1U);
 
     /* Get the second divider. */
-    divider = ((base->MSC & CMT_MSC_CMTDIV_MASK) >> CMT_MSC_CMTDIV_SHIFT);
+    divider = (((uint32_t)base->MSC & CMT_MSC_CMTDIV_MASK) >> CMT_MSC_CMTDIV_SHIFT);
     /* Get CMT frequency. */
     switch ((cmt_second_clkdiv_t)divider)
     {
         case kCMT_SecondClkDiv1:
-            frequency = frequency / CMT_CMTDIV_ONE;
+            frequency = frequency / (uint32_t)CMT_CMTDIV_ONE;
             break;
         case kCMT_SecondClkDiv2:
-            frequency = frequency / CMT_CMTDIV_TWO;
+            frequency = frequency / (uint32_t)CMT_CMTDIV_TWO;
             break;
         case kCMT_SecondClkDiv4:
-            frequency = frequency / CMT_CMTDIV_FOUR;
+            frequency = frequency / (uint32_t)CMT_CMTDIV_FOUR;
             break;
         case kCMT_SecondClkDiv8:
-            frequency = frequency / CMT_CMTDIV_EIGHT;
+            frequency = frequency / (uint32_t)CMT_CMTDIV_EIGHT;
             break;
         default:
-            frequency = frequency / CMT_CMTDIV_ONE;
+            frequency = frequency / (uint32_t)CMT_CMTDIV_ONE;
             break;
     }
 
     return frequency;
 }
 
+/*!
+ * brief Sets the modulation mark and space time period for the CMT modulator.
+ *
+ * This function sets the mark time period of the CMT modulator counter
+ * to control the mark time of the output modulated signal from the carrier generator output signal.
+ * If the CMT clock frequency is Fcmt and the carrier out signal frequency is fcg:
+ *      - In Time and Baseband mode: The mark period of the generated signal equals (markCount + 1) / (Fcmt/8).
+ *                                   The space period of the generated signal equals spaceCount / (Fcmt/8).
+ *      - In FSK mode: The mark period of the generated signal equals (markCount + 1)/fcg.
+ *                     The space period of the generated signal equals spaceCount / fcg.
+ *
+ * param base Base address for current CMT instance.
+ * param markCount The number of clock period for CMT modulator signal mark period,
+ *                   in the range of 0 ~ 0xFFFF.
+ * param spaceCount The number of clock period for CMT modulator signal space period,
+ *                   in the range of the 0 ~ 0xFFFF.
+ */
 void CMT_SetModulateMarkSpace(CMT_Type *base, uint32_t markCount, uint32_t spaceCount)
 {
     /* Set modulate mark. */
-    base->CMD1 = (markCount >> CMT_MODULATE_COUNT_WIDTH) & CMT_CMD1_MB_MASK;
-    base->CMD2 = (markCount & CMT_CMD2_MB_MASK);
+    base->CMD1 = (uint8_t)((markCount >> CMT_MODULATE_COUNT_WIDTH) & CMT_CMD1_MB_MASK);
+    base->CMD2 = (uint8_t)(markCount & CMT_CMD2_MB_MASK);
     /* Set modulate space. */
-    base->CMD3 = (spaceCount >> CMT_MODULATE_COUNT_WIDTH) & CMT_CMD3_SB_MASK;
-    base->CMD4 = spaceCount & CMT_CMD4_SB_MASK;
+    base->CMD3 = (uint8_t)((spaceCount >> CMT_MODULATE_COUNT_WIDTH) & CMT_CMD3_SB_MASK);
+    base->CMD4 = (uint8_t)(spaceCount & CMT_CMD4_SB_MASK);
 }
 
+/*!
+ * brief Sets the IRO (infrared output) signal state.
+ *
+ * Changes the states of the IRO signal when the kCMT_DirectIROMode mode is set
+ * and the IRO signal is enabled.
+ *
+ * param base   CMT peripheral base address.
+ * param state  The control of the IRO signal. See "cmt_infrared_output_state_t"
+ */
 void CMT_SetIroState(CMT_Type *base, cmt_infrared_output_state_t state)
 {
     uint8_t ocReg = base->OC;
 
-    ocReg &= ~CMT_OC_IROL_MASK;
+    ocReg &= ~(uint8_t)CMT_OC_IROL_MASK;
     ocReg |= CMT_OC_IROL(state);
 
     /* Set the infrared output signal control. */

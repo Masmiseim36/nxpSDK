@@ -52,6 +52,13 @@
 #define DEMO_AUDIO_DATA_CHANNEL (2U)
 /* demo audio bit width */
 #define DEMO_AUDIO_BIT_WIDTH kSAI_WordWidth16bits
+
+#ifndef DEMO_SAI_TX_SYNC_MODE
+#define DEMO_SAI_TX_SYNC_MODE kSAI_ModeAsync
+#endif
+#ifndef DEMO_SAI_RX_SYNC_MODE
+#define DEMO_SAI_RX_SYNC_MODE kSAI_ModeSync
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -85,8 +92,8 @@ sai_master_clock_t mclkConfig = {
 #endif
 };
 #endif
-uint8_t codecHandleBuffer[CODEC_HANDLE_SIZE] = {0U};
-codec_handle_t *codecHandle                  = (codec_handle_t *)codecHandleBuffer;
+codec_handle_t codecHandle;
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -135,8 +142,9 @@ int main(void)
 
     /* I2S mode configurations */
     SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, kSAI_Channel0Mask);
+    config.syncMode = DEMO_SAI_TX_SYNC_MODE;
     SAI_TransferTxSetConfig(DEMO_SAI, &txHandle, &config);
-    config.syncMode = kSAI_ModeSync;
+    config.syncMode = DEMO_SAI_RX_SYNC_MODE;
     SAI_TransferRxSetConfig(DEMO_SAI, &rxHandle, &config);
 
     /* set bit clock divider */
@@ -156,7 +164,7 @@ int main(void)
 #endif
 
     /* Use default setting to init codec */
-    CODEC_Init(codecHandle, &boardCodecConfig);
+    CODEC_Init(&codecHandle, &boardCodecConfig);
 
     while (1)
     {

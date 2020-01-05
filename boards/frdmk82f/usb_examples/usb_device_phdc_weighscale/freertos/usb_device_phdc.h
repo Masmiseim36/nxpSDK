@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _USB_DEVICE_PHDC_H_
@@ -51,9 +29,9 @@
 /*! @brief Available common EVENT types in PHDC class callback */
 typedef enum
 {
-    kUSB_DevicePhdcEventInterruptInSendComplete = 0x01, /*!< Send data completed */
-    kUSB_DevicePhdcEventBulkInSendComplete,             /*!< Send data completed */
-    kUSB_DevicePhdcEventDataReceived,                   /*!< Data received */
+    kUSB_DevicePhdcEventInterruptInSendComplete = 0x01, /*!< Send data completed or cancelled etc*/
+    kUSB_DevicePhdcEventBulkInSendComplete,             /*!< Send data completed or cancelled etc*/
+    kUSB_DevicePhdcEventDataReceived,                   /*!< Data received or cancelled etc*/
     kUSB_DevicePhdcEventSetFeature,                     /*!< Set feature request */
     kUSB_DevicePhdcEventClearFeature,                   /*!< Clear feature request */
     kUSB_DevicePhdcEventGetStatus,                      /*!< Get status request */
@@ -62,6 +40,9 @@ typedef enum
 /*! @brief Definition of pipe structure. */
 typedef struct _usb_device_phdc_pipe
 {
+    uint8_t *pipeDataBuffer;      /*!< pipe data buffer backup when stall */
+    uint32_t pipeDataLen;         /*!< pipe data length backup when stall  */
+    uint8_t pipeStall;            /*!< pipe is stall  */
     uint8_t ep;     /*!< The endpoint number of the pipe. */
     uint8_t isBusy; /*!< 1: The pipe is transferring packet, 0: The pipe is idle. */
 } usb_device_phdc_pipe_t;
@@ -151,6 +132,8 @@ extern usb_status_t USB_DevicePhdcEvent(void *handle, uint32_t event, void *para
  * @retval kStatus_USB_InvalidHandle        The device handle is not found.
  * @retval kStatus_USB_Busy                 The previous transfer is pending.
  * @retval kStatus_USB_Success              The sending is successful.
+ *
+ * @note The function can only be called in the same context. 
  */
 extern usb_status_t USB_DevicePhdcSend(class_handle_t handle, uint8_t ep, uint8_t *buffer, uint32_t length);
 
@@ -168,6 +151,8 @@ extern usb_status_t USB_DevicePhdcSend(class_handle_t handle, uint8_t ep, uint8_
  * @retval kStatus_USB_InvalidHandle        The device handle is not found.
  * @retval kStatus_USB_Busy                 The previous transfer is pending.
  * @retval kStatus_USB_Success              The receiving is successful.
+ *
+ * @note The function can only be called in the same context. 
  */
 extern usb_status_t USB_DevicePhdcRecv(class_handle_t handle, uint8_t ep, uint8_t *buffer, uint32_t length);
 

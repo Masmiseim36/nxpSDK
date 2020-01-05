@@ -1,32 +1,10 @@
 /*
-* Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without modification,
-* are permitted provided that the following conditions are met:
-*
-* o Redistributions of source code must retain the above copyright notice, this list
-*   of conditions and the following disclaimer.
-*
-* o Redistributions in binary form must reproduce the above copyright notice, this
-*   list of conditions and the following disclaimer in the documentation and/or
-*   other materials provided with the distribution.
-*
-* o Neither the name of Freescale Semiconductor, Inc. nor the names of its
-*   contributors may be used to endorse or promote products derived from this
-*   software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-* ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 #include "fsl_device_registers.h"
 #include "clock_config.h"
 #include "board.h"
@@ -46,16 +24,17 @@
 #include "usb_device_descriptor.h"
 #include "composite.h"
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 #define MSEC_TO_TICK(msec) ((1000L + ((uint32_t)configTICK_RATE_HZ * (uint32_t)(msec - 1U))) / 1000L)
-extern usb_osa_sem_handle VcomIdle;
+extern SemaphoreHandle_t VcomIdle;
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 extern usb_device_endpoint_struct_t g_cdcVcomDicEndpoints[];
 
-/* Line codinig of cdc device */
+/* Line coding of cdc device */
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 static uint8_t s_lineCoding[LINE_CODING_SIZE] = {
     /* E.g. 0x00,0xC2,0x01,0x00 : 0x0001C200 is 115200 bits per second */
     (LINE_CODING_DTERATE >> 0U) & 0x000000FFU,
@@ -67,26 +46,27 @@ static uint8_t s_lineCoding[LINE_CODING_SIZE] = {
     LINE_CODING_DATABITS};
 
 /* Abstract state of cdc device */
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 static uint8_t s_abstractState[COMM_FEATURE_DATA_SIZE] = {(STATUS_ABSTRACT_STATE >> 0U) & 0x00FFU,
                                                           (STATUS_ABSTRACT_STATE >> 8U) & 0x00FFU};
 
 /* Country code of cdc device */
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 static uint8_t s_countryCode[COMM_FEATURE_DATA_SIZE] = {(COUNTRY_SETTING >> 0U) & 0x00FFU,
                                                         (COUNTRY_SETTING >> 8U) & 0x00FFU};
 
 /* CDC ACM information */
-static usb_cdc_acm_info_t s_usbCdcAcmInfo = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 0, 0, 0, 0, 0};
-
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static usb_cdc_acm_info_t s_usbCdcAcmInfo;
 /* Data buffer for receiving and sending*/
-static uint8_t s_currRecvBuf[DATA_BUFF_SIZE];
-static uint8_t s_currSendBuf[DATA_BUFF_SIZE];
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_currRecvBuf[DATA_BUFF_SIZE];
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_currSendBuf[DATA_BUFF_SIZE];
 volatile static uint32_t s_recvSize = 0;
 volatile static uint32_t s_sendSize = 0;
 volatile static usb_device_composite_struct_t *g_deviceComposite;
 
 /*******************************************************************************
-* Code
-******************************************************************************/
+ * Code
+ ******************************************************************************/
 /*!
  * @brief CDC class specific callback function.
  *
@@ -102,12 +82,12 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
 {
     usb_status_t error = kStatus_USB_Error;
     uint32_t len;
-    uint16_t *uartBitmap;
+    uint8_t *uartBitmap;
     usb_cdc_acm_info_t *acmInfo = &s_usbCdcAcmInfo;
     usb_device_cdc_acm_request_param_struct_t *acmReqParam;
     usb_device_endpoint_callback_message_struct_t *epCbParam;
     acmReqParam = (usb_device_cdc_acm_request_param_struct_t *)param;
-    epCbParam = (usb_device_endpoint_callback_message_struct_t *)param;
+    epCbParam   = (usb_device_endpoint_callback_message_struct_t *)param;
     switch (event)
     {
         case kUSB_DeviceCdcEventSendResponse:
@@ -210,7 +190,7 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
         case kUSB_DeviceCdcEventGetLineCoding:
             *(acmReqParam->buffer) = s_lineCoding;
             *(acmReqParam->length) = LINE_CODING_SIZE;
-            error = kStatus_USB_Success;
+            error                  = kStatus_USB_Success;
             break;
         case kUSB_DeviceCdcEventSetLineCoding:
         {
@@ -238,11 +218,12 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
                 acmInfo->uartState &= (uint16_t)~USB_DEVICE_CDC_UART_STATE_TX_CARRIER;
             }
 
-            /* activate carrier and DTE */
+            /* activate carrier and DTE. Com port of terminal tool running on PC is open now */
             if (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_DTE_PRESENCE)
             {
                 acmInfo->uartState |= USB_DEVICE_CDC_UART_STATE_RX_CARRIER;
             }
+            /* Com port of terminal tool running on PC is closed now */
             else
             {
                 acmInfo->uartState &= (uint16_t)~USB_DEVICE_CDC_UART_STATE_RX_CARRIER;
@@ -260,12 +241,13 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
             acmInfo->serialStateBuf[5] = 0x00;
             acmInfo->serialStateBuf[6] = UART_BITMAP_SIZE; /* wLength */
             acmInfo->serialStateBuf[7] = 0x00;
-            /* Notifiy to host the line state */
+            /* Notify to host the line state */
             acmInfo->serialStateBuf[4] = acmReqParam->interfaceIndex;
             /* Lower byte of UART BITMAP */
-            uartBitmap = (uint16_t *)&acmInfo->serialStateBuf[NOTIF_PACKET_SIZE + UART_BITMAP_SIZE - 2];
-            *uartBitmap = acmInfo->uartState;
-            len = (uint32_t)(NOTIF_PACKET_SIZE + UART_BITMAP_SIZE);
+            uartBitmap    = (uint8_t *)&acmInfo->serialStateBuf[NOTIF_PACKET_SIZE + UART_BITMAP_SIZE - 2];
+            uartBitmap[0] = acmInfo->uartState & 0xFFu;
+            uartBitmap[1] = (acmInfo->uartState >> 8) & 0xFFu;
+            len           = (uint32_t)(NOTIF_PACKET_SIZE + UART_BITMAP_SIZE);
             if (0 == ((usb_device_cdc_acm_struct_t *)handle)->hasSentState)
             {
                 error =
@@ -323,7 +305,11 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
 void USB_DeviceCdcVcomTask(void)
 {
     usb_status_t error = kStatus_USB_Error;
-    xSemaphoreTake(VcomIdle, portMAX_DELAY);
+
+    if (pdFALSE == xSemaphoreTake(VcomIdle, portMAX_DELAY))
+    {
+        return;
+    }
     if ((1 == g_deviceComposite->cdcVcom.attach) && (1 == g_deviceComposite->cdcVcom.startTransactions))
     {
         /* User Code */
@@ -342,7 +328,7 @@ void USB_DeviceCdcVcomTask(void)
         if (s_sendSize)
         {
             uint32_t size = s_sendSize;
-            s_sendSize = 0;
+            s_sendSize    = 0;
 
             error = USB_DeviceCdcAcmSend(g_deviceComposite->cdcVcom.cdcAcmHandle, USB_CDC_VCOM_DIC_BULK_IN_ENDPOINT,
                                          s_currSendBuf, size);

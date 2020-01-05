@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _USB_DEVICE_DESCRIPTOR_H_
 #define _USB_DEVICE_DESCRIPTOR_H_ 1
@@ -109,13 +87,14 @@
 #define USB_CDC_TELEPHONE_CONTROL_FUNC_DESC (0x18)
 #define USB_CDC_OBEX_SERVICE_ID_FUNC_DESC (0x19)
 
-/* usb descritpor length */
-#define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (67)
+/* usb descriptor length */
+#define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (sizeof(g_UsbDeviceConfigurationDescriptor))
 #define USB_DESCRIPTOR_LENGTH_CDC_HEADER_FUNC (5)
 #define USB_DESCRIPTOR_LENGTH_CDC_CALL_MANAG (5)
 #define USB_DESCRIPTOR_LENGTH_CDC_ABSTRACT (4)
 #define USB_DESCRIPTOR_LENGTH_CDC_UNION_FUNC (5)
 
+/* Configuration, interface and endpoint. */
 #define USB_DEVICE_CONFIGURATION_COUNT (1)
 #define USB_DEVICE_STRING_COUNT (3)
 #define USB_DEVICE_LANGUAGE_COUNT (1)
@@ -131,6 +110,7 @@
 #define USB_CDC_VCOM_COMM_INTERFACE_INDEX (0)
 #define USB_CDC_VCOM_DATA_INTERFACE_INDEX (1)
 
+/* Packet size. */
 #define HS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE (16)
 #define FS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE (16)
 #define HS_CDC_VCOM_INTERRUPT_IN_INTERVAL (0x07) /* 2^(7-1) = 8ms */
@@ -140,13 +120,15 @@
 #define HS_CDC_VCOM_BULK_OUT_PACKET_SIZE (512)
 #define FS_CDC_VCOM_BULK_OUT_PACKET_SIZE (64)
 
-#define USB_DESCRIPTOR_LENGTH_STRING0 (4)
-#define USB_DESCRIPTOR_LENGTH_STRING1 (38)
-#define USB_DESCRIPTOR_LENGTH_STRING2 (42)
+/* String descriptor length. */
+#define USB_DESCRIPTOR_LENGTH_STRING0 (sizeof(g_UsbDeviceString0))
+#define USB_DESCRIPTOR_LENGTH_STRING1 (sizeof(g_UsbDeviceString1))
+#define USB_DESCRIPTOR_LENGTH_STRING2 (sizeof(g_UsbDeviceString2))
 
 #define USB_DESCRIPTOR_TYPE_CDC_CS_INTERFACE (0x24)
 #define USB_DESCRIPTOR_TYPE_CDC_CS_ENDPOINT (0x25)
 
+/* Class code. */
 #define USB_DEVICE_CLASS (0x02)
 #define USB_DEVICE_SUBCLASS (0x00)
 #define USB_DEVICE_PROTOCOL (0x00)
@@ -186,7 +168,7 @@ extern usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
  * current speed.
  * As the default, the device descriptors and configurations are configured by using FS parameters for both EHCI and
  * KHCI.
- * When the EHCI is enabled, the application needs to call this fucntion to update device by using current speed.
+ * When the EHCI is enabled, the application needs to call this function to update device by using current speed.
  * The updated information includes endpoint max packet size, endpoint interval, etc.
  *
  * @param handle The USB device handle.

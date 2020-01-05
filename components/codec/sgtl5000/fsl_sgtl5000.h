@@ -1,25 +1,29 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _FSL_SGTL5000_H_
 #define _FSL_SGTL5000_H_
 
-#include "fsl_codec_common.h"
+#include "fsl_codec_i2c.h"
 
 /*!
  * @addtogroup sgtl5000
  * @{
  */
 
-
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+/*! @name Driver version */
+/*@{*/
+/*! @brief CLOCK driver version 2.1.0. */
+#define FSL_SGTL5000_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
+/*@}*/
 
 /*! @brief Define the register address of sgtl5000. */
 #define CHIP_ID 0x0000
@@ -481,15 +485,15 @@
 #define SGTL5000_DAP_CONTROL_DAP_EN_SHIFT 0x0
 
 /*
-* DAP_PEQ_REG
-*/
+ * DAP_PEQ_REG
+ */
 #define SGTL5000_DAP_PEQ_EN_GET_MASK 0x0007
 #define SGTL5000_DAP_PEQ_EN_CLR_MASK 0xFFF8
 #define SGTL5000_DAP_PEQ_EN_SHIFT 0x0
 
 /*
-* DAP_BASS_ENHANCE_REG
-*/
+ * DAP_BASS_ENHANCE_REG
+ */
 #define SGTL5000_DAP_BASS_ENHANCE_MULT_GET_MASK 0xC000
 #define SGTL5000_DAP_BASS_ENHANCE_MULT_CLR_MASK 0x3FFF
 #define SGTL5000_DAP_BASS_ENHANCE_MULT_SHIFT 0xE
@@ -507,8 +511,8 @@
 #define SGTL5000_DAP_BASS_ENHANCE_EN_SHIFT 0x0
 
 /*
-* DAP_BASS_ENHANCE_CTRL_REG
-*/
+ * DAP_BASS_ENHANCE_CTRL_REG
+ */
 #define SGTL5000_DAP_BASS_ENHANCE_CTRL_LR_LEVEL_GET_MASK 0x3F00
 #define SGTL5000_DAP_BASS_ENHANCE_CTRL_LR_LEVEL_CLR_MASK 0xC0FF
 #define SGTL5000_DAP_BASS_ENHANCE_CTRL_LR_LEVEL_SHIFT 0x8
@@ -517,15 +521,15 @@
 #define SGTL5000_DAP_BASS_ENHANCE_CTRL_BASS_LEVEL_SHIFT 0x0
 
 /*
-* DAP_AUDIO_EQ_REG
-*/
+ * DAP_AUDIO_EQ_REG
+ */
 #define SGTL5000_DAP_AUDIO_EQ_EN_GET_MASK 0x0003
 #define SGTL5000_DAP_AUDIO_EQ_EN_CLR_MASK 0xFFFC
 #define SGTL5000_DAP_AUDIO_EQ_EN_SHIFT 0x0
 
 /*
-* DAP_SGTL_SURROUND_REG
-*/
+ * DAP_SGTL_SURROUND_REG
+ */
 #define SGTL5000_DAP_SGTL_SURROUND_WIDTH_CONTROL_GET_MASK 0x0070
 #define SGTL5000_DAP_SGTL_SURROUND_WIDTH_CONTROL_CLR_MASK 0xFF8F
 #define SGTL5000_DAP_SGTL_SURROUND_WIDTH_CONTROL_SHIFT 0x4
@@ -534,8 +538,8 @@
 #define SGTL5000_DAP_SGTL_SURROUND_SEL_SHIFT 0x0
 
 /*
-* DAP_FILTER_COEF_ACCESS_REG
-*/
+ * DAP_FILTER_COEF_ACCESS_REG
+ */
 #define SGTL5000_DAP_FILTER_COEF_ACCESS_DEBUG_GET_MASK 0x1000
 #define SGTL5000_DAP_FILTER_COEF_ACCESS_DEBUG_CLR_MASK 0xEFFF
 #define SGTL5000_DAP_FILTER_COEF_ACCESS_DEBUG_SHIFT 0xC
@@ -550,8 +554,8 @@
 #define SGTL5000_DAP_FILTER_COEF_ACCESS_INDEX_SHIFT 0x0
 
 /*
-*  DAP_COEF_WR_B0_MSB_REG
-*/
+ *  DAP_COEF_WR_B0_MSB_REG
+ */
 #define SGTL5000_DAP_COEF_WR_B0_MSB_BIT_19_GET_MASK 0x8000
 #define SGTL5000_DAP_COEF_WR_B0_MSB_BIT_19_CLR_MASK 0x7FFF
 #define SGTL5000_DAP_COEF_WR_B0_MSB_BIT_19_SHIFT 0xF
@@ -602,8 +606,8 @@
 #define SGTL5000_DAP_COEF_WR_B0_MSB_BIT_4_SHIFT 0x0
 
 /*
-* DAP_COEF_WR_B0_LSB_REG
-*/
+ * DAP_COEF_WR_B0_LSB_REG
+ */
 #define SGTL5000_DAP_COEF_WR_B0_LSB_BIT_3_GET_MASK 0x0008
 #define SGTL5000_DAP_COEF_WR_B0_LSB_BIT_3_CLR_MASK 0xFFF7
 #define SGTL5000_DAP_COEF_WR_B0_LSB_BIT_3_SHIFT 0x3
@@ -618,57 +622,57 @@
 #define SGTL5000_DAP_COEF_WR_B0_LSB_BIT_0_SHIFT 0x0
 
 /*
-* DAP_AUDIO_EQ_BASS_BAND0_REG
-*/
+ * DAP_AUDIO_EQ_BASS_BAND0_REG
+ */
 #define SGTL5000_DAP_AUDIO_EQ_BASS_BAND0_VOLUME_GET_MASK 0x007F
 #define SGTL5000_DAP_AUDIO_EQ_BASS_BAND0_VOLUME_CLR_MASK 0xFF80
 #define SGTL5000_DAP_AUDIO_EQ_BASS_BAND0_VOLUME_SHIFT 0x0
 
 /*
-* DAP_AUDIO_EQ_BAND1_REG
-*/
+ * DAP_AUDIO_EQ_BAND1_REG
+ */
 #define SGTL5000_DAP_AUDIO_EQ_BAND1_VOLUME_GET_MASK 0x007F
 #define SGTL5000_DAP_AUDIO_EQ_BAND1_VOLUME_CLR_MASK 0xFF80
 #define SGTL5000_DAP_AUDIO_EQ_BAND1_VOLUME_SHIFT 0x0
 
 /*
-* DAP_AUDIO_EQ_BAND2_REG
-*/
+ * DAP_AUDIO_EQ_BAND2_REG
+ */
 #define SGTL5000_DAP_AUDIO_EQ_BAND2_VOLUME_GET_MASK 0x007F
 #define SGTL5000_DAP_AUDIO_EQ_BAND2_VOLUME_CLR_MASK 0xFF80
 #define SGTL5000_DAP_AUDIO_EQ_BAND2_VOLUME_SHIFT 0x0
 
 /*
-* DAP_AUDIO_EQ_BAND3_REG
-*/
+ * DAP_AUDIO_EQ_BAND3_REG
+ */
 #define SGTL5000_DAP_AUDIO_EQ_BAND3_VOLUME_GET_MASK 0x007F
 #define SGTL5000_DAP_AUDIO_EQ_BAND3_VOLUME_CLR_MASK 0xFF80
 #define SGTL5000_DAP_AUDIO_EQ_BAND3_VOLUME_SHIFT 0x0
 
 /*
-* DAP_AUDIO_EQ_TREBLE_BAND4_REG
-*/
+ * DAP_AUDIO_EQ_TREBLE_BAND4_REG
+ */
 #define SGTL5000_DAP_AUDIO_EQ_TREBLE_BAND4_VOLUME_GET_MASK 0x007F
 #define SGTL5000_DAP_AUDIO_EQ_TREBLE_BAND4_VOLUME_CLR_MASK 0xFF80
 #define SGTL5000_DAP_AUDIO_EQ_TREBLE_BAND4_VOLUME_SHIFT 0x0
 
 /*
-* DAP_MAIN_CHAN_REG
-*/
+ * DAP_MAIN_CHAN_REG
+ */
 #define SGTL5000_DAP_MAIN_CHAN_VOL_GET_MASK 0xFFFF
 #define SGTL5000_DAP_MAIN_CHAN_VOL_CLR_MASK 0x0000
 #define SGTL5000_DAP_MAIN_CHAN_VOL_SHIFT 0x0
 
 /*
-* DAP_MIX_CHAN_REG
-*/
+ * DAP_MIX_CHAN_REG
+ */
 #define SGTL5000_DAP_MIX_CHAN_VOL_GET_MASK 0xFFFF
 #define SGTL5000_DAP_MIX_CHAN_VOL_CLR_MASK 0x0000
 #define SGTL5000_DAP_MIX_CHAN_VOL_SHIFT 0x0
 
 /*
-* DAP_AVC_CTRL_REG
-*/
+ * DAP_AVC_CTRL_REG
+ */
 #define SGTL5000_DAP_AVC_CTRL_APOP_ENABLE_GET_MASK 0x4000
 #define SGTL5000_DAP_AVC_CTRL_APOP_ENABLE_CLR_MASK 0xBFFF
 #define SGTL5000_DAP_AVC_CTRL_APOP_ENABLE_SHIFT 0xE
@@ -690,49 +694,57 @@
 #define SGTL5000_DAP_AVC_CTRL_EN_SHIFT 0x0
 
 /*
-* DAP_AVC_ATTACK_REG
-*/
+ * DAP_AVC_ATTACK_REG
+ */
 #define SGTL5000_DAP_AVC_ATTACK_RATE_GET_MASK 0x0FFF
 #define SGTL5000_DAP_AVC_ATTACK_RATE_CLR_MASK 0xF000
 #define SGTL5000_DAP_AVC_ATTACK_RATE_SHIFT 0x0
 
 /*
-* DAP_AVC_DECAY_REG
-*/
+ * DAP_AVC_DECAY_REG
+ */
 #define SGTL5000_DAP_AVC_DECAY_RATE_GET_MASK 0x0FFF
 #define SGTL5000_DAP_AVC_DECAY_RATE_CLR_MASK 0xF000
 #define SGTL5000_DAP_AVC_DECAY_RATE_SHIFT 0x0
 
 /*
-* DAP_COEF_WR_B1_LSB_REG
-*/
+ * DAP_COEF_WR_B1_LSB_REG
+ */
 #define SGTL5000_DAP_COEF_WR_B1_LSB_LSB_GET_MASK 0x000F
 #define SGTL5000_DAP_COEF_WR_B1_LSB_LSB_CLR_MASK 0xFFF0
 #define SGTL5000_DAP_COEF_WR_B1_LSB_LSB_SHIFT 0x0
 
 /*
-* DAP_COEF_WR_B2_LSB_REG
-*/
+ * DAP_COEF_WR_B2_LSB_REG
+ */
 #define SGTL5000_DAP_COEF_WR_B2_LSB_LSB_GET_MASK 0x000F
 #define SGTL5000_DAP_COEF_WR_B2_LSB_LSB_CLR_MASK 0xFFF0
 #define SGTL5000_DAP_COEF_WR_B2_LSB_LSB_SHIFT 0x0
 
 /*
-* DAP_COEF_WR_A1_LSB_REG
-*/
+ * DAP_COEF_WR_A1_LSB_REG
+ */
 #define SGTL5000_DAP_COEF_WR_A1_LSB_LSB_GET_MASK 0x000F
 #define SGTL5000_DAP_COEF_WR_A1_LSB_LSB_CLR_MASK 0xFFF0
 #define SGTL5000_DAP_COEF_WR_A1_LSB_LSB_SHIFT 0x0
 
 /*
-* DAP_COEF_WR_A2_LSB_REG
-*/
+ * DAP_COEF_WR_A2_LSB_REG
+ */
 #define SGTL5000_DAP_COEF_WR_A2_LSB_LSB_GET_MASK 0x000F
 #define SGTL5000_DAP_COEF_WR_A2_LSB_LSB_CLR_MASK 0xFFF0
 #define SGTL5000_DAP_COEF_WR_A2_LSB_LSB_SHIFT 0x0
 
 /*! @brief SGTL5000 I2C address. */
 #define SGTL5000_I2C_ADDR 0x0A
+
+/*! @brief sgtl handle size */
+#ifndef SGTL_I2C_HANDLER_SIZE
+#define SGTL_I2C_HANDLER_SIZE CODEC_I2C_MASTER_HANDLER_SIZE
+#endif
+
+/*! @breif sgtl i2c baudrate */
+#define SGTL_I2C_BITRATE 100000U
 
 /*! @brief Modules in Sgtl5000 board. */
 typedef enum _sgtl5000_module
@@ -749,10 +761,10 @@ typedef enum _sgtl5000_module
 } sgtl_module_t;
 
 /*!
-* @brief Sgtl5000 data route.
-* @note Only provide some typical data route, not all route listed.
-* Users cannot combine any routes, once a new route is set, the precios one would be replaced.
-*/
+ * @brief Sgtl5000 data route.
+ * @note Only provide some typical data route, not all route listed.
+ * Users cannot combine any routes, once a new route is set, the precios one would be replaced.
+ */
 typedef enum _sgtl_route
 {
     kSGTL_RouteBypass = 0x0,             /*!< LINEIN->Headphone. */
@@ -764,9 +776,9 @@ typedef enum _sgtl_route
 } sgtl_route_t;
 
 /*!
-* @brief The audio data transfer protocol choice.
-* Sgtl5000 only supports I2S format and PCM format.
-*/
+ * @brief The audio data transfer protocol choice.
+ * Sgtl5000 only supports I2S format and PCM format.
+ */
 typedef enum _sgtl_protocol
 {
     kSGTL_BusI2S = 0x0,      /*!< I2S Type */
@@ -776,13 +788,64 @@ typedef enum _sgtl_protocol
     kSGTL_BusPCMB            /*!< PCMB */
 } sgtl_protocol_t;
 
+/*! @brief sgtl play channel  */
+enum _sgtl_play_channel
+{
+    kSGTL_HeadphoneLeft  = 0, /*!< headphone left channel */
+    kSGTL_HeadphoneRight = 1, /*!< headphone right channel */
+    kSGTL_LineoutLeft    = 2, /*!< lineout left channel */
+    kSGTL_LineoutRight   = 3, /*!< lineout right channel */
+};
+
+/*! @brief sgtl record source */
+enum _sgtl_record_source
+{
+    kSGTL_RecordSourceLineIn = 0U, /*!< record source line in */
+    kSGTL_RecordSourceMic    = 1U, /*!< record source single end */
+};
+
+/*! @brief sgtl play source */
+enum _stgl_play_source
+{
+    kSGTL_PlaySourceLineIn = 0U, /*!< play source line in */
+    kSGTL_PlaySourceDAC    = 1U, /*!< play source line in */
+};
+
+/*! @brief SGTL SCLK valid edge */
+typedef enum _sgtl_sclk_edge
+{
+    kSGTL_SclkValidEdgeRising   = 0U, /*!< SCLK valid edge */
+    kSGTL_SclkValidEdgeFailling = 1U, /*!< SCLK failling edge */
+} sgtl_sclk_edge_t;
+
+/*! @brief Audio format configuration. */
+typedef struct _sgtl_audio_format
+{
+    uint32_t mclk_HZ;          /*!< master clock */
+    uint32_t sampleRate;       /*!< Sample rate */
+    uint32_t bitWidth;         /*!< Bit width */
+    sgtl_sclk_edge_t sclkEdge; /*!< sclk valid edge */
+} sgtl_audio_format_t;
+
 /*! @brief Initailize structure of sgtl5000 */
 typedef struct _sgtl_config
 {
-    sgtl_route_t route;  /*!< Audio data route.*/
-    sgtl_protocol_t bus; /*!< Audio transfer protocol */
-    bool master_slave;   /*!< Master or slave. True means master, false means slave. */
+    sgtl_route_t route;         /*!< Audio data route.*/
+    sgtl_protocol_t bus;        /*!< Audio transfer protocol */
+    bool master_slave;          /*!< Master or slave. True means master, false means slave. */
+    sgtl_audio_format_t format; /*!< audio format */
+
+    uint8_t slaveAddress;         /*!< code device slave address */
+    codec_i2c_config_t i2cConfig; /*!< i2c bus configuration */
 } sgtl_config_t;
+
+/*! @brief SGTL codec handler
+ */
+typedef struct _sgtl_handle
+{
+    sgtl_config_t *config;                    /*!< sgtl config pointer */
+    uint8_t i2cHandle[SGTL_I2C_HANDLER_SIZE]; /*!< i2c handle */
+} sgtl_handle_t;
 
 /*******************************************************************************
  * API
@@ -811,7 +874,7 @@ extern "C" {
  * it means using the default configuration.
  * @return Initialization status
  */
-status_t SGTL_Init(codec_handle_t *handle, void *config);
+status_t SGTL_Init(sgtl_handle_t *handle, sgtl_config_t *config);
 
 /*!
  * @brief Set audio data route in sgtl5000.
@@ -823,7 +886,7 @@ status_t SGTL_Init(codec_handle_t *handle, void *config);
  * @param handle Sgtl5000 handle structure.
  * @param route Audio data route in sgtl5000.
  */
-status_t SGTL_SetDataRoute(codec_handle_t *handle, sgtl_route_t route);
+status_t SGTL_SetDataRoute(sgtl_handle_t *handle, sgtl_route_t route);
 
 /*!
  * @brief Set the audio transfer protocol.
@@ -832,7 +895,7 @@ status_t SGTL_SetDataRoute(codec_handle_t *handle, sgtl_route_t route);
  * @param handle Sgtl5000 handle structure.
  * @param bus Audio data transfer protocol.
  */
-status_t SGTL_SetProtocol(codec_handle_t *handle, sgtl_protocol_t protocol);
+status_t SGTL_SetProtocol(sgtl_handle_t *handle, sgtl_protocol_t protocol);
 
 /*!
  * @brief Set sgtl5000 as master or slave.
@@ -840,7 +903,7 @@ status_t SGTL_SetProtocol(codec_handle_t *handle, sgtl_protocol_t protocol);
  * @param handle Sgtl5000 handle structure.
  * @param master 1 represent master, 0 represent slave.
  */
-void SGTL_SetMasterSlave(codec_handle_t *handle, bool master);
+void SGTL_SetMasterSlave(sgtl_handle_t *handle, bool master);
 
 /*!
  * @brief Set the volume of different modules in sgtl5000.
@@ -851,7 +914,7 @@ void SGTL_SetMasterSlave(codec_handle_t *handle, bool master);
  * @param module Sgtl5000 module, such as DAC, ADC and etc.
  * @param volume Volume value need to be set. The value is the exact value in register.
  */
-status_t SGTL_SetVolume(codec_handle_t *handle, sgtl_module_t module, uint32_t volume);
+status_t SGTL_SetVolume(sgtl_handle_t *handle, sgtl_module_t module, uint32_t volume);
 
 /*!
  * @brief Get the volume of different modules in sgtl5000.
@@ -862,7 +925,7 @@ status_t SGTL_SetVolume(codec_handle_t *handle, sgtl_module_t module, uint32_t v
  * @param module Sgtl5000 module, such as DAC, ADC and etc.
  * @return Module value, the value is exact value in register.
  */
-uint32_t SGTL_GetVolume(codec_handle_t *handle, sgtl_module_t module);
+uint32_t SGTL_GetVolume(sgtl_handle_t *handle, sgtl_module_t module);
 
 /*!
  * @brief Mute/unmute modules in sgtl5000.
@@ -871,27 +934,27 @@ uint32_t SGTL_GetVolume(codec_handle_t *handle, sgtl_module_t module);
  * @param module Sgtl5000 module, such as DAC, ADC and etc.
  * @param mute True means mute, and false means unmute.
  */
-status_t SGTL_SetMute(codec_handle_t *handle, sgtl_module_t module, bool mute);
+status_t SGTL_SetMute(sgtl_handle_t *handle, sgtl_module_t module, bool mute);
 
 /*!
  * @brief Enable expected devices.
  * @param handle Sgtl5000 handle structure.
  * @param module Module expected to enable.
  */
-status_t SGTL_EnableModule(codec_handle_t *handle, sgtl_module_t module);
+status_t SGTL_EnableModule(sgtl_handle_t *handle, sgtl_module_t module);
 
 /*!
  * @brief Disable expected devices.
  * @param handle Sgtl5000 handle structure.
  * @param module Module expected to enable.
  */
-status_t SGTL_DisableModule(codec_handle_t *handle, sgtl_module_t module);
+status_t SGTL_DisableModule(sgtl_handle_t *handle, sgtl_module_t module);
 
 /*!
  * @brief Deinit the sgtl5000 codec. Shut down Sgtl5000 modules.
  * @param handle Sgtl5000 handle structure pointer.
  */
-status_t SGTL_Deinit(codec_handle_t *handle);
+status_t SGTL_Deinit(sgtl_handle_t *handle);
 
 /*!
  * @brief Configure the data format of audio data.
@@ -904,7 +967,27 @@ status_t SGTL_Deinit(codec_handle_t *handle);
  * @param bits Bit depth of audio file (Sgtl5000 only supports 16bit, 20bit, 24bit
  * and 32 bit in HW).
  */
-status_t SGTL_ConfigDataFormat(codec_handle_t *handle, uint32_t mclk, uint32_t sample_rate, uint32_t bits);
+status_t SGTL_ConfigDataFormat(sgtl_handle_t *handle, uint32_t mclk, uint32_t sample_rate, uint32_t bits);
+
+/*!
+ * @brief select SGTL codec play source.
+ *
+ * @param handle Sgtl5000 handle structure pointer.
+ * @param recordSource play source value, reference _sgtl_play_source.
+ *
+ * @return kStatus_Success, else failed.
+ */
+status_t SGTL_SetPlay(sgtl_handle_t *handle, uint32_t playSource);
+
+/*!
+ * @brief select SGTL codec record source.
+ *
+ * @param handle Sgtl5000 handle structure pointer.
+ * @param recordSource record source value, reference _sgtl_record_source.
+ *
+ * @return kStatus_Success, else failed.
+ */
+status_t SGTL_SetRecord(sgtl_handle_t *handle, uint32_t recordSource);
 
 /*!
  * @brief Write register to sgtl using I2C.
@@ -912,7 +995,7 @@ status_t SGTL_ConfigDataFormat(codec_handle_t *handle, uint32_t mclk, uint32_t s
  * @param reg The register address in sgtl.
  * @param val Value needs to write into the register.
  */
-status_t SGTL_WriteReg(codec_handle_t *handle, uint16_t reg, uint16_t val);
+status_t SGTL_WriteReg(sgtl_handle_t *handle, uint16_t reg, uint16_t val);
 
 /*!
  * @brief Read register from sgtl using I2C.
@@ -920,7 +1003,7 @@ status_t SGTL_WriteReg(codec_handle_t *handle, uint16_t reg, uint16_t val);
  * @param reg The register address in sgtl.
  * @param val Value written to.
  */
-status_t SGTL_ReadReg(codec_handle_t *handle, uint16_t reg, uint16_t *val);
+status_t SGTL_ReadReg(sgtl_handle_t *handle, uint16_t reg, uint16_t *val);
 
 /*!
  * @brief Modify some bits in the register using I2C.
@@ -929,7 +1012,7 @@ status_t SGTL_ReadReg(codec_handle_t *handle, uint16_t reg, uint16_t *val);
  * @param mask The mask code for the bits want to write. The bit you want to write should be 0.
  * @param val Value needs to write into the register.
  */
-status_t SGTL_ModifyReg(codec_handle_t *handle, uint16_t reg, uint16_t clr_mask, uint16_t val);
+status_t SGTL_ModifyReg(sgtl_handle_t *handle, uint16_t reg, uint16_t clr_mask, uint16_t val);
 
 #if defined(__cplusplus)
 }

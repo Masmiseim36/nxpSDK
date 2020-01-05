@@ -1,15 +1,15 @@
 /*
 ** ###################################################################
 **     Processor:           MK27FN2M0AVMI15
-**     Compilers:           Keil ARM C/C++ Compiler
-**                          Freescale C/C++ for Embedded ARM
+**     Compilers:           Freescale C/C++ for Embedded ARM
 **                          GNU C Compiler
 **                          IAR ANSI C/C++ Compiler for ARM
+**                          Keil ARM C/C++ Compiler
 **                          MCUXpresso Compiler
 **
 **     Reference manual:    K27P169M150SF5RM, Rev. 2, Aug 2017
 **     Version:             rev. 1.3, 2018-01-09
-**     Build:               b180801
+**     Build:               b181105
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
@@ -18,6 +18,7 @@
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
 **     Copyright 2016-2018 NXP
+**     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
 **
@@ -94,6 +95,7 @@ void SystemCoreClockUpdate (void) {
 
   uint32_t MCGOUTClock;                /* Variable to store output clock frequency of the MCG module */
   uint16_t Divider;
+  uint8_t tmpC7 = 0;
 
   if ((MCG->C1 & MCG_C1_CLKS_MASK) == 0x00U) {
     /* Output of FLL or PLL is selected */
@@ -113,7 +115,8 @@ void SystemCoreClockUpdate (void) {
           MCGOUTClock = CPU_INT_IRC_CLK_HZ; /* IRC 48MHz oscillator drives MCG clock */
           break;
         }
-        if (((MCG->C2 & MCG_C2_RANGE_MASK) != 0x00U) && ((MCG->C7 & MCG_C7_OSCSEL_MASK) != 0x01U)) {
+        tmpC7 = MCG->C7;
+        if (((MCG->C2 & MCG_C2_RANGE_MASK) != 0x00U) && ((tmpC7 & MCG_C7_OSCSEL_MASK) != 0x01U)) {
           switch (MCG->C1 & MCG_C1_FRDIV_MASK) {
           case 0x38U:
             Divider = 1536U;
@@ -159,6 +162,7 @@ void SystemCoreClockUpdate (void) {
           MCGOUTClock *= 2929U;
           break;
         default:
+          MCGOUTClock *= 640U;
           break;
       }
     } else { /* (!((MCG->C6 & MCG_C6_PLLS_MASK) == 0x00U)) */
@@ -167,7 +171,7 @@ void SystemCoreClockUpdate (void) {
       MCGOUTClock = (uint32_t)(CPU_XTAL_CLK_HZ / Divider); /* Calculate the PLL reference clock */
       Divider = (((uint16_t)MCG->C6 & MCG_C6_VDIV_MASK) + 16U);
       MCGOUTClock *= Divider;          /* Calculate the VCO output clock */
-      MCGOUTClock /= 2;                /* Calculate the MCG output clock */
+      MCGOUTClock /= 2U;               /* Calculate the MCG output clock */
     } /* (!((MCG->C6 & MCG_C6_PLLS_MASK) == 0x00U)) */
   } else if ((MCG->C1 & MCG_C1_CLKS_MASK) == 0x40U) {
     /* Internal reference clock is selected */

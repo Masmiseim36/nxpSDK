@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
@@ -39,6 +17,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define DEMO_LPTMR_BASE LPTMR0
+#define DEMO_LPTMR_IRQn LPTMR0_IRQn
 #define LPTMR_LED_HANDLER LPTMR0_IRQHandler
 /* Get source clock for LPTMR driver */
 #define LPTMR_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_LpoClk)
@@ -62,7 +42,7 @@ volatile uint32_t lptmrCounter = 0U;
  ******************************************************************************/
 void LPTMR_LED_HANDLER(void)
 {
-    LPTMR_ClearStatusFlags(LPTMR0, kLPTMR_TimerCompareFlag);
+    LPTMR_ClearStatusFlags(DEMO_LPTMR_BASE, kLPTMR_TimerCompareFlag);
     lptmrCounter++;
     LED_TOGGLE();
     /*
@@ -82,12 +62,12 @@ int main(void)
     uint32_t currentCounter = 0U;
     lptmr_config_t lptmrConfig;
 
-    LED_INIT();
-
     /* Board pin, clock, debug console init */
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
+
+    LED_INIT();
 
     /* Configure LPTMR */
     /*
@@ -102,24 +82,24 @@ int main(void)
     LPTMR_GetDefaultConfig(&lptmrConfig);
 
     /* Initialize the LPTMR */
-    LPTMR_Init(LPTMR0, &lptmrConfig);
+    LPTMR_Init(DEMO_LPTMR_BASE, &lptmrConfig);
 
     /*
      * Set timer period.
      * Note : the parameter "ticks" of LPTMR_SetTimerPeriod should be equal or greater than 1.
-    */
-    LPTMR_SetTimerPeriod(LPTMR0, USEC_TO_COUNT(LPTMR_USEC_COUNT, LPTMR_SOURCE_CLOCK));
+     */
+    LPTMR_SetTimerPeriod(DEMO_LPTMR_BASE, USEC_TO_COUNT(LPTMR_USEC_COUNT, LPTMR_SOURCE_CLOCK));
 
     /* Enable timer interrupt */
-    LPTMR_EnableInterrupts(LPTMR0, kLPTMR_TimerInterruptEnable);
+    LPTMR_EnableInterrupts(DEMO_LPTMR_BASE, kLPTMR_TimerInterruptEnable);
 
     /* Enable at the NVIC */
-    EnableIRQ(LPTMR0_IRQn);
+    EnableIRQ(DEMO_LPTMR_IRQn);
 
     PRINTF("Low Power Timer Example\r\n");
 
     /* Start counting */
-    LPTMR_StartTimer(LPTMR0);
+    LPTMR_StartTimer(DEMO_LPTMR_BASE);
     while (1)
     {
         if (currentCounter != lptmrCounter)

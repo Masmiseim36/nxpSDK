@@ -46,8 +46,13 @@ volatile bool g_ButtonPress = false;
  */
 void BOARD_SW_IRQ_HANDLER(void)
 {
+#if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
+    /* Clear external interrupt flag. */
+    GPIO_GpioClearInterruptFlags(BOARD_SW_GPIO, 1U << BOARD_SW_GPIO_PIN);
+#else
     /* Clear external interrupt flag. */
     GPIO_PortClearInterruptFlags(BOARD_SW_GPIO, 1U << BOARD_SW_GPIO_PIN);
+#endif
     /* Change state of button. */
     g_ButtonPress = true;
 /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
@@ -64,12 +69,14 @@ int main(void)
 {
     /* Define the init structure for the input switch pin */
     gpio_pin_config_t sw_config = {
-        kGPIO_DigitalInput, 0,
+        kGPIO_DigitalInput,
+        0,
     };
 
     /* Define the init structure for the output LED pin */
     gpio_pin_config_t led_config = {
-        kGPIO_DigitalOutput, 0,
+        kGPIO_DigitalOutput,
+        0,
     };
 
     BOARD_InitPins();

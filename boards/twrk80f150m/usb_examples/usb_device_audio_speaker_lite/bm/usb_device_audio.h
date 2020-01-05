@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef __USB_DEVICE_AUDIO_H__
@@ -161,6 +135,11 @@
 #define USB_DEVICE_AUDIO_GET_CUR_SAM_FREQ_CONTROL (0x8501)
 #define USB_DEVICE_AUDIO_GET_RANGE_SAM_FREQ_CONTROL (0x9501)
 #define USB_DEVICE_AUDIO_GET_CUR_CLOCK_VALID_CONTROL (0x8502)
+#define USB_DEVICE_AUDIO_GET_CUR_MUTE_CONTROL_AUDIO20 (0x8503)
+#define USB_DEVICE_AUDIO_SET_CUR_MUTE_CONTROL_AUDIO20 (0x0503)
+#define USB_DEVICE_AUDIO_GET_CUR_VOLUME_CONTROL_AUDIO20 (0x8504)
+#define USB_DEVICE_AUDIO_GET_RANGE_VOLUME_CONTROL_AUDIO20 (0x9504)
+#define USB_DEVICE_AUDIO_SET_CUR_VOLUME_CONTROL_AUDIO20 (0x0504)
 #endif
 
 #if USBCFG_AUDIO_CLASS_2_0
@@ -174,6 +153,8 @@
 #define USB_DEVICE_AUDIO_CS_CLOCK_VALID_CONTROL (0x02)
 #define USB_DEVICE_AUDIO_REQUEST_CUR (0x01)
 #define USB_DEVICE_AUDIO_REQUEST_RANGE (0x02)
+#define USB_DEVICE_AUDIO_FU_MUTE_CONTROL (0x01)
+#define USB_DEVICE_AUDIO_FU_VOLUME_CONTROL (0x02)
 
 #endif
 
@@ -223,14 +204,23 @@
 
 #if USBCFG_AUDIO_CLASS_2_0
 STRUCT_PACKED
-struct _usb_device_control_range_struct
+struct _usb_device_control_range_layout3_struct
 {
-    uint16_t samplingFrequencyNumber;
-    uint32_t samplingFrequencyMin;
-    uint32_t samplingFrequencyMax;
-    uint32_t samplingFrequencyRes;
+    uint16_t wNumSubRanges;
+    uint32_t wMIN;
+    uint32_t wMAX;
+    uint32_t wRES;
 } STRUCT_UNPACKED;
-typedef struct _usb_device_control_range_struct usb_device_control_range_struct_t;
+typedef struct _usb_device_control_range_layout3_struct usb_device_control_range_layout3_struct_t;
+STRUCT_PACKED
+struct _usb_device_control_range_layout2_struct
+{
+    uint16_t wNumSubRanges;
+    uint16_t wMIN;
+    uint16_t wMAX;
+    uint16_t wRES;
+} STRUCT_UNPACKED;
+typedef struct _usb_device_control_range_layout2_struct usb_device_control_range_layout2_struct_t;
 #endif
 
 /*! @}*/

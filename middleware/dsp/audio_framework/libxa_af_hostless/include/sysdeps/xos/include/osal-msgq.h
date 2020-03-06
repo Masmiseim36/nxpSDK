@@ -1,0 +1,112 @@
+/*******************************************************************************
+* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
+* 
+* Permission is hereby granted, free of charge, to any person obtaining
+* a copy of this software and associated documentation files (the
+* "Software"), to use this Software with Cadence processor cores only and 
+* not with any other processors and platforms, subject to
+* the following conditions:
+* 
+* The above copyright notice and this permission notice shall be included
+* in all copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+******************************************************************************/
+#ifndef _OSAL_MSGQ_H
+#define _OSAL_MSGQ_H
+
+#include <xtensa/xos.h>
+#include "xaf-api.h"
+
+/*******************************************************************************
+ * External Definitions
+ ******************************************************************************/
+extern XAF_ERR_CODE xaf_malloc(void **buf_ptr, int size, int id);
+extern void xaf_free(void *buf_ptr, int id);
+
+typedef struct {
+    XosMsgQueue queue;
+} *xf_msgq_t;
+
+/* ...open proxy interface on proper DSP partition */
+static inline xf_msgq_t __xf_msgq_create(size_t n_items, size_t item_size)
+{
+    xf_msgq_t q;
+
+    xaf_malloc((void **)&q, (sizeof(*q) + XOS_MSGQ_SIZE(n_items, item_size)), XAF_MEM_ID_DEV);
+    if (!q)
+        return NULL;
+    if (xos_msgq_create(&q->queue, n_items, item_size, 0) == XOS_OK)
+        return q;
+    xaf_free(q, XAF_MEM_ID_DEV);
+    return NULL;
+}
+
+/* ...close proxy handle */
+static inline void __xf_msgq_destroy(xf_msgq_t q)
+{
+    xos_msgq_delete(&q->queue);
+    xaf_free(q, XAF_MEM_ID_DEV);
+}
+
+static inline int __xf_msgq_send(xf_msgq_t q, const void *data, size_t sz)
+{
+    return xos_msgq_put(&q->queue, data) == XOS_OK ? XAF_NO_ERROR : XAF_RTOS_ERROR;
+}
+
+#define MAXIMUM_TIMEOUT 10000
+
+static inline int __xf_msgq_recv_blocking(xf_msgq_t q, void *data, size_t sz)
+{
+    int ret = xos_msgq_get(&q->queue, data);
+    
+    if ( ret == XOS_OK )
+    {
+        ret = XAF_NO_ERROR;
+    }
+    else
+    {
+        ret = XAF_RTOS_ERROR;
+    }
+    
+    return  ret;
+}
+
+static inline int __xf_msgq_recv(xf_msgq_t q, void *data, size_t sz)
+{
+    int ret = xos_msgq_get_timeout(&q->queue, data, xos_msecs_to_cycles(MAXIMUM_TIMEOUT));
+    
+    if ( ret == XOS_OK )
+    {
+        ret = XAF_NO_ERROR;
+    }
+    else if ( ret == XOS_ERR_TIMEOUT )
+    {
+        ret = XAF_STATUS_TIMEOUT;
+    } 
+    else
+    {
+        ret = XAF_RTOS_ERROR;
+    }
+    
+    return  ret;
+}
+
+static inline int __xf_msgq_empty(xf_msgq_t q)
+{
+    return xos_msgq_empty(&q->queue);
+}
+
+static inline int __xf_msgq_full(xf_msgq_t q)
+{
+    return xos_msgq_full(&q->queue);
+}
+
+#endif

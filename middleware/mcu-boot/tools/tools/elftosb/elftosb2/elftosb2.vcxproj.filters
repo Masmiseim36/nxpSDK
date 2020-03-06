@@ -186,6 +186,9 @@
     <ClCompile Include="..\common\TrustZonePresetGenerator.cpp">
       <Filter>Source Files\common</Filter>
     </ClCompile>
+    <ClCompile Include="..\common\MulticoreImageGenerator.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\AESKey.h">
@@ -379,6 +382,9 @@
     </ClInclude>
     <ClInclude Include="elftosb.h">
       <Filter>Header Files\elftosb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\MulticoreImageGenerator.h">
+      <Filter>Header Files\common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

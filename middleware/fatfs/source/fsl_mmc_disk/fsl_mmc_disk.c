@@ -25,7 +25,9 @@
 /* Set default value for current build. */
 #define BOARD_MMC_VCC_SUPPLY kMMC_VoltageWindows270to360
 #endif
-
+#ifndef BOARD_MMC_VCCQ_SUPPLY
+#define BOARD_MMC_VCCQ_SUPPLY BOARD_MMC_VCC_SUPPLY
+#endif
 /*******************************************************************************
  * Definitons
  ******************************************************************************/
@@ -153,6 +155,7 @@ DSTATUS mmc_disk_initialize(uint8_t physicalDrive)
     * in board.h must be implemented.
     * User can remove preset the voltage window and sdmmc will switch VCC automatically. */
     g_mmc.hostVoltageWindowVCC = BOARD_MMC_VCC_SUPPLY;
+    g_mmc.hostVoltageWindowVCCQ = BOARD_MMC_VCCQ_SUPPLY;
 
     if (kStatus_Success != MMC_Init(&g_mmc))
     {

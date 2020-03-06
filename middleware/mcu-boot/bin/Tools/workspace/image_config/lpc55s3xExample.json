@@ -1,0 +1,17 @@
+{
+    "family": "lpc55s3x",
+    "inputImageFile": "./workspace/input_images/testfffffff.bin",
+    "imageLinkAddress": "0x0",
+    "outputImageExecutionTarget": "Internal flash (XIP)",
+    "outputImageAuthenticationType": "Signed",
+	"enableHwUserModeKeys": true,
+    "enableTrustZone": true,
+    "trustZonePresetFile": "./workspace/trust_zone_output/tzFile.bin",
+    "rootCertificate0File": "./workspace/keys_and_certs/selfsign_v3.der.crt",
+    "rootCertificate1File": "./workspace/keys_and_certs/selfsign_v3.der.crt",
+    "rootCertificate2File": "",
+    "rootCertificate3File": "",
+    "mainCertChainId": 1,
+    "mainCertPrivateKeyFile": "./workspace/keys_and_certs/selfsign_privatekey_rsa2048.pem",
+    "masterBootOutputFile": "./workspace/output_images/test_output.bin"
+}

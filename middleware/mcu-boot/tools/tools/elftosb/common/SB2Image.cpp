@@ -405,12 +405,6 @@ void SB2Image::writeToStream(std::ostream &stream)
 				if (isEncrypted()) {
 					// finished with the HMAC
 					mbedtls_md_hmac_finish(&hmac_sha256_ctx, m_digestHmac);
-					Log::log(Logger::DEBUG, "HMAC result: ");
-					for (size_t i = 0; i < (sizeof(m_digestHmac)); i++)
-					{
-						Log::log(Logger::DEBUG, "%02x", m_digestHmac[i]);
-					}
-					Log::log(Logger::DEBUG, "\n");
 					// write HMAC result for this key, then update SHA-256
 					stream.write(reinterpret_cast<const char *>(m_digestHmac), sizeof(m_digestHmac));
 					if (isSigned())// update SHA-256
@@ -1140,6 +1134,12 @@ SB2Image::BootCommand *SB2Image::BootCommand::createFromData(const cipher_block_
         case ROM_PROG_CMD:
             command = new ProgramCommand();
             break;
+		case ROM_WR_KEYSTORE_TO_NV:
+            command = new ProgramCommand();
+            break;
+		case ROM_WR_KEYSTORE_FROM_NV:
+            command = new ProgramCommand();
+            break;
         default:
             throw std::runtime_error(format_string("unrecognized boot command tag 0x%02x", header->m_tag));
     }
@@ -1371,6 +1371,8 @@ SB2Image::LoadCommand::LoadCommand()
     , m_length(0)
     , m_address(0)
     , m_loadDCD(false)
+	, m_isLoadSecret(false)
+	, m_isLoadHmac(false)
     , m_memoryId(0)
 {
     fillPadding();
@@ -1383,6 +1385,8 @@ SB2Image::LoadCommand::LoadCommand(uint32_t address, const uint8_t *data, uint32
     , m_length(0)
     , m_address(address)
     , m_loadDCD(false)
+	, m_isLoadSecret(false)
+	, m_isLoadHmac(false)
     , m_memoryId(0)
 {
     fillPadding();
@@ -1413,6 +1417,7 @@ void SB2Image::LoadCommand::initFromData(const cipher_block_t *blocks, unsigned 
     unsigned dataBlockCount = numberOfCipherBlocks(m_length);
     m_padCount = sizeOfPaddingForCipherBlocks(dataBlockCount);
     m_loadDCD = (ENDIAN_LITTLE_TO_HOST_U16(header->m_flags) & ROM_LOAD_DCD) != 0;
+	m_isLoadHmac = (ENDIAN_LITTLE_TO_HOST_U16(header->m_flags) & ROM_LOAD_CALC_HMAC) != 0;
     m_memoryId = MAKE_MEMORYID((ENDIAN_LITTLE_TO_HOST_U16(header->m_flags)  & ROM_MEM_GROUP_ID_MASK) >> ROM_MEM_GROUP_ID_SHIFT \
                             , (ENDIAN_LITTLE_TO_HOST_U16(header->m_flags) & ROM_MEM_DEVICE_ID_MASK) >> ROM_MEM_DEVICE_ID_SHIFT);
 
@@ -1449,6 +1454,7 @@ void SB2Image::LoadCommand::fillCommandHeader(boot_command_t &header)
 {
     header.m_tag = getTag();
     uint16_t flags = m_loadDCD ? ROM_LOAD_DCD : 0;
+	flags |= m_isLoadHmac ? ROM_LOAD_CALC_HMAC : 0;
     flags |= (DEVICEID(m_memoryId) << ROM_MEM_DEVICE_ID_SHIFT) & ROM_MEM_DEVICE_ID_MASK;
     flags |= (GROUPID(m_memoryId) << ROM_MEM_GROUP_ID_SHIFT) & ROM_MEM_GROUP_ID_MASK;
     header.m_flags = ENDIAN_HOST_TO_LITTLE_U32(flags);
@@ -1582,6 +1588,7 @@ void SB2Image::LoadCommand::fillPadding()
 void SB2Image::LoadCommand::debugPrint() const
 {
     uint16_t flags = m_loadDCD ? ROM_LOAD_DCD : 0;
+	flags |= m_isLoadHmac ? ROM_LOAD_CALC_HMAC : 0;
     flags |= (DEVICEID(m_memoryId) << ROM_MEM_DEVICE_ID_SHIFT) & ROM_MEM_DEVICE_ID_MASK;
     flags |= (GROUPID(m_memoryId) << ROM_MEM_GROUP_ID_SHIFT) & ROM_MEM_GROUP_ID_MASK;
     Log::log(Logger::INFO2, "  LOAD | adr=0x%08x | len=0x%08x | crc=0x%08x | flg=0x%04x\n", m_address, m_length,
@@ -1943,6 +1950,156 @@ void SB2Image::MemEnableCommand::getAddressRange(uint32_t *startAddress, uint32_
     *startAddress = m_startAddress;
     *count = m_byteCount;
 }
+
+//! \param blocks Pointer to the raw data blocks.
+//! \param count Number of blocks pointed to by \a blocks.
+//! \param[out] consumed On exit, this points to the number of cipher blocks that were occupied
+//!		by the command. Should be at least 1 for every command. This must not be NULL
+//!		on entry!
+//!
+//! \exception std::runtime_error Thrown if header fields are invalid.
+void SB2Image::KeyStoreToNvCommand::initFromData(const cipher_block_t *blocks, unsigned count, unsigned *consumed)
+{
+    // check static fields
+    const boot_command_t model = { 0, ROM_WR_KEYSTORE_TO_NV, 0, 0, 0, 0 };
+    const boot_command_t *header = reinterpret_cast<const boot_command_t *>(blocks);
+    validateHeader(&model, header, CMD_TAG_FIELD | CMD_DATA_FIELD);
+
+    // read fields from header
+    m_memoryId = MAKE_MEMORYID((ENDIAN_LITTLE_TO_HOST_U16(header->m_flags) & ROM_MEM_GROUP_ID_MASK) >> ROM_MEM_GROUP_ID_SHIFT\
+        , (ENDIAN_LITTLE_TO_HOST_U16(header->m_flags) & ROM_MEM_DEVICE_ID_MASK) >> ROM_MEM_DEVICE_ID_SHIFT);
+    m_startAddress = ENDIAN_LITTLE_TO_HOST_U32(header->m_address);
+    m_byteCount = ENDIAN_LITTLE_TO_HOST_U32(header->m_count);
+
+    *consumed = 1;
+}
+
+void SB2Image::KeyStoreToNvCommand::fillCommandHeader(boot_command_t &header)
+{
+    header.m_tag = getTag();
+    uint16_t flags = (DEVICEID(m_memoryId) << ROM_MEM_DEVICE_ID_SHIFT) & ROM_MEM_DEVICE_ID_MASK;
+    flags |= (GROUPID(m_memoryId) << ROM_MEM_GROUP_ID_SHIFT) & ROM_MEM_GROUP_ID_MASK;
+    header.m_flags = ENDIAN_HOST_TO_LITTLE_U16(flags);
+    header.m_address = ENDIAN_HOST_TO_LITTLE_U32(m_startAddress);
+    header.m_count = ENDIAN_HOST_TO_LITTLE_U32(m_byteCount);
+    header.m_data = 0;
+    header.m_checksum = calculateChecksum(header); // do this last
+}
+
+void SB2Image::KeyStoreToNvCommand::debugPrint() const
+{
+    uint16_t flags = (DEVICEID(m_memoryId) << ROM_MEM_DEVICE_ID_SHIFT) & ROM_MEM_DEVICE_ID_MASK;
+    flags |= (GROUPID(m_memoryId) << ROM_MEM_GROUP_ID_SHIFT) & ROM_MEM_GROUP_ID_MASK;
+    Log::log(Logger::INFO2, "  KTNV | adr=0x%08x | cnt=0x%08x | flg=0x%04x\n", m_startAddress, m_byteCount, ENDIAN_HOST_TO_LITTLE_U16(flags));
+}
+
+void SB2Image::KeyStoreToNvCommand::setAddressRange(uint32_t startAddress, uint32_t count)
+{
+    m_startAddress = startAddress;
+    m_byteCount = count;
+}
+
+void SB2Image::KeyStoreToNvCommand::getAddressRange(uint32_t *startAddress, uint32_t *count) const
+{
+    assert(startAddress && count);
+    *startAddress = m_startAddress;
+    *count = m_byteCount;
+}
+
+//! \param blocks Pointer to the raw data blocks.
+//! \param count Number of blocks pointed to by \a blocks.
+//! \param[out] consumed On exit, this points to the number of cipher blocks that were occupied
+//!		by the command. Should be at least 1 for every command. This must not be NULL
+//!		on entry!
+//!
+//! \exception std::runtime_error Thrown if header fields are invalid.
+void SB2Image::KeyStoreFromNvCommand::initFromData(const cipher_block_t *blocks, unsigned count, unsigned *consumed)
+{
+    // check static fields
+    const boot_command_t model = { 0, ROM_WR_KEYSTORE_FROM_NV, 0, 0, 0, 0 };
+    const boot_command_t *header = reinterpret_cast<const boot_command_t *>(blocks);
+    validateHeader(&model, header, CMD_TAG_FIELD | CMD_DATA_FIELD);
+
+    // read fields from header
+    m_memoryId = MAKE_MEMORYID((ENDIAN_LITTLE_TO_HOST_U16(header->m_flags) & ROM_MEM_GROUP_ID_MASK) >> ROM_MEM_GROUP_ID_SHIFT\
+        , (ENDIAN_LITTLE_TO_HOST_U16(header->m_flags) & ROM_MEM_DEVICE_ID_MASK) >> ROM_MEM_DEVICE_ID_SHIFT);
+    m_startAddress = ENDIAN_LITTLE_TO_HOST_U32(header->m_address);
+    m_byteCount = ENDIAN_LITTLE_TO_HOST_U32(header->m_count);
+
+    *consumed = 1;
+}
+
+void SB2Image::KeyStoreFromNvCommand::fillCommandHeader(boot_command_t &header)
+{
+    header.m_tag = getTag();
+    uint16_t flags = (DEVICEID(m_memoryId) << ROM_MEM_DEVICE_ID_SHIFT) & ROM_MEM_DEVICE_ID_MASK;
+    flags |= (GROUPID(m_memoryId) << ROM_MEM_GROUP_ID_SHIFT) & ROM_MEM_GROUP_ID_MASK;
+    header.m_flags = ENDIAN_HOST_TO_LITTLE_U16(flags);
+    header.m_address = ENDIAN_HOST_TO_LITTLE_U32(m_startAddress);
+    header.m_count = ENDIAN_HOST_TO_LITTLE_U32(m_byteCount);
+    header.m_data = 0;
+    header.m_checksum = calculateChecksum(header); // do this last
+}
+
+void SB2Image::KeyStoreFromNvCommand::debugPrint() const
+{
+    uint16_t flags = (DEVICEID(m_memoryId) << ROM_MEM_DEVICE_ID_SHIFT) & ROM_MEM_DEVICE_ID_MASK;
+    flags |= (GROUPID(m_memoryId) << ROM_MEM_GROUP_ID_SHIFT) & ROM_MEM_GROUP_ID_MASK;
+    Log::log(Logger::INFO2, "  KFNV | adr=0x%08x | cnt=0x%08x | flg=0x%04x\n", m_startAddress, m_byteCount, ENDIAN_HOST_TO_LITTLE_U16(flags));
+}
+
+void SB2Image::KeyStoreFromNvCommand::setAddressRange(uint32_t startAddress, uint32_t count)
+{
+    m_startAddress = startAddress;
+    m_byteCount = count;
+}
+
+void SB2Image::KeyStoreFromNvCommand::getAddressRange(uint32_t *startAddress, uint32_t *count) const
+{
+    assert(startAddress && count);
+    *startAddress = m_startAddress;
+    *count = m_byteCount;
+}
+
+//! \param blocks Pointer to the raw data blocks.
+//! \param count Number of blocks pointed to by \a blocks.
+//! \param[out] consumed On exit, this points to the number of cipher blocks that were occupied
+//!		by the command. Should be at least 1 for every command. This must not be NULL
+//!		on entry!
+//!
+//! \exception std::runtime_error Thrown if header fields are invalid.
+void SB2Image::CheckVersionCommand::initFromData(const cipher_block_t *blocks, unsigned count, unsigned *consumed)
+{
+    // check static fields
+    const boot_command_t model = { 0, ROM_FW_VER_CHK, 0, 0, 0, 0 };
+    const boot_command_t *header = reinterpret_cast<const boot_command_t *>(blocks);
+    validateHeader(&model, header, CMD_TAG_FIELD | CMD_DATA_FIELD);
+
+    // read fields from header
+    m_versionType = (CheckVersionType)ENDIAN_LITTLE_TO_HOST_U32(header->m_address);
+    m_version = ENDIAN_LITTLE_TO_HOST_U32(header->m_count);
+
+    *consumed = 1;
+}
+
+void SB2Image::CheckVersionCommand::fillCommandHeader(boot_command_t &header)
+{
+    header.m_tag = getTag();
+	header.m_flags = 0;
+	header.m_address = ENDIAN_HOST_TO_LITTLE_U32((uint32_t)m_versionType);
+    header.m_count = ENDIAN_HOST_TO_LITTLE_U32(m_version);
+    header.m_data = 0;
+    header.m_checksum = calculateChecksum(header); // do this last
+}
+
+void SB2Image::CheckVersionCommand::debugPrint() const
+{
+	if(m_versionType == CheckVersionType::SecureVersion)
+		Log::log(Logger::INFO2, "  CVER | type=SEC       | ver=0x%08x | flg=0x%04x\n", m_version, 0);
+	else if(m_versionType == CheckVersionType::NonSecureVersion)
+		Log::log(Logger::INFO2, "  CVER | type=NSEC      | ver=0x%08x | flg=0x%04x\n", m_version, 0);
+}
+
 
 //! Only if the section has been assigned a boot image owner object will this
 //! method be able to fill in the #section_header_t::m_offset field. If no

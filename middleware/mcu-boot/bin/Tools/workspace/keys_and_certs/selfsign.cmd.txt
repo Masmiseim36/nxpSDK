@@ -1,0 +1,3 @@
+openssl req -new -key selfsign_privatekey_rsa2048.pem -out selfsign_v3.csr -extensions v3_ca
+
+openssl x509 -req -days 7300 -in selfsign_v3.csr -signkey selfsign_privatekey_rsa2048.pem -sha256 -outform der -out selfsign_v3.der.crt -extfile v3_noca.ext -set_serial 0x3cc30000babadeda

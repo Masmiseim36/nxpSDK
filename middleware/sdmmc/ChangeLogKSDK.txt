@@ -2,18 +2,22 @@
 @page middleware_log Middleware Change Log
 
 @section sdmmc SDMMC
-  The current driver version is 2.2.12.
+  The current driver version is 2.2.13.
+
+  - 2.2.13
+    - Improvements
+      - Use the boot mode value instead of boot mode mask value as the parameter of MMC_SetBootConfig to improve user experience.
+      - Removed dynamic voltage switch feature for mmc, according to JEDEC standard, the voltage should be fixed after power up.
 
   - 2.2.12
     - Improvement:
-	  - Add manual tuning function for looking for the tuning window automatically.
-	  - Add reset all in the manual tuning to make sure host controller
+	    - Add manual tuning function for looking for the tuning window automatically.
+		  - Add reset all in the manual tuning to make sure host controller
 		state machine is correct for next tuning.
-	  - Add delay between each tuning block to make sure card status is
+		  - Add delay between each tuning block to make sure card status is
 		ready for next tuning.
       - Host contoller layer update to support USDHC(not support SD 3.0).
 	  - Increase the sd io driver strength for SD2.0 card.
-      - Increased the CMD1 retry times in the MMC card driver to improve driver compatibility.
     - BugFix:
       - Fix the build warning by changing the old style function declaration static
         status_t inline to static inline status_t(found by adding
@@ -33,14 +37,14 @@
 	  when a card event occurs before create.
 
   - 2.2.9
-    - Improvement:
-	  - Add NULL pointer check for sdmmchostcard_usr_param_t member cd in
+     - Improvement:
+	   - Add NULL pointer check for sdmmchostcard_usr_param_t member cd in
 	   card detect callback to avoid memory corruption.
-	  - Add card voltage switch function in sdmmhostcard_usr_param_t to allow
+	   - Add card voltage switch function in sdmmhostcard_usr_param_t to allow
 	   application register card signal line voltage switch function.
-    - Bug fix
-      - Fix host FreeRTOS adaptor and polling adaptor can't detect card insert bug for usdhc.
-      - Fix sdhc host layer build issue and typo issue.
+     - Bug fix
+       - Fix host FreeRTOS adaptor and polling adaptor can't detect card insert bug for usdhc.
+       - Fix sdhc host layer build issue and typo issue.
 
   - 2.2.8
     - Improvement:
@@ -164,6 +168,8 @@
 The current driver version is 2.2.13.
 
   - 2.2.13
+    - Improvements:
+      - Removed the sdio card interrupt from sdio host initialization, since the card interrupt enablement should be determined by application.
     - Bug Fixes
       - Fixed Out-of-bounds write Coverity issue.
 
@@ -233,7 +239,11 @@ The current driver version is 2.1.4.
 
 
 @section host_controller_adapter HOST CONTROLLER ADAPTER
-The current driver version is 2.2.14.
+The current driver version is 2.2.15.
+
+  - 2.2.15
+    - Bug Fixes
+      - Fixed the card access fail that caused by the host controller tuning configurations doesn't been cleared during switch SD3.0 to SD2.0.
 
   - 2.2.14
     - Bug Fixes

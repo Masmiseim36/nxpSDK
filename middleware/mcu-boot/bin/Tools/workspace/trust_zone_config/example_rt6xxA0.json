@@ -1,0 +1,7 @@
+{
+	"family": "rt6xx",
+	"tzpOutputFile": "workspace/trust_zone_output/tzFile.bin",
+	"trustZonePreset": {
+		"Secure vector table address (vtor_addr)": "0xabcdef"
+	}
+}

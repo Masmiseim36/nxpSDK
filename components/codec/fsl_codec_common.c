@@ -7,7 +7,6 @@
  */
 
 #include "fsl_codec_common.h"
-#include "fsl_codec_adapter.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -100,7 +99,7 @@ status_t CODEC_ModuleControl(codec_handle_t *handle, codec_module_ctrl_cmd_t cmd
             return kStatus_CODEC_NotSupport;
     }
 
-    return HAL_CODEC_ModuleControl(handle, cmd, data);
+    return HAL_CODEC_ModuleControl(handle, (uint32_t)cmd, data);
 }
 
 /*!
@@ -167,7 +166,7 @@ status_t CODEC_SetPower(codec_handle_t *handle, codec_module_t module, bool powe
         return kStatus_CODEC_NotSupport;
     }
 
-    return HAL_CODEC_SetPower(handle, module, powerOn);
+    return HAL_CODEC_SetPower(handle, (uint32_t)module, powerOn);
 }
 
 /*!

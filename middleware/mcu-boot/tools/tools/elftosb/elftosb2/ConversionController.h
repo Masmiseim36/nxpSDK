@@ -113,6 +113,9 @@ protected:
     OperationSequence *convertIfStatement(IfStatementASTNode *statement);
     OperationSequence *convertEraseStatement(EraseStatementASTNode *statement);
     OperationSequence *convertMemEnableStatement(MemEnableStatementASTNode *statement);
+	OperationSequence *convertKeystoreToNvStatement(KeyStoreToNvStatementASTNode *statement);
+	OperationSequence *convertKeystoreFromNvStatement(KeyStoreFromNvStatementASTNode *statement);
+	OperationSequence *convertCheckVersionStatement(CheckVersionStatementASTNode *statement);
     OperationSequence *convertKeywrapStatement(KeywrapStatementASTNode *statement);
     OperationSequence *convertEncryptStatement(EncryptStatementASTNode *statement);
     void handleMessageStatement(MessageStatementASTNode *statement);

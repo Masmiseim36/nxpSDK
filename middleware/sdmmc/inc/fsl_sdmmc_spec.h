@@ -673,10 +673,11 @@ enum _mmc_support_boot_mode
 /*! @brief MMC card high-speed timing(HS_TIMING in Extended CSD) */
 typedef enum _mmc_high_speed_timing
 {
-    kMMC_HighSpeedTimingNone = 0U, /*!< MMC card using none high-speed timing */
-    kMMC_HighSpeedTiming     = 1U, /*!< MMC card using high-speed timing */
-    kMMC_HighSpeed200Timing  = 2U, /*!< MMC card high speed 200 timing*/
-    kMMC_HighSpeed400Timing  = 3U, /*!< MMC card high speed 400 timing*/
+    kMMC_HighSpeedTimingNone       = 0U, /*!< MMC card using none high-speed timing */
+    kMMC_HighSpeedTiming           = 1U, /*!< MMC card using high-speed timing */
+    kMMC_HighSpeed200Timing        = 2U, /*!< MMC card high speed 200 timing*/
+    kMMC_HighSpeed400Timing        = 3U, /*!< MMC card high speed 400 timing*/
+    kMMC_EnhanceHighSpeed400Timing = 4U, /*!< MMC card high speed 400 timing*/
 } mmc_high_speed_timing_t;
 
 /*! @brief The number of data bus width type */
@@ -684,11 +685,12 @@ typedef enum _mmc_high_speed_timing
 /*! @brief MMC card data bus width(BUS_WIDTH in Extended CSD) */
 typedef enum _mmc_data_bus_width
 {
-    kMMC_DataBusWidth1bit    = 0U, /*!< MMC data bus width is 1 bit */
-    kMMC_DataBusWidth4bit    = 1U, /*!< MMC data bus width is 4 bits */
-    kMMC_DataBusWidth8bit    = 2U, /*!< MMC data bus width is 8 bits */
-    kMMC_DataBusWidth4bitDDR = 5U, /*!< MMC data bus width is 4 bits ddr */
-    kMMC_DataBusWidth8bitDDR = 6U, /*!< MMC data bus width is 8 bits ddr */
+    kMMC_DataBusWidth1bit          = 0U,    /*!< MMC data bus width is 1 bit */
+    kMMC_DataBusWidth4bit          = 1U,    /*!< MMC data bus width is 4 bits */
+    kMMC_DataBusWidth8bit          = 2U,    /*!< MMC data bus width is 8 bits */
+    kMMC_DataBusWidth4bitDDR       = 5U,    /*!< MMC data bus width is 4 bits ddr */
+    kMMC_DataBusWidth8bitDDR       = 6U,    /*!< MMC data bus width is 8 bits ddr */
+    kMMC_DataBusWidth8bitDDRSTROBE = 0x86U, /*!< MMC data bus width is 8 bits ddr  strobe mode */
 } mmc_data_bus_width_t;
 
 /*! @brief MMC card boot partition enabled(BOOT_PARTITION_ENABLE in Extended CSD) */
@@ -705,9 +707,9 @@ typedef enum _mmc_boot_partition_enable
  */
 typedef enum _mmc_boot_timing_mode
 {
-    kMMC_BootModeSDRWithDefaultTiming   = 0U << 3U, /*!< boot mode single data rate with backward compatiable timings */
-    kMMC_BootModeSDRWithHighSpeedTiming = 1U << 3U, /*!< boot mode single data rate with high speed timing */
-    kMMC_BootModeDDRTiming              = 2U << 3U, /*!< boot mode dual date rate */
+    kMMC_BootModeSDRWithDefaultTiming   = 0U, /*!< boot mode single data rate with backward compatiable timings */
+    kMMC_BootModeSDRWithHighSpeedTiming = 1U, /*!< boot mode single data rate with high speed timing */
+    kMMC_BootModeDDRTiming              = 2U, /*!< boot mode dual date rate */
 } mmc_boot_timing_mode_t;
 
 /*! @brief MMC card boot partition write protect configurations
@@ -779,7 +781,9 @@ typedef enum _mmc_access_partition
 #define MMC_BOOT_BUS_CONDITION_RESET_BUS_CONDITION_SHIFT (2U)
 /*! @brief The bit mask for BOOT BUS WIDTH RESET field in BOOT CONFIG */
 #define MMC_BOOT_BUS_CONDITION_RESET_BUS_CONDITION_MASK (4U)
-/*! @brief The bit mask for BOOT BUS WIDTH RESET field in BOOT CONFIG */
+/*! @brief The bit shift for BOOT MODE field in BOOT CONFIG */
+#define MMC_BOOT_BUS_CONDITION_BOOT_MODE_SHIFT (3U)
+/*! @brief The bit mask for BOOT MODE field in BOOT CONFIG */
 #define MMC_BOOT_BUS_CONDITION_BOOT_MODE_MASK (0x18U)
 
 /*! @brief MMC card CSD register flags */

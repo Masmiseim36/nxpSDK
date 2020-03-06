@@ -1505,9 +1505,36 @@ static usb_status_t USB_DeviceLpc3511IpGetActualBufferAndPrime(usb_device_lpc351
         if (((endpointIndex >> 1U) == USB_CONTROL_ENDPOINT))
 #endif
         {
+#if ((defined(USB_DEVICE_CONFIG_LPCIP3511HS)) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
+#if ((defined(FSL_FEATURE_USBHSD_USB_RAM_BASE_ADDRESS)) && (FSL_FEATURE_USBHSD_USB_RAM_BASE_ADDRESS))
+            uint32_t bufferValue = (uint32_t)actualBuffer;
+#if ((defined(__SAUREGION_PRESENT)) && (__SAUREGION_PRESENT > 0U))
+            bufferValue &= (0xEFFFFFFFu); /* bit28 is the secure address label */
+#endif
+#endif
+#endif
             /* not 64 bytes align || not in the dedicated ram || ( OUT && not mutiple of 4 ) */
             if ((((uint32_t)actualBuffer & 0x0000003FU) != 0U) ||
-                (((uint32_t)actualBuffer & 0xFFC00000U) != (lpc3511IpState->registerBase->DATABUFSTART & 0xFFC00000U))
+#if ((defined(USB_DEVICE_CONFIG_LPCIP3511HS)) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
+#if ((defined(FSL_FEATURE_USBHSD_USB_RAM_BASE_ADDRESS)) && (FSL_FEATURE_USBHSD_USB_RAM_BASE_ADDRESS))
+                (
+#endif
+#endif
+                    (((uint32_t)actualBuffer & 0xFFC00000U) !=
+                     (lpc3511IpState->registerBase->DATABUFSTART & 0xFFC00000U))
+#if ((defined(USB_DEVICE_CONFIG_LPCIP3511HS)) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
+#if ((defined(FSL_FEATURE_USBHSD_USB_RAM_BASE_ADDRESS)) && (FSL_FEATURE_USBHSD_USB_RAM_BASE_ADDRESS))
+
+                    || ((lpc3511IpState->controllerSpeed) &&
+                        ((bufferValue < FSL_FEATURE_USBHSD_USB_RAM_BASE_ADDRESS) ||
+                         (bufferValue > (FSL_FEATURE_USBHSD_USB_RAM_BASE_ADDRESS + FSL_FEATURE_USBHSD_USB_RAM))))
+#endif
+#endif
+#if ((defined(USB_DEVICE_CONFIG_LPCIP3511HS)) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
+#if ((defined(FSL_FEATURE_USBHSD_USB_RAM_BASE_ADDRESS)) && (FSL_FEATURE_USBHSD_USB_RAM_BASE_ADDRESS))
+                        )
+#endif
+#endif
 #if ((defined(USB_DEVICE_CONFIG_LPCIP3511HS)) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
                 || ((lpc3511IpState->controllerSpeed) && (!index) &&
                     (length != epState->stateUnion.stateBitField.maxPacketSize)))
@@ -2095,11 +2122,6 @@ void USB_DeviceLpcIp3511IsrFunction(void *deviceHandle)
 #endif
             {
                 lpc3511IpState->deviceState = 1U;
-#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
-#if ((defined FSL_FEATURE_USBHSD_HAS_EXIT_HS_ISSUE) && (FSL_FEATURE_USBHSD_HAS_EXIT_HS_ISSUE > 0U))
-                USB_PhyDeviceForceEnterFSMode(lpc3511IpState->controllerId, 0);
-#endif
-#endif
                 USB_DeviceLpc3511IpInterruptAttach(lpc3511IpState);
 #if (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)) && \
     (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U))
@@ -2120,10 +2142,25 @@ void USB_DeviceLpcIp3511IsrFunction(void *deviceHandle)
 #endif
                       ))
         {
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
+#if ((defined FSL_FEATURE_USBHSD_HAS_EXIT_HS_ISSUE) && (FSL_FEATURE_USBHSD_HAS_EXIT_HS_ISSUE > 0U))
+#if ((defined USB_DEVICE_IP3511HS_FORCE_EXIT_HS_MODE_ENABLE) && (USB_DEVICE_IP3511HS_FORCE_EXIT_HS_MODE_ENABLE > 0U))
+            uint32_t delay = 100000U;
+#endif
+#endif
+#endif
             lpc3511IpState->deviceState = 0U;
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #if ((defined FSL_FEATURE_USBHSD_HAS_EXIT_HS_ISSUE) && (FSL_FEATURE_USBHSD_HAS_EXIT_HS_ISSUE > 0U))
+#if ((defined USB_DEVICE_IP3511HS_FORCE_EXIT_HS_MODE_ENABLE) && (USB_DEVICE_IP3511HS_FORCE_EXIT_HS_MODE_ENABLE > 0U))
+            /* wait at least 125us to let the host to detect the detach */
             USB_PhyDeviceForceEnterFSMode(lpc3511IpState->controllerId, 1);
+            while (delay--)
+            {
+                __ASM("nop");
+            }
+            USB_PhyDeviceForceEnterFSMode(lpc3511IpState->controllerId, 0);
+#endif
 #endif
 #endif
             USB_DeviceLpc3511IpInterruptDetach(lpc3511IpState);

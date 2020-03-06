@@ -46,7 +46,7 @@ using namespace elftosb;
 const char k_toolName[] = "elftosb";
 
 //! Current version number for the tool.
-const char k_version[] = "5.1.9";
+const char k_version[] = "5.1.17";
 
 //! Copyright string.
 const char k_copyright[] = "Copyright (c) 2004-2015 Freescale Semiconductor, Inc.\n\
@@ -54,14 +54,22 @@ Copyright 2016-2019 NXP\nAll rights reserved.";
 
 //! Changelog for the tool.
 const string k_chnageLog = "Changelog:\n\
-10/10/2019 - version 5.1.9 Merged LPC54S0XX support from separated branch.\n\
-04/09/2019 - version 5.1.8 TZ-M preset data became part of encrypted area in Load to RAM encrypted+signed images for rt6xx and rt5xx, added build number for niobe4, niobe4 mini, rt500, rt600.\n\
-05/09/2019 - version 5.1.7 Corrected error message output.\n\
-02/12/2019 - version 5.1.6 Added rt5xx support, TZM generator updated for rt6xx, lpc55xx and rt5xx. Using revision to specify TZM-data for generation (a0/a1/b0).\n\
-02/12/2019 - version 5.1.5 Added Niobe4 mini (lpc55s3x) support, TZM generator updated for rt6xx, lpc55xx. Removed imageLinkAdressFromImage feature for rt6xx, lpc55xx.\n\
-01/30/2019 - version 5.1.4 Enabled not valid certificate chain for lpc55xx and rt6xx for Master Boot image file, only warning apperas. Improvements in user messages.\n\
-12/14/2018 - version 5.1.3 Corrected calculation of counter value used by AES-CTR mode for SB2.0 and SB2.1 encrytion, causing problem when more sections created in SB2.X file.\n\
-12/14/2018 - version 5.1.2 Added SB2.1 generation support.\n";
+12/09/2019 - version 5.1.17 Partial rollback from version 5.1.11, keystore structure finally not updated for RT500 B0 ROM -> chip revision not needed as input for now.\n\
+12/09/2019 - version 5.1.16 Adding check_version command.\n\
+12/04/2019 - version 5.1.15 Adding keystore_to_nv and keystore_from_nv commands.\n\
+11/04/2019 - version 5.1.14 Support of Multicore Packed Image\n\
+10/22/2019 - version 5.1.13 Removing CRC calculation and dynamic CTR base value from OTFAD keyblob, replacing with random data.\n\
+10/22/2019 - version 5.1.12 Correcting error message preparation in bd file parsing process causing null ptr exception.\n\
+10/14/2019 - version 5.1.11 Added chip revision as input paraterer to recognize correct keystore size for rt5xx.\n\
+10/10/2019 - version 5.1.10 Added loadh command support for sb2.x file.\n\
+10/10/2019 - version 5.1.9  Merged LPC54S0XX support from separated branch.\n\
+04/09/2019 - version 5.1.8  TZ-M preset data became part of encrypted area in Load to RAM encrypted+signed images for rt6xx and rt5xx, added build number for niobe4, niobe4 mini, rt500, rt600.\n\
+05/09/2019 - version 5.1.7  Corrected error message output.\n\
+02/12/2019 - version 5.1.6  Added rt5xx support, TZM generator updated for rt6xx, lpc55xx and rt5xx. Using revision to specify TZM-data for generation (a0/a1/b0).\n\
+02/12/2019 - version 5.1.5  Added Niobe4 mini (lpc55s3x) support, TZM generator updated for rt6xx, lpc55xx. Removed imageLinkAdressFromImage feature for rt6xx, lpc55xx.\n\
+01/30/2019 - version 5.1.4  Enabled not valid certificate chain for lpc55xx and rt6xx for Master Boot image file, only warning apperas. Improvements in user messages.\n\
+12/14/2018 - version 5.1.3  Corrected calculation of counter value used by AES-CTR mode for SB2.0 and SB2.1 encrytion, causing problem when more sections created in SB2.X file.\n\
+12/14/2018 - version 5.1.2  Added SB2.1 generation support.\n";
 
 static const char *k_optionsDefinition[] = { "?|help",
                                              "v|version",
@@ -654,7 +662,8 @@ public:
         {
             // verbose only affects the INFO and DEBUG filter levels
             // if the user has selected quiet mode, it overrides verbose
-            switch (Log::getLogger()->getFilterLevel())
+
+			switch (Log::getLogger()->getFilterLevel())
             {
                 case Logger::INFO:
                     Log::getLogger()->setFilterLevel(Logger::INFO2);

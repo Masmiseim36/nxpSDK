@@ -19,7 +19,6 @@
 #define kKeyblobOptionNameEnd "end"
 #define kKeyblobOptionNameKey "key"
 #define kKeyblobOptionNameCounter "counter"
-#define kKeyblobOptionNamedynamicCtrBase "dynamicCtrBase"
 #define kKeyblobOptionNameNoByteSwap "noByteSwap"
 
 namespace elftosb
@@ -110,9 +109,9 @@ protected:
         unsigned char unused_filler[16]; // unused fill to 64 bytes
     } keyblob_t;
 
-    void populateKeyBlob(keyblob_t *blob, uint32_t start, uint32_t end, const char *keyHex, const char *counterHex, uint32_t dynamicCtrBase);
+    void populateKeyBlob(keyblob_t *blob, uint32_t start, uint32_t end, const char *keyHex, const char *counterHex);
     void encrypt(uint32_t length, uint8_t *data, AESKey<128> *key, AESCounter<128> *counter);
-    bool getOptionValues(OptionContext &opt, const char **key, const char **ctr, uint32_t *start, uint32_t *end, uint32_t *dynamicCtrBase = nullptr);
+    bool getOptionValues(OptionContext &opt, const char **key, const char **ctr, uint32_t *start, uint32_t *end);
 
     uint32_t m_id;             //!< Unique identifier.
 	bool noByteSwap = false;

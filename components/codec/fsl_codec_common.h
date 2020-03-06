@@ -10,19 +10,16 @@
 #define _FSL_CODEC_COMMON_H_
 
 #include "fsl_common.h"
+#include "fsl_codec_adapter.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /*! @name Driver version */
 /*@{*/
-/*! @brief CLOCK driver version 2.1.1. */
-#define FSL_CODEC_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
+/*! @brief CLOCK driver version 2.2.0. */
+#define FSL_CODEC_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
 /*@}*/
-
-/*! @brief CODEC handle buffer size */
-#ifndef CODEC_HANDLE_SIZE
-#define CODEC_HANDLE_SIZE (128U)
-#endif
 
 /*! @brief codec maximum volume range */
 #define CODEC_VOLUME_MAX_VALUE (100U)
@@ -238,9 +235,9 @@ typedef struct _codec_capability
  */
 struct _codec_handle
 {
-    codec_config_t *codecConfig;               /*!< codec configuration function pointer */
-    const codec_capability_t *codecCapability; /*!< codec capability */
-    uint8_t codecDevHandle[CODEC_HANDLE_SIZE]; /*!< codec device handle */
+    codec_config_t *codecConfig;                    /*!< codec configuration function pointer */
+    const codec_capability_t *codecCapability;      /*!< codec capability */
+    uint8_t codecDevHandle[HAL_CODEC_HANDLER_SIZE]; /*!< codec device handle */
 };
 
 /*******************************************************************************

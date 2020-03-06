@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface>
+  <object class="tk.Menu" id="menuMain">
+    <child>
+      <object class="tk.Menuitem.Submenu" id="smFile">
+        <property name="label" translatable="yes">File</property>
+        <child>
+          <object class="tk.Menuitem.Command" id="mcmExit">
+            <property name="command">onMenuExitClick</property>
+            <property name="command_id_arg">false</property>
+            <property name="label" translatable="yes">Exit</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Menuitem.Submenu" id="smAbout">
+        <property name="label" translatable="yes">About</property>
+        <child>
+          <object class="tk.Menuitem.Command" id="mcmAbout">
+            <property name="command">onMenuAboutClick</property>
+            <property name="command_id_arg">false</property>
+            <property name="label" translatable="yes">About</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="tk.Toplevel" id="main">
+    <property name="geometry">1200x700</property>
+    <property name="resizable">both</property>
+    <property name="title" translatable="yes">elftosb-gui</property>
+    <child>
+      <object class="ttk.Frame" id="frmRoot">
+        <property name="height">200</property>
+        <property name="width">200</property>
+        <layout>
+          <property name="column">0</property>
+          <property name="propagate">True</property>
+          <property name="row">0</property>
+          <property name="sticky">nsew</property>
+          <rows>
+            <row id="0">
+              <property name="weight">0</property>
+            </row>
+            <row id="1">
+              <property name="weight">0</property>
+            </row>
+            <row id="2">
+              <property name="weight">1</property>
+            </row>
+          </rows>
+          <columns>
+            <column id="0">
+              <property name="weight">1</property>
+            </column>
+          </columns>
+        </layout>
+        <child>
+          <object class="ttk.Label" id="lblSelectTarget">
+            <property name="text" translatable="yes">Select target device:</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="padx">5</property>
+              <property name="pady">5</property>
+              <property name="propagate">True</property>
+              <property name="row">0</property>
+              <property name="sticky">nw</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Combobox" id="cmbTargetDevice">
+            <property name="height">0</property>
+            <property name="state">readonly</property>
+            <property name="takefocus">true</property>
+            <property name="textvariable">string:target</property>
+            <property name="values">"K32W0x" "LPC54S0xx" "LPC55S3x" "LPC55xx" "RT5xx" "RT6xx"</property>
+            <property name="width">43</property>
+            <bind add="" handler="onTargetDeviceSelected" sequence="&lt;&lt;ComboboxSelected&gt;&gt;" />
+            <layout>
+              <property name="column">0</property>
+              <property name="padx">10</property>
+              <property name="propagate">True</property>
+              <property name="row">1</property>
+              <property name="sticky">new</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Frame" id="frmDeviceSpecific">
+            <property name="padding">5</property>
+            <property name="width">200</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="padx">5</property>
+              <property name="propagate">True</property>
+              <property name="row">2</property>
+              <property name="sticky">nsew</property>
+              <rows>
+                <row id="0">
+                  <property name="weight">1</property>
+                </row>
+              </rows>
+              <columns>
+                <column id="0">
+                  <property name="weight">1</property>
+                </column>
+              </columns>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

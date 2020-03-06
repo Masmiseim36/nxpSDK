@@ -1,0 +1,4 @@
+The example json image configurations files (k3sExample.json, lpc55xxExample.json, lpc55xxExample2.json) are using relative paths to files located in workspace folder.
+This will be processed fine, if the script execution folder is root application folder, but if the script with this configuration file will be executed in different location, image creation will fail because of relative paths.
+If the image configuration file will be created by elftosb-gui application, always will be used absolute path.
+The example files were modified manually to have relative path, to get image configuration working on all environments.

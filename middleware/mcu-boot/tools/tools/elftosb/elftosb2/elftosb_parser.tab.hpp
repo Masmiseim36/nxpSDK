@@ -87,7 +87,14 @@
      TOK_KEYBLOB = 303,
      TOK_ENCRYPT = 304,
      TOK_KEYWRAP = 305,
-     UNARY_OP = 306
+     TOK_LOADH = 306,
+     TOK_LOADS = 307,
+     TOK_VERSION_CHECK = 308,
+     TOK_SEC = 309,
+     TOK_NSEC = 310,
+     TOK_KEYSTORE_TO_NV = 311,
+     TOK_KEYSTORE_FROM_NV = 312,
+     UNARY_OP = 313
    };
 #endif
 /* Tokens.  */
@@ -139,7 +146,14 @@
 #define TOK_KEYBLOB 303
 #define TOK_ENCRYPT 304
 #define TOK_KEYWRAP 305
-#define UNARY_OP 306
+#define TOK_LOADH 306
+#define TOK_LOADS 307
+#define TOK_VERSION_CHECK 308
+#define TOK_SEC 309
+#define TOK_NSEC 310
+#define TOK_KEYSTORE_TO_NV 311
+#define TOK_KEYSTORE_FROM_NV 312
+#define UNARY_OP 313
 
 
 
@@ -155,7 +169,7 @@ typedef union YYSTYPE
 	elftosb::ASTNode * m_ast;	// must use full name here because this is put into *.tab.hpp
 }
 /* Line 1489 of yacc.c.  */
-#line 159 "elftosb_parser.tab.hpp"
+#line 173 "elftosb_parser.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

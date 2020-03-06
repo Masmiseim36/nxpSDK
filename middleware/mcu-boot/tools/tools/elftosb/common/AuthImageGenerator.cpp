@@ -80,12 +80,16 @@ bool AuthImageGenerator::parseConfigurationLpcSboot(const string &confFilePath, 
 		throw runtime_error("Cannot parse json configuration file: " + confFilePath);
 	}
 
+	conf.multicoreConf = unique_ptr<MulticoreImageGenerator>(new MulticoreImageGenerator());
+	conf.multicoreConf->parseConfiguration(jsonConf, confFilePath);
+
+
 	if (jsonConf["family"].get_type() == jute::JSTRING) {
 		conf.family = jsonConf["family"].as_string();
 		transform(conf.family.begin(), conf.family.end(), conf.family.begin(), ::tolower);
 		if (conf.family != LPC55XX && conf.family != RT6XX && conf.family != NIOBE4MINI && conf.family != RT5XX) {
 			ss << "\tUnexpected \"family\" value (" << conf.family << ") from configuration file: " << confFilePath << ".\n";
-			ss << "\tSupported only " << LPC55XX << ", " << NIOBE4MINI << ", " << RT5XX <<" and " << RT6XX << "." << endl;
+			ss << "\tSupported only " << LPC55XX << ", " << NIOBE4MINI << ", " << RT5XX << " and " << RT6XX << "." << endl;
 			Log::log(Logger::ERROR, ss.str());
 			ss.str("");
 			error = true;
@@ -117,7 +121,8 @@ bool AuthImageGenerator::parseConfigurationLpcSboot(const string &confFilePath, 
 			Log::log(Logger::ERROR, ss.str());
 			ss.str("");
 			error = true;
-		}else if ((conf.family == RT6XX || conf.family == RT5XX) && tmp != "externalflash(xip)" && tmp != "ram") {
+		}
+		else if ((conf.family == RT6XX || conf.family == RT5XX) && tmp != "externalflash(xip)" && tmp != "ram") {
 			ss << "\tUnsupported value (" << backup << ") of \"outputImageAuthenticationType\" for selected family " << conf.family << " from configuration file: " << confFilePath << ".\n";
 			ss << "\tExpected values [\"External flash (XIP)\", \"RAM\"]  for " << conf.family << " family.\n";
 			Log::log(Logger::ERROR, ss.str());
@@ -145,7 +150,8 @@ bool AuthImageGenerator::parseConfigurationLpcSboot(const string &confFilePath, 
 			Log::log(Logger::ERROR, ss.str());
 			ss.str("");
 			error = true;
-		}else if ((conf.family == RT6XX || conf.family == RT5XX) && conf.imageType == "xip" && !(tmp == "crc" || tmp == "signed")) {
+		}
+		else if ((conf.family == RT6XX || conf.family == RT5XX) && conf.imageType == "xip" && !(tmp == "crc" || tmp == "signed")) {
 			ss << "\tUnsupported value (" << tmp << ") of \"outputImageAuthenticationType\" for selected family " << conf.family << " from configuration file: " << confFilePath << ".\n";
 			ss << "\tExpected values [\"CRC\", \"Signed\"] for " << conf.family << " family with \"outputImageExecutionTarget\" set to \"External flash(XIP)\".\n";
 			Log::log(Logger::ERROR, ss.str());
@@ -191,7 +197,7 @@ bool AuthImageGenerator::parseConfigurationLpcSboot(const string &confFilePath, 
 			ss.str("");
 			error = true;
 		}
-		
+
 		if (conf.deviceKeySrc != deviceKeySource::OTP) {
 			if (jsonConf["useKeyStore"].get_type() == jute::JBOOLEAN)
 				conf.useKeyStore = jsonConf["useKeyStore"].as_bool();
@@ -442,17 +448,33 @@ int AuthImageGenerator::createImageLpcSboot(const configuration &conf)
 	size_t imageSize = ftell(imageFile);
 	fseek(imageFile, 0, SEEK_SET);
 	// Get the word aligned length.
-	size_t imageAlignedSize = 0;
+	size_t totalImageAlignedSize = 0;
+	size_t mainImageAlignedSize = 0;
 	if (imageSize % AUTH_IMAGE_ALIGNMENT)
 	{
-		imageAlignedSize = imageSize + (AUTH_IMAGE_ALIGNMENT - (imageSize % AUTH_IMAGE_ALIGNMENT));
+		mainImageAlignedSize = imageSize + (AUTH_IMAGE_ALIGNMENT - (imageSize % AUTH_IMAGE_ALIGNMENT));
 	}
 	else
 	{
-		imageAlignedSize = imageSize;
+		mainImageAlignedSize = imageSize;
 	}
-	Log::log(Logger::INFO2, "\tSuccess. (File %s: Size = %lu bytes, AlignedSize = %lu bytes)\n", configdata, imageSize, imageAlignedSize);
+	totalImageAlignedSize = mainImageAlignedSize;
+	Log::log(Logger::INFO2, "\tSuccess. (File %s: Size = %lu bytes, AlignedSize = %lu bytes)\n", configdata, imageSize, totalImageAlignedSize);
 	step++; //2
+	Log::log(Logger::INFO2, "%d. Checking multicore configuration.\n", step);
+	size_t multicoreImageSize;
+	unique_ptr<uint8_t[]> multicoreImageData;
+	uint32_t isMulticoreImage = 0x0u;
+	if (conf.multicoreConf->isMulticoreImage()) {
+		multicoreImageData = conf.multicoreConf->getData(totalImageAlignedSize, multicoreImageSize);
+		totalImageAlignedSize += multicoreImageSize;
+		isMulticoreImage = MULTICORE_IS_MULTICORE_IMAGE_MASK;
+		Log::log(Logger::INFO2, "\tImage with multicore data.\n");
+	}
+	else 
+		Log::log(Logger::INFO2, "\tImage is not containing multicore data.\n");
+	Log::log(Logger::INFO2, "\tSuccess.\n");
+	step++; 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Read image type
 	////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -579,7 +601,7 @@ int AuthImageGenerator::createImageLpcSboot(const configuration &conf)
 	if (imageType == kSKBOOT_ImageTypeXipPlainCrc || imageType == kSKBOOT_ImageTypePlainCrc)
 	{
 		Log::log(Logger::INFO2, "Start to generate CRC image!\n");
-		totalImageSize = imageAlignedSize;
+		totalImageSize = totalImageAlignedSize;
 	}
 	else
 	{
@@ -871,7 +893,7 @@ int AuthImageGenerator::createImageLpcSboot(const configuration &conf)
 		}
 		Log::log(Logger::INFO2, "\tSuccess.\n");
 		// Calculate entire image size including image header and crt.
-		totalImageSize = imageAlignedSize + sizeof(certificate_block_header_t) + crtTableAlignedSize + sizeof(rkh_table_t);
+		totalImageSize = totalImageAlignedSize + sizeof(certificate_block_header_t) + crtTableAlignedSize + sizeof(rkh_table_t);
 		step++;
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		// Initialization of random number generator for mbedtls
@@ -918,12 +940,19 @@ int AuthImageGenerator::createImageLpcSboot(const configuration &conf)
 	Log::log(Logger::INFO2, "%d. Load the input image data to buffer.\n", step);
 	// Load image file to buffer.
 	ret = fread(buffer, 1, imageSize, imageFile);
-	Log::log(Logger::INFO2, "\tSuccess.\n");
 	if (ret != imageSize)
 	{
 		Log::log(Logger::ERROR, "Fail reading image file.\n", configdata);
 		cleanUpLpcSboot(userKey, keyStore, imageFile, usedRootCrtFile, outputFile, trustZonePresetFile, buffer, signature, trustCrt, rsa_priv_key_ctx);
 		return FAIL_RETURN;
+	}
+	Log::log(Logger::INFO2, "\tSuccess.\n");
+
+	if (conf.multicoreConf->isMulticoreImage()) {
+		Log::log(Logger::INFO2, "%d. Adding multicore data to buffer.\n", step);
+		// Load image file to buffer.
+		memcpy(buffer + mainImageAlignedSize, multicoreImageData.get(), multicoreImageSize);
+		Log::log(Logger::INFO2, "\tSuccess.\n");
 	}
 
 	/* LoadToRam signed images all have header MAC and optionally key store inserted at offset 64 bytes */
@@ -992,6 +1021,23 @@ int AuthImageGenerator::createImageLpcSboot(const configuration &conf)
 		if (conf.deviceKeySrc == deviceKeySource::OTP)
 			Log::log(Logger::INFO2, "\tDevice is using OTP, skiping Key Store.\n", step);
 		else if (conf.useKeyStore) {
+			if (LPC55XX == conf.family || NIOBE4MINI == conf.family)
+			{
+				keyStoreSize = sizeof(skboot_key_store_lpc55xx_t);
+				keyStore = new uint8_t[keyStoreSize]{};
+			}
+			else if (RT6XX == conf.family || RT5XX == conf.family)
+			{
+				keyStoreSize = sizeof(skboot_key_store_lpc68xx_t);
+				keyStore = new uint8_t[keyStoreSize]{};
+			}
+			else
+			{
+				Log::log(Logger::ERROR, "Unsupported device family: %s.\n", conf.family.c_str());
+				cleanUpLpcSboot(userKey, keyStore, imageFile, usedRootCrtFile, outputFile, trustZonePresetFile, buffer, signature, trustCrt, rsa_priv_key_ctx);
+				return FAIL_RETURN;
+			}
+
 			if (conf.keyStoreFile.length() > 0)
 			{
 				Log::log(Logger::INFO2, "%d.1 Add key store from specified file.\n", step);
@@ -1010,36 +1056,13 @@ int AuthImageGenerator::createImageLpcSboot(const configuration &conf)
 				Log::log(Logger::INFO2, "\tKey Store File Path = %s, size = %lu bytes\n", configdata, keyStoreFileSize);
 				fseek(keyStoreFile, 0, SEEK_SET);
 
-				if (LPC55XX == conf.family || NIOBE4MINI == conf.family)
+				if (keyStoreSize != keyStoreFileSize)
 				{
-					keyStoreSize = sizeof(skboot_key_store_lpc55xx_t);
-					keyStore = new uint8_t[keyStoreSize]{};
-					if (keyStoreSize != keyStoreFileSize)
-					{
-						Log::log(Logger::ERROR, "\tWrong size of key store file for %s. (expected: %d bytes, fetched: %lu bytes)\n", conf.family.c_str(), keyStoreSize, keyStoreFileSize);
-						cleanUpLpcSboot(userKey, keyStore, imageFile, usedRootCrtFile, outputFile, trustZonePresetFile, buffer, signature, trustCrt, rsa_priv_key_ctx);
-						return FAIL_RETURN;
-					}
-					ret = fread(keyStore, 1, keyStoreSize, keyStoreFile);
-				}
-				else if (RT6XX == conf.family || RT5XX == conf.family)
-				{
-					keyStoreSize = sizeof(skboot_key_store_lpc68xx_t);
-					keyStore = new uint8_t[keyStoreSize]{};
-					if (keyStoreSize != keyStoreFileSize)
-					{
-						Log::log(Logger::ERROR, "\tWrong size of key store file for %s. (expected: %d bytes, fetched: %lu bytes)\n", conf.family.c_str(), keyStoreSize, keyStoreFileSize);
-						cleanUpLpcSboot(userKey, keyStore, imageFile, usedRootCrtFile, outputFile, trustZonePresetFile, buffer, signature, trustCrt, rsa_priv_key_ctx);
-						return FAIL_RETURN;
-					}
-					ret = fread(keyStore, 1, keyStoreSize, keyStoreFile);
-				}
-				else
-				{
-					Log::log(Logger::ERROR, "Unsupported device family: %s.\n", conf.family.c_str());
+					Log::log(Logger::ERROR, "\tWrong size of key store file for %s. (expected: %d bytes, fetched: %lu bytes)\n", conf.family.c_str(), keyStoreSize, keyStoreFileSize);
 					cleanUpLpcSboot(userKey, keyStore, imageFile, usedRootCrtFile, outputFile, trustZonePresetFile, buffer, signature, trustCrt, rsa_priv_key_ctx);
 					return FAIL_RETURN;
 				}
+				ret = fread(keyStore, 1, keyStoreSize, keyStoreFile);
 				if (ret != keyStoreSize)
 				{
 					Log::log(Logger::ERROR, "Fail reading key store file.\n");
@@ -1050,22 +1073,6 @@ int AuthImageGenerator::createImageLpcSboot(const configuration &conf)
 			else
 			{
 				Log::log(Logger::INFO2, "%d.1 Reserve key store space only.\n", step);
-				if (LPC55XX == conf.family || NIOBE4MINI == conf.family)
-				{
-					keyStoreSize = sizeof(skboot_key_store_lpc55xx_t);
-					keyStore = new uint8_t[keyStoreSize]{};
-				}
-				else if (RT6XX == conf.family || RT5XX == conf.family)
-				{
-					keyStoreSize = sizeof(skboot_key_store_lpc68xx_t);
-					keyStore = new uint8_t[keyStoreSize]{};
-				}
-				else
-				{
-					Log::log(Logger::ERROR, "Unsupported device family: %s.\n", conf.family.c_str());
-					cleanUpLpcSboot(userKey, keyStore, imageFile, usedRootCrtFile, outputFile, trustZonePresetFile, buffer, signature, trustCrt, rsa_priv_key_ctx);
-					return FAIL_RETURN;
-				}
 				Log::log(Logger::INFO, "\tKey store with size %lu bytes will be reserved in image from address: 0x%x.\n", keyStoreSize, HMACHEADEROFSET + headerMacSizeInBytes);
 			}
 		}
@@ -1103,8 +1110,8 @@ int AuthImageGenerator::createImageLpcSboot(const configuration &conf)
 		step++;
 		Log::log(Logger::INFO2, "%d. Updating image header before encryption.\n", step);
 		// Modify the header offsize.
-		*(uint32_t *)(buffer + 0x28) = imageAlignedSize;
-		*(uint32_t *)(buffer + 0x24) = imageType | imageTypeTZM | enableHwKeys;
+		*(uint32_t *)(buffer + 0x28) = totalImageAlignedSize;
+		*(uint32_t *)(buffer + 0x24) = imageType | imageTypeTZM | enableHwKeys | isMulticoreImage;
 		*(uint32_t *)(buffer + 0x20) = totalImageSize + ES_IMG_TAIL_BYTELEN + signatureSizeInBytes + keyStoreSize + headerMacSizeInBytes + trustZonePresetFileSize;
 		*(uint32_t *)(buffer + 0x34) = imageLinkAddress;
 		Log::log(Logger::INFO2, "\tSuccess. (Image Type = 0x%08x, Image load address = 0x%x, Total Image size = %d bytes)\n", *(uint32_t *)(buffer + 0x24), *(uint32_t *)(buffer + 0x34), *(uint32_t *)(buffer + 0x20));
@@ -1158,7 +1165,7 @@ int AuthImageGenerator::createImageLpcSboot(const configuration &conf)
 		mbedtls_aes_context aesCtx;
 		mbedtls_aes_init(&aesCtx);
 		mbedtls_aes_setkey_enc(&aesCtx, firmwareDecryptKey, keySize * 8);
-		mbedtls_aes_crypt_ctr(&aesCtx, imageAlignedSize, &nc_off, ctrInitVector, stream_block, buffer, buffer);
+		mbedtls_aes_crypt_ctr(&aesCtx, totalImageAlignedSize, &nc_off, ctrInitVector, stream_block, buffer, buffer);
 		mbedtls_aes_crypt_ctr(&aesCtx, trustZonePresetFileSize, &nc_off, ctrInitVector, stream_block, buffer + totalImageSize + ES_IMG_TAIL_BYTELEN, buffer + totalImageSize + ES_IMG_TAIL_BYTELEN);
 		mbedtls_aes_free(&aesCtx);
 
@@ -1178,8 +1185,8 @@ int AuthImageGenerator::createImageLpcSboot(const configuration &conf)
 	step++;
 	Log::log(Logger::INFO2, "%d. Updating image header.\n", step);
 	// Modify the header offsize.
-	*(uint32_t *)(buffer + 0x28) = imageAlignedSize;
-	*(uint32_t *)(buffer + 0x24) = imageType | imageTypeTZM | enableHwKeys;
+	*(uint32_t *)(buffer + 0x28) = totalImageAlignedSize;
+	*(uint32_t *)(buffer + 0x24) = imageType | imageTypeTZM | enableHwKeys | isMulticoreImage;
 	*(uint32_t *)(buffer + 0x20) = totalImageSize + signatureSizeInBytes + keyStoreSize + headerMacSizeInBytes;
 	*(uint32_t *)(buffer + 0x34) = imageLinkAddress;
 
@@ -1192,7 +1199,7 @@ int AuthImageGenerator::createImageLpcSboot(const configuration &conf)
 		// Init certificate header
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		Log::log(Logger::INFO2, "%d. Init certificate header.\n", step);
-		certificate_block_header_t *header = (certificate_block_header_t *)(buffer + imageAlignedSize);
+		certificate_block_header_t *header = (certificate_block_header_t *)(buffer + totalImageAlignedSize);
 
 		header->signature = SIGNATURE_TAG;
 		header->headerMajorVersion = 1;
@@ -1204,7 +1211,7 @@ int AuthImageGenerator::createImageLpcSboot(const configuration &conf)
 		header->certificateCount = 1 /*root cert*/ + certCount;
 		header->certificateTableLengthInBytes = crtTableAlignedSize;
 
-		uint32_t crtTableOffset = imageAlignedSize + sizeof(certificate_block_header_t);
+		uint32_t crtTableOffset = totalImageAlignedSize + sizeof(certificate_block_header_t);
 		uint32_t crtOffset = crtTableOffset;
 		Log::log(Logger::INFO2, "\tSuccess.\n");
 		////////////////////////////////////////////////////////////////////////////////////////////////////

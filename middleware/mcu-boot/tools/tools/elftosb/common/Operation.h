@@ -33,11 +33,18 @@ public:
 class LoadOperation : public Operation
 {
 public:
+	enum class LoadOperationType_t {
+		load,
+		loadSecret,
+		loadHmac
+	};
+
     LoadOperation()
         : Operation()
         , m_source()
         , m_target()
         , m_isDCDLoad(false)
+		, m_operationType(LoadOperationType_t::load)
     {
     }
 
@@ -47,10 +54,13 @@ public:
     inline DataTarget *getTarget() { return m_target; }
     inline void setDCDLoad(bool isDCD) { m_isDCDLoad = isDCD; }
     inline bool isDCDLoad() const { return m_isDCDLoad; }
+	inline void setLoadOperationType(LoadOperationType_t type) { m_operationType = type; }
+    inline LoadOperationType_t getLoadOperationType() const { return m_operationType; }
 protected:
     smart_ptr<DataSource> m_source;
     smart_ptr<DataTarget> m_target;
     bool m_isDCDLoad;
+	LoadOperationType_t m_operationType;
 };
 
 /*!
@@ -252,6 +262,93 @@ protected:
     uint32_t m_startAddress;
     uint32_t m_byteCount;
     uint32_t m_memoryId;
+};
+
+/*!
+* \brief Operation to move keystore to nv memory.
+*/
+class KeystoreToNvOperation : public Operation
+{
+public:
+    KeystoreToNvOperation()
+        : Operation()
+        , m_startAddress(0)
+        , m_byteCount(0)
+        , m_memoryId(0)
+    {
+    }
+
+    void setMemoryId(uint32_t memoryId) { m_memoryId = memoryId; }
+    uint32_t getMemoryId() const { return m_memoryId; }
+    void setRange(uint32_t start, uint32_t count)
+    {
+        m_startAddress = start;
+        m_byteCount = count;
+    }
+    void getRange(uint32_t *start, uint32_t *count) const;
+
+protected:
+    uint32_t m_startAddress;
+    uint32_t m_byteCount;
+    uint32_t m_memoryId;
+};
+
+/*!
+* \brief Operation to move keystore from nv memory.
+*/
+class KeystoreFromNvOperation : public Operation
+{
+public:
+    KeystoreFromNvOperation()
+        : Operation()
+        , m_startAddress(0)
+        , m_byteCount(0)
+        , m_memoryId(0)
+    {
+    }
+
+    void setMemoryId(uint32_t memoryId) { m_memoryId = memoryId; }
+    uint32_t getMemoryId() const { return m_memoryId; }
+    void setRange(uint32_t start, uint32_t count)
+    {
+        m_startAddress = start;
+        m_byteCount = count;
+    }
+    void getRange(uint32_t *start, uint32_t *count) const;
+
+protected:
+    uint32_t m_startAddress;
+    uint32_t m_byteCount;
+    uint32_t m_memoryId;
+};
+
+/*!
+* \brief Operation to check version of secure/nonsecure firmware.
+*/
+class CheckVersionOperation : public Operation
+{
+public:
+    CheckVersionOperation()
+        : Operation()
+        , m_versionType(CheckVersionType::SecureVersion)
+        , m_version(0)
+    {
+    }
+	enum class CheckVersionType {
+		SecureVersion = 0x0u,
+		NonSecureVersion = 0x1u,
+	};
+
+    void setVersionType(CheckVersionOperation::CheckVersionType versionType) { m_versionType = versionType; }
+    CheckVersionType getVersionType() const { return m_versionType; }
+
+	void setVersion(uint32_t version) { m_version = version; }
+    uint32_t getVersion() const { return m_version; }
+
+
+protected:
+    CheckVersionOperation::CheckVersionType m_versionType;
+    uint32_t m_version;
 };
 
 /*!

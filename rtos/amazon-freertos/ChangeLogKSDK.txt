@@ -26,6 +26,7 @@ The current version is Amazon-FreeRTOS 201908.00 Original package is available a
           - iot_tls.c Supoort for secure element handling
           - aws_pkcs11_pal.c pkcs11 handling for SE050
       - Introduced aws_ota_pal.c for RT1060 supporting ota_bootloader (mcu-boot)
+      - updated lwIP template with options for core locking
 
   - 1.4.9_rev0
       - Remove 3rd party libraries lwip, mbedtls (use MCUXpresso SDK versions).

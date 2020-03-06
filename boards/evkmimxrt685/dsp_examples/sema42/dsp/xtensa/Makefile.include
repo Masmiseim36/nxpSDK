@@ -1,0 +1,80 @@
+# get build target from current directory and make it's first letter lowercase
+build_target = $(notdir $(CURDIR))
+build_target := $(subst R,r,$(build_target))
+build_target := $(subst D,d,$(build_target))
+
+post-all:
+	@echo post all rule
+	@echo ${xt_sysargs}
+	@echo ${xt_project}
+	xt-objcopy ${xt_sysargs} -O binary ${xt_project} ../../../../binary/dsp_text_$(build_target).bin \
+--only-section=.dram0.rodata \
+--only-section=.Level2InterruptVector.literal \
+--only-section=.Level3InterruptVector.literal \
+--only-section=.DebugExceptionVector.literal \
+--only-section=.NMIExceptionVector.literal \
+--only-section=.KernelExceptionVector.literal \
+--only-section=.UserExceptionVector.literal \
+--only-section=.DoubleExceptionVector.literal \
+--only-section=.iram0.literal \
+--only-section=.ResetVector.literal \
+--only-section=.dram0.literal \
+--only-section=.dram0.data \
+--only-section=.dram0.bss \
+--only-section=.ResetVector.text \
+--only-section=.ResetHandler.literal \
+--only-section=.ResetHandler.text \
+--only-section=.WindowVectors.text \
+--only-section=.Level2InterruptVector.text \
+--only-section=.Level3InterruptVector.text \
+--only-section=.DebugExceptionVector.text \
+--only-section=.NMIExceptionVector.text \
+--only-section=.KernelExceptionVector.text \
+--only-section=.UserExceptionVector.text \
+--only-section=.DoubleExceptionVector.text \
+--only-section=.iram0.text
+	xt-objcopy ${xt_sysargs} -O binary ${xt_project} ../../../../binary/dsp_data_$(build_target).bin \
+--only-section=.text \
+--only-section=.rodata \
+--only-section=.data \
+--only-section=.bss \
+--only-section=.literal \
+--only-section=.sram.text \
+--only-section=.sram.rodata \
+--only-section=.sram.data \
+--only-section=.sram.bss \
+--only-section=.sram.literal \
+--only-section=.clib.rodata \
+--only-section=.clib.text \
+--only-section=.clib.data \
+--only-section=.clib.data \
+--only-section=.clib.percpu.data \
+--only-section=.clib.bss \
+--only-section=.clib.percpu.bss \
+--only-section=.clib.literal \
+--only-section=.rtos.rodata \
+--only-section=.rtos.text \
+--only-section=.rtos.data \
+--only-section=.rtos.percpu.data \
+--only-section=.rtos.bss \
+--only-section=.rtos.percpu.bss \
+--only-section=.rtos.literal
+	xt-objcopy ${xt_sysargs} -O binary ${xt_project} ../../../../binary/dsp_ncache_$(build_target).bin \
+--only-section=NonCacheable
+
+#
+bin_path = ../../../../binary/
+ifdef OS
+	# windows
+	rm_cmd = del /Q
+	bin_path := $(subst /,\,$(bin_path))
+else
+	# unix
+	rm_cmd = rm -f
+endif
+
+pre-clean:
+	@echo pre-clean rule
+	cmd /c if exist "$(bin_path)dsp_text_$(build_target).bin" $(rm_cmd) "$(bin_path)dsp_text_$(build_target).bin"
+	cmd /c if exist "$(bin_path)dsp_data_$(build_target).bin" $(rm_cmd) "$(bin_path)dsp_data_$(build_target).bin"
+	cmd /c if exist "$(bin_path)dsp_ncache_$(build_target).bin" $(rm_cmd) "$(bin_path)dsp_ncache_$(build_target).bin"

@@ -179,7 +179,7 @@ void StELFFile::readFileHeaders()
 				if (m_header.e_ident[EI_CLASS] == ELFCLASS32)
 				{
 					programHeader.p_type = ENDIAN_LITTLE_TO_HOST_U32(programHeader.p_type);
-					programHeader.p_offset = ENDIAN_LITTLE_TO_HOST_U32(programHeader.p_type);
+					programHeader.p_offset = ENDIAN_LITTLE_TO_HOST_U32(programHeader.p_offset);
 					programHeader.p_vaddr = ENDIAN_LITTLE_TO_HOST_U32(programHeader.p_vaddr);
 					programHeader.p_paddr = ENDIAN_LITTLE_TO_HOST_U32(programHeader.p_paddr);
 					programHeader.p_filesz = ENDIAN_LITTLE_TO_HOST_U32(programHeader.p_filesz);
@@ -190,7 +190,7 @@ void StELFFile::readFileHeaders()
 				else
 				{
 					programHeader.p_type = ENDIAN_LITTLE_TO_HOST_U32(programElf64Header.p_type);
-					programHeader.p_offset = ENDIAN_LITTLE_TO_HOST_U32(programElf64Header.p_type);
+					programHeader.p_offset = ENDIAN_LITTLE_TO_HOST_U32(programElf64Header.p_offset);
 					programHeader.p_vaddr = ENDIAN_LITTLE_TO_HOST_U32(programElf64Header.p_vaddr);
 					programHeader.p_paddr = ENDIAN_LITTLE_TO_HOST_U32(programElf64Header.p_paddr);
 					programHeader.p_filesz = ENDIAN_LITTLE_TO_HOST_U32(programElf64Header.p_filesz);

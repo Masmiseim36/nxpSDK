@@ -1413,8 +1413,6 @@ status_t SDIO_HostInit(sdio_card_t *card)
     /* set the host status flag, after the card re-plug in, don't need init host again */
     card->isHostReady = true;
 
-    SDMMCHOST_ENABLE_SDIO_INT(card->host.base);
-
     return kStatus_Success;
 }
 

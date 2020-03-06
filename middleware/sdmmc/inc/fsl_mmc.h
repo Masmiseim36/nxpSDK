@@ -22,18 +22,19 @@
 /*! @brief MMC card flags */
 enum _mmc_card_flag
 {
-    kMMC_SupportHighSpeed26MHZFlag = (1U << 0U),           /*!< Support high speed 26MHZ */
-    kMMC_SupportHighSpeed52MHZFlag = (1U << 1U),           /*!< Support high speed 52MHZ */
-    kMMC_SupportHighSpeedDDR52MHZ180V300VFlag = (1 << 2U), /*!< ddr 52MHZ 1.8V or 3.0V */
-    kMMC_SupportHighSpeedDDR52MHZ120VFlag = (1 << 3U),     /*!< DDR 52MHZ 1.2V */
-    kMMC_SupportHS200200MHZ180VFlag = (1 << 4U),           /*!< HS200 ,200MHZ,1.8V */
-    kMMC_SupportHS200200MHZ120VFlag = (1 << 5U),           /*!< HS200, 200MHZ, 1.2V */
-    kMMC_SupportHS400DDR200MHZ180VFlag = (1 << 6U),        /*!< HS400, DDR, 200MHZ,1.8V */
-    kMMC_SupportHS400DDR200MHZ120VFlag = (1 << 7U),        /*!< HS400, DDR, 200MHZ,1.2V */
-    kMMC_SupportHighCapacityFlag = (1U << 8U),             /*!< Support high capacity */
-    kMMC_SupportAlternateBootFlag = (1U << 9U),            /*!< Support alternate boot */
-    kMMC_SupportDDRBootFlag = (1U << 10U),                 /*!< support DDR boot flag*/
-    kMMC_SupportHighSpeedBootFlag = (1U << 11U),           /*!< support high speed boot flag*/
+    kMMC_SupportHighSpeed26MHZFlag            = (1U << 0U),  /*!< Support high speed 26MHZ */
+    kMMC_SupportHighSpeed52MHZFlag            = (1U << 1U),  /*!< Support high speed 52MHZ */
+    kMMC_SupportHighSpeedDDR52MHZ180V300VFlag = (1 << 2U),   /*!< ddr 52MHZ 1.8V or 3.0V */
+    kMMC_SupportHighSpeedDDR52MHZ120VFlag     = (1 << 3U),   /*!< DDR 52MHZ 1.2V */
+    kMMC_SupportHS200200MHZ180VFlag           = (1 << 4U),   /*!< HS200 ,200MHZ,1.8V */
+    kMMC_SupportHS200200MHZ120VFlag           = (1 << 5U),   /*!< HS200, 200MHZ, 1.2V */
+    kMMC_SupportHS400DDR200MHZ180VFlag        = (1 << 6U),   /*!< HS400, DDR, 200MHZ,1.8V */
+    kMMC_SupportHS400DDR200MHZ120VFlag        = (1 << 7U),   /*!< HS400, DDR, 200MHZ,1.2V */
+    kMMC_SupportHighCapacityFlag              = (1U << 8U),  /*!< Support high capacity */
+    kMMC_SupportAlternateBootFlag             = (1U << 9U),  /*!< Support alternate boot */
+    kMMC_SupportDDRBootFlag                   = (1U << 10U), /*!< support DDR boot flag*/
+    kMMC_SupportHighSpeedBootFlag             = (1U << 11U), /*!< support high speed boot flag */
+    kMMC_SupportEnhanceHS400StrobeFlag        = (1U << 12U), /*!< support enhance HS400 strobe */
 };
 
 /*!
@@ -65,10 +66,10 @@ typedef struct _mmc_card
     uint32_t bootPartitionBlocks;                         /*!< Boot partition size united as block size */
     uint32_t eraseGroupBlocks;                            /*!< Erase group size united as block size */
     mmc_access_partition_t currentPartition;              /*!< Current access partition */
-    mmc_voltage_window_t hostVoltageWindowVCCQ;           /*!< Host IO voltage window */
-    mmc_voltage_window_t hostVoltageWindowVCC; /*!< application must set this value according to board specific */
-    mmc_high_speed_timing_t busTiming;         /*!< indicate the current work timing mode*/
-    mmc_data_bus_width_t busWidth;             /*!< indicate the current work bus width */
+    mmc_voltage_window_t hostVoltageWindowVCCQ; /*!< application must set this value according to board specific */
+    mmc_voltage_window_t hostVoltageWindowVCC;  /*!< application must set this value according to board specific */
+    mmc_high_speed_timing_t busTiming;          /*!< indicate the current work timing mode*/
+    mmc_data_bus_width_t busWidth;              /*!< indicate the current work bus width */
 } mmc_card_t;
 
 /*************************************************************************************************

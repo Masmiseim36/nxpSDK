@@ -130,14 +130,27 @@ using namespace std;
 		}
 
 		if (jsonConf["revision"].get_type() == jute::JSTRING) {
-			revision = jsonConf["revision"].as_string();
-			transform(revision.begin(), revision.end(), revision.begin(), ::tolower);
-			Log::log(Logger::INFO2, "\t\"revision\": " + revision + ".\n");
+			string tmp = jsonConf["revision"].as_string();
+			transform(tmp.begin(), tmp.end(), tmp.begin(), ::tolower);
+			Log::log(Logger::INFO2, "\t\"revision\": " + tmp + ".\n");
+			if (tmp.empty())
+				revision = deviceRevision::NONE;
+			else if (tmp == "a0")
+				revision = deviceRevision::A0;
+			else if (tmp == "a1")
+				revision = deviceRevision::A1;
+			else if (tmp == "b0")
+				revision = deviceRevision::B0;
+			else {
+				string ss = "\tUnexpected value of \"revision\": " + tmp + " from configuration file: " + confFilePath + ".\n";
+				Log::log(Logger::ERROR, ss);
+				error = true;
+			}
 		}
 		else {
-			string ss = "\tCannot read \"revision\" from configuration file: " + confFilePath + ". Using latest version avaiable as default.\n";
+			string ss = "\tCannot read \"revision\" from configuration file: " + confFilePath + ". Expecting latest avaiable chip revision.\n";
 			Log::log(Logger::INFO, ss);
-			revision = "def";
+			revision = deviceRevision::NONE;
 		}
 
 		if (jsonConf["tzpOutputFile"].get_type() == jute::JSTRING) {
@@ -163,17 +176,17 @@ using namespace std;
 	}
 
 	std::vector<pair<string, uint32_t>>* TrustZonePresetGenerator::getVector(const string family) {
-		if (family == LPC55XX && revision == "a0")
+		if (family == LPC55XX && revision == deviceRevision::A0)
 			return getLpc55xxVectorA0();
-		if (family == LPC55XX && (revision == "a1" || revision == "def"))
+		if (family == LPC55XX && (revision == deviceRevision::A1 || revision == deviceRevision::NONE))
 			return getLpc55xxVectorA1();
-		else if (family == RT6XX && revision == "a0")
+		else if (family == RT6XX && revision == deviceRevision::A0)
 			return getRt6xxVectorA0();
-		else if (family == RT6XX && (revision == "b0" || revision == "def"))
+		else if (family == RT6XX && (revision == deviceRevision::B0 || revision == deviceRevision::NONE))
 			return getRt6xxVectorB0();
-		else if (family == RT5XX && (revision == "a0" || revision == "def"))
+		else if (family == RT5XX && (revision == deviceRevision::A0 || revision == deviceRevision::NONE))
 			return getRt5xxVector();
-		else if (family == NIOBE4MINI && (revision == "a0" || revision == "def"))
+		else if (family == NIOBE4MINI && (revision == deviceRevision::A0 || revision == deviceRevision::NONE))
 			return getLpc55s3xVector();
 		else
 			throw runtime_error("Not supported device family: " + family + ".");

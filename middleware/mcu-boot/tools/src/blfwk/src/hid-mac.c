@@ -284,10 +284,10 @@ static int get_string_property(IOHIDDeviceRef device, CFStringRef prop, wchar_t 
     {
         CFRange range;
         range.location = 0;
-        range.length = len;
+        range.length = CFStringGetLength(str);
         CFIndex used_buf_len;
         CFStringGetBytes(str, range, kCFStringEncodingUTF32LE, (char)'?', FALSE, (UInt8 *)buf, len, &used_buf_len);
-        buf[len - 1] = 0x00000000;
+        buf[used_buf_len] = 0x00000000;
         return used_buf_len;
     }
     else
@@ -304,10 +304,10 @@ static int get_string_property_utf8(IOHIDDeviceRef device, CFStringRef prop, cha
     {
         CFRange range;
         range.location = 0;
-        range.length = len;
+        range.length = CFStringGetLength(str);
         CFIndex used_buf_len;
         CFStringGetBytes(str, range, kCFStringEncodingUTF8, (char)'?', FALSE, (UInt8 *)buf, len, &used_buf_len);
-        buf[len - 1] = 0x00000000;
+        buf[used_buf_len] = 0x00000000;
         return used_buf_len;
     }
     else
@@ -409,7 +409,10 @@ struct hid_device_info HID_API_EXPORT *hid_enumerate(unsigned short vendor_id, u
     setlocale(LC_ALL, "");
 
     /* Set up the HID Manager if it hasn't been done */
-    hid_init();
+    if (hid_init() < 0)
+    {
+        return NULL;
+    }
 
     /* Get a list of the Devices */
     CFSetRef device_set = IOHIDManagerCopyDevices(hid_mgr);
@@ -715,7 +718,10 @@ hid_device *HID_API_EXPORT hid_open_path(const char *path)
     dev = new_hid_device();
 
     /* Set up the HID Manager if it hasn't been done */
-    hid_init();
+    if (hid_init() < 0)
+		{
+        return NULL;
+    }
 
     CFSetRef device_set = IOHIDManagerCopyDevices(hid_mgr);
 

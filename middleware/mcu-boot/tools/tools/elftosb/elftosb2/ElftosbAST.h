@@ -1041,11 +1041,19 @@ protected:
 class LoadStatementASTNode : public StatementASTNode
 {
 public:
+	enum class LoadType_t
+    {
+        load,
+        loadSecret,
+		loadHash
+    };
+
     LoadStatementASTNode()
         : StatementASTNode()
         , m_data()
         , m_target()
         , m_loadOption()
+		, m_loadType(LoadType_t::load)
     {
     }
 
@@ -1054,6 +1062,7 @@ public:
         , m_data(data)
         , m_target()
         , m_loadOption()
+		, m_loadType(LoadType_t::load)
     {
     }
 
@@ -1069,10 +1078,13 @@ public:
     inline ASTNode *getTarget() { return m_target; }
     inline void setLoadOption(ASTNode *memOpt) { m_loadOption = memOpt; }
     inline ASTNode *getLoadOption() { return m_loadOption; }
+	inline void setLoadType(LoadType_t type) { m_loadType = type; }
+    inline LoadType_t getLoadtype() { return m_loadType; }
 protected:
     smart_ptr<ASTNode> m_data;
     smart_ptr<ASTNode> m_target;
     smart_ptr<ASTNode> m_loadOption; //!< Load option identifier.
+	LoadType_t m_loadType;
 };
 
 /*!
@@ -1186,6 +1198,104 @@ public:
 protected:
     smart_ptr<ASTNode> m_rangeExpr; //!< Expression that evaluates to the config block address range.
     smart_ptr<ASTNode> m_memOption; //!< Memory option identifier.
+};
+
+/*!
+* \brief Statement to insert a ROM_WR_KEYSTORE_TO_NV command.
+*/
+class KeyStoreToNvStatementASTNode : public StatementASTNode
+{
+public:
+    KeyStoreToNvStatementASTNode()
+        : StatementASTNode()
+        , m_memOption()
+        , m_rangeExpr()
+    {
+    }
+    KeyStoreToNvStatementASTNode(ASTNode *rangeExpr)
+        : StatementASTNode()
+        , m_memOption()
+        , m_rangeExpr(rangeExpr)
+    {
+    }
+    KeyStoreToNvStatementASTNode(const KeyStoreToNvStatementASTNode &other);
+
+    virtual ASTNode *clone() const { return new KeyStoreToNvStatementASTNode(*this); }
+    virtual std::string nodeName() const { return "KeyStoreToNovStatementASTNode"; }
+    virtual void printTree(int indent) const;
+
+    inline void setRangeExpr(ASTNode *rangeExpr) { m_rangeExpr = rangeExpr; }
+    inline ASTNode *getRangeExpr() { return m_rangeExpr; }
+    inline void setMemOption(ASTNode *memOpt) { m_memOption = memOpt; }
+    inline ASTNode *getMemOption() { return m_memOption; }
+protected:
+    smart_ptr<ASTNode> m_rangeExpr; //!< Expression that evaluates to the config block address range.
+    smart_ptr<ASTNode> m_memOption; //!< Memory option identifier.
+};
+
+/*!
+* \brief Statement to insert a ROM_WR_KEYSTORE_FROM_NV command.
+*/
+class KeyStoreFromNvStatementASTNode : public StatementASTNode
+{
+public:
+    KeyStoreFromNvStatementASTNode()
+        : StatementASTNode()
+        , m_memOption()
+        , m_rangeExpr()
+    {
+    }
+    KeyStoreFromNvStatementASTNode(ASTNode *rangeExpr)
+        : StatementASTNode()
+        , m_memOption()
+        , m_rangeExpr(rangeExpr)
+    {
+    }
+    KeyStoreFromNvStatementASTNode(const KeyStoreFromNvStatementASTNode &other);
+
+    virtual ASTNode *clone() const { return new KeyStoreFromNvStatementASTNode(*this); }
+    virtual std::string nodeName() const { return "KeyStoreFromNvStatementASTNode"; }
+    virtual void printTree(int indent) const;
+
+    inline void setRangeExpr(ASTNode *rangeExpr) { m_rangeExpr = rangeExpr; }
+    inline ASTNode *getRangeExpr() { return m_rangeExpr; }
+    inline void setMemOption(ASTNode *memOpt) { m_memOption = memOpt; }
+    inline ASTNode *getMemOption() { return m_memOption; }
+protected:
+    smart_ptr<ASTNode> m_rangeExpr; //!< Expression that evaluates to the config block address range.
+    smart_ptr<ASTNode> m_memOption; //!< Memory option identifier.
+};
+
+/*!
+* \brief Statement to insert a ROM_WR_KEYSTORE_FROM_NV command.
+*/
+class CheckVersionStatementASTNode : public StatementASTNode
+{
+public:
+    CheckVersionStatementASTNode()
+        : StatementASTNode()
+        , m_versionType()
+        , m_version()
+    {
+    }
+	enum class CheckVersionType {
+		SecureVersion = 0x0,
+		NonSecureVersion = 0x1,
+	};
+
+    CheckVersionStatementASTNode(const CheckVersionStatementASTNode &other);
+
+    virtual ASTNode *clone() const { return new CheckVersionStatementASTNode(*this); }
+    virtual std::string nodeName() const { return "CheckVersionStatementASTNode"; }
+    virtual void printTree(int indent) const;
+
+    inline void setVersionType(CheckVersionType versionType) { m_versionType = versionType; }
+    inline CheckVersionType getVersionType() { return m_versionType; }
+    inline void setVersion(ASTNode *version) { m_version = version; }
+    inline ASTNode *getVersion() { return m_version; }
+protected:
+	CheckVersionType m_versionType; //!< Expression that evaluates to the config block address range.
+    smart_ptr<ASTNode> m_version; //!< Memory option identifier.
 };
 
 /*!

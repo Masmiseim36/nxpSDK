@@ -1,0 +1,8 @@
+/*!
+@page middleware_log Middleware Change Log
+
+@section dsp_audio_framework DSP Audio Streamer
+  The current version of DSP Audio Streamer is 2.0.
+  - 2.0
+    - Initial version of DSP Audio Streamer
+*/

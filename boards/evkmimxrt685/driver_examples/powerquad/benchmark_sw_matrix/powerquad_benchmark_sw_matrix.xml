@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MIMXRT685S"/>
+    <definition extID="component.serial_manager.MIMXRT685S"/>
+    <definition extID="component.serial_manager_uart.MIMXRT685S"/>
+    <definition extID="component.usart_adapter.MIMXRT685S"/>
+    <definition extID="device.MIMXRT685S_CMSIS.MIMXRT685S"/>
+    <definition extID="device.MIMXRT685S_startup.MIMXRT685S"/>
+    <definition extID="platform.Include_common.MIMXRT685S"/>
+    <definition extID="platform.Include_core_cm33.MIMXRT685S"/>
+    <definition extID="platform.Include_dsp.MIMXRT685S"/>
+    <definition extID="platform.drivers.cache_cache64.MIMXRT685S"/>
+    <definition extID="platform.drivers.clock.MIMXRT685S"/>
+    <definition extID="platform.drivers.common.MIMXRT685S"/>
+    <definition extID="platform.drivers.flash_config.MIMXRT685S"/>
+    <definition extID="platform.drivers.flexcomm.MIMXRT685S"/>
+    <definition extID="platform.drivers.flexcomm_usart.MIMXRT685S"/>
+    <definition extID="platform.drivers.flexspi.MIMXRT685S"/>
+    <definition extID="platform.drivers.inputmux.MIMXRT685S"/>
+    <definition extID="platform.drivers.inputmux_connections.MIMXRT685S"/>
+    <definition extID="platform.drivers.lpc_gpio.MIMXRT685S"/>
+    <definition extID="platform.drivers.lpc_iopctl.MIMXRT685S"/>
+    <definition extID="platform.drivers.power.MIMXRT685S"/>
+    <definition extID="platform.drivers.reset.MIMXRT685S"/>
+    <definition extID="platform.utilities.assert.MIMXRT685S"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT685S"/>
+    <definition extID="utility.debug_console.MIMXRT685S"/>
+    <definition extID="cm33_MIMXRT685S"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="com.crt.advproject.config.exe.debug"/>
+    <definition extID="com.crt.advproject.config.exe.release"/>
+  </externalDefinitions>
+  <example id="evkmimxrt685_powerquad_benchmark_sw_matrix" name="powerquad_benchmark_sw_matrix" category="driver_examples/powerquad" dependency="platform.drivers.clock.MIMXRT685S utility.debug_console.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.inputmux.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S platform.utilities.assert.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.flash_config.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S component.serial_manager.MIMXRT685S component.lists.MIMXRT685S component.serial_manager_uart.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.Include_core_cm33.MIMXRT685S platform.Include_common.MIMXRT685S platform.Include_dsp.MIMXRT685S platform.drivers.inputmux_connections.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S" device_core="cm33_MIMXRT685S">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <memory>
+      <memoryBlock addr="08000000" size="00800000" access="RO" type="ExtFlash" id="QSPI_FLASH_MIMXRT685S" name="QSPI_FLASH"/>
+      <memoryBlock addr="00080000" size="00180000" access="RW" type="RAM" id="SRAM_MIMXRT685S" name="SRAM"/>
+      <memoryBlock addr="40140000" size="00004000" access="RW" type="RAM" id="USB_RAM_MIMXRT685S" name="USB_RAM"/>
+    </memory>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MIMXRT685SFVKB_cm33</value>
+          <value>BOOT_HEADER_ENABLE=1</value>
+          <value>ARM_MATH_CM33</value>
+          <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
+          <value>__FPU_PRESENT=1</value>
+          <value>__DSP_PRESENT=1</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-mcpu=cortex-m33  -c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
+          <value>&amp;Heap:Default;Default;Default&amp;Stack:Default;Default;0x8000</value>
+        </option>
+        <option id="com.crt.advproject.gas.hdrlib" type="enum">
+          <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gas.specs" type="enum">
+          <value>com.crt.advproject.gas.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.specs" type="enum">
+          <value>com.crt.advproject.gcc.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.link.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.link.hdrlib.newlibnano.nohost</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <debug_configurations>
+      <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+        <drivers>
+          <driver id_refs="QSPI_FLASH_MIMXRT685S">
+            <driverBinary path="devices/RT685/mcuxpresso" type="binary" target_path="binary">
+              <files mask="MIMXRT600_FlexSPI_B_MXIC_OPI.cfx"/>
+            </driverBinary>
+          </driver>
+        </drivers>
+      </debug_configuration>
+    </debug_configurations>
+    <source path="CMSIS/DSP/Source/BasicMathFunctions" target_path="CMSIS" type="src">
+      <files mask="arm_mult_q15.c"/>
+      <files mask="arm_mult_q31.c"/>
+      <files mask="arm_shift_q15.c"/>
+      <files mask="arm_shift_q31.c"/>
+    </source>
+    <source path="CMSIS/DSP/Source/CommonTables" target_path="CMSIS" type="src">
+      <files mask="arm_common_tables.c"/>
+      <files mask="arm_const_structs.c"/>
+    </source>
+    <source path="CMSIS/DSP/Source/ComplexMathFunctions" target_path="CMSIS" type="src">
+      <files mask="arm_cmplx_mult_cmplx_q15.c"/>
+      <files mask="arm_cmplx_mult_cmplx_q31.c"/>
+    </source>
+    <source path="CMSIS/DSP/Source/FastMathFunctions" target_path="CMSIS" type="src">
+      <files mask="arm_cos_f32.c"/>
+      <files mask="arm_cos_q15.c"/>
+      <files mask="arm_cos_q31.c"/>
+      <files mask="arm_sin_f32.c"/>
+      <files mask="arm_sin_q15.c"/>
+      <files mask="arm_sin_q31.c"/>
+      <files mask="arm_sqrt_q15.c"/>
+      <files mask="arm_sqrt_q31.c"/>
+    </source>
+    <source path="CMSIS/DSP/Source/FilteringFunctions" target_path="CMSIS" type="src">
+      <files mask="arm_biquad_cascade_df2T_f32.c"/>
+      <files mask="arm_biquad_cascade_df2T_init_f32.c"/>
+      <files mask="arm_conv_f32.c"/>
+      <files mask="arm_conv_q15.c"/>
+      <files mask="arm_conv_q31.c"/>
+      <files mask="arm_correlate_f32.c"/>
+      <files mask="arm_correlate_q15.c"/>
+      <files mask="arm_correlate_q31.c"/>
+      <files mask="arm_fir_f32.c"/>
+      <files mask="arm_fir_init_f32.c"/>
+      <files mask="arm_fir_init_q15.c"/>
+      <files mask="arm_fir_init_q31.c"/>
+      <files mask="arm_fir_q15.c"/>
+      <files mask="arm_fir_q31.c"/>
+    </source>
+    <source path="CMSIS/DSP/Source/MatrixFunctions" target_path="CMSIS" type="src">
+      <files mask="arm_mat_add_f32.c"/>
+      <files mask="arm_mat_add_q15.c"/>
+      <files mask="arm_mat_add_q31.c"/>
+      <files mask="arm_mat_init_f32.c"/>
+      <files mask="arm_mat_init_q15.c"/>
+      <files mask="arm_mat_init_q31.c"/>
+      <files mask="arm_mat_inverse_f32.c"/>
+      <files mask="arm_mat_mult_f32.c"/>
+      <files mask="arm_mat_mult_q15.c"/>
+      <files mask="arm_mat_mult_q31.c"/>
+      <files mask="arm_mat_scale_f32.c"/>
+      <files mask="arm_mat_scale_q15.c"/>
+      <files mask="arm_mat_scale_q31.c"/>
+      <files mask="arm_mat_sub_f32.c"/>
+      <files mask="arm_mat_sub_q15.c"/>
+      <files mask="arm_mat_sub_q31.c"/>
+      <files mask="arm_mat_trans_f32.c"/>
+      <files mask="arm_mat_trans_q15.c"/>
+      <files mask="arm_mat_trans_q31.c"/>
+    </source>
+    <source path="CMSIS/DSP/Source/TransformFunctions" target_path="CMSIS" type="src">
+      <files mask="arm_bitreversal.c"/>
+      <files mask="arm_bitreversal2.c"/>
+      <files mask="arm_cfft_q15.c"/>
+      <files mask="arm_cfft_q31.c"/>
+      <files mask="arm_cfft_radix2_init_q15.c"/>
+      <files mask="arm_cfft_radix2_init_q31.c"/>
+      <files mask="arm_cfft_radix2_q15.c"/>
+      <files mask="arm_cfft_radix2_q31.c"/>
+      <files mask="arm_cfft_radix4_init_q15.c"/>
+      <files mask="arm_cfft_radix4_init_q31.c"/>
+      <files mask="arm_cfft_radix4_q15.c"/>
+      <files mask="arm_cfft_radix4_q31.c"/>
+      <files mask="arm_dct4_init_q15.c"/>
+      <files mask="arm_dct4_init_q31.c"/>
+      <files mask="arm_dct4_q15.c"/>
+      <files mask="arm_dct4_q31.c"/>
+      <files mask="arm_rfft_init_q15.c"/>
+      <files mask="arm_rfft_init_q31.c"/>
+      <files mask="arm_rfft_q15.c"/>
+      <files mask="arm_rfft_q31.c"/>
+    </source>
+    <source path="boards/evkmimxrt685/driver_examples/powerquad/benchmark_sw_matrix/armgcc" target_path="MIMXRT685S/gcc" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT685Sxxxx_cm33_ram.ld"/>
+    </source>
+    <source path="boards/evkmimxrt685/driver_examples/powerquad/benchmark_sw_matrix/iar" target_path="MIMXRT685S/iar" type="linker" toolchain="iar">
+      <files mask="MIMXRT685Sxxxx_cm33_ram.icf"/>
+    </source>
+    <source path="boards/evkmimxrt685/driver_examples/powerquad/benchmark_sw_matrix/mdk" target_path="MIMXRT685S/arm" type="linker" toolchain="mdk">
+      <files mask="MIMXRT685Sxxxx_cm33_ram.scf"/>
+    </source>
+    <source path="boards/evkmimxrt685/driver_examples/powerquad/benchmark_sw_matrix/mdk" target_path="src" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt685_ram.ini"/>
+    </source>
+    <source path="boards/evkmimxrt685/driver_examples/powerquad/benchmark_sw_matrix" target_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/evkmimxrt685/driver_examples/powerquad/benchmark_sw_matrix" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/evkmimxrt685/driver_examples/powerquad/benchmark_sw_matrix" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/evkmimxrt685/driver_examples/powerquad/benchmark_sw_matrix" target_path="source" type="src">
+      <files mask="powerquad_benchmark_sw_matrix.c"/>
+    </source>
+  </example>
+</ksdk:examples>

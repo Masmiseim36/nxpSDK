@@ -68,6 +68,30 @@ void MemEnableOperation::getRange(uint32_t *start, uint32_t *count) const
     }
 }
 
+void KeystoreToNvOperation::getRange(uint32_t *start, uint32_t *count) const
+{
+    if (start)
+    {
+        *start = m_startAddress;
+    }
+    if (count)
+    {
+        *count = m_byteCount;
+    }
+}
+
+void KeystoreFromNvOperation::getRange(uint32_t *start, uint32_t *count) const
+{
+    if (start)
+    {
+        *start = m_startAddress;
+    }
+    if (count)
+    {
+        *count = m_byteCount;
+    }
+}
+
 //! Disposes of operations objects in the sequence.
 OperationSequence::~OperationSequence()
 {

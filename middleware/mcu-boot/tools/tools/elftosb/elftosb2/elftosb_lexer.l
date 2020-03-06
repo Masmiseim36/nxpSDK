@@ -41,37 +41,44 @@ ESC			\\(x{HEXDIGIT}{2}|.)
 
 %%
 
-options			{ return TOK_OPTIONS; }
-constants		{ return TOK_CONSTANTS; }
-sources			{ return TOK_SOURCES; }
-filters			{ return TOK_FILTERS; }
-section			{ return TOK_SECTION; }
-extern			{ return TOK_EXTERN; }
-from			{ return TOK_FROM; }
-raw				{ return TOK_RAW; }
-load			{ return TOK_LOAD; }
-jump			{ return TOK_JUMP; }
-call			{ return TOK_CALL; }
-mode			{ return TOK_MODE; }
-erase           { return TOK_ERASE; }
-all             { return TOK_ALL; }
-if				{ return TOK_IF; }
-else			{ return TOK_ELSE; }
-defined			{ return TOK_DEFINED; }
-info			{ return TOK_INFO; }
-warning			{ return TOK_WARNING; }
-error			{ return TOK_ERROR; }
-sizeof			{ return TOK_SIZEOF; }
-dcd				{ return TOK_DCD; }
-hab				{ return TOK_HAB; }
-ivt             { return TOK_IVT; }
-unsecure        { return TOK_UNSECURE; }
-reset           { return TOK_RESET; }
-jump_sp			{ return TOK_JUMP_SP; }
-enable          { return TOK_ENABLE; }
-keyblob         { return TOK_KEYBLOB; }
-encrypt         { return TOK_ENCRYPT; }
-keywrap         { return TOK_KEYWRAP; }
+options				{ return TOK_OPTIONS; }
+constants			{ return TOK_CONSTANTS; }
+sources				{ return TOK_SOURCES; }
+filters				{ return TOK_FILTERS; }
+section				{ return TOK_SECTION; }
+extern				{ return TOK_EXTERN; }
+from				{ return TOK_FROM; }
+raw					{ return TOK_RAW; }
+load				{ return TOK_LOAD; }
+jump				{ return TOK_JUMP; }
+call				{ return TOK_CALL; }
+mode				{ return TOK_MODE; }
+erase				{ return TOK_ERASE; }
+all					{ return TOK_ALL; }
+if					{ return TOK_IF; }
+else				{ return TOK_ELSE; }
+defined				{ return TOK_DEFINED; }
+info				{ return TOK_INFO; }
+warning				{ return TOK_WARNING; }
+error				{ return TOK_ERROR; }
+sizeof				{ return TOK_SIZEOF; }
+dcd					{ return TOK_DCD; }
+hab					{ return TOK_HAB; }
+ivt					{ return TOK_IVT; }
+unsecure			{ return TOK_UNSECURE; }
+reset				{ return TOK_RESET; }
+jump_sp				{ return TOK_JUMP_SP; }
+enable				{ return TOK_ENABLE; }
+keyblob				{ return TOK_KEYBLOB; }
+encrypt				{ return TOK_ENCRYPT; }
+keywrap				{ return TOK_KEYWRAP; }
+loadh				{ return TOK_LOADH; }
+loads				{ return TOK_LOADS; }
+version_check		{ return TOK_VERSION_CHECK; }
+sec					{ return TOK_SEC; }
+nsec				{ return TOK_NSEC; }
+keystore_to_nv		{ return TOK_KEYSTORE_TO_NV; }
+keystore_from_nv	{ return TOK_KEYSTORE_FROM_NV; }
 
 [whb]/[^a-zA-Z_0-9]					{	// must be followed by any non-ident char
 										int_size_t theSize;

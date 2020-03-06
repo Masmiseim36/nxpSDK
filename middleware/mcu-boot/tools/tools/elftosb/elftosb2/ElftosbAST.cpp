@@ -1344,6 +1344,87 @@ void MemEnableStatementASTNode::printTree(int indent) const
         m_memOption->printTree(indent + 2);
 }
 
+#pragma mark = KeyStoreToNvStatementASTNode =
+
+KeyStoreToNvStatementASTNode::KeyStoreToNvStatementASTNode(const KeyStoreToNvStatementASTNode &other)
+    : StatementASTNode(other)
+    , m_memOption()
+    , m_rangeExpr()
+{
+    m_rangeExpr = dynamic_cast<ExprASTNode *>(other.m_rangeExpr->clone());
+    m_memOption = dynamic_cast<ExprASTNode *>(other.m_memOption->clone());
+}
+
+void KeyStoreToNvStatementASTNode::printTree(int indent) const
+{
+    StatementASTNode::printTree(indent);
+
+    printIndent(indent + 1);
+    printf("range:\n");
+    if (m_rangeExpr)
+        m_rangeExpr->printTree(indent + 2);
+
+    printIndent(indent + 1);
+    printf("mem option:\n");
+    if (m_memOption)
+        m_memOption->printTree(indent + 2);
+}
+
+#pragma mark = KeyStoreFromNvStatementASTNode =
+
+KeyStoreFromNvStatementASTNode::KeyStoreFromNvStatementASTNode(const KeyStoreFromNvStatementASTNode &other)
+    : StatementASTNode(other)
+    , m_memOption()
+    , m_rangeExpr()
+{
+    m_rangeExpr = dynamic_cast<ExprASTNode *>(other.m_rangeExpr->clone());
+    m_memOption = dynamic_cast<ExprASTNode *>(other.m_memOption->clone());
+}
+
+void KeyStoreFromNvStatementASTNode::printTree(int indent) const
+{
+    StatementASTNode::printTree(indent);
+
+    printIndent(indent + 1);
+    printf("range:\n");
+    if (m_rangeExpr)
+        m_rangeExpr->printTree(indent + 2);
+
+    printIndent(indent + 1);
+    printf("mem option:\n");
+    if (m_memOption)
+        m_memOption->printTree(indent + 2);
+}
+
+#pragma mark = CheckVersionStatementASTNode =
+
+CheckVersionStatementASTNode::CheckVersionStatementASTNode(const CheckVersionStatementASTNode &other)
+    : StatementASTNode(other)
+    , m_versionType()
+    , m_version()
+{
+	m_versionType = other.m_versionType;
+    m_version = dynamic_cast<ExprASTNode *>(other.m_version->clone());
+}
+
+void CheckVersionStatementASTNode::printTree(int indent) const
+{
+    StatementASTNode::printTree(indent);
+
+	printIndent(indent + 1);
+	if(m_versionType == CheckVersionType::SecureVersion)
+		printf("version type: SEC\n");
+	else if(m_versionType == CheckVersionType::SecureVersion)
+		printf("version type: NSEC\n");
+	else
+		printf("version type: unknown!!\n");
+
+    printIndent(indent + 1);
+    printf("version:\n");
+    if (m_version)
+        m_version->printTree(indent + 2);
+}
+
 #pragma mark = SourceASTNode =
 
 SourceASTNode::SourceASTNode(const SourceASTNode &other)

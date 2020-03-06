@@ -273,6 +273,28 @@ void SB2ImageGenerator::processOperationSection(OperationSequenceSection *sectio
             continue;
         }
 
+		auto keystoreToNvOp = dynamic_cast<KeystoreToNvOperation *>(op);
+        if (keystoreToNvOp)
+        {
+            processKeystoreToNvOperation(keystoreToNvOp, newSection);
+            continue;
+        }
+
+		auto keystoreFromNvOp = dynamic_cast<KeystoreFromNvOperation *>(op);
+        if (keystoreFromNvOp)
+        {
+            processKeystoreFromNvOperation(keystoreFromNvOp, newSection);
+            continue;
+        }
+
+		auto checkVersionOp = dynamic_cast<CheckVersionOperation *>(op);
+        if (checkVersionOp)
+        {
+            processCheckVersionOp(checkVersionOp, newSection);
+            continue;
+        }
+		
+
         Log::log(Logger::WARNING, "warning: unexpected operation type\n");
     }
 
@@ -427,6 +449,11 @@ void SB2ImageGenerator::processLoadOperation(LoadOperation *op, SB2Image::BootSe
         command->setLoadAddress(range.m_begin);
         command->setDCD(op->isDCDLoad());
 
+		if (op->getLoadOperationType() == LoadOperation::LoadOperationType_t::loadHmac)
+			command->setLoadHmac(true);
+		else if (op->getLoadOperationType() == LoadOperation::LoadOperationType_t::loadSecret)
+			command->setLoadSecret(true);
+
         LoadExternalOperation *loadExtOp = dynamic_cast<LoadExternalOperation *>(op);
         if (loadExtOp)
         {
@@ -560,6 +587,50 @@ void SB2ImageGenerator::processMemEnableOperation(MemEnableOperation *op, SB2Ima
     command->setAddressRange(start, count);
 
     command->setMemoryId(op->getMemoryId());
+
+    section->addCommand(command);
+}
+
+void SB2ImageGenerator::processKeystoreToNvOperation(KeystoreToNvOperation *op, SB2Image::BootSection *section)
+{
+    auto command = new SB2Image::KeyStoreToNvCommand();
+
+    uint32_t start;
+    uint32_t count;
+    op->getRange(&start, &count);
+    command->setAddressRange(start, count);
+
+    command->setMemoryId(op->getMemoryId());
+
+    section->addCommand(command);
+}
+
+void SB2ImageGenerator::processKeystoreFromNvOperation(KeystoreFromNvOperation *op, SB2Image::BootSection *section)
+{
+    auto command = new SB2Image::KeyStoreFromNvCommand();
+
+    uint32_t start;
+    uint32_t count;
+    op->getRange(&start, &count);
+    command->setAddressRange(start, count);
+
+    command->setMemoryId(op->getMemoryId());
+
+    section->addCommand(command);
+}
+
+void SB2ImageGenerator::processCheckVersionOp(CheckVersionOperation *op, SB2Image::BootSection *section)
+{
+    auto command = new SB2Image::CheckVersionCommand();
+
+	if (op->getVersionType() == CheckVersionOperation::CheckVersionType::SecureVersion)
+		command->setVersionType(SB2Image::CheckVersionCommand::CheckVersionType::SecureVersion);
+	else if (op->getVersionType() == CheckVersionOperation::CheckVersionType::NonSecureVersion)
+		command->setVersionType(SB2Image::CheckVersionCommand::CheckVersionType::NonSecureVersion);
+	else
+		Log::log(Logger::ERROR, "ERROR: Unknown version check type.\n");
+
+	command->setVersion(op->getVersion());
 
     section->addCommand(command);
 }

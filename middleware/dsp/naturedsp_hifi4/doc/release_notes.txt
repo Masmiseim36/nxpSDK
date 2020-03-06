@@ -1,0 +1,52 @@
+---------------- Library Release 4.0.0 ----------------
+This release includes several API changes and new functionalities, performance improvements
+and documentation updates
+The performance measurements are obtained using RG-2018.9 Xtensa Xplorer, tools, and HiFi4 core configurations with big memories. 
+API updates:
+Unified API with HiFi3/3z library:
+- new FIR functions: bkfir16x16_xxx, bkfira16x16_xxx, bkfira32x32_xxx, cxfir16x16_xxx,
+  bkfir32x32_xxx, firdec16x16_xxx, firdec32x32_xxx, firinterp16x16_xxx,
+  firinterp32x32_xxx, fir_convol16x16, fir_convola16x16, fir_convol32x32,
+  fir_convola32x32, fir_xcorr16x16, fir_xcorra16x16, fir_xcorr32x32, fir_xcorra32x32,
+  fir_acorr16x16, fir_acorra16x16, fir_acorr32x32, fir_acorra32x32, fir_lconvola16x16,
+  fir_lconvola32x32, fir_lxcorra16x16, fir_lxcorra32x32, fir_lacorra16x16, fir_lacorra32x32, fir_blms16x16,
+  fir_blms32x32
+- added external IR option for bkfir, cxfir
+- new FIR functions with 72-bit extended accumulation (32x32ep)
+- new IIR functions: bqriir16x16_df1_xxx, bqriir16x16_df2_xxx, bqriir32x32_df1_xxx,
+  latr16x16_xxx, latr32x32_xxx
+- new vector functions: vec_dot32x32, vec_dot32x32_fast, vec_scale32x32,
+  vec_scale32x32_fast
+- new math functions: vec_sqrt16x16, vec_sqrt64x32, scl_sqrt16x16, scl_sqrt64x32,
+  vec_rsqrt16x16, vec_rsqrt32x32, scl_rsqrt16x16, scl_rsqrt32x32, vec_tanh32x32,
+  scl_tanh32x32, vec_sigmoid32x32, scl_sigmoid32x32, vec_softmax32x32
+- added matrix/matrix and matrix/vector multiplies for 32x32
+- fixed point matrix/matrix APIs is changed (inputs and outputs are represented in usual
+  matrix layout, not via pointers to rows)
+- FFT: added 32x32 FFT (fft_cplx32x32, ifft_cplx32x32, fft_real32x32, ifft_real32x32,
+  fft_cplx32x32_ie, ifft_cplx32x32_ie, fft_real32x32_ie, ifft_real32x32_ie), 16x16 FFT
+  with dynamic scaling (fft_cplx16x16_ie, ifft_cplx16x16_ie, fft_real16x16_ie,
+  ifft_real16x16_ie), mixed radix 32x32 FFTs
+- changed parameter N of DCT-II function to DCT-II handle to minimize memory footprint
+- DCT: added DCT type II, MDCT, IMDCT and 2D DCT
+
+New features
+- mixed radix 16x16, 32x16 FFTs, added dynamic scaling for all FFTs
+- stereo FFT, FIR and biquad IIR filters
+- matrix inverse (32x32 fixed point as well as float version for VFPU) added for commonly used small sizes
+- 32x32 and floating point ReLu
+- 64x64 reciprocal and division
+- floating point softmax, hyperbolic tangent and sigmoid
+- 32x32 power function
+- transposing matrix multiplies
+- power spectrum , 2D- convolution
+- emulated floating point operations
+- 8x8 and 8x16 matrix multiplies
+- complex 32x32 and floating point LMS
+- LogMel, MFCC APIs
+- floating point/32x32 LMS
+- support of LLVM compilation
+
+Conditionalization:
+- Support of scalar FPU core option
+- code conditionalized for the library to build successfully for Xtensa releases from RG-2018.9, RH-2018.6

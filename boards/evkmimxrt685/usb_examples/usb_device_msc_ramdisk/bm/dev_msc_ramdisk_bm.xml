@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MIMXRT685S"/>
+    <definition extID="component.osa.MIMXRT685S"/>
+    <definition extID="component.serial_manager.MIMXRT685S"/>
+    <definition extID="component.serial_manager_uart.MIMXRT685S"/>
+    <definition extID="component.usart_adapter.MIMXRT685S"/>
+    <definition extID="device.MIMXRT685S_CMSIS.MIMXRT685S"/>
+    <definition extID="device.MIMXRT685S_startup.MIMXRT685S"/>
+    <definition extID="middleware.baremetal.MIMXRT685S"/>
+    <definition extID="middleware.usb.device.MIMXRT685S"/>
+    <definition extID="middleware.usb.device_controller_ip3511hs.MIMXRT685S"/>
+    <definition extID="middleware.usb.phy.MIMXRT685S"/>
+    <definition extID="platform.Include_common.MIMXRT685S"/>
+    <definition extID="platform.Include_core_cm33.MIMXRT685S"/>
+    <definition extID="platform.Include_dsp.MIMXRT685S"/>
+    <definition extID="platform.drivers.cache_cache64.MIMXRT685S"/>
+    <definition extID="platform.drivers.clock.MIMXRT685S"/>
+    <definition extID="platform.drivers.common.MIMXRT685S"/>
+    <definition extID="platform.drivers.flash_config.MIMXRT685S"/>
+    <definition extID="platform.drivers.flexcomm.MIMXRT685S"/>
+    <definition extID="platform.drivers.flexcomm_usart.MIMXRT685S"/>
+    <definition extID="platform.drivers.flexspi.MIMXRT685S"/>
+    <definition extID="platform.drivers.lpc_gpio.MIMXRT685S"/>
+    <definition extID="platform.drivers.lpc_iopctl.MIMXRT685S"/>
+    <definition extID="platform.drivers.power.MIMXRT685S"/>
+    <definition extID="platform.drivers.reset.MIMXRT685S"/>
+    <definition extID="platform.utilities.assert.MIMXRT685S"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT685S"/>
+    <definition extID="utility.debug_console.MIMXRT685S"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="com.crt.advproject.config.exe.debug"/>
+    <definition extID="com.crt.advproject.config.exe.release"/>
+  </externalDefinitions>
+  <example id="evkmimxrt685_dev_msc_ramdisk_bm" name="dev_msc_ramdisk_bm" category="usb_examples" dependency="middleware.usb.device_controller_ip3511hs.MIMXRT685S middleware.usb.phy.MIMXRT685S middleware.usb.device.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.common.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S utility.debug_console.MIMXRT685S platform.utilities.assert.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.flash_config.MIMXRT685S component.serial_manager.MIMXRT685S component.lists.MIMXRT685S component.serial_manager_uart.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S platform.drivers.flexspi.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.reset.MIMXRT685S component.osa.MIMXRT685S platform.Include_core_cm33.MIMXRT685S platform.Include_common.MIMXRT685S platform.Include_dsp.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S middleware.baremetal.MIMXRT685S">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <memory>
+      <memoryBlock addr="08000000" size="00800000" access="RO" type="ExtFlash" id="QSPI_FLASH_MIMXRT685S" name="QSPI_FLASH"/>
+      <memoryBlock addr="00080000" size="00280000" access="RW" type="RAM" id="SRAM_MIMXRT685S" name="SRAM"/>
+      <memoryBlock addr="40140000" size="00004000" access="RW" type="RAM" id="USB_RAM_MIMXRT685S" name="USB_RAM"/>
+    </memory>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>_DEBUG=1</value>
+          <value>CPU_MIMXRT685SFVKB_cm33</value>
+          <value>BOOT_HEADER_ENABLE=1</value>
+          <value>ARM_MATH_CM33</value>
+          <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
+          <value>USB_STACK_BM</value>
+          <value>CPU_MIMXRT685SFVKB=1</value>
+          <value>USB_STACK_USE_DEDICATED_RAM=1</value>
+          <value>FSL_OSA_BM_TASK_ENABLE=0</value>
+          <value>FSL_OSA_BM_TIMER_CONFIG=0</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-mno-unaligned-access  -mcpu=cortex-m33  -c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
+          <value>&amp;Heap:Default;Default;Default&amp;Stack:Default;Default;0x1000</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <debug_configurations>
+      <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+        <drivers>
+          <driver id_refs="QSPI_FLASH_MIMXRT685S">
+            <driverBinary path="devices/RT685/mcuxpresso" type="binary" target_path="binary">
+              <files mask="MIMXRT600_FlexSPI_B_MXIC_OPI.cfx"/>
+            </driverBinary>
+          </driver>
+        </drivers>
+      </debug_configuration>
+    </debug_configurations>
+    <source path="boards/evkmimxrt685/usb_examples/usb_device_msc_ramdisk/bm/armgcc" target_path="MIMXRT685S/gcc" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT685Sxxxx_cm33_ram.ld"/>
+    </source>
+    <source path="boards/evkmimxrt685/usb_examples/usb_device_msc_ramdisk/bm/iar" target_path="MIMXRT685S/iar" type="linker" toolchain="iar">
+      <files mask="MIMXRT685Sxxxx_cm33_ram.icf"/>
+    </source>
+    <source path="boards/evkmimxrt685/usb_examples/usb_device_msc_ramdisk/bm/mdk" target_path="MIMXRT685S/arm" type="linker" toolchain="mdk">
+      <files mask="MIMXRT685Sxxxx_cm33_ram.scf"/>
+    </source>
+    <source path="boards/evkmimxrt685/usb_examples/usb_device_msc_ramdisk/bm/mdk" target_path="src" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt685_ram.ini"/>
+    </source>
+    <source path="boards/evkmimxrt685/usb_examples/usb_device_msc_ramdisk/bm" target_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/evkmimxrt685/usb_examples/usb_device_msc_ramdisk/bm" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/evkmimxrt685/usb_examples/usb_device_msc_ramdisk/bm" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/evkmimxrt685/usb_examples/usb_device_msc_ramdisk/bm" target_path="evkmimxrt685/usb_examples/usb_device_msc_ramdisk/bm" type="doc" exclude="true">
+      <files mask="readme.pdf"/>
+    </source>
+    <source path="boards/evkmimxrt685/usb_examples/usb_device_msc_ramdisk/bm" target_path="source" type="c_include">
+      <files mask="disk.h"/>
+      <files mask="usb_device_config.h"/>
+      <files mask="usb_device_descriptor.h"/>
+    </source>
+    <source path="boards/evkmimxrt685/usb_examples/usb_device_msc_ramdisk/bm" target_path="source" type="src">
+      <files mask="disk.c"/>
+      <files mask="usb_device_descriptor.c"/>
+    </source>
+    <source path="boards/evkmimxrt685/usb_examples/usb_device_msc_ramdisk/bm" target_path="usb/device/class/msc" type="c_include">
+      <files mask="usb_device_msc.h"/>
+      <files mask="usb_device_msc_ufi.h"/>
+    </source>
+    <source path="boards/evkmimxrt685/usb_examples/usb_device_msc_ramdisk/bm" target_path="usb/device/class/msc" type="src">
+      <files mask="usb_device_msc.c"/>
+      <files mask="usb_device_msc_ufi.c"/>
+    </source>
+    <source path="boards/evkmimxrt685/usb_examples/usb_device_msc_ramdisk/bm" target_path="usb/device/class" type="c_include">
+      <files mask="usb_device_class.h"/>
+    </source>
+    <source path="boards/evkmimxrt685/usb_examples/usb_device_msc_ramdisk/bm" target_path="usb/device/class" type="src">
+      <files mask="usb_device_class.c"/>
+    </source>
+    <source path="boards/evkmimxrt685/usb_examples/usb_device_msc_ramdisk/bm" target_path="usb/device/source" type="c_include">
+      <files mask="usb_device_ch9.h"/>
+    </source>
+    <source path="boards/evkmimxrt685/usb_examples/usb_device_msc_ramdisk/bm" target_path="usb/device/source" type="src">
+      <files mask="usb_device_ch9.c"/>
+    </source>
+  </example>
+</ksdk:examples>

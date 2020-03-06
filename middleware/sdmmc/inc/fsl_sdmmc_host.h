@@ -28,7 +28,7 @@
  * Definitions
  ******************************************************************************/
 /*! @brief Middleware adapter version. */
-#define FSL_SDMMC_HOST_ADAPTER_VERSION (MAKE_VERSION(2U, 2U, 14U)) /*2.2.14*/
+#define FSL_SDMMC_HOST_ADAPTER_VERSION (MAKE_VERSION(2U, 2U, 15U)) /*2.2.15*/
 
 /* Common definition for support and not support macro */
 #define SDMMCHOST_NOT_SUPPORT 0U /*!< use this define to indicate the host not support feature*/
@@ -552,8 +552,9 @@ enum _host_capability
 #define SDMMCHOST_GET_HOST_CONFIG_BLOCK_COUNT(config) (config->blockCount)
 #define SDMMCHOST_GET_HOST_CONFIG_BOOT_MODE(config) (config->bootMode)
 #define SDMMCHOST_EMPTY_CMD_FLAG(command) (command.type = kCARD_CommandTypeEmpty)
-#define SDMMCHOST_ENABLE_SDIO_INT(base)                          \
-    USDHC_EnableInterruptStatus(base, kUSDHC_CardInterruptFlag); \
+#define SDMMCHOST_ENABLE_SDIO_INT(base)                              \
+    USDHC_ClearInterruptStatusFlags(base, kUSDHC_CardInterruptFlag); \
+    USDHC_EnableInterruptStatus(base, kUSDHC_CardInterruptFlag);     \
     USDHC_EnableInterruptSignal(base, kUSDHC_CardInterruptFlag)
 #define SDMMCHOST_DISABLE_SDIO_INT(base)                          \
     USDHC_DisableInterruptStatus(base, kUSDHC_CardInterruptFlag); \

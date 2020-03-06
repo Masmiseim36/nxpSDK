@@ -1,0 +1,1219 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface>
+  <object class="ttk.Frame" id="K3sboot">
+    <layout>
+      <property name="column">0</property>
+      <property name="propagate">True</property>
+      <property name="row">0</property>
+      <property name="sticky">nsew</property>
+      <rows>
+        <row id="0">
+          <property name="weight">1</property>
+        </row>
+      </rows>
+      <columns>
+        <column id="0">
+          <property name="pad">5</property>
+          <property name="weight">0</property>
+        </column>
+        <column id="1">
+          <property name="weight">1</property>
+        </column>
+      </columns>
+    </layout>
+    <child>
+      <object class="ttk.Frame" id="frLeftMain">
+        <property name="height">200</property>
+        <property name="width">570</property>
+        <layout>
+          <property name="column">0</property>
+          <property name="propagate">False</property>
+          <property name="row">0</property>
+          <property name="sticky">nsw</property>
+          <rows>
+            <row id="0">
+              <property name="weight">1</property>
+            </row>
+          </rows>
+          <columns>
+            <column id="0">
+              <property name="weight">1</property>
+            </column>
+          </columns>
+        </layout>
+        <child>
+          <object class="pygubu.builder.widgets.scrolledframe" id="scrlMain">
+            <property name="scrolltype">both</property>
+            <property name="usemousewheel">false</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="propagate">True</property>
+              <property name="row">0</property>
+              <property name="sticky">nsew</property>
+              <rows>
+                <row id="0">
+                  <property name="weight">1</property>
+                </row>
+              </rows>
+              <columns>
+                <column id="0">
+                  <property name="weight">1</property>
+                </column>
+              </columns>
+            </layout>
+            <child>
+              <object class="tk.Frame" id="frLeft">
+                <property name="width">390</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">0</property>
+                  <property name="sticky">nsew</property>
+                  <rows>
+                    <row id="0">
+                      <property name="weight">1</property>
+                    </row>
+                  </rows>
+                  <columns>
+                    <column id="0">
+                      <property name="weight">1</property>
+                    </column>
+                  </columns>
+                </layout>
+                <child>
+                  <object class="ttk.Notebook" id="ntbLeft">
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="propagate">True</property>
+                      <property name="row">0</property>
+                      <property name="sticky">nsew</property>
+                    </layout>
+                    <child>
+                      <object class="ttk.Notebook.Tab" id="tbImage">
+                        <property name="sticky">nsew</property>
+                        <property name="text" translatable="yes">Image</property>
+                        <child>
+                          <object class="ttk.Labelframe" id="lfrImage">
+                            <property name="height">200</property>
+                            <property name="text" translatable="yes">Image configuration</property>
+                            <layout>
+                              <property name="column">0</property>
+                              <property name="propagate">True</property>
+                              <property name="row">0</property>
+                              <property name="sticky">nsew</property>
+                              <rows>
+                                <row id="0">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="1">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="10">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="11">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="12">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="13">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="14">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="15">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="16">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="17">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="18">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="19">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="2">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="20">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="21">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="22">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="23">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="24">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="25">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="26">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="27">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="28">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="29">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="3">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="30">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="31">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="32">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="33">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="34">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="35">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="36">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="37">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="38">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="39">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="4">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="40">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="41">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="42">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="43">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="44">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="45">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="49">
+                                  <property name="weight">1</property>
+                                </row>
+                                <row id="5">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="6">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="7">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="8">
+                                  <property name="weight">0</property>
+                                </row>
+                                <row id="9">
+                                  <property name="weight">0</property>
+                                </row>
+                              </rows>
+                              <columns>
+                                <column id="0">
+                                  <property name="weight">1</property>
+                                </column>
+                                <column id="1">
+                                  <property name="weight">0</property>
+                                </column>
+                                <column id="2">
+                                  <property name="weight">0</property>
+                                </column>
+                                <column id="3">
+                                  <property name="weight">0</property>
+                                </column>
+                                <column id="4">
+                                  <property name="weight">0</property>
+                                </column>
+                                <column id="5">
+                                  <property name="weight">0</property>
+                                </column>
+                              </columns>
+                            </layout>
+                            <child>
+                              <object class="ttk.Frame" id="frmConfButtons">
+                                <property name="height">200</property>
+                                <property name="width">200</property>
+                                <layout>
+                                  <property name="column">0</property>
+                                  <property name="pady">5</property>
+                                  <property name="propagate">True</property>
+                                  <property name="row">5</property>
+                                  <property name="sticky">nw</property>
+                                </layout>
+                                <child>
+                                  <object class="ttk.Frame" id="frmButtons">
+                                    <property name="height">200</property>
+                                    <property name="width">200</property>
+                                    <layout>
+                                      <property name="column">0</property>
+                                      <property name="propagate">True</property>
+                                      <property name="row">0</property>
+                                      <property name="sticky">nw</property>
+                                    </layout>
+                                    <child>
+                                      <object class="ttk.Button" id="btnLoad">
+                                        <property name="command">onLoadButtonClick</property>
+                                        <property name="state">normal</property>
+                                        <property name="text" translatable="yes">Load</property>
+                                        <property name="width">7</property>
+                                        <layout>
+                                          <property name="column">0</property>
+                                          <property name="padx">5</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">0</property>
+                                          <property name="sticky">nw</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Button" id="btnNew">
+                                        <property name="command">onNewButtonClick</property>
+                                        <property name="state">normal</property>
+                                        <property name="text" translatable="yes">New</property>
+                                        <property name="width">7</property>
+                                        <layout>
+                                          <property name="column">1</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">0</property>
+                                          <property name="sticky">nw</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Button" id="btnSave">
+                                        <property name="command">onSaveButtonClick</property>
+                                        <property name="state">normal</property>
+                                        <property name="text" translatable="yes">Save</property>
+                                        <property name="width">7</property>
+                                        <layout>
+                                          <property name="column">2</property>
+                                          <property name="padx">5</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">0</property>
+                                          <property name="sticky">nw</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Button" id="btnSaveAs">
+                                        <property name="command">onSaveAsButtonClick</property>
+                                        <property name="text" translatable="yes">Save As</property>
+                                        <property name="width">7</property>
+                                        <layout>
+                                          <property name="column">3</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">0</property>
+                                          <property name="sticky">nw</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="ttk.Frame" id="frmConfFile">
+                                    <property name="height">200</property>
+                                    <property name="width">200</property>
+                                    <layout>
+                                      <property name="column">0</property>
+                                      <property name="padx">5</property>
+                                      <property name="propagate">True</property>
+                                      <property name="row">1</property>
+                                      <property name="sticky">nw</property>
+                                    </layout>
+                                    <child>
+                                      <object class="ttk.Label" id="lblConfFile">
+                                        <property name="text" translatable="yes">File:</property>
+                                        <layout>
+                                          <property name="column">0</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">0</property>
+                                          <property name="sticky">nw</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Label" id="lblConfFileName">
+                                        <property name="width">45</property>
+                                        <layout>
+                                          <property name="column">1</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">0</property>
+                                          <property name="sticky">nw</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Labelframe" id="frmImage">
+                                <property name="height">200</property>
+                                <property name="text" translatable="yes">Input</property>
+                                <property name="width">200</property>
+                                <layout>
+                                  <property name="column">0</property>
+                                  <property name="padx">5</property>
+                                  <property name="propagate">True</property>
+                                  <property name="row">10</property>
+                                  <property name="sticky">new</property>
+                                </layout>
+                                <child>
+                                  <object class="ttk.Frame" id="frmInputImage">
+                                    <property name="height">200</property>
+                                    <property name="width">200</property>
+                                    <layout>
+                                      <property name="column">0</property>
+                                      <property name="propagate">True</property>
+                                      <property name="row">1</property>
+                                      <property name="sticky">nw</property>
+                                    </layout>
+                                    <child>
+                                      <object class="ttk.Label" id="lblImageFileName">
+                                        <property name="text" translatable="yes">none</property>
+                                        <property name="width">39</property>
+                                        <layout>
+                                          <property name="column">2</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">0</property>
+                                          <property name="sticky">nw</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Button" id="btnImageFile">
+                                        <property name="command">onImageFileButtonClick</property>
+                                        <property name="state">normal</property>
+                                        <property name="text" translatable="yes">..</property>
+                                        <property name="width">1</property>
+                                        <layout>
+                                          <property name="column">1</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">0</property>
+                                          <property name="sticky">nw</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Label" id="lblImage">
+                                        <property name="text" translatable="yes">*Image file:</property>
+                                        <layout>
+                                          <property name="column">0</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">0</property>
+                                          <property name="sticky">nw</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Labelframe" id="frmDefineImage">
+                                <property name="height">10</property>
+                                <property name="text" translatable="yes">Define output image format</property>
+                                <property name="width">10</property>
+                                <layout>
+                                  <property name="column">0</property>
+                                  <property name="padx">5</property>
+                                  <property name="propagate">True</property>
+                                  <property name="row">15</property>
+                                  <property name="sticky">new</property>
+                                  <columns>
+                                    <column id="0">
+                                      <property name="weight">1</property>
+                                    </column>
+                                  </columns>
+                                </layout>
+                                <child>
+                                  <object class="ttk.Labelframe" id="frmCertificates">
+                                    <property name="height">200</property>
+                                    <property name="text" translatable="yes">Signature</property>
+                                    <property name="width">200</property>
+                                    <layout>
+                                      <property name="column">0</property>
+                                      <property name="padx">5</property>
+                                      <property name="propagate">True</property>
+                                      <property name="row">51</property>
+                                      <property name="sticky">nsew</property>
+                                      <columns>
+                                        <column id="0">
+                                          <property name="weight">1</property>
+                                        </column>
+                                      </columns>
+                                    </layout>
+                                    <child>
+                                      <object class="ttk.Label" id="lblRootCertificates">
+                                        <property name="text" translatable="yes">*Specify 1 - 4 root certificates/certificate chains:</property>
+                                        <layout>
+                                          <property name="column">0</property>
+                                          <property name="columnspan">3</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">10</property>
+                                          <property name="sticky">nw</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Frame" id="frmCertRoot0">
+                                        <property name="height">200</property>
+                                        <property name="width">200</property>
+                                        <layout>
+                                          <property name="column">0</property>
+                                          <property name="padx">5</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">11</property>
+                                          <property name="sticky">nw</property>
+                                        </layout>
+                                        <child>
+                                          <object class="ttk.Label" id="lblCertRoot0File">
+                                            <property name="text" translatable="yes">none</property>
+                                            <property name="width">34</property>
+                                            <layout>
+                                              <property name="column">3</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="ttk.Radiobutton" id="rbCertRoot0Main">
+                                            <property name="command">onCertRootMainClick</property>
+                                            <property name="text" translatable="yes">RootCert0:</property>
+                                            <property name="value">0</property>
+                                            <property name="variable">int:certRootMain</property>
+                                            <layout>
+                                              <property name="column">1</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="ttk.Button" id="btnCertRootFile0">
+                                            <property name="command">onCertRootFile0Click</property>
+                                            <property name="text" translatable="yes">..</property>
+                                            <property name="width">1</property>
+                                            <layout>
+                                              <property name="column">2</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Frame" id="frmCertChain0">
+                                        <property name="height">200</property>
+                                        <property name="width">200</property>
+                                        <layout>
+                                          <property name="column">0</property>
+                                          <property name="columnspan">3</property>
+                                          <property name="padx">10</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">12</property>
+                                          <property name="sticky">nw</property>
+                                        </layout>
+                                        <child>
+                                          <object class="ttk.Button" id="btnCertChainFile0">
+                                            <property name="command">onChainCertFile0Click</property>
+                                            <property name="takefocus">False</property>
+                                            <property name="text" translatable="yes">..</property>
+                                            <property name="width">1</property>
+                                            <layout>
+                                              <property name="column">1</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="ttk.Label" id="lblCertChain0File">
+                                            <property name="text" translatable="yes">none</property>
+                                            <property name="width">35</property>
+                                            <layout>
+                                              <property name="column">2</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="ttk.Label" id="lblCertChain0">
+                                            <property name="text" translatable="yes">ChainCert0:</property>
+                                            <layout>
+                                              <property name="column">0</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Frame" id="frmCertRoot1">
+                                        <property name="height">200</property>
+                                        <property name="width">200</property>
+                                        <layout>
+                                          <property name="column">0</property>
+                                          <property name="padx">5</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">13</property>
+                                          <property name="sticky">nw</property>
+                                        </layout>
+                                        <child>
+                                          <object class="ttk.Label" id="lblCertRoot1File">
+                                            <property name="text" translatable="yes">none</property>
+                                            <property name="width">34</property>
+                                            <layout>
+                                              <property name="column">3</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="ttk.Radiobutton" id="rbCertRoot1Main">
+                                            <property name="command">onCertRootMainClick</property>
+                                            <property name="takefocus">False</property>
+                                            <property name="text" translatable="yes">RootCert1:</property>
+                                            <property name="value">1</property>
+                                            <property name="variable">int:certRootMain</property>
+                                            <layout>
+                                              <property name="column">1</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="ttk.Button" id="btnCertRootFile1">
+                                            <property name="command">onCertRootFile1Click</property>
+                                            <property name="text" translatable="yes">..</property>
+                                            <property name="width">1</property>
+                                            <layout>
+                                              <property name="column">2</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Frame" id="frmCertChain1">
+                                        <property name="height">200</property>
+                                        <property name="width">200</property>
+                                        <layout>
+                                          <property name="column">0</property>
+                                          <property name="columnspan">3</property>
+                                          <property name="padx">10</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">14</property>
+                                          <property name="sticky">nw</property>
+                                        </layout>
+                                        <child>
+                                          <object class="ttk.Button" id="btnCertChainFile1">
+                                            <property name="command">onChainCertFile1Click</property>
+                                            <property name="text" translatable="yes">..</property>
+                                            <property name="width">1</property>
+                                            <layout>
+                                              <property name="column">1</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="ttk.Label" id="lblCertChain1File">
+                                            <property name="text" translatable="yes">none</property>
+                                            <property name="width">35</property>
+                                            <layout>
+                                              <property name="column">2</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="ttk.Label" id="lblCertChain1">
+                                            <property name="text" translatable="yes">ChainCert1:</property>
+                                            <layout>
+                                              <property name="column">0</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Frame" id="frmCertRoot2">
+                                        <property name="height">200</property>
+                                        <property name="width">200</property>
+                                        <layout>
+                                          <property name="column">0</property>
+                                          <property name="padx">5</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">15</property>
+                                          <property name="sticky">nw</property>
+                                        </layout>
+                                        <child>
+                                          <object class="ttk.Label" id="lblCertRoot2File">
+                                            <property name="text" translatable="yes">none</property>
+                                            <property name="width">34</property>
+                                            <layout>
+                                              <property name="column">3</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="ttk.Radiobutton" id="rbCertRoot2Main">
+                                            <property name="command">onCertRootMainClick</property>
+                                            <property name="text" translatable="yes">RootCert2:</property>
+                                            <property name="value">2</property>
+                                            <property name="variable">int:certRootMain</property>
+                                            <layout>
+                                              <property name="column">1</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="ttk.Button" id="btnCertRootFile2">
+                                            <property name="command">onCertRootFile2Click</property>
+                                            <property name="text" translatable="yes">..</property>
+                                            <property name="width">1</property>
+                                            <layout>
+                                              <property name="column">2</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Frame" id="frmCertChain2">
+                                        <property name="height">200</property>
+                                        <property name="width">200</property>
+                                        <layout>
+                                          <property name="column">0</property>
+                                          <property name="columnspan">3</property>
+                                          <property name="padx">10</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">16</property>
+                                          <property name="sticky">nw</property>
+                                        </layout>
+                                        <child>
+                                          <object class="ttk.Button" id="btnCertChainFile2">
+                                            <property name="command">onChainCertFile2Click</property>
+                                            <property name="text" translatable="yes">..</property>
+                                            <property name="width">1</property>
+                                            <layout>
+                                              <property name="column">1</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="ttk.Label" id="lblCertChain2File">
+                                            <property name="text" translatable="yes">none</property>
+                                            <property name="width">35</property>
+                                            <layout>
+                                              <property name="column">2</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="ttk.Label" id="lblCertChain2">
+                                            <property name="text" translatable="yes">ChainCert2:</property>
+                                            <layout>
+                                              <property name="column">0</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Frame" id="frmCertRoot3">
+                                        <property name="height">200</property>
+                                        <property name="width">200</property>
+                                        <layout>
+                                          <property name="column">0</property>
+                                          <property name="padx">5</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">17</property>
+                                          <property name="sticky">nw</property>
+                                        </layout>
+                                        <child>
+                                          <object class="ttk.Label" id="lblCertRoot3File">
+                                            <property name="text" translatable="yes">none</property>
+                                            <property name="width">34</property>
+                                            <layout>
+                                              <property name="column">3</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="ttk.Radiobutton" id="rbCertRoot3Main">
+                                            <property name="command">onCertRootMainClick</property>
+                                            <property name="text" translatable="yes">RootCert3:</property>
+                                            <property name="value">3</property>
+                                            <property name="variable">int:certRootMain</property>
+                                            <layout>
+                                              <property name="column">1</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="ttk.Button" id="btnCertRootFile3">
+                                            <property name="command">onCertRootFile3Click</property>
+                                            <property name="text" translatable="yes">..</property>
+                                            <property name="width">1</property>
+                                            <layout>
+                                              <property name="column">2</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Frame" id="frmCertChain3">
+                                        <property name="height">200</property>
+                                        <property name="width">200</property>
+                                        <layout>
+                                          <property name="column">0</property>
+                                          <property name="columnspan">3</property>
+                                          <property name="padx">10</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">18</property>
+                                          <property name="sticky">nw</property>
+                                        </layout>
+                                        <child>
+                                          <object class="ttk.Button" id="btnCertChainFile3">
+                                            <property name="command">onChainCertFile3Click</property>
+                                            <property name="text" translatable="yes">..</property>
+                                            <property name="width">1</property>
+                                            <layout>
+                                              <property name="column">1</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="ttk.Label" id="lblCertChain3File">
+                                            <property name="text" translatable="yes">none</property>
+                                            <property name="width">35</property>
+                                            <layout>
+                                              <property name="column">2</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="ttk.Label" id="lblCertChain3">
+                                            <property name="text" translatable="yes">ChainCert3:</property>
+                                            <layout>
+                                              <property name="column">0</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Frame" id="frmCertRootMainKey">
+                                        <layout>
+                                          <property name="column">0</property>
+                                          <property name="columnspan">3</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">19</property>
+                                          <property name="sticky">nw</property>
+                                          <columns>
+                                            <column id="1">
+                                              <property name="minsize">0</property>
+                                            </column>
+                                            <column id="2">
+                                              <property name="minsize">20</property>
+                                            </column>
+                                          </columns>
+                                        </layout>
+                                        <child>
+                                          <object class="ttk.Label" id="lblCertRootMainKeyHead">
+                                            <property name="text" translatable="yes">Private key for selected root certificate/certificate chain:</property>
+                                            <layout>
+                                              <property name="column">0</property>
+                                              <property name="columnspan">5</property>
+                                              <property name="ipadx">5</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">0</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="ttk.Frame" id="frmRootCertKey">
+                                            <layout>
+                                              <property name="column">0</property>
+                                              <property name="padx">5</property>
+                                              <property name="propagate">True</property>
+                                              <property name="row">2</property>
+                                              <property name="sticky">nw</property>
+                                            </layout>
+                                            <child>
+                                              <object class="ttk.Button" id="btnCertRootMainKeyFile">
+                                                <property name="command">onCertRootMainKeyFileClick</property>
+                                                <property name="text" translatable="yes">..</property>
+                                                <property name="width">1</property>
+                                                <layout>
+                                                  <property name="column">1</property>
+                                                  <property name="propagate">True</property>
+                                                  <property name="row">1</property>
+                                                  <property name="sticky">nw</property>
+                                                </layout>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="ttk.Label" id="lblCertRootMainKeyFile">
+                                                <property name="takefocus">False</property>
+                                                <property name="text" translatable="yes">none</property>
+                                                <property name="width">34</property>
+                                                <layout>
+                                                  <property name="column">2</property>
+                                                  <property name="propagate">True</property>
+                                                  <property name="row">1</property>
+                                                  <property name="sticky">nw</property>
+                                                </layout>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="ttk.Label" id="lblCertRootMainKey">
+                                                <property name="text" translatable="yes">*Key file:</property>
+                                                <layout>
+                                                  <property name="column">0</property>
+                                                  <property name="propagate">True</property>
+                                                  <property name="row">1</property>
+                                                  <property name="sticky">nw</property>
+                                                </layout>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Labelframe" id="frmOutput">
+                                <property name="height">200</property>
+                                <property name="text" translatable="yes">Output</property>
+                                <property name="width">200</property>
+                                <layout>
+                                  <property name="column">0</property>
+                                  <property name="padx">5</property>
+                                  <property name="propagate">True</property>
+                                  <property name="row">20</property>
+                                  <property name="sticky">new</property>
+                                </layout>
+                                <child>
+                                  <object class="ttk.Frame" id="frmMasterBoot">
+                                    <property name="height">200</property>
+                                    <property name="width">200</property>
+                                    <layout>
+                                      <property name="column">0</property>
+                                      <property name="propagate">True</property>
+                                      <property name="row">0</property>
+                                      <property name="sticky">nw</property>
+                                    </layout>
+                                    <child>
+                                      <object class="ttk.Label" id="lblMBootFileName">
+                                        <property name="text" translatable="yes">none</property>
+                                        <property name="width">36</property>
+                                        <layout>
+                                          <property name="column">3</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">2</property>
+                                          <property name="sticky">nw</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Button" id="btnSelectMBootFile">
+                                        <property name="command">onMBootFileButtonClick</property>
+                                        <property name="text" translatable="yes">..</property>
+                                        <property name="width">1</property>
+                                        <layout>
+                                          <property name="column">2</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">2</property>
+                                          <property name="sticky">nw</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Label" id="lblMaterBootOutput">
+                                        <property name="text" translatable="yes">*Master Boot:</property>
+                                        <layout>
+                                          <property name="column">0</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">2</property>
+                                          <property name="sticky">nw</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Frame" id="frmProcess">
+                                <layout>
+                                  <property name="column">0</property>
+                                  <property name="padx">5</property>
+                                  <property name="pady">5</property>
+                                  <property name="propagate">True</property>
+                                  <property name="row">49</property>
+                                  <property name="sticky">sew</property>
+                                  <columns>
+                                    <column id="0">
+                                      <property name="weight">1</property>
+                                    </column>
+                                  </columns>
+                                </layout>
+                                <child>
+                                  <object class="ttk.Button" id="btnProcess">
+                                    <property name="command">onProcessButtonClick</property>
+                                    <property name="text" translatable="yes">Process</property>
+                                    <layout>
+                                      <property name="column">0</property>
+                                      <property name="propagate">True</property>
+                                      <property name="row">0</property>
+                                      <property name="sticky">sew</property>
+                                    </layout>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="ttk.Button" id="btnCreateImageScript">
+                                    <property name="command">onCreateImageScriptButtonClick</property>
+                                    <property name="text" translatable="yes">Create script</property>
+                                    <property name="width">15</property>
+                                    <layout>
+                                      <property name="column">1</property>
+                                      <property name="propagate">True</property>
+                                      <property name="row">0</property>
+                                      <property name="sticky">se</property>
+                                    </layout>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Labelframe" id="lfrRight">
+        <property name="text" translatable="yes">Process output</property>
+        <layout>
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">0</property>
+          <property name="sticky">nsew</property>
+          <rows>
+            <row id="0">
+              <property name="pad">0</property>
+              <property name="weight">0</property>
+            </row>
+            <row id="1">
+              <property name="weight">1</property>
+            </row>
+          </rows>
+          <columns>
+            <column id="0">
+              <property name="pad">0</property>
+              <property name="weight">1</property>
+            </column>
+          </columns>
+        </layout>
+        <child>
+          <object class="ttk.Frame" id="frTopMenu">
+            <property name="height">200</property>
+            <property name="width">200</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="propagate">True</property>
+              <property name="row">0</property>
+              <property name="sticky">new</property>
+              <columns>
+                <column id="0">
+                  <property name="weight">1</property>
+                </column>
+              </columns>
+            </layout>
+            <child>
+              <object class="ttk.Checkbutton" id="cbVerbose">
+                <property name="command">onVerboseClick</property>
+                <property name="offvalue">False</property>
+                <property name="onvalue">True</property>
+                <property name="text" translatable="yes">Verbose</property>
+                <property name="underline">0</property>
+                <property name="variable">boolean:beVerbose</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="padx">5</property>
+                  <property name="propagate">True</property>
+                  <property name="row">0</property>
+                  <property name="sticky">w</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Button" id="btnExportOutput">
+                <property name="command">onExportOutputButtonClick</property>
+                <property name="text" translatable="yes">Export</property>
+                <layout>
+                  <property name="column">1</property>
+                  <property name="propagate">True</property>
+                  <property name="row">0</property>
+                  <property name="sticky">ne</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Button" id="btnClear">
+                <property name="command">onOutputClearClick</property>
+                <property name="text" translatable="yes">Clear</property>
+                <layout>
+                  <property name="column">2</property>
+                  <property name="padx">5</property>
+                  <property name="propagate">True</property>
+                  <property name="row">0</property>
+                  <property name="sticky">ne</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="pygubu.builder.widgets.scrollbarhelper" id="sbhOutput">
+            <property name="scrolltype">vertical</property>
+            <property name="usemousewheel">true</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="padx">5</property>
+              <property name="pady">5</property>
+              <property name="propagate">True</property>
+              <property name="row">1</property>
+              <property name="sticky">nsew</property>
+            </layout>
+            <child>
+              <object class="tk.Text" id="txtOutput">
+                <property name="cursor">arrow</property>
+                <property name="height">10</property>
+                <property name="state">normal</property>
+                <property name="takefocus">true</property>
+                <property name="width">10</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">0</property>
+                  <property name="sticky">nsew</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

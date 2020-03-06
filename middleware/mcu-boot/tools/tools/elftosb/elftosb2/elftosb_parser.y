@@ -139,6 +139,13 @@ static void yyerror(YYLTYPE * yylloc, ElftosbLexer * lexer, CommandFileASTNode *
 %token TOK_KEYBLOB		"keyblob"
 %token TOK_ENCRYPT		"encrypt"
 %token TOK_KEYWRAP		"keywrap"
+%token TOK_LOADH		"loadh"
+%token TOK_LOADS		"loads"
+%token TOK_VERSION_CHECK		"version_check"
+%token TOK_SEC		"sec"
+%token TOK_NSEC		"nsec"
+%token TOK_KEYSTORE_TO_NV		"keystore_to_nv"
+%token TOK_KEYSTORE_FROM_NV		"keystore_from_nv"
 
 /* operator precedence */
 %left "&&" "||"
@@ -159,17 +166,16 @@ static void yyerror(YYLTYPE * yylloc, ElftosbLexer * lexer, CommandFileASTNode *
 %type <m_ast> const_def const_expr expr int_const_expr unary_expr int_value constants_block
 %type <m_ast> sources_block source_def_list source_def_list_elem source_def
 %type <m_ast> section_defs section_def section_contents full_stmt_list full_stmt_list_elem
-%type <m_ast> basic_stmt load_stmt call_stmt from_stmt load_data load_target call_target
+%type <m_ast> basic_stmt load_stmt loadh_stmt loads_stmt call_stmt from_stmt load_data load_target call_target
 %type <m_ast> address_or_range load_target_opt call_arg_opt basic_stmt_list basic_stmt_list_elem
 %type <m_ast> source_attr_list source_attr_list_elem source_attrs_opt
 %type <m_ast> section_list section_list_elem symbol_ref mode_stmt
 %type <m_ast> section_options_opt source_attr_list_opt
 %type <m_ast> if_stmt else_opt message_stmt erase_stmt
-%type <m_ast> bool_expr ivt_def assignment_list_opt
-%type <m_ast> reset_stmt enable_stmt mem_opt jump_sp_stmt load_opt keywrap_stmt
+%type <m_ast> bool_expr ivt_def assignment_list_opt ver_check_stmt
+%type <m_ast> reset_stmt enable_stmt mem_opt jump_sp_stmt load_opt keywrap_stmt keystore_stmt
 %type <m_ast> keyblob_block encrypt_stmt keyblob_def_list keyblob_def_list_elem keyblob_def
-
-%type <m_num> call_or_jump
+%type <m_num> call_or_jump sec_or_nsec
 
 %destructor { delete $$; } TOK_IDENT TOK_STRING_LITERAL TOK_SECTION_NAME TOK_SOURCE_NAME TOK_BLOB TOK_INT_SIZE TOK_INT_LITERAL
 
@@ -458,6 +464,8 @@ basic_stmt_list_elem
 				;
 
 basic_stmt		:		load_stmt			{ $$ = $1; }
+				|		loadh_stmt			{ $$ = $1; }
+				|		loads_stmt			{ $$ = $1; }
 				|		call_stmt			{ $$ = $1; }
 				|		erase_stmt			{ $$ = $1; }
 				|		mode_stmt			{ $$ = $1; }
@@ -465,11 +473,38 @@ basic_stmt		:		load_stmt			{ $$ = $1; }
 				|		reset_stmt			{ $$ = $1; }
 				|		jump_sp_stmt		{ $$ = $1; }
 				|		enable_stmt			{ $$ = $1; }
+				|		keystore_stmt		{ $$ = $1; }
+				|		ver_check_stmt		{ $$ = $1; }
 				;
+
+loadh_stmt		:		"loadh" load_data load_target_opt
+							{
+								LoadStatementASTNode * stmt = new LoadStatementASTNode();
+								stmt->setLoadType(LoadStatementASTNode::LoadType_t::loadHash);
+								stmt->setData($2);
+								stmt->setTarget($3);
+								// set char locations for the statement
+								stmt->setLocation(@1, @3);
+								$$ = stmt;
+							}
+				;
+
+loads_stmt		:		"loads" load_data load_target_opt
+							{
+								LoadStatementASTNode * stmt = new LoadStatementASTNode();
+								stmt->setLoadType(LoadStatementASTNode::LoadType_t::loadSecret);
+								stmt->setData($2);
+								stmt->setTarget($3);
+								// set char locations for the statement
+								stmt->setLocation(@1, @3);
+								$$ = stmt;
+							}
+				;				
 
 load_stmt		:		"load" load_opt load_data load_target_opt
 							{
 								LoadStatementASTNode * stmt = new LoadStatementASTNode();
+								stmt->setLoadType(LoadStatementASTNode::LoadType_t::load);
 								stmt->setLoadOption($2);
 								stmt->setData($3);
 								stmt->setTarget($4);
@@ -691,6 +726,31 @@ call_or_jump	:		"call"		{ $$ = 1; }
 				|		"jump"		{ $$ = 2; }
 				;
 
+ver_check_stmt	:		"version_check" sec_or_nsec int_const_expr
+						{
+							auto * stmt = new CheckVersionStatementASTNode();
+							switch ($2)
+							{
+								case 1:
+									stmt->setVersionType(CheckVersionStatementASTNode::CheckVersionType::SecureVersion);
+									break;
+								case 2:
+									stmt->setVersionType(CheckVersionStatementASTNode::CheckVersionType::NonSecureVersion);
+									break;
+								default:
+									yyerror(&yylloc, lexer, resultAST, "invalid sec_or_nsec value");
+									YYABORT;
+									break;
+							}
+							stmt->setVersion($3);
+							$$ = stmt;
+						}
+				;
+
+sec_or_nsec		:		"sec"		{ $$ = 1; }
+				|		"nsec"		{ $$ = 2; }
+				;
+
 call_target		:		TOK_SOURCE_NAME
 							{
 								$$ = new SymbolASTNode(NULL, $1);
@@ -801,6 +861,22 @@ reset_stmt		:		"reset"
 enable_stmt		:		"enable" mem_opt address_or_range
 							{
 								MemEnableStatementASTNode * enableNode = new MemEnableStatementASTNode($3);
+								enableNode->setMemOption($2);
+								enableNode->setLocation(@1, @3);
+								$$ = enableNode;
+							}
+				;
+
+keystore_stmt		:		"keystore_to_nv" mem_opt address_or_range
+							{
+								KeyStoreToNvStatementASTNode * enableNode = new KeyStoreToNvStatementASTNode($3);
+								enableNode->setMemOption($2);
+								enableNode->setLocation(@1, @3);
+								$$ = enableNode;
+							}
+				|			"keystore_from_nv" mem_opt address_or_range
+							{
+								KeyStoreFromNvStatementASTNode * enableNode = new KeyStoreFromNvStatementASTNode($3);
 								enableNode->setMemOption($2);
 								enableNode->setLocation(@1, @3);
 								$$ = enableNode;

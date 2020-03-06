@@ -1,0 +1,10 @@
+/*!
+@page middleware_log Middleware Change Log
+
+@section NatureDSP
+  The current version of NatureDSP is 4.0.0.
+
+  - 4.0.0
+    - Initial version of NatureDSP from Cadence.
+
+*/

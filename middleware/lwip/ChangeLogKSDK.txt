@@ -19,7 +19,6 @@
       - When CGI script is reading POST data by chunks, the loop in httpsrv_read() may cause blocking in receive function waiting for more data at the end of the stream
         - HTTPSRV_cgi_read() - added limiting of the last chunk length according to content length to avoid undesired blocking
       - Applied AUTOIP patch https://savannah.nongnu.org/patch/?9847 - with modification to support multiple network interfaces.
-      - Fixed buffer overflow in httpsrv when application provided CGI script does not handle the whole content of POST request
     - Removed LwipMibCompiler contrib application as it contained LGPL licensed files in SharpSnmpLib.
 
   - 2.1.2_rev3

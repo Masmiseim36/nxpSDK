@@ -53,6 +53,9 @@ protected:
     void processFlashEraseOperation(FlashEraseOperation *op, SB2Image::BootSection *section);
     void processResetOperation(ResetOperation *op, SB2Image::BootSection *section);
     void processMemEnableOperation(MemEnableOperation *op, SB2Image::BootSection *section);
+	void processKeystoreToNvOperation(KeystoreToNvOperation *op, SB2Image::BootSection *section);
+	void processKeystoreFromNvOperation(KeystoreFromNvOperation *op, SB2Image::BootSection *section);
+	void processCheckVersionOp(CheckVersionOperation *op, SB2Image::BootSection *section);
     void processProgramOperation(ProgramOperation *op, SB2Image::BootSection *section);
     void setFillPatternFromValue(SB2Image::FillCommand &command, SizedIntegerValue &pattern);
 	void validateHmacEntries(SB2Image::Section *section);

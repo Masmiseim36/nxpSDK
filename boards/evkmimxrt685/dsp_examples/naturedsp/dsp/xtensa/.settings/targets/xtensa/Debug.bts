@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<BuildTarget tool="xtensa" version="1.0">
+  <BuildSettings>
+    <BaseSettings path="project">
+      <PreprocessorOptions>
+        <StringListMapOptions>
+          <StringListMapEntry>
+            <key>Includes</key>
+            <value flag="-I" inheritance="donotinherit">
+              <ListEntry>${xt_project_loc}/../../../..</ListEntry>
+              <ListEntry>${xt_project_loc}/..</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/drivers</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp_hifi4/include_private</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp_hifi4/include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../components/uart</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../components/serial_manager</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../components/lists</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities/str</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities/debug_console</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities</ListEntry>
+            </value>
+          </StringListMapEntry>
+        </StringListMapOptions>
+        <KeyValueListMapOptions>
+          <KeyValueListMapEntry>
+            <key>Defines</key>
+            <value flag="-D">
+              <ListEntry key="DEBUG" value=""/>
+              <ListEntry key="SDK_DEBUGCONSOLE" value="1"/>
+              <ListEntry key="XOS_CLOCK_FREQ" value="594000000"/>
+              <ListEntry key="APP_DSP_ONLY" value="0"/>
+              <ListEntry key="SERIAL_PORT_TYPE_UART=1" value=""/>
+              <ListEntry key="CPU_MIMXRT685SFVKB_dsp" value=""/>
+            </value>
+          </KeyValueListMapEntry>
+        </KeyValueListMapOptions>
+      </PreprocessorOptions>
+      <CompilerOptions>
+        <FlagValueMapOptions>
+          <FlagValueMapEntry>
+            <key>Optimization</key>
+            <value use="true" level="0" flag="-O"/>
+          </FlagValueMapEntry>
+          <FlagValueMapEntry>
+            <key>Debug</key>
+            <value use="true" level="-3" flag="-g"/>
+          </FlagValueMapEntry>
+        </FlagValueMapOptions>
+        <SingleFlagMapOptions>
+          <SingleFlagMapEntry>
+            <key>WarningSetting</key>
+            <value use="true" flag="-Wall"/>
+          </SingleFlagMapEntry>
+          <SingleFlagMapEntry>
+            <key>SignCharType</key>
+            <value use="true" flag="-fsigned-char"/>
+          </SingleFlagMapEntry>
+        </SingleFlagMapOptions>
+        <StringListMapOptions>
+          <StringListMapEntry>
+            <key>CompilerAdditionalOptions</key>
+            <value inheritance="append">
+              <ListEntry>-Wno-missing-braces&#13;
+-fmessage-length=0&#13;
+-std=gnu99</ListEntry>
+            </value>
+          </StringListMapEntry>
+        </StringListMapOptions>
+      </CompilerOptions>
+      <AssemblerOptions/>
+      <LinkerOptions>
+        <BooleanMapOptions>
+          <BooleanMapEntry>
+            <key>CreateMinsize</key>
+            <value selected="true"/>
+          </BooleanMapEntry>
+          <BooleanMapEntry>
+            <key>GenerateMapFile</key>
+            <value selected="true"/>
+          </BooleanMapEntry>
+        </BooleanMapOptions>
+        <LinkerSupport custom="true" key="-mlsp" value="${xt_project_loc}/../../../../../../devices/MIMXRT685S/xtensa/gdbio"/>
+        <StringListMapOptions>
+          <StringListMapEntry>
+            <key>LinkerAdditionalOptions</key>
+            <value inheritance="append">
+              <ListEntry>-g&#13;
+</ListEntry>
+            </value>
+          </StringListMapEntry>
+        </StringListMapOptions>
+      </LinkerOptions>
+    </BaseSettings>
+  </BuildSettings>
+</BuildTarget>

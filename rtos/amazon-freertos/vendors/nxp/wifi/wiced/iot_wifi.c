@@ -419,7 +419,7 @@ WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkPara
                 break;
 
             /* Launch DHCP client and wait some time to get result */
-            dhcp_start(&fsl_netif0);
+            netifapi_dhcp_start(&fsl_netif0);
             pdhcp = (struct dhcp *)netif_get_client_data(&fsl_netif0, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP);
             assert( NULL != pdhcp);
             for (int i = 10; i > 0 && pdhcp->state != DHCP_STATE_BOUND; i--)

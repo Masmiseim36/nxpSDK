@@ -49,6 +49,14 @@
 
 #define USB_DEVICE_IP3511HS_LPM_ADPPROBE_ATTACH_DEBOUNCE_COUNT (3)
 
+/* if FSL_FEATURE_USBHSD_HAS_EXIT_HS_ISSUE is true:
+ * Enable this macro to exit HS mode automatically if the user case is:
+ *   host and device keep cable connected, and host turn off vbus to simulate detachment.
+ * If user disconnects the cable, there is no issue and don't need enable this macro.
+ * There is one delay in the isr if enable this macro.
+ */
+#define USB_DEVICE_IP3511HS_FORCE_EXIT_HS_MODE_ENABLE (0u)
+
 /*! @brief Endpoint state structure */
 typedef struct _usb_device_lpc3511ip_endpoint_state_struct
 {

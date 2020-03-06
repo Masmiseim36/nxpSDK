@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2018, Cypress Semiconductor Corporation or a subsidiary of 
  * Cypress Semiconductor Corporation. All Rights Reserved.
@@ -44,7 +43,6 @@
 
 //IMXRT platform headers
 #include "fsl_gpio.h"
-//#include "fsl_iomuxc.h" //!!cleanup
 #include "board.h"
 #include "fsl_device_registers.h"
 #include "pin_mux.h"
@@ -52,6 +50,19 @@
 /******************************************************
  *                      Macros
  ******************************************************/
+#if defined(BOARD_INITPINS_WL_REG_ON_GPIO) && defined(BOARD_INITPINS_WL_REG_ON_PIN)
+    /*
+     * Support for LPC GPIO driver
+     */
+    #ifdef _LPC_GPIO_H_
+        #define SET_WL_REG_ON(value) GPIO_PinWrite( BOARD_INITPINS_WL_REG_ON_GPIO, BOARD_INITPINS_WL_REG_ON_PORT, BOARD_INITPINS_WL_REG_ON_PIN, value );
+    #else
+        #define SET_WL_REG_ON(value) GPIO_PinWrite( BOARD_INITPINS_WL_REG_ON_GPIO, BOARD_INITPINS_WL_REG_ON_PIN, value );
+    #endif
+#else
+    #warning "Please define BOARD_INITPINS_WL_REG_ON_GPIO and BOARD_INITPINS_WL_REG_ON_PIN in pin_mux.h"
+    #define SET_WL_REG_ON(value)
+#endif
 
 /******************************************************
  *                    Constants
@@ -92,7 +103,7 @@ static void host_platform_wifi_pwr_pin_init(void)
 
 static void host_platform_wl_reg_on_set_low(void)
 {
-    GPIO_PinWrite( BOARD_INITPINS_WL_REG_ON_GPIO, BOARD_INITPINS_WL_REG_ON_PIN, 0U );
+    SET_WL_REG_ON(0U);
 }
 
 static void host_platform_wl_reg_on_set_high(void)
@@ -107,7 +118,7 @@ static void host_platform_wl_reg_on_set_high(void)
      */
     host_rtos_delay_milliseconds( (uint32_t) 1 );
 
-    GPIO_PinWrite( BOARD_INITPINS_WL_REG_ON_GPIO, BOARD_INITPINS_WL_REG_ON_PIN, 1U );
+    SET_WL_REG_ON(1U);
 }
 
 wwd_result_t host_platform_init( void )

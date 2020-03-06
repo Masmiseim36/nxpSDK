@@ -254,7 +254,10 @@ public:
         ROM_ERASE_CMD = 0x07,      //!< Flash erase command.
         ROM_RESET_CMD = 0x08,      //!< Reset command.
         ROM_MEM_ENABLE_CMD = 0x09, //!< Memory Enable command.
-        ROM_PROG_CMD = 0x0a        //!< Program persistent bits command.
+        ROM_PROG_CMD = 0x0a,       //!< Program persistent bits command.
+		ROM_FW_VER_CHK = 0x0b,     //!< Check FW version fuse value with 
+		ROM_WR_KEYSTORE_TO_NV = 0x0c,   //!< Program persistent bits command.
+		ROM_WR_KEYSTORE_FROM_NV = 0x0d
     };
 
     //! \brief Flag field constants for #ROM_TAG_CMD.
@@ -268,7 +271,8 @@ public:
     //! \brief Flag field constants for #ROM_LOAD_CMD.
     enum
     {
-        ROM_LOAD_DCD = (1 << 0) //!< Execute the DCD after loading completes.
+        ROM_LOAD_DCD = (1 << 0), //!< Execute the DCD after loading completes.
+		ROM_LOAD_CALC_HMAC = (1 << 1) //!< Execute the hash calculation after loading completes.
     };
 
     //! \brief Flag field constants for #ROM_FILL_CMD.
@@ -581,6 +585,11 @@ public:
         inline void setDCD(bool isDCD) { m_loadDCD = isDCD; }
         //@}
 
+		inline void setLoadSecret(bool isLoadSecret) { m_isLoadSecret = isLoadSecret; }
+		inline bool isLoadSecret() { return m_isLoadSecret; }
+
+		inline void setLoadHmac (bool isLoadHmac) { m_isLoadHmac = isLoadHmac; }
+		inline bool isLoadHmac() { return m_isLoadHmac; }
         //! \name Address
         //@{
         inline void setLoadAddress(uint32_t address) { m_address = address; }
@@ -622,6 +631,8 @@ public:
         uint32_t m_length;               //!< Number of bytes to load.
         uint32_t m_address;              //!< Address to which data will be loaded.
         bool m_loadDCD;                  //!< Whether to execute the DCD after loading.
+		bool m_isLoadSecret;			 //!< If load command is loading secret
+		bool m_isLoadHmac;				 //!< If load command is loading secret
         uint32_t m_memoryId;             //!< Memory device ID.
 
         void fillPadding();
@@ -993,6 +1004,150 @@ public:
         uint32_t m_startAddress;
         uint32_t m_byteCount;
         uint32_t m_memoryId;
+    };
+
+    /*!
+    * \brief KeyStoreToNv bootloader command.
+    */
+    class KeyStoreToNvCommand : public BootCommand
+    {
+    public:
+        //! \brief Default constructor.
+        KeyStoreToNvCommand()
+            : BootCommand()
+            , m_startAddress(0)
+            , m_byteCount(0)
+            , m_memoryId(0)
+        {
+        }
+
+        //! \brief Read the command contents from raw data.
+        virtual void initFromData(const cipher_block_t *blocks, unsigned count, unsigned *consumed);
+
+        //! \name Header
+        //@{
+        //! \brief Returns the tag value for this command.
+        virtual uint8_t getTag() const { return ROM_WR_KEYSTORE_TO_NV; }
+        //! \brief Constructs the header for this boot command.
+        virtual void fillCommandHeader(boot_command_t &header);
+        //@}
+
+        //! \name Memory enable address range
+        //@{
+        void setAddressRange(uint32_t startAddress, uint32_t count);
+        void getAddressRange(uint32_t *startAddress, uint32_t *count) const;
+        //@}
+
+        //! \name Memory enable controller ID
+        //@{
+        void setMemoryId(uint32_t id) { m_memoryId = id; }
+        uint32_t getMemoryId() const { return m_memoryId; }
+        //@}
+
+        //! \brief Print out a string representation of the object.
+        virtual void debugPrint() const;
+
+    protected:
+        uint32_t m_startAddress;
+        uint32_t m_byteCount;
+        uint32_t m_memoryId;
+    };
+
+	/*!
+    * \brief KeyStoreFromNv bootloader command.
+    */
+    class KeyStoreFromNvCommand : public BootCommand
+    {
+    public:
+        //! \brief Default constructor.
+        KeyStoreFromNvCommand()
+            : BootCommand()
+            , m_startAddress(0)
+            , m_byteCount(0)
+            , m_memoryId(0)
+        {
+        }
+
+        //! \brief Read the command contents from raw data.
+        virtual void initFromData(const cipher_block_t *blocks, unsigned count, unsigned *consumed);
+
+        //! \name Header
+        //@{
+        //! \brief Returns the tag value for this command.
+        virtual uint8_t getTag() const { return ROM_WR_KEYSTORE_FROM_NV; }
+        //! \brief Constructs the header for this boot command.
+        virtual void fillCommandHeader(boot_command_t &header);
+        //@}
+
+        //! \name Memory enable address range
+        //@{
+        void setAddressRange(uint32_t startAddress, uint32_t count);
+        void getAddressRange(uint32_t *startAddress, uint32_t *count) const;
+        //@}
+
+        //! \name Memory enable controller ID
+        //@{
+        void setMemoryId(uint32_t id) { m_memoryId = id; }
+        uint32_t getMemoryId() const { return m_memoryId; }
+        //@}
+
+        //! \brief Print out a string representation of the object.
+        virtual void debugPrint() const;
+
+    protected:
+        uint32_t m_startAddress;
+        uint32_t m_byteCount;
+        uint32_t m_memoryId;
+    };
+
+	/*!
+    * \brief CheckVersionCommand bootloader command.
+    */
+    class CheckVersionCommand : public BootCommand
+    {
+    public:
+        //! \brief Default constructor.
+        CheckVersionCommand()
+            : BootCommand()
+            , m_versionType(CheckVersionType::SecureVersion)
+            , m_version(0)
+        {
+        }
+		enum class CheckVersionType {
+			SecureVersion = 0x0,
+			NonSecureVersion = 0x1,
+		};
+
+        //! \brief Read the command contents from raw data.
+        virtual void initFromData(const cipher_block_t *blocks, unsigned count, unsigned *consumed);
+
+        //! \name Header
+        //@{
+        //! \brief Returns the tag value for this command.
+        virtual uint8_t getTag() const { return ROM_FW_VER_CHK; }
+        //! \brief Constructs the header for this boot command.
+        virtual void fillCommandHeader(boot_command_t &header);
+        //@}
+
+		//! \name Set version value
+        //@{
+        void setVersion(uint32_t version) { m_version = version; }
+        uint32_t getVersion() const { return m_version; }
+        //@}
+
+		//! \name Set Check Version command type
+        //@{
+        void setVersionType(CheckVersionType versionType) { m_versionType = versionType; }
+        CheckVersionType getVersionType() const { return m_versionType; }
+        //@}
+
+
+        //! \brief Print out a string representation of the object.
+        virtual void debugPrint() const;
+
+    protected:
+        CheckVersionType m_versionType;
+        uint32_t m_version;
     };
 
     /*!

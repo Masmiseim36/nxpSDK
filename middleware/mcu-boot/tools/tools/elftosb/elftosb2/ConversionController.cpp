@@ -772,13 +772,33 @@ OperationSequence *ConversionController::convertOneStatement(StatementASTNode *s
         return convertResetStatement(resetStmt);
     }
 
-    // see if it's a reset statement
+    // see if it's a memory enable statement
     MemEnableStatementASTNode *enableStmt = dynamic_cast<MemEnableStatementASTNode *>(statement);
     if (enableStmt)
     {
         return convertMemEnableStatement(enableStmt);
     }
 
+	// see if it's a keyStoreToNv statement
+    auto *keyStoreToNvStmt = dynamic_cast<KeyStoreToNvStatementASTNode *>(statement);
+    if (keyStoreToNvStmt)
+    {
+        return convertKeystoreToNvStatement(keyStoreToNvStmt);
+    }
+
+    // see if it's a keyStoreFromNv statement
+    auto *keyStoreFromNvStmt = dynamic_cast<KeyStoreFromNvStatementASTNode *>(statement);
+    if (keyStoreFromNvStmt)
+    {
+        return convertKeystoreFromNvStatement(keyStoreFromNvStmt);
+    }
+
+	// see if it's a checkVersion statement
+    auto *checkVersionStmt = dynamic_cast<CheckVersionStatementASTNode *>(statement);
+    if (checkVersionStmt)
+    {
+        return convertCheckVersionStatement(checkVersionStmt);
+    }
     // see if it's a keywrap statement
     KeywrapStatementASTNode *wrapStmt = dynamic_cast<KeywrapStatementASTNode *>(statement);
     if (wrapStmt)
@@ -899,12 +919,23 @@ OperationSequence *ConversionController::convertLoadStatement(LoadStatementASTNo
         ExprASTNode * exprNode = dynamic_cast<ExprASTNode *>(statement->getData());
         if (exprNode && isExternalLoad)
         {
-            throw semantic_error(
-                format_string("line %d: Patten fill is not supported by current memory option %s", statement->getFirstLine(), (dynamic_cast<StringConstASTNode *>(loadOption))->getString()->c_str()));
+			StringConstASTNode *strNode = dynamic_cast<StringConstASTNode *>(loadOption);
+            if (strNode)
+				throw semantic_error(format_string("line %d: Patten fill is not supported by current memory option %s", statement->getFirstLine(), strNode->getString()->c_str()));
+			else {
+				IntConstExprASTNode *IntNode = dynamic_cast<IntConstExprASTNode *>(loadOption);
+				throw semantic_error(format_string("line %d: Patten fill is not supported by current memory option @0x%x", statement->getFirstLine(), IntNode->getValue()));
+			}
+            
         }
         op->setSource(createSourceFromNode(statement->getData()));
         op->setTarget(createTargetFromNode(statement->getTarget()));
         op->setDCDLoad(isDCD);
+
+		if (statement->getLoadtype() == LoadStatementASTNode::LoadType_t::loadHash)
+			op->setLoadOperationType(LoadOperation::LoadOperationType_t::loadHmac);
+		else if (statement->getLoadtype() == LoadStatementASTNode::LoadType_t::loadSecret)
+			op->setLoadOperationType(LoadOperation::LoadOperationType_t::loadSecret);
 
         // Append the correct operation subclass to the operation sequence.
         OperationSequence *opSeq = new OperationSequence();
@@ -1454,6 +1485,208 @@ OperationSequence *ConversionController::convertMemEnableStatement(MemEnableStat
         op->setRange(beginAddress, sizeof(uint32_t));
     }
     op->setMemoryId(memId);
+
+    return new OperationSequence(op);
+}
+
+OperationSequence *ConversionController::convertKeystoreToNvStatement(KeyStoreToNvStatementASTNode *statement)
+{
+    // Get memory controller ID.
+    int memId;
+    ASTNode *memOption = statement->getMemOption();
+    if (!memOption)
+    {
+        throw semantic_error(format_string("line %d: memory ID is required", statement->getFirstLine()));
+    }
+    else
+    {
+        StringConstASTNode *strNode = dynamic_cast<StringConstASTNode *>(memOption);
+        if (!strNode)
+        {
+
+            IntConstExprASTNode *IntNode = dynamic_cast<IntConstExprASTNode *>(memOption);
+            if (!IntNode)
+            {
+                throw semantic_error(
+                    format_string("line %d: load option did not evaluate to a string, or '@' + digits", statement->getFirstLine()));
+            }
+            memId = IntNode->getValue();
+        }
+        else
+        {
+            std::string *optStr = strNode->getString();
+            memId = getMemoryId(statement, *optStr);
+        }
+    }
+
+    AddressRangeASTNode *addressNode = dynamic_cast<AddressRangeASTNode *>(statement->getRangeExpr());
+    if (!addressNode)
+    {
+        throw semantic_error("unexpected erase range node type");
+    }
+
+    // evaluate begin address
+    ExprASTNode *beginExpr = dynamic_cast<ExprASTNode *>(addressNode->getBegin());
+    if (!beginExpr)
+    {
+        throw semantic_error("address range must always have a beginning expression");
+    }
+    IntConstExprASTNode *beginIntExpr = dynamic_cast<IntConstExprASTNode *>(beginExpr->reduce(m_context));
+    if (!beginIntExpr)
+    {
+        throw semantic_error("address range begin did not evaluate to an integer");
+    }
+    uint32_t beginAddress = static_cast<uint32_t>(beginIntExpr->getValue());
+
+    // evaluate end address
+    ExprASTNode *endExpr = dynamic_cast<ExprASTNode *>(addressNode->getEnd());
+    uint32_t endAddress = 0;
+    bool hasEndAddress = false;
+    if (endExpr)
+    {
+        IntConstExprASTNode *endIntExpr = dynamic_cast<IntConstExprASTNode *>(endExpr->reduce(m_context));
+        if (!endIntExpr)
+        {
+            throw semantic_error("address range end did not evaluate to an integer");
+        }
+        endAddress = static_cast<uint32_t>(endIntExpr->getValue());
+        hasEndAddress = true;
+
+        if (endAddress < beginAddress)
+        {
+            Log::log(Logger::WARNING, "warning: line %d: end address of address range is before start address\n",
+                     addressNode->getFirstLine());
+        }
+    }
+
+    // create target
+    auto *op = new KeystoreToNvOperation;
+    if (hasEndAddress)
+    {
+        op->setRange(beginAddress, endAddress - beginAddress);
+    }
+    else
+    {
+        op->setRange(beginAddress, sizeof(uint32_t));
+    }
+    op->setMemoryId(memId);
+
+    return new OperationSequence(op);
+}
+
+OperationSequence *ConversionController::convertKeystoreFromNvStatement(KeyStoreFromNvStatementASTNode *statement)
+{
+    // Get memory controller ID.
+    int memId;
+    ASTNode *memOption = statement->getMemOption();
+    if (!memOption)
+    {
+        throw semantic_error(format_string("line %d: memory ID is required", statement->getFirstLine()));
+    }
+    else
+    {
+        StringConstASTNode *strNode = dynamic_cast<StringConstASTNode *>(memOption);
+        if (!strNode)
+        {
+
+            IntConstExprASTNode *IntNode = dynamic_cast<IntConstExprASTNode *>(memOption);
+            if (!IntNode)
+            {
+                throw semantic_error(
+                    format_string("line %d: load option did not evaluate to a string, or '@' + digits", statement->getFirstLine()));
+            }
+            memId = IntNode->getValue();
+        }
+        else
+        {
+            std::string *optStr = strNode->getString();
+            memId = getMemoryId(statement, *optStr);
+        }
+    }
+
+    AddressRangeASTNode *addressNode = dynamic_cast<AddressRangeASTNode *>(statement->getRangeExpr());
+    if (!addressNode)
+    {
+        throw semantic_error("unexpected erase range node type");
+    }
+
+    // evaluate begin address
+    ExprASTNode *beginExpr = dynamic_cast<ExprASTNode *>(addressNode->getBegin());
+    if (!beginExpr)
+    {
+        throw semantic_error("address range must always have a beginning expression");
+    }
+    IntConstExprASTNode *beginIntExpr = dynamic_cast<IntConstExprASTNode *>(beginExpr->reduce(m_context));
+    if (!beginIntExpr)
+    {
+        throw semantic_error("address range begin did not evaluate to an integer");
+    }
+    uint32_t beginAddress = static_cast<uint32_t>(beginIntExpr->getValue());
+
+    // evaluate end address
+    ExprASTNode *endExpr = dynamic_cast<ExprASTNode *>(addressNode->getEnd());
+    uint32_t endAddress = 0;
+    bool hasEndAddress = false;
+    if (endExpr)
+    {
+        IntConstExprASTNode *endIntExpr = dynamic_cast<IntConstExprASTNode *>(endExpr->reduce(m_context));
+        if (!endIntExpr)
+        {
+            throw semantic_error("address range end did not evaluate to an integer");
+        }
+        endAddress = static_cast<uint32_t>(endIntExpr->getValue());
+        hasEndAddress = true;
+
+        if (endAddress < beginAddress)
+        {
+            Log::log(Logger::WARNING, "warning: line %d: end address of address range is before start address\n",
+                     addressNode->getFirstLine());
+        }
+    }
+
+    // create target
+    auto *op = new KeystoreFromNvOperation;
+    if (hasEndAddress)
+    {
+        op->setRange(beginAddress, endAddress - beginAddress);
+    }
+    else
+    {
+        op->setRange(beginAddress, sizeof(uint32_t));
+    }
+    op->setMemoryId(memId);
+
+    return new OperationSequence(op);
+}
+
+OperationSequence *ConversionController::convertCheckVersionStatement(CheckVersionStatementASTNode *statement)
+{
+
+    uint32_t version;
+    auto *verOption = statement->getVersion();
+    if (!verOption)
+    {
+        throw semantic_error(format_string("line %d: memory ID is required", statement->getFirstLine()));
+    }
+    else
+    {
+		IntConstExprASTNode *IntNode = dynamic_cast<IntConstExprASTNode *>(verOption);
+		if (!IntNode)
+		{
+			throw semantic_error(
+				format_string("line %d: version option did not evaluate to a string, or '@' + digits", statement->getFirstLine()));
+		}
+		version = IntNode->getValue();
+    }
+	// create target
+    auto *op = new CheckVersionOperation();
+	if (statement->getVersionType() == CheckVersionStatementASTNode::CheckVersionType::SecureVersion)
+		op->setVersionType(CheckVersionOperation::CheckVersionType::SecureVersion);
+	else if (statement->getVersionType() == CheckVersionStatementASTNode::CheckVersionType::NonSecureVersion)
+		op->setVersionType(CheckVersionOperation::CheckVersionType::NonSecureVersion);
+	else 
+		throw semantic_error("unexpected type of version_check command, can be only sec/nsec");
+    op->setVersion(version);
 
     return new OperationSequence(op);
 }

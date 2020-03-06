@@ -203,7 +203,7 @@ void hexToBytes(const char *hexStr, unsigned char *bytes, int numBytes)
     }
 }
 
-void Keyblob::populateKeyBlob(keyblob_t *blob, uint32_t start, uint32_t end, const char *keyHex, const char *counterHex, uint32_t dynamicCtrBase)
+void Keyblob::populateKeyBlob(keyblob_t *blob, uint32_t start, uint32_t end, const char *keyHex, const char *counterHex)
 {
     // Populate key value.
     hexToBytes(keyHex, blob->key, sizeof(blob->key));
@@ -217,14 +217,9 @@ void Keyblob::populateKeyBlob(keyblob_t *blob, uint32_t start, uint32_t end, con
     blob->endaddr &= ~kFlagMask;
     blob->endaddr |= kKeyFlags;
 
-	blob->zero_fill = dynamicCtrBase;
-
-    // Add CRC32.
-    uint32_t result;
-    CRC32 crc;
-    crc.update(reinterpret_cast<uint8_t *>(blob), kCrc32SizeBytes);
-    crc.truncatedFinal(reinterpret_cast<uint8_t *>(&result), sizeof(result));
-    blob->key_blob_crc32 = result;
+    // Add random values
+    RandomNumberGenerator rng;
+    rng.generateBlock((uint8_t*)&blob->zero_fill, sizeof(blob->zero_fill) + sizeof(blob->key_blob_crc32));
 }
 
 uint8_t *Keyblob::createWrappedKeyblobData(uint8_t *kek, uint32_t *byteCount)
@@ -248,12 +243,11 @@ uint8_t *Keyblob::createWrappedKeyblobData(uint8_t *kek, uint32_t *byteCount)
     {
         uint32_t start = 0;
         uint32_t end = 0;
-		uint32_t dynamicCtrBase = 0;
         const char *keyHex = NULL;
         const char *counterHex = NULL;
 
         // If not all options are present, make it a null entry.
-        bool isValidEntry = getOptionValues(**it, &keyHex, &counterHex, &start, &end, &dynamicCtrBase);
+        bool isValidEntry = getOptionValues(**it, &keyHex, &counterHex, &start, &end);
 
         // Clear this wrapped entry.
         memset(wrapped, 0, kKeyBlobSizeBytes);
@@ -262,7 +256,7 @@ uint8_t *Keyblob::createWrappedKeyblobData(uint8_t *kek, uint32_t *byteCount)
         {
             // Fill in keyblob data.
             memset(blob, 0, sizeof(keyblob_t));
-            populateKeyBlob(blob, start, end, keyHex, counterHex, dynamicCtrBase);
+            populateKeyBlob(blob, start, end, keyHex, counterHex);
 
 #if PRINT_KEYBLOB
             uint8_t *keyData = reinterpret_cast<uint8_t *>(blob);
@@ -308,7 +302,7 @@ uint8_t *Keyblob::createWrappedKeyblobData(uint8_t *kek, uint32_t *byteCount)
     return wrappedData; // must be deleted by caller
 }
 
-bool Keyblob::getOptionValues(OptionContext &opt, const char **key, const char **ctr, uint32_t *start, uint32_t *end, uint32_t *dynamicCtrBase)
+bool Keyblob::getOptionValues(OptionContext &opt, const char **key, const char **ctr, uint32_t *start, uint32_t *end)
 {
     assert(key && ctr && start && end);
 
@@ -377,24 +371,6 @@ bool Keyblob::getOptionValues(OptionContext &opt, const char **key, const char *
             *ctr = *stringValue;
         }
     }
-
-	if (opt.hasOption(kKeyblobOptionNamedynamicCtrBase))
-	{
-		const Value *value = opt.getOption(kKeyblobOptionNamedynamicCtrBase);
-		uint32_t dynCtrValue = 0;
-		if (value) {
-			const IntegerValue *intValue = dynamic_cast<const IntegerValue *>(value);
-			if (!intValue)
-			{
-				Log::log(Logger::WARNING, "invalid type for %s option\n", kKeyblobOptionNamedynamicCtrBase);
-				return false;
-			}
-			else
-				dynCtrValue = intValue->getValue();
-		}
-		if (dynamicCtrBase)
-			*dynamicCtrBase = dynCtrValue;
-	}
 
 	if (opt.hasOption(kKeyblobOptionNameNoByteSwap))
 	{

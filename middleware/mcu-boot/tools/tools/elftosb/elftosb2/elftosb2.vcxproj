@@ -131,6 +131,7 @@
     <ClCompile Include="..\common\json.cpp" />
     <ClCompile Include="..\common\Keyblob.cpp" />
     <ClCompile Include="..\common\Logging.cpp" />
+    <ClCompile Include="..\common\MulticoreImageGenerator.cpp" />
     <ClCompile Include="..\common\Operation.cpp" />
     <ClCompile Include="..\common\OptionDictionary.cpp" />
     <ClCompile Include="..\common\options.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="..\common\Keyblob.h" />
     <ClInclude Include="..\common\KeyblobEntry.h" />
     <ClInclude Include="..\common\Logging.h" />
+    <ClInclude Include="..\common\MulticoreImageGenerator.h" />
     <ClInclude Include="..\common\Operation.h" />
     <ClInclude Include="..\common\OptionContext.h" />
     <ClInclude Include="..\common\OptionDictionary.h" />

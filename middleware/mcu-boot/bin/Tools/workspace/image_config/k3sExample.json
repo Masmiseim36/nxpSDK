@@ -1,0 +1,11 @@
+{
+    "family": "k32w0x",
+    "inputImageFile": "./workspace/input_images/testfffffff.bin",
+    "rootCertificate0File": "./workspace/keys_and_certs/selfsign_v3.der.crt",
+    "rootCertificate1File": "",
+    "rootCertificate2File": "",
+    "rootCertificate3File": "",
+    "mainCertChainId": 0,
+    "mainCertPrivateKeyFile": "./workspace/keys_and_certs/selfsign_privatekey_rsa2048.pem",
+    "masterBootOutputFile": "./workspace/output_images/test_output.bin"
+}

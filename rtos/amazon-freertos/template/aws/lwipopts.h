@@ -56,6 +56,23 @@
 #define LWIP_SOCKET 0
 
 #endif
+
+/* ---------- Core locking ---------- */
+
+#define LWIP_TCPIP_CORE_LOCKING 1
+
+void sys_lock_tcpip_core(void);
+#define LOCK_TCPIP_CORE() sys_lock_tcpip_core()
+
+void sys_unlock_tcpip_core(void);
+#define UNLOCK_TCPIP_CORE() sys_unlock_tcpip_core()
+
+void sys_check_core_locking(void);
+#define LWIP_ASSERT_CORE_LOCKED() sys_check_core_locking()
+
+void sys_mark_tcpip_thread(void);
+#define LWIP_MARK_TCPIP_THREAD() sys_mark_tcpip_thread()
+
 /* ---------- Memory options ---------- */
 /**
  * MEM_ALIGNMENT: should be set to the alignment of the CPU

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<BuildTarget tool="xtensa" version="1.0">
+  <BuildSettings>
+    <BaseSettings path="project">
+      <PreprocessorOptions>
+        <StringListMapOptions>
+          <StringListMapEntry>
+            <key>Includes</key>
+            <value flag="-I" inheritance="donotinherit">
+              <ListEntry>${xt_project_loc}/..</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../..</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/drivers</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities</ListEntry>
+            </value>
+          </StringListMapEntry>
+        </StringListMapOptions>
+        <KeyValueListMapOptions>
+          <KeyValueListMapEntry>
+            <key>Defines</key>
+            <value flag="-D">
+              <ListEntry key="NDEBUG" value=""/>
+              <ListEntry key="CPU_MIMXRT685SFVKB_dsp" value=""/>
+            </value>
+          </KeyValueListMapEntry>
+        </KeyValueListMapOptions>
+      </PreprocessorOptions>
+      <CompilerOptions>
+        <SingleFlagMapOptions>
+          <SingleFlagMapEntry>
+            <key>OptimizeSpace</key>
+            <value use="true" flag="-Os"/>
+          </SingleFlagMapEntry>
+          <SingleFlagMapEntry>
+            <key>WarningSetting</key>
+            <value use="true" flag="-Wall"/>
+          </SingleFlagMapEntry>
+          <SingleFlagMapEntry>
+            <key>SignCharType</key>
+            <value use="true" flag="-fsigned-char"/>
+          </SingleFlagMapEntry>
+        </SingleFlagMapOptions>
+        <StringListMapOptions>
+          <StringListMapEntry>
+            <key>CompilerAdditionalOptions</key>
+            <value inheritance="append">
+              <ListEntry>-Wno-missing-braces&#13;
+-fmessage-length=0&#13;
+-std=gnu99</ListEntry>
+            </value>
+          </StringListMapEntry>
+        </StringListMapOptions>
+      </CompilerOptions>
+      <AssemblerOptions/>
+      <LinkerOptions>
+        <BooleanMapOptions>
+          <BooleanMapEntry>
+            <key>CreateMinsize</key>
+            <value selected="true"/>
+          </BooleanMapEntry>
+        </BooleanMapOptions>
+        <LinkerSupport custom="true" key="-mlsp" value="${xt_project_loc}/../../../../../../devices/MIMXRT685S/xtensa/min-rt"/>
+      </LinkerOptions>
+    </BaseSettings>
+  </BuildSettings>
+</BuildTarget>

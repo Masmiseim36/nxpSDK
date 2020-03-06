@@ -283,6 +283,8 @@ void SDMMCHOST_Reset(SDMMCHOST_TYPE *base)
     SDMMCHOST_ENABLE_HS400_MODE(base, false);
     /* Disable DLL */
     SDMMCHOST_ENABLE_STROBE_DLL(base, false);
+    /* disable auto tuning */
+    SDMMCHOST_AUTO_TUNING_ENABLE(base, false);
 }
 
 void SDMMCHOST_Deinit(void *host)

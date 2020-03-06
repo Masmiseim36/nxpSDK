@@ -18,6 +18,7 @@
 #include "mbedtls/error.h"
 #include "mbedtls/gcm.h"
 #include "elftosb.h"
+#include "MulticoreImageGenerator.h"
 
 using namespace std;
 
@@ -35,6 +36,7 @@ using namespace std;
 #define SKBOOT_IMG_HDR_TZM_IMAGE_TYPE_MASK (0x00004000u) /* TZM image type */
 #define SKBOOT_IMG_HDR_TZM_PRESET_MASK (0x00002000u)     /* TZM preset */
 #define SKBOOT_IMG_HDR_HW_USER_KEY_EN (0x00001000u)
+#define MULTICORE_IS_MULTICORE_IMAGE_MASK (0x00000800u) /* multicore image flag */
 
 	typedef enum _skboot_image_type
 	{
@@ -81,6 +83,14 @@ using namespace std;
 		kCertMaxSupportedSizeInBytes = 4096,    //!< The maximum size of certificate, supported by bootloader.
 		kRootPublicKeyHashTableMaxEntries = 4,  //!< The maxinum count of RK table entries.
 		kImageSessionsAlignmentSizeInBytes = 4, //!< The alignment bytes request by signed image format.
+	};
+
+	enum class deviceRevision
+	{
+		NONE, //!< NONE
+		A0, //!< a0
+		A1, //!< a1
+		B0  //!< b0
 	};
 
 	/*! @brief root public key hash entry definition. */
@@ -415,6 +425,7 @@ typedef struct
 			bool   preformattedSignature;
 			bool   DebugCompatability;
 			bool   BypassCertificateChecks;
+			unique_ptr<MulticoreImageGenerator> multicoreConf;
 		};
 	private:
 		//! \brief Parrent function to create image.
